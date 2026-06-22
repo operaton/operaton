@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.runtime.CaseExecution;
@@ -24,6 +23,7 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
 
 public class CaseInstanceAssertTest extends ProcessAssertTestCase {
@@ -39,9 +39,9 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 		// When
 		caseService().completeCaseExecution(caseExecutionQuery().activityId(TASK_A).singleResult().getId());
     // Then
-		assertThat(taskA).isCompleted();
+		CmmnAwareTests.assertThat(taskA).isCompleted();
 		// And
-		assertThat(caseInstance).isCompleted();
+		CmmnAwareTests.assertThat(caseInstance).isCompleted();
 	}
 
   @Test
@@ -53,17 +53,17 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 				.createCaseExecutionQuery()
 				.activityId(TASK_A).singleResult();
 		// Then
-		assertThat(caseInstance).isActive();
+		CmmnAwareTests.assertThat(caseInstance).isActive();
 		// When
-		HumanTaskAssert caseTaskAssert = assertThat(caseInstance).humanTask(TASK_A);
+		HumanTaskAssert caseTaskAssert = CmmnAwareTests.assertThat(caseInstance).humanTask(TASK_A);
 		// Then
 		CaseExecution actual = caseTaskAssert.getActual();
-		Assertions
-				.assertThat(actual)
+		assertThat(actual)
 				.overridingErrorMessage(
 						"Expected case execution " + toString(actual)
 								+ " to be equal to " + toString(taskAId))
-				.isEqualToComparingOnlyGivenFields(taskAId, "id");
+				.extracting(CaseExecution::getId)
+				.isEqualTo(taskAId.getId());
 	}
 
   @Test
@@ -72,7 +72,7 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
     // Given
     CaseInstance caseInstance = aStartedCase();
     // Then
-    assertThat((CaseExecution) caseInstance).isCaseInstance();
+    CmmnAwareTests.assertThat((CaseExecution) caseInstance).isCaseInstance();
   }
 
 	private CaseInstance aStartedCase() {

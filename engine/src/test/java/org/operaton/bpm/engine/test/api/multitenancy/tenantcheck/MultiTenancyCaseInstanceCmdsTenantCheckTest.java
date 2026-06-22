@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
-
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -91,7 +90,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   @Test
   void manuallyStartCaseExecutionWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.manuallyStartCaseExecution(caseExecutionId);
 
@@ -128,7 +127,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   @Test
   void disableCaseExecutionWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.disableCaseExecution(caseExecutionId);
 
@@ -171,7 +170,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   void reenableCaseExecutionWithAuthenticatedTenant() {
     caseService.disableCaseExecution(caseExecutionId);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.reenableCaseExecution(caseExecutionId);
 
@@ -214,7 +213,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   void completeCaseExecutionWithAuthenticatedTenant() {
     caseService.manuallyStartCaseExecution(caseExecutionId);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.completeCaseExecution(caseExecutionId);
 
@@ -259,7 +258,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
   void closeCaseInstanceWithAuthenticatedTenant() {
     caseService.completeCaseExecution(caseInstanceId);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.closeCaseInstance(caseInstanceId);
 
@@ -301,7 +300,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   @Test
   void terminateCaseExecutionWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.terminateCaseExecution(caseInstanceId);
 
@@ -338,7 +337,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   @Test
   void getVariablesWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     Map<String, Object> variables = caseService.getVariables(caseExecutionId);
 
@@ -371,7 +370,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   @Test
   void getVariableWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     String variableValue = (String) caseService.getVariable(caseExecutionId, VARIABLE_NAME);
 
@@ -400,7 +399,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   @Test
   void getVariableTypedWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     StringValue variable = caseService.getVariableTyped(caseExecutionId, VARIABLE_NAME);
 
@@ -429,7 +428,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   @Test
   void removeVariablesWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.removeVariable(caseExecutionId, VARIABLE_NAME);
 
@@ -464,7 +463,7 @@ class MultiTenancyCaseInstanceCmdsTenantCheckTest {
 
   @Test
   void setVariableWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.setVariable(caseExecutionId, "newVar", "newValue");
 

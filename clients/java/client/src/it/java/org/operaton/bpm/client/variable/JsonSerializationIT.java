@@ -47,9 +47,8 @@ import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormat
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
-public class JsonSerializationIT {
+class JsonSerializationIT {
 
   protected static final String VARIABLE_NAME_JSON = "jsonVariable";
   protected static final String JSON_DATAFORMAT_NAME = JSON.getName();
@@ -85,7 +84,7 @@ public class JsonSerializationIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
 
@@ -94,7 +93,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldGetDeserializedJson() {
+  void shouldGetDeserializedJson() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_OBJECT_VALUE);
 
@@ -113,7 +112,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedDeserializedJson() {
+  void shouldGetTypedDeserializedJson() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_OBJECT_VALUE);
 
@@ -135,7 +134,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedSerializedJson() throws JSONException {
+  void shouldGetTypedSerializedJson() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_OBJECT_VALUE);
 
@@ -157,7 +156,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldGetJsonAsList() {
+  void shouldGetJsonAsList() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_LIST_OBJECT_VALUE);
 
@@ -177,7 +176,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedDeserializedJsonAsList() {
+  void shouldGetTypedDeserializedJsonAsList() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_OBJECT_VALUE);
 
@@ -199,7 +198,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedSerializedJsonAsList() throws JSONException {
+  void shouldGetTypedSerializedJsonAsList() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_OBJECT_VALUE);
 
@@ -221,7 +220,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldFailWhileDeserialization() {
+  void shouldFailWhileDeserialization() {
     // given
     ObjectValue objectValue = Variables.serializedObjectValue(VARIABLE_VALUE_JSON_SERIALIZED)
       .objectTypeName(FailingDeserializationBean.class.getName())
@@ -245,7 +244,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldFailWhileDeserializationTypedValue() {
+  void shouldFailWhileDeserializationTypedValue() {
     // given
     ObjectValue objectValue = Variables.serializedObjectValue(VARIABLE_VALUE_JSON_SERIALIZED)
       .objectTypeName(FailingDeserializationBean.class.getName())
@@ -268,7 +267,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldStillReturnSerializedJsonWhenDeserializationFails() throws JSONException {
+  void shouldStillReturnSerializedJsonWhenDeserializationFails() throws JSONException {
     // given
     ObjectValue objectValue = Variables.serializedObjectValue(VARIABLE_VALUE_JSON_SERIALIZED)
       .objectTypeName(FailingDeserializationBean.class.getName())
@@ -287,12 +286,8 @@ public class JsonSerializationIT {
 
     ExternalTask task = handler.getHandledTasks().get(0);
 
-    try {
-      task.getVariableTyped(VARIABLE_NAME_JSON);
-      fail("exception expected");
-    }
-    catch (Exception e) {
-    }
+    assertThatThrownBy(() -> task.getVariableTyped(VARIABLE_NAME_JSON))
+      .isInstanceOf(Exception.class);
 
     // However, the serialized value can be accessed
     ObjectValue typedValue = task.getVariableTyped(VARIABLE_NAME_JSON, false);
@@ -302,30 +297,18 @@ public class JsonSerializationIT {
     assertThat(typedValue.isDeserialized()).isFalse();
 
     // but not the deserialized properties
-    try {
-      typedValue.getValue();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(typedValue::getValue)
+      .isInstanceOf(IllegalStateException.class);
 
-    try {
-      typedValue.getValue(JsonSerializable.class);
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(() -> typedValue.getValue(JsonSerializable.class))
+      .isInstanceOf(IllegalStateException.class);
 
-    try {
-      typedValue.getObjectType();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(typedValue::getObjectType)
+      .isInstanceOf(IllegalStateException.class);
   }
 
   @Test
-  public void shouldFailWhileDeserializationDueToMismatchingTypeName() throws JSONException {
+  void shouldFailWhileDeserializationDueToMismatchingTypeName() throws JSONException {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue(VARIABLE_VALUE_JSON_SERIALIZED)
       .serializationDataFormat(JSON_DATAFORMAT_NAME)
@@ -348,7 +331,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldFailWhileDeserializationDueToWrongTypeName() throws JSONException {
+  void shouldFailWhileDeserializationDueToWrongTypeName() throws JSONException {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue(VARIABLE_VALUE_JSON_SERIALIZED)
       .serializationDataFormat(JSON_DATAFORMAT_NAME)
@@ -372,7 +355,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNull() throws JSONException {
+  void shouldDeserializeNull() throws JSONException {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(JSON_DATAFORMAT_NAME)
@@ -396,7 +379,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullTyped() throws JSONException {
+  void shouldDeserializeNullTyped() throws JSONException {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(JSON_DATAFORMAT_NAME)
@@ -423,7 +406,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullWithoutTypeName()  {
+  void shouldDeserializeNullWithoutTypeName()  {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(JSON_DATAFORMAT_NAME)
@@ -446,7 +429,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullTypedWithoutTypeName()  {
+  void shouldDeserializeNullTypedWithoutTypeName()  {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(JSON_DATAFORMAT_NAME)
@@ -472,7 +455,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shoudSetVariable() throws JSONException {
+  void shoudSetVariable() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -517,7 +500,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shoudSetVariableTyped() throws JSONException {
+  void shoudSetVariableTyped() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -562,7 +545,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped() throws JSONException {
+  void shoudSetVariableUntyped() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -607,7 +590,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Null() {
+  void shoudSetVariableTyped_Null() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -654,7 +637,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shoudSetJsonListVariable() throws JSONException {
+  void shoudSetJsonListVariable() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -703,7 +686,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shoudSetJsonListVariableTyped() throws JSONException {
+  void shoudSetJsonListVariableTyped() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -752,7 +735,7 @@ public class JsonSerializationIT {
   }
 
   @Test
-  public void shouldFailWithMapperNotFound() {
+  void shouldFailWithMapperNotFound() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 

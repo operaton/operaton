@@ -23,8 +23,8 @@ import java.util.Date;
  */
 public class BatchWindow {
 
-  public Date start;
-  public Date end;
+  private Date start;
+  private Date end;
 
   public BatchWindow() {
   }

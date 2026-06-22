@@ -101,7 +101,7 @@ public class Element {
     if (elementList.isEmpty()) {
       return null;
     } else if (elementList.size() > 1) {
-      throw new ProcessEngineException("Parsing exception: multiple elements with tag name " + tagName + " found");
+      throw new ProcessEngineException("Parsing exception: multiple elements with tag name '%s' found".formatted(tagName));
     }
     return elementList.get(0);
   }

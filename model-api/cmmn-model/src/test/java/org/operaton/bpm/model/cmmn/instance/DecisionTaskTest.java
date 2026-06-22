@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
@@ -34,7 +33,7 @@ public class DecisionTaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(ParameterMapping.class),
           new ChildElementAssumption(DecisionRefExpression.class, 0, 1)
         );
@@ -42,7 +41,7 @@ public class DecisionTaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
         new AttributeAssumption("decisionRef"),
         new AttributeAssumption(OPERATON_NS, "resultVariable"),
         new AttributeAssumption(OPERATON_NS, "decisionBinding"),

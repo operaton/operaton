@@ -43,13 +43,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  * - LocalSLSBInvocationTest.testStartProcess.bpmn20.xml  (1)
  * - LocalSLSBInvocationTest.callbackProcess.bpmn20.xml (2)
  *
+ * <p>
  * Two applications are deployed:
  * <ul>
  * <li>test.war - Process Application providing Processes (1+2)</li>
  * <li>service.war - application providing a Local SLSB starting Process (2)</li>
  * </ul>
+ * </p>
  *
- *
+ * <p>
  * Expected Control flow:
  *
  * <pre>
@@ -66,6 +68,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *                                                  V
  *       CallbackBean         <-----------  Process Engine
  *  </pre>
+ * </p>
  *
  *
  *

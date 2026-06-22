@@ -30,7 +30,7 @@ module.exports = [
   'processInstance',
   '$translate',
   'fixDate',
-  function(
+  function (
     $scope,
     $q,
     Notifications,
@@ -39,17 +39,17 @@ module.exports = [
     processData,
     processInstance,
     $translate,
-    fixDate
+    fixDate,
   ) {
     $scope.radio = {value: 'preserveDueDate'};
     $scope.dueDate = moment().format('YYYY-MM-DDTHH:mm:00');
 
     const checkDateFormat = ($scope.checkDateFormat = () =>
       /(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)(?:.(\d\d\d)| )?$/.test(
-        $scope.dueDate
+        $scope.dueDate,
       ));
 
-    $scope.changeDueDate = dueDate => {
+    $scope.changeDueDate = (dueDate) => {
       $scope.dueDate = dueDate;
     };
 
@@ -71,7 +71,7 @@ module.exports = [
     var finishedWithFailures = false;
 
     $scope.form = {
-      allJobsSelected: false
+      allJobsSelected: false,
     };
 
     var FINISHED = 'finished',
@@ -81,21 +81,22 @@ module.exports = [
 
     let executionIdToInstanceMap = null;
     try {
-      jobRetriesData.observe('executionIdToInstanceMap', function(
-        executionMap
-      ) {
-        executionIdToInstanceMap = executionMap;
-        $scope.runtimeView = true;
-      });
-    } catch (ignored) {
+      jobRetriesData.observe(
+        'executionIdToInstanceMap',
+        function (executionMap) {
+          executionIdToInstanceMap = executionMap;
+          $scope.runtimeView = true;
+        },
+      );
+    } catch (_ignored) {
       $scope.runtimeView = false;
     }
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       $modalInstance.close($scope.status);
     });
 
-    $scope.$watch('jobPages.current', function(newValue, oldValue) {
+    $scope.$watch('jobPages.current', function (newValue, oldValue) {
       if (!newValue) {
         jobPages.current = 1;
         return;
@@ -120,9 +121,9 @@ module.exports = [
       JobResource.count({
         processInstanceId: processInstance.id,
         withException: true,
-        noRetriesLeft: true
+        noRetriesLeft: true,
       })
-        .$promise.then(function(data) {
+        .$promise.then(function (data) {
           jobPages.total = data.count;
 
           if (!jobPages.total) {
@@ -133,15 +134,15 @@ module.exports = [
           JobResource.query(
             {
               firstResult: firstResult,
-              maxResults: count
+              maxResults: count,
             },
             {
               processInstanceId: processInstance.id,
               withException: true,
-              noRetriesLeft: true
-            }
+              noRetriesLeft: true,
+            },
           )
-            .$promise.then(function(response) {
+            .$promise.then(function (response) {
               for (var i = 0, job; (job = response[i]); i++) {
                 jobIdToFailedJobMap[job.id] = job;
                 if ($scope.runtimeView) {
@@ -163,7 +164,7 @@ module.exports = [
         .catch(angular.noop);
     }
 
-    $scope.$watch('summarizePages.current', function(newValue) {
+    $scope.$watch('summarizePages.current', function (newValue) {
       if (!newValue) {
         return;
       }
@@ -186,14 +187,14 @@ module.exports = [
       }
     }
 
-    $scope.selectAllJobs = function(allJobsSelected) {
-      angular.forEach($scope.failedJobs, function(job) {
+    $scope.selectAllJobs = function (allJobsSelected) {
+      angular.forEach($scope.failedJobs, function (job) {
         job.selected = allJobsSelected;
         selectFailedJob(job);
       });
     };
 
-    var selectFailedJob = ($scope.selectFailedJob = function(failedJob) {
+    var selectFailedJob = ($scope.selectFailedJob = function (failedJob) {
       var index = selectedFailedJobIds.indexOf(failedJob.id);
 
       if (failedJob.selected === true) {
@@ -211,25 +212,25 @@ module.exports = [
       }
     });
 
-    $scope.retryFailedJobs = function(selectedFailedJobIds) {
+    $scope.retryFailedJobs = function (selectedFailedJobIds) {
       $scope.status = PERFORM;
 
       summarizePages.total = selectedFailedJobIds.length;
       summarizePages.current = 1;
 
       doRetry(selectedFailedJobIds)
-        .then(function() {
+        .then(function () {
           if (!finishedWithFailures) {
             Notifications.addMessage({
               status: $translate.instant('PLUGIN_JOB_RETRY_STATUS_FINISHED'),
               message: $translate.instant('PLUGIN_JOB_RETRY_MESSAGE_2'),
-              exclusive: true
+              exclusive: true,
             });
           } else {
             Notifications.addError({
               status: $translate.instant('PLUGIN_JOB_RETRY_STATUS_FINISHED'),
               message: $translate.instant('PLUGIN_JOB_RETRY_ERROR_2'),
-              exclusive: true
+              exclusive: true,
             });
           }
 
@@ -247,7 +248,7 @@ module.exports = [
         job.status = PERFORM;
 
         let payload = {
-          retries: 1
+          retries: 1,
         };
 
         if ($scope.radio.value === 'dueDate') {
@@ -256,10 +257,10 @@ module.exports = [
 
         JobResource.setRetries(
           {
-            id: job.id
+            id: job.id,
           },
           payload,
-          function() {
+          function () {
             job.status = SUCCESS;
 
             // we want to show a summarize, when all requests
@@ -269,7 +270,7 @@ module.exports = [
               deferred.resolve();
             }
           },
-          function(error) {
+          function (error) {
             finishedWithFailures = true;
 
             job.status = FAILED;
@@ -281,7 +282,7 @@ module.exports = [
             if (count === 0) {
               deferred.resolve();
             }
-          }
+          },
         );
       }
 
@@ -293,8 +294,8 @@ module.exports = [
       return deferred.promise;
     }
 
-    $scope.close = function(status) {
+    $scope.close = function (status) {
       $modalInstance.close(status);
     };
-  }
+  },
 ];

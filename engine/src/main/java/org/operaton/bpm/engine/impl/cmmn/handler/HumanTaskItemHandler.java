@@ -228,7 +228,7 @@ public class HumanTaskItemHandler extends TaskItemHandler {
   }
 
   protected void initializeTaskDescription(CmmnElement element, TaskDefinition taskDefinition, CmmnHandlerContext context) {
-    String description = getDesciption(element);
+    String description = getDescription(element);
     if (description != null && ! description.isEmpty()) {
       ExpressionManager expressionManager = context.getExpressionManager();
       Expression descriptionExpression = expressionManager.createExpression(description);
@@ -268,7 +268,7 @@ public class HumanTaskItemHandler extends TaskItemHandler {
 
   protected TaskListener initializeTaskListener(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonTaskListener listener) {
     Collection<OperatonField> fields = listener.getOperatonFields();
-    List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(element, activity, context, fields);
+    List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(context, fields);
 
     ExpressionManager expressionManager = context.getExpressionManager();
 

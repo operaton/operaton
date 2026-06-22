@@ -20,8 +20,8 @@
 module.exports = [
   '$q',
   '$window',
-  function($q, $window) {
-    return function(files) {
+  function ($q, $window) {
+    return function (files) {
       return $q.all(Array.prototype.map.call(files, readFile));
     };
 
@@ -30,14 +30,14 @@ module.exports = [
 
       var reader = new $window.FileReader();
 
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         deferred.resolve({
           file: file,
-          content: e.target.result
+          content: e.target.result,
         });
       };
 
-      reader.onerror = function(error) {
+      reader.onerror = function (error) {
         deferred.reject(error);
       };
 
@@ -45,5 +45,5 @@ module.exports = [
 
       return deferred.promise;
     }
-  }
+  },
 ];

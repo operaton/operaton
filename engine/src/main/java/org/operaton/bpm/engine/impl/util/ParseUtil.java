@@ -69,7 +69,7 @@ public final class ParseUtil {
         result = Integer.parseInt(text);
       }
       catch (NumberFormatException e) {
-        throw new ProcessEngineException("Cannot parse " + attributeName + ": " + e.getMessage());
+        throw new ProcessEngineException("Cannot parse %s: %s".formatted(attributeName, e.getMessage()));
       }
     }
 

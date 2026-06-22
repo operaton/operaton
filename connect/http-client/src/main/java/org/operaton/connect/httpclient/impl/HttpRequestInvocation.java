@@ -19,6 +19,10 @@ package org.operaton.connect.httpclient.impl;
 import java.util.List;
 
 import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 
 import org.operaton.connect.impl.AbstractRequestInvocation;
@@ -29,15 +33,27 @@ public class HttpRequestInvocation extends AbstractRequestInvocation<BasicClassi
 
   protected HttpClient client;
 
-  public HttpRequestInvocation(BasicClassicHttpRequest target, ConnectorRequest<?> request, List<ConnectorRequestInterceptor> interceptorChain, HttpClient client) {
+  public HttpRequestInvocation(BasicClassicHttpRequest target,
+                               ConnectorRequest<?> request,
+                               List<ConnectorRequestInterceptor> interceptorChain,
+                               HttpClient client) {
     super(target, request, interceptorChain);
     this.client = client;
   }
 
   @Override
   public Object invokeTarget() throws Exception {
-    // execute the request
-    return client.execute(target);
+    return client.execute(target, response -> {
+      // Buffer the response entity so it remains readable after the connection is closed.
+      // HttpClient 5 closes the underlying stream once this handler returns.
+      HttpEntity entity = response.getEntity();
+      if (entity != null) {
+        response.setEntity(new ByteArrayEntity(
+            EntityUtils.toByteArray(entity),
+            ContentType.parseLenient(entity.getContentType())));
+      }
+      return response;
+    });
   }
 
 }

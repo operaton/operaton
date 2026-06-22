@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class StartProcessApplicationServiceStep extends DeploymentOperationStep 
   public void performOperationStep(DeploymentOperation operationContext) {
 
     final AbstractProcessApplication processApplication = operationContext.getAttachment(PROCESS_APPLICATION);
-    final Map<URL, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);
+    final Map<URI, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);
     final Map<String, DeployedProcessArchive> processArchiveDeploymentMap = operationContext.getAttachment(PROCESS_ARCHIVE_DEPLOYMENT_MAP);
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
 
@@ -85,7 +85,7 @@ public class StartProcessApplicationServiceStep extends DeploymentOperationStep 
 
     // create deployment infos
     List<ProcessApplicationDeploymentInfo> deploymentInfoList = new ArrayList<>();
-    if(processArchiveDeploymentMap != null) {
+    if (processArchiveDeploymentMap != null) {
       for (Entry<String, DeployedProcessArchive> deployment : processArchiveDeploymentMap.entrySet()) {
 
         final DeployedProcessArchive deployedProcessArchive = deployment.getValue();
@@ -109,7 +109,7 @@ public class StartProcessApplicationServiceStep extends DeploymentOperationStep 
         serviceContainer.getService(ServiceTypes.BPM_PLATFORM, RuntimeContainerDelegateImpl.SERVICE_NAME_PLATFORM_PLUGINS);
 
     if (plugins != null) {
-      for (BpmPlatformPlugin  plugin : plugins.getValue().getPlugins()) {
+      for (BpmPlatformPlugin plugin : plugins.getValue().getPlugins()) {
         plugin.postProcessApplicationDeploy(processApplication);
       }
     }

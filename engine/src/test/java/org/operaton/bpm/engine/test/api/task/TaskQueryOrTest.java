@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.api.task;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -314,7 +313,7 @@ class TaskQueryOrTest {
     List<Task> tasks = taskService.createTaskQuery()
       .or()
         .taskCandidateUser("John Doe")
-        .taskCandidateGroupIn(Arrays.asList("Controlling", "Sales"))
+        .taskCandidateGroupIn(List.of("Controlling", "Sales"))
       .endOr()
       .list();
 
@@ -341,7 +340,7 @@ class TaskQueryOrTest {
     List<Task> tasks = taskService.createTaskQuery()
       .or()
         .taskCandidateGroup("Accounting")
-        .taskCandidateGroupIn(Arrays.asList("Controlling", "Sales"))
+        .taskCandidateGroupIn(List.of("Controlling", "Sales"))
       .endOr()
       .list();
 

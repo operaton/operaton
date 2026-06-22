@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -36,10 +34,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class StartProcessInstanceCmd implements Command<ProcessInstanceWithVariables>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class StartProcessInstanceCmd implements Command<ProcessInstanceWithVariables> {
   protected final ProcessInstantiationBuilderImpl instantiationBuilder;
 
   public StartProcessInstanceCmd(ProcessInstantiationBuilderImpl instantiationBuilder) {

@@ -25,9 +25,9 @@ package org.operaton.bpm.engine.batch;
  *   Contains the number of remaining jobs, completed and failed batch
  *   execution jobs. The following relation between these exists:
  *
- *   <code>
+ *   <pre>
  *     batch total jobs = remaining jobs + completed jobs
- *   </code>
+ *   </pre>
  * </p>
  */
 public interface BatchStatistics extends Batch {

@@ -122,7 +122,7 @@ public class CaseTaskImpl extends TaskImpl implements CaseTask {
     caseRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_CASE_REF)
         .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonCaseBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CASE_BINDING)
       .namespace(OPERATON_NS)

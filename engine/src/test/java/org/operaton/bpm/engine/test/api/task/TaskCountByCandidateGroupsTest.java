@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,8 +57,8 @@ class TaskCountByCandidateGroupsTest {
 
   protected String userId = "user";
   protected List<String> tasks = new ArrayList<>();
-  protected List<String> tenants = Arrays.asList("tenant1", "tenant2");
-  protected List<String> groups = Arrays.asList("aGroupId", "anotherGroupId");
+  protected List<String> tenants = List.of("tenant1", "tenant2");
+  protected List<String> groups = List.of("aGroupId", "anotherGroupId");
 
 
   @BeforeEach

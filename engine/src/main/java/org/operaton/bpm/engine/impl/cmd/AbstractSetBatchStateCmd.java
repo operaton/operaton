@@ -45,7 +45,7 @@ public abstract class AbstractSetBatchStateCmd implements Command<Void> {
     BatchManager batchManager = commandContext.getBatchManager();
 
     BatchEntity batch = batchManager.findBatchById(batchId);
-    ensureNotNull(BadUserRequestException.class, "Batch for id '" + batchId + "' cannot be found", "batch", batch);
+    ensureNotNull(BadUserRequestException.class, "Batch for id '%s' cannot be found".formatted(batchId), "batch", batch);
 
     checkAccess(commandContext, batch);
 

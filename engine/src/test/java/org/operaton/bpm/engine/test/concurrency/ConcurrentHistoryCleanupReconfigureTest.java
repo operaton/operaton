@@ -35,6 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * The test covers the following scenario:
  *
+ * <p>
  * 1. An initial Process Engine creates a HistoryCleanupJob.
  * 2. A failure on the HistoryCleanupJob is simulated by setting an exception stack trace.
  * 3. The first Process Engine is started and the HistoryCleanupJob is reconfigured and the thread BLOCKS.
@@ -45,6 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 5.1 It attempts to flush the changes to the DB;
  * 5.2 An OptimisticLockingException is thrown, and the OptimisticLockingListener ignores it.
  * 6. The second Process Engine successfully reconfigures the HistoryCleanupJob.
+ * </p>
  */
 class ConcurrentHistoryCleanupReconfigureTest extends ConcurrencyTestHelper {
 

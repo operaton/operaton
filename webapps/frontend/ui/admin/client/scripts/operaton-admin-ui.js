@@ -50,11 +50,11 @@ export function init(pluginDependencies) {
     filtersModule.name,
     pagesModule.name,
     resourcesModule.name,
-    servicesModule.name
+    servicesModule.name,
   ].concat(
-    pluginDependencies.map(function(el) {
+    pluginDependencies.map(function (el) {
       return el.ngModuleName;
-    })
+    }),
   );
 
   var appNgModule = angular.module(APP_NAME, ngDependencies);
@@ -77,7 +77,7 @@ export function init(pluginDependencies) {
     '$animateProvider',
     '$qProvider',
     '$provide',
-    function(
+    function (
       $routeProvider,
       UriProvider,
       $modalProvider,
@@ -85,7 +85,7 @@ export function init(pluginDependencies) {
       $locationProvider,
       $animateProvider,
       $qProvider,
-      $provide
+      $provide,
     ) {
       translatePaginationCtrls($provide);
       $routeProvider.otherwise({redirectTo: '/'});
@@ -95,7 +95,7 @@ export function init(pluginDependencies) {
       UriProvider.replace('app://', getUri('href'));
       UriProvider.replace(
         'cockpitbase://',
-        getUri('app-root') + '/app/cockpit/'
+        getUri('app-root') + '/app/cockpit/',
       );
       UriProvider.replace('admin://', getUri('admin-api'));
       UriProvider.replace('plugin://', getUri('admin-api') + 'plugin/');
@@ -103,7 +103,7 @@ export function init(pluginDependencies) {
 
       UriProvider.replace(':engine', [
         '$window',
-        function($window) {
+        function ($window) {
           var uri = $window.location.href;
 
           var match = uri.match(/\/app\/admin\/([\w-]+)(|\/)/);
@@ -112,19 +112,19 @@ export function init(pluginDependencies) {
           } else {
             throw new Error('no process engine selected');
           }
-        }
+        },
       ]);
 
       $modalProvider.options = {
         animation: true,
         backdrop: true,
-        keyboard: true
+        keyboard: true,
       };
 
       $tooltipProvider.options({
         animation: true,
         popupDelay: 100,
-        appendToBody: true
+        appendToBody: true,
       });
 
       $locationProvider.hashPrefix('');
@@ -132,15 +132,15 @@ export function init(pluginDependencies) {
       $animateProvider.classNameFilter(/angular-animate/);
 
       $qProvider.errorOnUnhandledRejections(DEV_MODE); // eslint-disable-line
-    }
+    },
   ];
 
   appNgModule.provider(
     'configuration',
     require('./../../../common/scripts/services/cam-configuration')(
       window.camAdminConf,
-      'Admin'
-    )
+      'Admin',
+    ),
   );
 
   appNgModule.config(ModuleConfig);
@@ -148,14 +148,14 @@ export function init(pluginDependencies) {
   require('./../../../common/scripts/services/locales')(
     appNgModule,
     getUri('app-root'),
-    'admin'
+    'admin',
   );
 
   appNgModule.controller('camAdminAppCtrl', [
     '$scope',
     '$route',
     'camAPI',
-    function($scope, $route, camAPI) {
+    function ($scope, $route, camAPI) {
       var userService = camAPI.resource('user');
 
       function getUserProfile(auth) {
@@ -164,14 +164,14 @@ export function init(pluginDependencies) {
           return;
         }
 
-        userService.profile(auth.name, function(err, info) {
+        userService.profile(auth.name, function (err, info) {
           if (!err) {
             $scope.userFullName = info.firstName + ' ' + info.lastName;
           }
         });
       }
 
-      $scope.$on('authentication.changed', function(ev, auth) {
+      $scope.$on('authentication.changed', function (ev, auth) {
         if (auth) {
           getUserProfile(auth);
         } else {
@@ -180,18 +180,18 @@ export function init(pluginDependencies) {
       });
 
       getUserProfile($scope.authentication);
-    }
+    },
   ]);
 
   require('../../../common/scripts/services/plugins/addPlugins')(
     window.camAdminConf,
     appNgModule,
-    'admin'
+    'admin',
   ).then(() => {
-    $(document).ready(function() {
+    $(document).ready(function () {
       angular.bootstrap(document.documentElement, [
         appNgModule.name,
-        'cam.admin.custom'
+        'cam.admin.custom',
       ]);
 
       if (top !== window) {

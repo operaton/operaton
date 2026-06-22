@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-module.exports = function(pluginPoint, scope, appName) {
+module.exports = function (pluginPoint, scope, appName) {
   switch (appName) {
     case 'cockpit':
       return require('./cockpitPassthroughData')(pluginPoint, scope);

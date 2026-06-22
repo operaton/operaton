@@ -24,7 +24,7 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
     id: 'incidents-tab',
     label: 'PLUGIN_INCIDENTS_LABEL',
     template: incidentsTemplate,
-    priority: 15
+    priority: 15,
   });
 };
 

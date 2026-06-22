@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.identity.Picture;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -27,14 +24,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Daniel Meyer
  * @author Tom Baeyens
  */
-public class GetUserPictureCmd implements Command<Picture>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetUserPictureCmd implements Command<Picture> {
   protected String userId;
 
   public GetUserPictureCmd(String userId) {

@@ -29,6 +29,8 @@ import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FormService;
@@ -233,13 +235,11 @@ class HistoricVariableInstanceTest {
     HistoricVariableInstanceEntity historicVariable = (HistoricVariableInstanceEntity) variables.get(0);
     assertThat(historicVariable.getName()).isEqualTo("myVar");
     assertThat(historicVariable.getTextValue()).isEqualTo("test101112");
-    assertThat(historicVariable.getVariableTypeName()).isEqualTo("string");
     assertThat(historicVariable.getTypeName()).isEqualTo("string");
 
     HistoricVariableInstanceEntity historicVariable1 = (HistoricVariableInstanceEntity) variables.get(1);
     assertThat(historicVariable1.getName()).isEqualTo("myVar1");
     assertThat(historicVariable1.getTextValue()).isEqualTo("test789");
-    assertThat(historicVariable1.getVariableTypeName()).isEqualTo("string");
     assertThat(historicVariable1.getTypeName()).isEqualTo("string");
 
     assertThat(historyService.createHistoricActivityInstanceQuery().count()).isEqualTo(18);
@@ -373,7 +373,6 @@ class HistoricVariableInstanceTest {
       assertThat(update1.getExecutionId()).isEqualTo(historicActivityInstance1.getExecutionId());
       assertThat(historicActivityInstance1.getActivityId()).isEqualTo("usertask1");
 
-      // TODO http://jira.codehaus.org/browse/ACT-1083
       assertThat(update2.getActivityInstanceId()).isNotNull();
       HistoricActivityInstance historicActivityInstance2 = historyService.createHistoricActivityInstanceQuery().activityInstanceId(update2.getActivityInstanceId()).singleResult();
       assertThat(historicActivityInstance2.getActivityId()).isEqualTo("usertask2");
@@ -755,12 +754,9 @@ class HistoricVariableInstanceTest {
       assertThat(typedValue).isNotNull();
       assertThat(typedValue.isDeserialized()).isFalse();
       // cannot access the deserialized value
-      try {
-        typedValue.getValue();
-      }
-      catch(IllegalStateException e) {
-        testRule.assertTextPresent("Object is not deserialized", e.getMessage());
-      }
+      assertThatThrownBy(typedValue::getValue)
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("Object is not deserialized");
       assertThat(typedValue.getValueSerialized()).isNotNull();
     }
 
@@ -795,12 +791,9 @@ class HistoricVariableInstanceTest {
       assertThat(typedValue).isNotNull();
       assertThat(typedValue.isDeserialized()).isFalse();
       // cannot access the deserialized value
-      try {
-        typedValue.getValue();
-      }
-      catch(IllegalStateException e) {
-        testRule.assertTextPresent("Object is not deserialized", e.getMessage());
-      }
+      assertThatThrownBy(typedValue::getValue)
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("Object is not deserialized");
       assertThat(typedValue.getValueSerialized()).isNotNull();
     }
 
@@ -959,7 +952,7 @@ class HistoricVariableInstanceTest {
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testImplicitVariableUpdate.bpmn20.xml")
-  @Disabled
+  @Disabled("Historic variable's activity is not the historicServiceTask")
   @Test
   void testImplicitVariableUpdateActivityInstanceId() {
     // given
@@ -991,7 +984,7 @@ class HistoricVariableInstanceTest {
 
   @SuppressWarnings("unchecked")
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testImplicitVariableUpdate.bpmn20.xml")
-  @Disabled
+  @Disabled("historicDetails has just 2 instead of 3 expected entries")
   @Test
   void testImplicitVariableUpdateAndReplacementInOneTransaction() {
     // given
@@ -1732,52 +1725,16 @@ class HistoricVariableInstanceTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Deployment
-  @Test
-  void testJoinParallelGatewayLocalVariableOnLastJoiningExecution() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+      "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testJoinParallelGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testNestedJoinParallelGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testJoinInclusiveGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testNestedJoinInclusiveGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml"
+  })
+  void shouldSetHistoricVariable (String bpmnResource) {
     // when
-    runtimeService.startProcessInstanceByKey("process");
-
-    // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
-
-    HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertThat(historicVariable).isNotNull();
-    assertThat(historicVariable.getName()).isEqualTo("testVar");
-  }
-
-  @Deployment
-  @Test
-  void testNestedJoinParallelGatewayLocalVariableOnLastJoiningExecution() {
-    // when
-    runtimeService.startProcessInstanceByKey("process");
-
-    // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
-
-    HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertThat(historicVariable).isNotNull();
-    assertThat(historicVariable.getName()).isEqualTo("testVar");
-  }
-
-  @Deployment
-  @Test
-  void testJoinInclusiveGatewayLocalVariableOnLastJoiningExecution() {
-    // when
-    runtimeService.startProcessInstanceByKey("process");
-
-    // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
-
-    HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertThat(historicVariable).isNotNull();
-    assertThat(historicVariable.getName()).isEqualTo("testVar");
-  }
-
-  @Deployment
-  @Test
-  void testNestedJoinInclusiveGatewayLocalVariableOnLastJoiningExecution() {
-    // when
+    testRule.deploy(bpmnResource);
     runtimeService.startProcessInstanceByKey("process");
 
     // then

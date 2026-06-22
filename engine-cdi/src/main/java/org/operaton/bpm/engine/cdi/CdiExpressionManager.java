@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.el.VariableScopeElResolver;
 /**
  * {@link ExpressionManager} for resolving Cdi-managed beans.
  *
+ * <p>
  * This {@link ExpressionManager} implementation performs lazy lookup of the
  * Cdi-BeanManager and can thus be configured using the spring-based
  * configuration of the process engine:
@@ -41,6 +42,7 @@ import org.operaton.bpm.engine.impl.el.VariableScopeElResolver;
  *      &lt;bean class="org.operaton.bpm.engine.test.cdi.CdiExpressionManager" /&gt;
  * &lt;/property&gt;
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  */

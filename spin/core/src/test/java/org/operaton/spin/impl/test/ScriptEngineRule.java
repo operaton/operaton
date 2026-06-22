@@ -30,7 +30,9 @@ import org.junit.jupiter.api.extension.TestInstancePostProcessor;
  * A JUnit 5 extension to define and create a {@link ScriptEngine}
  * based on {@literal @}{@link ScriptEngineRule} annotation.
  *
+ * <p>
  * Author: Sebastian Menski
+ * </p>
  */
 public class ScriptEngineRule implements BeforeAllCallback, TestInstancePostProcessor {
 

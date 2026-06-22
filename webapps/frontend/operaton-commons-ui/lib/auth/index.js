@@ -42,21 +42,21 @@ var ngModule = angular.module('cam.commons.auth', [
   commonsUtil.name,
   'pascalprecht.translate',
   'webapps.plugin',
-  'operaton.common.services'
+  'operaton.common.services',
 ]);
 
 ngModule
   .config([
     'ViewsProvider',
     'canonicalAppNameProvider',
-    function(ViewsProvider, {$get: canonicalAppName}) {
+    function (ViewsProvider, {$get: canonicalAppName}) {
       ViewsProvider.registerDefaultView(`${canonicalAppName()}.login`, {
         id: 'default-login-form',
         controller: require('./page/form'),
         template: require('./page/form.html?raw'),
-        priority: 0
+        priority: 0,
       });
-    }
+    },
   ])
   .config(loginPage)
 
@@ -64,11 +64,11 @@ ngModule
   .run([
     '$rootScope',
     '$location',
-    function($rootScope, $location) {
+    function ($rootScope, $location) {
       var preLoginUrl;
 
-      $rootScope.$on('authentication.login.required', function(event) {
-        $rootScope.$evalAsync(function() {
+      $rootScope.$on('authentication.login.required', function (event) {
+        $rootScope.$evalAsync(function () {
           var url = $location.url();
 
           // skip if login is already in progress
@@ -82,8 +82,8 @@ ngModule
         });
       });
 
-      $rootScope.$on('authentication.login.success', function(event) {
-        $rootScope.$evalAsync(function() {
+      $rootScope.$on('authentication.login.success', function (event) {
+        $rootScope.$evalAsync(function () {
           // skip if default got prevented
           if (!event.defaultPrevented) {
             $location.url(preLoginUrl || '/').replace();
@@ -91,7 +91,7 @@ ngModule
           }
         });
       });
-    }
+    },
   ])
 
   // post logout redirect + reload support
@@ -102,16 +102,16 @@ ngModule
     '$timeout',
     'Notifications',
     '$translate',
-    function(
+    function (
       $cacheFactory,
       $rootScope,
       $location,
       $timeout,
       Notifications,
-      $translate
+      $translate,
     ) {
-      $rootScope.$on('authentication.logout.success', function(event) {
-        $rootScope.$evalAsync(function() {
+      $rootScope.$on('authentication.logout.success', function (event) {
+        $rootScope.$evalAsync(function () {
           // skip if default got prevented
           if (!event.defaultPrevented) {
             // clear http cache
@@ -122,8 +122,8 @@ ngModule
 
         // logout is successful - wait for authentication required messages from redirection to dashboard
         // then make an exclusive alert saying that the logout was successful.
-        $timeout(function() {
-          var getDayContext = function() {
+        $timeout(function () {
+          var getDayContext = function () {
             var now = new Date();
             if (now.getDay() >= 5) {
               return 'AUTH_DAY_CONTEXT_WEEKEND';
@@ -149,13 +149,13 @@ ngModule
           Notifications.addMessage({
             status: $translate.instant('AUTH_LOGOUT_SUCCESSFUL'),
             message: $translate.instant('AUTH_LOGOUT_THANKS', {
-              dayContext: $translate.instant(getDayContext())
+              dayContext: $translate.instant(getDayContext()),
             }),
-            exclusive: true
+            exclusive: true,
           });
         });
       });
-    }
+    },
   ])
 
   // notification integration
@@ -164,27 +164,27 @@ ngModule
     'Notifications',
     '$translate',
     'shouldDisplayAuthenticationError',
-    function(
+    function (
       $rootScope,
       Notifications,
       $translate,
-      shouldDisplayAuthenticationError
+      shouldDisplayAuthenticationError,
     ) {
-      $rootScope.$on('authentication.login.required', function() {
+      $rootScope.$on('authentication.login.required', function () {
         if (shouldDisplayAuthenticationError()) {
           Notifications.addError({
             status: $translate.instant('AUTH_FAILED_TO_DISPLAY_RESOURCE'),
             message: $translate.instant('AUTH_AUTHENTICATION_FAILED'),
             http: true,
-            exclusive: ['http']
+            exclusive: ['http'],
           });
         }
       });
-    }
+    },
   ])
 
   // ensure AuthenticationService is bootstraped
-  .run(['AuthenticationService', function() {}])
+  .run(['AuthenticationService', function () {}])
 
   .directive('camIfLoggedIn', ifLoggedInDirective)
   .directive('camIfLoggedOut', ifLoggedOutDirective)

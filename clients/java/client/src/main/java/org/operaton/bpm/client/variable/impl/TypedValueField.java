@@ -53,7 +53,7 @@ public class TypedValueField {
 
   @Override
   public String toString() {
-    return "TypedValueField [type=" + type + ", value=" + value + ", valueInfo=" + valueInfo + "]";
+    return "TypedValueField [type=%s, value=%s, valueInfo=%s]".formatted(type, value, valueInfo);
   }
 
 }

@@ -42,7 +42,7 @@ public class HistoricActivityInstanceResourceImpl implements HistoricActivityIns
       .activityInstanceId(activityInstanceId).singleResult();
 
     if (instance == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Historic activity instance with id '" + activityInstanceId + "' does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Historic activity instance with id '%s' does not exist".formatted(activityInstanceId));
     }
 
     final HistoricActivityInstanceDto historicActivityInstanceDto = new HistoricActivityInstanceDto();

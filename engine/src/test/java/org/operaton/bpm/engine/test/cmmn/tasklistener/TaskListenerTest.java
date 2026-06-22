@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.cmmn.tasklistener;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.test.cmmn.tasklistener.util.NotTaskListener;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.TaskDeleteListener;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -1294,52 +1295,42 @@ class TaskListenerTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDoesNotImplementTaskListenerInterfaceByClass.cmmn"})
   @Test
   void testDoesNotImplementTaskListenerInterfaceByClass() {
+    // given
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey("case");
-    try {
-      caseInstanceBuilder.create();
-      fail("exception expected");
-    } catch (Exception e) {
-      // then
-      Throwable cause = e.getCause();
-      String message = cause.getMessage();
-      testRule.assertTextPresent("NotTaskListener doesn't implement "+TaskListener.class, message);
-    }
 
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .cause()
+      .hasMessageContaining("NotTaskListener doesn't implement "+TaskListener.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testDoesNotImplementTaskListenerInterfaceByDelegateExpression.cmmn"})
   @Test
   void testDoesNotImplementTaskListenerInterfaceByDelegateExpression() {
+    // given
     var caseInstanceBuilder = caseService
           .withCaseDefinitionByKey("case")
           .setVariable("myTaskListener", new NotTaskListener());
-    try {
-      caseInstanceBuilder.create();
-      fail("exception expected");
-    } catch (Exception e) {
-      // then
-      Throwable cause = e.getCause();
-      String message = cause.getMessage();
-      testRule.assertTextPresent("Delegate expression ${myTaskListener} did not resolve to an implementation of interface "+TaskListener.class.getName(), message);
-    }
 
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .cause()
+      .hasMessageContaining("Delegate expression ${myTaskListener} did not resolve to an implementation of interface "+TaskListener.class.getName());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/tasklistener/TaskListenerTest.testTaskListenerDoesNotExist.cmmn"})
   @Test
   void testTaskListenerDoesNotExist() {
+    // given
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey("case");
 
-    try {
-      caseInstanceBuilder.create();
-      fail("exception expected");
-    } catch (Exception e) {
-      // then
-      Throwable cause = e.getCause();
-      String message = cause.getMessage();
-      testRule.assertTextPresent("Exception while instantiating class 'org.operaton.bpm.engine.test.cmmn.tasklistener.util.NotExistingTaskListener'", message);
-    }
-
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .cause()
+      .hasMessageContaining("Exception while instantiating class 'org.operaton.bpm.engine.test.cmmn.tasklistener.util.NotExistingTaskListener'");
   }
 
   @Override

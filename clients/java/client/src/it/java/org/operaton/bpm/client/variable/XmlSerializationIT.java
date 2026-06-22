@@ -43,9 +43,10 @@ import org.operaton.spin.xml.SpinXmlElement;
 import static org.operaton.bpm.client.util.ProcessModels.*;
 import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.XML;
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class XmlSerializationIT {
+class XmlSerializationIT {
 
   protected static final String VARIABLE_NAME_XML = "xmlVariable";
   protected static final String XML_DATAFORMAT_NAME = XML.getName();
@@ -90,7 +91,7 @@ public class XmlSerializationIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
 
@@ -99,7 +100,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldGetDeserializedXml() {
+  void shouldGetDeserializedXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_OBJECT_VALUE);
 
@@ -118,7 +119,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldGetDeserializedXmlNoAnnotation() {
+  void shouldGetDeserializedXmlNoAnnotation() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_NO_ANNOTATION_OBJECT_VALUE);
 
@@ -137,7 +138,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedDeserializedXml() {
+  void shouldGetTypedDeserializedXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_OBJECT_VALUE);
 
@@ -159,7 +160,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedSerializedXml() {
+  void shouldGetTypedSerializedXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_OBJECT_VALUE);
 
@@ -185,7 +186,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldGetXmlAsList() {
+  void shouldGetXmlAsList() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_LIST_OBJECT_VALUE);
 
@@ -206,7 +207,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedDeserializedXmlAsList() {
+  void shouldGetTypedDeserializedXmlAsList() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_LIST_OBJECT_VALUE);
 
@@ -228,7 +229,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedSerializedXmlAsList() {
+  void shouldGetTypedSerializedXmlAsList() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_LIST_OBJECT_VALUE);
 
@@ -257,7 +258,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldFailWhileDeserialization() {
+  void shouldFailWhileDeserialization() {
     // given
     ObjectValue objectValue = Variables.serializedObjectValue(VARIABLE_VALUE_XML_SERIALIZED)
       .objectTypeName(FailingDeserializationBean.class.getName())
@@ -282,7 +283,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldFailWhileDeserializationTypedValue() {
+  void shouldFailWhileDeserializationTypedValue() {
     // given
     ObjectValue objectValue = Variables.serializedObjectValue(VARIABLE_VALUE_XML_SERIALIZED)
       .objectTypeName(FailingDeserializationBean.class.getName())
@@ -306,7 +307,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldStillReturnSerializedXmlWhenDeserializationFails() {
+  void shouldStillReturnSerializedXmlWhenDeserializationFails() {
     // given
     ObjectValue objectValue = Variables.serializedObjectValue(VARIABLE_VALUE_XML_SERIALIZED)
       .objectTypeName(FailingDeserializationBean.class.getName())
@@ -325,12 +326,8 @@ public class XmlSerializationIT {
 
     ExternalTask task = handler.getHandledTasks().get(0);
 
-    try {
-      task.getVariableTyped(VARIABLE_NAME_XML);
-      fail("exception expected");
-    }
-    catch (Exception e) {
-    }
+    assertThatThrownBy(() -> task.getVariableTyped(VARIABLE_NAME_XML))
+      .isInstanceOf(Exception.class);
 
     // However, the serialized value can be accessed
     ObjectValue typedValue = task.getVariableTyped(VARIABLE_NAME_XML, false);
@@ -344,30 +341,18 @@ public class XmlSerializationIT {
     assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getIntProperty()).isEqualTo(Integer.parseInt(serializedValue.childElement("intProperty").textContent()));
 
     // but not the deserialized properties
-    try {
-      typedValue.getValue();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(typedValue::getValue)
+      .isInstanceOf(IllegalStateException.class);
 
-    try {
-      typedValue.getValue(XmlSerializable.class);
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(() -> typedValue.getValue(XmlSerializable.class))
+      .isInstanceOf(IllegalStateException.class);
 
-    try {
-      typedValue.getObjectType();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(typedValue::getObjectType)
+      .isInstanceOf(IllegalStateException.class);
   }
 
   @Test
-  public void shouldFailWhileDeserializationDueToMismatchingTypeName() {
+  void shouldFailWhileDeserializationDueToMismatchingTypeName() {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue(VARIABLE_VALUE_XML_SERIALIZED)
       .serializationDataFormat(XML_DATAFORMAT_NAME)
@@ -391,7 +376,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldFailWhileDeserializationDueToWrongTypeName() {
+  void shouldFailWhileDeserializationDueToWrongTypeName() {
     // given
 
     // not reachable class
@@ -419,7 +404,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNull() {
+  void shouldDeserializeNull() {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(XML_DATAFORMAT_NAME)
@@ -443,7 +428,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullTyped() {
+  void shouldDeserializeNullTyped() {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(XML_DATAFORMAT_NAME)
@@ -470,7 +455,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullWithoutTypeName()  {
+  void shouldDeserializeNullWithoutTypeName()  {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(XML_DATAFORMAT_NAME)
@@ -493,7 +478,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullTypedWithoutTypeName()  {
+  void shouldDeserializeNullTypedWithoutTypeName()  {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(XML_DATAFORMAT_NAME)
@@ -519,7 +504,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shoudSetVariableTyped() {
+  void shoudSetVariableTyped() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -568,7 +553,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shoudSetVariableTypedNoAnnotation() {
+  void shoudSetVariableTypedNoAnnotation() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -617,7 +602,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Null() {
+  void shoudSetVariableTyped_Null() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -664,7 +649,7 @@ public class XmlSerializationIT {
   }
 
   @Test
-  public void shoudSetXmlListVariable() {
+  void shoudSetXmlListVariable() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 

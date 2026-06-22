@@ -47,7 +47,7 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * <p>Ensures authorizations are properly
@@ -87,33 +87,32 @@ class AuthorizationServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(JONNY_2);
 
-    try {
-      // we cannot create another authorization
-      authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(JONNY_2);
-      assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
-    }
+    // when/then
+    // we cannot create another authorization
+    assertThatThrownBy(() -> authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ae = (AuthorizationException) e;
+        assertThat(ae.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ae.getMissingAuthorizations().get(0);
+        assertThat(ae.getUserId()).isEqualTo(JONNY_2);
+        assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
+      });
 
     // circumvent auth check to get new transient object
     Authorization authorization = new AuthorizationEntity(AUTH_TYPE_REVOKE);
     authorization.setUserId("someUserId");
     authorization.setResource(Resources.APPLICATION);
 
-    try {
-      authorizationService.saveAuthorization(authorization);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(JONNY_2);
-      assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ae = (AuthorizationException) e;
+        assertThat(ae.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ae.getMissingAuthorizations().get(0);
+        assertThat(ae.getUserId()).isEqualTo(JONNY_2);
+        assertExceptionInfo(CREATE.getName(), AUTHORIZATION.resourceName(), null, info);
+      });
   }
 
   @Test
@@ -132,17 +131,16 @@ class AuthorizationServiceAuthorizationsTest {
     identityService.setAuthenticatedUserId(JONNY_2);
     var basePermsId = basePerms.getId();
 
-    try {
-      // try to delete authorization
-      authorizationService.deleteAuthorization(basePermsId);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(JONNY_2);
-      assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.deleteAuthorization(basePermsId))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ae = (AuthorizationException) e;
+        assertThat(ae.getUserId()).isEqualTo(JONNY_2);
+        assertThat(ae.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ae.getMissingAuthorizations().get(0);
+        assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
+      });
   }
 
   @Test
@@ -164,17 +162,18 @@ class AuthorizationServiceAuthorizationsTest {
     basePerms = authorizationService.createAuthorizationQuery().singleResult();
     // make some change to the perms
     basePerms.addPermission(ALL);
+    Authorization finalBasePerms = basePerms;
 
-    try {
-      authorizationService.saveAuthorization(basePerms);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(JONNY_2);
-      assertExceptionInfo(UPDATE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(finalBasePerms))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ae = (AuthorizationException) e;
+        assertThat(ae.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ae.getMissingAuthorizations().get(0);
+        assertThat(ae.getUserId()).isEqualTo(JONNY_2);
+        assertExceptionInfo(UPDATE.getName(), AUTHORIZATION.resourceName(), finalBasePerms.getId(), info);
+      });
 
     // but we can create a new auth
     Authorization newAuth = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
@@ -221,29 +220,21 @@ class AuthorizationServiceAuthorizationsTest {
 
     processEngineConfiguration.setAuthorizationEnabled(true);
 
-    try {
-      // when
-      authorizationService.saveAuthorization(authorization);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("The resource type with id:'0' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type with id:'0' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
 
     // given
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId("userId");
-    authorization.addPermission(Permissions.ACCESS);
-    authorization.setResource(Resources.BATCH);
+    Authorization authorization2 = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
+    authorization2.setUserId("userId");
+    authorization2.addPermission(Permissions.ACCESS);
+    authorization2.setResource(Resources.BATCH);
 
-    try {
-      // when
-      authorizationService.saveAuthorization(authorization);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("The resource type with id:'13' is not valid for 'ACCESS' permission.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type with id:'13' is not valid for 'ACCESS' permission.");
   }
 
   @Test
@@ -257,14 +248,10 @@ class AuthorizationServiceAuthorizationsTest {
 
     processEngineConfiguration.setAuthorizationEnabled(true);
 
-    try {
-      // when
-      authorizationService.saveAuthorization(authorization);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
   }
 
   @Test
@@ -278,29 +265,21 @@ class AuthorizationServiceAuthorizationsTest {
 
     processEngineConfiguration.setAuthorizationEnabled(true);
 
-    try {
-      // when
-      authorizationService.saveAuthorization(authorization);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
 
     // given
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
-    authorization.setUserId("userId");
-    authorization.addPermission(Permissions.ACCESS);
-    authorization.setResource(Resources.PROCESS_DEFINITION);
+    Authorization authorization2 = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
+    authorization2.setUserId("userId");
+    authorization2.addPermission(Permissions.ACCESS);
+    authorization2.setResource(Resources.PROCESS_DEFINITION);
 
-    try {
-      // when
-      authorizationService.saveAuthorization(authorization);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("The resource type with id:'6' is not valid for 'ACCESS' permission.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type with id:'6' is not valid for 'ACCESS' permission.");
   }
 
   @Test
@@ -314,29 +293,21 @@ class AuthorizationServiceAuthorizationsTest {
 
     processEngineConfiguration.setAuthorizationEnabled(true);
 
-    try {
-      // when
-      authorizationService.saveAuthorization(authorization);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("The resource type with id:'8' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type with id:'8' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
 
     // given
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId("userId");
-    authorization.setPermissions(new Permissions[] { Permissions.CREATE, Permissions.ACCESS });
-    authorization.setResource(Resources.PROCESS_INSTANCE);
+    Authorization authorization2 = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
+    authorization2.setUserId("userId");
+    authorization2.setPermissions(new Permissions[] { Permissions.CREATE, Permissions.ACCESS });
+    authorization2.setResource(Resources.PROCESS_INSTANCE);
 
-    try {
-      // when
-      authorizationService.saveAuthorization(authorization);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("The resource type with id:'8' is not valid for 'ACCESS' permission.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type with id:'8' is not valid for 'ACCESS' permission.");
   }
 
   @Test
@@ -382,27 +353,18 @@ class AuthorizationServiceAuthorizationsTest {
     assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isFalse();
     assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isFalse();
     assertThat(authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.PROCESS_INSTANCE)).isFalse();
-    try {
-      authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.APPLICATION);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
-      assertThat(e.getMessage()).contains(BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES.getName());
-    }
-    try {
-      authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.APPLICATION);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
-      assertThat(e.getMessage()).contains(ProcessDefinitionPermissions.RETRY_JOB.getName());
-    }
-    try {
-      authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.APPLICATION);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("The resource type 'Application' is not valid");
-      assertThat(e.getMessage()).contains(ProcessInstancePermissions.RETRY_JOB.getName());
-    }
+
+    assertThatThrownBy(() -> authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.APPLICATION))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type 'Application' is not valid", BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES.getName());
+
+    assertThatThrownBy(() -> authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.APPLICATION))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type 'Application' is not valid", ProcessDefinitionPermissions.RETRY_JOB.getName());
+
+    assertThatThrownBy(() -> authorizationService.isUserAuthorized(userId, null, ProcessInstancePermissions.RETRY_JOB, Resources.APPLICATION))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type 'Application' is not valid", ProcessInstancePermissions.RETRY_JOB.getName());
 
   }
 
@@ -426,13 +388,10 @@ class AuthorizationServiceAuthorizationsTest {
     assertThat(authorizationService.isUserAuthorized(userId, null, BatchPermissions.CREATE_BATCH_MIGRATE_PROCESS_INSTANCES, Resources.BATCH)).isFalse();
     assertThat(authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_DEFINITION)).isFalse();
     assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, Resources.APPLICATION)).isFalse();
-    try {
-      authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_INSTANCE);
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("The resource type 'ProcessInstance' is not valid");
-      assertThat(e.getMessage()).contains(ProcessDefinitionPermissions.RETRY_JOB.getName());
-    }
+
+    assertThatThrownBy(() -> authorizationService.isUserAuthorized(userId, null, ProcessDefinitionPermissions.RETRY_JOB, Resources.PROCESS_INSTANCE))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The resource type 'ProcessInstance' is not valid", ProcessDefinitionPermissions.RETRY_JOB.getName());
   }
 
   @Test
@@ -459,7 +418,7 @@ class AuthorizationServiceAuthorizationsTest {
     }
   }
 
-  class ResourceImpl implements Resource {
+  static class ResourceImpl implements Resource {
 
     String resourceName;
     int resourceType;

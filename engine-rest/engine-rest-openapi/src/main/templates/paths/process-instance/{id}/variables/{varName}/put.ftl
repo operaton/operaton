@@ -59,10 +59,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 The variable value or type is invalid, for example if the value could not be parsed to an Integer value or
                 the passed variable type is not supported."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

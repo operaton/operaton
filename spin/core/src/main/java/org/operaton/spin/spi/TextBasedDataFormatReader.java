@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.regex.Pattern;
 
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 
 /**
@@ -31,7 +30,7 @@ import org.operaton.spin.impl.logging.SpinLogger;
  */
 public abstract class TextBasedDataFormatReader implements DataFormatReader {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   @Override
   public boolean canRead(Reader input, int readLimit) {

@@ -63,17 +63,15 @@ public class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd {
     PvmActivity activity = processDefinition.findActivity(activityId);
 
     EnsureUtil.ensureNotNull(NotValidException.class,
-        describeFailure("Activity '" + activityId + "' does not exist"),
+        describeFailure("Activity '%s' does not exist".formatted(activityId)),
         "activity",
         activity);
 
     if (activity.getOutgoingTransitions().isEmpty()) {
-      throw new ProcessEngineException("Cannot start after activity " + activityId + "; activity "
-          + "has no outgoing sequence flow to take");
+      throw new ProcessEngineException("Cannot start after activity %s; activity has no outgoing sequence flow to take".formatted(activityId));
     }
     else if (activity.getOutgoingTransitions().size() > 1) {
-      throw new ProcessEngineException("Cannot start after activity " + activityId + "; "
-          + "activity has more than one outgoing sequence flow");
+      throw new ProcessEngineException("Cannot start after activity %s; activity has more than one outgoing sequence flow".formatted(activityId));
     }
 
     return (TransitionImpl) activity.getOutgoingTransitions().get(0);

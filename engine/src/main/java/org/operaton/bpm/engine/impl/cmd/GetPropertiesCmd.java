@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +25,10 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetPropertiesCmd implements Command<Map<String, String>>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class GetPropertiesCmd implements Command<Map<String, String>> {
   @Override
   @SuppressWarnings("unchecked")
   public Map<String, String> execute(CommandContext commandContext) {

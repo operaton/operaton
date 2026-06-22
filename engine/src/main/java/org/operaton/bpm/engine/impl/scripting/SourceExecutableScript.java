@@ -69,7 +69,7 @@ public class SourceExecutableScript extends CompiledExecutableScript {
           throw bpmnError;
         }
         String activityIdMessage = getActivityIdExceptionMessage(variableScope);
-        throw new ScriptEvaluationException("Unable to evaluate script" + activityIdMessage + ":" + e.getMessage(), e);
+        throw new ScriptEvaluationException("Unable to evaluate script%s: %s".formatted(activityIdMessage, e.getMessage()), e);
       }
     }
   }
@@ -108,7 +108,7 @@ public class SourceExecutableScript extends CompiledExecutableScript {
         return compiledScript;
 
       } catch (ScriptException e) {
-        throw new ScriptCompilationException("Unable to compile script: " + e.getMessage(), e);
+        throw new ScriptCompilationException("Unable to compile script: %s".formatted(e.getMessage()), e);
 
       }
 

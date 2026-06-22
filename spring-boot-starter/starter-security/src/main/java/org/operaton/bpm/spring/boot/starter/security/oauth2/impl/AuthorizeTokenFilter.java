@@ -84,6 +84,7 @@ public class AuthorizeTokenFilter extends OncePerRequestFilter {
     try {
       request.getSession().invalidate();
     } catch (Exception ignored) {
+      // ignore
     }
   }
 

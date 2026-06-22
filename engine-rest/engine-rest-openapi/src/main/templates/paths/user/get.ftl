@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getUsers"
       tag = "User"
-      summary = "Get List"
+      summary = "List Users"
       desc = "Query for a list of users using a list of parameters.
               The size of the result set can be retrieved by using the Get User Count method.
               [Get User Count](${docsUrl}/reference/rest/user/get-query-count/) method." />
@@ -50,11 +50,12 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid, for example if a `sortOrder` parameter is supplied,
                 but no `sortBy`, or if an invalid operator for variable comparison is used. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

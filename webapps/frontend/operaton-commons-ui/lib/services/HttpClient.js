@@ -27,13 +27,13 @@ module.exports = [
   '$cookies',
   'configuration',
   'ifUnauthorizedForwardToWelcomeApp',
-  function(
+  function (
     $rootScope,
     $timeout,
     $q,
     $cookies,
     configuration,
-    ifUnauthorizedForwardToWelcomeApp
+    ifUnauthorizedForwardToWelcomeApp,
   ) {
     function setHeaders(options) {
       var headers = (options.headers = options.headers || {});
@@ -50,9 +50,9 @@ module.exports = [
 
     angular.forEach(
       ['post', 'get', 'load', 'put', 'del', 'options', 'head'],
-      function(name) {
-        AngularClient.prototype[name] = function(path, options) {
-          var myTimeout = $timeout(function() {}, 100000);
+      function (name) {
+        AngularClient.prototype[name] = function (path, options) {
+          var myTimeout = $timeout(function () {}, 100000);
 
           setHeaders(options);
 
@@ -60,7 +60,7 @@ module.exports = [
             ? options.done
             : angular.noop;
 
-          options.done = function(err, result, headers) {
+          options.done = function (err, result, headers) {
             function applyResponse() {
               ifUnauthorizedForwardToWelcomeApp(headers);
 
@@ -91,15 +91,15 @@ module.exports = [
 
           return $q.when(this._wrapped[name](path, options));
         };
-      }
+      },
     );
 
-    angular.forEach(['on', 'once', 'off', 'trigger'], function(name) {
-      AngularClient.prototype[name] = function() {
+    angular.forEach(['on', 'once', 'off', 'trigger'], function (name) {
+      AngularClient.prototype[name] = function () {
         this._wrapped[name].apply(this, arguments);
       };
     });
 
     return AngularClient;
-  }
+  },
 ];

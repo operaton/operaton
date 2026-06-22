@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.standalone.db;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +48,7 @@ class SchemaLogTest {
   protected static final String BASE_PATH = "org/operaton/bpm/engine/db";
   protected static final String CREATE_SCRIPT_FOLDER = BASE_PATH + "/create";
   protected static final String UPGRADE_SCRIPT_FOLDER = BASE_PATH + "/upgrade";
-  protected static final List<String> SCRIPT_FOLDERS = Arrays.asList(CREATE_SCRIPT_FOLDER, UPGRADE_SCRIPT_FOLDER);
+  protected static final List<String> SCRIPT_FOLDERS = List.of(CREATE_SCRIPT_FOLDER, UPGRADE_SCRIPT_FOLDER);
   protected static final String[] DATABASES = DbSqlSessionFactory.SUPPORTED_DATABASES;
 
   @RegisterExtension

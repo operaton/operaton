@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +37,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 /**
  * <p>Tests the deployment from two threads simultaneously.</p>
@@ -63,7 +66,7 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
    * @see <a href="https://app.camunda.com/jira/browse/CAM-2128">https://app.camunda.com/jira/browse/CAM-2128</a>
    */
   @Test
-  void testDuplicateFiltering() throws Exception {
+  void testDuplicateFiltering() {
 
     deployOnTwoConcurrentThreads(
         createDeploymentBuilder().enableDuplicateFiltering(false),
@@ -76,7 +79,7 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
   }
 
   @Test
-  void testVersioning() throws Exception {
+  void testVersioning() {
 
     deployOnTwoConcurrentThreads(
         createDeploymentBuilder(),
@@ -101,7 +104,7 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
         .addString("foo.bpmn", processResource);
   }
 
-  protected void deployOnTwoConcurrentThreads(DeploymentBuilder deploymentOne, DeploymentBuilder deploymentTwo) throws InterruptedException {
+  protected void deployOnTwoConcurrentThreads(DeploymentBuilder deploymentOne, DeploymentBuilder deploymentTwo) {
     assertThat(deploymentOne)
         .as("you can not use the same deployment builder for both deployments")
         .isNotEqualTo(deploymentTwo);
@@ -112,6 +115,9 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
     thread1 = executeControllableCommand(new ControllableDeployCommand(deploymentOne));
     thread1.reportInterrupts();
     thread1.waitForSync();
+
+    // prepare a latch to detect when thread2 actually attempts the deploy (acquire lock)
+    CountDownLatch thread2AttemptLatch = new CountDownLatch(1);
 
     thread2 = executeControllableCommand(new ControllableDeployCommand(deploymentTwo));
     thread2.reportInterrupts();
@@ -124,10 +130,15 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
 
     // STEP 3: make Thread 2 continue
     // -> it will attempt to acquire the exclusive lock and block on the lock
+    // restart thread2 but attach the latch so it signals when it attempts to deploy
+    // replace the previously created thread2 with one that notifies via latch
+    thread2 = executeControllableCommand(new ControllableDeployCommand(deploymentTwo, thread2AttemptLatch));
+    thread2.reportInterrupts();
+    thread2.waitForSync();
     thread2.makeContinue();
 
-    // wait for 2 seconds (Thread 2 is blocked on the lock)
-    Thread.sleep(2000);
+    // wait until thread2 tried to enter the deploy (i.e. attempted to acquire the lock)
+    await().atMost(2, TimeUnit.SECONDS).until(() -> thread2AttemptLatch.getCount() == 0);
 
     // STEP 4: allow Thread 1 to terminate
     // -> Thread 1 will commit and release the lock
@@ -151,14 +162,25 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
   protected static class ControllableDeployCommand extends ControllableCommand<Void> {
 
     private final DeploymentBuilder deploymentBuilder;
+    private final CountDownLatch preDeployLatch;
 
     public ControllableDeployCommand(DeploymentBuilder deploymentBuilder) {
+      this(deploymentBuilder, null);
+    }
+
+    public ControllableDeployCommand(DeploymentBuilder deploymentBuilder, CountDownLatch preDeployLatch) {
       this.deploymentBuilder = deploymentBuilder;
+      this.preDeployLatch = preDeployLatch;
     }
 
     @Override
     public Void execute(CommandContext commandContext) {
       monitor.sync();  // thread will block here until makeContinue() is called from main thread
+
+      // signal that this thread is about to enter the deploy command (attempt to acquire DB lock)
+      if (preDeployLatch != null) {
+        preDeployLatch.countDown();
+      }
 
       new DeployCmd((DeploymentBuilderImpl) deploymentBuilder).execute(commandContext);
 

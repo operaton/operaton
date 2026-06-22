@@ -31,7 +31,7 @@ module.exports = [
   'memberId',
   'idList',
   '$translate',
-  function(
+  function (
     $scope,
     $q,
     $location,
@@ -42,7 +42,7 @@ module.exports = [
     member,
     memberId,
     idList,
-    $translate
+    $translate,
   ) {
     var GroupResource = camAPI.resource('group');
 
@@ -56,14 +56,14 @@ module.exports = [
     $scope.groupIdList = idList;
     $scope.userId = memberId;
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       $modalInstance.close($scope.status);
     });
 
     var pages = ($scope.pages = {current: 1, size: 50, total: 0});
     var selectedGroups = [];
 
-    GroupResource.count().then(function(res) {
+    GroupResource.count().then(function (res) {
       pages.total = res.count;
     });
 
@@ -75,17 +75,17 @@ module.exports = [
           {},
           {
             maxResults: pages.size,
-            firstResult: (pages.current - 1) * pages.size
+            firstResult: (pages.current - 1) * pages.size,
           },
-          sorting
+          sorting,
         ),
-        function(err, res) {
+        function (err, res) {
           if (err === null) {
             deferred.resolve(res);
           } else {
             deferred.reject(err.data);
           }
-        }
+        },
       );
 
       return deferred.promise;
@@ -93,23 +93,23 @@ module.exports = [
 
     var sorting = ($scope.sorting = {});
 
-    $scope.onSortingChanged = function(_sorting) {
+    $scope.onSortingChanged = function (_sorting) {
       sorting = $scope.sorting = $scope.sorting || {};
       sorting.sortBy = _sorting.sortBy;
       sorting.sortOrder = _sorting.sortOrder;
       filterGroups();
     };
 
-    $scope.onPaginationChange = function() {
+    $scope.onPaginationChange = function () {
       filterGroups();
     };
 
-    var filterGroups = function() {
+    var filterGroups = function () {
       $q.all([loadAllGroups()]).then(
-        function(results) {
+        function (results) {
           var availableGroups = results[0];
           $scope.availableGroups = [];
-          angular.forEach(availableGroups, function(group) {
+          angular.forEach(availableGroups, function (group) {
             if ($scope.groupIdList.indexOf(group.id) == -1) {
               if (selectedGroups.indexOf(group.id) !== -1) {
                 group.checked = true;
@@ -120,21 +120,21 @@ module.exports = [
 
           $scope.status = BEFORE_CREATE;
         },
-        function(error) {
+        function (error) {
           $scope.status = LOADING_FAILED;
           Notifications.addError({
             status: 'Failed',
             message: $translate.instant('GROUP_MEMBERSHIP_CREATE_LOAD_FAILED', {
-              message: error.message
+              message: error.message,
             }),
-            exclusive: ['type']
+            exclusive: ['type'],
           });
-        }
+        },
       );
     };
     filterGroups();
 
-    $scope.selectGroup = function(group) {
+    $scope.selectGroup = function (group) {
       var index = selectedGroups.indexOf(group.id);
 
       if (index === -1) {
@@ -144,15 +144,15 @@ module.exports = [
       }
     };
 
-    $scope.createGroupMemberships = function() {
+    $scope.createGroupMemberships = function () {
       $scope.status = PERFORM_CREATE;
 
       var completeCount = 0;
       var deferred = $q.defer();
-      angular.forEach(selectedGroups, function(groupId) {
+      angular.forEach(selectedGroups, function (groupId) {
         GroupResource.createMember(
           {id: groupId, userId: $scope.userId},
-          function(err) {
+          function (err) {
             completeCount++;
             if (err === null) {
               if (completeCount == selectedGroups.length) {
@@ -163,30 +163,30 @@ module.exports = [
                 deferred.reject(err);
               }
             }
-          }
+          },
         );
       });
 
       deferred.promise.then(
-        function() {
+        function () {
           $scope.status = CREATE_SUCCESS;
         },
-        function(error) {
+        function (error) {
           $scope.status = CREATE_FAILED;
           Notifications.addError({
             status: 'Failed',
             message: $translate.instant(
               'GROUP_MEMBERSHIP_CREATE_CREATE_FAILED',
-              {message: error.message}
+              {message: error.message},
             ),
-            exclusive: ['type']
+            exclusive: ['type'],
           });
-        }
+        },
       );
     };
 
-    $scope.close = function(status) {
+    $scope.close = function (status) {
       $modalInstance.close(status);
     };
-  }
+  },
 ];

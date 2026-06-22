@@ -29,12 +29,12 @@ function escapeHtml(html) {
 module.exports = [
   '$filter',
   '$timeout',
-  function($filter, $timeout) {
+  function ($filter, $timeout) {
     return {
       notifications: [],
       consumers: [],
 
-      addError: function(error) {
+      addError: function (error) {
         if (!error.type) {
           error.type = 'danger';
         }
@@ -42,7 +42,7 @@ module.exports = [
         this.add(error);
       },
 
-      addMessage: function(message) {
+      addMessage: function (message) {
         if (!message.type) {
           message.type = 'info';
         }
@@ -64,7 +64,7 @@ module.exports = [
        * @param notification {notification}
        * @returns {undefined}
        */
-      add: function(notification) {
+      add: function (notification) {
         var self = this,
           notifications = this.notifications,
           consumers = this.consumers,
@@ -80,7 +80,7 @@ module.exports = [
             this.clearAll();
           } else {
             var filter = {};
-            angular.forEach(exclusive, function(key) {
+            angular.forEach(exclusive, function (key) {
               filter[key] = notification[key];
             });
 
@@ -98,7 +98,7 @@ module.exports = [
         }
 
         if (notification.duration) {
-          $timeout(function() {
+          $timeout(function () {
             if (notification.scope) {
               delete notification.scope;
             }
@@ -107,7 +107,7 @@ module.exports = [
         }
 
         if (notification.scope) {
-          notification.scope.$on('$destroy', function() {
+          notification.scope.$on('$destroy', function () {
             // remove the scope from the notification object to resolve circular dependency
             // when clearing the notification
             delete notification.scope;
@@ -116,7 +116,7 @@ module.exports = [
         }
       },
 
-      clear: function(notification) {
+      clear: function (notification) {
         var notifications = this.notifications,
           consumers = this.consumers,
           removeCandidates = [];
@@ -128,18 +128,18 @@ module.exports = [
         removeCandidates = $filter('filter')(notifications, notification);
         removeCandidates.push(notification);
 
-        angular.forEach(removeCandidates, function(e) {
+        angular.forEach(removeCandidates, function (e) {
           var idx = notifications.indexOf(e);
           if (idx != -1) {
             notifications.splice(idx, 1);
           }
 
-          angular.forEach(consumers, function(consumer) {
+          angular.forEach(consumers, function (consumer) {
             consumer.remove(e);
           });
         });
       },
-      clearAll: function() {
+      clearAll: function () {
         var notifications = this.notifications;
 
         while (notifications.length) {
@@ -148,18 +148,18 @@ module.exports = [
         }
       },
 
-      registerConsumer: function(consumer) {
+      registerConsumer: function (consumer) {
         this.consumers.push(consumer);
       },
 
-      unregisterConsumer: function(consumer) {
+      unregisterConsumer: function (consumer) {
         var consumers = this.consumers,
           idx = consumers.indexOf(consumer);
 
         if (idx != -1) {
           consumers.splice(idx, 1);
         }
-      }
+      },
     };
-  }
+  },
 ];

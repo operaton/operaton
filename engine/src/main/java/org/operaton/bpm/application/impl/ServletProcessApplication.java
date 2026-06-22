@@ -48,7 +48,9 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  * // empty implementation
  * }
  * </pre>
+ * </p>
  *
+ * <p>
  * This, in combination with a <code>META-INF/processes.xml</code> file is
  * sufficient for making sure that the process application class is picked up at
  * runtime.

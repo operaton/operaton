@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "getDecisionDefinitionsCount"
       tag = "Decision Definition"
-      summary = "Get List Count"
+      summary = "Count Decision Definitions"
       desc = "Requests the number of decision definitions that fulfill the query criteria.
               Takes the same filtering parameters as the
               [Get Decision Definition](${docsUrl}/reference/rest/decision-definition/get-query/) method." />
@@ -34,9 +34,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

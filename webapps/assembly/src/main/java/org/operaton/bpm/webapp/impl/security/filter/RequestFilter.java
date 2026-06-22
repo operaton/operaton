@@ -28,8 +28,10 @@ import java.util.regex.Pattern;
  *
  * Example uris:
  *
+ * <p>
  * <code>/some/url/{param1}/{param2}/{param3:.*}</code>
  * <code>/some/url/{param1:foo}/.*</code>
+ * </p>
  *
  * @author Daniel Meyer
  * @author nico.rehwaldt
@@ -115,12 +117,12 @@ public class RequestFilter {
 
         String[] groupSplit = groupStr.split(":");
         if (groupSplit.length > 2) {
-          throw new IllegalArgumentException("cannot parse uri part " + regex + " in " + pattern + ": expected {asdf(:pattern)}");
+          throw new IllegalArgumentException("cannot parse uri part %s in %s: expected {asdf(:pattern)}".formatted(regex, pattern));
         }
 
         group = groupSplit[0];
         if (groupSplit.length > 1) {
-          regex = "(" + groupSplit[1] + ")";
+          regex = "(%s)".formatted(groupSplit[1]);
         } else {
           regex = "([^/]+)";
         }

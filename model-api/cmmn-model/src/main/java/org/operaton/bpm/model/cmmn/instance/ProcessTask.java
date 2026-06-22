@@ -34,7 +34,7 @@ public interface ProcessTask extends Task {
 
   Collection<ParameterMapping> getParameterMappings();
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonProcessBinding();
 

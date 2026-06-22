@@ -29,6 +29,9 @@ public interface HumanTask extends Task {
 
   void setPerformer(Role performerRef);
 
+  /**
+   * @deprecated since 1.0, use {@link #getPlanningTable()} instead, which returns a single PlanningTable.
+   */
   @Deprecated(since = "1.0")
   Collection<PlanningTable> getPlanningTables();
 
@@ -36,7 +39,7 @@ public interface HumanTask extends Task {
 
   void setPlanningTable(PlanningTable planningTable);
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonAssignee();
 

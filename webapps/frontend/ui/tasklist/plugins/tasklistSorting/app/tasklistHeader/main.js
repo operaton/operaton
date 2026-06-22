@@ -25,7 +25,7 @@ var angular = require('angular'),
 
 var ngModule = angular.module(
   'tasklist.plugin.tasklistSorting.tasklistHeader',
-  []
+  [],
 );
 ngModule.directive('camSortingChoices', camTasklistSortingChoices);
 ngModule.directive('camSortingDropdown', camTasklistSortingDropdown);

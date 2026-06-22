@@ -91,6 +91,10 @@ public interface ModificationBuilder extends InstantiationBuilder<ModificationBu
   /**
    * Execute the modification synchronously.
    *
+   * @deprecated In production code, use {@link #executeAsync()} instead to execute the modification as a batch operation,
+   *             which is more suitable for operations affecting large numbers of instances.
+   *             In test code, calling synchronously is acceptable.
+   *
    * @throws AuthorizationException
    *   if the user has not all of the following permissions
    *   <ul>
@@ -100,9 +104,9 @@ public interface ModificationBuilder extends InstantiationBuilder<ModificationBu
    *   When the affected instances count exceeds the maximum results limit. A maximum results
    *   limit can be specified with the process engine configuration property
    *   <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
-   *   Please use  the batch operation {@link #executeAsync()} instead.
+   *
    */
-  @Deprecated (forRemoval = true, since = "1.0")
+  @Deprecated (since = "1.0")
   void execute();
 
   /**

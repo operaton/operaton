@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -31,10 +28,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-public abstract class AbstractExecuteFilterCmd implements Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public abstract class AbstractExecuteFilterCmd {
   protected String filterId;
   protected Query<?, ?> extendingQuery;
 
@@ -53,7 +47,7 @@ public abstract class AbstractExecuteFilterCmd implements Serializable {
       .getFilterManager()
       .findFilterById(filterId);
 
-    ensureNotNull("No filter found for id '" + filterId + "'", "filter", filter);
+    ensureNotNull("No filter found for id '%s'".formatted(filterId), "filter", filter);
 
     if (extendingQuery != null) {
       ((AbstractQuery<?, ?>) extendingQuery).validate();

@@ -26,10 +26,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Not found
                 Historic process instance with given id does not exist.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#parse-exceptions) for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

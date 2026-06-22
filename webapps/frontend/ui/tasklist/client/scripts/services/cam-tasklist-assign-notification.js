@@ -20,10 +20,10 @@ module.exports = [
   'camAPI',
   'Notifications',
   '$translate',
-  function(camAPI, Notifications, $translate) {
+  function (camAPI, Notifications, $translate) {
     var Task = camAPI.resource('task');
 
-    var escapeHtml = function(html) {
+    var escapeHtml = function (html) {
       var text = document.createTextNode(html);
       var div = document.createElement('div');
       div.appendChild(text);
@@ -38,14 +38,14 @@ module.exports = [
      * @param {String} [params.processInstanceId]     The ID of the process instance.
      * @param {String} [params.caseInstanceId]        The ID of the case instance.
      */
-    return function(params) {
+    return function (params) {
       if (
         !params.assignee ||
         !(params.processInstanceId || params.caseInstanceId)
       ) {
         return;
       }
-      Task.list(params, function(err, data) {
+      Task.list(params, function (err, data) {
         if (data._embedded.task.length > 0) {
           var msg = '';
           for (var task, i = 0; (task = data._embedded.task[i]); i++) {
@@ -59,19 +59,19 @@ module.exports = [
           $translate(
             params.processInstanceId
               ? 'ASSIGN_NOTE_PROCESS'
-              : 'ASSIGN_NOTE_CASE'
+              : 'ASSIGN_NOTE_CASE',
           )
-            .then(function(translated) {
+            .then(function (translated) {
               Notifications.addMessage({
                 duration: 16000,
                 status: translated,
                 unsafe: true,
-                message: msg.slice(0, -2)
+                message: msg.slice(0, -2),
               });
             })
-            .catch(function() {});
+            .catch(function () {});
         }
       });
     };
-  }
+  },
 ];

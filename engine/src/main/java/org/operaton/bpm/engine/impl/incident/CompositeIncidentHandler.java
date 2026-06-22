@@ -88,7 +88,7 @@ public class CompositeIncidentHandler implements IncidentHandler {
     String incidentHandlerType = getIncidentHandlerType();
     if (!incidentHandlerType.equals(incidentHandler.getIncidentHandlerType())) {
       throw new ProcessEngineException(
-          "Incorrect incident type handler in composite handler with type: " + incidentHandlerType);
+          "Incorrect incident type handler in composite handler with type: %s".formatted(incidentHandlerType));
     }
     this.incidentHandlers.add(incidentHandler);
   }

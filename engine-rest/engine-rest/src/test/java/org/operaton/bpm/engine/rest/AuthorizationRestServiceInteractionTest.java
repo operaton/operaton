@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -613,7 +612,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
     Map<String, Object> jsonBody = new HashMap<>();
 
     jsonBody.put("type", Authorization.AUTH_TYPE_GRANT);
-    jsonBody.put("permissions", Arrays.asList(Permissions.READ_INSTANCE.name()));
+    jsonBody.put("permissions", List.of(Permissions.READ_INSTANCE.name()));
     jsonBody.put("userId", MockProvider.EXAMPLE_USER_ID + ","+MockProvider.EXAMPLE_USER_ID2);
     jsonBody.put("groupId", MockProvider.EXAMPLE_GROUP_ID+","+MockProvider.EXAMPLE_GROUP_ID2);
     jsonBody.put("resourceType", Resources.TASK.resourceType());
@@ -813,7 +812,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
     Map<String, Object> jsonBody = new HashMap<>();
 
-    jsonBody.put("permissions", Arrays.asList(Permissions.TASK_WORK.name()));
+    jsonBody.put("permissions", List.of(Permissions.TASK_WORK.name()));
     jsonBody.put("userId", MockProvider.EXAMPLE_USER_ID + ","+MockProvider.EXAMPLE_USER_ID2);
     jsonBody.put("groupId", MockProvider.EXAMPLE_GROUP_ID+","+MockProvider.EXAMPLE_GROUP_ID2);
     jsonBody.put("resourceType", Resources.PROCESS_INSTANCE.resourceType());
@@ -884,7 +883,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
   @Test
   void testAuthenticationRestServiceOptions() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
 
@@ -913,7 +912,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
   @Test
   void testAuthenticationRestServiceOptionsWithAuthorizationDisabled() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 
@@ -941,7 +940,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
   @Test
   void testAuthorizationResourceOptions() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
 
@@ -979,7 +978,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
   @Test
   void testAuthorizationResourceOptionsUnauthorized() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
 
@@ -1018,7 +1017,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
   @Test
   void testAuthorizationResourceOptionsUpdateUnauthorized() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
 
     Authorization authorization = MockProvider.createMockGlobalAuthorization();
 
@@ -1060,7 +1059,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
   @Test
   void testAuthorizationResourceOptionsWithAuthorizationDisabled() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + AuthorizationRestService.PATH + "/" + MockProvider.EXAMPLE_AUTHORIZATION_ID;
 
     when(processEngine.getProcessEngineConfiguration().isAuthorizationEnabled()).thenReturn(false);
 

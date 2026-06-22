@@ -138,6 +138,9 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
         }
 
       }
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw LOG.shellExecutionException(e);
     } catch (Exception e) {
       throw LOG.shellExecutionException(e);
     }

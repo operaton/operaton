@@ -19,26 +19,26 @@
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.navigation', {
       id: 'reports',
       label: 'COCKPIT_REPORTS',
       pagePath: '#/reports',
       template: '<!-- nothing to show, but needed -->',
-      controller: function() {},
+      controller: function () {},
       access: [
         'Views',
-        function(Views) {
-          return function(cb) {
+        function (Views) {
+          return function (cb) {
             var reportPlugins = Views.getProviders({
-              component: 'cockpit.report'
+              component: 'cockpit.report',
             });
             cb(null, !!reportPlugins.length);
           };
-        }
+        },
       ],
 
-      priority: -4
+      priority: -4,
     });
-  }
+  },
 ];

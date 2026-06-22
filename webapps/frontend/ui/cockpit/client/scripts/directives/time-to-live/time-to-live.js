@@ -24,17 +24,17 @@ const template = require('./time-to-live.html?raw');
 module.exports = [
   '$translate',
   '$uibModal',
-  function($translate, $modal) {
+  function ($translate, $modal) {
     return {
       restrict: 'A',
       template: template,
       scope: {
         definition: '=timeToLive',
         customOnChange: '=onChange',
-        resource: '@'
+        resource: '@',
       },
-      link: function($scope) {
-        $scope.format = function(property) {
+      link: function ($scope) {
+        $scope.format = function (property) {
           if (property === 1) {
             return $translate.instant('TIME_TO_LIVE_DAY', {ttl: property});
           }
@@ -47,17 +47,17 @@ module.exports = [
             scope: $scope,
             resolve: {},
             controller: modalDialog.controller,
-            template: modalDialog.template
+            template: modalDialog.template,
           });
           dialog.result
             .then(
               // handle modal closed with result
-              updated => updated && $scope.customOnChange?.(),
+              (updated) => updated && $scope.customOnChange?.(),
               // handle modal canceled via backdrop click or esc
-              () => $scope.customOnChange?.()
+              () => $scope.customOnChange?.(),
             ).catch(console.error); // eslint-disable-line
         };
-      }
+      },
     };
-  }
+  },
 ];

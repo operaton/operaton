@@ -21,7 +21,7 @@ function noop() {
   return;
 }
 
-var Directive = function() {
+var Directive = function () {
   return {
     replace: false,
     restrict: 'A',
@@ -30,16 +30,16 @@ var Directive = function() {
       onSortChange: '&',
       sortBy: '@defaultSortBy',
       sortOrder: '@defaultSortOrder',
-      sortingId: '@'
+      sortingId: '@',
     },
     controller: [
       '$scope',
       'localConf',
-      function($scope, localConf) {
+      function ($scope, localConf) {
         var sortingId = $scope.sortingId;
         var defaultSorting = {
           sortBy: $scope.sortBy,
-          sortOrder: $scope.sortOrder
+          sortOrder: $scope.sortOrder,
         };
 
         var onSortInitialized = $scope.onSortInitialized || noop;
@@ -56,18 +56,18 @@ var Directive = function() {
           localConf.set(sortingId, sorting);
         }
 
-        this.changeOrder = function(column) {
+        this.changeOrder = function (column) {
           sorting.sortBy = column;
           sorting.sortOrder = sorting.sortOrder === 'desc' ? 'asc' : 'desc';
           saveLocal(sorting);
           onSortChange({sorting: sorting});
         };
 
-        this.getSorting = function() {
+        this.getSorting = function () {
           return sorting;
         };
-      }
-    ]
+      },
+    ],
   };
 };
 

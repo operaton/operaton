@@ -61,6 +61,8 @@ import static org.operaton.bpm.engine.authorization.Resources.TENANT_MEMBERSHIP;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestUtil.assertExceptionInfo;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -97,13 +99,9 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    // when
-    try {
-      identityService.newUser("jonny1");
-    } catch (AuthorizationException e) {
-      // then
-      fail("no authorization exception expected");
-    }
+    // when/then
+    assertThatCode(() -> identityService.newUser("jonny1"))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -120,18 +118,19 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
+    // given
     User newUser = identityService.newUser("jonny1");
 
-    try {
-      identityService.saveUser(newUser);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(CREATE.getName(), USER.resourceName(), null, info);
-    }
+    // when/then
+    assertThatThrownBy(() -> identityService.saveUser(newUser))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException authEx = (AuthorizationException) e;
+        assertThat(authEx.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = authEx.getMissingAuthorizations().get(0);
+        assertThat(authEx.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(CREATE.getName(), USER.resourceName(), null, info);
+      });
   }
 
   @Test
@@ -153,16 +152,16 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.deleteUser("jonny1");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(DELETE.getName(), USER.resourceName(), "jonny1", info);
-    }
+    // when/then
+    assertThatThrownBy(() -> identityService.deleteUser("jonny1"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException authEx = (AuthorizationException) e;
+        assertThat(authEx.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = authEx.getMissingAuthorizations().get(0);
+        assertThat(authEx.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(DELETE.getName(), USER.resourceName(), "jonny1", info);
+      });
   }
 
   @Test
@@ -225,15 +224,15 @@ class IdentityServiceAuthorizationsTest {
     User jonny1 = identityService.createUserQuery().singleResult();
     jonny1.setFirstName("Jonny");
 
-    try {
-      identityService.saveUser(jonny1);
-      fail("exception expected");
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(UPDATE.getName(), USER.resourceName(), "jonny1", info);
-    }
+    assertThatThrownBy(() -> identityService.saveUser(jonny1))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(UPDATE.getName(), USER.resourceName(), "jonny1", info);
+      });
 
     // but I can create a new user:
     identityService.saveUser(identityService.newUser("jonny3"));
@@ -302,12 +301,12 @@ class IdentityServiceAuthorizationsTest {
     var lockedUserId = lockedUser.getId();
 
     // when
-    try {
-      identityService.unlockUser(lockedUserId);
-      fail("expected exception");
-    } catch (AuthorizationException e) {
-      assertThat(e.getMessage()).contains("ENGINE-03029 Required admin authenticated group or user.");
-    }
+    assertThatThrownBy(() -> identityService.unlockUser(lockedUserId))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMessage()).contains("ENGINE-03029 Required admin authenticated group or user.");
+      });
 
     // return to god-mode
     processEngineConfiguration.setAuthorizationEnabled(false);
@@ -334,12 +333,8 @@ class IdentityServiceAuthorizationsTest {
     identityService.setAuthenticatedUserId(USER_ID);
 
     // when
-    try {
-      identityService.newGroup("group1");
-    } catch (AuthorizationException e) {
-      // then
-      fail("no authorization exception expected");
-    }
+    assertThatCode(() -> identityService.newGroup("group1"))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -358,16 +353,15 @@ class IdentityServiceAuthorizationsTest {
 
     Group group = identityService.newGroup("group1");
 
-    try {
-      identityService.saveGroup(group);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(CREATE.getName(), GROUP.resourceName(), null, info);
-    }
+    assertThatThrownBy(() -> identityService.saveGroup(group))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(CREATE.getName(), GROUP.resourceName(), null, info);
+      });
   }
 
   @Test
@@ -389,16 +383,15 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.deleteGroup("group1");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(DELETE.getName(), GROUP.resourceName(), "group1", info);
-    }
+    assertThatThrownBy(() -> identityService.deleteGroup("group1"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(DELETE.getName(), GROUP.resourceName(), "group1", info);
+      });
 
   }
 
@@ -443,7 +436,7 @@ class IdentityServiceAuthorizationsTest {
   @Test
   void testGroupUpdateAuthorizations() {
 
-    // crate group while still in god-mode:
+    // create group while still in god-mode:
     Group group1 = identityService.newGroup("group1");
     identityService.saveGroup(group1);
 
@@ -460,19 +453,18 @@ class IdentityServiceAuthorizationsTest {
     identityService.setAuthenticatedUserId(USER_ID);
 
     // fetch user:
-    group1 = identityService.createGroupQuery().singleResult();
-    group1.setName("Group 1");
+    Group loadedGroup1 = identityService.createGroupQuery().singleResult();
+    loadedGroup1.setName("Group 1");
 
-    try {
-      identityService.saveGroup(group1);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(UPDATE.getName(), GROUP.resourceName(), "group1", info);
-    }
+    assertThatThrownBy(() -> identityService.saveGroup(loadedGroup1))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(UPDATE.getName(), GROUP.resourceName(), "group1", info);
+      });
 
     // but I can create a new group:
     Group group2 = identityService.newGroup("group2");
@@ -494,12 +486,8 @@ class IdentityServiceAuthorizationsTest {
     identityService.setAuthenticatedUserId(USER_ID);
 
     // when
-    try {
-      identityService.newTenant("tenant");
-    } catch (AuthorizationException e) {
-      // then
-      fail("no authorization exception expected");
-    }
+    assertThatCode(() -> identityService.newTenant("tenant"))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -518,16 +506,15 @@ class IdentityServiceAuthorizationsTest {
 
     Tenant tenant = identityService.newTenant("tenant");
 
-    try {
-      identityService.saveTenant(tenant);
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(CREATE.getName(), TENANT.resourceName(), null, info);
-    }
+    assertThatThrownBy(() -> identityService.saveTenant(tenant))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(CREATE.getName(), TENANT.resourceName(), null, info);
+      });
   }
 
   @Test
@@ -549,16 +536,15 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.deleteTenant("tenant");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(DELETE.getName(), TENANT.resourceName(), "tenant", info);
-    }
+    assertThatThrownBy(() -> identityService.deleteTenant("tenant"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(DELETE.getName(), TENANT.resourceName(), "tenant", info);
+      });
   }
 
   @Test
@@ -581,19 +567,18 @@ class IdentityServiceAuthorizationsTest {
     identityService.setAuthenticatedUserId(USER_ID);
 
     // fetch user:
-    tenant = identityService.createTenantQuery().singleResult();
-    tenant.setName("newName");
+    Tenant fetchedTenant = identityService.createTenantQuery().singleResult();
+    fetchedTenant.setName("newName");
 
-    try {
-      identityService.saveTenant(tenant);
-
-      fail("exception expected");
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(UPDATE.getName(), TENANT.resourceName(), "tenant", info);
-    }
+    assertThatThrownBy(() -> identityService.saveTenant(fetchedTenant))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(UPDATE.getName(), TENANT.resourceName(), "tenant", info);
+      });
 
     // but I can create a new tenant:
     Tenant newTenant = identityService.newTenant("newTenant");
@@ -620,16 +605,15 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.createMembership("jonny1", "group1");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(CREATE.getName(), GROUP_MEMBERSHIP.resourceName(), "group1", info);
-    }
+    assertThatThrownBy(() -> identityService.createMembership("jonny1", "group1"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(CREATE.getName(), GROUP_MEMBERSHIP.resourceName(), "group1", info);
+      });
   }
 
   @Test
@@ -652,16 +636,15 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.deleteMembership("jonny1", "group1");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(DELETE.getName(), GROUP_MEMBERSHIP.resourceName(), "group1", info);
-    }
+    assertThatThrownBy(() -> identityService.deleteMembership("jonny1", "group1"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(DELETE.getName(), GROUP_MEMBERSHIP.resourceName(), "group1", info);
+      });
   }
 
   @Test
@@ -747,16 +730,15 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.createTenantUserMembership("tenant1", "jonny1");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(CREATE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
-    }
+    assertThatThrownBy(() -> identityService.createTenantUserMembership("tenant1", "jonny1"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(CREATE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
+      });
   }
 
   @Test
@@ -779,16 +761,15 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.createTenantGroupMembership("tenant1", "group1");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(CREATE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
-    }
+    assertThatThrownBy(() -> identityService.createTenantGroupMembership("tenant1", "group1"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(CREATE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
+      });
   }
 
   @Test
@@ -811,16 +792,15 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.deleteTenantUserMembership("tenant1", "jonny1");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(DELETE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
-    }
+    assertThatThrownBy(() -> identityService.deleteTenantUserMembership("tenant1", "jonny1"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(DELETE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
+      });
   }
 
   @Test
@@ -843,16 +823,15 @@ class IdentityServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
     identityService.setAuthenticatedUserId(USER_ID);
 
-    try {
-      identityService.deleteTenantGroupMembership("tenant1", "group1");
-      fail("exception expected");
-
-    } catch (AuthorizationException e) {
-      assertThat(e.getMissingAuthorizations()).hasSize(1);
-      MissingAuthorization info = e.getMissingAuthorizations().get(0);
-      assertThat(e.getUserId()).isEqualTo(USER_ID);
-      assertExceptionInfo(DELETE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
-    }
+    assertThatThrownBy(() -> identityService.deleteTenantGroupMembership("tenant1", "group1"))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        AuthorizationException ex = (AuthorizationException) e;
+        assertThat(ex.getMissingAuthorizations()).hasSize(1);
+        MissingAuthorization info = ex.getMissingAuthorizations().get(0);
+        assertThat(ex.getUserId()).isEqualTo(USER_ID);
+        assertExceptionInfo(DELETE.getName(), TENANT_MEMBERSHIP.resourceName(), "tenant1", info);
+      });
   }
 
   @Test

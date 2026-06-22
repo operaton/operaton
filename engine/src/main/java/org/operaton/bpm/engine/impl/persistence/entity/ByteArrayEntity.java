@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -27,9 +25,7 @@ import org.operaton.bpm.engine.repository.ResourceType;
 /**
  * @author Tom Baeyens
  */
-public class ByteArrayEntity implements Serializable, DbEntity, HasDbRevision {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class ByteArrayEntity implements DbEntity, HasDbRevision {
 
   private static final Object PERSISTENTSTATE_NULL = new Object();
 

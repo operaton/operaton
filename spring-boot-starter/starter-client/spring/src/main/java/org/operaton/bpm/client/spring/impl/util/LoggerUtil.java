@@ -18,12 +18,16 @@ package org.operaton.bpm.client.spring.impl.util;
 
 import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
 import org.operaton.bpm.client.spring.impl.subscription.util.SubscriptionLoggerUtil;
-import org.operaton.commons.logging.BaseLogger;
 
-public class LoggerUtil extends BaseLogger {
+import static org.operaton.commons.logging.BaseLogger.createLogger;
 
-  protected static final String PROJECT_CODE = "TASK/CLIENT/SPRING";
-  protected static final String PROJECT_LOGGER = "org.operaton.bpm.client.spring";
+public final class LoggerUtil {
+  private LoggerUtil() {
+    // prevent instantiation
+  }
+
+  private static final String PROJECT_CODE = "TASK/CLIENT/SPRING";
+  private static final String PROJECT_LOGGER = "org.operaton.bpm.client.spring";
 
   public static final ClientLoggerUtil CLIENT_LOGGER =
       createLogger(ClientLoggerUtil.class, PROJECT_CODE, PROJECT_LOGGER, "01");

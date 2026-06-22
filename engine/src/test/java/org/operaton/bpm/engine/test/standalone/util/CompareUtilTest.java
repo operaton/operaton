@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.util;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -45,9 +44,9 @@ class CompareUtilTest {
     assertThat(CompareUtil.areNotInAscendingOrder(null, second, null, first)).isTrue();
     assertThat(CompareUtil.areNotInAscendingOrder(nullDate, nullDate, nullDate)).isFalse();
 
-    assertThat(CompareUtil.areNotInAscendingOrder(Arrays.asList(first, second))).isFalse();
-    assertThat(CompareUtil.areNotInAscendingOrder(Arrays.asList(first, first))).isFalse();
-    assertThat(CompareUtil.areNotInAscendingOrder(Arrays.asList(second, first))).isTrue();
+    assertThat(CompareUtil.areNotInAscendingOrder(List.of(first, second))).isFalse();
+    assertThat(CompareUtil.areNotInAscendingOrder(List.of(first, first))).isFalse();
+    assertThat(CompareUtil.areNotInAscendingOrder(List.of(second, first))).isTrue();
   }
 
   @Test
@@ -64,9 +63,9 @@ class CompareUtilTest {
     assertThat(CompareUtil.elementIsNotContainedInArray(null, nullValues)).isFalse();
     assertThat(CompareUtil.elementIsNotContainedInArray(element, nullValues)).isFalse();
 
-    assertThat(CompareUtil.elementIsNotContainedInList(element, Arrays.asList(values))).isFalse();
-    assertThat(CompareUtil.elementIsNotContainedInList(element, Arrays.asList(values2))).isTrue();
-    assertThat(CompareUtil.elementIsNotContainedInList(null, Arrays.asList(values))).isFalse();
+    assertThat(CompareUtil.elementIsNotContainedInList(element, List.of(values))).isFalse();
+    assertThat(CompareUtil.elementIsNotContainedInList(element, List.of(values2))).isTrue();
+    assertThat(CompareUtil.elementIsNotContainedInList(null, List.of(values))).isFalse();
     assertThat(CompareUtil.elementIsNotContainedInList(null, nullList)).isFalse();
     assertThat(CompareUtil.elementIsNotContainedInList(element, nullList)).isFalse();
   }
@@ -85,9 +84,9 @@ class CompareUtilTest {
     assertThat(CompareUtil.elementIsContainedInArray(null, nullValues)).isFalse();
     assertThat(CompareUtil.elementIsContainedInArray(element, nullValues)).isFalse();
 
-    assertThat(CompareUtil.elementIsContainedInList(element, Arrays.asList(values))).isTrue();
-    assertThat(CompareUtil.elementIsContainedInList(element, Arrays.asList(values2))).isFalse();
-    assertThat(CompareUtil.elementIsContainedInList(null, Arrays.asList(values))).isFalse();
+    assertThat(CompareUtil.elementIsContainedInList(element, List.of(values))).isTrue();
+    assertThat(CompareUtil.elementIsContainedInList(element, List.of(values2))).isFalse();
+    assertThat(CompareUtil.elementIsContainedInList(null, List.of(values))).isFalse();
     assertThat(CompareUtil.elementIsContainedInList(null, nullList)).isFalse();
     assertThat(CompareUtil.elementIsContainedInList(element, nullList)).isFalse();
   }
@@ -95,7 +94,7 @@ class CompareUtilTest {
   @Test
   void testElementsAreContainedInArray() {
     // Positive case: all elements of subset are in superset
-    List<String> subset = Arrays.asList("a", "b");
+    List<String> subset = List.of("a", "b");
     String[] superset = {"a", "b", "c"};
     assertThat(CompareUtil.elementsAreContainedInArray(subset, superset)).isTrue();
 
@@ -108,11 +107,25 @@ class CompareUtilTest {
     assertThat(CompareUtil.elementsAreContainedInArray(subset, emptyArray)).isFalse();
 
     // Empty subset: should return false
-    List<String> emptyList = Arrays.asList();
+    List<String> emptyList = List.of();
     assertThat(CompareUtil.elementsAreContainedInArray(emptyList, superset)).isFalse();
 
     // Null parameters: should return false
     assertThat(CompareUtil.elementsAreContainedInArray(null, superset)).isFalse();
     assertThat(CompareUtil.elementsAreContainedInArray(subset, null)).isFalse();
+  }
+
+  @Test
+  void min_shouldReturnSmallerValue() {
+    assertThat(CompareUtil.min(1, 2)).isEqualTo(1);
+    assertThat(CompareUtil.min(5, 3)).isEqualTo(3);
+    assertThat(CompareUtil.min(4, 4)).isEqualTo(4);  // equal: returns first
+  }
+
+  @Test
+  void max_shouldReturnLargerValue() {
+    assertThat(CompareUtil.max(1, 2)).isEqualTo(2);
+    assertThat(CompareUtil.max(5, 3)).isEqualTo(5);
+    assertThat(CompareUtil.max(4, 4)).isEqualTo(4);  // equal: returns first
   }
 }

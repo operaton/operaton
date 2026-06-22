@@ -124,7 +124,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
       if(commonJWorkManagerName != null && !commonJWorkManagerName.isEmpty()) {
         executorServiceWrapper.setExecutorService(new CommonJWorkManagerExecutorService(this, commonJWorkManagerName));
       } else {
-        throw new RuntimeException("Resource Adapter configuration property 'isUseCommonJWorkManager' is set to true but 'commonJWorkManagerName' is not provided.");
+        throw new JcaConfigException("Resource Adapter configuration property 'isUseCommonJWorkManager' is set to true but 'commonJWorkManagerName' is not provided.");
       }
 
     } else {
@@ -175,7 +175,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
   @Override
   public XAResource[] getXAResources(ActivationSpec[] specs) {
     LOG.finest("getXAResources()");
-    return null;
+    return new XAResource[0];
   }
 
   // getters ///////////////////////////////////////////////////////////////

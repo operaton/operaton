@@ -4,17 +4,11 @@
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-xml-model</artifactId>
   <name>Operaton - XML Model API</name>
   <description>${project.name}</description>
-  <properties>
-    <operaton.artifact>org.operaton.bpm.model.xml</operaton.artifact>
-    <operaton.osgi.import.additional>
-      org.assertj.*;resolution:=optional
-    </operaton.osgi.import.additional>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -22,6 +16,11 @@
       <!-- Required for AbstractModelElementInstanceTest -->
       <scope>provided</scope>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
@@ -34,25 +33,6 @@
             <goals>
               <!-- AbstractModelElementInstanceTest used by other model-api tests -->
               <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>cleanVersions</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
             </goals>
           </execution>
         </executions>

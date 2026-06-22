@@ -33,7 +33,8 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Joram Barrez
@@ -138,13 +139,13 @@ class StandaloneTaskTest {
 
   @Test
   void testSaveTaskWithGenericResourceId() {
+    // given
     Task task = taskService.newTask("*");
-    try {
-      taskService.saveTask(task);
-      fail("it should not be possible to save a task with the generic resource id *");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Entity Task[*] has an invalid id: id cannot be *. * is a reserved identifier", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> taskService.saveTask(task))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Entity Task[*] has an invalid id: id cannot be *. * is a reserved identifier");
   }
 
   @Test

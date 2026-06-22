@@ -28,6 +28,7 @@ import org.operaton.bpm.model.xml.ModelParseException;
 import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.*;
 
@@ -48,14 +49,8 @@ public class Dmn {
   private static final DmnParser DMN_PARSER;
 
   static {
-    DmnFactory dmnFactory = ServiceLoader.load(DmnFactory.class).findFirst().orElse(
-      ServiceLoader.load(DmnFactory.class, Dmn.class.getClassLoader()).findFirst()
-        .orElseThrow(() -> new IllegalStateException("No DmnFactory found"))
-    );
-    DmnParserFactory dmnParserFactory = ServiceLoader.load(DmnParserFactory.class).findFirst().orElse(
-      ServiceLoader.load(DmnParserFactory.class, Dmn.class.getClassLoader()).findFirst()
-        .orElseThrow(() -> new IllegalStateException("No DmnParserFactory found"))
-    );
+    DmnFactory dmnFactory = ServiceLoaderUtil.loadSingleService(DmnFactory.class);
+    DmnParserFactory dmnParserFactory = ServiceLoaderUtil.loadSingleService(DmnParserFactory.class);
 
     INSTANCE = dmnFactory.newInstance();
     DMN_PARSER = dmnParserFactory.newInstance();
@@ -167,7 +162,7 @@ public class Dmn {
       result = doReadModelFromInputStream(is);
 
     } catch (FileNotFoundException e) {
-      throw new DmnModelException("Cannot read model from file " + file + ": file does not exist.");
+      throw new DmnModelException("Cannot read model from file %s: file does not exist.".formatted(file));
     } catch (IOException e) {
       throw new DmnModelException("Cannot read model from file " + file, e);
     }
@@ -182,7 +177,7 @@ public class Dmn {
     try (OutputStream os = new FileOutputStream(file)) {
       doWriteModelToOutputStream(os, modelInstance);
     } catch (FileNotFoundException e) {
-      throw new DmnModelException("Cannot write model to file " + file + ": file does not exist.");
+      throw new DmnModelException("Cannot write model to file %s: file does not exist.".formatted(file));
     } catch (IOException e) {
       throw new DmnModelException("Cannot write model to file " + file, e);
     }
@@ -299,7 +294,7 @@ public class Dmn {
     UsingTaskReferenceImpl.registerType(modelBuilder);
     VariableImpl.registerType(modelBuilder);
 
-    /** operaton extensions */
+    // Operaton extensions
   }
 
   /**

@@ -21,7 +21,9 @@ package org.operaton.bpm.engine.impl.bpmn.parser;
 /**
  * Represents a field declaration in object form:
  *
+ * <p>
  * &lt;field name='someField&gt; &lt;string ...
+ * </p>
  *
  * @author Joram Barrez
  * @author Frederik Heremans

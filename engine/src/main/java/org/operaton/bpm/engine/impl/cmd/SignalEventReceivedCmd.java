@@ -104,7 +104,7 @@ public class SignalEventReceivedCmd implements Command<Void> {
     for (EventSubscriptionEntity eventSubscription : startSignalEventSubscriptions) {
 
       String processDefinitionId = eventSubscription.getConfiguration();
-      ensureNotNull("Configuration of signal start event subscription '" + eventSubscription.getId() + "' contains no process definition id.",
+      ensureNotNull("Configuration of signal start event subscription '%s' contains no process definition id.".formatted(eventSubscription.getId()),
           processDefinitionId);
 
       ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
@@ -120,11 +120,11 @@ public class SignalEventReceivedCmd implements Command<Void> {
 
     ExecutionManager executionManager = commandContext.getExecutionManager();
     ExecutionEntity execution = executionManager.findExecutionById(executionId);
-    ensureNotNull("Cannot find execution with id '" + executionId + "'", "execution", execution);
+    ensureNotNull("Cannot find execution with id '%s'".formatted(executionId), "execution", execution);
 
     EventSubscriptionManager eventSubscriptionManager = commandContext.getEventSubscriptionManager();
     List<EventSubscriptionEntity> signalEvents = eventSubscriptionManager.findSignalEventSubscriptionsByNameAndExecution(signalName, executionId);
-    ensureNotEmpty(NotFoundException.class, "Execution '" + executionId + "' has not subscribed to a signal event with name '" + signalName + "'.", signalEvents);
+    ensureNotEmpty(NotFoundException.class, "Execution '%s' has not subscribed to a signal event with name '%s'.".formatted(executionId, signalName), signalEvents);
 
     checkAuthorizationOfCatchSignals(commandContext, signalEvents);
     notifyExecutions(signalEvents);

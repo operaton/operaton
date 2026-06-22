@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest;
-
 import java.util.*;
+import java.util.stream.Stream;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -25,6 +25,9 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -235,7 +238,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     parameters.put("notLocked", "true");
     parameters.put("executionId", "someExecutionId");
     parameters.put("processInstanceId", "someProcessInstanceId");
-    parameters.put("processInstanceIdIn", Arrays.asList("aProcessInstanceId", "anotherProcessInstanceId"));
+    parameters.put("processInstanceIdIn", List.of("aProcessInstanceId", "anotherProcessInstanceId"));
     parameters.put("processDefinitionId", "someProcessDefinitionId");
     parameters.put("active", "true");
     parameters.put("suspended", "true");
@@ -484,7 +487,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<ExternalTask> createMockExternalTasksTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockExternalTask().buildExternalTask(),
         MockProvider.mockExternalTask().tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).buildExternalTask());
   }
@@ -544,7 +547,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<ExternalTask> createMockExternalTasksTwoActivityIds() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockExternalTask().buildExternalTask(),
         MockProvider.mockExternalTask().activityId(MockProvider.ANOTHER_EXAMPLE_ACTIVITY_ID).buildExternalTask());
   }
@@ -611,7 +614,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<ExternalTask> createMockedExternalTasksWithPriorities() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockExternalTask().priority(EXTERNAL_TASK_LOW_BOUND_PRIORITY).buildExternalTask(),
         MockProvider.mockExternalTask().priority(EXTERNAL_TASK_HIGH_BOUND_PRIORITY).buildExternalTask());
   }
@@ -674,189 +677,80 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     assertThat(returnedId2).isEqualTo(MockProvider.EXTERNAL_TASK_ANOTHER_ID);
   }
 
-    @Test
-    void testProcessVariableParameters() {
-        // equals
-        String variableName = "varName";
-        String variableValue = "varValue";
-        String queryValue = variableName + "_eq_" + variableValue;
+  @ParameterizedTest
+  @MethodSource("variableParameterProvider")
+  void testProcessVariableParameters(String operator, boolean variableNamesIgnoreCase, boolean variableValuesIgnoreCase) {
+    // clear previous interactions but keep stubbing
+    Mockito.clearInvocations(mockQuery);
 
-        given()
-                .queryParam("processVariables", queryValue)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
+    String queryValue = SAMPLE_VAR_NAME + "_" + operator + "_" + SAMPLE_VAR_VALUE;
 
-        verify(mockQuery).processVariableValueEquals(variableName, variableValue);
-        reset(mockQuery);
-
-        //equals case-insensitive
-        queryValue = variableName + "_eq_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .queryParam("variableValuesIgnoreCase", true)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).matchVariableValuesIgnoreCase();
-        verify(mockQuery).processVariableValueEquals(variableName, variableValue);
-        reset(mockQuery);
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .queryParam("variableNamesIgnoreCase", true)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).matchVariableNamesIgnoreCase();
-        verify(mockQuery).processVariableValueEquals(variableName, variableValue);
-        reset(mockQuery);
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .queryParam("variableNamesIgnoreCase", true)
-                .queryParam("variableValuesIgnoreCase", true)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).matchVariableNamesIgnoreCase();
-        verify(mockQuery).matchVariableValuesIgnoreCase();
-        verify(mockQuery).processVariableValueEquals(variableName, variableValue);
-
-        // greater than
-        queryValue = variableName + "_gt_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).processVariableValueGreaterThan(variableName, variableValue);
-
-        // greater than equals
-        queryValue = variableName + "_gteq_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).processVariableValueGreaterThanOrEquals(variableName, variableValue);
-
-        // lower than
-        queryValue = variableName + "_lt_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).processVariableValueLessThan(variableName, variableValue);
-
-        // lower than equals
-        queryValue = variableName + "_lteq_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).processVariableValueLessThanOrEquals(variableName, variableValue);
-
-        // like
-        queryValue = variableName + "_like_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).processVariableValueLike(variableName, variableValue);
-        reset(mockQuery);
-
-        // like case-insensitive
-        queryValue = variableName + "_like_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .queryParam("variableValuesIgnoreCase", true)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).matchVariableValuesIgnoreCase();
-        verify(mockQuery).processVariableValueLike(variableName, variableValue);
-
-        // not equals
-        queryValue = variableName + "_neq_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).processVariableValueNotEquals(variableName, variableValue);
-        reset(mockQuery);
-
-        // not equals case-insensitive
-        queryValue = variableName + "_neq_" + variableValue;
-
-        given()
-                .queryParam("processVariables", queryValue)
-                .queryParam("variableValuesIgnoreCase", true)
-                .header("accept", MediaType.APPLICATION_JSON)
-                .then()
-                .expect()
-                .statusCode(Status.OK.getStatusCode())
-                .when()
-                .get(EXTERNAL_TASK_QUERY_URL);
-
-        verify(mockQuery).matchVariableValuesIgnoreCase();
-        verify(mockQuery).processVariableValueNotEquals(variableName, variableValue);
+    var request = given().queryParam("processVariables", queryValue);
+    if (variableValuesIgnoreCase) {
+      request = request.queryParam("variableValuesIgnoreCase", true);
     }
+    if (variableNamesIgnoreCase) {
+      request = request.queryParam("variableNamesIgnoreCase", true);
+    }
+
+    request.header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .when().get(EXTERNAL_TASK_QUERY_URL);
+
+    if (variableValuesIgnoreCase) {
+      verify(mockQuery).matchVariableValuesIgnoreCase();
+    }
+    if (variableNamesIgnoreCase) {
+      verify(mockQuery).matchVariableNamesIgnoreCase();
+    }
+
+    switch (operator) {
+    case "eq":
+      verify(mockQuery).processVariableValueEquals(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "gt":
+      verify(mockQuery).processVariableValueGreaterThan(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "gteq":
+      verify(mockQuery).processVariableValueGreaterThanOrEquals(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "lt":
+      verify(mockQuery).processVariableValueLessThan(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "lteq":
+      verify(mockQuery).processVariableValueLessThanOrEquals(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "like":
+      verify(mockQuery).processVariableValueLike(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "neq":
+      verify(mockQuery).processVariableValueNotEquals(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    default:
+      throw new IllegalArgumentException("Unsupported operator: " + operator);
+    }
+  }
+
+  static Stream<Arguments> variableParameterProvider() {
+    return Stream.of(
+      // equals variations (original tests covered several case-insensitive combos)
+      Arguments.of("eq", false, false),
+      Arguments.of("eq", false, true),
+      Arguments.of("eq", true, false),
+      Arguments.of("eq", true, true),
+      // numeric / comparative operators
+      Arguments.of("gt", false, false),
+      Arguments.of("gteq", false, false),
+      Arguments.of("lt", false, false),
+      Arguments.of("lteq", false, false),
+      // like (with and without value-ignore-case)
+      Arguments.of("like", false, false),
+      Arguments.of("like", false, true),
+      // not equals (with and without value-ignore-case)
+      Arguments.of("neq", false, false),
+      Arguments.of("neq", false, true)
+    );
+  }
 
   @Test
   void testProcessVariableValueEqualsIgnoreCaseAsPost() {
@@ -1010,7 +904,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     }
 
   private List<ExternalTask> createMockExternalTasksTwoIds() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockExternalTask().buildExternalTask(),
         MockProvider.mockExternalTask().id(MockProvider.EXTERNAL_TASK_ANOTHER_ID).buildExternalTask());
   }

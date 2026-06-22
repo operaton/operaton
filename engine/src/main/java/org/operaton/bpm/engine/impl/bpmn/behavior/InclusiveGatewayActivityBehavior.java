@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -45,50 +46,53 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
-
     execution.inactivate();
     lockConcurrentRoot(execution);
 
     PvmActivity activity = execution.getActivity();
-    if (activatesGateway(execution, activity)) {
-
-      LOG.activityActivation(activity.getId());
-
-      List<ActivityExecution> joinedExecutions = execution.findInactiveConcurrentExecutions(activity);
-      String defaultSequenceFlow = (String) execution.getActivity().getProperty("default");
-      List<PvmTransition> transitionsToTake = new ArrayList<>();
-
-      // find matching non-default sequence flows
-      for (PvmTransition outgoingTransition : execution.getActivity().getOutgoingTransitions()) {
-        if (defaultSequenceFlow == null || !outgoingTransition.getId().equals(defaultSequenceFlow)) {
-          Condition condition = (Condition) outgoingTransition.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
-          if (condition == null || condition.evaluate(execution)) {
-            transitionsToTake.add(outgoingTransition);
-          }
-        }
-      }
-
-      // if none found, add default flow
-      if (transitionsToTake.isEmpty()) {
-        if (defaultSequenceFlow != null) {
-          PvmTransition defaultTransition = execution.getActivity().findOutgoingTransition(defaultSequenceFlow);
-          if (defaultTransition == null) {
-            throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
-          }
-
-          transitionsToTake.add(defaultTransition);
-
-        } else {
-          // No sequence flow could be found, not even a default one
-          throw LOG.stuckExecutionException(execution.getActivity().getId());
-        }
-      }
-
-      // take the flows found
-      execution.leaveActivityViaTransitions(transitionsToTake, joinedExecutions);
-    } else {
+    if (!activatesGateway(execution, activity)) {
       LOG.noActivityActivation(activity.getId());
+      return;
     }
+
+    LOG.activityActivation(activity.getId());
+
+    List<ActivityExecution> joinedExecutions = execution.findInactiveConcurrentExecutions(activity);
+    String defaultSequenceFlow = (String) execution.getActivity().getProperty("default");
+
+    // find matching non-default sequence flows
+    List<PvmTransition> transitionsToTake = execution.getActivity().getOutgoingTransitions()
+        .stream()
+        .filter(transition -> isNotDefaultFlow(transition, defaultSequenceFlow))
+        .filter(transition -> hasNoConditionOrEvaluates(transition, execution))
+        .collect(Collectors.toList());
+
+    // if none found, add default flow
+    if (transitionsToTake.isEmpty()) {
+      if (defaultSequenceFlow == null) {
+        // No sequence flow could be found, not even a default one
+        throw LOG.stuckExecutionException(execution.getActivity().getId());
+      }
+
+      PvmTransition defaultTransition = execution.getActivity().findOutgoingTransition(defaultSequenceFlow);
+      if (defaultTransition == null) {
+        throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
+      }
+
+      transitionsToTake.add(defaultTransition);
+    }
+
+    // take the flows found
+    execution.leaveActivityViaTransitions(transitionsToTake, joinedExecutions);
+  }
+
+  private boolean isNotDefaultFlow(PvmTransition transition, String defaultSequenceFlow) {
+    return defaultSequenceFlow == null || !transition.getId().equals(defaultSequenceFlow);
+  }
+
+  private boolean hasNoConditionOrEvaluates(PvmTransition transition, ActivityExecution execution) {
+    Condition condition = (Condition) transition.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
+    return condition == null || condition.evaluate(execution);
   }
 
   protected Collection<ActivityExecution> getLeafExecutions(ActivityExecution parent) {
@@ -151,53 +155,25 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     // To avoid infinite looping, we must capture every node we visit and
     // check before going further in the graph if we have already visited the node.
     visitedActivities.add(srcActivity);
-
     List<PvmTransition> outgoingTransitions = srcActivity.getOutgoingTransitions();
 
     if (outgoingTransitions.isEmpty()) {
-
       if (srcActivity.getActivityBehavior() instanceof EventBasedGatewayActivityBehavior) {
-
         ActivityImpl eventBasedGateway = (ActivityImpl) srcActivity;
         Set<ActivityImpl> eventActivities = eventBasedGateway.getEventActivities();
-
-        for (ActivityImpl eventActivity : eventActivities) {
-          boolean isReachable = isReachable(eventActivity, targetActivity, visitedActivities);
-
-          if (isReachable) {
-            return true;
-          }
-        }
-
-      }
-      else {
-
+        return eventActivities.stream().anyMatch(activity -> isReachable(activity, targetActivity, visitedActivities));
+      } else {
         ScopeImpl flowScope = srcActivity.getFlowScope();
         if (flowScope instanceof PvmActivity pvmActivity) {
           return isReachable(pvmActivity, targetActivity, visitedActivities);
         }
-
       }
-
       return false;
+    } else {
+      return outgoingTransitions.stream()
+          .map(PvmTransition::getDestination)
+          .filter(activity -> activity != null && !visitedActivities.contains(activity))
+          .anyMatch(activity -> isReachable(activity, targetActivity, visitedActivities));
     }
-    else {
-      for (PvmTransition pvmTransition : outgoingTransitions) {
-        PvmActivity destinationActivity = pvmTransition.getDestination();
-        if (destinationActivity != null && !visitedActivities.contains(destinationActivity)) {
-
-          boolean reachable = isReachable(destinationActivity, targetActivity, visitedActivities);
-
-          // If false, we should investigate other paths, and not yet return the result
-          if (reachable) {
-            return true;
-          }
-
-        }
-      }
-    }
-
-    return false;
   }
-
 }

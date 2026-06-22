@@ -32,10 +32,12 @@ import org.operaton.bpm.engine.runtime.Execution;
  * {@code @Inject} @ExecutionId String currentExecutionId
  * </pre>
  *
+ * <p>
  * Note that the current {@link Execution} is also available for injection:
  * <pre>
  * {@code @Inject} Execution execution;
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  */

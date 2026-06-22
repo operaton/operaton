@@ -17,7 +17,6 @@
 package org.operaton.bpm.cockpit.plugin.base;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -394,7 +393,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("varboolean", EQUALS_OPERATOR_NAME, false);
 
     ProcessInstanceQueryDto parameter = new ProcessInstanceQueryDto();
-    parameter.setVariables(Arrays.asList(variable));
+    parameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> results = resource.queryProcessInstances(parameter, 0, Integer.MAX_VALUE);
 
@@ -414,7 +413,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("varstring", LIKE_OPERATOR_NAME, "B%");
 
     ProcessInstanceQueryDto parameter = new ProcessInstanceQueryDto();
-    parameter.setVariables(Arrays.asList(variable));
+    parameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> results = resource.queryProcessInstances(parameter, 0, Integer.MAX_VALUE);
 
@@ -434,7 +433,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("varfloat", EQUALS_OPERATOR_NAME, 0.0);
 
     ProcessInstanceQueryDto parameter = new ProcessInstanceQueryDto();
-    parameter.setVariables(Arrays.asList(variable));
+    parameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> results = resource.queryProcessInstances(parameter, 0, Integer.MAX_VALUE);
 
@@ -454,7 +453,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("varinteger", NOT_EQUALS_OPERATOR_NAME, 12);
 
     ProcessInstanceQueryDto parameter = new ProcessInstanceQueryDto();
-    parameter.setVariables(Arrays.asList(variable));
+    parameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(parameter, 0, Integer.MAX_VALUE);
 
@@ -474,7 +473,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     // when
     ProcessInstanceQueryDto parameter = new ProcessInstanceQueryDto();
 
-    parameter.setVariables(Arrays.asList(
+    parameter.setVariables(List.of(
         createVariableParameter("varinteger", VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME, 11),
         createVariableParameter("varinteger", VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME, 12),
         createVariableParameter("varinteger", VariableQueryParameterDto.EQUALS_OPERATOR_NAME, 12),
@@ -948,7 +947,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -971,7 +970,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -994,7 +993,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1017,7 +1016,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1040,7 +1039,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1063,7 +1062,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1086,7 +1085,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1109,7 +1108,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, (long) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1132,7 +1131,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1155,7 +1154,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, (long) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1178,7 +1177,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1201,7 +1200,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, (long) 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1224,7 +1223,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1247,7 +1246,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, (short) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1270,7 +1269,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1293,7 +1292,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, (short) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1316,7 +1315,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1339,7 +1338,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, (short) 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1362,7 +1361,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, 5.0);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1385,7 +1384,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1409,7 +1408,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1433,7 +1432,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1457,7 +1456,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, 5.1);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1481,7 +1480,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, 5.1);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1504,7 +1503,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1527,7 +1526,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1550,7 +1549,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1573,7 +1572,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1596,7 +1595,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1619,7 +1618,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1642,7 +1641,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1665,7 +1664,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, (long) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1688,7 +1687,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1711,7 +1710,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, (long) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1734,7 +1733,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1757,7 +1756,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, (long) 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1780,7 +1779,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1803,7 +1802,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, (short) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1826,7 +1825,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1849,7 +1848,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, (short) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1872,7 +1871,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1895,7 +1894,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, (short) 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1918,7 +1917,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, 5.0);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1941,7 +1940,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1965,7 +1964,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -1989,7 +1988,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2013,7 +2012,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, 5.1);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2037,7 +2036,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, 5.1);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2060,7 +2059,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2083,7 +2082,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2106,7 +2105,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2129,7 +2128,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2152,7 +2151,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2175,7 +2174,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2198,7 +2197,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2221,7 +2220,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, (long) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2244,7 +2243,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2267,7 +2266,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, (long) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2290,7 +2289,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2313,7 +2312,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, (long) 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2336,7 +2335,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2359,7 +2358,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, (short) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2382,7 +2381,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2405,7 +2404,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, (short) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2428,7 +2427,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2451,7 +2450,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, (short) 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2474,7 +2473,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, 5.0);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2497,7 +2496,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2521,7 +2520,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2545,7 +2544,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2569,7 +2568,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, 5.1);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2593,7 +2592,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, 5.1);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2616,7 +2615,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2639,7 +2638,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2662,7 +2661,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2685,7 +2684,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2708,7 +2707,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2731,7 +2730,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2754,7 +2753,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2777,7 +2776,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, (long) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2800,7 +2799,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2823,7 +2822,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, (long) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2846,7 +2845,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, (long) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2869,7 +2868,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, (long) 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2892,7 +2891,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2915,7 +2914,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, (short) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2938,7 +2937,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2961,7 +2960,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, (short) 4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -2984,7 +2983,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, (short) 5);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -3007,7 +3006,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, (short) 6);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -3030,7 +3029,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", EQUALS_OPERATOR_NAME, 5.0);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -3053,7 +3052,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", NOT_EQUALS_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -3076,7 +3075,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OR_EQUALS_OPERATOR_NAME, 5.3);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -3099,7 +3098,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", GREATER_THAN_OPERATOR_NAME, 4.9);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -3122,7 +3121,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OR_EQUALS_OPERATOR_NAME, 5.1);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);
@@ -3145,7 +3144,7 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     ProcessInstanceQueryDto queryParameter = new ProcessInstanceQueryDto();
 
     VariableQueryParameterDto variable = createVariableParameter("var", LESS_THAN_OPERATOR_NAME, 5.4);
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);

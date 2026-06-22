@@ -1,0 +1,132 @@
+# Auto-merge configuration
+# This file defines which dependencies can be automatically merged
+# by the auto-merge workflow after all checks have passed.
+
+# Configuration format:
+# - author: GitHub username (e.g., 'dependabot[bot]')
+#   labels: List of labels that must be present on the PR (optional)
+#   includes: List of dependency patterns to allow (optional, used with labels)
+#            (supports wildcards with *)
+#   excludes: List of dependency patterns to exclude (optional, overrides includes)
+#            (supports wildcards with *)
+#   title: Pattern to match PR titles using wildcards (optional, alternative to includes)
+
+auto-merge-rules:
+  # OpenRewrite dependencies - can be auto-merged after successful build
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:maven']
+    includes:
+      - 'org.openrewrite*'
+      - 'org.openrewrite.recipe*'
+
+  # NPM dependencies - all can be merged after successful build
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:npm']
+    includes:
+      - '*'
+    excludes:
+      - '*bootstrap*'
+
+  # NPM security update PRs - Dependabot security alerts bypass dependabot.yml
+  # label configuration and instead apply GitHub's default labels:
+  # 'dependencies' + the language label (e.g. 'javascript').
+  # These PRs must be treated as eligible just like regular npm updates.
+  - author: 'dependabot[bot]'
+    labels: ['dependencies', 'javascript']
+    includes:
+      - '*'
+    excludes:
+      - '*bootstrap*'
+
+  # Additional Maven dependencies that are safe to auto-merge
+  # Note: DB drivers are NOT included as they require integration tests
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:maven']
+    includes:
+      - 'ch.martinelli.oss:testcontainers-mailpit'
+      - 'ch.qos.logback*'
+      - 'com.fasterxml.jackson*'
+      - 'com.fasterxml.uuid:java-uuid-generator'
+      - 'com.google.guava*'
+      - 'com.h2database:h2'
+      - 'com.jayway.jsonpath:json-path'
+      - 'com.networknt:json-schema-validator'
+      - 'com.nimbusds:nimbus-jose-jwt'
+      - 'com.tngtech.archunit:archunit-junit4'
+      - 'com.unboundid:unboundid-ldapsdk'
+      - 'commons-codec:commons-codec'
+      - 'commons-io:commons-io'
+      - 'commons-logging:commons-logging'
+      - 'dev.resteasy.netty:resteasy-embedded-server'
+      - 'io.netty:*'
+      - 'io.rest-assured:rest-assured'
+      - 'io.smallrye:jandex'
+      - 'io.swagger*'
+      - 'io.undertow:undertow-servlet'
+      - 'joda-time:joda-time'
+      - 'net.javacrumbs.json-unit:*'
+      - 'org.apache.ant:ant'
+      - 'org.apache.commons*'
+      - 'org.apache.commons:commons-lang3'
+      - 'org.apache.httpcomponents*'
+      - 'org.assertj*'
+      - 'org.glassfish.jaxb*'
+      - 'org.jboss.logging:jboss-logging'
+      - 'org.jboss.weld.servlet:weld-servlet-shaded'
+      - 'org.junit*'
+      - 'org.mockito*'
+      - 'org.openapitools:jackson-databind-nullable'
+      - 'org.seleniumhq.selenium:selenium-java'
+      - 'org.slf4j*'
+      - 'org.springframework:spring-framework-bom'
+      - 'org.wiremock:wiremock'
+      - 'org.xmlunit:xmlunit-core'
+      # version properties
+      - 'okhttp-version'
+      - 'version.asm'
+      - 'version.groovy'
+      - 'version.jackson'
+      - 'version.jna'
+      - 'version.logback'
+      - 'version.mockito'
+      - 'version.quarkus'
+      - 'version.shrinkwrap.resolvers'
+      - 'version.slf4j'
+      - 'version.spring-boot'
+      - 'version.testcontainers'
+      - 'version.undertow'
+      # Maven plugins
+      - 'org.apache.felix:maven-bundle-plugin'
+      - 'org.apache.maven.plugins'
+      - 'org.codehaus.cargo:cargo-maven3-plugin'
+      - 'org.codehaus.mojo:*'
+      - 'org.jacoco:jacoco-maven-plugin'
+      - 'org.openapitools:openapi-generator-maven-plugin'
+      - 'org.sonatype.central:central-publishing-maven-plugin'
+      # Dependency groups
+      - 'arquillian group'
+      - 'jboss-weld group'
+      - 'openrewrite group'
+      - 'spring-boot group'
+      - 'jaxb group'
+
+  # Devcontainer dependencies can be auto-merged
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:devcontainers']
+    includes:
+      - '*'
+
+  # GitHub Actions from GitHub (actions/*) can be auto-merged
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:github-action']
+    includes:
+      - 'actions/*'
+
+  # Code cleanup PRs created by github-actions bot can be auto-merged
+  - author: 'github-actions[bot]'
+    title: '*Code cleanup*'
+
+# Note: 3rd party GitHub Actions (not actions/*) are NOT allowlisted
+#       for security reasons (require manual review)
+# Note: DB drivers (postgresql, mysql, oracle, etc.) are NOT
+#       allowlisted as they require integration tests

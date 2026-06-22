@@ -17,6 +17,7 @@
 package org.operaton.spin.xml.dom;
 
 import org.junit.jupiter.api.Test;
+import org.xmlunit.assertj.XmlAssert;
 
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
@@ -25,7 +26,6 @@ import org.operaton.spin.xml.mapping.Order;
 
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.createExampleOrder;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest {
@@ -43,7 +43,7 @@ public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest {
     //different timezone
     String exampleValidationXmlWoTimezone = XmlTestUtil.removeTimeZone(EXAMPLE_VALIDATION_XML);
     xml = XmlTestUtil.removeTimeZone(xml);
-    assertThat(xml).isXmlEqualTo(exampleValidationXmlWoTimezone);
+    XmlAssert.assertThat(xml).and(exampleValidationXmlWoTimezone).ignoreWhitespace().areIdentical();
   }
 
   @Test

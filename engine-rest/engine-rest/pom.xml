@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-engine-rest-core</artifactId>
   <name>Operaton - Engine - REST</name>
@@ -68,12 +68,6 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-jcl</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.operaton.commons</groupId>
@@ -104,11 +98,6 @@
     </dependency>
     <!-- test -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
@@ -121,12 +110,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit5</classifier>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <classifier>junit6</classifier>
       <scope>test</scope>
     </dependency>
     <!-- only included to prevent java.lang.ClassNotFoundException: org.apache.jasper.servlet.JspServlet -->
@@ -223,6 +207,11 @@
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <testResources>
@@ -314,8 +303,8 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <version.netty>4.2.4.Final</version.netty>
-        <version.undertow>2.3.20.Final</version.undertow>
+        <version.netty>4.2.15.Final</version.netty>
+        <version.undertow>2.3.24.Final</version.undertow>
       </properties>
       <dependencies>
         <dependency>
@@ -335,8 +324,9 @@
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-netty4</artifactId>
+          <groupId>dev.resteasy.netty</groupId>
+          <artifactId>resteasy-embedded-server</artifactId>
+          <version>1.0.0.Final</version>
           <scope>test</scope>
         </dependency>
         <dependency>
@@ -479,95 +469,6 @@
                   <resources>
                     <resource>
                       <directory>src/test/resources-jersey2</directory>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>wildfly-compatibility</id>
-      <properties>
-        <!-- Test with Resteasy version used by the oldest
-             Operaton-supported Wildfly/JBoss EAP version.
-             Currently, this is JBoss EAP 7.2. -->
-        <version.resteasy>3.15.6.Final</version.resteasy>
-        <version.netty>4.2.7.Final</version.netty>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-jaxrs</artifactId>
-          <version>${version.resteasy}</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>io.netty</groupId>
-          <artifactId>netty-all</artifactId>
-          <version>${version.netty}</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-netty4</artifactId>
-          <version>${version.resteasy}</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>encoding-test</id>
-                <phase>test</phase>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <configuration>
-                  <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
-                  <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
-                  <includes>
-                    <include>**/ProcessDefinitionRestServiceInteractionTest.java</include>
-                    <include>**/TaskRestServiceInteractionTest.java</include>
-                  </includes>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>add-test-source</id>
-                <phase>generate-test-sources</phase>
-                <goals>
-                  <goal>add-test-source</goal>
-                </goals>
-                <configuration>
-                  <sources>
-                    <source>src/test/java-resteasy</source>
-                  </sources>
-                </configuration>
-              </execution>
-              <execution>
-                <id>add-test-resource</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>add-test-resource</goal>
-                </goals>
-                <configuration>
-                  <resources>
-                    <resource>
-                      <directory>
-                        src/test/resources-resteasy
-                      </directory>
                     </resource>
                   </resources>
                 </configuration>

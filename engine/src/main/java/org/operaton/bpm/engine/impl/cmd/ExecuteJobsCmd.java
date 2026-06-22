@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 
 import org.operaton.bpm.engine.IdentityService;
@@ -40,10 +38,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class ExecuteJobsCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class ExecuteJobsCmd implements Command<Void> {
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected String jobId;
@@ -110,7 +105,7 @@ public class ExecuteJobsCmd implements Command<Void>, Serializable {
 
       job.execute(commandContext);
 
-    } catch (Throwable t) {
+    } catch (Exception t) {
       String failedActivityId = Context.getCommandInvocationContext()
           .getProcessDataContext()
           .getLatestActivityId();

@@ -42,8 +42,8 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class CleanableHistoricCaseInstanceReportTest {
@@ -206,40 +206,28 @@ class CleanableHistoricCaseInstanceReportTest {
 
   @Test
   void testReportByInvalidCaseDefinitionId() {
+    // given
     CleanableHistoricCaseInstanceReport report = historyService.createCleanableHistoricCaseInstanceReport();
 
-    try {
-      report.caseDefinitionIdIn(null);
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    // when/then
+    assertThatThrownBy(() -> report.caseDefinitionIdIn(null))
+      .isInstanceOf(NotValidException.class);
 
-    try {
-      report.caseDefinitionIdIn("abc", null, "def");
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.caseDefinitionIdIn("abc", null, "def"))
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test
   void testReportByInvalidCaseDefinitionKey() {
+    // given
     CleanableHistoricCaseInstanceReport report = historyService.createCleanableHistoricCaseInstanceReport();
 
-    try {
-      report.caseDefinitionKeyIn(null);
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    // when/then
+    assertThatThrownBy(() -> report.caseDefinitionKeyIn(null))
+      .isInstanceOf(NotValidException.class);
 
-    try {
-      report.caseDefinitionKeyIn("abc", null, "def");
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.caseDefinitionKeyIn("abc", null, "def"))
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test

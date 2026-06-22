@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.multiinstance;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +25,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -394,7 +395,7 @@ class MultiInstanceTest {
   @Deployment
   @Test
   void testParallelUserTasksBasedOnCollection() {
-    List<String> assigneeList = Arrays.asList("kermit", "gonzo", "mispiggy", "fozzie", "bubba");
+    List<String> assigneeList = List.of("kermit", "gonzo", "mispiggy", "fozzie", "bubba");
     String procId = runtimeService.startProcessInstanceByKey("miParallelUserTasksBasedOnCollection",
           CollectionUtil.singletonMap("assigneeList", assigneeList)).getId();
 
@@ -488,7 +489,7 @@ class MultiInstanceTest {
   @Test
   void testParallelUserTasksCustomExtensions() {
     Map<String, Object> vars = new HashMap<>();
-    List<String> assigneeList = Arrays.asList("kermit", "gonzo", "fozzie");
+    List<String> assigneeList = List.of("kermit", "gonzo", "fozzie");
     vars.put("assigneeList", assigneeList);
     runtimeService.startProcessInstanceByKey("miSequentialUserTasks", vars);
 
@@ -527,28 +528,26 @@ class MultiInstanceTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment
-  @Test
-  void testSequentialScriptTasks() {
+  @ParameterizedTest
+  @CsvSource({
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml, miSequentialScriptTask, 5, 10",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml, miSequentialScriptTask, 200, 19900",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelScriptTasks.bpmn20.xml, miParallelScriptTask, 10, 45",
+  })
+  void scriptTaskShouldSumAfterLoop (String bpmnResource, String processDefinitionKey, int nrOfLoops, int expectedSum) {
+    // given
+    testRule.deploy(bpmnResource);
     Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
-    vars.put("nrOfLoops", 5);
-    runtimeService.startProcessInstanceByKey("miSequentialScriptTask", vars);
-    Execution waitStateExecution = runtimeService.createExecutionQuery().singleResult();
-    int sum = (Integer) runtimeService.getVariable(waitStateExecution.getId(), "sum");
-    assertThat(sum).isEqualTo(10);
-  }
+    vars.put("nrOfLoops", nrOfLoops);
 
-  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml")
-  @Test
-  void testSequentialScriptTasksNoStackOverflow() {
-    Map<String, Object> vars = new HashMap<>();
-    vars.put("sum", 0);
-    vars.put("nrOfLoops", 200);
-    runtimeService.startProcessInstanceByKey("miSequentialScriptTask", vars);
+    // when
+    runtimeService.startProcessInstanceByKey(processDefinitionKey, vars);
     Execution waitStateExecution = runtimeService.createExecutionQuery().singleResult();
     int sum = (Integer) runtimeService.getVariable(waitStateExecution.getId(), "sum");
-    assertThat(sum).isEqualTo(19900);
+
+    // then
+    assertThat(sum).isEqualTo(expectedSum);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml"})
@@ -579,18 +578,6 @@ class MultiInstanceTest {
     Execution waitStateExecution = runtimeService.createExecutionQuery().singleResult();
     int sum = (Integer) runtimeService.getVariable(waitStateExecution.getId(), "sum");
     assertThat(sum).isEqualTo(5);
-  }
-
-  @Deployment
-  @Test
-  void testParallelScriptTasks() {
-    Map<String, Object> vars = new HashMap<>();
-    vars.put("sum", 0);
-    vars.put("nrOfLoops", 10);
-    runtimeService.startProcessInstanceByKey("miParallelScriptTask", vars);
-    Execution waitStateExecution = runtimeService.createExecutionQuery().singleResult();
-    int sum = (Integer) runtimeService.getVariable(waitStateExecution.getId(), "sum");
-    assertThat(sum).isEqualTo(45);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelScriptTasks.bpmn20.xml"})
@@ -924,14 +911,21 @@ class MultiInstanceTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment
-  @Test
-  void testNestedParallelSubProcessWithTimer() {
-    String procId = runtimeService.startProcessInstanceByKey("miNestedParallelSubProcess").getId();
-    List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(12);
+  @ParameterizedTest
+  @CsvSource({
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelSubProcessWithTimer.bpmn20.xml, miNestedParallelSubProcess, 12, 3",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelCallActivityWithTimer.bpmn20.xml, miParallelCallActivity, 6, 2",
+      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivityWithTimer.bpmn20.xml, miNestedParallelCallActivityWithTimer, 4, 3"
+  })
+  void parallelExecutionWithTimer (String bpmnResource, String processDefinitionKey, int expectedTaskCount, int completeTaskCount) {
+    testRule.deploy(bpmnResource);
+    testRule.deploy("org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml");
 
-    for (int i=0; i<3; i++) {
+    String procId = runtimeService.startProcessInstanceByKey(processDefinitionKey).getId();
+    List<Task> tasks = taskService.createTaskQuery().list();
+    assertThat(tasks).hasSize(expectedTaskCount);
+
+    for (int i=0; i<completeTaskCount; i++) {
       taskService.complete(tasks.get(i).getId());
     }
 
@@ -1080,29 +1074,6 @@ class MultiInstanceTest {
     }
   }
 
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelCallActivityWithTimer.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
-  @Test
-  void testParallelCallActivityWithTimer() {
-    String procId = runtimeService.startProcessInstanceByKey("miParallelCallActivity").getId();
-    List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(6);
-    for (int i = 0; i < 2; i++) {
-      taskService.complete(tasks.get(i).getId());
-    }
-
-    // Fire timer
-    Job timer = managementService.createJobQuery().singleResult();
-    managementService.executeJob(timer.getId());
-
-    Task taskAfterTimer = taskService.createTaskQuery().singleResult();
-    assertThat(taskAfterTimer.getTaskDefinitionKey()).isEqualTo("taskAfterTimer");
-    taskService.complete(taskAfterTimer.getId());
-
-    testRule.assertProcessEnded(procId);
-  }
-
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedSequentialCallActivity.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
@@ -1166,29 +1137,6 @@ class MultiInstanceTest {
     testRule.assertProcessEnded(procId);
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivityWithTimer.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
-  @Test
-  void testNestedParallelCallActivityWithTimer() {
-    String procId = runtimeService.startProcessInstanceByKey("miNestedParallelCallActivityWithTimer").getId();
-
-    List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(4);
-    for (int i = 0; i < 3; i++) {
-      taskService.complete(tasks.get(i).getId());
-    }
-
-    // Fire timer
-    Job timer = managementService.createJobQuery().singleResult();
-    managementService.executeJob(timer.getId());
-
-    Task taskAfterTimer = taskService.createTaskQuery().singleResult();
-    assertThat(taskAfterTimer.getTaskDefinitionKey()).isEqualTo("taskAfterTimer");
-    taskService.complete(taskAfterTimer.getId());
-
-    testRule.assertProcessEnded(procId);
-  }
-
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedParallelCallActivityCompletionCondition.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.externalSubProcess.bpmn20.xml"})
   @Test
@@ -1224,7 +1172,7 @@ class MultiInstanceTest {
   @Deployment
   @Test
   void testSequentialServiceTaskWithClassAndCollection() {
-    Collection<Integer> items = Arrays.asList(1,2,3,4,5,6);
+    Collection<Integer> items = List.of(1,2,3,4,5,6);
     Map<String, Object> vars = new HashMap<>();
     vars.put("result", 1);
     vars.put("items", items);
@@ -1267,7 +1215,7 @@ class MultiInstanceTest {
   @Test
   void testMultiInstanceCallActivityWithErrorBoundaryEvent() {
     Map<String, Object> variableMap = new HashMap<>();
-    variableMap.put("assignees", Arrays.asList("kermit", "gonzo"));
+    variableMap.put("assignees", List.of("kermit", "gonzo"));
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variableMap);
 
@@ -1294,7 +1242,7 @@ class MultiInstanceTest {
   @Test
   void testSequentialMultiInstanceCallActivityWithErrorBoundaryEvent() {
     Map<String, Object> variableMap = new HashMap<>();
-    variableMap.put("assignees", Arrays.asList("kermit", "gonzo"));
+    variableMap.put("assignees", List.of("kermit", "gonzo"));
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variableMap);
 
@@ -1317,8 +1265,8 @@ class MultiInstanceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedMultiInstanceTasks.bpmn20.xml"})
   @Test
   void testNestedMultiInstanceTasks() {
-    List<String> processes = Arrays.asList("process A", "process B");
-    List<String> assignees = Arrays.asList("kermit", "gonzo");
+    List<String> processes = List.of("process A", "process B");
+    List<String> assignees = List.of("kermit", "gonzo");
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("subProcesses", processes);
     variableMap.put("assignees", assignees);
@@ -1340,8 +1288,8 @@ class MultiInstanceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedMultiInstanceTasks.bpmn20.xml"})
   @Test
   void testNestedMultiInstanceTasksActivityInstance() {
-    List<String> processes = Arrays.asList("process A", "process B");
-    List<String> assignees = Arrays.asList("kermit", "gonzo");
+    List<String> processes = List.of("process A", "process B");
+    List<String> assignees = List.of("kermit", "gonzo");
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("subProcesses", processes);
     variableMap.put("assignees", assignees);

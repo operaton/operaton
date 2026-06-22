@@ -61,8 +61,10 @@ public interface AuthorizationQuery extends Query<AuthorizationQuery, Authorizat
    *   .list();
    * </pre>
    *
+   * <p>
    * Selects all Authorization objects which provide READ,UPDATE,DELETE
    * Permissions for the given user.
+   * </p>
    *
    */
   AuthorizationQuery hasPermission(Permission permission);

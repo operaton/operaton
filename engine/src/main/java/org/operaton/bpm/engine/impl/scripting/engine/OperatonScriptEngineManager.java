@@ -30,9 +30,12 @@ import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.JYT
  * <p>
  * a) after the discovery of the engines on the classpath; the respective engine factories are created
  * b) before the engines are created.
+ * </p>
  *
+ * <p>
  * If custom logic is needed for a specific engine after the classpath detection, before the engine creation,
  * it can be added to the classes map.
+ * </p>
  */
 public class OperatonScriptEngineManager extends ScriptEngineManager {
 

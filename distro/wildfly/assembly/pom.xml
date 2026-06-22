@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-wildfly-assembly</artifactId>
@@ -203,7 +203,9 @@
                   <workingDirectory>${maven.multiModuleProjectDirectory}</workingDirectory>
                   <arguments>
                     <argument>install</argument>
-                    <argument>pystache</argument>
+                    <argument>--only-binary</argument>
+                    <argument>:all:</argument>
+                    <argument>pystache==0.6.8</argument>
                   </arguments>
                   <skip>false</skip>
                 </configuration>

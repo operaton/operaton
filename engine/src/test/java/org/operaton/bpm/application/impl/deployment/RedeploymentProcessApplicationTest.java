@@ -17,7 +17,6 @@
 package org.operaton.bpm.application.impl.deployment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -45,7 +44,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -97,7 +96,7 @@ public class RedeploymentProcessApplicationTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { BPMN_RESOURCE_1, BPMN_RESOURCE_2, "processOne", "processTwo", processDefinitionTestProvider() },
       { CMMN_RESOURCE_1, CMMN_RESOURCE_2, "oneTaskCase", "twoTaskCase", caseDefinitionTestProvider() },
       { DMN_RESOURCE_1, DMN_RESOURCE_2, "decision", "score-decision", decisionDefinitionTestProvider() },
@@ -147,7 +146,7 @@ public class RedeploymentProcessApplicationTest {
     // then
     assertThat(application.isCalled()).isTrue();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2));
   }
 
   @TestTemplate
@@ -167,31 +166,24 @@ public class RedeploymentProcessApplicationTest {
           .deploy();
     // given
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
-    try {
 
-      // when - second deployment
-      deployment2 = repositoryService
-          .createDeployment()
-          .name(DEPLOYMENT_NAME)
-          .addDeploymentResources(deployment1.getId())
-          .deploy();
+    // when - second deployment
+    var deploymentBuilder = repositoryService
+        .createDeployment()
+        .name(DEPLOYMENT_NAME)
+        .addDeploymentResources(deployment1.getId());
 
-      fail("The second deployment should have thrown an exception due to mandatory enforcement of historyTimeToLive");
-    } catch (Exception e) {
-      // then
-      assertThat(e)
-          .withFailMessage("Deployment2 should throw ProcessEngineException due to mandatory historyTimeToLive")
-          .isInstanceOf(ProcessEngineException.class);
-    } finally {
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .withFailMessage("Deployment2 should throw ProcessEngineException due to mandatory historyTimeToLive")
+        .isInstanceOf(ProcessEngineException.class);
 
-      // cleanup
-      if (deployment1 != null) {
-        deploymentsToCleanup.add(deployment1);
-      }
+    // cleanup
+    if (deployment1 != null) {
+      deploymentsToCleanup.add(deployment1);
+    }
 
-      if (deployment2 != null) {
-        deploymentsToCleanup.add(deployment2);
-      }
+    if (deployment2 != null) {
+      deploymentsToCleanup.add(deployment2);
     }
   }
 
@@ -231,7 +223,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isFalse();
     assertThat(application2.isCalled()).isTrue();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   @TestTemplate
@@ -268,7 +260,7 @@ public class RedeploymentProcessApplicationTest {
     // then
     assertThat(application1.isCalled()).isTrue();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   @TestTemplate
@@ -308,7 +300,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isTrue();
     assertThat(application2.isCalled()).isFalse();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment3));
   }
 
   @TestTemplate
@@ -348,7 +340,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isTrue();
     assertThat(application2.isCalled()).isFalse();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   @TestTemplate
@@ -399,7 +391,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isFalse();
     assertThat(application2.isCalled()).isTrue();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   @TestTemplate
@@ -450,7 +442,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isTrue();
     assertThat(application2.isCalled()).isFalse();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   protected void deleteDeployments(List<Deployment> deployments) {

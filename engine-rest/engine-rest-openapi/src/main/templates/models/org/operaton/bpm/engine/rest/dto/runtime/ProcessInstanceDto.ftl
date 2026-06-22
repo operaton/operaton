@@ -25,7 +25,8 @@
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "The id of the case instance associated with the process instance." />
+        deprecated = true
+        desc = "The id of the case instance associated with the process instance. ${lib.cmmnDeprecationNotice}" />
 
     <@lib.property
         name = "ended"

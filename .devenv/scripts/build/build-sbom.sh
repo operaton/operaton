@@ -68,7 +68,7 @@ done
 
 echo "Generating CycloneDX SBOM for Node.js frontend module..."
 mkdir -p target/sbom
-docker run --rm -v "$(pwd)":/repo aquasec/trivy:latest fs --scanners vuln --format cyclonedx --output /repo/target/sbom/operaton-webapps.cyclonedx-json.sbom /repo/webapps/frontend
+docker run --rm -v "$(pwd)":/repo aquasec/trivy:canary fs --scanners vuln --format cyclonedx --output /repo/target/sbom/operaton-webapps.cyclonedx-json.sbom /repo/webapps/frontend
 
 echo "Merging CycloneDX SBOMs for each distribution..."
 for DISTRO in "${DISTROS[@]}"; do

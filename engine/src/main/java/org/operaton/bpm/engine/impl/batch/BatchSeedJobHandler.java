@@ -47,7 +47,7 @@ public class BatchSeedJobHandler implements JobHandler<BatchSeedJobConfiguration
 
     String batchId = configuration.getBatchId();
     BatchEntity batch = commandContext.getBatchManager().findBatchById(batchId);
-    ensureNotNull("Batch with id '" + batchId + "' cannot be found", "batch", batch);
+    ensureNotNull("Batch with id '%s' cannot be found".formatted(batchId), "batch", batch);
 
     BatchJobHandler<?> batchJobHandler = commandContext
         .getProcessEngineConfiguration()

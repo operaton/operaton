@@ -24,11 +24,11 @@ var angular = require('operaton-commons-ui/vendor/angular');
 var $ = angular.element;
 
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
       scope: {
-        repositoryData: '='
+        repositoryData: '=',
       },
 
       template: template,
@@ -38,22 +38,23 @@ module.exports = [
         '$location',
         '$timeout',
         'search',
-        function($scope, $location, $timeout, search) {
+        function ($scope, $location, $timeout, search) {
           var resourcesData = $scope.repositoryData.newChild($scope);
 
           // utilities /////////////////////////////////////////////////////////////////
 
-          var updateSilently = function(params) {
+          var updateSilently = function (params) {
             search.updateSilently(params);
           };
 
           // observe data //////////////////////////////////////////////////////////////
 
-          $scope.state = resourcesData.observe('resourceId', function(
-            resourceId
-          ) {
-            $scope.currentResourceId = resourceId.resourceId;
-          });
+          $scope.state = resourcesData.observe(
+            'resourceId',
+            function (resourceId) {
+              $scope.currentResourceId = resourceId.resourceId;
+            },
+          );
 
           // taken from
           // http://stackoverflow.com/questions/1916218/find-the-longest-common-starting-substring-in-a-set-of-strings#answer-1917041
@@ -73,27 +74,28 @@ module.exports = [
           }
 
           $scope.sharedStart = '';
-          $scope.state = resourcesData.observe('resources', function(
-            resources
-          ) {
-            var paths = [];
-            $scope.resources = (resources || []).map(function(resource) {
-              var parts = (resource.name || resource.id).split('/');
-              resource._filename = parts.pop();
-              resource._filepath = parts.join('/');
-              paths.push(resource._filepath);
-              return resource;
-            });
-            $scope.sharedStart = sharedStart(paths);
-          });
+          $scope.state = resourcesData.observe(
+            'resources',
+            function (resources) {
+              var paths = [];
+              $scope.resources = (resources || []).map(function (resource) {
+                var parts = (resource.name || resource.id).split('/');
+                resource._filename = parts.pop();
+                resource._filepath = parts.join('/');
+                paths.push(resource._filepath);
+                return resource;
+              });
+              $scope.sharedStart = sharedStart(paths);
+            },
+          );
 
-          $scope.truncateFilepath = function(filepath) {
+          $scope.truncateFilepath = function (filepath) {
             return filepath.slice($scope.sharedStart.length);
           };
 
           // selection //////////////////////////////////////////////////////////////////
 
-          $scope.focus = function($event, resource) {
+          $scope.focus = function ($event, resource) {
             if ($event) {
               $event.preventDefault();
             }
@@ -103,20 +105,20 @@ module.exports = [
             if ($scope.currentResourceId === resourceId) {
               updateSilently({
                 resource: resourceId,
-                resourceName: null
+                resourceName: null,
               });
             } else {
               updateSilently({
                 resource: resourceId,
                 resourceName: null,
-                viewbox: null
+                viewbox: null,
               });
             }
 
             resourcesData.changed('resourceId');
           };
 
-          var selectNextResource = function() {
+          var selectNextResource = function () {
             for (var i = 0; i < $scope.resources.length - 1; i++) {
               if ($scope.resources[i].id === $scope.currentResourceId) {
                 return $scope.focus(null, $scope.resources[i + 1]);
@@ -124,7 +126,7 @@ module.exports = [
             }
           };
 
-          var selectPreviousResource = function() {
+          var selectPreviousResource = function () {
             for (var i = 1; i < $scope.resources.length; i++) {
               if ($scope.resources[i].id === $scope.currentResourceId) {
                 return $scope.focus(null, $scope.resources[i - 1]);
@@ -132,7 +134,7 @@ module.exports = [
             }
           };
 
-          $scope.handleKeydown = function($event) {
+          $scope.handleKeydown = function ($event) {
             if ($event.keyCode === 40) {
               $event.preventDefault();
               selectNextResource($event);
@@ -141,15 +143,15 @@ module.exports = [
               selectPreviousResource();
             }
             // wait for angular to update the classes and scroll to the newly selected task
-            $timeout(function() {
+            $timeout(function () {
               var $el = $($event.target).find('li.active')[0];
               if ($el) {
                 $el.scrollIntoView(false);
               }
             });
           };
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

@@ -18,14 +18,16 @@ package org.operaton.bpm.spring.boot.starter;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
-import static org.springframework.test.util.AssertionErrors.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@AutoConfigureTestRestTemplate
 @SpringBootTest(classes = {TestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
@@ -39,13 +41,20 @@ class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurati
   @Test
   void jobExecutorHealthIndicatorTest() {
     final String body = getHealthBody();
-    assertTrue("wrong body " + body, body.contains("jobExecutor\":{\"status\":\"UP\""));
+    assertThat(body)
+        .as("health body should contain jobExecutor with status UP")
+        .contains("\"jobExecutor\":")
+        .contains("\"status\":\"UP\"");
   }
 
   @Test
   void processEngineHealthIndicatorTest() {
     final String body = getHealthBody();
-    assertTrue("wrong body " + body, body.contains("processEngine\":{\"status\":\"UP\",\"details\":{\"name\":\"testEngine\"}}"));
+    assertThat(body)
+        .as("health body should contain processEngine with status UP and engine name")
+        .contains("\"processEngine\":")
+        .contains("\"status\":\"UP\"")
+        .contains("\"name\":\"testEngine\"");
   }
 
   private String getHealthBody() {

@@ -50,7 +50,7 @@ import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclus
 import static org.operaton.bpm.client.variable.ClientValues.XML;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class XmlValueIT {
+class XmlValueIT {
 
   protected static final String VARIABLE_NAME_XML = "xmlVariable";
 
@@ -75,7 +75,7 @@ public class XmlValueIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
 
@@ -84,7 +84,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shouldGetXml() {
+  void shouldGetXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_VALUE);
 
@@ -99,12 +99,13 @@ public class XmlValueIT {
     ExternalTask task = handler.getHandledTasks().get(0);
 
     String variableValue = task.getVariable(VARIABLE_NAME_XML);
-    assertThat(variableValue).isNotNull();
-    assertThat(variableValue).isEqualTo(VARIABLE_VALUE_XML_SERIALIZED);
+    assertThat(variableValue)
+      .isNotNull()
+      .isEqualTo(VARIABLE_VALUE_XML_SERIALIZED);
   }
 
   @Test
-  public void shouldGetTypedXml() {
+  void shouldGetTypedXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_VALUE);
 
@@ -124,7 +125,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shouldGetNull() {
+  void shouldGetNull() {
     // given
     XmlValue xmlValue = ClientValues.xmlValue(null);
 
@@ -145,7 +146,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shoulGetNullTyped() {
+  void shoulGetNullTyped() {
     // given
     XmlValue xmlValue = ClientValues.xmlValue(null);
 
@@ -167,7 +168,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shouldReturnBrokenXml() {
+  void shouldReturnBrokenXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_VALUE_BROKEN);
 
@@ -185,7 +186,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shoudSetVariable() {
+  void shoudSetVariable() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -222,7 +223,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shoudSetVariableNull() {
+  void shoudSetVariableNull() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -259,32 +260,32 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shoudSetTransientVariable() {
+  void shoudSetTransientVariable() {
     // given
     BpmnModelInstance process = createProcessWithExclusiveGateway(PROCESS_KEY_2, "${XML(" + VARIABLE_NAME_XML + ").attr('attrName').value() == 'attrValue'}");
     ProcessDefinitionDto definition = engineRule.deploy(process).get(0);
-    ProcessInstanceDto processInstance = engineRule.startProcessInstance(definition.getId());
+    ProcessInstanceDto processInstanceDto = engineRule.startProcessInstance(definition.getId());
 
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
+    RecordingExternalTaskHandler taskHandler = new RecordingExternalTaskHandler((task, externalTaskService) -> {
       Map<String, Object> variables = new HashMap<>();
       variables.put(VARIABLE_NAME_XML, ClientValues.xmlValue(VARIABLE_VALUE_XML_SERIALIZED, true));
-      client.complete(task, variables);
+      externalTaskService.complete(task, variables);
     });
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
+      .handler(taskHandler)
       .open();
 
     // then
-    clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
+    clientRule.waitForFetchAndLockUntil(() -> !taskHandler.getHandledTasks().isEmpty());
 
-    TaskDto task = engineRule.getTaskByProcessInstanceId(processInstance.getId());
+    TaskDto task = engineRule.getTaskByProcessInstanceId(processInstanceDto.getId());
     assertThat(task).isNotNull();
-    assertThat(task.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(task.getProcessInstanceId()).isEqualTo(processInstanceDto.getId());
     assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_ID);
 
-    List<VariableInstanceDto> variables = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstance.getId(), VARIABLE_NAME_XML);
+    List<VariableInstanceDto> variables = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstanceDto.getId(), VARIABLE_NAME_XML);
     assertThat(variables).isEmpty();
   }
 

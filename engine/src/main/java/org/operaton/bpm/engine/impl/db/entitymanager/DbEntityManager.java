@@ -193,12 +193,11 @@ public class DbEntityManager implements Session, EntityLoadListener {
 
   @SuppressWarnings("unchecked")
   public boolean selectBoolean(String statement, Object parameter) {
-    List<String> result = (List<String>) persistenceSession.selectList(statement, parameter);
+    List<Object> result = (List<Object>) persistenceSession.selectList(statement, parameter);
     if(result != null) {
       return result.contains(1);
     }
     return false;
-
   }
 
   public <T extends DbEntity> T selectById(Class<T> entityClass, String id) {
@@ -638,7 +637,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   }
 
   protected void validateId(DbEntity dbEntity) {
-    EnsureUtil.ensureValidIndividualResourceId("Entity " + dbEntity + " has an invalid id", dbEntity.getId());
+    EnsureUtil.ensureValidIndividualResourceId("Entity %s has an invalid id".formatted(dbEntity), dbEntity.getId());
   }
 
   public <T extends DbEntity> List<T> pruneDeletedEntities(List<T> listToPrune) {

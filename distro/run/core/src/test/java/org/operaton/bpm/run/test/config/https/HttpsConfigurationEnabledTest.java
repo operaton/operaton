@@ -56,7 +56,7 @@ class HttpsConfigurationEnabledTest extends AbstractRestTest {
     String url = "https://localhost:" + localPort + CONTEXT_PATH + "/task";
 
     // when
-    var response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(null), List.class);
+    var response = restTemplate.exchange(url, HttpMethod.GET, HttpEntity.EMPTY, List.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -67,7 +67,7 @@ class HttpsConfigurationEnabledTest extends AbstractRestTest {
     // given
     String url = "http://localhost:8899" + CONTEXT_PATH + "/task";
     // when
-    HttpEntity<Object> requestEntity = new HttpEntity<>(null);
+    HttpEntity<?> requestEntity = HttpEntity.EMPTY;
     Throwable exception = assertThatExceptionOfType(ResourceAccessException.class).isThrownBy(() ->
       restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class)).actual();
     assertThat(exception.getMessage()).contains("I/O error on GET request for \"http://localhost:8899/engine-rest/task\":");

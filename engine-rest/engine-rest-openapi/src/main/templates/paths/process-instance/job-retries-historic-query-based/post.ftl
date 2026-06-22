@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "setRetriesByProcessHistoricQueryBased"
       tag = "Process Instance"
-      summary = "Set Job Retries Async Historic Query Based (POST)"
+      summary = "Set Job Retries Async (Historic Query)"
       desc = "Create a batch to set retries of jobs asynchronously based on a historic process instance query." />
 
   <@lib.requestBody
@@ -51,10 +51,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid, for example if neither processInstanceIds, nor historicProcessInstanceQuery is present.
                 Or if the retry count is not specified."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

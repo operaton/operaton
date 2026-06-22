@@ -16,8 +16,8 @@
  */
 
 'use strict';
-module.exports = function() {
-  return function(str) {
+module.exports = function () {
+  return function (str) {
     // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 
     // we double escape the / character => / is escaped as '%2F',

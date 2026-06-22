@@ -16,25 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
 
-public class TaskMeterLogEntity implements DbEntity, HasDbReferences, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class TaskMeterLogEntity implements DbEntity, HasDbReferences {
 
   protected String id;
 
@@ -55,7 +47,7 @@ public class TaskMeterLogEntity implements DbEntity, HasDbReferences, Serializab
       digest.update(assignee.getBytes(StandardCharsets.UTF_8));
       return ByteBuffer.wrap(digest.digest(), 0, 8).getLong();
     } catch (NoSuchAlgorithmException e) {
-      throw new ProcessEngineException("Cannot lookup hash algorithm '" + algorithm + "'");
+      throw new ProcessEngineException("Cannot lookup hash algorithm '%s'".formatted(algorithm));
     }
   }
 
@@ -92,15 +84,5 @@ public class TaskMeterLogEntity implements DbEntity, HasDbReferences, Serializab
   public Object getPersistentState() {
     // immutable
     return TaskMeterLogEntity.class;
-  }
-
-  @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    return new HashMap<>();
   }
 }

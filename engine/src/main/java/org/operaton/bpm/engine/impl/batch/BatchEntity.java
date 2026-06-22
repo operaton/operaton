@@ -18,10 +18,8 @@ package org.operaton.bpm.engine.impl.batch;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -468,13 +466,8 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (seedJobDefinitionId != null) {
       referenceIdAndClass.put(seedJobDefinitionId, JobDefinitionEntity.class);

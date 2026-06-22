@@ -56,12 +56,9 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
 
   protected String buildStringFromList(Collection<?> list) {
     StringBuilder message = new StringBuilder();
-    message.append("[");
-    message.append("\n");
+    message.append("[\n");
     for( Object object : list ) {
-      message.append("  ");
-      message.append(object.toString());
-      message.append("\n");
+      message.append("  %s%n".formatted(object.toString()));
     }
     message.append("]");
 
@@ -70,14 +67,9 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
 
   private String buildStringFromMap(Map<String, ?> map) {
     StringBuilder message = new StringBuilder();
-    message.append("[");
-    message.append("\n");
+    message.append("[\n");
     for( Map.Entry<String, ?> entry : map.entrySet() ) {
-      message.append("  ");
-      message.append(entry.getKey());
-      message.append(": ");
-      message.append(entry.getValue().toString());
-      message.append("\n");
+      message.append("  %s: %s%n".formatted(entry.getKey(), entry.getValue().toString()));
     }
     message.append("]");
     return message.toString();
@@ -172,7 +164,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
       }
 
       if(parameter instanceof DbEntity dbEntity) {
-        message = ClassNameUtil.getClassNameWithoutPackage(dbEntity) + "[id=" + dbEntity.getId() + "]";
+        message = "%s[id=%s]".formatted(ClassNameUtil.getClassNameWithoutPackage(dbEntity), dbEntity.getId());
       }
 
       logDebug("009", "SQL operation: '{}'; Entity: '{}'", operationType, message);
@@ -323,15 +315,15 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
 
   public AuthorizationException requiredOperatonAdminOrPermissionException(List<MissingAuthorization> missingAuthorizations) {
     String exceptionCode = "029";
-    StringBuilder sb = new StringBuilder();
-    sb.append("Required admin authenticated group or user");
+    String message;
     if(missingAuthorizations != null && !missingAuthorizations.isEmpty()) {
-      sb.append(" or any of the following permissions: ");
-      sb.append(AuthorizationException.generateMissingAuthorizationsList(missingAuthorizations));
+      message = "Required admin authenticated group or user or any of the following permissions: %s.".formatted(
+          AuthorizationException.generateMissingAuthorizationsList(missingAuthorizations));
       exceptionCode = "110";
+    } else {
+      message = "Required admin authenticated group or user.";
     }
-    sb.append(".");
-    return new AuthorizationException(exceptionMessage(exceptionCode, sb.toString()));
+    return new AuthorizationException(exceptionMessage(exceptionCode, message));
   }
 
   public void createChildExecution(ExecutionEntity child, ExecutionEntity parent) {
@@ -426,7 +418,15 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
         thatDeploymentId);
   }
 
+  /**
+   * @deprecated use {@link #tooManyProcessDefinitionsException(int, String, String, String)} instead
+   */
+  @Deprecated(since = "1.1", forRemoval = true)
   public ProcessEngineException toManyProcessDefinitionsException(int count, String key, String versionAttribute, String versionValue, String tenantId) {
+    return tooManyProcessDefinitionsException(count, key, versionAttribute, versionValue);
+  }
+
+  public ProcessEngineException tooManyProcessDefinitionsException(int count, String key, String versionAttribute, String versionValue) {
     return new ProcessEngineException(exceptionMessage(
       "045",
       "There are '{}' results for a process definition with key '{}', {} '{}' and tenant-id '{}'.",
@@ -736,8 +736,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
   public ProcessEngineException disabledHistoricInstancePermissionsException() {
     return  new BadUserRequestException(exceptionMessage(
         "090",
-        "Historic instance permissions are disabled, " +
-            "please check your process engine configuration."
+        "Historic instance permissions are disabled, please check your process engine configuration."
     ));
   }
 
@@ -836,9 +835,9 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
         final List<SQLException> relatedSqlExceptions = findRelatedSqlExceptions(exCause);
         StringBuilder sb = new StringBuilder();
         for (SQLException sqlException : relatedSqlExceptions) {
-          sb.append(sqlException).append("\n");
+          sb.append("%s%n".formatted(sqlException));
         }
-        message.append("\n").append(sb);
+        message.append("%n%s".formatted(sb));
       }
       exCause = exCause.getCause();
     } while (exCause != null);

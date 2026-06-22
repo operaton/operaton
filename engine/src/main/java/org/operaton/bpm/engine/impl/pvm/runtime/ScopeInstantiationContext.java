@@ -25,8 +25,10 @@ import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
  * scopes is instantiated at once (e.g. during process instance modification
  * or process instance migration).
  *
+ * <p>
  * State is for example the scopes that need to be instantiated or the
  * variables that need to be set after the scopes are created.
+ * </p>
  *
  * @author Sebastian Menski
  */

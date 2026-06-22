@@ -25,7 +25,6 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -85,7 +84,7 @@ public class ProcessDiagramRetrievalTest {
    */
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
             { "testStartEventWithNegativeCoordinates", ".bpmn", ".png", "sid-61D1FC47-8031-4834-A9B4-84158E73F7B9" },
             { "testStartAndEndEventWithNegativeCoordinates", ".bpmn", ".png", "sid-61D1FC47-8031-4834-A9B4-84158E73F7B9" },
             { "testProcessWithTask", ".bpmn", ".png", "sid-1E142B16-AFAF-429E-A441-D1232CFBD560" },
@@ -157,8 +156,6 @@ public class ProcessDiagramRetrievalTest {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
       InputStream expectedStream = new FileInputStream("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName);
       InputStream actualStream = repositoryService.getProcessDiagram(processDefinition.getId());
-//      writeToFile(repositoryService.getProcessDiagram(processDefinition.getId()),
-//              new File("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName + ".actual.png"));
       assertThat(isEqual(expectedStream, actualStream)).isTrue();
     } else {
       // some test diagrams do not contain executable processes

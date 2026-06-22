@@ -31,9 +31,10 @@ import java.util.concurrent.TimeUnit;
 import org.joda.time.LocalDateTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -63,12 +64,14 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings({"java:S4144"})
 class StartTimerEventTest {
 
   protected static final long TWO_HOURS = TimeUnit.HOURS.toMillis(2L);
@@ -112,9 +115,7 @@ class StartTimerEventTest {
     // timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((50 * 60 * 1000) + 5000)));
 
-    executeAllJobs();
-
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -133,7 +134,7 @@ class StartTimerEventTest {
     assertThat(jobQuery.count()).isOne();
 
     ClockUtil.setCurrentTime(new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("15/11/2036 11:12:30"));
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -142,10 +143,7 @@ class StartTimerEventTest {
 
   }
 
-  // FIXME: This test likes to run in an endless loop when invoking the
-  // waitForJobExecutorOnCondition method
   @Deployment
-  @Disabled
   @Test
   void testCycleDateStartTimerEvent() {
     ClockUtil.setCurrentTime(new Date());
@@ -159,18 +157,14 @@ class StartTimerEventTest {
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isOne();
     assertThat(jobQuery.count()).isOne();
 
-    moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isOne();
 
     assertThat(jobQuery.count()).isOne();
-    // have to manually delete pending timer
-//    cleanDB();
-
   }
 
   private void moveByMinutes(int minutes) {
@@ -195,7 +189,7 @@ class StartTimerEventTest {
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isOne();
     assertThat(jobQuery.count()).isOne();
 
@@ -204,7 +198,7 @@ class StartTimerEventTest {
     assertThat(job.getDeploymentId()).isNotNull();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isEqualTo(2);
     assertThat(jobQuery.count()).isZero();
 
@@ -230,7 +224,7 @@ class StartTimerEventTest {
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isOne();
     assertThat(jobQuery.count()).isOne();
 
@@ -250,7 +244,7 @@ class StartTimerEventTest {
     assertThat(jobQuery.count()).isOne();
 
     ClockUtil.setCurrentTime(new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("15/11/2036 11:12:30"));
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -287,7 +281,7 @@ class StartTimerEventTest {
 
     // move the clock forward 2 hours and 2 min
     moveByMinutes(122);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = processInstanceQuery.list();
     assertThat(pi).hasSize(1);
@@ -318,7 +312,7 @@ class StartTimerEventTest {
 
     // move the clock forward 2 hours and 1 minute
     moveByMinutes(121);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = processInstanceQuery.list();
     assertThat(pi).hasSize(1);
@@ -346,14 +340,13 @@ class StartTimerEventTest {
     assertThat(jobQuery.count()).isOne();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").singleResult();
     String pi = processInstance.getProcessInstanceId();
     assertThat(runtimeService.getActiveActivityIds(pi).get(0)).isEqualTo("changed");
 
     assertThat(jobQuery.count()).isOne();
 
-//    cleanDB();
     repositoryService.deleteDeployment(id, true);
   }
 
@@ -1767,46 +1760,17 @@ class StartTimerEventTest {
             .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
   }
 
-  @Test
-  void shouldReevaluateCronToRepeatingTimerCycle() {
+  @ParameterizedTest
+  @CsvSource({
+    "0 0 * ? * *, R2/PT2H, 120, 2, 120, 2",
+    "0 0 * ? * *, R2/2023-08-18T14:00/PT30M, 240, 4, 30, 1",
+    "R3/2023-08-18T8:00/PT1H, R2/PT2H, 120, 2, 120, 2",
+    "R3/PT1H, R2/2023-08-18T10:00/PT2H, 120, 2, 120, 2"
+  })
+  void shouldReevaluateCronToRepeatingTimerCycle2(String cycle, String changedCycle, long expectedDueDateMinutes1, int moveByHours1, long expectedDueDateMinutes2, int moveByHours2) {
     // given
     ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * *"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/PT2H");
-    moveByHours(1); // execute second job
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-        .isNull();
-  }
-
-  @Test
-  void shouldReevaluateCronToRepeatingTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * *"); // every hour
+    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean(cycle); // every hour
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
     processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
 
@@ -1814,99 +1778,30 @@ class StartTimerEventTest {
     moveByHours(1); // execute first job, "2023/8/18 9:00:00"
 
     // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/2023-08-18T14:00/PT30M");
+    myCycleTimerBean.setCycle(changedCycle);
     moveByHours(1); // execute second job, "2023/8/18 10:00:00"
     JobQuery jobQuery = managementService.createJobQuery();
 
-    // then one more job is left due in 4 hours
+    // then one more job is left due in <moveByHours1> hours
     Date duedate = jobQuery.singleResult().getDuedate();
     assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.HOURS.toMillis(4L)).toInstant(), within(59, ChronoUnit.MINUTES));
+      .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(expectedDueDateMinutes1)).toInstant(), within(59, ChronoUnit.MINUTES));
 
-    moveByHours(4); // execute first job from new cycle, "2023/8/18 14:00:00"
+    moveByHours(moveByHours1); // execute first job from new cycle
 
-    // one more job is left due in 30 minutes
+    // one more job is left due before <moveByHours2>
     duedate = jobQuery.singleResult().getDuedate();
     assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(30L)).toInstant(), within(59, ChronoUnit.MINUTES));
+      .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(expectedDueDateMinutes2)).toInstant(), within(59, ChronoUnit.MINUTES));
 
-    moveByHours(1); // execute second job from new cycle
+    moveByHours(moveByHours2); // execute second job from new cycle
 
     // then no more jobs left
     assertThat(jobQuery.singleResult())
-        .isNull();
+      .isNull();
+
+
   }
-
-  @Test
-  void shouldReevaluateRepeatingTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R3/2023-08-18T8:00/PT1H"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job, "2023/8/18 9:00:00"
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/PT2H");
-    moveByHours(1); // execute second job, "2023/8/18 10:00:00"
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle, "2023/8/18 12:00:00"
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-        .isNull();
-  }
-
-  @Test
-  void shouldReevaluateRepeatingTimerCycleToTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R3/PT1H"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job, "2023/8/18 9:00:00"
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/2023-08-18T10:00/PT2H");
-    moveByHours(1); // execute second job, "2023/8/18 10:00:00"
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle, "2023/8/18 12:00:00"
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-    .isNull();
-  }
-
 
   // util methods ////////////////////////////////////////
 

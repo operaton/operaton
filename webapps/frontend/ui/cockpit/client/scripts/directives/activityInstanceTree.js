@@ -24,7 +24,7 @@ var angular = require('operaton-commons-ui/vendor/angular');
 // QUESTION: Shouldn't we use the templateUrl property instead?
 
 function dashed(str) {
-  return (str || '').replace(/([A-Z])/g, function($1) {
+  return (str || '').replace(/([A-Z])/g, function ($1) {
     return '-' + $1.toLowerCase();
   });
 }
@@ -38,13 +38,13 @@ var iconNames = {
   'parallel-gateway': 'gateway-parallel',
   'exclusive-gateway': 'gateway-xor',
   'intermediate-compensation-throw-event':
-    'intermediate-event-throw-compensation'
+    'intermediate-event-throw-compensation',
 };
 
 var Directive = [
   '$compile',
   '$filter',
-  function($compile, $filter) {
+  function ($compile, $filter) {
     return {
       restrict: 'EAC',
 
@@ -53,11 +53,11 @@ var Directive = [
         onElementClick: '&',
         selection: '=',
         quickFilters: '=',
-        orderChildrenBy: '&'
+        orderChildrenBy: '&',
       },
 
-      link: function(scope, element) {
-        scope.symbolIconName = function(str) {
+      link: function (scope, element) {
+        scope.symbolIconName = function (str) {
           var name = dashed(str);
           name = iconNames[name] ? iconNames[name] : name;
           return 'icon-' + name;
@@ -73,13 +73,13 @@ var Directive = [
           fn(template);
         }
 
-        scope.$watch('node', function(newValue) {
+        scope.$watch('node', function (newValue) {
           if (!newValue || newValue.$loaded === false) {
             return;
           }
 
           var children = (newValue.childActivityInstances || []).concat(
-            newValue.childTransitionInstances || []
+            newValue.childTransitionInstances || [],
           );
 
           if (orderChildrenBy) {
@@ -91,11 +91,11 @@ var Directive = [
           createTreeNode(newValue);
         });
 
-        scope.$on(nodeOpenedEventName, function($event, value) {
+        scope.$on(nodeOpenedEventName, function ($event, value) {
           handleNodeEvents($event, value);
         });
 
-        scope.$on(nodeSelectedEventName, function($event, value) {
+        scope.$on(nodeSelectedEventName, function ($event, value) {
           handleNodeEvents($event, value);
         });
 
@@ -129,39 +129,39 @@ var Directive = [
 
           scope.$emit(name, {
             id: id,
-            parentActivityInstanceId: parentActivityInstanceId
+            parentActivityInstanceId: parentActivityInstanceId,
           });
         }
 
-        scope.$watch('selection.activityInstanceIds', function(
-          newValue,
-          oldValue
-        ) {
-          var node = scope.node;
+        scope.$watch(
+          'selection.activityInstanceIds',
+          function (newValue, oldValue) {
+            var node = scope.node;
 
-          if (!node) {
-            return;
-          }
-
-          if (oldValue && oldValue.indexOf(node.id) != -1) {
-            node.isSelected = false;
-          }
-
-          if (newValue && newValue.indexOf(node.id) != -1) {
-            node.isSelected = true;
-
-            if (node.parentActivityInstanceId) {
-              fireNodeEvent(nodeSelectedEventName, node);
+            if (!node) {
+              return;
             }
-          }
-        });
 
-        scope.deselect = function($event) {
+            if (oldValue && oldValue.indexOf(node.id) != -1) {
+              node.isSelected = false;
+            }
+
+            if (newValue && newValue.indexOf(node.id) != -1) {
+              node.isSelected = true;
+
+              if (node.parentActivityInstanceId) {
+                fireNodeEvent(nodeSelectedEventName, node);
+              }
+            }
+          },
+        );
+
+        scope.deselect = function ($event) {
           $event.ctrlKey = true;
           scope.select($event);
         };
 
-        scope.select = function($event) {
+        scope.select = function ($event) {
           var node = scope.node;
 
           $event.stopPropagation();
@@ -172,12 +172,12 @@ var Directive = [
           scope.onElementClick({
             id: node.id,
             activityId: node.activityId || node.targetActivityId,
-            $event: $event
+            $event: $event,
           });
         };
 
         function createTreeNode(node) {
-          withTemplate(function(template) {
+          withTemplate(function (template) {
             // if finished, show collapsed
             node.isOpen = node.endTime ? false : true;
 
@@ -188,21 +188,21 @@ var Directive = [
           });
         }
 
-        scope.propogateSelection = function(id, activityId, $event) {
+        scope.propogateSelection = function (id, activityId, $event) {
           scope.onElementClick({
             id: id,
             activityId: activityId,
-            $event: $event
+            $event: $event,
           });
         };
 
-        scope.toggleOpen = function() {
+        scope.toggleOpen = function () {
           var node = scope.node;
           node.isOpen = !node.isOpen;
         };
-      }
+      },
     };
-  }
+  },
 ];
 
 module.exports = Directive;

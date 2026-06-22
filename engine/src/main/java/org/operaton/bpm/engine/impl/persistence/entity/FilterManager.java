@@ -64,7 +64,7 @@ public class FilterManager extends AbstractManager {
     checkAuthorization(DELETE, FILTER, filterId);
 
     FilterEntity filter = findFilterByIdInternal(filterId);
-    ensureNotNull("No filter found for filter id '" + filterId + "'", "filter", filter);
+    ensureNotNull("No filter found for filter id '%s'".formatted(filterId), "filter", filter);
 
     // delete all authorizations for this filter id
     deleteAuthorizations(FILTER, filterId);

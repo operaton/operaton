@@ -4,52 +4,23 @@
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-cmmn-model</artifactId>
   <name>Operaton - CMMN Model API</name>
   <description>${project.name}</description>
-  <properties>
-    <operaton.artifact>org.operaton.bpm.model.cmmn</operaton.artifact>
-    <operaton.osgi.export>
-      !org.operaton.bpm.model.cmmn.schema.*,
-      ${operaton.osgi.export.pkg};${operaton.osgi.version};-noimport:=true
-    </operaton.osgi.export>
-  </properties>
   <dependencies>
     <dependency>
-      <groupId>org.operaton.bpm.model</groupId>
-      <artifactId>operaton-xml-model</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-utils</artifactId>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-xml-model</artifactId>
-      <version>${project.version}</version>
-      <classifier>tests</classifier>
-      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>cleanVersions</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -86,6 +57,23 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>no-test-skip</id>
+      <activation>
+        <property>
+          <name>!maven.test.skip</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.operaton.bpm.model</groupId>
+          <artifactId>operaton-xml-model</artifactId>
+          <version>${project.version}</version>
+          <classifier>tests</classifier>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
     </profile>
   </profiles>
 </project>

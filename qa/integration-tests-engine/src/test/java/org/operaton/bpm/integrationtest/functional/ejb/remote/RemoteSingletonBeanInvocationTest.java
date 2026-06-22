@@ -41,9 +41,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test verifies that a CDI Java Bean Delegate is able to inject and invoke the
  * remote business interface of a SingletonBean from a different application
  *
+ * <p>
  * Note:
  * - works on Jboss
  * - works on Glassfish
+ * </p>
  *
  * @author Daniel Meyer
  *

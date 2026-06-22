@@ -19,9 +19,10 @@ package org.operaton.bpm.spring.boot.starter.configuration.impl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.boot.diagnostics.FailureAnalyzedException;
+import org.springframework.boot.diagnostics.FailureAnalysis;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -61,6 +62,12 @@ class GenericPropertiesConfigurationTest {
     operatonBpmProperties.getGenericProperties().getProperties().put("dont-exist", dontExistValue);
 
     assertThatThrownBy(() -> genericPropertiesConfiguration.preInit(processEngineConfiguration))
-      .isInstanceOf(SpringBootStarterException.class);
+      .isInstanceOf(FailureAnalyzedException.class)
+      .satisfies(ex -> {
+        FailureAnalysis analysis = ((FailureAnalyzedException) ex).analysis();
+        assertThat(analysis.getDescription()).contains("050");
+        assertThat(analysis.getAction()).contains("operaton.bpm.*");
+        assertThat(((FailureAnalyzedException) ex).getCause()).isNotNull();
+      });
   }
 }

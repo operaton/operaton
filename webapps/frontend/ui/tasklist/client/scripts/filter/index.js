@@ -43,23 +43,23 @@ var filterModule = angular.module('cam.tasklist.filter', ['ui.bootstrap']);
 filterModule.directive('camTasklistFilters', camTasklistFilters);
 filterModule.directive(
   'camTasklistFilterModalForm',
-  camTasklistFilterModalForm
+  camTasklistFilterModalForm,
 );
 filterModule.directive(
   'camTasklistFilterModalFormGeneral',
-  camTasklistFilterModalFormGeneral
+  camTasklistFilterModalFormGeneral,
 );
 filterModule.directive(
   'camTasklistFilterModalFormCriteria',
-  camTasklistFilterModalFormCriteria
+  camTasklistFilterModalFormCriteria,
 );
 filterModule.directive(
   'camTasklistFilterModalFormVariable',
-  camTasklistFilterModalFormVariable
+  camTasklistFilterModalFormVariable,
 );
 filterModule.directive(
   'camTasklistFilterModalFormPermission',
-  camTasklistFilterModalFormPermission
+  camTasklistFilterModalFormPermission,
 );
 
 /* controllers */

@@ -124,6 +124,7 @@ import org.operaton.bpm.model.xml.ModelParseException;
 import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.*;
 
@@ -147,14 +148,8 @@ public class Cmmn {
   private static final CmmnParser CMMN_PARSER;
 
   static {
-    CmmnFactory cmmnFactory = ServiceLoader.load(CmmnFactory.class).findFirst().orElse(
-      ServiceLoader.load(CmmnFactory.class, Cmmn.class.getClassLoader()).findFirst()
-        .orElseThrow(() -> new IllegalStateException("No CmmnFactory found"))
-    );
-    CmmnParserFactory cmmnParserFactory = ServiceLoader.load(CmmnParserFactory.class).findFirst().orElse(
-      ServiceLoader.load(CmmnParserFactory.class, Cmmn.class.getClassLoader()).findFirst()
-        .orElseThrow(() -> new IllegalStateException("No CmmnParserFactory found"))
-    );
+    CmmnFactory cmmnFactory = ServiceLoaderUtil.loadSingleService(CmmnFactory.class);
+    CmmnParserFactory cmmnParserFactory = ServiceLoaderUtil.loadSingleService(CmmnParserFactory.class);
 
     INSTANCE = cmmnFactory.newInstance();
     CMMN_PARSER = cmmnParserFactory.newInstance();
@@ -260,7 +255,7 @@ public class Cmmn {
     try (InputStream is = new FileInputStream(file)) {
       result = doReadModelFromInputStream(is);
     } catch (FileNotFoundException e) {
-      throw new CmmnModelException("Cannot read model from file " + file + ": file does not exist.");
+      throw new CmmnModelException("Cannot read model from file %s: file does not exist.".formatted(file));
     } catch (IOException e) {
       throw new CmmnModelException("Cannot read model from file " + file, e);
     }
@@ -275,7 +270,7 @@ public class Cmmn {
     try (OutputStream os = new FileOutputStream(file)) {
       doWriteModelToOutputStream(os, modelInstance);
     } catch (FileNotFoundException e) {
-      throw new CmmnModelException("Cannot write model to file " + file + ": file does not exist.");
+      throw new CmmnModelException("Cannot write model to file %s: file does not exist.".formatted(file));
     } catch (IOException e) {
       throw new CmmnModelException("Cannot write model to file " + file, e);
     }
@@ -395,7 +390,7 @@ public class Cmmn {
     UserEventImpl.registerType(modelBuilder);
     UserEventListenerImpl.registerType(modelBuilder);
 
-    /** operaton extensions */
+    // Operaton extensions
     OperatonCaseExecutionListenerImpl.registerType(modelBuilder);
     OperatonExpressionImpl.registerType(modelBuilder);
     OperatonFieldImpl.registerType(modelBuilder);

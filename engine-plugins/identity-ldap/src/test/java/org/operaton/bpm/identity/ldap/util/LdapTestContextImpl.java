@@ -160,7 +160,7 @@ public class LdapTestContextImpl implements LdapTestContext {
     }
 
     private String addGroupEntry(LDAPConnection connection, String groupName) throws LDAPException {
-        String orgDN = "ou=" + groupName + "," + baseDn;
+        String orgDN = "ou=%s,%s".formatted(groupName, baseDn);
         Entry orgEntry = new Entry(orgDN);
         orgEntry.addAttribute("objectClass",  "organizationalUnit", "top", "operatonGroup");
         orgEntry.addAttribute("ou", groupName);
@@ -173,7 +173,7 @@ public class LdapTestContextImpl implements LdapTestContext {
     }
 
     private String addUserUidEntry(LDAPConnection connection, String uid, String groupName, String firstname, String lastname, String mail) throws LDAPException {
-        String userDN = "uid=" + uid +",ou=" + groupName + ",dc=operaton,dc=org";
+        String userDN = "uid=%s,ou=%s,dc=operaton,dc=org".formatted(uid, groupName);
         Entry userEntry = new Entry(userDN);
         userEntry.addAttribute("objectClass",  "top", "person", "inetOrgPerson", "operatonPerson");
         userEntry.addAttribute("uid", uid);
@@ -191,7 +191,7 @@ public class LdapTestContextImpl implements LdapTestContext {
     }
 
     private String addUserCnEntry(LDAPConnection connection, String uid, String groupName, String firstname, String lastname, String mail) throws LDAPException {
-        String userDN = "cn=" + lastname + "\\," + firstname + ",ou=" + groupName + ",dc=operaton,dc=org";
+        String userDN = "cn=%s\\,%s,ou=%s,dc=operaton,dc=org".formatted(lastname, firstname, groupName);
         Entry userEntry = new Entry(userDN);
         userEntry.addAttribute("objectClass", "top", "person", "inetOrgPerson", "operatonPerson");
         userEntry.addAttribute("uid", uid);
@@ -209,7 +209,7 @@ public class LdapTestContextImpl implements LdapTestContext {
     }
 
     private String addRoleEntry(LDAPConnection connection, String roleName, String... userDns) throws LDAPException {
-        String orgDN = "ou=" + roleName + "," + baseDn;
+        String orgDN = "ou=%s,%s".formatted(roleName, baseDn);
         Entry roleEntry = new Entry(orgDN);
         roleEntry.addAttribute("objectClass", "top", "groupOfNames");
         roleEntry.addAttribute("cn", roleName);

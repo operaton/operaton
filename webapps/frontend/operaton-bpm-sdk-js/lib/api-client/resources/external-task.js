@@ -39,10 +39,10 @@ ExternalTask.path = 'external-task';
  * @param {Object} [params]
  * @param {String} [params.id]      The id of the external task to be retrieved.
  */
-ExternalTask.get = function(params, done) {
+ExternalTask.get = function (params, done) {
   return this.http.get(this.path + '/' + params.id, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -72,7 +72,7 @@ ExternalTask.get = function(params, done) {
  * @param {String} [params.firstResult]	      Pagination of results. Specifies the index of the first result to return.
  * @param {String} [params.maxResults]	      Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  */
-ExternalTask.list = function(params, done) {
+ExternalTask.list = function (params, done) {
   var path = this.path + '/';
 
   // those parameters have to be passed in the query and not body
@@ -81,7 +81,7 @@ ExternalTask.list = function(params, done) {
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -105,10 +105,10 @@ ExternalTask.list = function(params, done) {
  * @param {String} [params.active]	          Only include active tasks. Value may only be true, as false matches any external task.
  * @param {String} [params.suspended]	        Only include suspended tasks. Value may only be true, as false matches any external task.
  */
-ExternalTask.count = function(params, done) {
+ExternalTask.count = function (params, done) {
   return this.http.post(this.path + '/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -126,10 +126,10 @@ ExternalTask.count = function(params, done) {
  *  lockDuration	 Mandatory. The duration to lock the external tasks for in milliseconds.
  *  variables	   A JSON array of String values that represent variable names. For each result task belonging to this topic, the given variables are returned as well if they are accessible from the external task's execution.
  */
-ExternalTask.fetchAndLock = function(params, done) {
+ExternalTask.fetchAndLock = function (params, done) {
   return this.http.post(this.path + '/fetchAndLock', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -155,10 +155,10 @@ ExternalTask.fetchAndLock = function(params, done) {
  *                - mimetype: The mime type of the file that is being uploaded.
  *                - encoding: The encoding of the file that is being uploaded.
  */
-ExternalTask.complete = function(params, done) {
+ExternalTask.complete = function (params, done) {
   return this.http.post(this.path + '/' + params.id + '/complete', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -174,10 +174,10 @@ ExternalTask.complete = function(params, done) {
  * @param {String} [params.retries]            A number of how often the task should be retried. Must be >= 0. If this is 0, an incident is created and the task cannot be fetched anymore unless the retries are increased again. The incident's message is set to the errorMessage parameter.
  * @param {String} [params.retryTimeout]       A timeout in milliseconds before the external task becomes available again for fetching. Must be >= 0.
  */
-ExternalTask.failure = function(params, done) {
+ExternalTask.failure = function (params, done) {
   return this.http.post(this.path + '/' + params.id + '/failure', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -187,10 +187,10 @@ ExternalTask.failure = function(params, done) {
  * @param {Object} [params]
  * @param {String} [params.id]          The id of the external task to unlock.
  */
-ExternalTask.unlock = function(params, done) {
+ExternalTask.unlock = function (params, done) {
   return this.http.post(this.path + '/' + params.id + '/unlock', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -201,10 +201,10 @@ ExternalTask.unlock = function(params, done) {
  * @param {String} [params.id]           The id of the external task to unlock.
  * @param {String} [params.retries]      The number of retries to set for the external task. Must be >= 0. If this is 0, an incident is created and the task cannot be fetched anymore unless the retries are increased again.
  */
-ExternalTask.retries = function(params, done) {
+ExternalTask.retries = function (params, done) {
   return this.http.put(this.path + '/' + params.id + '/retries', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -216,10 +216,10 @@ ExternalTask.retries = function(params, done) {
  * @param   {Object}            params
  * @param   {requestCallback}   done
  */
-ExternalTask.retriesAsync = function(params, done) {
+ExternalTask.retriesAsync = function (params, done) {
   return this.http.post(this.path + '/retries-async', {
     data: params,
-    done: done
+    done: done,
   });
 };
 

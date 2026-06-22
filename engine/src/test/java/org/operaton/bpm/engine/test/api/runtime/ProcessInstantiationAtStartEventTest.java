@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ProcessInstantiationAtStartEventTest {
 
@@ -121,26 +121,24 @@ class ProcessInstantiationAtStartEventTest {
 
   @Test
   void testFailToStartProcessInstanceSkipListeners() {
+    // given
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY);
-    try {
-      processInstantiationBuilder.execute(true, false);
 
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot skip");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute(true, false))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot skip");
   }
 
   @Test
   void testFailToStartProcessInstanceSkipInputOutputMapping() {
+    // given
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY);
-    try {
-      processInstantiationBuilder.execute(false, true);
 
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot skip");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute(false, true))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot skip");
   }
 
 }

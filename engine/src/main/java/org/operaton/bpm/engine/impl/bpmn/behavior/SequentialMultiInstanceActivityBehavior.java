@@ -35,7 +35,7 @@ public class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivi
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
   @Override
-  protected void createInstances(ActivityExecution execution, int nrOfInstances) throws Exception {
+  protected void createInstances(ActivityExecution execution, int nrOfInstances) {
     Collection<?> collection = evaluateCollection(execution);
     prepareScope(execution, nrOfInstances);
     setLoopVariable(execution, NUMBER_OF_ACTIVE_INSTANCES, 1);

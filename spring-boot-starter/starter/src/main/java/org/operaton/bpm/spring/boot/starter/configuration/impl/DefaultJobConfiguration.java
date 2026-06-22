@@ -69,7 +69,7 @@ public class DefaultJobConfiguration extends AbstractOperatonConfiguration imple
   protected void registerCustomJobHandlers(SpringProcessEngineConfiguration configuration) {
     configuration.setCustomJobHandlers(join(configuration.getCustomJobHandlers(), customJobHandlers));
     for (JobHandler<?> jobHandler : configuration.getCustomJobHandlers()) {
-      logger.info("Register Custom JobHandler: '{}'", jobHandler.getType());
+      LOG.registerCustomJobHandler(jobHandler.getType());
     }
   }
 

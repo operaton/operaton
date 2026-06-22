@@ -30,12 +30,12 @@ const addMissingLicenseHeaders = (filePath, source) => {
     if (rowFile.includes('node_modules')) {
       pkg = rowFile.replace(
         /^(.*)node_modules\/(@[a-z-\d.]+\/[a-z-\d.]+)?([a-z-\d.]+)?(.*)$/,
-        (match, p1, p2, p3) => p2 || p3
+        (match, p1, p2, p3) => p2 || p3,
       );
     } else if (!rowFile.includes('operaton-bpm-sdk-js')) {
       pkg = rowFile.replace(
         /^(@[a-z-\d.]+\/[a-z-\d.]+)?([a-z-\d.]+)?(.*)$/,
-        (match, p1, p2) => p2 || p1
+        (match, p1, p2) => p2 || p1,
       );
     }
 
@@ -45,29 +45,34 @@ const addMissingLicenseHeaders = (filePath, source) => {
         packagePath = `${process.cwd()}/node_modules/operaton-bpm-webapp/node_modules/${pkg}`;
       }
 
+      const licenseFileNames = [
+        'LICENSE',
+        'LICENCE',
+        'license',
+        'LICENSE.md',
+        'LICENCE.md',
+        'LICENSE-MIT',
+        'LICENSE-MIT.txt',
+        'LICENSE.txt',
+      ];
+
       let licenseInfo = null;
-      try {
-        licenseInfo = fs.readFileSync(`${packagePath}/LICENSE`, 'utf8');
-      } catch (e) {
-        try {
-          licenseInfo = fs.readFileSync(`${packagePath}/LICENSE.md`, 'utf8');
-        } catch (e) {
+      for (const fileName of licenseFileNames) {
+        const pathName = `${packagePath}/${fileName}`;
+        if (fs.existsSync(pathName)) {
           try {
-            licenseInfo = fs.readFileSync(
-              `${packagePath}/LICENSE-MIT.txt`,
-              'utf8'
-            );
-          } catch (e) {
-            try {
-              licenseInfo = fs.readFileSync(
-                `${packagePath}/LICENSE.txt`,
-                'utf8'
-              );
-            } catch (e) {
-              console.log(`${pkg} has no license file. 🤷‍`);// eslint-disable-line
-            }
+            licenseInfo = fs.readFileSync(pathName, 'utf8');
+          } catch (_e) {
+            // Ignore unreadable license files and try the next known filename.
+          }
+          if (licenseInfo) {
+            break;
           }
         }
+      }
+
+      if (!licenseInfo) {
+        console.log(`${pkg} has no license file. 🤷‍`); // eslint-disable-line
       }
 
       let packageJsonPath = require.resolve(`${packagePath}/package.json`);
@@ -75,7 +80,7 @@ const addMissingLicenseHeaders = (filePath, source) => {
       if (licenseInfo) {
         return `/*!\n@license ${pkg}@${version}\n${licenseInfo}*/\n${source}`;
       } else if (license) {
-        console.log(`${pkg} has a "license" property. 🤷‍`);// eslint-disable-line
+        console.log(`${pkg} has a "license" property. 🤷‍`); // eslint-disable-line
         return `/*! @license ${pkg}@${version} (${license}) */\n${source}`;
       }
     }
@@ -84,6 +89,6 @@ const addMissingLicenseHeaders = (filePath, source) => {
   }
 };
 
-module.exports = function(source) {
+module.exports = function (source) {
   return addMissingLicenseHeaders(this.resourcePath, source);
 };

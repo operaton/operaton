@@ -22,13 +22,17 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 /** An object structure representing an executable process composed of
  * activities and transitions.
  *
+ * <p>
  * Business processes are often created with graphical editors that store the
  * process definition in certain file format. These files can be added to a
  * {@link Deployment} artifact, such as for example a Business Archive (.bar)
  * file.
+ * </p>
  *
+ * <p>
  * At deploy time, the engine will then parse the process definition files to an
  * executable instance of this class, that can be used to start a {@link ProcessInstance}.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Joram Barez

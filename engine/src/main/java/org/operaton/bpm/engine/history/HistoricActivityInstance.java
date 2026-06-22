@@ -41,7 +41,9 @@ public interface HistoricActivityInstance {
    * The activity type of the activity.
    * Typically the activity type correspond to the XML tag used in the BPMN 2.0 process definition file.
    *
+   * <p>
    * All activity types are available in {@link org.operaton.bpm.engine.ActivityTypes}
+   * </p>
    *
    * @see org.operaton.bpm.engine.ActivityTypes
    */

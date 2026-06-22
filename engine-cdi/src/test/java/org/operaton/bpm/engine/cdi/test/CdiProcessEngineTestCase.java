@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.cdi.test;
 
-import java.util.logging.Logger;
 import jakarta.enterprise.inject.spi.BeanManager;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -46,8 +45,8 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.util.LogUtil;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 /**
  * @author Daniel Meyer
@@ -61,10 +60,9 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 public abstract class CdiProcessEngineTestCase {
 
   static {
-    LogUtil.readJavaUtilLoggingConfigFromClasspath();
+    SLF4JBridgeHandler.removeHandlersForRootLogger();
+    SLF4JBridgeHandler.install();
   }
-
-  protected Logger logger = Logger.getLogger(getClass().getName());
 
   @RegisterExtension
   protected static final ProcessEngineExtension processEngineExtension =

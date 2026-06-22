@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.filter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -425,8 +424,7 @@ class FilterTaskQueryTest {
         }
       } else if ((expectedRelationConditions == null && actualRelationConditions != null) ||
           (expectedRelationConditions != null && actualRelationConditions == null)) {
-        fail("Expected filtering properties: " + expectedRelationConditions + ". "
-            + "Actual filtering properties: " + actualRelationConditions);
+        fail("Expected filtering properties: %s. Actual filtering properties: %s".formatted(expectedRelationConditions, actualRelationConditions));
       }
     }
   }
@@ -1028,7 +1026,7 @@ class FilterTaskQueryTest {
   @Test
   void testExtendTaskQueryWithCandidateGroupInAndCandidateGroup() {
     // create a query with candidate group in and save it as a filter
-    TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList("testGroup", "testGroup2"));
+    TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(List.of("testGroup", "testGroup2"));
     assertThat(candidateGroupInQuery.getCandidateGroups()).hasSize(2);
     assertThat(candidateGroupInQuery.getCandidateGroups().get(0)).isEqualTo("testGroup");
     assertThat(candidateGroupInQuery.getCandidateGroups().get(1)).isEqualTo("testGroup2");
@@ -1057,7 +1055,7 @@ class FilterTaskQueryTest {
   @Test
   void testTaskQueryWithCandidateGroupInAndCandidateGroupExpression() {
     // create a query with candidate group in and candidate group expression
-    TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList("testGroup", "testGroup2")).taskCandidateGroupExpression("${'test'}");
+    TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(List.of("testGroup", "testGroup2")).taskCandidateGroupExpression("${'test'}");
     assertThat(candidateGroupInQuery.getExpressions()).containsEntry("taskCandidateGroup", "${'test'}");
     assertThat(candidateGroupInQuery.getCandidateGroups()).hasSize(2);
     assertThat(candidateGroupInQuery.getCandidateGroups().get(0)).isEqualTo("testGroup");
@@ -1356,7 +1354,7 @@ class FilterTaskQueryTest {
   void testDeprecatedOrderingFormatDeserializationSingleOrdering() {
     String sortByNameAsc = "RES." + TaskQueryProperty.NAME.getName() + " " + Direction.ASCENDING.getName();
 
-    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
+    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.QUERY_CONVERTER.get(EntityTypes.TASK);
     JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply a specific ordering by one dimension
@@ -1386,7 +1384,7 @@ class FilterTaskQueryTest {
     String sortByNameAsc = "RES." + TaskQueryProperty.NAME.getName() + " " + Direction.ASCENDING.getName();
     String secondaryOrdering = sortByNameAsc + ", RES." + TaskQueryProperty.ASSIGNEE.getName() + " " + Direction.DESCENDING.getName();
 
-    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
+    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.QUERY_CONVERTER.get(EntityTypes.TASK);
     JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply a secondary ordering
@@ -1423,7 +1421,7 @@ class FilterTaskQueryTest {
   void testDeprecatedOrderingFormatDeserializationFunctionOrdering() {
     String orderingWithFunction = "LOWER(RES." + TaskQueryProperty.NAME.getName() + ") asc";
 
-    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
+    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.QUERY_CONVERTER.get(EntityTypes.TASK);
     JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply an ordering with a function

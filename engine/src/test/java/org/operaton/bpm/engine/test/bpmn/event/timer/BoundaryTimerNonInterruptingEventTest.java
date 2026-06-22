@@ -48,6 +48,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
+import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
@@ -373,6 +374,7 @@ class BoundaryTimerNonInterruptingEventTest {
   void testReceiveTaskWithBoundaryTimer(){
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("timeCycle", "R/PT1H");
+    Date startTime = ClockUtil.getCurrentTime();
 
     // After process start, there should be a timer created
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nonInterruptingCycle",variables);
@@ -392,10 +394,11 @@ class BoundaryTimerNonInterruptingEventTest {
 
     runtimeService.signal(executions.get(0).getId());
 
-//    // After setting the clock to time '1 hour and 5 seconds', the second timer should fire
-//    ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((60 * 60 * 1000) + 5000)));
-//    testRule.waitForJobExecutorToProcessAllJobs(5000L);
-//    assertEquals(0L, jobQuery.count());
+    // After setting the clock to time '1 hour and 5 seconds', the second timer should fire
+    ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((60 * 60 * 1000) + 5000)));
+
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 5000L);
+    assertThat(jobQuery.count()).isZero();
 
     // which means the process has ended
     testHelper.assertProcessEnded(pi.getId());

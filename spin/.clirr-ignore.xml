@@ -37,6 +37,12 @@
     <className>org/operaton/spin/DataFormats</className>
     <field>*_DATAFORMAT_NAME</field>
   </difference>
+  <!-- constant field 'extensions' renamed to 'EXTENSIONS' and made private -->
+  <difference>
+    <differenceType>6001</differenceType>
+    <className>org/operaton/spin/scripting/SpinScriptEnv</className>
+    <field>extensions</field>
+  </difference>
 
 
 </differences>

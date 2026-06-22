@@ -17,8 +17,6 @@
 
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -35,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @param <T> the type of the value to set by this command
  */
-public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void>, Serializable {
+public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void> {
 
   protected final String taskId;
   protected final T value;
@@ -99,7 +97,7 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void>, Se
     TaskManager taskManager = context.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
 
-    ensureNotNull(NotFoundException.class, "Cannot find task with id " + taskId, "task", task);
+    ensureNotNull(NotFoundException.class, "Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkTaskAgainstContext(task, context);
 

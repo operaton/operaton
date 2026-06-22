@@ -119,7 +119,7 @@ public class FilterDto {
 
   public void updateFilter(Filter filter, ProcessEngine engine) {
     if (getResourceType() != null && !getResourceType().equals(filter.getResourceType())) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, "Unable to update filter from resource type '" + filter.getResourceType() + "' to '" + getResourceType() + "'");
+      throw new InvalidRequestException(Status.BAD_REQUEST, "Unable to update filter from resource type '%s' to '%s'".formatted(filter.getResourceType(), getResourceType()));
     }
     filter.setName(getName());
     filter.setOwner(getOwner());

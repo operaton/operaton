@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-module.exports = function(pluginPoint, scope) {
+module.exports = function (pluginPoint, scope) {
   let result = {};
 
   switch (pluginPoint) {

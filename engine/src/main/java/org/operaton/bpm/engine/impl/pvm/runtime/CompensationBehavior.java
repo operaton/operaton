@@ -58,6 +58,7 @@ public final class CompensationBehavior {
   /**
    * Determines whether an execution is responsible for default compensation handling.
    *
+   * <p>
    * This is the case if
    * <ul>
    *   <li>the execution has an activity
@@ -66,6 +67,7 @@ public final class CompensationBehavior {
    *   <li>the execution has children
    *   <li>the execution does not throw compensation
    * </ul>
+   * </p>
    */
   public static boolean executesDefaultCompensationHandler(PvmExecutionImpl scopeExecution) {
     ActivityImpl currentActivity = scopeExecution.getActivity();

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
 
@@ -30,7 +29,7 @@ public class InputClauseTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(InputExpression.class, 1, 1),
       new ChildElementAssumption(InputValues.class, 0, 1)
     );
@@ -38,7 +37,7 @@ public class InputClauseTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       // operaton extensions
       new AttributeAssumption(OPERATON_NS, "inputVariable")
     );

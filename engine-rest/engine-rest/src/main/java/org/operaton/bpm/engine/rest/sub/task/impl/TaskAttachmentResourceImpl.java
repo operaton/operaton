@@ -77,7 +77,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
     Attachment attachment = engine.getTaskService().getTaskAttachment(taskId, attachmentId);
 
     if (attachment == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Task attachment with id " + attachmentId + " does not exist for task id '" + taskId +  "'.");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Task attachment with id %s does not exist for task id '%s'.".formatted(attachmentId, taskId));
     }
 
     return AttachmentDto.fromAttachment(attachment);
@@ -93,7 +93,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
       return attachmentData;
     }
     else {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Attachment content for attachment with id '" + attachmentId + "' does not exist for task id '" + taskId + "'.");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Attachment content for attachment with id '%s' does not exist for task id '%s'.".formatted(attachmentId, taskId));
     }
   }
 
@@ -104,7 +104,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
     try {
       engine.getTaskService().deleteTaskAttachment(taskId, attachmentId);
     } catch (ProcessEngineException e) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Deletion is not possible. No attachment exists for task id '" + taskId + "' and attachment id '" + attachmentId + "'.");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Deletion is not possible. No attachment exists for task id '%s' and attachment id '%s'.".formatted(taskId, attachmentId));
     }
   }
 
@@ -183,7 +183,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
   private void ensureTaskExists(Status status) {
     HistoricTaskInstance historicTaskInstance = engine.getHistoryService().createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
     if (historicTaskInstance == null) {
-      throw new InvalidRequestException(status, "No task found for task id " + taskId);
+      throw new InvalidRequestException(status, "No task found for task id %s".formatted(taskId));
     }
   }
 

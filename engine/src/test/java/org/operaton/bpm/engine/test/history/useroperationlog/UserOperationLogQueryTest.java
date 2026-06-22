@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.history.useroperationlog;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -485,7 +484,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .map(UserOperationLogEntry::getProperty)
       .collect(Collectors.toSet());
 
-    assertThat(new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
+    assertThat(new HashSet<>(List.of(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
 
     // Process Definition activation
     actualProperties = query()
@@ -497,7 +496,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .map(UserOperationLogEntry::getProperty)
       .collect(Collectors.toSet());
 
-    assertThat(new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
+    assertThat(new HashSet<>(List.of(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})
@@ -626,7 +625,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .map(UserOperationLogEntry::getProperty)
       .collect(Collectors.toSet());
 
-    assertThat(new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
+    assertThat(new HashSet<>(List.of(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
 
     // Process Definition activation
     actualProperties = query()
@@ -638,7 +637,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
       .map(UserOperationLogEntry::getProperty)
       .collect(Collectors.toSet());
 
-    assertThat(new HashSet<>(Arrays.asList(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
+    assertThat(new HashSet<>(List.of(INCLUDE_PROCESS_INSTANCES_PROPERTY, SUSPENSION_STATE_PROPERTY))).isEqualTo(actualProperties);
   }
 
   @Deployment(resources = {ONE_TASK_PROCESS})

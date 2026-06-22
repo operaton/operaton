@@ -1,0 +1,77 @@
+[cam-widget-clipboard] {
+  overflow: hidden;
+  display: inline-block;
+
+  > [ng-transclude],
+  > .glyphicon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  > [ng-transclude]:empty {
+    display: none;
+  }
+
+  > .glyphicon {
+    cursor: pointer;
+    top: 0;
+    opacity: 0;
+    line-height: inherit;
+    transition:
+      opacity 0.218s linear,
+      color 0.218s linear;
+
+    &.copy-ok::before {
+      @extend .bi-check-lg;
+      color: $success;
+    }
+
+    &.copy-error::before {
+      content: "\e107";
+      color: $warning;
+    }
+  }
+
+  &:hover,
+  &.hovered,
+  &.no-transclusion {
+    > .glyphicon {
+      opacity: 1;
+    }
+  }
+
+  &.form-control-static {
+    display: inline;
+
+    > [ng-transclude],
+    > .glyphicon {
+      display: inline;
+    }
+  }
+
+  .cam-table {
+    // 1. Reset the table cell layout
+    td {
+      display: table-cell;
+      max-width: none;
+      width: auto;
+      white-space: nowrap;
+
+      // 2. Handle the content wrapper (transclude)
+      > [ng-transclude] {
+        display: inline-block; // Force inline to prevent stacking
+        vertical-align: middle;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: max-width 0.218s linear;
+      }
+
+      // 3. Hover logic for resizing
+      &:hover > [ng-transclude].resize {
+        max-width: calc(100% - 2em);
+      }
+    }
+  }
+}

@@ -71,9 +71,11 @@ public interface DomDocument {
   /**
    * Returns a new {@link DOMSource} of the document.
    *
+   * <p>
    * Note that a {@link DOMSource} wraps the underlying {@link Document} which is
    * not thread-safe. Multiple DOMSources of the same document should be synchronized
    * by the calling application.
+   * </p>
    *
    * @return the new {@link DOMSource}
    */

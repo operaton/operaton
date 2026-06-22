@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.xml.Element;
-import org.operaton.bpm.engine.impl.util.xml.Namespace;
 
 public class DefaultFailedJobParseListener implements BpmnParseListener {
 
@@ -38,12 +37,6 @@ public class DefaultFailedJobParseListener implements BpmnParseListener {
 
   protected static final String EXTENSION_ELEMENTS = "extensionElements";
   protected static final String FAILED_JOB_RETRY_TIME_CYCLE = "failedJobRetryTimeCycle";
-
-  /**
-   * @deprecated Use operaton ns instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  public static final Namespace FOX_ENGINE_NS = new Namespace("http://www.operaton.com/fox");
 
   public static final PropertyKey<FailedJobRetryConfiguration> FAILED_JOB_CONFIGURATION = new PropertyKey<>("FAILED_JOB_CONFIGURATION");
 
@@ -181,17 +174,13 @@ public class DefaultFailedJobParseListener implements BpmnParseListener {
   protected void setFailedJobRetryTimeCycleValue(Element element, ActivityImpl activity) {
     String failedJobRetryTimeCycleConfiguration = null;
 
-    Element extensionElements = element.element(EXTENSION_ELEMENTS);
-    if (extensionElements != null) {
-      Element failedJobRetryTimeCycleElement = extensionElements.elementNS(FOX_ENGINE_NS, FAILED_JOB_RETRY_TIME_CYCLE);
-      if (failedJobRetryTimeCycleElement == null) {
-        // try to get it from the activiti namespace
-        failedJobRetryTimeCycleElement = extensionElements.elementNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, FAILED_JOB_RETRY_TIME_CYCLE);
-      }
+    Element failedJobRetryTimeCycleElement = BpmnParseUtil.findOperatonExtensionElement(element, FAILED_JOB_RETRY_TIME_CYCLE);
+    if (failedJobRetryTimeCycleElement == null) {
+      failedJobRetryTimeCycleElement = BpmnParseUtil.findExtensionElement(element, BpmnParse.FOX_ENGINE_NS, FAILED_JOB_RETRY_TIME_CYCLE);
+    }
 
-      if (failedJobRetryTimeCycleElement != null) {
-        failedJobRetryTimeCycleConfiguration = failedJobRetryTimeCycleElement.getText();
-      }
+    if (failedJobRetryTimeCycleElement != null) {
+      failedJobRetryTimeCycleConfiguration = failedJobRetryTimeCycleElement.getText();
     }
 
     if (failedJobRetryTimeCycleConfiguration == null || failedJobRetryTimeCycleConfiguration.isEmpty()) {

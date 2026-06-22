@@ -26,12 +26,13 @@ import org.operaton.bpm.engine.impl.form.FormPropertyImpl;
 import org.operaton.bpm.engine.impl.form.type.AbstractFormFieldType;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.variable.VariableMap;
-
+import org.operaton.bpm.engine.variable.Variables;
 
 /**
  * @author Tom Baeyens
  */
 public class FormPropertyHandler {
+  private static final StartProcessVariableScope START_PROCESS_VARIABLE_SCOPE = new StartProcessVariableScope();
 
   protected String id;
   protected String name;
@@ -47,7 +48,22 @@ public class FormPropertyHandler {
     FormPropertyImpl formProperty = new FormPropertyImpl(this);
     Object modelValue = null;
 
-    if (execution!=null) {
+    modelValue = getModelValue(execution, modelValue);
+
+    if (modelValue instanceof String string) {
+      formProperty.setValue(string);
+    } else if (type != null) {
+      String formValue = type.convertModelValueToFormValue(modelValue);
+      formProperty.setValue(formValue);
+    } else if (modelValue != null) {
+      formProperty.setValue(modelValue.toString());
+    }
+
+    return formProperty;
+  }
+
+  private Object getModelValue(ExecutionEntity execution, Object modelValue) {
+    if (execution != null) {
       if (variableName != null || variableExpression == null) {
         final String varName = variableName != null ? variableName : id;
         if (execution.hasVariable(varName)) {
@@ -62,58 +78,61 @@ public class FormPropertyHandler {
       // Execution is null, the form-property is used in a start-form. Default value
       // should be available (ACT-1028) even though no execution is available.
       if (defaultExpression != null) {
-        modelValue = defaultExpression.getValue(StartProcessVariableScope.getSharedInstance());
+        modelValue = defaultExpression.getValue(START_PROCESS_VARIABLE_SCOPE);
       }
     }
-
-    if (modelValue instanceof String string) {
-      formProperty.setValue(string);
-    } else if (type != null) {
-      String formValue = type.convertModelValueToFormValue(modelValue);
-      formProperty.setValue(formValue);
-    } else if (modelValue != null) {
-      formProperty.setValue(modelValue.toString());
-    }
-
-    return formProperty;
+    return modelValue;
   }
 
   public void submitFormProperty(VariableScope variableScope, VariableMap variables) {
+    validateFormProperty(variables);
+    Object modelValue = getSubmittedValue(variableScope, variables);
+    if (modelValue != null) {
+      assignValueToVariable(variableScope, modelValue);
+    }
+  }
+
+  private void validateFormProperty(VariableMap variables) {
     if (!isWritable && variables.containsKey(id)) {
-      throw new ProcessEngineException("form property '"+id+"' is not writable");
+      throw new ProcessEngineException("form property '%s' is not writable".formatted(id));
     }
 
     if (isRequired && !variables.containsKey(id) && defaultExpression == null) {
-      throw new ProcessEngineException("form property '"+id+"' is required");
+      throw new ProcessEngineException("form property '%s' is required".formatted(id));
     }
+  }
 
-    Object modelValue = null;
+  private Object getSubmittedValue(VariableScope variableScope, VariableMap variables) {
     if (variables.containsKey(id)) {
-      final Object propertyValue = variables.remove(id);
       if (type != null) {
-        modelValue = type.convertFormValueToModelValue(propertyValue);
+        Object result = type.convertToModelValue(variables.getValueTyped(id));
+        variables.remove(id);
+        return result;
       } else {
-        modelValue = propertyValue;
+        return variables.remove(id);
       }
     } else if (defaultExpression != null) {
-      final Object expressionValue = defaultExpression.getValue(variableScope);
-      if (type != null && expressionValue != null) {
-        modelValue = type.convertFormValueToModelValue(expressionValue.toString());
-      } else if (expressionValue != null) {
-        modelValue = expressionValue.toString();
+      Object expressionValue = defaultExpression.getValue(variableScope);
+      if (expressionValue != null) {
+        if (type != null) {
+          return type.convertToModelValue(Variables.untypedValue(expressionValue.toString())).getValue();
+        } else {
+          return expressionValue.toString();
+        }
       } else if (isRequired) {
-        throw new ProcessEngineException("form property '"+id+"' is required");
+        throw new ProcessEngineException("form property '%s' is required".formatted(id));
       }
     }
+    return null;
+  }
 
-    if (modelValue != null) {
-      if (variableName != null) {
-        variableScope.setVariable(variableName, modelValue);
-      } else if (variableExpression != null) {
-        variableExpression.setValue(modelValue, variableScope);
-      } else {
-        variableScope.setVariable(id, modelValue);
-      }
+  private void assignValueToVariable(VariableScope variableScope, Object modelValue) {
+    if (variableName != null) {
+      variableScope.setVariable(variableName, modelValue);
+    } else if (variableExpression != null) {
+      variableExpression.setValue(modelValue, variableScope);
+    } else {
+      variableScope.setVariable(id, modelValue);
     }
   }
 

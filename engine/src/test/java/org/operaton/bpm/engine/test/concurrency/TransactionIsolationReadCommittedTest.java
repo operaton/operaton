@@ -32,6 +32,8 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 /**
  * @author Daniel Meyer
  *
@@ -46,43 +48,51 @@ class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
    * In this test, we run two transactions concurrently.
    * The transactions have the following behavior:
    *
+   * <p>
    * (1) INSERT row into a table
    * (2) SELECT ALL rows from that table
+   * </p>
    *
+   * <p>
    * We execute it with two threads in the following interleaving:
+   * </p>
    *
+   * <p>
    *      Thread 1             Thread 2
    *      ========             ========
    * ------INSERT---------------------------   |
    * ---------------------------INSERT------   |
    * ---------------------------SELECT------   v time
    * ------SELECT---------------------------
+   * </p>
    *
+   * <p>
    * Deadlocks may occur if readers are not properly isolated from writers.
+   * </p>
    *
    */
   @Test
   void testTransactionIsolation() {
+    assertThatCode(() -> {
+      thread1 = executeControllableCommand(new TestCommand("p1"));
 
-    thread1 = executeControllableCommand(new TestCommand("p1"));
+      // wait for Thread 1 to perform INSERT
+      thread1.waitForSync();
 
-    // wait for Thread 1 to perform INSERT
-    thread1.waitForSync();
+      thread2 = executeControllableCommand(new TestCommand("p2"));
 
-    thread2 = executeControllableCommand(new TestCommand("p2"));
+      // wait for Thread 2 to perform INSERT
+      thread2.waitForSync();
 
-    // wait for Thread 2 to perform INSERT
-    thread2.waitForSync();
+      // wait for Thread 2 to perform SELECT
+      thread2.makeContinue();
 
-    // wait for Thread 2 to perform SELECT
-    thread2.makeContinue();
+      // wait for Thread 1  to perform same SELECT => deadlock
+      thread1.makeContinue();
 
-    // wait for Thread 1  to perform same SELECT => deadlock
-    thread1.makeContinue();
-
-    thread2.waitForSync();
-    thread1.waitForSync();
-
+      thread2.waitForSync();
+      thread1.waitForSync();
+    }).doesNotThrowAnyException();
   }
 
   static class TestCommand extends ControllableCommand<Void> {

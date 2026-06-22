@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -66,12 +66,10 @@ class ConditionalScriptSequenceFlowTest {
   @Deployment
   @Test
   void testScriptExpressionWithNonBooleanResult() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("expected exception: invalid return value in script");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("condition script returns non-Boolean", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("condition script returns non-Boolean");
   }
 
   @Deployment(resources = {

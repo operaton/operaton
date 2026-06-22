@@ -57,12 +57,13 @@
     <@lib.response
         code = "200"
         dto = "MetricsResultDto"
-        last = true
         desc = "Request successful."
         examples = ['"example-1": {
                        "summary": "GET /metrics/activity-instance-end/sum?startDate=2015-01-01T00:00:00.000%2b0200",
                        "value": { "result": 4342343241 }
                      }']/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

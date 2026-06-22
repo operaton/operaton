@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -80,7 +79,7 @@ public class TaskReadVariablePermissionAuthorizationTest {
 
   @Parameters
   public static Collection<String> scenarios() {
-    return Arrays.asList(AUTHORIZATION_TYP_HISTORIC, AUTHORIZATION_TYP_RUNTIME);
+    return List.of(AUTHORIZATION_TYP_HISTORIC, AUTHORIZATION_TYP_RUNTIME);
   }
 
   public TaskReadVariablePermissionAuthorizationTest(String authorizationType) {

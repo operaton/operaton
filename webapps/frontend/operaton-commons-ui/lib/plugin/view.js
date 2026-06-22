@@ -19,7 +19,7 @@
 
 var angular = require('operaton-bpm-sdk-js/vendor/angular');
 // module is passed by the "loader" (main.js)
-module.exports = function(module) {
+module.exports = function (module) {
   module.directive('view', [
     '$q',
     '$http',
@@ -27,11 +27,11 @@ module.exports = function(module) {
     '$anchorScroll',
     '$compile',
     '$controller',
-    function($q, $http, $templateCache, $anchorScroll, $compile, $controller) {
+    function ($q, $http, $templateCache, $anchorScroll, $compile, $controller) {
       return {
         restrict: 'ECA',
         terminal: true,
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var lastScope;
 
           scope.$watch(attrs.provider, update);
@@ -57,7 +57,7 @@ module.exports = function(module) {
             var url = viewProvider.url;
             return $http
               .get(url, {cache: $templateCache})
-              .then(function(response) {
+              .then(function (response) {
                 return response.data;
               })
               .catch(angular.noop);
@@ -73,7 +73,7 @@ module.exports = function(module) {
             }
 
             $q.when(getTemplate(viewProvider)).then(
-              function(template) {
+              function (template) {
                 element.html(template);
                 destroyLastScope();
 
@@ -85,19 +85,19 @@ module.exports = function(module) {
 
                 if (viewVars) {
                   if (viewVars.read) {
-                    angular.forEach(viewVars.read, function(e) {
+                    angular.forEach(viewVars.read, function (e) {
                       // fill read vars initially
                       lastScope[e] = scope[e];
 
-                      scope.$watch(e, function(newValue) {
+                      scope.$watch(e, function (newValue) {
                         lastScope[e] = newValue;
                       });
                     });
                   }
 
                   if (viewVars.write) {
-                    angular.forEach(viewVars.write, function(e) {
-                      lastScope.$watch(e, function(newValue) {
+                    angular.forEach(viewVars.write, function (e) {
+                      lastScope.$watch(e, function (newValue) {
                         scope[e] = newValue;
                       });
                     });
@@ -118,15 +118,15 @@ module.exports = function(module) {
                 // $anchorScroll might listen on event...
                 $anchorScroll();
               },
-              function(error) {
+              function (error) {
                 clearContent();
 
                 throw error;
-              }
+              },
             );
           }
-        }
+        },
       };
-    }
+    },
   ]);
 };

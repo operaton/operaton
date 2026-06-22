@@ -393,6 +393,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
     given()
       .queryParam("reportType", "duration")
       .queryParam("periodUnit", "month")
+      .accept("text/csv")
     .then()
       .expect()
         .statusCode(Status.FORBIDDEN.getStatusCode())

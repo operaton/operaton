@@ -17,8 +17,8 @@
 
 module.exports = [
   '$window',
-  function($window) {
-    return function() {
+  function ($window) {
+    return function () {
       var FileReader = $window.FileReader;
 
       return (
@@ -26,5 +26,5 @@ module.exports = [
         typeof FileReader.prototype.readAsText === 'function'
       );
     };
-  }
+  },
 ];

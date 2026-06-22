@@ -46,7 +46,7 @@ public class DeleteAuthorizationCmd implements Command<Void> {
       .authorizationId(authorizationId)
       .singleResult();
 
-    ensureNotNull("Authorization for Id '" + authorizationId + "' does not exist", "authorization", authorization);
+    ensureNotNull("Authorization for Id '%s' does not exist".formatted(authorizationId), "authorization", authorization);
 
     authorizationManager.delete(authorization);
     commandContext.getOperationLogManager().logAuthorizationOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE, authorization, null);

@@ -27,7 +27,6 @@ public class UriElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE
 
   @Override
   public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
-    // TODO: implement something more robust (CAM-4028)
     String identifier = referenceSourceElement.getAttributeValue("href");
     if (identifier != null) {
       String[] parts = identifier.split("#");
@@ -45,7 +44,6 @@ public class UriElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE
 
   @Override
   protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, String referenceIdentifier) {
-    // TODO: implement something more robust (CAM-4028)
     referenceSourceElement.setAttributeValue("href", "#" + referenceIdentifier);
   }
 

@@ -35,13 +35,13 @@ public class CmmnSentryDeclaration implements Serializable {
   public static final String IF_PART = "ifPart";
   public static final String VARIABLE_ON_PART = "variableOnPart";
 
-  protected String id;
+  private String id;
 
-  protected Map<String, List<CmmnOnPartDeclaration>> onPartMap = new HashMap<>();
-  protected List<CmmnOnPartDeclaration> onParts = new ArrayList<>();
-  protected List<CmmnVariableOnPartDeclaration> variableOnParts = new ArrayList<>();
+  private final Map<String, List<CmmnOnPartDeclaration>> onPartMap = new HashMap<>();
+  private final List<CmmnOnPartDeclaration> onParts = new ArrayList<>();
+  private final List<CmmnVariableOnPartDeclaration> variableOnParts = new ArrayList<>();
 
-  protected CmmnIfPartDeclaration ifPart;
+  private CmmnIfPartDeclaration ifPart;
 
   public CmmnSentryDeclaration(String id) {
     this.id = id;

@@ -1,0 +1,23 @@
+# Title-based PR label rules for TimonVS/pr-labeler-action
+# Patterns are regular expressions matched case-insensitively against the PR title.
+# Primarily targets Dependabot bump PRs to assign specific database/integration labels.
+
+database:postgresql: ['*postgresql*', '*PostgreSQL*']
+
+database:mysql: ['*mysql*', '*MySQL']
+
+database:oracle: ['*oracle*', '*Oracle*']
+
+database:sqlserver: ['*sqlserver*', '*mssql*']
+
+database:h2: ['*h2*']
+
+database:db2: ['*db2*']
+
+integration:spring-boot: ['*spring-boot*', '*Spring Boot*', '*SpringBoot*']
+
+integration:quarkus: ['*quarkus*', '*Quarkus*']
+
+distro:tomcat: ['*version.tomcat*']
+
+distro:wildfly: ['*version.wildfly*']

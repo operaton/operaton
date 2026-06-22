@@ -17,7 +17,8 @@
 package org.operaton.bpm.engine.impl.util.xml;
 
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +31,18 @@ import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.Problem;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.impl.util.io.InputStreamSource;
 import org.operaton.bpm.engine.impl.util.io.ResourceStreamSource;
 import org.operaton.bpm.engine.impl.util.io.StreamSource;
 import org.operaton.bpm.engine.impl.util.io.StringStreamSource;
-import org.operaton.bpm.engine.impl.util.io.UrlStreamSource;
+import org.operaton.bpm.engine.impl.util.io.UriStreamSource;
 import org.operaton.bpm.engine.impl.xml.ProblemImpl;
-
 
 /**
  * @author Tom Baeyens
  */
 public abstract class Parse extends DefaultHandler {
-
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
@@ -72,7 +72,7 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public Parse sourceInputStream(InputStream inputStream) {
-    if (name==null) {
+    if (name == null) {
       name("inputStream");
     }
     setStreamSource(new InputStreamSource(inputStream));
@@ -84,23 +84,27 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public Parse sourceUrl(URL url) {
-    if (name==null) {
-      name(url.toString());
+    return sourceUri(ReflectUtil.urlToURI(url));
+  }
+
+  public Parse sourceUri(URI uri) {
+    if (name == null) {
+      name(uri.toString());
     }
-    setStreamSource(new UrlStreamSource(url));
+    setStreamSource(new UriStreamSource(uri));
     return this;
   }
 
   public Parse sourceUrl(String url) {
     try {
-      return sourceUrl(new URL(url));
-    } catch (MalformedURLException e) {
-      throw LOG.malformedUrlException(url, e);
+      return sourceUri(new URI(url));
+    } catch (URISyntaxException e) {
+      throw LOG.malformedUriException(url, e);
     }
   }
 
   public Parse sourceResource(String resource, ClassLoader classLoader) {
-    if (name==null) {
+    if (name == null) {
       name(resource);
     }
     setStreamSource(new ResourceStreamSource(resource, classLoader));
@@ -108,7 +112,7 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public Parse sourceString(String string) {
-    if (name==null) {
+    if (name == null) {
       name("string");
     }
     setStreamSource(new StringStreamSource(string));
@@ -116,7 +120,7 @@ public abstract class Parse extends DefaultHandler {
   }
 
   protected void setStreamSource(StreamSource streamSource) {
-    if (this.streamSource!=null) {
+    if (this.streamSource != null) {
       throw LOG.multipleSourcesException(this.streamSource, streamSource);
     }
     this.streamSource = streamSource;
@@ -134,12 +138,7 @@ public abstract class Parse extends DefaultHandler {
       InputStream inputStream = streamSource.getInputStream();
 
       SAXParser saxParser = parser.getSaxParser();
-      try {
-        saxParser.setProperty(JAXP_ACCESS_EXTERNAL_SCHEMA, resolveAccessExternalSchemaProperty());
-      } catch (Exception e) {
-        // ignore unavailable option
-        LOG.logAccessExternalSchemaNotSupported(e);
-      }
+      trySetAccessExternalSchema(saxParser);
       if (schemaResource != null) {
         saxParser.setProperty(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
         saxParser.setProperty(JAXP_SCHEMA_SOURCE, schemaResource);
@@ -150,6 +149,15 @@ public abstract class Parse extends DefaultHandler {
     }
 
     return this;
+  }
+
+  private void trySetAccessExternalSchema(SAXParser saxParser) {
+    try {
+      saxParser.setProperty(JAXP_ACCESS_EXTERNAL_SCHEMA, resolveAccessExternalSchemaProperty());
+    } catch (Exception e) {
+      // ignore unavailable option
+      LOG.logAccessExternalSchemaNotSupported(e);
+    }
   }
 
   /*
@@ -223,7 +231,7 @@ public abstract class Parse extends DefaultHandler {
       builder.append("\n* ");
       builder.append(warning.getMessage());
       builder.append(" | resource ").append(name);
-      builder.append(warning.toString());
+      builder.append(warning);
     }
     LOG.logParseWarnings(builder.toString());
   }
@@ -234,7 +242,7 @@ public abstract class Parse extends DefaultHandler {
       strb.append("\n* ");
       strb.append(error.getMessage());
       strb.append(" | resource ").append(name);
-      strb.append(error.toString());
+      strb.append(error);
     }
     throw LOG.exceptionDuringParsing(strb.toString(), name, errors, warnings);
   }

@@ -21,25 +21,25 @@ var template = require('./cam-cockpit-resource-action-download-plugin.html?raw')
 
 var Controller = [
   '$scope',
-  function($scope) {
+  function ($scope) {
     // fields ////////////////////////////////////////////
 
     var downloadData = $scope.resourceDetailsData.newChild($scope);
 
     // observe //////////////////////////////////////////
 
-    downloadData.observe('resource', function(_resource) {
+    downloadData.observe('resource', function (_resource) {
       $scope.resource = _resource;
     });
 
-    downloadData.observe('currentDeployment', function(_deployment) {
+    downloadData.observe('currentDeployment', function (_deployment) {
       $scope.deployment = _deployment;
     });
 
     // download link /////////////////////////////////////
 
     $scope.downloadLink = $scope.control.downloadLink;
-  }
+  },
 ];
 
 var Configuration = function PluginConfiguration(ViewsProvider) {
@@ -47,7 +47,7 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
     id: 'download-resource',
     controller: Controller,
     template: template,
-    priority: 100
+    priority: 100,
   });
 };
 

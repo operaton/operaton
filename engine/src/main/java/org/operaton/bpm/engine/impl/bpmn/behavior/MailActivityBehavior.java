@@ -111,7 +111,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected void addTo(Email email, String to) {
     String[] tos = splitAndTrim(to);
-    if (tos != null) {
+    if (tos.length > 0) {
       for (String t : tos) {
         try {
           email.addTo(t);
@@ -142,26 +142,22 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected void addCc(Email email, String cc) {
     String[] ccs = splitAndTrim(cc);
-    if (ccs != null) {
-      for (String c : ccs) {
-        try {
-          email.addCc(c);
-        } catch (EmailException e) {
-          throw LOG.addCcException(c, e);
-        }
+    for (String c : ccs) {
+      try {
+        email.addCc(c);
+      } catch (EmailException e) {
+        throw LOG.addCcException(c, e);
       }
     }
   }
 
   protected void addBcc(Email email, String bcc) {
     String[] bccs = splitAndTrim(bcc);
-    if (bccs != null) {
-      for (String b : bccs) {
-        try {
-          email.addBcc(b);
-        } catch (EmailException e) {
-          throw LOG.addBccException(b, e);
-        }
+    for (String b : bccs) {
+      try {
+        email.addBcc(b);
+      } catch (EmailException e) {
+        throw LOG.addBccException(b, e);
       }
     }
   }
@@ -195,7 +191,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected String[] splitAndTrim(String str) {
+  private String[] splitAndTrim(String str) {
     if (str != null) {
       String[] splittedStrings = str.split(",");
       for (int i = 0; i < splittedStrings.length; i++) {
@@ -203,10 +199,10 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
       }
       return splittedStrings;
     }
-    return null;
+    return new String[0];
   }
 
-  protected String getStringFromField(Expression expression, DelegateExecution execution) {
+  private String getStringFromField(Expression expression, DelegateExecution execution) {
     if(expression != null) {
       Object value = expression.getValue(execution);
       if(value != null) {

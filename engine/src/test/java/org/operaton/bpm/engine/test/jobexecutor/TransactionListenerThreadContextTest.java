@@ -32,7 +32,9 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * This test makes sure that if the transaction synchronization / transaction listener ExclusiveJobAddedNotification is
  * executed in a different thread than the Thread which executed the job, the notification still works.
  *
+ * <p>
  * See: https://app.camunda.com/jira/browse/CAM-3684
+ * </p>
  *
  * @author Daniel Meyer
  *

@@ -44,13 +44,13 @@
 
 // AngularJS DI
 module.exports = [
-  function() {
+  function () {
     return {
       scope: {
-        original: '=nl2br'
+        original: '=nl2br',
       },
 
-      link: function(scope, element) {
+      link: function (scope, element) {
         // set the content as text (will eliminate malicious html characters)
         element.text(scope.original || '');
 
@@ -59,7 +59,7 @@ module.exports = [
 
         // set the replaced content as html
         element.html(replaced);
-      }
+      },
     };
-  }
+  },
 ];

@@ -35,6 +35,7 @@ import org.operaton.bpm.model.cmmn.VariableTransition;
 import org.operaton.bpm.model.cmmn.instance.CaseFileItemOnPart;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.cmmn.instance.ConditionExpression;
+import org.operaton.bpm.model.cmmn.instance.ExitCriterion;
 import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
 import org.operaton.bpm.model.cmmn.instance.IfPart;
 import org.operaton.bpm.model.cmmn.instance.OnPart;
@@ -60,22 +61,14 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     IfPart ifPart = element.getIfPart();
     List<OperatonVariableOnPart> variableOnParts = queryExtensionElementsByClass(element, OperatonVariableOnPart.class);
 
-    if ((ifPart == null || ifPart.getConditions().isEmpty()) && variableOnParts.isEmpty()) {
+    if ((ifPart == null || ifPart.getCondition() == null) && variableOnParts.isEmpty()) {
 
       if (onParts == null || onParts.isEmpty()) {
         LOG.ignoredSentryWithMissingCondition(id);
         return null;
       } else {
-        boolean atLeastOneOnPartsValid = false;
 
-        for (OnPart onPart : onParts) {
-          if (onPart instanceof PlanItemOnPart planItemOnPart && planItemOnPart.getSource() != null && planItemOnPart.getStandardEvent() != null) {
-            atLeastOneOnPartsValid = true;
-            break;
-          }
-        }
-
-        if (!atLeastOneOnPartsValid) {
+        if (!hasValidOnPart(onParts)) {
           LOG.ignoredSentryWithInvalidParts(id);
           return null;
         }
@@ -103,6 +96,16 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     }
 
     return sentryDeclaration;
+  }
+
+  private boolean hasValidOnPart(Collection<OnPart> onParts) {
+    if (onParts == null) {
+      return false;
+    }
+    return onParts.stream()
+      .filter(PlanItemOnPart.class::isInstance)
+      .map(PlanItemOnPart.class::cast)
+      .anyMatch(part -> part.getSource() != null && part.getStandardEvent() != null);
   }
 
   public void initializeOnParts(Sentry sentry, CmmnHandlerContext context) {
@@ -140,7 +143,12 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
       }
 
       // initialize sentryRef
-      Sentry sentryRef = onPart.getSentry();
+      Sentry sentryRef = null;
+      ExitCriterion exitCriterion = onPart.getExitCriterion();
+      if (exitCriterion != null) {
+        sentryRef = exitCriterion.getSentry();
+      }
+
       if (sentryRef != null) {
         String sentryRefId = sentryRef.getId();
 
@@ -162,19 +170,16 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
   }
 
   protected void initializeIfPart(IfPart ifPart, CmmnSentryDeclaration sentryDeclaration, CmmnHandlerContext context) {
-    if (ifPart == null) {
+    if (ifPart == null || ifPart.getCondition() == null) {
       return;
     }
 
-    Collection<ConditionExpression> conditions = ifPart.getConditions();
+    ConditionExpression condition = ifPart.getCondition();
 
-    if (conditions.size() > 1) {
-      String id = sentryDeclaration.getId();
-      LOG.multipleIgnoredConditions(id);
-    }
+    String id = sentryDeclaration.getId();
+    LOG.multipleIgnoredConditions(id);
 
     ExpressionManager expressionManager = context.getExpressionManager();
-    ConditionExpression condition = conditions.iterator().next();
     Expression conditionExpression = expressionManager.createExpression(condition.getText());
 
     CmmnIfPartDeclaration ifPartDeclaration = new CmmnIfPartDeclaration();

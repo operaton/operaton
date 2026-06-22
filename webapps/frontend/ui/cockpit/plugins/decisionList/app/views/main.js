@@ -30,7 +30,7 @@ var angular = require('angular'),
   realOutput = require('./decisionInstance/realOutput');
 
 var ngModule = angular.module('cockpit.plugin.decisionList.views', [
-  dashboard.name
+  dashboard.name,
 ]);
 
 ngModule.config(decisionInstanceTable);

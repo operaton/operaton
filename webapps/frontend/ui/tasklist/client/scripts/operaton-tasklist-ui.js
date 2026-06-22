@@ -45,14 +45,14 @@ const translatePaginationCtrls = require('../../../common/scripts/util/translate
  */
 
 function bootstrapApp() {
-  $(document).ready(function() {
+  $(document).ready(function () {
     angular.bootstrap(document.documentElement, [
       'cam.tasklist',
       'cam.embedded.forms',
-      'cam.tasklist.custom'
+      'cam.tasklist.custom',
     ]);
 
-    setTimeout(function() {
+    setTimeout(function () {
       var $aufocused = $('[autofocus]');
       if ($aufocused.length) {
         $aufocused[0].focus();
@@ -74,11 +74,11 @@ export function init(pluginDependencies) {
     require('./form/index').name,
     require('./filter/index').name,
     require('./api/index').name,
-    require('./shortcuts/plugins/index').name
+    require('./shortcuts/plugins/index').name,
   ].concat(
-    pluginDependencies.map(function(el) {
+    pluginDependencies.map(function (el) {
       return el.ngModuleName;
-    })
+    }),
   );
 
   function parseUriConfig() {
@@ -102,25 +102,25 @@ export function init(pluginDependencies) {
     '$animateProvider',
     '$qProvider',
     '$provide',
-    function(
+    function (
       $modalProvider,
       $tooltipProvider,
       $locationProvider,
       $animateProvider,
       $qProvider,
-      $provide
+      $provide,
     ) {
       translatePaginationCtrls($provide);
       $modalProvider.options = {
         animation: true,
         backdrop: true,
-        keyboard: true
+        keyboard: true,
       };
 
       $tooltipProvider.options({
         animation: true,
         popupDelay: 100,
-        appendToBody: true
+        appendToBody: true,
       });
 
       $locationProvider.hashPrefix('');
@@ -128,27 +128,27 @@ export function init(pluginDependencies) {
       $animateProvider.classNameFilter(/angular-animate/);
 
       $qProvider.errorOnUnhandledRejections(DEV_MODE); // eslint-disable-line
-    }
+    },
   ];
 
   tasklistApp.config(ModuleConfig);
 
   tasklistApp.factory(
     'assignNotification',
-    require('./services/cam-tasklist-assign-notification')
+    require('./services/cam-tasklist-assign-notification'),
   );
   tasklistApp.provider(
     'configuration',
     require('./../../../common/scripts/services/cam-configuration')(
       window.camTasklistConf,
-      'Tasklist'
-    )
+      'Tasklist',
+    ),
   );
 
   require('./../../../common/scripts/services/locales')(
     tasklistApp,
     uriConfig['app-root'],
-    'tasklist'
+    'tasklist',
   );
   require('./config/uris')(tasklistApp, uriConfig);
 
@@ -158,17 +158,17 @@ export function init(pluginDependencies) {
 
   tasklistApp.controller(
     'camTasklistAppCtrl',
-    require('./controller/cam-tasklist-app-ctrl')
+    require('./controller/cam-tasklist-app-ctrl'),
   );
   tasklistApp.controller(
     'camTasklistViewCtrl',
-    require('./controller/cam-tasklist-view-ctrl')
+    require('./controller/cam-tasklist-view-ctrl'),
   );
 
   require('../../../common/scripts/services/plugins/addPlugins')(
     window.camTasklistConf,
     tasklistApp,
-    'tasklist'
+    'tasklist',
   ).then(bootstrapApp);
 }
 

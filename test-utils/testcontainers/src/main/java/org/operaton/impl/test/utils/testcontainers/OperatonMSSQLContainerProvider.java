@@ -17,7 +17,6 @@
 package org.operaton.impl.test.utils.testcontainers;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.containers.MSSQLServerContainerProvider;
 import org.testcontainers.utility.DockerImageName;
 

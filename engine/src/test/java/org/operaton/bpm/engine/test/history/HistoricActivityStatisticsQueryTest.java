@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -999,23 +999,15 @@ class HistoricActivityStatisticsQueryTest {
     HistoricActivityStatisticsQuery query = historyService
     .createHistoricActivityStatisticsQuery("foo");
 
-    // when 1
-    try {
-      query.processInstanceIdIn((String[]) null);
-      fail("exception expected");
-    } catch (NullValueException e) {
-      // then 1
-      testRule.assertTextPresent("processInstanceIds is null", e.getMessage());
-    }
+    // when/then 1
+    assertThatThrownBy(() -> query.processInstanceIdIn((String[]) null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("processInstanceIds is null");
 
-    // when 2
-    try {
-      query.processInstanceIdIn((String) null);
-      fail("exception expected");
-    } catch (NullValueException e) {
-      // then 2
-      testRule.assertTextPresent("processInstanceIds contains null value", e.getMessage());
-    }
+    // when/then 2
+    assertThatThrownBy(() -> query.processInstanceIdIn((String) null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("processInstanceIds contains null value");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityStatisticsQueryTest.testSingleTask.bpmn20.xml")
@@ -1381,7 +1373,7 @@ class HistoricActivityStatisticsQueryTest {
     String cancelledInstance2 = processInstances.get(2).getId();
     String processDefinitionId = processInstances.get(0).getProcessDefinitionId();
 
-    runtimeService.deleteProcessInstances(java.util.Arrays.asList(cancelledInstance1, cancelledInstance2), "test", false, false);
+    runtimeService.deleteProcessInstances(java.util.List.of(cancelledInstance1, cancelledInstance2), "test", false, false);
 
     // when
     HistoricActivityStatisticsQuery query = historyService
@@ -1416,7 +1408,7 @@ class HistoricActivityStatisticsQueryTest {
     String cancelledInstance2 = processInstances.get(2).getId();
     String processDefinitionId = processInstances.get(0).getProcessDefinitionId();
 
-    runtimeService.deleteProcessInstances(java.util.Arrays.asList(cancelledInstance1, cancelledInstance2), "test", false, false);
+    runtimeService.deleteProcessInstances(java.util.List.of(cancelledInstance1, cancelledInstance2), "test", false, false);
 
     // when
     HistoricActivityStatisticsQuery query = historyService

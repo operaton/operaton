@@ -26,60 +26,60 @@ var defaultConfig = {
     abbr: 'lll',
     normal: 'LLL',
     long: 'LLLL',
-    short: 'LL'
+    short: 'LL',
   },
   locales: {
     availableLocales: ['en'],
-    fallbackLocale: 'en'
+    fallbackLocale: 'en',
   },
   skipCustomListeners: {
     default: true,
-    hidden: false
+    hidden: false,
   },
   skipIoMappings: {
     default: true,
-    hidden: false
+    hidden: false,
   },
   cascade: {
-    default: false
+    default: false,
   },
   runtimeActivityInstanceMetrics: {
-    display: true
+    display: true,
   },
   historicActivityInstanceMetrics: {
     adjustablePeriod: true,
     period: {
-      unit: 'day'
-    }
+      unit: 'day',
+    },
   },
   batchOperation: {
     mode: 'filter',
-    autoLoadEnded: true
+    autoLoadEnded: true,
   },
   csrfCookieName: 'XSRF-TOKEN',
   disableWelcomeMessage: false,
   userOperationLogAnnotationLength: 4000,
   previewHtml: true,
-  assignProcessInstanceIdToTaskComment: false
+  assignProcessInstanceIdToTaskComment: false,
 };
 
-module.exports = function(config, app) {
+module.exports = function (config, app) {
   return [
-    function() {
+    function () {
       var storage = window.localStorage;
       var values = JSON.parse(storage.getItem('operaton-web') || '{}');
 
-      this.get = function(key, defaultValue) {
+      this.get = function (key, defaultValue) {
         return typeof values[key] !== 'undefined' ? values[key] : defaultValue;
       };
 
-      this.set = function(key, value) {
+      this.set = function (key, value) {
         values[key] = value;
         storage.setItem('operaton-web', JSON.stringify(values));
       };
 
       // Removes old translations - default localStorage is limited to 10MB
-      this.clearTranslationData = function() {
+      this.clearTranslationData = function () {
         for (var key in values) {
           if (key.includes('_locales_data_') && !key.includes(window.bust)) {
             delete values[key];
@@ -89,14 +89,14 @@ module.exports = function(config, app) {
         window.localStorage.setItem('operaton-web', JSON.stringify(values));
       };
 
-      this.getDateFormat = function(formatName) {
+      this.getDateFormat = function (formatName) {
         var dateFormatObj = config.dateFormat || defaultConfig.dateFormat;
         return (
           dateFormatObj[formatName] || defaultConfig.dateFormat[formatName]
         );
       };
 
-      this.getFallbackLocale = function() {
+      this.getFallbackLocale = function () {
         if (config.locales && config.locales.fallbackLocale) {
           return config.locales.fallbackLocale;
         } else {
@@ -104,7 +104,7 @@ module.exports = function(config, app) {
         }
       };
 
-      this.getAvailableLocales = function() {
+      this.getAvailableLocales = function () {
         if (config.locales && config.locales.availableLocales) {
           return config.locales.availableLocales;
         } else {
@@ -112,51 +112,51 @@ module.exports = function(config, app) {
         }
       };
 
-      this.getDateLocales = function() {
+      this.getDateLocales = function () {
         return config.camDateLocales;
       };
 
-      this.getAppVendor = function() {
+      this.getAppVendor = function () {
         return config.app && config.app.vendor ? config.app.vendor : 'Operaton';
       };
 
-      this.getAppName = function() {
+      this.getAppName = function () {
         return config.app && config.app.name ? config.app.name : app;
       };
 
-      this.getSkipCustomListeners = function() {
+      this.getSkipCustomListeners = function () {
         return angular.extend(
           {},
           defaultConfig.skipCustomListeners,
-          config.skipCustomListeners
+          config.skipCustomListeners,
         );
       };
 
-      this.getSkipIoMappings = function() {
+      this.getSkipIoMappings = function () {
         return angular.extend(
           {},
           defaultConfig.skipIoMappings,
-          config.skipIoMappings
+          config.skipIoMappings,
         );
       };
 
-      this.getCascade = function() {
+      this.getCascade = function () {
         return angular.extend({}, defaultConfig.cascade, config.cascade);
       };
 
-      this.getRuntimeActivityInstanceMetrics = function() {
+      this.getRuntimeActivityInstanceMetrics = function () {
         var param = 'runtimeActivityInstanceMetrics';
         return angular.extend({}, defaultConfig[param], config[param]).display;
       };
 
-      this.getActivityInstancePeriod = function() {
+      this.getActivityInstancePeriod = function () {
         var param = 'historicActivityInstanceMetrics';
         return config[param] && config[param].period
           ? config[param].period
           : defaultConfig[param].period;
       };
 
-      this.getActivityInstanceAdjustable = function() {
+      this.getActivityInstanceAdjustable = function () {
         var param = 'historicActivityInstanceMetrics';
 
         return config[param] &&
@@ -165,14 +165,14 @@ module.exports = function(config, app) {
           : defaultConfig[param].adjustablePeriod;
       };
 
-      this.getBatchOperationMode = function() {
+      this.getBatchOperationMode = function () {
         var param = 'batchOperation';
         return (
           (config[param] && config[param].mode) || defaultConfig[param].mode
         );
       };
 
-      this.getBatchOperationAutoLoadEnded = function() {
+      this.getBatchOperationAutoLoadEnded = function () {
         var param = 'batchOperation';
 
         return config[param] &&
@@ -181,32 +181,32 @@ module.exports = function(config, app) {
           : defaultConfig[param].autoLoadEnded;
       };
 
-      this.getBpmnJs = function() {
+      this.getBpmnJs = function () {
         return config['bpmnJs'];
       };
 
-      this.getHistoricProcessInstancesSearch = function() {
+      this.getHistoricProcessInstancesSearch = function () {
         return (config['defaultFilter'] || {})[
           'historicProcessDefinitionInstancesSearch'
         ];
       };
 
-      this.getCsrfCookieName = function() {
+      this.getCsrfCookieName = function () {
         var param = 'csrfCookieName';
         return config[param] || defaultConfig[param];
       };
 
-      this.getDisableWelcomeMessage = function() {
+      this.getDisableWelcomeMessage = function () {
         var param = 'disableWelcomeMessage';
         return config[param] || defaultConfig[param];
       };
 
-      this.getUserOperationLogAnnotationLength = function() {
+      this.getUserOperationLogAnnotationLength = function () {
         var param = 'userOperationLogAnnotationLength';
         return config[param] || defaultConfig[param];
       };
 
-      this.getPreviewHtml = function() {
+      this.getPreviewHtml = function () {
         var param = 'previewHtml';
         // 'false' is a valid config option
         return typeof config[param] !== 'undefined'
@@ -214,7 +214,7 @@ module.exports = function(config, app) {
           : defaultConfig[param];
       };
 
-      this.getAssignProcessInstanceIdToTaskComment = function() {
+      this.getAssignProcessInstanceIdToTaskComment = function () {
         var param = 'assignProcessInstanceIdToTaskComment';
         // 'false' is a valid config option
         return typeof config[param] !== 'undefined'
@@ -222,9 +222,9 @@ module.exports = function(config, app) {
           : defaultConfig[param];
       };
 
-      this.$get = function() {
+      this.$get = function () {
         return this;
       };
-    }
+    },
   ];
 };

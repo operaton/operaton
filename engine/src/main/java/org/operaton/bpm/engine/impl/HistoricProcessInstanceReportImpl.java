@@ -97,10 +97,9 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
 
     CommandContext commandContext = Context.getCommandContext();
 
-    if(commandContext == null) {
+    if (commandContext == null) {
       return commandExecutor.execute(new ExecuteDurationReportCmd());
-    }
-    else {
+    } else {
       return executeDurationReport(commandContext);
     }
 
@@ -110,13 +109,13 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
 
     doAuthCheck(commandContext);
 
-    if(areNotInAscendingOrder(startedAfter, startedBefore)) {
+    if (areNotInAscendingOrder(startedAfter, startedBefore)) {
       return Collections.emptyList();
     }
 
     return commandContext
-      .getHistoricReportManager()
-      .selectHistoricProcessInstanceDurationReport(this);
+        .getHistoricReportManager()
+        .selectHistoricProcessInstanceDurationReport(this);
 
   }
 
@@ -124,30 +123,48 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
     // since a report does only make sense in context of historic
     // data, the authorization check will be performed here
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
-      if (processDefinitionIdIn == null && processDefinitionKeyIn == null) {
-        checker.checkReadHistoryAnyProcessDefinition();
-      } else {
-        List<String> processDefinitionKeys = new ArrayList<>();
-        if (processDefinitionKeyIn != null) {
-          processDefinitionKeys.addAll(Arrays.asList(processDefinitionKeyIn));
-        }
+      performAuthorizationCheck(checker, commandContext);
+    }
+  }
 
-        if (processDefinitionIdIn != null) {
-          for (String processDefinitionId : processDefinitionIdIn) {
-            ProcessDefinition processDefinition = commandContext.getProcessDefinitionManager()
-              .findLatestProcessDefinitionById(processDefinitionId);
+  private void performAuthorizationCheck(CommandChecker checker, CommandContext commandContext) {
+    if (processDefinitionIdIn == null && processDefinitionKeyIn == null) {
+      checker.checkReadHistoryAnyProcessDefinition();
+    } else {
+      List<String> processDefinitionKeys = collectProcessDefinitionKeys(commandContext);
+      checkHistoryForProcessDefinitionKeys(checker, processDefinitionKeys);
+    }
+  }
 
-            if (processDefinition != null && processDefinition.getKey() != null) {
-              processDefinitionKeys.add(processDefinition.getKey());
-            }
-          }
-        }
+  private List<String> collectProcessDefinitionKeys(CommandContext commandContext) {
+    List<String> processDefinitionKeys = new ArrayList<>();
 
-        if (!processDefinitionKeys.isEmpty()) {
-          for (String processDefinitionKey : processDefinitionKeys) {
-            checker.checkReadHistoryProcessDefinition(processDefinitionKey);
-          }
-        }
+    if (processDefinitionKeyIn != null) {
+      processDefinitionKeys.addAll(Arrays.asList(processDefinitionKeyIn));
+    }
+
+    if (processDefinitionIdIn != null) {
+      addKeysFromProcessDefinitionIds(commandContext, processDefinitionKeys);
+    }
+
+    return processDefinitionKeys;
+  }
+
+  private void addKeysFromProcessDefinitionIds(CommandContext commandContext, List<String> processDefinitionKeys) {
+    for (String processDefinitionId : processDefinitionIdIn) {
+      ProcessDefinition processDefinition = commandContext.getProcessDefinitionManager()
+          .findLatestProcessDefinitionById(processDefinitionId);
+
+      if (processDefinition != null && processDefinition.getKey() != null) {
+        processDefinitionKeys.add(processDefinition.getKey());
+      }
+    }
+  }
+
+  private void checkHistoryForProcessDefinitionKeys(CommandChecker checker, List<String> processDefinitionKeys) {
+    if (!processDefinitionKeys.isEmpty()) {
+      for (String processDefinitionKey : processDefinitionKeys) {
+        checker.checkReadHistoryProcessDefinition(processDefinitionKey);
       }
     }
   }

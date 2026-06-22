@@ -109,22 +109,25 @@
   <@lib.property
       name = "caseDefinitionId"
       type = "string"
+      deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              definition."
+              definition. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property
       name = "caseInstanceId"
       type = "string"
+      deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              instance."
+              instance. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property
       name = "caseExecutionId"
       type = "string"
+      deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              execution."
+              execution. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property

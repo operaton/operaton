@@ -34,13 +34,13 @@ public class OnlyOnceMappedActivityInstructionValidator implements MigrationInst
   }
 
   protected void addFailure(String sourceActivityId, List<ValidatingMigrationInstruction> migrationInstructions, MigrationInstructionValidationReportImpl report) {
-    report.addFailure("There are multiple mappings for source activity id '" + sourceActivityId +"': " +
-      StringUtil.join(new StringUtil.StringIterator<ValidatingMigrationInstruction>(migrationInstructions.iterator()) {
+    report.addFailure("There are multiple mappings for source activity id '%s': %s".formatted(sourceActivityId,
+      StringUtil.join(new StringUtil.StringIterator<>(migrationInstructions.iterator()) {
         @Override
         public String next() {
           return iterator.next().toString();
         }
-      }));
+      })));
   }
 
 }

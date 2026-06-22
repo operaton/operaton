@@ -425,7 +425,7 @@ class MultiTenancyHistoricDataCmdsTenantCheckTest {
     // when/then
     assertThatThrownBy(() -> historyService.deleteHistoricVariableInstance(variableInstanceId))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot delete the historic variable instance '" + variableInstanceId + "' because it belongs to no authenticated tenant.");
+      .hasMessageContaining("Cannot delete the historic variable instance '%s' because it belongs to no authenticated tenant.".formatted(variableInstanceId));
 
     cleanUpAfterVariableInstanceTest(processInstanceId);
   }
@@ -488,7 +488,7 @@ class MultiTenancyHistoricDataCmdsTenantCheckTest {
     // when/then
     assertThatThrownBy(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId(processInstanceId))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot delete the historic variable instances of process instance '" + processInstanceId + "' because it belongs to no authenticated tenant.");
+      .hasMessageContaining("Cannot delete the historic variable instances of process instance '%s' because it belongs to no authenticated tenant.".formatted(processInstanceId));
 
     cleanUpAfterVariableInstanceTest(processInstanceId);
   }

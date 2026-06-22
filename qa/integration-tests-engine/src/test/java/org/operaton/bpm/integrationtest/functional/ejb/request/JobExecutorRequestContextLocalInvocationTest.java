@@ -44,9 +44,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test verifies that if a delegate bean invoked from the Job Executor
  * calls a LOCAL SLSB from a different deployment, the RequestContest is active there as well.
  *
+ * <p>
  * NOTE:
  * - does not work on Jboss (Bug in Jboss AS?) SEE HEMERA-2453
  * - not implemented on Glassfish
+ * </p>
  *
  * @author Daniel Meyer
  *

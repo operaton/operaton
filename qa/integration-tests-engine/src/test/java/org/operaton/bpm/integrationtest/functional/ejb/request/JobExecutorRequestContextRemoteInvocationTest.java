@@ -40,9 +40,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test verifies that if a delegate bean invoked from the Job Executor
  * calls a REMOTE SLSB from a different deployment, the RequestContext is active there as well.
  *
+ * <p>
  * NOTE:
  * - does not work on Jboss AS with a remote invocation (Bug in Jboss AS?) SEE HEMERA-2453
  * - works on Glassfish
+ * </p>
  *
  * @author Daniel Meyer
  *

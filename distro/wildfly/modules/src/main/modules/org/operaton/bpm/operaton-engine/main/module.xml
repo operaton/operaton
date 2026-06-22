@@ -28,15 +28,13 @@
     <module name="org.apache.groovy.groovy-all" services="import"/>
     <module name="org.graalvm.js.js-all" services="import"/>
 
-    <module name="sun.jdk" services="import"/>
-
     <module name="org.operaton.bpm.model.operaton-xml-model" />
     <module name="org.operaton.bpm.model.operaton-bpmn-model" />
     <module name="org.operaton.bpm.model.operaton-cmmn-model" />
     <module name="org.operaton.bpm.model.operaton-dmn-model" />
 
-    <module name="org.operaton.commons.operaton-commons-logging" />
-    <module name="org.operaton.commons.operaton-commons-utils" />
+    <module name="org.operaton.commons.operaton-commons-logging" export="true"/>
+    <module name="org.operaton.commons.operaton-commons-utils" export="true"/>
     <module name="org.operaton.commons.operaton-commons-typed-values" export="true" />
     <module name="org.operaton.template-engines.operaton-template-engines-freemarker" services="import" />
     <module name="org.operaton.spin.operaton-spin-core" services="import"/>

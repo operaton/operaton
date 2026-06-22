@@ -35,6 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Philipp Ossler
  */
 @ExtendWith(ProcessEngineExtension.class)
+@SuppressWarnings({"java:S4144", "java:S5976"})
 class EscalationEventTest {
 
   RuntimeService runtimeService;

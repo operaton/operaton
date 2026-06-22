@@ -180,7 +180,6 @@ class ProcessInstantiationAtActivitiesHistoryTest {
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicDetail).isNotNull();
-    // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isNull();
     assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
@@ -214,7 +213,6 @@ class ProcessInstantiationAtActivitiesHistoryTest {
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicDetail).isNotNull();
-    // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isNull();
     assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
@@ -249,7 +247,6 @@ class ProcessInstantiationAtActivitiesHistoryTest {
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicDetail).isNotNull();
-    // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isEqualTo(instance.getId());
     assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
@@ -299,7 +296,7 @@ class ProcessInstantiationAtActivitiesHistoryTest {
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
+      assertThat(!tasks.isEmpty()).as("task for activity %s does not exist".formatted(taskName)).isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

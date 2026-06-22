@@ -84,7 +84,8 @@ class SchemaValidatorTest {
     Files.writeString(schema, schemaJson, StandardCharsets.UTF_8);
     Files.writeString(instance, instanceJson, StandardCharsets.UTF_8);
 
-    assertThatThrownBy(() -> SchemaValidator.main(new String[] { schema.toString(), instance.toString() }))
+    String[] args = { schema.toString(), instance.toString() };
+    assertThatThrownBy(() -> SchemaValidator.main(args))
       .isInstanceOf(SchemaException.class);
   }
 }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.sentry;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -365,7 +366,9 @@ class SentryExitCriteriaTest extends CmmnTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitOnParentSuspendInsideStage.cmmn"})
-  public void FAILING_testExitOnParentSuspendInsideStage() {
+  @Test
+  @Disabled("Fixme: Manual start not possible; The case execution is already in state 'active'")
+  void testExitOnParentSuspendInsideStage() {
     // given
     createCaseInstance();
 
@@ -400,7 +403,9 @@ class SentryExitCriteriaTest extends CmmnTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryExitCriteriaTest.testExitOnParentResumeInsideStage.cmmn"})
-  public void FAILING_testExitOnParentResumeInsideStage() {
+  @Test
+  @Disabled("Fixme: Manual start not possible; The case execution is already in state 'active'")
+  void testExitOnParentResumeInsideStage() {
     // given
     createCaseInstance();
 

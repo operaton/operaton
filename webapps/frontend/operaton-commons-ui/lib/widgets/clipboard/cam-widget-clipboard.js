@@ -24,23 +24,23 @@ var template = require('./cam-widget-clipboard.html?raw');
 module.exports = [
   '$timeout',
   '$translate',
-  function($timeout, $translate) {
+  function ($timeout, $translate) {
     return {
       transclude: true,
       template: template,
       scope: {
         value: '=camWidgetClipboard',
-        leftSide: '=?'
+        leftSide: '=?',
       },
 
-      link: function($scope, element, attrs) {
+      link: function ($scope, element, attrs) {
         var cb;
 
         $scope.noTooltip = typeof attrs.noTooltip !== 'undefined';
         $scope.copyStatus = null;
         $scope.icon = attrs.icon || 'glyphicon-copy';
 
-        $scope.$watch('value', function() {
+        $scope.$watch('value', function () {
           $scope.tooltipText =
             attrs.tooltipText ||
             $translate.instant('CAM_WIDGET_COPY', {value: $scope.value});
@@ -50,11 +50,11 @@ module.exports = [
         function restore() {
           $scope.$apply();
           _top = $timeout(
-            function() {
+            function () {
               $scope.copyStatus = null;
             },
             1200,
-            true
+            true,
           );
         }
 
@@ -83,7 +83,7 @@ module.exports = [
 
         // needed because otherwise the content of `element` is not rendered yet
         // and `querySelector` is then not available
-        $timeout(function() {
+        $timeout(function () {
           var link = element[0].querySelector('a.' + $scope.icon);
           if (!link) {
             return;
@@ -93,23 +93,23 @@ module.exports = [
           handleResize();
 
           cb = new Clipboard(link, {
-            text: function() {
+            text: function () {
               return $scope.value;
-            }
+            },
           });
 
-          cb.on('success', function() {
+          cb.on('success', function () {
             $scope.copyStatus = true;
             restore();
           });
 
-          cb.on('error', function() {
+          cb.on('error', function () {
             $scope.copyStatus = false;
             restore();
           });
         });
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
           window.removeEventListener('resize', handleResize);
           if (cb && cb.destroy) {
             cb.destroy();
@@ -119,7 +119,7 @@ module.exports = [
             $timeout.cancel(_top);
           }
         });
-      }
+      },
     };
-  }
+  },
 ];

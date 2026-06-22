@@ -93,8 +93,8 @@ class EmbeddedProcessApplicationTest {
     TestApplicationWithoutProcesses processApplication = new TestApplicationWithoutProcesses();
     processApplication.deploy();
 
-    ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
-    long deployments = processEngine.getRepositoryService().createDeploymentQuery().count();
+    ProcessEngine defaultProcessEngine = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
+    long deployments = defaultProcessEngine.getRepositoryService().createDeploymentQuery().count();
     assertThat(deployments).isZero();
 
     processApplication.undeploy();
@@ -107,11 +107,11 @@ class EmbeddedProcessApplicationTest {
     TestApplicationWithCustomEngine processApplication = new TestApplicationWithCustomEngine();
     processApplication.deploy();
 
-    ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getProcessEngine("embeddedEngine");
-    assertThat(processEngine).isNotNull();
-    assertThat(processEngine.getName()).isEqualTo("embeddedEngine");
+    ProcessEngine embeddedProcessEngine = BpmPlatform.getProcessEngineService().getProcessEngine("embeddedEngine");
+    assertThat(embeddedProcessEngine).isNotNull();
+    assertThat(embeddedProcessEngine.getName()).isEqualTo("embeddedEngine");
 
-    ProcessEngineConfiguration configuration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
+    ProcessEngineConfiguration configuration = ((ProcessEngineImpl) embeddedProcessEngine).getProcessEngineConfiguration();
 
     // assert engine properties specified
     assertThat(configuration.isJobExecutorDeploymentAware()).isTrue();
@@ -129,11 +129,11 @@ class EmbeddedProcessApplicationTest {
     TestApplicationWithoutDmn processApplication = new TestApplicationWithoutDmn();
     processApplication.deploy();
 
-    ProcessEngine processEngine = BpmPlatform.getProcessEngineService().getProcessEngine("embeddedEngine");
-    assertThat(processEngine).isNotNull();
-    assertThat(processEngine.getName()).isEqualTo("embeddedEngine");
+    ProcessEngine embeddedProcessEngine = BpmPlatform.getProcessEngineService().getProcessEngine("embeddedEngine");
+    assertThat(embeddedProcessEngine).isNotNull();
+    assertThat(embeddedProcessEngine.getName()).isEqualTo("embeddedEngine");
 
-    ProcessEngineConfigurationImpl configuration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
+    ProcessEngineConfigurationImpl configuration = ((ProcessEngineImpl) embeddedProcessEngine).getProcessEngineConfiguration();
 
     // assert engine properties specified
     assertThat(configuration.isJobExecutorDeploymentAware()).isTrue();

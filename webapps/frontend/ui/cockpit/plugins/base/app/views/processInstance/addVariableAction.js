@@ -31,39 +31,39 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
       '$scope',
       '$uibModal',
       '$rootScope',
-      function($scope, $modal, $rootScope) {
-        $scope.openDialog = function() {
+      function ($scope, $modal, $rootScope) {
+        $scope.openDialog = function () {
           var dialog = $modal.open({
             scope: $scope,
             resolve: {
               resolved: () => ({
                 type: 'PROCESS_INSTANCE',
-                instanceId: $scope.processInstance.id
-              })
+                instanceId: $scope.processInstance.id,
+              }),
             },
             controller: addTemplate.controller,
-            template: addTemplate.template
+            template: addTemplate.template,
           });
 
           dialog.result
-            .then(function(result) {
+            .then(function (result) {
               // dialog closed. YEA!
               if (result === 'SUCCESS') {
                 // refresh filter and all views
                 $scope.processData.set(
                   'filter',
-                  angular.extend({}, $scope.filter)
+                  angular.extend({}, $scope.filter),
                 );
                 $rootScope.$broadcast(
-                  'cam-common:cam-searchable:query-force-change'
+                  'cam-common:cam-searchable:query-force-change',
                 );
               }
             })
             .catch(angular.noop);
         };
-      }
+      },
     ],
-    priority: 10
+    priority: 10,
   });
 };
 

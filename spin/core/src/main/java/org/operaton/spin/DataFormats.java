@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
 
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.spi.DataFormat;
@@ -38,9 +37,10 @@ import org.operaton.spin.xml.SpinXmlElement;
  * @author Sebastian Menski
  * @author Daniel Meyer
  */
+@SuppressWarnings("java:S3740")
 public class DataFormats {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   public static final String JSON_DATAFORMAT_NAME = "application/json";
 
@@ -109,13 +109,9 @@ public class DataFormats {
   /**
    * Detect all available dataformats on the classpath using a {@link ServiceLoader}.
    */
-  protected void ensureDataformatsInitialized() {
+  protected synchronized void ensureDataformatsInitialized() {
     if(availableDataFormats == null) {
-      synchronized(DataFormats.class) {
-        if(availableDataFormats == null) {
-          registerDataFormats(null);
-        }
-      }
+      registerDataFormats(null);
     }
   }
 
@@ -229,7 +225,7 @@ public class DataFormats {
     INSTANCE.registerDataFormats(classloader, configurators);
   }
 
-  public static void loadDataFormats(ClassLoader classloader, Map configurationProperties) {
+  public static void loadDataFormats(ClassLoader classloader, Map<String, Object> configurationProperties) {
     INSTANCE.registerDataFormats(classloader, Collections.emptyList(), configurationProperties);
   }
 

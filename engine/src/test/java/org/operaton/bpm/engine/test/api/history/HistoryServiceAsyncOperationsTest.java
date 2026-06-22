@@ -127,7 +127,7 @@ class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTest {
     JobQuery batchJobQuery = managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId());
     List<Job> batchJobs = batchJobQuery.list();
     assertThat(batchJobs).hasSize(2);
-    batchJobs.stream().forEach(job -> assertThat(job.getDeploymentId())
+    batchJobs.forEach(job -> assertThat(job.getDeploymentId())
         .satisfiesAnyOf(
             arg -> assertThat(arg).isEqualTo(firstDeploymentId),
             arg -> assertThat(arg).isNull()

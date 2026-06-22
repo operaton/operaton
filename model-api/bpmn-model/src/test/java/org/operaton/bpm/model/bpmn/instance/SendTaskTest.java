@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
@@ -38,11 +37,11 @@ public class SendTaskTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("implementation", false, false, "##WebService"),
       new AttributeAssumption("messageRef"),
       new AttributeAssumption("operationRef"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "class"),
       new AttributeAssumption(OPERATON_NS, "delegateExpression"),
       new AttributeAssumption(OPERATON_NS, "expression"),

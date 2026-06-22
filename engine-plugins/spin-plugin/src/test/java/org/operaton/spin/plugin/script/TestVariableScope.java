@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore;
  *
  */
 public class TestVariableScope extends AbstractVariableScope {
+  private static final VariableInstanceFactory VARIABLE_INSTANCE_FACTORY = new SimpleVariableInstanceFactory();
 
   protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
 
@@ -48,7 +49,7 @@ public class TestVariableScope extends AbstractVariableScope {
 
   @Override
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) SimpleVariableInstanceFactory.INSTANCE;
+    return VARIABLE_INSTANCE_FACTORY;
   }
 
   @Override

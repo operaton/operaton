@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.identity;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.operaton.bpm.engine.IdentityService;
@@ -42,7 +43,9 @@ public interface PasswordPolicyRule {
    *
    * @return a map of parameters
    */
-  Map<String, String> getParameters();
+  default Map<String, String> getParameters() {
+    return Collections.emptyMap();
+  }
 
   /**
    * Checks the given password against this rule.

@@ -136,7 +136,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
       writer.append("├── ");
     }
 
-    writer.append(getActivityId()+"=>"+getId() +"\n");
+    writer.append(getActivityId()+"=>%s%n".formatted(getId()));
 
     for (int i = 0; i < childTransitionInstances.length; i++) {
       TransitionInstance transitionInstance = childTransitionInstances[i];
@@ -159,7 +159,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
       writer.append("├── ");
     }
 
-    writer.append("transition to/from " + transition.getActivityId() + ":" + transition.getId() + "\n");
+    writer.append("transition to/from %s:%s%n".formatted(transition.getActivityId(), transition.getId()));
   }
 
   @Override

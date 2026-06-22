@@ -40,17 +40,20 @@ public class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
    * (where the condition evaluates to true), is not valid for an exclusive
    * gateway.
    *
+   * <p>
    * Hence, this behaviour is overriden and replaced by the correct behavior:
    * selecting the first sequence flow which condition evaluates to true
    * (or which hasn't got a condition) and leaving the activity through that
    * sequence flow.
+   * </p>
    *
+   * <p>
    * If no sequence flow is selected (ie all conditions evaluate to false),
    * then the default sequence flow is taken (if defined).
+   * </p>
    */
   @Override
   public void doLeave(ActivityExecution execution) {
-
     LOG.leavingActivity(execution.getActivity().getId());
 
     PvmTransition outgoingSeqFlow = null;
@@ -59,10 +62,7 @@ public class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     while (outgoingSeqFlow == null && transitionIterator.hasNext()) {
       PvmTransition seqFlow = transitionIterator.next();
 
-      Condition condition = (Condition) seqFlow.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
-      if ( (condition == null && (defaultSequenceFlow == null || !defaultSequenceFlow.equals(seqFlow.getId())) )
-              || (condition != null && condition.evaluate(execution)) ) {
-
+      if (isOutgoingSequenceFlow(defaultSequenceFlow, seqFlow, execution)) {
         LOG.outgoingSequenceFlowSelected(seqFlow.getId());
         outgoingSeqFlow = seqFlow;
       }
@@ -71,7 +71,6 @@ public class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     if (outgoingSeqFlow != null) {
       execution.leaveActivityViaTransition(outgoingSeqFlow);
     } else {
-
       if (defaultSequenceFlow != null) {
         PvmTransition defaultTransition = execution.getActivity().findOutgoingTransition(defaultSequenceFlow);
         if (defaultTransition != null) {
@@ -86,4 +85,9 @@ public class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     }
   }
 
+  private boolean isOutgoingSequenceFlow(String defaultSequenceFlow, PvmTransition seqFlow, ActivityExecution execution) {
+    Condition condition = (Condition) seqFlow.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
+    return (condition == null && (defaultSequenceFlow == null || !defaultSequenceFlow.equals(seqFlow.getId())) )
+        || (condition != null && condition.evaluate(execution));
+  }
 }

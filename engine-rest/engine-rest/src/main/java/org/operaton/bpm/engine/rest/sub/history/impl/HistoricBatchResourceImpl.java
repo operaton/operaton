@@ -43,7 +43,7 @@ public class HistoricBatchResourceImpl implements HistoricBatchResource {
       .singleResult();
 
     if (batch == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Historic batch with id '" + batchId + "' does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Historic batch with id '%s' does not exist".formatted(batchId));
     }
 
     return HistoricBatchDto.fromBatch(batch);
@@ -56,7 +56,7 @@ public class HistoricBatchResourceImpl implements HistoricBatchResource {
         .deleteHistoricBatch(batchId);
     }
     catch (BadUserRequestException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Unable to delete historic batch with id '" + batchId + "'");
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Unable to delete historic batch with id '%s'".formatted(batchId));
     }
   }
 

@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@SuppressWarnings({"java:S4144", "java:S5976"})
 class StartEventOperatonFormDefinitionParseTest {
 
   @RegisterExtension

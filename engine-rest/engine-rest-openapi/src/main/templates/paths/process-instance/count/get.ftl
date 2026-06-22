@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "getProcessInstancesCount"
       tag = "Process Instance"
-      summary = "Get List Count"
+      summary = "Count Process Instances"
       desc = "Queries for the number of process instances that fulfill given parameters." />
 
   "parameters": [
@@ -26,9 +26,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid, for example an invalid operator for variable comparison is used."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

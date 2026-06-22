@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class DecisionRuleTest extends DmnModelElementInstanceTest {
 
@@ -28,7 +27,7 @@ public class DecisionRuleTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(InputEntry.class),
       new ChildElementAssumption(OutputEntry.class, 1)
     );

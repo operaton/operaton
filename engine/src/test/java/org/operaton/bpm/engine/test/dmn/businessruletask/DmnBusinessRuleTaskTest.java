@@ -112,7 +112,7 @@ public class DmnBusinessRuleTaskTest {
     // when/then
     assertThatThrownBy(() -> startExpressionProcess("testDecision", 1))
       .isInstanceOf(DecisionDefinitionNotFoundException.class)
-      .hasMessageContaining("no decision definition deployed with key = 'testDecision', version = '1' and tenant-id 'null");
+      .hasMessageContaining("no decision definition deployed with key = 'testDecision', version = '1' and tenant-id = 'null");
   }
 
   @Deployment(resources = {DECISION_PROCESS_LATEST, DECISION_OKAY_DMN})
@@ -215,7 +215,7 @@ public class DmnBusinessRuleTaskTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
       .isInstanceOf(DecisionDefinitionNotFoundException.class)
-      .hasMessageContaining("no decision definition deployed with key = 'decision', versionTag = '0.0.2' and tenant-id 'null'");
+      .hasMessageContaining("no decision definition deployed with key = 'decision', versionTag = '0.0.2' and tenant-id = 'null'");
   }
 
   @Test

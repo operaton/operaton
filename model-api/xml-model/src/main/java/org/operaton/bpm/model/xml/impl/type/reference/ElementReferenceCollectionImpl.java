@@ -137,126 +137,133 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
 
   @Override
   public Collection<TARGET> getReferenceTargetElements(final ModelElementInstanceImpl referenceSourceParentElement) {
+    return new ModelElementInstanceCollection(referenceSourceParentElement);
+  }
 
-    return new Collection<>() {
+  private class ModelElementInstanceCollection implements Collection<TARGET> {
 
-      @Override
-      public int size() {
-        return getView(referenceSourceParentElement).size();
+    private final ModelElementInstanceImpl referenceSourceParentElement;
+
+    public ModelElementInstanceCollection(ModelElementInstanceImpl referenceSourceParentElement) {
+      this.referenceSourceParentElement = referenceSourceParentElement;
+    }
+
+    @Override
+    public int size() {
+      return getView(referenceSourceParentElement).size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+      return getView(referenceSourceParentElement).isEmpty();
+    }
+
+    @Override
+    public boolean contains(Object o) {
+      if (o == null) {
+        return false;
+      }
+      else if (!(o instanceof ModelElementInstanceImpl modelElement)) {
+        return false;
+      }
+      else {
+        return getView(referenceSourceParentElement).contains(modelElement.getDomElement());
+      }
+    }
+
+    @Override
+    public Iterator<TARGET> iterator() {
+      Collection<TARGET> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
+      return modelElementCollection.iterator();
+    }
+
+    @Override
+    public Object[] toArray() {
+      Collection<TARGET> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
+      return modelElementCollection.toArray();
+    }
+
+    public <T1> T1[] toArray(T1[] a) {
+      Collection<TARGET> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
+      return modelElementCollection.toArray(a);
+    }
+
+    @Override
+    public boolean add(TARGET t) {
+      if (referenceSourceCollection.isImmutable()) {
+        throw new UnsupportedModelOperationException("add()", "collection is immutable");
+      }
+      else {
+        if (!contains(t)) {
+          performAddOperation(referenceSourceParentElement, t);
+        }
+        return true;
+      }
+    }
+
+    @Override
+    public boolean remove(Object o) {
+      if (referenceSourceCollection.isImmutable()) {
+        throw new UnsupportedModelOperationException("remove()", "collection is immutable");
+      }
+      else {
+        ModelUtil.ensureInstanceOf(o, ModelElementInstanceImpl.class);
+        performRemoveOperation(referenceSourceParentElement, o);
+        return true;
+      }
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+      Collection<TARGET> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
+      return modelElementCollection.containsAll(c);
+    }
+
+    public boolean addAll(Collection<? extends TARGET> c) {
+      if (referenceSourceCollection.isImmutable()) {
+        throw new UnsupportedModelOperationException("addAll()", "collection is immutable");
+      }
+      else {
+        boolean result = false;
+        for (TARGET o: c) {
+          result |= add(o);
+        }
+        return result;
       }
 
-      @Override
-      public boolean isEmpty() {
-        return getView(referenceSourceParentElement).isEmpty();
-      }
+    }
 
-      @Override
-      public boolean contains(Object o) {
-        if (o == null) {
-          return false;
-        }
-        else if (!(o instanceof ModelElementInstanceImpl modelElement)) {
-          return false;
-        }
-        else {
-          return getView(referenceSourceParentElement).contains(modelElement.getDomElement());
-        }
+    @Override
+    public boolean removeAll(Collection<?> c) {
+      if (referenceSourceCollection.isImmutable()) {
+        throw new UnsupportedModelOperationException("removeAll()", "collection is immutable");
       }
-
-      @Override
-      public Iterator<TARGET> iterator() {
-        Collection<TARGET> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
-        return modelElementCollection.iterator();
-      }
-
-      @Override
-      public Object[] toArray() {
-        Collection<TARGET> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
-        return modelElementCollection.toArray();
-      }
-
-      public <T1> T1[] toArray(T1[] a) {
-        Collection<TARGET> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
-        return modelElementCollection.toArray(a);
-      }
-
-      @Override
-      public boolean add(TARGET t) {
-        if (referenceSourceCollection.isImmutable()) {
-          throw new UnsupportedModelOperationException("add()", "collection is immutable");
+      else {
+        boolean result = false;
+        for (Object o: c) {
+          result |= remove(o);
         }
-        else {
-          if (!contains(t)) {
-            performAddOperation(referenceSourceParentElement, t);
-          }
-          return true;
-        }
+        return result;
       }
+    }
 
-      @Override
-      public boolean remove(Object o) {
-        if (referenceSourceCollection.isImmutable()) {
-          throw new UnsupportedModelOperationException("remove()", "collection is immutable");
-        }
-        else {
-          ModelUtil.ensureInstanceOf(o, ModelElementInstanceImpl.class);
-          performRemoveOperation(referenceSourceParentElement, o);
-          return true;
-        }
+    @Override
+    public boolean retainAll(Collection<?> c) {
+      throw new UnsupportedModelOperationException("retainAll()", "not implemented");
+    }
+
+    @Override
+    public void clear() {
+      if (referenceSourceCollection.isImmutable()) {
+        throw new UnsupportedModelOperationException("clear()", "collection is immutable");
       }
-
-      @Override
-      public boolean containsAll(Collection<?> c) {
-        Collection<TARGET> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
-        return modelElementCollection.containsAll(c);
+      else {
+        Collection<DomElement> view = new ArrayList<>();
+        for (SOURCE referenceSourceElement : referenceSourceCollection.get(referenceSourceParentElement)) {
+          view.add(referenceSourceElement.getDomElement());
+        }
+        performClearOperation(referenceSourceParentElement, view);
       }
-
-      public boolean addAll(Collection<? extends TARGET> c) {
-        if (referenceSourceCollection.isImmutable()) {
-          throw new UnsupportedModelOperationException("addAll()", "collection is immutable");
-        }
-        else {
-          boolean result = false;
-          for (TARGET o: c) {
-            result |= add(o);
-          }
-          return result;
-        }
-
-      }
-
-      @Override
-      public boolean removeAll(Collection<?> c) {
-        if (referenceSourceCollection.isImmutable()) {
-          throw new UnsupportedModelOperationException("removeAll()", "collection is immutable");
-        }
-        else {
-          boolean result = false;
-          for (Object o: c) {
-            result |= remove(o);
-          }
-          return result;
-        }
-      }
-
-      @Override
-      public boolean retainAll(Collection<?> c) {
-        throw new UnsupportedModelOperationException("retainAll()", "not implemented");
-      }
-
-      @Override
-      public void clear() {
-        if (referenceSourceCollection.isImmutable()) {
-          throw new UnsupportedModelOperationException("clear()", "collection is immutable");
-        }
-        else {
-          Collection<DomElement> view = new ArrayList<>();
-          for (SOURCE referenceSourceElement : referenceSourceCollection.get(referenceSourceParentElement)) {
-            view.add(referenceSourceElement.getDomElement());
-          }
-          performClearOperation(referenceSourceParentElement, view);
-        }
-      }
-    };
+    }
   }
 }

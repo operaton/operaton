@@ -47,6 +47,9 @@ public class CaseFileItemImpl extends CmmnElementImpl implements CaseFileItem {
   protected static ChildElement<Children> childrenChild;
 
   // cmmn 1.0
+  /**
+   * @deprecated CMMN 1.1 sourceRef is replaced by sourceRefs
+   */
   @Deprecated(since = "1.0")
   protected static AttributeReference<CaseFileItem> sourceRefAttribute;
 
@@ -90,16 +93,6 @@ public class CaseFileItemImpl extends CmmnElementImpl implements CaseFileItem {
   }
 
   @Override
-  public CaseFileItem getSourceRef() {
-    return sourceRefAttribute.getReferenceTargetElement(this);
-  }
-
-  @Override
-  public void setSourceRef(CaseFileItem sourceRef) {
-    sourceRefAttribute.setReferenceTargetElement(this, sourceRef);
-  }
-
-  @Override
   public Collection<CaseFileItem> getSourceRefs() {
     return sourceRefCollection.getReferenceTargetElements(this);
   }
@@ -119,6 +112,7 @@ public class CaseFileItemImpl extends CmmnElementImpl implements CaseFileItem {
     childrenChild.setChild(this, children);
   }
 
+  @SuppressWarnings("deprecation")
   public static void registerType(ModelBuilder modelBuilder) {
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItem.class, CMMN_ELEMENT_CASE_FILE_ITEM)

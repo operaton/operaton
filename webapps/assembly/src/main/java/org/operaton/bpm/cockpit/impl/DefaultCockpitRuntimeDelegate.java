@@ -101,7 +101,7 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
 
     ProcessEngine processEngine = getProcessEngine(processEngineName);
     if (processEngine == null) {
-      throw new ProcessEngineException("No process engine with name " + processEngineName + " found.");
+      throw new ProcessEngineException("No process engine with name %s found.".formatted(processEngineName));
     }
 
     ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl)processEngine).getProcessEngineConfiguration();

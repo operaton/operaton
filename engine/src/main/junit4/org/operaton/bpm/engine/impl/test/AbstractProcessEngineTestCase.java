@@ -53,7 +53,9 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
    *   * operaton-engine-spring
    *   * operaton-identity-ldap
    *
+   * <p>
    * It should be removed once those Test classes are migrated to JUnit 4.
+   * </p>
    */
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
@@ -206,7 +208,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
       .singleResult();
 
     if (processInstance!=null) {
-      throw new AssertionFailedError("Expected finished process instance '"+processInstanceId+"' but it was still in the db");
+      throw new AssertionFailedError("Expected finished process instance '%s' but it was still in the db".formatted(processInstanceId));
     }
   }
 
@@ -218,7 +220,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
       .singleResult();
 
     if (processInstance==null) {
-      throw new AssertionFailedError("Expected process instance '"+processInstanceId+"' to be still active but it was not in the db");
+      throw new AssertionFailedError("Expected process instance '%s' to be still active but it was not in the db".formatted(processInstanceId));
     }
   }
 
@@ -230,7 +232,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
       .singleResult();
 
     if (caseInstance!=null) {
-      throw new AssertionFailedError("Expected finished case instance '"+caseInstanceId+"' but it was still in the db");
+      throw new AssertionFailedError("Expected finished case instance '%s' but it was still in the db".formatted(caseInstanceId));
     }
   }
 
@@ -286,7 +288,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     List<Job> jobs = managementService.createJobQuery().withRetriesLeft().list();
 
     if (jobs.isEmpty()) {
-      assertTrue("executed less jobs than expected. expected <" + expectedExecutions + "> actual <" + jobsExecuted + ">",
+      assertTrue("executed less jobs than expected. expected <%s> actual <%s>".formatted(expectedExecutions, jobsExecuted),
           jobsExecuted == expectedExecutions || ignoreLessExecutions);
       return;
     }
@@ -298,7 +300,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
       } catch (Exception e) {}
     }
 
-    assertTrue("executed more jobs than expected. expected <" + expectedExecutions + "> actual <" + jobsExecuted + ">",
+    assertTrue("executed more jobs than expected. expected <%s> actual <%s>".formatted(expectedExecutions, jobsExecuted),
         jobsExecuted <= expectedExecutions);
 
     if (recursive) {
@@ -306,6 +308,9 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     }
   }
 
+  /**
+   * @deprecated typo in method name. Use {@link #getInstancesForActivityId(ActivityInstance, String)} instead.
+   */
   @Deprecated
   protected List<ActivityInstance> getInstancesForActivitiyId(ActivityInstance activityInstance, String activityId) {
     return getInstancesForActivityId(activityInstance, activityId);
@@ -368,7 +373,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
   protected String deployment(DeploymentBuilder deploymentBuilder, BpmnModelInstance... bpmnModelInstances) {
     for (int i = 0; i < bpmnModelInstances.length; i++) {
       BpmnModelInstance bpmnModelInstance = bpmnModelInstances[i];
-      deploymentBuilder.addModelInstance("testProcess-"+i+".bpmn", bpmnModelInstance);
+      deploymentBuilder.addModelInstance("testProcess-%s.bpmn".formatted(i), bpmnModelInstance);
     }
 
     return deploymentWithBuilder(deploymentBuilder);

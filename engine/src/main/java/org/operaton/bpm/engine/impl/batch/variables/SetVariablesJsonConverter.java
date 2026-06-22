@@ -28,8 +28,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 public class SetVariablesJsonConverter extends AbstractBatchConfigurationObjectConverter<BatchConfiguration> {
 
-  public static final SetVariablesJsonConverter INSTANCE = new SetVariablesJsonConverter();
-
   protected static final String IDS = "ids";
   protected static final String ID_MAPPINGS = "idMappings";
 

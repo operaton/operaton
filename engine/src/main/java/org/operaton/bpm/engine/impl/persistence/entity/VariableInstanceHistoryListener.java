@@ -31,8 +31,6 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
  */
 public class VariableInstanceHistoryListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
-  public static final VariableInstanceHistoryListener INSTANCE = new VariableInstanceHistoryListener();
-
   @Override
   public void onCreate(final VariableInstanceEntity variableInstance, final AbstractVariableScope sourceScope) {
     if (getHistoryLevel().isHistoryEventProduced(HistoryEventTypes.VARIABLE_INSTANCE_CREATE, variableInstance) && !variableInstance.isTransient()) {

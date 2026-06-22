@@ -40,27 +40,28 @@ Telemetry.path = 'telemetry';
  *
  * @param  {Function} done
  */
-Telemetry.get = function(done) {
+Telemetry.get = function (done) {
   return this.http.get(this.path + '/configuration', {
-    done: done
+    done: done,
   });
 };
 
 /**
- * Configures whether Operaton receives data collection of the process engine setup and usage.
+ * Deprecated. Telemetry sending has been removed; the endpoint is a no-op kept
+ * for backwards compatibility.
  *
  * @param  {Object}   payload                  is an object representation of an authorization
- * @param  {Boolean}  payload.enableTelemetry  Specifies if the data collection should be sent or not.
+ * @param  {Boolean}  payload.enableTelemetry  Deprecated no-op flag.
  * @param  {Function} done
  */
-Telemetry.configure = function(payload, done) {
+Telemetry.configure = function (payload, done) {
   if (typeof payload === 'boolean') {
     payload = {enableTelemetry: payload};
   }
 
   return this.http.post(this.path + '/configuration', {
     data: payload,
-    done: done
+    done: done,
   });
 };
 
@@ -70,7 +71,7 @@ Telemetry.configure = function(payload, done) {
  * @param  {Object}   payload
  * @param  {Function} done
  */
-Telemetry.fetchData = function(payload, done) {
+Telemetry.fetchData = function (payload, done) {
   if (typeof payload === 'function') {
     done = payload;
     payload = {};
@@ -81,7 +82,7 @@ Telemetry.fetchData = function(payload, done) {
 
   return this.http.get(this.path + '/data', {
     data: payload,
-    done: done
+    done: done,
   });
 };
 

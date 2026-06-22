@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "queryHistoricProcessInstances"
       tag = "Historic Process Instance"
-      summary = "Get List (POST)"
+      summary = "List Historic Process Instances"
       desc = "Queries for historic process instances that fulfill the given parameters.
               This method is slightly more powerful than the
               [Get Process Instance](${docsUrl}/reference/rest/history/process-instance/get-process-instance-query/)
@@ -87,10 +87,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid, for example if a sortOrder parameter is supplied, but no sortBy.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

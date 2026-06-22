@@ -36,7 +36,7 @@ class NoDefaultDatasourceConfigurationTest {
   static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
       .withConfigurationResource("org/operaton/bpm/quarkus/engine/test/persistence/conf/secondary-datasource-application.properties")
       .assertException(throwable -> assertThat(throwable)
-          .hasMessageContaining("Default")
+          .hasMessageContaining("default")
           .isInstanceOf(UnsatisfiedResolutionException.class))
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
@@ -45,6 +45,7 @@ class NoDefaultDatasourceConfigurationTest {
 
   @Test
   void shouldExpectException() {
+    assertThat(processEngine).isNull();
   }
 
 }

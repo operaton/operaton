@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnDiagram;
 
@@ -35,7 +34,7 @@ public class DefinitionsTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Import.class),
       new ChildElementAssumption(Extension.class),
       new ChildElementAssumption(RootElement.class),
@@ -46,7 +45,7 @@ public class DefinitionsTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("id", true),
       new AttributeAssumption("name"),
       new AttributeAssumption("targetNamespace", false, true),

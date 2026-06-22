@@ -46,16 +46,20 @@ class PvmEventScopesTest {
    *                                          |
    *                                          v
    *
+   * <p>
    *           +------------------------------+
    *           | embedded subprocess          |
    * +-----+   |  +-----------+   +---------+ |   +----+   +---+
    * |start|-->|  |startInside|-->|endInside| |-->|wait|-->|end|
    * +-----+   |  +-----------+   +---------+ |   +----+   +---+
    *           +------------------------------+
+   * </p>
    *
+   * <p>
    *                                                           ^
    *                                                           |
    *                                       destroy evt scope --+
+   * </p>
    *
    */
   @Test
@@ -125,9 +129,11 @@ class PvmEventScopesTest {
    *           |                                                                      |
    *           +----------------------------------------------------------------------+
    *
+   * <p>
    *                                                                                  ^
    *                                                                                  |
    *                                                              destroy evt scope --+
+   * </p>
    */
   @Test
   void testTransitionDestroysEventScope() {

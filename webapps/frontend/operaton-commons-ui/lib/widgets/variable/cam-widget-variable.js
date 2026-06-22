@@ -27,7 +27,7 @@ var modalCtrl = varUtils.modalCtrl;
 
 module.exports = [
   '$uibModal',
-  function($modal) {
+  function ($modal) {
     return {
       template: template,
 
@@ -56,10 +56,10 @@ module.exports = [
         display: '@?',
         shown: '=?',
         disabled: '=?',
-        hiddenTypes: '=?'
+        hiddenTypes: '=?',
       },
 
-      link: function($scope, element) {
+      link: function ($scope, element) {
         function isShownType(what) {
           if (
             !Array.isArray($scope.hiddenTypes) ||
@@ -78,31 +78,31 @@ module.exports = [
 
         $scope.useCheckbox = varUtils.useCheckbox($scope);
 
-        $scope.isShown = function(what) {
+        $scope.isShown = function (what) {
           if (!Array.isArray($scope.shown) || !$scope.shown.length) {
             return true;
           }
           return $scope.shown.indexOf(what) > -1;
         };
 
-        $scope.isDisabled = function(what) {
+        $scope.isDisabled = function (what) {
           if (!Array.isArray($scope.disabled) || !$scope.disabled.length) {
             return false;
           }
           return $scope.disabled.indexOf(what) > -1;
         };
 
-        $scope.shownClasses = function() {
+        $scope.shownClasses = function () {
           if (!Array.isArray($scope.shown) || !$scope.shown.length) {
             return '';
           }
           return $scope.shown
-            .map(function(part) {
+            .map(function (part) {
               return 'show-' + part;
             })
             .join(' ');
         };
-        $scope.$watch('shown', function() {
+        $scope.$watch('shown', function () {
           element
             .removeClass('show-type show-name show-value')
             .addClass($scope.shownClasses());
@@ -119,7 +119,7 @@ module.exports = [
         // from either type or null switch
         var backup = $scope.variable.value;
 
-        $scope.$watch('variable.type', function(current, previous) {
+        $scope.$watch('variable.type', function (current, previous) {
           // convert the value to boolean when the type becomes Boolean
           if (current === 'Boolean') {
             // we don't do anything if the value is null
@@ -144,18 +144,18 @@ module.exports = [
           }
         });
 
-        $scope.isNull = function() {
+        $scope.isNull = function () {
           return $scope.variable.value === null;
         };
-        $scope.setNonNull = function() {
+        $scope.setNonNull = function () {
           $scope.variable.value = backup || defaultValues[$scope.variable.type];
         };
-        $scope.setNull = function() {
+        $scope.setNull = function () {
           backup = $scope.variable.value;
           $scope.variable.value = null;
         };
 
-        $scope.editVariableValue = function() {
+        $scope.editVariableValue = function () {
           $modal
             .open({
               template: varUtils.templateDialog, //templateDialog,
@@ -165,21 +165,21 @@ module.exports = [
               windowClass: 'cam-widget-variable-dialog',
 
               resolve: {
-                variable: function() {
+                variable: function () {
                   return angular.copy($scope.variable);
                 },
-                readonly: function() {
+                readonly: function () {
                   return $scope.display;
-                }
-              }
+                },
+              },
             })
-            .result.then(function(result) {
+            .result.then(function (result) {
               $scope.variable.value = result.value;
               $scope.variable.valueInfo = result.valueInfo;
             })
             .catch(angular.noop);
         };
-      }
+      },
     };
-  }
+  },
 ];

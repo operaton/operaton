@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -77,7 +76,7 @@ public class BatchModificationHistoryTest {
 
   @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { false, null },
       { true, START_DATE }
     });

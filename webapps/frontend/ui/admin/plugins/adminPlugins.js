@@ -17,7 +17,7 @@
 
 'use strict';
 
-import 'ui/admin/plugins/styles.less';
+import 'ui/admin/plugins/styles.scss';
 
 var angular = require('angular'),
   base = require('./base/app/plugin');

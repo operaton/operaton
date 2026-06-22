@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import junit.framework.AssertionFailedError;
 import org.junit.jupiter.api.TestTemplate;
@@ -31,7 +30,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Parse an invalid process definition and assert the error message.
@@ -46,7 +45,7 @@ public class SignalEventParseInvalidProcessTest {
 
   @Parameters(name = "process definition = {0}, expected error message = {1}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "InvalidProcessWithDuplicateSignalNames.bpmn20.xml", "duplicate signal name", "alertSignal2" },
         { "InvalidProcessWithNoSignalName.bpmn20.xml", "signal with id 'alertSignal' has no name", "alertSignal" },
         { "InvalidProcessWithSignalNoId.bpmn20.xml", "signal must have an id", null },
@@ -69,21 +68,23 @@ public class SignalEventParseInvalidProcessTest {
 
   @TestTemplate
   void testParseInvalidProcessDefinition() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource);
-    try {
-      deploymentBuilder.deploy();
 
-      fail("exception expected: " + expectedErrorMessage);
-    } catch (ParseException e) {
-      assertTextPresent(expectedErrorMessage, e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo(elementIds);
-    }
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .satisfies(e -> {
+        ParseException pe = (ParseException) e;
+        assertTextPresent(expectedErrorMessage, pe.getMessage());
+        assertThat(pe.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo(elementIds);
+      });
   }
 
   public void assertTextPresent(String expected, String actual) {
     if (actual == null || !actual.contains(expected)) {
-      throw new AssertionFailedError("expected presence of [" + expected + "], but was [" + actual + "]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expected, actual));
     }
   }
 }

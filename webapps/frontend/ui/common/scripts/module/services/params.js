@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-module.exports = function() {
-  return function(query) {
-    return Object.keys(query).reduce(function(queryStr, key) {
+module.exports = function () {
+  return function (query) {
+    return Object.keys(query).reduce(function (queryStr, key) {
       var value = query[key];
       var part = key + '=' + encodeURIComponent(value);
 

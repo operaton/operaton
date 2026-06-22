@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class WebappsDatabaseNamingConsistencyTest {
 
@@ -40,8 +40,9 @@ public class WebappsDatabaseNamingConsistencyTest {
     // given the rule that all DB column names are created in uppercase
 
     // when scanning all mapping files for lowercase column names
-    StringBuilder errorMessageBuilder = new StringBuilder();
-    Pattern pattern = Pattern.compile(COLUMN_NAME_REGEX);
+    var errorMessageBuilder = new StringBuilder();
+    var pattern = Pattern.compile(COLUMN_NAME_REGEX);
+
     try {
       for (String scannedFolder : SCANNED_FOLDERS) {
         URL resource = getClass().getClassLoader().getResource(scannedFolder);
@@ -70,12 +71,11 @@ public class WebappsDatabaseNamingConsistencyTest {
         }
       }
     } catch (IOException e) {
-      fail("Unable to find test resource for test " + getClass().getName() + "\n" + e.getMessage());
+      throw new RuntimeException("Unable to find test resource for test " + getClass().getName() + "\n" + e.getMessage());
     }
+    
     // then don't expect any results
-    String errorMessage = errorMessageBuilder.toString();
-    if (!errorMessage.isEmpty()) {
-      fail(errorMessage);
-    }
+    var errorMessage = errorMessageBuilder.toString();
+    assertThat(errorMessage).isEmpty();
   }
 }

@@ -29,7 +29,7 @@ module.exports = {
   shouldUpdateFilter: shouldUpdateFilter,
   createSearchesForActivityIds: createSearchesForActivityIds,
   encodeQuery: encodeQuery,
-  updateSearchValuesForTypeInCtrlMode: updateSearchValuesForTypeInCtrlMode
+  updateSearchValuesForTypeInCtrlMode: updateSearchValuesForTypeInCtrlMode,
 };
 
 /**
@@ -63,7 +63,7 @@ function shouldUpdateFilter(newFilter, currentFilter, whiteList) {
 
   return !angular.equals(
     prepareObjectForComparing(newFilter, whiteList),
-    prepareObjectForComparing(currentFilter, whiteList)
+    prepareObjectForComparing(currentFilter, whiteList),
   );
 }
 
@@ -76,7 +76,7 @@ function prepareObjectForComparing(obj, whiteList) {
 }
 
 function stripProperties(obj, whiteList) {
-  return Object.keys(obj).reduce(function(newObj, key) {
+  return Object.keys(obj).reduce(function (newObj, key) {
     var value = obj[key];
 
     if (includes(whiteList, key)) {
@@ -88,7 +88,7 @@ function stripProperties(obj, whiteList) {
 }
 
 function stripUndefinedFromObject(obj) {
-  return Object.keys(obj).reduce(function(newObj, key) {
+  return Object.keys(obj).reduce(function (newObj, key) {
     var value = obj[key];
 
     if (value != null) {
@@ -114,10 +114,10 @@ function getActivityIdsFromUrlParams(searchType, params) {
 
 function getActivityIdsFromSearches(searchType, searches) {
   return searches
-    .filter(function(search) {
+    .filter(function (search) {
       return search.type === searchType;
     })
-    .map(function(search) {
+    .map(function (search) {
       return search.value;
     });
 }
@@ -135,26 +135,26 @@ function updateSearchValuesForTypeInCtrlMode(searches, searchType, values) {
   var newValues = removeDoubleValues(values, searches, searchType);
 
   return newSearches.concat(
-    createSearchesForActivityIds(searchType, newValues)
+    createSearchesForActivityIds(searchType, newValues),
   );
 }
 
 function removeDoubledSearches(searches, values, searchType) {
-  return searches.filter(function(search) {
+  return searches.filter(function (search) {
     return search.type !== searchType || !includes(values, search.value);
   });
 }
 
 function removeDoubleValues(values, searches, searchType) {
   var searchesValues = searches
-    .filter(function(search) {
+    .filter(function (search) {
       return search.type === searchType;
     })
-    .map(function(search) {
+    .map(function (search) {
       return search.value;
     });
 
-  return values.filter(function(value) {
+  return values.filter(function (value) {
     return !includes(searchesValues, value);
   });
 }
@@ -169,15 +169,15 @@ function removeDoubleValues(values, searches, searchType) {
 function replaceActivitiesInSearchQuery(
   searches,
   searchType,
-  selectedActivityIds
+  selectedActivityIds,
 ) {
   return removeActivitySearches(searchType, searches).concat(
-    createSearchesForActivityIds(searchType, selectedActivityIds)
+    createSearchesForActivityIds(searchType, selectedActivityIds),
   );
 }
 
 function removeActivitySearches(searchType, searches) {
-  return searches.filter(function(search) {
+  return searches.filter(function (search) {
     return search.type !== searchType;
   });
 }
@@ -190,7 +190,7 @@ function createActivitySearch(searchType, value) {
   return {
     type: searchType,
     operator: 'eq',
-    value: value
+    value: value,
   };
 }
 
@@ -215,7 +215,7 @@ function createSearchQueryForSearchWidget(searches, arrayTypes, variableTypes) {
 
   return searches.reduce(
     addSearchToQuery.bind(null, arrayTypes, variableTypes),
-    {}
+    {},
   );
 }
 
@@ -267,11 +267,12 @@ function getSearchValue(search) {
   return sanitizeValue(
     search.value.key,
     search.value.value,
-    search.operator.value.key
+    search.operator.value.key,
   );
 }
 
-var simpleDateExp = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
+var simpleDateExp =
+  /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
 function sanitizeValue(key, value, operator) {
   // Regex for '\_' and '\%' epxressions
   var specialWildCardCharExp = /(\\%)|(\\_)/g;
@@ -313,7 +314,7 @@ function createVariableValue(search, value) {
   return {
     name: search.name.value,
     operator: search.operator.value.key,
-    value: parseValue(value)
+    value: parseValue(value),
   };
 }
 

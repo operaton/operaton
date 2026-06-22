@@ -41,6 +41,7 @@ import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.junit.jupiter.api.extension.TestWatcher;
+import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.*;
@@ -63,6 +64,8 @@ import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
  * This extension provides a managed instance of {@link ProcessEngine} and its services, which can
  * be automatically injected into test fields. The process engine configuration can be provided
  * through an {@code operaton.cfg.xml} file on the classpath or customized using a builder pattern.
+ * If no configuration file can be found on the classpath, a default  {@link StandaloneInMemProcessEngineConfiguration}
+ * will be used
  * </p>
  *
  * <h3>Basic Usage:</h3>
@@ -186,17 +189,29 @@ public class ProcessEngineExtension implements TestWatcher,
 
   public void initializeProcessEngine() {
     Consumer<ProcessEngineConfigurationImpl> configurator = processEngineConfigurator;
+
+    String engineName = randomName ? ProcessEngineUtils.newRandomProcessEngineName() : ProcessEngines.NAME_DEFAULT;
+
     if (randomName) {
       if (processEngineConfigurator == null) {
-        configurator = config -> config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+        configurator = config -> config.setProcessEngineName(engineName);
       } else {
         configurator = config -> {
-          config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+          config.setProcessEngineName(engineName);
           processEngineConfigurator.accept(config);
         };
       }
     }
-    processEngine = TestHelper.getProcessEngine(configurationResource, configurator);
+
+    if(this.getClass().getClassLoader().getResource(configurationResource) != null) {
+      LOG.debug("using provided configuration resource: {}", configurationResource);
+      processEngine = TestHelper.getProcessEngine(configurationResource, configurator);
+    } else {
+      LOG.debug("no configuration resource provided. Using default StandaloneInMemProcessEngineConfiguration");
+      processEngine = TestHelper.getProcessEngine(new StandaloneInMemProcessEngineConfiguration()
+              .setJdbcUrl("jdbc:h2:mem:operaton-" + engineName), configurator);
+    }
+
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 
@@ -239,7 +254,7 @@ public class ProcessEngineExtension implements TestWatcher,
   public void beforeEach(ExtensionContext context) {
     LOG.debug("beforeEach: {}", context.getDisplayName());
 
-    if (!ProcessEngines.isRegisteredProcessEngine(processEngine.getName())) {
+    if (processEngine == null || !ProcessEngines.isRegisteredProcessEngine(processEngine.getName())) {
       initializeProcessEngine();
       initializeServices();
     }
@@ -309,27 +324,27 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public void afterAll(ExtensionContext context) {
-    try {
-      deleteHistoryCleanupJob();
-      if (closeEngine && processEngine != null) {
+    if (closeEngine && processEngine != null) {
+      try {
+        deleteHistoryCleanupJob();
         processEngine.close();
+      } finally {
+        // null the references after all tests because the instance is hold in static reference
+        processEngine = null;
+        processEngineConfiguration = null;
+        repositoryService = null;
+        runtimeService = null;
+        taskService = null;
+        historyService = null;
+        identityService = null;
+        managementService = null;
+        formService = null;
+        filterService = null;
+        authorizationService = null;
+        caseService = null;
+        externalTaskService = null;
+        decisionService = null;
       }
-    } finally {
-      // null the references after all tests because the instance is hold in static reference
-      processEngine = null;
-      processEngineConfiguration = null;
-      repositoryService = null;
-      runtimeService = null;
-      taskService = null;
-      historyService = null;
-      identityService = null;
-      managementService = null;
-      formService = null;
-      filterService = null;
-      authorizationService = null;
-      caseService = null;
-      externalTaskService = null;
-      decisionService = null;
     }
   }
 
@@ -397,11 +412,9 @@ public class ProcessEngineExtension implements TestWatcher,
                 }
               });
 
-    if (serviceInstance.isPresent()) {
-      getAllFields(testInstance.getClass())
+      serviceInstance.ifPresent(instance -> getAllFields(testInstance.getClass())
               .filter(field -> field.getType() != Object.class && field.getType().isAssignableFrom(serviceType))
-              .forEach(field -> inject(testInstance, field, serviceInstance.get()));
-    }
+              .forEach(field -> inject(testInstance, field, instance)));
   }
 
   // FLUENT BUILDER

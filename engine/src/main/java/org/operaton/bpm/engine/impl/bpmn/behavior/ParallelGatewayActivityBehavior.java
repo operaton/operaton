@@ -27,26 +27,34 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * Implementation of the Parallel Gateway/AND gateway as definined in the BPMN
  * 2.0 specification.
  *
+ * <p>
  * The Parallel Gateway can be used for splitting a path of execution into
  * multiple paths of executions (AND-split/fork behavior), one for every
  * outgoing sequence flow.
+ * </p>
  *
+ * <p>
  * The Parallel Gateway can also be used for merging or joining paths of
  * execution (AND-join). In this case, on every incoming sequence flow an
  * execution needs to arrive, before leaving the Parallel Gateway (and
  * potentially then doing the fork behavior in case of multiple outgoing
  * sequence flow).
+ * </p>
  *
+ * <p>
  * Note that there is a slight difference to spec (p. 436): "The parallel
  * gateway is activated if there is at least one Token on each incoming sequence
  * flow." We only check the number of incoming tokens to the number of sequenceflow.
  * So if two tokens would arrive through the same sequence flow, our implementation
  * would activate the gateway.
+ * </p>
  *
+ * <p>
  * Note that a Parallel Gateway having one incoming and multiple ougoing
  * sequence flow, is the same as having multiple outgoing sequence flow on a
  * given activity. However, a parallel gateway does NOT check conditions on the
  * outgoing sequence flow.
+ * </p>
  *
  * @author Joram Barrez
  * @author Tom Baeyens

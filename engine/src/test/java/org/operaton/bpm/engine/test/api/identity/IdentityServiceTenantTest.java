@@ -38,7 +38,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 @ExtendWith(ProcessEngineExtension.class)
 class IdentityServiceTenantTest {
@@ -97,21 +96,18 @@ class IdentityServiceTenantTest {
 
   @Test
   void createExistingTenant() {
+    // given
     Tenant tenant = identityService.newTenant(TENANT_ONE);
     tenant.setName("Tenant");
     identityService.saveTenant(tenant);
 
     Tenant secondTenant = identityService.newTenant(TENANT_ONE);
     secondTenant.setName("Tenant");
-    try {
-      identityService.saveTenant(secondTenant);
-      fail("BadUserRequestException is expected");
-    } catch (Exception ex) {
-      if (!(ex instanceof BadUserRequestException)) {
-        fail("BadUserRequestException is expected, but another exception was received:  " + ex);
-      }
-      assertThat(ex.getMessage()).isEqualTo("The tenant already exists");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> identityService.saveTenant(secondTenant))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("The tenant already exists");
   }
 
   @Test
@@ -134,32 +130,32 @@ class IdentityServiceTenantTest {
 
   @Test
   void testInvalidTenantId() {
+    // given
     String invalidId = "john's tenant";
     Tenant tenant = identityService.newTenant(invalidId);
-    try {
-      identityService.saveTenant(tenant);
-      fail("Invalid tenant id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
-    }
+
+    // when/then
+    assertThatThrownBy(() -> identityService.saveTenant(tenant))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
   }
 
   @Test
   void testInvalidTenantIdOnUpdate() {
+    // given
     String invalidId = "john's tenant";
     Tenant updatedTenant = identityService.newTenant("john");
     updatedTenant.setId(invalidId);
-    try {
-      identityService.saveTenant(updatedTenant);
 
-      fail("Invalid tenant id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
-    }
+    // when/then
+    assertThatThrownBy(() -> identityService.saveTenant(updatedTenant))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
   }
 
   @Test
   void testCustomCreateTenantWhitelistPattern() {
+    // given
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .setProcessEngineName(PROCESS_ENGINE_NAME)
@@ -167,18 +163,17 @@ class IdentityServiceTenantTest {
     processEngine.getProcessEngineConfiguration().setTenantResourceWhitelistPattern("[a-zA-Z]+");
 
     String invalidId = "john's tenant";
-
     Tenant tenant = processEngine.getIdentityService().newTenant(invalidId);
-    try {
-      identityService.saveTenant(tenant);
-      fail("Invalid tenant id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
-    }
+
+    // when/then
+    assertThatThrownBy(() -> identityService.saveTenant(tenant))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
   }
 
   @Test
   void testCustomTenantWhitelistPattern() {
+    // given
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/generic.resource.id.whitelist.operaton.cfg.xml")
       .setProcessEngineName(PROCESS_ENGINE_NAME)
@@ -190,13 +185,10 @@ class IdentityServiceTenantTest {
     Tenant tenant = processEngine.getIdentityService().newTenant(validId);
     tenant.setId(invalidId);
 
-    try {
-      identityService.saveTenant(tenant);
-
-      fail("Invalid tenant id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
-    }
+    // when/then
+    assertThatThrownBy(() -> identityService.saveTenant(tenant))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Tenant", invalidId));
   }
 
   @Test

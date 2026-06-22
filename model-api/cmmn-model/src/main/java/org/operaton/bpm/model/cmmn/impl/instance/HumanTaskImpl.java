@@ -44,13 +44,16 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
   protected static AttributeReference<Role> performerRefAttribute;
 
   // cmmn 1.0
+  /**
+   * @deprecated since 1.0, use planningTableChild instead.
+   */
   @Deprecated(since = "1.0")
   protected static ChildElementCollection<PlanningTable> planningTableCollection;
 
   // cmmn 1.1
   protected static ChildElement<PlanningTable> planningTableChild;
 
-  /** operaton extensions */
+  // Operaton extensions
   protected static Attribute<String> operatonAssigneeAttribute;
   protected static Attribute<String> operatonCandidateGroupsAttribute;
   protected static Attribute<String> operatonCandidateUsersAttribute;
@@ -74,6 +77,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public Collection<PlanningTable> getPlanningTables() {
     return planningTableCollection.get(this);
   }
@@ -88,7 +92,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     planningTableChild.setChild(this, planningTable);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonAssignee() {
@@ -184,6 +188,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     operatonPriorityAttribute.setValue(this, operatonPriority);
   }
 
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(HumanTask.class, CMMN_ELEMENT_HUMAN_TASK)
         .namespaceUri(CMMN11_NS)
@@ -194,7 +199,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
         .idAttributeReference(Role.class)
         .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonAssigneeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ASSIGNEE)
       .namespace(OPERATON_NS)

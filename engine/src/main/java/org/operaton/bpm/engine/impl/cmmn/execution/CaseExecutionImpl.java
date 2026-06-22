@@ -47,14 +47,15 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
+  private static final VariableInstanceFactory<CoreVariableInstance> VARIABLE_INSTANCE_FACTORY = (VariableInstanceFactory) new SimpleVariableInstanceFactory();
 
   @Serial private static final long serialVersionUID = 1L;
 
   // current position /////////////////////////////////////////////////////////
 
-  protected List<CaseExecutionImpl> caseExecutions;
+  private List<CaseExecutionImpl> caseExecutions;
 
-  protected List<CaseSentryPartImpl> caseSentryParts;
+  private List<CaseSentryPartImpl> caseSentryParts;
 
   protected CaseExecutionImpl caseInstance;
 
@@ -70,7 +71,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // variables ////////////////////////////////////////////////////////////////
 
-  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
+  protected transient VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
 
   // case definition id ///////////////////////////////////////////////////////
 
@@ -300,7 +301,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   @Override
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) SimpleVariableInstanceFactory.INSTANCE;
+    return VARIABLE_INSTANCE_FACTORY;
   }
 
   @Override
@@ -313,9 +314,9 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   @Override
   public String toString() {
     if (isCaseInstanceExecution()) {
-      return "CaseInstance[" + getToStringIdentity() + "]";
+      return "CaseInstance[%s]".formatted(getToStringIdentity());
     } else {
-      return "CmmnExecution["+getToStringIdentity() + "]";
+      return "CmmnExecution[%s]".formatted(getToStringIdentity());
     }
   }
 

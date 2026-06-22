@@ -19,11 +19,11 @@
 
 module.exports = [
   'search',
-  function(search) {
-    return function() {
+  function (search) {
+    return function () {
       var lastSearchQuery = null;
 
-      return function() {
+      return function () {
         var searchQuery = search().searchQuery;
 
         if (
@@ -36,5 +36,5 @@ module.exports = [
         }
       };
     };
-  }
+  },
 ];

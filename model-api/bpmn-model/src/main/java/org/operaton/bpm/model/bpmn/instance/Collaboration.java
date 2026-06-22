@@ -49,8 +49,6 @@ public interface Collaboration extends RootElement {
 
   Collection<CorrelationKey> getCorrelationKeys();
 
-  /** TODO: choreographyRef */
-
   Collection<ConversationLink> getConversationLinks();
 
 }

@@ -21,6 +21,8 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -63,17 +65,27 @@ class ProcessInstanceModificationEventSubProcessTest {
   TaskService taskService;
   ManagementService managementService;
 
-  @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS)
-  @Test
-  void testStartBeforeTaskInsideEventSubProcess() {
+  @ParameterizedTest(name = "Start before: {0}")
+  @CsvSource({
+    "Task inside event sub-process, " + INTERRUPTING_EVENT_SUBPROCESS + ", eventSubProcessTask, task1;task2;eventSubProcessTask",
+    "Task inside non-interrupting event sub-process, " + NON_INTERRUPTING_EVENT_SUBPROCESS + ", eventSubProcessTask, task1;task2;eventSubProcessTask",
+    "Start event inside non-interrupting event sub-process, " + NON_INTERRUPTING_EVENT_SUBPROCESS + ", eventProcessStart, task1;task2;eventSubProcessTask",
+    "Non-interrupting event sub-process, " + NON_INTERRUPTING_EVENT_SUBPROCESS + ", eventSubProcess, task1;eventSubProcessTask;task2"
+  })
+  void testStartBeforeTaskInsideEventSubProcess(String name, String bpmnResource, String startBefore, String completeTasksInOrder) {
+    // given
+    testRule.deploy(bpmnResource);
+
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
+    // when
     runtimeService
       .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("eventSubProcessTask")
+      .startBeforeActivity(startBefore)
       .execute();
 
+    // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
@@ -82,9 +94,9 @@ class ProcessInstanceModificationEventSubProcessTest {
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("task1")
         .beginScope("eventSubProcess")
-          .activity("eventSubProcessTask")
+        .activity("eventSubProcessTask")
         .endScope()
-      .done());
+        .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
@@ -93,10 +105,10 @@ class ProcessInstanceModificationEventSubProcessTest {
         describeExecutionTree(null).scope()
           .child("task1").concurrent().noScope().up()
           .child(null).concurrent().noScope()
-            .child("eventSubProcessTask").scope()
-        .done());
+          .child("eventSubProcessTask").scope()
+          .done());
 
-    completeTasksInOrder("task1", "task2", "eventSubProcessTask");
+    completeTasksInOrder(completeTasksInOrder.split(";"));
     testRule.assertProcessEnded(processInstanceId);
   }
 
@@ -208,43 +220,6 @@ class ProcessInstanceModificationEventSubProcessTest {
 
   @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS)
   @Test
-  void testStartBeforeTaskInsideNonInterruptingEventSubProcess() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("eventSubProcessTask")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        .activity("task1")
-        .beginScope("eventSubProcess")
-          .activity("eventSubProcessTask")
-        .endScope()
-      .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child("task1").concurrent().noScope().up()
-          .child(null).concurrent().noScope()
-            .child("eventSubProcessTask").scope()
-        .done());
-
-    completeTasksInOrder("task1", "eventSubProcessTask", "task2");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS)
-  @Test
   void testStartBeforeTaskInsideNonInterruptingEventSubProcessAndCancelTaskOutsideEventSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
@@ -277,80 +252,6 @@ class ProcessInstanceModificationEventSubProcessTest {
         .done());
 
     completeTasksInOrder("eventSubProcessTask");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS)
-  @Test
-  void testStartBeforeStartEventInsideNonInterruptingEventSubProcess() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("eventProcessStart")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        .activity("task1")
-        .beginScope("eventSubProcess")
-          .activity("eventSubProcessTask")
-        .endScope()
-      .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child("task1").concurrent().noScope().up()
-          .child(null).concurrent().noScope()
-            .child("eventSubProcessTask").scope()
-        .done());
-
-    completeTasksInOrder("task1", "task2", "eventSubProcessTask");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS)
-  @Test
-  void testStartBeforeNonInterruptingEventSubProcess() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("eventSubProcess")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        .activity("task1")
-        .beginScope("eventSubProcess")
-          .activity("eventSubProcessTask")
-        .endScope()
-      .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child("task1").concurrent().noScope().up()
-          .child(null).concurrent().noScope()
-            .child("eventSubProcessTask").scope()
-        .done());
-
-    completeTasksInOrder("task1", "eventSubProcessTask", "task2");
     testRule.assertProcessEnded(processInstanceId);
   }
 
@@ -468,20 +369,30 @@ class ProcessInstanceModificationEventSubProcessTest {
     testRule.assertProcessEnded(processInstanceId);
   }
 
-  @Deployment(resources = INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
-  @Test
-  void testStartBeforeTaskInsideEventSubProcessInsideSubProcessTask2ShouldStay() {
+  @ParameterizedTest(name = "Start before: {0}")
+  @CsvSource({
+    "Task inside event sub-process inside sub-process, " + INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS + ", eventSubProcessTask",
+    "Task inside non-interrupting event sub-process inside sub-process, " + NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS + ", eventSubProcessTask",
+    "Start event inside non-interrupting event sub-process inside sub-process, " + NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS + ", eventProcessStart",
+    "Non-interrupting event sub-process inside sub-process, " + NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS + ", eventSubProcess",
+  })
+  void task2ShouldStay(String name, String bpmnResource, String startBeforeActivity) {
+    // given
+    testRule.deploy(bpmnResource);
+
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
 
+    // when
     runtimeService
       .createProcessInstanceModification(processInstanceId)
       .startBeforeActivity("eventSubProcessTask")
       .execute();
 
+    // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
@@ -489,10 +400,10 @@ class ProcessInstanceModificationEventSubProcessTest {
     assertThat(updatedTree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .beginScope("subProcess")
-          .activity("task2")
-          .beginScope("eventSubProcess")
-            .activity("eventSubProcessTask")
-      .done());
+        .activity("task2")
+        .beginScope("eventSubProcess")
+        .activity("eventSubProcessTask")
+        .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
@@ -500,10 +411,10 @@ class ProcessInstanceModificationEventSubProcessTest {
       .matches(
         describeExecutionTree(null).scope()
           .child(null).scope()
-            .child("task2").concurrent().noScope().up()
-            .child(null).concurrent().noScope()
-              .child("eventSubProcessTask").scope()
-        .done());
+          .child("task2").concurrent().noScope().up()
+          .child(null).concurrent().noScope()
+          .child("eventSubProcessTask").scope()
+          .done());
 
     completeTasksInOrder("task2", "eventSubProcessTask");
     testRule.assertProcessEnded(processInstanceId);
@@ -700,130 +611,6 @@ class ProcessInstanceModificationEventSubProcessTest {
 
   }
 
-  @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
-  @Test
-  void testStartBeforeTaskInsideNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    String taskId = taskService.createTaskQuery().singleResult().getId();
-    taskService.complete(taskId);
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("eventSubProcessTask")
-      .execute();
-
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        .beginScope("subProcess")
-          .activity("task2")
-          .beginScope("eventSubProcess")
-            .activity("eventSubProcessTask")
-      .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child(null).scope()
-            .child("task2").concurrent().noScope().up()
-            .child(null).concurrent().noScope()
-              .child("eventSubProcessTask").scope()
-        .done());
-
-    completeTasksInOrder("task2", "eventSubProcessTask");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
-  @Test
-  void testStartBeforeStartEventInsideNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    String taskId = taskService.createTaskQuery().singleResult().getId();
-    taskService.complete(taskId);
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("eventProcessStart")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        .beginScope("subProcess")
-          .activity("task2")
-          .beginScope("eventSubProcess")
-            .activity("eventSubProcessTask")
-      .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child(null).scope()
-            .child("task2").concurrent().noScope().up()
-            .child(null).concurrent().noScope()
-              .child("eventSubProcessTask").scope()
-        .done());
-
-    completeTasksInOrder("task2", "eventSubProcessTask");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = NON_INTERRUPTING_EVENT_SUBPROCESS_INSIDE_SUBPROCESS)
-  @Test
-  void testStartBeforeNonInterruptingEventSubProcessInsideSubProcessTask2ShouldStay() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    String taskId = taskService.createTaskQuery().singleResult().getId();
-    taskService.complete(taskId);
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("eventSubProcess")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .beginScope("subProcess")
-            .activity("task2")
-            .beginScope("eventSubProcess")
-              .activity("eventSubProcessTask")
-        .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child(null).scope()
-            .child("task2").concurrent().noScope().up()
-            .child(null).concurrent().noScope()
-              .child("eventSubProcessTask").scope()
-        .done());
-
-    completeTasksInOrder("task2", "eventSubProcessTask");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
   @Deployment
   @Test
   void testTimerJobPreservationOnCancellationAndStart() {
@@ -900,7 +687,7 @@ class ProcessInstanceModificationEventSubProcessTest {
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
+      assertThat(!tasks.isEmpty()).as("task for activity %s does not exist".formatted(taskName)).isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

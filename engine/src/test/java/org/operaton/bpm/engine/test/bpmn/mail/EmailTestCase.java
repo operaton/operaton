@@ -16,11 +16,26 @@
  */
 package org.operaton.bpm.engine.test.bpmn.mail;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Properties;
+import jakarta.activation.DataHandler;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.internet.MimeMessage;
+
+import ch.martinelli.oss.testcontainers.mailpit.MailpitClient;
+import ch.martinelli.oss.testcontainers.mailpit.MailpitContainer;
+import ch.martinelli.oss.testcontainers.mailpit.Message;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.slf4j.Logger;
-import org.subethamail.wiser.Wiser;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -28,14 +43,18 @@ import org.operaton.bpm.engine.impl.test.TestLogger;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
  */
+@Testcontainers(disabledWithoutDocker = true)
 public abstract class EmailTestCase {
 
   @RegisterExtension
   protected static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+
   @RegisterExtension
   protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
@@ -44,36 +63,88 @@ public abstract class EmailTestCase {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;
 
-  protected Wiser wiser;
+  protected MailpitClient smtpClient;
+
+  @Container
+  protected MailpitContainer mailpit = new MailpitContainer();
 
   @BeforeEach
-  public void setUp() throws Exception {
-    int port = processEngineConfiguration.getMailServerPort();
+  public void setUp() {
+    // Resolve container host + mapped ports
+    String host = mailpit.getHost();
+    int smtpPort = mailpit.getMappedPort(1025);  // internal SMTP port
 
-    boolean serverUpAndRunning = false;
-    while (!serverUpAndRunning) {
-      wiser = new Wiser();
-      wiser.setPort(port);
+    LOG.info("Starting Mailpit SMTP server on {}:{}", host, smtpPort);
 
-      try {
-        LOG.info("Starting Wiser mail server on port: {}", port);
-        wiser.start();
-        serverUpAndRunning = true;
-        LOG.info("Wiser mail server listening on port: {}", port);
-      } catch (RuntimeException e) { // Fix for slow port-closing Jenkins
-        if (e.getMessage().toLowerCase().contains("BindException")) {
-          Thread.sleep(250L);
-        }
-      }
-    }
+    // Configure the process engine to use Mailpit's SMTP host/port
+    processEngineConfiguration.setMailServerHost(host);
+    processEngineConfiguration.setMailServerPort(smtpPort);
+
+    smtpClient = mailpit.getClient();
   }
 
   @AfterEach
-  public void tearDown() throws Exception {
-    wiser.stop();
+  public void tearDown() {
+    smtpClient.deleteAllMessages();
+  }
 
-    // Fix for slow Jenkins
-    Thread.sleep(250L);
+  /**
+   * Helper to fetch received emails for assertions.
+   */
+  protected List<Message> getReceivedEmails() {
+    return smtpClient.getAllMessages();
+  }
+
+  protected void assertEmailSend(String rawEmailMessage, boolean htmlMail, String subject, String message,
+                                     String from, List<String> to, List<String> cc) {
+    try {
+      MimeMessage mimeMessage = createMimeMessageFromRawData(rawEmailMessage);
+
+      if (htmlMail) {
+        assertThat(mimeMessage.getContentType()).contains("multipart/mixed");
+      } else {
+        assertThat(mimeMessage.getContentType()).contains("text/plain");
+      }
+
+      assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo(subject);
+      assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
+      assertThat(getMessage(mimeMessage)).contains(message);
+
+      for (String t : to) {
+        assertThat(mimeMessage.getHeader("To", null)).contains(t);
+      }
+
+      if (cc != null) {
+        for (String c : cc) {
+          assertThat(mimeMessage.getHeader("Cc", null)).contains(c);
+        }
+      }
+
+    } catch (MessagingException | IOException e) {
+      fail(e.getMessage());
+    }
+  }
+
+  protected MimeMessage createMimeMessageFromRawData(String rawEmailContent)
+          throws MessagingException {
+
+    Properties props = System.getProperties();
+    Session session = Session.getInstance(props, null);
+
+    InputStream inputStream = new ByteArrayInputStream(rawEmailContent.getBytes());
+    return new MimeMessage(session, inputStream);
+  }
+
+  protected String getRawMessage(Message msg) {
+    return smtpClient.getMessageSource(msg.id());
+  }
+
+  private String getMessage(MimeMessage mimeMessage) throws MessagingException, IOException {
+    DataHandler dataHandler = mimeMessage.getDataHandler();
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    dataHandler.writeTo(baos);
+    baos.flush();
+    return baos.toString();
   }
 
 }

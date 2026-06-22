@@ -35,8 +35,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 
 public class BatchSetVariablesHandler extends AbstractBatchJobHandler<BatchConfiguration> {
 
-  public static final BatchJobDeclaration JOB_DECLARATION =
-      new BatchJobDeclaration(Batch.TYPE_SET_VARIABLES);
+  public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_SET_VARIABLES);
+  private static final SetVariablesJsonConverter JSON_CONVERTER = new SetVariablesJsonConverter();
 
   @Override
   public void executeHandler(BatchConfiguration batchConfiguration,
@@ -68,7 +68,7 @@ public class BatchSetVariablesHandler extends AbstractBatchJobHandler<BatchConfi
 
   @Override
   protected SetVariablesJsonConverter getJsonConverterInstance() {
-    return SetVariablesJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

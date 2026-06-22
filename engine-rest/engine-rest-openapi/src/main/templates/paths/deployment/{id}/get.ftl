@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getDeployment"
       tag = "Deployment"
-      summary = "Get"
+      summary = "Get Deployment"
       desc = "Retrieves a deployment by id, according to the `Deployment` interface of the engine." />
 
   "parameters" : [
@@ -38,10 +38,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Deployment with given id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

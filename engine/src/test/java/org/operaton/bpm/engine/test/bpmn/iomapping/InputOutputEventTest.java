@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -136,31 +136,32 @@ class InputOutputEventTest {
 
   @Test
   void testMessageStartEvent() {
+    // given
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testMessageStartEvent.bpmn20.xml");
 
-    try {
-      deploymentBuilder.deploy();
-      fail("expected exception");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("operaton:inputOutput mapping unsupported for element type 'startEvent'", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("start");
-    }
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("operaton:inputOutput mapping unsupported for element type 'startEvent'")
+        .extracting(e -> ((ParseException) e).getResourceReports().get(0).getErrors().get(0).getMainElementId())
+        .isEqualTo("start");
   }
 
   @Test
   void testNoneEndEvent() {
+    // given
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testNoneEndEvent.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("expected exception");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("operaton:outputParameter not allowed for element type 'endEvent'", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("endMapping");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("operaton:outputParameter not allowed for element type 'endEvent'")
+        .extracting(e -> ((ParseException) e).getResourceReports().get(0).getErrors().get(0).getMainElementId())
+        .isEqualTo("endMapping");
   }
 
   @Deployment
@@ -268,16 +269,17 @@ class InputOutputEventTest {
 
   @Test
   void testMessageBoundaryEvent() {
+    // given
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputEventTest.testMessageBoundaryEvent.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("expected exception");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("operaton:inputOutput mapping unsupported for element type 'boundaryEvent'", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("messageBoundary");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("operaton:inputOutput mapping unsupported for element type 'boundaryEvent'")
+        .extracting(e -> ((ParseException) e).getResourceReports().get(0).getErrors().get(0).getMainElementId())
+        .isEqualTo("messageBoundary");
   }
 
   @AfterEach

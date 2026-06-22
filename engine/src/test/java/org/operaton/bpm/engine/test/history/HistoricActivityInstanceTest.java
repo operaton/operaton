@@ -416,7 +416,7 @@ class HistoricActivityInstanceTest {
 
     for (HistoricActivityInstance instance : instances) {
       if (!"innerEnd".equals(instance.getActivityId()) && !"end1".equals(instance.getActivityId()) && !"end2".equals(instance.getActivityId())) {
-        fail("Unexpected instance with activity id " + instance.getActivityId() + " found.");
+        fail("Unexpected instance with activity id %s found.".formatted(instance.getActivityId()));
       }
     }
 
@@ -438,7 +438,7 @@ class HistoricActivityInstanceTest {
 
     for (HistoricActivityInstance instance : instances) {
       if (!"subprocess".equals(instance.getActivityId()) && !"userTask1".equals(instance.getActivityId()) && !"userTask2".equals(instance.getActivityId())) {
-        fail("Unexpected instance with activity id " + instance.getActivityId() + " found.");
+        fail("Unexpected instance with activity id %s found.".formatted(instance.getActivityId()));
       }
     }
 

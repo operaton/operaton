@@ -104,7 +104,7 @@ public class HistoricTaskInstanceReportQueryDto extends AbstractReportDto<Histor
     } else if( TASK_NAME.equals(groupby) ){
       return reportQuery.countByTaskName();
     } else {
-      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "groupBy parameter has invalid value: " + groupby);
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "groupBy parameter has invalid value: %s".formatted(groupby));
     }
   }
 }

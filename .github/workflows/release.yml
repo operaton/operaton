@@ -17,9 +17,13 @@ on:
   workflow_dispatch:
     inputs:
       next_version:
-        description: 'The next development version to set (without -SNAPSHOT suffix)'
-        required: true
-        default: '1.2.0'
+        description: 'The next development version to set (without -SNAPSHOT suffix). Leave empty to auto-compute based on branch.'
+        required: false
+        default: ''
+      preliminary_release_qualifier:
+        description: 'Optional preliminary release qualifier. Must match M[0-9] or RC[0-9].'
+        required: false
+        default: ''
       dry_run:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
@@ -27,21 +31,93 @@ on:
         default: true
 jobs:
 
-  release_build:
-    name: Release Build
-    runs-on: ubuntu-latest
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
     outputs:
-      version: ${{steps.version.outputs.version}}
-      database_version: ${{steps.version.outputs.database_version}}
-      is_prerelease: ${{steps.version.outputs.is_prerelease}}
+      next_version: ${{steps.compute-next-version.outputs.next_version}}
     steps:
       - name: Check out the code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v5.2.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Compute next development version
+        id: compute-next-version
+        run: |
+          INPUT_VERSION="${{github.event.inputs.next_version}}"
+          BRANCH_NAME="${{github.ref_name}}"
+
+          if [ -n "$INPUT_VERSION" ]; then
+            # Use the provided version
+            echo "next_version=$INPUT_VERSION" >> $GITHUB_OUTPUT
+            echo "Using provided next version: $INPUT_VERSION"
+          else
+            # Compute version based on branch
+            CURRENT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
+            if [ -z "$CURRENT_VERSION" ]; then
+              echo "::error::Failed to retrieve current version from pom.xml"
+              exit 1
+            fi
+            echo "Current version (without -SNAPSHOT): $CURRENT_VERSION"
+
+            if [[ "$CURRENT_VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)(.*)$ ]]; then
+              MAJOR="${BASH_REMATCH[1]}"
+              MINOR="${BASH_REMATCH[2]}"
+              PATCH="${BASH_REMATCH[3]}"
+              SUFFIX="${BASH_REMATCH[4]}"
+
+              if [ "$BRANCH_NAME" == "main" ]; then
+                # main branch: increment minor, set patch to 0
+                NEXT_MINOR=$((MINOR + 1))
+                COMPUTED_VERSION="${MAJOR}.${NEXT_MINOR}.0${SUFFIX}"
+                echo "Branch 'main': incrementing minor version"
+              elif [[ "$BRANCH_NAME" =~ ^release/ ]]; then
+                # release/* branches: increment patch
+                NEXT_PATCH=$((PATCH + 1))
+                COMPUTED_VERSION="${MAJOR}.${MINOR}.${NEXT_PATCH}${SUFFIX}"
+                echo "Branch '$BRANCH_NAME': incrementing patch version"
+              else
+                echo "::error::Cannot auto-compute next version for branch '$BRANCH_NAME'. Please provide the next_version input explicitly."
+                exit 1
+              fi
+
+              echo "next_version=$COMPUTED_VERSION" >> $GITHUB_OUTPUT
+              echo "Computed next version: $COMPUTED_VERSION"
+            else
+              echo "::error::Unable to parse current version '$CURRENT_VERSION'. Please provide the next_version input explicitly."
+              exit 1
+            fi
+          fi
+
+  release_build:
+    name: Release Build
+    needs:
+      - prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{steps.version.outputs.version}}
+      base_version: ${{steps.version.outputs.base_version}}
+      database_version: ${{steps.version.outputs.database_version}}
+      is_prerelease: ${{steps.version.outputs.is_prerelease}}
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v6.0.3
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5.2.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -50,18 +126,30 @@ jobs:
         id: version
         shell: bash
         run: |
-          RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
-          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
-          DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
-          echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
-          echo "database_version=$DATABASE_VERSION"
-          if [[ "$RELEASE_VERSION" == *"alpha"* || "$RELEASE_VERSION" == *"beta"* ]]; then
-            echo "⚙ Releasing version '$RELEASE_VERSION' (Pre-Release)"
+          BASE_RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
+          QUALIFIER="${{github.event.inputs.preliminary_release_qualifier}}"
+          if [ -n "$QUALIFIER" ]; then
+            if [[ ! "$QUALIFIER" =~ ^(M[0-9]|RC[0-9])$ ]]; then
+              echo "::error::Preliminary Release Qualifier '$QUALIFIER' must match M[0-9] or RC[0-9]."
+              exit 1
+            fi
+            if [[ ! "$BASE_RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.0$ ]]; then
+              echo "::error::Preliminary Release Qualifier can only be used for .0 versions. Current version is '$BASE_RELEASE_VERSION'."
+              exit 1
+            fi
+            RELEASE_VERSION="${BASE_RELEASE_VERSION}-${QUALIFIER}"
+            echo "⚙ Releasing version '$RELEASE_VERSION' (Preliminary Release)"
             echo "is_prerelease=true" >> $GITHUB_OUTPUT
           else
+            RELEASE_VERSION="$BASE_RELEASE_VERSION"
             echo "⚙ Releasing version '$RELEASE_VERSION'"
             echo "is_prerelease=false" >> $GITHUB_OUTPUT
           fi
+          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          echo "base_version=$BASE_RELEASE_VERSION" >> $GITHUB_OUTPUT
+          DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
+          echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
+          echo "database_version=$DATABASE_VERSION"
           .github/scripts/set-project-version.sh $RELEASE_VERSION
 
       - name: Maven Build
@@ -86,14 +174,14 @@ jobs:
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
           .devenv/scripts/build/build-sbom.sh
-          pip install pystache
+          pip install --only-binary :all: pystache==0.6.8
       - name: Commit changes
-        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
         if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "chore(release) Releasing version ${{steps.version.outputs.version}}"
       - name: Cache build artifacts
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             distro/**/*.tar.gz
@@ -111,14 +199,16 @@ jobs:
     needs:
       - release_build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out the code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           fetch-depth: 0
 
       - name: Restore build artifacts cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             distro/**/*.tar.gz
@@ -135,10 +225,10 @@ jobs:
       - name: Modify jreleaser.yml for release
         run: |
           # set prerelease flag
-          perl -0777 -pe 's/(prerelease:\s*\n\s*enabled:\s*)(true|false)/$1false/' -i jreleaser.yml
+          perl -0777 -pe 's/(prerelease:\s*\n\s*enabled:\s*)(true|false)/$1${{ needs.release_build.outputs.is_prerelease }}/' -i jreleaser.yml
 
       - name: Release with JReleaser
-        uses: jreleaser/release-action@v2
+        uses: jreleaser/release-action@90ac653bb9c79d11179e65d81499f3f34527dcd5 # v2.5.0
         env:
           JRELEASER_PROJECT_VERSION: ${{needs.release_build.outputs.version}}
           JRELEASER_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -149,7 +239,7 @@ jobs:
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
         with:
-          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=false
+          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=${{needs.release_build.outputs.is_prerelease}} -PSLACK_BOT_TOKEN=${{secrets.SLACK_BOT_TOKEN}} -PSLACK_WEBHOOK_URL=${{secrets.SLACK_WEBHOOK_URL}}
 
       - name: Restore jreleaser.yml after release
         if: always()
@@ -158,20 +248,20 @@ jobs:
 
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
+        uses: mikepenz/action-junit-report@3a81627bfac62268172037048872e8ebd4207e6d #v6.4.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: staging
           path: |
@@ -181,32 +271,20 @@ jobs:
   post_release:
     name: Post-Release
     needs:
+      - prepare
       - release
+      - release_build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Set next development version
-        id: set-next-version
-        run: |
-          NEXT_VERSION=${{github.event.inputs.next_version}}-SNAPSHOT
-          .github/scripts/set-project-version.sh $NEXT_VERSION
-          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
-
-      - name: Commit changes
-        uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9.1.4
-        if: ${{github.event.inputs.dry_run == 'false' }}
-        with:
-          message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"
-
       - name: Notify Docker Repository
         if: ${{github.event.inputs.dry_run == 'false' }}
+        env:
+          DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-            -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
+            -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -d '{"ref":"main","inputs":{"version": "${{ needs.release_build.outputs.version}}","snapshot": "false"}}' \
@@ -215,3 +293,49 @@ jobs:
             echo "Failed to notify Docker repository. HTTP response code: $response"
             exit 1
           fi
+
+      - name: Check out the code
+        uses: actions/checkout@v6.0.3
+      - name: Update the release branch
+        run: |
+          git pull
+      - name: Delete snapshot release
+        if: ${{github.event.inputs.dry_run == 'false' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SNAPSHOT_TAGS=(
+            "${{ needs.release_build.outputs.version }}-SNAPSHOT"
+            "v${{ needs.release_build.outputs.version }}-SNAPSHOT"
+          )
+
+          for SNAPSHOT_TAG in "${SNAPSHOT_TAGS[@]}"; do
+            echo "Attempting to delete snapshot release: $SNAPSHOT_TAG"
+
+            if gh release view "$SNAPSHOT_TAG" > /dev/null 2>&1; then
+              echo "Found snapshot release $SNAPSHOT_TAG, deleting..."
+              gh release delete "$SNAPSHOT_TAG" --yes --cleanup-tag
+              echo "Successfully deleted snapshot release $SNAPSHOT_TAG"
+            else
+              echo "Snapshot release $SNAPSHOT_TAG not found, skipping deletion"
+            fi
+          done
+
+      - name: Set next development version
+        id: set-next-version
+        run: |
+          if [ -n "${{github.event.inputs.preliminary_release_qualifier}}" ]; then
+            NEXT_VERSION=${{needs.release_build.outputs.base_version}}-SNAPSHOT
+          else
+            NEXT_VERSION=${{needs.prepare.outputs.next_version}}-SNAPSHOT
+          fi
+          .github/scripts/set-project-version.sh $NEXT_VERSION
+          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        if: ${{github.event.inputs.dry_run == 'false' }}
+        with:
+          message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"
+          pull: '--rebase --autostash'
+        continue-on-error: true

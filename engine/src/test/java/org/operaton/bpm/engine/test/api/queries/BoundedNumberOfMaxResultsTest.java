@@ -48,8 +48,8 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 class BoundedNumberOfMaxResultsTest {
 
@@ -180,18 +180,12 @@ class BoundedNumberOfMaxResultsTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process")
         .getProcessInstanceId();
 
-    try {
-      // when
-      runtimeService.restartProcessInstances(processDefinitionId)
-          .processInstanceIds(processInstanceId)
-          .startAfterActivity("startEvent")
-          .execute();
-
-      // then
-      // do not fail
-    } catch (BadUserRequestException e) {
-      fail("The query inside the command should not throw an exception!");
-    }
+    // when/then
+    assertThatCode(() -> runtimeService.restartProcessInstances(processDefinitionId)
+        .processInstanceIds(processInstanceId)
+        .startAfterActivity("startEvent")
+        .execute())
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -248,14 +242,10 @@ class BoundedNumberOfMaxResultsTest {
         .singleResult()
         .getId();
 
-    try {
-      // when
-      filterService.list(filterId);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("An unbound number of results is forbidden!");
-    }
+    // when/then
+    assertThatThrownBy(() -> filterService.list(filterId))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("An unbound number of results is forbidden!");
 
     // clear
     filterService.deleteFilter(filterId);
@@ -273,14 +263,10 @@ class BoundedNumberOfMaxResultsTest {
         .singleResult()
         .getId();
 
-    try {
-      // when
-      filterService.listPage(filterId, 0, 11);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("Max results limit of 10 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(() -> filterService.listPage(filterId, 0, 11))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 10 exceeded!");
 
     // clear
     filterService.deleteFilter(filterId);
@@ -302,15 +288,10 @@ class BoundedNumberOfMaxResultsTest {
     TaskQuery extendingQuery = taskService.createTaskQuery()
         .taskCandidateGroup("aCandidateGroup");
 
-    try {
-      // when
-      filterService.list(filterId, extendingQuery);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("An unbound number of results is forbidden!");
-    }
+    // when/then
+    assertThatThrownBy(() -> filterService.list(filterId, extendingQuery))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("An unbound number of results is forbidden!");
 
     // clear
     filterService.deleteFilter(filterId);
@@ -329,15 +310,10 @@ class BoundedNumberOfMaxResultsTest {
     var externalTaskService = engineRule.getExternalTaskService().updateRetries()
           .externalTaskQuery(engineRule.getExternalTaskService().createExternalTaskQuery());
 
-    try {
-      // when
-      externalTaskService.set(5);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(() -> externalTaskService.set(5))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @Test
@@ -347,15 +323,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    try {
-      // when
-      engineRule.getExternalTaskService().updateRetries()
-          .externalTaskQuery(engineRule.getExternalTaskService().createExternalTaskQuery())
-          .set(5);
-      // then: no exception
-    } catch (BadUserRequestException e) {
-      fail("No exception expected!");
-    }
+    // when/then
+    assertThatCode(() -> engineRule.getExternalTaskService().updateRetries()
+        .externalTaskQuery(engineRule.getExternalTaskService().createExternalTaskQuery())
+        .set(5))
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -375,37 +347,10 @@ class BoundedNumberOfMaxResultsTest {
     var externalTaskService = engineRule.getExternalTaskService().updateRetries()
           .historicProcessInstanceQuery(historicProcessInstanceQuery);
 
-    try {
-      // when
-      externalTaskService.set(5);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
-  }
-
-  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  @Test
-  void shouldSyncUpdateExternalTaskRetriesProcInstQueryByHistProcInstQuery() {
-    // given
-    testHelper.deploy(externalTaskProcess);
-
-    runtimeService.startProcessInstanceByKey("process");
-
-    HistoricProcessInstanceQuery historicProcessInstanceQuery = engineRule.getHistoryService()
-        .createHistoricProcessInstanceQuery();
-
-    try {
-      // when
-      engineRule.getExternalTaskService().updateRetries()
-          .historicProcessInstanceQuery(historicProcessInstanceQuery)
-          .set(5);
-      // then: no exception
-    } catch (BadUserRequestException e) {
-      fail("No exception expected!");
-    }
+    // when/then
+    assertThatThrownBy(() -> externalTaskService.set(5))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @Test
@@ -415,15 +360,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    try {
-      // when
-      engineRule.getExternalTaskService().updateRetries()
-          .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery())
-          .set(5);
-      // then: no exception
-    } catch (BadUserRequestException e) {
-      fail("No exception expected!");
-    }
+    // when/then
+    assertThatCode(() -> engineRule.getExternalTaskService().updateRetries()
+        .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery())
+        .set(5))
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -440,15 +381,10 @@ class BoundedNumberOfMaxResultsTest {
     var externalTaskService = engineRule.getExternalTaskService().updateRetries()
           .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery());
 
-    try {
-      // when
-      externalTaskService.set(5);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(() -> externalTaskService.set(5))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -462,15 +398,11 @@ class BoundedNumberOfMaxResultsTest {
     HistoricProcessInstanceQuery historicProcessInstanceQuery = engineRule.getHistoryService()
         .createHistoricProcessInstanceQuery();
 
-    try {
-      // when
-      engineRule.getExternalTaskService().updateRetries()
-          .historicProcessInstanceQuery(historicProcessInstanceQuery)
-          .set(5);
-      // then: no exception
-    } catch (BadUserRequestException e) {
-      fail("No exception expected!");
-    }
+    // when/then
+    assertThatCode(() -> engineRule.getExternalTaskService().updateRetries()
+        .historicProcessInstanceQuery(historicProcessInstanceQuery)
+        .set(5))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -500,15 +432,10 @@ class BoundedNumberOfMaxResultsTest {
     var migrationPlanExecutionBuilder = runtimeService.newMigration(plan)
           .processInstanceQuery(runtimeService.createProcessInstanceQuery());
 
-    try {
-      // when
-      migrationPlanExecutionBuilder.execute();
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(migrationPlanExecutionBuilder::execute)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @Test
@@ -532,19 +459,15 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceById(source);
 
-    try {
-      // when
-      runtimeService.newMigration(plan)
-          .processInstanceQuery(runtimeService.createProcessInstanceQuery())
-          .execute();
-
-      // then: no exception thrown
-    } catch (BadUserRequestException e) {
-      fail("No Exception expected!");
-    }
+    // when/then
+    assertThatCode(() -> runtimeService.newMigration(plan)
+        .processInstanceQuery(runtimeService.createProcessInstanceQuery())
+        .execute())
+      .doesNotThrowAnyException();
   }
 
   @Test
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   void shouldThrowExceptionWhenInstanceModification_MaxResultsLimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
@@ -568,18 +491,14 @@ class BoundedNumberOfMaxResultsTest {
           .startAfterActivity("userTask")
           .processInstanceQuery(runtimeService.createProcessInstanceQuery());
 
-    try {
-      // when
-      modificationBuilder.execute();
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(modificationBuilder::execute)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @Test
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   void shouldSyncProcessInstanceModification() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
@@ -596,17 +515,12 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    try {
-      // when
-      runtimeService.createModification(processDefinitionId)
-          .startAfterActivity("userTask")
-          .processInstanceQuery(runtimeService.createProcessInstanceQuery())
-          .execute();
-
-      // then: no exception is thrown
-    } catch (BadUserRequestException e) {
-      fail("Exception expected!");
-    }
+    // when/then
+    assertThatCode(() -> runtimeService.createModification(processDefinitionId)
+        .startAfterActivity("userTask")
+        .processInstanceQuery(runtimeService.createProcessInstanceQuery())
+        .execute())
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -633,15 +547,10 @@ class BoundedNumberOfMaxResultsTest {
           .historicProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
           .startAfterActivity("startEvent");
 
-    try {
-      // when
-      restartProcessInstanceBuilder.execute();
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(restartProcessInstanceBuilder::execute)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -661,18 +570,12 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    try {
-      // when
-      runtimeService.restartProcessInstances(processDefinitionId)
-          .historicProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
-          .startAfterActivity("startEvent")
-          .execute();
-
-      // then: No Exception is thrown
-    } catch (BadUserRequestException e) {
-
-      fail("Exception expected!");
-    }
+    // when/then
+    assertThatCode(() -> runtimeService.restartProcessInstances(processDefinitionId)
+        .historicProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
+        .startAfterActivity("startEvent")
+        .execute())
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -688,15 +591,10 @@ class BoundedNumberOfMaxResultsTest {
     var updateProcessInstanceSuspensionStateSelectBuilder = runtimeService.updateProcessInstanceSuspensionState()
           .byProcessInstanceQuery(runtimeService.createProcessInstanceQuery());
 
-    try {
-      // when
-      updateProcessInstanceSuspensionStateSelectBuilder.suspend();
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(updateProcessInstanceSuspensionStateSelectBuilder::suspend)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @Test
@@ -713,15 +611,10 @@ class BoundedNumberOfMaxResultsTest {
     var updateProcessInstanceSuspensionStateSelectBuilder = runtimeService.updateProcessInstanceSuspensionState()
           .byProcessInstanceIds(instanceIds);
 
-    try {
-      // when
-      updateProcessInstanceSuspensionStateSelectBuilder.suspend();
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(updateProcessInstanceSuspensionStateSelectBuilder::suspend)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @Test
@@ -731,16 +624,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    try {
-      // when
-      runtimeService.updateProcessInstanceSuspensionState()
-          .byProcessInstanceQuery(runtimeService.createProcessInstanceQuery())
-          .suspend();
-
-      // then: no exception expected
-    } catch (BadUserRequestException e) {
-      fail("No exception expected!");
-    }
+    // when/then
+    assertThatCode(() -> runtimeService.updateProcessInstanceSuspensionState()
+        .byProcessInstanceQuery(runtimeService.createProcessInstanceQuery())
+        .suspend())
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -757,15 +645,10 @@ class BoundedNumberOfMaxResultsTest {
     var updateProcessInstanceSuspensionStateSelectBuilder = runtimeService.updateProcessInstanceSuspensionState()
           .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery());
 
-    try {
-      // when
-      updateProcessInstanceSuspensionStateSelectBuilder.suspend();
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-
-      // then
-      assertThat(e).hasMessage("Max results limit of 2 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(updateProcessInstanceSuspensionStateSelectBuilder::suspend)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 2 exceeded!");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -776,16 +659,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    try {
-      // when
-      runtimeService.updateProcessInstanceSuspensionState()
-          .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
-          .suspend();
-
-      // then: no exception expected
-    } catch (BadUserRequestException e) {
-      fail("No exception expected!");
-    }
+    // when/then
+    assertThatCode(() -> runtimeService.updateProcessInstanceSuspensionState()
+        .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
+        .suspend())
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -848,14 +726,9 @@ class BoundedNumberOfMaxResultsTest {
 
     testHelper.deploy(process);
 
-    try {
-      // when
-      runtimeService.startProcessInstanceByKey("process");
-
-      // then: should not fail
-    } catch (BadUserRequestException e) {
-      fail("Should not throw exception inside command!");
-    }
+    // when/then
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("process"))
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)

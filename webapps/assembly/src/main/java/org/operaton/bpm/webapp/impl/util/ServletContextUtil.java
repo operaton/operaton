@@ -93,7 +93,7 @@ public final class ServletContextUtil {
   }
 
   protected static String buildTelemetrySentAttribute(String webappName, String engineName) {
-    return SUCCESSFUL_ET_ATTR_NAME + "." + webappName + "." + engineName;
+    return "%s.%s.%s".formatted(SUCCESSFUL_ET_ATTR_NAME, webappName, engineName);
   }
 
   /**

@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 
 import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
+import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.COOKIE_NAME_FORBIDDEN;
 
 public class CookieConfigurator {
 
@@ -43,9 +44,23 @@ public class CookieConfigurator {
       isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookieInitParam);
     }
 
-    String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
-    if (hasText(sessionCookieName) && !CookieConstants.JSESSION_ID.equals(sessionCookieName)) {
-      cookieName = sessionCookieName;
+    String cookieNameParam = filterConfig.getInitParameter("cookieName");
+    if (cookieNameParam != null && !cookieNameParam.isBlank()) {
+      String trimmed = cookieNameParam.trim();
+      if (trimmed.matches(COOKIE_NAME_FORBIDDEN)) {
+        throw new IllegalArgumentException("cookieName contains forbidden characters (CTLs, whitespace, or separators).");
+      }
+      cookieName = trimmed;
+    } else {
+      String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
+      if (sessionCookieName != null && !sessionCookieName.isBlank()
+              && !CookieConstants.JSESSION_ID.equals(sessionCookieName.trim())) {
+        String trimmed = sessionCookieName.trim();
+        if (trimmed.matches(COOKIE_NAME_FORBIDDEN)) {
+          throw new IllegalArgumentException("cookieName from session cookie config contains forbidden characters (CTLs, whitespace, or separators).");
+        }
+        cookieName = trimmed;
+      }
     }
 
     String enableSameSiteCookieInitParam = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);
@@ -89,8 +104,8 @@ public class CookieConfigurator {
 
   static String getSameSiteCookieValueInitValue(String sameSiteCookieValueInitParam, String sameSiteCookieOptionInitParam) {
     if (hasText(sameSiteCookieValueInitParam) && hasText(sameSiteCookieOptionInitParam)) {
-      throw new ProcessEngineException("Please either configure " + SAME_SITE_OPTION_PARAM +
-              " or " + SAME_SITE_VALUE_PARAM + ".");
+      throw new ProcessEngineException("Please either configure %s or %s.".formatted(
+          SAME_SITE_OPTION_PARAM, SAME_SITE_VALUE_PARAM));
     }
 
     if (hasText(sameSiteCookieValueInitParam)) {
@@ -101,8 +116,9 @@ public class CookieConfigurator {
       } else if (sameSiteCookieOptionInitParam.equalsIgnoreCase(SameSiteOption.STRICT.name())) {
         return SameSiteOption.STRICT.getValue();
       } else {
-        throw new ProcessEngineException("For " + SAME_SITE_OPTION_PARAM + " param, please configure one of the " +
-                "following options: " + Arrays.toString(Arrays.stream(SameSiteOption.values()).map(SameSiteOption::getValue).toArray(String[]::new)));
+        throw new ProcessEngineException("For %s param, please configure one of the following options: %s".formatted(
+                SAME_SITE_OPTION_PARAM,
+                Arrays.toString(Arrays.stream(SameSiteOption.values()).map(SameSiteOption::getValue).toArray(String[]::new))));
       }
     } else { // default
       return SameSiteOption.LAX.getValue();

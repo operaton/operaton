@@ -39,6 +39,7 @@ public abstract class AcquireJobsRunnable implements Runnable {
     this.jobExecutor = jobExecutor;
   }
 
+  @SuppressWarnings("java:S2274")
   protected void suspendAcquisition(long millis) {
     if (millis <= 0) {
       return;
@@ -56,6 +57,7 @@ public abstract class AcquireJobsRunnable implements Runnable {
     }
     catch (InterruptedException e) {
       LOG.jobExecutionWaitInterrupted();
+      Thread.currentThread().interrupt();
     }
     finally {
       isWaiting.set(false);

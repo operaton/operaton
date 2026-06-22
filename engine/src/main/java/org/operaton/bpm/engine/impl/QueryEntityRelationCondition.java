@@ -68,10 +68,7 @@ public class QueryEntityRelationCondition {
 
   @Override
   public String toString() {
-    return "QueryEntityRelationCondition["
-      + "property=" + property
-      + ", comparisonProperty=" + comparisonProperty
-      + ", scalarValue=" + scalarValue
-      + "]";
+    return "QueryEntityRelationCondition[property=%s, comparisonProperty=%s, scalarValue=%s]"
+        .formatted(property, comparisonProperty, scalarValue);
   }
 }

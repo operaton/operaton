@@ -19,14 +19,14 @@
 
 var template = require('./cam-pagination.html?raw');
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     template: template,
     controller: 'CamPaginationController as Pagination',
     scope: {
       total: '=',
-      onPaginationChange: '&camPagination'
-    }
+      onPaginationChange: '&camPagination',
+    },
   };
 };

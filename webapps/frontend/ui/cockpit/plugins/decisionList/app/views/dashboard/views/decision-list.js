@@ -21,13 +21,13 @@ var template = require('./decision-list.html?raw');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.decisions.dashboard', {
       id: 'decision-list',
       label: 'Deployed Decision Tables',
       template: template,
       controller: 'DecisionListController',
-      priority: -5 // display below the process definition list
+      priority: -5, // display below the process definition list
     });
-  }
+  },
 ];

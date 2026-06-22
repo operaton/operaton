@@ -28,5 +28,5 @@ var angular = require('angular'),
   viewsModule = require('./views/main');
 
 module.exports = angular.module('cockpit.plugin.decisionList', [
-  viewsModule.name
+  viewsModule.name,
 ]);

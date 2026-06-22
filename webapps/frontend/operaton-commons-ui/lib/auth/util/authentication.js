@@ -47,7 +47,7 @@ function Authentication(data) {
  * @param  {String} app name of the app
  * @return {Boolean} true if can access
  */
-Authentication.prototype.canAccess = function(app) {
+Authentication.prototype.canAccess = function (app) {
   return this.authorizedApps && this.authorizedApps.indexOf(app) !== -1;
 };
 

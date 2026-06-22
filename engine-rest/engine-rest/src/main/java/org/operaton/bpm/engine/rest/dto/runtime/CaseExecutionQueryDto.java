@@ -238,7 +238,7 @@ public class CaseExecutionQueryDto extends AbstractQueryDto<CaseExecutionQuery> 
         case NOT_EQUALS_OPERATOR_NAME -> query.variableValueNotEquals(variableName, variableValue);
         case LIKE_OPERATOR_NAME -> query.variableValueLike(variableName, String.valueOf(variableValue));
         default ->
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: %s".formatted(op));
         }
       }
     }
@@ -262,7 +262,7 @@ public class CaseExecutionQueryDto extends AbstractQueryDto<CaseExecutionQuery> 
         case NOT_EQUALS_OPERATOR_NAME -> query.caseInstanceVariableValueNotEquals(variableName, variableValue);
         case LIKE_OPERATOR_NAME -> query.caseInstanceVariableValueLike(variableName, String.valueOf(variableValue));
         default ->
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: %s".formatted(op));
         }
       }
     }

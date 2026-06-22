@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -39,9 +38,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Daniel Meyer
  */
-public class EventSubscriptionEntity implements EventSubscription, DbEntity, HasDbRevision, HasDbReferences, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class EventSubscriptionEntity implements EventSubscription, DbEntity, HasDbRevision, HasDbReferences {
 
   // persistent state ///////////////////////////
   protected String id;
@@ -99,7 +96,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
 
   protected void processEventSync(Object payload, Object payloadLocal, Object payloadToTriggeredScope, String businessKey) {
     EventHandler eventHandler = Context.getProcessEngineConfiguration().getEventHandler(eventType);
-    ensureNotNull("Could not find eventhandler for event of type '" + eventType + "'", "eventHandler", eventHandler);
+    ensureNotNull("Could not find eventhandler for event of type '%s'".formatted(eventType), "eventHandler", eventHandler);
     eventHandler.handleEvent(this, payload, payloadLocal, payloadToTriggeredScope, businessKey, Context.getCommandContext());
   }
 
@@ -133,7 +130,6 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
       .insert(this);
     addToExecution();
   }
-
 
   public static EventSubscriptionEntity createAndInsert(ExecutionEntity executionEntity, EventType eventType, ActivityImpl activity) {
     return createAndInsert(executionEntity, eventType, activity, null);
@@ -368,13 +364,8 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (executionId != null) {
       referenceIdAndClass.put(executionId, ExecutionEntity.class);

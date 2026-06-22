@@ -36,7 +36,7 @@ public interface ScriptTask extends Task {
 
   void setScript(Script script);
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonResultVariable();
 

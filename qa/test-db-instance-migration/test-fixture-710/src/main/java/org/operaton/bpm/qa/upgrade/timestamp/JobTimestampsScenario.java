@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.qa.upgrade.timestamp;
 
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -36,13 +38,15 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class JobTimestampsScenario extends AbstractTimestampMigrationScenario {
 
-  protected static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
   protected static final Date LOCK_EXP_TIME = new Date(TIME + 300_000L);
   protected static final String PROCESS_DEFINITION_KEY = "jobTimestampsMigrationTestProcess";
   protected static final BpmnModelInstance SINGLE_JOB_MODEL  = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
     .startEvent("start")
     .intermediateCatchEvent("catch")
-      .timerWithDate(SDF.format(TIMESTAMP))
+      .timerWithDate(Instant.ofEpochMilli(TIMESTAMP.getTime())
+          .atZone(ZoneId.systemDefault())
+          .format(DATE_FORMATTER))
     .endEvent("end")
     .done();
 

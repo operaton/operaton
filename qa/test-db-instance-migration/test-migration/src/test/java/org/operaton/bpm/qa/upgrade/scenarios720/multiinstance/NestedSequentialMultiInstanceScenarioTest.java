@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 @ScenarioUnderTest("NestedSequentialMultiInstanceSubprocessScenario")
@@ -118,14 +120,10 @@ public class NestedSequentialMultiInstanceScenarioTest {
     rule.getRuntimeService().setVariable(instance.getId(), ThrowBpmnErrorDelegate.EXCEPTION_INDICATOR_VARIABLE, true);
     rule.getRuntimeService().setVariable(instance.getId(), ThrowBpmnErrorDelegate.EXCEPTION_MESSAGE_VARIABLE, "unhandledException");
 
-    // then
-    try {
-      rule.getTaskService().complete(innerMiSubProcessTask.getId());
-      Assert.fail("should throw a ThrowBpmnErrorDelegateException");
-
-    } catch (ThrowBpmnErrorDelegateException e) {
-      Assert.assertEquals("unhandledException", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> rule.getTaskService().complete(innerMiSubProcessTask.getId()))
+      .isInstanceOf(ThrowBpmnErrorDelegateException.class)
+      .hasMessage("unhandledException");
   }
 
 }

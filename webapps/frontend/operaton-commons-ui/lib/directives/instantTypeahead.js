@@ -22,24 +22,24 @@ var secretEmptyKey = '[$empty$]';
     this directive is used in combination with typeahead and opens the typeahead field on focus
   **/
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
       require: 'ngModel',
-      link: function(scope, element, attrs, model) {
+      link: function (scope, element, attrs, model) {
         // this parser run before typeahead's parser
-        model.$parsers.unshift(function(inputValue) {
+        model.$parsers.unshift(function (inputValue) {
           var value = inputValue ? inputValue : secretEmptyKey; // replace empty string with secretEmptyKey to bypass typeahead-min-length check
           model.$viewValue = value; // this $viewValue must match the inputValue pass to typehead directive
           return value;
         });
 
         // this parser run after typeahead's parser
-        model.$parsers.push(function(inputValue) {
+        model.$parsers.push(function (inputValue) {
           return inputValue === secretEmptyKey ? '' : inputValue; // set the secretEmptyKey back to empty string
         });
 
-        scope.instantTypeahead = function(element, viewValue) {
+        scope.instantTypeahead = function (element, viewValue) {
           return (
             viewValue === secretEmptyKey ||
             ('' + element)
@@ -48,16 +48,16 @@ module.exports = [
           );
         };
 
-        element.bind('click', function() {
+        element.bind('click', function () {
           model.$setViewValue(model.$viewValue === ' ' ? '' : ' ');
           element.triggerHandler('input');
         });
 
-        element.bind('input', function() {
+        element.bind('input', function () {
           // update the view value to trigger re-evaluation of the model parsers
           model.$setViewValue(model.$viewValue);
         });
-      }
+      },
     };
-  }
+  },
 ];

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -105,7 +104,7 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
   void testWithQuery() {
     //given
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery()
-        .processInstanceIds(new HashSet<>(Arrays.asList(processInstance.getId(), processInstance2.getId())));
+        .processInstanceIds(new HashSet<>(List.of(processInstance.getId(), processInstance2.getId())));
 
     authRule
         .init(scenario)
@@ -129,7 +128,7 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
 
   protected void setupAndExecuteProcessInstancesListTest() {
     //given
-    List<String> processInstanceIds = Arrays.asList(processInstance.getId(), processInstance2.getId());
+    List<String> processInstanceIds = List.of(processInstance.getId(), processInstance2.getId());
     authRule
         .init(scenario)
         .withUser("userId")

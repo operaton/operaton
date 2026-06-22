@@ -59,8 +59,8 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
   protected String userId;
   protected String tenantId;
 
-  protected List<HistoricDecisionInputInstance> inputs;
-  protected List<HistoricDecisionOutputInstance> outputs;
+  protected transient List<HistoricDecisionInputInstance> inputs;
+  protected transient List<HistoricDecisionOutputInstance> outputs;
 
   @Override
   public String getDecisionDefinitionId() {

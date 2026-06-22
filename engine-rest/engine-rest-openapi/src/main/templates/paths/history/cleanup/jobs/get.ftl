@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "findCleanupJobs"
       tag = "History Cleanup"
-      summary = "Find clean up history jobs (GET)"
+      summary = "List History Cleanup Jobs"
       desc = "Finds history cleanup jobs (See
               [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup))."
   />
@@ -58,8 +58,9 @@
         code = "404"
         dto = "ExceptionDto"
         desc = "History clean up jobs are empty."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

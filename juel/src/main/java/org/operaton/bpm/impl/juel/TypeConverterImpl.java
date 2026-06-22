@@ -305,7 +305,7 @@ public class TypeConverterImpl implements TypeConverter {
     }
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({ "unchecked", "rawtypes", "java:S3776" })
   protected Object coerceToType(Object value, Class<?> type) {
     if (type == String.class) {
       return coerceToString(value);

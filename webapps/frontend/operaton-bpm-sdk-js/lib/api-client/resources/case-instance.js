@@ -34,30 +34,30 @@ var CaseInstance = AbstractClientResource.extend();
  */
 CaseInstance.path = 'case-instance';
 
-CaseInstance.get = function(instanceId, done) {
+CaseInstance.get = function (instanceId, done) {
   return this.http.get(this.path + '/' + instanceId, {
-    done: done
+    done: done,
   });
 };
 
-CaseInstance.list = function(params, done) {
+CaseInstance.list = function (params, done) {
   return this.http.get(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-CaseInstance.close = function(instanceId, params, done) {
+CaseInstance.close = function (instanceId, params, done) {
   return this.http.post(this.path + '/' + instanceId + '/close', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-CaseInstance.terminate = function(instanceId, params, done) {
+CaseInstance.terminate = function (instanceId, params, done) {
   return this.http.post(this.path + '/' + instanceId + '/terminate', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -70,11 +70,11 @@ CaseInstance.terminate = function(instanceId, params, done) {
  * @param   {Object}            params
  * @param   {requestCallback}   done
  */
-CaseInstance.setVariable = function(id, params, done) {
+CaseInstance.setVariable = function (id, params, done) {
   var url = this.path + '/' + id + '/variables/' + utils.escapeUrl(params.name);
   return this.http.put(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 

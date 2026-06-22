@@ -31,7 +31,9 @@ import jakarta.el.VariableMapper;
  * A method expression is ready to be evaluated (by calling either
  * {@link #invoke(ELContext, Object[])} or {@link #getMethodInfo(ELContext)}).
  *
+ * <p>
  * Instances of this class are usually created using an {@link ExpressionFactoryImpl}.
+ * </p>
  *
  * @author Christoph Beck
  */

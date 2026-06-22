@@ -73,22 +73,12 @@ class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
   void nameNotFound() {
-    // Given
-    // Process model deployed
-    // When
-    // findId("This should not be found");
-    // Then
     expect(() -> findId("This should not be found"), "doesn't exist");
   }
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
   void nameNull() {
-    // Given
-    // Process model deployed
-    // When
-    // findId(null);
-    // Then
     expect(() -> findId(null), IllegalArgumentException.class);
   }
 
@@ -161,26 +151,14 @@ class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNames.bpmn")
   void processWithDuplicateNames() {
-    // Given
-    // Process model with duplicate task names deployed
-    // When
-    // findId("Task one"); findId("Event one"); findId("Gateway one");
-    // Then
     expect(() -> findId("Task one"), "not unique");
-    // And
     expect(() -> findId("Event one"), "not unique");
-    // And
     expect(() -> findId("Gateway one"), "not unique");
   }
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNamesOnTaskAndGateway.bpmn")
   void processWithDuplicateNamesOnDifferentElementsTypes() {
-    // Given
-    // Process model with same name on task and gateway deployed
-    // When
-    // findId("Element one");
-    // Then
     expect(() -> findId("Element one"), "not unique");
   }
 

@@ -125,6 +125,10 @@ public class TaskManager extends AbstractManager {
     return getDbEntityManager().selectList("selectTasksByProcessInstanceId", processInstanceId);
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #findTasksByQueryCriteria(TaskQueryImpl)} instead,
+   *             which allows pagination to be set directly on the query object.
+   */
   @Deprecated(since = "1.0")
   public List<Task> findTasksByQueryCriteria(TaskQueryImpl taskQuery, Page page) {
     taskQuery.setFirstResult(page.getFirstResult());

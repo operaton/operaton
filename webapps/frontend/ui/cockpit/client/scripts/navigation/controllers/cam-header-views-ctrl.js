@@ -28,50 +28,53 @@ module.exports = [
   '$injector',
   '$location',
   'Views',
-  function($scope, $injector, $location, Views) {
+  function ($scope, $injector, $location, Views) {
     $scope.navbarVars = {read: []};
 
     $scope.menuActions = [];
     $scope.dropdownActions = [];
 
-    Views.getProviders({component: 'cockpit.navigation'}).forEach(function(
-      plugin
-    ) {
-      if (angular.isArray(plugin.access)) {
-        var fn = $injector.invoke(plugin.access);
+    Views.getProviders({component: 'cockpit.navigation'}).forEach(
+      function (plugin) {
+        if (angular.isArray(plugin.access)) {
+          var fn = $injector.invoke(plugin.access);
 
-        fn(function(err, access) {
-          if (err) {
-            throw err;
-          }
+          fn(function (err, access) {
+            if (err) {
+              throw err;
+            }
 
-          plugin.accessible = access;
-        });
-      }
+            plugin.accessible = access;
+          });
+        }
 
-      // accessible by default in case there's no callback
-      else {
-        plugin.accessible = true;
-      }
+        // accessible by default in case there's no callback
+        else {
+          plugin.accessible = true;
+        }
 
-      // "Legacy" Plugins
-      if (!plugin.render) {
-        plugin.template = `<a ng-href="${plugin.pagePath}">
+        // "Legacy" Plugins
+        if (!plugin.render) {
+          plugin.template = `<a ng-href="${plugin.pagePath}">
         {{'${plugin.label}' | translate}}</a>`;
-      }
+        }
 
-      (plugin.priority >= 0 ? $scope.menuActions : $scope.dropdownActions).push(
-        plugin
-      );
-    });
+        (plugin.priority >= 0
+          ? $scope.menuActions
+          : $scope.dropdownActions
+        ).push(plugin);
+      },
+    );
 
-    $scope.activeClass = function(plugin) {
+    $scope.activeClass = function (plugin) {
       var path = $location.absUrl();
-      return (typeof plugin.checkActive === 'function'
-      ? plugin.checkActive(path)
-      : checkActive(plugin, path))
+      return (
+        typeof plugin.checkActive === 'function'
+          ? plugin.checkActive(path)
+          : checkActive(plugin, path)
+      )
         ? 'active'
         : '';
     };
-  }
+  },
 ];

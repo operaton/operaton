@@ -65,8 +65,10 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
    *                   |-- directory/processes/process.bpmn     (2)
    * </pre>
    *
+   * <p>
    * Processes (1) + (2) will have the same resource name (= "processes/process.bpmn"),
    * so that only one process should be deployed.
+   * </p>
    *
    */
   @Deployment

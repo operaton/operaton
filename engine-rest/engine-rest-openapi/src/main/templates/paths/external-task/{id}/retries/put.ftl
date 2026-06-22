@@ -39,18 +39,18 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        desc = "Returned if the task does not exist. This could indicate a wrong task id as well as a cancelled task,
-                e.g., due to a caught BPMN boundary event. See the
+        desc = "Returned if the retries count is negative or the external task is not active. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
 
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
-        desc = "In case the number of retries is negative or null, an exception of type `InvalidRequestException`
-                is returned. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
+        desc = "Returned if the external task with the given id does not exist. See the
+                [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

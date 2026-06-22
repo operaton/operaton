@@ -42,7 +42,8 @@ public final class JobExecutorDefinition extends SimpleResourceDefinition {
   public void registerAttributes(ManagementResourceRegistration resourceRegistration) {
     for (AttributeDefinition attr : SubsystemAttributeDefinitons.JOB_EXECUTOR_ATTRIBUTES) {
       if (!attr.getFlags().contains(AttributeAccess.Flag.RESTART_ALL_SERVICES)) {
-        throw new IllegalStateException("Attribute " + attr.getName() + " was not marked as reload required: " + resourceRegistration.getPathAddress());
+        throw new IllegalStateException("Attribute %s was not marked as reload required: %s".formatted(
+            attr.getName(), resourceRegistration.getPathAddress()));
       }
       resourceRegistration.registerReadOnlyAttribute(attr, null);
     }

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryExternalTasksCount"
       tag = "External Task"
-      summary = "Get List Count (POST)"
+      summary = "Count External Tasks"
       desc = "Queries for the number of external tasks that fulfill given parameters. This method takes the same message
               body as the [Get External Tasks (POST)](${docsUrl}/reference/rest/external-task/post-query/) method." />
 
@@ -35,10 +35,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

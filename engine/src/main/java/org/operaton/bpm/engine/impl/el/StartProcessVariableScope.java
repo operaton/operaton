@@ -19,14 +19,12 @@ package org.operaton.bpm.engine.impl.el;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
 
 /**
  * Variable-scope only used to resolve variables when NO execution is active but
@@ -38,17 +36,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class StartProcessVariableScope implements VariableScope {
 
-  private static final StartProcessVariableScope INSTANCE = new StartProcessVariableScope();
-
   private static final VariableMap EMPTY_VARIABLE_MAP = Variables.fromMap(Collections.emptyMap());
-
-  /**
-   * Since a {@link StartProcessVariableScope} has no state, it's safe to use the same
-   * instance to prevent too many useless instances created.
-   */
-  public static StartProcessVariableScope getSharedInstance()  {
-    return INSTANCE;
-  }
 
   @Override
   public String getVariableScopeKey() {
@@ -122,16 +110,6 @@ public class StartProcessVariableScope implements VariableScope {
 
   @Override
   public <T extends TypedValue> T getVariableLocalTyped(String variableName, boolean deserializeObjectValue) {
-    return null;
-  }
-
-  @Override
-  public Set<String> getVariableNames() {
-    return Collections.emptySet();
-  }
-
-  @Override
-  public Set<String> getVariableNamesLocal() {
     return null;
   }
 

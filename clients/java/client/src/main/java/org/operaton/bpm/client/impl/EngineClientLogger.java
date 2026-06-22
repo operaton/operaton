@@ -39,7 +39,7 @@ public class EngineClientLogger extends ExternalTaskClientLogger {
 
   protected <T> void exceptionWhileClosingResourceStream(T response, IOException e) {
     logError(
-      "003", "Exception while closing resource stream of response '" + response + "': ", e);
+      "003", "Exception while closing resource stream of response '%s': ".formatted(response), e);
   }
 
   protected <T> EngineClientException exceptionWhileParsingJsonObject(Class<T> responseDtoClass, Throwable t) {

@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -185,18 +185,14 @@ class MultiTenancyBatchTest {
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
-    try {
-      managementService.deleteBatch(batchId, true);
-      fail("exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("Cannot delete batch '"
+
+    // then
+    assertThatThrownBy(() -> managementService.deleteBatch(batchId, true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot delete batch '"
         + batch.getId() + "' because it belongs to no authenticated tenant");
-    }
-    finally {
-      identityService.clearAuthentication();
-    }
+
+    identityService.clearAuthentication();
   }
 
   @Test
@@ -222,18 +218,14 @@ class MultiTenancyBatchTest {
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
-    try {
-      managementService.suspendBatchById(batchId);
-      fail("exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("Cannot suspend batch '"
+
+    // then
+    assertThatThrownBy(() -> managementService.suspendBatchById(batchId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot suspend batch '"
       + batch.getId() +"' because it belongs to no authenticated tenant");
-    }
-    finally {
-      identityService.clearAuthentication();
-    }
+
+    identityService.clearAuthentication();
   }
 
   @Test
@@ -261,18 +253,14 @@ class MultiTenancyBatchTest {
 
     // when
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
-    try {
-      managementService.activateBatchById(batchId);
-      fail("exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("Cannot activate batch '"
+
+    // then
+    assertThatThrownBy(() -> managementService.activateBatchById(batchId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot activate batch '"
       + batch.getId() + "' because it belongs to no authenticated tenant");
-    }
-    finally {
-      identityService.clearAuthentication();
-    }
+
+    identityService.clearAuthentication();
   }
 
 }

@@ -495,9 +495,6 @@ class VariableListenerTest extends CmmnTest {
     ProcessEngineAwareListener.reset();
   }
 
-  /**
-   * TODO: add when history for case execution variables is implemented
-   */
   @Deployment
   @Test
   void testListenerDoesNotInterfereWithHistory() {

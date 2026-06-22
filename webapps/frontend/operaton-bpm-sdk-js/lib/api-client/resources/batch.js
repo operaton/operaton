@@ -36,36 +36,36 @@ Batch.path = 'batch';
 /**
  * Retrieves a single batch according to the Batch interface in the engine.
  */
-Batch.get = function(id, done) {
+Batch.get = function (id, done) {
   return this.http.get(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 
-Batch.suspended = function(params, done) {
+Batch.suspended = function (params, done) {
   return this.http.put(this.path + '/' + params.id + '/suspended', {
     data: {
-      suspended: !!params.suspended
+      suspended: !!params.suspended,
     },
-    done: done
+    done: done,
   });
 };
 
-Batch.statistics = function(params, done) {
+Batch.statistics = function (params, done) {
   return this.http.get(this.path + '/statistics/', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-Batch.statisticsCount = function(params, done) {
+Batch.statisticsCount = function (params, done) {
   return this.http.get(this.path + '/statistics/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-Batch.delete = function(params, done) {
+Batch.delete = function (params, done) {
   var path = this.path + '/' + params.id;
 
   if (params.cascade) {
@@ -73,7 +73,7 @@ Batch.delete = function(params, done) {
   }
 
   return this.http.del(path, {
-    done: done
+    done: done,
   });
 };
 

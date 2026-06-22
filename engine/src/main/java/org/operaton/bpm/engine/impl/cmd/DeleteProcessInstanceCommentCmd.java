@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,9 +36,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * of a given processInstanceId
  */
 
-public class DeleteProcessInstanceCommentCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeleteProcessInstanceCommentCmd implements Command<Object> {
   protected String commentId;
   protected String processInstanceId;
 
@@ -58,7 +54,7 @@ public class DeleteProcessInstanceCommentCmd implements Command<Object>, Seriali
     ensureNotNull(BadUserRequestException.class, "processInstanceId", processInstanceId);
 
     ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
-    ensureNotNull("No processInstance exists with processInstanceId: " + processInstanceId, "processInstance",
+    ensureNotNull("No processInstance exists with processInstanceId: %s".formatted(processInstanceId), "processInstance",
         processInstance);
 
     checkUpdateProcessInstanceById(processInstanceId, commandContext);

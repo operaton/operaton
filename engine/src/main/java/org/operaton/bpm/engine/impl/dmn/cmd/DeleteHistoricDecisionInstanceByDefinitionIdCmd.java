@@ -50,7 +50,7 @@ public class DeleteHistoricDecisionInstanceByDefinitionIdCmd implements Command<
     DecisionDefinitionEntity decisionDefinition = commandContext
         .getDecisionDefinitionManager()
         .findDecisionDefinitionById(decisionDefinitionId);
-    ensureNotNull("No decision definition found with id: " + decisionDefinitionId, "decisionDefinition", decisionDefinition);
+    ensureNotNull("No decision definition found with id: %s".formatted(decisionDefinitionId), "decisionDefinition", decisionDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteHistoricDecisionInstance(decisionDefinition.getKey());

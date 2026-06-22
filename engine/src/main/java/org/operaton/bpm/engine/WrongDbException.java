@@ -23,7 +23,9 @@ import java.io.Serial;
  * Exception that is thrown when the Activiti engine discovers a mismatch between the
  * database schema version and the engine version.
  *
+ * <p>
  * The check is done when the engine is created in {@link ProcessEngineBuilder#buildProcessEngine()}.
+ * </p>
  *
  * @author Tom Baeyens
  */
@@ -35,8 +37,7 @@ public class WrongDbException extends ProcessEngineException {
   final String dbVersion;
 
   public WrongDbException(String libraryVersion, String dbVersion) {
-    this("version mismatch: activiti library version is '" + libraryVersion + "', db version is " +
-        dbVersion +" Hint: Set <property name=\"databaseSchemaUpdate\" to value=\"true\" or value=\"create-drop\" (use create-drop for testing only!) in bean processEngineConfiguration in operaton.cfg.xml for automatic schema creation",
+    this("version mismatch: Operaton library version is '%s', db version is %s Hint: Set <property name=\"databaseSchemaUpdate\" to value=\"true\" or value=\"create-drop\" (use create-drop for testing only!) in bean processEngineConfiguration in operaton.cfg.xml for automatic schema creation".formatted(libraryVersion, dbVersion),
         libraryVersion, dbVersion);
   }
 

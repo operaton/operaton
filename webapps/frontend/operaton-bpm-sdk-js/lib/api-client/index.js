@@ -81,7 +81,7 @@ function OperatonClient(config) {
 OperatonClient.HttpClient = require('./http-client');
 
 // provide an isolated scope
-(function(proto) {
+(function (proto) {
   /**
    * configuration storage
    * @memberof CamSDK.client.OperatonClient.prototype
@@ -96,7 +96,7 @@ OperatonClient.HttpClient = require('./http-client');
    * @memberof CamSDK.client.OperatonClient.prototype
    * @name initialize
    */
-  proto.initialize = function() {
+  proto.initialize = function () {
     /* jshint sub: true */
     _resources['authorization'] = require('./resources/authorization');
     _resources['batch'] = require('./resources/batch');
@@ -142,7 +142,7 @@ OperatonClient.HttpClient = require('./http-client');
     // create global HttpClient instance
     this.http = new this.HttpClient({
       baseUrl: this.baseUrl,
-      headers: this.config.headers
+      headers: this.config.headers,
     });
 
     // configure the client for each resources separately,
@@ -153,7 +153,7 @@ OperatonClient.HttpClient = require('./http-client');
         // use the SDK config for some default values
         mock: this.config.mock,
         baseUrl: this.baseUrl,
-        headers: this.config.headers
+        headers: this.config.headers,
       };
       resConf = this.config.resources[name] || {};
 
@@ -177,7 +177,7 @@ OperatonClient.HttpClient = require('./http-client');
    * @param  {String} name
    * @return {CamSDK.client.AbstractClientResource}
    */
-  proto.resource = function(name) {
+  proto.resource = function (name) {
     return _resources[name];
   };
 })(OperatonClient.prototype);

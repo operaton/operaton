@@ -35,7 +35,7 @@ public final class QueryMaxResultsLimitUtil {
         throw new BadUserRequestException("An unbound number of results is forbidden!");
 
       } else if (resultsCount > maxResultsLimit) {
-        throw new BadUserRequestException("Max results limit of " + maxResultsLimit + " exceeded!");
+        throw new BadUserRequestException("Max results limit of %s exceeded!".formatted(maxResultsLimit));
 
       }
     }

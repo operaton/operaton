@@ -37,14 +37,4 @@ public class VariableInstanceConcurrentLocalInitializer
     variableInstance.setConcurrentLocal(!execution.isScope() || execution.getParent() != null && execution.isExecutingScopeLeafActivity());
   }
 
-  @Override
-  public void onDelete(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
-
-  }
-
-  @Override
-  public void onUpdate(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
-
-  }
-
 }

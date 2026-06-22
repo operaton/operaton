@@ -29,7 +29,8 @@ public class MaxLengthValidator extends AbstractTextValueValidator {
       maxLength = Integer.parseInt(configuration);
     } catch (NumberFormatException e) {
       // do not throw validation exception, as the issue is not with the submitted value
-      throw new FormFieldConfigurationException(configuration, "Cannot validate \"maxlength\": configuration "+configuration+" cannot be interpreted as Integer");
+      throw new FormFieldConfigurationException(configuration, "Cannot validate \"maxlength\": configuration %s cannot be interpreted as Integer"
+          .formatted(configuration));
     }
 
     return submittedValue.length() <= maxLength;

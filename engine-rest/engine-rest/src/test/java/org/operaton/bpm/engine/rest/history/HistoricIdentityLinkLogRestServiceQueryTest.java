@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -285,7 +284,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
 
   @Test
   void testQueryByTenantIds() {
-    mockedQuery = setUpMockHistoricIdentityLinkQuery(Arrays.asList(
+    mockedQuery = setUpMockHistoricIdentityLinkQuery(List.of(
         MockProvider.createMockHistoricIdentityLink(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricIdentityLink(MockProvider.ANOTHER_EXAMPLE_TENANT_ID)));
 

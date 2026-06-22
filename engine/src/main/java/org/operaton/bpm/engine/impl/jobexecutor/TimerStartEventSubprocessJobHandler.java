@@ -24,7 +24,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 /**
  * {@link JobHandler} implementation for timer start events which are embedded into an event subprocess.
  *
+ * <p>
  * The configuration is the id of the start event activity.
+ * </p>
  *
  * @author Daniel Meyer
  * @author Kristin Polenz
@@ -49,7 +51,8 @@ public class TimerStartEventSubprocessJobHandler extends TimerEventJobHandler {
       execution.executeEventHandlerActivity(eventSubprocessActivity);
 
     } else {
-      throw new ProcessEngineException("Error while triggering event subprocess using timer start event: cannot find activity with id '"+configuration+"'.");
+      throw new ProcessEngineException("Error while triggering event subprocess using timer start event: cannot find activity with id '%s'."
+          .formatted(configuration));
     }
 
   }

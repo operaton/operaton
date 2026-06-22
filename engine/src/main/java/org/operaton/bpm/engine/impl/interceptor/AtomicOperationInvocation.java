@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("deprecation")
 public class AtomicOperationInvocation {
 
   private static final ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;

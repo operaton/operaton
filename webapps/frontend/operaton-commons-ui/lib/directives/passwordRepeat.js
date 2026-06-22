@@ -21,17 +21,17 @@
     this directive is placed on the Password (repeat) input field.
     it is configured with the name of the property which holds the password we must repeat.
   **/
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     require: 'ngModel',
-    link: function(scope, element, attrs, model) {
+    link: function (scope, element, attrs, model) {
       // this is the name of the scope property
       // holding the value of the password we are trying to match.
       var repeatedPasswordName = attrs.passwordRepeat;
 
       // check match if we are changed
-      model.$parsers.unshift(function(viewValue) {
+      model.$parsers.unshift(function (viewValue) {
         var repeatedPasswordValue = scope.$eval(repeatedPasswordName);
         var isValid = viewValue == repeatedPasswordValue;
         model.$setValidity('passwordRepeat', isValid);
@@ -39,7 +39,7 @@ module.exports = function() {
       });
 
       // check match if password to repeat is changed
-      scope.$watch(repeatedPasswordName, function(newValue) {
+      scope.$watch(repeatedPasswordName, function (newValue) {
         var isValid = newValue == model.$viewValue;
         model.$setValidity('passwordRepeat', isValid);
         if (!isValid) {
@@ -50,6 +50,6 @@ module.exports = function() {
           model.$setViewValue(model.$viewValue);
         }
       });
-    }
+    },
   };
 };

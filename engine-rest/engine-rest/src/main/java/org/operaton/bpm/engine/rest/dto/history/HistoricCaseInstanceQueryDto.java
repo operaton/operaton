@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -35,54 +38,51 @@ import static java.lang.Boolean.TRUE;
 
 public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseInstanceQuery> {
 
-  public static final String SORT_BY_CASE_INSTANCE_ID_VALUE = "instanceId";
-  public static final String SORT_BY_CASE_DEFINITION_ID_VALUE = "definitionId";
-  public static final String SORT_BY_CASE_INSTANCE_BUSINESS_KEY_VALUE = "businessKey";
-  public static final String SORT_BY_CASE_INSTANCE_CREATE_TIME_VALUE = "createTime";
-  public static final String SORT_BY_CASE_INSTANCE_CLOSE_TIME_VALUE = "closeTime";
-  public static final String SORT_BY_CASE_INSTANCE_DURATION_VALUE = "duration";
+  private static final String SORT_BY_CASE_INSTANCE_ID_VALUE = "instanceId";
+  private static final String SORT_BY_CASE_DEFINITION_ID_VALUE = "definitionId";
+  private static final String SORT_BY_CASE_INSTANCE_BUSINESS_KEY_VALUE = "businessKey";
+  private static final String SORT_BY_CASE_INSTANCE_CREATE_TIME_VALUE = "createTime";
+  private static final String SORT_BY_CASE_INSTANCE_CLOSE_TIME_VALUE = "closeTime";
+  private static final String SORT_BY_CASE_INSTANCE_DURATION_VALUE = "duration";
   private static final String SORT_BY_TENANT_ID = "tenantId";
 
-  public static final List<String> VALID_SORT_BY_VALUES;
-  static {
-    VALID_SORT_BY_VALUES = new ArrayList<>();
-    VALID_SORT_BY_VALUES.add(SORT_BY_CASE_INSTANCE_ID_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_CASE_DEFINITION_ID_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_CASE_INSTANCE_BUSINESS_KEY_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_CASE_INSTANCE_CREATE_TIME_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_CASE_INSTANCE_CLOSE_TIME_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_CASE_INSTANCE_DURATION_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_TENANT_ID);
-  }
+  private static final List<String> VALID_SORT_BY_VALUES = List.of(SORT_BY_CASE_INSTANCE_ID_VALUE,
+    SORT_BY_CASE_DEFINITION_ID_VALUE,
+    SORT_BY_CASE_INSTANCE_BUSINESS_KEY_VALUE,
+    SORT_BY_CASE_INSTANCE_CREATE_TIME_VALUE,
+    SORT_BY_CASE_INSTANCE_CLOSE_TIME_VALUE,
+    SORT_BY_CASE_INSTANCE_DURATION_VALUE,
+    SORT_BY_TENANT_ID
+    );
 
-  public String caseInstanceId;
-  public Set<String> caseInstanceIds;
-  public String caseDefinitionId;
-  public String caseDefinitionKey;
-  public String caseDefinitionName;
-  public String caseDefinitionNameLike;
-  public List<String> caseDefinitionKeyNotIn;
-  public String caseInstanceBusinessKey;
-  public String caseInstanceBusinessKeyLike;
-  public String superCaseInstanceId;
-  public String subCaseInstanceId;
+  private String caseInstanceId;
+  private Set<String> caseInstanceIds;
+  private String caseDefinitionId;
+  private String caseDefinitionKey;
+  private String caseDefinitionName;
+  private String caseDefinitionNameLike;
+  private List<String> caseDefinitionKeyNotIn;
+  private String caseInstanceBusinessKey;
+  private String caseInstanceBusinessKeyLike;
+  private String superCaseInstanceId;
+  private String subCaseInstanceId;
   private String superProcessInstanceId;
   private String subProcessInstanceId;
   private List<String> tenantIds;
   private Boolean withoutTenantId;
-  public String createdBy;
-  public List<String> caseActivityIdIn;
+  private String createdBy;
+  private List<String> caseActivityIdIn;
 
-  public Date createdBefore;
-  public Date createdAfter;
-  public Date closedBefore;
-  public Date closedAfter;
+  private Date createdBefore;
+  private Date createdAfter;
+  private Date closedBefore;
+  private Date closedAfter;
 
-  public Boolean active;
-  public Boolean completed;
-  public Boolean terminated;
-  public Boolean closed;
-  public Boolean notClosed;
+  private Boolean active;
+  private Boolean completed;
+  private Boolean terminated;
+  private Boolean closed;
+  private Boolean notClosed;
 
   protected List<VariableQueryParameterDto> variables;
 
@@ -358,7 +358,7 @@ public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseI
         } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.variableValueLike(variableName, String.valueOf(variableValue));
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: %s".formatted(op));
         }
       }
     }

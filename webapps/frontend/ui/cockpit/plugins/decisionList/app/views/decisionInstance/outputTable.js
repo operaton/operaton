@@ -21,7 +21,7 @@ var template = require('./output-variable-table.html?raw');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.decisionInstance.tab', {
       id: 'decision-input-table',
       label: 'PLUGIN_OUTPUT_TABLE_LABEL',
@@ -31,26 +31,26 @@ module.exports = [
         '$translate',
         'localConf',
         'orderByFilter',
-        function($scope, $translate, localConf, orderBy) {
-          $scope.variables = $scope.decisionInstance.outputs.map(function(
-            variable
-          ) {
-            const variableValue =
-              variable.type === 'Date'
-                ? new Date(variable.value)
-                : variable.value;
-            return {
-              variable: {
-                type: variable.type,
-                value: variableValue,
-                name:
-                  variable.clauseName ||
-                  variable.clauseId ||
-                  variable.variableName,
-                valueInfo: variable.valueInfo
-              }
-            };
-          });
+        function ($scope, $translate, localConf, orderBy) {
+          $scope.variables = $scope.decisionInstance.outputs.map(
+            function (variable) {
+              const variableValue =
+                variable.type === 'Date'
+                  ? new Date(variable.value)
+                  : variable.value;
+              return {
+                variable: {
+                  type: variable.type,
+                  value: variableValue,
+                  name:
+                    variable.clauseName ||
+                    variable.clauseId ||
+                    variable.variableName,
+                  valueInfo: variable.valueInfo,
+                },
+              };
+            },
+          );
 
           // prettier-ignore
           $scope.headColumns = [
@@ -63,10 +63,10 @@ module.exports = [
           $scope.sortObj = loadLocal({
             sortBy: 'variable.name',
             sortOrder: 'asc',
-            sortReverse: false
+            sortReverse: false,
           });
 
-          $scope.onSortChange = function(sortObj) {
+          $scope.onSortChange = function (sortObj) {
             sortObj = sortObj || $scope.sortObj;
             sortObj.sortReverse = sortObj.sortOrder !== 'asc';
             saveLocal(sortObj);
@@ -74,7 +74,7 @@ module.exports = [
             $scope.variables = orderBy(
               $scope.variables,
               sortObj.sortBy,
-              sortObj.sortReverse
+              sortObj.sortReverse,
             );
           };
 
@@ -85,9 +85,9 @@ module.exports = [
           function loadLocal(defaultValue) {
             return localConf.get('sortDecisionInputTab', defaultValue);
           }
-        }
+        },
       ],
-      priority: 10
+      priority: 10,
     });
-  }
+  },
 ];

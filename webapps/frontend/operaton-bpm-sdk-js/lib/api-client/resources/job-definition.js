@@ -23,23 +23,23 @@ var JobDefinition = AbstractClientResource.extend();
 
 JobDefinition.path = 'job-definition';
 
-JobDefinition.setRetries = function(params, done) {
+JobDefinition.setRetries = function (params, done) {
   return this.http.put(this.path + '/' + params.id + '/retries', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-JobDefinition.list = function(params, done) {
+JobDefinition.list = function (params, done) {
   return this.http.get(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-JobDefinition.get = function(id, done) {
+JobDefinition.get = function (id, done) {
   return this.http.get(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 

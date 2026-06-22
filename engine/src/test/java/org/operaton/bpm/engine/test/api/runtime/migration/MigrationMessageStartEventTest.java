@@ -99,8 +99,7 @@ class MigrationMessageStartEventTest {
 
   protected void assertEventSubscriptionMigrated(EventSubscription eventSubscriptionBefore, String activityIdAfter, String eventName) {
     EventSubscription eventSubscriptionAfter = runtimeService.createEventSubscriptionQuery().singleResult();
-    assertThat(eventSubscriptionAfter).as("Expected that an event subscription with id '" + eventSubscriptionBefore.getId() + "' "
-        + "exists after migration").isNotNull();
+    assertThat(eventSubscriptionAfter).as("Expected that an event subscription with id '%s' exists after migration".formatted(eventSubscriptionBefore.getId())).isNotNull();
 
     assertThat(eventSubscriptionAfter.getEventType()).isEqualTo(eventSubscriptionBefore.getEventType());
     assertThat(eventSubscriptionAfter.getActivityId()).isEqualTo(activityIdAfter);

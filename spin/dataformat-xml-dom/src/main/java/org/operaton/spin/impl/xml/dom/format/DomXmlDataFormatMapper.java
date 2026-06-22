@@ -135,7 +135,7 @@ public class DomXmlDataFormatMapper implements DataFormatMapper {
       }
       String className = typeToValidate.getName();
       if (!validator.validate(className)) {
-        throw new SpinRuntimeException("The class '" + className + "' is not whitelisted for deserialization.");
+        throw new SpinRuntimeException("The class '%s' is not whitelisted for deserialization.".formatted(className));
       }
     }
   }

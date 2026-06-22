@@ -17,12 +17,14 @@
 package org.operaton.bpm.webapp.impl.db;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.xml.sax.InputSource;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -69,6 +71,7 @@ class QuerySessionFactoryTest {
     var mappingFiles = List.of("foo/mapping1.xml", "bar/mapping2.xml");
     var documentBuildFactory = DocumentBuilderFactory.newDefaultInstance();
     var builder = documentBuildFactory.newDocumentBuilder();
+    builder.setEntityResolver((publicId, systemId) -> resolveMyBatisDtd(systemId));
 
     // when
     String mappings = querySessionFactory.buildMappings(mappingFiles);
@@ -77,8 +80,22 @@ class QuerySessionFactoryTest {
     var document = builder.parse(new ByteArrayInputStream(mappings.getBytes()));
     assertThat(document.getDocumentElement().getNodeName()).isEqualTo("configuration");
 
-    assertThat(mappings)
+    // normalize newlines only for the assertion
+    assertThat(mappings.replace("\r\n", "\n"))
       .contains("<mapper resource=\"foo/mapping1.xml\" />\n")
       .contains("<mapper resource=\"bar/mapping2.xml\" />\n");
+  }
+
+  private InputSource resolveMyBatisDtd(String systemId) {
+    if (systemId == null || !systemId.endsWith("/dtd/mybatis-3-config.dtd")) {
+      return null;
+    }
+
+    InputStream localDtd = QuerySessionFactoryTest.class.getClassLoader()
+      .getResourceAsStream("org/apache/ibatis/builder/xml/mybatis-3-config.dtd");
+    assertThat(localDtd)
+      .as("MyBatis DTD must be available on the test classpath to avoid external entity resolution")
+      .isNotNull();
+    return new InputSource(localDtd);
   }
 }

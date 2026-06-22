@@ -17,8 +17,8 @@
 
 'use strict';
 
-module.exports = function() {
-  return function(object, path, defaultValue) {
+module.exports = function () {
+  return function (object, path, defaultValue) {
     var current = object;
     var property;
 

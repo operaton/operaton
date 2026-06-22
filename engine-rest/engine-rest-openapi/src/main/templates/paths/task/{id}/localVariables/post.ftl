@@ -24,7 +24,7 @@
       mediaType = "application/json"
       dto = "PatchVariablesDto"
       examples = ['"example-1": {
-                     "summary": "POST `/task/aTaskId/variables`",
+                     "summary": "POST `/task/aTaskId/localVariables`",
                      "description": "Status 204 Response: No content.",
                      "value": {
                        "modifications": {
@@ -62,10 +62,11 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "Update or delete could not be executed because the task is `null` or does not exist.. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

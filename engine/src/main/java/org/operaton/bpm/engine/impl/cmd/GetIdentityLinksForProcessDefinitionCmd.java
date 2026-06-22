@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.context.Context;
@@ -28,13 +26,10 @@ import org.operaton.bpm.engine.task.IdentityLink;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tijs Rademakers
  */
-public class GetIdentityLinksForProcessDefinitionCmd implements Command<List<IdentityLink>>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetIdentityLinksForProcessDefinitionCmd implements Command<List<IdentityLink>> {
   protected String processDefinitionId;
 
   public GetIdentityLinksForProcessDefinitionCmd(String processDefinitionId) {
@@ -49,7 +44,7 @@ public class GetIdentityLinksForProcessDefinitionCmd implements Command<List<Ide
       .getProcessDefinitionManager()
       .findLatestProcessDefinitionById(processDefinitionId);
 
-    ensureNotNull("Cannot find process definition with id " + processDefinitionId, "processDefinition", processDefinition);
+    ensureNotNull("Cannot find process definition with id %s".formatted(processDefinitionId), "processDefinition", processDefinition);
 
     return (List) processDefinition.getIdentityLinks();
   }

@@ -26,9 +26,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ClockUtilTest {
 
+  private static final long HALF_SECOND = 500L;
   private static final long ONE_SECOND = 1000L;
-  private static final long TWO_SECONDS = 2000L;
-  private static final long FIVE_SECONDS = 5000L;
   private static final long TWO_DAYS = 172800000L;
 
   @BeforeEach
@@ -52,15 +51,13 @@ class ClockUtilTest {
   }
 
   @Test
-  void offsetShouldTravelInTime() throws Exception {
+  void offsetShouldTravelInTime() {
     long duration = TWO_DAYS;
     Date target = new Date(new Date().getTime() + duration);
 
     ClockUtil.offset(duration);
 
-    Thread.sleep(1100L);
-
-    assertThat(ClockUtil.now()).isCloseTo(target, TWO_SECONDS);
+    assertThat(ClockUtil.now()).isCloseTo(target, ONE_SECOND);
   }
 
   @Test
@@ -70,9 +67,9 @@ class ClockUtilTest {
 
     ClockUtil.setCurrentTime(target);
 
-    Thread.sleep(1100L);
+    Thread.sleep(HALF_SECOND);
 
-    assertThat(ClockUtil.now()).isCloseTo(target, ONE_SECOND);
+    assertThat(ClockUtil.now()).isCloseTo(target, HALF_SECOND);
   }
 
   @Test
@@ -112,19 +109,17 @@ class ClockUtilTest {
 
     assertThat(ClockUtil.now()).isCloseTo(target, ONE_SECOND);
 
-    Thread.sleep(FIVE_SECONDS);
+    Thread.sleep(HALF_SECOND);
 
-    assertThat(ClockUtil.now()).isCloseTo(new Date(target.getTime() + FIVE_SECONDS), ONE_SECOND);
+    assertThat(ClockUtil.now()).isCloseTo(new Date(target.getTime() + HALF_SECOND), ONE_SECOND);
   }
 
   @Test
-  void timeShouldFreezeWithSetCurrentTime() throws Exception {
+  void timeShouldFreezeWithSetCurrentTime() {
     Date now = new Date();
     long duration = TWO_DAYS;
     Date target = new Date(now.getTime() + duration);
     ClockUtil.setCurrentTime(target);
-
-    Thread.sleep(FIVE_SECONDS);
 
     assertThat(ClockUtil.now()).isCloseTo(target, ONE_SECOND);
   }

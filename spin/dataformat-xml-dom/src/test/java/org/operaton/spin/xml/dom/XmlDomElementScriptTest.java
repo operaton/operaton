@@ -40,6 +40,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings({"java:S4144", "java:S5976"}) // tests are different by expression in @Script annotation
 public abstract class XmlDomElementScriptTest extends ScriptTest {
 
   // has attribute

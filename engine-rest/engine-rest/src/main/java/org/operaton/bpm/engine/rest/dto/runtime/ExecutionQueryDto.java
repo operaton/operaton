@@ -247,7 +247,7 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
         case NOT_EQUALS_OPERATOR_NAME -> query.variableValueNotEquals(variableName, variableValue);
         case LIKE_OPERATOR_NAME -> query.variableValueLike(variableName, String.valueOf(variableValue));
         default ->
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: %s".formatted(op));
         }
       }
     }
@@ -263,7 +263,7 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
         } else if (NOT_EQUALS_OPERATOR_NAME.equals(op)) {
           query.processVariableValueNotEquals(variableName, variableValue);
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid process variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid process variable comparator specified: %s".formatted(op));
         }
       }
     }
@@ -276,7 +276,7 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
     case SORT_BY_DEFINITION_KEY_VALUE -> query.orderByProcessDefinitionKey();
     case SORT_BY_DEFINITION_ID_VALUE -> query.orderByProcessDefinitionId();
     case SORT_BY_TENANT_ID -> query.orderByTenantId();
-    default -> throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid sort operator specified: " + sortBy);
+    default -> throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid sort operator specified: %s".formatted(sortBy));
     }
   }
 }

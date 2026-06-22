@@ -19,6 +19,7 @@ package org.operaton.commons.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * helper/convience methods for working with collections.
@@ -112,7 +114,8 @@ public final class CollectionUtil {
    * @param <T>   The type of the value.
    * @param map   The map to which values will be added.
    * @param toAdd The map containing values to be merged.
-   * @throws NullPointerException if either <code>map</code> is <code>null</code>, or if <code>toAdd</code> contains <code>null</code> lists
+   * @throws NullPointerException          if either <code>map</code> is <code>null</code>, or if <code>toAdd</code>
+   *                                       contains <code>null</code> lists
    * @throws UnsupportedOperationException if the destination map is read-only
    */
   public static <S, T> void mergeMapsOfLists(Map<S, List<T>> map, Map<S, List<T>> toAdd) {
@@ -131,7 +134,7 @@ public final class CollectionUtil {
    * @param map   The map to which the value will be added.
    * @param key   The key for the map entry.
    * @param value The value to be added to the set.
-   * @throws NullPointerException if <code>map</code> is <code>null</code>
+   * @throws NullPointerException          if <code>map</code> is <code>null</code>
    * @throws UnsupportedOperationException if the destination map is read-only
    */
   public static <S, T> void addToMapOfSets(Map<S, Set<T>> map, S key, T value) {
@@ -146,7 +149,7 @@ public final class CollectionUtil {
    * @param map    The map to which the values will be added.
    * @param key    The key for the map entry.
    * @param values The collection of values to be added to the set.
-   * @throws NullPointerException if <code>map</code> is <code>null</code>
+   * @throws NullPointerException          if <code>map</code> is <code>null</code>
    * @throws UnsupportedOperationException if the destination map is read-only
    */
   public static <S, T> void addCollectionToMapOfSets(Map<S, Set<T>> map, S key, Collection<T> values) {
@@ -158,6 +161,7 @@ public final class CollectionUtil {
    * Chops a list into non-view sublists of length partitionSize. Note: the argument <code>list</code>
    * may be included in the result.
    * <p><strong>Note:</strong> <code>partitionSize</code> must be greater than 0</p>
+   * 
    * @param <T>           The type of elements in the list.
    * @param list          The list to be partitioned.
    * @param partitionSize The size of each partition.
@@ -234,5 +238,39 @@ public final class CollectionUtil {
    */
   public static boolean hasElements(Collection<?> collection) {
     return !isEmpty(collection);
+  }
+
+  /**
+   * Converts an Enumeration to a Set.
+   *
+   * @param <T>         The type of elements in the enumeration.
+   * @param enumeration The enumeration to be converted.
+   * @return A set containing all elements from the enumeration.
+   * @since 1.1
+   */
+  public static <T> Set<T> toSet(Enumeration<T> enumeration) {
+    Set<T> set = new HashSet<>();
+    while (enumeration.hasMoreElements()) {
+      set.add(enumeration.nextElement());
+    }
+    return set;
+  }
+
+  /**
+   * Converts an Enumeration to a Set with a mapper function.
+   *
+   * @param <T>         The type of elements in the enumeration.
+   * @param <R>         The type of elements in the resulting set.
+   * @param enumeration The enumeration to be converted.
+   * @param mapper      The mapper function to transform elements.
+   * @return A set containing all transformed elements from the enumeration.
+   * @since 1.1
+   */
+  public static <T, R> Set<R> toSet(Enumeration<T> enumeration, Function<T, R> mapper) {
+    Set<R> set = new HashSet<>();
+    while (enumeration.hasMoreElements()) {
+      set.add(mapper.apply(enumeration.nextElement()));
+    }
+    return set;
   }
 }

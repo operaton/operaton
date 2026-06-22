@@ -19,26 +19,26 @@
 
 var template = require('./sortable-table-head.html?raw');
 
-var Directive = function() {
+var Directive = function () {
   return {
     replace: false,
     restrict: 'AE',
     scope: {
       headColumns: '=?',
       onSortChange: '&',
-      defaultSort: '=?'
+      defaultSort: '=?',
     },
     template: template,
     controller: [
       '$scope',
-      function($scope) {
+      function ($scope) {
         // Order Icons
-        $scope.orderClass = function(forColumn) {
+        $scope.orderClass = function (forColumn) {
           forColumn = forColumn || $scope.defaultSort.sortBy;
           var icons = {
             none: 'minus',
             desc: 'chevron-down',
-            asc: 'chevron-up'
+            asc: 'chevron-up',
           };
           return (
             'glyphicon-' +
@@ -51,23 +51,23 @@ var Directive = function() {
         };
 
         // On-click function to order Columns
-        $scope.changeOrder = function(column) {
+        $scope.changeOrder = function (column) {
           $scope.defaultSort.sortBy = column;
           $scope.defaultSort.sortOrder =
             $scope.defaultSort.sortOrder === 'desc' ? 'asc' : 'desc';
           $scope.onSortChange({sortObj: $scope.defaultSort});
         };
 
-        $scope.evaluateCondition = function(condition) {
+        $scope.evaluateCondition = function (condition) {
           return typeof condition === 'undefined' ? true : condition;
         };
 
-        $scope.formatClassName = function(className) {
+        $scope.formatClassName = function (className) {
           return className.replace(/\s/g, '-');
         };
-      }
+      },
     ],
-    link: function() {}
+    link: function () {},
   };
 };
 

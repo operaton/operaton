@@ -76,7 +76,7 @@ public final class JsonUtil {
   public static ObjectMapper getMapper() {
     if (mapper == null) {
       mapper = new ObjectMapper();
-      mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+      mapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY);
       mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
     return mapper;

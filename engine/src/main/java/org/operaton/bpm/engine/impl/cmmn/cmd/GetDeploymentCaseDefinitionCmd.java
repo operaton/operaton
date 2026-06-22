@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -32,9 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class GetDeploymentCaseDefinitionCmd implements Command<CaseDefinition>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetDeploymentCaseDefinitionCmd implements Command<CaseDefinition> {
   protected String caseDefinitionId;
 
   public GetDeploymentCaseDefinitionCmd(String caseDefinitionId) {

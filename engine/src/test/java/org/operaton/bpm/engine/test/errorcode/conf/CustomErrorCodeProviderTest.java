@@ -23,6 +23,8 @@ import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -81,13 +83,14 @@ class CustomErrorCodeProviderTest {
     engineRule.getIdentityService().deleteUser("kermit");
   }
 
-  @Test
-  void shouldOverrideProvidedExceptionCode1() {
+  @ParameterizedTest
+  @ValueSource(ints = {22_222, 20_000, 39_999})
+  void shouldOverrideProvidedExceptionCode(Integer code) {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
         .serviceTask()
-          .operatonClass(FailingJavaDelegateWithErrorCode.class)
+        .operatonClass(FailingJavaDelegateWithErrorCode.class)
         .endEvent()
         .done();
 
@@ -95,50 +98,10 @@ class CustomErrorCodeProviderTest {
 
     // when
     Throwable exception = catchThrowable(() -> runtimeService.startProcessInstanceByKey("foo",
-        Variables.putValue("code", 22_222)));
+        Variables.putValue("code", code)));
 
     // then
-    assertThat(((ProcessEngineException) exception).getCode()).isEqualTo(22_222);
-  }
-
-  @Test
-  void shouldOverrideProvidedExceptionCode2() {
-    // given
-    BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
-        .startEvent()
-        .serviceTask()
-          .operatonClass(FailingJavaDelegateWithErrorCode.class)
-        .endEvent()
-        .done();
-
-    testRule.deploy(myProcess);
-
-    // when
-    Throwable exception = catchThrowable(() -> runtimeService.startProcessInstanceByKey("foo",
-        Variables.putValue("code", 20_000)));
-
-    // then
-    assertThat(((ProcessEngineException) exception).getCode()).isEqualTo(20_000);
-  }
-
-  @Test
-  void shouldOverrideProvidedExceptionCode3() {
-    // given
-    BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
-        .startEvent()
-        .serviceTask()
-          .operatonClass(FailingJavaDelegateWithErrorCode.class)
-        .endEvent()
-        .done();
-
-    testRule.deploy(myProcess);
-
-    // when
-    Throwable exception = catchThrowable(() -> runtimeService.startProcessInstanceByKey("foo",
-        Variables.putValue("code", 39_999)));
-
-    // then
-    assertThat(((ProcessEngineException) exception).getCode()).isEqualTo(39_999);
+    assertThat(((ProcessEngineException) exception).getCode()).isEqualTo(code);
   }
 
   /**
@@ -195,13 +158,14 @@ class CustomErrorCodeProviderTest {
         .isEqualTo(PROVIDED_CUSTOM_CODE);
   }
 
-  @Test
-  void shouldResetReservedCodeFromDelegationCode1() {
+  @ParameterizedTest
+  @ValueSource(ints = { 1, 19_999, 40_000 })
+  void shouldResetReservedCodeFromDelegationCode(Integer code) {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
         .startEvent()
         .serviceTask()
-          .operatonClass(FailingJavaDelegateWithErrorCode.class)
+        .operatonClass(FailingJavaDelegateWithErrorCode.class)
         .endEvent()
         .done();
 
@@ -210,57 +174,7 @@ class CustomErrorCodeProviderTest {
     // when
     ThrowingCallable callable =
         () -> runtimeService.startProcessInstanceByKey("foo",
-            Variables.putValue("code", 1));
-
-    // then
-    assertThatThrownBy(callable)
-        .extracting("code")
-        .isEqualTo(BuiltinExceptionCode.FALLBACK.getCode());
-    assertThat(loggingRule.getLog().get(0).getMessage())
-        .contains("Falling back to default error code 0.");
-  }
-
-  @Test
-  void shouldResetReservedCodeFromDelegationCode2() {
-    // given
-    BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
-        .startEvent()
-        .serviceTask()
-          .operatonClass(FailingJavaDelegateWithErrorCode.class)
-        .endEvent()
-        .done();
-
-    testRule.deploy(myProcess);
-
-    // when
-    ThrowingCallable callable =
-        () -> runtimeService.startProcessInstanceByKey("foo",
-            Variables.putValue("code", 19_999));
-
-    // then
-    assertThatThrownBy(callable)
-        .extracting("code")
-        .isEqualTo(BuiltinExceptionCode.FALLBACK.getCode());
-    assertThat(loggingRule.getLog().get(0).getMessage())
-        .contains("Falling back to default error code 0.");
-  }
-
-  @Test
-  void shouldResetReservedCodeFromDelegationCode3() {
-    // given
-    BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")
-        .startEvent()
-        .serviceTask()
-          .operatonClass(FailingJavaDelegateWithErrorCode.class)
-        .endEvent()
-        .done();
-
-    testRule.deploy(myProcess);
-
-    // when
-    ThrowingCallable callable =
-        () -> runtimeService.startProcessInstanceByKey("foo",
-            Variables.putValue("code", 40_000));
+            Variables.putValue("code", code));
 
     // then
     assertThatThrownBy(callable)

@@ -1,0 +1,31 @@
+@import './_app-variables.scss';
+@import '~ui/common/styles/cam-webapps-common.scss';
+@import "~ui/common/styles/app-splash.scss";
+
+/* ---------------------------------------------------------------- */
+
+@import '~operaton-commons-ui/lib/widgets/variable/cam-widget-variable';
+@import '~operaton-commons-ui/lib/widgets/variables-table/cam-widget-variables-table';
+@import '~operaton-commons-ui/lib/widgets/annotation/cam-annotation-edit';
+@import '~operaton-commons-ui/lib/widgets/bpmn-viewer/cam-widget-bpmn-viewer';
+@import '~operaton-commons-ui/lib/widgets/cmmn-viewer/cam-widget-cmmn-viewer';
+@import '~ui/common/styles/directives/notifications-panel';
+@import '~ui/common/styles/directives/cam-breadcrumbs-panel';
+@import '~ui/common/styles/directives/pagination';
+@import '~ui/common/styles/directives/cam-in-place-text-field';
+@import 'directives/diagram-statistics-loader';
+@import 'directives/cam-cockpit-resource-content';
+@import 'directives/sortable-table-head';
+@import 'directives/change-version';
+@import 'directives/textarea';
+@import '~operaton-commons-ui/lib/widgets/inline-field/cam-widget-inline-field';
+@import '~operaton-commons-ui/lib/widgets/search-pill/cam-widget-search-pill';
+@import '~operaton-commons-ui/lib/widgets/selection-type/cam-widget-selection-type';
+@import '~operaton-commons-ui/lib/widgets/search/cam-widget-search';
+@import '~operaton-commons-ui/lib/widgets/cam-share-link/cam-share-link';
+@import '~operaton-commons-ui/lib/widgets/loader/cam-widget-loader';
+@import '~operaton-commons-ui/resources/css/prism.css';
+@import './ctn';
+@import './process-information';
+@import './filters';
+@import '../scripts/reports/reports';

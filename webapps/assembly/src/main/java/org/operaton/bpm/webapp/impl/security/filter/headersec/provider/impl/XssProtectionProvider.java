@@ -61,7 +61,7 @@ public class XssProtectionProvider extends HeaderSecurityProvider {
 
     if (!isDisabled()) {
       if (!ServletFilterUtil.isEmpty(value) && !ServletFilterUtil.isEmpty(option)) {
-        throw new ProcessEngineException(this.getClass().getSimpleName() + ": cannot set both " + VALUE_PARAM + " and " + OPTION_PARAM + ".");
+        throw new ProcessEngineException("%s: cannot set both %s and %s.".formatted(this.getClass().getSimpleName(), VALUE_PARAM, OPTION_PARAM));
       }
 
       if (!ServletFilterUtil.isEmpty(value)) {
@@ -87,7 +87,7 @@ public class XssProtectionProvider extends HeaderSecurityProvider {
       }
     }
 
-    throw new ProcessEngineException(this.getClass().getSimpleName() + ": cannot set non-existing option " + optionValue + " for " + OPTION_PARAM + ".");
+    throw new ProcessEngineException("%s: cannot set non-existing option %s for %s.".formatted(this.getClass().getSimpleName(), optionValue, OPTION_PARAM));
   }
 
   @Override

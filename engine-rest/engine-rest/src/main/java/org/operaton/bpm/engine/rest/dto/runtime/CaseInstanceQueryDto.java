@@ -246,7 +246,7 @@ public class CaseInstanceQueryDto extends AbstractQueryDto<CaseInstanceQuery> {
         case NOT_EQUALS_OPERATOR_NAME -> query.variableValueNotEquals(variableName, variableValue);
         case LIKE_OPERATOR_NAME -> query.variableValueLike(variableName, String.valueOf(variableValue));
         default ->
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: %s".formatted(op));
         }
       }
     }
@@ -259,7 +259,7 @@ public class CaseInstanceQueryDto extends AbstractQueryDto<CaseInstanceQuery> {
     case SORT_BY_DEFINITION_KEY_VALUE -> query.orderByCaseDefinitionKey();
     case SORT_BY_DEFINITION_ID_VALUE -> query.orderByCaseDefinitionId();
     case SORT_BY_TENANT_ID -> query.orderByTenantId();
-    default -> throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid sort operator specified: " + sortBy);
+    default -> throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid sort operator specified: %s".formatted(sortBy));
     }
   }
 

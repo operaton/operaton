@@ -32,9 +32,11 @@ public interface SetJobRetriesAsyncBuilder {
   /**
    * Specifies a due date to be set on the referenced {@link Job jobs}.
    *
+   * <p>
    * When the number of retries of a job are incremented it is not automatically scheduled for immediate execution.
    * When a {@link Job} is executed is determined by the due date. By setting the due date together with the job retries, the scheduled execution date of the
    * job can be adjusted.
+   * </p>
    *
    * @param dueDate The new due date for the updated jobs. If it is null, the due date will be set to null. If
    * {@link ProcessEngineConfiguration#isEnsureJobDueDateNotNull() ensureJobDueDateNotNull} is true, the due date will be set to the current date instead of null.

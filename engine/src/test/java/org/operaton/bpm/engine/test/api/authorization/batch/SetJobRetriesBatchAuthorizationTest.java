@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -154,7 +153,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   }
 
   @TestTemplate
-  void testJobsListQueryBased() {
+  void testJobsQueryBased() {
     setupAndExecuteJobsQueryBasedTest();
     // then
     assertScenario();
@@ -174,7 +173,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   @TestTemplate
   void testWithTwoInvocationsProcessQueryBased() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
-    setupAndExecuteJobsQueryBasedTest();
+    setupAndExecuteProcessQueryBasedTest();
 
     // then
     assertScenario();
@@ -184,7 +183,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
 
   private void setupAndExecuteProcessListBasedTest() {
     //given
-    List<String> processInstances = Arrays.asList(processInstance.getId(), processInstance2.getId());
+    List<String> processInstances = List.of(processInstance.getId(), processInstance2.getId());
     authRule
         .init(scenario)
         .withUser("userId")
@@ -200,9 +199,34 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
     executeSeedAndBatchJobs();
   }
 
+  private void setupAndExecuteProcessQueryBasedTest() {
+    //given
+    ProcessInstanceQuery processInstanceQuery = engineRule.getRuntimeService().createProcessInstanceQuery();
+    authRule
+        .init(scenario)
+        .withUser("userId")
+        .bindResource("Process", sourceDefinition.getKey())
+        .bindResource("processInstance1", processInstance.getId())
+        .bindResource("processInstance2", processInstance2.getId())
+        .start();
+
+    // when
+    batch = managementService.setJobRetriesAsync(
+        null, processInstanceQuery, RETRIES);
+
+    executeSeedAndBatchJobs();
+  }
+
   @TestTemplate
   void testProcessList() {
     setupAndExecuteProcessListBasedTest();
+    // then
+    assertScenario();
+  }
+
+  @TestTemplate
+  void testProcessQuery() {
+    setupAndExecuteProcessQueryBasedTest();
     // then
     assertScenario();
   }

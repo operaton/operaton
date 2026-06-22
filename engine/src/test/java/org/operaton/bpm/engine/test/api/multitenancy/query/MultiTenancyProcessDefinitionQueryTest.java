@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -325,7 +324,7 @@ class MultiTenancyProcessDefinitionQueryTest {
 
   @Test
   void testQueryAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
@@ -337,7 +336,7 @@ class MultiTenancyProcessDefinitionQueryTest {
 
   @Test
   void testQueryAuthenticatedTenants() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 

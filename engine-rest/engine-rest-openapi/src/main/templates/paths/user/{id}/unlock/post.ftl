@@ -34,10 +34,11 @@
        code = "404"
        mediaType = "application/json"
        dto = "ExceptionDto"
-       last = true
        desc = "User cannot be found. See the
                [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

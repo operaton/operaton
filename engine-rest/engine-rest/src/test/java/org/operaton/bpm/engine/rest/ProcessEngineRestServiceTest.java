@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -819,7 +818,7 @@ public class ProcessEngineRestServiceTest extends
 
   @Test
   void testGetRegisteredDeployments() {
-    final Set<String> registeredDeployments = new HashSet<>(Arrays.asList("deployment1", "deployment2"));
+    final Set<String> registeredDeployments = new HashSet<>(List.of("deployment1", "deployment2"));
     when(mockManagementService.getRegisteredDeployments()).thenReturn(registeredDeployments);
 
     final Response response = given()

@@ -36,7 +36,7 @@ import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -71,19 +71,21 @@ class CmmnDeployerTest extends CmmnTest {
 
   @Test
   void testDeployTwoCasesWithDuplicateIdAtTheSameTime() {
+    // given
     String cmmnResourceName1 = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testSimpleDeployment.cmmn";
     String cmmnResourceName2 = "org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testSimpleDeployment2.cmmn";
     var deploymentBuilder = repositoryService.createDeployment()
               .addClasspathResource(cmmnResourceName1)
               .addClasspathResource(cmmnResourceName2)
               .name("duplicateAtTheSameTime");
-    try {
-      deploymentBuilder.deploy();
-      fail("");
-    } catch (Exception e) {
-      // Verify that nothing is deployed
-      assertThat(repositoryService.createDeploymentQuery().count()).isZero();
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageStartingWith("The deployment contains definitions with the same key 'Case_1' (id attribute), this is not allowed");
+
+    // Verify that nothing is deployed
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testCaseDiagramResource.cmmn",
@@ -247,11 +249,10 @@ class CmmnDeployerTest extends CmmnTest {
 
   @Test
   void testDeployCaseDefinitionWithMalformedHistoryTimeToLive() {
-    try {
-     testRule.deploy("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithMalformedHistoryTimeToLive.cmmn");
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getCause().getMessage()).contains("Cannot parse historyTimeToLive");
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy("org/operaton/bpm/engine/test/cmmn/deployment/CmmnDeploymentTest.testDeployCaseDefinitionWithMalformedHistoryTimeToLive.cmmn"))
+      .isInstanceOf(ProcessEngineException.class)
+      .cause()
+      .hasMessageContaining("Cannot parse historyTimeToLive");
   }
 }

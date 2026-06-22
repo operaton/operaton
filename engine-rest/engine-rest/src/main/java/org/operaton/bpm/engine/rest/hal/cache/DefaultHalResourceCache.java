@@ -98,34 +98,36 @@ public class DefaultHalResourceCache implements Cache {
   }
 
   protected void ensureCapacityLimit() {
-    if (size() > getCapacity()) {
-      List<HalResourceCacheEntry> resources = new ArrayList<>(cache.values());
-      NavigableSet<HalResourceCacheEntry> remainingResources = new TreeSet<>(COMPARATOR);
+    if (size() <= getCapacity()) {
+      return;
+    }
 
-      // remove expired resources
-      for (HalResourceCacheEntry resource : resources) {
-        if (expired(resource)) {
-          remove(resource.getId());
-        }
-        else {
-          remainingResources.add(resource);
-        }
+    List<HalResourceCacheEntry> resources = new ArrayList<>(cache.values());
+    NavigableSet<HalResourceCacheEntry> remainingResources = new TreeSet<>(COMPARATOR);
 
-        if (size() <= getCapacity()) {
-          // abort if capacity is reached
-          return;
-        }
+    // remove expired resources
+    for (HalResourceCacheEntry resource : resources) {
+      if (expired(resource)) {
+        remove(resource.getId());
+      }
+      else {
+        remainingResources.add(resource);
       }
 
-      // if still exceed capacity remove oldest
-      while (remainingResources.size() > capacity) {
-        HalResourceCacheEntry resourceToRemove = remainingResources.pollFirst();
-        if (resourceToRemove != null) {
-          remove(resourceToRemove.getId());
-        }
-        else {
-          break;
-        }
+      if (size() <= getCapacity()) {
+        // abort if capacity is reached
+        return;
+      }
+    }
+
+    // if still exceed capacity remove oldest
+    while (remainingResources.size() > capacity) {
+      HalResourceCacheEntry resourceToRemove = remainingResources.pollFirst();
+      if (resourceToRemove != null) {
+        remove(resourceToRemove.getId());
+      }
+      else {
+        break;
       }
     }
   }

@@ -47,8 +47,10 @@ public interface CustomFunctionBuilder {
    * Define a custom function that only returns a value and
    * has no further business logic (method body).
    *
+   * <p>
    * It is not possible to use this method together with
    * {@link #setFunction}.
+   * </p>
    *
    * @param result that should be returned by the custom function
    * @return the builder
@@ -59,8 +61,10 @@ public interface CustomFunctionBuilder {
    * Pass a {@link Function} with a {@link List} of objects as argument
    * and an object as return value.
    *
+   * <p>
    * It is not possible to use this method together with
    * {@link #setReturnValue}.
+   * </p>
    *
    * @param function to be called
    * @return the builder

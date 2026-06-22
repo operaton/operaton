@@ -227,6 +227,7 @@ public class TopicSubscriptionManager implements Runnable {
     }
   }
 
+  @SuppressWarnings("java:S2142") // InterruptedException is intentionally swallowed to wake up early from backoff
   protected void suspend(long waitTime) {
     if (waitTime > 0 && isRunning.get()) {
       ACQUISITION_MONITOR.lock();
@@ -250,7 +251,9 @@ public class TopicSubscriptionManager implements Runnable {
           }
         }
       } catch (InterruptedException e) {
-        // we ignore and just continue to execute tasks
+        // InterruptedException is used as a signal to wake up early from backoff sleep.
+        // The thread should continue processing tasks normally, so we intentionally
+        // do not restore the interrupted status here (Sonar rule java:S2142 suppressed).
         LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
       } finally {
         ACQUISITION_MONITOR.unlock();

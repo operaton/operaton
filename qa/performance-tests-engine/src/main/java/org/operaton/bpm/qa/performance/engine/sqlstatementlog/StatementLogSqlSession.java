@@ -283,7 +283,7 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
       try {
         statementParameters = JsonUtil.getMapper().writeValueAsString(parameters).replace("\"", "'");
       } catch (Exception e) {
-//        e.printStackTrace();
+        // ignore
       }
     }
 

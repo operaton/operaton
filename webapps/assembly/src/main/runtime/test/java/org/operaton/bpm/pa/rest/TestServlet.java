@@ -50,9 +50,13 @@ import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
  * This servlet allows the testsuite to check whether the database is clean.
  * If the database is not clean the schema is dropped and re-created.
  *
+ * <p>
  * Invoke using GET /operaton/ensureCleanDb/{engineName}
+ * </p>
  *
+ * <p>
  * Response is JSON: {"clean":true}
+ * </p>
  *
  * @author Daniel Meyer
  *

@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import junit.framework.AssertionFailedError;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -34,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Parse an invalid process definition and assert the error message.
@@ -48,7 +46,7 @@ public class CompensationEventParseInvalidProcessTest {
 
   @Parameters(name = "process definition = {0}, expected error message = {1}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "CompensationEventParseInvalidProcessTest.illegalCompensateActivityRefParentScope.bpmn20.xml", "Invalid attribute value for 'activityRef': no activity with id 'someServiceInMainProcess' in scope 'subProcess'", new String[] { "throwCompensate" } },
         { "CompensationEventParseInvalidProcessTest.illegalCompensateActivityRefNestedScope.bpmn20.xml", "Invalid attribute value for 'activityRef': no activity with id 'someServiceInNestedScope' in scope 'subProcess'", new String[] { "throwCompensate" } },
         { "CompensationEventParseInvalidProcessTest.invalidActivityRefFails.bpmn20.xml", "Invalid attribute value for 'activityRef':", new String[]{"throwCompensate"} },
@@ -80,27 +78,22 @@ public class CompensationEventParseInvalidProcessTest {
 
   @TestTemplate
   void testParseInvalidProcessDefinition() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource);
-    try {
-      deploymentBuilder.deploy();
 
-      fail("exception expected: " + expectedErrorMessage);
-    } catch (ParseException e) {
-      assertExceptionMessageContainsText(e, expectedErrorMessage);
-      List<Problem> errors = e.getResourceReports().get(0).getErrors();
-      assertThat(errors).hasSize(1);
-      assertThat(errors.get(0).getMainElementId()).isEqualTo(bpmnElementIds[0]);
-      if (bpmnElementIds.length == 2) {
-        assertThat(errors.get(0).getElementIds()).containsExactlyInAnyOrder(bpmnElementIds);
-      }
-    }
-  }
-
-  public void assertExceptionMessageContainsText(Exception e, String expectedMessage) {
-    String actualMessage = e.getMessage();
-    if (actualMessage == null || !actualMessage.contains(expectedMessage)) {
-      throw new AssertionFailedError("expected presence of [" + expectedMessage + "], but was [" + actualMessage + "]");
-    }
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining(expectedErrorMessage)
+      .satisfies(e -> {
+        ParseException pe = (ParseException) e;
+        List<Problem> errors = pe.getResourceReports().get(0).getErrors();
+        assertThat(errors).hasSize(1);
+        assertThat(errors.get(0).getMainElementId()).isEqualTo(bpmnElementIds[0]);
+        if (bpmnElementIds.length == 2) {
+          assertThat(errors.get(0).getElementIds()).containsExactlyInAnyOrder(bpmnElementIds);
+        }
+      });
   }
 }

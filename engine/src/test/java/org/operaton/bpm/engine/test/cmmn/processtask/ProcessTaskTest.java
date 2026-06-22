@@ -595,7 +595,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -650,7 +650,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("myAnotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -693,7 +693,7 @@ class ProcessTaskTest extends CmmnTest {
       String name = variable.getName();
 
       if (!"aVariable".equals(name) && !"anotherVariable".equals(name)) {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
 
       assertThat(variable.getValue()).isNull();
@@ -745,7 +745,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -794,7 +794,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -879,7 +879,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -984,7 +984,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -1035,7 +1035,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("myAnotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -1077,7 +1077,7 @@ class ProcessTaskTest extends CmmnTest {
     for (VariableInstance variable : variables) {
       String name = variable.getName();
       if (!"aVariable".equals(name) && !"anotherVariable".equals(name)) {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
 
       assertThat(variable.getValue()).isNull();
@@ -1130,7 +1130,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -1183,7 +1183,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -1236,7 +1236,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -1341,7 +1341,7 @@ class ProcessTaskTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 

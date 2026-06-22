@@ -42,12 +42,12 @@ Message.path = 'message';
  * @param {String} [params.correlationKeys]       A JSON object containing the keys the recieve task is to be corrolated with. Each key corresponds to a variable name and each value to a variable value.
  * @param {String} [params.processVariables]       A JSON object containing the variables the recieve task is to be corrolated with. Each key corresponds to a variable name and each value to a variable value.
  */
-Message.correlate = function(params, done) {
+Message.correlate = function (params, done) {
   var url = this.path + '/';
 
   return this.http.post(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 

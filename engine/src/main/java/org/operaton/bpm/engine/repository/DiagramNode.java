@@ -82,7 +82,7 @@ public class DiagramNode extends DiagramElement {
 
   @Override
   public String toString() {
-    return super.toString() + ", x=" + getX() + ", y=" + getY() + ", width=" + getWidth() + ", height=" + getHeight();
+    return "%s, x=%s, y=%s, width=%s, height=%s".formatted(super.toString(), getX(), getY(), getWidth(), getHeight());
   }
 
   @Override

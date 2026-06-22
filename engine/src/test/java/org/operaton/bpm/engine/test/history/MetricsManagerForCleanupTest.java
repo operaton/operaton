@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +88,7 @@ public class MetricsManagerForCleanupTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         // all historic batches are old enough to be cleaned up
         { 5, -6, -7, 50, 2 },
         // one batch should be cleaned up

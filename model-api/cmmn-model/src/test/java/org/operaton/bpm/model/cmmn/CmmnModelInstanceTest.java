@@ -36,11 +36,11 @@ class CmmnModelInstanceTest {
     definitions.setId("TestId");
     modelInstance.setDefinitions(definitions);
 
-    CmmnModelInstance cloneInstance = modelInstance.clone();
-    cloneInstance.getDefinitions().setId("TestId2");
+    CmmnModelInstance copiedInstance = modelInstance.copy();
+    copiedInstance.getDefinitions().setId("TestId2");
 
     assertThat(modelInstance.getDefinitions().getId()).isEqualTo("TestId");
-    assertThat(cloneInstance.getDefinitions().getId()).isEqualTo("TestId2");
+    assertThat(copiedInstance.getDefinitions().getId()).isEqualTo("TestId2");
   }
 
 }

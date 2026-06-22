@@ -17,9 +17,9 @@
 
 'use strict';
 
-module.exports = function() {
+module.exports = function () {
   return {
-    link: function(scope, element) {
+    link: function (scope, element) {
       var processData = scope.processData;
       var selectedActivityQuery = element.attr('cam-select-activity');
 
@@ -31,16 +31,16 @@ module.exports = function() {
         throw new Error('No activity ID query given in @cam-select-activity');
       }
 
-      element.on('click', function(event) {
+      element.on('click', function (event) {
         event.preventDefault();
 
-        scope.$apply(function() {
+        scope.$apply(function () {
           // refresh view with selected activity instance id
           processData.set('filter', {
-            activityIds: [scope.$eval(selectedActivityQuery)]
+            activityIds: [scope.$eval(selectedActivityQuery)],
           });
         });
       });
-    }
+    },
   };
 };

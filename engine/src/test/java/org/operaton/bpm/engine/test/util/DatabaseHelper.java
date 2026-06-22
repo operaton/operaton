@@ -27,8 +27,8 @@ public final class DatabaseHelper {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
       try {
         transactionIsolation[0] = commandContext.getDbSqlSession().getSqlSession().getConnection().getTransactionIsolation();
-      } catch (SQLException e) {
-
+      } catch (SQLException ignored) {
+        // ignore
       }
       return null;
     });

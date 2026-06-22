@@ -34,7 +34,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LocalVariableIT {
+class LocalVariableIT {
 
   private static final String GLOBAL_VARIABLE_NAME = "globalVariable";
   private static final StringValue GLOBAL_VARIABLE_VALUE = ClientValues.stringValue("globalVariableValue");
@@ -62,14 +62,14 @@ public class LocalVariableIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(EXTERNAL_TASK_PROCESS).get(0);
     handler.clear();
   }
 
   @Test
-  public void shouldFetchAllVariables() {
+  void shouldFetchAllVariables() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), GLOBAL_VARIABLE_NAME, GLOBAL_VARIABLE_VALUE);
 
@@ -88,7 +88,7 @@ public class LocalVariableIT {
   }
 
   @Test
-  public void shouldOnlyFetchLocalVariable() {
+  void shouldOnlyFetchLocalVariable() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), GLOBAL_VARIABLE_NAME, GLOBAL_VARIABLE_VALUE);
 

@@ -22,10 +22,10 @@ var angular = require('operaton-bpm-sdk-js/vendor/angular');
 var SearchFactory = [
   '$location',
   '$rootScope',
-  function($location, $rootScope) {
+  function ($location, $rootScope) {
     var silent = false;
 
-    $rootScope.$on('$routeUpdate', function(e, lastRoute) {
+    $rootScope.$on('$routeUpdate', function (e, lastRoute) {
       if (silent) {
         silent = false;
       } else {
@@ -33,18 +33,18 @@ var SearchFactory = [
       }
     });
 
-    $rootScope.$on('$routeChangeSuccess', function() {
+    $rootScope.$on('$routeChangeSuccess', function () {
       silent = false;
     });
 
-    var search = function() {
+    var search = function () {
       return $location.search.apply($location, arguments);
     };
 
-    search.updateSilently = function(params, replaceFlag) {
+    search.updateSilently = function (params, replaceFlag) {
       var oldPath = $location.absUrl();
 
-      angular.forEach(params, function(value, key) {
+      angular.forEach(params, function (value, key) {
         $location.search(key, value);
       });
 
@@ -60,7 +60,7 @@ var SearchFactory = [
     };
 
     return search;
-  }
+  },
 ];
 
 var searchModule = angular.module('operaton.common.search', []);

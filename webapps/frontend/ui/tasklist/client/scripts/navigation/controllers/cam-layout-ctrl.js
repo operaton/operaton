@@ -23,8 +23,8 @@ var $bdy = $('body');
 module.exports = [
   '$scope',
   '$timeout',
-  function($scope, $timeout) {
-    $scope.toggleVariableSearch = function($event) {
+  function ($scope, $timeout) {
+    $scope.toggleVariableSearch = function ($event) {
       if ($event && $event.preventDefault) {
         $event.preventDefault();
       }
@@ -48,7 +48,7 @@ module.exports = [
       return $bdy.addClass(target + '-column-close');
     }
 
-    $scope.toggleRegion = function($event) {
+    $scope.toggleRegion = function ($event) {
       if ($event && $event.preventDefault) {
         $event.preventDefault();
       }
@@ -67,12 +67,12 @@ module.exports = [
       }
 
       $bdy.toggleClass(target + '-column-close');
-      $timeout(function() {
+      $timeout(function () {
         $scope.$root.$broadcast('layout:change');
       }, 600);
     };
 
-    $scope.maximizeRegion = function($event) {
+    $scope.maximizeRegion = function ($event) {
       if ($event && $event.preventDefault) {
         $event.preventDefault();
       }
@@ -83,7 +83,7 @@ module.exports = [
       document.querySelector('.reset-regions').focus();
     };
 
-    $scope.resetRegions = function($event) {
+    $scope.resetRegions = function ($event) {
       if ($event && $event.preventDefault) {
         $event.preventDefault();
       }
@@ -93,5 +93,5 @@ module.exports = [
       open('task');
       document.querySelector('.maximize').focus();
     };
-  }
+  },
 ];

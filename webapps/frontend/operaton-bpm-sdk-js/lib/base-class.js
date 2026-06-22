@@ -50,7 +50,7 @@ function BaseClass() {
  * @param  {Object.<String, *>} [staticProps]
  * @return {CamSDK.BaseClass}
  */
-BaseClass.extend = function(protoProps, staticProps) {
+BaseClass.extend = function (protoProps, staticProps) {
   protoProps = protoProps || {};
   staticProps = staticProps || {};
 
@@ -60,7 +60,7 @@ BaseClass.extend = function(protoProps, staticProps) {
   if (protoProps && Object.hasOwnProperty.call(parent, 'constructor')) {
     child = protoProps.constructor;
   } else {
-    child = function() {
+    child = function () {
       return parent.apply(this, arguments);
     };
   }
@@ -72,7 +72,7 @@ BaseClass.extend = function(protoProps, staticProps) {
     child[s] = staticProps[s];
   }
 
-  Surrogate = function() {
+  Surrogate = function () {
     this.constructor = child;
   };
   Surrogate.prototype = parent.prototype;

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryJobsCount"
       tag = "Job"
-      summary = "Get Job Count (POST)"
+      summary = "Count Jobs"
       desc = "Queries for jobs that fulfill given parameters. This method takes the same message
               body as the [Get Jobs POST](${docsUrl}/reference/rest/job/post-
               query/) method and therefore it is slightly more powerful than the
@@ -63,8 +63,9 @@
                 for due date comparison is used. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

@@ -36,7 +36,7 @@ class DurationHelperTest {
   }
 
   @Test
-  void shouldNotExceedNumber() throws Exception {
+  void shouldNotExceedNumber() {
     ClockUtil.setCurrentTime(new Date(0));
     DurationHelper dh = new DurationHelper("R2/PT10S");
 
@@ -76,7 +76,7 @@ class DurationHelperTest {
   }
 
   @Test
-  void shouldNotExceedNumberWithStartDate() throws Exception {
+  void shouldNotExceedNumberWithStartDate() {
     DurationHelper dh = new DurationHelper("R2/PT10S", new Date(0));
     assertEquals(20000, dh.getDateAfter(new Date(15000)).getTime());
     assertThat(dh.getDateAfter(new Date(30000))).isNull();

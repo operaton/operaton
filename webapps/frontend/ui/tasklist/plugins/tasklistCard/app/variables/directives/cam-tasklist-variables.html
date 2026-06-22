@@ -1,9 +1,9 @@
 <div ng-repeat="(delta, info) in variableDefinitions"
      ng-if="variablesByName[info.name] || filterProperties.showUndefinedVariable"
-     class="col-xs-12 col-lg-6">
+     class="col-12 col-lg-6">
 
   <div class="row variable-item">
-    <span class="col-xs-4 col-lg-12">
+    <span class="col-4 col-lg-12">
       <strong class="variable-label"
               ng-class="{'undefined' : !variablesByName[info.name] && filterProperties.showUndefinedVariable}"
               tooltip-placement="top"
@@ -13,7 +13,7 @@
     </span>
 
 
-    <span class="col-xs-8 col-lg-12"
+    <span class="col-8 col-lg-12"
           ng-if="!variablesByName[info.name] && filterProperties.showUndefinedVariable">
       <span class="variable-value undefined"
             translate="UNDEFINED_VARIABLE">
@@ -22,7 +22,7 @@
     </span>
 
 
-    <span class="col-xs-8 col-lg-12"
+    <span class="col-8 col-lg-12"
           ng-if="(variablesByName[info.name] && variablesByName[info.name].value !== null) || variablesByName[info.name].type === 'Bytes'"
           ng-switch="variablesByName[info.name].type">
       <span class="variable-value"
@@ -77,7 +77,7 @@
       </span>
     </span>
 
-    <span class="col-xs-8 col-lg-12"
+    <span class="col-8 col-lg-12"
       ng-if="variablesByName[info.name].value === null && variablesByName[info.name].type !== 'Bytes'">
       <span class="variable-value variable-empty-value"
             translate="EMPTY_VALUE">Empty</span>

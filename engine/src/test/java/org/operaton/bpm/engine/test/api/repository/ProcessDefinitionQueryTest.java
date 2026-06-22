@@ -265,7 +265,9 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   /**
    * CAM-8014
    *
+   * <p>
    * Verify that search by name like returns results with case-insensitive
+   * </p>
    */
   @Test
   void testQueryByNameLikeCaseInsensitive() {
@@ -289,7 +291,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   void testQueryByKeys() {
 
     // empty list
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKeysIn("a", "b").list()).isEmpty();
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKeyIn("a", "b").list()).isEmpty();
 
 
     // collect all definition keys
@@ -299,7 +301,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
       processDefinitionKeys[i] = list.get(i).getKey();
     }
 
-    List<ProcessDefinition> keyInList = repositoryService.createProcessDefinitionQuery().processDefinitionKeysIn(processDefinitionKeys).list();
+    List<ProcessDefinition> keyInList = repositoryService.createProcessDefinitionQuery().processDefinitionKeyIn(processDefinitionKeys).list();
     for (ProcessDefinition processDefinition : keyInList) {
       boolean found = false;
       for (ProcessDefinition otherProcessDefinition : list) {
@@ -310,7 +312,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
       assertThat(found).withFailMessage("Expected to find process definition " + processDefinition).isTrue();
     }
 
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeysIn(processDefinitionKeys).count()).isZero();
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeyIn(processDefinitionKeys).count()).isZero();
   }
 
   @Test

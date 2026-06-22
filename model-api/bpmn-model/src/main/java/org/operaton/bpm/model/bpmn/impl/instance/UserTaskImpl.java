@@ -44,7 +44,7 @@ public class UserTaskImpl extends TaskImpl implements UserTask {
   protected static Attribute<String> implementationAttribute;
   protected static ChildElementCollection<Rendering> renderingCollection;
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<String> operatonAssigneeAttribute;
   protected static Attribute<String> operatonCandidateGroupsAttribute;
@@ -73,7 +73,7 @@ public class UserTaskImpl extends TaskImpl implements UserTask {
     renderingCollection = sequenceBuilder.elementCollection(Rendering.class)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonAssigneeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ASSIGNEE)
       .namespace(OPERATON_NS)
@@ -146,7 +146,7 @@ public class UserTaskImpl extends TaskImpl implements UserTask {
     return renderingCollection.get(this);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonAssignee() {

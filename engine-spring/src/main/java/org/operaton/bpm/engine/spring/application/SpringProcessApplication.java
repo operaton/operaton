@@ -91,22 +91,18 @@ public class SpringProcessApplication extends AbstractProcessApplication impleme
 
   @Override
   public void onApplicationEvent(ApplicationContextEvent event) {
-    try {
-      // we only want to listen for context events of the main application
-      // context, not its children
-      if (event.getSource().equals(applicationContext)) {
-        if (event instanceof ContextRefreshedEvent && !isDeployed) {
-          // deploy the process application
-          afterPropertiesSet();
-        } else if (event instanceof ContextClosedEvent) {
-          // undeploy the process application
-          destroy();
-        } else {
-          // ignore
-        }
+    // we only want to listen for context events of the main application
+    // context, not its children
+    if (event.getSource().equals(applicationContext)) {
+      if (event instanceof ContextRefreshedEvent && !isDeployed) {
+        // deploy the process application
+        afterPropertiesSet();
+      } else if (event instanceof ContextClosedEvent) {
+        // undeploy the process application
+        destroy();
+      } else {
+        // ignore
       }
-    } catch (Exception e) {
-      throw new RuntimeException(e);
     }
   }
 

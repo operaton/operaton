@@ -19,17 +19,18 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.annotations.BusinessKey;
@@ -67,7 +68,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
     }
 
     @SuppressWarnings("unused")
-    boolean shouldReturnAsyncResultWithProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
+    boolean shouldReturnFutureWithProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
         return result instanceof Future || methodInvocation.getMethod().getReturnType().isAssignableFrom(Future.class);
     }
 
@@ -95,7 +96,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
             ProcessInstance pi;
             if (null != businessKey && StringUtils.hasText(businessKey)) {
                 pi = runtimeService.startProcessInstanceByKey(processKey, businessKey, vars);
-                log.info(() -> "the business key for the started process is '" + businessKey + "' ");
+                log.info(() -> "the business key for the started process is '%s' ".formatted(businessKey));
             } else {
                 pi = runtimeService.startProcessInstanceByKey(processKey, vars);
             }
@@ -114,12 +115,12 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
             return pId;
           }
 
-            if (shouldReturnAsyncResultWithProcessInstance(startProcess, invocation, result)) {
-                return new AsyncResult<ProcessInstance>(pi);
+            if (shouldReturnFutureWithProcessInstance(startProcess, invocation, result)) {
+                return CompletableFuture.completedFuture(pi);
             }
 
         } catch (Throwable th) {
-            throw new RuntimeException(th);
+            throw new ProcessEngineException(th);
         }
         return result;
     }
@@ -161,9 +162,8 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
      *
      * @param invocation the invocation of the method as passed to the {@link org.aopalliance.intercept.MethodInterceptor#invoke(org.aopalliance.intercept.MethodInvocation)} method
      * @return returns the map of process variables extracted from the parameters
-     * @throws Throwable thrown anything goes wrong
      */
-    protected Map<String, Object> processVariablesFromAnnotations(MethodInvocation invocation) throws Throwable {
+    protected Map<String, Object> processVariablesFromAnnotations(MethodInvocation invocation) {
 
         Map<ProcessVariable, Object> vars = this.mapOfAnnotationValues(ProcessVariable.class, invocation);
 

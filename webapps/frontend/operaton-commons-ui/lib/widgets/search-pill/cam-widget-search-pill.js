@@ -22,7 +22,7 @@ var $ = require('jquery'),
 
 module.exports = [
   '$timeout',
-  function($timeout) {
+  function ($timeout) {
     return {
       restrict: 'A',
 
@@ -47,14 +47,14 @@ module.exports = [
         onDelete: '&',
 
         disableTypeaheadAutoselect: '=?',
-        allowNonOptions: '@?'
+        allowNonOptions: '@?',
       },
 
-      link: function($scope, element) {
+      link: function ($scope, element) {
         $scope.valueType = getValueType();
         $scope.potentialNames = $scope.potentialNames || [];
 
-        $scope.changeSearch = function(field, value, evt) {
+        $scope.changeSearch = function (field, value, evt) {
           var before = $scope[field].value;
           $scope[field].value = value;
           $scope[field].inEdit = false;
@@ -63,45 +63,45 @@ module.exports = [
               field: field,
               before: before,
               value: value,
-              $event: evt
+              $event: evt,
             });
           }
         };
 
-        $scope.clearEditTrigger = function(field) {
+        $scope.clearEditTrigger = function (field) {
           $scope[field].inEdit = false;
         };
 
-        $scope.onKeydown = function(evt, field) {
+        $scope.onKeydown = function (evt, field) {
           if (evt.keyCode === 13 && evt.target === evt.currentTarget) {
             $scope[field].inEdit = true;
           }
         };
 
-        $scope.$watch('allowDates', function(newValue) {
+        $scope.$watch('allowDates', function (newValue) {
           if (!newValue) {
             $scope.valueType = getValueType();
           }
         });
 
-        $scope.$watch('enforceDates', function(newValue) {
+        $scope.$watch('enforceDates', function (newValue) {
           if (newValue) {
             $scope.valueType = getValueType();
           }
         });
 
-        $scope.$watch('enforceString', function(newValue) {
+        $scope.$watch('enforceString', function (newValue) {
           if (newValue) {
             $scope.valueType = getValueType();
           }
         });
 
-        var focusField = function(fieldName) {
-          $timeout(function() {
+        var focusField = function (fieldName) {
+          $timeout(function () {
             $(
               element[0].querySelectorAll(
-                "[cam-widget-inline-field][value='" + fieldName + ".value']"
-              )
+                "[cam-widget-inline-field][value='" + fieldName + ".value']",
+              ),
             )
               .find('.view-value')
               .click();
@@ -109,34 +109,34 @@ module.exports = [
         };
         $scope.$watch(
           'value',
-          function(newValue) {
+          function (newValue) {
             return newValue && newValue.inEdit && focusField('value');
           },
-          true
+          true,
         );
         $scope.$watch(
           'name',
-          function(newValue) {
+          function (newValue) {
             return newValue && newValue.inEdit && focusField('name');
           },
-          true
+          true,
         );
         $scope.$watch(
           'type',
-          function(newValue) {
+          function (newValue) {
             return newValue && newValue.inEdit && focusField('type');
           },
-          true
+          true,
         );
         $scope.$watch(
           'operator',
-          function(newValue) {
+          function (newValue) {
             if (newValue && !newValue.value && newValue.values.length === 1) {
               newValue.value = newValue.values[0];
             }
             return newValue && newValue.inEdit && focusField('operator');
           },
-          true
+          true,
         );
 
         function getValueType() {
@@ -148,7 +148,7 @@ module.exports = [
         }
       },
 
-      template: template
+      template: template,
     };
-  }
+  },
 ];

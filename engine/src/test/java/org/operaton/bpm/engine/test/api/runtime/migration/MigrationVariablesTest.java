@@ -46,7 +46,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -563,15 +563,11 @@ class MigrationVariablesTest {
     runtimeService.setVariableLocal(scopeExecution.getId(), "foo", 42);
     runtimeService.setVariableLocal(concurrentExecution.getId(), "foo", 42);
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("expected exception");
-    }
-    catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("The variable 'foo' exists in both, this scope"
+    // when/then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The variable 'foo' exists in both, this scope"
           + " and concurrent local in the parent scope. Migrating to a non-scope activity would overwrite one of them.");
-    }
   }
 
   @Test

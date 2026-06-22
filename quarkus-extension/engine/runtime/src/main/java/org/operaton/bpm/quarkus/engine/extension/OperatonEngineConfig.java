@@ -37,7 +37,9 @@ public interface OperatonEngineConfig {
    * The Operaton JobExecutor config. It provides available job acquisition thread configuration
    * properties. These properties only take effect in a Quarkus environment.
    *
+   * <p>
    * The JobExecutor is responsible for running Operaton jobs.
+   * </p>
    */
   OperatonJobExecutorConfig jobExecutor();
 

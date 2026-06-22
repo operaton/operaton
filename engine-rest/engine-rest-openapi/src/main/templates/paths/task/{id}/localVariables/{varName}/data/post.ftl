@@ -31,7 +31,7 @@
       dto = "MultiFormVariableBinaryDto"
       requestDesc = "For binary variables a multipart form submit with the following parts:"
       examples = [ '"example-1": {
-                      "summary": "POST `/task/aTaskId/variables/aVarName/data` (1)",
+                      "summary": "POST `/task/aTaskId/localVariables/aVarName/data` (1)",
                       "description": "Post binary content of a byte array variable.",
                       "value": "
                         ```
@@ -52,7 +52,7 @@
                       "
                     }',
                    '"example-2": {
-                      "summary": "POST `/task/aTaskId/variables/aVarName/data` (2)",
+                      "summary": "POST `/task/aTaskId/localVariables/aVarName/data` (2)",
                       "description": "Post the JSON serialization of a Java Class (**deprecated**).",
                       "value": "
                         ```
@@ -73,7 +73,7 @@
                       "
                     }',
                    '"example-3": {
-                      "summary": "POST `/task/aTaskId/variables/aVarName/data` (3)",
+                      "summary": "POST `/task/aTaskId/localVariables/aVarName/data` (3)",
                       "description": "Post a text file.",
                       "value": "
                         ```
@@ -111,10 +111,11 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "Variable name is `null`, or the Task id is `null` or does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

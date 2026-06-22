@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -84,7 +83,7 @@ class HistoricInstanceForCleanupQueryTest {
     ClockUtil.setCurrentTime(DateUtils.addDays(startDate, daysInThePast));
 
     // given
-    List<Batch> list = Arrays.asList(helper.migrateProcessInstancesAsync(1), helper.migrateProcessInstancesAsync(1), helper.migrateProcessInstancesAsync(1));
+    List<Batch> list = List.of(helper.migrateProcessInstancesAsync(1), helper.migrateProcessInstancesAsync(1), helper.migrateProcessInstancesAsync(1));
 
     String batchType = list.get(0).getType();
     final Map<String, Integer> batchOperationsMap = new HashedMap();

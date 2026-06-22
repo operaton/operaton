@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -146,7 +145,7 @@ class GetCompletedHistoricTaskInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricTaskInstances(now, null, 10);
 
     // then
-    Set<String> allowedTaskIds = new HashSet<>(Arrays.asList("userTask2", "userTask3"));
+    Set<String> allowedTaskIds = new HashSet<>(List.of("userTask2", "userTask3"));
     assertThat(completedHistoricTaskInstances).hasSize(2);
     assertTrue(allowedTaskIds.contains(completedHistoricTaskInstances.get(0).getTaskDefinitionKey()));
     assertTrue(allowedTaskIds.contains(completedHistoricTaskInstances.get(1).getTaskDefinitionKey()));

@@ -22,7 +22,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
-import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
@@ -30,7 +29,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Roman Smirnov
@@ -71,14 +70,11 @@ public abstract class AbstractPaLocalScriptEngineTest extends AbstractFoxPlatfor
 
     assertThat(reference).isNotNull();
 
-    ProcessApplicationInterface processApplication = null;
-    try {
-      processApplication = reference.getProcessApplication();
-    } catch (ProcessApplicationUnavailableException e) {
-      fail("Could not retrieve process application");
-    }
+    ProcessApplicationInterface[] processApplication = new ProcessApplicationInterface[1];
+    assertThatCode(() -> processApplication[0] = reference.getProcessApplication().getRawObject())
+      .doesNotThrowAnyException();
 
-    return processApplication.getRawObject();
+    return processApplication[0];
   }
 
 }

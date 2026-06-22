@@ -23,7 +23,7 @@ var template = require('./jobSuspension.html?raw');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView(
       'cockpit.processDefinition.diagram.plugin',
       {
@@ -34,7 +34,7 @@ module.exports = [
           'processData',
           'processDiagram',
           'camAPI',
-          function($scope, control, processData, processDiagram, camAPI) {
+          function ($scope, control, processData, processDiagram, camAPI) {
             var viewer = control.getViewer();
             var overlays = viewer.get('overlays');
             var elementRegistry = viewer.get('elementRegistry');
@@ -43,14 +43,14 @@ module.exports = [
 
             $scope.$on(
               '$processDefinition.suspensionState.changed',
-              function() {
+              function () {
                 loadJobDefinitions();
-              }
+              },
             );
 
             var processDefinition = null;
 
-            var loadJobDefinitions = function(_processDefinition) {
+            var loadJobDefinitions = function (_processDefinition) {
               processDefinition = _processDefinition || processDefinition;
 
               if (!processDefinition) return;
@@ -60,15 +60,15 @@ module.exports = [
                 .list({
                   processDefinitionId: processDefinition.id,
                   firstResult: 0,
-                  maxResults: 2000
+                  maxResults: 2000,
                 })
-                .then(function(jobDefinitions) {
-                  elementRegistry.forEach(function(shape) {
+                .then(function (jobDefinitions) {
+                  elementRegistry.forEach(function (shape) {
                     var element =
                       processDiagram.bpmnElements[shape.businessObject.id];
                     var definitionsForElement = getElementDefinitions(
                       element,
-                      jobDefinitions
+                      jobDefinitions,
                     );
 
                     if (definitionsForElement.length > 0) {
@@ -76,12 +76,12 @@ module.exports = [
                     }
 
                     function isSuspended() {
-                      return definitionsForElement.some(function(definition) {
+                      return definitionsForElement.some(function (definition) {
                         return definition.suspended;
                       });
                     }
 
-                    $scope.$watch(isSuspended, function(suspended) {
+                    $scope.$watch(isSuspended, function (suspended) {
                       var node = overlaysNodes[element.id];
 
                       if (!node && suspended) {
@@ -90,13 +90,13 @@ module.exports = [
                         overlays.add(element.id, {
                           position: {
                             top: 0,
-                            right: 0
+                            right: 0,
                           },
                           show: {
                             minZoom: -Infinity,
-                            maxZoom: +Infinity
+                            maxZoom: +Infinity,
                           },
-                          html: node[0]
+                          html: node[0],
                         });
 
                         overlaysNodes[element.id] = node;
@@ -108,7 +108,7 @@ module.exports = [
                           node.tooltip({
                             container: 'body',
                             title: 'Suspended Job Definition',
-                            placement: 'top'
+                            placement: 'top',
                           });
                         } else {
                           node.hide();
@@ -122,13 +122,13 @@ module.exports = [
             processData.observe('processDefinition', loadJobDefinitions);
 
             function getElementDefinitions(element, jobDefinitions) {
-              return jobDefinitions.filter(function(definition) {
+              return jobDefinitions.filter(function (definition) {
                 return definition.activityId === element.id;
               });
             }
-          }
-        ]
-      }
+          },
+        ],
+      },
     );
-  }
+  },
 ];

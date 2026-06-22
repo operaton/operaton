@@ -40,19 +40,18 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
 
-
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  * @author Daniel Meyer
  * @author Falko Menge
  */
-public class ExecutionImpl extends PvmExecutionImpl implements
-        Serializable,
-        ActivityExecution,
-        PvmProcessInstance {
+public class ExecutionImpl extends PvmExecutionImpl implements Serializable, ActivityExecution, PvmProcessInstance {
 
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
+  @SuppressWarnings("rawtypes")
+  private static final VariableInstanceFactory VARIABLE_INSTANCE_FACTORY = new SimpleVariableInstanceFactory();
 
   private static final AtomicInteger idGenerator = new AtomicInteger();
 
@@ -60,29 +59,29 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   /** the process instance.  this is the root of the execution tree.
    * the processInstance of a process instance is a self reference. */
-  protected ExecutionImpl processInstance;
+  private ExecutionImpl processInstance;
 
   /** the parent execution */
-  protected ExecutionImpl parent;
+  private ExecutionImpl parent;
 
   /** nested executions representing scopes or concurrent paths */
-  protected List<ExecutionImpl> executions;
+  private List<ExecutionImpl> executions;
 
   /** super execution, not-null if this execution is part of a subprocess */
-  protected ExecutionImpl superExecution;
+  private ExecutionImpl superExecution;
 
   /** reference to a subprocessinstance, not-null if currently subprocess is started from this execution */
-  protected ExecutionImpl subProcessInstance;
+  private ExecutionImpl subProcessInstance;
 
   /** super case execution, not-null if this execution is part of a case execution */
-  protected CaseExecutionImpl superCaseExecution;
+  private CaseExecutionImpl superCaseExecution;
 
   /** reference to a subcaseinstance, not-null if currently subcase is started from this execution */
-  protected CaseExecutionImpl subCaseInstance;
+  private CaseExecutionImpl subCaseInstance;
 
   // variables/////////////////////////////////////////////////////////////////
 
-  protected VariableStore<CoreVariableInstance> variableStore = new VariableStore<>();
+  private final transient VariableStore<CoreVariableInstance> variableStore = new VariableStore<>();
 
   // lifecycle methods ////////////////////////////////////////////////////////
 
@@ -115,7 +114,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
     return createdExecution;
   }
 
-  /** instantiates a new execution.  can be overridden by subclasses */
+  /** instantiates a new execution. can be overridden by subclasses */
   @Override
   protected ExecutionImpl newExecution() {
     return new ExecutionImpl();
@@ -154,7 +153,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   /** ensures initialization and returns the non-null executions list */
   @Override
   public List<ExecutionImpl> getExecutions() {
-    if(executions == null) {
+    if (executions == null) {
       executions = new ArrayList<>();
     }
     return executions;
@@ -272,8 +271,8 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   @Override
   protected String generateActivityInstanceId(String activityId) {
     int nextId = idGenerator.incrementAndGet();
-    String compositeId = activityId+":"+nextId;
-    if(compositeId.length()>64) {
+    String compositeId = activityId + ":" + nextId;
+    if (compositeId.length() > 64) {
       return String.valueOf(nextId);
     } else {
       return compositeId;
@@ -285,9 +284,9 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   @Override
   public String toString() {
     if (isProcessInstanceExecution()) {
-      return "ProcessInstance["+getToStringIdentity()+"]";
+      return "ProcessInstance[%s]".formatted(getToStringIdentity());
     } else {
-      return (isEventScope? "EventScope":"")+(isConcurrent? "Concurrent" : "")+(isScope() ? "Scope" : "")+"Execution["+getToStringIdentity()+"]";
+      return (isEventScope? "EventScope":"")+(isConcurrent? "Concurrent" : "")+(isScope() ? "Scope" : "")+"Execution[%s]".formatted(getToStringIdentity());
     }
   }
 
@@ -311,7 +310,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   @Override
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) SimpleVariableInstanceFactory.INSTANCE;
+    return VARIABLE_INSTANCE_FACTORY;
   }
 
   @Override

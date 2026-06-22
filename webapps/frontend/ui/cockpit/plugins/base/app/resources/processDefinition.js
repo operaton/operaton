@@ -20,7 +20,7 @@
 module.exports = [
   '$resource',
   'Uri',
-  function($resource, Uri) {
+  function ($resource, Uri) {
     return $resource(
       Uri.appUri('plugin://base/:engine/process-definition/:id/:action'),
       {id: '@id'},
@@ -28,18 +28,18 @@ module.exports = [
         getCalledProcessDefinitions: {
           method: 'POST',
           isArray: true,
-          params: {action: 'called-process-definitions'}
+          params: {action: 'called-process-definitions'},
         },
         queryStatistics: {
           method: 'GET',
           isArray: true,
-          params: {id: 'statistics'}
+          params: {id: 'statistics'},
         },
         statisticsCount: {
           method: 'GET',
-          params: {id: 'statistics-count'}
-        }
-      }
+          params: {id: 'statistics-count'},
+        },
+      },
     );
-  }
+  },
 ];

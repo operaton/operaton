@@ -30,33 +30,33 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
       '$rootScope',
       'search',
       '$uibModal',
-      function($scope, $rootScope, search, $modal) {
-        $scope.openExternalTaskRetryDialog = function(incident) {
+      function ($scope, $rootScope, search, $modal) {
+        $scope.openExternalTaskRetryDialog = function (incident) {
           var dialog = $modal.open({
             resolve: {
-              incident: function() {
+              incident: function () {
                 return incident;
-              }
+              },
             },
             controller: 'ExternalTaskRetryController',
-            template: dialogTemplate
+            template: dialogTemplate,
           });
 
           dialog.result
-            .then(function(result) {
+            .then(function (result) {
               if (result === 'finished') {
                 // refresh filter and all views
                 $scope.processData.set(
                   'filter',
-                  angular.extend({}, $scope.filter)
+                  angular.extend({}, $scope.filter),
                 );
               }
             })
             .catch(angular.noop);
         };
-      }
+      },
     ],
-    priority: 50
+    priority: 50,
   });
 };
 

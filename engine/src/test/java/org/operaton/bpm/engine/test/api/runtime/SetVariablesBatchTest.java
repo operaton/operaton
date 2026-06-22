@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -103,7 +102,7 @@ class SetVariablesBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     Batch batch = runtimeService.setVariablesAsync(processInstances, SINGLE_VARIABLE);
 
@@ -132,7 +131,7 @@ class SetVariablesBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     Batch batch = runtimeService.setVariablesAsync(processInstances,
         Variables.putValue("foo", Variables.stringValue("bar")));
@@ -163,7 +162,7 @@ class SetVariablesBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     Batch batch = runtimeService.setVariablesAsync(processInstances,
         Variables
@@ -202,7 +201,7 @@ class SetVariablesBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     TestPojo pojo = new TestPojo("bar", 3D);
     Batch batch = runtimeService.setVariablesAsync(processInstances,
@@ -233,7 +232,7 @@ class SetVariablesBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     Batch batch = runtimeService.setVariablesAsync(processInstances,
         Variables
@@ -275,7 +274,7 @@ class SetVariablesBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    List<String> processInstanceIds = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstanceIds = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     Map<String, Object> variablesMap = new HashMap<>();
     variablesMap.put("foo", "bar");
@@ -528,7 +527,7 @@ class SetVariablesBatchTest {
     String deploymentIdOne = list.get(0).getId();
     String deploymentIdTwo = list.get(1).getId();
 
-    List<String> processInstanceIds = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstanceIds = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     // when
     Batch batch = runtimeService.setVariablesAsync(processInstanceIds, SINGLE_VARIABLE);
@@ -671,7 +670,7 @@ class SetVariablesBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    List<String> processInstanceIds = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstanceIds = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     // when
     Batch batch = runtimeService.setVariablesAsync(processInstanceIds, SINGLE_VARIABLE);
@@ -696,7 +695,7 @@ class SetVariablesBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    List<String> processInstanceIds = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstanceIds = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     // when
     Batch batch = runtimeService.setVariablesAsync(processInstanceIds, SINGLE_VARIABLE);

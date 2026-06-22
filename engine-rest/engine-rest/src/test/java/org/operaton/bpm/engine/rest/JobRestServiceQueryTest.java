@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -721,7 +720,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   @Test
   void testWithoutTenantIdParameter() {
     Job mockJob = MockProvider.mockJob().tenantId(null).build();
-    mockQuery = setUpMockJobQuery(Arrays.asList(mockJob));
+    mockQuery = setUpMockJobQuery(List.of(mockJob));
 
     Response response = given()
       .queryParam("withoutTenantId", true)
@@ -743,7 +742,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testIncludeJobsWithoutTenantIdParameter() {
-    List<Job> jobs = Arrays.asList(
+    List<Job> jobs = List.of(
         MockProvider.mockJob().tenantId(null).build(),
         MockProvider.mockJob().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
     mockQuery = setUpMockJobQuery(jobs);
@@ -803,7 +802,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   @Test
   void testWithoutTenantIdPostParameter() {
     Job mockJob = MockProvider.mockJob().tenantId(null).build();
-    mockQuery = setUpMockJobQuery(Arrays.asList(mockJob));
+    mockQuery = setUpMockJobQuery(List.of(mockJob));
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
@@ -826,7 +825,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testIncludeJobsWithoutTenantIdPostParameter() {
-    List<Job> jobs = Arrays.asList(
+    List<Job> jobs = List.of(
         MockProvider.mockJob().tenantId(null).build(),
         MockProvider.mockJob().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
     mockQuery = setUpMockJobQuery(jobs);
@@ -859,7 +858,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<Job> createMockJobsTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockJob().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockJob().tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
   }
@@ -923,7 +922,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<Job> createMockJobsTwoProcessInstances() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockJob().processInstanceId(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).build(),
         MockProvider.mockJob().processInstanceId(MockProvider.ANOTHER_EXAMPLE_PROCESS_INSTANCE_ID).build());
   }
@@ -987,7 +986,7 @@ public class JobRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<Job> createMockJobsTwoJobIds() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockJob().build(),
         MockProvider.mockJob().id(MockProvider.ANOTHER_EXAMPLE_JOB_ID).build());
   }

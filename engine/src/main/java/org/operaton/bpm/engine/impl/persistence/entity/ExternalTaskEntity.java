@@ -18,10 +18,8 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.delegate.BpmnError;
@@ -496,7 +494,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
 
       if (validateExistence) {
         EnsureUtil.ensureNotNull(
-            "Cannot find execution with id " + executionId + " for external task " + id,
+            "Cannot find execution with id %s for external task %s".formatted(executionId, id),
             "execution",
             execution);
       }
@@ -617,13 +615,8 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (executionId != null) {
       referenceIdAndClass.put(executionId, ExecutionEntity.class);

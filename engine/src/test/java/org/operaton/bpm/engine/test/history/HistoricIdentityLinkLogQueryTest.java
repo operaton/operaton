@@ -272,11 +272,15 @@ class HistoricIdentityLinkLogQueryTest {
    * 00:00.00 Should add 3 history records of identity link deletion at
    * 01-01-2016 12:00.00
    *
+   * <p>
    * Should add 3 history records of identity link addition at 01-01-2016
    * 12:30.00 Should add 3 history records of identity link deletion at
    * 01-01-2016 21:00.00
+   * </p>
    *
+   * <p>
    * Test case: Query the number of added records at different time interval.
+   * </p>
    */
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test

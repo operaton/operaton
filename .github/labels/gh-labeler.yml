@@ -1,0 +1,165 @@
+# Path-based PR label rules for actions/labeler@v5
+# Negative globs (!pattern) exclude paths within a match set.
+# sync-labels: true in the workflow removes stale labels automatically.
+
+lang:java:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.java'
+
+lang:javascript:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.js'
+    - '**/*.ts'
+    - '**/*.mjs'
+
+documentation:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.md'
+    - '**/*.adoc'
+    - 'docs/**'
+
+scope:build:
+- changed-files:
+  - any-glob-to-any-file:
+    - '.mvn/**'
+    - 'mvnw'
+    - 'mvnw.cmd'
+    - 'bom/**'
+    - 'parent/**'
+
+scope:ci:
+- changed-files:
+  - any-glob-to-any-file:
+    - '.github/**'
+
+scope:connect:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'connect/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:core-api:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'engine/**'
+      - 'engine-dmn/**'
+      - 'engine-spring/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:db_schema:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'engine/src/main/resources/org/operaton/bpm/engine/db/**'
+
+scope:external-task-client-java:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'clients/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:model-api:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'model-api/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:juel:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'juel/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:spin:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'spin/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:spring-boot:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'spring-boot-starter/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:quarkus:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'quarkus-extension/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:webapp:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'webapps/**'
+
+scope:ldap:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/ldap/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
+
+scope:tests:
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/src/test/**'
+
+scope:assert:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'test-utils/assert/**'
+
+scope:e2e-qa:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'qa/integration-tests-*/**'
+
+api:rest:
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
+      - 'engine-rest/docs/**'
+    - any-glob-to-any-file:
+      - '!engine-rest/docs/node_modules/**'
+
+distro:wildfly:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'distro/wildfly/**'
+
+distro:tomcat:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'distro/tomcat/**'
+
+distro:operaton:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'distro/run/**'
+
+qa:
+- changed-files:
+  - any-glob-to-any-file:
+    - 'qa/**'
+

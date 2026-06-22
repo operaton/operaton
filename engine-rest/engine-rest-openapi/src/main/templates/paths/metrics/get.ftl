@@ -96,8 +96,9 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

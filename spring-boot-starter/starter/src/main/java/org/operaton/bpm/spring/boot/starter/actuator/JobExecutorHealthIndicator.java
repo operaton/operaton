@@ -19,8 +19,8 @@ package org.operaton.bpm.spring.boot.starter.actuator;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.boot.actuate.health.AbstractHealthIndicator;
-import org.springframework.boot.actuate.health.Health.Builder;
+import org.springframework.boot.health.contributor.AbstractHealthIndicator;
+import org.springframework.boot.health.contributor.Health.Builder;
 
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
@@ -175,10 +175,8 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
 
     @Override
     public String toString() {
-      return "Details [name=" + name + ", lockOwner=" + lockOwner + ", lockTimeInMillis="
-          + lockTimeInMillis + ", maxJobsPerAcquisition=" + maxJobsPerAcquisition
-          + ", waitTimeInMillis=" + waitTimeInMillis + ", processEngineNames=" + processEngineNames
-          + "]";
+      return "Details [name=%s, lockOwner=%s, lockTimeInMillis=%s, maxJobsPerAcquisition=%d, waitTimeInMillis=%s, processEngineNames=%s]"
+          .formatted(name, lockOwner, lockTimeInMillis, maxJobsPerAcquisition, waitTimeInMillis, processEngineNames);
     }
 
   }

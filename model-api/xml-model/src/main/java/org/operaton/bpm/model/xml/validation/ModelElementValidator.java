@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  *
  * @see ModelInstance#validate(java.util.Collection)
  * @param <T> the type of the elements to validate.
- * @since 7.6
  */
 public interface ModelElementValidator<T extends ModelElementInstance> {
 

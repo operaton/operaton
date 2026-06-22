@@ -26,5 +26,5 @@ module.exports = {
   DIRECTIVE_CAM_SCRIPT: 'cam-script',
   DIRECTIVE_CAM_ERROR_CODE: 'cam-error-code',
   DIRECTIVE_CAM_ERROR_MESSAGE: 'cam-error-message',
-  DIRECTIVE_CAM_ESCALATION_CODE: 'cam-escalation-code'
+  DIRECTIVE_CAM_ESCALATION_CODE: 'cam-escalation-code',
 };

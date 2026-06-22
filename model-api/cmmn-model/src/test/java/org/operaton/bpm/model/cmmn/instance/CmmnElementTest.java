@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
 
@@ -34,7 +33,7 @@ public class CmmnElementTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
         new ChildElementAssumption(Documentation.class),
         new ChildElementAssumption(ExtensionElements.class, 0, 1)
       );
@@ -42,7 +41,7 @@ public class CmmnElementTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
         new AttributeAssumption("id", true),
         new AttributeAssumption(CmmnModelConstants.CMMN10_NS, "description")
       );

@@ -33,7 +33,7 @@ import org.operaton.bpm.model.xml.testmodel.TestModelTest;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -315,13 +315,8 @@ public class AnimalTest extends TestModelTest {
     assertThat(tweety.getGender()).isNull();
 
     // gender is required, so the model is invalid without
-    try {
-      validateModel();
-      fail("The model is invalid cause the gender of an animal is a required attribute.");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(ModelValidationException.class);
-    }
+    assertThatThrownBy(this::validateModel)
+      .isInstanceOf(ModelValidationException.class);
 
     // add gender to make model valid
     tweety.setGender(Gender.Female);

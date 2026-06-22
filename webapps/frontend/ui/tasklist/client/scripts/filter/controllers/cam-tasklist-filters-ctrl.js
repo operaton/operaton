@@ -26,10 +26,9 @@ module.exports = [
   '$q',
   'camAPI',
   '$timeout',
-  function($scope, $modal, $q, camAPI, $timeout) {
-    var filtersData = ($scope.filtersData = $scope.tasklistData.newChild(
-      $scope
-    ));
+  function ($scope, $modal, $q, camAPI, $timeout) {
+    var filtersData = ($scope.filtersData =
+      $scope.tasklistData.newChild($scope));
 
     var Filter = camAPI.resource('filter');
 
@@ -37,10 +36,10 @@ module.exports = [
 
     // provide /////////////////////////////////////////////////////////////////////////////////
 
-    filtersData.provide('filterAuthorizations', function() {
+    filtersData.provide('filterAuthorizations', function () {
       var deferred = $q.defer();
 
-      Filter.authorizations(function(err, res) {
+      Filter.authorizations(function (err, res) {
         if (err) {
           deferred.reject(err);
         } else {
@@ -53,7 +52,7 @@ module.exports = [
 
     filtersData.provide('userCanCreateFilter', [
       'filterAuthorizations',
-      function(filterAuthorizations) {
+      function (filterAuthorizations) {
         filterAuthorizations = filterAuthorizations || {};
         var links = filterAuthorizations.links || [];
 
@@ -64,18 +63,18 @@ module.exports = [
         }
 
         return false;
-      }
+      },
     ]);
 
     // observe ////////////////////////////////////////////////////////////////////////////////
 
-    filtersData.observe('userCanCreateFilter', function(userCanCreateFilter) {
+    filtersData.observe('userCanCreateFilter', function (userCanCreateFilter) {
       $scope.userCanCreateFilter = userCanCreateFilter;
     });
 
     var doAfterFilterUpdate = [];
-    filtersData.observe('filters', function(filters) {
-      doAfterFilterUpdate.forEach(function(fct) {
+    filtersData.observe('filters', function (filters) {
+      doAfterFilterUpdate.forEach(function (fct) {
         fct(filters);
       });
       doAfterFilterUpdate = [];
@@ -83,12 +82,12 @@ module.exports = [
 
     // open modal /////////////////////////////////////////////////////////////////////////////
 
-    var focusFilter = function(filter) {
+    var focusFilter = function (filter) {
       if (filter) {
-        doAfterFilterUpdate.push(function() {
-          $timeout(function() {
+        doAfterFilterUpdate.push(function () {
+          $timeout(function () {
             var element = $(
-              '.task-filters .content div.item.active .actions a'
+              '.task-filters .content div.item.active .actions a',
             )[0];
             element && element.focus();
           });
@@ -98,15 +97,15 @@ module.exports = [
       }
     };
 
-    $scope.$on('shortcut:focusFilter', function() {
+    $scope.$on('shortcut:focusFilter', function () {
       $('.task-filters .content h4 a')[0].focus();
     });
 
-    $scope.openModal = function($event, filter) {
+    $scope.openModal = function ($event, filter) {
       $event.stopPropagation();
 
-      var handleDialogClose = function() {
-        $timeout(function() {
+      var handleDialogClose = function () {
+        $timeout(function () {
           filtersData.changed('filters');
           focusFilter(filter);
         }, 20);
@@ -119,15 +118,15 @@ module.exports = [
           controller: 'camFilterModalCtrl',
           template: template,
           resolve: {
-            filter: function() {
+            filter: function () {
               return filter;
             },
-            filtersData: function() {
+            filtersData: function () {
               return filtersData;
-            }
-          }
+            },
+          },
         })
         .result.then(handleDialogClose, handleDialogClose);
     };
-  }
+  },
 ];

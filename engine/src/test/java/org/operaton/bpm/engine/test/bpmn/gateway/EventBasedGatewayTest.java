@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -160,32 +160,34 @@ class EventBasedGatewayTest {
 
   @Test
   void testConnectedToActitity() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testConnectedToActivity.bpmn20.xml");
 
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Event based gateway can only be connected to elements of type intermediateCatchEvent");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("gw1");
-    }
-
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Event based gateway can only be connected to elements of type intermediateCatchEvent")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("gw1");
+      });
   }
 
   @Test
   void testInvalidSequenceFlow() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testEventInvalidSequenceFlow.bpmn20.xml");
 
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Invalid incoming sequenceflow for intermediateCatchEvent");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("invalidFlow");
-    }
-
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Invalid incoming sequenceflow for intermediateCatchEvent")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("invalidFlow");
+      });
   }
 
   @Deployment

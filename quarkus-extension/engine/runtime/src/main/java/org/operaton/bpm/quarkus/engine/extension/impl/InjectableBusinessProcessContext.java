@@ -28,7 +28,7 @@ public class InjectableBusinessProcessContext extends BusinessProcessContext imp
 
   @Override
   protected BeanManager getBeanManager() {
-    return BeanManagerLookup.localInstance;
+    return BeanManagerLookup.getLocalInstance();
   }
 
   @Override

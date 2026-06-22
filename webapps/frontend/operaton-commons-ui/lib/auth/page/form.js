@@ -23,13 +23,13 @@ module.exports = [
   '$translate',
   'Views',
   'canonicalAppName',
-  function(
+  function (
     $scope,
     AuthenticationService,
     Notifications,
     $translate,
     views,
-    canonicalAppName
+    canonicalAppName,
   ) {
     $scope.status = 'INIT';
 
@@ -40,28 +40,28 @@ module.exports = [
     }
 
     const loginDataPlugins = views.getProviders({
-      component: `${canonicalAppName}.login.data`
+      component: `${canonicalAppName}.login.data`,
     });
 
-    $scope.login = function() {
+    $scope.login = function () {
       $scope.status = 'LOADING';
       const loginDataPromise = AuthenticationService.login(
         $scope.username,
-        $scope.password
+        $scope.password,
       );
 
-      loginDataPlugins.forEach(loginDataPlugin => {
+      loginDataPlugins.forEach((loginDataPlugin) => {
         loginDataPlugin.result &&
           loginDataPlugin.result(loginDataPromise, $scope);
       });
 
       return loginDataPromise
-        .then(function() {
+        .then(function () {
           $scope.status = 'DONE';
           Notifications.clearAll();
           $scope.$root.$broadcast('first-visit-info-box-dismissed');
         })
-        .catch(function(error) {
+        .catch(function (error) {
           $scope.status = 'ERROR';
           delete $scope.username;
           delete $scope.password;
@@ -72,9 +72,9 @@ module.exports = [
               (error.data && error.data.message) ||
               $translate.instant('PAGE_LOGIN_ERROR_MSG'),
             scope: $scope,
-            exclusive: true
+            exclusive: true,
           });
         });
     };
-  }
+  },
 ];

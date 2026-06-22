@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Johannes Heinemann
@@ -220,21 +221,14 @@ class SignalEventExpressionNameTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalCatchIntermediate.bpmn20.xml"})
   @Test
   void testSignalExpressionErrorHandling() {
-
-    String expectedErrorMessage = "Unknown property used in expression: alert-${var}. Cannot resolve identifier 'var'";
-
     // given an empty variable mapping
-    HashMap<String, Object> variables = new HashMap<>();
+    var variables = Collections.<String,Object>emptyMap();
 
-    try {
-      // when starting the process
-      runtimeService.startProcessInstanceByKey("catchSignal", variables);
+    // when/then - the expression cannot be resolved and no signal should be available
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("catchSignal", variables))
+      .isInstanceOf(ProcessEngineException.class);
 
-      fail("exception expected: " + expectedErrorMessage);
-    } catch (ProcessEngineException e) {
-      // then the expression cannot be resolved and no signal should be available
-      assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isZero();
-    }
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isZero();
   }
 
 }

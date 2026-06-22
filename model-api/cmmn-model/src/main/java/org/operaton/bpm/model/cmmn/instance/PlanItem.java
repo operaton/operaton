@@ -32,9 +32,15 @@ public interface PlanItem extends CmmnElement {
 
   void setDefinition(PlanItemDefinition definition);
 
+  /**
+   * @deprecated since 1.0, typo in method name. Use {@link #getEntryCriteria()} instead.
+   */
   @Deprecated(since = "1.0")
   Collection<Sentry> getEntryCriterias();
 
+  /**
+   * @deprecated since 1.0, typo in method name. Use {@link #getExitCriteria()} instead.
+   */
   @Deprecated(since = "1.0")
   Collection<Sentry> getExitCriterias();
 

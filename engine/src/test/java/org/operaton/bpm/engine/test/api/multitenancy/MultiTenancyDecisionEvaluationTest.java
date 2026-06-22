@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
-
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -35,7 +34,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiTenancyDecisionEvaluationTest {
 
@@ -62,67 +61,72 @@ class MultiTenancyDecisionEvaluationTest {
 
   @Test
   void testFailToEvaluateDecisionByIdWithoutTenantId() {
-   testRule.deploy(DMN_FILE);
+    // given
+    testRule.deploy(DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
-    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinition.getId())
-          .variables(createVariables())
-          .decisionDefinitionWithoutTenantId();
+    VariableMap variables = createVariables();
+    String decisionDefinitionId = decisionDefinition.getId();
 
-    try {
-      decisionsEvaluationBuilder.evaluate();
-      fail("BadUserRequestException exception");
-    } catch(BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinitionId)
+        .variables(variables)
+        .decisionDefinitionWithoutTenantId();
+
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   void testFailToEvaluateDecisionByIdWithTenantId() {
+    // given
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
-    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinition.getId())
-          .variables(createVariables())
-          .decisionDefinitionTenantId(TENANT_ONE);
+    VariableMap variables = createVariables();
+    String decisionDefinitionId = decisionDefinition.getId();
 
-    try {
-      decisionsEvaluationBuilder.evaluate();
-      fail("BadUserRequestException exception");
-    } catch(BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinitionId)
+        .variables(variables)
+        .decisionDefinitionTenantId(TENANT_ONE);
+
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   void testFailToEvaluateDecisionByKeyForNonExistingTenantID() {
+    // given
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
-    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-          .variables(createVariables())
-          .decisionDefinitionTenantId("nonExistingTenantId");
+    VariableMap variables = createVariables();
 
-    try {
-      decisionsEvaluationBuilder.evaluate();
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key 'decision' and tenant-id 'nonExistingTenantId'");
-    }
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+        .variables(variables)
+        .decisionDefinitionTenantId("nonExistingTenantId");
+
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no decision definition deployed with key 'decision' and tenant-id 'nonExistingTenantId'");
   }
 
   @Test
   void testFailToEvaluateDecisionByKeyForMultipleTenants() {
+    // given
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+    VariableMap variables = createVariables();
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-          .variables(createVariables());
+        .variables(variables);
 
-    try {
-      decisionsEvaluationBuilder.evaluate();
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("multiple tenants.");
-    }
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("multiple tenants.");
   }
 
   @Test
@@ -207,41 +211,41 @@ class MultiTenancyDecisionEvaluationTest {
 
   @Test
   void testFailToEvaluateDecisionByKeyNoAuthenticatedTenants() {
+    // given
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
+    VariableMap variables = createVariables();
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-        .variables(createVariables());
+        .variables(variables);
 
-    try {
-      decisionsEvaluationBuilder.evaluate();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key 'decision'");
-    }
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no decision definition deployed with key 'decision'");
   }
 
   @Test
   void testFailToEvaluateDecisionByKeyWithTenantIdNoAuthenticatedTenants() {
+    // given
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
+    VariableMap variables = createVariables();
     var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
         .decisionDefinitionTenantId(TENANT_ONE)
-        .variables(createVariables());
+        .variables(variables);
 
-    try {
-      decisionsEvaluationBuilder.evaluate();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot evaluate the decision");
-    }
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate
+    )
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot evaluate the decision");
   }
 
   @Test
   void testFailToEvaluateDecisionByIdNoAuthenticatedTenants() {
+    // given
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
     DecisionDefinition decisionDefinition = repositoryService
@@ -249,21 +253,20 @@ class MultiTenancyDecisionEvaluationTest {
       .singleResult();
 
     identityService.setAuthentication("user", null, null);
-    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinition.getId())
-        .variables(createVariables());
+    VariableMap variables = createVariables();
+    String decisionDefinitionId = decisionDefinition.getId();
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinitionId)
+        .variables(variables);
 
-    try {
-      decisionsEvaluationBuilder.evaluate();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot evaluate the decision");
-    }
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot evaluate the decision");
   }
 
   @Test
   void testEvaluateDecisionByKeyWithTenantIdAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
@@ -284,7 +287,7 @@ class MultiTenancyDecisionEvaluationTest {
         .createDecisionDefinitionQuery()
         .singleResult();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     DmnDecisionResult decisionResult = decisionService.evaluateDecisionById(decisionDefinition.getId())
         .variables(createVariables())
@@ -295,7 +298,7 @@ class MultiTenancyDecisionEvaluationTest {
 
   @Test
   void testEvaluateDecisionByKeyWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE_SECOND_VERSION);

@@ -18,9 +18,9 @@ package org.operaton.bpm.client.spring.impl.client.util;
 
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientException;
-import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
+import org.operaton.commons.logging.BaseLogger;
 
-public class ClientLoggerUtil extends LoggerUtil {
+public final class ClientLoggerUtil extends BaseLogger {
 
   public void beanCreationSkipped(String className, String beanName) {
     logDebug("001", "Skipping creation of bean '{}' for factory '{}'. " +

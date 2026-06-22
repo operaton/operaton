@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -32,7 +33,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
@@ -98,28 +98,34 @@ class BoundaryErrorEventTest {
 
   @Test
   void testThrowErrorWithoutErrorCode() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithoutErrorCode.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("ProcessEngineException expected");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("'errorCode' is mandatory on errors referenced by throwing error event definitions", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("'errorCode' is mandatory on errors referenced by throwing error event definitions")
+        .satisfies(e -> {
+          ParseException parseException = (ParseException) e;
+          assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
+        });
   }
 
   @Test
   void testThrowErrorWithEmptyErrorCode() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithEmptyErrorCode.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("ProcessEngineException expected");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("'errorCode' is mandatory on errors referenced by throwing error event definitions", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("'errorCode' is mandatory on errors referenced by throwing error event definitions")
+        .satisfies(e -> {
+          ParseException parseException = (ParseException) e;
+          assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
+        });
   }
 
   @Deployment
@@ -272,7 +278,9 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @SuppressWarnings("deprecation")
-  public void FAILING_testCatchErrorOnCallActivityShouldEndCalledProcessProperly() {
+  @Test
+  @Disabled("Emd activity id is not set")
+  void testCatchErrorOnCallActivityShouldEndCalledProcessProperly() {
     // given a process instance that has instantiated (called) a sub process instance
     runtimeService.startProcessInstanceByKey("catchErrorOnCallActivity").getId();
     Task task = taskService.createTaskQuery().singleResult();
@@ -286,7 +294,7 @@ class BoundaryErrorEventTest {
     // then the called historic process instance should have properly ended
     HistoricProcessInstance historicSubProcessInstance = historyService.createHistoricProcessInstanceQuery().processDefinitionKey("simpleSubProcess").singleResult();
     assertThat(historicSubProcessInstance).isNotNull();
-    assertThat(historicSubProcessInstance.getDeleteReason()).isNull();
+    assertThat(historicSubProcessInstance.getDeleteReason()).isEqualTo("Cancel scope activity Activity(catchError) executed.");
     assertThat(historicSubProcessInstance.getEndActivityId()).isEqualTo("theEnd");
   }
 
@@ -295,17 +303,22 @@ class BoundaryErrorEventTest {
   })
   @Test
   void testUncaughtError() {
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
+    // given
     runtimeService.startProcessInstanceByKey("simpleSubProcess");
     Task task = taskService.createTaskQuery().singleResult();
+    String taskId = task.getId();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
 
-    try {
-      // Completing the task will reach the end error event,
-      // which is never caught in the process
-      taskService.complete(task.getId());
-    } catch (BpmnError e) {
-      testRule.assertTextPresent("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process", e.getMessage());
-    }
+    // when/then
+    // Completing the task will reach the end error event,
+    // which is never caught in the process
+    assertThatThrownBy(() -> taskService.complete(taskId))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("ENGINE-02042 Execution with id 'theEnd' throws an error event with errorCode 'myError' and errorMessage 'null', but no error handler was defined.");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
 
@@ -315,17 +328,22 @@ class BoundaryErrorEventTest {
   })
   @Test
   void testUncaughtErrorOnCallActivity() {
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
+    // given
     runtimeService.startProcessInstanceByKey("uncaughtErrorOnCallActivity");
     Task task = taskService.createTaskQuery().singleResult();
+    String taskId = task.getId();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
 
-    try {
-      // Completing the task will reach the end error event,
-      // which is never caught in the process
-      taskService.complete(task.getId());
-    } catch (BpmnError e) {
-      testRule.assertTextPresent("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process", e.getMessage());
-    }
+    // when/then
+    // Completing the task will reach the end error event,
+    // which is never caught in the process
+    assertThatThrownBy(() -> taskService.complete(taskId))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("ENGINE-02042 Execution with id 'theEnd' throws an error event with errorCode 'myError' and errorMessage 'null', but no error handler was defined.");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment(resources = {
@@ -488,11 +506,14 @@ class BoundaryErrorEventTest {
   })
   @Test
   void testUncaughtErrorThrownByJavaDelegateOnServiceTask() {
-    try {
-      runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-child");
-    } catch (BpmnError e) {
-      testRule.assertTextPresent("No catching boundary event found for error with errorCode '23', neither in same process nor in parent process", e.getMessage());
-    }
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-child"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("ENGINE-02042 Execution with id 'serviceTask' throws an error event with errorCode '23' and errorMessage 'This is a business fault, which can be caught by a BPMN Error Event.', but no error handler was defined. ");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment(resources = {
@@ -706,11 +727,14 @@ class BoundaryErrorEventTest {
   })
   @Test
   void testUncaughtErrorThrownByJavaDelegateOnCallActivity() {
-    try {
-      runtimeService.startProcessInstanceByKey("uncaughtErrorThrownByJavaDelegateOnCallActivity-parent");
-    } catch (BpmnError e) {
-      testRule.assertTextPresent("No catching boundary event found for error with errorCode '23', neither in same process nor in parent process", e.getMessage());
-    }
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("uncaughtErrorThrownByJavaDelegateOnCallActivity-parent"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("ENGINE-02042 Execution with id 'serviceTask' throws an error event with errorCode '23' and errorMessage 'This is a business fault, which can be caught by a BPMN Error Event.', but no error handler was defined. ");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment
@@ -846,23 +870,19 @@ class BoundaryErrorEventTest {
   @Deployment
   @Test
   void testUncaughtRuntimeException() {
-    try {
-      runtimeService.startProcessInstanceByKey("testUncaughtRuntimeException");
-      fail("error should not be caught");
-    } catch (RuntimeException e) {
-      assertThat(e.getMessage()).isEqualTo("This should not be caught!");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testUncaughtRuntimeException"))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessage("This should not be caught!");
   }
 
   @Deployment
   @Test
   void testUncaughtBusinessExceptionWrongErrorCode() {
-    try {
-      runtimeService.startProcessInstanceByKey("testUncaughtBusinessExceptionWrongErrorCode");
-      fail("error should not be caught");
-    } catch (RuntimeException e) {
-      assertThat(e.getMessage()).isEqualTo("couldn't execute activity <serviceTask id=\"serviceTask\" ...>: Business Exception");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testUncaughtBusinessExceptionWrongErrorCode"))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessage("couldn't execute activity <serviceTask id=\"serviceTask\" ...>: Business Exception");
   }
 
   @Deployment

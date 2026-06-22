@@ -159,7 +159,7 @@ public abstract class CallableElementActivityBehavior extends AbstractBpmnActivi
   }
 
   @Override
-  public void completed(ActivityExecution execution) throws Exception {
+  public void completed(ActivityExecution execution) {
     // only control flow. no sub instance data available
     leave(execution);
   }

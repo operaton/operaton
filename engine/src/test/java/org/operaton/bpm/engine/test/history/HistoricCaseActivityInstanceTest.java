@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -731,10 +733,15 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     assertThat(humanTask2.getDurationInMillis()).isNotNull();
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatTask.cmmn"})
-  @Test
-  void testRepeatTask() {
+  @ParameterizedTest(name = "Repetition: {0}")
+  @CsvSource({
+      "Task, org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatTask.cmmn, PI_HumanTask_2",
+      "Stage, org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatStage.cmmn, PI_Stage_1",
+      "Milestone, org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatMilestone.cmmn, PI_Milestone_1",
+  })
+  void testRepetition(String name, String cmmnResource, String actitityId) {
     // given
+    testRule.deploy(cmmnResource);
     createCaseInstance();
     String firstHumanTaskId = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
 
@@ -742,38 +749,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     complete(firstHumanTaskId);
 
     // then
-    HistoricCaseActivityInstanceQuery query = historicQuery().caseActivityId("PI_HumanTask_2");
-    assertThat(query.count()).isEqualTo(2);
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatStage.cmmn"})
-  @Test
-  void testRepeatStage() {
-    // given
-    createCaseInstance();
-
-    String firstHumanTaskId = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
-
-    // when
-    complete(firstHumanTaskId);
-
-    // then
-    HistoricCaseActivityInstanceQuery query = historicQuery().caseActivityId("PI_Stage_1");
-    assertThat(query.count()).isEqualTo(2);
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/repetition/RepetitionRuleTest.testRepeatMilestone.cmmn"})
-  @Test
-  void testRepeatMilestone() {
-    // given
-    createCaseInstance();
-    String firstHumanTaskId = queryCaseExecutionByActivityId("PI_HumanTask_1").getId();
-
-    // when
-    complete(firstHumanTaskId);
-
-    // then
-    HistoricCaseActivityInstanceQuery query = historicQuery().caseActivityId("PI_Milestone_1");
+    HistoricCaseActivityInstanceQuery query = historicQuery().caseActivityId(actitityId);
     assertThat(query.count()).isEqualTo(2);
   }
 
@@ -939,7 +915,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
   protected void assertHistoricState(String activityId, CaseExecutionState expectedState) {
     HistoricCaseActivityInstanceEventEntity historicActivityInstance = (HistoricCaseActivityInstanceEventEntity) queryHistoricActivityCaseInstance(activityId);
     int actualStateCode = historicActivityInstance.getCaseActivityInstanceState();
-    CaseExecutionState actualState = CaseExecutionState.CaseExecutionStateImpl.getStateForCode(actualStateCode);
+    CaseExecutionState actualState = CaseExecutionState.forStatusCode(actualStateCode);
     assertThat(actualState).as("The state of historic case activity '" + activityId + "' wasn't as expected").isEqualTo(expectedState);
   }
 
@@ -996,7 +972,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
   }
 
   protected class CaseExecutionStateCountMap extends HashMap<CaseExecutionState, Long> {
-    private static final Collection<CaseExecutionState> ALL_STATES = CaseExecutionState.CASE_EXECUTION_STATES.values();
+    private static final Collection<CaseExecutionState> ALL_STATES = Arrays.asList(CaseExecutionState.values());
     private static final Collection<CaseExecutionState> ENDED_STATES = Arrays.asList(COMPLETED, TERMINATED);
     private static final Collection<CaseExecutionState> NOT_ENDED_STATES = new ArrayList<>(ALL_STATES);
 

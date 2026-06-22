@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +43,7 @@ public class JobExecutorAcquireJobsDefaultTest extends AbstractJobExecutorAcquir
 
   @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { false, null },
       { true, ClockTestUtil.setClockToDateWithoutMilliseconds() }
     });

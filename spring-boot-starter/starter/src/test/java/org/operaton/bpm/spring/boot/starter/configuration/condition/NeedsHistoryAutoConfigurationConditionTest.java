@@ -28,7 +28,8 @@ class NeedsHistoryAutoConfigurationConditionTest {
   @Test
   void isHistoryAutoSupportedTest() {
     NeedsHistoryAutoConfigurationCondition condition = new NeedsHistoryAutoConfigurationCondition();
-    assertThat(condition.isHistoryAutoSupported()).isFalse();
+    condition.historyAutoFieldName = "HISTORY_AUTO";
+    assertThat(condition.isHistoryAutoSupported()).isTrue();
     condition.historyAutoFieldName = "DB_SCHEMA_UPDATE_FALSE";
     assertThat(condition.isHistoryAutoSupported()).isFalse();
   }
@@ -49,7 +50,6 @@ class NeedsHistoryAutoConfigurationConditionTest {
     Environment environment = mock(Environment.class);
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
-    when(condition.isHistoryAutoSupported()).thenReturn(true);
     assertThat(condition.needsAdditionalConfiguration(context)).isFalse();
   }
 

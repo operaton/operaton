@@ -146,7 +146,7 @@ class VariableScopeTest {
         .getExecutionManager()
         .findExecutionById(executionId);
 
-      ensureNotNull("execution " + executionId + " doesn't exist", "execution", execution);
+      ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
 
       List<String> executionVariables;
       if (isLocal) {

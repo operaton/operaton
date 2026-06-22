@@ -115,10 +115,12 @@ public interface DecisionDefinitionQuery extends Query<DecisionDefinitionQuery, 
    * Only select the decision definitions which are the latest deployed
    * (ie. which have the highest version number for the given key).
    *
+   * <p>
    * Can only be used in combination with {@link #decisionDefinitionKey(String)}
    * or {@link #decisionDefinitionKeyLike(String)}. Can also be used without any
    * other criteria (ie. query.latest().list()), which will then give all the
    * latest versions of all the deployed decision definitions.
+   * </p>
    *
    */
   DecisionDefinitionQuery latestVersion();
@@ -222,9 +224,11 @@ public interface DecisionDefinitionQuery extends Query<DecisionDefinitionQuery, 
   /**
    * Order by version tag (needs to be followed by {@link #asc()} or {@link #desc()}).
    *
+   * <p>
    * <strong>Note:</strong> sorting by versionTag is a string based sort.
    * There is no interpretation of the version which can lead to a sorting like:
    * v0.1.0 v0.10.0 v0.2.0.
+   * </p>
    */
   DecisionDefinitionQuery orderByVersionTag();
 

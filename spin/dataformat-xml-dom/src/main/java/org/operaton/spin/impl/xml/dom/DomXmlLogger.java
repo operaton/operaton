@@ -34,7 +34,7 @@ import org.operaton.spin.xml.SpinXmlElementImplementationException;
  * @author Daniel Meyer
  *
  */
-public class DomXmlLogger extends SpinLogger {
+public class DomXmlLogger extends BaseLogger {
 
   public static final String PROJECT_CODE = SpinLogger.PROJECT_CODE + "/DOM-XML";
   public static final DomXmlLogger XML_DOM_LOGGER = BaseLogger.createLogger(DomXmlLogger.class, PROJECT_CODE, "org.operaton.spin.xml", "01");

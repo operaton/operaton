@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -156,7 +155,7 @@ class MultiTenancyExternalTaskQueryTest {
 
   @Test
   void testQueryAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
 
@@ -168,7 +167,7 @@ class MultiTenancyExternalTaskQueryTest {
 
   @Test
   void testQueryAuthenticatedTenants() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
 

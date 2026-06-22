@@ -80,6 +80,10 @@ import org.operaton.bpm.engine.task.IdentityLink;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.JOB_CREATE;
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.JOB_DELETE;
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.JOB_FAIL;
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.JOB_SUCCESS;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.getExceptionStacktrace;
 import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
@@ -394,48 +398,9 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   }
 
   protected HistoryEvent createHistoricVariableEvent(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope, HistoryEventType eventType) {
-    String scopeActivityInstanceId = null;
-    String sourceActivityInstanceId = null;
-
-    if(variableInstance.getExecutionId() != null) {
-      ExecutionEntity scopeExecution = Context.getCommandContext()
-        .getDbEntityManager()
-        .selectById(ExecutionEntity.class, variableInstance.getExecutionId());
-
-      if (variableInstance.getTaskId() == null
-          && !variableInstance.isConcurrentLocal()) {
-        scopeActivityInstanceId = scopeExecution.getParentActivityInstanceId();
-
-      } else {
-        scopeActivityInstanceId = scopeExecution.getActivityInstanceId();
-      }
-    }
-    else if (variableInstance.getCaseExecutionId() != null) {
-      scopeActivityInstanceId = variableInstance.getCaseExecutionId();
-    }
-
-    ExecutionEntity sourceExecution = null;
-    CaseExecutionEntity sourceCaseExecution = null;
-    if (sourceVariableScope instanceof ExecutionEntity executionEntity) {
-      sourceExecution = executionEntity;
-      sourceActivityInstanceId = sourceExecution.getActivityInstanceId();
-
-    } else if (sourceVariableScope instanceof TaskEntity taskEntity) {
-      sourceExecution = taskEntity.getExecution();
-      if (sourceExecution != null) {
-        sourceActivityInstanceId = sourceExecution.getActivityInstanceId();
-      }
-      else {
-        sourceCaseExecution = taskEntity.getCaseExecution();
-        if (sourceCaseExecution != null) {
-          sourceActivityInstanceId = sourceCaseExecution.getId();
-        }
-      }
-    }
-    else if (sourceVariableScope instanceof CaseExecutionEntity caseExecutionEntity) {
-      sourceCaseExecution = caseExecutionEntity;
-      sourceActivityInstanceId = sourceCaseExecution.getId();
-    }
+    String scopeActivityInstanceId = getScopeActivityInstanceId(variableInstance);
+    String sourceActivityInstanceId = getSourceActivityInstanceId(sourceVariableScope);
+    ExecutionEntity sourceExecution = getSourceExecution(sourceVariableScope);
 
     // create event
     HistoricVariableUpdateEventEntity evt = newVariableUpdateEventEntity(sourceExecution);
@@ -464,6 +429,60 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     }
 
     return evt;
+  }
+
+  private static String getScopeActivityInstanceId(VariableInstanceEntity variableInstance) {
+    String scopeActivityInstanceId = null;
+    if(variableInstance.getExecutionId() != null) {
+      ExecutionEntity scopeExecution = Context.getCommandContext()
+        .getDbEntityManager()
+        .selectById(ExecutionEntity.class, variableInstance.getExecutionId());
+
+      if (variableInstance.getTaskId() == null && !variableInstance.isConcurrentLocal()) {
+        scopeActivityInstanceId = scopeExecution.getParentActivityInstanceId();
+      } else {
+        scopeActivityInstanceId = scopeExecution.getActivityInstanceId();
+      }
+    }
+    else if (variableInstance.getCaseExecutionId() != null) {
+      scopeActivityInstanceId = variableInstance.getCaseExecutionId();
+    }
+    return scopeActivityInstanceId;
+  }
+
+  private static String getSourceActivityInstanceId(VariableScope sourceVariableScope) {
+    String sourceActivityInstanceId = null;
+    ExecutionEntity sourceExecution = getSourceExecution(sourceVariableScope);
+    CaseExecutionEntity sourceCaseExecution;
+    if (sourceVariableScope instanceof ExecutionEntity) {
+      sourceActivityInstanceId = sourceExecution.getActivityInstanceId();
+    } else if (sourceVariableScope instanceof TaskEntity taskEntity) {
+      if (sourceExecution != null) {
+        sourceActivityInstanceId = sourceExecution.getActivityInstanceId();
+      }
+      else {
+        sourceCaseExecution = taskEntity.getCaseExecution();
+        if (sourceCaseExecution != null) {
+          sourceActivityInstanceId = sourceCaseExecution.getId();
+        }
+      }
+    }
+    else if (sourceVariableScope instanceof CaseExecutionEntity caseExecutionEntity) {
+      sourceCaseExecution = caseExecutionEntity;
+      sourceActivityInstanceId = sourceCaseExecution.getId();
+    }
+
+    return sourceActivityInstanceId;
+  }
+
+  private static ExecutionEntity getSourceExecution(VariableScope sourceVariableScope) {
+    ExecutionEntity sourceExecution = null;
+    if (sourceVariableScope instanceof ExecutionEntity executionEntity) {
+      sourceExecution = executionEntity;
+    } else if (sourceVariableScope instanceof TaskEntity taskEntity) {
+      sourceExecution = taskEntity.getExecution();
+    }
+    return sourceExecution;
   }
 
   // event instance factory ////////////////////////
@@ -1068,12 +1087,12 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
   @Override
   public HistoryEvent createHistoricJobLogCreateEvt(Job job) {
-    return createHistoricJobLogEvt(job, HistoryEventTypes.JOB_CREATE);
+    return createHistoricJobLogEvt(job, JOB_CREATE);
   }
 
   @Override
   public HistoryEvent createHistoricJobLogFailedEvt(Job job, Throwable exception) {
-    HistoricJobLogEventEntity event = (HistoricJobLogEventEntity) createHistoricJobLogEvt(job, HistoryEventTypes.JOB_FAIL);
+    HistoricJobLogEventEntity event = (HistoricJobLogEventEntity) createHistoricJobLogEvt(job, JOB_FAIL);
 
     if(exception != null) {
       // exception message
@@ -1096,12 +1115,12 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
   @Override
   public HistoryEvent createHistoricJobLogSuccessfulEvt(Job job) {
-    return createHistoricJobLogEvt(job, HistoryEventTypes.JOB_SUCCESS);
+    return createHistoricJobLogEvt(job, JOB_SUCCESS);
   }
 
   @Override
   public HistoryEvent createHistoricJobLogDeleteEvt(Job job) {
-    return createHistoricJobLogEvt(job, HistoryEventTypes.JOB_DELETE);
+    return createHistoricJobLogEvt(job, JOB_DELETE);
   }
 
   protected HistoryEvent createHistoricJobLogEvt(Job job, HistoryEventType eventType) {
@@ -1124,19 +1143,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     String hostName = Context.getCommandContext().getProcessEngineConfiguration().getHostname();
     evt.setHostname(hostName);
 
-    if (HistoryCleanupJobHandler.TYPE.equals(jobEntity.getJobHandlerType())) {
-      String timeToLive = Context.getProcessEngineConfiguration().getHistoryCleanupJobLogTimeToLive();
-      if(timeToLive != null) {
-        try {
-          Integer timeToLiveDays = ParseUtil.parseHistoryTimeToLive(timeToLive);
-          Date removalTime = DefaultHistoryRemovalTimeProvider.determineRemovalTime(currentTime, timeToLiveDays);
-          evt.setRemovalTime(removalTime);
-        } catch (ProcessEngineException e) {
-          ProcessEngineException wrappedException = LOG.invalidPropertyValue("historyCleanupJobLogTimeToLive", timeToLive, e);
-          LOG.invalidPropertyValue(wrappedException);
-        }
-      }
-    }
+    setRemovalTime(evt, jobEntity, currentTime);
 
     JobDefinition jobDefinition = jobEntity.getJobDefinition();
     if (jobDefinition != null) {
@@ -1178,20 +1185,40 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     // initialize sequence counter
     initSequenceCounter(jobEntity, evt);
 
-    JobState state = null;
-    if (HistoryEventTypes.JOB_CREATE.equals(eventType)) {
-      state = JobState.CREATED;
-    }
-    else if (HistoryEventTypes.JOB_FAIL.equals(eventType)) {
-      state = JobState.FAILED;
-    }
-    else if (HistoryEventTypes.JOB_SUCCESS.equals(eventType)) {
-      state = JobState.SUCCESSFUL;
-    }
-    else if (HistoryEventTypes.JOB_DELETE.equals(eventType)) {
-      state = JobState.DELETED;
-    }
+    JobState state = toJobState(eventType);
     evt.setState(state.getStateCode());
+  }
+
+  private static void setRemovalTime(HistoricJobLogEventEntity evt, JobEntity jobEntity, Date currentTime) {
+    if (HistoryCleanupJobHandler.TYPE.equals(jobEntity.getJobHandlerType())) {
+      String timeToLive = Context.getProcessEngineConfiguration().getHistoryCleanupJobLogTimeToLive();
+      if (timeToLive != null) {
+        try {
+          Integer timeToLiveDays = ParseUtil.parseHistoryTimeToLive(timeToLive);
+          Date removalTime = DefaultHistoryRemovalTimeProvider.determineRemovalTime(currentTime, timeToLiveDays);
+          evt.setRemovalTime(removalTime);
+        } catch (ProcessEngineException e) {
+          ProcessEngineException wrappedException = LOG.invalidPropertyValue("historyCleanupJobLogTimeToLive", timeToLive, e);
+          LOG.invalidPropertyValue(wrappedException);
+        }
+      }
+    }
+  }
+
+  private static JobState toJobState(HistoryEventType eventType) {
+    if (JOB_CREATE.equals(eventType)) {
+      return JobState.CREATED;
+    }
+    else if (JOB_FAIL.equals(eventType)) {
+      return JobState.FAILED;
+    }
+    else if (JOB_SUCCESS.equals(eventType)) {
+      return JobState.SUCCESSFUL;
+    }
+    else if (JOB_DELETE.equals(eventType)) {
+      return JobState.DELETED;
+    }
+    throw new IllegalArgumentException("Unknown HistoryEventType: " + eventType.getEventName());
   }
 
   @Override

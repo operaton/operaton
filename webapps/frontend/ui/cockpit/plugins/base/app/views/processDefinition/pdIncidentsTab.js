@@ -25,7 +25,7 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
     label: 'PLUGIN_INCIDENTS_LABEL',
     template: template,
     priority: 9,
-    controller: function() {}
+    controller: function () {},
   });
 };
 

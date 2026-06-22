@@ -218,14 +218,12 @@ public class MigratingInstanceParseContext {
     return mapping;
   }
 
-  // TODO: conditions would go here
   public MigrationInstruction getInstructionFor(String scopeId) {
     List<MigrationInstruction> instructions = instructionsBySourceScope.get(scopeId);
 
     if (instructions == null || instructions.isEmpty()) {
       return null;
-    }
-    else {
+    } else {
       return instructions.get(0);
     }
   }
@@ -301,7 +299,7 @@ public class MigratingInstanceParseContext {
 
   public void ensureNoEntitiesAreLeft(String entityName, Collection<? extends DbEntity> dbEntities, MigratingProcessInstanceValidationReportImpl processInstanceReport) {
     if (!dbEntities.isEmpty()) {
-      processInstanceReport.addFailure("Process instance contains not migrated " + entityName + ": [" + StringUtil.joinDbEntityIds(dbEntities) + "]");
+      processInstanceReport.addFailure("Process instance contains not migrated %s: [%s]".formatted(entityName, StringUtil.joinDbEntityIds(dbEntities)));
     }
   }
 

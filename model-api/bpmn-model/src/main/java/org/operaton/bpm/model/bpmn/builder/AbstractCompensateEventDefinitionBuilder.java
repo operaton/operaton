@@ -32,11 +32,11 @@ public abstract class AbstractCompensateEventDefinitionBuilder<B extends Abstrac
     Activity activity = modelInstance.getModelElementById(activityId);
 
     if (activity == null) {
-      throw new BpmnModelException("Activity with id '" + activityId + "' does not exist");
+      throw new BpmnModelException("Activity with id '%s' does not exist".formatted(activityId));
     }
     Event event = (Event) element.getParentElement();
     if (activity.getParentElement() != event.getParentElement()) {
-      throw new BpmnModelException("Activity with id '" + activityId + "' must be in the same scope as '" + event.getId() + "'");
+      throw new BpmnModelException("Activity with id '%s' must be in the same scope as '%s'".formatted(activityId, event.getId()));
     }
 
     element.setActivity(activity);

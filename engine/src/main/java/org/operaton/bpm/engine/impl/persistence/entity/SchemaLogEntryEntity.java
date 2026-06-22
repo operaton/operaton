@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,9 +27,7 @@ import org.operaton.bpm.engine.management.SchemaLogEntry;
  * @author Miklas Boskamp
  *
  */
-public class SchemaLogEntryEntity implements SchemaLogEntry, DbEntity, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class SchemaLogEntryEntity implements SchemaLogEntry, DbEntity {
 
   protected String id;
   protected Date timestamp;
@@ -79,9 +75,6 @@ public class SchemaLogEntryEntity implements SchemaLogEntry, DbEntity, Serializa
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[id=" + id
-        + ", timestamp=" + timestamp
-        + ", version=" + version
-        + "]";
+        + "[id=%s, timestamp=%s, version=%s]".formatted(id, timestamp, version);
   }
 }

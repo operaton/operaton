@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -62,18 +62,16 @@ class MigrationSignallableServiceTaskTest {
       .mapActivities("serviceTask", "serviceTask")
       .build();
 
-    // when
-    try {
-      testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasActivityInstanceFailures("serviceTask",
-          "The type of the source activity is not supported for activity instance migration"
-        );
-    }
+    // when/then
+    assertThatThrownBy(() -> testHelper.createProcessInstanceAndMigrate(migrationPlan))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasActivityInstanceFailures("serviceTask",
+            "The type of the source activity is not supported for activity instance migration"
+          );
+      });
   }
 
   @Test
@@ -97,22 +95,19 @@ class MigrationSignallableServiceTaskTest {
 
     String processInstanceId = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId()).getId();
     testHelper.executeAvailableJobs();
-    var runtimeService = rule.getRuntimeService().newMigration(migrationPlan)
+    var migrationBuilder = rule.getRuntimeService().newMigration(migrationPlan)
         .processInstanceIds(processInstanceId);
 
-    // when
-    try {
-      runtimeService.execute();
-
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasActivityInstanceFailures("serviceTask",
-          "The type of the source activity is not supported for activity instance migration"
-        );
-    }
+    // when/then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasActivityInstanceFailures("serviceTask",
+            "The type of the source activity is not supported for activity instance migration"
+          );
+      });
   }
 
   public static class SignallableServiceTaskDelegate implements SignallableActivityBehavior {

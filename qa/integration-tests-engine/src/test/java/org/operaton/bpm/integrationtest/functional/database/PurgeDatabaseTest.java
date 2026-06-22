@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.database;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
+import org.operaton.bpm.engine.impl.HistoryLevelUtils;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -45,7 +44,7 @@ import static org.assertj.core.api.Assertions.fail;
 @ExtendWith(ArquillianExtension.class)
 public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
 
-  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = Arrays.asList(
+  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = List.of(
     "ACT_GE_PROPERTY",
     "ACT_GE_SCHEMA_LOG"
   );
@@ -106,7 +105,7 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
           PersistenceSession persistenceSession = commandContext.getSession(PersistenceSession.class);
           persistenceSession.dbSchemaDrop();
           persistenceSession.dbSchemaCreate();
-          HistoryLevelSetupCommand.dbCreateHistoryLevel(commandContext);
+          HistoryLevelUtils.dbCreateHistoryLevel(commandContext);
           return null;
         });
       }

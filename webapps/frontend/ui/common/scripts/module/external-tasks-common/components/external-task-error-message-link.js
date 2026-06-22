@@ -19,7 +19,7 @@
 
 var template = require('./external-task-error-message-link.html?raw');
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     template: template,
@@ -27,7 +27,7 @@ module.exports = function() {
     controller: 'ExternalTaskErrorMessageLinkController as Link',
     scope: {
       taskId: '=externalTaskErrorMessageLink',
-      historic: '=?'
-    }
+      historic: '=?',
+    },
   };
 };

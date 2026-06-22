@@ -21,13 +21,13 @@ var template = require('./job-definition-suspension-overlay.html?raw');
 
 var Controller = [
   '$scope',
-  function($scope) {
+  function ($scope) {
     var bpmnElement = $scope.bpmnElement,
       processData = $scope.processData.newChild($scope);
 
     processData.provide('jobDefinitionsForElement', [
       'jobDefinitions',
-      function(jobDefinitions) {
+      function (jobDefinitions) {
         var matchedDefinitions = [];
         for (var i = 0; i < jobDefinitions.length; i++) {
           var jobDefinition = jobDefinitions[i];
@@ -36,32 +36,32 @@ var Controller = [
           }
         }
         return matchedDefinitions;
-      }
+      },
     ]);
 
-    $scope.$on('$processDefinition.suspensionState.changed', function() {
+    $scope.$on('$processDefinition.suspensionState.changed', function () {
       processData.changed('jobDefinitions');
     });
 
     $scope.jobDefinitionsForElement = processData.observe(
       'jobDefinitionsForElement',
-      function(jobDefinitionsForElement) {
+      function (jobDefinitionsForElement) {
         if (jobDefinitionsForElement.length > 0) {
           bpmnElement.isSelectable = true;
         }
         $scope.jobDefinitionsForElement = jobDefinitionsForElement;
-      }
+      },
     );
 
-    $scope.isSuspended = function() {
+    $scope.isSuspended = function () {
       return (
         $scope.jobDefinitionsForElement.filter &&
-        $scope.jobDefinitionsForElement.filter(function(jobDefinition) {
+        $scope.jobDefinitionsForElement.filter(function (jobDefinition) {
           return jobDefinition.suspended;
         }).length > 0
       );
     };
-  }
+  },
 ];
 
 var Configuration = function PluginConfiguration(ViewsProvider) {
@@ -71,8 +71,8 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
       id: 'job-definition-diagram-overlay',
       template: template,
       controller: Controller,
-      priority: 10
-    }
+      priority: 10,
+    },
   );
 };
 

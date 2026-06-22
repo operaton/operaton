@@ -22,6 +22,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -57,7 +59,7 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOut;
 import org.operaton.commons.utils.CollectionUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Joram Barrez
@@ -107,12 +109,14 @@ class CallActivityTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcessParentVariableAccess.bpmn20.xml"
+  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml" })
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Simple sub process, org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcessParentVariableAccess.bpmn20.xml",
+      "Concurrent sub process, org/operaton/bpm/engine/test/bpmn/callactivity/concurrentSubProcessParentVariableAccess.bpmn20.xml"
   })
-  @Test
-  void testAccessSuperInstanceVariables() {
+  void testAccessSuperInstanceVariables(String name, String bpmnResource) {
+    testRule.deploy(bpmnResource);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     // one task in the subprocess should be active after starting the process instance
@@ -131,35 +135,14 @@ class CallActivityTest {
 
   }
 
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/callactivity/concurrentSubProcessParentVariableAccess.bpmn20.xml"
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Regular expression, org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithExpressions.bpmn20.xml",
+      "Hash expression, org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithHashExpressions.bpmn20.xml"
   })
-  @Test
-  void testAccessSuperInstanceVariablesFromConcurrentExecution() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
-
-    // one task in the subprocess should be active after starting the process instance
-    TaskQuery taskQuery = taskService.createTaskQuery();
-    Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
-
-    // the variable does not yet exist
-    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isNull();
-
-    // completing the task executed the sub process
-    taskService.complete(taskBeforeSubProcess.getId());
-
-    // now the variable exists
-    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isEqualTo("hello");
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithExpressions.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
-  @Test
-  void testCallSimpleSubProcessWithExpressions() {
-
+  void testCallSimpleSubProcessWithExpressionVariants(String name, String bpmnResource) {
+    testRule.deploy(bpmnResource);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     // one task in the subprocess should be active after starting the process
@@ -518,12 +501,9 @@ class CallActivityTest {
     // set target
     operatonOut.setOperatonTarget("superVariable2");
 
-    try {
-      String deploymentId = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance).deploy().getId();
-      repositoryService.deleteDeployment(deploymentId, true);
-    } catch (ProcessEngineException e) {
-      fail("No exception expected");
-    }
+    // then - no exception should be thrown
+    String deploymentId = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance).deploy().getId();
+    repositoryService.deleteDeployment(deploymentId, true);
   }
 
   /**
@@ -738,14 +718,15 @@ class CallActivityTest {
   }
 
   private void deployAndExpectException(BpmnModelInstance modelInstance) {
+    // given
     var deploymentBuilder = repositoryService.createDeployment().addModelInstance("process.bpmn", modelInstance);
-    try {
-      testRule.deploy(deploymentBuilder);
-      fail("Exception expected");
-    } catch (ParseException e) {
-       testRule.assertTextPresent("Missing attribute 'target'", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("callActivity");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("Missing attribute 'target'")
+        .extracting(e -> ((ParseException) e).getResourceReports().get(0).getErrors().get(0).getMainElementId())
+        .isEqualTo("callActivity");
   }
 
   /**
@@ -1050,12 +1031,10 @@ class CallActivityTest {
     runtimeService.setVariable(processInstance.getId(), "globalVariable", "42");
     var beforeSecondCallActivityTaskId = taskService.createTaskQuery().singleResult().getId();
 
-    try {
-      taskService.complete(beforeSecondCallActivityTaskId);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-       testRule.assertTextPresent("Cannot resolve identifier 'globalVariable'", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.complete(beforeSecondCallActivityTaskId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot resolve identifier 'globalVariable'");
   }
 
   @Deployment(resources = {
@@ -1192,36 +1171,6 @@ class CallActivityTest {
     }
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithHashExpressions.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
-  @Test
-  void testCallSimpleSubProcessWithHashExpressions() {
-
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
-
-    // one task in the subprocess should be active after starting the process
-    // instance
-    TaskQuery taskQuery = taskService.createTaskQuery();
-    Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
-
-    // Completing the task continues the process which leads to calling the
-    // subprocess. The sub process we want to call is passed in as a variable
-    // into this task
-    taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess");
-    taskService.complete(taskBeforeSubProcess.getId());
-    Task taskInSubProcess = taskQuery.singleResult();
-    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
-
-    // Completing the task in the subprocess, finishes the subprocess
-    taskService.complete(taskInSubProcess.getId());
-    Task taskAfterSubProcess = taskQuery.singleResult();
-    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
-
-    // Completing this task end the process instance
-    taskService.complete(taskAfterSubProcess.getId());
-    testRule.assertProcessEnded(processInstance.getId());
-  }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testInterruptingEventSubProcessEventSubscriptions.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/callactivity/interruptingEventSubProcessEventSubscriptions.bpmn20.xml"})
@@ -1595,32 +1544,23 @@ class CallActivityTest {
         .endEvent()
         .done();
 
-    try {
-      // when
-     testRule.deploy(modelInstance);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("Could not parse BPMN process.");
-      assertThat(e.getMessage()).contains("Missing attribute 'calledElementVersionTag' when 'calledElementBinding' has value 'versionTag'");
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy(modelInstance))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Could not parse BPMN process.")
+        .hasMessageContaining("Missing attribute 'calledElementVersionTag' when 'calledElementBinding' has value 'versionTag'");
   }
 
   @Test
   void testCallProcessByVersionTagNoneSubprocess() {
     // given
     BpmnModelInstance modelInstance = getModelWithCallActivityVersionTagBinding("ver_tag_1");
-
    testRule.deploy(modelInstance);
 
-    try {
-      // when
-      runtimeService.startProcessInstanceByKey("process");
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'subProcess', versionTag = 'ver_tag_1' and tenant-id = 'null': processDefinition is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no processes deployed with key = 'subProcess', versionTag = 'ver_tag_1' and tenant-id = 'null': processDefinition is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml"})
@@ -1628,18 +1568,13 @@ class CallActivityTest {
   void testCallProcessByVersionTagTwoSubprocesses() {
     // given
     BpmnModelInstance modelInstance = getModelWithCallActivityVersionTagBinding("ver_tag_1");
-
    testRule.deploy(modelInstance);
    testRule.deploy("org/operaton/bpm/engine/test/bpmn/callactivity/subProcessWithVersionTag.bpmn20.xml");
 
-    try {
-      // when
-      runtimeService.startProcessInstanceByKey("process");
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("There are '2' results for a process definition with key 'subProcess', versionTag 'ver_tag_1' and tenant-id '{}'.");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("There are '2' results for a process definition with key 'subProcess', versionTag 'ver_tag_1' and tenant-id '{}'.");
 
     // clean up
     cleanupDeployments();

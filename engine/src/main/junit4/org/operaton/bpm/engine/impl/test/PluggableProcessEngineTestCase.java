@@ -42,7 +42,9 @@ public class PluggableProcessEngineTestCase extends AbstractProcessEngineTestCas
    *   * operaton-engine-plugin-connect
    *   * operaton-identity-ldap
    *
+   * <p>
    * It should be removed once those Test classes are migrated to JUnit 4.
+   * </p>
    */
 
   protected static ProcessEngine cachedProcessEngine;

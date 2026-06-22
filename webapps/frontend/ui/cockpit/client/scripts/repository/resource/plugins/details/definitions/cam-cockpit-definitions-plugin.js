@@ -24,7 +24,7 @@ var Controller = [
   '$q',
   'camAPI',
   'hasPlugin',
-  function($scope, $q, camAPI, hasPlugin) {
+  function ($scope, $q, camAPI, hasPlugin) {
     // fields //////////////////////////////////////////////////////
 
     var definitionsData = $scope.resourceData.newChild($scope);
@@ -43,47 +43,47 @@ var Controller = [
 
     $scope.hasCasePlugin = hasPlugin(
       'cockpit.cases.dashboard',
-      'case-definition'
+      'case-definition',
     );
     $scope.hasDrdPlugin = hasPlugin(
       'cockpit.drd.definition.tab',
-      'decision-instance-table'
+      'decision-instance-table',
     );
 
     // observe //////////////////////////////////////////////////////
 
     $scope.pages = {current: 1, size: 50, total: 0};
 
-    $scope.onPaginationChange = function() {
+    $scope.onPaginationChange = function () {
       definitionsData.changed('definitions');
       $scope.loadingState = 'LOADING';
     };
 
-    definitionsData.observe('resource', function() {
+    definitionsData.observe('resource', function () {
       $scope.pages.current = 1;
       $scope.loadingState = 'LOADING';
     });
 
-    definitionsData.observe(['definitions', 'pages'], function(
-      definitions,
-      pages
-    ) {
-      $scope.pages = pages;
+    definitionsData.observe(
+      ['definitions', 'pages'],
+      function (definitions, pages) {
+        $scope.pages = pages;
 
-      $scope.loadingState =
-        definitions && definitions.length ? 'LOADED' : 'EMPTY';
-      $scope.definitions = definitions;
+        $scope.loadingState =
+          definitions && definitions.length ? 'LOADED' : 'EMPTY';
+        $scope.definitions = definitions;
 
-      if (definitions && definitions.length && !isDmnResource(resource)) {
-        loadInstancesCount(definitions);
-      }
+        if (definitions && definitions.length && !isDmnResource(resource)) {
+          loadInstancesCount(definitions);
+        }
 
-      if (isDmnResource(resource)) {
-        loadDecisionRequirementsDefinition(definitions);
-      }
-    });
+        if (isDmnResource(resource)) {
+          loadDecisionRequirementsDefinition(definitions);
+        }
+      },
+    );
 
-    definitionsData.observe('resource', function(_resource) {
+    definitionsData.observe('resource', function (_resource) {
       resource = $scope.resource = _resource;
       $scope.hasDefinitions =
         isBpmnResource(resource) ||
@@ -93,13 +93,13 @@ var Controller = [
 
     // instances ///////////////////////////////////////////////////
 
-    var loadInstancesCount = function(definitions) {
+    var loadInstancesCount = function (definitions) {
       function instancesCount(definition, query, Service) {
         definition.instances = {
-          $loaded: false
+          $loaded: false,
         };
 
-        Service.count(query, function(err, result) {
+        Service.count(query, function (err, result) {
           if (err) {
             return (definition.instances.$error = true);
           }
@@ -123,12 +123,12 @@ var Controller = [
         if (isBpmnResource(definition.resource)) {
           Service = ProcessInstance;
           query = {
-            processDefinitionId: definition.id
+            processDefinitionId: definition.id,
           };
         } else if (isCmmnResource(definition.resource)) {
           Service = CaseInstance;
           query = {
-            caseDefinitionId: definition.id
+            caseDefinitionId: definition.id,
           };
         }
 
@@ -139,13 +139,13 @@ var Controller = [
     };
 
     // drd //////////////////////////////////////////////////////////
-    var loadDecisionRequirementsDefinition = function(definitions) {
+    var loadDecisionRequirementsDefinition = function (definitions) {
       var drdId = definitions[0].decisionRequirementsDefinitionId;
 
       $scope.drdLoadingState = drdId ? 'LOADING' : 'EMPTY';
 
       if (drdId) {
-        DrdService.get(drdId, function(err, result) {
+        DrdService.get(drdId, function (err, result) {
           if (err) {
             return ($scope.drdTextError = err);
           }
@@ -163,7 +163,7 @@ var Controller = [
 
     // link ////////////////////////////////////////////////////////
 
-    $scope.getDefinitionLink = function(definition, resource) {
+    $scope.getDefinitionLink = function (definition, resource) {
       if (resource) {
         var path = null;
 
@@ -179,12 +179,12 @@ var Controller = [
       }
     };
 
-    $scope.getDrdLink = function(definition) {
+    $scope.getDrdLink = function (definition) {
       if (definition) {
         return '#/decision-requirement/' + definition.id;
       }
     };
-  }
+  },
 ];
 
 var Configuration = function PluginConfiguration(ViewsProvider) {
@@ -192,7 +192,7 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
     id: 'resource-details',
     template: template,
     controller: Controller,
-    priority: 1000
+    priority: 1000,
   });
 };
 

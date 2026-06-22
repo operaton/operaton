@@ -37,7 +37,7 @@ import org.operaton.bpm.model.bpmn.instance.Task;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -126,13 +126,10 @@ public abstract class AbstractProcessEngineServicesAccessTest {
 
     deployModel(modelInstance);
 
-    // if
-    try {
-      runtimeService.startProcessInstanceByKey(PROCESS_DEF_KEY);
-      fail("exception expected");
-    } catch(RuntimeException e) {
-      testRule.assertTextPresent("BOOOM", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(PROCESS_DEF_KEY))
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining("BOOOM");
 
     // then
     // starting the process fails and everything is rolled back:

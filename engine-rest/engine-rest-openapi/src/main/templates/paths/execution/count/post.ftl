@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryExecutionsCount"
       tag = "Execution"
-      summary = "Get Execution Count (POST)"
+      summary = "Count Executions"
       desc = "Queries for the number of executions that fulfill given parameters. This method
               takes the same message body as the [Get Executions
               POST](${docsUrl}/reference/rest/execution/post-query/) method and
@@ -56,8 +56,9 @@
                 for variable comparison is used. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

@@ -31,7 +31,7 @@ import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import static io.restassured.RestAssured.when;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class CockpitPluginAutoDeploymentIT {
 
@@ -94,8 +94,7 @@ class CockpitPluginAutoDeploymentIT {
     String pluginHome = System.getProperty(EXAMPLE_PLUGIN_HOME);
 
     if (pluginHome == null || pluginHome.isEmpty()) {
-      throw new RuntimeException("System property " + EXAMPLE_PLUGIN_HOME + " not set. This property must point "
-          + "to the root directory of the plugin to deploy.");
+      throw new RuntimeException("System property %s not set. This property must point to the root directory of the plugin to deploy.".formatted(EXAMPLE_PLUGIN_HOME));
     }
 
     Path pluginPath = Path.of(pluginHome, jarName).toAbsolutePath();
@@ -106,11 +105,9 @@ class CockpitPluginAutoDeploymentIT {
 
   void undeployPlugins() {
     for (String pluginPath : deployedPlugins) {
-      try {
-        Files.delete(Path.of(pluginPath));
-      } catch (IOException e) {
-        fail("unable to undeploy plugin " + pluginPath);
-      }
+      assertThatCode(() -> Files.delete(Path.of(pluginPath)))
+        .as("unable to undeploy plugin " + pluginPath)
+        .doesNotThrowAnyException();
     }
   }
 }

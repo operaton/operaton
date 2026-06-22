@@ -23,7 +23,7 @@ import java.util.Collections;
  */
 public class EmptyHalResource extends HalResource<EmptyHalResource> {
 
-  public static final HalResource INSTANCE = new EmptyHalResource();
+  public static final HalResource<EmptyHalResource> INSTANCE = new EmptyHalResource();
 
   public EmptyHalResource() {
     links = Collections.emptyMap();

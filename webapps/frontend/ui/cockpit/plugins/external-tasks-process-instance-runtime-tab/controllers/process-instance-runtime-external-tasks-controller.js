@@ -24,7 +24,7 @@ module.exports = [
   'observeBpmnElements',
   '$translate',
   'localConf',
-  ProcessInstanceRuntimeTab
+  ProcessInstanceRuntimeTab,
 ];
 
 function ProcessInstanceRuntimeTab(
@@ -33,7 +33,7 @@ function ProcessInstanceRuntimeTab(
   externalTasks,
   observeBpmnElements,
   $translate,
-  localConf
+  localConf,
 ) {
   exposeScopeProperties($scope, this, ['processInstance', 'processData']);
   observeBpmnElements($scope, this);
@@ -53,62 +53,62 @@ function ProcessInstanceRuntimeTab(
       class: 'state',
       request: '',
       sortable: false,
-      content: this.translate.instant('PLUGIN_EXT_EXTERNAL_TASK_ID')
+      content: this.translate.instant('PLUGIN_EXT_EXTERNAL_TASK_ID'),
     },
     {
       class: 'activity',
       request: '',
       sortable: false,
-      content: this.translate.instant('PLUGIN_EXT_ACTIVITY')
+      content: this.translate.instant('PLUGIN_EXT_ACTIVITY'),
     },
     {
       class: 'retries',
       request: '',
       sortable: false,
-      content: this.translate.instant('PLUGIN_EXT_RETRIES')
+      content: this.translate.instant('PLUGIN_EXT_RETRIES'),
     },
     {
       class: 'worker-id',
       request: '',
       sortable: false,
-      content: this.translate.instant('PLUGIN_EXT_WORKER_ID')
+      content: this.translate.instant('PLUGIN_EXT_WORKER_ID'),
     },
     {
       class: 'expiration',
       request: '',
       sortable: false,
-      content: this.translate.instant('PLUGIN_EXT_LOCK_EXPIRATION_TIME')
+      content: this.translate.instant('PLUGIN_EXT_LOCK_EXPIRATION_TIME'),
     },
     {
       class: 'topic',
       request: '',
       sortable: false,
-      content: this.translate.instant('PLUGIN_EXT_TOPIC')
+      content: this.translate.instant('PLUGIN_EXT_TOPIC'),
     },
     {
       class: 'priority',
       request: 'taskPriority',
       sortable: true,
-      content: this.translate.instant('PLUGIN_EXT_PRIORITY')
-    }
+      content: this.translate.instant('PLUGIN_EXT_PRIORITY'),
+    },
   ];
 }
 
-ProcessInstanceRuntimeTab.prototype._loadLocal = function(defaultValue) {
+ProcessInstanceRuntimeTab.prototype._loadLocal = function (defaultValue) {
   return this.localConf.get('sortExternalTaskRuntimeTab', defaultValue);
 };
 
-ProcessInstanceRuntimeTab.prototype._saveLocal = function(sorting) {
+ProcessInstanceRuntimeTab.prototype._saveLocal = function (sorting) {
   return this.localConf.set('sortExternalTaskRuntimeTab', sorting);
 };
 
-ProcessInstanceRuntimeTab.prototype.onSortChange = function(sorting) {
+ProcessInstanceRuntimeTab.prototype.onSortChange = function (sorting) {
   this.sorting = sorting;
   this._saveLocal(this.sorting);
   this.onLoad();
 };
 
-ProcessInstanceRuntimeTab.prototype.onLoad = function(pages, activityIds) {
+ProcessInstanceRuntimeTab.prototype.onLoad = function (pages, activityIds) {
   this.pages = pages || this.pages;
   this.activityIds = activityIds || this.activityIds;
 
@@ -117,10 +117,10 @@ ProcessInstanceRuntimeTab.prototype.onLoad = function(pages, activityIds) {
       this.processInstance.id,
       this.pages,
       this.sorting,
-      this.getActivityParams(this.activityIds)
+      this.getActivityParams(this.activityIds),
     )
     .then(
-      function(data) {
+      function (data) {
         this.tasks = data.list;
 
         setTimeout(() => {
@@ -128,17 +128,17 @@ ProcessInstanceRuntimeTab.prototype.onLoad = function(pages, activityIds) {
         }, 0);
 
         return data;
-      }.bind(this)
+      }.bind(this),
     )
-    .catch(function() {});
+    .catch(function () {});
 };
 
-ProcessInstanceRuntimeTab.prototype.getActivityParams = function(activityIds) {
+ProcessInstanceRuntimeTab.prototype.getActivityParams = function (activityIds) {
   if (!activityIds || !activityIds.length) {
     return {};
   }
 
   return {
-    activityIdIn: activityIds
+    activityIdIn: activityIds,
   };
 };

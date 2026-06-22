@@ -5,18 +5,12 @@
   <parent>
     <groupId>org.operaton.bpm.dmn</groupId>
     <artifactId>operaton-engine-dmn-root</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine-dmn</artifactId>
   <name>Operaton - DMN - Engine</name>
   <description>${project.name}</description>
-  <properties>
-    <operaton.artifact>org.operaton.bpm.dmn.engine</operaton.artifact>
-    <operaton.osgi.import.additional>
-      org.junit.*;resolution:=optional
-    </operaton.osgi.import.additional>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.operaton.commons</groupId>
@@ -199,6 +193,16 @@
               <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
             </configuration>
           </execution>
+          <execution>
+            <id>junit6-jar</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>junit6</classifier>
+              <classesDirectory>${project.build.directory}/classes-junit6</classesDirectory>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -246,6 +250,22 @@
               <outputDirectory>${project.build.directory}/classes-junit5</outputDirectory>
             </configuration>
           </execution>
+          <execution>
+            <id>junit6-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <!-- Specify the extra test source folder -->
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
+              </compileSourceRoots>
+              <!-- Set its own output directory -->
+              <outputDirectory>${project.build.directory}/classes-junit6</outputDirectory>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -255,19 +275,6 @@
             <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>

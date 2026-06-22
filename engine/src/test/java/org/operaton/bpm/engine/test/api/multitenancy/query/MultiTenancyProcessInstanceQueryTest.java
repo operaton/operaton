@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -166,7 +165,7 @@ class MultiTenancyProcessInstanceQueryTest {
 
   @Test
   void testQueryAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
@@ -178,7 +177,7 @@ class MultiTenancyProcessInstanceQueryTest {
 
   @Test
   void testQueryAuthenticatedTenants() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 

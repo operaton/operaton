@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -26,15 +25,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
 public class SetExecutionVariablesCmd extends AbstractSetVariableCmd {
-
-  @Serial private static final long serialVersionUID = 1L;
-
   protected boolean failIfNotExists = true;
 
   public SetExecutionVariablesCmd(String executionId,
@@ -66,7 +61,7 @@ public class SetExecutionVariablesCmd extends AbstractSetVariableCmd {
       .findExecutionById(entityId);
 
     if (failIfNotExists) {
-      ensureNotNull("execution " + entityId + " doesn't exist", "execution", execution);
+      ensureNotNull("execution %s doesn't exist".formatted(entityId), "execution", execution);
     }
 
     if(execution != null) {

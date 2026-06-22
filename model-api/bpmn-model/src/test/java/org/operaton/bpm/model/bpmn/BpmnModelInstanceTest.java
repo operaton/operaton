@@ -36,11 +36,11 @@ class BpmnModelInstanceTest {
     definitions.setId("TestId");
     modelInstance.setDefinitions(definitions);
 
-    BpmnModelInstance cloneInstance = modelInstance.clone();
-    cloneInstance.getDefinitions().setId("TestId2");
+    BpmnModelInstance copiedInstance = modelInstance.copy();
+    copiedInstance.getDefinitions().setId("TestId2");
 
     assertThat(modelInstance.getDefinitions().getId()).isEqualTo("TestId");
-    assertThat(cloneInstance.getDefinitions().getId()).isEqualTo("TestId2");
+    assertThat(copiedInstance.getDefinitions().getId()).isEqualTo("TestId2");
   }
 
 }

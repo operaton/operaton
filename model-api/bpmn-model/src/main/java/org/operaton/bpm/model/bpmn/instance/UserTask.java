@@ -37,7 +37,7 @@ public interface UserTask extends Task {
 
   Collection<Rendering> getRenderings();
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonAssignee();
 

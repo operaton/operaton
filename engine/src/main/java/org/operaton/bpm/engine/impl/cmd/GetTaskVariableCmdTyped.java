@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,13 +25,10 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Daniel Meyer
  */
-public class GetTaskVariableCmdTyped implements Command<TypedValue>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetTaskVariableCmdTyped implements Command<TypedValue> {
   protected String taskId;
   protected String variableName;
   protected boolean isLocal;
@@ -57,7 +51,7 @@ public class GetTaskVariableCmdTyped implements Command<TypedValue>, Serializabl
       .getTaskManager()
       .findTaskById(taskId);
 
-    ensureNotNull("task " + taskId + " doesn't exist", "task", task);
+    ensureNotNull("task %s doesn't exist".formatted(taskId), "task", task);
 
     checkGetTaskVariableTyped(task, commandContext);
 

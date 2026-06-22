@@ -23,7 +23,7 @@ var viewers = {};
 
 module.exports = {
   generateViewer: generateViewer,
-  cacheViewer: cacheViewer
+  cacheViewer: cacheViewer,
 };
 
 function generateViewer(options) {

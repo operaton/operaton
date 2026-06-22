@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -111,7 +110,7 @@ class CorrelateAllMessageBatchTest {
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
     String processInstanceIdThree = runtimeService.startProcessInstanceByKey(PROCESS_TWO_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdThree);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdThree);
 
     Batch batch = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
       .processInstanceIds(processInstances)
@@ -227,7 +226,7 @@ class CorrelateAllMessageBatchTest {
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
     String processInstanceIdThree = runtimeService.startProcessInstanceByKey(PROCESS_TWO_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdThree);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdThree);
 
     Batch batch = runtimeService.createMessageCorrelationAsync(null)
       .processInstanceIds(processInstances)
@@ -294,7 +293,7 @@ class CorrelateAllMessageBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     Batch batch = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
       .processInstanceIds(processInstances)
@@ -411,7 +410,7 @@ class CorrelateAllMessageBatchTest {
     String deploymentIdOne = list.get(0).getId();
     String deploymentIdTwo = list.get(1).getId();
 
-    List<String> processInstances = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstances = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     // when
     Batch batch = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
@@ -557,7 +556,7 @@ class CorrelateAllMessageBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
 
-    List<String> processInstanceIds = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstanceIds = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     // when
     Batch batch = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)
@@ -584,7 +583,7 @@ class CorrelateAllMessageBatchTest {
     String processInstanceIdOne = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
     String processInstanceIdTwo = runtimeService.startProcessInstanceByKey(PROCESS_ONE_KEY).getId();
 
-    List<String> processInstanceIds = Arrays.asList(processInstanceIdOne, processInstanceIdTwo);
+    List<String> processInstanceIds = List.of(processInstanceIdOne, processInstanceIdTwo);
 
     // when
     Batch batch = runtimeService.createMessageCorrelationAsync(MESSAGE_ONE_REF)

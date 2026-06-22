@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.jobexecutor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -152,9 +151,9 @@ class JobExecutorTestCase {
 
     @Test
     void testAcquiredJobs() {
-      List<String> firstBatch = new ArrayList<>(Arrays.asList("a", "b", "c"));
-      List<String> secondBatch = new ArrayList<>(Arrays.asList("d", "e", "f"));
-      List<String> thirdBatch = new ArrayList<>(Arrays.asList("g"));
+      List<String> firstBatch = new ArrayList<>(List.of("a", "b", "c"));
+      List<String> secondBatch = new ArrayList<>(List.of("d", "e", "f"));
+      List<String> thirdBatch = new ArrayList<>(List.of("g"));
 
       AcquiredJobs acquiredJobs = new AcquiredJobs(0);
       acquiredJobs.addJobIdBatch(firstBatch);
@@ -166,7 +165,7 @@ class JobExecutorTestCase {
       assertThat(acquiredJobs.getJobIdBatches().get(2)).isEqualTo(thirdBatch);
 
       acquiredJobs.removeJobId("a");
-      assertThat(acquiredJobs.getJobIdBatches().get(0)).isEqualTo(Arrays.asList("b", "c"));
+      assertThat(acquiredJobs.getJobIdBatches().get(0)).isEqualTo(List.of("b", "c"));
       assertThat(acquiredJobs.getJobIdBatches().get(1)).isEqualTo(secondBatch);
       assertThat(acquiredJobs.getJobIdBatches().get(2)).isEqualTo(thirdBatch);
 

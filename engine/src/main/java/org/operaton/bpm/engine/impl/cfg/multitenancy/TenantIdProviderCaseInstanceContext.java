@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * Provides information about a starting case instance to a {@link TenantIdProvider} implementation.
  *
  * @author Kristin Polenz
- * @since 7.5
  */
 public class TenantIdProviderCaseInstanceContext {
 

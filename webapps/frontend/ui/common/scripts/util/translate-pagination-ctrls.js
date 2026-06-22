@@ -16,19 +16,19 @@
  */
 
 'use strict';
-module.exports = $provide => {
+module.exports = ($provide) => {
   $provide.decorator('uibPaginationDirective', [
     '$delegate',
     'uibPaginationConfig',
     '$translate',
-    function($delegate, uibPaginationConfig, $translate) {
+    function ($delegate, uibPaginationConfig, $translate) {
       uibPaginationConfig.firstText = $translate.instant('PAGINATION_FIRST');
       uibPaginationConfig.lastText = $translate.instant('PAGINATION_LAST');
       uibPaginationConfig.previousText = $translate.instant(
-        'PAGINATION_PREVIOUS'
+        'PAGINATION_PREVIOUS',
       );
       uibPaginationConfig.nextText = $translate.instant('PAGINATION_NEXT');
       return $delegate;
-    }
+    },
   ]);
 };

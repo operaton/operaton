@@ -30,8 +30,6 @@ public class ProcessInstanceDto {
   protected List<IncidentStatisticsDto> incidents;
   protected int suspensionState;
 
-  public ProcessInstanceDto() {}
-
   public String getId() {
     return id;
   }

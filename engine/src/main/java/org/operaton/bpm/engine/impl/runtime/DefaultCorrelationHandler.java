@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -90,29 +91,16 @@ public class DefaultCorrelationHandler implements CorrelationHandler {
 
     ExecutionQueryImpl query = new ExecutionQueryImpl();
 
-    Map<String, Object> correlationKeys = correlationSet.getCorrelationKeys();
-    if (correlationKeys != null) {
-      for (Map.Entry<String, Object> correlationKey : correlationKeys.entrySet()) {
-        query.processVariableValueEquals(correlationKey.getKey(), correlationKey.getValue());
-      }
+    for (Map.Entry<String, Object> correlationKey : correlationSet.getCorrelationKeys().entrySet()) {
+      query.processVariableValueEquals(correlationKey.getKey(), correlationKey.getValue());
     }
 
-    Map<String, Object> localCorrelationKeys = correlationSet.getLocalCorrelationKeys();
-    if (localCorrelationKeys != null) {
-      for (Map.Entry<String, Object> correlationKey : localCorrelationKeys.entrySet()) {
-        query.variableValueEquals(correlationKey.getKey(), correlationKey.getValue());
-      }
+    for (Map.Entry<String, Object> correlationKey : correlationSet.getLocalCorrelationKeys().entrySet()) {
+      query.variableValueEquals(correlationKey.getKey(), correlationKey.getValue());
     }
 
-    String businessKey = correlationSet.getBusinessKey();
-    if (businessKey != null) {
-      query.processInstanceBusinessKey(businessKey);
-    }
-
-    String processInstanceId = correlationSet.getProcessInstanceId();
-    if (processInstanceId != null) {
-      query.processInstanceId(processInstanceId);
-    }
+    Optional.ofNullable(correlationSet.getBusinessKey()).ifPresent(query::processInstanceBusinessKey);
+    Optional.ofNullable(correlationSet.getProcessInstanceId()).ifPresent(query::processInstanceId);
 
     if (messageName != null) {
       query.messageEventSubscriptionName(messageName);

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1656,7 +1655,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<CaseExecution> createMockCaseExecutionsTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockCaseExecution(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockCaseExecution(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

@@ -67,7 +67,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -1147,22 +1147,21 @@ class HistoricJobLogTest {
 
   @Test
   void shouldGetJobExceptionStacktraceUnexistingJobId() {
-    try {
-      historyService.getHistoricJobLogExceptionStacktrace("unexistingjob");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      assertThat(re.getMessage()).containsIgnoringCase("No historic job log found with id unexistingjob");
-    }
+    // given
+    String unexistingJobId = "unexistingjob";
+
+    // when/then
+    assertThatThrownBy(() -> historyService.getHistoricJobLogExceptionStacktrace(unexistingJobId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic job log found with id unexistingjob");
   }
 
   @Test
   void shouldGetJobExceptionStacktraceNullJobId() {
-    try {
-      historyService.getHistoricJobLogExceptionStacktrace(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      assertThat(re.getMessage()).containsIgnoringCase("historicJobLogId is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.getHistoricJobLogExceptionStacktrace(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("historicJobLogId is null");
   }
 
   @Deployment

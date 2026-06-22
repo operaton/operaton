@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.client.variable;
 
-import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -37,7 +38,10 @@ class DateValueMapperTest {
 
   private static final String DATE_FORMAT = "dd.MM.yyyy - HH:mm:ss.SSSZ";
   private static final Date VARIABLE_VALUE_DATE = new GregorianCalendar(2018, Calendar.JANUARY, 1, 8, 0, 0).getTime();
-  private static final String VARIABLE_VALUE_DATE_SERIALIZED = new SimpleDateFormat(DATE_FORMAT).format(VARIABLE_VALUE_DATE);
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
+  private static final String VARIABLE_VALUE_DATE_SERIALIZED = VARIABLE_VALUE_DATE.toInstant()
+      .atZone(ZoneId.systemDefault())
+      .format(DATE_FORMATTER);
 
   protected DateValueMapper dateValueMapper;
 

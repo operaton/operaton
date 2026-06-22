@@ -40,13 +40,17 @@ public interface ParameterValueProvider {
   *   <li>May have side effects
   * </ul>
   *
+  * <p>
   * If true, a caller of {@link #getValue(VariableScope)} can assume that:
+  * </p>
   *
+  * <p>
   * <ul>
   *   <li>passing an empty variable scope returns the same value as passing any other variable scope
   *   <li>Calling {@link #getValue(VariableScope)} multiple times always returns the same value
   *   <li>Calling {@link #getValue(VariableScope)} does not have side effects
   * </ul>
+  * </p>
   */
   boolean isDynamic();
 

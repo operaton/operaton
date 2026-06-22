@@ -87,7 +87,6 @@ public interface JobDefinition {
    * @return the priority that overrides the default/BPMN XML priority or <code>null</code> if
    *   no overriding priority is set
    *
-   * @since 7.4
    */
   Long getOverridingJobPriority();
 

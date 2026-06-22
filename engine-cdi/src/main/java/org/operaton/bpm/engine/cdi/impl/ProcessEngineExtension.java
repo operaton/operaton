@@ -36,7 +36,7 @@ public class ProcessEngineExtension implements Extension {
   public void beforeBeanDiscovery(@Observes final BeforeBeanDiscovery event, BeanManager manager) {
     event.addScope(BusinessProcessScoped.class, true, true);
 
-    BeanManagerLookup.localInstance = manager;
+    BeanManagerLookup.setLocalInstance(manager);
   }
 
   public void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager) {

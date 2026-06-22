@@ -462,28 +462,22 @@ class HistoricTaskInstanceTest {
 
   @Test
   void testInvalidSorting() {
+    // given
     HistoricTaskInstanceQuery historicTaskInstanceQuery1 = historyService.createHistoricTaskInstanceQuery();
-    try {
-      historicTaskInstanceQuery1.asc();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
-    }
 
-    try {
-      historicTaskInstanceQuery1.desc();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
-    }
+    // when/then
+    assertThatThrownBy(historicTaskInstanceQuery1::asc)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
+
+    assertThatThrownBy(historicTaskInstanceQuery1::desc)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
 
     var historicTaskInstanceQuery2 = historicTaskInstanceQuery1.orderByProcessInstanceId();
-    try {
-      historicTaskInstanceQuery2.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
-    }
+    assertThatThrownBy(historicTaskInstanceQuery2::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricTaskInstanceTest.testHistoricTaskInstance.bpmn20.xml"})

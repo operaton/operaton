@@ -41,9 +41,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test verifies that a CDI Java Bean Delegate is able to inject and invoke the
  * local business interface of a SLSB from a different application
  *
+ * <p>
  * Note:
  * - works on Jboss
  * - not implemented on Glassfish
+ * </p>
  *
  * @author Daniel Meyer
  *

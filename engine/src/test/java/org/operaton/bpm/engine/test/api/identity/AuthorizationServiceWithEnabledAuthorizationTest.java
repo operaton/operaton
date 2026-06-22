@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.identity;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,7 +42,7 @@ import static org.operaton.bpm.engine.test.api.identity.TestPermissions.DELETE;
 import static org.operaton.bpm.engine.test.api.identity.TestPermissions.READ;
 import static org.operaton.bpm.engine.test.api.identity.TestPermissions.UPDATE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Stefan Hentschel.
@@ -73,7 +72,7 @@ class AuthorizationServiceWithEnabledAuthorizationTest {
     Resource resource1 = TestResource.RESOURCE1;
     Resource resource2 = TestResource.RESOURCE2;
 
-    List<String> jonnysGroups = Arrays.asList("sales", "marketing");
+    List<String> jonnysGroups = List.of("sales", "marketing");
     List<String> someOneElsesGroups = Collections.singletonList("marketing");
 
     // if no authorizations are in Db, nothing is authorized
@@ -104,7 +103,7 @@ class AuthorizationServiceWithEnabledAuthorizationTest {
     localRevoke.removePermission(READ);
     authorizationService.saveAuthorization(localRevoke);
 
-    List<String> jonnysGroups = Arrays.asList("sales", "marketing");
+    List<String> jonnysGroups = List.of("sales", "marketing");
     List<String> someOneElsesGroups = Collections.singletonList("marketing");
 
     // jonny does not have ALL permissions
@@ -142,7 +141,7 @@ class AuthorizationServiceWithEnabledAuthorizationTest {
     groupRevoke.removePermission(READ);
     authorizationService.saveAuthorization(groupRevoke);
 
-    List<String> jonnysGroups = Arrays.asList("sales", "marketing");
+    List<String> jonnysGroups = List.of("sales", "marketing");
     List<String> someOneElsesGroups = Collections.singletonList("marketing");
 
     // jonny does not have ALL permissions if queried with groups
@@ -203,32 +202,23 @@ class AuthorizationServiceWithEnabledAuthorizationTest {
 
   @Test
   void testNullAuthorizationCheckUserGroup() {
-    try {
-      authorizationService.isUserAuthorized(null, null, UPDATE, TestResource.RESOURCE1);
-      fail("Expected NullValueException");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("Authorization must have a 'userId' or/and a 'groupId'");
-    }
+    assertThatThrownBy(() -> authorizationService.isUserAuthorized(null, null, UPDATE, TestResource.RESOURCE1))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Authorization must have a 'userId' or/and a 'groupId'");
   }
 
   @Test
   void testNullAuthorizationCheckPermission() {
-    try {
-      authorizationService.isUserAuthorized("jonny", null, null, TestResource.RESOURCE1);
-      fail("Expected NullValueException");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("Invalid permission for an authorization");
-    }
+    assertThatThrownBy(() -> authorizationService.isUserAuthorized("jonny", null, null, TestResource.RESOURCE1))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Invalid permission for an authorization");
   }
 
   @Test
   void testNullAuthorizationCheckResource() {
-    try {
-      authorizationService.isUserAuthorized("jonny", null, UPDATE, null);
-      fail("Expected NullValueException");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("Invalid resource for an authorization");
-    }
+    assertThatThrownBy(() -> authorizationService.isUserAuthorized("jonny", null, UPDATE, null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Invalid resource for an authorization");
   }
 
   @Test
@@ -258,7 +248,7 @@ class AuthorizationServiceWithEnabledAuthorizationTest {
     userGrant.addPermission(READ);
     authorizationService.saveAuthorization(userGrant);
 
-    List<String> jonnysGroups = Arrays.asList("sales", "marketing");
+    List<String> jonnysGroups = List.of("sales", "marketing");
     List<String> someOneElsesGroups = Collections.singletonList("marketing");
 
     // jonny can read

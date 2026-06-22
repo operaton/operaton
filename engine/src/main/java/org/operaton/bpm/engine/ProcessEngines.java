@@ -21,12 +21,11 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Enumeration;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,25 +36,25 @@ import org.operaton.bpm.engine.impl.ProcessEngineInfoImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
+import org.operaton.commons.utils.CollectionUtil;
 
-
-/** Helper for initializing and closing process engines in server environments.
+/**
+ * Helper for initializing and closing process engines in server environments.
  * <br>
- * All created {@link ProcessEngine}s will be registered with this class.
- * <br>
- * The activiti-webapp-init webapp will
- * call the {@link #init()} method when the webapp is deployed and it will call the
- * {@link #destroy()} method when the webapp is destroyed, using a context-listener
- * (<code>org.operaton.bpm.engine.test.impl.servlet.listener.ProcessEnginesServletContextListener</code>).  That way,
- * all applications can just use the {@link #getProcessEngines()} to
+ * All created {@link ProcessEngine}s will be registered with this class. <br>
+ * The activiti-webapp-init webapp will call the {@link #init()} method when the
+ * webapp is deployed and it will call the {@link #destroy()} method when the
+ * webapp is destroyed, using a context-listener
+ * (<code>org.operaton.bpm.engine.test.impl.servlet.listener.ProcessEnginesServletContextListener</code>).
+ * That way, all applications can just use the {@link #getProcessEngines()} to
  * obtain pre-initialized and cached process engines. <br>
  * <br>
- * Please note that there is <b>no lazy initialization</b> of process engines, so make sure the
- * context-listener is configured or {@link ProcessEngine}s are already created so they were registered
- * on this class.<br>
+ * Please note that there is <b>no lazy initialization</b> of process engines,
+ * so make sure the context-listener is configured or {@link ProcessEngine}s are
+ * already created so they were registered on this class.<br>
  * <br>
  * The {@link #init()} method will try to build one {@link ProcessEngine} for
- * each operaton.cfg.xml file found on the classpath.  If you have more than one,
+ * each operaton.cfg.xml file found on the classpath. If you have more than one,
  * make sure you specify different process.engine.name values.
  *
  * @author Tom Baeyens
@@ -67,8 +66,8 @@ public final class ProcessEngines {
 
   public static final String NAME_DEFAULT = "default";
 
-  private static volatile boolean isInitialized;
-  private static volatile Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
+  private static boolean isInitialized;
+  private static Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
   private static final Map<String, ProcessEngineInfo> PROCESS_ENGINE_INFOS_BY_NAME = new ConcurrentHashMap<>();
   private static final Map<String, ProcessEngineInfo> PROCESS_ENGINE_INFOS_BY_RESOURCE_URL = new ConcurrentHashMap<>();
   private static final List<ProcessEngineInfo> PROCESS_ENGINE_INFOS = new CopyOnWriteArrayList<>();
@@ -81,66 +80,94 @@ public final class ProcessEngines {
     init(true);
   }
 
-  /** Initializes all process engines that can be found on the classpath for
-   * resources <code>operaton.cfg.xml</code> (plain Activiti style configuration)
-   * and for resources <code>activiti-context.xml</code> (Spring style configuration). */
+  /**
+   * Initializes all process engines that can be found on the classpath for
+   * resources <code>operaton.cfg.xml</code> (plain Activiti style
+   * configuration) and for resources <code>activiti-context.xml</code> (Spring
+   * style configuration).
+   */
   public static synchronized void init(boolean forceCreate) {
-    if (!isInitialized) {
-      if(processEngines == null) {
-        // Create new map to store process-engines if current map is null
-        processEngines = new ConcurrentHashMap<>();
-      }
-      ClassLoader classLoader = ReflectUtil.getClassLoader();
-      Enumeration<URL> resources = null;
-      try {
-        resources = classLoader.getResources("operaton.cfg.xml");
-      } catch (IOException e) {
-        try {
-          resources = classLoader.getResources("activiti.cfg.xml");
-        } catch(IOException ex) {
-          if(forceCreate) {
-            throw new ProcessEngineException("problem retrieving operaton.cfg.xml and activiti.cfg.xml resources on the classpath: "+System.getProperty("java.class.path"), ex);
-          } else {
-            return;
-          }
-        }
-      }
-
-      // Remove duplicated configuration URL's using set. Some classloaders may return identical URL's twice, causing duplicate startups
-      Set<URL> configUrls = new HashSet<>();
-      while (resources.hasMoreElements()) {
-        configUrls.add( resources.nextElement() );
-      }
-      for (Iterator<URL> iterator = configUrls.iterator(); iterator.hasNext();) {
-        URL resource = iterator.next();
-        initProcessEngineFromResource(resource);
-      }
-
-      try {
-        resources = classLoader.getResources("activiti-context.xml");
-      } catch (IOException e) {
-        if(forceCreate) {
-          throw new ProcessEngineException("problem retrieving activiti-context.xml resources on the classpath: "+System.getProperty("java.class.path"), e);
-        } else {
-          return;
-        }
-      }
-      while (resources.hasMoreElements()) {
-        URL resource = resources.nextElement();
-        initProcessEngineFromSpringResource(resource);
-      }
-
-      isInitialized = true;
-    } else {
+    if (isInitialized) {
       LOG.processEngineAlreadyInitialized();
+    }
+
+    if (processEngines == null) {
+      processEngines = new ConcurrentHashMap<>();
+    }
+
+    ClassLoader classLoader = ReflectUtil.getClassLoader();
+    Set<URI> configResources = getResources(classLoader, "operaton.cfg.xml", "activiti.cfg.xml", forceCreate);
+    if (configResources.isEmpty() && !forceCreate) {
+      return;
+    }
+
+    for (URI resource : configResources) {
+      initProcessEngineFromResource(resource);
+    }
+
+    Set<URI> springResources = getResources(classLoader, "activiti-context.xml", null, forceCreate);
+    if (springResources.isEmpty() && !forceCreate) {
+      return;
+    }
+
+    for (URI resource : springResources) {
+      initProcessEngineFromSpringResource(resource);
+    }
+
+    isInitialized = true;
+  }
+
+  // Remove duplicated configuration URL's using set. Some classloaders may
+  // return identical URL's twice, causing duplicate startups
+  private static Set<URI> getResources(ClassLoader classLoader, String resourceName,
+      String fallbackResourceName, boolean forceCreate) {
+    try {
+      return CollectionUtil.toSet(classLoader.getResources(resourceName), ReflectUtil::urlToURI);
+    } catch (IOException e) {
+      if (fallbackResourceName != null) {
+        try {
+          return CollectionUtil.toSet(classLoader.getResources(fallbackResourceName), ReflectUtil::urlToURI);
+        } catch (IOException ex) {
+          return handleGetResourcesException(resourceName, fallbackResourceName, forceCreate, ex);
+        }
+      }
+      return handleGetResourcesException(resourceName, fallbackResourceName, forceCreate, e);
     }
   }
 
+  private static Set<URI> handleGetResourcesException(String resourceName, String fallbackResourceName,
+      boolean forceCreate, IOException e) {
+    if (forceCreate) {
+      String message = "problem retrieving " + resourceName
+          + (fallbackResourceName != null ? " and " + fallbackResourceName : "") + " resources on the classpath: "
+          + System.getProperty("java.class.path");
+      throw new ProcessEngineException(message, e);
+    }
+    return Collections.emptySet();
+  }
+
+  /**
+   * @deprecated Planned for removal
+   */
+  @Deprecated(since = "1.1", forRemoval = true)
+  @SuppressWarnings("java:S1133")
   protected static void initProcessEngineFromSpringResource(URL resource) {
     try {
-      Class< ? > springConfigurationHelperClass = ReflectUtil.loadClass("org.operaton.bpm.engine.spring.SpringConfigurationHelper");
-      Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", URL.class);
-      ProcessEngine processEngine = (ProcessEngine) method.invoke(null, new Object[]{resource});
+      initProcessEngineFromSpringResource(resource.toURI());
+    } catch (URISyntaxException e) {
+      throw new ProcessEngineException(
+        "couldn't initialize process engine from spring configuration resource %s: %s".formatted(resource.toString(),
+          e.getMessage()),
+        e);
+    }
+  }
+
+  private static void initProcessEngineFromSpringResource(URI resource) {
+    try {
+      Class<?> springConfigurationHelperClass = ReflectUtil.loadClass(
+          "org.operaton.bpm.engine.spring.SpringConfigurationHelper");
+      Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", URI.class);
+      ProcessEngine processEngine = (ProcessEngine) method.invoke(null, resource);
 
       String processEngineName = processEngine.getName();
       ProcessEngineInfo processEngineInfo = new ProcessEngineInfoImpl(processEngineName, resource.toString(), null);
@@ -148,14 +175,17 @@ public final class ProcessEngines {
       PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.put(resource.toString(), processEngineInfo);
 
     } catch (Exception e) {
-      throw new ProcessEngineException("couldn't initialize process engine from spring configuration resource "+resource.toString()+": "+e.getMessage(), e);
+      throw new ProcessEngineException(
+          "couldn't initialize process engine from spring configuration resource %s: %s".formatted(resource.toString(),
+              e.getMessage()),
+          e);
     }
   }
 
   /**
    * Registers the given process engine. No {@link ProcessEngineInfo} will be
-   * available for this process engine. An engine that is registered will be closed
-   * when the {@link ProcessEngines#destroy()} is called.
+   * available for this process engine. An engine that is registered will be
+   * closed when the {@link ProcessEngines#destroy()} is called.
    */
   public static void registerProcessEngine(ProcessEngine processEngine) {
     processEngines.put(processEngine.getName(), processEngine);
@@ -175,13 +205,13 @@ public final class ProcessEngines {
     return processEngines.containsKey(processEngineName);
   }
 
-  private static ProcessEngineInfo initProcessEngineFromResource(URL resourceUrl) {
+  private static ProcessEngineInfo initProcessEngineFromResource(URI resourceUrl) {
     ProcessEngineInfo processEngineInfo = PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.get(resourceUrl.toString());
     // if there is an existing process engine info
-    if (processEngineInfo!=null) {
+    if (processEngineInfo != null) {
       // remove that process engine from the member fields
       PROCESS_ENGINE_INFOS.remove(processEngineInfo);
-      if (processEngineInfo.getException()==null) {
+      if (processEngineInfo.getException() == null) {
         String processEngineName = processEngineInfo.getName();
         processEngines.remove(processEngineName);
         PROCESS_ENGINE_INFOS_BY_NAME.remove(processEngineName);
@@ -214,29 +244,34 @@ public final class ProcessEngines {
     return sw.toString();
   }
 
-  private static  ProcessEngine buildProcessEngine(URL resource) {
+  private static ProcessEngine buildProcessEngine(URI resource) {
     InputStream inputStream = null;
     try {
-      inputStream = resource.openStream();
-      ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromInputStream(inputStream);
+      inputStream = resource.toURL().openStream();
+      ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration
+          .createProcessEngineConfigurationFromInputStream(inputStream);
       return processEngineConfiguration.buildProcessEngine();
 
     } catch (IOException e) {
-      throw new ProcessEngineException("couldn't open resource stream: "+e.getMessage(), e);
+      throw new ProcessEngineException("couldn't open resource stream: %s".formatted(e.getMessage()), e);
     } finally {
       IoUtil.closeSilently(inputStream);
     }
   }
 
-  /** Get initialization results. */
+  /**
+   * Get initialization results.
+   */
   public static List<ProcessEngineInfo> getProcessEngineInfos() {
     return PROCESS_ENGINE_INFOS;
   }
 
-  /** Get initialization results. Only info will be available for process engines
-   * which were added in the {@link ProcessEngines#init()}. No {@link ProcessEngineInfo}
-   * is available for engines which were registered programmatically.
-  */
+  /**
+   * Get initialization results. Only info will be available for process engines
+   * which were added in the {@link ProcessEngines#init()}. No
+   * {@link ProcessEngineInfo} is available for engines which were registered
+   * programmatically.
+   */
   public static ProcessEngineInfo getProcessEngineInfo(String processEngineName) {
     return PROCESS_ENGINE_INFOS_BY_NAME.get(processEngineName);
   }
@@ -253,8 +288,12 @@ public final class ProcessEngines {
     return getProcessEngine(processEngineName, true);
   }
 
-  /** obtain a process engine by name.
-   * @param processEngineName is the name of the process engine or null for the default process engine.  */
+  /**
+   * obtain a process engine by name.
+   *
+   * @param processEngineName is the name of the process engine or null for the
+   *                          default process engine.
+   */
   public static ProcessEngine getProcessEngine(String processEngineName, boolean forceCreate) {
     if (!isInitialized) {
       init(forceCreate);
@@ -262,37 +301,41 @@ public final class ProcessEngines {
     return processEngines.get(processEngineName);
   }
 
-  /** retries to initialize a process engine that previously failed.
+  /**
+   * retries to initialize a process engine that previously failed.
    */
   public static ProcessEngineInfo retry(String resourceUrl) {
     try {
-      return initProcessEngineFromResource(new URL(resourceUrl));
-    } catch (MalformedURLException e) {
-      throw new ProcessEngineException("invalid url: "+resourceUrl, e);
+      return initProcessEngineFromResource(new URI(resourceUrl));
+    } catch (URISyntaxException e) {
+      throw new ProcessEngineException("invalid uri: %s".formatted(resourceUrl), e);
     }
   }
 
-  /** provides access to process engine to application clients in a
-   * managed server environment.
+  /**
+   * provides access to process engine to application clients in a managed server environment.
    */
   public static Map<String, ProcessEngine> getProcessEngines() {
     return processEngines;
   }
 
-  /** closes all process engines.  This method should be called when the server shuts down. */
+  /**
+   * closes all process engines. This method should be called when the server shuts down.
+   */
   public static synchronized void destroy() {
     if (isInitialized) {
       Map<String, ProcessEngine> engines = new HashMap<>(processEngines);
       processEngines = new ConcurrentHashMap<>();
 
-      for (var engineEntry : engines.entrySet()) {
-        String processEngineName = engineEntry.getKey();
-        ProcessEngine processEngine = engineEntry.getValue();
+      for (var processEngine : engines.values()) {
         try {
           processEngine.close();
-        }
-        catch (Exception e) {
-          LOG.exceptionWhileClosingProcessEngine(processEngineName==null ? "the default process engine" : "process engine "+processEngineName, e);
+        } catch (Exception e) {
+          LOG.exceptionWhileClosingProcessEngine(
+              processEngine.getName() == null
+                  ? "the default process engine"
+                  : "process engine " + processEngine.getName(),
+              e);
         }
       }
 
@@ -303,5 +346,4 @@ public final class ProcessEngines {
       isInitialized = false;
     }
   }
-
 }

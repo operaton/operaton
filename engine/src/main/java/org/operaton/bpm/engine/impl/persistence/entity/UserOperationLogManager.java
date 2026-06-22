@@ -49,6 +49,8 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.util.PermissionConverter;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Manager for {@link UserOperationLogEntryEventEntity} that also provides a generic and some specific log methods.
  *
@@ -392,50 +394,56 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public void logJobOperation(String operation, String jobId, String jobDefinitionId, String processInstanceId,
       String processDefinitionId, String processDefinitionKey, List<PropertyChange> propertyChanges) {
-    if (isUserOperationLogEnabled()) {
+    if (!isUserOperationLogEnabled()) {
+      return;
+    }
 
-      UserOperationLogContext context = new UserOperationLogContext();
-      UserOperationLogContextEntryBuilder entryBuilder =
-          UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.JOB)
-            .jobId(jobId)
-            .jobDefinitionId(jobDefinitionId)
-            .processDefinitionId(processDefinitionId)
-            .processDefinitionKey(processDefinitionKey)
-            .propertyChanges(propertyChanges)
-            .category(UserOperationLogEntry.CATEGORY_OPERATOR);
+    UserOperationLogContext context = new UserOperationLogContext();
+    UserOperationLogContextEntryBuilder entryBuilder =
+        UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.JOB)
+          .jobId(jobId)
+          .jobDefinitionId(jobDefinitionId)
+          .processDefinitionId(processDefinitionId)
+          .processDefinitionKey(processDefinitionKey)
+          .propertyChanges(propertyChanges)
+          .category(UserOperationLogEntry.CATEGORY_OPERATOR);
 
-      if(jobId != null) {
-        JobEntity job = getJobManager().findJobById(jobId);
-        // Backward compatibility
-        if(job != null) {
-          entryBuilder.inContextOf(job);
-        }
-      } else
-
-      if(jobDefinitionId != null) {
-        JobDefinitionEntity jobDefinition = getJobDefinitionManager().findById(jobDefinitionId);
-        // Backward compatibility
-        if(jobDefinition != null) {
-          entryBuilder.inContextOf(jobDefinition);
-        }
+    if (jobId != null) {
+      JobEntity job = getJobManager().findJobById(jobId);
+      // Backward compatibility
+      if (job != null) {
+        entryBuilder.inContextOf(job);
       }
-      else if (processInstanceId != null) {
-        ExecutionEntity processInstance = getProcessInstanceManager().findExecutionById(processInstanceId);
-        // Backward compatibility
-        if(processInstance != null) {
-          entryBuilder.inContextOf(processInstance);
-        }
-      }
-      else if (processDefinitionId != null) {
-        ProcessDefinitionEntity definition = getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
-        // Backward compatibility
-        if(definition != null) {
-          entryBuilder.inContextOf(definition);
-        }
-      }
+    } else {
+      setInContextOfFrom(jobDefinitionId, processInstanceId, processDefinitionId, entryBuilder);
+    }
 
-      context.addEntry(entryBuilder.create());
-      fireUserOperationLog(context);
+    context.addEntry(entryBuilder.create());
+    fireUserOperationLog(context);
+  }
+
+  private void setInContextOfFrom(String jobDefinitionId, String processInstanceId, String processDefinitionId,
+      UserOperationLogContextEntryBuilder entryBuilder) {
+    if (jobDefinitionId != null) {
+      JobDefinitionEntity jobDefinition = getJobDefinitionManager().findById(jobDefinitionId);
+      // Backward compatibility
+      if(jobDefinition != null) {
+        entryBuilder.inContextOf(jobDefinition);
+      }
+    }
+    else if (processInstanceId != null) {
+      ExecutionEntity processInstance = getProcessInstanceManager().findExecutionById(processInstanceId);
+      // Backward compatibility
+      if(processInstance != null) {
+        entryBuilder.inContextOf(processInstance);
+      }
+    }
+    else if (processDefinitionId != null) {
+      ProcessDefinitionEntity definition = getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
+      // Backward compatibility
+      if(definition != null) {
+        entryBuilder.inContextOf(definition);
+      }
     }
   }
 
@@ -752,27 +760,44 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   public void logAuthorizationOperation(String operation, AuthorizationEntity authorization, AuthorizationEntity previousValues) {
-    if (isUserOperationLogEnabled()) {
-      List<PropertyChange> propertyChanges = new ArrayList<>();
-      propertyChanges.add(new PropertyChange("permissionBits", previousValues == null ? null : previousValues.getPermissions(), authorization.getPermissions()));
-      propertyChanges.add(new PropertyChange("permissions", previousValues == null ? null : getPermissionStringList(previousValues), getPermissionStringList(authorization)));
-      propertyChanges.add(new PropertyChange("type", previousValues == null ? null : previousValues.getAuthorizationType(), authorization.getAuthorizationType()));
-      propertyChanges.add(new PropertyChange("resource", previousValues == null ? null : getResourceName(previousValues.getResourceType()), getResourceName(authorization.getResourceType())));
-      propertyChanges.add(new PropertyChange("resourceId", previousValues == null ? null : previousValues.getResourceId(), authorization.getResourceId()));
-      if (authorization.getUserId() != null || (previousValues != null && previousValues.getUserId() != null)) {
-        propertyChanges.add(new PropertyChange(PROP_USER_ID, previousValues == null ? null : previousValues.getUserId(), authorization.getUserId()));
-      }
-      if (authorization.getGroupId() != null || (previousValues != null && previousValues.getGroupId() != null)) {
-        propertyChanges.add(new PropertyChange(PROP_GROUP_ID, previousValues == null ? null : previousValues.getGroupId(), authorization.getGroupId()));
-      }
+    if (!isUserOperationLogEnabled()) {
+      return;
+    }
 
-      UserOperationLogContext context = new UserOperationLogContext();
-      UserOperationLogContextEntryBuilder entryBuilder =
-          UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.AUTHORIZATION)
+    List<PropertyChange> propertyChanges = new ArrayList<>();
+
+    if (previousValues == null) {
+      propertyChanges.add(new PropertyChange("permissionBits", null, authorization.getPermissions()));
+      propertyChanges.add(new PropertyChange("permissions", null, getPermissionStringList(authorization)));
+      propertyChanges.add(new PropertyChange("type", null, authorization.getAuthorizationType()));
+      propertyChanges.add(new PropertyChange("resource", null, getResourceName(authorization.getResourceType())));
+      propertyChanges.add(new PropertyChange("resourceId", null, authorization.getResourceId()));
+
+      addPropertyChangeIfPresent(propertyChanges, PROP_USER_ID, null, authorization.getUserId());
+      addPropertyChangeIfPresent(propertyChanges, PROP_GROUP_ID, null, authorization.getGroupId());
+    } else {
+      propertyChanges.add(new PropertyChange("permissionBits", previousValues.getPermissions(), authorization.getPermissions()));
+      propertyChanges.add(new PropertyChange("permissions", getPermissionStringList(previousValues), getPermissionStringList(authorization)));
+      propertyChanges.add(new PropertyChange("type", previousValues.getAuthorizationType(), authorization.getAuthorizationType()));
+      propertyChanges.add(new PropertyChange("resource", getResourceName(previousValues.getResourceType()), getResourceName(authorization.getResourceType())));
+      propertyChanges.add(new PropertyChange("resourceId", previousValues.getResourceId(), authorization.getResourceId()));
+
+      addPropertyChangeIfPresent(propertyChanges, PROP_USER_ID, previousValues.getUserId(), authorization.getUserId());
+      addPropertyChangeIfPresent(propertyChanges, PROP_GROUP_ID, previousValues.getGroupId(), authorization.getGroupId());
+    }
+
+    UserOperationLogContext context = new UserOperationLogContext();
+    UserOperationLogContextEntryBuilder entryBuilder =
+        UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.AUTHORIZATION)
             .propertyChanges(propertyChanges)
             .category(UserOperationLogEntry.CATEGORY_ADMIN);
-      context.addEntry(entryBuilder.create());
-      fireUserOperationLog(context);
+    context.addEntry(entryBuilder.create());
+    fireUserOperationLog(context);
+  }
+
+  private void addPropertyChangeIfPresent(List<PropertyChange> list, String property, String previousValue, String currentValue) {
+    if (previousValue != null || currentValue != null) {
+      list.add(new PropertyChange(property, previousValue, currentValue));
     }
   }
 
@@ -825,11 +850,13 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected boolean writeUserOperationLogOnlyWithLoggedInUser() {
-    return Context.getCommandContext().isRestrictUserOperationLogToAuthenticatedUsers();
+    CommandContext commandContext = requireNonNull(Context.getCommandContext());
+    return commandContext.isRestrictUserOperationLogToAuthenticatedUsers();
   }
 
   protected boolean isUserOperationLogEnabledOnCommandContext() {
-    return Context.getCommandContext().isUserOperationLogEnabled();
+    CommandContext commandContext = requireNonNull(Context.getCommandContext());
+    return commandContext.isUserOperationLogEnabled();
   }
 
   protected String getOperationType(IdentityOperationResult operationResult) {

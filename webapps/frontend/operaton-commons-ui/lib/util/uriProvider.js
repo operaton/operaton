@@ -18,7 +18,7 @@
 'use strict';
 var angular = require('operaton-bpm-sdk-js/vendor/angular');
 
-module.exports = function() {
+module.exports = function () {
   var TEMPLATES_PATTERN = /[\w]+:\/\/|:[\w]+/g;
 
   var replacements = {};
@@ -46,13 +46,13 @@ module.exports = function() {
    * @param {string} pattern
    * @param {string|Function} replacement string or function
    */
-  this.replace = function(pattern, replacement) {
+  this.replace = function (pattern, replacement) {
     replacements[pattern] = replacement;
   };
 
   this.$get = [
     '$injector',
-    function($injector) {
+    function ($injector) {
       return {
         /**
          * @function
@@ -63,7 +63,7 @@ module.exports = function() {
          * @returns {string} the replaced string
          */
         appUri: function appUri(str) {
-          var replaced = str.replace(TEMPLATES_PATTERN, function(template) {
+          var replaced = str.replace(TEMPLATES_PATTERN, function (template) {
             var replacement = replacements[template];
             if (replacement === undefined) {
               return template;
@@ -81,8 +81,8 @@ module.exports = function() {
           });
 
           return replaced;
-        }
+        },
       };
-    }
+    },
   ];
 };

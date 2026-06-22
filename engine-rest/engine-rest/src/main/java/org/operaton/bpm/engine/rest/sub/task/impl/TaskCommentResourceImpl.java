@@ -74,7 +74,7 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
 
     Comment comment = engine.getTaskService().getTaskComment(taskId, commentId);
     if (comment == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Task comment with id " + commentId + " does not exist for task id '" + taskId + "'.");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Task comment with id %s does not exist for task id '%s'.".formatted(commentId, taskId));
     }
 
     return CommentDto.fromComment(comment);
@@ -168,7 +168,7 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
   private void ensureTaskExists(Status status) {
     HistoricTaskInstance historicTaskInstance = engine.getHistoryService().createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
     if (historicTaskInstance == null) {
-      throw new InvalidRequestException(status, "No task found for task id " + taskId);
+      throw new InvalidRequestException(status, "No task found for task id %s".formatted(taskId));
     }
   }
 

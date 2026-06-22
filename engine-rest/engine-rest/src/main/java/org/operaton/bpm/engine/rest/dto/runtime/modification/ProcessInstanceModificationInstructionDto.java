@@ -110,7 +110,7 @@ public abstract class ProcessInstanceModificationInstructionDto {
   public abstract void applyTo(InstantiationBuilder<?> builder, ProcessEngine engine, ObjectMapper mapper);
 
   protected String buildErrorMessage(String message) {
-    return "For instruction type '" + type + "': " +  message;
+    return "For instruction type '%s': %s".formatted(type, message);
   }
 
   protected void applyVariables(ActivityInstantiationBuilder<?> builder,

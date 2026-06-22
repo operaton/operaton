@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import java.io.InputStream;
-import java.io.Serial;
-import java.io.Serializable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -34,16 +32,12 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  *
  * @author Simon Zambrovski
  */
-public class GetDeploymentCaseDiagramCmd implements Command<InputStream>, Serializable {
-
-  @Serial
-  private static final long serialVersionUID = 1L;
-
+public class GetDeploymentCaseDiagramCmd implements Command<InputStream> {
   protected String caseDefinitionId;
 
   public GetDeploymentCaseDiagramCmd(String caseDefinitionId) {
     if (caseDefinitionId == null || caseDefinitionId.isEmpty()) {
-      throw new ProcessEngineException("The case definition id is mandatory, but '" + caseDefinitionId + "' has been provided.");
+      throw new ProcessEngineException("The case definition id is mandatory, but '%s' has been provided.".formatted(caseDefinitionId));
     }
     this.caseDefinitionId = caseDefinitionId;
   }

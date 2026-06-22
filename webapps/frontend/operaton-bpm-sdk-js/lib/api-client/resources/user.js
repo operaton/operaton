@@ -46,7 +46,7 @@ User.path = 'user';
  * @param  {String}   options.id
  * @param  {Function} done
  */
-User.options = function(options, done) {
+User.options = function (options, done) {
   var id;
 
   if (typeof options === 'function') {
@@ -62,8 +62,8 @@ User.options = function(options, done) {
   return this.http.options(this.path + '/' + utils.escapeUrl(id), {
     done: done || noop,
     headers: {
-      Accept: 'application/json'
-    }
+      Accept: 'application/json',
+    },
   });
 };
 
@@ -77,7 +77,7 @@ User.options = function(options, done) {
  * @param  {String}   [options.email]
  * @param  {Function} done
  */
-User.create = function(options, done) {
+User.create = function (options, done) {
   options = options || {};
   done = done || noop;
 
@@ -95,11 +95,11 @@ User.create = function(options, done) {
     profile: {
       id: options.id,
       firstName: options.firstName,
-      lastName: options.lastName
+      lastName: options.lastName,
     },
     credentials: {
-      password: options.password
-    }
+      password: options.password,
+    },
   };
 
   if (options.email) {
@@ -108,7 +108,7 @@ User.create = function(options, done) {
 
   return this.http.post(this.path + '/create', {
     data: data,
-    done: done
+    done: done,
   });
 };
 
@@ -129,7 +129,7 @@ User.create = function(options, done) {
  * @param {String} [options.maxResults]    Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  * @param  {Function} done
  */
-User.list = function(options, done) {
+User.list = function (options, done) {
   if (typeof options === 'function') {
     done = options;
     options = {};
@@ -138,7 +138,7 @@ User.list = function(options, done) {
   }
   return this.http.get(this.path, {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -154,7 +154,7 @@ User.list = function(options, done) {
  * @param {String} [options.memberOfGroup] users which are members of a group.
  * @param  {Function} done
  */
-User.count = function(options, done) {
+User.count = function (options, done) {
   if (typeof options === 'function') {
     done = options;
     options = {};
@@ -164,7 +164,7 @@ User.count = function(options, done) {
 
   return this.http.get(this.path + '/count', {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -174,11 +174,11 @@ User.count = function(options, done) {
  * @param  {uuid}         options.id
  * @param  {Function} done
  */
-User.profile = function(options, done) {
+User.profile = function (options, done) {
   var id = typeof options === 'string' ? options : options.id;
 
   return this.http.get(this.path + '/' + utils.escapeUrl(id) + '/profile', {
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -191,7 +191,7 @@ User.profile = function(options, done) {
  * @param  {String}   [options.email]
  * @param  {Function} done
  */
-User.updateProfile = function(options, done) {
+User.updateProfile = function (options, done) {
   options = options || {};
   done = done || noop;
 
@@ -205,8 +205,8 @@ User.updateProfile = function(options, done) {
     this.path + '/' + utils.escapeUrl(options.id) + '/profile',
     {
       data: options,
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -218,7 +218,7 @@ User.updateProfile = function(options, done) {
  * @param {String} [options.authenticatedUserPassword]  The password of the authenticated user who changes the password of the user (ie. the user with passed id as path parameter).
  * @param  {Function} done
  */
-User.updateCredentials = function(options, done) {
+User.updateCredentials = function (options, done) {
   options = options || {};
   done = done || noop;
   var err;
@@ -236,7 +236,7 @@ User.updateCredentials = function(options, done) {
   }
 
   var data = {
-    password: options.password
+    password: options.password,
   };
 
   if (options.authenticatedUserPassword) {
@@ -247,8 +247,8 @@ User.updateCredentials = function(options, done) {
     this.path + '/' + utils.escapeUrl(options.id) + '/credentials',
     {
       data: data,
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -258,11 +258,11 @@ User.updateCredentials = function(options, done) {
  * @param  {uuid} options.id
  * @param  {Function} done
  */
-User.delete = function(options, done) {
+User.delete = function (options, done) {
   var id = typeof options === 'string' ? options : options.id;
 
   return this.http.del(this.path + '/' + utils.escapeUrl(id), {
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -272,11 +272,11 @@ User.delete = function(options, done) {
  * @param  {uuid} options.id
  * @param  {Function} done
  */
-User.unlock = function(options, done) {
+User.unlock = function (options, done) {
   var id = typeof options === 'string' ? options : options.id;
 
   return this.http.post(this.path + '/' + utils.escapeUrl(id) + '/unlock', {
-    done: done || noop
+    done: done || noop,
   });
 };
 

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.delegate;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.impl.interceptor.DelegateInterceptor;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
+import org.operaton.bpm.engine.repository.ResourceDefinition;
 
 /**
  * Provides context about the invocation of usercode and handles the actual
@@ -31,7 +32,7 @@ public abstract class DelegateInvocation {
 
   protected Object invocationResult;
   protected BaseDelegateExecution contextExecution;
-  protected ResourceDefinitionEntity contextResource;
+  protected ResourceDefinitionEntity<? extends ResourceDefinition> contextResource;
 
   /**
    * Provide a context execution or resource definition in which context the invocation
@@ -40,7 +41,7 @@ public abstract class DelegateInvocation {
    *
    * @param contextExecution set to an execution
    */
-  protected DelegateInvocation(BaseDelegateExecution contextExecution, ResourceDefinitionEntity contextResource) {
+  protected DelegateInvocation(BaseDelegateExecution contextExecution, ResourceDefinitionEntity<? extends ResourceDefinition> contextResource) {
     // This constructor forces sub classes to call it, thereby making it more visible
     // whether a context switch is going to be performed for them.
     this.contextExecution = contextExecution;
@@ -75,7 +76,7 @@ public abstract class DelegateInvocation {
     return contextExecution;
   }
 
-  public ResourceDefinitionEntity getContextResource() {
+  public ResourceDefinitionEntity<? extends ResourceDefinition> getContextResource() {
     return contextResource;
   }
 }

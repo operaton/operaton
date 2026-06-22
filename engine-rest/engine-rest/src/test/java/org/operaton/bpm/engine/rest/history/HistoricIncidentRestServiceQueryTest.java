@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -657,7 +656,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   void testQueryByTenantIds() {
-    mockedQuery = setUpMockHistoricIncidentQuery(Arrays.asList(
+    mockedQuery = setUpMockHistoricIncidentQuery(List.of(
         MockProvider.createMockHistoricIncident(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricIncident(MockProvider.ANOTHER_EXAMPLE_TENANT_ID)));
 

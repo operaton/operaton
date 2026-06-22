@@ -55,49 +55,52 @@ public class PropertiesAwareSpringTopicSubscription extends SpringTopicSubscript
     String topicName = merge.getTopicName();
     SubscriptionConfiguration subscriptionProperties = clientProperties.findSubscriptionPropsByTopicName(topicName);
 
-    if (subscriptionProperties != null) {
-      if (subscriptionProperties.getAutoOpen() != null) {
-        merge.setAutoOpen(subscriptionProperties.getAutoOpen());
-      }
-      if (subscriptionProperties.getLockDuration() != null) {
-        merge.setLockDuration(subscriptionProperties.getLockDuration());
-      }
-      if (subscriptionProperties.getVariableNames() != null) {
-        merge.setVariableNames(subscriptionProperties.getVariableNames());
-      }
-      if (subscriptionProperties.getBusinessKey() != null) {
-        merge.setBusinessKey(subscriptionProperties.getBusinessKey());
-      }
-      if (subscriptionProperties.getProcessDefinitionId() != null) {
-        merge.setProcessDefinitionId(subscriptionProperties.getProcessDefinitionId());
-      }
-      if (subscriptionProperties.getProcessDefinitionIdIn() != null) {
-        merge.setProcessDefinitionIdIn(subscriptionProperties.getProcessDefinitionIdIn());
-      }
-      if (subscriptionProperties.getProcessDefinitionKey() != null) {
-        merge.setProcessDefinitionKey(subscriptionProperties.getProcessDefinitionKey());
-      }
-      if (subscriptionProperties.getProcessDefinitionKeyIn() != null) {
-        merge.setProcessDefinitionKeyIn(subscriptionProperties.getProcessDefinitionKeyIn());
-      }
-      if (subscriptionProperties.getProcessDefinitionVersionTag() != null) {
-        merge.setProcessDefinitionVersionTag(subscriptionProperties.getProcessDefinitionVersionTag());
-      }
-      if (subscriptionProperties.getProcessVariables() != null) {
-        merge.setProcessVariables(subscriptionProperties.getProcessVariables());
-      }
-      if (subscriptionProperties.getWithoutTenantId() != null) {
-        merge.setWithoutTenantId(subscriptionProperties.getWithoutTenantId());
-      }
-      if (subscriptionProperties.getTenantIdIn() != null) {
-        merge.setTenantIdIn(subscriptionProperties.getTenantIdIn());
-      }
-      if (subscriptionProperties.getIncludeExtensionProperties() != null) {
-        merge.setIncludeExtensionProperties(subscriptionProperties.getIncludeExtensionProperties());
-      }
-
-      setSubscriptionConfiguration(merge);
+    if (subscriptionProperties == null) {
+      return;
     }
+
+    if (subscriptionProperties.getAutoOpen() != null) {
+      merge.setAutoOpen(subscriptionProperties.getAutoOpen());
+    }
+    if (subscriptionProperties.getLockDuration() != null) {
+      merge.setLockDuration(subscriptionProperties.getLockDuration());
+    }
+    if (subscriptionProperties.getVariableNames() != null) {
+      merge.setVariableNames(subscriptionProperties.getVariableNames());
+    }
+    if (subscriptionProperties.getBusinessKey() != null) {
+      merge.setBusinessKey(subscriptionProperties.getBusinessKey());
+    }
+    if (subscriptionProperties.getProcessDefinitionId() != null) {
+      merge.setProcessDefinitionId(subscriptionProperties.getProcessDefinitionId());
+    }
+    if (subscriptionProperties.getProcessDefinitionIdIn() != null) {
+      merge.setProcessDefinitionIdIn(subscriptionProperties.getProcessDefinitionIdIn());
+    }
+    if (subscriptionProperties.getProcessDefinitionKey() != null) {
+      merge.setProcessDefinitionKey(subscriptionProperties.getProcessDefinitionKey());
+    }
+    if (subscriptionProperties.getProcessDefinitionKeyIn() != null) {
+      merge.setProcessDefinitionKeyIn(subscriptionProperties.getProcessDefinitionKeyIn());
+    }
+    if (subscriptionProperties.getProcessDefinitionVersionTag() != null) {
+      merge.setProcessDefinitionVersionTag(subscriptionProperties.getProcessDefinitionVersionTag());
+    }
+    if (subscriptionProperties.getProcessVariables() != null) {
+      merge.setProcessVariables(subscriptionProperties.getProcessVariables());
+    }
+    if (subscriptionProperties.getWithoutTenantId() != null) {
+      merge.setWithoutTenantId(subscriptionProperties.getWithoutTenantId());
+    }
+    if (subscriptionProperties.getTenantIdIn() != null) {
+      merge.setTenantIdIn(subscriptionProperties.getTenantIdIn());
+    }
+    if (subscriptionProperties.getIncludeExtensionProperties() != null) {
+      merge.setIncludeExtensionProperties(subscriptionProperties.getIncludeExtensionProperties());
+    }
+
+    setSubscriptionConfiguration(merge);
+
   }
 
 }

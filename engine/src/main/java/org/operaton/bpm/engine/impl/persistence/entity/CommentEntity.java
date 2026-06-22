@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,13 +31,10 @@ import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Event;
 
-
 /**
  * @author Tom Baeyens
  */
-public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
 
   public static final String TYPE_EVENT = "event";
   public static final String TYPE_COMMENT = "comment";
@@ -95,7 +91,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   @Override
   public List<String> getMessageParts() {
     if (message==null) {
-      return null;
+      return Collections.emptyList();
     }
     List<String> messageParts = new ArrayList<>();
     StringTokenizer tokenizer = new StringTokenizer(message, MESSAGE_PARTS_MARKER);

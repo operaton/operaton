@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getComments"
       tag = "Task Comment"
-      summary = "Get List"
+      summary = "List Task Comments"
       desc = "Gets the comments for a task by id." />
 
   "parameters" : [
@@ -66,10 +66,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "No task exists for the given task id. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

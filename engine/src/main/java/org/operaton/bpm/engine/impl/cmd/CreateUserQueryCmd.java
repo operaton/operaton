@@ -16,21 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-
 /**
  * @author Tom Baeyens
  */
-public class CreateUserQueryCmd implements Command<UserQuery>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class CreateUserQueryCmd implements Command<UserQuery> {
   @Override
   public UserQuery execute(CommandContext commandContext) {
     return commandContext

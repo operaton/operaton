@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +66,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -122,7 +121,7 @@ class RestartProcessInstanceAsyncTest {
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
 
-    List<String> processInstanceIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> processInstanceIds = List.of(processInstance1.getId(), processInstance2.getId());
 
     // when
     Batch batch = runtimeService.restartProcessInstances(processDefinition.getId())
@@ -136,12 +135,9 @@ class RestartProcessInstanceAsyncTest {
 
   @Test
   void restartProcessInstanceWithNullProcessDefinitionId() {
-    try {
-      runtimeService.restartProcessInstances(null);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("processDefinitionId is null");
-    }
+    assertThatThrownBy(() -> runtimeService.restartProcessInstances(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("processDefinitionId is null");
   }
 
   @Test
@@ -150,23 +146,18 @@ class RestartProcessInstanceAsyncTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
     var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(processDefinition.getId()).processInstanceIds(processInstance.getId());
 
-    try {
-      restartProcessInstanceBuilder.executeAsync();
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("instructions is empty");
-    }
+    assertThatThrownBy(restartProcessInstanceBuilder::executeAsync)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("instructions is empty");
   }
 
   @Test
   void restartProcessInstanceWithoutProcessInstanceIds() {
     var restartProcessInstanceBuilder = runtimeService.restartProcessInstances("foo").startAfterActivity("bar");
-    try {
-      restartProcessInstanceBuilder.executeAsync();
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("processInstanceIds is empty");
-    }
+
+    assertThatThrownBy(restartProcessInstanceBuilder::executeAsync)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("processInstanceIds is empty");
   }
 
   @Test
@@ -174,12 +165,10 @@ class RestartProcessInstanceAsyncTest {
     var restartProcessInstanceBuilder = runtimeService.restartProcessInstances("foo")
       .startAfterActivity("bar")
       .processInstanceIds((String) null);
-    try {
-      restartProcessInstanceBuilder.executeAsync();
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("processInstanceIds contains null value");
-    }
+
+    assertThatThrownBy(restartProcessInstanceBuilder::executeAsync)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("processInstanceIds contains null value");
   }
 
   @Test
@@ -190,12 +179,10 @@ class RestartProcessInstanceAsyncTest {
         .processInstanceIds("aaa")
         .executeAsync();
     helper.completeSeedJobs(batch);
-    try {
-      helper.executeJobs(batch);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Historic process instance cannot be found");
-    }
+
+    assertThatThrownBy(() -> helper.executeJobs(batch))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Historic process instance cannot be found");
   }
 
   @Test
@@ -804,16 +791,14 @@ class RestartProcessInstanceAsyncTest {
   @Test
   void testJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
     // given
-    ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-
-    processEngineConfiguration.setAuthorizationEnabled(true);
+    engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
     ProcessDefinition processDefinition = testRule.deployForTenantAndGetDefinition("tenantId", ProcessModels.TWO_TASKS_PROCESS);
 
     try {
       ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
       ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("Process");
 
-      List<String> list = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+      List<String> list = List.of(processInstance1.getId(), processInstance2.getId());
 
       runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
       runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -864,13 +849,9 @@ class RestartProcessInstanceAsyncTest {
         .processInstanceIds(processInstance.getId())
         .executeAsync();
 
-    try {
-      helper.completeBatch(batch);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("Its process definition '" + processDefinition.getId() + "' does not match given process definition '" + processDefinition2.getId() +"'" );
-    }
+    assertThatThrownBy(() -> helper.completeBatch(batch))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Its process definition '%s' does not match given process definition '%s'".formatted(processDefinition.getId(), processDefinition2.getId()));
   }
 
   @Test
@@ -1135,7 +1116,7 @@ class RestartProcessInstanceAsyncTest {
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
 
-    List<String> processInstanceIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> processInstanceIds = List.of(processInstance1.getId(), processInstance2.getId());
 
     // when
     Batch batch = runtimeService.restartProcessInstances(processDefinition.getId())

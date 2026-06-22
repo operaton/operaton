@@ -52,13 +52,13 @@ import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRe
 @SuppressWarnings("unused") // registered through XML
 public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcessor, BeanClassLoaderAware, BeanFactoryAware, InitializingBean, Ordered {
 
-	private volatile ActivitiStateHandlerRegistry registry;
+	private ActivitiStateHandlerRegistry registry;
 
-	private volatile int order = Ordered.LOWEST_PRECEDENCE;
+	private int order = Ordered.LOWEST_PRECEDENCE;
 
-	private volatile BeanFactory beanFactory;
+	private BeanFactory beanFactory;
 
-	private volatile ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
+	private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
   @Override
   public void setBeanFactory(BeanFactory beanFactory) {

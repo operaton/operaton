@@ -20,13 +20,13 @@
 module.exports = [
   'ProcessDefinitionResource',
   'page',
-  function(ProcessDefinitionResource, page) {
+  function (ProcessDefinitionResource, page) {
     function breadcrumbTrails(
       processInstance,
       fetchSuperInstance,
       trail,
       index,
-      urlSuffix
+      urlSuffix,
     ) {
       trail = trail || [];
 
@@ -41,9 +41,9 @@ module.exports = [
           // TODO: CAM-2017 API definition cleanup
           id:
             superProcessInstance.processDefinitionId ||
-            superProcessInstance.definitionId
+            superProcessInstance.definitionId,
         })
-          .$promise.then(function(response) {
+          .$promise.then(function (response) {
             // var superProcessDefinition = response.data;
             var superProcessDefinition = response;
 
@@ -54,7 +54,8 @@ module.exports = [
                   '#/process-definition/' +
                   superProcessDefinition.id +
                   (urlSuffix ? '/' + urlSuffix : ''),
-                label: superProcessDefinition.name || superProcessDefinition.key
+                label:
+                  superProcessDefinition.name || superProcessDefinition.key,
               },
               {
                 divider: ':',
@@ -62,8 +63,8 @@ module.exports = [
                   '#/process-instance/' +
                   superProcessInstance.id +
                   (urlSuffix ? '/' + urlSuffix : ''),
-                label: superProcessInstance.id.slice(0, 8) + '…'
-              }
+                label: superProcessInstance.id.slice(0, 8) + '…',
+              },
             ].concat(trail);
 
             breadcrumbTrails(
@@ -71,15 +72,15 @@ module.exports = [
               fetchSuperInstance,
               trail,
               index,
-              urlSuffix
+              urlSuffix,
             );
           })
-          .catch(function() {});
+          .catch(function () {});
       }
 
       fetchSuperInstance(processInstance, handleSuperProcessInstance);
     }
 
     return breadcrumbTrails;
-  }
+  },
 ];

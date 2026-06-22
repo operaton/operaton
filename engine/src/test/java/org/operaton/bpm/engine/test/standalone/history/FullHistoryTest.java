@@ -64,7 +64,8 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Tom Baeyens
@@ -815,31 +816,26 @@ class FullHistoryTest {
     assertThat(historyService.createHistoricDetailQuery().processInstanceId(processInstance.getId()).count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
 
-    try {
-      // Delete the historic process-instance, which is still running
-      historyService.deleteHistoricProcessInstance("unexisting");
-      fail("Exception expected when deleting process-instance that is still running");
-    } catch(ProcessEngineException ae) {
-      // Expected exception
-      assertThat(ae.getMessage()).contains("No historic process instance found with id: unexisting");
-    }
+    // when/then
+    // Delete the historic process-instance, which is still running
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstance("unexisting"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic process instance found with id: unexisting");
   }
 
   @Test
   @Deployment
   void testDeleteRunningHistoricProcessInstance() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest");
     assertThat(processInstance).isNotNull();
     var processInstanceId = processInstance.getId();
 
-    try {
-      // Delete the historic process-instance, which is still running
-      historyService.deleteHistoricProcessInstance(processInstanceId);
-      fail("Exception expected when deleting process-instance that is still running");
-    } catch(ProcessEngineException ae) {
-      // Expected exception
-      assertThat(ae.getMessage()).contains("Process instance is still running, cannot delete historic process instance");
-    }
+    // when/then
+    // Delete the historic process-instance, which is still running
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstance(processInstanceId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance is still running, cannot delete historic process instance");
   }
 
   @Test

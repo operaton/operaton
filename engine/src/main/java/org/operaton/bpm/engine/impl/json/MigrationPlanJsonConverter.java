@@ -22,13 +22,13 @@ import org.operaton.bpm.engine.impl.migration.MigrationPlanImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 
-public class MigrationPlanJsonConverter extends JsonObjectConverter<MigrationPlan> {
-
-  public static final MigrationPlanJsonConverter INSTANCE = new MigrationPlanJsonConverter();
+public class MigrationPlanJsonConverter implements JsonObjectConverter<MigrationPlan> {
 
   public static final String SOURCE_PROCESS_DEFINITION_ID = "sourceProcessDefinitionId";
   public static final String TARGET_PROCESS_DEFINITION_ID = "targetProcessDefinitionId";
   public static final String INSTRUCTIONS = "instructions";
+
+  private static final MigrationInstructionJsonConverter MIGRATION_INSTRUCTION_JSON_CONVERTER = new MigrationInstructionJsonConverter();
 
   @Override
   public JsonObject toJsonObject(MigrationPlan migrationPlan) {
@@ -36,7 +36,7 @@ public class MigrationPlanJsonConverter extends JsonObjectConverter<MigrationPla
 
     JsonUtil.addField(json, SOURCE_PROCESS_DEFINITION_ID, migrationPlan.getSourceProcessDefinitionId());
     JsonUtil.addField(json, TARGET_PROCESS_DEFINITION_ID, migrationPlan.getTargetProcessDefinitionId());
-    JsonUtil.addListField(json, INSTRUCTIONS, MigrationInstructionJsonConverter.INSTANCE, migrationPlan.getInstructions());
+    JsonUtil.addListField(json, INSTRUCTIONS, MIGRATION_INSTRUCTION_JSON_CONVERTER, migrationPlan.getInstructions());
 
     return json;
   }
@@ -45,7 +45,7 @@ public class MigrationPlanJsonConverter extends JsonObjectConverter<MigrationPla
   public MigrationPlan toObject(JsonObject json) {
     MigrationPlanImpl migrationPlan = new MigrationPlanImpl(JsonUtil.getString(json, SOURCE_PROCESS_DEFINITION_ID), JsonUtil.getString(json, TARGET_PROCESS_DEFINITION_ID));
 
-    migrationPlan.setInstructions(JsonUtil.asList(JsonUtil.getArray(json, INSTRUCTIONS), MigrationInstructionJsonConverter.INSTANCE));
+    migrationPlan.setInstructions(JsonUtil.asList(JsonUtil.getArray(json, INSTRUCTIONS), MIGRATION_INSTRUCTION_JSON_CONVERTER));
 
     return migrationPlan;
   }

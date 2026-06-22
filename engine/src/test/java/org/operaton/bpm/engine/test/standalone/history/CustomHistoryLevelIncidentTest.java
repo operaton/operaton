@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -68,10 +67,10 @@ public class CustomHistoryLevelIncidentTest {
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
-      new Object[]{ Arrays.asList(HistoryEventTypes.INCIDENT_CREATE) },
-      new Object[]{ Arrays.asList(HistoryEventTypes.INCIDENT_CREATE, HistoryEventTypes.INCIDENT_RESOLVE) },
-      new Object[]{ Arrays.asList(HistoryEventTypes.INCIDENT_DELETE, HistoryEventTypes.INCIDENT_CREATE, HistoryEventTypes.INCIDENT_MIGRATE, HistoryEventTypes.INCIDENT_RESOLVE) }
+    return List.of(new Object[][] {
+      new Object[]{ List.of(HistoryEventTypes.INCIDENT_CREATE) },
+      new Object[]{ List.of(HistoryEventTypes.INCIDENT_CREATE, HistoryEventTypes.INCIDENT_RESOLVE) },
+      new Object[]{ List.of(HistoryEventTypes.INCIDENT_DELETE, HistoryEventTypes.INCIDENT_CREATE, HistoryEventTypes.INCIDENT_MIGRATE, HistoryEventTypes.INCIDENT_RESOLVE) }
     });
   }
 
@@ -276,7 +275,7 @@ public class CustomHistoryLevelIncidentTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(sourceProcessDefinition.getId());
 
-    return runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList(processInstance.getId(), "unknownId")).executeAsync();
+    return runtimeService.newMigration(migrationPlan).processInstanceIds(List.of(processInstance.getId(), "unknownId")).executeAsync();
   }
 
   protected BpmnModelInstance createModelInstance() {

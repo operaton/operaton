@@ -185,6 +185,7 @@ public class HistoryParseListener implements BpmnParseListener {
 
   @Override
   public void parseIntermediateSignalCatchEventDefinition(Element signalEventDefinition, ActivityImpl signalActivity) {
+    // nothing to do
   }
 
   @Override

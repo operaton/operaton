@@ -32,8 +32,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -117,14 +117,10 @@ class CallActivityDelegateMappingTest {
       "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
   void testCallSubProcessWithDelegatedVariableMappingNotFound() {
-    try {
-      runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
-      fail("Execption expected!");
-    } catch (ProcessEngineException e) {
-      //Exception while instantiating class 'org.operaton.bpm.engine.test.bpmn.callactivity.NotFoundMapping'
-      assertEquals("ENGINE-09008 Exception while instantiating class 'org.operaton.bpm.engine.test.bpmn.callactivity.NotFoundMapping': ENGINE-09017 Cannot load class 'org.operaton.bpm.engine.test.bpmn.callactivity.NotFoundMapping': org.operaton.bpm.engine.test.bpmn.callactivity.NotFoundMapping",
-              e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("callSimpleSubProcess"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("ENGINE-09008 Exception while instantiating class 'org.operaton.bpm.engine.test.bpmn.callactivity.NotFoundMapping': ENGINE-09017 Cannot load class 'org.operaton.bpm.engine.test.bpmn.callactivity.NotFoundMapping': org.operaton.bpm.engine.test.bpmn.callactivity.NotFoundMapping");
   }
 
   @Test
@@ -133,14 +129,10 @@ class CallActivityDelegateMappingTest {
       "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"
   })
   void testCallSubProcessWithDelegatedVariableMappingeExpressionNotFound() {
-    try {
-      runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
-      fail("Exception expected!");
-    } catch (ProcessEngineException pex) {
-      assertEquals(
-              "Unknown property used in expression: ${notFound}. Cause: Cannot resolve identifier 'notFound'",
-              pex.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("callSimpleSubProcess"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Unknown property used in expression: ${notFound}. Cause: Cannot resolve identifier 'notFound'");
   }
 
   private void delegateVariableMappingThrowException() {
@@ -149,16 +141,14 @@ class CallActivityDelegateMappingTest {
     TaskQuery taskQuery = taskService.createTaskQuery();
     Task taskBeforeSubProcess = taskQuery.singleResult();
     assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
+    var taskId = taskBeforeSubProcess.getId();
 
-    //when completing the task continues the process which leads to calling the subprocess
+    //when/then completing the task continues the process which leads to calling the subprocess
     //which throws an exception
-    try {
-      taskService.complete(taskBeforeSubProcess.getId());
-      fail("Exeption expected!");
-    } catch (ProcessEngineException pex) { //then
-      assertThat("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.".equalsIgnoreCase(pex.getMessage())
-          || pex.getMessage().contains("1234")).isTrue();
-    }
+    assertThatThrownBy(() -> taskService.complete(taskId))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(pex -> assertThat("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.".equalsIgnoreCase(pex.getMessage())
+          || pex.getMessage().contains("1234")).isTrue());
 
     //then process rollback to user task which is before sub process
     //not catched by boundary event
@@ -218,16 +208,14 @@ class CallActivityDelegateMappingTest {
     assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
     taskService.complete(taskBeforeSubProcess.getId());
     Task taskInSubProcess = taskQuery.singleResult();
+    var taskInSubProcessId = taskInSubProcess.getId();
 
-    //when completing the task continues the process which leads to calling the output mapping
+    //when/then completing the task continues the process which leads to calling the output mapping
     //which throws an exception
-    try {
-      taskService.complete(taskInSubProcess.getId());
-      fail("Exeption expected!");
-    } catch (ProcessEngineException pex) { //then
-      assertThat("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.".equalsIgnoreCase(pex.getMessage())
-          || pex.getMessage().contains("1234")).isTrue();
-    }
+    assertThatThrownBy(() -> taskService.complete(taskInSubProcessId))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(pex -> assertThat("org.operaton.bpm.engine.ProcessEngineException: New process engine exception.".equalsIgnoreCase(pex.getMessage())
+          || pex.getMessage().contains("1234")).isTrue());
 
     //then process rollback to user task which is in sub process
     //not catched by boundary event

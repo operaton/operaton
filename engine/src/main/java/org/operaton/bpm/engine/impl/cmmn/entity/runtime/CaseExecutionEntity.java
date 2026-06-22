@@ -68,8 +68,14 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACT
  *
  */
 public class CaseExecutionEntity extends CmmnExecution implements CaseExecution, CaseInstance, DbEntity, HasDbRevision, HasDbReferences, VariablesProvider<VariableInstanceEntity> {
-
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
+  private static final CmmnVariableInvocationListener CMMN_VARIABLE_INVOCATION_LISTENER = new CmmnVariableInvocationListener();
+  private static final VariableInstanceEntityPersistenceListener VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER = new VariableInstanceEntityPersistenceListener();
+  private static final VariableInstanceHistoryListener VARIABLE_INSTANCE_HISTORY_LISTENER = new VariableInstanceHistoryListener();
+  private static final VariableInstanceSequenceCounterListener VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER = new VariableInstanceSequenceCounterListener();
+  @SuppressWarnings("rawtypes")
+  private static final VariableInstanceFactory VARIABLE_INSTANCE_FACTORY = new VariableInstanceEntityFactory();
 
   // current position /////////////////////////////////////////////////////////
 
@@ -81,11 +87,11 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   protected transient CaseExecutionEntity parent;
 
   /** nested executions */
-  protected List<CaseExecutionEntity> caseExecutions;
+  private List<CaseExecutionEntity> caseExecutions;
 
   /** nested case sentry parts */
-  protected List<CaseSentryPartEntity> caseSentryParts;
-  protected Map<String, List<CmmnSentryPart>> sentries;
+  private List<CaseSentryPartEntity> caseSentryParts;
+  private Map<String, List<CmmnSentryPart>> sentries;
 
   /** reference to a sub process instance, not-null if currently subprocess is started from this execution */
   protected transient ExecutionEntity subProcessInstance;
@@ -99,7 +105,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   // associated entities /////////////////////////////////////////////////////
 
   @SuppressWarnings({ "unchecked" })
-  protected VariableStore<VariableInstanceEntity> variableStore = new VariableStore<>(
+  private transient VariableStore<VariableInstanceEntity> variableStore = new VariableStore<>(
       this, new CaseExecutionEntityReferencer(this));
 
   // Persistence //////////////////////////////////////////////////////////////
@@ -112,7 +118,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   protected String superCaseExecutionId;
   protected String superExecutionId;
 
-  // activity properites //////////////////////////////////////////////////////
+  // activity properties //////////////////////////////////////////////////////
 
   protected String activityName;
   protected String activityType;
@@ -176,7 +182,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
   protected void ensureParentInitialized() {
     if (parent == null && parentId != null) {
-      if(isExecutionTreePrefetchEnabled()) {
+      if (isExecutionTreePrefetchEnabled()) {
         ensureCaseExecutionTreeInitialized();
 
       } else {
@@ -203,17 +209,17 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
     for (CaseExecutionEntity execution : executions) {
       execution.caseExecutions = new ArrayList<>();
       executionMap.put(execution.getId(), execution);
-      if(execution.isCaseInstanceExecution()) {
+      if (execution.isCaseInstanceExecution()) {
         caseExecutionInstance = execution;
       }
     }
 
     for (CaseExecutionEntity execution : executions) {
-      CaseExecutionEntity parent = executionMap.get(execution.getParentId());
-      if(!execution.isCaseInstanceExecution()) {
+      CaseExecutionEntity parentExecutionEntity = executionMap.get(execution.getParentId());
+      if (!execution.isCaseInstanceExecution()) {
         execution.caseInstance = caseExecutionInstance;
-        execution.parent = parent;
-        parent.caseExecutions.add(execution);
+        execution.parent = parentExecutionEntity;
+        parentExecutionEntity.caseExecutions.add(execution);
       } else {
         execution.caseInstance = execution;
       }
@@ -384,7 +390,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   @Override
   public void create(Map<String, Object> variables) {
     // determine tenant Id if null
-    if(tenantId == null) {
+    if (tenantId == null) {
       provideTenantId(variables);
     }
     super.create(variables);
@@ -393,19 +399,17 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   protected void provideTenantId(Map<String, Object> variables) {
     TenantIdProvider tenantIdProvider = Context.getProcessEngineConfiguration().getTenantIdProvider();
 
-    if(tenantIdProvider != null) {
+    if (tenantIdProvider != null) {
       VariableMap variableMap = Variables.fromMap(variables);
       CaseDefinition caseDefinition = (CaseDefinition) getCaseDefinition();
 
       TenantIdProviderCaseInstanceContext ctx = null;
 
-      if(superExecutionId != null) {
+      if (superExecutionId != null) {
         ctx = new TenantIdProviderCaseInstanceContext(caseDefinition, variableMap, getSuperExecution());
-      }
-      else if(superCaseExecutionId != null) {
+      } else if (superCaseExecutionId != null) {
         ctx = new TenantIdProviderCaseInstanceContext(caseDefinition, variableMap, getSuperCaseExecution());
-      }
-      else {
+      } else {
         ctx = new TenantIdProviderCaseInstanceContext(caseDefinition, variableMap);
       }
 
@@ -430,7 +434,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
     child.setCaseDefinition(getCaseDefinition());
 
     // inherit the tenant id from parent case execution
-    if(tenantId != null) {
+    if (tenantId != null) {
       child.setTenantId(tenantId);
     }
 
@@ -521,8 +525,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
     String tenantId = ((ProcessDefinitionEntity) processDefinition).getTenantId();
     if (tenantId != null) {
       subProcess.setTenantId(tenantId);
-    }
-    else {
+    } else {
       // if process definition has no tenant id, inherit this case instance's tenant id
       subProcess.setTenantId(this.tenantId);
     }
@@ -571,8 +574,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
     String tenantId = ((CaseDefinitionEntity) caseDefinition).getTenantId();
     if (tenantId != null) {
       subCase.setTenantId(tenantId);
-    }
-    else {
+    } else {
       // if case definition has no tenant id, inherit this case instance's tenant id
       subCase.setTenantId(this.tenantId);
     }
@@ -711,16 +713,16 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) VariableInstanceEntityFactory.INSTANCE;
+    return VARIABLE_INSTANCE_FACTORY;
   }
 
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   protected List<VariableInstanceLifecycleListener<CoreVariableInstance>> getVariableInstanceLifecycleListeners() {
-    return Arrays.<VariableInstanceLifecycleListener<CoreVariableInstance>>asList((VariableInstanceLifecycleListener) VariableInstanceEntityPersistenceListener.INSTANCE,
-        (VariableInstanceLifecycleListener) VariableInstanceSequenceCounterListener.INSTANCE,
-        (VariableInstanceLifecycleListener) VariableInstanceHistoryListener.INSTANCE,
-        (VariableInstanceLifecycleListener) CmmnVariableInvocationListener.INSTANCE,
+    return Arrays.asList((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
+        (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER,
+        (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_HISTORY_LISTENER,
+        (VariableInstanceLifecycleListener) CMMN_VARIABLE_INVOCATION_LISTENER,
         (VariableInstanceLifecycleListener) new VariableOnPartListener(this)
       );
 
@@ -747,9 +749,9 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   @Override
   public String toString() {
     if (isCaseInstanceExecution()) {
-      return "CaseInstance["+getToStringIdentity()+"]";
+      return "CaseInstance[%s]".formatted(getToStringIdentity());
     } else {
-      return "CaseExecution["+getToStringIdentity()+"]";
+      return "CaseExecution[%s]".formatted(getToStringIdentity());
     }
   }
 
@@ -761,13 +763,13 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   // delete/remove ///////////////////////////////////////////////////////
 
   @Override
-  @SuppressWarnings({"unchecked", "rawtypes"})
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public void remove() {
     super.remove();
 
     for (VariableInstanceEntity variableInstance : variableStore.getVariables()) {
       invokeVariableLifecycleListenersDelete(variableInstance, this,
-          Arrays.<VariableInstanceLifecycleListener<CoreVariableInstance>>asList((VariableInstanceLifecycleListener) VariableInstanceEntityPersistenceListener.INSTANCE));
+          Arrays.asList((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER));
       variableStore.removeVariable(variableInstance.getName());
     }
 
@@ -823,8 +825,8 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   }
 
   @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (parentId != null) {
       referenceIdAndClass.put(parentId, CaseExecutionEntity.class);
@@ -854,7 +856,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
   @Override
   public CmmnModelInstance getCmmnModelInstance() {
-    if(caseDefinitionId != null) {
+    if (caseDefinitionId != null) {
 
       return Context.getProcessEngineConfiguration()
         .getDeploymentCache()
@@ -869,20 +871,16 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   @Override
   public CmmnElement getCmmnModelElementInstance() {
     CmmnModelInstance cmmnModelInstance = getCmmnModelInstance();
-    if(cmmnModelInstance != null) {
-
+    if (cmmnModelInstance != null) {
       ModelElementInstance modelElementInstance = cmmnModelInstance.getModelElementById(activityId);
 
       try {
         return (CmmnElement) modelElementInstance;
-
-      } catch(ClassCastException e) {
+      } catch (ClassCastException e) {
         ModelElementType elementType = modelElementInstance.getElementType();
-        throw new ProcessEngineException("Cannot cast "+modelElementInstance+" to CmmnElement. "
-            + "Is of type "+elementType.getTypeName() + " Namespace "
-            + elementType.getTypeNamespace(), e);
+        throw new ProcessEngineException("Cannot cast %s to CmmnElement. Is of type %s Namespace %s"
+            .formatted(modelElementInstance, elementType.getTypeName(), elementType.getTypeNamespace()), e);
       }
-
     } else {
       return null;
     }

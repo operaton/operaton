@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -64,6 +65,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  */
 public class GetActivityInstanceCmd implements Command<ActivityInstance> {
+  private static final ExecutionIdComparator EXECUTION_ID_COMPARATOR = new ExecutionIdComparator();
 
   protected String processInstanceId;
 
@@ -73,33 +75,22 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
 
   @Override
   public ActivityInstance execute(CommandContext commandContext) {
-
     ensureNotNull("processInstanceId", processInstanceId);
-    List<ExecutionEntity> executionList = loadProcessInstance(processInstanceId, commandContext);
 
+    List<ExecutionEntity> executionList = loadProcessInstance(processInstanceId, commandContext);
     if (executionList.isEmpty()) {
       return null;
     }
 
     checkGetActivityInstance(processInstanceId, commandContext);
-
-    List<ExecutionEntity> nonEventScopeExecutions = filterNonEventScopeExecutions(executionList);
-    List<ExecutionEntity> leaves = filterLeaves(nonEventScopeExecutions);
-    // Leaves must be ordered in a predictable way (e.g. by ID)
-    // in order to return a stable execution tree with every repeated invocation of this command.
-    // For legacy process instances, there may miss scope executions for activities that are now a scope.
-    // In this situation, there may be multiple scope candidates for the same instance id; which one
-    // can depend on the order the leaves are iterated.
-    orderById(leaves);
+    List<ExecutionEntity> leaves = getLeaves(executionList);
 
     ExecutionEntity processInstance = filterProcessInstance(executionList);
-
     if (processInstance.isEnded()) {
       return null;
     }
 
     Map<String, List<Incident>> incidents = groupIncidentIdsByExecutionId(commandContext);
-
     // create act instance for process instance
     ActivityInstanceImpl processActInst = createActivityInstance(
       processInstance,
@@ -110,83 +101,97 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
 
     Map<String, ActivityInstanceImpl> activityInstances = new HashMap<>();
     activityInstances.put(processInstanceId, processActInst);
-
     Map<String, TransitionInstanceImpl> transitionInstances = new HashMap<>();
-
-
     for (ExecutionEntity leaf : leaves) {
-      // skip leafs without activity, e.g. if only the process instance exists after cancellation
-      // it will not have an activity set
-      if (leaf.getActivity() == null) {
-        continue;
-      }
-
-      Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = leaf.createActivityExecutionMapping();
-      Map<ScopeImpl, PvmExecutionImpl> scopeInstancesToCreate = new HashMap<>(activityExecutionMapping);
-
-      // create an activity/transition instance for each leaf that executes a non-scope activity
-      // and does not throw compensation
-      if (leaf.getActivityInstanceId() != null) {
-
-        if (!CompensationBehavior.isCompensationThrowing(leaf) || LegacyBehavior.isCompensationThrowing(leaf, activityExecutionMapping)) {
-          String parentActivityInstanceId = null;
-
-          parentActivityInstanceId = activityExecutionMapping
-              .get(leaf.getActivity().getFlowScope())
-              .getParentActivityInstanceId();
-
-          ActivityInstanceImpl leafInstance = createActivityInstance(leaf,
-              leaf.getActivity(),
-              leaf.getActivityInstanceId(),
-              parentActivityInstanceId,
-              incidents);
-          activityInstances.put(leafInstance.getId(), leafInstance);
-
-          scopeInstancesToCreate.remove(leaf.getActivity());
-        }
-      }
-      else {
-        TransitionInstanceImpl transitionInstance = createTransitionInstance(leaf, incidents);
-        transitionInstances.put(transitionInstance.getId(), transitionInstance);
-
-        scopeInstancesToCreate.remove(leaf.getActivity());
-      }
-
-      LegacyBehavior.removeLegacyNonScopesFromMapping(scopeInstancesToCreate);
-      scopeInstancesToCreate.remove(leaf.getProcessDefinition());
-
-      // create an activity instance for each scope (including compensation throwing executions)
-      for (Map.Entry<ScopeImpl, PvmExecutionImpl> scopeExecutionEntry : scopeInstancesToCreate.entrySet()) {
-        ScopeImpl scope = scopeExecutionEntry.getKey();
-        PvmExecutionImpl scopeExecution = scopeExecutionEntry.getValue();
-
-        String activityInstanceId = null;
-        String parentActivityInstanceId = null;
-
-        activityInstanceId = scopeExecution.getParentActivityInstanceId();
-        parentActivityInstanceId = activityExecutionMapping
-            .get(scope.getFlowScope())
-            .getParentActivityInstanceId();
-
-        if (!activityInstances.containsKey(activityInstanceId)) {
-          // regardless of the tree structure (compacted or not), the scope's activity instance id
-          // is the activity instance id of the parent execution and the parent activity instance id
-          // of that is the actual parent activity instance id
-          ActivityInstanceImpl scopeInstance = createActivityInstance(
-              scopeExecution,
-              scope,
-              activityInstanceId,
-              parentActivityInstanceId,
-              incidents);
-          activityInstances.put(activityInstanceId, scopeInstance);
-        }
-      }
+      processLeaf(leaf, activityInstances, transitionInstances, incidents);
     }
 
     LegacyBehavior.repairParentRelationships(activityInstances.values(), processInstanceId);
     populateChildInstances(activityInstances, transitionInstances);
 
     return processActInst;
+  }
+
+  private List<ExecutionEntity> getLeaves(List<ExecutionEntity> executionList) {
+    List<ExecutionEntity> nonEventScopeExecutions = filterNonEventScopeExecutions(executionList);
+    List<ExecutionEntity> leaves = filterLeaves(nonEventScopeExecutions);
+    // Leaves must be ordered in a predictable way (e.g. by ID)
+    // in order to return a stable execution tree with every repeated invocation of this command.
+    // For legacy process instances, there may miss scope executions for activities that are now a scope.
+    // In this situation, there may be multiple scope candidates for the same instance id; which one
+    // can depend on the order the leaves are iterated.
+    orderById(leaves);
+    return leaves;
+  }
+
+  private void processLeaf(ExecutionEntity leaf, Map<String, ActivityInstanceImpl> activityInstances, Map<String, TransitionInstanceImpl> transitionInstances, Map<String, List<Incident>> incidents) {
+    // skip leafs without activity, e.g. if only the process instance exists after cancellation
+    // it will not have an activity set
+    if (leaf.getActivity() == null) {
+      return;
+    }
+
+    Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = leaf.createActivityExecutionMapping();
+    Map<ScopeImpl, PvmExecutionImpl> scopeInstancesToCreate = new HashMap<>(activityExecutionMapping);
+
+    if (leaf.getActivityInstanceId() != null) {
+      createLeafInstance(leaf, activityExecutionMapping, scopeInstancesToCreate, activityInstances, incidents);
+    }
+    else {
+      createLeafTransitionInstance(leaf, scopeInstancesToCreate, transitionInstances, incidents);
+    }
+
+    createScopeInstances(leaf, activityExecutionMapping, scopeInstancesToCreate, activityInstances, incidents);
+  }
+
+  private void createLeafInstance(ExecutionEntity leaf, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping, Map<ScopeImpl, PvmExecutionImpl> scopeInstancesToCreate, Map<String, ActivityInstanceImpl> activityInstances, Map<String, List<Incident>> incidents) {
+    // create an activity/transition instance for each leaf that executes a non-scope activity
+    // and does not throw compensation
+    if (!CompensationBehavior.isCompensationThrowing(leaf) || LegacyBehavior.isCompensationThrowing(leaf, activityExecutionMapping)) {
+      String parentActivityInstanceId = activityExecutionMapping
+          .get(leaf.getActivity().getFlowScope())
+          .getParentActivityInstanceId();
+
+      ActivityInstanceImpl leafInstance = createActivityInstance(leaf,
+          leaf.getActivity(),
+          leaf.getActivityInstanceId(),
+          parentActivityInstanceId,
+          incidents);
+      activityInstances.put(leafInstance.getId(), leafInstance);
+
+      scopeInstancesToCreate.remove(leaf.getActivity());
+    }
+  }
+
+  private void createLeafTransitionInstance(ExecutionEntity leaf, Map<ScopeImpl, PvmExecutionImpl> scopeInstancesToCreate, Map<String, TransitionInstanceImpl> transitionInstances, Map<String, List<Incident>> incidents) {
+    TransitionInstanceImpl transitionInstance = createTransitionInstance(leaf, incidents);
+    transitionInstances.put(transitionInstance.getId(), transitionInstance);
+
+    scopeInstancesToCreate.remove(leaf.getActivity());
+  }
+
+  private void createScopeInstances(ExecutionEntity leaf, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping, Map<ScopeImpl, PvmExecutionImpl> scopeInstancesToCreate, Map<String, ActivityInstanceImpl> activityInstances, Map<String, List<Incident>> incidents) {
+    LegacyBehavior.removeLegacyNonScopesFromMapping(scopeInstancesToCreate);
+    scopeInstancesToCreate.remove(leaf.getProcessDefinition());
+
+    // create an activity instance for each scope (including compensation throwing executions)
+    for (Map.Entry<ScopeImpl, PvmExecutionImpl> scopeExecutionEntry : scopeInstancesToCreate.entrySet()) {
+      ScopeImpl scope = scopeExecutionEntry.getKey();
+      PvmExecutionImpl scopeExecution = scopeExecutionEntry.getValue();
+
+      String activityInstanceId = scopeExecution.getParentActivityInstanceId();
+      String parentActivityInstanceId = activityExecutionMapping
+          .get(scope.getFlowScope())
+          .getParentActivityInstanceId();
+
+      activityInstances.computeIfAbsent(activityInstanceId, id ->
+          createActivityInstance(
+              scopeExecution,
+              scope,
+              id,
+              parentActivityInstanceId,
+              incidents));
+    }
   }
 
   protected void checkGetActivityInstance(String processInstanceId, CommandContext commandContext) {
@@ -196,7 +201,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   protected void orderById(List<ExecutionEntity> leaves) {
-    Collections.sort(leaves, ExecutionIdComparator.INSTANCE);
+    leaves.sort(EXECUTION_ID_COMPARATOR);
   }
 
   protected ActivityInstanceImpl createActivityInstance(PvmExecutionImpl scopeExecution, ScopeImpl scope,
@@ -301,26 +306,22 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
     Map<ActivityInstanceImpl, List<TransitionInstanceImpl>> childTransitionInstances
       = new HashMap<>();
 
-    for (ActivityInstanceImpl instance : activityInstances.values()) {
-      if (instance.getParentActivityInstanceId() != null) {
-        ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
-        if (parentInstance == null) {
-          throw new ProcessEngineException("No parent activity instance with id " + instance.getParentActivityInstanceId() + " generated");
-        }
-        putListElement(childActivityInstances, parentInstance, instance);
-      }
-    }
+    populateActivityInstances(activityInstances, childActivityInstances);
+    populateTransitionInstances(activityInstances, transitionInstances, childTransitionInstances);
+    populateChildActivityInstances(childActivityInstances);
+    populateChildTransitionInstances(childTransitionInstances);
+  }
 
-    for (TransitionInstanceImpl instance : transitionInstances.values()) {
-      if (instance.getParentActivityInstanceId() != null) {
-        ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
-        if (parentInstance == null) {
-          throw new ProcessEngineException("No parent activity instance with id " + instance.getParentActivityInstanceId() + " generated");
-        }
-        putListElement(childTransitionInstances, parentInstance, instance);
-      }
+  private static void populateChildTransitionInstances(Map<ActivityInstanceImpl, List<TransitionInstanceImpl>> childTransitionInstances) {
+    for (Map.Entry<ActivityInstanceImpl, List<TransitionInstanceImpl>> entry :
+      childTransitionInstances.entrySet()) {
+      ActivityInstanceImpl instance = entry.getKey();
+      List<TransitionInstanceImpl> childInstances = entry.getValue();
+      instance.setChildTransitionInstances(childInstances.toArray(new TransitionInstanceImpl[childInstances.size()]));
     }
+  }
 
+  private static void populateChildActivityInstances(Map<ActivityInstanceImpl, List<ActivityInstanceImpl>> childActivityInstances) {
     for (Map.Entry<ActivityInstanceImpl, List<ActivityInstanceImpl>> entry :
         childActivityInstances.entrySet()) {
       ActivityInstanceImpl instance = entry.getKey();
@@ -329,16 +330,33 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
         instance.setChildActivityInstances(childInstances.toArray(new ActivityInstanceImpl[childInstances.size()]));
       }
     }
+  }
 
-    for (Map.Entry<ActivityInstanceImpl, List<TransitionInstanceImpl>> entry :
-      childTransitionInstances.entrySet()) {
-    ActivityInstanceImpl instance = entry.getKey();
-    List<TransitionInstanceImpl> childInstances = entry.getValue();
-    if (childTransitionInstances != null) {
-      instance.setChildTransitionInstances(childInstances.toArray(new TransitionInstanceImpl[childInstances.size()]));
+  private void populateTransitionInstances(Map<String, ActivityInstanceImpl> activityInstances,
+                         Map<String, TransitionInstanceImpl> transitionInstances,
+                         Map<ActivityInstanceImpl, List<TransitionInstanceImpl>> childTransitionInstances) {
+    for (TransitionInstanceImpl instance : transitionInstances.values()) {
+      if (instance.getParentActivityInstanceId() != null) {
+        ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
+        if (parentInstance == null) {
+          throw new ProcessEngineException("No parent activity instance with id %s generated".formatted(instance.getParentActivityInstanceId()));
+        }
+        putListElement(childTransitionInstances, parentInstance, instance);
+      }
     }
   }
 
+  private void populateActivityInstances(Map<String, ActivityInstanceImpl> activityInstances,
+                         Map<ActivityInstanceImpl, List<ActivityInstanceImpl>> childActivityInstances) {
+    for (ActivityInstanceImpl instance : activityInstances.values()) {
+      if (instance.getParentActivityInstanceId() != null) {
+        ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
+        if (parentInstance == null) {
+          throw new ProcessEngineException("No parent activity instance with id %s generated".formatted(instance.getParentActivityInstanceId()));
+        }
+        putListElement(childActivityInstances, parentInstance, instance);
+      }
+    }
   }
 
   protected <S, T> void putListElement(Map<S, List<T>> mapOfLists, S key, T listElement) {
@@ -421,7 +439,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
 
   /**
    * Loads all executions that are part of this process instance tree from the dbSqlSession cache.
-   * (optionally querying the db if a child is not already loaded.
+   * (optionally querying the db if a child is not already loaded.)
    *
    * @param execution the current root execution (already contained in childExecutions)
    * @param childExecutions the list in which all child executions should be collected
@@ -463,16 +481,10 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   protected List<Incident> getIncidents(Map<String, List<Incident>> incidents,
       PvmExecutionImpl execution) {
     List<Incident> incidentList = incidents.get(execution.getId());
-    if (incidentList != null) {
-      return incidentList;
-    } else {
-      return Collections.emptyList();
-    }
+    return Objects.requireNonNullElse(incidentList, Collections.emptyList());
   }
 
   public static class ExecutionIdComparator implements Comparator<ExecutionEntity> {
-
-    public static final ExecutionIdComparator INSTANCE = new ExecutionIdComparator();
 
     @Override
     public int compare(ExecutionEntity o1, ExecutionEntity o2) {

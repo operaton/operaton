@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.standalone;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
@@ -100,7 +99,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
 
   @Parameters
   public static Collection<Object[]> getRequestUrls() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
         {"", "/engine/default/process-definition/and/a/longer/path", "default", true},
         {"", "/engine/default/process-definition/and/a/longer/path", "default", true},
         {"", "/engine/default/process-definition", "default", true},

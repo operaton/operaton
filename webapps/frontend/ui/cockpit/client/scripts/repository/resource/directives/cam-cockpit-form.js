@@ -22,33 +22,33 @@ var template = require('./cam-cockpit-form.html?raw');
 const Form = require('@bpmn-io/form-js').Form;
 
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
 
       scope: {
         name: '=',
-        source: '='
+        source: '=',
       },
 
       template: template,
 
-      link: function($scope, $element) {
+      link: function ($scope, $element) {
         $scope.error = null;
 
         async function createForm() {
           const json = JSON.parse($scope.source);
           const form = new Form({
-            container: $element.find('.operatonForm')[0]
+            container: $element.find('.operatonForm')[0],
           });
           await form.importSchema(json);
           form.setProperty('readOnly', true);
         }
 
-        createForm().catch(e => {
+        createForm().catch((e) => {
           $scope.error = e;
         });
-      }
+      },
     };
-  }
+  },
 ];

@@ -50,7 +50,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -133,13 +133,9 @@ class ProcessDefinitionSuspensionTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     assertThat(processDefinition.isSuspended()).isFalse();
 
-    try {
-      repositoryService.activateProcessDefinitionById(processDefinition.getId());
-      processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-      assertThat(processDefinition.isSuspended()).isFalse();
-    } catch (Exception e) {
-      fail("Should be successful");
-    }
+    repositoryService.activateProcessDefinitionById(processDefinition.getId());
+    processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
+    assertThat(processDefinition.isSuspended()).isFalse();
 
   }
 
@@ -152,13 +148,9 @@ class ProcessDefinitionSuspensionTest {
 
     repositoryService.suspendProcessDefinitionById(processDefinition.getId());
 
-    try {
-      repositoryService.suspendProcessDefinitionById(processDefinition.getId());
-      processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-      assertThat(processDefinition.isSuspended()).isTrue();
-    } catch (Exception e) {
-      fail("Should be successful");
-    }
+    repositoryService.suspendProcessDefinitionById(processDefinition.getId());
+    processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
+    assertThat(processDefinition.isSuspended()).isTrue();
 
   }
 
@@ -213,20 +205,14 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinitionId);
 
     // By id
-    try {
-      runtimeService.startProcessInstanceById(processDefinitionId);
-      fail("Exception is expected but not thrown");
-    } catch(SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceById(processDefinitionId))
+        .isInstanceOf(SuspendedEntityInteractionException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
 
     // By Key
-    try {
-      runtimeService.startProcessInstanceByKey(processDefinitionKey);
-      fail("Exception is expected but not thrown");
-    } catch(SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(processDefinitionKey))
+        .isInstanceOf(SuspendedEntityInteractionException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -277,12 +263,9 @@ class ProcessDefinitionSuspensionTest {
     for (Task task : taskService.createTaskQuery().list()) {
       assertThat(task.isSuspended()).isTrue();
       var taskId = task.getId();
-      try {
-        taskService.complete(taskId);
-        fail("A suspended task shouldn't be able to be continued");
-      } catch(SuspendedEntityInteractionException e) {
-        testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-      }
+      assertThatThrownBy(() -> taskService.complete(taskId))
+          .isInstanceOf(SuspendedEntityInteractionException.class)
+          .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
     }
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(nrOfProcessInstances);
     assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(nrOfProcessInstances);
@@ -308,19 +291,13 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinitionId);
 
     var emptyProperties = new HashMap<String,Object>();
-    try {
-      formService.submitStartForm(processDefinitionId, emptyProperties);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> formService.submitStartForm(processDefinitionId, emptyProperties))
+        .isInstanceOf(ProcessEngineException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
 
-    try {
-      formService.submitStartForm(processDefinitionId, "someKey", emptyProperties);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> formService.submitStartForm(processDefinitionId, "someKey", emptyProperties))
+        .isInstanceOf(ProcessEngineException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
 
   }
 
@@ -370,12 +347,9 @@ class ProcessDefinitionSuspensionTest {
     managementService.executeJob(job.getId());
 
     // Try to start process instance. It should fail now.
-    try {
-      runtimeService.startProcessInstanceById(processDefinitionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceById(processDefinitionId))
+        .isInstanceOf(SuspendedEntityInteractionException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("suspended"));
     assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
@@ -427,12 +401,9 @@ class ProcessDefinitionSuspensionTest {
     managementService.executeJob(job.getId());
 
     // Try to start process instance. It should fail now.
-    try {
-      runtimeService.startProcessInstanceById(processDefinitionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceById(processDefinitionId))
+        .isInstanceOf(SuspendedEntityInteractionException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("suspended"));
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(nrOfProcessInstances);
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isZero();
     assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(nrOfProcessInstances);
@@ -464,12 +435,9 @@ class ProcessDefinitionSuspensionTest {
     repositoryService.suspendProcessDefinitionById(processDefinitionId);
 
     // Try to start process instance. It should fail now.
-    try {
-      runtimeService.startProcessInstanceById(processDefinitionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceById(processDefinitionId))
+        .isInstanceOf(SuspendedEntityInteractionException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("suspended"));
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().suspended().count()).isOne();
@@ -2348,12 +2316,9 @@ class ProcessDefinitionSuspensionTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("theTask");
 
     // try to start before activity for suspended processDefinition
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("Exception is expected but not thrown");
-    } catch(SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+        .isInstanceOf(SuspendedEntityInteractionException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -2370,12 +2335,9 @@ class ProcessDefinitionSuspensionTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("theTask");
 
     // try to start after activity for suspended processDefinition
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("Exception is expected but not thrown");
-    } catch(SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+        .isInstanceOf(SuspendedEntityInteractionException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/processOne.bpmn20.xml"})

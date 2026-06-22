@@ -8,13 +8,13 @@ on:
 
 jobs:
   stale:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       issues: write
       pull-requests: write
 
     steps:
-      - uses: actions/stale@v10
+      - uses: actions/stale@v10.3.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 

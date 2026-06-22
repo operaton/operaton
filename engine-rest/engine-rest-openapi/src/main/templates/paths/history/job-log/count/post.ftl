@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryHistoricJobLogsCount"
       tag = "Historic Job Log"
-      summary = "Get Job Log Count (POST)"
+      summary = "Count Historic Job Logs"
       desc = "Queries for the number of historic job logs that fulfill the given parameters.
               This method takes the same message body as the
               [Get Job Logs (POST)](${docsUrl}/reference/rest/history/job-log/post-job-log-query/)
@@ -45,8 +45,9 @@
         desc = "Returned if some of the query parameters are invalid. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

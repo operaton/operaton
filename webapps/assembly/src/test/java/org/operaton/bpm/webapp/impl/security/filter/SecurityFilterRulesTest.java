@@ -19,7 +19,6 @@ package org.operaton.bpm.webapp.impl.security.filter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -60,7 +59,7 @@ class SecurityFilterRulesTest {
   protected String applicationPath;
 
   public static Collection<String> data() {
-    return Arrays.asList(EMPTY_PATH, CUSTOM_APP_PATH);
+    return List.of(EMPTY_PATH, CUSTOM_APP_PATH);
   }
 
   public void initSecurityFilterRulesTest(String applicationPath) {
@@ -504,7 +503,7 @@ class SecurityFilterRulesTest {
   }
 
   private void authenticatedForApp(String engineName, String appName, Runnable codeBlock) {
-    HashSet<String> authorizedApps = new HashSet<>(Arrays.asList(appName));
+    HashSet<String> authorizedApps = new HashSet<>(List.of(appName));
 
     UserAuthentication engineAuth = new UserAuthentication(LOGGED_IN_USER.getIdentityId(), engineName);
     engineAuth.setGroupIds(Collections. emptyList());

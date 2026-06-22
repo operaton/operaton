@@ -45,7 +45,7 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
       .extendsType(Gateway.class)
       .instanceProvider(ParallelGatewayImpl::new);
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)
@@ -60,7 +60,7 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
     return new ParallelGatewayBuilder((BpmnModelInstance) modelInstance, this);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

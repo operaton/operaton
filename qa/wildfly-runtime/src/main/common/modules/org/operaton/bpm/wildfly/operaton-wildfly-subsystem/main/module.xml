@@ -47,8 +47,5 @@
     <module name="org.operaton.connect.operaton-connect-http-client" services="import" />
     <module name="org.operaton.connect.operaton-connect-soap-http-client" services="import" />
 
-    <!-- for LDAP plugin only -->
-    <module name="sun.jdk" />
-
   </dependencies>
 </module>

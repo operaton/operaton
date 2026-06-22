@@ -37,7 +37,7 @@ public class QueryVariableValue implements Serializable {
   protected QueryOperator operator;
   protected boolean local;
 
-  protected AbstractQueryVariableValueCondition valueCondition;
+  protected transient AbstractQueryVariableValueCondition valueCondition;
 
   protected boolean variableNameIgnoreCase;
   protected boolean variableValueIgnoreCase;

@@ -118,7 +118,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
     addProcessEngineOp.get(OP_ADDR).set(processEngineAddress);
 
     if(discoveredEngineNames.contains(engineName)) {
-      throw new ProcessEngineException("A process engine with name '" + engineName + "' already exists. The process engine name must be unique.");
+      throw new ProcessEngineException("A process engine with name '%s' already exists. The process engine name must be unique.".formatted(engineName));
     } else {
       discoveredEngineNames.add(engineName);
     }

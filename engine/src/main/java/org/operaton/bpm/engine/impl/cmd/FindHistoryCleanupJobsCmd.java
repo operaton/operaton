@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,10 +26,7 @@ import org.operaton.bpm.engine.runtime.Job;
 /**
  * @author Svetlana Dorokhova
  */
-public class FindHistoryCleanupJobsCmd implements Command<List<Job>>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class FindHistoryCleanupJobsCmd implements Command<List<Job>> {
   @Override
   public List<Job> execute(CommandContext commandContext) {
     return commandContext.getJobManager().findJobsByHandlerType(HistoryCleanupJobHandler.TYPE);

@@ -99,10 +99,12 @@ public interface DecisionRequirementsDefinitionQuery extends Query<DecisionRequi
    * Only select the decision requirements definition which are the latest deployed
    * (i.e. which have the highest version number for the given key).
    *
+   * <p>
    * Can only be used in combination with {@link #decisionRequirementsDefinitionKey(String)}
    * or {@link #decisionRequirementsDefinitionKeyLike(String)}. Can also be used without any
    * other criteria (i.e. query.latest().list()), which will then give all the
    * latest versions of all the deployed decision requirements definition.
+   * </p>
    *
    */
   DecisionRequirementsDefinitionQuery latestVersion();

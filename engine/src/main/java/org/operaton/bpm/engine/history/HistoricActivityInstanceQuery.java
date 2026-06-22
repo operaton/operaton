@@ -134,7 +134,6 @@ public interface HistoricActivityInstanceQuery extends Query<HistoricActivityIns
    * ordered</strong> by using {@link #executionId(String)} and {@link #orderPartiallyByOccurrence()}
    * which will return a result set ordered by its occurrence.</p>
    *
-   * @since 7.3
    */
   HistoricActivityInstanceQuery orderPartiallyByOccurrence();
 

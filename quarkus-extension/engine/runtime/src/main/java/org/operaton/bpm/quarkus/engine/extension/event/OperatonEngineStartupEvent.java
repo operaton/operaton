@@ -19,10 +19,14 @@ package org.operaton.bpm.quarkus.engine.extension.event;
 /**
  * Event class that is fired after Operaton engine startup.
  *
+ * <p>
  * The event is fired after the Operaton engine has been bootstrapped,
  * so it can be used to perform deployments to the engine.
+ * </p>
  *
+ * <p>
  * This event is observed in the following way:
+ * </p>
  *
  * <code><pre>
  *     void onOperatonEngineStart(@Observes OperatonEngineStartupEvent event) {

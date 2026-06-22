@@ -23,6 +23,8 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 
 /**
  * @author Tom Baeyens
@@ -35,6 +37,6 @@ class ParallelTest {
   @Deployment
   @Test
   void testParallel() {
-    runtimeService.startProcessInstanceByKey("myProc");
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("myProc")).doesNotThrowAnyException();
   }
 }

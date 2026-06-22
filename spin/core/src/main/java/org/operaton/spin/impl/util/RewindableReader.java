@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
 
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 
 /**
@@ -32,7 +31,7 @@ import org.operaton.spin.impl.logging.SpinLogger;
  */
 public class RewindableReader extends Reader {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   protected PushbackReader wrappedReader;
 
@@ -111,7 +110,9 @@ public class RewindableReader extends Reader {
   /**
    * Rewinds the reader such that the initial characters are returned when invoking read().
    *
+   * <p>
    * Throws an exception if more than the buffering limit has already been read.
+   * </p>
    * @throws IOException
    */
   public void rewind() throws IOException {

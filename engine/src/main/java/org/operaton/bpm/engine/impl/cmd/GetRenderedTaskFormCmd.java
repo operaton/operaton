@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -31,13 +28,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetRenderedTaskFormCmd  implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetRenderedTaskFormCmd  implements Command<Object> {
   protected String taskId;
   protected String formEngineName;
 
@@ -46,17 +40,16 @@ public class GetRenderedTaskFormCmd  implements Command<Object>, Serializable {
     this.formEngineName = formEngineName;
   }
 
-
   @Override
   public Object execute(CommandContext commandContext) {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Task '" + taskId + "' not found", "task", task);
+    ensureNotNull("Task '%s' not found".formatted(taskId), "task", task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadTaskVariable(task);
     }
-    ensureNotNull("Task form definition for '" + taskId + "' not found", "task.getTaskDefinition()", task.getTaskDefinition());
+    ensureNotNull("Task form definition for '%s' not found".formatted(taskId), "task.getTaskDefinition()", task.getTaskDefinition());
 
     TaskFormHandler taskFormHandler = task.getTaskDefinition().getTaskFormHandler();
     if (taskFormHandler == null) {
@@ -68,7 +61,7 @@ public class GetRenderedTaskFormCmd  implements Command<Object>, Serializable {
       .getFormEngines()
       .get(formEngineName);
 
-    ensureNotNull("No formEngine '" + formEngineName + "' defined process engine configuration", "formEngine", formEngine);
+    ensureNotNull("No formEngine '%s' defined process engine configuration".formatted(formEngineName), "formEngine", formEngine);
 
     TaskFormData taskForm = taskFormHandler.createTaskForm(task);
 

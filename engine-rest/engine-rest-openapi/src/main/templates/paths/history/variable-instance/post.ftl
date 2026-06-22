@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryHistoricVariableInstances"
       tag = "Historic Variable Instance"
-      summary = "Get Variable Instances (POST)"
+      summary = "List Historic Variable Instances"
       desc = "Queries for historic variable instances that fulfill the given parameters.
               This method is slightly more powerful than the
               [Get Variable Instances](${docsUrl}/reference/rest/history/variable-instance/get-variable-instance-query/)
@@ -89,8 +89,9 @@
                 parameter is supplied, but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

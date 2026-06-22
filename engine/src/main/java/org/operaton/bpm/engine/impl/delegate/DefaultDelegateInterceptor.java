@@ -130,7 +130,7 @@ public class DefaultDelegateInterceptor implements DelegateInterceptor {
   protected ProcessApplicationReference getProcessApplicationForInvocation(final DelegateInvocation invocation) {
 
     BaseDelegateExecution contextExecution = invocation.getContextExecution();
-    ResourceDefinitionEntity contextResource = invocation.getContextResource();
+    ResourceDefinitionEntity<?> contextResource = invocation.getContextResource();
 
     if (contextExecution != null) {
       return ProcessApplicationContextUtil.getTargetProcessApplication((CoreExecution) contextExecution);

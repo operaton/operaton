@@ -20,7 +20,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.operaton.commons.utils.IoUtil;
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 
 /**
@@ -31,7 +30,7 @@ public class SpinIoUtil extends IoUtil {
 
   public static final Charset ENCODING_CHARSET = StandardCharsets.UTF_8;
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   /**
    * Converts a {@link OutputStream} to an {@link InputStream} by coping the data directly.

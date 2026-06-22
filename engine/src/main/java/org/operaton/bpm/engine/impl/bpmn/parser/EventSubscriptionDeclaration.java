@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
@@ -41,20 +39,19 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  * @author Falko Menge
  * @author Danny Gräf
  */
-public class EventSubscriptionDeclaration implements Serializable {
+public class EventSubscriptionDeclaration {
+  private static final StartProcessVariableScope START_PROCESS_VARIABLE_SCOPE = new StartProcessVariableScope();
 
-  @Serial private static final long serialVersionUID = 1L;
+  private final EventType eventType;
+  private final Expression eventName;
+  private final CallableElement eventPayload;
 
-  protected final EventType eventType;
-  protected final Expression eventName;
-  protected final CallableElement eventPayload;
-
-  protected boolean async;
+  private boolean async;
   protected String activityId;
-  protected String eventScopeActivityId;
-  protected boolean isStartEvent;
+  private String eventScopeActivityId;
+  private boolean isStartEvent;
 
-  protected EventSubscriptionJobDeclaration jobDeclaration;
+  private EventSubscriptionJobDeclaration jobDeclaration;
 
   public EventSubscriptionDeclaration(Expression eventExpression, EventType eventType) {
     this.eventName = eventExpression;
@@ -80,11 +77,11 @@ public class EventSubscriptionDeclaration implements Serializable {
    * Returns the name of the event without evaluating the possible expression that it might contain.
    */
   public String getUnresolvedEventName() {
-      return eventName.getExpressionText();
+    return eventName.getExpressionText();
   }
 
   public boolean hasEventName() {
-    return !( eventName == null || "".equalsIgnoreCase(getUnresolvedEventName().trim()) );
+    return !(eventName == null || "".equalsIgnoreCase(getUnresolvedEventName().trim()));
   }
 
   public boolean isEventNameLiteralText() {
@@ -138,7 +135,7 @@ public class EventSubscriptionDeclaration implements Serializable {
   public EventSubscriptionEntity createSubscriptionForStartEvent(ProcessDefinitionEntity processDefinition) {
     EventSubscriptionEntity eventSubscriptionEntity = new EventSubscriptionEntity(eventType);
 
-    VariableScope scopeForExpression = StartProcessVariableScope.getSharedInstance();
+    VariableScope scopeForExpression = START_PROCESS_VARIABLE_SCOPE;
     String event = resolveExpressionOfEventName(scopeForExpression);
     eventSubscriptionEntity.setEventName(event);
     eventSubscriptionEntity.setActivityId(activityId);
@@ -171,7 +168,7 @@ public class EventSubscriptionDeclaration implements Serializable {
    */
   public String resolveExpressionOfEventName(VariableScope scope) {
     if (isExpressionAvailable()) {
-      if(scope instanceof BaseDelegateExecution execution) {
+      if (scope instanceof BaseDelegateExecution execution) {
         // the variable scope execution is also the current context execution
         // during expression evaluation the current context is updated with the scope execution
         return (String) eventName.getValue(scope, execution);

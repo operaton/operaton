@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.context.Context;
@@ -47,7 +48,7 @@ public final class CommandContextFunctions {
       return commandContext.getAuthenticatedGroupIds();
     }
     else {
-      return null;
+      return Collections.emptyList();
     }
   }
 }

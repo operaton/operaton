@@ -17,13 +17,12 @@
 package org.operaton.bpm.engine.test.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.TestTemplate;
@@ -81,7 +80,7 @@ public class HistoricBatchManagerBatchesForCleanupTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         // all historic batches are old enough to be cleaned up
         { 5, -11, -6, -7, 50, 2 },
         // one batch should be cleaned up

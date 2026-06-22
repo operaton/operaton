@@ -22,7 +22,7 @@ var angular = require('operaton-bpm-sdk-js/vendor/angular'),
 
 module.exports = [
   '$translate',
-  function($translate) {
+  function ($translate) {
     return {
       transclude: true,
 
@@ -32,10 +32,10 @@ module.exports = [
         loadingState: '@',
         textEmpty: '@',
         textError: '@',
-        textLoading: '@'
+        textLoading: '@',
       },
 
-      compile: function(element, attrs) {
+      compile: function (element, attrs) {
         if (!angular.isDefined(attrs.textLoading)) {
           attrs.textLoading = $translate.instant('LOADING');
         }
@@ -43,7 +43,7 @@ module.exports = [
         if (!angular.isDefined(attrs.loadingState)) {
           attrs.loadingState = 'INITIAL';
         }
-      }
+      },
     };
-  }
+  },
 ];

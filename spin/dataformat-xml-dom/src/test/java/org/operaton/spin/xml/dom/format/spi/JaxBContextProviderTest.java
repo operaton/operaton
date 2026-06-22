@@ -17,8 +17,6 @@
 package org.operaton.spin.xml.dom.format.spi;
 
 import java.io.StringWriter;
-import java.util.HashSet;
-import java.util.Set;
 import jakarta.xml.bind.JAXBException;
 
 import org.junit.jupiter.api.AfterEach;
@@ -31,7 +29,7 @@ import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.mapping.Customer;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -54,25 +52,12 @@ class JaxBContextProviderTest {
 
     // using the custom jaxb context provider should fail with a JAXBException
     ((DomXmlDataFormat) DataFormats.xml()).setJaxBContextProvider(new EmptyContextProvider());
-    try {
-      spinWrapper = Spin.XML(objectToConvert);
-      spinWrapper.writeToWriter(new StringWriter());
-    } catch (SpinXmlDataFormatException e) {
 
-      // assert that there is a jaxb exception somewhere in the exception hierarchy
-      Set<Throwable> processedExceptions = new HashSet<>();
-      while (!processedExceptions.contains(e.getCause()) && e.getCause() != null) {
-        if (e.getCause() instanceof JAXBException) {
-          // happy path
-          return;
-        }
-
-        processedExceptions.add(e.getCause());
-      }
-
-      fail("expected a JAXBException in the cause hierarchy of the spin exception");
-    }
-
+    // when/then
+    assertThatThrownBy(() -> Spin.XML(objectToConvert))
+      .withFailMessage("expected a JAXBException in the cause hierarchy of the spin exception")
+      .isInstanceOf(SpinXmlDataFormatException.class)
+      .hasRootCauseInstanceOf(JAXBException.class);
   }
 
   @AfterEach

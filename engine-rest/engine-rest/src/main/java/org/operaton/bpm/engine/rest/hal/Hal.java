@@ -26,10 +26,10 @@ import org.operaton.bpm.engine.rest.IdentityRestService;
 import org.operaton.bpm.engine.rest.ProcessDefinitionRestService;
 import org.operaton.bpm.engine.rest.UserRestService;
 import org.operaton.bpm.engine.rest.cache.Cache;
-import org.operaton.bpm.engine.rest.hal.caseDefinition.HalCaseDefinitionResolver;
+import org.operaton.bpm.engine.rest.hal.casedefinition.HalCaseDefinitionResolver;
 import org.operaton.bpm.engine.rest.hal.group.HalGroupResolver;
 import org.operaton.bpm.engine.rest.hal.identitylink.HalIdentityLinkResolver;
-import org.operaton.bpm.engine.rest.hal.processDefinition.HalProcessDefinitionResolver;
+import org.operaton.bpm.engine.rest.hal.processdefinition.HalProcessDefinitionResolver;
 import org.operaton.bpm.engine.rest.hal.user.HalUserResolver;
 
 /**
@@ -41,10 +41,10 @@ public class Hal {
   public static final String APPLICATION_HAL_JSON = "application/hal+json";
   public static final MediaType APPLICATION_HAL_JSON_TYPE = new MediaType("application", "hal+json");
 
-  public static Hal instance = new Hal();
+  private static final Hal instance = new Hal();
 
-  protected Map<Class<?>, HalLinkResolver> halLinkResolvers = new HashMap<>();
-  protected Map<Class<?>, Cache> halRelationCaches = new HashMap<>();
+  private final Map<Class<?>, HalLinkResolver> halLinkResolvers = new HashMap<>();
+  private final Map<Class<?>, Cache> halRelationCaches = new HashMap<>();
 
   public Hal() {
     // register the built-in resolvers

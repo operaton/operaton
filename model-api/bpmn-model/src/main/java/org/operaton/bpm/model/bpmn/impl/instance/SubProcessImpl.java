@@ -42,7 +42,7 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
   protected static ChildElementCollection<FlowElement> flowElementCollection;
   protected static ChildElementCollection<Artifact> artifactCollection;
 
-  /** operaton extensions */
+  // Operaton extensions
   protected static Attribute<Boolean> operatonAsyncAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
@@ -66,7 +66,7 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
     artifactCollection = sequenceBuilder.elementCollection(Artifact.class)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)
@@ -110,7 +110,7 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
     return artifactCollection.get(this);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

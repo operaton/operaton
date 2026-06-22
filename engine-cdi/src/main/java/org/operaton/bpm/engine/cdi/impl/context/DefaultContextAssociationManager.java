@@ -65,7 +65,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
         beanManager.getContext(scopeAnnotation.annotationType());
         return scopeType;
       } catch (ContextNotActiveException e) {
-        log.finest("Context " + scopeAnnotation.annotationType() + " not active.");
+        log.finest("Context %s not active.".formatted(scopeAnnotation.annotationType()));
       }
     }
     throw new ProcessEngineException("Could not determine an active context to associate the current process instance / task instance with.");

@@ -21,7 +21,7 @@ var template = require('./cam-tasklist-form-external.html?raw');
 
 module.exports = [
   '$location',
-  function($location) {
+  function ($location) {
     return {
       restrict: 'A',
 
@@ -31,19 +31,19 @@ module.exports = [
 
       template: template,
 
-      link: function($scope, $elment, attrs, formController) {
+      link: function ($scope, $elment, attrs, formController) {
         formController.notifyFormValidated(true);
 
         $scope.externalFormUrl = null;
         $scope.EXTERNAL_FORM_NOTE = null;
 
         $scope.$watch(
-          function() {
+          function () {
             return (
               formController.getTasklistForm() && formController.getParams()
             );
           },
-          function(value) {
+          function (value) {
             if (value) {
               var tasklistForm = formController.getTasklistForm();
               var params = formController.getParams();
@@ -63,7 +63,7 @@ module.exports = [
                 $scope.EXTERNAL_FORM_NOTE = 'PROCESS_EXTERNAL_FORM_NOTE';
               } else {
                 return formController.notifyFormInitializationFailed({
-                  message: 'INIT_EXTERNAL_FORM_FAILED'
+                  message: 'INIT_EXTERNAL_FORM_FAILED',
                 });
               }
 
@@ -75,25 +75,25 @@ module.exports = [
               absoluteUrl = absoluteUrl.replace(url, '/');
 
               $scope.externalFormUrl = encodeURI(
-                key + '?' + queryParam + '&callbackUrl=' + absoluteUrl
+                key + '?' + queryParam + '&callbackUrl=' + absoluteUrl,
               );
 
               formController.notifyFormInitialized();
             }
-          }
+          },
         );
 
         $scope.$watch(
-          function() {
+          function () {
             return formController.getOptions();
           },
-          function(options) {
+          function (options) {
             if (options) {
               options.hideCompleteButton = true;
             }
-          }
+          },
         );
-      }
+      },
     };
-  }
+  },
 ];

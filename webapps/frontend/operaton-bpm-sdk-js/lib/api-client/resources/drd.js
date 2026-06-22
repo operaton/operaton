@@ -62,7 +62,7 @@ DRD.path = 'decision-requirements-definition';
  *                                                  Can be used in combination with tenantIdIn. Value may only be true, as false is the default behavior.
  * @param {Function} done
  */
-DRD.count = function(params, done) {
+DRD.count = function (params, done) {
   if (typeof params === 'function') {
     done = params;
     params = {};
@@ -70,7 +70,7 @@ DRD.count = function(params, done) {
 
   return this.http.get(this.path + '/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -114,7 +114,7 @@ DRD.count = function(params, done) {
  *                                                Will return less results, if there are no more results left.
  * @param {Function} done
  */
-DRD.list = function(params, done) {
+DRD.list = function (params, done) {
   if (typeof params === 'function') {
     done = params;
     params = {};
@@ -122,7 +122,7 @@ DRD.list = function(params, done) {
 
   return this.http.get(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -135,9 +135,9 @@ function createIdUrl(path, id) {
  * @param  {uuid}     id   The id of the decision definition to be retrieved.
  * @param  {Function} done
  */
-DRD.get = function(id, done) {
+DRD.get = function (id, done) {
   return this.http.get(createIdUrl(this.path, id), {
-    done: done
+    done: done,
   });
 };
 
@@ -157,7 +157,7 @@ function createKeyTenantUrl(path, key, tenantId) {
  * @param  {uuid}     [tenantId]   The id of the tenant to which the decision requirements definition belongs to.
  * @param  {Function} done
  */
-DRD.getByKey = function(key, tenantId, done) {
+DRD.getByKey = function (key, tenantId, done) {
   var url = createKeyTenantUrl(this.path, key, tenantId);
 
   if (typeof tenantId === 'function') {
@@ -165,7 +165,7 @@ DRD.getByKey = function(key, tenantId, done) {
   }
 
   return this.http.get(url, {
-    done: done
+    done: done,
   });
 };
 
@@ -174,9 +174,9 @@ DRD.getByKey = function(key, tenantId, done) {
  * @param  {uuid}     id   The id of the decision definition to be retrieved.
  * @param  {Function} done
  */
-DRD.getXML = function(id, done) {
+DRD.getXML = function (id, done) {
   return this.http.get(createIdUrl(this.path, id) + '/xml', {
-    done: done
+    done: done,
   });
 };
 
@@ -186,7 +186,7 @@ DRD.getXML = function(id, done) {
  * @param  {uuid}     [tenantId]   The id of the tenant to which the decision requirements definition belongs to.
  * @param  {Function} done
  */
-DRD.getXMLByKey = function(key, tenantId, done) {
+DRD.getXMLByKey = function (key, tenantId, done) {
   var url = createKeyTenantUrl(this.path, key, tenantId) + '/xml';
 
   if (typeof tenantId === 'function') {
@@ -194,7 +194,7 @@ DRD.getXMLByKey = function(key, tenantId, done) {
   }
 
   return this.http.get(url, {
-    done: done
+    done: done,
   });
 };
 

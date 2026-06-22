@@ -37,7 +37,7 @@ var angular = require('operaton-bpm-sdk-js/vendor/angular'),
 
 var ngModule = angular.module('operaton.common.services', [
   // `ResourceResolver` relies on cam.commons.util for Notifications
-  util.name
+  util.name,
 ]);
 
 ngModule.filter('escape', escape);
@@ -50,12 +50,12 @@ ngModule.factory('unescape', unescape);
 ngModule.factory('fixDate', fixDate);
 ngModule.factory(
   'ifUnauthorizedForwardToWelcomeApp',
-  ifUnauthorizedForwardToWelcomeApp
+  ifUnauthorizedForwardToWelcomeApp,
 );
 ngModule.factory('unfixDate', unfixDate);
 ngModule.factory(
   'shouldDisplayAuthenticationError',
-  shouldDisplayAuthenticationError
+  shouldDisplayAuthenticationError,
 );
 ngModule.provider('canonicalAppName', canonicalAppName);
 
@@ -64,50 +64,50 @@ ngModule.provider('canonicalAppName', canonicalAppName);
  */
 ngModule.config([
   '$httpProvider',
-  function($httpProvider) {
+  function ($httpProvider) {
     $httpProvider.interceptors.push([
       '$rootScope',
       '$q',
       'RequestLogger',
       'ifUnauthorizedForwardToWelcomeApp',
-      function(
+      function (
         $rootScope,
         $q,
         RequestLogger,
-        ifUnauthorizedForwardToWelcomeApp
+        ifUnauthorizedForwardToWelcomeApp,
       ) {
         RequestLogger.logStarted();
 
         return {
-          response: function(response) {
+          response: function (response) {
             RequestLogger.logFinished();
             ifUnauthorizedForwardToWelcomeApp(response.headers());
 
             return response;
           },
-          responseError: function(response) {
+          responseError: function (response) {
             RequestLogger.logFinished();
 
             var httpError = {
               status: parseInt(response.status),
               response: response,
-              data: response.data
+              data: response.data,
             };
 
             $rootScope.$broadcast('httpError', httpError);
 
             return $q.reject(response);
-          }
+          },
         };
-      }
+      },
     ]);
-  }
+  },
 ]);
 
 ngModule.config([
   '$httpProvider',
   '$windowProvider',
-  function($httpProvider, $windowProvider) {
+  function ($httpProvider, $windowProvider) {
     // eslint-disable-next-line
     if (!DEV_MODE) {
       var window = $windowProvider.$get();
@@ -122,7 +122,7 @@ ngModule.config([
     } else {
       $httpProvider.defaults.headers.get = {'X-Authorized-Engine': 'default'};
     }
-  }
+  },
 ]);
 
 module.exports = ngModule;

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -32,15 +30,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNumberOfElements;
 
-
 /**
  * @author Daniel Meyer
  * @author Joram Barrez
  */
-public class MessageEventReceivedCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class MessageEventReceivedCmd implements Command<Void> {
   protected final String executionId;
   protected final Map<String, Object> processVariables;
   protected final Map<String, Object> processVariablesLocal;
@@ -84,8 +78,8 @@ public class MessageEventReceivedCmd implements Command<Void>, Serializable {
           executionId, EventType.MESSAGE.name(), exclusive);
     }
 
-    ensureNotEmpty("Execution with id '" + executionId + "' does not have a subscription to a message event with name '" + messageName + "'", "eventSubscriptions", eventSubscriptions);
-    ensureNumberOfElements("More than one matching message subscription found for execution " + executionId, "eventSubscriptions", eventSubscriptions, 1);
+    ensureNotEmpty("Execution with id '%s' does not have a subscription to a message event with name '%s'".formatted(executionId, messageName), "eventSubscriptions", eventSubscriptions);
+    ensureNumberOfElements("More than one matching message subscription found for execution %s".formatted(executionId), "eventSubscriptions", eventSubscriptions, 1);
 
     // there can be only one:
     EventSubscriptionEntity eventSubscriptionEntity = eventSubscriptions.get(0);
@@ -100,6 +94,5 @@ public class MessageEventReceivedCmd implements Command<Void>, Serializable {
 
     return null;
   }
-
 
 }

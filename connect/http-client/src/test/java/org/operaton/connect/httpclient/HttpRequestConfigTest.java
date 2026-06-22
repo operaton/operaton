@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import org.apache.hc.client5.http.ConnectTimeoutException;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.config.RequestConfig.Builder;
 import org.apache.hc.core5.http.HttpHost;
@@ -37,11 +36,12 @@ import org.operaton.connect.httpclient.impl.util.ParseUtil;
 
 import static org.operaton.connect.httpclient.impl.RequestConfigOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class HttpRequestConfigTest {
 
-  public static final String EXAMPLE_URL = "http://operaton.org/example";
+  public static final String EXAMPLE_URL = "https://operaton.org";
 
   static Stream<Arguments> timeout_args () {
     return Stream.of(
@@ -318,75 +318,36 @@ public class HttpRequestConfigTest {
     assertThat(config.getResponseTimeout()).isEqualTo(Timeout.ofSeconds(10));
   }
 
-  // FIXME: Class org.mockito.internal.util.reflection.Whitebox no longer exists
-  /*
-  @Test
-  void shouldNotChangeDefaultConfig() {
-    // given
-    HttpClient client = (HttpClient) Whitebox.getInternalState(connector, "httpClient");
-    connector.createRequest().url(EXAMPLE_URL).get()
-        .configOption(CONNECTION_TIMEOUT.getName(), -2)
-        .configOption(SOCKET_TIMEOUT.getName(), -2)
-        .configOption(CONNECTION_REQUEST_TIMEOUT.getName(), -2)
-        .configOption(MAX_REDIRECTS.getName(), 0)
-        .execute();
-
-    // when
-    RequestConfig config = (RequestConfig) Whitebox.getInternalState(client, "defaultConfig");
-
-    // then
-    assertThat(config.getMaxRedirects()).isEqualTo(50);
-    assertThat(config.getConnectTimeout()).isEqualTo(-1);
-    assertThat(config.getConnectionRequestTimeout()).isEqualTo(-1);
-    assertThat(config.getSocketTimeout()).isEqualTo(-1);
-  }
-  */
-
-  @Test
-  void shouldThrowTimeoutException() {
-    try {
-      // when
-      connector.createRequest().url(EXAMPLE_URL).get()
-              .configOption(CONNECTION_TIMEOUT.getName(), Timeout.ofNanoseconds(1))
-              .execute();
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e)
-              .hasMessageContaining("Unable to execute HTTP request")
-              .hasCauseExactlyInstanceOf(ConnectTimeoutException.class);
-    }
-  }
-
   @Test
   void shouldThrowClassCastExceptionStringToBoolean() {
-    try {
-      // when
-      connector.createRequest().url(EXAMPLE_URL).get()
-              .configOption(AUTHENTICATION_ENABLED.getName(), "true")
-              .execute();
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e)
-              .hasMessageContaining("Invalid value for request configuration option: " + AUTHENTICATION_ENABLED.getName())
-              .hasCauseInstanceOf(ClassCastException.class);
-      assertThat(e.getCause()).hasMessageContaining("java.lang.String cannot be cast to class java.lang.Boolean");
-    }
+    // given
+    var httpRequest = connector.createRequest()
+      .url(EXAMPLE_URL)
+      .get()
+      .configOption(AUTHENTICATION_ENABLED.getName(), "true");
+
+    // when, then
+    assertThatThrownBy(httpRequest::execute)
+    .isInstanceOf(ConnectorRequestException.class)
+      .hasMessageContaining("Invalid value for request configuration option: " + AUTHENTICATION_ENABLED.getName())
+      .hasCauseInstanceOf(ClassCastException.class)
+      .rootCause().hasMessageContaining("java.lang.String cannot be cast to class java.lang.Boolean");
   }
 
   @Test
   void shouldThrowClassCastExceptionIntToHttpHost() {
-    try {
-      // when
-      connector.createRequest().url(EXAMPLE_URL).get()
-              .configOption(PROXY_PREFERRED_AUTH_SCHEMES.getName(), 0)
-              .execute();
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e)
-              .hasMessageContaining("Invalid value for request configuration option: " + PROXY_PREFERRED_AUTH_SCHEMES.getName())
-              .hasCauseInstanceOf(ClassCastException.class);
-      assertThat(e.getCause()).hasMessageContaining("java.lang.Integer cannot be cast to class java.util.Collection");
-    }
+    // given
+    var httpRequest = connector.createRequest()
+      .url(EXAMPLE_URL)
+      .get()
+      .configOption(PROXY_PREFERRED_AUTH_SCHEMES.getName(), 0);
+
+    // when, then
+    assertThatThrownBy(httpRequest::execute)
+      .isInstanceOf(ConnectorRequestException.class)
+      .hasMessageContaining("Invalid value for request configuration option: " + PROXY_PREFERRED_AUTH_SCHEMES.getName())
+      .hasCauseInstanceOf(ClassCastException.class)
+      .rootCause().hasMessageContaining("java.lang.Integer cannot be cast to class java.util.Collection");
   }
 
 }

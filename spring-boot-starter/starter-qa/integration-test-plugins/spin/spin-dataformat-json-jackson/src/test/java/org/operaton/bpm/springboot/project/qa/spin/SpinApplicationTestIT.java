@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RuntimeService;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 @SpringBootTest(classes = {SpinApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SpinApplicationTestIT {
@@ -46,8 +46,11 @@ class SpinApplicationTestIT {
   }
 
   @Test
-  void shouldFailWithSpinException() {
-    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"))
-      .hasMessageContaining("SPIN/JACKSON-JSON-01006 Cannot deserialize");
+  void shouldDeserializeJava8DateTimeSuccessfully() {
+    // Spring Boot auto-configures JavaTimeModule into Spin's Jackson ObjectMapper
+    // (via OperatonJacksonFormatConfiguratorJSR310), so LocalDateTime deserialization
+    // must succeed when using operaton-spin-dataformat-json-jackson (non-shaded Jackson).
+    assertThatNoException().isThrownBy(() ->
+        runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"));
   }
 }

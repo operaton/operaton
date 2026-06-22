@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -87,7 +86,7 @@ public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { 3, 5, 3, 7, 4, 50, 3 },
         //not enough time has passed
         { 3, 5, 3, 7, 2, 50, 0 },

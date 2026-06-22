@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +39,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.batchByI
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -74,14 +73,7 @@ class BatchQueryTest {
     List<Batch> list = managementService.createBatchQuery().list();
 
     // then
-    assertThat(list).hasSize(2);
-
-    List<String> batchIds = new ArrayList<>();
-    for (Batch resultBatch : list) {
-      batchIds.add(resultBatch.getId());
-    }
-
-    assertThat(batchIds).containsExactly(batch1.getId(), batch2.getId());
+    assertThat(list).extracting(Batch::getId).containsExactly(batch1.getId(), batch2.getId());
   }
 
   @Test
@@ -128,13 +120,9 @@ class BatchQueryTest {
   @Test
   void testBatchQueryByIdNull() {
     var batchQuery = managementService.createBatchQuery();
-    try {
-      batchQuery.batchId(null);
-      fail("exception expected");
-    }
-    catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("Batch id is null");
-    }
+    assertThatThrownBy(() -> batchQuery.batchId(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Batch id is null");
   }
 
   @Test
@@ -165,13 +153,9 @@ class BatchQueryTest {
   @Test
   void testBatchQueryByTypeNull() {
     var batchQuery = managementService.createBatchQuery();
-    try {
-      batchQuery.type(null);
-      fail("exception expected");
-    }
-    catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("Type is null");
-    }
+    assertThatThrownBy(() -> batchQuery.type(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Type is null");
   }
 
   @Test
@@ -216,27 +200,17 @@ class BatchQueryTest {
   @Test
   void testBatchQueryOrderingPropertyWithoutOrder() {
     var batchQuery = managementService.createBatchQuery().orderById();
-    try {
-      batchQuery.singleResult();
-      fail("exception expected");
-    }
-    catch (NotValidException e) {
-      assertThat(e.getMessage()).contains("Invalid query: "
-          + "call asc() or desc() after using orderByXX()");
-    }
+    assertThatThrownBy(batchQuery::singleResult)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
   }
 
   @Test
   void testBatchQueryOrderWithoutOrderingProperty() {
     var batchQuery = managementService.createBatchQuery();
-    try {
-      batchQuery.asc();
-      fail("exception expected");
-    }
-    catch (NotValidException e) {
-      assertThat(e.getMessage()).contains("You should call any of the orderBy methods "
-          + "first before specifying a direction");
-    }
+    assertThatThrownBy(batchQuery::asc)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("You should call any of the orderBy methods " + "first before specifying a direction");
   }
 
   @Test
@@ -275,14 +249,7 @@ class BatchQueryTest {
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
 
-    List<String> foundIds = new ArrayList<>();
-    for (Batch batch : query.list()) {
-      foundIds.add(batch.getId());
-    }
-    assertThat(foundIds).contains(
-      batch1.getId(),
-      batch3.getId()
-    );
+    assertThat(query.list()).extracting(Batch::getId).containsExactly(batch1.getId(), batch3.getId());
   }
 
 }

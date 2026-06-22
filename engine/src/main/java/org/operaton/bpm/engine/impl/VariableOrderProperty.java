@@ -99,7 +99,7 @@ public class VariableOrderProperty extends QueryOrderingProperty {
     } else if (ValueType.DOUBLE.equals(type)) {
       return VariableInstanceQueryProperty.DOUBLE;
     } else {
-      throw new ProcessEngineException("Cannot order by variables of type " + type.getName());
+      throw new ProcessEngineException("Cannot order by variables of type %s".formatted(type.getName()));
     }
   }
 

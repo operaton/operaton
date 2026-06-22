@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getAttachments"
       tag = "Task Attachment"
-      summary = "Get List"
+      summary = "List Task Attachments"
       desc = "Gets the attachments for a task." />
 
   "parameters" : [
@@ -68,9 +68,10 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "No task exists for the given task id. See the [Introduction](/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

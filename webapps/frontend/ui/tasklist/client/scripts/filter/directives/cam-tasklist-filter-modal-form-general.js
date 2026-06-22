@@ -20,18 +20,18 @@
 var template = require('./cam-tasklist-filter-modal-form-general.html?raw');
 
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
       require: '^camTasklistFilterModalForm',
       scope: {
         filter: '=',
-        accesses: '='
+        accesses: '=',
       },
 
       template: template,
 
-      link: function($scope, $element, attrs, parentCtrl) {
+      link: function ($scope, $element, attrs, parentCtrl) {
         // init //////////////////////////////////////////////////////////
 
         var _form = $scope.filterGeneralForm;
@@ -45,7 +45,7 @@ module.exports = [
 
         // register hint provider ////////////////////////////////////////
 
-        var showHintProvider = function() {
+        var showHintProvider = function () {
           for (var i = 0, control; (control = controls[i]); i++) {
             if (control.$dirty && control.$invalid) {
               return true;
@@ -55,7 +55,7 @@ module.exports = [
         };
 
         parentCtrl.registerHintProvider('filterGeneralForm', showHintProvider);
-      }
+      },
     };
-  }
+  },
 ];

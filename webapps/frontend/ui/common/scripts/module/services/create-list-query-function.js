@@ -21,10 +21,10 @@ var angular = require('operaton-commons-ui/vendor/angular');
 
 module.exports = [
   '$q',
-  function($q) {
-    return function(getCount, getList) {
-      return function(query, pages, sorting) {
-        return getCount(query).then(function(data) {
+  function ($q) {
+    return function (getCount, getList) {
+      return function (query, pages, sorting) {
+        return getCount(query).then(function (data) {
           var first = (pages.current - 1) * pages.size;
           var count = data.count;
           var listQuery = angular.extend(
@@ -32,15 +32,15 @@ module.exports = [
             query,
             {
               firstResult: first,
-              maxResults: pages.size
+              maxResults: pages.size,
             },
-            sorting
+            sorting,
           );
 
           if (count > first) {
             return $q.all({
               count: count,
-              list: getList(listQuery)
+              list: getList(listQuery),
             });
           }
 
@@ -48,5 +48,5 @@ module.exports = [
         });
       };
     };
-  }
+  },
 ];

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.logging;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -97,28 +96,24 @@ class ProcessDataLoggingContextTest {
   }
 
   @AfterEach
-  void resetClock() {
-    ClockUtil.reset();
-    testMDCFacade.clear();
-  }
-
-  @AfterEach
   void tearDown() {
     if (defaultEngineRegistered) {
       runtimeContainerDelegate.unregisterProcessEngine(engineRule.getProcessEngine());
     }
-  }
+    // reset clock
+    ClockUtil.reset();
+    testMDCFacade.clear();
 
-  @AfterEach
-  void resetLogConfiguration() {
+    // resetLogConfiguration
     engineRule.getProcessEngineConfiguration()
-      .setLoggingContextActivityId("activityId")
-      .setLoggingContextApplicationName("applicationName")
-      .setLoggingContextBusinessKey("businessKey")
-      .setLoggingContextProcessDefinitionId("processDefinitionId")
-      .setLoggingContextProcessInstanceId("processInstanceId")
-      .setLoggingContextTenantId("tenantId")
-      .setLoggingContextEngineName("engineName");
+            .setLoggingContextActivityId("activityId")
+            .setLoggingContextApplicationName("applicationName")
+            .setLoggingContextBusinessKey("businessKey")
+            .setLoggingContextProcessDefinitionId("processDefinitionId")
+            .setLoggingContextProcessInstanceId("processInstanceId")
+            .setLoggingContextRootProcessInstanceId("rootProcessInstanceId")
+            .setLoggingContextTenantId("tenantId")
+            .setLoggingContextEngineName("engineName");
   }
 
   @Test
@@ -131,7 +126,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then
-    assertActivityLogs(instance, "ENGINE-200", Arrays.asList("start", "waitState", "end"), true, false, true, true, engineRule.getProcessEngine().getName());
+    assertActivityLogs(instance, "ENGINE-200", List.of("start", "waitState", "end"), true, false, true, true, engineRule.getProcessEngine().getName());
   }
 
   @Test
@@ -160,9 +155,45 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then activity context logs are present
-    assertActivityLogsPresent(instance, Arrays.asList("start", "waitState", "end"));
+    assertActivityLogsPresent(instance, List.of("start", "waitState", "end"));
     // other logs do not contain MDC properties
     assertActivityLogsPresentWithoutMdc("ENGINE-130");
+  }
+
+  @Test
+  @WatchLogger(loggerNames = PVM_LOGGER, level = "DEBUG")
+  void shouldLogRootProcessInstanceIdInActivityContext() {
+    // given
+    manageDeployment(modelOneTaskProcess());
+
+    // when
+    ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    taskService.complete(taskService.createTaskQuery().singleResult().getId());
+
+    // then
+    assertThat(loggingRule.getFilteredLog("ENGINE-200"))
+        .isNotEmpty()
+        .allSatisfy(logEvent -> assertThat(logEvent.getMDCPropertyMap())
+            .containsEntry("rootProcessInstanceId", instance.getRootProcessInstanceId()));
+  }
+
+  @Test
+  @WatchLogger(loggerNames = PVM_LOGGER, level = "DEBUG")
+  void shouldLogCustomRootProcessInstanceIdMdcProperty() {
+    // given
+    engineRule.getProcessEngineConfiguration().setLoggingContextRootProcessInstanceId("rootInstId");
+    manageDeployment(modelOneTaskProcess());
+
+    // when
+    ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    taskService.complete(taskService.createTaskQuery().singleResult().getId());
+
+    // then
+    assertThat(loggingRule.getFilteredLog("ENGINE-200"))
+        .isNotEmpty()
+        .allSatisfy(logEvent -> assertThat(logEvent.getMDCPropertyMap())
+            .containsEntry("rootInstId", instance.getRootProcessInstanceId())
+            .doesNotContainKey("rootProcessInstanceId"));
   }
 
   @Test
@@ -307,7 +338,7 @@ class ProcessDataLoggingContextTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then activity context logs are present
-    assertActivityLogsPresent(instance, Arrays.asList("start", "waitState", "end"), "actId", "appName", "busKey", "defId", "instId", "tenId", "engName");
+    assertActivityLogsPresent(instance, List.of("start", "waitState", "end"), "actId", "appName", "busKey", "defId", "instId", "tenId", "engName");
   }
 
   @Test
@@ -358,7 +389,7 @@ class ProcessDataLoggingContextTest {
     testRule.waitForJobExecutorToProcessAllJobs();
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then
-    assertActivityLogsPresent(pi, Arrays.asList("start", "waitState", "end"));
+    assertActivityLogsPresent(pi, List.of("start", "waitState", "end"));
   }
 
   @Test
@@ -375,7 +406,7 @@ class ProcessDataLoggingContextTest {
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     testRule.waitForJobExecutorToProcessAllJobs();
     // then
-    assertActivityLogsPresent(pi, Arrays.asList("start", "waitState", "end"));
+    assertActivityLogsPresent(pi, List.of("start", "waitState", "end"));
   }
 
   @Test
@@ -394,7 +425,7 @@ class ProcessDataLoggingContextTest {
     testRule.waitForJobExecutorToProcessAllJobs();
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     // then
-    assertActivityLogsPresent(pi, Arrays.asList("start", "timer", "waitState", "end"));
+    assertActivityLogsPresent(pi, List.of("start", "timer", "waitState", "end"));
     // job executor logs do not contain MDC properties
     assertActivityLogsPresentWithoutMdc("ENGINE-140");
   }
@@ -788,7 +819,7 @@ class ProcessDataLoggingContextTest {
 
   protected void assertFailureLogPresent(ProcessInstance instance, String filter, String activityId, String appName,
       String businessKey, int numberOfFailureLogs) {
-    assertActivityLogs(instance, filter, Arrays.asList(activityId), appName, businessKey, instance.getProcessDefinitionId(), engineRule.getProcessEngine().getName(), true,
+    assertActivityLogs(instance, filter, List.of(activityId), appName, businessKey, instance.getProcessDefinitionId(), engineRule.getProcessEngine().getName(), true,
         numberOfFailureLogs);
   }
 

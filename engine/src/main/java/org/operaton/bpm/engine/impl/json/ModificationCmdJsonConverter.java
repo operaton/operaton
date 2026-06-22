@@ -27,9 +27,7 @@ import org.operaton.bpm.engine.impl.cmd.TransitionInstanceCancellationCmd;
 import org.operaton.bpm.engine.impl.cmd.TransitionInstantiationCmd;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public class ModificationCmdJsonConverter extends JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
-
-  public static final ModificationCmdJsonConverter INSTANCE = new ModificationCmdJsonConverter();
+public class ModificationCmdJsonConverter implements JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
 
   public static final String START_BEFORE = "startBeforeActivity";
   public static final String START_AFTER = "startAfterActivity";

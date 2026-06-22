@@ -27,13 +27,13 @@ var debouncePromiseFactory = require('operaton-bpm-sdk-js').utils
 var debounceQuery = debouncePromiseFactory();
 
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
       scope: {
         deploymentsData: '=',
         totalItems: '=',
-        deployments: '='
+        deployments: '=',
       },
       template: template,
       controller: [
@@ -43,54 +43,60 @@ module.exports = [
         'search',
         'Notifications',
         'camAPI',
-        function($scope, $location, $rootScope, search, Notifications, camAPI) {
+        function (
+          $scope,
+          $location,
+          $rootScope,
+          search,
+          Notifications,
+          camAPI,
+        ) {
           var Deployment = camAPI.resource('deployment');
-          var deploymentsListData = ($scope.deploymentsListData = $scope.deploymentsData.newChild(
-            $scope
-          ));
+          var deploymentsListData = ($scope.deploymentsListData =
+            $scope.deploymentsData.newChild($scope));
           $scope.searchConfig = searchConfigJSON;
 
           $scope.loadingState = 'INITIAL';
 
           // control ///////////////////////////////////////////////////////////////////
           var control = ($scope.control = {});
-          control.addMessage = function(status, msg, unsafe) {
+          control.addMessage = function (status, msg, unsafe) {
             Notifications.addMessage({
               status: status,
               message: msg,
               scope: $scope,
-              unsafe: unsafe
+              unsafe: unsafe,
             });
           };
 
-          $scope.onSearchChange = function(query, pages) {
+          $scope.onSearchChange = function (query, pages) {
             $scope.loadingState = 'LOADING';
             var pagination = {
               firstResult: (pages.current - 1) * pages.size,
-              maxResults: pages.size
+              maxResults: pages.size,
             };
 
             return debounceQuery(
               Deployment.list(
-                lodash.assign(query, pagination, $scope.deploymentsSorting)
-              )
+                lodash.assign(query, pagination, $scope.deploymentsSorting),
+              ),
             )
-              .then(function(res) {
+              .then(function (res) {
                 $scope.deployments = res.items;
 
                 var phase = $scope.$root.$$phase;
                 if (phase !== '$apply' && phase !== '$digest') {
-                  $scope.$apply(function() {
+                  $scope.$apply(function () {
                     $scope.loadingState = 'LOADED';
                   });
                 }
 
                 return res.count;
               })
-              .catch(function() {
+              .catch(function () {
                 var phase = $scope.$root.$$phase;
                 if (phase !== '$apply' && phase !== '$digest') {
-                  $scope.$apply(function() {
+                  $scope.$apply(function () {
                     $scope.loadingState = 'ERROR';
                   });
                 }
@@ -98,48 +104,50 @@ module.exports = [
           };
 
           // observe data ///////////////////////////////////////////////////////////////
-          deploymentsListData.observe('currentDeployment', function(
-            currentDeployment
-          ) {
-            $scope.currentDeployment = currentDeployment;
-          });
+          deploymentsListData.observe(
+            'currentDeployment',
+            function (currentDeployment) {
+              $scope.currentDeployment = currentDeployment;
+            },
+          );
 
-          deploymentsListData.observe('deploymentsSorting', function(
-            deploymentsSorting
-          ) {
-            $scope.deploymentsSorting = deploymentsSorting;
+          deploymentsListData.observe(
+            'deploymentsSorting',
+            function (deploymentsSorting) {
+              $scope.deploymentsSorting = deploymentsSorting;
 
-            $rootScope.$broadcast(
-              'cam-common:cam-searchable:query-force-change'
-            );
-          });
+              $rootScope.$broadcast(
+                'cam-common:cam-searchable:query-force-change',
+              );
+            },
+          );
 
           // selection ////////////////////////////////////////////////////////////////
-          $scope.focus = function(deployment) {
+          $scope.focus = function (deployment) {
             if (!isFocused(deployment)) {
               search.updateSilently({
                 resource: null,
                 resourceName: null,
                 viewbox: null,
-                editMode: true
+                editMode: true,
               });
             }
 
             search.updateSilently({
-              deployment: deployment.id
+              deployment: deployment.id,
             });
             deploymentsListData.changed('currentDeployment');
           };
 
-          var isFocused = ($scope.isFocused = function(deployment) {
+          var isFocused = ($scope.isFocused = function (deployment) {
             return (
               deployment &&
               $scope.currentDeployment &&
               deployment.id === $scope.currentDeployment.id
             );
           });
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

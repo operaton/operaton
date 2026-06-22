@@ -332,7 +332,7 @@ public class FetchExternalTasksDto {
 
     protected void configureFieldOrBadRequest(String key, String parameterName, Map<String, Consumer<FetchAndLockBuilder>> fieldMappings) {
       if (!fieldMappings.containsKey(key)) {
-        throw new InvalidRequestException(BAD_REQUEST, "Cannot set query " + parameterName + " parameter to value " + key);
+        throw new InvalidRequestException(BAD_REQUEST, "Cannot set query %s parameter to value %s".formatted(parameterName, key));
       }
       fieldMappings.get(key).accept(builder);
     }

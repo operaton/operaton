@@ -51,12 +51,12 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer
  *
  */
+@SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
 class MigrationTransitionInstancesTest {
 
   @RegisterExtension
@@ -455,17 +455,20 @@ class MigrationTransitionInstancesTest {
     ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
     testHelper.completeTask("userTask1");
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasTransitionInstanceFailures("userTask1",
-          "Transition instance is assigned to a sequence flow that cannot be matched in the target activity"
-        );
-    }
+    var migrationBuilder = rule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(processInstance.getId());
+
+    // when then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        MigratingProcessInstanceValidationException ex = (MigratingProcessInstanceValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasTransitionInstanceFailures("userTask1",
+            "Transition instance is assigned to a sequence flow that cannot be matched in the target activity"
+          );
+      });
   }
 
   @Test
@@ -570,17 +573,23 @@ class MigrationTransitionInstancesTest {
         .mapActivities("startEvent", "subProcessStart")
         .build();
 
-    // when
-    try {
-      testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasTransitionInstanceFailures("startEvent",
-          "A transition instance that instantiates the process can only be migrated to a process-level flow node"
-        );
-    }
+    ProcessInstance processInstance = rule.getRuntimeService()
+        .startProcessInstanceById(sourceProcessDefinition.getId());
+
+    var migrationBuilder = rule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(processInstance.getId());
+
+    // when then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        MigratingProcessInstanceValidationException ex = (MigratingProcessInstanceValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasTransitionInstanceFailures("startEvent",
+            "A transition instance that instantiates the process can only be migrated to a process-level flow node"
+          );
+      });
   }
 
   @Test
@@ -855,18 +864,23 @@ class MigrationTransitionInstancesTest {
         .mapEqualActivities()
         .build();
 
-    // when
-    try {
-      testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasTransitionInstanceFailures("userTask",
-          "Target activity is not asyncBefore"
-        );
-    }
+    ProcessInstance processInstance = rule.getRuntimeService()
+        .startProcessInstanceById(sourceProcessDefinition.getId());
+
+    var migrationBuilder = rule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(processInstance.getId());
+
+    // when then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        MigratingProcessInstanceValidationException ex = (MigratingProcessInstanceValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasTransitionInstanceFailures("userTask",
+            "Target activity is not asyncBefore"
+          );
+      });
   }
 
   @Test
@@ -885,18 +899,20 @@ class MigrationTransitionInstancesTest {
 
     testHelper.completeTask("userTask1");
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasTransitionInstanceFailures("userTask1",
-          "Target activity is not asyncAfter"
-        );
-    }
+    var migrationBuilder = rule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(processInstance.getId());
+
+    // when then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        MigratingProcessInstanceValidationException ex = (MigratingProcessInstanceValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasTransitionInstanceFailures("userTask1",
+            "Target activity is not asyncAfter"
+          );
+      });
   }
 
   @Test
@@ -909,18 +925,23 @@ class MigrationTransitionInstancesTest {
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .build();
 
-    // when
-    try {
-      testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasTransitionInstanceFailures("userTask",
-          "There is no migration instruction for this instance's activity"
-        );
-    }
+    ProcessInstance processInstance = rule.getRuntimeService()
+        .startProcessInstanceById(sourceProcessDefinition.getId());
+
+    var migrationBuilder = rule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(processInstance.getId());
+
+    // when then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        MigratingProcessInstanceValidationException ex = (MigratingProcessInstanceValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasTransitionInstanceFailures("userTask",
+            "There is no migration instruction for this instance's activity"
+          );
+      });
   }
 
   @Test
@@ -938,18 +959,23 @@ class MigrationTransitionInstancesTest {
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .build();
 
-    // when
-    try {
-      testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasTransitionInstanceFailures("subProcess",
-          "There is no migration instruction for this instance's activity"
-        );
-    }
+    ProcessInstance processInstance = rule.getRuntimeService()
+        .startProcessInstanceById(sourceProcessDefinition.getId());
+
+    var migrationBuilder = rule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(processInstance.getId());
+
+    // when then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        MigratingProcessInstanceValidationException ex = (MigratingProcessInstanceValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasTransitionInstanceFailures("subProcess",
+            "There is no migration instruction for this instance's activity"
+          );
+      });
   }
 
   @Test
@@ -969,18 +995,20 @@ class MigrationTransitionInstancesTest {
     Job job = rule.getManagementService().createJobQuery().singleResult();
     rule.getManagementService().setJobRetries(job.getId(), 0);
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasTransitionInstanceFailures("userTask",
-          "There is no migration instruction for this instance's activity"
-        );
-    }
+    var migrationBuilder = rule.getRuntimeService()
+        .newMigration(migrationPlan)
+        .processInstanceIds(processInstance.getId());
+
+    // when then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        MigratingProcessInstanceValidationException ex = (MigratingProcessInstanceValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasTransitionInstanceFailures("userTask",
+            "There is no migration instruction for this instance's activity"
+          );
+      });
 
   }
 

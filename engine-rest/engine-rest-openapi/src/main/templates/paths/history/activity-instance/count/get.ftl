@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "getHistoricActivityInstancesCount"
       tag = "Historic Activity Instance"
-      summary = "Get List Count"
+      summary = "Count Historic Activity Instances"
       desc = "Queries for the number of historic activity instances that fulfill the given parameters.
               Takes the same parameters as the [Get Historic Activity Instance](${docsUrl}/reference/rest/history/activity-instance/get-activity-instance-query/)  method." />
 
@@ -31,10 +31,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

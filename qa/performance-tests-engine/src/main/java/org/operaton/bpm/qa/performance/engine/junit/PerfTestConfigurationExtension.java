@@ -61,14 +61,14 @@ public class PerfTestConfigurationExtension implements BeforeAllCallback, TestWa
     if (perfTestConfiguration == null) {
       File file = IoUtil.getFile(PROPERTY_FILE_NAME);
       if (!file.exists()) {
-        throw new PerfTestException("Cannot load file '" + PROPERTY_FILE_NAME + "': file does not exist.");
+        throw new PerfTestException("Cannot load file '%s': file does not exist.".formatted(PROPERTY_FILE_NAME));
       }
       try (FileInputStream propertyInputStream = new FileInputStream(file)) {
         Properties properties = new Properties();
         properties.load(propertyInputStream);
         perfTestConfiguration = new PerfTestConfiguration(properties);
       } catch (Exception e) {
-        throw new PerfTestException("Cannot load properties from file " + PROPERTY_FILE_NAME + ": " + e);
+        throw new PerfTestException("Cannot load properties from file %s: %s".formatted(PROPERTY_FILE_NAME, e));
       }
     }
   }

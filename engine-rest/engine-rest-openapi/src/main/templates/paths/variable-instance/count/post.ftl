@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryVariableInstancesCount"
       tag = "Variable Instance"
-      summary = "Get Variable Instance Count (POST)"
+      summary = "Count Variable Instances"
       desc = "Query for the number of variable instances that fulfill given parameters. This
               method takes the same message body as the
               [Get Variable Instances POST](${docsUrl}/reference/rest/variable-
@@ -61,8 +61,9 @@
                 comparison is used. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

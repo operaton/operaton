@@ -19,7 +19,7 @@
 
 var VariablesFactory = [
   '$translate',
-  function($translate) {
+  function ($translate) {
     // variable specific stuff //////////////
 
     function reverse(hash) {
@@ -49,7 +49,7 @@ var VariablesFactory = [
       gteq: '>=',
       lt: '<',
       lteq: '<=',
-      like: ' like '
+      like: ' like ',
     };
 
     var SYM_TO_OPS = reverse(OPS);
@@ -59,7 +59,7 @@ var VariablesFactory = [
     }
 
     var PATTERN = new RegExp(
-      '^(\\w+)\\s*(' + keys(SYM_TO_OPS).join('|') + ')\\s*([^!=<>]+)$'
+      '^(\\w+)\\s*(' + keys(SYM_TO_OPS).join('|') + ')\\s*([^!=<>]+)$',
     );
 
     /**
@@ -85,7 +85,7 @@ var VariablesFactory = [
       }
 
       throw new Error(
-        $translate.instant('VARIABLE_ERROR_INFER_TYPE', {value: value})
+        $translate.instant('VARIABLE_ERROR_INFER_TYPE', {value: value}),
       );
     }
 
@@ -107,7 +107,7 @@ var VariablesFactory = [
       }
 
       throw new Error(
-        $translate.instant('VARIABLE_ERROR_INFER_TYPE', {value: value})
+        $translate.instant('VARIABLE_ERROR_INFER_TYPE', {value: value}),
       );
     }
 
@@ -120,13 +120,15 @@ var VariablesFactory = [
        * @param  {string} str the string to parse
        * @return {object}     the parsed variableFilter object
        */
-      parse: function(str) {
+      parse: function (str) {
         var match = PATTERN.exec(str),
           value;
 
         if (!match) {
           throw new Error(
-            $translate.instant('VARIABLE_ERROR_VARIABLE_SYNTAX', {message: str})
+            $translate.instant('VARIABLE_ERROR_VARIABLE_SYNTAX', {
+              message: str,
+            }),
           );
         }
 
@@ -135,11 +137,11 @@ var VariablesFactory = [
         return {
           name: match[1],
           operator: SYM_TO_OPS[match[2]],
-          value: value
+          value: value,
         };
       },
 
-      toString: function(variable) {
+      toString: function (variable) {
         if (!variable) {
           return '';
         }
@@ -151,8 +153,8 @@ var VariablesFactory = [
         );
       },
 
-      operators: keys(SYM_TO_OPS)
+      operators: keys(SYM_TO_OPS),
     };
-  }
+  },
 ];
 module.exports = VariablesFactory;

@@ -33,7 +33,7 @@ module.exports = [
   '$http',
   'Uri',
   '$route',
-  function($rootScope, $q, $http, Uri, $route) {
+  function ($rootScope, $q, $http, Uri, $route) {
     function emit(event, a, b) {
       $rootScope.$broadcast(event, a, b);
     }
@@ -47,7 +47,7 @@ module.exports = [
 
       return new Authentication({
         name: data.userId,
-        authorizedApps: data.authorizedApps
+        authorizedApps: data.authorizedApps,
       });
     }
 
@@ -77,16 +77,16 @@ module.exports = [
      *
      * @return {Promise<Authentication, Response>} the promise with the new authentication or failure response
      */
-    this.login = function(username, password) {
+    this.login = function (username, password) {
       var form = $.param({
         username: username,
-        password: password
+        password: password,
       });
 
       function success(authentication) {
         // When the next subsequent request after the location change is
         // a modifying request (POST), no valid CSRF token is available
-        $http.get(Uri.appUri('engine://engine/')).then(function() {
+        $http.get(Uri.appUri('engine://engine/')).then(function () {
           update(authentication);
           emit('authentication.login.success', authentication);
         });
@@ -105,8 +105,8 @@ module.exports = [
           url: Uri.appUri('admin://auth/user/:engine/login/:appName'),
           data: form,
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          }
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          },
         });
       }
 
@@ -127,7 +127,7 @@ module.exports = [
      *
      * @return {Promise<Void, Response>} a promise that resolves to the failed response on error
      */
-    this.logout = function(engine) {
+    this.logout = function (engine) {
       function success(response) {
         update(null);
         emit('authentication.logout.success', response);
@@ -140,7 +140,7 @@ module.exports = [
 
       return $http
         .post(
-          Uri.appUri('admin://auth/user/' + (engine || ':engine') + '/logout')
+          Uri.appUri('admin://auth/user/' + (engine || ':engine') + '/logout'),
         )
         .then(success, error);
     };
@@ -153,10 +153,9 @@ module.exports = [
      */
     var authenticationPromise;
 
-    $rootScope.$on('authentication.changed', function(e, authentication) {
-      authenticationPromise = $q[authentication ? 'when' : 'reject'](
-        authentication
-      );
+    $rootScope.$on('authentication.changed', function (e, authentication) {
+      authenticationPromise =
+        $q[authentication ? 'when' : 'reject'](authentication);
 
       if (!authentication) {
         $route.reload();
@@ -170,7 +169,7 @@ module.exports = [
      *
      * @return {Promise<Authentication, Response>} a promise resolving to the current users authentication
      */
-    this.getAuthentication = function() {
+    this.getAuthentication = function () {
       function success(authentication) {
         update(authentication);
         return authentication;
@@ -193,7 +192,7 @@ module.exports = [
 
     //////// secure route integration ///////////////
 
-    $rootScope.$on('$routeChangeStart', function(event, next) {
+    $rootScope.$on('$routeChangeStart', function (event, next) {
       // secures routes that are annotated with
       //
       // {
@@ -208,21 +207,21 @@ module.exports = [
         if (!next.resolve.authentication) {
           next.resolve.authentication = [
             'AuthenticationService',
-            function(AuthenticationService) {
-              return AuthenticationService.getAuthentication().catch(function(
-                response
-              ) {
-                if (next.authentication === 'optional') {
-                  return null;
-                } else {
-                  emit('authentication.login.required', next);
-                  return $q.reject(response);
-                }
-              });
-            }
+            function (AuthenticationService) {
+              return AuthenticationService.getAuthentication().catch(
+                function (response) {
+                  if (next.authentication === 'optional') {
+                    return null;
+                  } else {
+                    emit('authentication.login.required', next);
+                    return $q.reject(response);
+                  }
+                },
+              );
+            },
           ];
         }
       }
     });
-  }
+  },
 ];

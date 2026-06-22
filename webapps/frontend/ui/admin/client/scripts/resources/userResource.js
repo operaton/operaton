@@ -20,7 +20,7 @@
 module.exports = [
   '$resource',
   'Uri',
-  function($resource, Uri) {
+  function ($resource, Uri) {
     return $resource(
       Uri.appUri('engine://engine/:engine/user/:userId/:action'),
       {userId: '@id'},
@@ -30,8 +30,8 @@ module.exports = [
         updateCredentials: {method: 'PUT', params: {action: 'credentials'}},
         createUser: {method: 'POST', params: {userId: 'create'}},
         OPTIONS: {method: 'OPTIONS', params: {}},
-        count: {method: 'GET', params: {userId: 'count'}}
-      }
+        count: {method: 'GET', params: {userId: 'count'}},
+      },
     );
-  }
+  },
 ];

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -378,7 +377,7 @@ class CleanableHistoricBatchReportTest {
     String pId = runtimeService.startProcessInstanceById(processDefinition.getId()).getId();
     List<String> batchIds = new ArrayList<>();
     for (int i = 0; i < cancelationCountBatch; i++) {
-      batchIds.add(runtimeService.deleteProcessInstancesAsync(Arrays.asList(pId), "create-deletion-batch").getId());
+      batchIds.add(runtimeService.deleteProcessInstancesAsync(List.of(pId), "create-deletion-batch").getId());
     }
     return batchIds;
   }

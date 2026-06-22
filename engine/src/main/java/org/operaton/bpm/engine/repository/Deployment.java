@@ -21,15 +21,21 @@ import java.util.Date;
 /**
  * Represents a deployment that is already present in the process repository.
  *
+ * <p>
  * A deployment is a container for resources such as process definitions, images, forms, etc.
+ * </p>
  *
+ * <p>
  * When a deployment is 'deployed' through the {@link org.operaton.bpm.engine.RepositoryService},
  * the engine will recognize certain of such resource types and act upon
  * them (e.g. process definitions will be parsed to an executable Java artifact).
+ * </p>
  *
+ * <p>
  * To create a Deployment, use the {@link org.operaton.bpm.engine.repository.DeploymentBuilder}.
  * A Deployment on itself is a <b>read-only</b> object and its content cannot be
  * changed after deployment (hence the builder that needs to be used).
+ * </p>
  *
  * @author Tom Baeyens
  * @author Joram Barrez

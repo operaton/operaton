@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class EscalationTest extends BpmnModelElementInstanceTest {
 
@@ -33,7 +32,7 @@ public class EscalationTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("name"),
       new AttributeAssumption("escalationCode"),
       new AttributeAssumption("structureRef")

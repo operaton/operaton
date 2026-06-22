@@ -23,7 +23,7 @@ var angular = require('angular');
 var identityLinksTemplate = require('./identity-links-modal.html?raw');
 var userTasksTemplate = require('./user-tasks-table.html?raw');
 
-module.exports = function(ngModule) {
+module.exports = function (ngModule) {
   /**
      * @name userTaskTable
      * @memberof cam.cockpit.plugin.base.views
@@ -41,7 +41,7 @@ module.exports = function(ngModule) {
    */
   function map(array, cb) {
     var newArray = [];
-    angular.forEach(array, function(val, key) {
+    angular.forEach(array, function (val, key) {
       newArray[key] = cb(val, key);
     });
     return newArray;
@@ -55,7 +55,7 @@ module.exports = function(ngModule) {
    */
   function compact(array) {
     var newArray = [];
-    angular.forEach(array, function(val) {
+    angular.forEach(array, function (val) {
       if (val) {
         newArray.push(val);
       }
@@ -83,7 +83,7 @@ module.exports = function(ngModule) {
     '$translate',
     'localConf',
     'Uri',
-    function(
+    function (
       $scope,
       search,
       camAPI,
@@ -92,7 +92,7 @@ module.exports = function(ngModule) {
       $modal,
       $translate,
       localConf,
-      Uri
+      Uri,
     ) {
       // input: processInstance, processData
 
@@ -104,7 +104,7 @@ module.exports = function(ngModule) {
       var DEFAULT_PAGES = {size: 50, total: 0, current: 1};
 
       // reset Page when changing Tabs
-      $scope.$on('$destroy', function() {
+      $scope.$on('$destroy', function () {
         search('page', null);
       });
 
@@ -117,13 +117,14 @@ module.exports = function(ngModule) {
 
       var sorting = ($scope.sorting = loadLocal({
         sortBy: 'created',
-        sortOrder: 'desc'
+        sortOrder: 'desc',
       }));
 
-      $scope.getSearchQueryForSearchType = searchWidgetUtils.getSearchQueryForSearchType.bind(
-        null,
-        'activityInstanceIdIn'
-      );
+      $scope.getSearchQueryForSearchType =
+        searchWidgetUtils.getSearchQueryForSearchType.bind(
+          null,
+          'activityInstanceIdIn',
+        );
 
       // prettier-ignore
       $scope.headColumns = [
@@ -139,7 +140,7 @@ module.exports = function(ngModule) {
         { class: 'action', request: '', sortable: false, content: $translate.instant('PLUGIN_USER_TASKS_ACTION') }
       ];
 
-      $scope.$watch('pages.current', function(newValue, oldValue) {
+      $scope.$watch('pages.current', function (newValue, oldValue) {
         if (newValue == oldValue) {
           return;
         }
@@ -147,15 +148,15 @@ module.exports = function(ngModule) {
         search('page', !newValue || newValue == 1 ? null : newValue);
       });
 
-      userTaskData.observe(['filter', 'executionIdToInstanceMap'], function(
-        newFilter,
-        newExecutionIdToInstanceMap
-      ) {
-        pages.current = newFilter.page || 1;
-        executionIdToInstanceMap = newExecutionIdToInstanceMap;
+      userTaskData.observe(
+        ['filter', 'executionIdToInstanceMap'],
+        function (newFilter, newExecutionIdToInstanceMap) {
+          pages.current = newFilter.page || 1;
+          executionIdToInstanceMap = newExecutionIdToInstanceMap;
 
-        updateView(newFilter, newExecutionIdToInstanceMap, sorting);
-      });
+          updateView(newFilter, newExecutionIdToInstanceMap, sorting);
+        },
+      );
 
       function loadLocal(defaultValue) {
         return localConf.get('sortPIUserTaskTab', defaultValue);
@@ -182,14 +183,14 @@ module.exports = function(ngModule) {
           sorting: [
             {
               sortBy: sorting.sortBy,
-              sortOrder: sorting.sortOrder
-            }
-          ]
+              sortOrder: sorting.sortOrder,
+            },
+          ],
         };
 
         var pagingParams = {
           firstResult: firstResult,
-          maxResults: count
+          maxResults: count,
         };
 
         var params = angular.extend({}, filter, defaultParams);
@@ -205,13 +206,13 @@ module.exports = function(ngModule) {
         taskCopies = {};
 
         TaskResource.count(params)
-          .$promise.then(function(response) {
+          .$promise.then(function (response) {
             pages.total = response.count;
           })
           .catch(angular.noop);
 
         TaskResource.query(pagingParams, params)
-          .$promise.then(function(response) {
+          .$promise.then(function (response) {
             for (var i = 0, task; (task = response[i]); i++) {
               task.instance = executionIdToInstanceMap[task.executionId];
               taskCopies[task.id] = angular.copy(task);
@@ -223,13 +224,13 @@ module.exports = function(ngModule) {
           .catch(angular.noop);
       }
 
-      $scope.onSortChange = function(_sorting) {
+      $scope.onSortChange = function (_sorting) {
         sorting = _sorting;
         saveLocal(sorting);
         updateView(filter, executionIdToInstanceMap, sorting);
       };
 
-      $scope.getHref = function(userTask) {
+      $scope.getHref = function (userTask) {
         if (userTask.instance) {
           return (
             '#/process-instance/' +
@@ -242,11 +243,11 @@ module.exports = function(ngModule) {
         return '';
       };
 
-      $scope.getTasklistHref = function(userTask) {
+      $scope.getTasklistHref = function (userTask) {
         return Uri.appUri('tasklistbase://:engine/#/?task=' + userTask.id);
       };
 
-      $scope.submitAssigneeChange = function(editForm, cb) {
+      $scope.submitAssigneeChange = function (editForm, cb) {
         cb = ensureCallback(cb);
 
         var userTask = editForm.context;
@@ -256,51 +257,53 @@ module.exports = function(ngModule) {
 
         TaskResource.setAssignee(defaultParams, params).$promise.then(
           // success
-          function(response) {
-            var assignee = (copy.assignee = userTask.assignee =
-              response.userId);
+          function (response) {
+            var assignee =
+              (copy.assignee =
+              userTask.assignee =
+                response.userId);
 
             var message;
             if (assignee) {
               message = $translate.instant('PLUGIN_USER_TASKS_MESSAGE_1', {
                 name: userTask.instance.name,
-                assignee: copy.assignee
+                assignee: copy.assignee,
               });
             } else {
               message = $translate.instant('PLUGIN_USER_TASKS_MESSAGE_2', {
-                name: userTask.instance.name
+                name: userTask.instance.name,
               });
             }
 
             Notifications.addMessage({
               status: $translate.instant('PLUGIN_USER_TASKS_STATUS_ASSIGNEE'),
               message: message,
-              duration: 5000
+              duration: 5000,
             });
 
             cb();
           },
 
           // error
-          function(error) {
+          function (error) {
             var message;
             if (userTask.assignee) {
               message = $translate.instant('PLUGIN_USER_TASKS_MESSAGE_3', {
                 name: userTask.instance.name,
                 assignee: userTask.assignee,
-                error: error.data.message
+                error: error.data.message,
               });
             } else {
               message = $translate.instant('PLUGIN_USER_TASKS_MESSAGE_4', {
                 name: userTask.instance.name,
-                error: error.data.message
+                error: error.data.message,
               });
             }
 
             var err = {
               status: $translate.instant('PLUGIN_USER_TASKS_STATUS_ASSIGNEE'),
               message: message,
-              exclusive: true
+              exclusive: true,
             };
 
             userTask.assignee = copy.assignee;
@@ -308,99 +311,99 @@ module.exports = function(ngModule) {
             Notifications.addError(err);
             taskIdIdToExceptionMessageMap[userTask.id] = error.data;
             cb(err);
-          }
+          },
         );
       };
 
-      $scope.openDialog = function(userTask, decorator) {
+      $scope.openDialog = function (userTask, decorator) {
         // 1. load the identityLinks
-        Task.identityLinks(userTask.id, function(err, response) {
+        Task.identityLinks(userTask.id, function (err, response) {
           // 2. filter the response.data to exclude links
           var identityLinks = compact(
-            map(response, function(item) {
+            map(response, function (item) {
               var ok =
                 item[decorator.key] &&
                 item.type !== 'assignee' &&
                 item.type !== 'owner';
               return ok ? item : null;
-            })
+            }),
           );
 
           // 3. open a dialog
           $modal
             .open({
               resolve: {
-                userTask: function() {
+                userTask: function () {
                   return userTask;
                 },
-                identityLinks: function() {
+                identityLinks: function () {
                   return identityLinks;
                 },
-                decorator: function() {
+                decorator: function () {
                   return decorator;
-                }
+                },
               },
               controller: 'IdentityLinksController',
               template: identityLinksTemplate,
-              windowClass: 'identity-link-modal'
+              windowClass: 'identity-link-modal',
             })
             .result.catch(angular.noop);
         });
       };
 
-      $scope.changeGroupIdentityLinks = function() {
+      $scope.changeGroupIdentityLinks = function () {
         var userTask = this.userTask;
 
         $scope.openDialog(userTask, {
           title: $translate.instant('PLUGIN_USER_TASKS_MANAGE_GROUPS'),
           table: {
             label: $translate.instant('PLUGIN_USER_TASKS_CURRENT_GROUPS'),
-            id: $translate.instant('PLUGIN_USER_TASKS_GROUP_ID')
+            id: $translate.instant('PLUGIN_USER_TASKS_GROUP_ID'),
           },
           add: {
-            label: $translate.instant('PLUGIN_USER_TASKS_ADD_GROUP')
+            label: $translate.instant('PLUGIN_USER_TASKS_ADD_GROUP'),
           },
           notifications: {
             remove: $translate.instant(
-              'PLUGIN_USER_TASKS_NOTIFICATION_REMOVE_GROUP'
+              'PLUGIN_USER_TASKS_NOTIFICATION_REMOVE_GROUP',
             ),
-            add: $translate.instant('PLUGIN_USER_TASKS_NOTIFICATION_ADD_GROUP')
+            add: $translate.instant('PLUGIN_USER_TASKS_NOTIFICATION_ADD_GROUP'),
           },
-          key: 'groupId'
+          key: 'groupId',
         });
       };
 
-      $scope.changeUserIdentityLinks = function() {
+      $scope.changeUserIdentityLinks = function () {
         var userTask = this.userTask;
 
         $scope.openDialog(userTask, {
           title: $translate.instant('PLUGIN_USER_TASKS_MANAGE_USERS'),
           table: {
             label: $translate.instant('PLUGIN_USER_TASKS_CURRENT_USERS'),
-            id: $translate.instant('PLUGIN_USER_TASKS_USER_ID')
+            id: $translate.instant('PLUGIN_USER_TASKS_USER_ID'),
           },
           add: {
-            label: $translate.instant('PLUGIN_USER_TASKS_ADD_USER')
+            label: $translate.instant('PLUGIN_USER_TASKS_ADD_USER'),
           },
           notifications: {
             remove: $translate.instant(
-              'PLUGIN_USER_TASKS_NOTIFICATION_REMOVE_USER'
+              'PLUGIN_USER_TASKS_NOTIFICATION_REMOVE_USER',
             ),
-            add: $translate.instant('PLUGIN_USER_TASKS_NOTIFICATION_ADD_USER')
+            add: $translate.instant('PLUGIN_USER_TASKS_NOTIFICATION_ADD_USER'),
           },
-          key: 'userId'
+          key: 'userId',
         });
       };
 
-      $scope.getExceptionForUserTask = function(userTask) {
+      $scope.getExceptionForUserTask = function (userTask) {
         return taskIdIdToExceptionMessageMap[userTask.id];
       };
 
       // translate
-      $scope.translate = function(token, object) {
+      $scope.translate = function (token, object) {
         return $translate.instant(token, object);
       };
-    }
+    },
   ]);
 
   ngModule.controller('IdentityLinksController', [
@@ -411,14 +414,14 @@ module.exports = function(ngModule) {
     'userTask',
     'identityLinks',
     'decorator',
-    function(
+    function (
       $modalInstance,
       camAPI,
       $scope,
       Notifications,
       userTask,
       identityLinks,
-      decorator
+      decorator,
     ) {
       var Task = camAPI.resource('task');
 
@@ -428,32 +431,36 @@ module.exports = function(ngModule) {
       $scope.title = decorator.title;
       var key = ($scope.key = decorator.key);
 
-      $scope.$on('$routeChangeStart', function() {
+      $scope.$on('$routeChangeStart', function () {
         $modalInstance.close();
       });
 
-      $scope.removeItem = function() {
+      $scope.removeItem = function () {
         var delta = this.delta;
 
-        Task.identityLinksDelete(userTask.id, this.identityLink, function(err) {
-          if (err) {
-            return Notifications.addError({
-              status: decorator.notifications.remove,
-              message: err.message,
-              exclusive: true
-            });
-          }
+        Task.identityLinksDelete(
+          userTask.id,
+          this.identityLink,
+          function (err) {
+            if (err) {
+              return Notifications.addError({
+                status: decorator.notifications.remove,
+                message: err.message,
+                exclusive: true,
+              });
+            }
 
-          // deleting an entry is not enough, we need to "rebuild" the identiy links
-          identityLinks = $scope.identityLinks = compact(
-            map(identityLinks, function(g, d) {
-              return delta !== d ? g : false;
-            })
-          );
-        });
+            // deleting an entry is not enough, we need to "rebuild" the identiy links
+            identityLinks = $scope.identityLinks = compact(
+              map(identityLinks, function (g, d) {
+                return delta !== d ? g : false;
+              }),
+            );
+          },
+        );
       };
 
-      $scope.invalid = function() {
+      $scope.invalid = function () {
         var editForm = this.editForm;
 
         if (editForm.$invalid) {
@@ -462,28 +469,28 @@ module.exports = function(ngModule) {
 
         var exists;
         var newItem = editForm.newItem.$modelValue;
-        angular.forEach(identityLinks, function(identityLink) {
+        angular.forEach(identityLinks, function (identityLink) {
           exists = exists || identityLink[key] === newItem;
         });
 
         return exists;
       };
 
-      $scope.addItem = function() {
+      $scope.addItem = function () {
         var editForm = this;
 
         var newIdentityLink = {
-          type: 'candidate'
+          type: 'candidate',
         };
 
         newIdentityLink[key] = editForm.newItem;
 
-        Task.identityLinksAdd(userTask.id, newIdentityLink, function(err) {
+        Task.identityLinksAdd(userTask.id, newIdentityLink, function (err) {
           if (err) {
             return Notifications.addError({
               status: decorator.notifications.add,
               message: err.message,
-              exclusive: true
+              exclusive: true,
             });
           }
 
@@ -491,16 +498,16 @@ module.exports = function(ngModule) {
           editForm.newItem = '';
         });
       };
-    }
+    },
   ]);
 
-  var Configuration = function(ViewsProvider) {
+  var Configuration = function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.processInstance.runtime.tab', {
       id: 'user-tasks-tab',
       label: 'PLUGIN_USER_TASKS_LABEL',
       template: userTasksTemplate,
       controller: 'UserTaskController',
-      priority: 5
+      priority: 5,
     });
   };
 

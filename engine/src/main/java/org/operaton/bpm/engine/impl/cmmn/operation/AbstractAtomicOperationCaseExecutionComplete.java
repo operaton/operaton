@@ -54,47 +54,65 @@ public abstract class AbstractAtomicOperationCaseExecutionComplete extends Abstr
   protected void postTransitionNotification(CmmnExecution execution) {
     if (!execution.isCaseInstanceExecution()) {
       execution.remove();
-
     } else {
-      CmmnExecution superCaseExecution = execution.getSuperCaseExecution();
-      PvmExecutionImpl superExecution = execution.getSuperExecution();
-
-      if (superCaseExecution != null) {
-        TransferVariablesActivityBehavior behavior = (TransferVariablesActivityBehavior) getActivityBehavior(superCaseExecution);
-        behavior.transferVariables(execution, superCaseExecution);
-        superCaseExecution.complete();
-
-      } else if (superExecution != null) {
-        SubProcessActivityBehavior behavior = (SubProcessActivityBehavior) getActivityBehavior(superExecution);
-
-        try {
-          behavior.passOutputVariables(superExecution, execution);
-        } catch (RuntimeException e) {
-          LOG.completingSubCaseError(execution, e);
-          throw e;
-        } catch (Exception e) {
-          LOG.completingSubCaseError(execution, e);
-          throw LOG.completingSubCaseErrorException(execution, e);
-        }
-
-        // set sub case instance to null
-        superExecution.setSubCaseInstance(null);
-
-        try {
-          behavior.completed(superExecution);
-        } catch (RuntimeException e) {
-          LOG.completingSubCaseError(execution, e);
-          throw e;
-        } catch (Exception e) {
-          LOG.completingSubCaseError(execution, e);
-          throw LOG.completingSubCaseErrorException(execution, e);
-        }
-      }
-
-      execution.setSuperCaseExecution(null);
-      execution.setSuperExecution(null);
+      handleCaseInstanceCompletion(execution);
     }
 
+    handleParentCompletion(execution);
+  }
+
+  private void handleCaseInstanceCompletion(CmmnExecution execution) {
+    CmmnExecution superCaseExecution = execution.getSuperCaseExecution();
+    PvmExecutionImpl superExecution = execution.getSuperExecution();
+
+    if (superCaseExecution != null) {
+      handleSuperCaseExecutionCompletion(execution, superCaseExecution);
+    } else if (superExecution != null) {
+      handleSuperExecutionCompletion(execution, superExecution);
+    }
+
+    execution.setSuperCaseExecution(null);
+    execution.setSuperExecution(null);
+  }
+
+  private void handleSuperCaseExecutionCompletion(CmmnExecution execution, CmmnExecution superCaseExecution) {
+    TransferVariablesActivityBehavior behavior = (TransferVariablesActivityBehavior) getActivityBehavior(superCaseExecution);
+    behavior.transferVariables(execution, superCaseExecution);
+    superCaseExecution.complete();
+  }
+
+  private void handleSuperExecutionCompletion(CmmnExecution execution, PvmExecutionImpl superExecution) {
+    SubProcessActivityBehavior behavior = (SubProcessActivityBehavior) getActivityBehavior(superExecution);
+    passOutputVariables(behavior, superExecution, execution);
+    superExecution.setSubCaseInstance(null);
+    completeSuperExecution(behavior, superExecution, execution);
+  }
+
+  private void passOutputVariables(SubProcessActivityBehavior behavior, PvmExecutionImpl superExecution, CmmnExecution execution) {
+    try {
+      behavior.passOutputVariables(superExecution, execution);
+    } catch (RuntimeException e) {
+      LOG.completingSubCaseError(execution, e);
+      throw e;
+    } catch (Exception e) {
+      LOG.completingSubCaseError(execution, e);
+      throw LOG.completingSubCaseErrorException(execution, e);
+    }
+  }
+
+  private void completeSuperExecution(SubProcessActivityBehavior behavior, PvmExecutionImpl superExecution, CmmnExecution execution) {
+    try {
+      behavior.completed(superExecution);
+    } catch (RuntimeException e) {
+      LOG.completingSubCaseError(execution, e);
+      throw e;
+    } catch (Exception e) {
+      LOG.completingSubCaseError(execution, e);
+      throw LOG.completingSubCaseErrorException(execution, e);
+    }
+  }
+
+  private void handleParentCompletion(CmmnExecution execution) {
     CmmnExecution parent = execution.getParent();
     if (parent != null) {
       CmmnActivityBehavior behavior = getActivityBehavior(parent);
@@ -102,7 +120,6 @@ public abstract class AbstractAtomicOperationCaseExecutionComplete extends Abstr
         compositeBehavior.handleChildCompletion(parent, execution);
       }
     }
-
   }
 
   protected abstract void triggerBehavior(CmmnActivityBehavior behavior, CmmnExecution execution);

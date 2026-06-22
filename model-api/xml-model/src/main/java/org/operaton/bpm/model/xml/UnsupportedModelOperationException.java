@@ -32,7 +32,7 @@ public class UnsupportedModelOperationException extends UnsupportedOperationExce
   @Serial private static final long serialVersionUID = 1L;
 
   public UnsupportedModelOperationException(String operationName, String reason) {
-    super("The operation " + operationName + " is unsupported: " + reason + ".");
+    super("The operation %s is unsupported: %s.".formatted(operationName, reason));
   }
 
 }

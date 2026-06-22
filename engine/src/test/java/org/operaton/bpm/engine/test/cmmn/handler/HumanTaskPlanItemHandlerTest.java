@@ -374,8 +374,8 @@ class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
   @Test
   void testTaskDefinitionAssigneeExpression() {
     // given
-    String aPriority = "aPriority";
-    humanTask.setOperatonPriority(aPriority);
+    String assignee = "anAssignee";
+    humanTask.setOperatonAssignee(assignee);
 
     // when
     CmmnActivity activity = handler.handleElement(planItem, context);
@@ -384,9 +384,9 @@ class HumanTaskPlanItemHandlerTest extends CmmnElementHandlerTest {
     HumanTaskActivityBehavior behavior = (HumanTaskActivityBehavior) activity.getActivityBehavior();
     TaskDefinition taskDefinition = behavior.getTaskDefinition();
 
-    Expression priorityExpression = taskDefinition.getPriorityExpression();
-    assertThat(priorityExpression).isNotNull();
-    assertThat(priorityExpression.getExpressionText()).isEqualTo(aPriority);
+    Expression assigneeExpression = taskDefinition.getAssigneeExpression();
+    assertThat(assigneeExpression).isNotNull();
+    assertThat(assigneeExpression.getExpressionText()).isEqualTo(assignee);
   }
 
   @Test

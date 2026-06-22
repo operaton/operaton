@@ -58,8 +58,6 @@ public class SignalEventCatchBoundaryWithVariablesTest extends AbstractFoxPlatfo
     assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).activityId("receiveTask").count()).isOne();
     assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).activityId("receiveTask").count()).isOne();
 
-    // TODO: THis fails because of http://jira.codehaus.org/browse/ACT-1257,
-    // should be fixed and re-enabled :-)
     assertThat(runtimeService.getVariable(piCatchSignal.getId(), "processName")).isEqualTo("catchSignal-visited (was catchSignal)");
     assertThat(runtimeService.getVariable(piThrowSignal.getId(), "processName")).isEqualTo("throwSignal-visited (was throwSignal)");
 

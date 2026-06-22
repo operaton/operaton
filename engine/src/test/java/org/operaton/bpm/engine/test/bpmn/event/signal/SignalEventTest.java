@@ -55,6 +55,7 @@ import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -232,7 +233,7 @@ class SignalEventTest {
 
     for (Task task : tasks) {
       if (!"My User Task".equals(task.getName()) && !"My Second User Task".equals(task.getName())) {
-        fail("Expected: <My User Task> or <My Second User Task> but was <" + task.getName() + ">.");
+        fail("Expected: <My User Task> or <My Second User Task> but was <%s>.".formatted(task.getName()));
       }
     }
 
@@ -265,7 +266,7 @@ class SignalEventTest {
 
     for (Task task : tasks) {
       if (!"Approve".equals(task.getName()) && !"Review".equals(task.getName())) {
-        fail("Expected: <Approve> or <Review> but was <" + task.getName() + ">.");
+        fail("Expected: <Approve> or <Review> but was <%s>.".formatted(task.getName()));
       }
     }
 
@@ -586,11 +587,10 @@ class SignalEventTest {
     String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
-    try {
-      new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
-    } catch (RuntimeException e) {
-      testRule.assertTextPresent("Exception while deserializing object.", e.getMessage());
-    }
+    var objectInputStream = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
+    assertThatThrownBy(objectInputStream::readObject)
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining("Exception while deserializing object.");
 
     // but it can be set as a variable when delivering a message:
     runtimeService
@@ -638,7 +638,6 @@ class SignalEventTest {
     // then there is a process instance
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
     assertThat(processInstance).isNotNull();
-//    assertEquals(catchingProcessDefinition.getId(), processInstance.getProcessDefinitionId());
 
     // and a task
     assertThat(taskService.createTaskQuery().count()).isOne();

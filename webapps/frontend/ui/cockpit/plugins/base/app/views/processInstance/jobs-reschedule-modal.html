@@ -12,7 +12,7 @@
     <form name="rescheduleJobDuedateForm" class="form-horizontal">
       <fieldset>
         <div class="form-group">
-          <label class="control-label col-xs-4">
+          <label class="control-label col-4">
                   {{'PLUGIN_JOBS_RECALCULATE' | translate}}
 
             <span uib-tooltip="{{'PLUGIN_JOBS_RECALCULATE_TOOLTIP' | translate}}"
@@ -21,7 +21,7 @@
             </span>
           </label>
 
-          <div class="col-xs-8">
+          <div class="col-8">
               <label class="radio">
                 <input type="radio" ng-model="recalculationType" value="creation">
                 {{ 'PLUGIN_JOBS_FROM_CREATION' | translate }}
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-xs-4">
+          <label class="control-label col-4">
                   {{'PLUGIN_JOBS_SPECIFIC_DATE' | translate}}
 
             <span uib-tooltip="{{'PLUGIN_JOBS_SPECIFIC_DATE_TOOLTIP' | translate}}"
@@ -44,7 +44,7 @@
             </span>
           </label>
 
-          <div class="col-xs-8">
+          <div class="col-8">
               <label class="radio">
                 <input type="radio" ng-model="recalculationType" value="specific">
               </label>
@@ -52,7 +52,7 @@
         </div>
         <div class="form-group"
             ng-show="recalculationType==='specific'">
-          <label class="control-label col-xs-4">
+          <label class="control-label col-4">
             {{'PLUGIN_JOBS_CASCADE' | translate}}
 
           <span uib-tooltip="{{'PLUGIN_JOBS_CASCADE_TOOLTIP' | translate}}"
@@ -61,17 +61,17 @@
           </span>
           </label>
 
-          <div class="col-xs-8">
+          <div class="col-8">
             <label class="checkbox">
                 <input type="checkbox" ng-model="cascade">
             </label>
           </div>
 
-          <label class="control-label col-xs-4">
+          <label class="control-label col-4">
             {{'PLUGIN_JOBS_DATE_INPUT' | translate}}
           </label>
 
-          <div class="col-xs-8">
+          <div class="col-8">
             <input date type="text" ng-model="date" name="dateValue" ng-disabled="recalculationType!=='specific'" class="form-control">
             <p class="invalid" ng-show="this.rescheduleJobDuedateForm.$error.datePattern">
               {{ 'PLUGIN_JOBS_VALID_PATTERN' | translate }}

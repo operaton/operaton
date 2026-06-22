@@ -28,9 +28,8 @@ import jakarta.ws.rs.ext.Provider;
  */
 @Provider
 public class RestExceptionHandler implements ExceptionMapper<RestException> {
-
   @Override
   public Response toResponse(RestException exception) {
-    return ExceptionHandlerHelper.getInstance().getResponse(exception);
+    return ExceptionHandlerHelper.getResponse(exception);
   }
 }

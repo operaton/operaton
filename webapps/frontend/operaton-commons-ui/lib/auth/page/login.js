@@ -32,7 +32,7 @@ var Controller = [
   '$http',
   'Views',
   'canonicalAppName',
-  function(
+  function (
     $scope,
     $rootScope,
     Notifications,
@@ -43,14 +43,14 @@ var Controller = [
     configuration,
     $http,
     views,
-    canonicalAppName
+    canonicalAppName,
   ) {
     $scope.logo = $sce.trustAsHtml(logo);
     $scope.status = 'INIT';
     $scope.appName = configuration.getAppName();
 
     $scope.loginPlugins = views.getProviders({
-      component: `${canonicalAppName}.login`
+      component: `${canonicalAppName}.login`,
     });
 
     if ($rootScope.authentication) {
@@ -67,9 +67,9 @@ var Controller = [
     if (showFirstLogin) {
       $http({
         method: 'GET',
-        url: '/operaton-welcome'
+        url: '/operaton-welcome',
       })
-        .then(function(res) {
+        .then(function (res) {
           if (res.status !== 200) {
             $scope.dismissInfoBox();
             return;
@@ -79,33 +79,33 @@ var Controller = [
 
           const unregisterListener = $scope.$on(
             'first-visit-info-box-dismissed',
-            $scope.dismissInfoBox
+            $scope.dismissInfoBox,
           );
 
-          $scope.$on('$destroy', function() {
+          $scope.$on('$destroy', function () {
             unregisterListener();
           });
         })
         .catch($scope.dismissInfoBox);
     }
 
-    $translate('FIRST_LOGIN_INFO').then(function(string) {
+    $translate('FIRST_LOGIN_INFO').then(function (string) {
       $scope.FirstLoginMessage = $sce.trustAsHtml(string);
     });
 
-    $scope.dismissInfoBox = function() {
+    $scope.dismissInfoBox = function () {
       $scope.showFirstLogin = false;
       localConf.set('firstVisit', false);
     };
-  }
+  },
 ];
 
 module.exports = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/login', {
       template: template,
-      controller: Controller
+      controller: Controller,
     });
-  }
+  },
 ];

@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
@@ -34,9 +29,7 @@ import org.operaton.bpm.engine.management.JobDefinition;
  * @author Daniel Meyer
  *
  */
-public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbReferences, DbEntity, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbReferences, DbEntity {
 
   protected String id;
   protected int revision;
@@ -204,15 +197,4 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
   public void setDeploymentId(String deploymentId) {
     this.deploymentId = deploymentId;
   }
-
-  @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    return new HashMap<>();
-  }
-
 }

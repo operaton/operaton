@@ -28,7 +28,7 @@ public abstract class AbstractTaskBuilder<B extends AbstractTaskBuilder<B, E>, E
     super(modelInstance, element, selfType);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * Sets the operaton async attribute to true.

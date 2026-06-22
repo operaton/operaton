@@ -44,9 +44,9 @@ CaseDefinition.path = 'case-definition';
  * @param  {uuid}     id    of the case definition to be requested
  * @param  {Function} done
  */
-CaseDefinition.get = function(id, done) {
+CaseDefinition.get = function (id, done) {
   return this.http.get(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 
@@ -56,16 +56,16 @@ CaseDefinition.get = function(id, done) {
  * @param  {String}   key    of the case definition to be requested
  * @param  {Function} done
  */
-CaseDefinition.getByKey = function(key, done) {
+CaseDefinition.getByKey = function (key, done) {
   return this.http.get(this.path + '/key/' + key, {
-    done: done
+    done: done,
   });
 };
 
-CaseDefinition.list = function(params, done) {
+CaseDefinition.list = function (params, done) {
   return this.http.get(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -78,7 +78,7 @@ CaseDefinition.list = function(params, done) {
  * @param {String} [params.variables]       A JSON object containing the variables the case is to be initialized with. Each key corresponds to a variable name and each value to a variable value.
  * @param {String} [params.businessKey]     The business key the case instance is to be initialized with. The business key identifies the case instance in the context of the given case definition.
  */
-CaseDefinition.create = function(params, done) {
+CaseDefinition.create = function (params, done) {
   var url = this.path + '/';
 
   if (params.id) {
@@ -93,7 +93,7 @@ CaseDefinition.create = function(params, done) {
 
   return this.http.post(url + '/create', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -102,10 +102,10 @@ CaseDefinition.create = function(params, done) {
  * @param  {uuid}     id   The id of the case definition.
  * @param  {Function} done
  */
-CaseDefinition.xml = function(data, done) {
+CaseDefinition.xml = function (data, done) {
   var path = this.path + '/' + (data.id ? data.id : 'key/' + data.key) + '/xml';
   return this.http.get(path, {
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -116,12 +116,12 @@ CaseDefinition.xml = function(data, done) {
  * @param {Object} [params]
  * @param {Number} [params.historyTimeToLive]  New value for historyTimeToLive field of process definition. Can be null.
  */
-CaseDefinition.updateHistoryTimeToLive = function(id, params, done) {
+CaseDefinition.updateHistoryTimeToLive = function (id, params, done) {
   var url = this.path + '/' + id + '/history-time-to-live';
 
   return this.http.put(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 

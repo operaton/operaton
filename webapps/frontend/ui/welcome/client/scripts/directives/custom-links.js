@@ -20,7 +20,7 @@ var template = require('./custom-links.html?raw');
 
 module.exports = [
   'customLinks',
-  function(customLinks) {
+  function (customLinks) {
     return {
       restrict: 'A',
 
@@ -28,9 +28,9 @@ module.exports = [
 
       replace: true,
 
-      link: function($scope) {
+      link: function ($scope) {
         $scope.links = customLinks;
-      }
+      },
     };
-  }
+  },
 ];

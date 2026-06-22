@@ -19,13 +19,13 @@
 
 var template = require('./cam-toolbar.html?raw');
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     template: template,
     scope: {
       providers: '=camToolbar',
-      vars: '=?'
-    }
+      vars: '=?',
+    },
   };
 };

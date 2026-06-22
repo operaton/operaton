@@ -31,30 +31,31 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  * @author Roman Smirnov
  *
  */
+@SuppressWarnings("java:S1948")
 public class CmmnActivity extends CoreActivity {
 
   @Serial private static final long serialVersionUID = 1L;
 
   protected List<CmmnActivity> activities = new ArrayList<>();
-  protected Map<String, CmmnActivity> namedActivities = new HashMap<>();
+  private Map<String, CmmnActivity> namedActivities = new HashMap<>();
 
-  protected CmmnElement cmmnElement;
+  private CmmnElement cmmnElement;
 
-  protected CmmnActivityBehavior activityBehavior;
+  private CmmnActivityBehavior activityBehavior;
 
   protected CmmnCaseDefinition caseDefinition;
 
-  protected CmmnActivity parent;
+  private CmmnActivity parent;
 
-  protected List<CmmnSentryDeclaration> sentries = new ArrayList<>();
-  protected Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
+  private List<CmmnSentryDeclaration> sentries = new ArrayList<>();
+  private Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
 
-  protected List<CmmnSentryDeclaration> entryCriteria = new ArrayList<>();
-  protected List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
+  private List<CmmnSentryDeclaration> entryCriteria = new ArrayList<>();
+  private List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
 
   // eventName => activity id => variable listeners
-  protected Map<String, Map<String, List<VariableListener<?>>>> resolvedVariableListeners;
-  protected Map<String, Map<String, List<VariableListener<?>>>> resolvedBuiltInVariableListeners;
+  private Map<String, Map<String, List<VariableListener<?>>>> resolvedVariableListeners;
+  private Map<String, Map<String, List<VariableListener<?>>>> resolvedBuiltInVariableListeners;
 
   public CmmnActivity(String id, CmmnCaseDefinition caseDefinition) {
     super(id);
@@ -185,44 +186,46 @@ public class CmmnActivity extends CoreActivity {
    * the listener is defined on.
    */
   public Map<String, List<VariableListener<?>>> getVariableListeners(String eventName, boolean includeCustomListeners) {
-    Map<String, Map<String, List<VariableListener<?>>>> listenerCache;
+    Map<String, Map<String, List<VariableListener<?>>>> listenerCache = getVariableListenerCache(includeCustomListeners);
+
+    return listenerCache.computeIfAbsent(eventName, k -> resolveVariableListeners(eventName, includeCustomListeners));
+  }
+
+  private Map<String, Map<String, List<VariableListener<?>>>> getVariableListenerCache(boolean includeCustomListeners) {
     if (includeCustomListeners) {
       if (resolvedVariableListeners == null) {
         resolvedVariableListeners = new HashMap<>();
       }
-
-      listenerCache = resolvedVariableListeners;
+      return resolvedVariableListeners;
     } else {
       if (resolvedBuiltInVariableListeners == null) {
         resolvedBuiltInVariableListeners = new HashMap<>();
       }
-      listenerCache = resolvedBuiltInVariableListeners;
+      return resolvedBuiltInVariableListeners;
     }
+  }
 
-    Map<String, List<VariableListener<?>>> resolvedListenersForEvent = listenerCache.get(eventName);
+  private Map<String, List<VariableListener<?>>> resolveVariableListeners(String eventName, boolean includeCustomListeners) {
+    Map<String, List<VariableListener<?>>> resolvedListenersForEvent = new HashMap<>();
+    CmmnActivity currentActivity = this;
 
-    if (resolvedListenersForEvent == null) {
-      resolvedListenersForEvent = new HashMap<>();
-      listenerCache.put(eventName, resolvedListenersForEvent);
+    while (currentActivity != null) {
+      List<VariableListener<?>> localListeners = getVariableListenersLocal(currentActivity, eventName, includeCustomListeners);
 
-      CmmnActivity currentActivity = this;
-
-      while (currentActivity != null) {
-        List<VariableListener<?>> localListeners = null;
-        if (includeCustomListeners) {
-          localListeners = currentActivity.getVariableListenersLocal(eventName);
-        } else {
-          localListeners = currentActivity.getBuiltInVariableListenersLocal(eventName);
-        }
-
-        if (localListeners != null && !localListeners.isEmpty()) {
-          resolvedListenersForEvent.put(currentActivity.getId(), localListeners);
-        }
-
-        currentActivity = currentActivity.getParent();
+      if (localListeners != null && !localListeners.isEmpty()) {
+        resolvedListenersForEvent.put(currentActivity.getId(), localListeners);
       }
-    }
 
+      currentActivity = currentActivity.getParent();
+    }
     return resolvedListenersForEvent;
+  }
+
+  private List<VariableListener<?>> getVariableListenersLocal(CmmnActivity activity, String eventName, boolean includeCustomListeners) {
+    if (includeCustomListeners) {
+      return activity.getVariableListenersLocal(eventName);
+    } else {
+      return activity.getBuiltInVariableListenersLocal(eventName);
+    }
   }
 }

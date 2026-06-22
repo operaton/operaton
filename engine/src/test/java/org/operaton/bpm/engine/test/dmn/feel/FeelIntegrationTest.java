@@ -17,37 +17,35 @@
 package org.operaton.bpm.engine.test.dmn.feel;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(ProcessEngineExtension.class)
 class FeelIntegrationTest {
+  @RegisterExtension
+  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
 
   DecisionService decisionService;
 
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/literal-expression.dmn"})
-  void shouldEvaluateLiteralExpression() {
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Literal Expression, org/operaton/bpm/engine/test/dmn/feel/literal-expression.dmn",
+      "Input Expression, org/operaton/bpm/engine/test/dmn/feel/input-expression.dmn",
+      "Output Rule, org/operaton/bpm/engine/test/dmn/feel/output-rule.dmn"
+  })
+  void shouldEvaluate(String name, String dmnResource) {
     // given
-
-    // when
-    String result = decisionService.evaluateDecisionByKey("c").evaluate()
-        .getSingleEntry();
-
-    // then
-    assertThat(result).isEqualTo("foo");
-  }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/input-expression.dmn"})
-  void shouldEvaluateInputExpression() {
-    // given
+    testRule.deploy(dmnResource);
 
     // when
     String result = decisionService.evaluateDecisionByKey("c").evaluate()
@@ -65,19 +63,6 @@ class FeelIntegrationTest {
     // when
     String result = decisionService.evaluateDecisionTableByKey("c",
         Variables.putValue("cellInput", 6)).getSingleEntry();
-
-    // then
-    assertThat(result).isEqualTo("foo");
-  }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/output-rule.dmn"})
-  void shouldEvaluateOutputRule() {
-    // given
-
-    // when
-    String result = decisionService.evaluateDecisionByKey("c").evaluate()
-        .getSingleEntry();
 
     // then
     assertThat(result).isEqualTo("foo");

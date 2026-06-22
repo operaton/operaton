@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -57,7 +56,7 @@ class ModifyVariableInSameTransactionTest {
         .endEvent()
         .done();
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(bpmnModel);
-    VariableMap variables = Variables.createVariables().putValue("listVar", Arrays.asList( 1, 2, 3));
+    VariableMap variables = Variables.createVariables().putValue("listVar", List.of( 1, 2, 3));
     ProcessInstance instance = engineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId(), variables);
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();
@@ -111,7 +110,7 @@ class ModifyVariableInSameTransactionTest {
         .endEvent()
         .done();
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(bpmnModel);
-    VariableMap variables = Variables.createVariables().putValue("listVar", Arrays.asList( 1, 2, 3));
+    VariableMap variables = Variables.createVariables().putValue("listVar", List.of( 1, 2, 3));
     ProcessInstance instance = engineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId(), variables);
 
     Task task = engineRule.getTaskService().createTaskQuery().singleResult();

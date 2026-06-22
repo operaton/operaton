@@ -59,7 +59,7 @@ public class FetchAndLockResult {
 
   @Override
   public String toString() {
-    return "FetchAndLockResult [tasks=" + tasks + ", throwable=" + throwable + "]";
+    return "FetchAndLockResult [tasks=%s, throwable=%s]".formatted(tasks, throwable);
   }
 
 }

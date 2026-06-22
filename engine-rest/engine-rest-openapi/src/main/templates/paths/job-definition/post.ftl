@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryJobDefinitions"
       tag = "Job Definition"
-      summary = "Get Job Definitions (POST)"
+      summary = "List Job Definitions"
       desc = "Queries for job definitions that fulfill given parameters. This method is slightly
               more powerful than the
               [Get Job Definitions](${docsUrl}/reference/rest/job-definition/get-query/)
@@ -89,8 +89,9 @@
                 parameter is supplied, but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

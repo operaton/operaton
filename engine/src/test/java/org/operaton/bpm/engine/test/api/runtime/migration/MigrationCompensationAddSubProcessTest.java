@@ -38,7 +38,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -322,24 +322,22 @@ class MigrationCompensationAddSubProcessTest {
           .compensateEventDefinitionDone()
         .endEvent()
         .done());
-    var runtimeService = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
+    var migrationPlanBuilder = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "outerSubProcess")
         .mapActivities("eventSubProcessStart", "eventSubProcessStart")
         .mapActivities("compensationBoundary", "compensationBoundary")
         .mapActivities("userTask2", "userTask2");
 
-
-    try {
-      // when
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures("eventSubProcessStart",
-          "The source activity's event scope (subProcess) must be mapped to the target activity's event scope (innerSubProcess)"
-        );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasInstructionFailures("eventSubProcessStart",
+            "The source activity's event scope (subProcess) must be mapped to the target activity's event scope (innerSubProcess)"
+          );
+      });
   }
 
 }

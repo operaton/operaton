@@ -104,6 +104,7 @@ auto-merge-rules:
       - 'org.openapitools:openapi-generator-maven-plugin'
       - 'org.sonatype.central:central-publishing-maven-plugin'
       # Dependency groups
+      - 'all group'
       - 'arquillian group'
       - 'jboss-weld group'
       - 'openrewrite group'

@@ -42,7 +42,7 @@ public class ErrorDeclarationForProcessInstanceFinder implements TreeVisitor<Pvm
     List<ErrorEventDefinition> errorEventDefinitions = scope.getProperties().get(BpmnProperties.ERROR_EVENT_DEFINITIONS);
     for (ErrorEventDefinition definition : errorEventDefinitions) {
       PvmActivity activityHandler = scope.getProcessDefinition().findActivity(definition.getHandlerActivityId());
-      if ((!isReThrowingErrorEventSubprocess(activityHandler)) && ((exception != null && definition.catchesException(exception))
+      if ((!isReThrowingErrorEventSubprocess(activityHandler)) && ((exception != null && catchesExceptionOrErrorCode(definition))
         || (exception == null && definition.catchesError(errorCode)))) {
 
         errorHandlerActivity = activityHandler;
@@ -50,6 +50,10 @@ public class ErrorDeclarationForProcessInstanceFinder implements TreeVisitor<Pvm
         break;
       }
     }
+  }
+
+  protected boolean catchesExceptionOrErrorCode(ErrorEventDefinition definition) {
+    return definition.catchesException(exception) || (errorCode != null && definition.catchesError(errorCode));
   }
 
   protected boolean isReThrowingErrorEventSubprocess(PvmActivity activityHandler) {

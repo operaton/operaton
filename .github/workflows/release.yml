@@ -45,7 +45,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@v5.3.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -117,7 +117,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@v5.3.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -181,7 +181,7 @@ jobs:
         with:
           message: "chore(release) Releasing version ${{steps.version.outputs.version}}"
       - name: Cache build artifacts
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: |
             distro/**/*.tar.gz
@@ -208,7 +208,7 @@ jobs:
           fetch-depth: 0
 
       - name: Restore build artifacts cache
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: |
             distro/**/*.tar.gz

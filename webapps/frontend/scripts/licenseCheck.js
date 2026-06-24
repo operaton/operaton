@@ -35,6 +35,7 @@ const PRODUCTION_LICENSES = [
 ];
 
 const DEV_LICENSES = [
+  'BlueOak-1.0.0',
   'CC-BY-3.0',
   'CC-BY-4.0',
   'ODC-By-1.0',

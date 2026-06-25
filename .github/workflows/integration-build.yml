@@ -276,7 +276,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -313,7 +313,7 @@ jobs:
           find target -name maven-metadata.* -delete
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Cache build artifacts
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v5.0.5
         with:
           path: |
             distro/**/*.tar.gz
@@ -350,7 +350,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -414,7 +414,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v7.0.0
       - name: Cache Maven packages
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -469,7 +469,7 @@ jobs:
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
       - name: Cache documentation artifacts
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v5.0.5
         with:
           path: |
             target/*.zip
@@ -544,7 +544,7 @@ jobs:
           fetch-depth: 0
 
       - name: Restore build artifacts cache
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: |
             distro/**/*.tar.gz
@@ -558,7 +558,7 @@ jobs:
           fail-on-cache-miss: true
 
       - name: Restore documentation artifacts cache
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.5
         with:
           path: |
             target/*.zip

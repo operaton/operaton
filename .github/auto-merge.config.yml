@@ -122,6 +122,7 @@ auto-merge-rules:
     labels: ['dependencies:github-action']
     includes:
       - 'actions/*'
+      - 'github-actions group'
 
   # Code cleanup PRs created by github-actions bot can be auto-merged
   - author: 'github-actions[bot]'

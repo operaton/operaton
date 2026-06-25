@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Statement;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.impl.cmd.DeployCmd;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -32,6 +34,7 @@ import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
+import org.operaton.bpm.engine.repository.ProcessApplicationDeploymentBuilder;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
@@ -50,10 +53,12 @@ import static org.awaitility.Awaitility.await;
 @RequiredDatabase(excludes = DbSqlSessionFactory.H2)
 class ConcurrentDeploymentTest extends ConcurrencyTestCase {
 
+  private static final String PROCESS_KEY = "issue3215Process";
+
   private static String processResource;
 
   static {
-    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess().startEvent().done();
+    BpmnModelInstance modelInstance = Bpmn.createExecutableProcess(PROCESS_KEY).startEvent().done();
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     Bpmn.writeModelToStream(outputStream, modelInstance);
     processResource = new String(outputStream.toByteArray());
@@ -98,10 +103,78 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
     assertThat(processDefinitions.get(1).getVersion()).isEqualTo(2);
   }
 
+  @Test
+  void testProcessApplicationDuplicateFilteringWithDatabaseDeploymentLock() {
+    processEngineConfiguration.setDeploymentSynchronized(false);
+
+    deployOnTwoConcurrentThreads(
+        createProcessApplicationDeploymentBuilder().enableDuplicateFiltering(false),
+        createProcessApplicationDeploymentBuilder().enableDuplicateFiltering(false));
+
+    assertThat(thread1.getException()).isNull();
+    assertThat(thread2.getException()).isNull();
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
+
+    List<ProcessDefinition> processDefinitions = repositoryService
+        .createProcessDefinitionQuery()
+        .processDefinitionKey(PROCESS_KEY)
+        .list();
+
+    assertThat(processDefinitions).hasSize(1);
+    assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
+  }
+
+  @Test
+  void testIssue3215ConcurrentProcessApplicationDeploymentsCreateUniqueVersions() {
+    processEngineConfiguration.setDeploymentSynchronized(false);
+    processEngineConfiguration.setDeploymentLockUsed(false);
+
+    List<ProcessDefinition> processDefinitions;
+    try {
+      deployOnTwoConcurrentThreads(
+          createProcessApplicationDeploymentBuilder(),
+          createProcessApplicationDeploymentBuilder());
+
+      processDefinitions = repositoryService
+          .createProcessDefinitionQuery()
+          .processDefinitionKey(PROCESS_KEY)
+          .list();
+    } finally {
+      cleanupCorruptDeploymentRows();
+    }
+
+    assertThat(thread1.getException()).isNull();
+    assertThat(thread2.getException()).isNull();
+    assertThat(processDefinitions)
+        .extracting(ProcessDefinition::getVersion)
+        .containsExactlyInAnyOrder(1, 2);
+  }
+
   protected DeploymentBuilder createDeploymentBuilder() {
     return new DeploymentBuilderImpl(null)
         .name("some-deployment-name")
         .addString("foo.bpmn", processResource);
+  }
+
+  protected ProcessApplicationDeploymentBuilder createProcessApplicationDeploymentBuilder() {
+    return repositoryService
+        .createDeployment(new EmbeddedProcessApplication().getReference())
+        .name("some-deployment-name")
+        .addString("foo.bpmn", processResource);
+  }
+
+  protected void cleanupCorruptDeploymentRows() {
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      try (Statement statement = commandContext.getDbSqlSession().getSqlSession().getConnection().createStatement()) {
+        statement.executeUpdate("delete from ACT_RE_PROCDEF where KEY_ = '" + PROCESS_KEY + "'");
+        statement.executeUpdate("delete from ACT_GE_BYTEARRAY where DEPLOYMENT_ID_ in " +
+                                "(select ID_ from ACT_RE_DEPLOYMENT where NAME_ = 'some-deployment-name')");
+        statement.executeUpdate("delete from ACT_RE_DEPLOYMENT where NAME_ = 'some-deployment-name'");
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+      return null;
+    });
   }
 
   protected void deployOnTwoConcurrentThreads(DeploymentBuilder deploymentOne, DeploymentBuilder deploymentTwo) {
@@ -151,6 +224,8 @@ class ConcurrentDeploymentTest extends ConcurrencyTestCase {
 
   @AfterEach
   void tearDown() {
+    processEngineConfiguration.setDeploymentLockUsed(true);
+    processEngineConfiguration.setDeploymentSynchronized(true);
 
     for(Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);

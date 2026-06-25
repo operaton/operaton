@@ -4,7 +4,7 @@
     [
       "@babel/preset-env",
       {
-        "corejs": 3,
+        "corejs": "3.49",
         "modules": "commonjs", // resolves https://github.com/noppa/ng-hot-reload/issues/31
         "shippedProposals": true,
         "useBuiltIns": "usage"
@@ -12,7 +12,6 @@
     ]
   ],
   "plugins": [
-    "@babel/plugin-transform-object-rest-spread",
-    "@babel/plugin-transform-object-assign"
+    "@babel/plugin-transform-object-rest-spread"
   ]
 }

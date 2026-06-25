@@ -35,7 +35,7 @@
     <version.httpclient>4.5.14</version.httpclient>
     <version.httpclient5>5.6.1</version.httpclient5>
     <version.httpcore5>5.4</version.httpcore5>
-    <version.httpcore5-h2>5.4.2</version.httpcore5-h2>
+    <version.httpcore5-h2>5.4.3</version.httpcore5-h2>
     <version.cronutils>9.2.1</version.cronutils>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.junit5>6.0.3</version.junit5>

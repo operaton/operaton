@@ -199,7 +199,7 @@ def create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version):
     else:
         print(f"Warning: TestFixture.java not found in {dst}")
 
-    # update the copied module pom: artifactId and the version in <name>
+    # update the copied module pom
     fixture_pom = os.path.join(dst, "pom.xml")
     if os.path.isfile(fixture_pom):
         with open(fixture_pom, "r", encoding="utf-8") as f:
@@ -208,9 +208,19 @@ def create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version):
             f"operaton-qa-upgrade-test-fixture-{cur_vwpwd}",
             f"operaton-qa-upgrade-test-fixture-{new_vwpwd}"
         )
+        # Bump every version reference (in <name> and in the
+        # "uncomment/replace when X is released" placeholders) from the
+        # superseded version to the new one. Replace the full form first
+        # (e.g. 7.24.0 -> 7.25.0), then the major.minor form (7.24 -> 7.25).
+        cur_vwp = get_version_without_patch(current_version)
+        new_vwp = get_version_without_patch(new_version)
+        content = content.replace(current_version, new_version)
+        content = content.replace(cur_vwp, new_vwp)
+        # The fixture migrates *from* the version being superseded, so its
+        # baseline becomes the current version (the new previous).
         content = re.sub(
-            rf"(<name>[^<]*){re.escape(current_version)}",
-            rf"\g<1>{new_version}",
+            r"(<operaton\.version\.previous>)[^<]*(</operaton\.version\.previous>)",
+            rf"\g<1>{current_version}\g<2>",
             content
         )
         with open(fixture_pom, "w", encoding="utf-8") as f:

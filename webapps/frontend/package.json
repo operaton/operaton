@@ -64,10 +64,10 @@
     "superagent": "10.3.0"
   },
   "devDependencies": {
-    "@babel/core": "8.0.1",
-    "@babel/eslint-parser": "8.0.1",
-    "@babel/plugin-transform-object-rest-spread": "8.0.1",
-    "@babel/preset-env": "8.0.2",
+    "@babel/core": "7.29.7",
+    "@babel/eslint-parser": "7.29.7",
+    "@babel/plugin-transform-object-rest-spread": "7.29.7",
+    "@babel/preset-env": "7.29.7",
     "angular-mocks": "1.8.3",
     "babel-loader": "10.1.1",
     "copy-webpack-plugin": "14.0.0",

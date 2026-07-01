@@ -235,6 +235,41 @@ class IdentityServiceTest {
   }
 
   @Test
+  void shouldCheckPasswordCaseInsensitiveForDatabaseUsers() {
+    User user = identityService.newUser("johndoe");
+    user.setPassword("s3cret");
+    identityService.saveUser(user);
+
+    assertThat(identityService.checkPassword("JOHNDOE", "s3cret")).isTrue();
+  }
+
+  @Test
+  void shouldQueryDatabaseUserByIdCaseInsensitive() {
+    User user = identityService.newUser("johndoe");
+    identityService.saveUser(user);
+
+    List<User> users = identityService.createUserQuery()
+        .userId("JOHNDOE")
+        .list();
+
+    assertThat(users).extracting(User::getId).containsExactly("johndoe");
+  }
+
+  @Test
+  void shouldPreferExactUserIdWhenCheckingPasswordForSimilarUsers() {
+    User lowerCaseUser = identityService.newUser("johndoe");
+    lowerCaseUser.setPassword("lowerSecret");
+    identityService.saveUser(lowerCaseUser);
+
+    User mixedCaseUser = identityService.newUser("JohnDoe");
+    mixedCaseUser.setPassword("mixedSecret");
+    identityService.saveUser(mixedCaseUser);
+
+    assertThat(identityService.checkPassword("JohnDoe", "mixedSecret")).isTrue();
+    assertThat(identityService.checkPassword("JohnDoe", "lowerSecret")).isFalse();
+  }
+
+  @Test
   void testUserPicture() {
     // First, create a new user
     User user = identityService.newUser("johndoe");

@@ -110,6 +110,7 @@ auto-merge-rules:
       - 'openrewrite group'
       - 'spring-boot group'
       - 'jaxb group'
+      - 'github-actions group'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

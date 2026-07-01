@@ -51,6 +51,10 @@ public class MockedProcessEngineProvider implements ProcessEngineProvider {
     cachedEngines = new HashMap<>();
   }
 
+  public static void setDefaultProcessEngine(ProcessEngine processEngine) {
+    cachedDefaultProcessEngine = processEngine;
+  }
+
   private ProcessEngine mockProcessEngine(String engineName) {
     ProcessEngine engine = mock(ProcessEngine.class);
     when(engine.getName()).thenReturn(engineName);

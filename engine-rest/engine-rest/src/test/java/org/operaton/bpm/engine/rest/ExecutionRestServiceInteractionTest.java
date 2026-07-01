@@ -16,7 +16,30 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import static io.restassured.RestAssured.given;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.isNull;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +74,7 @@ import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
@@ -85,6 +109,9 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
 
   protected static final String EXECUTION_URL = TEST_RESOURCE_ROOT_PATH + "/execution/{id}";
   protected static final String SIGNAL_EXECUTION_URL = EXECUTION_URL + "/signal";
+  protected static final String STARTABLE_AD_HOC_ACTIVITIES_URL = EXECUTION_URL + "/ad-hoc-activities";
+  protected static final String TRIGGER_AD_HOC_ACTIVITIES_URL = EXECUTION_URL + "/ad-hoc-activities/trigger";
+  protected static final String COMPLETE_AD_HOC_SUB_PROCESS_URL = EXECUTION_URL + "/ad-hoc-activities/complete";
   protected static final String EXECUTION_LOCAL_VARIABLES_URL = EXECUTION_URL + "/localVariables";
   protected static final String SINGLE_EXECUTION_LOCAL_VARIABLE_URL = EXECUTION_LOCAL_VARIABLES_URL + "/{varId}";
   protected static final String SINGLE_EXECUTION_LOCAL_BINARY_VARIABLE_URL = SINGLE_EXECUTION_LOCAL_VARIABLE_URL + "/data";
@@ -166,7 +193,247 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  void testSignalWithUnparseableIntegerVariable() {
+  public void testGetStartableAdHocActivities() {
+    AdHocActivity taskA = mock(AdHocActivity.class);
+    when(taskA.getActivityId()).thenReturn("taskA");
+    when(taskA.getActivityName()).thenReturn("Task A");
+    when(taskA.getActivityType()).thenReturn("userTask");
+
+    AdHocActivity taskB = mock(AdHocActivity.class);
+    when(taskB.getActivityId()).thenReturn("taskB");
+    when(taskB.getActivityName()).thenReturn("Task B");
+    when(taskB.getActivityType()).thenReturn("serviceTask");
+
+    when(runtimeServiceMock.getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID))
+      .thenReturn(Arrays.asList(taskA, taskB));
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("[0].activityId", equalTo("taskA"))
+      .body("[0].activityName", equalTo("Task A"))
+      .body("[0].activityType", equalTo("userTask"))
+      .body("[1].activityId", equalTo("taskB"))
+      .body("[1].activityName", equalTo("Task B"))
+      .body("[1].activityType", equalTo("serviceTask"))
+      .when().get(STARTABLE_AD_HOC_ACTIVITIES_URL);
+
+    verify(runtimeServiceMock).getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID);
+  }
+
+  @Test
+  public void testGetStartableAdHocActivitiesThrowsBadUserRequestException() {
+    doThrow(new BadUserRequestException("execution " + MockProvider.EXAMPLE_EXECUTION_ID + " is not waiting in an adHocSubProcess"))
+      .when(runtimeServiceMock).getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID);
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID)
+      .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot get startable ad-hoc activities for execution " + MockProvider.EXAMPLE_EXECUTION_ID
+          + ": execution " + MockProvider.EXAMPLE_EXECUTION_ID + " is not waiting in an adHocSubProcess"))
+      .when().get(STARTABLE_AD_HOC_ACTIVITIES_URL);
+  }
+
+  @Test
+  public void testGetStartableAdHocActivitiesThrowsAuthorizationException() {
+    String message = "expected exception";
+    doThrow(new AuthorizationException(message)).when(runtimeServiceMock)
+      .getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID);
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID)
+      .then().expect().statusCode(Status.FORBIDDEN.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(AuthorizationException.class.getSimpleName()))
+      .body("message", equalTo(message))
+      .when().get(STARTABLE_AD_HOC_ACTIVITIES_URL);
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  public void testTriggerAdHocActivities() {
+    Map<String, Object> taskAVariables = VariablesBuilder.create().variable("k1", "v1").getVariables();
+    Map<String, Object> taskBVariables = VariablesBuilder.create().variable("k2", 42).getVariables();
+
+    Map<String, Object> instructionA = new HashMap<>();
+    instructionA.put("activityId", "taskA");
+    instructionA.put("variables", taskAVariables);
+
+    Map<String, Object> instructionB = new HashMap<>();
+    instructionB.put("activityId", "taskB");
+    instructionB.put("variables", taskBVariables);
+
+    List<Map<String, Object>> instructions = new ArrayList<>();
+    instructions.add(instructionA);
+    instructions.add(instructionB);
+
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("activities", instructions);
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(payload)
+      .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
+      .when().post(TRIGGER_AD_HOC_ACTIVITIES_URL);
+
+    List<String> expectedActivityIds = Arrays.asList("taskA", "taskB");
+    ArgumentCaptor<Map<String, Map<String, Object>>> activityVariablesCaptor =
+      (ArgumentCaptor<Map<String, Map<String, Object>>>) (ArgumentCaptor<?>) ArgumentCaptor.forClass(Map.class);
+
+    verify(runtimeServiceMock).triggerAdHocActivities(eq(MockProvider.EXAMPLE_EXECUTION_ID),
+      argThat(new EqualsList(expectedActivityIds)),
+      activityVariablesCaptor.capture());
+
+    Map<String, Map<String, Object>> capturedActivityVariables = activityVariablesCaptor.getValue();
+    assertThat(capturedActivityVariables).hasSize(2);
+    assertThat(capturedActivityVariables).containsKey("taskA");
+    assertThat(capturedActivityVariables).containsKey("taskB");
+
+    Object taskAValue = capturedActivityVariables.get("taskA").get("k1");
+    Object taskBValue = capturedActivityVariables.get("taskB").get("k2");
+    assertThat(taskAValue).isEqualTo("v1");
+    assertThat(taskBValue).isEqualTo(42);
+  }
+
+  @Test
+  public void testTriggerAdHocActivitiesThrowsAuthorizationException() {
+    String message = "expected exception";
+    doThrow(new AuthorizationException(message)).when(runtimeServiceMock)
+      .triggerAdHocActivities(anyString(), any(), any());
+
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("activities", new ArrayList<>());
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(payload)
+      .then().expect().statusCode(Status.FORBIDDEN.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(AuthorizationException.class.getSimpleName()))
+      .body("message", equalTo(message))
+      .when().post(TRIGGER_AD_HOC_ACTIVITIES_URL);
+  }
+
+  @Test
+  public void testTriggerAdHocActivitiesThrowsProcessEngineException() {
+    doThrow(new ProcessEngineException("expected exception")).when(runtimeServiceMock)
+      .triggerAdHocActivities(anyString(), any(), any());
+
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("activities", new ArrayList<>());
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(payload)
+      .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(RestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot trigger ad-hoc activities for execution " + MockProvider.EXAMPLE_EXECUTION_ID + ": expected exception"))
+      .when().post(TRIGGER_AD_HOC_ACTIVITIES_URL);
+  }
+
+  @Test
+  public void testTriggerAdHocActivitiesWithNotSupportedVariableType() {
+    Map<String, Object> instruction = new HashMap<>();
+    instruction.put("activityId", "taskA");
+    instruction.put("variables", VariablesBuilder.create().variable("aKey", "1abc", "X").getVariables());
+
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("activities", Arrays.asList(instruction));
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(payload)
+      .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot trigger ad-hoc activities for execution " + MockProvider.EXAMPLE_EXECUTION_ID + ": Unsupported value type 'X'"))
+      .when().post(TRIGGER_AD_HOC_ACTIVITIES_URL);
+  }
+
+  @Test
+  public void testTriggerAdHocActivitiesWithNullActivitiesThrowsBadUserRequestException() {
+    doThrow(new BadUserRequestException("activityIds is empty")).when(runtimeServiceMock)
+      .triggerAdHocActivities(anyString(), any(), any());
+
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("activities", null);
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(payload)
+      .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot trigger ad-hoc activities for execution " + MockProvider.EXAMPLE_EXECUTION_ID
+          + ": activityIds is empty"))
+      .when().post(TRIGGER_AD_HOC_ACTIVITIES_URL);
+  }
+
+  @Test
+  public void testCompleteAdHocSubProcess() {
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body("{}")
+      .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
+      .when().post(COMPLETE_AD_HOC_SUB_PROCESS_URL);
+
+    verify(runtimeServiceMock).completeAdHocSubProcess(eq(MockProvider.EXAMPLE_EXECUTION_ID), isNull());
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  public void testCompleteAdHocSubProcessWithVariables() {
+    Map<String, Object> variables = VariablesBuilder.create().variable("completionReason", "manual").getVariables();
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("variables", variables);
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(payload)
+      .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
+      .when().post(COMPLETE_AD_HOC_SUB_PROCESS_URL);
+
+    ArgumentCaptor<Map<String, Object>> variablesCaptor =
+      (ArgumentCaptor<Map<String, Object>>) (ArgumentCaptor<?>) ArgumentCaptor.forClass(Map.class);
+
+    verify(runtimeServiceMock).completeAdHocSubProcess(eq(MockProvider.EXAMPLE_EXECUTION_ID), variablesCaptor.capture());
+
+    Map<String, Object> capturedVariables = variablesCaptor.getValue();
+    assertThat(capturedVariables.get("completionReason")).isEqualTo("manual");
+  }
+
+  @Test
+  public void testCompleteAdHocSubProcessWithNotSupportedVariableType() {
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("variables", VariablesBuilder.create().variable("aKey", "1abc", "X").getVariables());
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(payload)
+      .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot complete ad-hoc subprocess for execution " + MockProvider.EXAMPLE_EXECUTION_ID + ": Unsupported value type 'X'"))
+      .when().post(COMPLETE_AD_HOC_SUB_PROCESS_URL);
+  }
+
+  @Test
+  public void testCompleteAdHocSubProcessThrowsAuthorizationException() {
+    String message = "expected exception";
+    doThrow(new AuthorizationException(message)).when(runtimeServiceMock)
+      .completeAdHocSubProcess(anyString(), isNull());
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body("{}")
+      .then().expect().statusCode(Status.FORBIDDEN.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(AuthorizationException.class.getSimpleName()))
+      .body("message", equalTo(message))
+      .when().post(COMPLETE_AD_HOC_SUB_PROCESS_URL);
+  }
+
+  @Test
+  public void testCompleteAdHocSubProcessThrowsProcessEngineException() {
+    doThrow(new ProcessEngineException("expected exception")).when(runtimeServiceMock)
+      .completeAdHocSubProcess(anyString(), isNull());
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body("{}")
+      .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(RestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot complete ad-hoc subprocess for execution " + MockProvider.EXAMPLE_EXECUTION_ID + ": expected exception"))
+      .when().post(COMPLETE_AD_HOC_SUB_PROCESS_URL);
+  }
+
+  @Test
+  public void testCompleteAdHocSubProcessThrowsBadUserRequestException() {
+    doThrow(new BadUserRequestException("adHocSubProcess has active child activities and cannot be completed"))
+      .when(runtimeServiceMock).completeAdHocSubProcess(anyString(), isNull());
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body("{}")
+      .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot complete ad-hoc subprocess for execution " + MockProvider.EXAMPLE_EXECUTION_ID
+          + ": adHocSubProcess has active child activities and cannot be completed"))
+      .when().post(COMPLETE_AD_HOC_SUB_PROCESS_URL);
+  }
+
+  @Test
+  public void testSignalWithUnparseableIntegerVariable() {
     String variableKey = "aKey";
     String variableValue = "1abc";
     String variableType = "Integer";

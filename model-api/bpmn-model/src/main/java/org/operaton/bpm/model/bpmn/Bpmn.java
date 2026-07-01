@@ -22,6 +22,7 @@ import java.util.ServiceLoader;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.impl.BpmnParser;
 import org.operaton.bpm.model.bpmn.impl.instance.ActivationConditionImpl;
+import org.operaton.bpm.model.bpmn.impl.instance.AdHocSubProcessImpl;
 import org.operaton.bpm.model.bpmn.impl.instance.ActivityImpl;
 import org.operaton.bpm.model.bpmn.impl.instance.ArtifactImpl;
 import org.operaton.bpm.model.bpmn.impl.instance.AssignmentImpl;
@@ -584,6 +585,7 @@ public class Bpmn {
     StartEventImpl.registerType(bpmnModelBuilder);
     SubConversationImpl.registerType(bpmnModelBuilder);
     SubProcessImpl.registerType(bpmnModelBuilder);
+    AdHocSubProcessImpl.registerType(bpmnModelBuilder);
     SupportedInterfaceRef.registerType(bpmnModelBuilder);
     Supports.registerType(bpmnModelBuilder);
     Target.registerType(bpmnModelBuilder);

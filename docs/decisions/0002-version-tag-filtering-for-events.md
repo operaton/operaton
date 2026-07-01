@@ -1,9 +1,9 @@
 ---
 status: "Proposed"
 date: 2026-07-01
-decision-makers: ["@javahippie"]
+decision-makers: ["Tim Zöller", "Karsten Thoms"]
 consulted: []
-informed: []
+informed: ["Andreas Zill", "Arne Deutsch", "Lars Uffmann", "Julian Haupt", "Paul Hempel", "Steven Gort", "Mikhail Golubev", "Tobias Unger", "@marijnritense""]
 ---
 
 # Version Tag Filtering for Message-Correlated Events

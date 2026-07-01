@@ -9,7 +9,7 @@ on:
       - '**/*.sql'
       - 'qa/test-db-rolling-update/**'
   schedule:
-    - cron: "30 2 * * *"     # Runs at 2:30 AM UTC daily
+    - cron: "15 1 * * 5"     # Runs at 1:15 AM UTC Friday
   workflow_dispatch:
 
 jobs:

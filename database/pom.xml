@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -25,13 +25,13 @@
     <version.sqlserver>13.4.0.jre11</version.sqlserver>
     <version.mysql>9.7.0</version.mysql>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
-    <version.db2>12.1.4.0</version.db2>
-    <version.postgresql>42.7.11</version.postgresql>
-    <operaton.dbscheme.current.version>7.24.0</operaton.dbscheme.current.version>
+    <version.db2>12.1.5.0</version.db2>
+    <version.postgresql>42.7.12</version.postgresql>
+    <operaton.dbscheme.current.version>7.25.0</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->
     <operaton.dbscheme.previous.artifactVersion>1.0.0-beta-5</operaton.dbscheme.previous.artifactVersion>
-    <operaton.dbscheme.previous.version>7.23.1</operaton.dbscheme.previous.version>
+    <operaton.dbscheme.previous.version>7.24.0</operaton.dbscheme.previous.version>
 
     <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
     <database.tc.params>TC_DAEMON=true</database.tc.params>
@@ -184,7 +184,7 @@
         <database.type>h2</database.type>
         <database.driver>org.h2.Driver</database.driver>
         <database.username>sa</database.username>
-        <database.password />
+        <database.password/>
         <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
       </properties>
       <dependencies>

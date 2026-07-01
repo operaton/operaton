@@ -141,6 +141,13 @@ updates:
     labels:
       - "dependencies:github-action"
     milestone: 23
+    groups:
+      github-actions:
+        patterns:
+          - "actions/*"
+      3rd-party-actions:
+        patterns:
+          - "*"
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -187,12 +194,7 @@ updates:
         patterns:
           - "*"
     ignore:
-      - dependency-name: "eslint*"
-        # Known incompatibility with eslint 10
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "bootstrap"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "jquery"
+      - dependency-name: "*"
         update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
@@ -211,6 +213,9 @@ updates:
       all:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -224,7 +229,10 @@ updates:
       - "dependencies:github-action"
     milestone: 26
     groups:
-      all:
+      github-actions:
+        patterns:
+          - "actions/*"
+      3rd-party-actions:
         patterns:
           - "*"
   - package-ecosystem: "devcontainers"
@@ -274,11 +282,6 @@ updates:
           - "*"
     ignore:
       - dependency-name: "eslint*"
-        # Known incompatibility with eslint 10
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "bootstrap"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "jquery"
         update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
@@ -297,6 +300,9 @@ updates:
       all:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -310,7 +316,10 @@ updates:
       - "dependencies:github-action"
     milestone: 25
     groups:
-      all:
+      github-actions:
+        patterns:
+          - "actions/*"
+      3rd-party-actions:
         patterns:
           - "*"
   - package-ecosystem: "devcontainers"

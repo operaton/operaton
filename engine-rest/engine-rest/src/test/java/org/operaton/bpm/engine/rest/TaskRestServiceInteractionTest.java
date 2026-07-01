@@ -194,6 +194,7 @@ public class TaskRestServiceInteractionTest extends
     mockTask = MockProvider.createMockTask();
     mockQuery = mock(TaskQuery.class);
     when(mockQuery.initializeFormKeys()).thenReturn(mockQuery);
+    when(mockQuery.initializeFormKeys(anyBoolean())).thenReturn(mockQuery);
     when(mockQuery.taskId(any())).thenReturn(mockQuery);
     when(mockQuery.withCommentAttachmentInfo()).thenReturn(mockQuery);
     when(mockQuery.singleResult()).thenReturn(mockTask);
@@ -748,6 +749,18 @@ public class TaskRestServiceInteractionTest extends
         .body("operatonFormRef.version", equalTo(MockProvider.EXAMPLE_FORM_REF_VERSION))
         .body("key", nullValue())
       .when().get(SINGLE_TASK_URL);
+  }
+
+  @Test
+  void testGetTaskEvaluateFormKeyFalse() {
+    given()
+      .pathParam("id", MockProvider.EXAMPLE_TASK_ID)
+      .queryParam("evaluateFormKey", false)
+      .header("accept", MediaType.APPLICATION_JSON)
+    .expect().statusCode(Status.OK.getStatusCode())
+    .when().get(SINGLE_TASK_URL);
+
+    verify(mockQuery).initializeFormKeys(false);
   }
 
   /**

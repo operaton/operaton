@@ -470,13 +470,6 @@
       </build>
     </profile>
   </profiles>
-  <repositories>
-    <repository>
-      <id>JBoss public</id>
-      <name>jboss</name>
-      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-    </repository>
-  </repositories>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>

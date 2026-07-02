@@ -61,6 +61,8 @@ Then open [http://localhost:8080](http://localhost:8080) and log in with `demo` 
 
 ➜ See the [Getting Started Guide](https://docs.operaton.org/docs/get-started/) for detailed setup instructions.
 
+➜ See the [Examples Repository](https://github.com/operaton/operaton-examples) for numerous self-contained example projects.
+
 ### Maven
 
 Choose your integration approach:
@@ -298,6 +300,7 @@ Operaton is fully compatible with your existing BPMN, DMN models and Forms creat
 - 🐛 [Issue Tracker](https://github.com/operaton/operaton/issues)
 - 🏁 [Good First Issues](https://github.com/search?q=org%3Aoperaton+is%3Aopen+label%3A%22good+first+issue%22&type=issues)
 - 📘 [REST API Reference](https://docs.operaton.org/reference/latest/rest-api/)
+- 📂 [Examples](https://github.com/operaton/operaton-examples)
 - 📗 [Javadoc](https://docs.operaton.org/reference/latest/javadoc/)
 
 ## Development

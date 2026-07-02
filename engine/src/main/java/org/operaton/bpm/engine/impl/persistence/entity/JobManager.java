@@ -285,12 +285,27 @@ public class JobManager extends AbstractManager {
       Map<String, Object> nonExclusiveParams = new HashMap<>(params);
       nonExclusiveParams.put("skipLocked", true);
       nonExclusiveParams.put("nonExclusiveOnly", true);
-      List<AcquirableJobEntity> nonExclusiveJobs = getDbEntityManager()
-          .selectList("selectNextJobsToExecute", nonExclusiveParams, new Page(0, remaining));
-      result.addAll(nonExclusiveJobs);
+      result.addAll(selectNextJobsToExecuteWithSkipLocked(nonExclusiveParams, remaining));
     }
 
     return result;
+  }
+
+  /**
+   * Oracle and DB2 apply a SQL row limit before lock-skipping, so a limited query
+   * returns fewer rows than requested whenever the first candidates are locked —
+   * in the worst case none although free jobs exist. Their statements therefore
+   * emit no SQL row limit when skipLocked is active; instead the cursor is cut off
+   * after maxResults rows. Both databases lock rows as they are fetched under
+   * lock-skipping reads, so only the returned rows end up locked.
+   */
+  @SuppressWarnings("unchecked")
+  protected List<AcquirableJobEntity> selectNextJobsToExecuteWithSkipLocked(Map<String, Object> params, int maxResults) {
+    String databaseType = Context.getProcessEngineConfiguration().getDatabaseType();
+    if (DbSqlSessionFactory.ORACLE.equals(databaseType) || DbSqlSessionFactory.DB2.equals(databaseType)) {
+      return getDbEntityManager().selectListCursorLimited("selectNextJobsToExecute", params, maxResults);
+    }
+    return getDbEntityManager().selectList("selectNextJobsToExecute", params, new Page(0, maxResults));
   }
 
   @SuppressWarnings("unchecked")

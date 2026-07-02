@@ -183,6 +183,20 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return filterLoadedObjects(loadedObjects);
   }
 
+  /**
+   * Selects with the row limit enforced by cutting off the cursor after
+   * {@code maxResults} fetched rows instead of by a limit clause in the SQL.
+   * For locking reads on databases that apply a SQL row limit before lock-skipping
+   * (Oracle, DB2): the statement must not emit a SQL row limit there, otherwise the
+   * limit consumes locked candidate rows and the result under-fills.
+   */
+  @SuppressWarnings("unchecked")
+  public List selectListCursorLimited(String statement, Object parameter, int maxResults) {
+    ListQueryParameterObject queryParameter = new ListQueryParameterObject(parameter, 0, maxResults);
+    List loadedObjects = persistenceSession.selectList(statement, queryParameter, maxResults);
+    return filterLoadedObjects(loadedObjects);
+  }
+
   public Object selectOne(String statement, Object parameter) {
     Object result = persistenceSession.selectOne(statement, parameter);
     if (result instanceof DbEntity loadedObject) {

@@ -233,12 +233,21 @@
     </if>
   </select>
 
-  <!-- SQL Server specific version using READPAST hint instead of FOR UPDATE SKIP LOCKED -->
+  <!-- SQL Server specific version using UPDLOCK/READPAST hints instead of FOR UPDATE SKIP LOCKED.
+       The skipLocked branch must stay a flat TOP query: inside the ROW_NUMBER pagination wrapper
+       the hints do not skip rows locked by other transactions under READ_COMMITTED_SNAPSHOT
+       (verified against a real SQL Server 2022 with concurrent row locks). -->
   <select id="selectNextJobsToExecute_mssql" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="acquirableJobResultMap">
     <bind name="orderingProperties" value="parameter.orderingProperties" />
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
-    ${limitBefore}
-    select RES.ID_,
+    <if test="!parameter.skipLocked">
+      ${limitBefore}
+    </if>
+    select
+    <if test="parameter.skipLocked">
+      top (#{maxResults})
+    </if>
+      RES.ID_,
       RES.REV_,
       RES.DUEDATE_,
     <if test="parameter.applyExclusiveOverProcessHierarchies">
@@ -246,7 +255,9 @@
     </if>
       RES.PROCESS_INSTANCE_ID_,
       RES.EXCLUSIVE_
-    ${limitBetweenAcquisition}
+    <if test="!parameter.skipLocked">
+      ${limitBetweenAcquisition}
+    </if>
     from ${prefix}ACT_RU_JOB RES
     <if test="parameter.skipLocked">
       with (UPDLOCK, ROWLOCK, READPAST)
@@ -289,10 +300,19 @@
     <if test="parameter.applyOrdering">
       ${orderBy}
     </if>
-    ${limitAfter}
+    <if test="!parameter.skipLocked">
+      ${limitAfter}
+    </if>
   </select>
 
-  <!-- IBM DB2 specific version using SKIP LOCKED DATA instead of FOR UPDATE SKIP LOCKED -->
+  <!-- IBM DB2 specific version using SKIP LOCKED DATA instead of FOR UPDATE SKIP LOCKED.
+       The skipLocked branch emits no row limit: DB2 applies LIMIT before lock-skipping,
+       which under-fills the page with locked candidates (verified on Db2 12.1). The caller
+       cuts the cursor off after maxResults rows instead (JobManager#selectNextJobsToExecuteWithSkipLocked).
+       USE AND KEEP UPDATE LOCKS is required: a plain FOR UPDATE cursor under CS releases the
+       U lock as the cursor moves on, so competing acquirers would have nothing to skip
+       (verified on Db2 12.1: locks were gone right after the select). FOR UPDATE additionally
+       keeps the jcc driver in row-wise fetching, so the cursor cutoff locks only the rows returned. -->
   <select id="selectNextJobsToExecute_db2" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="acquirableJobResultMap">
     <bind name="orderingProperties" value="parameter.orderingProperties" />
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
@@ -345,13 +365,19 @@
     <if test="parameter.applyOrdering">
       ${orderBy}
     </if>
-    ${limitAfter}
+    <if test="!parameter.skipLocked">
+      ${limitAfter}
+    </if>
     <if test="parameter.skipLocked">
-      FOR UPDATE SKIP LOCKED DATA
+      FOR UPDATE WITH RS USE AND KEEP UPDATE LOCKS SKIP LOCKED DATA
     </if>
   </select>
 
-  <!-- Oracle specific version using ROWNUM in WHERE clause instead of ROWNUM wrapping for FOR UPDATE SKIP LOCKED compatibility (ORA-02014) -->
+  <!-- Oracle specific version: FOR UPDATE SKIP LOCKED tolerates neither a subquery wrapper
+       (ORA-02014) nor a row limit — ROWNUM is applied before lock-skipping and consumes the
+       budget with locked candidates (under-fills to 0 under contention, verified on Oracle 21).
+       The skipLocked branch emits no row limit; the caller cuts the cursor off after
+       maxResults rows (JobManager#selectNextJobsToExecuteWithSkipLocked), same as for DB2. -->
   <select id="selectNextJobsToExecute_oracle" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="acquirableJobResultMap">
     <bind name="orderingProperties" value="parameter.orderingProperties" />
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
@@ -401,10 +427,6 @@
 
       <if test="!parameter.historyCleanupEnabled">
         and HANDLER_TYPE_ != 'history-cleanup'
-      </if>
-
-      <if test="parameter.skipLocked">
-        and ROWNUM &lt;= #{maxResults}
       </if>
 
     <if test="parameter.applyOrdering">

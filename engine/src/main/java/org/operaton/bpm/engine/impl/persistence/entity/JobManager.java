@@ -72,6 +72,8 @@ public class JobManager extends AbstractManager {
   private static final String PRIORITY = "priority";
   private static final String DEPLOYMENT_IDS = "deploymentIds";
   private static final String NOW = "now";
+  private static final String SKIP_LOCKED = "skipLocked";
+  private static final String SELECT_NEXT_JOBS_TO_EXECUTE = "selectNextJobsToExecute";
   private static final String ALWAYS_SET_DUE_DATE = "alwaysSetDueDate";
   private static final String DEPLOYMENT_AWARE = "deploymentAware";
   private static final String JOB_PRIORITY_MIN = "jobPriorityMin";
@@ -253,13 +255,13 @@ public class JobManager extends AbstractManager {
     // don't apply default sorting
     params.put("applyOrdering", !orderingProperties.isEmpty());
     boolean skipLocked = engineConfiguration.isJobExecutorAcquireWithSkipLocked();
-    params.put("skipLocked", skipLocked);
+    params.put(SKIP_LOCKED, skipLocked);
     params.put("applyExclusiveOverProcessHierarchies", engineConfiguration.isJobExecutorAcquireExclusiveOverProcessHierarchies());
 
     if (skipLocked) {
       return findNextJobsToExecuteWithSkipLocked(params, page);
     } else {
-      return getDbEntityManager().selectList("selectNextJobsToExecute", params, page);
+      return getDbEntityManager().selectList(SELECT_NEXT_JOBS_TO_EXECUTE, params, page);
     }
   }
 
@@ -272,10 +274,10 @@ public class JobManager extends AbstractManager {
   protected List<AcquirableJobEntity> findNextJobsToExecuteWithSkipLocked(Map<String, Object> params, Page page) {
     // 1. Exclusive jobs WITHOUT SKIP LOCKED
     Map<String, Object> exclusiveParams = new HashMap<>(params);
-    exclusiveParams.put("skipLocked", false);
+    exclusiveParams.put(SKIP_LOCKED, false);
     exclusiveParams.put("exclusiveOnly", true);
     List<AcquirableJobEntity> exclusiveJobs = getDbEntityManager()
-        .selectList("selectNextJobsToExecute", exclusiveParams, page);
+        .selectList(SELECT_NEXT_JOBS_TO_EXECUTE, exclusiveParams, page);
 
     int remaining = page.getMaxResults() - exclusiveJobs.size();
     List<AcquirableJobEntity> result = new ArrayList<>(exclusiveJobs);
@@ -283,7 +285,7 @@ public class JobManager extends AbstractManager {
     // 2. Non-exclusive jobs WITH SKIP LOCKED
     if (remaining > 0) {
       Map<String, Object> nonExclusiveParams = new HashMap<>(params);
-      nonExclusiveParams.put("skipLocked", true);
+      nonExclusiveParams.put(SKIP_LOCKED, true);
       nonExclusiveParams.put("nonExclusiveOnly", true);
       result.addAll(selectNextJobsToExecuteWithSkipLocked(nonExclusiveParams, remaining));
     }
@@ -303,9 +305,9 @@ public class JobManager extends AbstractManager {
   protected List<AcquirableJobEntity> selectNextJobsToExecuteWithSkipLocked(Map<String, Object> params, int maxResults) {
     String databaseType = Context.getProcessEngineConfiguration().getDatabaseType();
     if (DbSqlSessionFactory.ORACLE.equals(databaseType) || DbSqlSessionFactory.DB2.equals(databaseType)) {
-      return getDbEntityManager().selectListCursorLimited("selectNextJobsToExecute", params, maxResults);
+      return getDbEntityManager().selectListCursorLimited(SELECT_NEXT_JOBS_TO_EXECUTE, params, maxResults);
     }
-    return getDbEntityManager().selectList("selectNextJobsToExecute", params, new Page(0, maxResults));
+    return getDbEntityManager().selectList(SELECT_NEXT_JOBS_TO_EXECUTE, params, new Page(0, maxResults));
   }
 
   @SuppressWarnings("unchecked")

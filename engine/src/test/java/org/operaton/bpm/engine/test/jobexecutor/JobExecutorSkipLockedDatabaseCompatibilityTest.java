@@ -188,9 +188,9 @@ class JobExecutorSkipLockedDatabaseCompatibilityTest extends AbstractJobExecutor
     // when: acquiring jobs without skip locked
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
 
-    // then: behavior depends on database and isolation level
-    // The query should not use SKIP LOCKED / READPAST syntax
-    // This is more of a sanity check that the configuration works
+    // then: the classic query path filters the lock-owned job via the WHERE clause
+    // (deterministic because the test clock is frozen, so LOCK_EXP_TIME_ is never expired)
     assertThat(configuration.isJobExecutorAcquireWithSkipLocked()).isFalse();
+    assertThat(acquirableJobs).isEmpty();
   }
 }

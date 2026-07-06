@@ -170,22 +170,14 @@ public class HttpConnectorTest {
   }
 
   @Test
-  void shouldGetDefaultCharset() {
-    // when/then
-    assertThat(((AbstractHttpConnector<?, ?>) connector).getCharset()).isEqualTo(StandardCharsets.UTF_8);
-  }
+  void shouldUseDefaultCharsetForPayloadEncoding() throws Exception {
+    String payload = "café";
 
-  @Test
-  void shouldSetCharset() {
-    // given
-    Charset iso = Charset.forName("ISO-8859-1");
-    AbstractHttpConnector<?, ?> abstractConnector = (AbstractHttpConnector<?, ?>) connector;
+    connector.createRequest().url(EXAMPLE_URL).payload(payload).post().execute();
 
-    // when
-    abstractConnector.setCharset(iso);
-
-    // then
-    assertThat(abstractConnector.getCharset()).isEqualTo(iso);
+    HttpPost request = interceptor.getTarget();
+    byte[] bytes = request.getEntity().getContent().readAllBytes();
+    assertThat(bytes).isEqualTo(payload.getBytes(StandardCharsets.UTF_8));
   }
 
   @Test

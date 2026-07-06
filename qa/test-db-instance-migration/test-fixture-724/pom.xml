@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -12,23 +13,22 @@
   <name>operaton BPM - QA - upgrade - instance migration - test fixture - 7.24.0</name>
 
   <properties>
-    <!-- delete when 7.24 is released -->
-    <operaton.version.current>${project.version}</operaton.version.current>
-    <operaton.version.previous>7.23.1</operaton.version.previous>
+    <!-- latest version with 7.24 -->
+    <operaton.version.current>2.1.2</operaton.version.current>
+    <operaton.schema_version.current>7.24.0</operaton.schema_version.current>
   </properties>
 
-  <!-- uncomment when 7.24 is released -->
-  <!--   <dependencyManagement> -->
-  <!--     <dependencies> -->
-  <!--       <dependency> -->
-  <!--         <groupId>org.operaton.bpm</groupId> -->
-  <!--         <artifactId>operaton-bom</artifactId> -->
-  <!--         <version>7.24.0</version> -->
-  <!--         <scope>import</scope> -->
-  <!--         <type>pom</type> -->
-  <!--       </dependency> -->
-  <!--     </dependencies> -->
-  <!--   </dependencyManagement> -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-bom</artifactId>
+        <version>${operaton.version.current}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -106,9 +106,7 @@
                     <artifactItem>
                       <groupId>org.operaton.bpm.distro</groupId>
                       <artifactId>operaton-sql-scripts</artifactId>
-                      <!-- Replace after 7.24.0 release -->
-                      <version>${operaton.version.current}</version>
-                      <!--<version>7.24.0</version>-->
+                      <version>${operaton.schema_version.current}</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
                       <overWrite>true</overWrite>
@@ -118,8 +116,7 @@
               </execution>
             </executions>
           </plugin>
-          <!-- uncomment when 7.24 is released -->
-          <!--<plugin>
+          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <configuration>
@@ -140,7 +137,7 @@
                 </configuration>
               </execution>
             </executions>
-          </plugin>-->
+          </plugin>
         </plugins>
       </build>
     </profile>

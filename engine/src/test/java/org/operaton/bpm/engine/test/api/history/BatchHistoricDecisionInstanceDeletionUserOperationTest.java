@@ -33,12 +33,12 @@ import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.operaton.bpm.engine.test.api.runtime.BatchHelper;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -58,6 +58,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+  BatchHelper helper = new BatchHelper(engineRule);
 
   protected DecisionService decisionService;
   protected HistoryService historyService;
@@ -88,18 +89,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
 
   @AfterEach
   void removeBatches() {
-    for (Batch batch : managementService.createBatchQuery().list()) {
-      managementService.deleteBatch(batch.getId(), true);
-    }
-
-    // remove history of completed batches
-    for (HistoricBatch historicBatch : historyService.createHistoricBatchQuery().list()) {
-      historyService.deleteHistoricBatch(historicBatch.getId());
-    }
-  }
-
-  @AfterEach
-  void clearAuthentication() {
+    helper.removeAllRunningAndHistoricBatches();
     identityService.clearAuthentication();
   }
 

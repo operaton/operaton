@@ -75,19 +75,16 @@ class HistoryCleanupTaskMetricsTest {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @BeforeEach
-  void init() {
+  void setUp() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
   }
 
   @AfterEach
-  void clearDatabase() {
+  void tearDown() {
     testRule.deleteHistoryCleanupJobs();
     managementService.deleteTaskMetrics(null);
     managementService.deleteMetrics(null);
-  }
 
-  @AfterEach
-  void resetConfiguration() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
     processEngineConfiguration.setTaskMetricsTimeToLive(null);
   }

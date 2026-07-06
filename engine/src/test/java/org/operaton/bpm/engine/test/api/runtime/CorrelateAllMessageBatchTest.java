@@ -91,12 +91,8 @@ class CorrelateAllMessageBatchTest {
   }
 
   @AfterEach
-  void clearAuthentication() {
+  void tearDown() {
     engineRule.getIdentityService().setAuthenticatedUserId(null);
-  }
-
-  @AfterEach
-  void resetConfiguration() {
     ClockUtil.reset();
     engineRule.getProcessEngineConfiguration()
       .setInvocationsPerBatchJob(ProcessEngineConfigurationImpl.DEFAULT_INVOCATIONS_PER_BATCH_JOB);

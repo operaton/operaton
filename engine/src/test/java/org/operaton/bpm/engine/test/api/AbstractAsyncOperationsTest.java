@@ -67,9 +67,7 @@ public abstract class AbstractAsyncOperationsTest {
 
   @AfterEach
   public void cleanUpBatches() {
-    managementService.createBatchQuery().list().forEach(b -> managementService.deleteBatch(b.getId(), true));
-
-    historyService.createHistoricBatchQuery().list().forEach(b -> historyService.deleteHistoricBatch(b.getId()));
+    helper.removeAllRunningAndHistoricBatches();
 
     // restore default settings
     engineConfiguration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);

@@ -63,10 +63,10 @@ public abstract class AbstractBatchAuthorizationTest {
     runtimeService = engineRule.getRuntimeService();
     managementService = engineRule.getManagementService();
     invocationsPerBatchJob = engineRule.getProcessEngineConfiguration().getInvocationsPerBatchJob();
+    deployProcesses();
   }
 
-  @BeforeEach
-  public void deployProcesses() {
+  protected void deployProcesses() {
     sourceDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.ONE_TASK_PROCESS)
         .changeElementId(ProcessModels.PROCESS_KEY, "ONE_TASK_PROCESS"));
     sourceDefinition2 = testHelper.deployAndGetDefinition(modify(ProcessModels.TWO_TASKS_PROCESS)
@@ -79,10 +79,8 @@ public abstract class AbstractBatchAuthorizationTest {
   public void tearDown() {
     authRule.deleteUsersAndGroups();
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(invocationsPerBatchJob);
-  }
 
-  @AfterEach
-  public void cleanBatch() {
+    // clean batch
     Batch runningBatch = engineRule.getManagementService().createBatchQuery().singleResult();
     if (runningBatch != null) {
       engineRule.getManagementService().deleteBatch(runningBatch.getId(), true);

@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -104,25 +103,6 @@ public class BatchModificationAuthorizationTest {
   @AfterEach
   void tearDown() {
     authRule.deleteUsersAndGroups();
-  }
-
-  @AfterEach
-  void cleanBatch() {
-    Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
-    if (batch != null) {
-      engineRule.getManagementService().deleteBatch(
-          batch.getId(), true);
-    }
-
-    HistoricBatch historicBatch = engineRule.getHistoryService().createHistoricBatchQuery().singleResult();
-    if (historicBatch != null) {
-      engineRule.getHistoryService().deleteHistoricBatch(
-          historicBatch.getId());
-    }
-  }
-
-  @AfterEach
-  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 

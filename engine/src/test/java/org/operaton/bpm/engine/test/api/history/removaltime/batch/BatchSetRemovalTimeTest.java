@@ -92,8 +92,7 @@ class BatchSetRemovalTimeTest {
   @AfterEach
   void tearDown() {
     ClockUtil.reset();
-    managementService.createBatchQuery().list().forEach(b -> managementService.deleteBatch(b.getId(), true));
-    historyService.createHistoricBatchQuery().list().forEach(b -> historyService.deleteHistoricBatch(b.getId()));
+    helper.removeAllRunningAndHistoricBatches();
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJobByBatchType(new HashMap<>());
   }
 

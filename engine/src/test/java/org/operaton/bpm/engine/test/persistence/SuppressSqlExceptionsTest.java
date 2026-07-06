@@ -81,12 +81,8 @@ class SuppressSqlExceptionsTest {
   Map<String, String> keptStatementMappings;
 
   @BeforeEach
-  void assignServices() {
+  void setUp() {
     batchProcessingEnabled = engineConfig.isJdbcBatchProcessing();
-  }
-
-  @BeforeEach
-  void keepStatementMappings() {
     Map<String, String> statementMappings = engineRule.getProcessEngineConfiguration()
         .getDbSqlSessionFactory()
         .getStatementMappings();

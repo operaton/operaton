@@ -119,20 +119,12 @@ class FetchAndLockHandlerTest {
 
     when(servletContextEvent.getServletContext()).thenReturn(servletContext);
     handler.contextInitialized(servletContextEvent);
-  }
-
-  @BeforeEach
-  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
   @AfterEach
-  void resetClock() {
+  void tearDown() {
     ClockUtil.reset();
-  }
-
-  @AfterEach
-  void resetUniqueWorkerRequestParam() {
     handler.parseUniqueWorkerRequestParam("false");
   }
 

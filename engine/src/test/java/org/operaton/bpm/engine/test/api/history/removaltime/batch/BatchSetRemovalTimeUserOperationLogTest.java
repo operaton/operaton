@@ -68,12 +68,10 @@ class BatchSetRemovalTimeUserOperationLogTest {
   protected IdentityService identityService;
 
   @AfterEach
-  void clearAuth() {
+  void tearDown() {
     identityService.clearAuthentication();
-  }
 
-  @AfterEach
-  void clearDatabase() {
+    // clear database
     List<Batch> batches = managementService.createBatchQuery()
       .type(Batch.TYPE_HISTORIC_PROCESS_INSTANCE_DELETION)
       .list();

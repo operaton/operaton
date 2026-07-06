@@ -67,12 +67,9 @@ class DecisionServiceUserOperationLogTest {
   protected IdentityService identityService;
 
   @BeforeEach
-  void init() {
+  void setUp() {
     identityService.clearAuthentication();
-  }
 
-  @BeforeEach
-  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -83,7 +80,7 @@ class DecisionServiceUserOperationLogTest {
   }
 
   @AfterEach
-  void disableDmnFeelLegacyBehavior() {
+  void tearDown() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()

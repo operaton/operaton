@@ -18,7 +18,7 @@
     <version.resteasy>7.0.2.Final</version.resteasy>
     <!-- must be in sync with transitive version from org.springframework.boot:spring-boot-starter-jersey -->
     <version.jersey3>4.0.2</version.jersey3>
-    <version.groovy>5.0.6</version.groovy>
+    <version.groovy>5.0.7</version.groovy>
     <version.rest-assured>6.0.0</version.rest-assured>
     <version.jython>2.7.4</version.jython>
     <version.graal.js>25.0.3</version.graal.js>

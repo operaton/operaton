@@ -12,12 +12,12 @@
   <properties>
     <generated-directory>${project.build.directory}/generated-sources/openapi-json</generated-directory>
     <generated-file>openapi.json</generated-file>
-    <openapi.generator.version>7.22.0</openapi.generator.version>
+    <openapi.generator.version>7.23.0</openapi.generator.version>
     <!-- properties versions used by the openapi client -->
     <!-- update them during openapi.generator version update  -->
     <gson-fire-version>1.9.0</gson-fire-version>
-    <swagger-core-version>2.1.43</swagger-core-version>
-    <okhttp-version>5.3.2</okhttp-version>
+    <swagger-core-version>2.1.45</swagger-core-version>
+    <okhttp-version>5.4.0</okhttp-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <surefire.forkCount>1</surefire.forkCount>
   </properties>

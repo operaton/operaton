@@ -151,6 +151,7 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
           - 'GitHub'
           - 'ageduldig'
           - 'Copilot'
+          - 'Claude Sonnet 4.6'
         categories:
           - 'merge'
           - 'wip'
@@ -183,7 +184,8 @@ deploy:
 
 signing:
   active: ALWAYS
-  armored: true
+  pgp:
+    armored: true
 
 files:
   artifacts:
@@ -252,7 +254,7 @@ distributions:
 announce:
   slack:
     active: RELEASE
-    token: {{SLACK_BOT_TOKEN}}
-    webhook: {{SLACK_WEBHOOK_URL}}
+    token: '{{SLACK_BOT_TOKEN}}'
+    webhook: '{{SLACK_WEBHOOK_URL}}'
     channel: '#general'
     message: '🚀 {{projectNameCapitalized}} {{projectVersion}} has been released! {{releaseNotesUrl}}'

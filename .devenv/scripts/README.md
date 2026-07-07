@@ -114,6 +114,55 @@ none
 
 `jq` must be installed.  
 
+# Directory `smoketest`
+
+Automated smoke tests against the Operaton Docker SNAPSHOT images. Used during release preparation (PREPARE phase) and post-release verification (PERFORM phase).
+
+Each image runs on a dedicated port to avoid conflicts with locally-running Operaton instances or other services on 8080:
+
+| Image | Port |
+|-------|------|
+| `operaton/operaton` | 18080 |
+| `operaton/wildfly` | 18081 |
+| `operaton/tomcat` | 18082 |
+
+**Requirements:** `docker`, `node` (playwright is installed automatically on first run into `/tmp`)
+
+## `smoke-all.sh`
+
+Run smoke tests against all three SNAPSHOT images sequentially.
+
+```bash
+.devenv/scripts/smoketest/smoke-all.sh
+# Specific tag:
+.devenv/scripts/smoketest/smoke-all.sh --tag=2.1.2
+```
+
+## `smoke-test.sh`
+
+Run the smoke test for a single image.
+
+**Options:**
+- `--image=operaton|wildfly|tomcat` — which image to test (default: `operaton`)
+- `--tag=TAG` — Docker tag to pull (default: `SNAPSHOT`)
+- `--port=PORT` — override the default port
+- `--keep` — leave the container running after the test
+
+```bash
+.devenv/scripts/smoketest/smoke-test.sh --image=operaton
+.devenv/scripts/smoketest/smoke-test.sh --image=wildfly --tag=2.1.2
+```
+
+## `browser-flows.mjs`
+
+Node.js/Playwright script that drives the Tasklist and Cockpit browser flows. Called automatically by `smoke-test.sh`. Can also be run directly:
+
+```bash
+node .devenv/scripts/smoketest/browser-flows.mjs http://localhost:18080 /tmp/screenshots
+```
+
+Screenshots are saved to `.devenv/scripts/smoketest/screenshots/<image>/` during automated runs.
+
 # Directory `maintenance`
 
 ## `code-cleanup.sh`
@@ -200,3 +249,25 @@ python3 .devenv/scripts/maintenance/init-database-version.py --new-version 7.25.
 ### Notes
 - Always run this script from the repository root.
 - Review and commit the changes after running the script.
+
+# Directory `release`
+
+Helpers for the post-release announcement phase (the ANNOUNCE action of the `operaton-release` skill). They prepare and list only — they never publish or delete.
+
+## `list-merged-branches.sh`
+
+List the branches of merged PRs in a release milestone, with links, so a human can review and delete them. Read-only; never deletes.
+
+```bash
+.devenv/scripts/release/list-merged-branches.sh "<MILESTONE>" [--repo OWNER/REPO]
+```
+
+## `update-website.py`
+
+Bump the `#changelog` card in operaton.org `index.html` and scaffold a blog post under `_posts/` from the most recent release post. Edits a local operaton.org checkout; does not commit, push, or open a PR.
+
+```bash
+.devenv/scripts/release/update-website.py --version 2.1.2 --summary "..." [--repo PATH]
+```
+
+When several releases ship the same day, pass the highest version; the single changelog card always shows the highest. See `.devenv/scripts/release/README.md` for details.

@@ -24,7 +24,6 @@ documentation:
 scope:build:
 - changed-files:
   - any-glob-to-any-file:
-    - '**/pom.xml'
     - '.mvn/**'
     - 'mvnw'
     - 'mvnw.cmd'
@@ -139,7 +138,7 @@ api:rest:
 - all:
   - changed-files:
     - any-glob-to-any-file:
-      - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
+      - 'engine-rest/engine-rest-openapi/src/main/**'
       - 'engine-rest/docs/**'
     - any-glob-to-any-file:
       - '!engine-rest/docs/node_modules/**'

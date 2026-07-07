@@ -6,7 +6,7 @@
       tag = "Telemetry"
       deprecated = true
       summary = "Fetch Telemetry Data"
-      desc = "Deprecated: Always returns false. The sending telemetry feature is removed. Please remove the endpoint usages as they are no longer needed." />
+      desc = "Deprecated: The sending telemetry feature is removed. This endpoint is retained for diagnostics and returns the data collected locally by the engine." />
 
   "parameters" : [],
 
@@ -24,7 +24,6 @@
                            "product": {
                              "name": "Operaton BPM Runtime",
                              "version": "7.14.0",
-                             "edition": "enterprise",
                              "internals": {
                                "database": {  
                                  "vendor": "h2",
@@ -53,16 +52,6 @@
                                  "spring-boot-starter",
                                  "operaton-bpm-run"
                                ],
-                               "license-key": {
-                                 "customer": "customer name",
-                                 "type": "UNIFIED",
-                                 "valid-until": "2022-09-30",
-                                 "unlimited": false,
-                                 "features": {
-                                   "operatonBPM": "true"
-                                 },
-                                 "raw": "customer=customer name;expiryDate=2022-09-30;operatonBPM=true;optimize=false;cawemo=false"
-                               },
                                "webapps": [
                                  "cockpit",
                                  "admin"

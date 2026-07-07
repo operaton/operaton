@@ -1,10 +1,10 @@
 # This configuration is intended for production use and was created with respect to the security guide.
 # The provided links to documentation guides for each property will give more information about the purpose of each property.
-# security guide: https://docs.operaton.org/manual/latest/user-guide/security/
+# security guide: https://docs.operaton.org/docs/documentation/user-guide/security
 
 operaton.bpm:
-# https://docs.operaton.org/manual/latest/user-guide/security/#http-header-security-in-webapps
-# https://docs.operaton.org/manual/latest/webapps/shared-options/header-security/
+# https://docs.operaton.org/docs/documentation/user-guide/security/#http-header-security-in-webapps
+# https://docs.operaton.org/docs/documentation/webapps/shared-options/header-security/
   webapp:
     # The new web apps (webapps-neo) are served at the application root (/) and
     # are enabled by default. The legacy web apps remain available at
@@ -17,27 +17,27 @@ operaton.bpm:
     header-security:
       hsts-disabled: false
 
-# https://docs.operaton.org/manual/latest/user-guide/security/#authorization
-# https://docs.operaton.org/manual/latest/user-guide/process-engine/authorization-service/
+# https://docs.operaton.org/docs/documentation/user-guide/security/#authorization
+# https://docs.operaton.org/docs/documentation/user-guide/process-engine/authorization-service/
   authorization.enabled: true
 
   generic-properties.properties:
-# https://docs.operaton.org/manual/latest/user-guide/security/#variable-values-from-untrusted-sources
+# https://docs.operaton.org/docs/documentation/user-guide/security/#variable-values-from-untrusted-sources
     deserialization-type-validation-enabled: true
     deserialization-allowed-packages:
     deserialization-allowed-classes:
-# https://docs.operaton.org/manual/latest/user-guide/security/#password-policy
-# https://docs.operaton.org/manual/latest/user-guide/process-engine/password-policy/
+# https://docs.operaton.org/docs/documentation/user-guide/security/#password-policy
+# https://docs.operaton.org/docs/documentation/user-guide/process-engine/password-policy/
     enable-password-policy: true
 
   run:
-# https://docs.operaton.org/manual/latest/user-guide/security/#authentication
-# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#authentication
+# https://docs.operaton.org/docs/documentation/user-guide/security/#authentication
+# https://docs.operaton.org/docs/documentation/user-guide/operaton-bpm-run/#authentication
     auth.enabled: true
     rest.disable-wadl: true
     deployment.deploy-changed-only: true
-# https://docs.operaton.org/manual/latest/user-guide/process-engine/identity-service/#configuration-properties-of-the-ldap-plugin
-# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#ldap-identity-service
+# https://docs.operaton.org/docs/documentation/user-guide/process-engine/identity-service/#configuration-properties-of-the-ldap-plugin
+# https://docs.operaton.org/docs/documentation/user-guide/operaton-bpm-run/#ldap-identity-service
 # Uncomment this section to enable LDAP support for Operaton Run
 #    ldap:
 #      enabled: true
@@ -60,8 +60,8 @@ operaton.bpm:
 #      group-name-attribute: cn
 #      group-member-attribute: member
 #      sort-control-supported: false
-# https://docs.operaton.org/manual/latest/user-guide/process-engine/authorization-service/#the-administrator-authorization-plugin
-# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#ldap-administrator-authorization
+# https://docs.operaton.org/docs/documentation/user-guide/process-engine/authorization-service/#the-administrator-authorization-plugin
+# https://docs.operaton.org/docs/documentation/user-guide/operaton-bpm-run/#ldap-administrator-authorization
 # Uncomment this section to grant administrator authorizations to an existing LDAP user or group
 #    admin-auth:
 #      enabled: true
@@ -69,32 +69,32 @@ operaton.bpm:
 #      administrator-group-name: admins
 
 server:
-# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#https
+# https://docs.operaton.org/docs/documentation/user-guide/operaton-bpm-run/#https
 # do not use the provided certificate in production
-  ssl:
-    key-store: classpath:keystore.p12
-    key-store-password: operaton
-    key-store-type: pkcs12
-    key-alias: localhost
-    key-password: operaton
-  port: 8443
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-type: pkcs12
+#    key-store-password: REPLACE_ME
+#    key-alias: REPLACE_ME
+#    key-password: REPLACE_ME
+#  port: 8443
 
-# https://docs.operaton.org/manual/latest/user-guide/security/#http-header-security-in-webapps
-# https://docs.operaton.org/manual/latest/webapps/shared-options/header-security/
+# https://docs.operaton.org/docs/documentation/user-guide/security/#http-header-security-in-webapps
+# https://docs.operaton.org/docs/documentation/webapps/shared-options/header-security/
   servlet.session.cookie:
     secure: true
     http-only: true
 
-# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#logging
-# https://docs.operaton.org/manual/latest/user-guide/logging/#process-engine
+# https://docs.operaton.org/docs/documentation/user-guide/operaton-bpm-run/#logging
+# https://docs.operaton.org/docs/documentation/user-guide/logging/#process-engine
 logging:
    level.root: INFO
    file.name: logs/operaton-bpm-run.log
 
 # datasource configuration is required
 # do not use the H2 databse in production
-# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#connect-to-a-database
-# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#database
+# https://docs.operaton.org/docs/documentation/user-guide/operaton-bpm-run/#connect-to-a-database
+# https://docs.operaton.org/docs/documentation/user-guide/operaton-bpm-run/#database
 spring.datasource:
   url: jdbc:h2:./operaton-h2-test-production/process-engine;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE
   driver-class-name: org.h2.Driver

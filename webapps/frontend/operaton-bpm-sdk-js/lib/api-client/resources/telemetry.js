@@ -47,10 +47,11 @@ Telemetry.get = function (done) {
 };
 
 /**
- * Configures whether Operaton receives data collection of the process engine setup and usage.
+ * Deprecated. Telemetry sending has been removed; the endpoint is a no-op kept
+ * for backwards compatibility.
  *
  * @param  {Object}   payload                  is an object representation of an authorization
- * @param  {Boolean}  payload.enableTelemetry  Specifies if the data collection should be sent or not.
+ * @param  {Boolean}  payload.enableTelemetry  Deprecated no-op flag.
  * @param  {Function} done
  */
 Telemetry.configure = function (payload, done) {

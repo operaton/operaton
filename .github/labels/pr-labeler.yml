@@ -17,3 +17,9 @@ database:db2: ['*db2*']
 integration:spring-boot: ['*spring-boot*', '*Spring Boot*', '*SpringBoot*']
 
 integration:quarkus: ['*quarkus*', '*Quarkus*']
+
+scope:quarkus: ['*bump version.quarkus*']
+
+distro:tomcat: ['*version.tomcat*']
+
+distro:wildfly: ['*version.wildfly*']

@@ -51,6 +51,7 @@ import org.operaton.commons.logging.MdcAccess;
  * <li>loggingContextBusinessKey - the context property for the business key</li>
  * <li>loggingContextDefinitionId - the context property for the definition id</li>
  * <li>loggingContextProcessInstanceId - the context property for the instance id</li>
+ * <li>loggingContextRootProcessInstanceId - the context property for the root process instance id</li>
  * <li>loggingContextTenantId - the context property for the tenant id</li>
  * </ul>
  * </p>
@@ -66,6 +67,7 @@ public class ProcessDataContext {
   protected String mdcPropertyDefinitionId;
   protected String mdcPropertyDefinitionKey;
   protected String mdcPropertyInstanceId;
+  protected String mdcPropertyRootProcessInstanceId;
   protected String mdcPropertyTenantId;
   protected String mdcPropertyEngineName;
 
@@ -115,6 +117,7 @@ public class ProcessDataContext {
     mdcPropertyDefinitionId = initProperty(configuration::getLoggingContextProcessDefinitionId);
     mdcPropertyDefinitionKey = initProperty(configuration::getLoggingContextProcessDefinitionKey);
     mdcPropertyInstanceId = initProperty(configuration::getLoggingContextProcessInstanceId);
+    mdcPropertyRootProcessInstanceId = initProperty(configuration::getLoggingContextRootProcessInstanceId);
     mdcPropertyTenantId = initProperty(configuration::getLoggingContextTenantId);
     mdcPropertyEngineName = initProperty(configuration::getLoggingContextEngineName);
 
@@ -144,6 +147,7 @@ public class ProcessDataContext {
     parkExternalMDCProperty(configuration::getLoggingContextProcessDefinitionId);
     parkExternalMDCProperty(configuration::getLoggingContextProcessDefinitionKey);
     parkExternalMDCProperty(configuration::getLoggingContextProcessInstanceId);
+    parkExternalMDCProperty(configuration::getLoggingContextRootProcessInstanceId);
     parkExternalMDCProperty(configuration::getLoggingContextTenantId);
     parkExternalMDCProperty(configuration::getLoggingContextEngineName);
   }
@@ -195,6 +199,7 @@ public class ProcessDataContext {
     addToStack(execution.getCurrentActivityName(), mdcPropertyActivityName);
     addToStack(execution.getProcessDefinitionId(), mdcPropertyDefinitionId);
     addToStack(execution.getProcessInstanceId(), mdcPropertyInstanceId);
+    addToStack(execution.getRootProcessInstanceId(), mdcPropertyRootProcessInstanceId);
     addToStack(execution.getTenantId(), mdcPropertyTenantId);
     addToStack(execution.getProcessEngine().getName(), mdcPropertyEngineName);
 
@@ -210,7 +215,7 @@ public class ProcessDataContext {
     }
 
     if (isNotBlank(mdcPropertyDefinitionKey)) {
-      addToStack(execution.getProcessDefinition().getKey(), mdcPropertyDefinitionKey);
+      addToStack(execution.getProcessDefinitionKey(), mdcPropertyDefinitionKey);
     }
 
     sections.sealCurrentSection();

@@ -100,14 +100,17 @@ auto-merge-rules:
       - 'org.apache.maven.plugins'
       - 'org.codehaus.cargo:cargo-maven3-plugin'
       - 'org.codehaus.mojo:*'
+      - 'org.jacoco:jacoco-maven-plugin'
       - 'org.openapitools:openapi-generator-maven-plugin'
       - 'org.sonatype.central:central-publishing-maven-plugin'
       # Dependency groups
+      - 'all group'
       - 'arquillian group'
       - 'jboss-weld group'
       - 'openrewrite group'
       - 'spring-boot group'
       - 'jaxb group'
+      - 'github-actions group'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'
@@ -120,6 +123,7 @@ auto-merge-rules:
     labels: ['dependencies:github-action']
     includes:
       - 'actions/*'
+      - 'github-actions group'
 
   # Code cleanup PRs created by github-actions bot can be auto-merged
   - author: 'github-actions[bot]'

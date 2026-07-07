@@ -251,8 +251,8 @@
     </dependency>
 
     <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -765,9 +765,6 @@
               <failIfNoTests>false</failIfNoTests>
               <trimStackTrace>false</trimStackTrace>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <excludes combine.children="append">
-                <exclude>**/CompetingMessageCorrelationTest.java</exclude>
-              </excludes>
             </configuration>
           </plugin>
         </plugins>

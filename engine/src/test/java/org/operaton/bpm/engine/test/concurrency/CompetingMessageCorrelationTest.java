@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.concurrency;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -306,16 +305,7 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     assertThat(thread2.getException()).isInstanceOf(OptimisticLockingException.class);
   }
 
-  /**
-   * <p>
-   *   At least on MySQL, this test case fails with deadlock exceptions.
-   *   The reason is the combination of our flush with the locking of the event
-   *   subscription documented in the ticket CAM-3636.
-   * </p>
-   * @throws InterruptedException
-   */
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
-  @Ignore("CAM-3636")
   @Test
   void testConcurrentMixedCorrelationCase2() throws Exception {
     InvocationLogListener.reset();

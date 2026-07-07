@@ -132,7 +132,6 @@ module.exports = (_env, argv = {}) => {
               options: {
                 // Optional: helps sass-loader handle modern Sass features
                 implementation: require('sass'),
-                additionalData: `$ce-banner-height: ${eeBuild ? '0' : '20px'};`,
                 sassOptions: {
                   // Keep unicode escapes in generated CSS (e.g. "\f4da")
                   // so icon codepoints are not emitted as raw UTF-8 bytes.

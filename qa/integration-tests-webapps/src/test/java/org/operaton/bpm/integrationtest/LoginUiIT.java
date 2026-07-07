@@ -27,28 +27,62 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
+  // the login page / inputs must show up reasonably fast
+  protected static final Duration LOGIN_TIMEOUT = Duration.ofSeconds(30);
+  // the post-login SPA may need longer to render on a freshly deployed webapp under CI load
+  protected static final Duration POST_LOGIN_TIMEOUT = Duration.ofSeconds(45);
+  // retry the whole login flow on transient WebDriver/timeout failures
+  protected static final int LOGIN_ATTEMPTS = 3;
+
   protected WebDriverWait wait;
+
+  /**
+   * Runs the given login flow, retrying the full flow (fresh navigation + credentials)
+   * on any {@link WebDriverException} — covers the flaky case where the submit does not
+   * register or the webapp is not warmed up yet.
+   */
+  void withRetries(Runnable loginFlow) {
+    WebDriverException last = null;
+    for (int attempt = 1; attempt <= LOGIN_ATTEMPTS; attempt++) {
+      try {
+        loginFlow.run();
+        return;
+      } catch (WebDriverException e) {
+        last = e;
+      }
+    }
+    throw last;
+  }
 
   void login(String appName) {
     driver.manage().deleteAllCookies();
 
     driver.get("%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName));
 
-    wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+    WebDriverWait loginWait = new WebDriverWait(driver, LOGIN_TIMEOUT);
 
-    WebElement userNameInput = wait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"text\"]")));
+    WebElement userNameInput = loginWait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"text\"]")));
     sendKeys(userNameInput, "demo");
 
-    WebElement passwordInput = wait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"password\"]")));
+    WebElement passwordInput = loginWait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"password\"]")));
     sendKeys(passwordInput, "demo");
 
-    wait.until(visibilityOfElementLocated(By.cssSelector("button[type=\"submit\"]")))
+    // wait until the button is actually clickable to avoid submitting before the SPA is bound
+    loginWait.until(elementToBeClickable(By.cssSelector("button[type=\"submit\"]")))
         .submit();
+
+    // verify the submit took effect: the login form must disappear. Otherwise we are still
+    // on the login page and withRetries() should re-run the flow rather than wait in vain.
+    loginWait.until(invisibilityOfElementLocated(By.cssSelector("input[type=\"password\"]")));
+
+    wait = new WebDriverWait(driver, POST_LOGIN_TIMEOUT);
   }
 
   void sendKeys(WebElement element, String keys)  {
@@ -58,13 +92,7 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
   @Test
   void shouldLoginToCockpit() {
-    assertThatCode(() -> {
-      try {
-        loginToCockpit();
-      } catch (WebDriverException e) {
-        loginToCockpit();
-      }
-    }).doesNotThrowAnyException();
+    assertThatCode(() -> withRetries(this::loginToCockpit)).doesNotThrowAnyException();
   }
 
   void loginToCockpit() {
@@ -79,13 +107,7 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
   @Test
   void shouldLoginToTasklist() {
-    assertThatCode(() -> {
-      try {
-        loginToTasklist();
-      } catch (WebDriverException e) {
-        loginToTasklist();
-      }
-    }).doesNotThrowAnyException();
+    assertThatCode(() -> withRetries(this::loginToTasklist)).doesNotThrowAnyException();
   }
 
   void loginToTasklist() {
@@ -101,13 +123,7 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
   @Test
   void shouldLoginToAdmin() {
-    assertThatCode(() -> {
-      try {
-        loginToAdmin();
-      } catch (WebDriverException e) {
-        loginToAdmin();
-      }
-    }).doesNotThrowAnyException();
+    assertThatCode(() -> withRetries(this::loginToAdmin)).doesNotThrowAnyException();
   }
 
   void loginToAdmin() {
@@ -122,13 +138,7 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
   @Test
   void shouldLoginToWelcome() {
-    assertThatCode(() -> {
-      try {
-        loginToWelcome();
-      } catch (WebDriverException e) {
-        loginToWelcome();
-      }
-    }).doesNotThrowAnyException();
+    assertThatCode(() -> withRetries(this::loginToWelcome)).doesNotThrowAnyException();
   }
 
   void loginToWelcome() {

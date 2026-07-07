@@ -54,6 +54,7 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailVariableInstanceUpdateEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -2616,11 +2617,87 @@ class TaskServiceTest {
   }
 
   @Test
+  void testDeleteTaskAttachmentThatDoesNotExist() {
+    assertThatThrownBy(() -> taskService.deleteTaskAttachment(null, "attachmentDoesNotExist"))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("No attachment exists with attachmentId 'attachmentDoesNotExist'");
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   void testDeleteTaskAttachmentWithTaskIdNull() {
-    int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
-    if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      assertThatThrownBy(() -> taskService.deleteTaskAttachment(null, "myAttachmentId")).isInstanceOf(ProcessEngineException.class);
-    }
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    Attachment attachment = taskService.createAttachment("web page", null, processInstance.getId(), "weatherforcast",
+        "temperatures and more", new ByteArrayInputStream("someContent".getBytes()));
+    String attachmentId = attachment.getId();
+    assertThat(taskService.getAttachment(attachmentId)).isNotNull();
+
+    taskService.deleteTaskAttachment(null, attachmentId);
+
+    assertThat(taskService.getAttachment(attachmentId)).isNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
+  void testDeleteTaskAttachmentWithTaskIdEmpty() {
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    Attachment attachment = taskService.createAttachment("web page", "", null, "weatherforcast",
+        "temperatures and more", new ByteArrayInputStream("someContent".getBytes()));
+    String attachmentId = attachment.getId();
+    assertThat(taskService.getAttachment(attachmentId)).isNotNull();
+
+    taskService.deleteTaskAttachment("", attachmentId);
+
+    assertThat(taskService.getAttachment(attachmentId)).isNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
+  void testDeleteTaskAttachmentWithContentIdNull() {
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String taskId = taskService.createTaskQuery().singleResult().getId();
+    Attachment attachment = taskService.createAttachment("web page", taskId, null, "weatherforcast",
+        "temperatures and more", "http://weather.com");
+    String attachmentId = attachment.getId();
+    assertThat(taskService.getAttachment(attachmentId)).isNotNull();
+
+    taskService.deleteTaskAttachment(taskId, attachmentId);
+
+    assertThat(taskService.getAttachment(attachmentId)).isNull();
+  }
+
+  @Test
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
+  void testDeleteTaskAttachmentWithContentIdEmpty() {
+    String attachmentId = createAttachmentEntity(null, "");
+    assertThat(taskService.getAttachment(attachmentId)).isNotNull();
+
+    taskService.deleteTaskAttachment(null, attachmentId);
+
+    assertThat(taskService.getAttachment(attachmentId)).isNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
+  void testDeleteTaskAttachmentWithTaskIdNoLongerExists() {
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String taskId = taskService.createTaskQuery().singleResult().getId();
+    Attachment attachment = taskService.createAttachment("web page", taskId, null, "weatherforcast",
+        "temperatures and more", "http://weather.com");
+    taskService.complete(taskId);
+    String attachmentId = attachment.getId();
+
+    taskService.deleteTaskAttachment(taskId, attachmentId);
+
+    assertThat(taskService.getAttachment(attachmentId)).isNull();
   }
 
   @Test
@@ -3365,6 +3442,22 @@ class TaskServiceTest {
     Task taskAfterThrow = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(taskAfterThrow.getTaskDefinitionKey()).isEqualTo("after-306");
     assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
+  }
+
+  private String createAttachmentEntity(String taskId, String contentId) {
+    return processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AttachmentEntity attachment = new AttachmentEntity();
+      attachment.setName("weatherforcast");
+      attachment.setDescription("temperatures and more");
+      attachment.setType("web page");
+      attachment.setTaskId(taskId);
+      attachment.setContentId(contentId);
+      attachment.setCreateTime(ClockUtil.getCurrentTime());
+
+      commandContext.getDbEntityManager().insert(attachment);
+
+      return attachment.getId();
+    });
   }
 
   protected BpmnModelInstance createUserTaskProcessWithCatchBoundaryEvent() {

@@ -51,6 +51,12 @@
       <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
       <version>${project.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${version.liquibase}</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -73,23 +79,6 @@
       <id>instance-migration</id>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>update-db</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>update</goal>
-                </goals>
-                <configuration>
-                  <changeLogFile>operaton-changelog.xml</changeLogFile>
-                  <changeLogDirectory>${project.build.directory}/scripts-current/sql/liquibase/</changeLogDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
           <!-- provide sql scripts -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -134,6 +123,12 @@
                 <phase>process-test-classes</phase>
                 <configuration>
                   <mainClass>org.operaton.bpm.qa.upgrade.TestFixture</mainClass>
+                  <systemProperties>
+                    <systemProperty>
+                      <key>liquibase.changelog.dir</key>
+                      <value>${project.build.directory}/scripts-current/sql/liquibase/</value>
+                    </systemProperty>
+                  </systemProperties>
                 </configuration>
               </execution>
             </executions>

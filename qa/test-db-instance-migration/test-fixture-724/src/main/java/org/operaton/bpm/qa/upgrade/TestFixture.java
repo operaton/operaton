@@ -16,6 +16,18 @@
  */
 package org.operaton.bpm.qa.upgrade;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import liquibase.Contexts;
+import liquibase.LabelExpression;
+import liquibase.Liquibase;
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.resource.FileSystemResourceAccessor;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -27,9 +39,22 @@ public class TestFixture {
   public TestFixture(ProcessEngine processEngine) {
   }
 
-  public static void main(String... args) {
+  public static void main(String... args) throws Exception {
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("operaton.cfg.xml");
+
+    // Run Liquibase in the same classloader as the process engine so that both
+    // share the same database instance (critical for jdbc:h2:mem: URLs where each
+    // classloader gets an isolated in-memory database).
+    String changelogDir = System.getProperty("liquibase.changelog.dir");
+    if (changelogDir != null) {
+      runLiquibase(
+        processEngineConfiguration.getJdbcUrl(),
+        processEngineConfiguration.getJdbcUsername(),
+        processEngineConfiguration.getJdbcPassword(),
+        changelogDir);
+    }
+
     ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
 
     // register test scenarios
@@ -39,5 +64,20 @@ public class TestFixture {
     // runner.setupScenarios(ExampleScenario.class);
 
     processEngine.close();
+  }
+
+  private static void runLiquibase(String url, String username, String password, String changelogDir)
+      throws Exception {
+    try (Connection conn = DriverManager.getConnection(url, username, password)) {
+      Database db = DatabaseFactory.getInstance()
+        .findCorrectDatabaseImplementation(new JdbcConnection(conn));
+      try {
+        new Liquibase("operaton-changelog.xml",
+          new FileSystemResourceAccessor(new File(changelogDir)), db)
+          .update(new Contexts(), new LabelExpression());
+      } finally {
+        db.close();
+      }
+    }
   }
 }

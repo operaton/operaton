@@ -9,13 +9,15 @@ operaton.bpm:
   filter:
     create: All tasks
   webapp:
-    # The new web apps (webapps-neo) are served at the application root (/) and
-    # are enabled by default (added to the classpath via run.sh / run.bat).
+    # The new web apps (webapps-neo) are served at the application root (/).
+    # They are DISABLED by default. Enable them by setting the
+    # OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS environment variable to "true"
+    # (or start run.sh / run.bat with the --webapps-neo flag).
     neo:
-      enabled: true
-    # The legacy web apps remain available at /operaton/app when added to the
-    # classpath with the --webapps flag. Disable them explicitly here, or via
-    # the OPERATON_BPM_WEBAPP_ENABLED environment variable.
+      enabled: ${OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS:false}
+    # The legacy web apps are served at /operaton/app and are enabled by default.
+    # Disable them via the OPERATON_BPM_WEBAPP_ENABLED environment variable or by
+    # setting operaton.bpm.webapp.enabled: false here.
     # enabled: false
   run:
 # https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#cross-origin-resource-sharing

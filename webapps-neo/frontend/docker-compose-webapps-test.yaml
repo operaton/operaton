@@ -10,6 +10,7 @@ services:
     environment:
       - OPERATON_BPM_RUN_AUTH_ENABLED=true
       - LOGGING_LEVEL_ROOT=INFO
+      - OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true
     # No ports exposed — accessed only via nginx proxy in web-apps container
 
   web-apps:

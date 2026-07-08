@@ -10,6 +10,7 @@ services:
       - OPERATON_BPM_RUN_CORS_ALLOWED_HEADERS=Origin,X-Requested-With,Content-Type,Accept,Authorization
       - LOGGING_LEVEL_ROOT=INFO
       - REST_AUTH_ENABLED=true
+      - OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true
     ports:
       - "8084:8080"
 

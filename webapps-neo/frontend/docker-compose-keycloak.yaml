@@ -14,6 +14,7 @@ services:
       - KEYCLOAK_CLIENT_SECRET=operaton-identity-secret
       - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:5173
       - REST_AUTH_ENABLED=false
+      - OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true
     ports:
       - "8084:8080"
     depends_on:

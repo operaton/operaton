@@ -46,7 +46,7 @@
     <version.commonj>1.1.0</version.commonj>
     <!-- application servers -->
     <version.wildfly>38.0.1.Final</version.wildfly>
-    <version.tomcat>11.0.23</version.tomcat>
+    <version.tomcat>11.0.24</version.tomcat>
     <version.arquillian>1.10.2.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.7</version.shrinkwrap.resolvers>
     <version.selenium>4.43.0</version.selenium>

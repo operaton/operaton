@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:91dab529-0bd6-42e3-9696-35db1c0a0eca",
+  "serialNumber": "urn:uuid:f89085b6-1851-4b08-934f-379ae15ec40f",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-07-06T04:12:26Z",
+    "timestamp": "2026-07-09T00:23:35Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.72.0-SNAPSHOT-878fdb461"
+          "version": "0.72.0-SNAPSHOT-bc614b39d"
         }
       ]
     },
@@ -18044,44 +18044,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.networknt/json-schema-validator@2.0.3?type=jar",
+      "bom-ref": "pkg:maven/com.networknt/json-schema-validator@2.0.4?type=jar",
       "group": "com.networknt",
       "name": "json-schema-validator",
-      "version": "2.0.3",
+      "version": "2.0.4",
       "description": "A json schema validator that supports draft v4, v6, v7, v2019-09 and v2020-12",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d714bcca336d41bde6bbfad3e9d82a61"
+          "content": "e9d8e2cb13ac8c788731f05c6a3a6e8f"
         },
         {
           "alg": "SHA-1",
-          "content": "886f816a1996a5444a750e6a4829b762c60739e1"
+          "content": "57ec5a08b2fd6dab50a48b84ec42fdcd0436690f"
         },
         {
           "alg": "SHA-256",
-          "content": "ce6b5646e5360f690cfdb7e55f0802eed3cc69b6a74efe93ba3f563d81bee171"
+          "content": "4856729c8f38ffba02380b0895b7e98a511f6e68a1fb6424782f3e6549dbba07"
         },
         {
           "alg": "SHA-512",
-          "content": "c2b32479ac9327dcf0f862b7b3887add807696ed133718e4ec02a561ff2d1f106c0a5f66c0a4a595c050fff8cef25bef7500f0d4ab3a65e53656b3372a416ddd"
+          "content": "8d427c2dcad5ec81ecf8f3e9cb0d561086d22d41c5dda0b48ffbd6f81ff1e6b2d886ede115580f6fa8c25f102eb802efb79224d7f8aae56455d2c019c9733343"
         },
         {
           "alg": "SHA-384",
-          "content": "6c4a8f8fe3609aa8f9f9b7049fb9f088b1745060617850e8f3c797226d976556919e87b18bb6ddc761545742be624794"
+          "content": "6c0391ffe0f08dd308e6f092668992b3b6b10be89dec79918cf23529c6800084ecd4ba41dbdde5010b8d340ea840dad9"
         },
         {
           "alg": "SHA3-384",
-          "content": "6743e519198ffa80b328f9dab13dc6fa6c2e558a5386b039e50ab48e49fd6b220b19ab9ab729166dde9ffdbddf50f13d"
+          "content": "ba9c59890cb53e0475d3f7e645ac6c54e5b42462d582441af794244dca642032ff318c4b719a6865f8c2e86748f20bc1"
         },
         {
           "alg": "SHA3-256",
-          "content": "2a754f5554ceabe7545b548f03bd41a37d10028ca5b2b3686b1f81c20fc297a1"
+          "content": "60b4e1de5308fb203b93c87e221ff8670a372c55004f8583e7ed9985a2843241"
         },
         {
           "alg": "SHA3-512",
-          "content": "c23735f6660d0c73aabca2d056e5c6fee4c13cbdbd96e8bb9a4da5ebe1595a9dc37255aa4e32d7c60b22e6f51804d139a4021c6d1d55195ffb540f7b4f1910e0"
+          "content": "2bb2e958de2f406905aad9d7798ed0074e936676f74cc9e7588bad52744e6ef808a4a358047bf0273fcaec7007503c1f361ea73709b2726a1a208e291f6d619b"
         }
       ],
       "licenses": [
@@ -18091,7 +18091,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.networknt/json-schema-validator@2.0.3?type=jar",
+      "purl": "pkg:maven/com.networknt/json-schema-validator@2.0.4?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/networknt/json-schema-validator",
@@ -19443,7 +19443,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "976fdeb3-4165-4086-848a-803343b252aa",
+      "bom-ref": "e7aaff53-7dbf-4b62-9638-1e5f5a264a0b",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24574,7 +24574,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b5da5efa-f562-4709-b758-3cc706ab7992",
+      "bom-ref": "3be764dc-d8c4-4bb2-a7e1-a57277b56e08",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26604,11 +26604,11 @@
         "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
-        "pkg:maven/com.networknt/json-schema-validator@2.0.3?type=jar"
+        "pkg:maven/com.networknt/json-schema-validator@2.0.4?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.networknt/json-schema-validator@2.0.3?type=jar",
+      "ref": "pkg:maven/com.networknt/json-schema-validator@2.0.4?type=jar",
       "dependsOn": [
         "pkg:maven/com.ethlo.time/itu@1.14.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.4?type=jar",
@@ -26966,7 +26966,13 @@
       "dependsOn": []
     },
     {
-      "ref": "976fdeb3-4165-4086-848a-803343b252aa",
+      "ref": "3be764dc-d8c4-4bb2-a7e1-a57277b56e08",
+      "dependsOn": [
+        "e7aaff53-7dbf-4b62-9638-1e5f5a264a0b"
+      ]
+    },
+    {
+      "ref": "e7aaff53-7dbf-4b62-9638-1e5f5a264a0b",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -27013,12 +27019,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "b5da5efa-f562-4709-b758-3cc706ab7992",
-      "dependsOn": [
-        "976fdeb3-4165-4086-848a-803343b252aa"
       ]
     },
     {

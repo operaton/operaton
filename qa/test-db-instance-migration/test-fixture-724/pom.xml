@@ -57,6 +57,12 @@
       <artifactId>liquibase-core</artifactId>
       <version>${version.liquibase}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-jsr223</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>

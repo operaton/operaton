@@ -11,7 +11,7 @@
   ],
   "plugins": [
     [
-      "polyfill-corejs3",
+      "babel-plugin-polyfill-corejs3",
       {
         "method": "usage-global",
         "version": "3.49"

@@ -14,21 +14,21 @@
   <properties>
     <!-- delete when 7.25 is released -->
     <operaton.version.current>${project.version}</operaton.version.current>
-    <operaton.version.previous>7.24.0</operaton.version.previous>
+    <operaton.version.current>2.2.0-SNAPSHOT</operaton.version.current>
+    <operaton.schema_version.current>7.25.0</operaton.schema_version.current>
   </properties>
 
-  <!-- uncomment when 7.25 is released -->
-  <!--   <dependencyManagement> -->
-  <!--     <dependencies> -->
-  <!--       <dependency> -->
-  <!--         <groupId>org.operaton.bpm</groupId> -->
-  <!--         <artifactId>operaton-bom</artifactId> -->
-  <!--         <version>7.25.0</version> -->
-  <!--         <scope>import</scope> -->
-  <!--         <type>pom</type> -->
-  <!--       </dependency> -->
-  <!--     </dependencies> -->
-  <!--   </dependencyManagement> -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-bom</artifactId>
+        <version>${operaton.version.current}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -51,6 +51,18 @@
       <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
       <version>${project.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${version.liquibase}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy-jsr223</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -73,23 +85,6 @@
       <id>instance-migration</id>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>update-db</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>update</goal>
-                </goals>
-                <configuration>
-                  <changeLogFile>operaton-changelog.xml</changeLogFile>
-                  <changeLogDirectory>${project.build.directory}/scripts-current/sql/liquibase/</changeLogDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
           <!-- provide sql scripts -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -106,9 +101,7 @@
                     <artifactItem>
                       <groupId>org.operaton.bpm.distro</groupId>
                       <artifactId>operaton-sql-scripts</artifactId>
-                      <!-- Replace after 7.25.0 release -->
-                      <version>${operaton.version.current}</version>
-                      <!--<version>7.25.0</version>-->
+                      <version>${operaton.schema_version.current}</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
                       <overWrite>true</overWrite>
@@ -118,8 +111,7 @@
               </execution>
             </executions>
           </plugin>
-          <!-- uncomment when 7.25 is released -->
-          <!--<plugin>
+          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <configuration>
@@ -137,10 +129,16 @@
                 <phase>process-test-classes</phase>
                 <configuration>
                   <mainClass>org.operaton.bpm.qa.upgrade.TestFixture</mainClass>
+                  <systemProperties>
+                    <systemProperty>
+                      <key>liquibase.changelog.dir</key>
+                      <value>${project.build.directory}/scripts-current/sql/liquibase/</value>
+                    </systemProperty>
+                  </systemProperties>
                 </configuration>
               </execution>
             </executions>
-          </plugin>-->
+          </plugin>
         </plugins>
       </build>
     </profile>

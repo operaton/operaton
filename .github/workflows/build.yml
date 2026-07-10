@@ -39,6 +39,7 @@ on:
       - '.gitingore'
       - 'LICENSE'
       - 'NOTICE'
+      - 'qa/**'
   workflow_dispatch:
     inputs:
       profile:

@@ -151,6 +151,10 @@ jobs:
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
           .github/scripts/set-project-version.sh $RELEASE_VERSION
+          if [ -z "$QUALIFIER" ]; then
+            chmod +x .github/scripts/finalize-qa-db-fixture.sh
+            .github/scripts/finalize-qa-db-fixture.sh $DATABASE_VERSION $RELEASE_VERSION
+          fi
 
       - name: Maven Build
         run: |

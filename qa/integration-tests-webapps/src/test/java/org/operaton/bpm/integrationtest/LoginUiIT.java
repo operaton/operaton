@@ -76,7 +76,8 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
     WebElement passwordInput = loginWait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"password\"]")));
     sendKeys(passwordInput, "demo");
 
-    // wait until the button is actually clickable to avoid submitting before the SPA is bound
+    // wait until the button is actually clickable to avoid clicking before the SPA is bound;
+    // use a real click so the browser goes through the same ng-submit path as a user interaction
     loginWait.until(elementToBeClickable(By.cssSelector("button[type=\"submit\"]")))
         .click();
 
@@ -87,17 +88,14 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
     wait = new WebDriverWait(driver, POST_LOGIN_TIMEOUT);
   }
 
+  // clear persisted browser state between retries so stale auth/csrf data cannot leak
+  // across webapp reloads or container redeployments
   void clearBrowserStorage() {
-    if (driver instanceof JavascriptExecutor javascriptExecutor) {
-      javascriptExecutor.executeScript("""
-          try {
-            window.localStorage && window.localStorage.clear();
-            window.sessionStorage && window.sessionStorage.clear();
-          } catch (error) {
-            return error && error.message;
-          }
-          return null;
-          """);
+    String currentUrl = driver.getCurrentUrl();
+    if (currentUrl != null
+        && (currentUrl.startsWith("http://") || currentUrl.startsWith("https://"))
+        && driver instanceof JavascriptExecutor javascriptExecutor) {
+      javascriptExecutor.executeScript("window.localStorage.clear(); window.sessionStorage.clear();");
     }
   }
 

@@ -38,7 +38,8 @@ class JobExecutorAcquireJobsForPriorityRangeTest extends AbstractJobExecutorAcqu
   ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension();
 
   @BeforeEach
-  void setUp() {
+  protected void setUp() {
+    super.setUp();
     configuration.setJobExecutorAcquireByPriority(true);
     // create 10 jobs, 5 with prio 5 and 5 with prio 10
     createJobs();

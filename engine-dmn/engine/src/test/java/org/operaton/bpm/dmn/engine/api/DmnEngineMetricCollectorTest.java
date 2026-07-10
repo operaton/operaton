@@ -41,7 +41,8 @@ class DmnEngineMetricCollectorTest extends DmnEngineTest {
   protected DmnEngineMetricCollector metricCollector;
 
   @BeforeEach
-  void setUp() {
+  protected void setUp() {
+    super.setUp();
     metricCollector = dmnEngine.getConfiguration().getEngineMetricCollector();
     variables.putValue("status", "bronze");
     variables.putValue("sum", 100);

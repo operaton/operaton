@@ -59,7 +59,7 @@ class BatchQueryAuthorizationTest {
   void setUp() {
     authRule.createUserAndGroup("user", "group");
 
-    // deploy process and migraation plan
+    // deploy process and migration plan
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 

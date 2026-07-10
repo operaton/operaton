@@ -76,7 +76,7 @@ public abstract class AbstractBatchAuthorizationTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  protected void tearDown() {
     authRule.deleteUsersAndGroups();
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(invocationsPerBatchJob);
 

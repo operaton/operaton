@@ -50,7 +50,8 @@ public class JobExecutorAcquireJobsDefaultTest extends AbstractJobExecutorAcquir
   }
 
   @BeforeEach
-  void setUp() {
+  protected void setUp() {
+    super.setUp();
     rule.getProcessEngineConfiguration().setEnsureJobDueDateNotNull(ensureJobDueDateSet);
   }
 

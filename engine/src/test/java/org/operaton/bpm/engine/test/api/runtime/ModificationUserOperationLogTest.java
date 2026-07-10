@@ -63,12 +63,8 @@ class ModificationUserOperationLogTest {
   static final Date START_DATE = new Date(1457326800000L);
 
   @BeforeEach
-  void setClock() {
+  void setUp() {
     ClockUtil.setCurrentTime(START_DATE);
-  }
-
-  @BeforeEach
-  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -79,17 +75,9 @@ class ModificationUserOperationLogTest {
   }
 
   @AfterEach
-  void resetClock() {
+  void tearDown() {
     ClockUtil.reset();
-  }
-
-  @AfterEach
-  void removeInstanceIds() {
     helper.currentProcessInstances = new ArrayList<>();
-  }
-
-  @AfterEach
-  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 

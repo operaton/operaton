@@ -87,12 +87,8 @@ public class ReuseEntityCacheTest {
   }
 
   @AfterEach
-  void resetEngineConfiguration() {
+  void tearDown() {
     getEngineConfig().setDbEntityCacheReuseEnabled(defaultSetting);
-  }
-
-  @AfterEach
-  void shutdownJobExecutor() {
     jobExecutor.shutdown();
   }
 

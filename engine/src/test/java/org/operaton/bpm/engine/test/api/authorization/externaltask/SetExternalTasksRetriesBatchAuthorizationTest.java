@@ -105,10 +105,7 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
   @AfterEach
   void tearDown() {
     authRule.deleteUsersAndGroups();
-  }
 
-  @AfterEach
-  void cleanBatch() {
     Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
     if (batch != null) {
       engineRule.getManagementService().deleteBatch(

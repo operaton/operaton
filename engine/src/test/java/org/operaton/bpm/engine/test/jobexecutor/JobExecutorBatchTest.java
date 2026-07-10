@@ -53,31 +53,19 @@ class JobExecutorBatchTest {
   protected int defaultBatchJobsPerSeed;
 
   @BeforeEach
-  void replaceJobExecutor() {
+  void setUp() {
     defaultJobExecutor = processEngineConfiguration.getJobExecutor();
     jobExecutor = new CountingJobExecutor();
     processEngineConfiguration.setJobExecutor(jobExecutor);
-  }
-
-  @BeforeEach
-  void saveBatchJobsPerSeed() {
     defaultBatchJobsPerSeed = engineRule.getProcessEngineConfiguration().getBatchJobsPerSeed();
   }
 
   @AfterEach
-  void resetJobExecutor() {
+  void tearDown() {
     engineRule.getProcessEngineConfiguration()
       .setJobExecutor(defaultJobExecutor);
-  }
-
-  @AfterEach
-  void resetBatchJobsPerSeed() {
     engineRule.getProcessEngineConfiguration()
       .setBatchJobsPerSeed(defaultBatchJobsPerSeed);
-  }
-
-  @AfterEach
-  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 

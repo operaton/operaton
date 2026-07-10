@@ -64,9 +64,10 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
   void login(String appName) {
     driver.manage().deleteAllCookies();
+    String appUrl = "%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName);
+    driver.get(appUrl);
     clearBrowserStorage();
-
-    driver.get("%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName));
+    driver.navigate().refresh();
 
     WebDriverWait loginWait = new WebDriverWait(driver, LOGIN_TIMEOUT);
 
@@ -91,12 +92,7 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
   // clear persisted browser state between retries so stale auth/csrf data cannot leak
   // across webapp reloads or container redeployments
   void clearBrowserStorage() {
-    String currentUrl = driver.getCurrentUrl();
-    if (currentUrl != null
-        && (currentUrl.startsWith("http://") || currentUrl.startsWith("https://"))
-        && driver instanceof JavascriptExecutor javascriptExecutor) {
-      javascriptExecutor.executeScript("window.localStorage.clear(); window.sessionStorage.clear();");
-    }
+    ((JavascriptExecutor) driver).executeScript("window.localStorage.clear(); window.sessionStorage.clear();");
   }
 
   void sendKeys(WebElement element, String keys)  {

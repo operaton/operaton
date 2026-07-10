@@ -129,10 +129,16 @@ scope:assert:
   - any-glob-to-any-file:
     - 'test-utils/assert/**'
 
-scope:e2e-qa:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'qa/integration-tests-*/**'
+scope:qa-e2e:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'qa/integration-tests-*/**'
+
+scope:qa-db:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'qa/test-database-*/**'
+          - 'qa/test-db-*/**'
 
 api:rest:
 - all:

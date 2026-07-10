@@ -93,7 +93,8 @@ class HistoryCleanupHistoricBatchTest {
   }
 
   @AfterEach
-  void clearDatabase() {
+  void tearDown() {
+    // clear database
     migrationHelper.removeAllRunningAndHistoricBatches();
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
@@ -113,10 +114,8 @@ class HistoryCleanupHistoricBatchTest {
 
       return null;
     });
-  }
 
-  @AfterEach
-  void resetConfiguration() {
+    // reset configuration
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
     processEngineConfiguration.setBatchOperationHistoryTimeToLive(null);
     processEngineConfiguration.setBatchOperationsForHistoryCleanup(null);

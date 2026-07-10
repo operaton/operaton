@@ -44,6 +44,7 @@
     <dependency>
       <groupId>org.apache.openjpa</groupId>
       <artifactId>openjpa</artifactId>
+      <version>${version.openjpa}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

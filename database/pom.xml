@@ -26,7 +26,7 @@
     <version.mysql>9.7.0</version.mysql>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.db2>12.1.5.0</version.db2>
-    <version.postgresql>42.7.12</version.postgresql>
+    <version.postgresql>42.7.13</version.postgresql>
     <operaton.dbscheme.current.version>7.25.0</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->

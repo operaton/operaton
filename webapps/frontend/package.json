@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "@bpmn-io/dmn-migrate": "0.7.1",
-    "@bpmn-io/form-js": "1.21.3",
+    "@bpmn-io/form-js": "1.23.0",
     "@ibm/plex": "6.4.1",
     "@popperjs/core": "2.11.8",
     "angular": "1.8.3",
@@ -89,7 +89,7 @@
     "lightningcss": "^1.32.0",
     "mini-css-extract-plugin": "2.10.2",
     "postcss-loader": "8.2.1",
-    "prettier": "3.8.4",
+    "prettier": "3.9.4",
     "raw-loader": "4.0.2",
     "sass": "1.101.0",
     "sass-loader": "16.0.8",

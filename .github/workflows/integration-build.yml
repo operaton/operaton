@@ -86,6 +86,9 @@ on:
       - '.gitingore'
       - 'LICENSE'
       - 'NOTICE'
+      - 'qa/**'
+      - '!qa/integration-tests-engine/**'
+      - '!qa/integration-tests-webapps/**'
   push:
     branches:
       # when developing the workflow itself, create this branch and push to it

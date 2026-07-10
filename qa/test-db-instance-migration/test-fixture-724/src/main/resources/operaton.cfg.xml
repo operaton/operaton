@@ -14,6 +14,11 @@
     <!-- Database configurations -->
     <property name="databaseSchemaUpdate" value="false" />
 
+    <property name="javaSerializationFormatEnabled" value="true" />
+
+    <!-- older BPMN fixtures don't include historyTimeToLive -->
+    <property name="enforceHistoryTimeToLive" value="false" />
+
     <!-- job executor configurations -->
     <property name="jobExecutorActivate" value="false" />
 
@@ -28,6 +33,12 @@
     <property name="defaultSerializationFormat" value="application/json"/>
 
     <property name="jdbcBatchProcessing" value="${jdbcBatchProcessing}"/>
+
+    <property name="processEnginePlugins">
+      <list>
+        <bean class="org.operaton.spin.plugin.impl.SpinProcessEnginePlugin" />
+      </list>
+    </property>
 
   </bean>
 

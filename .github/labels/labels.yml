@@ -230,9 +230,14 @@
   color: "#FEF1B4"
   description: "Changes related to the DMN model & engine"
 
-- name: "scope:e2e-qa"
+- name: "scope:qa-e2e"
   color: "#FEF1B4"
   description: "Changes to the E2E tests"
+  from_name: "scope:e2e-qa"
+
+- name: "scope:qa-db"
+  color: "#FEF1B4"
+  description: "Changes to the database tests"
 
 - name: "scope:external-task-client-java"
   color: "#FEF1B4"

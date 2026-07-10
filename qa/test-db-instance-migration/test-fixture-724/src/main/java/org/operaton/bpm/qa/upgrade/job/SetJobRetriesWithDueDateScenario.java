@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.job;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -28,6 +25,9 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class SetJobRetriesWithDueDateScenario {
 

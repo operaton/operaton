@@ -16,15 +16,14 @@
  */
 package org.operaton.bpm.qa.upgrade.useroperationlog;
 
-import java.util.Date;
-
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
+
+import java.util.Date;
 
 /**
  * @author Yana.Vasileva

@@ -16,15 +16,14 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios.compensation;
 
-import java.util.List;
-
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ExtendsScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 import org.operaton.bpm.qa.upgrade.Times;
+
+import java.util.List;
 
 /**
  * @author Thorben Lindhauer

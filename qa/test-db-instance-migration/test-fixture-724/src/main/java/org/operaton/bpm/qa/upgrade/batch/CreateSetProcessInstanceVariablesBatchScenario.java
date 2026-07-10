@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.batch;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -27,6 +24,9 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
+
+import java.util.Arrays;
+import java.util.List;
 
 public final class CreateSetProcessInstanceVariablesBatchScenario {
 

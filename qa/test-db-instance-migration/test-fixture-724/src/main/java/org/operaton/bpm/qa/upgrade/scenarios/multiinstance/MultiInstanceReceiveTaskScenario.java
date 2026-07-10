@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios.multiinstance;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.gson;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;

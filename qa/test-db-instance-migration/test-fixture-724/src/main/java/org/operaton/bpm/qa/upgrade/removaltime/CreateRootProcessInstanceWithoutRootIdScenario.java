@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.removaltime;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;

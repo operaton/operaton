@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.variable;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;

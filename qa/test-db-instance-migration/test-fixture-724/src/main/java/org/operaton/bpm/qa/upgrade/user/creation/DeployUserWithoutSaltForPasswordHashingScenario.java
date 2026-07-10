@@ -17,7 +17,6 @@
 package org.operaton.bpm.qa.upgrade.user.creation;
 
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;

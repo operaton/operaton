@@ -16,17 +16,12 @@
  */
 package org.operaton.bpm.qa.upgrade.gson;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
+
+import java.util.*;
 
 /**
  * @author Tassilo Weidner

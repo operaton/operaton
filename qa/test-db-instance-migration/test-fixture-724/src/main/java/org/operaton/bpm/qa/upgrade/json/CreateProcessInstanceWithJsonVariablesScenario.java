@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.json;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -32,8 +27,11 @@ import org.operaton.bpm.qa.upgrade.json.beans.Order;
 import org.operaton.bpm.qa.upgrade.json.beans.OrderDetails;
 import org.operaton.bpm.qa.upgrade.json.beans.RegularCustomer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.junit.Assert.assertEquals;
 
 public final class CreateProcessInstanceWithJsonVariablesScenario {
 

@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.qa.upgrade.json.beans;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * @author Svetlana Dorokhova.

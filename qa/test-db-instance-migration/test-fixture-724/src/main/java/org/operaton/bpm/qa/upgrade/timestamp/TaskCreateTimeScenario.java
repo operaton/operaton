@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.timestamp;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;

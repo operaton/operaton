@@ -17,7 +17,6 @@
 package org.operaton.bpm.qa.upgrade.scenarios.sentry;
 
 import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.Deployment;

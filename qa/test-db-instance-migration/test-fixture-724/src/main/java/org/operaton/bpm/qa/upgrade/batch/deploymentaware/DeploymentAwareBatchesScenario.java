@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.qa.upgrade.batch.deploymentaware;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -28,6 +24,10 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public final class DeploymentAwareBatchesScenario {
 

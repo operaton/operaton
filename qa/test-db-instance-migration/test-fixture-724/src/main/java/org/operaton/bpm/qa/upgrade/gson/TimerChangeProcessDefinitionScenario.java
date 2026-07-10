@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.qa.upgrade.gson;
 
-import java.util.Date;
-
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
+
+import java.util.Date;
 
 /**
  * @author Tassilo Weidner

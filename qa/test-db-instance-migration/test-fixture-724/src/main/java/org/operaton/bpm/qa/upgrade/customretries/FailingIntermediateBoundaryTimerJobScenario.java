@@ -16,20 +16,19 @@
  */
 package org.operaton.bpm.qa.upgrade.customretries;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.junit.Assert.fail;
+import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 
 public final class FailingIntermediateBoundaryTimerJobScenario {
 

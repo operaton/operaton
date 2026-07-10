@@ -17,7 +17,6 @@
 package org.operaton.bpm.qa.upgrade.useroperationlog;
 
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;

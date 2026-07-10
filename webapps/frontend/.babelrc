@@ -4,14 +4,19 @@
     [
       "@babel/preset-env",
       {
-        "corejs": "3.49",
         "modules": "commonjs", // resolves https://github.com/noppa/ng-hot-reload/issues/31
-        "shippedProposals": true,
-        "useBuiltIns": "usage"
+        "shippedProposals": true
       }
     ]
   ],
   "plugins": [
+    [
+      "babel-plugin-polyfill-corejs3",
+      {
+        "method": "usage-global",
+        "version": "3.49"
+      }
+    ],
     "@babel/plugin-transform-object-rest-spread"
   ]
 }

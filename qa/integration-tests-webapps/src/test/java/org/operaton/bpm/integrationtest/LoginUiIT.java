@@ -22,6 +22,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -63,8 +64,10 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
   void login(String appName) {
     driver.manage().deleteAllCookies();
-
-    driver.get("%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName));
+    String appUrl = "%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName);
+    driver.get(appUrl);
+    clearBrowserStorage();
+    driver.navigate().refresh();
 
     WebDriverWait loginWait = new WebDriverWait(driver, LOGIN_TIMEOUT);
 
@@ -74,15 +77,22 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
     WebElement passwordInput = loginWait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"password\"]")));
     sendKeys(passwordInput, "demo");
 
-    // wait until the button is actually clickable to avoid submitting before the SPA is bound
+    // wait until the button is actually clickable to avoid clicking before the SPA is bound;
+    // use a real click so the browser goes through the same ng-submit path as a user interaction
     loginWait.until(elementToBeClickable(By.cssSelector("button[type=\"submit\"]")))
-        .submit();
+        .click();
 
     // verify the submit took effect: the login form must disappear. Otherwise we are still
     // on the login page and withRetries() should re-run the flow rather than wait in vain.
     loginWait.until(invisibilityOfElementLocated(By.cssSelector("input[type=\"password\"]")));
 
     wait = new WebDriverWait(driver, POST_LOGIN_TIMEOUT);
+  }
+
+  // clear persisted browser state between retries so stale auth/csrf data cannot leak
+  // across webapp reloads or container redeployments
+  void clearBrowserStorage() {
+    ((JavascriptExecutor) driver).executeScript("window.localStorage.clear(); window.sessionStorage.clear();");
   }
 
   void sendKeys(WebElement element, String keys)  {

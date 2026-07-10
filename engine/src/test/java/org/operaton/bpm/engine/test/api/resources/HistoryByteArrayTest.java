@@ -89,8 +89,16 @@ class HistoryByteArrayTest {
 
   String taskId;
 
+  @AfterEach
+  void tearDown() {
+    if (taskId != null) {
+      // delete task
+      taskService.deleteTask(taskId, true);
+    }
+  }
+
   @BeforeEach
-  void setUp() {
+  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -101,11 +109,7 @@ class HistoryByteArrayTest {
   }
 
   @AfterEach
-  void tearDown() {
-    if (taskId != null) {
-      // delete task
-      taskService.deleteTask(taskId, true);
-    }
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()

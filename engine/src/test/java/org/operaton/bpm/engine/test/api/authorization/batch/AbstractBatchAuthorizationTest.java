@@ -58,7 +58,7 @@ public abstract class AbstractBatchAuthorizationTest {
   protected int invocationsPerBatchJob;
 
   @BeforeEach
-  public void setUp() {
+  public void setUpBase() {
     authRule.createUserAndGroup("userId", "groupId");
     runtimeService = engineRule.getRuntimeService();
     managementService = engineRule.getManagementService();
@@ -76,7 +76,7 @@ public abstract class AbstractBatchAuthorizationTest {
   }
 
   @AfterEach
-  protected void tearDown() {
+  void tearDownBase() {
     authRule.deleteUsersAndGroups();
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(invocationsPerBatchJob);
 

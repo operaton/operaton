@@ -115,9 +115,17 @@ public class BatchMigrationTest {
   }
 
   @AfterEach
-  void tearDown() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
+  }
+
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
+  }
+
+  @AfterEach
+  void restoreEngineSettings() {
     configuration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     configuration.setInvocationsPerBatchJob(defaultInvocationsPerBatchJob);
     configuration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);

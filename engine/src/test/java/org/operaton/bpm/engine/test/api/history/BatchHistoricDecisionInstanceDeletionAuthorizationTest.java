@@ -33,13 +33,13 @@ import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.batch.Batch;
+import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.operaton.bpm.engine.test.api.runtime.BatchHelper;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
@@ -66,7 +66,6 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
   AuthorizationTestExtension authRule = new AuthorizationTestExtension(engineRule);
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
-  BatchHelper helper = new BatchHelper(engineRule);
 
   protected DecisionService decisionService;
   protected HistoryService historyService;
@@ -138,7 +137,18 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
   @AfterEach
   void tearDown() {
     authRule.deleteUsersAndGroups();
-    helper.removeAllRunningAndHistoricBatches();
+  }
+
+  @AfterEach
+  void removeBatches() {
+    for (Batch batch : managementService.createBatchQuery().list()) {
+      managementService.deleteBatch(batch.getId(), true);
+    }
+
+    // remove history of completed batches
+    for (HistoricBatch historicBatch : historyService.createHistoricBatchQuery().list()) {
+      historyService.deleteHistoricBatch(historicBatch.getId());
+    }
   }
 
   @TestTemplate

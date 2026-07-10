@@ -64,8 +64,12 @@ public class BatchPriorityTest {
   }
 
   @AfterEach
-  void tearDown() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
+  }
+
+  @AfterEach
+  void resetBatchJobsPerSeed() {
     ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     processEngineConfiguration.setBatchJobPriority(defaultBatchJobPriority);

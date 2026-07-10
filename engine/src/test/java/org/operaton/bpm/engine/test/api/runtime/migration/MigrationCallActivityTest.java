@@ -47,10 +47,14 @@ class MigrationCallActivityTest {
   MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @BeforeEach
-  void setUp() {
+  void deployOneTaskProcess() {
     testHelper.deployAndGetDefinition(
         modify(ProcessModels.ONE_TASK_PROCESS)
           .changeElementId(ProcessModels.PROCESS_KEY, "oneTaskProcess"));
+  }
+
+  @BeforeEach
+  void deployOneTaskCase() {
     testHelper.deploy("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
   }
 

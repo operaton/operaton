@@ -70,8 +70,12 @@ class BatchSuspensionTest {
   }
 
   @AfterEach
-  void tearDown() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
+  }
+
+  @AfterEach
+  void resetBatchJobsPerSeed() {
     engineRule.getProcessEngineConfiguration()
       .setBatchJobsPerSeed(defaultBatchJobsPerSeed);
   }

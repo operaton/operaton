@@ -65,10 +65,14 @@ class BatchStatisticsQueryTest {
   }
 
   @AfterEach
-  void tearDown() {
+  void resetBatchJobsPerSeed() {
     engineRule.getProcessEngineConfiguration()
       .setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     ClockUtil.reset();
+  }
+
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 

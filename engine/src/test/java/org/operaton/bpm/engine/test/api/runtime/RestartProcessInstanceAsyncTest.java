@@ -94,16 +94,20 @@ class RestartProcessInstanceAsyncTest {
   boolean defaultEnsureJobDueDateSet;
 
   @BeforeEach
-  void setUp() {
+  void init() {
     defaultTenantIdProvider = processEngineConfiguration.getTenantIdProvider();
     defaultEnsureJobDueDateSet = processEngineConfiguration.isEnsureJobDueDateNotNull();
   }
 
   @AfterEach
-  void tearDown() {
+  void reset() {
     helper.removeAllRunningAndHistoricBatches();
     processEngineConfiguration.setTenantIdProvider(defaultTenantIdProvider);
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
+  }
+
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 

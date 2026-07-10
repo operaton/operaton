@@ -50,7 +50,7 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
   private Long jobExecutorPriorityRangeMax;
 
   @BeforeEach
-  protected void setUp() {
+  protected void setUpBase() {
     jobExecutorAcquireByDueDate = configuration.isJobExecutorAcquireByDueDate();
     jobExecutorAcquireByPriority = configuration.isJobExecutorAcquireByPriority();
     jobExecutorPreferTimerJobs = configuration.isJobExecutorPreferTimerJobs();
@@ -61,7 +61,7 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
   }
 
   @AfterEach
-  protected void tearDown() {
+  protected void tearDownBase() {
     configuration.setJobExecutorAcquireByDueDate(jobExecutorAcquireByDueDate);
     configuration.setJobExecutorAcquireByPriority(jobExecutorAcquireByPriority);
     configuration.setJobExecutorPreferTimerJobs(jobExecutorPreferTimerJobs);

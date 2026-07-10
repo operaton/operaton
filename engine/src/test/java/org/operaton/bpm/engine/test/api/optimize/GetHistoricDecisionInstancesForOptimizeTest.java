@@ -72,24 +72,16 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   AuthorizationService authorizationService;
 
   @BeforeEach
-  void setUp() {
+  void init() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
 
     createUser(userId);
-
-    DefaultDmnEngineConfiguration dmnEngineConfiguration =
-        engineRule.getProcessEngineConfiguration()
-            .getDmnEngineConfiguration();
-
-    ResetDmnConfigUtil.reset(dmnEngineConfiguration)
-        .enableFeelLegacyBehavior(true)
-        .init();
   }
 
   @AfterEach
-  void tearDown() {
+  void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
     }
@@ -100,6 +92,21 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       authorizationService.deleteAuthorization(authorization.getId());
     }
     ClockUtil.reset();
+  }
+
+  @BeforeEach
+  void enableDmnFeelLegacyBehavior() {
+    DefaultDmnEngineConfiguration dmnEngineConfiguration =
+        engineRule.getProcessEngineConfiguration()
+            .getDmnEngineConfiguration();
+
+    ResetDmnConfigUtil.reset(dmnEngineConfiguration)
+        .enableFeelLegacyBehavior(true)
+        .init();
+  }
+
+  @AfterEach
+  void disableDmnFeelLegacyBehavior() {
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()

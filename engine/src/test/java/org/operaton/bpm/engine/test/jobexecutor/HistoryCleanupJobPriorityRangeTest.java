@@ -37,14 +37,12 @@ class HistoryCleanupJobPriorityRangeTest extends AbstractJobExecutorAcquireJobsT
 
   @BeforeEach
   void setup() {
-    super.setUp();
     defaultHistoryCleanupJobPriority = configuration.getHistoryCleanupJobPriority();
     defaultIsJobExecutorAcquireByPriority = configuration.isJobExecutorAcquireByPriority();
   }
 
   @AfterEach
-  public void tearDown() {
-    super.tearDown();
+  void tearDown() {
     configuration.setHistoryCleanupJobPriority(defaultHistoryCleanupJobPriority);
     configuration.setJobExecutorAcquireByPriority(defaultIsJobExecutorAcquireByPriority);
     resetDatabase();

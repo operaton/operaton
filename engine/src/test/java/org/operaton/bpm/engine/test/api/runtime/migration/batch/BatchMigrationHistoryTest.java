@@ -84,17 +84,29 @@ public class BatchMigrationHistoryTest {
   }
 
   @BeforeEach
-  void setUp() {
+  void setupConfiguration() {
     configuration = engineRule.getProcessEngineConfiguration();
     defaultEnsureJobDueDateSet = configuration.isEnsureJobDueDateNotNull();
     configuration.setEnsureJobDueDateNotNull(ensureJobDueDateSet);
+  }
+
+  @BeforeEach
+  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
   }
 
   @AfterEach
-  void tearDown() {
+  void resetClock() {
     ClockUtil.reset();
+  }
+
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
+  }
+
+  @AfterEach
+  void resetConfiguration() {
     configuration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
   }
 

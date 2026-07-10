@@ -61,8 +61,12 @@ class HistoricBatchQueryTest {
   protected HistoryService historyService;
 
   @AfterEach
-  void tearDown() {
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
+  }
+
+  @AfterEach
+  void resetClock() {
     ClockUtil.reset();
   }
 

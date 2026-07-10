@@ -63,8 +63,18 @@ class RestartProcessInstanceUserOperationLogTest {
   static final Date START_DATE = new Date(1457326800000L);
 
   @BeforeEach
-  void setUp() {
+  void setClock() {
     ClockUtil.setCurrentTime(START_DATE);
+  }
+
+  @AfterEach
+  void resetEngineConfig() {
+    rule.getProcessEngineConfiguration()
+        .setRestrictUserOperationLogToAuthenticatedUsers(true);
+  }
+
+  @BeforeEach
+  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -75,10 +85,12 @@ class RestartProcessInstanceUserOperationLogTest {
   }
 
   @AfterEach
-  void tearDown() {
-    rule.getProcessEngineConfiguration()
-        .setRestrictUserOperationLogToAuthenticatedUsers(true);
+  void resetClock() {
     ClockUtil.reset();
+  }
+
+  @AfterEach
+  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 

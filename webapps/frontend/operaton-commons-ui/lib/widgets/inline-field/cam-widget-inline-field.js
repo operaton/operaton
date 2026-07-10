@@ -30,7 +30,7 @@ function getScrollParent(element) {
   var overflowRegex = /(auto|scroll)/;
 
   if (style.position === 'fixed') return document.body;
-  for (var parent = element; (parent = parent.parentElement);) {
+  for (var parent = element; (parent = parent.parentElement); ) {
     style = getComputedStyle(parent);
     if (excludeStaticParent && style.position === 'static') {
       continue;

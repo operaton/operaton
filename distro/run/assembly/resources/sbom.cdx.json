@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:056c6f88-c58c-477f-8a81-5bc2d2c12284",
+  "serialNumber": "urn:uuid:60a84140-70d0-4b9b-b817-4696e942f04f",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-07-09T00:24:39Z",
+    "timestamp": "2026-07-10T12:30:19Z",
     "tools": {
       "components": [
         {
@@ -255,45 +255,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.38?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.37",
+      "version": "1.5.38",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "472f3bc240ba39591ee957c7c8acea1c"
+          "content": "558314a8784c6dd39cc18670303457cf"
         },
         {
           "alg": "SHA-1",
-          "content": "7c95bc3f7a4d9ad53bf632272818a923c85b9ad3"
+          "content": "bc5873cb4a7f502ce18ce2977d98ad26b9f96444"
         },
         {
           "alg": "SHA-256",
-          "content": "fd68ff5aa2760857ac5b7ad301e98bc6c18a74d60d7e016da1a608307c9eead7"
+          "content": "afb439c61fa287c9e1925523b13baab03617e724406a389d48b61c2c3e46b700"
         },
         {
           "alg": "SHA-512",
-          "content": "ac4b56366074ef22fbc48b453910f2584b5446206eea2d0b5ad16562895a5318ed1ce92e78e92452a5924cc7e807ed4d7815a72e148b232571373099dcde40b1"
+          "content": "89e69701388d5c859ab2216d240f13afdf502268dfc54782b183b38cb43e34d65657cb7f8d12d269dd351488ce7c59783d6c463fee84b11737a5b886c71b5858"
         },
         {
           "alg": "SHA-384",
-          "content": "3653b09fd8a4ea6dbd4fa5f8c758597db1226958f74cc180fe3e7df2ec2d6db1f53144e5e88c1c9fb2fee138555f291f"
+          "content": "21fe0b5a9c06635d0dae42ec40483e3b290d92a7e5199a31296e505b811effa8fc23abc84c9d7ad7d3e98916d03648d4"
         },
         {
           "alg": "SHA3-384",
-          "content": "1cf1cf0167372725807c1f01d8b290cbf497fb3554805ea613bab9d391f9a96c40d65fdf2a0ea83fed482b299573f558"
+          "content": "3ebbf60b1411f4cd1b5118c24dd7dc8cf74c98532bd2ba7c56e711aac6e4be0ff031c1dbd29d940eb44e9ff8ebccd18c"
         },
         {
           "alg": "SHA3-256",
-          "content": "6e1b8a3274d6f2cf159101cfd3caacf46f8abc264374fc5b1b26f820cc8e4702"
+          "content": "cbacc14a951204dc09684db550a86ee7e543845a35e7c65fb16bccef078df81f"
         },
         {
           "alg": "SHA3-512",
-          "content": "96bdb86aa5f19394dd9c3657d276fa0a41b94f94aa1d17621a3524ab63f483602449fb708c849f70af67a0570228c3c472a7f693aeb8396d3bf40b25486ff368"
+          "content": "25e5f44f13c7b240fa5acb8e3fb396590b29ed5e287f97586ba5c832f71251cb6787cd902abf6a081616a11af886439b6d9e9239583ff58914b54848e230bd33"
         }
       ],
       "licenses": [
@@ -310,7 +310,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.38?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -328,45 +328,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.38?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.37",
+      "version": "1.5.38",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "606908ba3c9d8a6cbd46069b7ce908c5"
+          "content": "a065b3893602a19f6f393a42c499c198"
         },
         {
           "alg": "SHA-1",
-          "content": "41df60907428d396d02134253eee8bd385a31601"
+          "content": "7b1d133b29bf42ff268cf3f71d1308b80480fb8d"
         },
         {
           "alg": "SHA-256",
-          "content": "c142955d757d923c6c626296bd97be2e0db1cfd33adeadbf2e2927403391e0a1"
+          "content": "a855a0fc97b1d06f4efb1c3bba5ebd0eb508d8b58e68e89e4bbc23a85135c883"
         },
         {
           "alg": "SHA-512",
-          "content": "6e0cbeba3ee1a1478116cbfd8345fad9a7d3f29c75a2e60bc569ae427cc29755ee0e3395964dd42c41c2876c41dc72ac2be4c146782f1091d52d413ccd380e34"
+          "content": "c5f73bdfcf4aea58506c4764a05b6992edc628ca54ec6903e56a3d2bf93da7ee5514bcbde1c8ca0ff2d1a164ba92f7354576cf2b7f6a40c3ea8cfa3a865dd396"
         },
         {
           "alg": "SHA-384",
-          "content": "5f9dc17c7a5d18f9d3557f10c97c074fe02ac62507afa54522d7ddc59154abe0e2c0d13db53a76a6b1f9493cd231b525"
+          "content": "9d3c6f6913b941ef270fd15d355607f4b9e76c621386182e10e83796ff27e6e038736c5ed54a378981e725e91296ef09"
         },
         {
           "alg": "SHA3-384",
-          "content": "9c2c6b1afe31610a0dc595fa86f5684a26a7aaf15c21470901d4a6e880cb9fc2fee3f8fd686063f2442bcb7812713970"
+          "content": "b649d010518d3dd41b6b568bac744f8cc9220835e34c9a38306efb9cb46f692570dedf9a914d70a1647bd3a95296a6b9"
         },
         {
           "alg": "SHA3-256",
-          "content": "46878c9991e87b3b1ba604b4a5b6cb9c9dd1369f8510fd078a038d3d48815d28"
+          "content": "5b7610c3dbfaae028f5f0d8c2ddc145803e793a795cd0ed8dfa86c3ca284fef5"
         },
         {
           "alg": "SHA3-512",
-          "content": "1aa69b18e2a4fe8721a3a7b60bf73a87b8d498f17f400b4e5366a795fe2e95cec6c157e3b569e2fc6513e4a6d6d394d071a5849361a6aa94de6423f81506f3ae"
+          "content": "80d3a5cfa5ce11ec797c26c1cf387676b937942dab5d344559d1f469e6315cb9b55171da4202174671ad416c74ba2fb82f08e198b58f355bf03b97814a340e13"
         }
       ],
       "licenses": [
@@ -383,7 +383,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.38?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -6021,44 +6021,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-catalina",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "Tomcat Servlet Engine Core Classes and Standard implementations",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "68959213cb66db7690289c1ef35d3ea0"
+          "content": "92ac9c39500d38137cf973f7d68784c7"
         },
         {
           "alg": "SHA-1",
-          "content": "cd813564e6f4d46fb14b0bb254ab6e659bde8488"
+          "content": "19f03ce3f17767baa817ee2b7db79438f3d136e6"
         },
         {
           "alg": "SHA-256",
-          "content": "60c0dc41d2daaadf634d964f4d5527d57c46246bf8714e7c7b7135ab5564f112"
+          "content": "c937efc1f2208a1159077e705d14f7cd259e9929e48d00843732615b2cf91ca8"
         },
         {
           "alg": "SHA-512",
-          "content": "4f445820fddff2b2c14154817793ff40ac2101ad3d14c8ad97b6bdd1925ffdf640b1fb12a21783308e366d1e9509b7958bca76107ae7d37b55e316777b3fa5e1"
+          "content": "061ba7de6dd60526b1da71196fc2624619e39acb2ed68056d9e1cb3f58a34016fbfe24ebdfa2862032bf06a26c9d6d9b429a58f5059c7e1f77bed1afd826e8f4"
         },
         {
           "alg": "SHA-384",
-          "content": "d00d86d22b023f8fa543f821135fb7c905b462dba926122da026d9ffbedc38c8bdd031cff787058b85546a763f3691a5"
+          "content": "374771e00d5ec09052758503b6ae157b7eebe8ffe1306ab9c1b27a51fe2f7f3f0530bd7cea4839f7efcf40e467e285cc"
         },
         {
           "alg": "SHA3-384",
-          "content": "ab82fdc9a681ef46b1a2c77a6d14046fbc0fdecaf179219bfa39c1f0eb1f7a432b6f64ab151660a44ad62c93918e1f88"
+          "content": "91d8bcf150ae36254a9977d766fa6cc2e1c7ec01c5ca0276ae11065633adccec172635478b5e014949590dac184321f9"
         },
         {
           "alg": "SHA3-256",
-          "content": "4b1137e4506957a1a0140c0310551a365f2c54b3ee0dd07790bb7439d36068a0"
+          "content": "e6e770253503d008bd0d59c694b47e3f2fe87ca8ccb7e738576b1064bb4a5105"
         },
         {
           "alg": "SHA3-512",
-          "content": "7f7ec593da2468b9407e46ff02270adb970f32eebc89134383c03c6f204a6c3d9f14ead695154a2acb2146ac3782530455165bdaaf7acfc9d7111ec8efe36dd1"
+          "content": "ebd319508a8cb93d9dc85684af7a50c8f185bf6058e542cd95ad1d147aa4e001a3a3b200bd6ca954706a816bfe0261a65c3118b2845b9844b981e5fdba6336f9"
         }
       ],
       "licenses": [
@@ -6068,7 +6068,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6078,44 +6078,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-servlet-api",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "jakarta.servlet package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "5ebf3ff5fd98ee43fee4ac1be4e38ad8"
+          "content": "9ebcaa95df5638e7ad40b29970d3e54c"
         },
         {
           "alg": "SHA-1",
-          "content": "e2d83eecdc4864806446d317f384f662196f1e7b"
+          "content": "32aeedf341c61c2e73a44471cdc44548f943a3fd"
         },
         {
           "alg": "SHA-256",
-          "content": "7b7c5244b98dd0385d72de43dfcb4a89e81f9b25b364ced3b0c9eb2c4eda605c"
+          "content": "75328f4f8cbb7dca64ea859e3c5a45cc6057b07e8b958b30d636f21c23bdf3d8"
         },
         {
           "alg": "SHA-512",
-          "content": "72f80c1968c211c49974384aa2fb7f8af0dcfb852edf883fe7a7acf141b93eb63650de740bb41ef048e760c08ae63cb73a29b7490af706355a44cf4a84d5571a"
+          "content": "6814d6acf46a826fb9a03301d61f81c2857c3889f422cc9aa160862b5331f5f13885fd93c7280132c50069421e3d3c9e7448c1bd692745e2a428987ebe367fba"
         },
         {
           "alg": "SHA-384",
-          "content": "3a04bbe3e9b6433935592c38e21e282139e37a38b3919f0df16b02b06a671db4bbffe726fc95f61d12013e23bff4fe50"
+          "content": "ccc8ba7953b4dfa37ebdd83e74105e1363bcd74094f1b47b0866beb0064ddd18ef414e3d50fd59f944e33d59ce9ce5c5"
         },
         {
           "alg": "SHA3-384",
-          "content": "a3465afbdc74a7f6e231c10dd8800b0ba32f437807ebfff46dc41792b6f25dfb6d04abd0020b3fbae83e6653ca05d21f"
+          "content": "64b62b2d501e640bc6c26fc2e4f9a7efab34f532acbe8d54610739620107ae3f7dffe69af790de36eef626460e1348d8"
         },
         {
           "alg": "SHA3-256",
-          "content": "3b233f31dc50d644186f9122d341659937d82302e00ee77c8782942084119697"
+          "content": "5fbabc10bdad14256f4ed81a314fe0176381abf4725e01bdee1dbed4c0d65747"
         },
         {
           "alg": "SHA3-512",
-          "content": "964ffd3b4d4701d0d64e057001a9be90ab71ca5e506305b44287e678316ce662164759759e9b37b04b4a66191f93d2e939513226e6d8a4d1bf269868bef9e5ed"
+          "content": "67196a188b20b6e95781418bf7008bcf7d39828882081ec8a221df94249d372c8fa9ccd01c0c08d6bb75fb161cc8d2945d7c2af172dcf22618cb5bb18d4bad1c"
         }
       ],
       "licenses": [
@@ -6125,7 +6125,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6249,44 +6249,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-juli",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "Tomcat Core Logging Package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a4544a855319ca0fd20a7072a2a237b3"
+          "content": "a1767f3a04539a48ffcac70171d21da4"
         },
         {
           "alg": "SHA-1",
-          "content": "18dba7ca9d12766826665677af272c1cdc4a62e2"
+          "content": "ad0dc3ff5e9ec8dce8cdc22b5516385d78f573f9"
         },
         {
           "alg": "SHA-256",
-          "content": "074c6817d55aa9f57b9071a71ecd14b57a63fd6382f53bb903dbbe294315068e"
+          "content": "650396351461d178b262fae157d1bd19ba3aede37fbcdeaec0c4235162385c6b"
         },
         {
           "alg": "SHA-512",
-          "content": "18e76728bd070c807e4d153aacaccd1bf97a27b2d667ea6d420b5968c2666cad807bf8c15c889a9074505f9df6264eb6689477cd711a9335a1a4178e22945db8"
+          "content": "708fc3095e49bd3a72b367370226ac503b685c8ad3654c8149c608f9421f54a388d1fdd7c821523a833d8441dce2c73b05ff1ac2c7e7dde2124b75bf73f1ddd2"
         },
         {
           "alg": "SHA-384",
-          "content": "94665cfc0deb7d3f78507b9ec07c225cf53aa7a71fe8291f8fb7e1b722ceaf442b7ba56e42691b7abade10ac8c0809b2"
+          "content": "928a7b65ec72719d486c0b3b3e6c5979caed8f14b39c04633ecb62d9b28fdce02473dac4d4596a0a938c5816eb2b13f8"
         },
         {
           "alg": "SHA3-384",
-          "content": "519ac0917f2ea96c75f65d6c34e71c8f08956c3ff6958134982012dd07621cb9838df29522805c50420e61bea0366180"
+          "content": "e411d8b85cf5974fd207e24a96e6d32e66a533ac224a76f6fd83095151c2009f66405b83faa7605db8bb7a8022a17fd1"
         },
         {
           "alg": "SHA3-256",
-          "content": "75e211ebff336972380e95b0e666f8e2c211cacb19e7441ce04cdeef9b4c9660"
+          "content": "1d330d76db0cbf7d9cb42d287d6e420baf4c49e3db04a6d8c56e72edd24cdc1a"
         },
         {
           "alg": "SHA3-512",
-          "content": "a092eccf4dea7d6b83ca26d32963dc292e45c65e4395b78f8aaf7b643bb49c311fdf89e311fc8c1e7973383e6de97c87554e7c2f2528a374c1ca45832ca62623"
+          "content": "a1250e29bb21fa48e1fa378cb41a2fb25ad5a4b8db6960a9f0d6de02bf7fbbaa92d4a8ad3dd315317fd89befd172196d4d6423941948968bb5237e901d968ce1"
         }
       ],
       "licenses": [
@@ -6296,7 +6296,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6363,44 +6363,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-api",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "Definition of interfaces shared by Catalina and Jasper",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e94883c702614abb4abfbf2588c8c422"
+          "content": "29622d4ff2611245f3479da6ee31afe9"
         },
         {
           "alg": "SHA-1",
-          "content": "196e35940529d26d4d1db977670de6063310bb0c"
+          "content": "00bffe1ab99f859cbf902759ae431dc5f6852535"
         },
         {
           "alg": "SHA-256",
-          "content": "8249735a2e5b9408971b12089c70bbf6a632471f58ad9fddc4f2c210ad2cc27f"
+          "content": "3a31b668322faa4caaf039f46f616ed69c105eadbf600989f1d26c8d3be91782"
         },
         {
           "alg": "SHA-512",
-          "content": "9a3ca15571c70ae2bb07c06c47e2865094273023c58955bfa4f92f5ab3848eee651c0d043fbdf2e8409c1054f2b0559da6154b79a112f0f07a41b587f9db8949"
+          "content": "c0e33c5e989e3f2eac037dfeb8da407ae3d5a291df89e6c3aaa23833aa065effff8bc895be6208dd895f1ebd8f254d20c967c6e5f6f9930ecbbfdda199671816"
         },
         {
           "alg": "SHA-384",
-          "content": "d29143f6f70f5e340d6b5bafd6daf7ec77e57816660f6cb8104b894c8df5330c7f6c740a072732ef3b450c7e356c4794"
+          "content": "2cb16a6f888736591df4e7bad4dd62139f8ddfb949caaa9f9894c3ccdce7b56687e8b2f0dea53f75eb46a12976a7d427"
         },
         {
           "alg": "SHA3-384",
-          "content": "e55a413954209917d6c7bcbad318f7584989a0506ad915b76d84649520015130cb11c703e9d51acfa6ded6832d3cfe4c"
+          "content": "38c799a99d7e01c501bcb7ed55dcac870e4e8355d0a4d9282225c6c1a4b9b3d74723ea3892e2a5709394a28706877923"
         },
         {
           "alg": "SHA3-256",
-          "content": "9385d47d3d0e66053d56207ac50fab260ad034bbaca6cf338ae3df38a3436f03"
+          "content": "027ad4892f61ecb324105b0a5ef0d63ef4ea81300b63bc9c7e0027f61ebc8e58"
         },
         {
           "alg": "SHA3-512",
-          "content": "4d443db6012acb03adcb37e71eae1779a5c9e6720ea349a9f773a7969acd93ccf0f97e879ba4db1021acd1b1e09dc8e89206eabe17cf14555fa382d22d3b6e98"
+          "content": "b2009922b1f6943355424584d6251470280b914e882e4c847e5974794e4228731729178052df475181d724c1bd85b88f7b9b6ef90ece29aa19e9ee9ddbcfc865"
         }
       ],
       "licenses": [
@@ -6410,7 +6410,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6420,44 +6420,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-jni",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "Interface code to the native connector",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "0310fc9235959e279ccad7fbcffd21f8"
+          "content": "31677779a1d809ca3b95ab52aecc4a92"
         },
         {
           "alg": "SHA-1",
-          "content": "4b2267e2e5d9102d39333b838e9f3c0e226058d5"
+          "content": "29a043aa30e02e02902d3ab40c95012475cae89e"
         },
         {
           "alg": "SHA-256",
-          "content": "74fb0729d5081cbb25746063068ccc9ed0a38d31fec125cce428e40503100ef9"
+          "content": "1160a4eb04cb9d1fd53e1d306e277cac9a330a74d06574bdb9f096c0f1055913"
         },
         {
           "alg": "SHA-512",
-          "content": "408431800127dffb7e9a7f14109b103de57105cab268f9cf363a80bca4120fadf0b17280822e0e7fb87c91bbd93cd2b86ef416f141d8d340319596ae03fd0eae"
+          "content": "8a21c44a5657b35921210db5f75fe1c83aaf8428a3f43fa8e857fd1acd68074028e9bfd3486aea63e7c31aaf1066c987871823259ac1c3740b9cc2d3be9de63e"
         },
         {
           "alg": "SHA-384",
-          "content": "483af9ea0327551e4e0bc9b27174b405c330b72f42603e41f4aec4381cadcdb749f6b05d5a43a1d1147836c0726dfdae"
+          "content": "4fd3bd1152dea3d2d2585788d82803e12a03d2d8fca035c82331cb67a1c4ae79e268f143e4a8cfb9361f6bce3d657c19"
         },
         {
           "alg": "SHA3-384",
-          "content": "7a87ac6036a9651f0702d2a0dcb64244379b1fe0901037af894e97652e9548b09156e752b7f0cc8337c0a0ef00b22799"
+          "content": "cda675d11168b12a9eaa205bf7937e527568661459d1696d6095dd3a2996c350df4ddf8fbe6c5d404f64a7671f60c0d2"
         },
         {
           "alg": "SHA3-256",
-          "content": "d4fa8747f921f840041179a2412bdfb1823cbab9de5003de77fe557e1837a8dd"
+          "content": "de8f59c20d7babd080c3a7dd3bdbf2c64e95ed144addc7fa013d8c19c2a89f9e"
         },
         {
           "alg": "SHA3-512",
-          "content": "7230811f77f128c81dbedf88018c8bcf525eae3f9fc3785e17463a6e2f02b4ea7b600cd6d60f53d714db100fbe6fadfc1def86e8f06429361dd971d4043eb547"
+          "content": "31ff5602dcf630988d935f85173066f35121e82c7494a919aa96ff09256d698a190abb2aee4d356ba928cba7be2334b849fe1565855cc3db5c076010aa6db0d0"
         }
       ],
       "licenses": [
@@ -6467,7 +6467,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6477,44 +6477,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-coyote",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "Tomcat Connectors and HTTP parser",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "49ef0a1c29820fddc3ff22547a5c4dd1"
+          "content": "8e0ffde8f425982025bc2d29b4ece48d"
         },
         {
           "alg": "SHA-1",
-          "content": "ad3eb377d0c756f59bcd3ba4e58a59dc7d5d8e37"
+          "content": "1cfd039c787cb201fcc7fbc5810cf22262b21cdf"
         },
         {
           "alg": "SHA-256",
-          "content": "94cad90c2210b1219d064568695279d2332689f877501252b066c32643901af5"
+          "content": "b159cec02c3fc65691626bec2cc74f2a4d3057b52e86c3605faf3a05192b0cd1"
         },
         {
           "alg": "SHA-512",
-          "content": "23fd8a940602f577de347fceed9f60901c5059a1405080d4588317c631ba564a32974f2d1e709d6c53ad51ce49d06b3098cfe8fec427280f5e97890a740cceb4"
+          "content": "583c5778933d8af6f0e51288a667392eb61f0c9587b0ca3d564ece6bab6a4c7abe5177c6d113e3cfc3716a1900f4dc778b1178971295935994e2ccbd4c71ec1e"
         },
         {
           "alg": "SHA-384",
-          "content": "5dac0c9f46cf70584b855cadc6ee62ec2db698ad06801ae5f5386364c20522f0c8e4ef35d0c3cd63647080e99df13836"
+          "content": "d04c58493cbc2d21d909771165ff5f6261ea35a44a356a178cbc0ea596d619d9273d1ec3f6aa6c6a31f7ea29d61c78f7"
         },
         {
           "alg": "SHA3-384",
-          "content": "161857d543997ceb6c6c2ef5767a24b8b4b56a1fa1b9067beb29323cca5170fbea7677a13307cbb78e19f67c2dbe3817"
+          "content": "f6fa5c87f482a3bca334d8f0bdb75ba85f8f0f17441c0e7b0ac7b8ac4cc940a07790733eb33e18b5291236f91c6434bd"
         },
         {
           "alg": "SHA3-256",
-          "content": "368205d9a6c72a6ab9785e8e271443f2cc3345138fe677e9c7d2afdb93112724"
+          "content": "cbb928b5110f1fb4962c9faddbd881fb1f21d177ddf5d4d267b7c59690a706ae"
         },
         {
           "alg": "SHA3-512",
-          "content": "18858df3fd90757aef9632c45986560ec7737c9184b2b7dfbdd83e0def0b670621c5841142b3daaeb96d00eb41f8823b1d9fe7274ba795872afa753d9220bb0f"
+          "content": "43984d1c56fd73a8ea80ede001be984cdf0417232ec4534d681499e9f613b61d89d466d81e7a8fef4aaf18ca1601d6e3eb754b1b492b148f3f23a489d9a7fcf6"
         }
       ],
       "licenses": [
@@ -6524,7 +6524,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6534,44 +6534,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-util",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "Common code shared by multiple Tomcat components",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "cc32637375d2bb2a048f6b5dcbeef346"
+          "content": "262c6cbd45bb2c11db52285ed09b108d"
         },
         {
           "alg": "SHA-1",
-          "content": "088d7f2291245e42ece379e6e77b89b0b2e3fa9d"
+          "content": "d9181a74acf1cc56c84898b582a627a26fd7f365"
         },
         {
           "alg": "SHA-256",
-          "content": "2dac664b5ab2484506fb3a934cea35b2f9a395aa60982347f34e77f97d320a4d"
+          "content": "6400aaf8d6f259a0898069ae8d8e194a1fe3846222b2cff45df93d4842e2976d"
         },
         {
           "alg": "SHA-512",
-          "content": "35067921987ecb4d49407d5e96bbfb8f98da2969ae36a1519e3817d7b51af7a81b1351b614a91dfc9005c631c6e06bd1f7ad36fc1cf40c2e4b2ee603c9ca6c1a"
+          "content": "41410707a850a30234a76da50285f3004564dbdd6ed33ad242a88e3d88c959bc92ded1e31efe0d32eb8b52e52a700b23c0dbe71987d51a4a79d6f2a124d3af1b"
         },
         {
           "alg": "SHA-384",
-          "content": "bcaed8108c122f9a917914a21d963f72328ce3d8216b4d3b2767e55739ac1abea6cbf32612d3b82c0675b235f2295900"
+          "content": "877257b4389ddb1787132858abb05ed9162ec545c0885849eeb776656c0a5ca69746db7af7fc85d707962aa9956ac1ca"
         },
         {
           "alg": "SHA3-384",
-          "content": "eab72fc220a58c3ca3202f853f8896a88911fe7f7a3a9ac52c999f9f737d0f389f8bfae12272e76309f70362e20c3907"
+          "content": "c70e8caa5641a2baa8fdf3b80743930c825279e84e2b996776a49802341435ac1e5b00fc938a87b290a22a95f45cc8c1"
         },
         {
           "alg": "SHA3-256",
-          "content": "68749e9821efeedfdf9148a42d4bd31ad5fd5433adc819802543843a4bbbf650"
+          "content": "7d39e582c02a631221be5ec7fc885a8d2f8f233014b481df543e12518b5719aa"
         },
         {
           "alg": "SHA3-512",
-          "content": "637e77dc89e66b8e756c5b1b93e984fa0b8e5ee6cdce2405ebacf38463e02ba4c615dea37779ad6c3fe5840635b4f37024c3822242acf8c33c64d7bd339dcf84"
+          "content": "b4911c13169f5144edce063db02a5f839ca7c3e691a95ab5d5d3ba9bd68303e6f6b5e06ebd20cb0bf6509a09777461944274a177357e349c9463e0173dacca9f"
         }
       ],
       "licenses": [
@@ -6581,7 +6581,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6591,44 +6591,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-util-scan",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "Common code shared by Catalina and Jasper for scanning JARS and processing XML descriptors",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6b320877b2924f4c0f3e666e175a47dc"
+          "content": "88100f55e682a7c1ec8ffa43f41ddadf"
         },
         {
           "alg": "SHA-1",
-          "content": "ff500ecd178d9a17e9896803ea6f49243dd3f1ff"
+          "content": "7cf9b8592bab88714eb85a795c0cd09e7ee84e54"
         },
         {
           "alg": "SHA-256",
-          "content": "2284ace8070e27ca1122f9dc376604dbc0cde3550089b15b787c9ec0b2a48320"
+          "content": "df92de2c526229d27871a024c1fb03bb46740f861baf59092db58d2a173c04c3"
         },
         {
           "alg": "SHA-512",
-          "content": "3f6b3f3172e73d87e68e1d26406b21a7c3fba0ca29413c328ee9414cb0972f6ba144e622ecf3adf6e7f345d4a949ee6c149e68492d9c96b12f84d82607099350"
+          "content": "0390669d45f5cf01c5bc929c0041432bc68caa138b7f45c16abd1f892f0ecbbd52aeda0dbaf31fc58b67c11808e11ac15e0b9eb0c052392610f0ccf20757a7f7"
         },
         {
           "alg": "SHA-384",
-          "content": "36b28aea265c6f54a384dcb201df3821bf242071e051eba5e1cf7e760a47780f6330ea4dfecc8ae240c5e84b2438efe0"
+          "content": "1f6f181c66ef6ae851d19d80127620c807c4487fe0dffe9c142956e807d38858d35316eaba2e731267b5fcc58ee61d84"
         },
         {
           "alg": "SHA3-384",
-          "content": "b2be918d6ee9f6f193b688d745e31ce1e4883d95d80f41b0a2cb474e57fcea31ea01a86f8a097173235330ce6afe356a"
+          "content": "cb6d7e4304013ac7c475fecfde6a50f18712b580ddd8243ca5326040cf447c176cef814e082de0aab97937649f0a4725"
         },
         {
           "alg": "SHA3-256",
-          "content": "1a534000219a2a586e2c2aa79101b5b348eac19956529fe8fd5fc52250618658"
+          "content": "f797cefb6ea4f74574ee514afd37a315f12a9d92c4de23456b3333f94e9484cf"
         },
         {
           "alg": "SHA3-512",
-          "content": "2027148ea62ae05686d39369c83a52d1f805c785e89946b88c3e8bf79dc70fd210c6c50986ad338b2a11a1859c05159b73746cbad8325c80599b37b24f2344ce"
+          "content": "5f396ac7c2a576ed4c70b9237f846a9a0cdb1a68caf4d76faba889a28df0647e85513a988b45d671ea2f6901b62040c79a60d4089c7b11262f6d8a2c57f3e7c4"
         }
       ],
       "licenses": [
@@ -6638,7 +6638,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6648,44 +6648,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-jaspic-api",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "jakarta.security.auth.message package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a74bed439c59945fdc5b56323168e38f"
+          "content": "1bfdfb7a83cdf44cd737288b9f542fde"
         },
         {
           "alg": "SHA-1",
-          "content": "a3edeb88cdc419ab887bb295f9d4c14a85ed9357"
+          "content": "99d6865623cda6f4b23705b989e4671b2649ca5b"
         },
         {
           "alg": "SHA-256",
-          "content": "04764fa4de74fd788c9c197c8222fc51453a989012f47fae083ed73d6afbc213"
+          "content": "156b2ffa61538f250430bf0c36dc6799cbe127f22c53144d98ff488665c14d7c"
         },
         {
           "alg": "SHA-512",
-          "content": "2f3bd47d5247dcea540194fa756c50021429465a4cf9cabb703b61c8f6211419a6885aae6e8601bb230c1f2f713a7ad1b277f5a09446e5fc1faae08bfb49d53b"
+          "content": "eb4d35d96bf4cdab7a4a3b13b0f16f58a8f7d604f287d96fab8e7a660ce60f021002447106994238b5ab0dda5407c2c5ffbcc65819e04815ebdba15313e6bebf"
         },
         {
           "alg": "SHA-384",
-          "content": "0f46fea23cc49e364923955aee1154f35ea934aedfe0fec162ed011a0fae132e69502d3e96d20f532db0c320c2bd5155"
+          "content": "55c9910c3bcafcf8978099acd2ed794c4f25a0b08cb68f4ef404a2e4e5f877dc4c129b759a522aca17810829cf719d64"
         },
         {
           "alg": "SHA3-384",
-          "content": "0c40e81582fa8bb3d3ea7f29e5a3cc429e70af96fa7da720969c8f04edd73bedfb3feb57fd8fdc5e934da5c5d6c7a16d"
+          "content": "d83c9302f3ced57b8541597ffe4ba69330ab3932513b79de6594acee9e3254addd4dc707c35d15609144c8162e3a9518"
         },
         {
           "alg": "SHA3-256",
-          "content": "8026dd7c237b24cbee7472c7750d40d7be883655eed7a3f73317ae8e3476efa6"
+          "content": "d3a304109a40aca4b73a6d1710e8884c40664cae112c5667dec1e4daee258d6a"
         },
         {
           "alg": "SHA3-512",
-          "content": "63118491a88ec7b0a2beb49294b391770cb6d50c8742456b2eba64442469854765b0afb3e7c1c68fef9b92bc4c383dcd291100df564e1fc98362e600fa68f0cf"
+          "content": "bd95c22e8faa342a0b9af2d5e594eb1b29d59d351a7cce7e017f517ff77436f5c235aefcba58fbb85425f90c646f215f3b66b5a416d20f4426381252bec99d69"
         }
       ],
       "licenses": [
@@ -6695,7 +6695,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -19723,44 +19723,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.23?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.24?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-jdbc",
-      "version": "11.0.23",
+      "version": "11.0.24",
       "description": "Tomcat JDBC Pool Package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "721beb86ade41cbd6eb156695b42a7f7"
+          "content": "2a03aa22494bba5f9d34416973d4a0c5"
         },
         {
           "alg": "SHA-1",
-          "content": "e1c62dd5c6e4c1499458b002560b97950c962259"
+          "content": "6c9c2aae14f367972a367a352cf1f1756b033db7"
         },
         {
           "alg": "SHA-256",
-          "content": "4fa0b95ffe864ed793d16276b2dbe431cd513b4ce85c185c713673a025549083"
+          "content": "c045a900e747099be49d39998bd4ef392af17b020c192a975fe3cca5a509be28"
         },
         {
           "alg": "SHA-512",
-          "content": "e09ea13218fdb48f8dd0f949340ca6b6abc1c5b138ff099680271c0e9da5dd8ea4e85d4c81eaccf2ed0a0bf66b39b04d934840e0eafd619187394a672ece1e0f"
+          "content": "4df8700b0cf2d2cc37b4a3d32c9b31e59d97f65db531a8d6be86b2903525e0dc22a500d8ab86da2a8461d7bfa9d716d035bffdbbd5f54427ff88bc39760e1803"
         },
         {
           "alg": "SHA-384",
-          "content": "f2a1ece2d2ae77128db396045aca6ca2c65b139751a13b82e0f7e253ad3a28fea251c4f934736dfed3f1a0ea519d5273"
+          "content": "14e3183e168222f5e3b3e0ee647363905c830ac755274b53b7104ede6ef6612fbd5aec7439aeb7d5e4ad7af89e80fbf6"
         },
         {
           "alg": "SHA3-384",
-          "content": "dbc4c28619facafc454b8ab5ad43914bf04221dc55b60db9070266315d7aceabc5ecb98532b79cf8d8c3f2fa95acebc3"
+          "content": "072ba0c7acdce5edcff0af4e04bb63f64b82fec4d2d0936327ab60fa379cf047aeee8e5a447116f7853eff75bb935b62"
         },
         {
           "alg": "SHA3-256",
-          "content": "726333650e9463ab03622e86a005f1e65ef80da2f8c89006800649e62c8b3449"
+          "content": "56e853915332d27a2dcb39a095e2646e5f49fa78b3a2b00d1db71e0e322d3b38"
         },
         {
           "alg": "SHA3-512",
-          "content": "f1fd4dde9d0e96da167309768cb90eaed3e44f3ab2a29e9e327085e62615833cf218b785a067deb6ceb7b62e7c7c92097e16488071e9455b9eaada02e753f49b"
+          "content": "689f004994f636e046233c6e400fbd65126e7af34bb87261f6b21e5fcb02f0221ad5b76fe730337b92fc567d96f9760a6d00c1bb8413fd4377999dd8b5463a8d"
         }
       ],
       "licenses": [
@@ -19770,7 +19770,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.23?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.24?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -23409,7 +23409,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b526f238-b2f7-4c3a-8f51-e6847e4c71ec",
+      "bom-ref": "37b8c04b-41de-4906-aa36-2aaebe2294c7",
       "name": "package-lock.json",
       "properties": [
         {
@@ -23449,15 +23449,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/cm-theme@0.1.0-alpha.2",
+      "bom-ref": "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
       "group": "@bpmn-io",
       "name": "cm-theme",
-      "version": "0.1.0-alpha.2",
-      "purl": "pkg:npm/%40bpmn-io/cm-theme@0.1.0-alpha.2",
+      "version": "0.2.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/cm-theme@0.1.0-alpha.2"
+          "value": "@bpmn-io/cm-theme@0.2.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23560,10 +23567,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/feel-editor@2.5.2",
+      "bom-ref": "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
       "group": "@bpmn-io",
       "name": "feel-editor",
-      "version": "2.5.2",
+      "version": "2.6.0",
       "licenses": [
         {
           "license": {
@@ -23571,11 +23578,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/feel-editor@2.5.2",
+      "purl": "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/feel-editor@2.5.2"
+          "value": "@bpmn-io/feel-editor@2.6.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23603,6 +23610,56 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/feelers-editor@1.1.1",
+      "group": "@bpmn-io",
+      "name": "feelers-editor",
+      "version": "1.1.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/feelers-editor@1.1.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/feelers-editor@1.1.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/feelers-lint@1.0.0",
+      "group": "@bpmn-io",
+      "name": "feelers-lint",
+      "version": "1.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/feelers-lint@1.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/feelers-lint@1.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/%40bpmn-io/feelin@6.1.0",
       "group": "@bpmn-io",
       "name": "feelin",
@@ -23621,10 +23678,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.21.3",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.23.0",
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
-      "version": "1.21.3",
+      "version": "1.23.0",
       "licenses": [
         {
           "license": {
@@ -23632,11 +23689,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.21.3",
+      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.23.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-carbon-styles@1.21.3"
+          "value": "@bpmn-io/form-js-carbon-styles@1.23.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23646,10 +23703,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.21.3",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.23.0",
       "group": "@bpmn-io",
       "name": "form-js-editor",
-      "version": "1.21.3",
+      "version": "1.23.0",
       "licenses": [
         {
           "license": {
@@ -23657,11 +23714,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.21.3",
+      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.23.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-editor@1.21.3"
+          "value": "@bpmn-io/form-js-editor@1.23.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23671,10 +23728,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.21.3",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.23.0",
       "group": "@bpmn-io",
       "name": "form-js-playground",
-      "version": "1.21.3",
+      "version": "1.23.0",
       "licenses": [
         {
           "license": {
@@ -23682,11 +23739,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.21.3",
+      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.23.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-playground@1.21.3"
+          "value": "@bpmn-io/form-js-playground@1.23.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23696,10 +23753,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.21.3",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.23.0",
       "group": "@bpmn-io",
       "name": "form-js-viewer",
-      "version": "1.21.3",
+      "version": "1.23.0",
       "licenses": [
         {
           "license": {
@@ -23707,11 +23764,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.21.3",
+      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.23.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-viewer@1.21.3"
+          "value": "@bpmn-io/form-js-viewer@1.23.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23721,10 +23778,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.21.3",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.23.0",
       "group": "@bpmn-io",
       "name": "form-js",
-      "version": "1.21.3",
+      "version": "1.23.0",
       "licenses": [
         {
           "license": {
@@ -23732,11 +23789,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js@1.21.3",
+      "purl": "pkg:npm/%40bpmn-io/form-js@1.23.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js@1.21.3"
+          "value": "@bpmn-io/form-js@1.23.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23746,15 +23803,47 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/lang-feel@3.0.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/lang-feel@4.0.2",
       "group": "@bpmn-io",
       "name": "lang-feel",
-      "version": "3.0.0",
-      "purl": "pkg:npm/%40bpmn-io/lang-feel@3.0.0",
+      "version": "4.0.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/lang-feel@4.0.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/lang-feel@3.0.0"
+          "value": "@bpmn-io/lang-feel@4.0.2"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/lang-feelers@1.0.0",
+      "group": "@bpmn-io",
+      "name": "lang-feelers",
+      "version": "1.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/lang-feelers@1.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/lang-feelers@1.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23782,10 +23871,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
+      "bom-ref": "pkg:npm/%40bpmn-io/lezer-feel@3.0.1",
       "group": "@bpmn-io",
-      "name": "properties-panel",
-      "version": "3.40.3",
+      "name": "lezer-feel",
+      "version": "3.0.1",
       "licenses": [
         {
           "license": {
@@ -23793,11 +23882,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
+      "purl": "pkg:npm/%40bpmn-io/lezer-feel@3.0.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/properties-panel@3.40.3"
+          "value": "@bpmn-io/lezer-feel@3.0.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23807,15 +23896,72 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40camunda/feel-builtins@1.0.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/lezer-feelers@1.0.0",
+      "group": "@bpmn-io",
+      "name": "lezer-feelers",
+      "version": "1.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/lezer-feelers@1.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/lezer-feelers@1.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
+      "group": "@bpmn-io",
+      "name": "properties-panel",
+      "version": "3.47.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/properties-panel@3.47.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40camunda/feel-builtins@1.3.0",
       "group": "@camunda",
       "name": "feel-builtins",
-      "version": "1.0.0",
-      "purl": "pkg:npm/%40camunda/feel-builtins@1.0.0",
+      "version": "1.3.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40camunda/feel-builtins@1.3.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@camunda/feel-builtins@1.0.0"
+          "value": "@camunda/feel-builtins@1.3.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23825,10 +23971,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/grid@11.53.0",
+      "bom-ref": "pkg:npm/%40carbon/grid@11.57.0",
       "group": "@carbon",
       "name": "grid",
-      "version": "11.53.0",
+      "version": "11.57.0",
       "licenses": [
         {
           "license": {
@@ -23836,11 +23982,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/grid@11.53.0",
+      "purl": "pkg:npm/%40carbon/grid@11.57.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/grid@11.53.0"
+          "value": "@carbon/grid@11.57.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23850,28 +23996,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/icons@11.75.0",
-      "group": "@carbon",
-      "name": "icons",
-      "version": "11.75.0",
-      "purl": "pkg:npm/%40carbon/icons@11.75.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/icons@11.75.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/layout@11.51.0",
+      "bom-ref": "pkg:npm/%40carbon/layout@11.54.0",
       "group": "@carbon",
       "name": "layout",
-      "version": "11.51.0",
+      "version": "11.54.0",
       "licenses": [
         {
           "license": {
@@ -23879,11 +24007,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/layout@11.51.0",
+      "purl": "pkg:npm/%40carbon/layout@11.54.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/layout@11.51.0"
+          "value": "@carbon/layout@11.54.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23893,15 +24021,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40codemirror/autocomplete@6.20.0",
+      "bom-ref": "pkg:npm/%40codemirror/autocomplete@6.20.3",
       "group": "@codemirror",
       "name": "autocomplete",
-      "version": "6.20.0",
-      "purl": "pkg:npm/%40codemirror/autocomplete@6.20.0",
+      "version": "6.20.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40codemirror/autocomplete@6.20.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@codemirror/autocomplete@6.20.0"
+          "value": "@codemirror/autocomplete@6.20.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23911,15 +24046,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40codemirror/commands@6.10.2",
+      "bom-ref": "pkg:npm/%40codemirror/commands@6.10.4",
       "group": "@codemirror",
       "name": "commands",
-      "version": "6.10.2",
-      "purl": "pkg:npm/%40codemirror/commands@6.10.2",
+      "version": "6.10.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40codemirror/commands@6.10.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@codemirror/commands@6.10.2"
+          "value": "@codemirror/commands@6.10.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23954,46 +24096,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40codemirror/language@6.12.1",
+      "bom-ref": "pkg:npm/%40codemirror/language@6.12.4",
       "group": "@codemirror",
       "name": "language",
-      "version": "6.12.1",
-      "purl": "pkg:npm/%40codemirror/language@6.12.1",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "@codemirror/language@6.12.1"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/%40codemirror/lint@6.9.4",
-      "group": "@codemirror",
-      "name": "lint",
-      "version": "6.9.4",
-      "purl": "pkg:npm/%40codemirror/lint@6.9.4",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "@codemirror/lint@6.9.4"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/%40codemirror/search@6.6.0",
-      "group": "@codemirror",
-      "name": "search",
-      "version": "6.6.0",
+      "version": "6.12.4",
       "licenses": [
         {
           "license": {
@@ -24001,11 +24107,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40codemirror/search@6.6.0",
+      "purl": "pkg:npm/%40codemirror/language@6.12.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@codemirror/search@6.6.0"
+          "value": "@codemirror/language@6.12.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24015,15 +24121,72 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40codemirror/state@6.5.4",
+      "bom-ref": "pkg:npm/%40codemirror/lint@6.9.7",
+      "group": "@codemirror",
+      "name": "lint",
+      "version": "6.9.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40codemirror/lint@6.9.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@codemirror/lint@6.9.7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40codemirror/search@6.7.1",
+      "group": "@codemirror",
+      "name": "search",
+      "version": "6.7.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40codemirror/search@6.7.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@codemirror/search@6.7.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40codemirror/state@6.7.1",
       "group": "@codemirror",
       "name": "state",
-      "version": "6.5.4",
-      "purl": "pkg:npm/%40codemirror/state@6.5.4",
+      "version": "6.7.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40codemirror/state@6.7.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@codemirror/state@6.5.4"
+          "value": "@codemirror/state@6.7.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24033,15 +24196,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40codemirror/view@6.39.15",
+      "bom-ref": "pkg:npm/%40codemirror/view@6.43.6",
       "group": "@codemirror",
       "name": "view",
-      "version": "6.39.15",
-      "purl": "pkg:npm/%40codemirror/view@6.39.15",
+      "version": "6.43.6",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40codemirror/view@6.43.6",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@codemirror/view@6.39.15"
+          "value": "@codemirror/view@6.43.6"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24126,15 +24296,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40lezer/common@1.5.1",
+      "bom-ref": "pkg:npm/%40lezer/common@1.5.2",
       "group": "@lezer",
       "name": "common",
-      "version": "1.5.1",
-      "purl": "pkg:npm/%40lezer/common@1.5.1",
+      "version": "1.5.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40lezer/common@1.5.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@lezer/common@1.5.1"
+          "value": "@lezer/common@1.5.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24153,6 +24330,31 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "@lezer/highlight@1.2.3"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40lezer/html@1.3.13",
+      "group": "@lezer",
+      "name": "html",
+      "version": "1.3.13",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40lezer/html@1.3.13",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@lezer/html@1.3.13"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24187,15 +24389,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40lezer/lr@1.4.8",
+      "bom-ref": "pkg:npm/%40lezer/lr@1.4.10",
       "group": "@lezer",
       "name": "lr",
-      "version": "1.4.8",
-      "purl": "pkg:npm/%40lezer/lr@1.4.8",
+      "version": "1.4.10",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40lezer/lr@1.4.10",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@lezer/lr@1.4.8"
+          "value": "@lezer/lr@1.4.10"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24205,15 +24414,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40lezer/markdown@1.6.3",
+      "bom-ref": "pkg:npm/%40lezer/markdown@1.7.1",
       "group": "@lezer",
       "name": "markdown",
-      "version": "1.6.3",
-      "purl": "pkg:npm/%40lezer/markdown@1.6.3",
+      "version": "1.7.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40lezer/markdown@1.7.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@lezer/markdown@1.6.3"
+          "value": "@lezer/markdown@1.7.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26217,14 +26433,21 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/feelers@1.5.1",
+      "bom-ref": "pkg:npm/feelers@3.1.0",
       "name": "feelers",
-      "version": "1.5.1",
-      "purl": "pkg:npm/feelers@1.5.1",
+      "version": "3.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/feelers@3.1.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "feelers@1.5.1"
+          "value": "feelers@3.1.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26888,9 +27111,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/marked@18.0.2",
+      "bom-ref": "pkg:npm/marked@18.0.6",
       "name": "marked",
-      "version": "18.0.2",
+      "version": "18.0.6",
       "licenses": [
         {
           "license": {
@@ -26898,11 +27121,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/marked@18.0.2",
+      "purl": "pkg:npm/marked@18.0.6",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "marked@18.0.2"
+          "value": "marked@18.0.6"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28211,7 +28434,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "60f4b17e-88ac-4036-85b3-52f90260e41f",
+      "bom-ref": "ae84ef6f-cfe8-40f5-9fbe-97f5773267bd",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28513,19 +28736,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@1.1.5-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.38?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.38?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.38?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.38?type=jar",
       "dependsOn": []
     },
     {
@@ -28689,13 +28912,13 @@
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
         "pkg:maven/jakarta.ejb/jakarta.ejb-api@4.0.1?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.23?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.24?type=jar",
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-core@1.5.37?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.38?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.38?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.awaitility/awaitility@4.3.0?type=jar"
       ]
@@ -28781,29 +29004,29 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.24?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.23?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.24?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.55?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.55?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-api@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.23?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-api@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.24?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.24?type=jar",
       "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.55?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.55?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.23?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.24?type=jar"
       ]
     },
     {
@@ -28811,7 +29034,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar",
       "dependsOn": []
     },
     {
@@ -28819,40 +29042,40 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.24?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.23?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.24?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.24?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.24?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.23?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.24?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.24?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.24?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-api@11.0.23?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-api@11.0.24?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.24?type=jar",
       "dependsOn": []
     },
     {
@@ -30321,16 +30544,16 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.4?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.5-SNAPSHOT?classifier=junit6\u0026type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.23?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.24?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.38?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.23?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.24?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.23?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.24?type=jar"
       ]
     },
     {
@@ -30421,7 +30644,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.5-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.4?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.38?type=jar"
       ]
     },
     {
@@ -30740,7 +30963,7 @@
     {
       "ref": "pkg:maven/org.springframework.boot/spring-boot-starter-logging@3.5.16?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.37?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.38?type=jar",
         "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.24.3?type=jar",
         "pkg:maven/org.slf4j/jul-to-slf4j@2.0.18?type=jar"
       ]
@@ -31059,16 +31282,10 @@
       "dependsOn": []
     },
     {
-      "ref": "60f4b17e-88ac-4036-85b3-52f90260e41f",
-      "dependsOn": [
-        "b526f238-b2f7-4c3a-8f51-e6847e4c71ec"
-      ]
-    },
-    {
-      "ref": "b526f238-b2f7-4c3a-8f51-e6847e4c71ec",
+      "ref": "37b8c04b-41de-4906-aa36-2aaebe2294c7",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
-        "pkg:npm/%40bpmn-io/form-js@1.21.3",
+        "pkg:npm/%40bpmn-io/form-js@1.23.0",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/%40popperjs/core@2.11.8",
         "pkg:npm/angular-animate@1.8.3",
@@ -31116,14 +31333,21 @@
       ]
     },
     {
+      "ref": "ae84ef6f-cfe8-40f5-9fbe-97f5773267bd",
+      "dependsOn": [
+        "37b8c04b-41de-4906-aa36-2aaebe2294c7"
+      ]
+    },
+    {
       "ref": "pkg:npm/%40bpmn-io/align-to-origin@0.7.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/cm-theme@0.1.0-alpha.2",
+      "ref": "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
       "dependsOn": [
-        "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/view@6.39.15",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
         "pkg:npm/%40lezer/highlight@1.2.3"
       ]
     },
@@ -31153,17 +31377,18 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/feel-editor@2.5.2",
+      "ref": "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
       "dependsOn": [
+        "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
         "pkg:npm/%40bpmn-io/feel-lint@3.1.0",
-        "pkg:npm/%40bpmn-io/lang-feel@3.0.0",
-        "pkg:npm/%40camunda/feel-builtins@1.0.0",
-        "pkg:npm/%40codemirror/autocomplete@6.20.0",
-        "pkg:npm/%40codemirror/commands@6.10.2",
-        "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/lint@6.9.4",
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15",
+        "pkg:npm/%40bpmn-io/lang-feel@4.0.2",
+        "pkg:npm/%40camunda/feel-builtins@1.3.0",
+        "pkg:npm/%40codemirror/autocomplete@6.20.3",
+        "pkg:npm/%40codemirror/commands@6.10.4",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/lint@6.9.7",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
         "pkg:npm/%40lezer/highlight@1.2.3",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/mitt@3.0.1"
@@ -31173,28 +31398,55 @@
       "ref": "pkg:npm/%40bpmn-io/feel-lint@3.1.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
-        "pkg:npm/%40codemirror/language@6.12.1"
+        "pkg:npm/%40codemirror/language@6.12.4"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40bpmn-io/feelers-editor@1.1.1",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
+        "pkg:npm/%40bpmn-io/feelers-lint@1.0.0",
+        "pkg:npm/%40bpmn-io/lang-feelers@1.0.0",
+        "pkg:npm/%40codemirror/autocomplete@6.20.3",
+        "pkg:npm/%40codemirror/commands@6.10.4",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/lint@6.9.7",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
+        "pkg:npm/%40lezer/common@1.5.2",
+        "pkg:npm/%40lezer/html@1.3.13",
+        "pkg:npm/%40lezer/markdown@1.7.1",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/mitt@3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40bpmn-io/feelers-lint@1.0.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/feel-lint@3.1.0",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/lint@6.9.7"
       ]
     },
     {
       "ref": "pkg:npm/%40bpmn-io/feelin@6.1.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
-        "pkg:npm/%40lezer/common@1.5.1",
+        "pkg:npm/%40lezer/common@1.5.2",
         "pkg:npm/luxon@3.7.2",
         "pkg:npm/min-dash@5.0.0"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.21.3",
+      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.23.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.21.3",
+      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.23.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/draggle@4.1.2",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.21.3",
-        "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.23.0",
+        "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/ids@3.0.2",
@@ -31204,17 +31456,17 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.21.3",
+      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.23.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-editor@1.21.3",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.21.3",
-        "pkg:npm/%40codemirror/autocomplete@6.20.0",
-        "pkg:npm/%40codemirror/commands@6.10.2",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.23.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.23.0",
+        "pkg:npm/%40codemirror/autocomplete@6.20.3",
+        "pkg:npm/%40codemirror/commands@6.10.4",
         "pkg:npm/%40codemirror/lang-json@6.0.2",
-        "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/lint@6.9.4",
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/lint@6.9.7",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/codemirror@6.0.2",
         "pkg:npm/downloadjs@1.4.7",
@@ -31224,148 +31476,172 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.21.3",
+      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.23.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
-        "pkg:npm/%40carbon/grid@11.53.0",
+        "pkg:npm/%40carbon/grid@11.57.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dompurify@3.4.11",
-        "pkg:npm/feelers@1.5.1",
+        "pkg:npm/feelers@3.1.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/lodash@4.18.1",
         "pkg:npm/luxon@3.7.2",
-        "pkg:npm/marked@18.0.2",
+        "pkg:npm/marked@18.0.6",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/preact@10.29.2"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js@1.21.3",
+      "ref": "pkg:npm/%40bpmn-io/form-js@1.23.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.21.3",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.21.3",
-        "pkg:npm/%40bpmn-io/form-js-playground@1.21.3",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.21.3"
+        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.23.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.23.0",
+        "pkg:npm/%40bpmn-io/form-js-playground@1.23.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.23.0"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/lang-feel@3.0.0",
+      "ref": "pkg:npm/%40bpmn-io/lang-feel@4.0.2",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
-        "pkg:npm/%40codemirror/autocomplete@6.20.0",
-        "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40lezer/common@1.5.1"
+        "pkg:npm/%40bpmn-io/lezer-feel@3.0.1",
+        "pkg:npm/%40codemirror/autocomplete@6.20.3",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40lezer/common@1.5.2"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40bpmn-io/lang-feelers@1.0.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/lezer-feel@3.0.1",
+        "pkg:npm/%40bpmn-io/lezer-feelers@1.0.0",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40lezer/common@1.5.2"
       ]
     },
     {
       "ref": "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
       "dependsOn": [
         "pkg:npm/%40lezer/highlight@1.2.3",
-        "pkg:npm/%40lezer/lr@1.4.8",
+        "pkg:npm/%40lezer/lr@1.4.10",
         "pkg:npm/min-dash@5.0.0"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
+      "ref": "pkg:npm/%40bpmn-io/lezer-feel@3.0.1",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/feel-editor@2.5.2",
-        "pkg:npm/%40carbon/icons@11.75.0",
-        "pkg:npm/%40codemirror/view@6.39.15",
+        "pkg:npm/%40lezer/highlight@1.2.3",
+        "pkg:npm/%40lezer/lr@1.4.10",
+        "pkg:npm/min-dash@5.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40bpmn-io/lezer-feelers@1.0.0",
+      "dependsOn": [
+        "pkg:npm/%40lezer/common@1.5.2",
+        "pkg:npm/%40lezer/highlight@1.2.3",
+        "pkg:npm/%40lezer/lr@1.4.10"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
+        "pkg:npm/%40bpmn-io/feelers-editor@1.1.1",
+        "pkg:npm/%40codemirror/autocomplete@6.20.3",
+        "pkg:npm/%40codemirror/commands@6.10.4",
+        "pkg:npm/%40codemirror/lang-json@6.0.2",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/lint@6.9.7",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
         "pkg:npm/classnames@2.5.1",
-        "pkg:npm/feelers@1.5.1",
         "pkg:npm/focus-trap@8.0.0",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/min-dom@5.3.0"
       ]
     },
     {
-      "ref": "pkg:npm/%40camunda/feel-builtins@1.0.0",
+      "ref": "pkg:npm/%40camunda/feel-builtins@1.3.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40carbon/grid@11.53.0",
+      "ref": "pkg:npm/%40carbon/grid@11.57.0",
       "dependsOn": [
-        "pkg:npm/%40carbon/layout@11.51.0",
+        "pkg:npm/%40carbon/layout@11.54.0",
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
     },
     {
-      "ref": "pkg:npm/%40carbon/icons@11.75.0",
-      "dependsOn": [
-        "pkg:npm/%40ibm/telemetry-js@1.10.1"
-      ]
-    },
-    {
-      "ref": "pkg:npm/%40carbon/layout@11.51.0",
+      "ref": "pkg:npm/%40carbon/layout@11.54.0",
       "dependsOn": [
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
     },
     {
-      "ref": "pkg:npm/%40codemirror/autocomplete@6.20.0",
+      "ref": "pkg:npm/%40codemirror/autocomplete@6.20.3",
       "dependsOn": [
-        "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15",
-        "pkg:npm/%40lezer/common@1.5.1"
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
+        "pkg:npm/%40lezer/common@1.5.2"
       ]
     },
     {
-      "ref": "pkg:npm/%40codemirror/commands@6.10.2",
+      "ref": "pkg:npm/%40codemirror/commands@6.10.4",
       "dependsOn": [
-        "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15",
-        "pkg:npm/%40lezer/common@1.5.1"
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
+        "pkg:npm/%40lezer/common@1.5.2"
       ]
     },
     {
       "ref": "pkg:npm/%40codemirror/lang-json@6.0.2",
       "dependsOn": [
-        "pkg:npm/%40codemirror/language@6.12.1",
+        "pkg:npm/%40codemirror/language@6.12.4",
         "pkg:npm/%40lezer/json@1.0.3"
       ]
     },
     {
-      "ref": "pkg:npm/%40codemirror/language@6.12.1",
+      "ref": "pkg:npm/%40codemirror/language@6.12.4",
       "dependsOn": [
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15",
-        "pkg:npm/%40lezer/common@1.5.1",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
+        "pkg:npm/%40lezer/common@1.5.2",
         "pkg:npm/%40lezer/highlight@1.2.3",
-        "pkg:npm/%40lezer/lr@1.4.8",
+        "pkg:npm/%40lezer/lr@1.4.10",
         "pkg:npm/style-mod@4.1.3"
       ]
     },
     {
-      "ref": "pkg:npm/%40codemirror/lint@6.9.4",
+      "ref": "pkg:npm/%40codemirror/lint@6.9.7",
       "dependsOn": [
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
         "pkg:npm/crelt@1.0.6"
       ]
     },
     {
-      "ref": "pkg:npm/%40codemirror/search@6.6.0",
+      "ref": "pkg:npm/%40codemirror/search@6.7.1",
       "dependsOn": [
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
         "pkg:npm/crelt@1.0.6"
       ]
     },
     {
-      "ref": "pkg:npm/%40codemirror/state@6.5.4",
+      "ref": "pkg:npm/%40codemirror/state@6.7.1",
       "dependsOn": [
         "pkg:npm/%40marijn/find-cluster-break@1.0.2"
       ]
     },
     {
-      "ref": "pkg:npm/%40codemirror/view@6.39.15",
+      "ref": "pkg:npm/%40codemirror/view@6.43.6",
       "dependsOn": [
-        "pkg:npm/%40codemirror/state@6.5.4",
+        "pkg:npm/%40codemirror/state@6.7.1",
         "pkg:npm/crelt@1.0.6",
         "pkg:npm/style-mod@4.1.3",
         "pkg:npm/w3c-keyname@2.2.8"
@@ -31386,33 +31662,41 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40lezer/common@1.5.1",
+      "ref": "pkg:npm/%40lezer/common@1.5.2",
       "dependsOn": []
     },
     {
       "ref": "pkg:npm/%40lezer/highlight@1.2.3",
       "dependsOn": [
-        "pkg:npm/%40lezer/common@1.5.1"
+        "pkg:npm/%40lezer/common@1.5.2"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40lezer/html@1.3.13",
+      "dependsOn": [
+        "pkg:npm/%40lezer/common@1.5.2",
+        "pkg:npm/%40lezer/highlight@1.2.3",
+        "pkg:npm/%40lezer/lr@1.4.10"
       ]
     },
     {
       "ref": "pkg:npm/%40lezer/json@1.0.3",
       "dependsOn": [
-        "pkg:npm/%40lezer/common@1.5.1",
+        "pkg:npm/%40lezer/common@1.5.2",
         "pkg:npm/%40lezer/highlight@1.2.3",
-        "pkg:npm/%40lezer/lr@1.4.8"
+        "pkg:npm/%40lezer/lr@1.4.10"
       ]
     },
     {
-      "ref": "pkg:npm/%40lezer/lr@1.4.8",
+      "ref": "pkg:npm/%40lezer/lr@1.4.10",
       "dependsOn": [
-        "pkg:npm/%40lezer/common@1.5.1"
+        "pkg:npm/%40lezer/common@1.5.2"
       ]
     },
     {
-      "ref": "pkg:npm/%40lezer/markdown@1.6.3",
+      "ref": "pkg:npm/%40lezer/markdown@1.7.1",
       "dependsOn": [
-        "pkg:npm/%40lezer/common@1.5.1",
+        "pkg:npm/%40lezer/common@1.5.2",
         "pkg:npm/%40lezer/highlight@1.2.3"
       ]
     },
@@ -31638,13 +31922,13 @@
     {
       "ref": "pkg:npm/codemirror@6.0.2",
       "dependsOn": [
-        "pkg:npm/%40codemirror/autocomplete@6.20.0",
-        "pkg:npm/%40codemirror/commands@6.10.2",
-        "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/lint@6.9.4",
-        "pkg:npm/%40codemirror/search@6.6.0",
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15"
+        "pkg:npm/%40codemirror/autocomplete@6.20.3",
+        "pkg:npm/%40codemirror/commands@6.10.4",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/lint@6.9.7",
+        "pkg:npm/%40codemirror/search@6.7.1",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6"
       ]
     },
     {
@@ -31841,7 +32125,7 @@
     {
       "ref": "pkg:npm/dmn-js-properties-panel@3.11.1",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
+        "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/dmn-js@17.8.1",
         "pkg:npm/min-dash@5.0.0",
@@ -31851,7 +32135,7 @@
     {
       "ref": "pkg:npm/dmn-js-shared@17.8.1",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/feel-editor@2.5.2",
+        "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
         "pkg:npm/diagram-js@15.18.1",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dmn-moddle@12.0.1",
@@ -31973,23 +32257,10 @@
       ]
     },
     {
-      "ref": "pkg:npm/feelers@1.5.1",
+      "ref": "pkg:npm/feelers@3.1.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/cm-theme@0.1.0-alpha.2",
-        "pkg:npm/%40bpmn-io/feel-lint@3.1.0",
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
-        "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
-        "pkg:npm/%40codemirror/autocomplete@6.20.0",
-        "pkg:npm/%40codemirror/commands@6.10.2",
-        "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/lint@6.9.4",
-        "pkg:npm/%40codemirror/state@6.5.4",
-        "pkg:npm/%40codemirror/view@6.39.15",
-        "pkg:npm/%40lezer/common@1.5.1",
-        "pkg:npm/%40lezer/highlight@1.2.3",
-        "pkg:npm/%40lezer/lr@1.4.8",
-        "pkg:npm/%40lezer/markdown@1.6.3",
-        "pkg:npm/min-dom@5.3.0"
+        "pkg:npm/%40bpmn-io/lezer-feelers@1.0.0"
       ]
     },
     {
@@ -32151,7 +32422,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/marked@18.0.2",
+      "ref": "pkg:npm/marked@18.0.6",
       "dependsOn": []
     },
     {
@@ -33628,6 +33899,9 @@
           "url": "https://access.redhat.com/errata/RHSA-2026:36625"
         },
         {
+          "url": "https://access.redhat.com/errata/RHSA-2026:36754"
+        },
+        {
           "url": "https://access.redhat.com/security/cve/CVE-2026-12143"
         },
         {
@@ -33668,7 +33942,7 @@
         }
       ],
       "published": "2026-06-12T19:16:26Z",
-      "updated": "2026-07-08T13:16:28Z",
+      "updated": "2026-07-09T13:16:47Z",
       "affects": [
         {
           "ref": "pkg:npm/form-data@4.0.5",

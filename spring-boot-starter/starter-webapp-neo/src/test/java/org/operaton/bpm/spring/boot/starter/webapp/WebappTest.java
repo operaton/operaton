@@ -30,7 +30,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestRestTemplate
 @SpringBootTest(
   classes = WebappExampleApplication.class,
-  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+  properties = {
+    "operaton.bpm.webapp.neo.enabled=true",
+    "operaton.bpm.webapp.neo.application-path=/app-neo"
+  }
 )
 @SuppressWarnings("unused")
 class WebappTest {

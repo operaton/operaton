@@ -40,7 +40,7 @@ public class MessageEventDefinitionImpl extends EventDefinitionImpl implements M
   protected static AttributeReference<Message> messageRefAttribute;
   protected static ElementReference<Operation, OperationRef> operationRefChild;
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<String> operatonClassAttribute;
   protected static Attribute<String> operatonDelegateExpressionAttribute;
@@ -66,7 +66,7 @@ public class MessageEventDefinitionImpl extends EventDefinitionImpl implements M
       .qNameElementReference(Operation.class)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonClassAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CLASS)
       .namespace(OPERATON_NS)
@@ -123,7 +123,7 @@ public class MessageEventDefinitionImpl extends EventDefinitionImpl implements M
     operationRefChild.setReferenceTargetElement(this, operation);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonClass() {

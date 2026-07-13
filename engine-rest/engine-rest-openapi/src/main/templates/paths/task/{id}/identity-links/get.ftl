@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getIdentityLinks"
       tag = "Task Identity Link"
-      summary = "Get List"
+      summary = "List Task Identity Links"
       desc = "Gets the identity links for a task by id, which are the users and groups that are in
               *some* relation to it (including assignee and owner)." />
 
@@ -56,9 +56,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Task with given id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

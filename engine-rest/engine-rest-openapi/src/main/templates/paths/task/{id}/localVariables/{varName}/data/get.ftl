@@ -42,7 +42,7 @@
           },
           "examples": {
             "example-1": {
-              "summary": "GET /task/aTaskId/variables/aVarName/data",
+              "summary": "GET /task/aTaskId/localVariables/aVarName/data",
               "value": "binary variable: Status 200. Content-Type: application/octet-stream"
             }
           }
@@ -56,7 +56,7 @@
           },
           "examples": {
             "example-1": {
-              "summary": "GET /task/aTaskId/variables/aVarName/data",
+              "summary": "GET /task/aTaskId/localVariables/aVarName/data",
               "value": "file variable: Status 200. Content-Type: text/plain; charset=UTF-8. Content-Disposition: attachment; filename=\"someFile.txt\""
             }
           }
@@ -74,10 +74,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Variable with given id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

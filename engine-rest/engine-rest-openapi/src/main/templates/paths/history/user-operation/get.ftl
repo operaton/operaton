@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryUserOperationEntries"
       tag = "Historic User Operation Log"
-      summary = "Get User Operation Log (Historic)"
+      summary = "List User Operation Log Entries"
       desc = "Queries for user operation log entries that fulfill the given parameters.
               The size of the result set can be retrieved by using the
               [Get User Operation Log Count](${docsUrl}/reference/rest/history/user-operation-log/get-user-operation-log-query-count/)
@@ -111,8 +111,9 @@
                 parameter is supplied, but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

@@ -126,7 +126,6 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if:
                 * no `messageName` was supplied
                 * both `tenantId` and `withoutTenantId` are supplied
@@ -134,6 +133,8 @@
                 * the variable value or type is invalid, for example if the value could not be parsed to an Integer value or the passed variable type is not supported.
 
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

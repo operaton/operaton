@@ -58,10 +58,11 @@
        code = "500"
        mediaType = "application/json"
        dto = "ExceptionDto"
-       last = true
        desc = "The user could not be updated due to an internal server error. See the
                [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

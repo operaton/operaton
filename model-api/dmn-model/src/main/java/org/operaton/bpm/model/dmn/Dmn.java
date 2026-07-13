@@ -294,7 +294,7 @@ public class Dmn {
     UsingTaskReferenceImpl.registerType(modelBuilder);
     VariableImpl.registerType(modelBuilder);
 
-    /** operaton extensions */
+    // Operaton extensions
   }
 
   /**

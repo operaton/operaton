@@ -17,13 +17,17 @@
 package org.operaton.impl.test.utils.testcontainers;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.OracleContainer;
-import org.testcontainers.containers.OracleContainerProvider;
+import org.testcontainers.containers.JdbcDatabaseContainerProvider;
 import org.testcontainers.utility.DockerImageName;
 
-public class OperatonOracleContainerProvider extends OracleContainerProvider {
+import java.util.List;
+import java.util.Objects;
+
+public class OperatonOracleContainerProvider extends JdbcDatabaseContainerProvider {
 
   private static final String NAME = "operatonoracle";
+
+  private static final List<String> XE_VERSIONS = List.of("21", "18", "11");
 
   @Override
   public boolean supports(String databaseType) {
@@ -32,8 +36,17 @@ public class OperatonOracleContainerProvider extends OracleContainerProvider {
 
   @Override
   public JdbcDatabaseContainer<?> newInstance(String tag) {
-    DockerImageName dockerImageName = TestcontainersHelper
-      .resolveDockerImageName("oracle", tag, "gvenzl/oracle-xe");
-    return new OracleContainer(dockerImageName);
+    Objects.requireNonNull(tag);
+    // tags starting with 21, 18, or 11 are routed to gvenzl/oracle-xe.
+    if (XE_VERSIONS.stream().anyMatch(tag::startsWith)) {
+      DockerImageName dockerImageName = TestcontainersHelper
+              .resolveDockerImageName("oracle", tag, "gvenzl/oracle-xe");
+      return new org.testcontainers.containers.OracleContainer(dockerImageName);
+      // anything else goes to gvenzl/oracle-free, including "latest", "slim" and "full".
+    } else {
+      DockerImageName dockerImageName = TestcontainersHelper
+              .resolveDockerImageName("oracle", tag, "gvenzl/oracle-free");
+      return new org.testcontainers.oracle.OracleContainer(dockerImageName);
+    }
   }
 }

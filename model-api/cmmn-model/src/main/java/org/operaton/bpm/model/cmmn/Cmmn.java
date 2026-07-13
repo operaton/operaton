@@ -390,7 +390,7 @@ public class Cmmn {
     UserEventImpl.registerType(modelBuilder);
     UserEventListenerImpl.registerType(modelBuilder);
 
-    /** operaton extensions */
+    // Operaton extensions
     OperatonCaseExecutionListenerImpl.registerType(modelBuilder);
     OperatonExpressionImpl.registerType(modelBuilder);
     OperatonFieldImpl.registerType(modelBuilder);

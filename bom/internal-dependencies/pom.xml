@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent/pom.xml</relativePath>
-    <version>2.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-core-internal-dependencies</artifactId>
@@ -74,7 +74,7 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-bom</artifactId>
-        <version>6.2.15.Final</version>
+        <version>${version.resteasy}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -175,9 +175,9 @@
         <version>${version.commons-codec}</version>
       </dependency>
       <dependency>
-        <groupId>commons-collections</groupId>
-        <artifactId>commons-collections</artifactId>
-        <version>3.2.2</version>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.5.0</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -192,7 +192,7 @@
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.21.0</version>
+        <version>2.22.0</version>
       </dependency>
       <dependency>
         <groupId>commons-fileupload</groupId>
@@ -268,6 +268,17 @@
         <artifactId>feel-engine</artifactId>
         <version>${version.feel-scala}</version>
         <classifier>scala-shaded</classifier>
+        <!--
+          jackson-module-scala is shaded into feel-engine and could cause NoClassDefFoundError when present
+          in the classpath before feel-engine. Exclude it to avoid such issues.
+          See https://github.com/operaton/operaton/issues/2875
+        -->
+        <exclusions>
+          <exclusion>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-scala_2.13</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <!-- Scala library needed for feel-engine due to ScalaSignature annotations in jackson-module-scala -->
       <dependency>
@@ -293,7 +304,7 @@
       <dependency>
         <groupId>org.glassfish.jaxb</groupId>
         <artifactId>jaxb-runtime</artifactId>
-        <version>4.0.7</version>
+        <version>4.0.9</version>
       </dependency>
       <dependency>
         <groupId>io.github.frshdn</groupId>
@@ -303,7 +314,7 @@
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.10.16</version>
+        <version>1.10.17</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -384,7 +395,7 @@
       <dependency>
         <groupId>org.xmlunit</groupId>
         <artifactId>xmlunit-core</artifactId>
-        <version>2.11.0</version>
+        <version>2.12.0</version>
         <scope>test</scope>
       </dependency>
 
@@ -401,7 +412,37 @@
 
       <dependency>
         <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-annotations-api</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-catalina</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-el-api</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jsp-api</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-core</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-el</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-websocket</artifactId>
         <version>${version.tomcat}</version>
       </dependency>
 
@@ -416,25 +457,6 @@
         <artifactId>unirest-java</artifactId>
         <version>${version.unirest-java}</version>
         <classifier>standalone</classifier>
-      </dependency>
-
-      <dependency>
-        <groupId>org.jboss.resteasy</groupId>
-        <artifactId>resteasy-jaxrs</artifactId>
-        <version>${version.resteasy}</version>
-        <!-- The exclusion is there because we don't need the Resteasy client
-          API in the Rest API test suite and assembly; in case you need to remove
-          the exclusion here, please make sure to add it in the REST API projects -->
-        <exclusions>
-          <exclusion>
-            <artifactId>httpclient</artifactId>
-            <groupId>org.apache.httpcomponents</groupId>
-          </exclusion>
-          <exclusion>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
 
       <!-- scripting -->

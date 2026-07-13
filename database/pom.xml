@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
-    <version>2.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-database-settings</artifactId>
@@ -19,19 +19,19 @@
     <!-- database driver versions -->
     <version.h2>2.4.240</version.h2>
     <version.h2-v1>1.4.200</version.h2-v1><!-- used for instance migration qa -->
-    <version.oracle>23.26.1.0.0</version.oracle>
-    <version.mariadb>3.5.8</version.mariadb>
+    <version.oracle>23.26.2.0.0</version.oracle>
+    <version.mariadb>3.5.9</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
     <version.sqlserver>13.4.0.jre11</version.sqlserver>
-    <version.mysql>9.6.0</version.mysql>
+    <version.mysql>9.7.0</version.mysql>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
-    <version.db2>12.1.4.0</version.db2>
-    <version.postgresql>42.7.10</version.postgresql>
-    <operaton.dbscheme.current.version>7.24.0</operaton.dbscheme.current.version>
+    <version.db2>12.1.5.0</version.db2>
+    <version.postgresql>42.7.13</version.postgresql>
+    <operaton.dbscheme.current.version>7.25.0</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->
     <operaton.dbscheme.previous.artifactVersion>1.0.0-beta-5</operaton.dbscheme.previous.artifactVersion>
-    <operaton.dbscheme.previous.version>7.23.1</operaton.dbscheme.previous.version>
+    <operaton.dbscheme.previous.version>7.24.0</operaton.dbscheme.previous.version>
 
     <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
     <database.tc.params>TC_DAEMON=true</database.tc.params>
@@ -184,7 +184,7 @@
         <database.type>h2</database.type>
         <database.driver>org.h2.Driver</database.driver>
         <database.username>sa</database.username>
-        <database.password />
+        <database.password/>
         <hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
       </properties>
       <dependencies>
@@ -263,7 +263,7 @@
         <database.driver>org.mariadb.jdbc.Driver</database.driver>
         <hibernate.dialect>org.hibernate.dialect.MariaDBDialect</hibernate.dialect>
         <database.datasource.class>org.mariadb.jdbc.MariaDbDataSource</database.datasource.class>
-        <database.tc.url>operatonmariadb:10.6</database.tc.url>
+        <database.tc.url>operatonmariadb:10.11</database.tc.url>
         <jboss.datasource.filename>mariadb-ds.xml</jboss.datasource.filename>
         <database.tc.params>/${database.name}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
@@ -301,7 +301,7 @@
         <database.type>mysql</database.type>
         <database.driver>com.mysql.cj.jdbc.Driver</database.driver>
         <database.datasource.class>com.mysql.cj.jdbc.MysqlDataSource</database.datasource.class>
-        <database.tc.url>operatonmysql:9.2.0</database.tc.url>
+        <database.tc.url>operatonmysql:8.4</database.tc.url>
         <jboss.datasource.filename>mysql-ds.xml</jboss.datasource.filename>
         <database.tc.params>/${database.name}?sendFractionalSeconds=false&amp;amp;user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
@@ -586,7 +586,7 @@
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>
         <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
-        <database.tc.url>operatonpostgresql:13.2</database.tc.url>
+        <database.tc.url>operatonpostgresql:14</database.tc.url>
         <database.url>jdbc:tc:${database.tc.url}:///${database.name}/${database.tc.params}</database.url>
       </properties>
 

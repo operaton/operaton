@@ -4,8 +4,8 @@
   <@lib.endpointInfo
       id = "deleteGroupMembership"
       tag = "Tenant"
-      summary = "Create Tenant Group Membership"
-      desc = "Creates a membership between a tenant and a group."
+      summary = "Delete Tenant Group Membership"
+      desc = "Deletes a membership between a tenant and a group."
   />
 
   "parameters" : [
@@ -48,8 +48,9 @@
         desc = "In case an internal error occurs. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "createComment"
       tag = "Task Comment"
-      summary = "Create"
+      summary = "Create Task Comment"
       desc = "Creates a comment for a task by id." />
 
   "parameters" : [
@@ -68,10 +68,11 @@
     <@lib.response
         code = "403"
         dto = "AuthorizationExceptionDto"
-        last = true
         desc = "The history of the engine is disabled. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

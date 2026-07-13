@@ -53,7 +53,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
   // cmmn 1.1
   protected static ChildElement<PlanningTable> planningTableChild;
 
-  /** operaton extensions */
+  // Operaton extensions
   protected static Attribute<String> operatonAssigneeAttribute;
   protected static Attribute<String> operatonCandidateGroupsAttribute;
   protected static Attribute<String> operatonCandidateUsersAttribute;
@@ -92,7 +92,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     planningTableChild.setChild(this, planningTable);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonAssignee() {
@@ -199,7 +199,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
         .idAttributeReference(Role.class)
         .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonAssigneeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ASSIGNEE)
       .namespace(OPERATON_NS)

@@ -113,10 +113,12 @@ public class SessionCookiePathFilter implements Filter {
    * @throws IllegalArgumentException if {@code path} contains whitespace or a semicolon
    */
   public static String normalizeCookiePath(String path) {
-    if (path.matches(".*[\\s;].*")) {
-      throw new IllegalArgumentException(
-              "Security violation: Configured cookie path contains illegal characters (whitespace or semicolon). Path: "
-                      + path);
+    for (char c : path.toCharArray()) {
+      if (Character.isWhitespace(c) || c == ';') {
+        throw new IllegalArgumentException(
+          "Security violation: Configured cookie path contains illegal characters (whitespace or semicolon). Path: "
+            + path);
+      }
     }
 
     String normalized = path.replaceAll("/+", "/");

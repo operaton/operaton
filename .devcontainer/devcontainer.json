@@ -12,7 +12,7 @@
 			"installGradle": "false"
 		},
 		"ghcr.io/devcontainers/features/git-lfs:1": {},
-		"ghcr.io/devcontainers/features/node:1": {
+		"ghcr.io/devcontainers/features/node:2": {
 			"version": "20"
 		}
 	}

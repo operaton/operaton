@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryHistoricExternalTaskLogs"
       tag = "Historic External Task Log"
-      summary = "Get External Task Logs (POST)"
+      summary = "List Historic External Task Logs"
       desc = "Queries for historic external task logs that fulfill the given parameters.
               This method is slightly more powerful than the
               [Get External Task Logs](${docsUrl}/reference/rest/history/external-task-log/get-external-task-log-query/)
@@ -68,8 +68,9 @@
                 parameter is supplied, but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

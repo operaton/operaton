@@ -132,7 +132,7 @@ public class DemoDataGenerator {
       // create group
       if(identityService.createGroupQuery().groupId(Groups.OPERATON_ADMIN).count() == 0) {
         Group operatonAdminGroup = identityService.newGroup(Groups.OPERATON_ADMIN);
-        operatonAdminGroup.setName("operaton BPM Administrators");
+        operatonAdminGroup.setName("Operaton BPM Administrators");
         operatonAdminGroup.setType(Groups.GROUP_TYPE_SYSTEM);
         identityService.saveGroup(operatonAdminGroup);
       }

@@ -98,11 +98,12 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "If the task does not exist or the corresponding process instance could not be
                 resumed successfully. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

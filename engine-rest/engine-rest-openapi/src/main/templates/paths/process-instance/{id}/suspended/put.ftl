@@ -32,8 +32,9 @@
 
     <@lib.response
         code = "204"
-        last = true
         desc = "Request successful." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
       }
 }

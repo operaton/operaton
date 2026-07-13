@@ -43,7 +43,7 @@ public class SubProcessTest extends BpmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
       new AttributeAssumption("triggeredByEvent", false, false, false),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "async", false, false, false)
     );
   }

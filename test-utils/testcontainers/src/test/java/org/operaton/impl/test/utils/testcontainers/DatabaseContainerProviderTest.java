@@ -43,12 +43,17 @@ class DatabaseContainerProviderTest {
    */
   @ParameterizedTest(name = "{3}:{2}")
   @CsvSource({
-    "jdbc:tc:operatonpostgresql:13.2:///process-engine, SELECT version();, 13.2, postgres",
-    "jdbc:tc:operatonmariadb:10.0://localhost:3306/process-engine, SELECT version();, 10.0, mariadb",
-    "jdbc:tc:operatonmysql:5.7://localhost:3306/process-engine, SELECT version();, 5.7, mysql",
-    "jdbc:tc:operatonmysql:8.0://localhost:3306/process-engine, SELECT version();, 8.0, mysql",
-    "jdbc:tc:operatonmysql:9.2.0://localhost:3306/process-engine, SELECT version();, 9.2.0, mysql",
+    "jdbc:tc:operatonpostgresql:14:///process-engine, SELECT version();, 14, postgres",
+    "jdbc:tc:operatonpostgresql:15:///process-engine, SELECT version();, 15, postgres",
+    "jdbc:tc:operatonpostgresql:16:///process-engine, SELECT version();, 16, postgres",
+    "jdbc:tc:operatonpostgresql:17:///process-engine, SELECT version();, 17, postgres",
+    "jdbc:tc:operatonpostgresql:18:///process-engine, SELECT version();, 18, postgres",
+    "jdbc:tc:operatonmariadb:10.6://localhost:3306/process-engine, SELECT version();, 10.6, mariadb",
+    "jdbc:tc:operatonmariadb:10.11://localhost:3306/process-engine, SELECT version();, 10.11, mariadb",
+    "jdbc:tc:operatonmysql:8.4://localhost:3306/process-engine, SELECT version();, 8.4, mysql",
+    "jdbc:tc:operatonmysql:9.7://localhost:3306/process-engine, SELECT version();, 9.7, mysql",
     "jdbc:tc:operatonsqlserver:2022-latest://localhost:1433/process-engine, SELECT @@VERSION, 2022, sqlserver",
+    "jdbc:tc:operatonoracle:23-faststart://localhost:1521, SELECT * FROM v$version, 23.26, oracle",
     "jdbc:tc:operatonoracle:21-faststart://localhost:1521, SELECT * FROM v$version, 21c, oracle",
     "jdbc:tc:operatondb2:12.1.2.0://localhost:50000, SELECT SERVICE_LEVEL FROM TABLE(SYSPROC.ENV_GET_INST_INFO()), v12, db2"
   })

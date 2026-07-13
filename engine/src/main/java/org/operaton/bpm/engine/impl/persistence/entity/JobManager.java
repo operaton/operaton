@@ -302,7 +302,7 @@ public class JobManager extends AbstractManager {
       List<List<String>> partitions = CollectionUtil
           .partition(new ArrayList<>(processInstanceIds), DbSqlSessionFactory.MAXIMUM_NUMBER_PARAMS);
       List<ImmutablePair<String, String>> result = new ArrayList<>();
-      partitions.stream().forEach(partition -> {
+      partitions.forEach(partition -> {
         jobQuery.processInstanceIds(new HashSet<>(partition));
         result.addAll(getDbEntityManager().selectList("selectJobDeploymentIdMappingsByQueryCriteria", jobQuery));
       });

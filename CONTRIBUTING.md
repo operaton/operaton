@@ -9,6 +9,8 @@
   * [Naming Conventions](#naming-conventions)
   * [Documentation Standards](#documentation-standards)
   * [Architectural Guidelines](#architectural-guidelines)
+  * [License Header](#license-header)
+  * [Public Java API](#public-java-api)
 * [Contribution checklist](#contribution-checklist)
 * [Commit message conventions](#commit-message-conventions)
 * [Review process](#review-process)
@@ -17,7 +19,7 @@
 
 We would love you to contribute to this project. You can do so in various ways.
 
-If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-3sui6yak7-T4ByOTYVdlDEHXWi8vuaGA).
+If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-3z4x7flwj-Q3Q2soGX1wNjcsENiL9s_g).
 
 ## File bugs or feature requests
 
@@ -178,6 +180,7 @@ Follow standard Java naming conventions:
 * **Constants**: SCREAMING_SNAKE_CASE (e.g., `API_BASE_URL`)
 * **Components**: PascalCase for Angular components (e.g., `TaskListController`)
 
+
 ## Documentation Standards
 
 ### Javadoc Requirements
@@ -188,6 +191,8 @@ All public APIs must include comprehensive Javadoc documentation:
 * **Public Methods**: Include `@param`, `@return`, and `@throws` tags where applicable
 * **Public Fields**: Brief description of purpose and valid values
 * **Deprecated Elements**: Use `@deprecated` with replacement information and removal timeline
+* **New API classes/methods**: When classes or methods are added, a `@since` annotation with `<major>.<minor>` version 
+  (without patch version) has to be added.
 
 **Example**:
 ```java
@@ -211,9 +216,37 @@ public ProcessInstance startProcessInstanceByKey(String processDefinitionKey, Ma
 * **Complex Logic**: Add comments for non-obvious algorithms or business rules
 * **TODOs**: Include issue references where possible (e.g., `// TODO: Optimize query performance #1234`)
 
-### License Headers
+### License Header
 
-All new files must include the Apache 2.0 license header as specified in the [Copyright section](#copyright).
+For new files it is mandatory to add this license header:
+
+```
+/*
+ * Copyright 2026 the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+```
+
+This is for files with Java-style content. Change the comment format for files with different comment formats.
+
+### Public Java API
+
+Classes that are potentially public API (e.g. classes not in an `.impl.` package) must have comprehensive Javadoc documentation.
+
+
+Methods added to public API interfaces must be added as _default methods_ for backward compatibility reasons. The implementation can delegate to a new method that contains the actual implementation. This allows existing implementations to continue working without modification while still allowing us to add new methods to public interfaces.
+
 
 ## Architectural Guidelines
 
@@ -272,6 +305,8 @@ Before submitting your pull request for code review, please go through the follo
 1. Does your implementation follow our [Architectural Guidelines](#architectural-guidelines)?
     * Review existing ADRs if making significant changes
     * Consider creating a new ADR for major architectural decisions
+1. Does your code add files?
+    * Add the License Header to new files
 1. Is your code covered by unit tests?
     * Ask us if you are not sure where to write the tests or what kind of tests you should write.
     * Java: Use JUnit 5 with AssertJ assertions and `ProcessEngineExtension` for engine tests.
@@ -345,37 +380,33 @@ A list of bullet points giving a high-level overview of the contribution, e.g. w
 
 ## \<footer\>
 
-Must be `related to <ticket>` where ticket is the ticket number, e.g. CAM-1234. If the change is related to multiple 
-tickets, list them in a comma-separated list such as `related to CAM-1234, CAM-4321`.
+Must be `related to <ticket>` where ticket is the ticket number, e.g. `#1234`. If the change is related to multiple 
+tickets, list them in a comma-separated list such as `related to #1234, #4321`.
 
 Optionally, you can reference the number of the GitHub PR from which the commit is merged. The message footer can then 
-look like `related to <ticket>, closes #<pr_number>` such as `related to CAM-1234, closes #567`.
+look like `related to <ticket>, closes #<pr_number>` such as `related to #1234, closes #567`.
 
-# Copyright
+## AI coding assistants
 
-## License Header
+_(adopted from [Linux Kernel guidline](https://docs.kernel.org/process/coding-assistants.html?ref=itsfoss.com))_
 
-For new files it is mandatory to add this license header:
+Contributions should include an Assisted-by tag in the following format:
 
-```
-/*
- * Copyright 2026 the Operaton contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at:
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-```
+`Assisted-by: AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]`
 
-This is for files with Java-style content. Change the comment format for files with different comment formats.
+Where:
+
+`AGENT_NAME` is the name of the AI tool or framework
+
+`MODEL_VERSION` is the specific model version used
+
+`[TOOL1] [TOOL2]` are optional specialized analysis tools used.
+
+Basic development tools (git, gcc, make, editors) should not be listed.
+
+Example:
+
+`Assisted-by: Claude:claude-3-opus coccinelle sparse`
 
 # Review process
 

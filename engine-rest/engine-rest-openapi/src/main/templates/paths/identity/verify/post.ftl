@@ -40,8 +40,9 @@
         code = "400"
         dto = "ExceptionDto"
         desc = "If body does not contain username or password."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

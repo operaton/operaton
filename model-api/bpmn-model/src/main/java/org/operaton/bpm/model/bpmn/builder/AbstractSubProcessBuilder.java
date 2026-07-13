@@ -42,7 +42,7 @@ public class AbstractSubProcessBuilder<B extends AbstractSubProcessBuilder<B>> e
     return myself;
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * Sets the operaton async attribute to true.

@@ -35,8 +35,9 @@
     <@lib.response
         code = "204"
         desc = "Request successful. This method returns no content."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

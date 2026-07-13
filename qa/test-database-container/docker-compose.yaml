@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:9.2.0
+    image: mysql:8.4
     container_name: mysql
     ports:
       - "${MT_MYSQL_HOST_PORT:-33060}:3306"
@@ -11,7 +11,7 @@ services:
       - ./my.cnf:/etc/mysql/conf.d/my.cnf
 
   mariadb:
-    image: mariadb:11.8
+    image: mariadb:10.11
     container_name: mariadb
     ports:
       - "${MT_MARIADB_HOST_PORT:-33070}:3306"
@@ -31,7 +31,7 @@ services:
       - ORACLE_DATABASE=${MT_ORACLE_DATABASE:-SYSTEM}
 
   postgres:
-    image: postgres:17
+    image: postgres:14
     container_name: postgres
     ports:
       - "${MT_POSTGRES_HOST_PORT:-54320}:5432"

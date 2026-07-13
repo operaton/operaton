@@ -52,17 +52,9 @@ class BatchSetVariablesMigrationTest {
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @AfterEach
-  void removeBatches() {
+  void tearDown() {
     helper.removeAllRunningAndHistoricBatches();
-  }
-
-  @AfterEach
-  void clearAuthentication() {
     engineRule.getIdentityService().clearAuthentication();
-  }
-
-  @AfterEach
-  void resetEngineConfig() {
     engineRule.getProcessEngineConfiguration()
         .setRestrictUserOperationLogToAuthenticatedUsers(true);
   }

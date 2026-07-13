@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getExternalTask"
       tag = "External Task"
-      summary = "Get"
+      summary = "Get External Task"
       desc = "Retrieves an external task by id, corresponding to the `ExternalTask` interface in the engine." />
 
   "parameters" : [
@@ -51,10 +51,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "External task with the given id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

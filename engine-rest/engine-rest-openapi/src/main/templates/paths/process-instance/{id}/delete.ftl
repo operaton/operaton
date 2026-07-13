@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "deleteProcessInstance"
       tag = "Process Instance"
-      summary = "Delete"
+      summary = "Delete Process Instance"
       desc = "Deletes a running process instance by id." />
 
   "parameters": [
@@ -54,9 +54,10 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Not found
                 Process instance with given id does not exist. " />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

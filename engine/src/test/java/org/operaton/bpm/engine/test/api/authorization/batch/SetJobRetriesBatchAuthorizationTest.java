@@ -75,8 +75,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   public AuthorizationScenarioWithCount scenario;
 
   @Override
-  @BeforeEach
-  public void deployProcesses() {
+  protected void deployProcesses() {
     Deployment deploy = testHelper.deploy(DEFINITION_XML);
     sourceDefinition = engineRule.getRepositoryService()
         .createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();

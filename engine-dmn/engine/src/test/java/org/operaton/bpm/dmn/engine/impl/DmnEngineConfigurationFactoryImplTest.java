@@ -22,7 +22,7 @@ import org.operaton.commons.utils.ServiceLoaderUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * @since 1.1
+ * @since 2.1
  */
 class DmnEngineConfigurationFactoryImplTest {
   @Test

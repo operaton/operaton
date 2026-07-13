@@ -69,10 +69,6 @@ public abstract class BatchCreationAuthorizationTest {
     runtimeService = engineRule.getRuntimeService();
     managementService = engineRule.getManagementService();
     historyService = engineRule.getHistoryService();
-  }
-
-  @BeforeEach
-  public void deployProcesses() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
   }
@@ -80,10 +76,8 @@ public abstract class BatchCreationAuthorizationTest {
   @AfterEach
   public void tearDown() {
     authRule.deleteUsersAndGroups();
-  }
 
-  @AfterEach
-  public void cleanBatch() {
+    // clean batch
     Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
     if (batch != null) {
       engineRule.getManagementService().deleteBatch(

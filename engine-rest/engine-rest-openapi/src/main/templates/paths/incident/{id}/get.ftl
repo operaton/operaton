@@ -46,8 +46,9 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if an incident with given id does not exist." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
     }
 }
 

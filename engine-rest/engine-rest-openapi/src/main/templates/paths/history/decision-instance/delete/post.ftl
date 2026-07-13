@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "deleteAsync"
       tag = "Historic Decision Instance"
-      summary = "Delete Async (POST)"
+      summary = "Delete Historic Decision Instances Async"
       desc = "Delete multiple historic decision instances asynchronously (batch).
               At least `historicDecisionInstanceIds` or `historicDecisionInstanceQuery` 
               has to be provided. If both are provided then all instances matching query 
@@ -63,8 +63,9 @@
                 `historicDecisionInstanceIds` nor `historicDecisionInstanceQuery` is
                 present. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) 
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

@@ -17,16 +17,20 @@
 package org.operaton.bpm.engine.rest;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.ServiceLoader;
 import jakarta.ws.rs.core.MediaType;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+import io.restassured.config.ObjectMapperConfig;
 import io.restassured.http.Header;
 import org.apache.http.entity.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +54,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public abstract class AbstractRestServiceTest {
-
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   protected static ProcessEngine processEngine;
   protected static final String TEST_RESOURCE_ROOT_PATH = "/rest-test";
   protected static int port;
@@ -192,22 +196,27 @@ public abstract class AbstractRestServiceTest {
 
   private static void setupRestAssured() throws IOException {
     if (connectionProperties == null) {
-      InputStream propStream = null;
-      try {
-        propStream = AbstractRestServiceTest.class.getResourceAsStream(PROPERTIES_FILE_PATH);
+      try (InputStream propStream = AbstractRestServiceTest.class.getResourceAsStream(PROPERTIES_FILE_PATH)){
         connectionProperties = new Properties();
         connectionProperties.load(propStream);
-      } finally {
-        propStream.close();
       }
     }
 
     port = Integer.parseInt(connectionProperties.getProperty(PORT_PROPERTY));
     RestAssured.port = port;
+    // Use a plain ObjectMapper without auto-registering modules (e.g. jackson-module-scala
+    // from feel-engine shaded jar) to ensure JSON objects are deserialized as java.util.LinkedHashMap.
+    RestAssured.config = RestAssured.config()
+        .objectMapperConfig(ObjectMapperConfig.objectMapperConfig()
+            .jackson2ObjectMapperFactory((cls, charset) -> OBJECT_MAPPER));
   }
 
-  protected File getFile(String path) throws URISyntaxException {
-    URI uri = this.getClass().getResource(path).toURI();
+  protected final File getFile(String path) throws URISyntaxException, FileNotFoundException {
+    URL resource = this.getClass().getResource(path);
+    if (resource == null) {
+      throw new FileNotFoundException("Resource not found: " + path);
+    }
+    URI uri = resource.toURI();
     return new File(uri);
   }
 

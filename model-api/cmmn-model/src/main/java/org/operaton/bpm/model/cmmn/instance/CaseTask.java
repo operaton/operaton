@@ -34,7 +34,7 @@ public interface CaseTask extends Task {
 
   Collection<ParameterMapping> getParameterMappings();
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonCaseBinding();
 

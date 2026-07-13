@@ -279,7 +279,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
     return new FileInputStream(file);
   }
 
-  protected File getFile() throws URISyntaxException {
+  protected File getFile() throws URISyntaxException, FileNotFoundException {
     return getFile("/decisions/decision-requirements-diagram.png");
   }
 }

@@ -44,7 +44,8 @@
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "Filter by case instance id." />
+        deprecated = true
+        desc = "Filter by case instance id. ${lib.cmmnDeprecationNotice}" />
 
     <@lib.property
         name = "superProcessInstance"

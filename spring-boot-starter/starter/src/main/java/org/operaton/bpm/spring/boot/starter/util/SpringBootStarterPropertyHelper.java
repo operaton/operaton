@@ -43,7 +43,8 @@ public final class SpringBootStarterPropertyHelper {
         binder.bind(ConfigurationPropertyName.EMPTY, Bindable.ofInstance(target), new NoUnboundElementsBindHandler(BindHandler.DEFAULT));
       }
     } catch (Exception e) {
-      throw LOG.exceptionDuringBinding(e.getMessage());
+      String msg = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
+      throw LOG.exceptionDuringBinding(msg, e);
     }
   }
 }

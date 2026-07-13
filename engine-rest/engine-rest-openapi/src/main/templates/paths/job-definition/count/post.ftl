@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryJobDefinitionsCount"
       tag = "Job Definition"
-      summary = "Get Job Definition Count (POST)"
+      summary = "Count Job Definitions"
       desc = "Queries for the number of job definitions that fulfill given parameters. This
               method takes the same message body as the
               [Get Job Definitions (POST)](${docsUrl}/reference/rest/job-definition/post-query/)
@@ -49,8 +49,9 @@
                 parameter is supplied, but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

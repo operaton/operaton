@@ -40,3 +40,5 @@ out/jreleaser
 *.class
 *.zip
 sloc.txt
+/docs/superpowers
+.devenv/scripts/smoketest/screenshots/

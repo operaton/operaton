@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getHistoricActivityInstance"
       tag = "Historic Activity Instance"
-      summary = "Get"
+      summary = "Get Historic Activity Instance"
       desc = "Retrieves a historic activity instance by id, according to the `HistoricActivityInstance` interface in the engine." />
 
   "parameters" : [
@@ -54,10 +54,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Not Found
                 Historic activity instance with given id does not exist.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

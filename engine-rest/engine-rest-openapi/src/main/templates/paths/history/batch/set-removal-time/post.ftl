@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "setRemovalTimeAsyncHistoricBatch"
       tag = "Historic Batch"
-      summary = "Set Removal Time Async (POST)"
+      summary = "Set Removal Time Async"
       desc = "Sets the removal time to multiple historic batches asynchronously (batch).
 
               At least __historicBatchIds__ or __historicBatchQuery__ has to be
@@ -67,8 +67,9 @@
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format.
                 "
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

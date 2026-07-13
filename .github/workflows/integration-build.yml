@@ -86,6 +86,9 @@ on:
       - '.gitingore'
       - 'LICENSE'
       - 'NOTICE'
+      - 'qa/**'
+      - '!qa/integration-tests-engine/**'
+      - '!qa/integration-tests-webapps/**'
   push:
     branches:
       # when developing the workflow itself, create this branch and push to it
@@ -119,7 +122,7 @@ jobs:
       recent_changes: ${{steps.check-commits.outputs.commits}}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
       - name: Check for recent commits
@@ -140,13 +143,14 @@ jobs:
     if: github.event_name == 'pull_request' || github.event_name == 'push'
     outputs:
       needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
+      needs_spring_boot_starter_tests: ${{ steps.check-pr.outputs.needs_spring_boot_starter_tests }}
       java_versions: ${{ steps.compute-matrix.outputs.java_versions }}
       distros: ${{ steps.compute-matrix.outputs.distros }}
       databases: ${{ steps.compute-matrix.outputs.databases }}
       testsuites: ${{ steps.compute-matrix.outputs.testsuites }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
       - name: Check PR conditions
@@ -178,6 +182,14 @@ jobs:
             echo "✅ PR doesn't require integration build"
             NEEDS_BUILD=false
           fi
+
+          # Detect scope:spring-boot label
+          NEEDS_SBS_TESTS=false
+          if echo "$PR_LABELS" | grep -q '"scope:spring-boot"'; then
+            echo "🍃 PR has scope:spring-boot label"
+            NEEDS_SBS_TESTS=true
+          fi
+          echo "needs_spring_boot_starter_tests=$NEEDS_SBS_TESTS" >> $GITHUB_OUTPUT
 
           echo "needs_build=$NEEDS_BUILD" >> $GITHUB_OUTPUT
       - name: Compute matrix values
@@ -232,7 +244,7 @@ jobs:
     name: Early Exit Check
     runs-on: ubuntu-latest
     needs: determine-pr-config
-    if: github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'false'
+    if: github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'false' && needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'false'
     steps:
       - name: Cancel workflow
         run: |
@@ -263,17 +275,17 @@ jobs:
       database_version: ${{steps.maven-build.outputs.database_version}}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v5
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v5.4.0
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
@@ -304,7 +316,7 @@ jobs:
           find target -name maven-metadata.* -delete
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Cache build artifacts
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             distro/**/*.tar.gz
@@ -337,17 +349,17 @@ jobs:
       )
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v5
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v5.4.0
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
@@ -372,7 +384,7 @@ jobs:
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
         if: ${{ matrix.testsuite != 'webapps' || matrix.database == 'h2' }}
-        uses: mikepenz/action-junit-report@bccf2e31636835cf0874589931c4116687171386 #v6.4.0
+        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
         with:
           report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml
           require_passed_tests: true
@@ -389,6 +401,54 @@ jobs:
           retention-days: 30
           overwrite: true
 
+  spring-boot-starter-integration-tests:
+    name: Spring Boot Starter Integration Tests
+    runs-on: ubuntu-latest
+    needs:
+      - detect-recent-changes
+      - determine-pr-config
+    if: |
+      always() && !cancelled() && (
+        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
+        (github.event_name == 'workflow_dispatch' && (github.event.inputs.integration_tests == 'true' || github.event.inputs.integration_tests == true)) ||
+        (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true')
+      )
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.0
+      - name: Cache Maven packages
+        uses: actions/cache@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Set up Java
+        uses: actions/setup-java@v5.4.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Execute Spring Boot Starter Integration Tests
+        id: maven-spring-boot-starter-integration-tests
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-spring-boot-starter.sh
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        with:
+          report_paths: ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/*.xml
+          require_passed_tests: true
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: failsafe-reports-spring-boot-starter
+          path: |
+            ${{ github.workspace }}/spring-boot-starter/**/target/surefire-reports/**
+            ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/**
+          retention-days: 30
+          overwrite: true
+
   documentation:
     name: Documentation
     runs-on: ubuntu-latest
@@ -402,7 +462,7 @@ jobs:
       )
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
       - name: Documentation
@@ -412,7 +472,7 @@ jobs:
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
       - name: Cache documentation artifacts
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v6.1.0
         with:
           path: |
             target/*.zip
@@ -431,10 +491,10 @@ jobs:
       )
     steps:
       - name: Check out the code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 1
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v5.4.0
         with:
           distribution: zulu
           java-version: 17
@@ -482,12 +542,12 @@ jobs:
       )
     steps:
       - name: Check out the code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
 
       - name: Restore build artifacts cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6.1.0
         with:
           path: |
             distro/**/*.tar.gz
@@ -501,7 +561,7 @@ jobs:
           fail-on-cache-miss: true
 
       - name: Restore documentation artifacts cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6.1.0
         with:
           path: |
             target/*.zip
@@ -526,7 +586,7 @@ jobs:
 
       - name: Publish Test Report
         if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_tests == 'false'}}
-        uses: mikepenz/action-junit-report@bccf2e31636835cf0874589931c4116687171386 #v6.4.0
+        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true

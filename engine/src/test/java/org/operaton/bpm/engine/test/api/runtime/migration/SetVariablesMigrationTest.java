@@ -51,12 +51,8 @@ class SetVariablesMigrationTest {
   MigrationTestExtension testHelper = new MigrationTestExtension(rule);
 
   @AfterEach
-  void clearAuthentication() {
+  void tearDown() {
     rule.getIdentityService().clearAuthentication();
-  }
-
-  @AfterEach
-  void resetEngineConfig() {
     rule.getProcessEngineConfiguration()
         .setRestrictUserOperationLogToAuthenticatedUsers(true);
   }

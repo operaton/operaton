@@ -13,17 +13,17 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v5
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v5.4.0
         with:
           distribution: 'temurin'
           java-version: 17
@@ -36,7 +36,7 @@ jobs:
       - name: Verification Build
         run: .devenv/scripts/build/build.sh --profile=max --skip-tests
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 #v8.1.0
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 #v8.1.1
         with:
           title: '[bot] Code cleanup'
           commit-message: 'refactor(cleanup): Apply coding rules'

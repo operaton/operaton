@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.identity.PasswordPolicy;
 import org.operaton.bpm.engine.impl.BootstrapEngineCommand;
+import org.operaton.bpm.engine.impl.DefaultHistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.SchemaOperationsProcessEngineBuild;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
@@ -252,7 +253,7 @@ public abstract class ProcessEngineConfiguration {
   protected DataSource dataSource;
   protected SchemaOperationsCommand schemaOperationsCommand = new SchemaOperationsProcessEngineBuild();
   protected ProcessEngineBootstrapCommand bootstrapCommand = new BootstrapEngineCommand();
-  protected HistoryLevelSetupCommand historyLevelCommand = new HistoryLevelSetupCommand();
+  protected HistoryLevelSetupCommand historyLevelCommand = new DefaultHistoryLevelSetupCommand();
   protected boolean transactionsExternallyManaged;
   /** the number of seconds the jdbc driver will wait for a response from the database */
   protected Integer jdbcStatementTimeout;

@@ -1,0 +1,30 @@
+name: Sync Labels
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '.github/labels/labels.yml'
+      - '.github/workflows/sync-labels.yml'
+  pull_request:
+    paths:
+      - '.github/labels/labels.yml'
+      - '.github/workflows/sync-labels.yml'
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.0
+
+      - name: Run Labeler
+        uses: crazy-max/ghaction-github-labeler@548a7c3603594ec17c819e1239f281a3b801ab4d # v6.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          yaml-file: .github/labels/labels.yml
+          dry-run: ${{ github.event_name == 'pull_request' }}

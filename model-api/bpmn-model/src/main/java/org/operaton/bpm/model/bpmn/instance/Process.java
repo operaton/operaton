@@ -68,7 +68,7 @@ public interface Process extends CallableElement {
 
   Collection<Process> getSupports();
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonCandidateStarterGroups();
 

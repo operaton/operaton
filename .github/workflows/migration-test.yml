@@ -9,7 +9,7 @@ on:
       - '**/*.sql'
       - 'qa/test-db-rolling-update/**'
   schedule:
-    - cron: "30 2 * * *"     # Runs at 2:30 AM UTC daily
+    - cron: "15 1 * * 5"     # Runs at 1:15 AM UTC Friday
   workflow_dispatch:
 
 jobs:
@@ -23,10 +23,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.0
 
       - name: Set up Docker
-        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0.11.4.0.0
+        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0.11.4.2.0
 
       - name: Run QA script
         run: |

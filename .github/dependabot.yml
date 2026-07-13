@@ -281,7 +281,7 @@ updates:
         patterns:
           - "*"
     ignore:
-      - dependency-name: "eslint*"
+      - dependency-name: "*"
         update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"

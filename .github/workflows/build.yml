@@ -87,7 +87,7 @@ jobs:
             docs/decisions
       - name: Lint ADR files
         # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@ded1f9488f68a970bc66ea5619e13e9b52e601cd
+        uses: DavidAnson/markdownlint-cli2-action@8de2aa07cae85fd17c0b35642db70cf5495f1d25
         with:
           globs: |
             docs/decisions/*.md

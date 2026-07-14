@@ -16,25 +16,38 @@
  */
 package org.operaton.connect.httpclient;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CodingErrorAction;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.connect.httpclient.impl.AbstractHttpConnector;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.findAll;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static org.apache.hc.core5.http.HttpHeaders.USER_AGENT;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Since Apache HTTP client makes it extremely hard to test the proper configuration
@@ -84,5 +97,53 @@ class HttpConnectorSystemPropertiesTest {
     // then
     verify(getRequestedFor(urlEqualTo("/")).withHeader(USER_AGENT, equalTo("foo")));
 
+  }
+
+  @Test
+  void shouldApplyPayloadUsingCharsetFromSystemProperty(WireMockRuntimeInfo wmRuntimeInfo) throws Exception {
+    // given
+    setSystemProperty(AbstractHttpConnector.PROPERTY_CHARSET, "UTF-16");
+    stubFor(post(urlEqualTo("/")).willReturn(aResponse().withStatus(200)));
+    String payload = "café";
+
+    // when
+    HttpConnectorImpl connector = new HttpConnectorImpl();
+    connector.createRequest()
+        .url("http://localhost:" + wmRuntimeInfo.getHttpPort())
+        .contentType("text/plain")
+        .payload(payload)
+        .post()
+        .execute();
+
+    // then
+    assertThat(readRequestPayload(StandardCharsets.UTF_16)).isEqualTo(payload);
+  }
+
+  @Test
+  void shouldApplyPayloadUsingUtf8ByDefault(WireMockRuntimeInfo wmRuntimeInfo) throws Exception {
+    // given
+    stubFor(post(urlEqualTo("/")).willReturn(aResponse().withStatus(200)));
+    String payload = "café";
+
+    // when
+    HttpConnectorImpl connector = new HttpConnectorImpl();
+    connector.createRequest()
+        .url("http://localhost:" + wmRuntimeInfo.getHttpPort())
+        .contentType("text/plain")
+        .payload(payload)
+        .post()
+        .execute();
+
+    // then
+    assertThat(readRequestPayload(StandardCharsets.UTF_8)).isEqualTo(payload);
+  }
+
+  protected String readRequestPayload(Charset charset) throws CharacterCodingException {
+    List<LoggedRequest> requests = findAll(postRequestedFor(urlEqualTo("/")));
+    assertThat(requests).hasSize(1);
+    CharsetDecoder decoder = charset.newDecoder()
+        .onMalformedInput(CodingErrorAction.REPORT)
+        .onUnmappableCharacter(CodingErrorAction.REPORT);
+    return decoder.decode(ByteBuffer.wrap(requests.get(0).getBody())).toString();
   }
 }

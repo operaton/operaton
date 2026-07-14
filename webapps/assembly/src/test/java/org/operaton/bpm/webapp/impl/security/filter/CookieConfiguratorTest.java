@@ -78,13 +78,15 @@ class CookieConfiguratorTest {
 
     @Test
     void getCookieName_shouldReturnCustomCookieName_whenConfiguredByInitParam() {
-        // given
+        // given the cookieName init-param is configured
         String customCookieName = "CUSTOMCOOKIE";
+        when(filterConfig.getInitParameter(CookieConfigurator.COOKIE_NAME_PARAM)).thenReturn(customCookieName);
+        cookieConfigurator.parseParams(filterConfig);
 
         // when
-        String actualCookieName = cookieConfigurator.getCookieName(customCookieName);
+        String actualCookieName = cookieConfigurator.getCookieName("JSESSIONID");
 
-        // then
+        // then the init-param takes precedence over the passed-in default name
         assertThat(actualCookieName).isEqualTo(customCookieName);
     }
 

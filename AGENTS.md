@@ -40,6 +40,24 @@
 
 On Windows, use `mvnw` or `mvnw.cmd` instead of `./mvnw`.
 
+### Faster Builds
+
+Use `.devenv/scripts/build/build.sh` flags for targeted builds:
+
+| Flag | Maven effect | When the CI uses it |
+|------|-------------|---------------------|
+| `--skip-tests` | `-DskipTests` | dependabot GitHub Actions / npm PRs |
+| `--skip-engine-tests` | `-Dtest.excludes=org/operaton/bpm/engine` | No changes in engine or its deps |
+| `--webapps-only` | `-pl webapps/assembly -am` | All changes within `webapps/` |
+
+> **Important:** `-pl webapps -am` is NOT sufficient (resolves only the aggregator POM).
+> Always use `-pl webapps/assembly -am`, which builds the 29-module chain including engine and engine-rest.
+
+The CI `prepare` job (`.github/actions/prepare-build/`) sets these flags automatically
+based on PR branch name, actor, and changed files.
+
+> See also `.github/copilot-instructions.md` for GitHub Copilot-specific guidelines.
+
 ### Critical Build Dependencies
 
 The `engine` module requires these dependencies to be built first:

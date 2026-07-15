@@ -60,6 +60,14 @@ class TestCheckSkipEngineTests(unittest.TestCase):
         files = ["juel/src/main/java/Foo.java"]
         self.assertFalse(check_skip_engine_tests(files))
 
+    def test_engine_cdi_changed(self):
+        files = ["engine-cdi/src/main/java/Foo.java"]
+        self.assertFalse(check_skip_engine_tests(files))
+
+    def test_engine_spring_changed(self):
+        files = ["engine-spring/src/main/java/Foo.java"]
+        self.assertFalse(check_skip_engine_tests(files))
+
     def test_empty_files_returns_false(self):
         self.assertFalse(check_skip_engine_tests([]))
 

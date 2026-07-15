@@ -17,7 +17,6 @@
     <test.includes />
     <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
     <test.excludes>$.</test.excludes>
-    <skipTests.operaton-engine>false</skipTests.operaton-engine>
     <version.cronutils>9.2.1</version.cronutils>
     <history.level>full</history.level>
     <mail.server.port>5025</mail.server.port>
@@ -448,7 +447,7 @@
           <failIfNoTests>false</failIfNoTests>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <skip>${skipTests.operaton-engine}</skip>
+          <skip>false</skip>
           <!-- Surefire 3.6.0 also matches these patterns against JUnit class names,
                without the .class suffix. Keep both scanner and provider compatible. -->
           <includes>

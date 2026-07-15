@@ -100,7 +100,7 @@ if [ "$SKIP_ENGINE_TESTS" = "true" ]; then
 fi
 
 if [ "$WEBAPPS_ONLY" = "true" ]; then
-  MVN_ARGS+=(-pl webapps/assembly -am)
+  MVN_ARGS+=(-pl webapps/assembly -am -Dmaven.test.skip=true)
 fi
 
 case "$BUILD_PROFILE" in

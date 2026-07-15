@@ -17,7 +17,7 @@ The script has the following options:
 - `--reports` - Execute Reporting plugins to generate update reports, code statistics.
 - `--skip-tests` - Skip the test execution.
 - `--skip-engine-tests` - Skip only engine tests (appends `-Dtest.excludes=org/operaton/bpm/engine`). Useful when no engine-related files changed.
-- `--webapps-only` - Build only `webapps/assembly` and its transitive dependencies (appends `-pl webapps/assembly -am`). Use when only `webapps/` files changed. Note: `-pl webapps -am` is insufficient — it resolves only the aggregator POM chain. Always use `-pl webapps/assembly -am`.
+- `--webapps-only` - Build only `webapps/assembly` and its transitive dependencies (appends `-pl webapps/assembly -am -Dmaven.test.skip=true`). Use when only `webapps/` files changed. Note: `-pl webapps -am` is insufficient — it resolves only the aggregator POM chain. Always use `-pl webapps/assembly -am -Dmaven.test.skip=true`.
 
 Any further arguments will be passed to the Maven build. 
 

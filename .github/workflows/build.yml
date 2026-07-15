@@ -59,8 +59,32 @@ concurrency:
 
 jobs:
 
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      skip_tests: ${{ steps.prepare.outputs.skip_tests }}
+      skip_engine_tests: ${{ steps.prepare.outputs.skip_engine_tests }}
+      webapps_only: ${{ steps.prepare.outputs.webapps_only }}
+    steps:
+      - name: Checkout action files
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            .github/actions/prepare-build
+      - name: Prepare build
+        id: prepare
+        uses: ./.github/actions/prepare-build
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   build:
     name: Build
+    needs: [prepare]
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -140,6 +164,9 @@ jobs:
           INPUT_RUNNER: ${{ github.event.inputs.runner || 'mvnd' }}
           INPUT_REPORTS: ${{ github.event.inputs.reports || 'false' }}
           INPUT_SKIP_TESTS: ${{ github.event.inputs.skip_tests || 'false' }}
+          PREPARE_SKIP_TESTS: ${{ needs.prepare.outputs.skip_tests || 'false' }}
+          PREPARE_SKIP_ENGINE_TESTS: ${{ needs.prepare.outputs.skip_engine_tests || 'false' }}
+          PREPARE_WEBAPPS_ONLY: ${{ needs.prepare.outputs.webapps_only || 'false' }}
         run: |
           .github/scripts/jacoco-create-flag-files.sh
 
@@ -160,10 +187,20 @@ jobs:
             BUILD_CMD="$BUILD_CMD --reports"
           fi
 
-          # Add skip-tests flag if enabled
+          # Add skip-tests flag (workflow_dispatch input or prepare job heuristic)
           SKIP_TESTS="${INPUT_SKIP_TESTS}"
-          if [ "$SKIP_TESTS" = "true" ]; then
+          if [ "$SKIP_TESTS" = "true" ] || [ "$PREPARE_SKIP_TESTS" = "true" ]; then
             BUILD_CMD="$BUILD_CMD --skip-tests"
+          fi
+
+          # Add skip-engine-tests flag if set by prepare job
+          if [ "$PREPARE_SKIP_ENGINE_TESTS" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --skip-engine-tests"
+          fi
+
+          # Add webapps-only flag if set by prepare job
+          if [ "$PREPARE_WEBAPPS_ONLY" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --webapps-only"
           fi
 
           # Restored modules keep reporting: .mvn/maven-build-cache-config.xml

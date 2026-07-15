@@ -111,6 +111,9 @@ Uses only Python stdlib (`urllib.request`, `json`, `os`, `sys`). No third-party 
 **Edge cases:**
 - If the GitHub API returns an empty file list (e.g., PR not yet ready), all heuristics that require file inspection default to `"false"` (safe: full build runs).
 - On `workflow_dispatch`, `GITHUB_HEAD_REF` is empty and `GITHUB_EVENT_NAME` is not `pull_request`, so all outputs are `"false"`.
+- On fork PRs, `secrets.GITHUB_TOKEN` is read-only but still valid for the `pulls/*/files` API. If the API call fails for any reason, the script logs a warning and returns `[]`, falling back to a full build — the safe direction.
+
+**Default env vars:** The script reads `GITHUB_EVENT_NAME`, `GITHUB_ACTOR`, `GITHUB_HEAD_REF`, `GITHUB_REPOSITORY`, `GITHUB_EVENT_PATH`, and `GITHUB_OUTPUT` from the environment. These are injected automatically by the GitHub Actions runner in every step. They are also declared explicitly in `action.yml`'s `env:` block for self-documentation.
 
 **Default:** All outputs default to `"false"` if no heuristic fires.
 

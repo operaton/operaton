@@ -1,0 +1,28 @@
+name: Prepare Build
+description: Analyzes PR context and emits build optimization flags (skip_tests, skip_engine_tests, webapps_only)
+
+inputs:
+  github-token:
+    description: GitHub token for REST API access to changed files
+    required: true
+
+outputs:
+  skip_tests:
+    description: '"true" if all tests should be skipped'
+    value: ${{ steps.prepare.outputs.skip_tests }}
+  skip_engine_tests:
+    description: '"true" if engine tests should be skipped'
+    value: ${{ steps.prepare.outputs.skip_engine_tests }}
+  webapps_only:
+    description: '"true" if only webapps/assembly and its deps should be built'
+    value: ${{ steps.prepare.outputs.webapps_only }}
+
+runs:
+  using: composite
+  steps:
+    - name: Run prepare script
+      id: prepare
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: python3 ${{ github.action_path }}/prepare_build.py

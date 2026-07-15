@@ -447,7 +447,6 @@
           <failIfNoTests>false</failIfNoTests>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <skip>false</skip>
           <!-- Surefire 3.6.0 also matches these patterns against JUnit class names,
                without the .class suffix. Keep both scanner and provider compatible. -->
           <includes>

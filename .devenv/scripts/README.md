@@ -17,6 +17,8 @@ The script has the following options:
 - `--extra-maven-profiles=<PROFILES>` - Comma-separated list of additional Maven profiles to activate on top of those selected by `--profile`.
 - `--reports` - Execute Reporting plugins to generate update reports, code statistics.
 - `--skip-tests` - Skip the test execution.
+- `--skip-engine-tests` - Skip only engine tests (appends `-Dtest.excludes=org/operaton/bpm/engine`). Useful when no engine-related files changed.
+- `--webapps-only` - Build only `webapps/assembly` and its transitive dependencies (appends `-pl webapps/assembly -am`). Use when only `webapps/` files changed. Note: `-pl webapps -am` is insufficient — it resolves only the aggregator POM chain. Always use `-pl webapps/assembly -am`.
 
 Any further arguments will be passed to the Maven build. 
 

@@ -7,6 +7,9 @@ import urllib.error
 import urllib.request
 
 ENGINE_DEPS = (
+    "pom.xml",
+    "parent/",
+    "bom/",
     "engine/",
     "engine-dmn/",
     "engine-rest/",
@@ -15,6 +18,8 @@ ENGINE_DEPS = (
     "commons/",
     "model-api/",
     "juel/",
+    "database/",
+    "test-utils/",
 )
 
 
@@ -40,6 +45,12 @@ def get_changed_files(token, repo, pr_number):
                 data = json.loads(resp.read())
         except urllib.error.HTTPError as exc:
             print(f"Warning: GitHub API error {exc.code}: {exc.reason}", file=sys.stderr)
+            return []
+        except urllib.error.URLError as exc:
+            print(f"Warning: GitHub API connection error: {exc.reason}", file=sys.stderr)
+            return []
+        except (json.JSONDecodeError, Exception) as exc:
+            print(f"Warning: unexpected error fetching changed files: {exc}", file=sys.stderr)
             return []
         if not data:
             break

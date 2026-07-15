@@ -455,7 +455,6 @@
           <failIfNoTests>false</failIfNoTests>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <skip>false</skip>
           <includes>
             <include>%regex[.*(${test.includes}).*Test.*.class]</include>
           </includes>

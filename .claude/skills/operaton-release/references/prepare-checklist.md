@@ -20,7 +20,11 @@ gh run list --repo operaton/operaton --branch BRANCH --workflow migration-test.y
 - [ ] `integration-build.yml` latest = success
 - [ ] `migration-test.yml` latest = success
 
-If integration-build.yml fails in the `Release` job due to a cache miss, re-trigger the `Documentation` job.
+### Troubleshooting
+
+If `integration-build.yml` fails in the `Release` job due to a cache miss, re-trigger the `Documentation` job.
+
+If `integration-build.yml` failed in a subset of integration tests, but the previous scheduled run passed, re-trigger the failing tests.
 
 A red required build is a 🔴 blocker.
 

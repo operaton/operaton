@@ -1,9 +1,12 @@
+import json
 import unittest
+import urllib.error
 import sys
 import os
+from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(__file__))
-from prepare_build import check_skip_tests, check_skip_engine_tests, check_webapps_only
+from prepare_build import check_skip_tests, check_skip_engine_tests, check_webapps_only, get_changed_files
 
 
 class TestCheckSkipTests(unittest.TestCase):
@@ -68,12 +71,56 @@ class TestCheckSkipEngineTests(unittest.TestCase):
         files = ["engine-spring/src/main/java/Foo.java"]
         self.assertFalse(check_skip_engine_tests(files))
 
+    def test_parent_changed(self):
+        files = ["parent/pom.xml"]
+        self.assertFalse(check_skip_engine_tests(files))
+
+    def test_bom_changed(self):
+        files = ["bom/pom.xml"]
+        self.assertFalse(check_skip_engine_tests(files))
+
+    def test_database_changed(self):
+        files = ["database/pom.xml"]
+        self.assertFalse(check_skip_engine_tests(files))
+
+    def test_test_utils_changed(self):
+        files = ["test-utils/src/main/java/Foo.java"]
+        self.assertFalse(check_skip_engine_tests(files))
+
+    def test_root_pom_changed(self):
+        files = ["pom.xml"]
+        self.assertFalse(check_skip_engine_tests(files))
+
     def test_empty_files_returns_false(self):
         self.assertFalse(check_skip_engine_tests([]))
 
     def test_mixed_no_engine(self):
         files = ["docs/README.md", "spring-boot-starter/src/main/java/Foo.java"]
         self.assertTrue(check_skip_engine_tests(files))
+
+
+class TestGetChangedFilesFallback(unittest.TestCase):
+
+    def test_url_error_returns_empty(self):
+        with patch("urllib.request.urlopen",
+                   side_effect=urllib.error.URLError("connection refused")):
+            result = get_changed_files("token", "org/repo", 123)
+        self.assertEqual(result, [])
+
+    def test_http_error_returns_empty(self):
+        with patch("urllib.request.urlopen",
+                   side_effect=urllib.error.HTTPError(
+                       url="", code=403, msg="Forbidden", hdrs=None, fp=None)):
+            result = get_changed_files("token", "org/repo", 123)
+        self.assertEqual(result, [])
+
+    def test_json_decode_error_returns_empty(self):
+        with patch("urllib.request.urlopen") as mock_open:
+            mock_open.return_value.__enter__ = lambda s: s
+            mock_open.return_value.__exit__ = lambda s, *a: False
+            mock_open.return_value.read.return_value = b"not-json{"
+            result = get_changed_files("token", "org/repo", 123)
+        self.assertEqual(result, [])
 
 
 class TestCheckWebappsOnly(unittest.TestCase):

@@ -1,0 +1,37 @@
+name: Prepare Build
+description: Analyzes PR context and emits build optimization flags (skip_tests, skip_engine_tests, webapps_only)
+
+inputs:
+  github-token:
+    description: GitHub token for REST API access to changed files
+    required: true
+
+outputs:
+  skip_tests:
+    description: '"true" if all tests should be skipped'
+    value: ${{ steps.prepare.outputs.skip_tests }}
+  skip_engine_tests:
+    description: '"true" if engine tests should be skipped'
+    value: ${{ steps.prepare.outputs.skip_engine_tests }}
+  webapps_only:
+    description: '"true" if only webapps/assembly and its deps should be built'
+    value: ${{ steps.prepare.outputs.webapps_only }}
+
+runs:
+  using: composite
+  steps:
+    - name: Run prepare script
+      id: prepare
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        # Default GitHub Actions env vars consumed by the script, listed for self-documentation.
+        # These are also injected automatically by the runner, so the values below are redundant
+        # but make the script's dependencies explicit.
+        GITHUB_EVENT_NAME: ${{ github.event_name }}
+        GITHUB_ACTOR: ${{ github.actor }}
+        GITHUB_HEAD_REF: ${{ github.head_ref }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
+        # GITHUB_OUTPUT is managed by the runner per-step and is not re-declared here.
+      run: python3 ${{ github.action_path }}/prepare_build.py

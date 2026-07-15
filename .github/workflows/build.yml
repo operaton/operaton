@@ -93,8 +93,31 @@ jobs:
           globs: |
             docs/decisions/*.md
 
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      skip_tests: ${{ steps.prepare.outputs.skip_tests }}
+      skip_engine_tests: ${{ steps.prepare.outputs.skip_engine_tests }}
+      webapps_only: ${{ steps.prepare.outputs.webapps_only }}
+    steps:
+      - name: Checkout action files
+        uses: actions/checkout@v7.0.0
+        with:
+          sparse-checkout: |
+            .github/actions/prepare-build
+      - name: Prepare build
+        id: prepare
+        uses: ./.github/actions/prepare-build
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   build:
     name: Build
+    needs: [lint-adr, prepare]
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -150,10 +173,23 @@ jobs:
             BUILD_CMD="$BUILD_CMD --reports"
           fi
 
-          # Add skip-tests flag if enabled
-          SKIP_TESTS="${{ github.event.inputs.skip_tests || 'false' }}"
-          if [ "$SKIP_TESTS" = "true" ]; then
+          # Add skip-tests flag (workflow_dispatch input or prepare job heuristic)
+          SKIP_TESTS_INPUT="${{ github.event.inputs.skip_tests || 'false' }}"
+          SKIP_TESTS_PREPARE="${{ needs.prepare.outputs.skip_tests || 'false' }}"
+          if [ "$SKIP_TESTS_INPUT" = "true" ] || [ "$SKIP_TESTS_PREPARE" = "true" ]; then
             BUILD_CMD="$BUILD_CMD --skip-tests"
+          fi
+
+          # Add skip-engine-tests flag if set by prepare job
+          SKIP_ENGINE_TESTS="${{ needs.prepare.outputs.skip_engine_tests || 'false' }}"
+          if [ "$SKIP_ENGINE_TESTS" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --skip-engine-tests"
+          fi
+
+          # Add webapps-only flag if set by prepare job
+          WEBAPPS_ONLY="${{ needs.prepare.outputs.webapps_only || 'false' }}"
+          if [ "$WEBAPPS_ONLY" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --webapps-only"
           fi
 
           echo "ℹ️ Executing: $BUILD_CMD"

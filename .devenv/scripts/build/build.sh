@@ -4,6 +4,8 @@ MVN_ARGS=()
 PROFILES=()
 BUILD_PROFILE="normal"
 SKIP_TESTS="false"
+SKIP_ENGINE_TESTS="false"
+WEBAPPS_ONLY="false"
 REPORT_PLUGINS="false"
 RUNNER="./mvnw"
 VALID_BUILD_PROFILES=("fast" "normal" "max")
@@ -33,6 +35,12 @@ parse_args() {
         ;;
       --skip-tests)
         SKIP_TESTS="true"
+        ;;
+      --skip-engine-tests)
+        SKIP_ENGINE_TESTS="true"
+        ;;
+      --webapps-only)
+        WEBAPPS_ONLY="true"
         ;;
       --reports)
         REPORT_PLUGINS="true"
@@ -85,6 +93,14 @@ fi
 
 if ([ "$SKIP_TESTS" = "true" ]); then
   MVN_ARGS+=(-DskipTests)
+fi
+
+if [ "$SKIP_ENGINE_TESTS" = "true" ]; then
+  MVN_ARGS+=(-Dtest.excludes=org/operaton/bpm/engine)
+fi
+
+if [ "$WEBAPPS_ONLY" = "true" ]; then
+  MVN_ARGS+=(-pl webapps/assembly -am)
 fi
 
 case "$BUILD_PROFILE" in

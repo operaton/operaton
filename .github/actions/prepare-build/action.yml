@@ -1,5 +1,5 @@
 name: Prepare Build
-description: Analyzes PR context and emits build optimization flags (skip_tests, skip_engine_tests, webapps_only)
+description: Analyzes PR context and emits build optimization outputs (skip_tests, skip_engine_tests, changed_modules)
 
 inputs:
   github-token:
@@ -11,11 +11,11 @@ outputs:
     description: '"true" if all tests should be skipped'
     value: ${{ steps.prepare.outputs.skip_tests }}
   skip_engine_tests:
-    description: '"true" if engine tests should be skipped'
+    description: '"true" if the engine test suite should be excluded from a full build'
     value: ${{ steps.prepare.outputs.skip_engine_tests }}
-  webapps_only:
-    description: '"true" if only webapps/assembly and its deps should be built'
-    value: ${{ steps.prepare.outputs.webapps_only }}
+  changed_modules:
+    description: 'Comma-separated module dirs for a narrowed -pl build; empty = full build'
+    value: ${{ steps.prepare.outputs.changed_modules }}
 
 runs:
   using: composite

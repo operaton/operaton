@@ -14,9 +14,6 @@
   <description>${project.name}</description>
 
   <properties>
-    <test.includes />
-    <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
-    <test.excludes>$.</test.excludes>
     <history.level>full</history.level>
     <mail.server.port>5025</mail.server.port>
     <authorizationCheckRevokes>auto</authorizationCheckRevokes>
@@ -458,9 +455,9 @@
           <includes>
             <include>%regex[.*(${test.includes}).*Test.*.class]</include>
           </includes>
+          <!-- the ${test.excludes} regex exclude is appended from the parent pom -->
           <excludes combine.children="append">
             <exclude>**/*TestCase.java</exclude>
-            <exclude>%regex[.*(${test.excludes}).*Test.*.class]</exclude>
             <!-- Nashorn is not part of the JDK anymore in Java 15+ -->
             <exclude>**/*NashornTest.java</exclude>
           </excludes>

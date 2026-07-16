@@ -102,13 +102,17 @@ jobs:
     outputs:
       skip_tests: ${{ steps.prepare.outputs.skip_tests }}
       skip_engine_tests: ${{ steps.prepare.outputs.skip_engine_tests }}
-      webapps_only: ${{ steps.prepare.outputs.webapps_only }}
+      changed_modules: ${{ steps.prepare.outputs.changed_modules }}
     steps:
-      - name: Checkout action files
+      - name: Checkout action files and module poms
         uses: actions/checkout@v7.0.0
         with:
+          # non-cone mode: the script needs every pom.xml to map changed
+          # files to Maven modules and derive the core-api module set
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            .github/actions/prepare-build
+            /.github/actions/prepare-build/
+            **/pom.xml
       - name: Prepare build
         id: prepare
         uses: ./.github/actions/prepare-build
@@ -186,10 +190,11 @@ jobs:
             BUILD_CMD="$BUILD_CMD --skip-engine-tests"
           fi
 
-          # Add webapps-only flag if set by prepare job
-          WEBAPPS_ONLY="${{ needs.prepare.outputs.webapps_only || 'false' }}"
-          if [ "$WEBAPPS_ONLY" = "true" ]; then
-            BUILD_CMD="$BUILD_CMD --webapps-only"
+          # Narrow the build to changed modules + up/downstream if the prepare
+          # job mapped every changed file to a Maven module
+          CHANGED_MODULES="${{ needs.prepare.outputs.changed_modules || '' }}"
+          if [ -n "$CHANGED_MODULES" ]; then
+            BUILD_CMD="$BUILD_CMD --changed-modules=$CHANGED_MODULES"
           fi
 
           echo "ℹ️ Executing: $BUILD_CMD"

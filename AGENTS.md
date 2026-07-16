@@ -46,15 +46,16 @@ Use `.devenv/scripts/build/build.sh` flags for targeted builds:
 
 | Flag | Maven effect | When the CI uses it |
 |------|-------------|---------------------|
-| `--skip-tests` | `-DskipTests` | dependabot GitHub Actions / npm PRs |
-| `--skip-engine-tests` | `-Dtest.excludes=org/operaton/bpm/engine` | No changes in engine or its deps |
-| `--webapps-only` | `-pl webapps/assembly -am` | All changes within `webapps/` |
-
-> **Important:** `-pl webapps -am` is NOT sufficient (resolves only the aggregator POM).
-> Always use `-pl webapps/assembly -am`, which builds the 29-module chain including engine and engine-rest.
+| `--skip-tests` | `-DskipTests` | dependabot GitHub Actions / npm PRs, docs-only PRs |
+| `--skip-engine-tests` | `-Dtest.excludes=org/operaton/bpm/engine` | Full builds where neither engine nor its upstream deps changed |
+| `--changed-modules=<dirs>` | Whole reactor `clean install -Dmaven.test.skip=true -Dskip.frontend.build=true` (preceded by a real build of test-jar-producer modules, since `maven.test.skip` skips packaging their test-jar entirely), then `verify -pl <dirs> -amd` (affected tests) | Every changed file maps to a Maven module |
+| `--affected-by=<git-ref>` | Same as `--changed-modules`, derived from the local git diff (e.g. `--affected-by=origin/main`) | Local development only |
 
 The CI `prepare` job (`.github/actions/prepare-build/`) sets these flags automatically
-based on PR branch name, actor, and changed files.
+based on PR branch name, actor, and changed files. Phase 1 builds every module because
+CI runs on fresh checkouts and the reactor must be self-contained; the saving is skipping
+unaffected test suites in phase 2. Maven's `-amd` derives the affected test set from the
+live reactor, so there is no hand-maintained module map.
 
 > See also `.github/copilot-instructions.md` for GitHub Copilot-specific guidelines.
 

@@ -39,6 +39,7 @@ out/jreleaser
 *.gz
 *.class
 *.zip
+__pycache__/
 sloc.txt
 /docs/superpowers
 .devenv/scripts/smoketest/screenshots/

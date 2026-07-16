@@ -16,8 +16,16 @@ The script has the following options:
 - `--profile=<PROFILE>` - The build profile to use. Valid values: `fast`, `normal` (default), `max`. This will activate a different amount of Maven profiles.
 - `--reports` - Execute Reporting plugins to generate update reports, code statistics.
 - `--skip-tests` - Skip the test execution.
-- `--skip-engine-tests` - Skip only engine tests (appends `-Dtest.excludes=org/operaton/bpm/engine`). Useful when no engine-related files changed.
-- `--webapps-only` - Build only `webapps/assembly` and its transitive dependencies (appends `-pl webapps/assembly -am -Dmaven.test.skip=true`). Use when only `webapps/` files changed. Note: `-pl webapps -am` is insufficient — it resolves only the aggregator POM chain. Always use `-pl webapps/assembly -am -Dmaven.test.skip=true`.
+- `--skip-engine-tests` - Skip engine tests (appends `-Dtest.excludes=org/operaton/bpm/engine`). Useful when no engine-related files changed. Note: this also excludes tests in `org.operaton.bpm.engine.*` packages of other modules (engine-cdi, engine-rest, …).
+- `--changed-modules=<dir,dir,...>` - Affected-modules build. Runs up to three Maven passes:
+  1. `install -pl <test-jar producers> -am -DskipTests [-Dskip.frontend.build=true]` — only if the repo has such modules. A few modules (`spin/core`, `engine-cdi`, …) attach a test-jar that is a real compile-time dependency elsewhere; `maven.test.skip` (step 2) makes the jar plugin skip packaging it entirely (not even an empty jar), so these are built for real first (tests compiled and packaged, only *execution* skipped) and installed before anything can rely on a missing artifact.
+  2. `clean install -Dmaven.test.skip=true [-Dskip.frontend.build=true]` (whole reactor) — compiles and installs every module without running or even compiling/packaging tests. Builds every module on purpose: CI runs on fresh checkouts, and a `-pl … -am -amd` reactor is not self-contained (the dependents pulled in by `-amd` need dependencies that are not in the reactor).
+  3. `verify -pl <dirs> -amd` — run tests only in the changed modules and their dependents.
+
+  `-Dskip.frontend.build=true` (skip the webapps npm build) is added to steps 1–2 only when `prepare_build.py --needs-real-frontend=<dirs>` says the affected closure cannot observe the built frontend — computed from the same pom dependency graph, checking whether `webapps/assembly` or `distro/webjar` (or anything depending on them, e.g. `spring-boot-starter/starter-webapp`, which boots a real server and asserts a served page) is reachable. When it is reachable, the flag is omitted and the real frontend is built.
+
+  The build-time saving comes from skipping compilation, packaging, and execution of unaffected test suites, not from compiling fewer modules. Use `--profile=normal` (the default) or `max` with affected builds; `fast` omits modules that other modules depend on (e.g. `distro-webjar`), so it cannot build the whole reactor.
+- `--affected-by=<git-ref>` - Like `--changed-modules`, but derives the changed modules from `git diff` against the merge-base with `<git-ref>` (e.g. `--affected-by=origin/main`), using the same classification as the CI prepare job (`.github/actions/prepare-build/prepare_build.py`). Falls back to a full build whenever a change cannot be safely mapped to modules (any `pom.xml`, `parent/`, `bom/`, `database/`, `qa/`, `.github/`, `.devenv/`, root-level files). Docs-only diffs skip tests entirely.
 
 Any further arguments will be passed to the Maven build. 
 

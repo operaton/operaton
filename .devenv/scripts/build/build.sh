@@ -5,7 +5,8 @@ PROFILES=()
 BUILD_PROFILE="normal"
 SKIP_TESTS="false"
 SKIP_ENGINE_TESTS="false"
-WEBAPPS_ONLY="false"
+CHANGED_MODULES=""
+AFFECTED_BY=""
 REPORT_PLUGINS="false"
 RUNNER="./mvnw"
 VALID_BUILD_PROFILES=("fast" "normal" "max")
@@ -39,8 +40,11 @@ parse_args() {
       --skip-engine-tests)
         SKIP_ENGINE_TESTS="true"
         ;;
-      --webapps-only)
-        WEBAPPS_ONLY="true"
+      --changed-modules=*)
+        CHANGED_MODULES="${1#*=}"
+        ;;
+      --affected-by=*)
+        AFFECTED_BY="${1#*=}"
         ;;
       --reports)
         REPORT_PLUGINS="true"
@@ -68,6 +72,17 @@ parse_args() {
 }
 
 ##########################################################################
+run_mvn() {
+  local cmd="$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $*"
+  echo "ℹ️ $cmd"
+  if ! $cmd; then
+    echo "❌ Error: Build failed"
+    popd > /dev/null
+    exit 1
+  fi
+}
+
+##########################################################################
 # main script
 parse_args "$@"
 
@@ -81,7 +96,18 @@ pushd $(pwd) > /dev/null
 cd $(git rev-parse --show-toplevel) || exit 1
 PROJECT_ROOT=$(pwd)
 
-MVN_ARGS+=(clean install)
+# --affected-by: derive changed modules locally from the git diff
+if [ -n "$AFFECTED_BY" ]; then
+  PREPARE_OUT=$(python3 "$PROJECT_ROOT/.github/actions/prepare-build/prepare_build.py" --diff-ref "$AFFECTED_BY") || exit 1
+  CHANGED_MODULES=$(echo "$PREPARE_OUT" | grep '^changed_modules=' | cut -d= -f2-)
+  if echo "$PREPARE_OUT" | grep -q '^skip_tests=true'; then
+    SKIP_TESTS="true"
+  fi
+  if echo "$PREPARE_OUT" | grep -q '^skip_engine_tests=true'; then
+    SKIP_ENGINE_TESTS="true"
+  fi
+  echo "ℹ️ Affected by '$AFFECTED_BY': changed_modules=${CHANGED_MODULES:-<full build>} skip_tests=$SKIP_TESTS skip_engine_tests=$SKIP_ENGINE_TESTS"
+fi
 
 if [ "$REPORT_PLUGINS" = "true" ]; then
   MVN_ARGS+=(versions:dependency-updates-aggregate-report)
@@ -89,18 +115,6 @@ if [ "$REPORT_PLUGINS" = "true" ]; then
   # MVN_ARGS+=(dependency:analyze-report) TODO Disabled due to issue #1095
   MVN_ARGS+=(-Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc)
   MVN_ARGS+=(-Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list)
-fi
-
-if ([ "$SKIP_TESTS" = "true" ]); then
-  MVN_ARGS+=(-DskipTests)
-fi
-
-if [ "$SKIP_ENGINE_TESTS" = "true" ]; then
-  MVN_ARGS+=(-Dtest.excludes=org/operaton/bpm/engine)
-fi
-
-if [ "$WEBAPPS_ONLY" = "true" ]; then
-  MVN_ARGS+=(-pl webapps/assembly -am -Dmaven.test.skip=true)
 fi
 
 case "$BUILD_PROFILE" in
@@ -115,14 +129,62 @@ case "$BUILD_PROFILE" in
     ;;
 esac
 
-MVN_CMD="$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
-echo "ℹ️ $MVN_CMD"
-$MVN_CMD
-
-if [[ $? -ne 0 ]]; then
-  echo "❌ Error: Build failed"
-  popd > /dev/null
-  exit 1
+TEST_ARGS=()
+if [ "$SKIP_ENGINE_TESTS" = "true" ]; then
+  TEST_ARGS+=(-Dtest.excludes=org/operaton/bpm/engine)
 fi
-popd > /dev/null
 
+if [ -n "$CHANGED_MODULES" ]; then
+  # Two-phase affected build:
+  # 1. compile + install the whole reactor without tests
+  # 2. run tests only in the changed modules and their dependents (-amd)
+  #
+  # Phase 1 deliberately builds every module rather than a -pl/-amd slice.
+  # CI runs on fresh checkouts with nothing in the local repository, and the
+  # reactor must be self-contained. A `-pl <changed> -am -amd` reactor is NOT:
+  # -amd pulls in the changed modules' dependents (distro assemblies, webapps,
+  # starters), but their own dependencies that are not also upstream of the
+  # changed modules never enter the reactor, so they cannot be resolved.
+  #
+  # -Dmaven.test.skip=true (not -DskipTests) additionally skips compiling and
+  # packaging test sources, since phase 1 never runs any tests anyway.
+  # -Dskip.frontend.build=true skips the webapps npm build for the same reason,
+  # unless the affected closure could actually observe the built frontend
+  # (e.g. spring-boot-starter/starter-webapp boots a real server and asserts
+  # a page returns 200, which 404s without the real npm build) — computed via
+  # the same pom dependency graph used for the rest of this feature.
+  #
+  # Caveat: maven-jar-plugin's test-jar goal also honors maven.test.skip and
+  # silently produces NO artifact at all (not even an empty jar) when test
+  # sources aren't compiled. A handful of modules' test-jars are real
+  # compile-time dependencies of other modules (e.g. engine-cdi's
+  # "tests-quarkus" classified jar is needed by quarkus-extension/engine/qa)
+  # — skip them reactor-wide and that resolution fails inside the very same
+  # build. So those producer modules are built for real (tests compiled +
+  # packaged, only *execution* skipped) in a small preliminary pass; the
+  # local repo then already has their real test-jars before the fast
+  # full-reactor pass rebuilds (and reinstalls everything else) with tests
+  # skipped.
+  PREPARE_PY="$PROJECT_ROOT/.github/actions/prepare-build/prepare_build.py"
+  TEST_JAR_PRODUCERS=$(python3 "$PREPARE_PY" --list-test-jar-producers) || exit 1
+  NEEDS_REAL_FRONTEND=$(python3 "$PREPARE_PY" --needs-real-frontend="$CHANGED_MODULES") || exit 1
+  FRONTEND_ARGS=(-Dskip.frontend.build=true)
+  if [ "$NEEDS_REAL_FRONTEND" = "true" ]; then
+    FRONTEND_ARGS=()
+  fi
+  if [ -n "$TEST_JAR_PRODUCERS" ]; then
+    run_mvn install -pl "$TEST_JAR_PRODUCERS" -am -DskipTests "${FRONTEND_ARGS[@]}" "${MVN_ARGS[@]}"
+  fi
+  run_mvn clean install -Dmaven.test.skip=true "${FRONTEND_ARGS[@]}" "${MVN_ARGS[@]}"
+  if [ "$SKIP_TESTS" != "true" ]; then
+    run_mvn verify -pl "$CHANGED_MODULES" -amd "${TEST_ARGS[@]}" "${MVN_ARGS[@]}"
+  fi
+else
+  FULL_ARGS=(clean install)
+  if [ "$SKIP_TESTS" = "true" ]; then
+    FULL_ARGS+=(-DskipTests)
+  fi
+  run_mvn "${FULL_ARGS[@]}" "${TEST_ARGS[@]}" "${MVN_ARGS[@]}"
+fi
+
+popd > /dev/null

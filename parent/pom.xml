@@ -58,6 +58,12 @@
     <version.nodejs>24.14.0</version.nodejs>
     <version.npm>11.8.0</version.npm>
     <jacoco.argLine/>
+    <!-- test class filtering, interpolated into the surefire excludes below:
+         -Dtest.excludes=<regex> (or a profile setting the property) skips matching
+         test classes in every module that inherits this configuration.
+         The default expression never matches. -->
+    <test.includes/>
+    <test.excludes>$.</test.excludes>
     <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
     <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
     <surefire.forkCount>1</surefire.forkCount>
@@ -91,6 +97,11 @@
             </systemPropertyVariables>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <forkCount>${surefire.forkCount}</forkCount>
+            <excludes>
+              <!-- surefire's documented default, restated because an explicit list replaces it -->
+              <exclude>**/*$*</exclude>
+              <exclude>%regex[.*(${test.excludes}).*Test.*.class]</exclude>
+            </excludes>
           </configuration>
         </plugin>
         <plugin>

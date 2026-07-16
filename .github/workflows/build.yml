@@ -68,14 +68,18 @@ jobs:
     outputs:
       skip_tests: ${{ steps.prepare.outputs.skip_tests }}
       skip_engine_tests: ${{ steps.prepare.outputs.skip_engine_tests }}
-      webapps_only: ${{ steps.prepare.outputs.webapps_only }}
+      changed_modules: ${{ steps.prepare.outputs.changed_modules }}
     steps:
-      - name: Checkout action files
+      - name: Checkout action files and module poms
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          # non-cone mode: the script needs every pom.xml to map changed
+          # files to Maven modules and derive the core-api module set
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            .github/actions/prepare-build
+            /.github/actions/prepare-build/
+            **/pom.xml
       - name: Prepare build
         id: prepare
         uses: ./.github/actions/prepare-build
@@ -166,7 +170,7 @@ jobs:
           INPUT_SKIP_TESTS: ${{ github.event.inputs.skip_tests || 'false' }}
           PREPARE_SKIP_TESTS: ${{ needs.prepare.outputs.skip_tests || 'false' }}
           PREPARE_SKIP_ENGINE_TESTS: ${{ needs.prepare.outputs.skip_engine_tests || 'false' }}
-          PREPARE_WEBAPPS_ONLY: ${{ needs.prepare.outputs.webapps_only || 'false' }}
+          PREPARE_CHANGED_MODULES: ${{ needs.prepare.outputs.changed_modules || '' }}
         run: |
           .github/scripts/jacoco-create-flag-files.sh
 
@@ -198,9 +202,10 @@ jobs:
             BUILD_CMD="$BUILD_CMD --skip-engine-tests"
           fi
 
-          # Add webapps-only flag if set by prepare job
-          if [ "$PREPARE_WEBAPPS_ONLY" = "true" ]; then
-            BUILD_CMD="$BUILD_CMD --webapps-only"
+          # Narrow the build to changed modules + up/downstream if the prepare
+          # job mapped every changed file to a Maven module
+          if [ -n "$PREPARE_CHANGED_MODULES" ]; then
+            BUILD_CMD="$BUILD_CMD --changed-modules=$PREPARE_CHANGED_MODULES"
           fi
 
           # Restored modules keep reporting: .mvn/maven-build-cache-config.xml

@@ -148,7 +148,7 @@
       <groupId>net.minidev</groupId>
       <artifactId>json-smart</artifactId>
     </dependency>
-    <!-- Scala library needed for feel-engine 1.20.0+ due to jackson-module-scala -->
+    <!-- Scala library needed for the unshaded feel-engine -->
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
@@ -233,16 +233,6 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
-                <delete dir="target/modules/org/operaton/feel"/>
-                <copy todir="target/modules" flatten="false">
-                  <fileset refid="maven.project.dependencies"/>
-                  <mapper>
-                    <chainedmapper>
-                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes"/>
-                      <regexpmapper from="^(org.camunda.feel.feel-engine.*)/(([A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${version.feel-scala}-scala-shaded.jar" handledirsep="yes"/>
-                    </chainedmapper>
-                  </mapper>
-                </copy>
                 <!-- copy jackson dependencies to slot -->
                 <delete dir="target/modules/com/fasterxml/jackson"/>
                 <copy todir="target/modules" flatten="false">
@@ -323,6 +313,7 @@
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-annotations/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-annotations/${version.jackson}"/>
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-core/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-core/${version.jackson}"/>
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-databind/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-databind/${version.jackson}"/>
+                <move file="target/modules/com/fasterxml/jackson/module/jackson-module-scala_2.13/version.jackson" toFile="target/modules/com/fasterxml/jackson/module/jackson-module-scala_2.13/${version.jackson}"/>
                 <replace dir="target/modules" token="@version.json-path@" value="${version.json-path}">
                   <include name="**/module.xml"/>
                 </replace>
@@ -345,6 +336,18 @@
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.scala@" value="${version.scala}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.fastparse@" value="${version.fastparse}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.geny@" value="${version.geny}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.sourcecode@" value="${version.sourcecode}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.paranamer@" value="${version.paranamer}">
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.graal.js@" value="${version.graal.js}">

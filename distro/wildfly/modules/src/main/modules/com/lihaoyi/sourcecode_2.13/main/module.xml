@@ -1,0 +1,9 @@
+<module xmlns="urn:jboss:module:1.0" name="com.lihaoyi.sourcecode_2.13">
+  <resources>
+    <resource-root path="sourcecode_2.13-@version.sourcecode@.jar" />
+  </resources>
+
+  <dependencies>
+    <module name="org.scala-lang.scala-library" />
+  </dependencies>
+</module>

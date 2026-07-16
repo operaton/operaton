@@ -1,0 +1,16 @@
+<module xmlns="urn:jboss:module:1.0" name="com.fasterxml.jackson.module.jackson-module-scala_2.13" slot="@version.jackson@" >
+  <resources>
+    <resource-root path="jackson-module-scala_2.13-@version.jackson@.jar" />
+  </resources>
+
+  <dependencies>
+
+    <module name="java.base" />
+    <module name="com.fasterxml.jackson.core.jackson-core" export="true" slot="@version.jackson@" />
+    <module name="com.fasterxml.jackson.core.jackson-annotations" export="true" slot="@version.jackson@" />
+    <module name="com.fasterxml.jackson.core.jackson-databind" export="true" slot="@version.jackson@" />
+    <module name="org.scala-lang.scala-library" />
+    <module name="com.thoughtworks.paranamer.paranamer" />
+
+  </dependencies>
+</module>

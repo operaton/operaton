@@ -272,4 +272,13 @@ public class EngineUtilLogger extends ProcessEngineLogger {
       "049",
       "The URI '{}' is malformed", uri), cause);
   }
+
+  public void warnLegacyCronExpressionPatched(String originalExpression, String patchedExpression) {
+    logWarn(
+        "050",
+        "Legacy cron expression '{}' was automatically patched to '{}' for compatibility with modern Quartz syntax. "
+            + "Consider updating the timer expression to avoid this warning.",
+        originalExpression,
+        patchedExpression);
+  }
 }

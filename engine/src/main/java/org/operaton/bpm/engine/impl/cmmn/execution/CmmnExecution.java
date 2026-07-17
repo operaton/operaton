@@ -331,6 +331,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   }
 
+  @SuppressWarnings("removal")
   protected List<String> collectAffectedSentries(CmmnExecution child, String transition) {
     List<? extends CmmnSentryPart> sentryParts = getCaseSentryParts();
 

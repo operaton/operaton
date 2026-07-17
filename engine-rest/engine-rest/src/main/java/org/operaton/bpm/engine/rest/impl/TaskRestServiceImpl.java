@@ -59,33 +59,36 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
   }
 
   @Override
-  public Object getTasks(Request request, UriInfo uriInfo, Integer firstResult, Integer maxResults) {
+  public Object getTasks(Request request, UriInfo uriInfo, Integer firstResult, Integer maxResults,
+                         boolean evaluateFormKey) {
     Variant variant = request.selectVariant(VARIANTS);
     if (variant != null) {
       if (MediaType.APPLICATION_JSON_TYPE.equals(variant.getMediaType())) {
-        return getJsonTasks(uriInfo, firstResult, maxResults);
+        return getJsonTasks(uriInfo, firstResult, maxResults, evaluateFormKey);
       }
       else if (Hal.APPLICATION_HAL_JSON_TYPE.equals(variant.getMediaType())) {
-        return getHalTasks(uriInfo, firstResult, maxResults);
+        return getHalTasks(uriInfo, firstResult, maxResults, evaluateFormKey);
       }
     }
     throw new InvalidRequestException(Response.Status.NOT_ACCEPTABLE, "No acceptable content-type found");
   }
 
-  public List<TaskDto> getJsonTasks(UriInfo uriInfo, Integer firstResult, Integer maxResults) {
+  public List<TaskDto> getJsonTasks(UriInfo uriInfo, Integer firstResult, Integer maxResults,
+                                    boolean evaluateFormKey) {
     // get list of tasks
     TaskQueryDto queryDto = new TaskQueryDto(getObjectMapper(), uriInfo.getQueryParameters());
-    return queryTasks(queryDto, firstResult, maxResults);
+    return queryTasksInternal(queryDto, firstResult, maxResults, evaluateFormKey);
   }
 
-  public HalTaskList getHalTasks(UriInfo uriInfo, Integer firstResult, Integer maxResults) {
+  public HalTaskList getHalTasks(UriInfo uriInfo, Integer firstResult, Integer maxResults,
+                                 boolean evaluateFormKey) {
     TaskQueryDto queryDto = new TaskQueryDto(getObjectMapper(), uriInfo.getQueryParameters());
 
     ProcessEngine engine = getProcessEngine();
     TaskQuery query = queryDto.toQuery(engine);
 
     // get list of tasks
-    List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query);
+    List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query, evaluateFormKey);
 
     // get total count
     long count = query.count();
@@ -96,11 +99,16 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
   @Override
   public List<TaskDto> queryTasks(TaskQueryDto queryDto, Integer firstResult,
       Integer maxResults) {
+    return queryTasksInternal(queryDto, firstResult, maxResults, true);
+  }
+
+  private List<TaskDto> queryTasksInternal(TaskQueryDto queryDto, Integer firstResult,
+      Integer maxResults, boolean evaluateFormKey) {
     ProcessEngine engine = getProcessEngine();
     queryDto.setObjectMapper(getObjectMapper());
     TaskQuery query = queryDto.toQuery(engine);
 
-    List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query);
+    List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query, evaluateFormKey);
 
 
     boolean withTaskVariables = Boolean.TRUE.equals(queryDto.getWithTaskVariablesInReturn());
@@ -117,9 +125,14 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
   }
 
   protected List<Task> executeTaskQuery(Integer firstResult, Integer maxResults, TaskQuery query) {
+    return executeTaskQuery(firstResult, maxResults, query, true);
+  }
+
+  protected List<Task> executeTaskQuery(Integer firstResult, Integer maxResults, TaskQuery query,
+                                        boolean evaluateFormKey) {
 
     // enable initialization of form key:
-    query.initializeFormKeys();
+    query.initializeFormKeys(evaluateFormKey);
     return QueryUtil.list(query, firstResult, maxResults);
   }
 
@@ -146,9 +159,10 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
   public TaskResource getTask(String id,
                               boolean withCommentAttachmentInfo,
                               boolean withTaskVariablesInReturn,
-                              boolean withTaskLocalVariablesInReturn) {
+                              boolean withTaskLocalVariablesInReturn,
+                              boolean evaluateFormKey) {
     return new TaskResourceImpl(getProcessEngine(), id, relativeRootResourcePath, getObjectMapper(),
-        withCommentAttachmentInfo, withTaskVariablesInReturn, withTaskLocalVariablesInReturn);
+        withCommentAttachmentInfo, withTaskVariablesInReturn, withTaskLocalVariablesInReturn, evaluateFormKey);
   }
 
   @Override

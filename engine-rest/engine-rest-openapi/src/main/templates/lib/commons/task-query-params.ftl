@@ -697,6 +697,13 @@
       location = "query"
       type = "boolean"
       defaultValue = "false"
-      last = last
       desc = "Indicates if all the local variables visible from task should be retrieved. Value may only be `true`, as
              `false` is the default behavior." />
+
+  <@lib.parameter name = "evaluateFormKey"
+      location = "query"
+      type = "boolean"
+      defaultValue = "true"
+      last = last
+      desc = "Indicates whether the form key should be evaluated when returning the task. If set to `false`,
+              the form key is returned as-is without evaluation. Defaults to `true`." />

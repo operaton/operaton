@@ -39,15 +39,17 @@ public interface TaskRestService {
   TaskResource getTask(@PathParam("id") String id,
                        @QueryParam("withCommentAttachmentInfo") boolean withCommentAttachmentInfo,
                        @QueryParam("withTaskVariablesInReturn") boolean withTaskVariablesInReturn,
-                       @QueryParam("withTaskLocalVariablesInReturn") boolean withTaskLocalVariablesInReturn);
+                       @QueryParam("withTaskLocalVariablesInReturn") boolean withTaskLocalVariablesInReturn,
+                       @QueryParam("evaluateFormKey") @DefaultValue("true") boolean evaluateFormKey);
 
   @GET
   @Produces({MediaType.APPLICATION_JSON, Hal.APPLICATION_HAL_JSON})
   Object getTasks(@Context Request request, @Context UriInfo uriInfo,
-                  @QueryParam("firstResult") Integer firstResult, @QueryParam("maxResults") Integer maxResults);
+                  @QueryParam("firstResult") Integer firstResult, @QueryParam("maxResults") Integer maxResults,
+                  @QueryParam("evaluateFormKey") @DefaultValue("true") boolean evaluateFormKey);
 
   /**
-   * Expects the same parameters as {@link TaskRestService#getTasks(UriInfo, Integer, Integer)} (as
+   * Expects the same parameters as {@link TaskRestService#getTasks(Request, UriInfo, Integer, Integer, boolean)} (as
    * JSON message body) and allows more than one variable check.
    * @param query
    * @param firstResult

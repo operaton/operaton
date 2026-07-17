@@ -14,8 +14,16 @@
         location = "path"
         type = "string"
         required = true
-        last = true
         desc = "The id of the task to be retrieved."/>
+
+    <@lib.parameter
+        name = "evaluateFormKey"
+        location = "query"
+        type = "boolean"
+        defaultValue = "true"
+        last = true
+        desc = "Indicates whether the form key should be evaluated when returning the task. If set to `false`,
+                the form key is returned as-is without evaluation. Defaults to `true`." />
 
   ],
 

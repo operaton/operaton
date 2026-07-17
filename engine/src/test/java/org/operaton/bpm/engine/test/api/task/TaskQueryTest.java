@@ -4970,6 +4970,34 @@ class TaskQueryTest {
   }
 
   @Test
+  void testInitializeFormKeysWithoutEvaluationReturnsRawExpression() {
+    BpmnModelInstance process = Bpmn.createExecutableProcess("process")
+        .operatonHistoryTimeToLive(180)
+        .startEvent()
+      .userTask()
+        .operatonFormKey("${formKey}")
+      .endEvent()
+      .done();
+    testRule.deploy(process);
+
+    Map<String, Object> variables = new HashMap<>();
+    variables.put("formKey", "evaluatedFormKey");
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
+
+    Task evaluatedTask = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .initializeFormKeys()
+        .singleResult();
+    assertThat(evaluatedTask.getFormKey()).isEqualTo("evaluatedFormKey");
+
+    Task rawTask = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .initializeFormKeys(false)
+        .singleResult();
+    assertThat(rawTask.getFormKey()).isEqualTo("${formKey}");
+  }
+
+  @Test
   @Deployment
   void testInitializeFormKeysOperatonFormRef() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("formRefProcess");

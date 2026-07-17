@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.task.Event;
  * {@code TaskService#getTaskEvents} (backed by {@code GetTaskEventsCmd}), for as long
  * as that deprecated API still exists.
  */
-@SuppressWarnings("java:S5738")
+@SuppressWarnings("removal")
 public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
 
   public static final String TYPE_EVENT = "event";

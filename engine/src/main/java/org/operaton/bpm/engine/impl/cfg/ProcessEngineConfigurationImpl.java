@@ -570,6 +570,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    */
   protected boolean standaloneTasksEnabled = true;
 
+  /**
+   * When set to true, the engine validates that the TASK_ID_ referenced by a
+   * variable exists in ACT_RU_TASK before inserting or updating the variable.
+   */
+  protected boolean checkVariableTaskId;
+
   protected boolean enableGracefulDegradationOnContextSwitchFailure = true;
 
   protected BusinessCalendarManager businessCalendarManager;
@@ -4217,6 +4223,15 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public ProcessEngineConfigurationImpl setStandaloneTasksEnabled(boolean standaloneTasksEnabled) {
     this.standaloneTasksEnabled = standaloneTasksEnabled;
+    return this;
+  }
+
+  public boolean isCheckVariableTaskId() {
+    return checkVariableTaskId;
+  }
+
+  public ProcessEngineConfigurationImpl setCheckVariableTaskId(boolean checkVariableTaskId) {
+    this.checkVariableTaskId = checkVariableTaskId;
     return this;
   }
 

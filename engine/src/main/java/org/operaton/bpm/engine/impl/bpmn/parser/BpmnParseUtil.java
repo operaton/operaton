@@ -50,8 +50,8 @@ public final class BpmnParseUtil {
   }
 
   /**
-   * Returns the operaton extension element in the operaton namespace
-   * and the given name.
+   * Returns the extension element in the configured custom extension namespace
+   * aliases and the given name.
    *
     * @param element the parent element of the extension element
    * @param extensionElementName the name of the extension element to find

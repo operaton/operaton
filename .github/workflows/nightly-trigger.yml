@@ -65,12 +65,34 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       actions: write
+      contents: read
     strategy:
       fail-fast: false
       matrix:
         branch: ${{ fromJson(needs.detect-release-branches.outputs.all_branches) }}
     steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v7.0.0
+        with:
+          ref: ${{ matrix.branch }}
+          fetch-depth: 0
+
+      - name: Check for recent commits
+        id: check-commits
+        run: |
+          COMMITS=$(git rev-list --since="24 hours ago" HEAD)
+          if [ -z "$COMMITS" ]; then
+            echo "🔎❌ No commits in the last 24 hours on ${{ matrix.branch }}."
+            echo "recent_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "🔎✔️ Commits within the last 24 hours on ${{ matrix.branch }}."
+            echo "recent_changes=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Trigger Integration Build Workflow
+        # Only a scheduled (nightly) run honors the recent-commits gate.
+        # A manual dispatch of this workflow (e.g. for testing) must always trigger.
+        if: ${{ github.event_name != 'schedule' || steps.check-commits.outputs.recent_changes == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -100,6 +122,10 @@ jobs:
           else
             echo "✅ Successfully triggered integration build for ${{ matrix.branch }}"
           fi
+
+      - name: Skip notice
+        if: ${{ github.event_name == 'schedule' && steps.check-commits.outputs.recent_changes == 'false' }}
+        run: echo "⏭️ Skipping integration build for ${{ matrix.branch }}, no commits in the last 24 hours."
 
   trigger-builds:
     name: Trigger Build for ${{ matrix.branch }}

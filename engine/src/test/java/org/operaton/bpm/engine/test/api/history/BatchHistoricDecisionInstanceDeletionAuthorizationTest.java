@@ -137,10 +137,7 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
   @AfterEach
   void tearDown() {
     authRule.deleteUsersAndGroups();
-  }
 
-  @AfterEach
-  void removeBatches() {
     for (Batch batch : managementService.createBatchQuery().list()) {
       managementService.deleteBatch(batch.getId(), true);
     }

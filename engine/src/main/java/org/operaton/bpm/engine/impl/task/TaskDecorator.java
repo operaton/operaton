@@ -202,7 +202,7 @@ public class TaskDecorator {
    * Extract a candidate list from a string.
    */
   protected List<String> extractCandidates(String str) {
-    return Arrays.asList(str.split("[\\s]*,[\\s]*"));
+    return Arrays.asList(str.split("\\s*+,\\s*+"));
   }
 
   // getters ///////////////////////////////////////////////////////////////

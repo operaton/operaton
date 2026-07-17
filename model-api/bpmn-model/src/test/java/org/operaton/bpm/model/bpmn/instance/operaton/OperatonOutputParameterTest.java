@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
@@ -44,7 +45,21 @@ class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return List.of(new AttributeAssumption(OPERATON_NS, "name", false, true));
+    return List.of(
+      new AttributeAssumption(OPERATON_NS, "name", false, true),
+      new AttributeAssumption(OPERATON_NS, "isTransient", false, false, false)
+    );
+  }
+
+  @Test
+  void testOperatonTransientAttribute() {
+    OperatonOutputParameter outputParamElement = modelInstance.newInstance(OperatonOutputParameter.class);
+
+    assertThat(outputParamElement.isOperatonTransient()).isFalse();
+
+    outputParamElement.setOperatonTransient(true);
+
+    assertThat(outputParamElement.isOperatonTransient()).isTrue();
   }
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")

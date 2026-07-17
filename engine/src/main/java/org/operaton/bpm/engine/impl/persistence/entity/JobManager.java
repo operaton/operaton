@@ -72,6 +72,8 @@ public class JobManager extends AbstractManager {
   private static final String PRIORITY = "priority";
   private static final String DEPLOYMENT_IDS = "deploymentIds";
   private static final String NOW = "now";
+  private static final String SKIP_LOCKED = "skipLocked";
+  private static final String SELECT_NEXT_JOBS_TO_EXECUTE = "selectNextJobsToExecute";
   private static final String ALWAYS_SET_DUE_DATE = "alwaysSetDueDate";
   private static final String DEPLOYMENT_AWARE = "deploymentAware";
   private static final String JOB_PRIORITY_MIN = "jobPriorityMin";
@@ -252,9 +254,60 @@ public class JobManager extends AbstractManager {
     params.put("orderingProperties", orderingProperties);
     // don't apply default sorting
     params.put("applyOrdering", !orderingProperties.isEmpty());
+    boolean skipLocked = engineConfiguration.isJobExecutorAcquireWithSkipLocked();
+    params.put(SKIP_LOCKED, skipLocked);
     params.put("applyExclusiveOverProcessHierarchies", engineConfiguration.isJobExecutorAcquireExclusiveOverProcessHierarchies());
 
-    return getDbEntityManager().selectList("selectNextJobsToExecute", params, page);
+    if (skipLocked) {
+      return findNextJobsToExecuteWithSkipLocked(params, page);
+    } else {
+      return getDbEntityManager().selectList(SELECT_NEXT_JOBS_TO_EXECUTE, params, page);
+    }
+  }
+
+  /**
+   * When skipLocked is enabled, exclusive and non-exclusive jobs are acquired separately.
+   * Exclusive jobs are acquired without SKIP LOCKED to preserve contention-based serialization
+   * that prevents two threads from grabbing different exclusive jobs for the same process instance.
+   * Non-exclusive jobs are acquired with SKIP LOCKED for the concurrency benefit.
+   */
+  protected List<AcquirableJobEntity> findNextJobsToExecuteWithSkipLocked(Map<String, Object> params, Page page) {
+    // 1. Exclusive jobs WITHOUT SKIP LOCKED
+    Map<String, Object> exclusiveParams = new HashMap<>(params);
+    exclusiveParams.put(SKIP_LOCKED, false);
+    exclusiveParams.put("exclusiveOnly", true);
+    List<AcquirableJobEntity> exclusiveJobs = getDbEntityManager()
+        .selectList(SELECT_NEXT_JOBS_TO_EXECUTE, exclusiveParams, page);
+
+    int remaining = page.getMaxResults() - exclusiveJobs.size();
+    List<AcquirableJobEntity> result = new ArrayList<>(exclusiveJobs);
+
+    // 2. Non-exclusive jobs WITH SKIP LOCKED
+    if (remaining > 0) {
+      Map<String, Object> nonExclusiveParams = new HashMap<>(params);
+      nonExclusiveParams.put(SKIP_LOCKED, true);
+      nonExclusiveParams.put("nonExclusiveOnly", true);
+      result.addAll(selectNextJobsToExecuteWithSkipLocked(nonExclusiveParams, remaining));
+    }
+
+    return result;
+  }
+
+  /**
+   * Oracle and DB2 apply a SQL row limit before lock-skipping, so a limited query
+   * returns fewer rows than requested whenever the first candidates are locked —
+   * in the worst case none although free jobs exist. Their statements therefore
+   * emit no SQL row limit when skipLocked is active; instead the cursor is cut off
+   * after maxResults rows. Both databases lock rows as they are fetched under
+   * lock-skipping reads, so only the returned rows end up locked.
+   */
+  @SuppressWarnings("unchecked")
+  protected List<AcquirableJobEntity> selectNextJobsToExecuteWithSkipLocked(Map<String, Object> params, int maxResults) {
+    String databaseType = Context.getProcessEngineConfiguration().getDatabaseType();
+    if (DbSqlSessionFactory.ORACLE.equals(databaseType) || DbSqlSessionFactory.DB2.equals(databaseType)) {
+      return getDbEntityManager().selectListCursorLimited(SELECT_NEXT_JOBS_TO_EXECUTE, params, maxResults);
+    }
+    return getDbEntityManager().selectList(SELECT_NEXT_JOBS_TO_EXECUTE, params, new Page(0, maxResults));
   }
 
   @SuppressWarnings("unchecked")

@@ -21,9 +21,11 @@ import java.util.Set;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
+import org.operaton.bpm.engine.rest.dto.repository.DeleteDeploymentsDto;
 import org.operaton.bpm.engine.rest.dto.repository.DeploymentDto;
 import org.operaton.bpm.engine.rest.mapper.MultipartFormData;
 import org.operaton.bpm.engine.rest.sub.repository.DeploymentResource;
@@ -57,5 +59,11 @@ public interface DeploymentRestService {
   @Path("/registered")
   @Produces(MediaType.APPLICATION_JSON)
   Set<String> getRegisteredDeployments(@Context UriInfo uriInfo);
+
+  @POST
+  @Path("/delete")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  Response deleteDeployments(DeleteDeploymentsDto deleteDeploymentsDto);
 
 }

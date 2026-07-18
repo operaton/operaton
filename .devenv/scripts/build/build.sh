@@ -50,6 +50,9 @@ parse_args() {
       --affected-by=*)
         AFFECTED_BY="${1#*=}"
         ;;
+      --webapps-only)
+        CHANGED_MODULES="webapps/assembly"
+        ;;
       --reports)
         REPORT_PLUGINS="true"
         ;;

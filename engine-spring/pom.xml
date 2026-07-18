@@ -10,6 +10,14 @@
   <artifactId>operaton-engine-spring</artifactId>
   <name>Operaton - Engine - Spring</name>
   <description>${project.name}</description>
+  <properties>
+    <!-- Run tests across multiple concurrent JVM forks (0.7 * available CPU cores).
+         Safe here because every test's Spring context XML now has its own unique H2
+         in-memory database name (previously many shared "jdbc:h2:mem:activiti" /
+         "jdbc:h2:mem:operaton", a latent collision risk once tests run close together
+         in wall-clock time under forking). -->
+    <surefire.forkCount>0.7C</surefire.forkCount>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>

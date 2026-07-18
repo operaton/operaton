@@ -11,12 +11,14 @@
   <name>Operaton - Engine - Spring</name>
   <description>${project.name}</description>
   <properties>
-    <!-- Run tests across multiple concurrent JVM forks (0.7 * available CPU cores).
+    <!-- Run tests across multiple concurrent JVM forks (0.5 * available CPU cores).
          Safe here because every test's Spring context XML now has its own unique H2
          in-memory database name (previously many shared "jdbc:h2:mem:activiti" /
          "jdbc:h2:mem:operaton", a latent collision risk once tests run close together
-         in wall-clock time under forking). -->
-    <surefire.forkCount>0.7C</surefire.forkCount>
+         in wall-clock time under forking). 0.5C chosen empirically - see engine/pom.xml
+         for the fork-count tuning data (0.5C measured faster than 0.7C/1C/1.5C there;
+         the same pattern held here: 0.5C measurably faster than 0.7C). -->
+    <surefire.forkCount>0.5C</surefire.forkCount>
   </properties>
   <dependencyManagement>
     <dependencies>

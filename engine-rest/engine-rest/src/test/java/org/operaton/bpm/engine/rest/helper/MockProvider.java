@@ -751,6 +751,7 @@ public abstract class MockProvider {
   public static final String EXAMPLE_HIST_INCIDENT_ROOT_PROC_INST_ID = "aRootProcInstId";
   public static final String EXAMPLE_HIST_INCIDENT_CAUSE_INCIDENT_ID = "aCauseIncidentId";
   public static final String EXAMPLE_HIST_INCIDENT_ROOT_CAUSE_INCIDENT_ID = "aRootCauseIncidentId";
+  public static final String EXAMPLE_HIST_ROOT_CAUSE_INCIDENT_MESSAGE = "aRootCauseIncidentMessage";
   public static final String EXAMPLE_HIST_INCIDENT_CONFIGURATION = "aConfiguration";
   public static final String EXAMPLE_HIST_INCIDENT_HISTORY_CONFIGURATION = "aHistoryConfiguration";
   public static final String EXAMPLE_HIST_INCIDENT_MESSAGE = "anIncidentMessage";
@@ -2669,6 +2670,7 @@ public abstract class MockProvider {
     when(incident.getRemovalTime()).thenReturn(DateTimeUtil.parseDate(EXAMPLE_HIST_INCIDENT_REMOVAL_TIME));
     when(incident.getRootProcessInstanceId()).thenReturn(EXAMPLE_HIST_INCIDENT_ROOT_PROC_INST_ID);
     when(incident.getAnnotation()).thenReturn(EXAMPLE_USER_OPERATION_ANNOTATION);
+    when(incident.getRootCauseIncidentMessage()).thenReturn(EXAMPLE_HIST_ROOT_CAUSE_INCIDENT_MESSAGE);
 
     return incident;
   }

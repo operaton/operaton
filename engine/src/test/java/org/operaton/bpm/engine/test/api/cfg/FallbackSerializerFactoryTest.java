@@ -59,8 +59,8 @@ class FallbackSerializerFactoryTest {
     // given
     // that the process engine is configured with a fallback serializer factory
      ProcessEngineConfigurationImpl engineConfiguration = new StandaloneInMemProcessEngineConfiguration()
-       .setJdbcUrl("jdbc:h2:mem:operaton-forceclose")
-       .setProcessEngineName("engine-forceclose");
+       .setJdbcUrl("jdbc:h2:mem:operaton-fallbackserializer")
+       .setProcessEngineName("engine-fallbackserializer");
 
      engineConfiguration.setFallbackSerializerFactory(new ExampleSerializerFactory());
 
@@ -87,8 +87,8 @@ class FallbackSerializerFactoryTest {
     // that the process engine is configured with a serializer for a certain format
     // and a fallback serializer factory for the same format
      ProcessEngineConfigurationImpl engineConfiguration = new StandaloneInMemProcessEngineConfiguration()
-       .setJdbcUrl("jdbc:h2:mem:operaton-forceclose")
-       .setProcessEngineName("engine-forceclose");
+       .setJdbcUrl("jdbc:h2:mem:operaton-fallbackserializer")
+       .setProcessEngineName("engine-fallbackserializer");
 
      engineConfiguration.setCustomPreVariableSerializers(List.of(new ExampleConstantSerializer()));
      engineConfiguration.setFallbackSerializerFactory(new ExampleSerializerFactory());

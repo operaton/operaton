@@ -20,6 +20,7 @@ from prepare_build import (
     discover_test_jar_producers,
     get_changed_files,
     map_file_to_module,
+    relevant_test_jar_producers,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -313,6 +314,36 @@ class TestCheckNeedsRealFrontend(FixtureRepo):
 
     def test_false_when_closure_has_no_frontend_sensitive_module(self):
         self.assertFalse(check_needs_real_frontend(["clients/java/client"], self.graph()))
+
+
+class TestRelevantTestJarProducers(FixtureRepo):
+    """Only producers whose test-jar could actually be consumed within the
+    current build's scope need the (slower) real-test-compile treatment."""
+
+    def graph(self):
+        return build_module_graph(self.root)
+
+    def test_includes_producer_whose_consumer_is_changed(self):
+        # spin/dataformat-xml-dom depends on spin/core's test-jar
+        relevant = relevant_test_jar_producers(
+            ["spin/core"], ["spin/dataformat-xml-dom"], self.graph())
+        self.assertIn("spin/core", relevant)
+
+    def test_excludes_producer_with_no_consumer_in_scope(self):
+        relevant = relevant_test_jar_producers(
+            ["spin/core"], ["clients/java/client"], self.graph())
+        self.assertNotIn("spin/core", relevant)
+
+    def test_excludes_producer_that_is_itself_changed(self):
+        # spin/core will be rebuilt for real by phase 3 anyway, no prelim needed
+        relevant = relevant_test_jar_producers(
+            ["spin/core"], ["spin/core"], self.graph())
+        self.assertNotIn("spin/core", relevant)
+
+    def test_empty_producers_returns_empty(self):
+        self.assertEqual(
+            relevant_test_jar_producers([], ["spin/dataformat-xml-dom"], self.graph()),
+            [])
 
 
 class TestDiscoverTestJarProducers(FixtureRepo):

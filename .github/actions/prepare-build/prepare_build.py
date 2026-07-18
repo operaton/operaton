@@ -143,6 +143,17 @@ def discover_test_jar_producers(root):
     return sorted(producers)
 
 
+def relevant_test_jar_producers(producers, changed_modules, graph):
+    """Narrow producers to ones whose real test-jar actually matters for the
+    current build: excludes producers with no consumer in the affected
+    closure (nothing needs their test-jar), and producers that are
+    themselves in the closure (phase 3 rebuilds them for real anyway, so no
+    preliminary pass is needed for those)."""
+    closure = set(changed_modules) | compute_downstream(graph, changed_modules)
+    return [p for p in producers
+            if p not in closure and compute_downstream(graph, [p]) & closure]
+
+
 def map_file_to_module(path, module_dirs):
     """Deepest module directory containing the file, or None."""
     module_set = set(module_dirs)
@@ -322,9 +333,12 @@ def main():
                         help="local mode: classify git diff vs merge-base(REF, HEAD)")
     parser.add_argument("--analyze-recent", type=int, metavar="N",
                         help="replay classification over the last N merged PRs")
-    parser.add_argument("--list-test-jar-producers", action="store_true",
+    parser.add_argument("--list-test-jar-producers", nargs="?", const="",
+                        metavar="CHANGED_MODULES",
                         help="print comma-separated modules whose test-jar is a "
-                             "real compile-time dependency elsewhere")
+                             "real compile-time dependency elsewhere. With a "
+                             "comma-separated CHANGED_MODULES value, narrows to "
+                             "producers actually relevant to that build's closure")
     parser.add_argument("--needs-real-frontend", metavar="MODULES",
                         help="print true/false: do MODULES (comma-separated) or "
                              "their dependents need the real built webapp frontend")
@@ -334,8 +348,14 @@ def main():
     token = os.environ.get("GITHUB_TOKEN", "")
     output_file = os.environ.get("GITHUB_OUTPUT", "/dev/stdout")
 
-    if args.list_test_jar_producers:
-        print(",".join(discover_test_jar_producers(git_toplevel())))
+    if args.list_test_jar_producers is not None:
+        repo_root = git_toplevel()
+        producers = discover_test_jar_producers(repo_root)
+        changed = [m for m in args.list_test_jar_producers.split(",") if m]
+        if changed:
+            producers = relevant_test_jar_producers(
+                producers, changed, build_module_graph(repo_root))
+        print(",".join(producers))
         return
 
     if args.needs_real_frontend is not None:

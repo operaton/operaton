@@ -73,7 +73,9 @@ parse_args() {
 
 ##########################################################################
 run_mvn() {
-  local cmd="$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $*"
+  local profiles_csv="$1"
+  shift
+  local cmd="$RUNNER -P$profiles_csv $*"
   echo "ℹ️ $cmd"
   if ! $cmd; then
     echo "❌ Error: Build failed"
@@ -129,6 +131,18 @@ case "$BUILD_PROFILE" in
     ;;
 esac
 
+PROFILES_CSV=$(IFS=,; echo "${PROFILES[*]}")
+
+# check-api-compatibility binds the clirr-maven-plugin (API compatibility
+# report against the previous release) in ~17 public-API modules. It's
+# irrelevant to phases that only need real artifacts installed quickly
+# (compile-only passes), so those use this narrower profile list instead.
+FAST_PROFILES=()
+for p in "${PROFILES[@]}"; do
+  [ "$p" != "check-api-compatibility" ] && FAST_PROFILES+=("$p")
+done
+FAST_PROFILES_CSV=$(IFS=,; echo "${FAST_PROFILES[*]}")
+
 TEST_ARGS=()
 if [ "$SKIP_ENGINE_TESTS" = "true" ]; then
   TEST_ARGS+=(-Dtest.excludes=org/operaton/bpm/engine)
@@ -152,39 +166,44 @@ if [ -n "$CHANGED_MODULES" ]; then
   # unless the affected closure could actually observe the built frontend
   # (e.g. spring-boot-starter/starter-webapp boots a real server and asserts
   # a page returns 200, which 404s without the real npm build) — computed via
-  # the same pom dependency graph used for the rest of this feature.
+  # the same pom dependency graph used for the rest of this feature. Both
+  # passes also drop check-api-compatibility (see FAST_PROFILES above) since
+  # neither runs any tests or represents a real verification of the change.
   #
   # Caveat: maven-jar-plugin's test-jar goal also honors maven.test.skip and
   # silently produces NO artifact at all (not even an empty jar) when test
-  # sources aren't compiled. A handful of modules' test-jars are real
-  # compile-time dependencies of other modules (e.g. engine-cdi's
-  # "tests-quarkus" classified jar is needed by quarkus-extension/engine/qa)
-  # — skip them reactor-wide and that resolution fails inside the very same
-  # build. So those producer modules are built for real (tests compiled +
-  # packaged, only *execution* skipped) in a small preliminary pass; the
-  # local repo then already has their real test-jars before the fast
-  # full-reactor pass rebuilds (and reinstalls everything else) with tests
-  # skipped.
+  # sources aren't compiled. A few modules' test-jars are real compile-time
+  # dependencies of other modules (e.g. engine-cdi's "tests-quarkus"
+  # classified jar is needed by quarkus-extension/engine/qa) — skip them
+  # reactor-wide and that resolution fails inside the very same build. So
+  # those producer modules are built for real (tests compiled + packaged,
+  # only *execution* skipped, deliberately -DskipTests not maven.test.skip
+  # here) in a small preliminary pass; the local repo then already has their
+  # real test-jars before the fast full-reactor pass rebuilds (and
+  # reinstalls everything else) with tests skipped. Narrowed to only
+  # producers whose test-jar is actually reachable from this build's
+  # affected closure — e.g. a clients/java/client-only change needs none of
+  # them.
   PREPARE_PY="$PROJECT_ROOT/.github/actions/prepare-build/prepare_build.py"
-  TEST_JAR_PRODUCERS=$(python3 "$PREPARE_PY" --list-test-jar-producers) || exit 1
+  TEST_JAR_PRODUCERS=$(python3 "$PREPARE_PY" --list-test-jar-producers="$CHANGED_MODULES") || exit 1
   NEEDS_REAL_FRONTEND=$(python3 "$PREPARE_PY" --needs-real-frontend="$CHANGED_MODULES") || exit 1
   FRONTEND_ARGS=(-Dskip.frontend.build=true)
   if [ "$NEEDS_REAL_FRONTEND" = "true" ]; then
     FRONTEND_ARGS=()
   fi
   if [ -n "$TEST_JAR_PRODUCERS" ]; then
-    run_mvn install -pl "$TEST_JAR_PRODUCERS" -am -DskipTests "${FRONTEND_ARGS[@]}" "${MVN_ARGS[@]}"
+    run_mvn "$FAST_PROFILES_CSV" install -pl "$TEST_JAR_PRODUCERS" -am -DskipTests "${FRONTEND_ARGS[@]}" "${MVN_ARGS[@]}"
   fi
-  run_mvn clean install -Dmaven.test.skip=true "${FRONTEND_ARGS[@]}" "${MVN_ARGS[@]}"
+  run_mvn "$FAST_PROFILES_CSV" clean install -Dmaven.test.skip=true "${FRONTEND_ARGS[@]}" "${MVN_ARGS[@]}"
   if [ "$SKIP_TESTS" != "true" ]; then
-    run_mvn verify -pl "$CHANGED_MODULES" -amd "${TEST_ARGS[@]}" "${MVN_ARGS[@]}"
+    run_mvn "$PROFILES_CSV" verify -pl "$CHANGED_MODULES" -amd "${TEST_ARGS[@]}" "${MVN_ARGS[@]}"
   fi
 else
   FULL_ARGS=(clean install)
   if [ "$SKIP_TESTS" = "true" ]; then
     FULL_ARGS+=(-DskipTests)
   fi
-  run_mvn "${FULL_ARGS[@]}" "${TEST_ARGS[@]}" "${MVN_ARGS[@]}"
+  run_mvn "$PROFILES_CSV" "${FULL_ARGS[@]}" "${TEST_ARGS[@]}" "${MVN_ARGS[@]}"
 fi
 
 popd > /dev/null

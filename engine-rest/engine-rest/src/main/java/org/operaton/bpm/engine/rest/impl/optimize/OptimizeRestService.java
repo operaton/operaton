@@ -27,22 +27,12 @@ import jakarta.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.history.HistoricDecisionInstance;
-import org.operaton.bpm.engine.history.HistoricIncident;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstance;
-import org.operaton.bpm.engine.history.HistoricVariableUpdate;
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.optimize.OptimizeHistoricIdentityLinkLogEntity;
 import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
-import org.operaton.bpm.engine.rest.dto.history.HistoricDecisionInstanceDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricIncidentDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricTaskInstanceDto;
-import org.operaton.bpm.engine.rest.dto.history.UserOperationLogEntryDto;
+import org.operaton.bpm.engine.rest.dto.history.*;
 import org.operaton.bpm.engine.rest.dto.history.optimize.OptimizeHistoricActivityInstanceDto;
 import org.operaton.bpm.engine.rest.dto.history.optimize.OptimizeHistoricIdentityLinkLogDto;
 import org.operaton.bpm.engine.rest.dto.history.optimize.OptimizeHistoricVariableUpdateDto;

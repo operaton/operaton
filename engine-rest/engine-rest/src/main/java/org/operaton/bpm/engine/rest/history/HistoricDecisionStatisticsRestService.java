@@ -17,11 +17,7 @@
 package org.operaton.bpm.engine.rest.history;
 
 import java.util.List;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 import org.operaton.bpm.engine.rest.dto.history.HistoricDecisionInstanceStatisticsDto;

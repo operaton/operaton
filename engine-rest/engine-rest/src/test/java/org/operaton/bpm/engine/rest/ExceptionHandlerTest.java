@@ -28,9 +28,7 @@ import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 
 public class ExceptionHandlerTest extends AbstractRestServiceTest {
 

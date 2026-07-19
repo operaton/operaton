@@ -19,11 +19,12 @@ package org.operaton.bpm.engine.rest.util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 import org.mockito.exceptions.base.MockitoAssertionError;
 
 import static org.operaton.bpm.engine.rest.helper.NoIntermediaryInvocation.immediatelyAfter;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Thorben Lindhauer
@@ -35,7 +36,7 @@ class NoIntermediaryInvocationTest {
 
   @BeforeEach
   void setUp() {
-    foo = Mockito.mock(Foo.class);
+    foo = mock(Foo.class);
   }
 
   @Test
@@ -46,7 +47,7 @@ class NoIntermediaryInvocationTest {
     foo.getBar();
 
     // when
-    InOrder inOrder = Mockito.inOrder(foo);
+    InOrder inOrder = inOrder(foo);
     inOrder.verify(foo).getFoo();
 
     // then
@@ -61,7 +62,7 @@ class NoIntermediaryInvocationTest {
     foo.getBaz();
 
     // when
-    InOrder inOrder = Mockito.inOrder(foo);
+    InOrder inOrder = inOrder(foo);
     inOrder.verify(foo).getFoo();
 
     // then
@@ -75,7 +76,7 @@ class NoIntermediaryInvocationTest {
     foo.getFoo();
 
     // when
-    InOrder inOrder = Mockito.inOrder(foo);
+    InOrder inOrder = inOrder(foo);
     inOrder.verify(foo).getFoo();
 
     // then
@@ -90,7 +91,7 @@ class NoIntermediaryInvocationTest {
     foo.getFoo();
 
     // when
-    InOrder inOrder = Mockito.inOrder(foo);
+    InOrder inOrder = inOrder(foo);
     inOrder.verify(foo).getFoo();
 
     // then
@@ -106,7 +107,7 @@ class NoIntermediaryInvocationTest {
     foo.getBar();
 
     // when
-    InOrder inOrder = Mockito.inOrder(foo);
+    InOrder inOrder = inOrder(foo);
     inOrder.verify(foo).getFoo();
 
     // then

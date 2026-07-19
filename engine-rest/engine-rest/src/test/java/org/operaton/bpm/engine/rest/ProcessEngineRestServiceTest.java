@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -31,41 +26,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.mockito.Mockito;
 
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
-import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricActivityStatistics;
-import org.operaton.bpm.engine.history.HistoricActivityStatisticsQuery;
-import org.operaton.bpm.engine.history.HistoricDetail;
-import org.operaton.bpm.engine.history.HistoricDetailQuery;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
-import org.operaton.bpm.engine.history.HistoricIncident;
-import org.operaton.bpm.engine.history.HistoricIncidentQuery;
-import org.operaton.bpm.engine.history.HistoricJobLog;
-import org.operaton.bpm.engine.history.HistoricJobLogQuery;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricTaskInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricVariableInstance;
-import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricVariableUpdate;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.identity.User;
@@ -73,28 +40,11 @@ import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.HistoricActivityStatisticsQueryImpl;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.management.JobDefinitionQuery;
-import org.operaton.bpm.engine.repository.CaseDefinition;
-import org.operaton.bpm.engine.repository.CaseDefinitionQuery;
-import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.repository.DeploymentQuery;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.engine.repository.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.ExecutionQuery;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.IncidentQuery;
-import org.operaton.bpm.engine.runtime.MessageCorrelationBuilder;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.Variables;
@@ -104,16 +54,9 @@ import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 public class ProcessEngineRestServiceTest extends
     AbstractRestServiceTest {
@@ -350,7 +293,7 @@ public class ProcessEngineRestServiceTest extends
     when(mockMessageCorrelationBuilder.processInstanceId(anyString())).thenReturn(mockMessageCorrelationBuilder);
     when(mockMessageCorrelationBuilder.processInstanceBusinessKey(anyString())).thenReturn(mockMessageCorrelationBuilder);
     when(mockMessageCorrelationBuilder.processInstanceVariableEquals(anyString(), any())).thenReturn(mockMessageCorrelationBuilder);
-    when(mockMessageCorrelationBuilder.setVariables(Mockito.any())).thenReturn(mockMessageCorrelationBuilder);
+    when(mockMessageCorrelationBuilder.setVariables(any())).thenReturn(mockMessageCorrelationBuilder);
     when(mockMessageCorrelationBuilder.setVariable(anyString(), any())).thenReturn(mockMessageCorrelationBuilder);
 
   }

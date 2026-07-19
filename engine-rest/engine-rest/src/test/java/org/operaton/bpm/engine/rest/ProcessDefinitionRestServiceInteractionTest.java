@@ -20,13 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -44,13 +38,7 @@ import org.mockito.stubbing.Answer;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
@@ -58,19 +46,11 @@ import org.operaton.bpm.engine.impl.form.validator.FormFieldValidationException;
 import org.operaton.bpm.engine.impl.repository.CalledProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.bpm.engine.repository.CalledProcessDefinition;
-import org.operaton.bpm.engine.repository.DeleteProcessDefinitionsBuilder;
-import org.operaton.bpm.engine.repository.DeleteProcessDefinitionsSelectBuilder;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
+import org.operaton.bpm.engine.repository.*;
 import org.operaton.bpm.engine.rest.dto.HistoryTimeToLiveDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
-import org.operaton.bpm.engine.rest.helper.EqualsMap;
-import org.operaton.bpm.engine.rest.helper.EqualsVariableMap;
-import org.operaton.bpm.engine.rest.helper.ErrorMessageHelper;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.helper.VariableTypeHelper;
+import org.operaton.bpm.engine.rest.helper.*;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsObjectValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
@@ -91,22 +71,10 @@ import static io.restassured.RestAssured.given;
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestServiceTest {
@@ -827,7 +795,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
   @Test
   void testUnsuccessfulSubmitStartForm() {
-    doThrow(new ProcessEngineException("expected exception")).when(formServiceMock).submitStartForm(any(String.class), Mockito.any());
+    doThrow(new ProcessEngineException("expected exception")).when(formServiceMock).submitStartForm(any(String.class), any());
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -841,7 +809,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   @Test
   void testSubmitFormByIdThrowsAuthorizationException() {
     String message = "expected exception";
-    doThrow(new AuthorizationException(message)).when(formServiceMock).submitStartForm(any(String.class), Mockito.any());
+    doThrow(new AuthorizationException(message)).when(formServiceMock).submitStartForm(any(String.class), any());
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
@@ -858,7 +826,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   @Test
   void testSubmitFormByIdThrowsFormFieldValidationException() {
     String message = "expected exception";
-    doThrow(new FormFieldValidationException("form-exception", message)).when(formServiceMock).submitStartForm(any(String.class), Mockito.any());
+    doThrow(new FormFieldValidationException("form-exception", message)).when(formServiceMock).submitStartForm(any(String.class), any());
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
@@ -3087,7 +3055,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
   @Test
   void testUnsuccessfulSubmitStartForm_ByKey() {
-    doThrow(new ProcessEngineException("expected exception")).when(formServiceMock).submitStartForm(any(String.class), Mockito.any());
+    doThrow(new ProcessEngineException("expected exception")).when(formServiceMock).submitStartForm(any(String.class), any());
 
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -3101,7 +3069,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   @Test
   void testSubmitFormByKeyThrowsAuthorizationException() {
     String message = "expected exception";
-    doThrow(new AuthorizationException(message)).when(formServiceMock).submitStartForm(any(String.class), Mockito.any());
+    doThrow(new AuthorizationException(message)).when(formServiceMock).submitStartForm(any(String.class), any());
 
     given()
       .pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
@@ -3118,7 +3086,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   @Test
   void testSubmitFormByKeyThrowsFormFieldValidationException() {
     String message = "expected exception";
-    doThrow(new FormFieldValidationException("form-exception", message)).when(formServiceMock).submitStartForm(any(String.class), Mockito.any());
+    doThrow(new FormFieldValidationException("form-exception", message)).when(formServiceMock).submitStartForm(any(String.class), any());
 
     given()
       .pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
@@ -4100,7 +4068,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   @Test
   void shouldReturnErrorCodeWhenSubmittingForm() {
     doThrow(new ProcessEngineException("foo", 123))
-        .when(formServiceMock).submitStartForm(any(String.class), Mockito.any());
+        .when(formServiceMock).submitStartForm(any(String.class), any());
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)

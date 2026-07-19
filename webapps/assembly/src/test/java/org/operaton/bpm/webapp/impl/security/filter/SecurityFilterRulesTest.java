@@ -28,7 +28,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.impl.DefaultCockpitRuntimeDelegate;
@@ -40,6 +39,7 @@ import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
 
 /**
  *
@@ -77,7 +77,7 @@ class SecurityFilterRulesTest {
   @BeforeEach
   void createEngine()
   {
-    final ProcessEngine engine = Mockito.mock(ProcessEngine.class);
+    final ProcessEngine engine = mock(ProcessEngine.class);
 
     Cockpit.setCockpitRuntimeDelegate(new DefaultCockpitRuntimeDelegate() {
 

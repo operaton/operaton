@@ -118,8 +118,12 @@ public abstract class ConcurrencyTestHelper {
       this.executingThread = executingThread;
     }
 
+    // Bounded so a broken sync choreography fails the test instead of blocking
+    // the fork forever
+    public static final long DEFAULT_SYNC_TIMEOUT_MILLIS = 5 * 60 * 1000L;
+
     public void waitForSync() {
-      waitForSync(Long.MAX_VALUE);
+      waitForSync(DEFAULT_SYNC_TIMEOUT_MILLIS);
     }
 
     public void waitForSync(long timeout) {
@@ -132,13 +136,19 @@ public abstract class ConcurrencyTestHelper {
           }
         }
         try {
-          if (!syncAvailable) {
+          long deadline = System.currentTimeMillis() + timeout;
+          while (!syncAvailable) {
+            long remaining = deadline - System.currentTimeMillis();
+            if (remaining <= 0) {
+              fail("timed out after " + timeout + " ms waiting for sync");
+            }
             try {
-              wait(timeout);
+              wait(remaining);
             } catch (InterruptedException e) {
               if (!reportFailure || exception == null) {
                 fail("unexpected interruption");
               }
+              return;
             }
           }
         } finally {

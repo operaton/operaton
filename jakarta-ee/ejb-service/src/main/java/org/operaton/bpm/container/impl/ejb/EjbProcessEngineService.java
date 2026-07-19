@@ -18,7 +18,6 @@ package org.operaton.bpm.container.impl.ejb;
 
 import java.util.List;
 import java.util.Set;
-import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
@@ -42,32 +41,24 @@ public class EjbProcessEngineService implements ProcessEngineService {
   @EJB
   protected EjbBpmPlatformBootstrap ejbBpmPlatform;
 
-  /** the processEngineServiceDelegate */
-  protected ProcessEngineService processEngineServiceDelegate;
-
-  @PostConstruct
-  protected void initProcessEngineServiceDelegate() {
-    processEngineServiceDelegate = ejbBpmPlatform.getProcessEngineService();
-  }
-
   @Override
   public ProcessEngine getDefaultProcessEngine() {
-    return processEngineServiceDelegate.getDefaultProcessEngine();
+    return ejbBpmPlatform.getProcessEngineService().getDefaultProcessEngine();
   }
 
   @Override
   public List<ProcessEngine> getProcessEngines() {
-    return processEngineServiceDelegate.getProcessEngines();
+    return ejbBpmPlatform.getProcessEngineService().getProcessEngines();
   }
 
   @Override
   public Set<String> getProcessEngineNames() {
-    return processEngineServiceDelegate.getProcessEngineNames();
+    return ejbBpmPlatform.getProcessEngineService().getProcessEngineNames();
   }
 
   @Override
   public ProcessEngine getProcessEngine(String name) {
-    return processEngineServiceDelegate.getProcessEngine(name);
+    return ejbBpmPlatform.getProcessEngineService().getProcessEngine(name);
   }
 
 }

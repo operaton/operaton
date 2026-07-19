@@ -17,7 +17,6 @@
 package org.operaton.bpm.container.impl.ejb;
 
 import java.util.Set;
-import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
@@ -41,22 +40,14 @@ public class EjbProcessApplicationService implements ProcessApplicationService {
   @EJB
   protected EjbBpmPlatformBootstrap ejbBpmPlatform;
 
-  /** the processApplicationServiceDelegate */
-  protected ProcessApplicationService processApplicationServiceDelegate;
-
-  @PostConstruct
-  protected void initProcessEngineServiceDelegate() {
-    processApplicationServiceDelegate = ejbBpmPlatform.getProcessApplicationService();
-  }
-
   @Override
   public Set<String> getProcessApplicationNames() {
-    return processApplicationServiceDelegate.getProcessApplicationNames();
+    return ejbBpmPlatform.getProcessApplicationService().getProcessApplicationNames();
   }
 
   @Override
   public ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
-    return processApplicationServiceDelegate.getProcessApplicationInfo(processApplicationName);
+    return ejbBpmPlatform.getProcessApplicationService().getProcessApplicationInfo(processApplicationName);
   }
 
 }

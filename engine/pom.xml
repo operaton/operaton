@@ -18,6 +18,16 @@
     <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
     <test.excludes>$.</test.excludes>
     <skipTests.operaton-engine>false</skipTests.operaton-engine>
+    <!-- Run tests across multiple concurrent JVM forks (0.5 * available CPU cores).
+         Each fork stays single-threaded internally (execution order is unaffected);
+         only fork count changes. Safe because the h2-in-memory profile already
+         isolates each fork's H2 database via ${surefire.forkNumber} in the JDBC URL.
+         0.5C was chosen empirically over higher multipliers: on a 10-core machine,
+         0.5C (5 forks) measured faster than 0.7C (7 forks), which was faster than 1C
+         (10 forks), which was faster than 1.5C (15 forks) - beyond a certain fork
+         count, oversubscription (JVM startup/classloading cost per fork, GC/memory
+         pressure) outweighs the added parallelism. -->
+    <surefire.forkCount>0.5C</surefire.forkCount>
     <history.level>full</history.level>
     <mail.server.port>5025</mail.server.port>
     <authorizationCheckRevokes>auto</authorizationCheckRevokes>
@@ -470,6 +480,55 @@
             <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
+        <executions>
+          <!-- With forkCount > 1, Surefire's JUnit Platform provider can dispatch a
+               @Nested class to a different JVM fork than its enclosing class, running
+               it twice (once as part of the enclosing class's own cascade, once
+               standalone in the other fork) - this happens regardless of the
+               include/exclude file patterns above, since it's how Surefire's JUnit5
+               test-plan-based fork distribution works, not a file-scan artifact.
+               Excluding nested classes from the scan doesn't prevent it either (tried
+               that - it broke discovery of classes whose only tests live in @Nested
+               children, e.g. JobExecutorTestCase, since Surefire's own "does this class
+               have tests" pre-filter also consults that same scan). All 3 classes in
+               this module using @Nested (ProcessEngineExtensionEngineRetentionTest,
+               JobExecutorTestCase, SchemaLogTest) are tagged @Tag("sequential") and run
+               here, single-forked, instead.
+
+               Also here: the org.operaton.bpm.engine.test.concurrency package, which
+               hand-orchestrates real background threads with blocking wait()/notify()
+               and no timeout to deterministically reproduce race conditions. Under
+               forkCount > 1, CPU contention across the concurrent forks can delay
+               thread scheduling enough to break that timing choreography and hang a
+               test indefinitely (observed once: CompetingHistoryCleanupAcquisitionTest
+               deadlocked between the main thread and its JobExecutor's acquisition
+               thread, both waiting on ThreadControl.waitForSync()/sync()). Tagged via
+               the package's shared base classes (ConcurrencyTestHelper,
+               AbstractCompetingTransactionsOptimisticLockingTest - @Tag is inherited
+               through the class hierarchy) plus the handful of classes with no shared
+               base. -->
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <excludedGroups>sequential</excludedGroups>
+            </configuration>
+          </execution>
+          <execution>
+            <id>sequential-tests</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <forkCount>1</forkCount>
+              <groups>sequential</groups>
+            </configuration>
+          </execution>
+        </executions>
         </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

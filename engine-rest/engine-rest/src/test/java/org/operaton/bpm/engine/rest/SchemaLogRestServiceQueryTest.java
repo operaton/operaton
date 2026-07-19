@@ -16,18 +16,13 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
@@ -37,8 +32,7 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Miklas Boskamp
@@ -64,7 +58,7 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
 
   @BeforeEach
   void init() {
-    mockedQuery = Mockito.mock(SchemaLogQuery.class);
+    mockedQuery = mock(SchemaLogQuery.class);
 
     mockedSchemaLogEntries = createMockedSchemaLogEntries();
     when(mockedQuery.list()).thenReturn(mockedSchemaLogEntries);

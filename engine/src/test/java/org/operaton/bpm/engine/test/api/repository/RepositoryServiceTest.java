@@ -20,33 +20,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.mockito.Mockito;
 
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.EntityTypes;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -69,15 +51,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.engine.repository.CalledProcessDefinition;
-import org.operaton.bpm.engine.repository.CaseDefinition;
-import org.operaton.bpm.engine.repository.CaseDefinitionQuery;
-import org.operaton.bpm.engine.repository.DecisionDefinition;
-import org.operaton.bpm.engine.repository.DecisionDefinitionQuery;
-import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
-import org.operaton.bpm.engine.repository.DecisionRequirementsDefinitionQuery;
-import org.operaton.bpm.engine.repository.DeploymentBuilder;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.engine.repository.*;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
@@ -91,10 +65,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Frederik Heremans
@@ -1328,7 +1300,7 @@ class RepositoryServiceTest {
       .filter(act -> act.getActivityBehavior() instanceof CallActivityBehavior)
       .peek(activity -> {
         CallableElement callableElement = ((CallActivityBehavior) activity.getActivityBehavior()).getCallableElement();
-        CallableElement spy = Mockito.spy(callableElement);
+        CallableElement spy = spy(callableElement);
         ((CallActivityBehavior) activity.getActivityBehavior()).setCallableElement(spy);
       }).toList();
 
@@ -1339,11 +1311,11 @@ class RepositoryServiceTest {
     //check that we never try to resolve any of the dynamic bindings
     for (ActivityImpl activity : callActivities) {
       CallableElement callableElement = ((CallActivityBehavior) activity.getActivityBehavior()).getCallableElement();
-      Mockito.verify(callableElement, Mockito.never()).getDefinitionKey(Mockito.any());
-      Mockito.verify(callableElement, Mockito.never()).getVersion(Mockito.any());
-      Mockito.verify(callableElement, Mockito.never()).getVersionTag(Mockito.any());
-      Mockito.verify(callableElement, Mockito.never()).getDefinitionTenantId(Mockito.any(), Mockito.anyString());
-      Mockito.verify(callableElement, Mockito.times(1)).hasDynamicReferences();
+      verify(callableElement, never()).getDefinitionKey(any());
+      verify(callableElement, never()).getVersion(any());
+      verify(callableElement, never()).getVersionTag(any());
+      verify(callableElement, never()).getDefinitionTenantId(any(), anyString());
+      verify(callableElement, times(1)).hasDynamicReferences();
     }
 
     assertThat(mappings).isEmpty();

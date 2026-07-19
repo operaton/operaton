@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -24,12 +25,12 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.ProcessEngine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
 
 @SuppressWarnings("unchecked")
 class AbstractProcessAssertTest {
@@ -43,14 +44,11 @@ class AbstractProcessAssertTest {
 
   @BeforeEach
   void setUp() {
-    processEngine = Mockito.mock(ProcessEngine.class);
+    processEngine = mock(ProcessEngine.class);
     AbstractAssertions.init(processEngine);
-    allAsserts = List.of((Class<AbstractProcessAssert<?, ?>>[]) new Class[] {
-      JobAssert.class,
-      ProcessDefinitionAssert.class,
-      ProcessInstanceAssert.class,
-      TaskAssert.class
-    }).iterator();
+    allAsserts = List.of(
+      (Class<AbstractProcessAssert<?, ?>>[]) new Class[] { JobAssert.class, ProcessDefinitionAssert.class,
+        ProcessInstanceAssert.class, TaskAssert.class }).iterator();
   }
 
   @AfterEach
@@ -60,7 +58,7 @@ class AbstractProcessAssertTest {
 
   @Test
   void constructorPattern() {
-    while(allAsserts.hasNext()) {
+    while (allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> newInstanceFromExpectedConstructor = newInstanceFromExpectedConstructor();
       assertThat(newInstanceFromExpectedConstructor).isNotNull();
@@ -69,7 +67,7 @@ class AbstractProcessAssertTest {
 
   @Test
   void factoryMethodPattern() {
-    while(allAsserts.hasNext()) {
+    while (allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> newInstanceFromExpectedFactoryMethod = newInstanceFromExpectedFactoryMethod();
       assertThat(newInstanceFromExpectedFactoryMethod).isNotNull();
@@ -78,7 +76,7 @@ class AbstractProcessAssertTest {
 
   @Test
   void lastAssertBeforeFirstAssert() {
-    while(allAsserts.hasNext()) {
+    while (allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       assertThat(AbstractProcessAssert.getLastAssert(anAssertClass)).isNull();
     }
@@ -86,7 +84,7 @@ class AbstractProcessAssertTest {
 
   @Test
   void lastAssertAfterFirstAssert() {
-    while(allAsserts.hasNext()) {
+    while (allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> assertInstance = newInstanceFromExpectedFactoryMethod();
       assertThat(assertInstance).isNotNull();
@@ -96,7 +94,7 @@ class AbstractProcessAssertTest {
 
   @Test
   void lastAssertAfterSecondAssert() {
-    while(allAsserts.hasNext()) {
+    while (allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> assertInstance1 = newInstanceFromExpectedFactoryMethod();
       assertThat(assertInstance1).isNotNull();
@@ -117,7 +115,7 @@ class AbstractProcessAssertTest {
     assert constructor != null;
     A assertInstance = null;
     try {
-      assertInstance = (A) constructor.newInstance(processEngine, Mockito.mock(anActualClass));
+      assertInstance = (A) constructor.newInstance(processEngine, mock(anActualClass));
     } catch (Exception e) {
       fail("Cannot create instance from constructor!", e);
     }
@@ -150,7 +148,7 @@ class AbstractProcessAssertTest {
     assertThat(type.getActualTypeArguments()[1]).isInstanceOf(Class.class);
     anActualClass = (Class<?>) type.getActualTypeArguments()[1];
     assertThat(anActualClass).isNotNull();
-    anActual = Mockito.mock(anActualClass);
+    anActual = mock(anActualClass);
   }
 
 }

@@ -19,13 +19,8 @@ package org.operaton.bpm.engine.rest.impl.history;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Request;
-import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.UriInfo;
-import jakarta.ws.rs.core.Variant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,11 +36,7 @@ import org.operaton.bpm.engine.history.SetRemovalTimeSelectModeForHistoricProces
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
 import org.operaton.bpm.engine.rest.dto.converter.ReportResultToCsvConverter;
-import org.operaton.bpm.engine.rest.dto.history.DeleteHistoricProcessInstancesDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceReportDto;
-import org.operaton.bpm.engine.rest.dto.history.ReportResultDto;
+import org.operaton.bpm.engine.rest.dto.history.*;
 import org.operaton.bpm.engine.rest.dto.history.batch.removaltime.SetRemovalTimeToHistoricProcessInstancesDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.history.HistoricProcessInstanceRestService;

@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
@@ -38,7 +37,7 @@ class JobExecutorStartingEventListenerTest {
 
   @Test
   void handleProcessApplicationStartedEventTest() {
-    JobExecutorStartingEventListener spy = Mockito.spy(jobExecutorStartingEventListener);
+    JobExecutorStartingEventListener spy = spy(jobExecutorStartingEventListener);
     spy.handleProcessApplicationStartedEvent(null);
     verify(spy).activate();
   }

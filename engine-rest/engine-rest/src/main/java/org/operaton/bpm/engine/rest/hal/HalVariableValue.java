@@ -19,11 +19,7 @@ package org.operaton.bpm.engine.rest.hal;
 import java.util.Map;
 import jakarta.ws.rs.core.UriBuilder;
 
-import org.operaton.bpm.engine.rest.CaseExecutionRestService;
-import org.operaton.bpm.engine.rest.CaseInstanceRestService;
-import org.operaton.bpm.engine.rest.ExecutionRestService;
-import org.operaton.bpm.engine.rest.ProcessInstanceRestService;
-import org.operaton.bpm.engine.rest.TaskRestService;
+import org.operaton.bpm.engine.rest.*;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.sub.VariableResource;

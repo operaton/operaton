@@ -40,6 +40,7 @@
         <module>modules/rest</module>
         <module>modules/example</module>
         <module>modules/webapps</module>
+        <module>modules/webapps-neo</module>
         <module>core</module>
         <module>assembly</module>
         <module>distro</module>

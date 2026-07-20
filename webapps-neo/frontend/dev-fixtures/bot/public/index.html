@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>dev-fixtures · control panel</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --muted: #64748b;
+      --fg: #0f172a;
+      --accent: #2563eb;
+      --ok: #15803d;
+      --err: #b91c1c;
+      --warn: #b45309;
+      --border: #e2e8f0;
+      --output-bg: #f1f5f9;
+      --pill-ok-bg: #dcfce7;
+      --pill-err-bg: #fee2e2;
+      --pill-muted-bg: #e2e8f0;
+      font-family: system-ui, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --panel: #1e293b;
+        --muted: #94a3b8;
+        --fg: #e2e8f0;
+        --accent: #3b82f6;
+        --ok: #22c55e;
+        --err: #ef4444;
+        --warn: #f59e0b;
+        --border: #334155;
+        --output-bg: #0b1120;
+        --pill-ok-bg: rgba(34,197,94,.15);
+        --pill-err-bg: rgba(239,68,68,.15);
+        --pill-muted-bg: rgba(148,163,184,.15);
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); }
+    header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; justify-content: space-between; }
+    h1 { margin: 0; font-size: 1.1rem; font-weight: 600; }
+    h1 small { color: var(--muted); font-weight: 400; margin-left: .5rem; }
+    main { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1rem; }
+    @media (max-width: 880px) { main { grid-template-columns: 1fr; } }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; }
+    .panel h2 { margin: 0 0 .75rem; font-size: 1rem; }
+    .row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: .5rem; }
+    label { font-size: .85rem; color: var(--muted); display: flex; flex-direction: column; gap: .15rem; flex: 1 1 12ch; min-width: 12ch; }
+    input, select {
+      background: var(--panel); color: var(--fg); border: 1px solid var(--border);
+      border-radius: 4px; padding: .35rem .5rem; font: inherit; min-width: 0;
+    }
+    button {
+      background: var(--accent); color: #fff; border: 0; border-radius: 4px;
+      padding: .4rem .8rem; cursor: pointer; font: inherit;
+    }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    button.secondary { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+    button.danger { background: var(--err); }
+    button.linklike {
+      background: transparent; color: var(--accent); padding: 0; border: 0;
+      font: inherit; cursor: pointer;
+    }
+    button.linklike:hover { text-decoration: underline; }
+    .status-pill { display: inline-block; padding: .1rem .5rem; border-radius: 999px; font-size: .75rem; }
+    .status-pill.running { background: var(--pill-ok-bg); color: var(--ok); }
+    .status-pill.stopped { background: var(--pill-muted-bg); color: var(--muted); }
+    .status-pill.failed  { background: var(--pill-err-bg); color: var(--err); }
+    .output-wrap { position: relative; }
+    .output {
+      background: var(--output-bg); border: 1px solid var(--border); border-radius: 4px;
+      font-family: ui-monospace, monospace; font-size: .8rem;
+      padding: .6rem; height: 50vh; min-height: 240px; overflow: auto;
+      white-space: pre-wrap; resize: vertical;
+    }
+    .stick-bottom-toggle {
+      position: absolute; right: .5rem; top: .5rem;
+      font-size: .75rem; padding: .15rem .5rem;
+      background: var(--panel); color: var(--muted); border: 1px solid var(--border);
+    }
+    .stick-bottom-toggle.on { color: var(--ok); border-color: var(--ok); }
+    .recent { font-size: .8rem; max-height: 28vh; overflow: auto; }
+    .recent-row { display: flex; gap: .5rem; padding: .25rem 0; border-bottom: 1px dashed var(--border); align-items: baseline; }
+    .recent-row:last-child { border-bottom: 0; }
+    .recent-row .kind  { color: var(--accent); width: 6ch; }
+    .recent-row .time  { color: var(--muted); width: 12ch; font-variant-numeric: tabular-nums; }
+    .recent-row .args  { color: var(--fg); flex: 1; word-break: break-all; }
+    .hint { color: var(--muted); font-size: .8rem; margin-top: .5rem; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>dev-fixtures <small>control panel</small></h1>
+  <span id="status-summary" class="status-pill stopped">idle</span>
+</header>
+
+<main>
+  <section class="panel">
+    <h2>Deploy</h2>
+    <p class="hint">Push every <code>.bpmn</code> and <code>.dmn</code> under <code>processes/</code> + <code>rules/</code> as a single, deduplicating deployment.</p>
+    <div class="row"><button id="btn-deploy" type="button">Deploy fixtures</button></div>
+  </section>
+
+  <section class="panel">
+    <h2>Bot</h2>
+    <p class="hint">Long-running worker: external + user task completion, weighted spawning, message dispatch.</p>
+    <div class="row">
+      <label><input type="checkbox" id="bot-auto-deploy"> auto-deploy first</label>
+      <label><input type="checkbox" id="bot-no-spawner"> workers only (no auto-spawn)</label>
+    </div>
+    <div class="row">
+      <button id="btn-bot-start" type="button">Start bot</button>
+      <button id="btn-bot-stop" type="button" class="danger">Stop bot</button>
+      <span id="bot-pill" class="status-pill stopped">stopped</span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Spawn</h2>
+    <p class="hint">Start one or many specific instances. Pick either a process key or a message name.</p>
+    <div class="row">
+      <label>process
+        <select id="spawn-process">
+          <option value="">—</option>
+          <option>orderFulfillment</option>
+          <option>insuranceClaim</option>
+          <option>loanApproval</option>
+          <option>documentReview</option>
+        </select>
+      </label>
+      <label>or message
+        <select id="spawn-message">
+          <option value="">—</option>
+          <option>loan-application-received</option>
+          <option>document-review-completed</option>
+        </select>
+      </label>
+      <label>count <input id="spawn-count" type="number" min="1" value="1"></label>
+    </div>
+    <div class="row">
+      <label style="flex: 1 1 100%">vars (k=v,k=v) <input id="spawn-vars" placeholder="amount=1000,credit=good"></label>
+    </div>
+    <div class="row"><button id="btn-spawn" type="button">Spawn</button></div>
+  </section>
+
+  <section class="panel">
+    <h2>Stress</h2>
+    <p class="hint">Drive load. Default = 1000 instances, ramped up over 5 min.</p>
+    <div class="row">
+      <label>preset
+        <select id="stress-preset">
+          <option value="">(use default)</option>
+          <option>tiny</option>
+          <option>small</option>
+          <option selected>default</option>
+          <option>big</option>
+          <option>huge</option>
+        </select>
+      </label>
+      <label>or count <input id="stress-count" type="number" min="1" placeholder="custom"></label>
+      <label>mode
+        <select id="stress-mode">
+          <option selected>rampup</option>
+          <option>burst</option>
+          <option>soak</option>
+        </select>
+      </label>
+    </div>
+    <div class="row">
+      <label>duration <input id="stress-duration" placeholder="5m"></label>
+      <label>rate <input id="stress-rate" placeholder="60/min"></label>
+      <label>process
+        <select id="stress-process">
+          <option value="">(weighted mix)</option>
+          <option>orderFulfillment</option>
+          <option>insuranceClaim</option>
+          <option>loanApproval</option>
+          <option>documentReview</option>
+        </select>
+      </label>
+    </div>
+    <div class="row">
+      <button id="btn-stress" type="button">Start stress</button>
+      <button id="btn-stress-cancel" type="button" class="danger">Cancel</button>
+      <span id="stress-pill" class="status-pill stopped">idle</span>
+    </div>
+  </section>
+
+  <section class="panel" style="grid-column: 1 / -1">
+    <h2>Output <small id="active-job-id" style="color: var(--muted); font-weight: 400; margin-left: .5rem"></small></h2>
+    <div class="output-wrap">
+      <button id="stick-bottom" type="button" class="stick-bottom-toggle on" title="auto-follow output">following ▾</button>
+      <div id="output" class="output">(no output yet)</div>
+    </div>
+    <h2 style="margin-top: 1rem">Recent jobs</h2>
+    <div id="recent" class="recent"></div>
+  </section>
+</main>
+
+<script type="module">
+  const $ = (id) => document.getElementById(id)
+
+  let active_job_id = null
+  let recent_signature = ''
+  let stick_to_bottom = true
+
+  const post = async (path, body) => {
+    const res = await fetch(path, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: body ? JSON.stringify(body) : '{}',
+    })
+    return res.json()
+  }
+
+  const get = async (path) => (await fetch(path)).json()
+
+  const set_text = (el, text) => { if (el.textContent !== text) el.textContent = text }
+  const set_class = (el, cls) => { if (el.className !== cls) el.className = cls }
+
+  const render_recent = (recent) => {
+    const sig = recent.map(j => `${j.id}:${j.exitCode}:${j.finishedAt}`).join('|')
+    if (sig === recent_signature) return
+    recent_signature = sig
+    const root = $('recent')
+    root.innerHTML = ''
+    for (const j of recent) {
+      const row = document.createElement('div')
+      row.className = 'recent-row'
+      row.innerHTML = `
+        <span class="kind">${j.kind}</span>
+        <span class="time">${new Date(j.startedAt).toLocaleTimeString()}</span>
+        <span class="args"></span>
+      `
+      row.querySelector('.args').textContent = j.args.join(' ')
+      const view = document.createElement('button')
+      view.type = 'button'
+      view.className = 'linklike'
+      view.textContent = 'view'
+      view.addEventListener('click', () => { active_job_id = j.id; refresh_active() })
+      row.appendChild(view)
+      root.appendChild(row)
+    }
+  }
+
+  const render_status = async () => {
+    let s
+    try { s = await get('/api/status') } catch { return }
+    const bot_running = s.bot && !s.bot.finishedAt
+    const stress_running = s.stress && !s.stress.finishedAt
+
+    set_class($('bot-pill'), 'status-pill ' + (bot_running ? 'running' : s.bot?.exitCode ? 'failed' : 'stopped'))
+    set_text($('bot-pill'), bot_running ? 'running' : s.bot?.exitCode ? `exited ${s.bot.exitCode}` : 'stopped')
+
+    set_class($('stress-pill'), 'status-pill ' + (stress_running ? 'running' : s.stress?.exitCode === 0 ? 'stopped' : s.stress?.exitCode ? 'failed' : 'stopped'))
+    set_text($('stress-pill'), stress_running ? 'running' : s.stress ? (s.stress.exitCode === 0 ? 'finished' : `exited ${s.stress.exitCode}`) : 'idle')
+
+    set_class($('status-summary'), 'status-pill ' + (bot_running || stress_running ? 'running' : 'stopped'))
+    set_text($('status-summary'), bot_running && stress_running ? 'bot + stress' : bot_running ? 'bot running' : stress_running ? 'stress running' : 'idle')
+
+    $('btn-bot-start').disabled = bot_running
+    $('btn-bot-stop').disabled = !bot_running
+    $('btn-stress').disabled = stress_running
+    $('btn-stress-cancel').disabled = !stress_running
+
+    render_recent(s.recent)
+    if (active_job_id) refresh_active()
+  }
+
+  const refresh_active = async () => {
+    if (!active_job_id) return
+    let j
+    try { j = await get('/api/jobs/' + active_job_id) } catch { return }
+    set_text($('active-job-id'), `${j.kind} · ${j.id} · ${j.running ? 'running' : `exit ${j.exitCode}`}`)
+    const out = $('output')
+    const new_text = j.output || '(no output)'
+    if (out.textContent !== new_text) {
+      const at_bottom = out.scrollTop + out.clientHeight >= out.scrollHeight - 4
+      out.textContent = new_text
+      if (stick_to_bottom && at_bottom) out.scrollTop = out.scrollHeight
+    }
+  }
+
+  const set_active = (j) => { active_job_id = j.id; refresh_active() }
+
+  // Detach auto-follow if the user scrolls the output up.
+  $('output').addEventListener('scroll', () => {
+    const out = $('output')
+    const at_bottom = out.scrollTop + out.clientHeight >= out.scrollHeight - 4
+    if (!at_bottom && stick_to_bottom) {
+      stick_to_bottom = false
+      $('stick-bottom').classList.remove('on')
+      $('stick-bottom').textContent = 'paused ▴'
+    }
+  })
+
+  $('stick-bottom').addEventListener('click', () => {
+    stick_to_bottom = !stick_to_bottom
+    $('stick-bottom').classList.toggle('on', stick_to_bottom)
+    $('stick-bottom').textContent = stick_to_bottom ? 'following ▾' : 'paused ▴'
+    if (stick_to_bottom) $('output').scrollTop = $('output').scrollHeight
+  })
+
+  $('btn-deploy').addEventListener('click', async () => set_active(await post('/api/deploy')))
+
+  $('btn-bot-start').addEventListener('click', async () => set_active(await post('/api/bot/start', {
+    autoDeploy: $('bot-auto-deploy').checked,
+    noSpawner: $('bot-no-spawner').checked,
+  })))
+  $('btn-bot-stop').addEventListener('click', () => post('/api/bot/stop'))
+
+  $('btn-spawn').addEventListener('click', async () => {
+    const body = {
+      process: $('spawn-process').value || undefined,
+      message: $('spawn-message').value || undefined,
+      count: parseInt($('spawn-count').value, 10) || 1,
+      vars: $('spawn-vars').value || undefined,
+    }
+    if (!body.process && !body.message) return alert('Pick either a process or a message.')
+    set_active(await post('/api/spawn', body))
+  })
+
+  $('btn-stress').addEventListener('click', async () => {
+    const body = {
+      preset: $('stress-preset').value || undefined,
+      count: $('stress-count').value ? parseInt($('stress-count').value, 10) : undefined,
+      mode: $('stress-mode').value,
+      duration: $('stress-duration').value || undefined,
+      rate: $('stress-rate').value || undefined,
+      process: $('stress-process').value || undefined,
+    }
+    set_active(await post('/api/stress', body))
+  })
+  $('btn-stress-cancel').addEventListener('click', () => post('/api/stress/cancel'))
+
+  setInterval(render_status, 2000)
+  render_status()
+</script>
+</body>
+</html>

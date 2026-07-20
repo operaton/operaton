@@ -5,6 +5,7 @@ SET BASEDIR=%~dp0
 SET PARENTDIR=%BASEDIR%..\
 SET DEPLOYMENTDIR=%PARENTDIR%configuration/resources
 SET WEBAPPS_PATH=%BASEDIR%webapps
+SET WEBAPPS_NEO_PATH=%BASEDIR%webapps-neo
 SET OAUTH2_PATH=%BASEDIR%oauth2
 SET REST_PATH=%BASEDIR%rest
 SET EXAMPLE_PATH=%BASEDIR%example
@@ -68,16 +69,24 @@ SET productionChosen=false
 SET detachProcess=false
 SET classPath=%PARENTDIR%configuration\userlib,%PARENTDIR%configuration\keystore
 SET configuration=%PARENTDIR%configuration\default.yml
+SET NEO_PROP=
 
 
 REM inspect arguments
 :Loop
 IF [%~1]==[] GOTO Continue
 
+IF [%~1]==[--webapps-neo] (
+  SET optionalComponentChosen=true
+  SET classPath=%WEBAPPS_NEO_PATH%,%classPath%
+  SET NEO_PROP=-Doperaton.bpm.webapp.neo.enabled=true
+  ECHO WebApps Neo enabled
+)
+
 IF [%~1]==[--webapps] (
   SET optionalComponentChosen=true
   SET classPath=%WEBAPPS_PATH%,%classPath%
-  ECHO WebApps enabled
+  ECHO Legacy WebApps enabled
 )
 
 IF [%~1]==[--oauth2] (
@@ -116,18 +125,21 @@ SHIFT
 GOTO Loop
 :Continue
 
-REM If no optional component is chosen, enable REST and Webapps.
+REM If no optional component is chosen, enable REST and the legacy Webapps.
+REM The new Webapps (neo) stay on the classpath but dormant; enable them via
+REM OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true or the --webapps-neo flag.
 REM If production mode is not chosen, also enable the example application.
 setlocal enabledelayedexpansion
 IF [%optionalComponentChosen%]==[false] (
   SET restChosen=true
   ECHO REST API enabled
-  ECHO WebApps enabled
+  ECHO Legacy WebApps enabled
+  ECHO WebApps Neo available (enable with OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true)
   IF [%productionChosen%]==[false] (
     ECHO Invoice Example included - needs to be enabled in application configuration as well
     SET classPath=%EXAMPLE_PATH%,%classPath%
   )
-  SET classPath=%WEBAPPS_PATH%,%REST_PATH%,!classPath!
+  SET classPath=%WEBAPPS_PATH%,%WEBAPPS_NEO_PATH%,%REST_PATH%,!classPath!
 )
 setlocal disabledelayedexpansion
 
@@ -143,10 +155,10 @@ ECHO classpath: %classPath%
 REM start the application
 IF [%detachProcess%]==[true] (
   REM in the background
-  start "%APPNAME%" "%JAVA%" -Dloader.path="%classPath%" -Doperaton.deploymentDir="%DEPLOYMENTDIR%" %JAVA_OPTS% -jar "%BASEDIR%operaton-bpm.jar" --spring.config.location=file:"%configuration%"
+  start "%APPNAME%" "%JAVA%" -Dloader.path="%classPath%" %NEO_PROP% -Doperaton.deploymentDir="%DEPLOYMENTDIR%" %JAVA_OPTS% -jar "%BASEDIR%operaton-bpm.jar" --spring.config.location=file:"%configuration%"
 
 ) ELSE (
-  call "%JAVA%" -Dloader.path="%classPath%" -Doperaton.deploymentDir="%DEPLOYMENTDIR%" %JAVA_OPTS% -jar "%BASEDIR%operaton-bpm.jar" --spring.config.location=file:"%configuration%"
+  call "%JAVA%" -Dloader.path="%classPath%" %NEO_PROP% -Doperaton.deploymentDir="%DEPLOYMENTDIR%" %JAVA_OPTS% -jar "%BASEDIR%operaton-bpm.jar" --spring.config.location=file:"%configuration%"
 )
 
 GOTO End
@@ -165,11 +177,12 @@ GOTO End
 ECHO Usage: run.bat [start^|stop] (options...)
 :ArgsHelp
 ECHO Options:
-ECHO   --webapps    - Enables the Operaton Webapps
-ECHO   --oauth2     - Enables the Operaton Platform Spring Security OAuth2 integration
-ECHO   --rest       - Enables the REST API
-ECHO   --example    - Enables the example application
-ECHO   --production - Applies the production.yaml configuration file
-ECHO   --detached   - Starts Operaton as a detached process
+ECHO   --webapps-neo - Enables the new Operaton Webapps at the root path (also via OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true)
+ECHO   --webapps     - Enables the legacy Operaton Webapps (served at /operaton/app)
+ECHO   --oauth2      - Enables the Operaton Platform Spring Security OAuth2 integration
+ECHO   --rest        - Enables the REST API
+ECHO   --example     - Enables the example application
+ECHO   --production  - Applies the production.yaml configuration file
+ECHO   --detached    - Starts Operaton as a detached process
 
 :End

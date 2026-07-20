@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             xmlns:camunda="http://camunda.org/schema/1.0/dmn"
+             id="ClaimRouting" name="Claim Routing"
+             namespace="http://operaton.org/dev-fixtures">
+  <decision id="claimRouting" name="Claim Routing" camunda:historyTimeToLive="P30D">
+    <decisionTable id="DecisionTable_ClaimRouting" hitPolicy="FIRST">
+      <input id="Input_ClaimType" label="Claim Type">
+        <inputExpression id="InputExpr_ClaimType" typeRef="string">
+          <text>claimType</text>
+        </inputExpression>
+      </input>
+      <input id="Input_Amount" label="Amount">
+        <inputExpression id="InputExpr_Amount" typeRef="number">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <output id="Output_Routing" label="Routing" name="routing" typeRef="string" />
+
+      <rule id="Rule_FastTrackSmall">
+        <inputEntry id="ie_fts_1"><text>"auto","home","health"</text></inputEntry>
+        <inputEntry id="ie_fts_2"><text>&lt;= 500</text></inputEntry>
+        <outputEntry id="oe_fts_1"><text>"fast-track"</text></outputEntry>
+      </rule>
+      <rule id="Rule_HealthHigh">
+        <inputEntry id="ie_hh_1"><text>"health"</text></inputEntry>
+        <inputEntry id="ie_hh_2"><text>&gt; 5000</text></inputEntry>
+        <outputEntry id="oe_hh_1"><text>"manual"</text></outputEntry>
+      </rule>
+      <rule id="Rule_AutoLarge">
+        <inputEntry id="ie_al_1"><text>"auto"</text></inputEntry>
+        <inputEntry id="ie_al_2"><text>&gt; 10000</text></inputEntry>
+        <outputEntry id="oe_al_1"><text>"manual"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Default">
+        <inputEntry id="ie_d_1"><text></text></inputEntry>
+        <inputEntry id="ie_d_2"><text></text></inputEntry>
+        <outputEntry id="oe_d_1"><text>"standard"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

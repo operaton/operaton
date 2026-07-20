@@ -1,0 +1,64 @@
+## Full stack: Operaton (with Keycloak plugin) + Keycloak + Web Apps
+##
+## Usage:
+##   docker compose -f docker-compose-full.yaml up --build
+##   podman compose -f docker-compose-full.yaml up --build
+##
+## Services:
+##   - web-apps:  http://localhost:3000   (SPA served by nginx)
+##   - operaton:  http://localhost:8084   (Operaton engine REST API)
+##   - keycloak:  http://localhost:8888   (Keycloak admin console)
+##
+## Default credentials:
+##   Keycloak admin:   admin / admin
+##   Operaton user:    demo / demo  (authenticated via Keycloak)
+
+services:
+  operaton:
+    build:
+      context: ./operaton
+      dockerfile: Dockerfile
+    environment:
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_REALM=operaton
+      - KEYCLOAK_CLIENT_ID=operaton-identity-service
+      - KEYCLOAK_CLIENT_SECRET=operaton-identity-secret
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:5173
+      - REST_AUTH_ENABLED=false
+    volumes:
+      - ./operaton/config/default.yml:/operaton/configuration/default.yml:z
+    ports:
+      - "8084:8080"
+    depends_on:
+      - keycloak
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+    command: start-dev --import-realm
+    volumes:
+      - ./keycloak/operaton-realm.json:/opt/keycloak/data/import/operaton-realm.json:z
+    ports:
+      - "8888:8080"
+
+  web-apps:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASSET_DIR=/var/www/html
+      - APP_PREFIX=DOCKER_RUN_PLACEHOLDER_
+      - DOCKER_RUN_PLACEHOLDER_BACKEND=[{\\"name\\":\\"Operaton\\",\\"url\\":\\"http://localhost:8084\\"}]
+      - DOCKER_RUN_PLACEHOLDER_AUTH_MODE=oauth
+      - DOCKER_RUN_PLACEHOLDER_OAUTH_AUTHORITY=http://localhost:8888/realms/operaton
+      - DOCKER_RUN_PLACEHOLDER_OAUTH_CLIENT_ID=operaton-web-apps
+      - DOCKER_RUN_PLACEHOLDER_OAUTH_REDIRECT_URI=http://localhost:3000/
+      - DOCKER_RUN_PLACEHOLDER_ENABLE_MODELER=true
+      - DOCKER_RUN_PLACEHOLDER_HIDE_RELEASE_WARNING=true
+    ports:
+      - "3000:80"
+    depends_on:
+      - operaton
+      - keycloak

@@ -1,0 +1,165 @@
+.dmn-literal-expression-container {
+  --decision-properties-background-color: var(--color-white);
+  --decision-properties-border-color: var(--color-grey-225-10-15);
+  --decision-properties-color: var(--color-grey-225-10-15);
+  --literal-expression-color: var(--color-grey-225-10-15);
+  --literal-expression-properties-border-color: var(--color-grey-225-10-15);
+  --literal-expression-properties-color: var(--color-grey-225-10-15);
+  --powered-by-overlay-background-color: var(--color-black-opacity-20);
+  --powered-by-overlay-content-background-color: var(--color-white);
+  --powered-by-overlay-content-border-color: var(--color-grey-225-10-75);
+  --powered-by-overlay-content-color: var(--color-grey-225-10-15);
+  --textarea-border-color: var(--color-grey-225-10-15);
+  --textarea-color: var(--color-grey-225-10-15);
+  --view-drd-button-background-color: var(--color-white);
+  --view-drd-button-border-color: var(--color-grey-225-10-75);
+  --view-drd-button-color: var(--color-grey-225-10-15);
+  --view-drd-button-hover-background-color: var(--color-grey-225-10-97);
+  --literal-expression-font-family: 'Arial', sans-serif;
+  --literal-expression-font-family-monospace: monospace;
+
+  font-family: var(--literal-expression-font-family);
+  color: var(--literal-expression-color);
+  width: 100%;
+  height: 100%;
+}
+
+.dmn-literal-expression-container .viewer-container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.dmn-literal-expression-container * {
+  box-sizing: border-box;
+}
+
+/* decision properties */
+.dmn-literal-expression-container .decision-properties {
+  border: 1px solid var(--decision-properties-border-color);
+  border-bottom: none;
+  padding: 10px;
+  padding-right: 75px;
+  color: var(--decision-properties-color);
+  background-color: var(--decision-properties-background-color);
+  position: relative;
+  min-width: 192px;
+}
+
+.dmn-literal-expression-container .decision-name {
+  margin: 0;
+  font-size: 21px;
+  font-weight: normal;
+  white-space: pre;
+}
+
+.dmn-literal-expression-container .decision-name:not(.editor) {
+  cursor: default;
+}
+
+.dmn-literal-expression-container .decision-name.editor {
+  cursor: text;
+}
+
+.dmn-literal-expression-container .decision-name div {
+  outline: none;
+}
+
+.dmn-literal-expression-container .decision-name:not(.editable),
+.dmn-literal-expression-container .decision-name [contenteditable="true"] {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.dmn-literal-expression-container .textarea .content-editable {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.dmn-literal-expression-container .decision-name.editor:not(.focussed):hover {
+  cursor: text;
+}
+
+.dmn-literal-expression-container .decision-name.focussed .content-editable {
+  text-overflow: unset;
+}
+
+/* textarea */
+.dmn-literal-expression-container .textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  font-family: var(--literal-expression-font-family-monospace);
+  line-height: 1.4;
+  border: 1px solid var(--textarea-border-color);
+  border-bottom-width: 1px;
+  white-space: pre;
+  font-size: 14px;
+  color: var(--textarea-color);
+  min-height: 250px;
+  overflow: auto;
+}
+
+.dmn-literal-expression-container .textarea div:focus {
+  outline: none;
+}
+
+.dmn-literal-expression-container .textarea.editor {
+  cursor: text;
+}
+
+.dmn-literal-expression-container .textarea:not(.editor) {
+  cursor: default;
+}
+
+/* literal expression properties */
+.dmn-literal-expression-container .literal-expression-properties {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--literal-expression-properties-border-color);
+  border-top: none;
+  font-size: 14px;
+  color: var(--literal-expression-properties-color);
+}
+
+.dmn-literal-expression-container .literal-expression-properties .variables-table {
+  border-spacing: 8px;
+  border-collapse: separate;
+}
+
+.dmn-literal-expression-container .literal-expression-properties .variables-table tr td:first-child {
+  font-weight: bold;
+}
+
+.dmn-literal-expression-container .literal-expression-properties .variables-table tr td:last-child {
+  min-width: 100px;
+}
+
+.dmn-literal-expression-container .literal-expression-properties .variable-name-input {
+  width: 100%;
+}
+
+/* view drd */
+.dmn-literal-expression-container .view-drd {
+  margin-right: 10px;
+  padding-bottom: 10px;
+}
+
+.dmn-literal-expression-container .view-drd .view-drd-button {
+  background: var(--view-drd-button-background-color);
+  padding: 8px;
+  border: solid 1px var(--view-drd-button-border-color);
+  border-radius: 2px;
+  font-size: 14px;
+  color: var(--view-drd-button-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dmn-literal-expression-container .view-drd .view-drd-button:hover {
+  background: var(--view-drd-button-hover-background-color);
+}

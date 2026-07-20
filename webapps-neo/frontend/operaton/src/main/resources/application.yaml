@@ -1,0 +1,36 @@
+spring.datasource:
+  url: ${JDBC_URL:jdbc:h2:./operaton-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+  username: ${JDBC_USER:sa}
+  password: ${JDBC_PASSWORD:sa}
+
+operaton.bpm:
+  history-level: audit
+  authorization:
+    enabled: true
+
+server:
+  port: 8080
+
+keycloak:
+  url: ${KEYCLOAK_URL:http://localhost:9000}
+  realm: ${KEYCLOAK_REALM:operaton}
+  client.id: ${KEYCLOAK_CLIENT_ID:operaton-identity-service}
+  client.secret: ${KEYCLOAK_CLIENT_SECRET:operaton-identity-secret}
+
+spring.security:
+  oauth2:
+    resourceserver:
+      jwt:
+        issuer-uri: ${keycloak.url}/realms/${keycloak.realm}
+        jwk-set-uri: ${keycloak.url}/realms/${keycloak.realm}/protocol/openid-connect/certs
+
+plugin.identity.keycloak:
+  keycloakIssuerUrl: ${keycloak.url}/realms/${keycloak.realm}
+  keycloakAdminUrl: ${keycloak.url}/admin/realms/${keycloak.realm}
+  clientId: ${keycloak.client.id}
+  clientSecret: ${keycloak.client.secret}
+  useEmailAsOperatonUserId: false
+  useUsernameAsOperatonUserId: true
+  useGroupPathAsOperatonGroupId: true
+  administratorGroupName: operaton-admin
+  disableSSLCertificateValidation: true

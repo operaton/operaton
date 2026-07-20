@@ -8,6 +8,17 @@ operaton.bpm:
     password: demo
   filter:
     create: All tasks
+  webapp:
+    # The new web apps (webapps-neo) are served at the application root (/).
+    # They are DISABLED by default. Enable them by setting the
+    # OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS environment variable to "true"
+    # (or start run.sh / run.bat with the --webapps-neo flag).
+    neo:
+      enabled: ${OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS:false}
+    # The legacy web apps are served at /operaton/app and are enabled by default.
+    # Disable them via the OPERATON_BPM_WEBAPP_ENABLED environment variable or by
+    # setting operaton.bpm.webapp.enabled: false here.
+    # enabled: false
   run:
 # https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#cross-origin-resource-sharing
     cors:
@@ -33,3 +44,33 @@ spring.datasource:
 # https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc-static-content
 spring.web.resources:
   static-locations: NULL
+
+# ---------------------------------------------------------------------------
+# OAuth2 for the new web apps (webapps-neo)
+# ---------------------------------------------------------------------------
+# Start Operaton with the --oauth2 flag and uncomment the blocks below to let
+# webapps-neo authenticate against the backend through the Spring OAuth2 module
+# (server-side session) instead of HTTP Basic auth. Replace the sample values
+# with your identity provider's settings. With same-origin embedded webapps you
+# typically also want to disable the wildcard CORS above
+# (operaton.bpm.run.cors.enabled: false).
+#
+# operaton.bpm.run.auth:
+#   enabled: true
+#   authentication: oauth2
+#
+# operaton.bpm.oauth2:
+#   identity-provider:
+#     group-name-attribute: groups
+#
+# spring.security.oauth2.client:
+#   registration:
+#     operaton:
+#       client-id: operaton
+#       client-secret: "********"
+#       authorization-grant-type: authorization_code
+#       scope: openid,profile,email
+#       redirect-uri: "{baseUrl}/login/oauth2/code/operaton"
+#   provider:
+#     operaton:
+#       issuer-uri: https://your-idp.example.com/realms/operaton

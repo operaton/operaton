@@ -44,9 +44,10 @@ public final class PropertyHelper {
   }
 
   /**
-   * Regex for Ant-style property placeholders
+   * Regex for Ant-style property placeholders. Matching only the placeholder keeps it linear: the
+   * literal prefix anchors each attempt instead of rescanning from every offset (java:S8786).
    */
-  private static final Pattern PROPERTY_TEMPLATE = Pattern.compile("([^$]*+)\\$\\{([^\\n\\r\\u0085\\u2028\\u2029][^}\\n\\r\\u0085\\u2028\\u2029]*+)\\}([^$]*+)");
+  private static final Pattern PROPERTY_TEMPLATE = Pattern.compile("\\$\\{([^\\n\\r\\u0085\\u2028\\u2029][^}\\n\\r\\u0085\\u2028\\u2029]*+)\\}");
 
   public static boolean getBooleanProperty(Map<String, String> properties, String name, boolean defaultValue) {
     String value = properties.get(name);
@@ -149,15 +150,12 @@ public final class PropertyHelper {
   public static String resolveProperty(Properties props, String original) {
     Matcher matcher = PROPERTY_TEMPLATE.matcher(original);
     StringBuilder buffer = new StringBuilder();
-    boolean found = false;
     while(matcher.find()) {
-      found = true;
-      String propertyName = matcher.group(2).trim();
-      buffer.append(matcher.group(1))
-        .append(props.containsKey(propertyName) ? props.getProperty(propertyName) : "")
-        .append(matcher.group(3));
+      String propertyName = matcher.group(1).trim();
+      String replacement = props.containsKey(propertyName) ? props.getProperty(propertyName) : "";
+      matcher.appendReplacement(buffer, Matcher.quoteReplacement(replacement));
     }
-    return found ? buffer.toString() : original;
+    return matcher.appendTail(buffer).toString();
   }
 
   protected static String convertToCamelCase(String value, String token) {

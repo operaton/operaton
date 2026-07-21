@@ -20,6 +20,13 @@
       <artifactId>operaton-qa-db-rolling-update-util</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${version.scala}</version>
+      <scope>runtime</scope>
+    </dependency>
+
   </dependencies>
   <build>
     <resources>

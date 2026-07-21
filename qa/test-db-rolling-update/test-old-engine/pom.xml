@@ -22,6 +22,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${version.scala}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>

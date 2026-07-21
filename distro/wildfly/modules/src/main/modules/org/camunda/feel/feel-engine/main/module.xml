@@ -5,7 +5,7 @@
 
   <dependencies>
     <module name="org.slf4j" />
-    <module name="org.scala-lang.scala-library" />
+    <module name="org.scala-lang.scala-library" export="true"/>
     <module name="com.lihaoyi.fastparse_2.13" />
     <module name="com.fasterxml.uuid.java-uuid-generator" />
     <!-- Use Operaton's Jackson version -->

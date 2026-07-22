@@ -244,6 +244,13 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
+                <copy todir="target/modules" flatten="false">
+                  <fileset dir="target/modules">
+                    <include name="com/fasterxml/jackson/module/jackson-module-scala_2.13/**/*.jar"/>
+                  </fileset>
+                  <regexpmapper from="^com/fasterxml/jackson/module/jackson-module-scala_2\.13/[^/]+/(.*)$$" to="com/fasterxml/jackson/module/jackson-module-scala/2.13/\1" handledirsep="yes"/>
+                </copy>
+                <delete dir="target/modules/com/fasterxml/jackson/module/jackson-module-scala_2.13"/>
                 <!-- Place httpcore5-h2 in the httpcore5 module. -->
                 <copy todir="target/modules" flatten="false">
                   <fileset dir="target/modules">
@@ -279,6 +286,19 @@
                   </mapper>
                 </copy>
                 <delete dir="target/modules/org/graalvm/polyglot"/>
+                <!-- module names cannot contain dots other than as package separators,
+                     so use the Scala binary version as a module slot instead of part of the name -->
+                <copy todir="target/modules" flatten="false">
+                  <fileset dir="target/modules">
+                    <include name="com/lihaoyi/*_2.13/main/*.jar"/>
+                  </fileset>
+                  <regexpmapper from="^com/lihaoyi/([A-Za-z]+)_2\.13/main/(.*)$$" to="com/lihaoyi/\1/2.13/\2" handledirsep="yes"/>
+                </copy>
+                <delete>
+                  <fileset dir="target/modules/com/lihaoyi">
+                    <include name="*_2.13/**"/>
+                  </fileset>
+                </delete>
                 <!-- copy module.xml -->
                 <copy todir="target/modules" flatten="false">
                   <fileset dir="src/main/modules"/>
@@ -313,7 +333,6 @@
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-annotations/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-annotations/${version.jackson}"/>
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-core/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-core/${version.jackson}"/>
                 <move file="target/modules/com/fasterxml/jackson/core/jackson-databind/version.jackson" toFile="target/modules/com/fasterxml/jackson/core/jackson-databind/${version.jackson}"/>
-                <move file="target/modules/com/fasterxml/jackson/module/jackson-module-scala_2.13/version.jackson" toFile="target/modules/com/fasterxml/jackson/module/jackson-module-scala_2.13/${version.jackson}"/>
                 <replace dir="target/modules" token="@version.json-path@" value="${version.json-path}">
                   <include name="**/module.xml"/>
                 </replace>

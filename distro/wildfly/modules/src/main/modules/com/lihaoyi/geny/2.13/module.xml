@@ -1,4 +1,4 @@
-<module xmlns="urn:jboss:module:1.0" name="com.lihaoyi.geny_2.13">
+<module xmlns="urn:jboss:module:1.0" name="com.lihaoyi.geny" slot="2.13">
   <resources>
     <resource-root path="geny_2.13-@version.geny@.jar" />
   </resources>

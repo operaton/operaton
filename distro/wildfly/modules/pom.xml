@@ -153,6 +153,24 @@
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
     </dependency>
+
+    <!-- test dependencies: load the assembled module tree with JBoss Modules -->
+    <dependency>
+      <groupId>org.jboss.modules</groupId>
+      <artifactId>jboss-modules</artifactId>
+      <version>2.1.6.Final</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -416,6 +434,11 @@
         <configuration>
           <classesDirectory>${project.build.directory}/modules/</classesDirectory>
         </configuration>
+      </plugin>
+      <!-- runs after prepare-package, when the module tree in target/modules is assembled -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

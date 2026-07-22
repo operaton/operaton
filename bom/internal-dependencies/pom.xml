@@ -264,8 +264,11 @@
 
       <!-- Other dependencies -->
       <!--
-        feel-engine is used unshaded, its dependencies (scala-library, fastparse, jackson-module-scala,
-        java-uuid-generator) are managed here to keep them aligned across the platform.
+        feel-engine is used unshaded; its dependency tree is pinned here to a single version
+        platform-wide. Bump these entries together with version.feel-scala: scala-library,
+        fastparse (and fastparse's geny/sourcecode) track the feel-engine release, and paranamer
+        tracks jackson-module-scala. jackson-module-scala itself has no entry here on purpose -
+        it must follow the platform Jackson version and is managed by the imported jackson-bom.
         See https://github.com/operaton/operaton/issues/2654
       -->
       <dependency>

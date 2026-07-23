@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:b5e07ff0-db69-40ec-9923-8b0adc5e1bc5",
+  "serialNumber": "urn:uuid:bdee596e-d5c1-4e8e-a07b-b9d325d27c69",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-07-15T15:21:48Z",
+    "timestamp": "2026-07-23T21:22:36Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.72.0-SNAPSHOT-f06520353"
+          "version": "0.72.0-SNAPSHOT-2c64b8f58"
         }
       ]
     },
@@ -19443,7 +19443,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "bf81821e-f4f5-469c-a570-b41f733b44ab",
+      "bom-ref": "4002000c-e679-4dc6-850a-c641508e1525",
       "name": "package-lock.json",
       "properties": [
         {
@@ -20558,10 +20558,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40nodable/entities@2.2.0",
+      "bom-ref": "pkg:npm/%40nodable/entities@3.0.0",
       "group": "@nodable",
       "name": "entities",
-      "version": "2.2.0",
+      "version": "3.0.0",
       "licenses": [
         {
           "license": {
@@ -20569,11 +20569,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40nodable/entities@2.2.0",
+      "purl": "pkg:npm/%40nodable/entities@3.0.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@nodable/entities@2.2.0"
+          "value": "@nodable/entities@3.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21138,9 +21138,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.19.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.21.0",
       "name": "bpmn-js",
-      "version": "18.19.0",
+      "version": "18.21.0",
       "licenses": [
         {
           "license": {
@@ -21148,11 +21148,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.19.0",
+      "purl": "pkg:npm/bpmn-js@18.21.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.19.0"
+          "value": "bpmn-js@18.21.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21892,9 +21892,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@15.18.1",
+      "bom-ref": "pkg:npm/diagram-js@15.22.0",
       "name": "diagram-js",
-      "version": "15.18.1",
+      "version": "15.22.0",
       "licenses": [
         {
           "license": {
@@ -21902,11 +21902,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js@15.18.1",
+      "purl": "pkg:npm/diagram-js@15.22.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@15.18.1"
+          "value": "diagram-js@15.22.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22012,9 +22012,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.8.1",
+      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.9.0",
       "name": "dmn-js-boxed-expression",
-      "version": "17.8.1",
+      "version": "17.9.0",
       "licenses": [
         {
           "license": {
@@ -22022,11 +22022,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-boxed-expression@17.8.1",
+      "purl": "pkg:npm/dmn-js-boxed-expression@17.9.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-boxed-expression@17.8.1"
+          "value": "dmn-js-boxed-expression@17.9.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22036,9 +22036,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-decision-table@17.8.1",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.9.0",
       "name": "dmn-js-decision-table",
-      "version": "17.8.1",
+      "version": "17.9.0",
       "licenses": [
         {
           "license": {
@@ -22046,11 +22046,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-decision-table@17.8.1",
+      "purl": "pkg:npm/dmn-js-decision-table@17.9.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-decision-table@17.8.1"
+          "value": "dmn-js-decision-table@17.9.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22060,9 +22060,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-drd@17.8.1",
+      "bom-ref": "pkg:npm/dmn-js-drd@17.9.0",
       "name": "dmn-js-drd",
-      "version": "17.8.1",
+      "version": "17.9.0",
       "licenses": [
         {
           "license": {
@@ -22070,11 +22070,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-drd@17.8.1",
+      "purl": "pkg:npm/dmn-js-drd@17.9.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-drd@17.8.1"
+          "value": "dmn-js-drd@17.9.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22084,9 +22084,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.8.1",
+      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.9.0",
       "name": "dmn-js-literal-expression",
-      "version": "17.8.1",
+      "version": "17.9.0",
       "licenses": [
         {
           "license": {
@@ -22094,11 +22094,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-literal-expression@17.8.1",
+      "purl": "pkg:npm/dmn-js-literal-expression@17.9.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-literal-expression@17.8.1"
+          "value": "dmn-js-literal-expression@17.9.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22132,9 +22132,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-shared@17.8.1",
+      "bom-ref": "pkg:npm/dmn-js-shared@17.9.0",
       "name": "dmn-js-shared",
-      "version": "17.8.1",
+      "version": "17.9.0",
       "licenses": [
         {
           "license": {
@@ -22142,11 +22142,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-shared@17.8.1",
+      "purl": "pkg:npm/dmn-js-shared@17.9.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-shared@17.8.1"
+          "value": "dmn-js-shared@17.9.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22156,9 +22156,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js@17.8.1",
+      "bom-ref": "pkg:npm/dmn-js@17.9.0",
       "name": "dmn-js",
-      "version": "17.8.1",
+      "version": "17.9.0",
       "licenses": [
         {
           "license": {
@@ -22166,11 +22166,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js@17.8.1",
+      "purl": "pkg:npm/dmn-js@17.9.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js@17.8.1"
+          "value": "dmn-js@17.9.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22293,19 +22293,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.11",
+      "bom-ref": "pkg:npm/dompurify@3.4.12",
       "name": "dompurify",
-      "version": "3.4.11",
+      "version": "3.4.12",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.11",
+      "purl": "pkg:npm/dompurify@3.4.12",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.11"
+          "value": "dompurify@3.4.12"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22555,9 +22555,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.9.3",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.10.1",
       "name": "fast-xml-parser",
-      "version": "5.9.3",
+      "version": "5.10.1",
       "licenses": [
         {
           "license": {
@@ -22565,11 +22565,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.9.3",
+      "purl": "pkg:npm/fast-xml-parser@5.10.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.9.3"
+          "value": "fast-xml-parser@5.10.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23196,9 +23196,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/is-unsafe@1.0.1",
+      "bom-ref": "pkg:npm/is-unsafe@2.0.0",
       "name": "is-unsafe",
-      "version": "1.0.1",
+      "version": "2.0.0",
       "licenses": [
         {
           "license": {
@@ -23206,11 +23206,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/is-unsafe@1.0.1",
+      "purl": "pkg:npm/is-unsafe@2.0.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "is-unsafe@1.0.1"
+          "value": "is-unsafe@2.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23508,9 +23508,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/min-dash@5.0.0",
+      "bom-ref": "pkg:npm/min-dash@5.1.0",
       "name": "min-dash",
-      "version": "5.0.0",
+      "version": "5.1.0",
       "licenses": [
         {
           "license": {
@@ -23518,11 +23518,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/min-dash@5.0.0",
+      "purl": "pkg:npm/min-dash@5.1.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "min-dash@5.0.0"
+          "value": "min-dash@5.1.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23890,9 +23890,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/path-expression-matcher@1.5.0",
+      "bom-ref": "pkg:npm/path-expression-matcher@1.6.2",
       "name": "path-expression-matcher",
-      "version": "1.5.0",
+      "version": "1.6.2",
       "licenses": [
         {
           "license": {
@@ -23900,11 +23900,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/path-expression-matcher@1.5.0",
+      "purl": "pkg:npm/path-expression-matcher@1.6.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "path-expression-matcher@1.5.0"
+          "value": "path-expression-matcher@1.6.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24675,6 +24675,30 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/xml-naming@0.3.0",
+      "name": "xml-naming",
+      "version": "0.3.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/xml-naming@0.3.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "xml-naming@0.3.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/zeebe-dmn-moddle@1.0.0",
       "name": "zeebe-dmn-moddle",
       "version": "1.0.0",
@@ -24699,7 +24723,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0af1bcfe-780c-4491-8146-7557024cc438",
+      "bom-ref": "6a64e1d9-a1b9-404f-be1e-dcf15bf1fc1a",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27091,13 +27115,7 @@
       "dependsOn": []
     },
     {
-      "ref": "0af1bcfe-780c-4491-8146-7557024cc438",
-      "dependsOn": [
-        "bf81821e-f4f5-469c-a570-b41f733b44ab"
-      ]
-    },
-    {
-      "ref": "bf81821e-f4f5-469c-a570-b41f733b44ab",
+      "ref": "4002000c-e679-4dc6-850a-c641508e1525",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.23.0",
@@ -27117,23 +27135,23 @@
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.12.1",
-        "pkg:npm/bpmn-js@18.19.0",
+        "pkg:npm/bpmn-js@18.21.0",
         "pkg:npm/camunda-dmn-js@3.7.0",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
         "pkg:npm/core-js@3.49.0",
         "pkg:npm/dmn-font@0.6.2",
-        "pkg:npm/dmn-js-decision-table@17.8.1",
-        "pkg:npm/dmn-js-drd@17.8.1",
-        "pkg:npm/dmn-js-literal-expression@17.8.1",
+        "pkg:npm/dmn-js-decision-table@17.9.0",
+        "pkg:npm/dmn-js-drd@17.9.0",
+        "pkg:npm/dmn-js-literal-expression@17.9.0",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
-        "pkg:npm/dmn-js-shared@17.8.1",
-        "pkg:npm/dmn-js@17.8.1",
+        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/dmn-js@17.9.0",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.11",
+        "pkg:npm/dompurify@3.4.12",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.9.3",
+        "pkg:npm/fast-xml-parser@5.10.1",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.18.1",
@@ -27144,6 +27162,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "6a64e1d9-a1b9-404f-be1e-dcf15bf1fc1a",
+      "dependsOn": [
+        "4002000c-e679-4dc6-850a-c641508e1525"
       ]
     },
     {
@@ -27171,7 +27195,7 @@
       "dependsOn": [
         "pkg:npm/dmn-moddle@12.0.1",
         "pkg:npm/ids@3.0.2",
-        "pkg:npm/min-dash@5.0.0"
+        "pkg:npm/min-dash@5.1.0"
       ]
     },
     {
@@ -27242,7 +27266,7 @@
         "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
         "pkg:npm/%40lezer/common@1.5.2",
         "pkg:npm/luxon@3.7.2",
-        "pkg:npm/min-dash@5.0.0"
+        "pkg:npm/min-dash@5.1.0"
       ]
     },
     {
@@ -27258,7 +27282,7 @@
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/ids@3.0.2",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/preact@10.15.1"
       ]
@@ -27291,14 +27315,14 @@
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.11",
+        "pkg:npm/dompurify@3.4.12",
         "pkg:npm/feelers@3.1.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/lodash@4.18.1",
         "pkg:npm/luxon@3.7.2",
         "pkg:npm/marked@18.0.5",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/preact@10.29.2"
       ]
     },
@@ -27334,7 +27358,7 @@
       "dependsOn": [
         "pkg:npm/%40lezer/highlight@1.2.3",
         "pkg:npm/%40lezer/lr@1.4.10",
-        "pkg:npm/min-dash@5.0.0"
+        "pkg:npm/min-dash@5.1.0"
       ]
     },
     {
@@ -27342,7 +27366,7 @@
       "dependsOn": [
         "pkg:npm/%40lezer/highlight@1.2.3",
         "pkg:npm/%40lezer/lr@1.4.10",
-        "pkg:npm/min-dash@5.0.0"
+        "pkg:npm/min-dash@5.1.0"
       ]
     },
     {
@@ -27367,7 +27391,7 @@
         "pkg:npm/%40codemirror/view@6.43.6",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/focus-trap@8.0.0",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
     },
@@ -27517,7 +27541,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40nodable/entities@2.2.0",
+      "ref": "pkg:npm/%40nodable/entities@3.0.0",
       "dependsOn": []
     },
     {
@@ -27622,14 +27646,14 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.19.0",
+      "ref": "pkg:npm/bpmn-js@18.21.0",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.0.0",
         "pkg:npm/diagram-js-direct-editing@3.4.0",
-        "pkg:npm/diagram-js@15.18.1",
+        "pkg:npm/diagram-js@15.22.0",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/tiny-svg@4.1.4"
       ]
@@ -27637,7 +27661,7 @@
     {
       "ref": "pkg:npm/bpmn-moddle@10.0.0",
       "dependsOn": [
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/moddle-xml@12.0.0",
         "pkg:npm/moddle@8.0.0"
       ]
@@ -27663,13 +27687,13 @@
         "pkg:npm/camunda-dmn-moddle@1.3.1",
         "pkg:npm/diagram-js-grid@2.0.1",
         "pkg:npm/diagram-js-origin@1.4.0",
-        "pkg:npm/diagram-js@15.18.1",
-        "pkg:npm/dmn-js-drd@17.8.1",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-drd@17.9.0",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
-        "pkg:npm/dmn-js-shared@17.8.1",
-        "pkg:npm/dmn-js@17.8.1",
+        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/dmn-js@17.9.0",
         "pkg:npm/inferno@5.6.3",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/zeebe-dmn-moddle@1.0.0"
       ]
     },
@@ -27816,15 +27840,15 @@
     {
       "ref": "pkg:npm/diagram-js-direct-editing@3.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.18.1",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
     },
     {
       "ref": "pkg:npm/diagram-js-grid@2.0.1",
       "dependsOn": [
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/tiny-svg@4.1.4"
       ]
@@ -27832,18 +27856,18 @@
     {
       "ref": "pkg:npm/diagram-js-origin@1.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.18.1",
+        "pkg:npm/diagram-js@15.22.0",
         "pkg:npm/tiny-svg@3.1.3"
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js@15.18.1",
+      "ref": "pkg:npm/diagram-js@15.22.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.4",
         "pkg:npm/clsx@2.1.1",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/inherits-browser@0.1.0",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/object-refs@0.4.0",
         "pkg:npm/path-intersection@4.1.0",
@@ -27877,55 +27901,55 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dmn-js-boxed-expression@17.8.1",
+      "ref": "pkg:npm/dmn-js-boxed-expression@17.9.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.18.1",
-        "pkg:npm/dmn-js-shared@17.8.1",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-shared@17.9.0",
         "pkg:npm/inferno@5.6.3",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/table-js@9.4.0"
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-decision-table@17.8.1",
+      "ref": "pkg:npm/dmn-js-decision-table@17.9.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
-        "pkg:npm/diagram-js@15.18.1",
-        "pkg:npm/dmn-js-shared@17.8.1",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-shared@17.9.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/selection-ranges@4.1.1",
         "pkg:npm/table-js@9.4.0"
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-drd@17.8.1",
+      "ref": "pkg:npm/dmn-js-drd@17.9.0",
       "dependsOn": [
         "pkg:npm/diagram-js-direct-editing@3.4.0",
-        "pkg:npm/diagram-js@15.18.1",
-        "pkg:npm/dmn-js-shared@17.8.1",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-shared@17.9.0",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/object-refs@0.4.0",
         "pkg:npm/tiny-svg@4.1.4"
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-literal-expression@17.8.1",
+      "ref": "pkg:npm/dmn-js-literal-expression@17.9.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.18.1",
-        "pkg:npm/dmn-js-shared@17.8.1",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-shared@17.9.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/table-js@9.4.0"
       ]
@@ -27934,22 +27958,22 @@
       "ref": "pkg:npm/dmn-js-properties-panel@3.11.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
-        "pkg:npm/diagram-js@15.18.1",
-        "pkg:npm/dmn-js@17.8.1",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js@17.9.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-shared@17.8.1",
+      "ref": "pkg:npm/dmn-js-shared@17.9.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
-        "pkg:npm/diagram-js@15.18.1",
+        "pkg:npm/diagram-js@15.22.0",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dmn-moddle@12.0.1",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inferno@5.6.3",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/selection-ranges@4.1.1",
         "pkg:npm/selection-update@1.1.1",
@@ -27957,19 +27981,19 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js@17.8.1",
+      "ref": "pkg:npm/dmn-js@17.9.0",
       "dependsOn": [
-        "pkg:npm/dmn-js-boxed-expression@17.8.1",
-        "pkg:npm/dmn-js-decision-table@17.8.1",
-        "pkg:npm/dmn-js-drd@17.8.1",
-        "pkg:npm/dmn-js-literal-expression@17.8.1",
-        "pkg:npm/dmn-js-shared@17.8.1"
+        "pkg:npm/dmn-js-boxed-expression@17.9.0",
+        "pkg:npm/dmn-js-decision-table@17.9.0",
+        "pkg:npm/dmn-js-drd@17.9.0",
+        "pkg:npm/dmn-js-literal-expression@17.9.0",
+        "pkg:npm/dmn-js-shared@17.9.0"
       ]
     },
     {
       "ref": "pkg:npm/dmn-moddle@12.0.1",
       "dependsOn": [
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/moddle-xml@12.0.0",
         "pkg:npm/moddle@8.0.0"
       ]
@@ -27994,7 +28018,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.11",
+      "ref": "pkg:npm/dompurify@3.4.12",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]
@@ -28049,19 +28073,19 @@
     {
       "ref": "pkg:npm/fast-xml-builder@1.2.0",
       "dependsOn": [
-        "pkg:npm/path-expression-matcher@1.5.0",
+        "pkg:npm/path-expression-matcher@1.6.2",
         "pkg:npm/xml-naming@0.1.0"
       ]
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.9.3",
+      "ref": "pkg:npm/fast-xml-parser@5.10.1",
       "dependsOn": [
-        "pkg:npm/%40nodable/entities@2.2.0",
+        "pkg:npm/%40nodable/entities@3.0.0",
         "pkg:npm/fast-xml-builder@1.2.0",
-        "pkg:npm/is-unsafe@1.0.1",
-        "pkg:npm/path-expression-matcher@1.5.0",
+        "pkg:npm/is-unsafe@2.0.0",
+        "pkg:npm/path-expression-matcher@1.6.2",
         "pkg:npm/strnum@2.4.1",
-        "pkg:npm/xml-naming@0.1.0"
+        "pkg:npm/xml-naming@0.3.0"
       ]
     },
     {
@@ -28214,7 +28238,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/is-unsafe@1.0.1",
+      "ref": "pkg:npm/is-unsafe@2.0.0",
       "dependsOn": []
     },
     {
@@ -28270,7 +28294,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/min-dash@5.0.0",
+      "ref": "pkg:npm/min-dash@5.1.0",
       "dependsOn": []
     },
     {
@@ -28287,7 +28311,7 @@
       "ref": "pkg:npm/min-dom@5.3.0",
       "dependsOn": [
         "pkg:npm/domify@3.0.0",
-        "pkg:npm/min-dash@5.0.0"
+        "pkg:npm/min-dash@5.1.0"
       ]
     },
     {
@@ -28297,7 +28321,7 @@
     {
       "ref": "pkg:npm/moddle-xml@12.0.0",
       "dependsOn": [
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/moddle@8.0.0",
         "pkg:npm/saxen@11.0.2"
       ]
@@ -28319,7 +28343,7 @@
     {
       "ref": "pkg:npm/moddle@8.0.0",
       "dependsOn": [
-        "pkg:npm/min-dash@5.0.0"
+        "pkg:npm/min-dash@5.1.0"
       ]
     },
     {
@@ -28357,7 +28381,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/path-expression-matcher@1.5.0",
+      "ref": "pkg:npm/path-expression-matcher@1.6.2",
       "dependsOn": []
     },
     {
@@ -28493,10 +28517,10 @@
     {
       "ref": "pkg:npm/table-js@9.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.18.1",
+        "pkg:npm/diagram-js@15.22.0",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/inferno@5.6.3",
-        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
         "pkg:npm/selection-ranges@4.1.1"
       ]
@@ -28531,6 +28555,10 @@
     },
     {
       "ref": "pkg:npm/xml-naming@0.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/xml-naming@0.3.0",
       "dependsOn": []
     },
     {
@@ -29631,6 +29659,83 @@
       "affects": [
         {
           "ref": "pkg:npm/angular-sanitize@1.8.3",
+          "versions": [
+            {
+              "version": "1.8.3",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-11998",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ghsa"
+          },
+          "score": 7.6,
+          "severity": "high",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:L"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7.6,
+          "severity": "high",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:L"
+        }
+      ],
+      "cwes": [
+        791,
+        79
+      ],
+      "description": "A flaw in AngularJS\u0027 Strict Contextual Escaping (SCE) logic allows bypassing certain SCE policies for resource URLs and can lead to arbitrary JavaScript execution within the context of the victim\u0027s browser session.\n\n\nSCE\u0027s purpose is to ensure that only trusted or safe values are used in certain security-sensitive contexts, such as resource URLs, including URLs that define executable JavaScript scripts, \u0027\u003Ciframe\u003E\u0027 documents, route templates, etc. A flaw in the logic that tries to match entire URLs against regular expression matchers can result in partial matches for certain types of regular expressions, effectively bypassing the policies and allowing the use of unsafe values as resource URLs.\n\n\nThis issue affects AngularJS versions greater than or equal to 1.2.0-rc.3.\n\n\nNote:\nThe AngularJS project was already End-of-Life when this CVE was published and will not receive any updates to address this issue. For more information see the\u00A0 End-of-Life announcement https://docs.angularjs.org/misc/version-support-status .",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-11998"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-11998"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2492579"
+        },
+        {
+          "url": "https://codepen.io/herodevs/pen/JobQdmz/5b3896f56fab66f20cd25e698cf3faa8"
+        },
+        {
+          "url": "https://github.com/angular/angular.js"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-11998"
+        },
+        {
+          "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-11998.json"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-11998"
+        },
+        {
+          "url": "https://www.herodevs.com/vulnerability-directory/cve-2026-11998"
+        },
+        {
+          "url": "https://www.herodevs.com/vulnerability-directory/cve-2026-11998?nes-for-angularjs"
+        }
+      ],
+      "published": "2026-06-24T21:16:52Z",
+      "updated": "2026-07-20T12:17:52Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
               "version": "1.8.3",

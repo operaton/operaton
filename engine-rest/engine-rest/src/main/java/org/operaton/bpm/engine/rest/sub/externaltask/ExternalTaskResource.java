@@ -16,20 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.sub.externaltask;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
-import org.operaton.bpm.engine.rest.dto.externaltask.CompleteExternalTaskDto;
-import org.operaton.bpm.engine.rest.dto.externaltask.ExtendLockOnExternalTaskDto;
-import org.operaton.bpm.engine.rest.dto.externaltask.ExternalTaskBpmnError;
-import org.operaton.bpm.engine.rest.dto.externaltask.ExternalTaskDto;
-import org.operaton.bpm.engine.rest.dto.externaltask.ExternalTaskFailureDto;
-import org.operaton.bpm.engine.rest.dto.externaltask.LockExternalTaskDto;
+import org.operaton.bpm.engine.rest.dto.externaltask.*;
 import org.operaton.bpm.engine.rest.dto.runtime.PriorityDto;
 import org.operaton.bpm.engine.rest.dto.runtime.RetriesDto;
 

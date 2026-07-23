@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -31,12 +27,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
@@ -60,14 +51,10 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Permissions.*;
 import static org.operaton.bpm.engine.authorization.Resources.FILTER;
 import static org.operaton.bpm.engine.rest.dto.task.TaskQueryDto.*;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_FILTER_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.mockFilter;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.mockVariableInstance;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 import static org.operaton.bpm.engine.rest.helper.TaskQueryMatcher.hasName;
 import static org.operaton.bpm.engine.variable.Variables.stringValue;
 import static io.restassured.RestAssured.given;
@@ -75,20 +62,10 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.emptyOrNullString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 /**

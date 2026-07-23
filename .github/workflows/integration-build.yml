@@ -115,28 +115,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  detect-recent-changes:
-    name: Detect recent changes
-    runs-on: ubuntu-latest
-    outputs:
-      recent_changes: ${{steps.check-commits.outputs.commits}}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v7.0.0
-        with:
-          fetch-depth: 0
-      - name: Check for recent commits
-        id: check-commits
-        run: |
-          COMMITS=$(git rev-list --since="24 hours ago" HEAD)
-          if [ -z "$COMMITS" ]; then
-            echo "🔎❌ No commits in the last 24 hours detected."
-            echo "commits=false" >> $GITHUB_OUTPUT
-          else
-            echo "🔎✔️ Commits within the last 24 hours detected."
-            echo "commits=true" >> $GITHUB_OUTPUT
-          fi
-
   determine-pr-config:
     name: Determine PR Configuration
     runs-on: ubuntu-latest
@@ -267,11 +245,9 @@ jobs:
         java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21", "25"]') }}
     runs-on: ubuntu-latest
     needs:
-      - detect-recent-changes
       - determine-pr-config
     if: |
       always() && !cancelled() && github.event_name != 'push' && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
         (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false') ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
       )
@@ -291,7 +267,7 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Set up Java
-        uses: actions/setup-java@v5.4.0
+        uses: actions/setup-java@v5.6.0
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
@@ -309,7 +285,7 @@ jobs:
           DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
-          SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
+          SKIP_TESTS=${{ github.event.inputs.skip_tests || false }}
 
           CMD=".devenv/scripts/build/build.sh --profile=max --reports"
           if [ "$SKIP_TESTS" = "true" ]; then
@@ -338,18 +314,16 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     needs:
-      - detect-recent-changes
       - determine-pr-config
     strategy:
       fail-fast: false
       matrix:
         java: ${{ fromJson('["17"]') }}
         testsuite: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.testsuites) || fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
-        distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
-        database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
+        distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]') }}
+        database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]') }}
     if: |
       always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
         (github.event_name == 'workflow_dispatch' && (github.event.inputs.integration_tests == 'true' || github.event.inputs.integration_tests == true)) ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
       )
@@ -365,7 +339,7 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Set up Java
-        uses: actions/setup-java@v5.4.0
+        uses: actions/setup-java@v5.6.0
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
@@ -411,11 +385,9 @@ jobs:
     name: Spring Boot Starter Integration Tests
     runs-on: ubuntu-latest
     needs:
-      - detect-recent-changes
       - determine-pr-config
     if: |
       always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
         (github.event_name == 'workflow_dispatch' && (github.event.inputs.integration_tests == 'true' || github.event.inputs.integration_tests == true)) ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true')
       )
@@ -429,7 +401,7 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Set up Java
-        uses: actions/setup-java@v5.4.0
+        uses: actions/setup-java@v5.6.0
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -459,12 +431,10 @@ jobs:
     name: Documentation
     runs-on: ubuntu-latest
     needs:
-      - detect-recent-changes
       - determine-pr-config
     if: |
       always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false')
+        github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false'
       )
     steps:
       - name: Checkout Code
@@ -492,15 +462,14 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false')
+        github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false'
       )
     steps:
       - name: Check out the code
         uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 1
-      - uses: actions/setup-java@v5.4.0
+      - uses: actions/setup-java@v5.6.0
         with:
           distribution: zulu
           java-version: 17
@@ -543,8 +512,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false')
+        github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false'
       )
     steps:
       - name: Check out the code
@@ -584,14 +552,14 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
-          JRELEASER_DRY_RUN: ${{ github.event_name == 'schedule' && false || github.event.inputs.dry_run }}
+          JRELEASER_DRY_RUN: ${{ github.event.inputs.dry_run }}
           JRELEASER_PRERELEASE_ENABLED: true
           JRELEASER_PROJECT_SNAPSHOT_LABEL: ${{needs.build.outputs.project_version}}
         with:
           arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}}
 
       - name: Publish Test Report
-        if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_tests == 'false'}}
+        if: ${{ github.event.inputs.skip_tests == 'false'}}
         uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
@@ -620,8 +588,7 @@ jobs:
       - release
     if: |
       always() && !cancelled() && (
-        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
+        github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false'
       )
     steps:
       - name: Notify Docker Repository

@@ -19,12 +19,12 @@ package org.operaton.spin.impl.xml.dom.format;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.SpinRuntimeException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 class DomXmlDeserializationValidationTest {
 
@@ -50,7 +50,7 @@ class DomXmlDeserializationValidationTest {
     format.getMapper().validateType(int.class, validator);
 
     // then
-    Mockito.verifyNoInteractions(validator);
+    verifyNoInteractions(validator);
   }
 
   @Test
@@ -62,8 +62,8 @@ class DomXmlDeserializationValidationTest {
     format.getMapper().validateType(String.class, validator);
 
     // then
-    Mockito.verify(validator).validate("java.lang.String");
-    Mockito.verifyNoMoreInteractions(validator);
+    verify(validator).validate("java.lang.String");
+    verifyNoMoreInteractions(validator);
   }
 
   @Test
@@ -75,9 +75,9 @@ class DomXmlDeserializationValidationTest {
     format.getMapper().validateType(Complex.class, validator);
 
     // then
-    Mockito.verify(validator)
+    verify(validator)
         .validate("org.operaton.spin.impl.xml.dom.format.DomXmlDeserializationValidationTest$Complex");
-    Mockito.verifyNoMoreInteractions(validator);
+    verifyNoMoreInteractions(validator);
   }
 
   @Test
@@ -89,8 +89,8 @@ class DomXmlDeserializationValidationTest {
     format.getMapper().validateType(Integer[].class, validator);
 
     // then
-    Mockito.verify(validator).validate("java.lang.Integer");
-    Mockito.verifyNoMoreInteractions(validator);
+    verify(validator).validate("java.lang.Integer");
+    verifyNoMoreInteractions(validator);
   }
 
   @Test
@@ -144,8 +144,8 @@ class DomXmlDeserializationValidationTest {
   }
 
   protected DeserializationTypeValidator createValidatorMock(boolean result) {
-    DeserializationTypeValidator newValidator = Mockito.mock(DeserializationTypeValidator.class);
-    Mockito.when(newValidator.validate(Mockito.anyString())).thenReturn(result);
+    DeserializationTypeValidator newValidator = mock(DeserializationTypeValidator.class);
+    when(newValidator.validate(anyString())).thenReturn(result);
     return newValidator;
   }
 }

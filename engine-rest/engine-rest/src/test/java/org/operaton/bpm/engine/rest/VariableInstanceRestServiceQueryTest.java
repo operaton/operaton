@@ -29,7 +29,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
@@ -45,16 +44,8 @@ import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTest {
@@ -198,32 +189,32 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("variableName", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByVariableName();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("variableType", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByVariableType();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("activityInstanceId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByActivityInstanceId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("activityInstanceId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByActivityInstanceId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("tenantId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByTenantId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("tenantId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByTenantId();
     inOrder.verify(mockedQuery).desc();
@@ -231,7 +222,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   void testSecondarySortingAsPost() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("variableName").desc()
@@ -326,7 +317,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
         .when().get(VARIABLE_INSTANCE_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     inOrder.verify(mockedQuery).variableName(queryVariableName);
     inOrder.verify(mockedQuery).list();
 
@@ -368,7 +359,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
         .when().post(VARIABLE_INSTANCE_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     inOrder.verify(mockedQuery).variableName(queryVariableName);
     inOrder.verify(mockedQuery).list();
 

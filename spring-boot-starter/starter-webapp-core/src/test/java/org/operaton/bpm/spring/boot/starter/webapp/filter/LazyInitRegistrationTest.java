@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationContext;
 
@@ -91,7 +90,7 @@ class LazyInitRegistrationTest {
   @Test
   void lazyInitWithoutApplicationContext() {
     assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isFalse();
-    verify(lazyDelegateFilterMock, times(0)).setInitHook(Mockito.any(InitHook.class));
+    verify(lazyDelegateFilterMock, times(0)).setInitHook(any(InitHook.class));
     verify(lazyDelegateFilterMock, times(0)).lazyInit();
   }
 
@@ -100,7 +99,7 @@ class LazyInitRegistrationTest {
   void lazyInitWithoutRegistration() {
     LazyInitRegistration.applicationContext = applicationContextMock;
     assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isFalse();
-    verify(lazyDelegateFilterMock, times(0)).setInitHook(Mockito.any(InitHook.class));
+    verify(lazyDelegateFilterMock, times(0)).setInitHook(any(InitHook.class));
     verify(lazyDelegateFilterMock, times(0)).lazyInit();
   }
 
@@ -139,7 +138,7 @@ class LazyInitRegistrationTest {
 
   @Test
   void setApplicationContextTest() {
-    try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
+    try (MockedStatic<LazyInitRegistration> theMock = mockStatic(LazyInitRegistration.class)) {
       LazyInitRegistration.register(lazyDelegateFilterMock);
       Set<LazyDelegateFilter<? extends Filter>> registrations = new HashSet<>();
       registrations.add(lazyDelegateFilterMock);

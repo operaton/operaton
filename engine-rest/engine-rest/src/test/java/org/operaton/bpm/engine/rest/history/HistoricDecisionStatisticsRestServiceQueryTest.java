@@ -23,7 +23,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatistics;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatisticsQuery;
@@ -35,9 +34,7 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Askar Akhmerov
@@ -59,7 +56,7 @@ public class HistoricDecisionStatisticsRestServiceQueryTest extends AbstractRest
 
   @AfterEach
   void tearDown() {
-    Mockito.reset(processEngine.getHistoryService(), historicDecisionInstanceStatisticsQuery);
+    reset(processEngine.getHistoryService(), historicDecisionInstanceStatisticsQuery);
   }
 
   private void setupHistoricDecisionStatisticsMock() {

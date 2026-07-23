@@ -26,6 +26,22 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- The starter is a 'provided' dependency in the QA modules, which makes its
+          transitive dependencies 'provided' as well. spring-boot:start forks the application
+          with the runtime classpath, which excludes 'provided' - the test classpath includes it. -->
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <useTestClasspath>true</useTestClasspath>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
   <profiles>
     <profile>
       <id>distro</id>

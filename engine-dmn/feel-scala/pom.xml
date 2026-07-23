@@ -20,7 +20,6 @@
       <artifactId>feel-engine</artifactId>
     </dependency>
 
-    <!-- Scala library is used directly (scala.util.Either, scala.collection, ...) -->
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>

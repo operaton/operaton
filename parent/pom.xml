@@ -21,7 +21,7 @@
     <version.groovy>5.0.7</version.groovy>
     <version.rest-assured>6.0.1</version.rest-assured>
     <version.jython>2.7.4</version.jython>
-    <version.graal.js>25.0.3</version.graal.js>
+    <version.graal.js>25.0.4</version.graal.js>
     <version.nashorn>15.7</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
@@ -122,7 +122,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.5.0</version>
+          <version>3.5.1</version>
           <configuration>
             <skipIfEmpty>true</skipIfEmpty>
             <archive>

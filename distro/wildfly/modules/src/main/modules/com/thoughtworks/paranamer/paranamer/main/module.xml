@@ -1,0 +1,5 @@
+<module xmlns="urn:jboss:module:1.0" name="com.thoughtworks.paranamer.paranamer">
+  <resources>
+    <resource-root path="paranamer-@version.paranamer@.jar" />
+  </resources>
+</module>

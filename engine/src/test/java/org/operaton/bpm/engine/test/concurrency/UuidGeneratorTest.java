@@ -32,9 +32,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-// Tagged "sequential": hand-orchestrates real background threads with blocking
-// wait()/notify() and no timeout - see ConcurrencyTestHelper's tag comment and the
-// surefire-plugin config in this module's pom.xml.
 @Tag("sequential")
 class UuidGeneratorTest {
 

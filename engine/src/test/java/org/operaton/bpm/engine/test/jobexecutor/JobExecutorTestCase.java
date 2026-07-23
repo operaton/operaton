@@ -50,10 +50,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Tom Baeyens
  */
-// Tagged "sequential": with forkCount > 1, Surefire's JUnit Platform provider can
-// dispatch a @Nested class to a different JVM fork than its enclosing class,
-// running it twice (once as part of the enclosing class's own cascade, once
-// standalone) - see the surefire-plugin config in this module's pom.xml.
 @Tag("sequential")
 class JobExecutorTestCase {
   @RegisterExtension

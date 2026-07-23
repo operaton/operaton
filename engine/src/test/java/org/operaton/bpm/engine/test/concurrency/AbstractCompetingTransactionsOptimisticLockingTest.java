@@ -45,9 +45,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * entities that have already been removed in a concurrent transaction lead to
  * {@link OptimisticLockingException}s.
  */
-// Tagged "sequential": hand-orchestrates real background threads with blocking
-// wait()/notify() and no timeout - see ConcurrencyTestHelper's tag comment and the
-// surefire-plugin config in this module's pom.xml. Tag inherited by subclasses.
 @Tag("sequential")
 public abstract class AbstractCompetingTransactionsOptimisticLockingTest {
 

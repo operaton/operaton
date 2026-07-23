@@ -263,28 +263,49 @@
       </dependency>
 
       <!-- Other dependencies -->
+      <!--
+        feel-engine is used unshaded; its dependency tree is pinned here to a single version
+        platform-wide. Bump these entries together with version.feel-scala: scala-library,
+        fastparse (and fastparse's geny/sourcecode) track the feel-engine release, and paranamer
+        tracks jackson-module-scala. jackson-module-scala itself has no entry here on purpose -
+        it must follow the platform Jackson version and is managed by the imported jackson-bom.
+        See https://github.com/operaton/operaton/issues/2654
+      -->
       <dependency>
         <groupId>org.camunda.feel</groupId>
         <artifactId>feel-engine</artifactId>
         <version>${version.feel-scala}</version>
-        <classifier>scala-shaded</classifier>
-        <!--
-          jackson-module-scala is shaded into feel-engine and could cause NoClassDefFoundError when present
-          in the classpath before feel-engine. Exclude it to avoid such issues.
-          See https://github.com/operaton/operaton/issues/2875
-        -->
-        <exclusions>
-          <exclusion>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-scala_2.13</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
-      <!-- Scala library needed for feel-engine due to ScalaSignature annotations in jackson-module-scala -->
       <dependency>
         <groupId>org.scala-lang</groupId>
         <artifactId>scala-library</artifactId>
         <version>${version.scala}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.lihaoyi</groupId>
+        <artifactId>fastparse_2.13</artifactId>
+        <version>${version.fastparse}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.lihaoyi</groupId>
+        <artifactId>geny_2.13</artifactId>
+        <version>${version.geny}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.lihaoyi</groupId>
+        <artifactId>sourcecode_2.13</artifactId>
+        <version>${version.sourcecode}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.uuid</groupId>
+        <artifactId>java-uuid-generator</artifactId>
+        <version>${version.uuid-generator}</version>
+      </dependency>
+      <!-- paranamer is a transitive dependency of jackson-module-scala -->
+      <dependency>
+        <groupId>com.thoughtworks.paranamer</groupId>
+        <artifactId>paranamer</artifactId>
+        <version>${version.paranamer}</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>

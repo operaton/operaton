@@ -66,6 +66,12 @@
         <include>org.operaton.bpm.juel:*:jar</include>
 
         <include>org.camunda.feel:*:jar</include>
+        <!-- dependencies of the unshaded feel-engine -->
+        <include>org.scala-lang:scala-library:jar</include>
+        <include>com.lihaoyi:*:jar</include>
+        <include>com.fasterxml.jackson.core:*:jar</include>
+        <include>com.fasterxml.jackson.module:jackson-module-scala_2.13:jar</include>
+        <include>com.thoughtworks.paranamer:paranamer:jar</include>
 
         <include>org.freemarker:*:jar</include>
         <include>org.operaton.template-engines:*:jar</include>

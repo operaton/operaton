@@ -18,10 +18,8 @@
     <dependency>
       <groupId>org.camunda.feel</groupId>
       <artifactId>feel-engine</artifactId>
-      <classifier>scala-shaded</classifier>
     </dependency>
 
-    <!-- Scala library needed for feel-engine due to ScalaSignature annotations -->
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>

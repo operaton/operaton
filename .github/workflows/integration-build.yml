@@ -161,11 +161,17 @@ jobs:
             NEEDS_BUILD=false
           fi
 
-          # Detect scope:spring-boot label
+          # Detect scope:spring-boot label or changes to files that affect the Spring Boot Starter
           NEEDS_SBS_TESTS=false
           if echo "$PR_LABELS" | grep -q '"scope:spring-boot"'; then
             echo "🍃 PR has scope:spring-boot label"
             NEEDS_SBS_TESTS=true
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD 2>/dev/null || true)
+            if echo "$CHANGED_FILES" | grep -qE '^(parent/pom\.xml|bom/|engine/pom\.xml|engine-dmn/)'; then
+              echo "📦 Changes to platform core files (parent/pom.xml, bom/, engine/pom.xml, engine-dmn/) affect the Spring Boot Starter"
+              NEEDS_SBS_TESTS=true
+            fi
           fi
           echo "needs_spring_boot_starter_tests=$NEEDS_SBS_TESTS" >> $GITHUB_OUTPUT
 

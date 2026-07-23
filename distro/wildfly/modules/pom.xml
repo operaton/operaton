@@ -148,10 +148,28 @@
       <groupId>net.minidev</groupId>
       <artifactId>json-smart</artifactId>
     </dependency>
-    <!-- Scala library needed for feel-engine 1.20.0+ due to jackson-module-scala -->
+    <!-- Scala library needed for the unshaded feel-engine -->
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
+    </dependency>
+
+    <!-- test dependencies: load the assembled module tree with JBoss Modules -->
+    <dependency>
+      <groupId>org.jboss.modules</groupId>
+      <artifactId>jboss-modules</artifactId>
+      <version>2.1.6.Final</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
@@ -233,16 +251,6 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
-                <delete dir="target/modules/org/operaton/feel"/>
-                <copy todir="target/modules" flatten="false">
-                  <fileset refid="maven.project.dependencies"/>
-                  <mapper>
-                    <chainedmapper>
-                      <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes"/>
-                      <regexpmapper from="^(org.camunda.feel.feel-engine.*)/(([A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${version.feel-scala}-scala-shaded.jar" handledirsep="yes"/>
-                    </chainedmapper>
-                  </mapper>
-                </copy>
                 <!-- copy jackson dependencies to slot -->
                 <delete dir="target/modules/com/fasterxml/jackson"/>
                 <copy todir="target/modules" flatten="false">
@@ -254,6 +262,13 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
+                <copy todir="target/modules" flatten="false">
+                  <fileset dir="target/modules">
+                    <include name="com/fasterxml/jackson/module/jackson-module-scala_2.13/**/*.jar"/>
+                  </fileset>
+                  <regexpmapper from="^com/fasterxml/jackson/module/jackson-module-scala_2\.13/[^/]+/(.*)$$" to="com/fasterxml/jackson/module/jackson-module-scala/2.13/\1" handledirsep="yes"/>
+                </copy>
+                <delete dir="target/modules/com/fasterxml/jackson/module/jackson-module-scala_2.13"/>
                 <!-- Place httpcore5-h2 in the httpcore5 module. -->
                 <copy todir="target/modules" flatten="false">
                   <fileset dir="target/modules">
@@ -289,6 +304,19 @@
                   </mapper>
                 </copy>
                 <delete dir="target/modules/org/graalvm/polyglot"/>
+                <!-- module names cannot contain dots other than as package separators,
+                     so use the Scala binary version as a module slot instead of part of the name -->
+                <copy todir="target/modules" flatten="false">
+                  <fileset dir="target/modules">
+                    <include name="com/lihaoyi/*_2.13/main/*.jar"/>
+                  </fileset>
+                  <regexpmapper from="^com/lihaoyi/([A-Za-z]+)_2\.13/main/(.*)$$" to="com/lihaoyi/\1/2.13/\2" handledirsep="yes"/>
+                </copy>
+                <delete>
+                  <fileset dir="target/modules/com/lihaoyi">
+                    <include name="*_2.13/**"/>
+                  </fileset>
+                </delete>
                 <!-- copy module.xml -->
                 <copy todir="target/modules" flatten="false">
                   <fileset dir="src/main/modules"/>
@@ -347,6 +375,18 @@
                 <replace dir="target/modules" token="@version.scala@" value="${version.scala}">
                   <include name="**/module.xml"/>
                 </replace>
+                <replace dir="target/modules" token="@version.fastparse@" value="${version.fastparse}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.geny@" value="${version.geny}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.sourcecode@" value="${version.sourcecode}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.paranamer@" value="${version.paranamer}">
+                  <include name="**/module.xml"/>
+                </replace>
                 <replace dir="target/modules" token="@version.graal.js@" value="${version.graal.js}">
                   <include name="**/module.xml"/>
                 </replace>
@@ -394,6 +434,11 @@
         <configuration>
           <classesDirectory>${project.build.directory}/modules/</classesDirectory>
         </configuration>
+      </plugin>
+      <!-- runs after prepare-package, when the module tree in target/modules is assembled -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

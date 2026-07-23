@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:bdee596e-d5c1-4e8e-a07b-b9d325d27c69",
+  "serialNumber": "urn:uuid:94f49b8b-3bba-4061-86b3-709a0d45c746",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-07-23T21:22:36Z",
+    "timestamp": "2026-07-23T22:04:55Z",
     "tools": {
       "components": [
         {
@@ -2242,7 +2242,7 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.camunda.feel/feel-engine@1.21.0?classifier=scala-shaded\u0026type=jar",
+      "bom-ref": "pkg:maven/org.camunda.feel/feel-engine@1.21.0?type=jar",
       "publisher": "Camunda Services GmbH",
       "group": "org.camunda.feel",
       "name": "feel-engine",
@@ -2252,35 +2252,35 @@
       "hashes": [
         {
           "alg": "MD5",
-          "content": "7bd19584890f1a1f77663ac3fbe712bd"
+          "content": "45416ceb7097ecb955da68ec631c511b"
         },
         {
           "alg": "SHA-1",
-          "content": "2e580c2303feed898d9539301da82b251f8632cd"
+          "content": "156b1dd1a50a520b1edd4c21791465d903e335d4"
         },
         {
           "alg": "SHA-256",
-          "content": "44101757fe2a4adbd3e5f94dd6e504d217c73bdcb4222a16defc56b8ccb2c6a5"
+          "content": "c573f1ceee09ec1848023a76ba8c8c884a20cb963a3089e7b0f8b311dbbd7ab5"
         },
         {
           "alg": "SHA-512",
-          "content": "15c57eb5464e046f62f5c975676e9aa144ca8fbe9e56d24217461d41007a5dbe664ec53d48e3565b4c55a0ad4606e7d7887488811a7fcbcb0c0d521323807064"
+          "content": "d022b607bb63f5d093706a9bf94a9ccd9bd94d6820e9cab1a0546848827b7a48392a82292f25fc00d78b27617ffa014a74c0054ca3fc8a3680da3e35066112b3"
         },
         {
           "alg": "SHA-384",
-          "content": "e4138eb074addf1a321e1eeb19f3176e50708770fae34fb96516b1c4567d2e2ac613bbd2f1badde433d9c62746377c70"
+          "content": "c2172b327c79138580de92aa50cabf86b5fa877882d6634d5e3daa3fc9945948b02e9ad3639bca75440264206993a61b"
         },
         {
           "alg": "SHA3-384",
-          "content": "52635b370920bbb4796da8930a39b75534034b33571d810b9d3b13e6a894708397ae29d9746cfa01967a8546952acf89"
+          "content": "5fd9c4f79d9996cdfbdfe81f1a03decacb4c7e7f120229e48ec9485619615e787d3f6637502acc9b2c014c71d30a1c81"
         },
         {
           "alg": "SHA3-256",
-          "content": "1aae7b3ac6cf80af2d96f7f29c4a772373410abbdb044262ecd907a6da9279dc"
+          "content": "d15eebb80995aeb58c8dcfbd3b091610e3306519fed81df09bc693c01bab451c"
         },
         {
           "alg": "SHA3-512",
-          "content": "ac577f19e6808f712b9ea866314b9d8484eeaf0f5db1e4fe96cc9b144fd593aca4837aca0937231ec3df7aafff28155b632c40e2b2d56bfa3c69fe421b15013b"
+          "content": "4085a43b7d54a976713b5924300e2c46d7ba51aff4043a5161462939c3f33cbac2d82f2027e6722872d71f171c39b4c4e83606dd0274861360e10b8a67e6a088"
         }
       ],
       "licenses": [
@@ -2290,7 +2290,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.camunda.feel/feel-engine@1.21.0?classifier=scala-shaded\u0026type=jar",
+      "purl": "pkg:maven/org.camunda.feel/feel-engine@1.21.0?type=jar",
       "externalReferences": [
         {
           "url": "http://www.camunda.org/camunda-bpm-release-parent/feel-engine",
@@ -2562,6 +2562,343 @@
         },
         {
           "url": "https://github.com/cowtowncoder/java-uuid-generator",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-scala_2.13@2.21.5?type=jar",
+      "publisher": "com.fasterxml.jackson.module",
+      "group": "com.fasterxml.jackson.module",
+      "name": "jackson-module-scala_2.13",
+      "version": "2.21.5",
+      "description": "jackson-module-scala",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "25b6804bd69139464339b645fc1617aa"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "dbd255aa791e9879d0f9c1d450e4536883648ad1"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "4c38c877fe252c9304623351180979e74528013e92e5a519641df37953a88287"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "584ab60de55d3e3d66bac32b84048b9839f2a59c9994ac19da0ec35251babb29884429ef72934540640c8a2cd0f52459a538b6f82d6e0b7d0446a57d516b4793"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "106f6a8686c2fa3059b88340eca148f514f546434e6af6b7d428ed5db2fffd02eb195ea16cdd3f155f77143315da1f5f"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "2bba545caf74e269f7fb6015665dfe4972cba8788317841f3934cb7709a11d084b696d38697e3206a0d46a14e2824375"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "0af448b30b601eb210a1a3aff31fe7f8e23b6bbd219d6265f732e557cf46ba6e"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "bad0fbaf9878dc9fbb1a079fbaec8757b009702b4b83a7b9de5284c0ace5142886044021a7f398d0ef203b958dcc61490f9c433cb22d254dd55dca62bee3aaf8"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-scala_2.13@2.21.5?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/FasterXML/jackson-module-scala",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-module-scala",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
+      "publisher": "FasterXML",
+      "group": "com.fasterxml.jackson.core",
+      "name": "jackson-core",
+      "version": "2.21.5",
+      "description": "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "76c6cb978edc2c67b79a89a4f7224c28"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7ec0c8bf8402fa998f64b2009632d6566a42ceb7"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "b64b5874162b503a0e58a8f7758266e8dd9f91bf49e3a59ae0b5f47589a231b7"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "e38be02a800765e5841c321e972e83149634bee42de1fcb177a115f1e21fde828f9db1a5862e741f2bd440550517a365b75ee8f7640ff72bcaa73f356b10dc70"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "61caf9c116560e207437d4fbdc912de8211606cc6174140e4de06ad0347b0bed723e162d149afa6b0db172d04fd2313b"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "8aab2349ba6f2cd916393be6f8edaf928fc5cbfbfa3089fc4eb284ad0fd8a02df496e939f455a936d6dcd0e244f8ba9c"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "64f93dbf5a725407dd7f7a193dde6c8fb34295cbc84208994cb35c2866e5889e"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "3e95f930376250f4b6acfba4412e1470dba561ab83393da68632846337ec74b51606f8762065b619f43831484d9299550bb8e6042fde7dcf48ee4c573e035bb3"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/FasterXML/jackson-core",
+          "type": "website"
+        },
+        {
+          "url": "https://central.sonatype.com/api/v1/publisher",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-core/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-core",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
+      "publisher": "FasterXML",
+      "group": "com.fasterxml.jackson.core",
+      "name": "jackson-annotations",
+      "version": "2.21",
+      "description": "Core annotations used for value types, used by Jackson data binding package.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "e0d0c3e7300954f73e43c67d933aaea4"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "b1bc1868bf02dc0bd6c7836257a036a331005309"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "53ca085f4a150f703f49e1aabd935bd03b43e1ea3d55d135438292af22cef56b"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "d832a99867acc2d5afb2596da760c50e6a6b54c1bbc8e6c4186f267a16e1d55c7a916ef8b034ad6b277c41e3342b91dcdc2e3dcea8bdccfe89e7c147894591be"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "30b15d68f8da6f6c26aa9f6c95d09152b6c1a8092cd976cf600d63d1751509a73865f937e0ad97d8d55bf20f6a749b44"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "5205b51f6ed689cf31b58b98a61ca9e17a439c15d669dcb408ec4d430e77ac9ac57d39d5ca1f9973e8d184f6dd57ec4f"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "d6782d188a72b2bb96e4b595343e783012b3f98c30f7b9950244c21739334509"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "b648f1e9ffe818227d53fbde409e61858ac22d3f78705eaf08065587ed512c9b33b0f5e2222356bfb33fb2973bb5a3184e31d2a7099f8fc8d2fd23eb4612a4bf"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/FasterXML/jackson",
+          "type": "website"
+        },
+        {
+          "url": "https://central.sonatype.com/api/v1/publisher",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-annotations/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-annotations",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
+      "publisher": "FasterXML",
+      "group": "com.fasterxml.jackson.core",
+      "name": "jackson-databind",
+      "version": "2.21.5",
+      "description": "General data-binding functionality for Jackson: works on core streaming API",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "f1cdb6f418d6d587c64d5dc44a2a24fc"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "84924990b468233a28214ae2c505a9ec24cd6ea6"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "507418c0fafd38b2b2cfb704521630da613a8e4cc8381195a6f418017883e2c0"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "d21422d843f48a5386a0c46ed8113e12c961adeb7e9af95b61757985c279e9b2ffab0a5df28766d0ff0522780d72b1ff91d30dbee1202453e5936068cf645531"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "e628c49d62ab7963084808a2aa5894b9bdcf067dd5378d01a92d25f08e282306555205fb5779e29199241e1c3e037ae0"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "9eaee059eec1631ddaf7e49f56846e5880111dd156076443423944cb50e9349eb59180c317e4bc066b591f2815962053"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "2047b325775793d29cbd64c7b2b5e94ea2da79788eb20c742a1cc67a7957b38d"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "53ec901e930f789a98f65989ac8a96ad3c55ddbe68834de46f83de41bba229d8da8cf302b3e44e45dce8e7a2a6f3c38fb5a19926ed368a3bdb9d1360fc550e6d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/FasterXML/jackson",
+          "type": "website"
+        },
+        {
+          "url": "https://central.sonatype.com/api/v1/publisher",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-databind/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-databind",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.thoughtworks.paranamer/paranamer@2.8.3?type=jar",
+      "group": "com.thoughtworks.paranamer",
+      "name": "paranamer",
+      "version": "2.8.3",
+      "description": "Paranamer allows runtime access to constructor and method parameter names for Java classes",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "2ac658965d0ed96c4ee2cd8e5bd4b07b"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "75ae4eb129574b7fc0df5fa8808d7ed625be815d"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "a9df136f2e926b37a838a5b4e2227343c3a755d15724b3a8350b4aea4b158945"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "c880f95b14a4f48f34bc1a85264ad2aae3d96868c81a5e05b68bb1da100cfd68b77c8952194b3db3b20cb7d9e51ea48f6d74c5a9c469bfe190ab8da1e8cbadc3"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "e79918c5f60f35536d6125cf73e13d44da12a19a7406da526ddd29c39f9004f6ed3c687fea8b58df19ff798bbf56b118"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "97b3dd9b3238b74fcf06eb5cf9af1f53dff534dc31622bafc8ce5efef5044fb3ac8ce56460387b0193e20302fc123d89"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "1d2e577cd10ae03f276a45bdfa9add2716db323588dd32a42ff89b4ee8ad0304"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "a7f4daf40ec6bbe10fee6b3778400b10e020c87f60d22576261d69eb406bba271ec3546a2d4c00234708e01eed9b0d564a90f356eb26693cbbab562d6618c76c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-4-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.thoughtworks.paranamer/paranamer@2.8.3?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/paul-hammant/paranamer/paranamer",
+          "type": "website"
+        },
+        {
+          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/paul-hammant/paranamer/paranamer",
           "type": "vcs"
         }
       ]
@@ -4281,76 +4618,6 @@
         {
           "url": "https://github.com/docker-java/docker-java",
           "type": "website"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-      "publisher": "FasterXML",
-      "group": "com.fasterxml.jackson.core",
-      "name": "jackson-annotations",
-      "version": "2.21",
-      "description": "Core annotations used for value types, used by Jackson data binding package.",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "e0d0c3e7300954f73e43c67d933aaea4"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "b1bc1868bf02dc0bd6c7836257a036a331005309"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "53ca085f4a150f703f49e1aabd935bd03b43e1ea3d55d135438292af22cef56b"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "d832a99867acc2d5afb2596da760c50e6a6b54c1bbc8e6c4186f267a16e1d55c7a916ef8b034ad6b277c41e3342b91dcdc2e3dcea8bdccfe89e7c147894591be"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "30b15d68f8da6f6c26aa9f6c95d09152b6c1a8092cd976cf600d63d1751509a73865f937e0ad97d8d55bf20f6a749b44"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "5205b51f6ed689cf31b58b98a61ca9e17a439c15d669dcb408ec4d430e77ac9ac57d39d5ca1f9973e8d184f6dd57ec4f"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "d6782d188a72b2bb96e4b595343e783012b3f98c30f7b9950244c21739334509"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "b648f1e9ffe818227d53fbde409e61858ac22d3f78705eaf08065587ed512c9b33b0f5e2222356bfb33fb2973bb5a3184e31d2a7099f8fc8d2fd23eb4612a4bf"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/FasterXML/jackson",
-          "type": "website"
-        },
-        {
-          "url": "https://central.sonatype.com/api/v1/publisher",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-annotations/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-annotations",
-          "type": "vcs"
         }
       ]
     },
@@ -7256,146 +7523,6 @@
         },
         {
           "url": "https://github.com/qos-ch/slf4j/slf4j-parent/jcl-over-slf4j",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
-      "publisher": "FasterXML",
-      "group": "com.fasterxml.jackson.core",
-      "name": "jackson-databind",
-      "version": "2.21.5",
-      "description": "General data-binding functionality for Jackson: works on core streaming API",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "f1cdb6f418d6d587c64d5dc44a2a24fc"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "84924990b468233a28214ae2c505a9ec24cd6ea6"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "507418c0fafd38b2b2cfb704521630da613a8e4cc8381195a6f418017883e2c0"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "d21422d843f48a5386a0c46ed8113e12c961adeb7e9af95b61757985c279e9b2ffab0a5df28766d0ff0522780d72b1ff91d30dbee1202453e5936068cf645531"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "e628c49d62ab7963084808a2aa5894b9bdcf067dd5378d01a92d25f08e282306555205fb5779e29199241e1c3e037ae0"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "9eaee059eec1631ddaf7e49f56846e5880111dd156076443423944cb50e9349eb59180c317e4bc066b591f2815962053"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "2047b325775793d29cbd64c7b2b5e94ea2da79788eb20c742a1cc67a7957b38d"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "53ec901e930f789a98f65989ac8a96ad3c55ddbe68834de46f83de41bba229d8da8cf302b3e44e45dce8e7a2a6f3c38fb5a19926ed368a3bdb9d1360fc550e6d"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/FasterXML/jackson",
-          "type": "website"
-        },
-        {
-          "url": "https://central.sonatype.com/api/v1/publisher",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-databind/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-databind",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
-      "publisher": "FasterXML",
-      "group": "com.fasterxml.jackson.core",
-      "name": "jackson-core",
-      "version": "2.21.5",
-      "description": "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "76c6cb978edc2c67b79a89a4f7224c28"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "7ec0c8bf8402fa998f64b2009632d6566a42ceb7"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "b64b5874162b503a0e58a8f7758266e8dd9f91bf49e3a59ae0b5f47589a231b7"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "e38be02a800765e5841c321e972e83149634bee42de1fcb177a115f1e21fde828f9db1a5862e741f2bd440550517a365b75ee8f7640ff72bcaa73f356b10dc70"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "61caf9c116560e207437d4fbdc912de8211606cc6174140e4de06ad0347b0bed723e162d149afa6b0db172d04fd2313b"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "8aab2349ba6f2cd916393be6f8edaf928fc5cbfbfa3089fc4eb284ad0fd8a02df496e939f455a936d6dcd0e244f8ba9c"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "64f93dbf5a725407dd7f7a193dde6c8fb34295cbc84208994cb35c2866e5889e"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "3e95f930376250f4b6acfba4412e1470dba561ab83393da68632846337ec74b51606f8762065b619f43831484d9299550bb8e6042fde7dcf48ee4c573e035bb3"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/FasterXML/jackson-core",
-          "type": "website"
-        },
-        {
-          "url": "https://central.sonatype.com/api/v1/publisher",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-core/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-core",
           "type": "vcs"
         }
       ]
@@ -19443,7 +19570,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "4002000c-e679-4dc6-850a-c641508e1525",
+      "bom-ref": "48211ee3-9c2f-4a47-9f66-75dd0393bae5",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24723,7 +24850,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "6a64e1d9-a1b9-404f-be1e-dcf15bf1fc1a",
+      "bom-ref": "75ee958e-e8a8-416b-a6d7-3ca3a7d2113f",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24949,19 +25076,20 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.camunda.feel/feel-engine@1.21.0?classifier=scala-shaded\u0026type=jar",
+        "pkg:maven/org.camunda.feel/feel-engine@1.21.0?type=jar",
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.camunda.feel/feel-engine@1.21.0?classifier=scala-shaded\u0026type=jar",
+      "ref": "pkg:maven/org.camunda.feel/feel-engine@1.21.0?type=jar",
       "dependsOn": [
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar",
         "pkg:maven/com.lihaoyi/fastparse_2.13@3.1.1?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
-        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar"
+        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.module/jackson-module-scala_2.13@2.21.5?type=jar"
       ]
     },
     {
@@ -24995,6 +25123,35 @@
       ]
     },
     {
+      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-scala_2.13@2.21.5?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
+        "pkg:maven/com.thoughtworks.paranamer/paranamer@2.8.3?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
+      "dependsOn": [
+        "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/com.thoughtworks.paranamer/paranamer@2.8.3?type=jar",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.2.0-SNAPSHOT?type=jar",
@@ -25003,7 +25160,7 @@
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.2.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.camunda.feel/feel-engine@1.21.0?classifier=scala-shaded\u0026type=jar",
+        "pkg:maven/org.camunda.feel/feel-engine@1.21.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.3?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
@@ -25124,10 +25281,6 @@
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
-    },
-    {
-      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-      "dependsOn": []
     },
     {
       "ref": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.7.1?type=jar",
@@ -25694,17 +25847,6 @@
         "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
         "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
-      "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar"
       ]
     },
     {
@@ -27115,7 +27257,7 @@
       "dependsOn": []
     },
     {
-      "ref": "4002000c-e679-4dc6-850a-c641508e1525",
+      "ref": "48211ee3-9c2f-4a47-9f66-75dd0393bae5",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.23.0",
@@ -27165,9 +27307,9 @@
       ]
     },
     {
-      "ref": "6a64e1d9-a1b9-404f-be1e-dcf15bf1fc1a",
+      "ref": "75ee958e-e8a8-416b-a6d7-3ca3a7d2113f",
       "dependsOn": [
-        "4002000c-e679-4dc6-850a-c641508e1525"
+        "48211ee3-9c2f-4a47-9f66-75dd0393bae5"
       ]
     },
     {

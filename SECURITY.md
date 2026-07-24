@@ -14,7 +14,7 @@ the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 |---------|--------------------------------------|
 | 2.1.x   | ✅ Fully maintained                  |
 | 1.1.x   | ❌ End of life (final release: 1.1.5) |
-| 1.0.x   | ❌ End of life                       |
+| 1.0.x   | ❌ End of life (final release: 1.0.3) |
 
 🔒 We generally provide security updates for the **latest major version**.
 

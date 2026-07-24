@@ -64,6 +64,25 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+      <!-- Jackson 3 - Place before Spring Boot to override the vulnerable version
+        managed by spring-boot-dependencies (3.1.4, CVE-2026-59889). Remove once
+        Spring Boot manages jackson-bom >= 3.1.5. -->
+      <dependency>
+        <groupId>tools.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${version.jackson3}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <!-- Netty - Place before Spring Boot, which manages 4.2.15 (CVE-2026-56745
+        et al.). Remove once spring-boot-dependencies manages netty >= 4.2.16. -->
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-bom</artifactId>
+        <version>${version.netty}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>

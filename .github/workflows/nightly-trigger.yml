@@ -21,7 +21,7 @@ jobs:
       all_branches: ${{ steps.list-branches.outputs.all_branches }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -72,7 +72,7 @@ jobs:
         branch: ${{ fromJson(needs.detect-release-branches.outputs.all_branches) }}
     steps:
       - name: Checkout Branch
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           ref: ${{ matrix.branch }}
           fetch-depth: 0

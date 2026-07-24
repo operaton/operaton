@@ -82,7 +82,7 @@ jobs:
       contents: read
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           sparse-checkout: |
             docs/decisions
@@ -102,7 +102,7 @@ jobs:
       actions: write
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
       - name: Cache Maven packages
@@ -212,7 +212,7 @@ jobs:
     continue-on-error: true
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
       - name: Restore build artifacts cache

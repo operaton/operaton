@@ -40,7 +40,7 @@ jobs:
       next_version: ${{steps.compute-next-version.outputs.next_version}}
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -112,7 +112,7 @@ jobs:
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -209,7 +209,7 @@ jobs:
       contents: write
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -301,7 +301,7 @@ jobs:
           fi
 
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
       - name: Update the release branch
         run: |
           git pull

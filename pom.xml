@@ -21,7 +21,7 @@
     <!-- Transitive dependencies of the unshaded feel-engine -->
     <version.fastparse>3.1.1</version.fastparse>
     <version.geny>1.1.0</version.geny>
-    <version.sourcecode>0.4.0</version.sourcecode>
+    <version.sourcecode>0.4.4</version.sourcecode>
     <version.paranamer>2.8.3</version.paranamer>
     <version.quarkus>3.33.2.1</version.quarkus>
     <version.java>17</version.java>

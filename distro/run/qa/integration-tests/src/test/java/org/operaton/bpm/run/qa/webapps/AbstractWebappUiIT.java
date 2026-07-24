@@ -18,8 +18,7 @@ package org.operaton.bpm.run.qa.webapps;
 
 import java.net.URI;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.WebDriver;
@@ -37,14 +36,22 @@ import org.operaton.bpm.integrationtest.util.SeleniumScreenshotExtension;
  */
 public abstract class AbstractWebappUiIT extends AbstractWebIT {
 
-  protected static WebDriver driver;
+  protected WebDriver driver;
 
   @RegisterExtension
   @SuppressWarnings("unused")
-  private final SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
+  private final SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(() -> driver);
 
-  @BeforeAll
-  static void createDriver() {
+  /**
+   * A fresh browser is created for every test method (and disposed afterwards). The webapps share
+   * a single JSESSIONID/XSRF-TOKEN pair across cockpit/tasklist/admin/welcome, so reusing one
+   * browser across tests leaks authenticated-session and CSRF-token state: the first login
+   * succeeds, but a stale JSESSIONID that outlives an in-browser cookie wipe prevents the server
+   * from re-issuing an XSRF-TOKEN, so every subsequent login is rejected. A brand-new browser
+   * guarantees each test starts from the clean state that reliably logs in.
+   */
+  @BeforeEach
+  void createDriver() {
     ChromeDriverService chromeDriverService = new ChromeDriverService.Builder()
         .withVerbose(true)
         .usingAnyFreePort()
@@ -82,9 +89,12 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
-  @AfterAll
-  static void quitDriver() {
-    driver.quit();
+  @AfterEach
+  void quitDriver() {
+    if (driver != null) {
+      driver.quit();
+      driver = null;
+    }
   }
 
 }

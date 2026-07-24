@@ -31,7 +31,7 @@ import org.operaton.bpm.integrationtest.util.SeleniumScreenshotExtension;
 
 public abstract class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest {
 
-  protected static WebDriver driver;
+  protected WebDriver driver;
 
   @RegisterExtension
   public SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(() -> driver);

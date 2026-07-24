@@ -96,6 +96,7 @@ auto-merge-rules:
       - 'version.testcontainers'
       - 'version.undertow'
       # Maven plugins
+      - 'com.mycila:license-maven-plugin'
       - 'org.apache.felix:maven-bundle-plugin'
       - 'org.apache.maven.plugins'
       - 'org.codehaus.cargo:cargo-maven3-plugin'

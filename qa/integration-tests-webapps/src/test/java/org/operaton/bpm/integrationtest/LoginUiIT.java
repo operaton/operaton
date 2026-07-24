@@ -22,7 +22,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -63,11 +62,10 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
   }
 
   void login(String appName) {
-    driver.manage().deleteAllCookies();
+    // each test runs in a fresh browser (see AbstractWebappUiIntegrationTest), so no cookie or
+    // storage reset is required here - the browser starts without any session or CSRF state
     String appUrl = "%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName);
     driver.get(appUrl);
-    clearBrowserStorage();
-    driver.navigate().refresh();
 
     WebDriverWait loginWait = new WebDriverWait(driver, LOGIN_TIMEOUT);
 
@@ -87,12 +85,6 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
     loginWait.until(invisibilityOfElementLocated(By.cssSelector("input[type=\"password\"]")));
 
     wait = new WebDriverWait(driver, POST_LOGIN_TIMEOUT);
-  }
-
-  // clear persisted browser state between retries so stale auth/csrf data cannot leak
-  // across webapp reloads or container redeployments
-  void clearBrowserStorage() {
-    ((JavascriptExecutor) driver).executeScript("window.localStorage.clear(); window.sessionStorage.clear();");
   }
 
   void sendKeys(WebElement element, String keys)  {

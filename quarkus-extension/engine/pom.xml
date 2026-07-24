@@ -12,7 +12,22 @@
   <description>${project.name}</description>
   <properties>
     <surefire.memArgs>-Xmx2048m</surefire.memArgs>
+    <version.netty>4.2.16.Final</version.netty>
   </properties>
+  <dependencyManagement>
+    <dependencies>
+      <!-- runtime and deployment do not import the quarkus-bom, so netty resolves
+        from vertx-core's pom (4.2.15, CVE-2026-56745 et al.). Remove once the
+        Quarkus/Vert.x versions in use ship netty >= 4.2.16. -->
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-bom</artifactId>
+        <version>${version.netty}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <modules>
     <module>deployment</module>
     <module>runtime</module>

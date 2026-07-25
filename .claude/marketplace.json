@@ -1,0 +1,13 @@
+{
+  "name": "operaton-local",
+  "owner": {
+    "name": "Operaton"
+  },
+  "plugins": [
+    {
+      "name": "operaton",
+      "source": "./.claude/plugins/operaton",
+      "description": "Operaton project skills"
+    }
+  ]
+}

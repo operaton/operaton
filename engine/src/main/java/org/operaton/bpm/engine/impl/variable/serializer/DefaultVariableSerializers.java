@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -38,7 +40,7 @@ public class DefaultVariableSerializers implements VariableSerializers {
   public DefaultVariableSerializers() {
   }
 
-  public DefaultVariableSerializers(DefaultVariableSerializers serializers) {
+  public DefaultVariableSerializers(@NonNull DefaultVariableSerializers serializers) {
     this.serializerList.addAll(serializers.serializerList);
     this.serializerMap.putAll(serializers.serializerMap);
   }
@@ -49,7 +51,7 @@ public class DefaultVariableSerializers implements VariableSerializers {
   }
 
   @Override
-  public TypedValueSerializer<?> findSerializerForValue(TypedValue value, VariableSerializerFactory fallBackSerializerFactory) {
+  public TypedValueSerializer<?> findSerializerForValue(@NonNull TypedValue value, VariableSerializerFactory fallBackSerializerFactory) {
     assertValueTypeNotNull(value);
     List<TypedValueSerializer<?>> matchedSerializers = findMatchingSerializers(value);
 
@@ -63,14 +65,14 @@ public class DefaultVariableSerializers implements VariableSerializers {
     }
   }
 
-  private void assertValueTypeNotNull(TypedValue value) {
+  private void assertValueTypeNotNull(@NonNull TypedValue value) {
     ValueType type = value.getType();
     if (type != null && type.isAbstract()) {
       throw new ProcessEngineException("Cannot serialize value of abstract type %s".formatted(type.getName()));
     }
   }
 
-  private List<TypedValueSerializer<?>> findMatchingSerializers(TypedValue value) {
+  private List<TypedValueSerializer<?>> findMatchingSerializers(@NonNull TypedValue value) {
     List<TypedValueSerializer<?>> matchedSerializers = new ArrayList<>();
     ValueType type = value.getType();
     for (TypedValueSerializer<?> serializer : serializerList) {
@@ -112,7 +114,7 @@ public class DefaultVariableSerializers implements VariableSerializers {
   }
 
   @Override
-  public TypedValueSerializer<?> findSerializerForValue(TypedValue value) {
+  public TypedValueSerializer<?> findSerializerForValue(@NonNull TypedValue value) {
     return findSerializerForValue(value, null);
   }
 

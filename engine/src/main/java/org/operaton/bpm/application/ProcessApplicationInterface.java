@@ -21,6 +21,8 @@ import java.util.concurrent.Callable;
 import jakarta.el.BeanELResolver;
 import jakarta.el.ELResolver;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.impl.EjbProcessApplication;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
@@ -144,7 +146,7 @@ public interface ProcessApplicationInterface {
    * @param context of the current invocation, can be <code>null</code>
    * @return the result of the callback
    */
-  <T> T execute(Callable<T> callable, InvocationContext context) throws ProcessApplicationExecutionException;
+  <T> T execute(Callable<T> callable, @Nullable InvocationContext context) throws ProcessApplicationExecutionException;
 
   /**
    * <p>Override this method to provide an environment-specific {@link ClassLoader} to be used by the process

@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.interceptor;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 
 /**
  * @author Tom Baeyens
  */
+@NullMarked
 public class CommandContextFactory {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -33,11 +36,13 @@ public class CommandContextFactory {
   // getters and setters //////////////////////////////////////////////////////
 
   public ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+    if (processEngineConfiguration == null) {
+      throw new IllegalStateException("Process Engine Configuration missing!");
+    }
     return processEngineConfiguration;
   }
 
   public void setProcessEngineConfiguration(ProcessEngineConfigurationImpl processEngineConfiguration) {
     this.processEngineConfiguration = processEngineConfiguration;
   }
-
 }

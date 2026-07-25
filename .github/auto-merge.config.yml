@@ -50,6 +50,7 @@ auto-merge-rules:
       - 'com.google.guava*'
       - 'com.h2database:h2'
       - 'com.jayway.jsonpath:json-path'
+      - 'com.lihaoyi*'
       - 'com.networknt:json-schema-validator'
       - 'com.nimbusds:nimbus-jose-jwt'
       - 'com.tngtech.archunit:archunit-junit4'

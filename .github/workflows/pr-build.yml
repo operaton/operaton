@@ -211,12 +211,22 @@ jobs:
               qa/integration-tests-engine/**,\
               webapps/**
         continue-on-error: true
+      # Handed off as a run-scoped artifact, NOT via actions/cache: the repo cache
+      # pool is a shared 10 GB LRU and run-id-keyed entries both get evicted
+      # mid-run and evict the reusable m2/sonar caches. Tarred first because the
+      # subtree holds thousands of small files, which upload-artifact transfers
+      # individually.
       - name: Stage artifacts for integration tests
         if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true'
-        uses: actions/cache/save@v6.1.0
+        run: tar -czf /tmp/it-stage.tar.gz -C ~/.m2/repository org/operaton
+      - name: Upload staged artifacts
+        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true'
+        uses: actions/upload-artifact@v7
         with:
-          path: ~/.m2/repository/org/operaton
-          key: ${{ github.run_id }}-it-stage
+          name: it-stage
+          path: /tmp/it-stage.tar.gz
+          retention-days: 1
+          if-no-files-found: error
 
   integration-tests:
     name: Integration Tests
@@ -241,11 +251,12 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Restore staged artifacts
-        uses: actions/cache/restore@v6.1.0
+        uses: actions/download-artifact@v8
         with:
-          path: ~/.m2/repository/org/operaton
-          key: ${{ github.run_id }}-it-stage
-          fail-on-cache-miss: true
+          name: it-stage
+          path: /tmp
+      - name: Unpack staged artifacts
+        run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
       - name: Set up Java
         uses: actions/setup-java@v5.6.0
         with:
@@ -303,11 +314,12 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Restore staged artifacts
-        uses: actions/cache/restore@v6.1.0
+        uses: actions/download-artifact@v8
         with:
-          path: ~/.m2/repository/org/operaton
-          key: ${{ github.run_id }}-it-stage
-          fail-on-cache-miss: true
+          name: it-stage
+          path: /tmp
+      - name: Unpack staged artifacts
+        run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
       - name: Set up Java
         uses: actions/setup-java@v5.6.0
         with:

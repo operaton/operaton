@@ -340,6 +340,24 @@ jobs:
         testsuite: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.testsuites) || fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
         distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]') }}
         database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]') }}
+        # Webapps tests only ever execute on h2 (both test steps are h2-gated);
+        # every other database produced a no-op cell that checked out, restored
+        # caches and exited without running anything.
+        exclude:
+          - testsuite: webapps
+            database: postgresql
+          - testsuite: webapps
+            database: postgresql-xa
+          - testsuite: webapps
+            database: mariadb
+          - testsuite: webapps
+            database: sqlserver
+          - testsuite: webapps
+            database: mysql
+          - testsuite: webapps
+            database: oracle
+          - testsuite: webapps
+            database: db2
     # needs.build.result != 'failure' keeps the matrix off when the build broke,
     # while still allowing a dispatch with skip_build=true (build skipped): the
     # cells then fall back to building the tested modules themselves.

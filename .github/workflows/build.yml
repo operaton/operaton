@@ -21,25 +21,6 @@ on:
       - 'LICENSE'
       - 'NOTICE'
       - 'jreleaser.yml'
-  pull_request:
-    branches:
-      - main
-      - release/**
-    paths-ignore:
-      - '.github/workflows/**'
-      - '!.github/workflows/build.yml'
-      - '.github/jreleaser/changelog.tpl'
-      - '.github/ISSUE_TEMPLATE/**'
-      - '.github/PULL_REQUEST_TEMPLATE/**'
-      - '.github/dependabot.yml'
-      - '.github/auto-merge.config.yml'
-      - '**/*.md'
-      - 'distro/**'
-      - 'settings/**'
-      - '.gitingore'
-      - 'LICENSE'
-      - 'NOTICE'
-      - 'qa/**'
   workflow_dispatch:
     inputs:
       profile:

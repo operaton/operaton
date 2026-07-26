@@ -68,24 +68,6 @@ on:
         type: boolean
         required: true
         default: false
-  pull_request:             # Runs on pull requests to main
-    branches:
-      - main
-      - release/**
-    paths-ignore:
-      - '.github/workflows/**'
-      - '!.github/workflows/integration-build.yml'
-      - '.github/jreleaser/changelog.tpl'
-      - '.github/ISSUE_TEMPLATE/**'
-      - '.github/PULL_REQUEST_TEMPLATE/**'
-      - '.github/dependabot.yml'
-      - '.github/workflows/auto-merge.yml'
-      - '**/*.md'
-      - 'distro/**'
-      - 'settings/**'
-      - '.gitingore'
-      - 'LICENSE'
-      - 'NOTICE'
   push:
     branches:
       # when developing the workflow itself, create this branch and push to it

@@ -270,30 +270,69 @@ jobs:
           if [ "$SKIP_TESTS" = "true" ]; then
               CMD="$CMD --skip-tests"
           fi
+          # The Java 17 build stages the artifacts the integration-test matrix
+          # consumes with --no-build; integration-test-operaton-run adds the
+          # run-QA modules (example-plugin, integration-tests) the operaton
+          # distro cells resolve from the staged repository.
+          if [ "${{ matrix.java }}" = "17" ]; then
+              CMD="$CMD --extra-profiles=integration-test-operaton-run"
+          fi
           $CMD
 
           .github/scripts/prepare-reports.sh
           ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
-      - name: Cache build artifacts
-        uses: actions/cache/save@v6.1.0
+      # Run-scoped handoffs go through artifacts, NOT actions/cache: the repo
+      # cache pool is a shared 10 GB LRU, run-id-keyed entries were evicted
+      # mid-run (the recurring nightly Release failure) and pushed out the
+      # reusable m2 cache. Tarred first — thousands of small files upload
+      # slowly through upload-artifact.
+      # Only the Java 17 build's artifacts are consumed downstream (Release job,
+      # IT staging) — 17 is what ships. The 21/25 builds validate compile+test
+      # only; bundling their output would upload ~2 GB nobody reads.
+      - name: Bundle build artifacts
+        if: matrix.java == '17'
+        shell: bash
+        run: |
+          shopt -s globstar nullglob
+          for f in \
+            distro/**/*.tar.gz \
+            distro/**/*.zip \
+            distro/webjar/target/operaton-webapp-webjar-*.jar \
+            */staging-deploy/** \
+            **/target/reports/** \
+            **/target/surefire-reports/*.xml \
+            target/*.zip; do
+            [ -f "$f" ] && printf '%s\n' "$f"
+          done > /tmp/build-artifacts.lst
+          tar -czf /tmp/build-artifacts-${{ matrix.java }}.tar.gz --files-from /tmp/build-artifacts.lst
+      - name: Upload build artifacts
+        if: matrix.java == '17'
+        uses: actions/upload-artifact@v7
         with:
-          path: |
-            distro/**/*.tar.gz
-            distro/**/*.zip
-            distro/webjar/target/operaton-webapp-webjar-*.jar
-            ./*/staging-deploy/**
-            **/target/reports/**
-            **/target/surefire-reports/*.xml
-            target/*.zip
-          key: ${{ github.run_id }}-build-artifacts
+          name: build-artifacts-${{ matrix.java }}
+          path: /tmp/build-artifacts-${{ matrix.java }}.tar.gz
+          retention-days: 3
+          if-no-files-found: error
+      - name: Stage artifacts for integration tests
+        if: matrix.java == '17'
+        run: tar -czf /tmp/it-stage.tar.gz -C ~/.m2/repository org/operaton
+      - name: Upload staged artifacts
+        if: matrix.java == '17'
+        uses: actions/upload-artifact@v7
+        with:
+          name: it-stage
+          path: /tmp/it-stage.tar.gz
+          retention-days: 1
+          if-no-files-found: error
 
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
     needs:
       - determine-pr-config
+      - build
     strategy:
       fail-fast: false
       matrix:
@@ -301,8 +340,29 @@ jobs:
         testsuite: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.testsuites) || fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
         distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]') }}
         database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]') }}
+        # Webapps tests only ever execute on h2 (both test steps are h2-gated);
+        # every other database produced a no-op cell that checked out, restored
+        # caches and exited without running anything.
+        exclude:
+          - testsuite: webapps
+            database: postgresql
+          - testsuite: webapps
+            database: postgresql-xa
+          - testsuite: webapps
+            database: mariadb
+          - testsuite: webapps
+            database: sqlserver
+          - testsuite: webapps
+            database: mysql
+          - testsuite: webapps
+            database: oracle
+          - testsuite: webapps
+            database: db2
+    # needs.build.result != 'failure' keeps the matrix off when the build broke,
+    # while still allowing a dispatch with skip_build=true (build skipped): the
+    # cells then fall back to building the tested modules themselves.
     if: |
-      always() && !cancelled() && (
+      always() && !cancelled() && needs.build.result != 'failure' && (
         (github.event_name == 'workflow_dispatch' && (github.event.inputs.integration_tests == 'true' || github.event.inputs.integration_tests == true)) ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
       )
@@ -317,6 +377,15 @@ jobs:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
+      - name: Restore staged artifacts
+        if: needs.build.result == 'success'
+        uses: actions/download-artifact@v8
+        with:
+          name: it-stage
+          path: /tmp
+      - name: Unpack staged artifacts
+        if: needs.build.result == 'success'
+        run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
       - name: Set up Java
         uses: actions/setup-java@v5.6.0
         with:
@@ -327,14 +396,18 @@ jobs:
         if: ${{ matrix.testsuite == 'engine' }}
         shell: bash
         run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
+          NO_BUILD=""
+          if [ "${{ needs.build.result }}" = "success" ]; then NO_BUILD="--no-build"; fi
+          .devenv/scripts/build/build-and-run-integration-tests.sh $NO_BUILD --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
       - name: Execute Webapps Integration Tests
         id: maven-webapps-integration-tests
         if: ${{ matrix.testsuite == 'webapps' && matrix.database == 'h2' }}
         shell: bash
         run: |
+          NO_BUILD=""
+          if [ "${{ needs.build.result }}" = "success" ]; then NO_BUILD="--no-build"; fi
           .github/scripts/install-chrome-and-driver.sh
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
+          .devenv/scripts/build/build-and-run-integration-tests.sh $NO_BUILD --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
       - name: Execute Database Upgrade Tests
         id: maven-db-upgrade-tests
         if: ${{ matrix.database == 'h2' }}
@@ -345,7 +418,9 @@ jobs:
         if: ${{ matrix.testsuite != 'webapps' || matrix.database == 'h2' }}
         uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
         with:
-          report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml
+          # TEST-*.xml only: the glob must not match failsafe-summary.xml,
+          # which has no testsuite root and makes the action emit annotations
+          report_paths: ${{ github.workspace }}/**/target/*-reports/TEST-*.xml
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
@@ -393,7 +468,7 @@ jobs:
         if: always()
         uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
         with:
-          report_paths: ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/*.xml
+          report_paths: ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/TEST-*.xml
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
@@ -426,12 +501,13 @@ jobs:
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
-      - name: Cache documentation artifacts
-        uses: actions/cache/save@v6.1.0
+      - name: Upload documentation artifacts
+        uses: actions/upload-artifact@v7
         with:
-          path: |
-            target/*.zip
-          key: ${{ github.run_id }}-documentation-artifacts
+          name: documentation-artifacts
+          path: target/*.zip
+          retention-days: 3
+          if-no-files-found: error
 
   deploy-snapshots:
     name: Deploy Snapshots
@@ -499,27 +575,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Restore build artifacts cache
-        uses: actions/cache@v6.1.0
+      # Explicitly the Java 17 build's artifacts — the previous run-id cache key
+      # was written by whichever build matrix job finished first.
+      - name: Download build artifacts
+        uses: actions/download-artifact@v8
         with:
-          path: |
-            distro/**/*.tar.gz
-            distro/**/*.zip
-            distro/webjar/target/operaton-webapp-webjar-*.jar
-            ./*/staging-deploy/**
-            **/target/reports/**
-            **/target/surefire-reports/*.xml
-            target/*.zip
-          key: ${{ github.run_id }}-build-artifacts
-          fail-on-cache-miss: true
+          name: build-artifacts-17
+          path: /tmp
+      - name: Unpack build artifacts
+        run: tar -xzf /tmp/build-artifacts-17.tar.gz
 
-      - name: Restore documentation artifacts cache
-        uses: actions/cache@v6.1.0
+      - name: Download documentation artifacts
+        uses: actions/download-artifact@v8
         with:
-          path: |
-            target/*.zip
-          key: ${{ github.run_id }}-documentation-artifacts
-          fail-on-cache-miss: true
+          name: documentation-artifacts
+          path: target
 
       - name: Release with JReleaser
         uses: jreleaser/release-action@90ac653bb9c79d11179e65d81499f3f34527dcd5 # v2.5.0
@@ -541,7 +611,7 @@ jobs:
         if: ${{ github.event.inputs.skip_tests == 'false'}}
         uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
         with:
-          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
+          report_paths: ${{ github.workspace }}/**/target/surefire-reports/TEST-*.xml
           require_passed_tests: true
 
       - name: Archive Reports

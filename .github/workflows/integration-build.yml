@@ -288,7 +288,11 @@ jobs:
       # mid-run (the recurring nightly Release failure) and pushed out the
       # reusable m2 cache. Tarred first — thousands of small files upload
       # slowly through upload-artifact.
+      # Only the Java 17 build's artifacts are consumed downstream (Release job,
+      # IT staging) — 17 is what ships. The 21/25 builds validate compile+test
+      # only; bundling their output would upload ~2 GB nobody reads.
       - name: Bundle build artifacts
+        if: matrix.java == '17'
         shell: bash
         run: |
           shopt -s globstar nullglob
@@ -304,6 +308,7 @@ jobs:
           done > /tmp/build-artifacts.lst
           tar -czf /tmp/build-artifacts-${{ matrix.java }}.tar.gz --files-from /tmp/build-artifacts.lst
       - name: Upload build artifacts
+        if: matrix.java == '17'
         uses: actions/upload-artifact@v7
         with:
           name: build-artifacts-${{ matrix.java }}

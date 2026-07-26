@@ -40,6 +40,7 @@ jobs:
     outputs:
       needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
       needs_spring_boot_starter_tests: ${{ steps.check-pr.outputs.needs_spring_boot_starter_tests }}
+      needs_quarkus_tests: ${{ steps.check-pr.outputs.needs_quarkus_tests }}
       testsuites: ${{ steps.compute-matrix.outputs.testsuites }}
       distros: ${{ steps.compute-matrix.outputs.distros }}
       databases: ${{ steps.compute-matrix.outputs.databases }}
@@ -88,6 +89,20 @@ jobs:
             fi
           fi
           echo "needs_spring_boot_starter_tests=$NEEDS_SBS_TESTS" >> $GITHUB_OUTPUT
+
+          # Detect scope:quarkus label or changes to files that affect the Quarkus extension
+          NEEDS_QUARKUS_TESTS=false
+          if echo "$PR_LABELS" | grep -q '"scope:quarkus"'; then
+            echo "⚡ PR has scope:quarkus label"
+            NEEDS_QUARKUS_TESTS=true
+          else
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD 2>/dev/null || true)
+            if echo "$CHANGED_FILES" | grep -qE '^(parent/pom\.xml|bom/|engine/pom\.xml|engine-dmn/|quarkus-extension/)'; then
+              echo "📦 Changes to platform core files affect the Quarkus extension"
+              NEEDS_QUARKUS_TESTS=true
+            fi
+          fi
+          echo "needs_quarkus_tests=$NEEDS_QUARKUS_TESTS" >> $GITHUB_OUTPUT
       - name: Compute matrix values
         id: compute-matrix
         if: steps.check-pr.outputs.needs_build == 'true'
@@ -217,10 +232,10 @@ jobs:
       # subtree holds thousands of small files, which upload-artifact transfers
       # individually.
       - name: Stage artifacts for integration tests
-        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true'
+        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
         run: tar -czf /tmp/it-stage.tar.gz -C ~/.m2/repository org/operaton
       - name: Upload staged artifacts
-        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true'
+        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
         uses: actions/upload-artifact@v7
         with:
           name: it-stage
@@ -343,5 +358,55 @@ jobs:
           path: |
             ${{ github.workspace }}/spring-boot-starter/**/target/surefire-reports/**
             ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/**
+          retention-days: 30
+          overwrite: true
+
+  quarkus-tests:
+    name: Quarkus Extension Tests
+    runs-on: ubuntu-latest
+    needs:
+      - determine-pr-config
+      - build
+    if: needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.1
+      - name: Cache Maven packages
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Restore staged artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: it-stage
+          path: /tmp
+      - name: Unpack staged artifacts
+        run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
+      - name: Set up Java
+        uses: actions/setup-java@v5.6.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Execute Quarkus Extension Tests
+        shell: bash
+        run: |
+          # The build stage installs the quarkus-extension modules with tests
+          # skipped; the quarkus-tests profile re-enables surefire, resolving
+          # all other Operaton artifacts from the staged ~/.m2 repository.
+          ./mvnw -Pquarkus-tests -f quarkus-extension test
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        with:
+          report_paths: ${{ github.workspace }}/quarkus-extension/**/target/surefire-reports/*.xml
+          require_passed_tests: true
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: surefire-reports-quarkus
+          path: ${{ github.workspace }}/quarkus-extension/**/target/surefire-reports/**
           retention-days: 30
           overwrite: true

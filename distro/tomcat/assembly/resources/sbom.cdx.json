@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:f88fb204-01d7-4eda-b273-38981e931fa4",
+  "serialNumber": "urn:uuid:49a83ca8-a06d-4172-8463-446904b8bee4",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-07-25T07:59:43Z",
+    "timestamp": "2026-07-28T05:07:38Z",
     "tools": {
       "components": [
         {
@@ -2374,44 +2374,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.0?type=jar",
+      "bom-ref": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.4?type=jar",
       "group": "com.lihaoyi",
       "name": "sourcecode_2.13",
-      "version": "0.4.0",
+      "version": "0.4.4",
       "description": "sourcecode",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f05abd4f0c483aef2d772ec15d6954d9"
+          "content": "a2985cf5644215014cfcd9ad4df781c7"
         },
         {
           "alg": "SHA-1",
-          "content": "05e754d24fe657d4a58dffed67910f58b26bb953"
+          "content": "9014066d23e4fe50911a366f2b85174ffc4bb2a1"
         },
         {
           "alg": "SHA-256",
-          "content": "7ce9b8c285a04280374d739d7b799408b2cfa40cc3173960848aec9ee8450fed"
+          "content": "bd4e99aef8267a410b6ed716c487cf5256f801425f158a8c9cbd056eb032d80d"
         },
         {
           "alg": "SHA-512",
-          "content": "191e0c6272e93c842fde1c2e1627562e0b51de91173f78de3cc80e8acbba74686bab8df374a9bc5d845bbff79bd34d27059008fabb0915a884e34ce3b16f37a2"
+          "content": "8a2acc33e29003a5d48f5b768e51c5c581ecf73f9cd27d362dc466f812f3eaae524f2febc0ecab3a0283be2f9748b5d8fba0e41c207332282fdeb4f2d053b12f"
         },
         {
           "alg": "SHA-384",
-          "content": "c7565d8c282858b42a4f5b76a666f5362ac0301f749eab15283c5806e8e9d9ac72f073a61d57c4b58ba086c17de71fa4"
+          "content": "13083566cf1cadbd605614c9137c9dce8c759461d0d7a044cbd24fbca9143b8cb84e24ed78df4ac945ff393bbf0135a2"
         },
         {
           "alg": "SHA3-384",
-          "content": "4d81dbcf4fc69b7f83cb28fb19968603dc4a50d1bacf6e5f8558d0d81012ac1c52cde606d58bbc93348c9c73a3cf281f"
+          "content": "aafaf3a8c48c2573b780f3f977af505421d44c6c3ee88c9fe0b4d4b358c2deb4ca769a63b1a812340a42c672cf70a572"
         },
         {
           "alg": "SHA3-256",
-          "content": "66031fbf4158f4a71077b75fd437cfcdfdde1509291a28abc3c986042887d36a"
+          "content": "54f370f6504a055d60da50718e03795b2e38557524c353b2bd401a7236387c85"
         },
         {
           "alg": "SHA3-512",
-          "content": "3c9af23c04c938d2b2960174696b6e0cb3ee3ed1df26bb1cad47ca33a12eb57ddcd8f0dce4742a1f1d80fb41472c596679263d30379db95f821c40cbdce61ba2"
+          "content": "2121acd93c1ddfb5cfb41928432d30ea4008f397a67386b4bca108c31e58997c0cd87795aaadb525ad9bf12f62ee5ef60b083416f0e4a6247004c629b85836a4"
         }
       ],
       "licenses": [
@@ -2422,7 +2422,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.0?type=jar",
+      "purl": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.4?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/com-lihaoyi/sourcecode",
@@ -2436,44 +2436,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.lihaoyi/geny_2.13@1.1.0?type=jar",
+      "bom-ref": "pkg:maven/com.lihaoyi/geny_2.13@1.1.1?type=jar",
       "group": "com.lihaoyi",
       "name": "geny_2.13",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "geny",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d2886be8fb1b640c57974c59ce5301f5"
+          "content": "b68fd1e2b5cf7c154ffaf5a160cc59d1"
         },
         {
           "alg": "SHA-1",
-          "content": "19bca2a2446743c7520d3e171b1232b1da789cf8"
+          "content": "0b5e90111d61950f20d75f5371e9fb184f6f4a96"
         },
         {
           "alg": "SHA-256",
-          "content": "bd93f278047bb533da70b42d2b21dc297d946bab86a4fe844c200b4db8d174b5"
+          "content": "20af231c222fc71c29e06b3cd8d9190a16b412da83cc49fb0b778cf2dc6f94d2"
         },
         {
           "alg": "SHA-512",
-          "content": "45cfc16d60cd98700fa9bba50a83041962696a2daf3a2ff9e5ffde2465256a668162d7bb06f8eb1b49b6cc0bbae459f0fba94a8fbcf583bc9ac044484b3988c5"
+          "content": "519c3fa7854f225631b7c03044d81e2eaf64c386a93084378c9a19345f3400dcfb3f16846fab7abeaeafb760782120826f68b0f61895df866fa3c436115377aa"
         },
         {
           "alg": "SHA-384",
-          "content": "441b2da1ddb3cce737ced129052bf44614fbe4724cc2c2fea7665c47e1886ed3114a2b7cb761a2819721d015ae359349"
+          "content": "3749a0957811fd69067ab90571932491173732b076eb9300a41765c5edff50b863b6f4b268fbd70debbef9a3b5987449"
         },
         {
           "alg": "SHA3-384",
-          "content": "a4c952090920d9b29570c10c3871459f6f46531d55fe7b8ffb41895eb5958ba7256797c42a78bc909826085bec339dac"
+          "content": "9041b9ac9c3f7d8f2e4fc320dc69f1864eda0b996ae828e34199bc943c856eaf8bf6a51cc29eb809650c0b4c4ad76145"
         },
         {
           "alg": "SHA3-256",
-          "content": "11e5723f462a1af6e574b246a2be0f73ad7a60664bc577774e0212fa60eb4b58"
+          "content": "6f6cda88022340aa2854563b26fba4b3cbf249e82ce1e9820339701d00d04d52"
         },
         {
           "alg": "SHA3-512",
-          "content": "1103ab9f8684f075784ad65eddec69012399da3a2f0d5a9d89cb42965f699d1685d587d5c37de236f9fe694ff596e8c1085c3f520475899d97cfc00010209da1"
+          "content": "75486be9a3c385f4cb2eb3fd8897f5c90d75b5076bb6ed5d4b48f68be15d982d8fd97b185f4590ce8922f28b33e109ed8a0080fe9e6cea38d736dc1433280d2c"
         }
       ],
       "licenses": [
@@ -2484,7 +2484,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.lihaoyi/geny_2.13@1.1.0?type=jar",
+      "purl": "pkg:maven/com.lihaoyi/geny_2.13@1.1.1?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/com-lihaoyi/geny",
@@ -3831,45 +3831,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/joda-time/joda-time@2.14.2?type=jar",
+      "bom-ref": "pkg:maven/joda-time/joda-time@2.14.3?type=jar",
       "publisher": "Joda.org",
       "group": "joda-time",
       "name": "joda-time",
-      "version": "2.14.2",
+      "version": "2.14.3",
       "description": "Date and time library to replace JDK date handling",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f97b875af822f845f60696569225dfa9"
+          "content": "2895193bdd32515f8ac4328af23761fb"
         },
         {
           "alg": "SHA-1",
-          "content": "3860f88b96c286330a895f65ba126f09a0b33bba"
+          "content": "53007bae8c9dd68d85656103a74f1bf86bdafbad"
         },
         {
           "alg": "SHA-256",
-          "content": "6f65df20eed028bc1a2eba1506e27f943203534d099f94e16b6842391afb72f5"
+          "content": "43533e9df6431839d0865c897d7d43a9ca75378a52b7f60b3e08b037a5c94986"
         },
         {
           "alg": "SHA-512",
-          "content": "47114e1634d86ffcb3daacfd90291d8aa093c7d84eb2e8300616ebf9ee3050e5bc76558f4cf456a83a9e28eb658f1d7e2ca516fec36e0606b4c53e17d3669773"
+          "content": "19be58f762f4bcf6d45c0c27b43f2afdd6f03e1e21fceef85eebf4b75efa27fc1d17c5822f6f3ad0ec49386a0331433f83aa7ea5020f7b6d6144a8672e7e6a1e"
         },
         {
           "alg": "SHA-384",
-          "content": "d1b95780526678355cc9c2b440c8305849754966538011676a39948ac14734f3615fcf3b0d9b17a148473a9f781025df"
+          "content": "24674c7e2ee883b923b64a376062d5ada09e0fd6ca4629b0a91f280e7b59a60e540d946d49ed58f51950fd4ea2d8af76"
         },
         {
           "alg": "SHA3-384",
-          "content": "2aaebdfb1f910e3addbd1e4e756a1699ea3455afda3df76f5dae84011170e6563b865e10ee5ce574c13d1bcb22792637"
+          "content": "0e08242b5cc7f1b9ffee33cf4de11f428c61ebed1b440b30984c4c7473e83fbaad4ea3dd8ccc17509079f78d0706e8ba"
         },
         {
           "alg": "SHA3-256",
-          "content": "d788409330d6da4bd5288b47effee3e486dddf33c7c83d5992f619a51ae1eb65"
+          "content": "76cb796bbc5cc2b267a9cae6c298aedc04a8d075b911ee221eb82eb030c4147d"
         },
         {
           "alg": "SHA3-512",
-          "content": "61c6b20b3e81f8137906191c70336aefeb9844467431cc0bce02f84aaeb53053743d3140215bc0ef6de9428a05396f450f900e2c661419ab71025c6e482fb050"
+          "content": "b3efebb2a9803646b8fcdb398f00b52ac77e5b86b532aa41c73e2bc8ea1dae68cd22ecc2ca0682dc9e54492afb028327d26aba30733c05239b311b5681b3495c"
         }
       ],
       "licenses": [
@@ -3879,7 +3879,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/joda-time/joda-time@2.14.2?type=jar",
+      "purl": "pkg:maven/joda-time/joda-time@2.14.3?type=jar",
       "externalReferences": [
         {
           "url": "https://www.joda.org/joda-time/",
@@ -18473,45 +18473,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.10?type=jar",
+      "bom-ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.11?type=jar",
       "publisher": "FasterXML",
       "group": "org.openapitools",
       "name": "jackson-databind-nullable",
-      "version": "0.2.10",
+      "version": "0.2.11",
       "description": "JsonNullable wrapper class and Jackson module to support fields with meaningful null values.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "af899811cdda7c572a3297ff1622a756"
+          "content": "18d11cf8e3d41359001f6d44679a1dd6"
         },
         {
           "alg": "SHA-1",
-          "content": "1dc6fab0c58de4c15582a2522fc3457d5d254c54"
+          "content": "008b26d18bc212fd4372b69c0a6625ec5e319796"
         },
         {
           "alg": "SHA-256",
-          "content": "cb6fe4189b895b011f2016e3a276710090f15e78145aa37e009e537cfda8b7ea"
+          "content": "07417c949d66a67eb8bc1e919f3f1f13a741badf8b4fcbd39ac16a509d38d34c"
         },
         {
           "alg": "SHA-512",
-          "content": "a5f58c5f3f098d007db54a0bb368e56ca355d5123cfb4603555ad619bb5fd7aa77e03d89bc6eef5e7af6b3a50e0b85dec93d784c235ab87214e2d2120102dbcb"
+          "content": "1351d718222127258c51fbf6e73dcc71289b5beecbee2dbd9851eee1c15c7deea7e35e327ed0f912d58993dff6e9a4c5a24bc2ea79fbb26b6c47aa903e5b98b4"
         },
         {
           "alg": "SHA-384",
-          "content": "e583d71870a1fd9f3b1dc68e47e59f0eb6eb9ba368b06d86303be021d9e9c83c02bb10253ff61b574f1d8c80c3c180ab"
+          "content": "d2f31e6896d4347e2f8803febc0a6431607956321aa75b5b90015b4aa8ec8826af9df110df321a9b0edc11374521b51e"
         },
         {
           "alg": "SHA3-384",
-          "content": "cd8747bc725074418cc0434d1e9c2bd331ab2e9ec6ed138b90099004bd90bfcbf389801e6bb9e1d9b266ef3e82dd4f44"
+          "content": "1f593e2766264473907bc347728f63ae8c2843a7744a0c65b34561add012dad0efb0dba3d811d7749012dcf3501309d5"
         },
         {
           "alg": "SHA3-256",
-          "content": "6edf788e4e4b17d864495fba80e41cf1a9c4f869d90385c13772396078bb444f"
+          "content": "3cfb2bf1b2b022e50d3fcd963ce9616f60f7b49f2fef10772256ef6e28e36c36"
         },
         {
           "alg": "SHA3-512",
-          "content": "505a32386d0382b1e2a799936c71f745db12fa01e5fe9777381d83f3ffb2169615c6e59c87a387694239f5f4a433e750ec2a1e43d785052eaa4f5d40b2d76f40"
+          "content": "f0729d69a2213d9a627ec67b2868bf5fb6f705d462e98d329de2695b614325e0750f44276a0b68e561a005e8379373da5f5180be65f9a39aeaecb673381ff232"
         }
       ],
       "licenses": [
@@ -18522,7 +18522,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.10?type=jar",
+      "purl": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.11?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/OpenAPITools/jackson-databind-nullable",
@@ -19569,7 +19569,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "db52b19b-3389-4506-bef2-eac0feb953d6",
+      "bom-ref": "c2df387b-a3b4-4d5a-8907-dcb12acc4a13",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24825,7 +24825,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2ef402a7-83c0-47bd-b3c4-cace21d45e76",
+      "bom-ref": "7fa5c118-7c8d-4f7d-a259-31518c567ecb",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -25074,19 +25074,19 @@
     {
       "ref": "pkg:maven/com.lihaoyi/fastparse_2.13@3.1.1?type=jar",
       "dependsOn": [
-        "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.0?type=jar",
-        "pkg:maven/com.lihaoyi/geny_2.13@1.1.0?type=jar",
+        "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.4?type=jar",
+        "pkg:maven/com.lihaoyi/geny_2.13@1.1.1?type=jar",
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.0?type=jar",
+      "ref": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.4?type=jar",
       "dependsOn": [
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.lihaoyi/geny_2.13@1.1.0?type=jar",
+      "ref": "pkg:maven/com.lihaoyi/geny_2.13@1.1.1?type=jar",
       "dependsOn": [
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar"
       ]
@@ -25334,7 +25334,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@7.0.7?type=jar",
-        "pkg:maven/joda-time/joda-time@2.14.2?type=jar",
+        "pkg:maven/joda-time/joda-time@2.14.3?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
@@ -25378,7 +25378,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/joda-time/joda-time@2.14.2?type=jar",
+      "ref": "pkg:maven/joda-time/joda-time@2.14.3?type=jar",
       "dependsOn": []
     },
     {
@@ -26740,7 +26740,7 @@
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.5?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
-        "pkg:maven/joda-time/joda-time@2.14.2?type=jar"
+        "pkg:maven/joda-time/joda-time@2.14.3?type=jar"
       ]
     },
     {
@@ -26769,7 +26769,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@7.0.7?type=jar",
-        "pkg:maven/joda-time/joda-time@2.14.2?type=jar",
+        "pkg:maven/joda-time/joda-time@2.14.3?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar"
       ]
@@ -26835,7 +26835,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@7.0.7?type=jar",
-        "pkg:maven/joda-time/joda-time@2.14.2?type=jar",
+        "pkg:maven/joda-time/joda-time@2.14.3?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar"
       ]
@@ -26903,12 +26903,12 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
-        "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.10?type=jar",
+        "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.11?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.10?type=jar",
+      "ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.11?type=jar",
       "dependsOn": []
     },
     {
@@ -27234,13 +27234,13 @@
       "dependsOn": []
     },
     {
-      "ref": "2ef402a7-83c0-47bd-b3c4-cace21d45e76",
+      "ref": "7fa5c118-7c8d-4f7d-a259-31518c567ecb",
       "dependsOn": [
-        "db52b19b-3389-4506-bef2-eac0feb953d6"
+        "c2df387b-a3b4-4d5a-8907-dcb12acc4a13"
       ]
     },
     {
-      "ref": "db52b19b-3389-4506-bef2-eac0feb953d6",
+      "ref": "c2df387b-a3b4-4d5a-8907-dcb12acc4a13",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.24.0",

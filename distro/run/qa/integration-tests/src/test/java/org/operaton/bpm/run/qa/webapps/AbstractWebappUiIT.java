@@ -20,6 +20,7 @@ import java.net.URI;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -51,7 +52,8 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
    * guarantees each test starts from the clean state that reliably logs in.
    */
   @BeforeEach
-  void createDriver() {
+  void setUp(TestInfo testInfo) {
+    // create driver
     ChromeDriverService chromeDriverService = new ChromeDriverService.Builder()
         .withVerbose(true)
         .usingAnyFreePort()
@@ -64,6 +66,11 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
         .addArguments("--disable-dev-shm-usage");
 
     driver = new ChromeDriver(chromeDriverService, chromeOptions);
+
+    // create client
+    preventRaceConditions();
+    createClient(getWebappCtxPath());
+    appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
   public static ExpectedCondition<Boolean> currentURIIs(final URI pageURI) {
@@ -82,13 +89,6 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
     return webDriver -> webDriver.getCurrentUrl().contains(url);
   }
 
-  @BeforeEach
-  void createClient() {
-    preventRaceConditions();
-    createClient(getWebappCtxPath());
-    appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
-  }
-
   @AfterEach
   void quitDriver() {
     if (driver != null) {
@@ -96,5 +96,4 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
       driver = null;
     }
   }
-
 }

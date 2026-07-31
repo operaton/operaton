@@ -56,6 +56,9 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
         return;
       } catch (WebDriverException e) {
         last = e;
+        // clear cookies so the next attempt starts from a clean session/CSRF state
+        // instead of retrying against whatever the failed attempt left behind
+        driver.manage().deleteAllCookies();
       }
     }
     throw last;

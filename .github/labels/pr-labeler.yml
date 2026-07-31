@@ -4,6 +4,8 @@
 
 database:postgresql: ['*postgresql*', '*PostgreSQL*']
 
+database:mariadb: ['*mariadb-java-client*', '*MariaDB*']
+
 database:mysql: ['*mysql*', '*MySQL']
 
 database:oracle: ['*oracle*', '*Oracle*']

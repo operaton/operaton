@@ -1,5 +1,5 @@
 ---
-name: null-safety
+name: operaton-null-safety
 description: Use when fixing Sonar javabugs:S2259 null-pointer-dereference issues, adding JSpecify annotations (@NullMarked, @Nullable, @NonNull) to Java code, or when asked to make Java code null-safe
 ---
 
@@ -7,7 +7,8 @@ description: Use when fixing Sonar javabugs:S2259 null-pointer-dereference issue
 
 ## Overview
 
-Fix null-dereference bugs (Sonar S2259) by making nullability explicit with JSpecify annotations at API boundaries, then guarding call sites. Goal: S2259 count → 0, with the *fewest* annotations — `@NullMarked` scope + `@Nullable` exceptions, not `@NonNull` everywhere.
+Assure null safety by using JSpecify annotations at API boundaries, then guarding call sites.
+Use fewest annotations possible: `@NullMarked` scope + `@Nullable` exceptions, not `@NonNull` everywhere.
 
 ## Step 0: Verify the dependency FIRST
 
@@ -29,13 +30,9 @@ If absent, add to the module's pom (and version to the parent/bom if the repo ma
 
 A diff that imports jspecify without this step does not compile. Never skip it.
 
-## Step 1: Identify issues from SonarCloud
+## Step 1: Analyze nullability
 
-```bash
-curl -s "https://sonarcloud.io/api/issues/search?componentKeys=<project>&rules=javabugs:S2259&statuses=OPEN,CONFIRMED&ps=100&p=1" | jq '.total, .issues[] | {component, line, flows}'
-```
-
-(For Operaton: `componentKeys=operaton_operaton`.) Each issue's `flows[].locations` traces exactly which nullable return reaches the dereference — read that flow before proposing anything; the root cause is usually a method in *another* file returning null.
+Analyze accessible methods and fields for nullability. The analysis must be 100% sure.
 
 ## Step 2: Annotate — the decision order
 
@@ -57,8 +54,6 @@ Never `@SuppressWarnings` or mark the Sonar issue "won't fix" to hit zero.
 ```bash
 mvn -q compile -pl <module>   # must pass before claiming done
 ```
-
-Then state which S2259 issue keys the change resolves. Sonar count updates only after the next analysis — say so, don't claim "count is now 0".
 
 ## Output rules
 

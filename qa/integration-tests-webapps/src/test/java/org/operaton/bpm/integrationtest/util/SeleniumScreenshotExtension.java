@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.function.Supplier;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
@@ -40,14 +41,13 @@ public class SeleniumScreenshotExtension implements AfterTestExecutionCallback, 
 
   private static final String OUTPUT_DIR_PROPERTY_NAME = "selenium.screenshot.directory";
   private static final Logger log = LoggerFactory.getLogger(SeleniumScreenshotExtension.class);
-  protected WebDriver webDriver;
 
-  public SeleniumScreenshotExtension(WebDriver driver) {
-    if (driver instanceof RemoteWebDriver) {
-      webDriver = new Augmenter().augment(driver);
-    } else {
-      webDriver = driver;
-    }
+  // resolved lazily so a driver that is (re)created per test - after this extension instance
+  // is constructed - is still captured for the screenshot
+  protected final Supplier<WebDriver> driverSupplier;
+
+  public SeleniumScreenshotExtension(Supplier<WebDriver> driverSupplier) {
+    this.driverSupplier = driverSupplier;
   }
 
   @Override
@@ -71,6 +71,13 @@ public class SeleniumScreenshotExtension implements AfterTestExecutionCallback, 
       return;
     }
 
+    WebDriver driver = driverSupplier.get();
+    if (driver == null) {
+      log.info("No screenshot created, because no WebDriver is available.");
+      return;
+    }
+
+    WebDriver webDriver = (driver instanceof RemoteWebDriver) ? new Augmenter().augment(driver) : driver;
     File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
     String now = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
     String scrFilename = "%s-%s-%s.png".formatted(context.getRequiredTestClass().getSimpleName(), context.getRequiredTestMethod().getName(), now);

@@ -1,0 +1,410 @@
+# Unified PR pipeline: builds and installs all artifacts ONCE (build stage),
+# then runs unit tests and — when required by PR labels — the integration test
+# matrix against the staged artifacts instead of rebuilding them per matrix cell.
+name: PR Build
+
+on:
+  pull_request:
+    branches:
+      - main
+      - release/**
+    paths-ignore:
+      - '.github/workflows/**'
+      - '!.github/workflows/pr-build.yml'
+      - '.github/jreleaser/changelog.tpl'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE/**'
+      - '.github/dependabot.yml'
+      - '.github/workflows/auto-merge.yml'
+      - '**/*.md'
+      - 'distro/**'
+      - 'settings/**'
+      - 'LICENSE'
+      - 'NOTICE'
+      - 'qa/**'
+      - '!qa/integration-tests-engine/**'
+      - '!qa/integration-tests-webapps/**'
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  determine-pr-config:
+    name: Determine PR Configuration
+    runs-on: ubuntu-latest
+    outputs:
+      needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
+      needs_spring_boot_starter_tests: ${{ steps.check-pr.outputs.needs_spring_boot_starter_tests }}
+      needs_quarkus_tests: ${{ steps.check-pr.outputs.needs_quarkus_tests }}
+      testsuites: ${{ steps.compute-matrix.outputs.testsuites }}
+      distros: ${{ steps.compute-matrix.outputs.distros }}
+      databases: ${{ steps.compute-matrix.outputs.databases }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Check PR conditions
+        id: check-pr
+        env:
+          PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          echo "PR Labels: $PR_LABELS"
+          echo "PR Author: $PR_AUTHOR"
+
+          if [[ "$PR_AUTHOR" == "dependabot"* ]]; then
+            echo "🤖 PR is from Dependabot"
+            NEEDS_BUILD=true
+          elif echo "$PR_LABELS" | grep -q '"dependencies"'; then
+            echo "📦 PR has dependencies label"
+            NEEDS_BUILD=true
+          elif echo "$PR_LABELS" | grep -q '"distro:'; then
+            echo "🏗️ PR has distro labels"
+            NEEDS_BUILD=true
+          elif echo "$PR_LABELS" | grep -q '"database:'; then
+            echo "🗄️ PR has database labels"
+            NEEDS_BUILD=true
+          else
+            echo "✅ PR doesn't require the integration test matrix"
+            NEEDS_BUILD=false
+          fi
+          echo "needs_build=$NEEDS_BUILD" >> $GITHUB_OUTPUT
+
+          # Detect scope:spring-boot label or changes to files that affect the Spring Boot Starter
+          NEEDS_SBS_TESTS=false
+          if echo "$PR_LABELS" | grep -q '"scope:spring-boot"'; then
+            echo "🍃 PR has scope:spring-boot label"
+            NEEDS_SBS_TESTS=true
+          else
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD 2>/dev/null || true)
+            if echo "$CHANGED_FILES" | grep -qE '^(parent/pom\.xml|bom/|engine/pom\.xml|engine-dmn/)'; then
+              echo "📦 Changes to platform core files affect the Spring Boot Starter"
+              NEEDS_SBS_TESTS=true
+            fi
+          fi
+          echo "needs_spring_boot_starter_tests=$NEEDS_SBS_TESTS" >> $GITHUB_OUTPUT
+
+          # Detect scope:quarkus label or changes to files that affect the Quarkus extension
+          NEEDS_QUARKUS_TESTS=false
+          if echo "$PR_LABELS" | grep -q '"scope:quarkus"'; then
+            echo "⚡ PR has scope:quarkus label"
+            NEEDS_QUARKUS_TESTS=true
+          else
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD 2>/dev/null || true)
+            if echo "$CHANGED_FILES" | grep -qE '^(parent/pom\.xml|bom/|engine/pom\.xml|engine-dmn/|quarkus-extension/)'; then
+              echo "📦 Changes to platform core files affect the Quarkus extension"
+              NEEDS_QUARKUS_TESTS=true
+            fi
+          fi
+          echo "needs_quarkus_tests=$NEEDS_QUARKUS_TESTS" >> $GITHUB_OUTPUT
+      - name: Compute matrix values
+        id: compute-matrix
+        if: steps.check-pr.outputs.needs_build == 'true'
+        env:
+          PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
+        run: |
+          # Determine testsuites based on labels
+          if echo "$PR_LABELS" | grep -q '"dependencies:npm"'; then
+            TESTSUITES='["webapps"]'
+            echo "🎯 Using webapps testsuite for npm dependencies: $TESTSUITES"
+          else
+            TESTSUITES='["engine"]'
+            echo "🎯 Using default engine testsuite: $TESTSUITES"
+          fi
+          echo "testsuites=$TESTSUITES" >> $GITHUB_OUTPUT
+
+          # Determine distros based on labels
+          DISTRO_LABELS=$(echo "$PR_LABELS" | jq --raw-output '.[] | select(startswith("distro:")) | sub("distro:"; "")')
+          if [[ -n "$DISTRO_LABELS" ]]; then
+            DISTROS=$(echo "$DISTRO_LABELS" | jq --raw-input --slurp --compact-output 'split("\n") | map(select(. != ""))')
+            echo "🎯 Using specific distros from labels: $DISTROS"
+          else
+            DISTROS='["operaton", "tomcat", "wildfly"]'
+            echo "🎯 Using default distros: $DISTROS"
+          fi
+          echo "distros=$DISTROS" >> $GITHUB_OUTPUT
+
+          # Determine databases based on labels
+          DATABASE_LABELS=$(echo "$PR_LABELS" | jq --raw-output '.[] | select(startswith("database:")) | sub("database:"; "")')
+          if [[ -n "$DATABASE_LABELS" ]]; then
+            DATABASES=$(echo "$DATABASE_LABELS" | jq --raw-input --slurp --compact-output 'split("\n") | map(select(. != ""))')
+            echo "🎯 Using specific databases from labels: $DATABASES"
+          else
+            DATABASES='["h2"]'
+            echo "🎯 Using default database: $DATABASES"
+          fi
+          echo "databases=$DATABASES" >> $GITHUB_OUTPUT
+
+  build:
+    name: Build & Unit Tests
+    runs-on: ubuntu-24.04
+    needs: determine-pr-config
+    permissions:
+      contents: read
+      checks: write
+      actions: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Cache Maven packages
+        uses: actions/cache@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v6.1.0
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Setup Node
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: Setup mvnd
+        uses: ./.github/actions/mvnd-setup
+      - name: Maven Build
+        id: maven-build
+        shell: bash
+        run: |
+          .github/scripts/jacoco-create-flag-files.sh
+
+          BUILD_CMD=".devenv/scripts/build/build.sh --profile=normal --runner=mvnd"
+
+          # When the integration test matrix will run, extend the build so ALL
+          # distro artifacts land in ~/.m2 — the matrix cells then run with
+          # --no-build against these staged artifacts instead of rebuilding.
+          if [ "${{ needs.determine-pr-config.outputs.needs_integration_build }}" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --extra-maven-profiles=distro-wildfly,integration-test-operaton-run"
+          fi
+
+          echo "ℹ️ Executing: $BUILD_CMD"
+          $BUILD_CMD
+
+          ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        continue-on-error: true
+        with:
+          report_paths: ${{ github.workspace }}/**/target/surefire-reports/TEST-*.xml
+          require_passed_tests: true
+      - name: Upload Surefire Reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: surefire-reports
+          path: ${{ github.workspace }}/**/target/surefire-reports/**
+          retention-days: 30
+      - name: Sonarqube Analysis
+        # SONAR_TOKEN is not available on PRs from forks — the step skips itself there
+        if: env.SONAR_TOKEN
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: bash
+        run: |
+          ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=operaton_operaton \
+          -Dsonar.exclusions=webapps/assembly/**,\
+              qa/performance-tests-engine/**,\
+              qa/integration-tests-webapps/**,\
+              qa/integration-tests-engine/** \
+          -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
+              qa/integration-tests-webapps/**,\
+              qa/integration-tests-engine/**,\
+              webapps/**
+        continue-on-error: true
+      # Handed off as a run-scoped artifact, NOT via actions/cache: the repo cache
+      # pool is a shared 10 GB LRU and run-id-keyed entries both get evicted
+      # mid-run and evict the reusable m2/sonar caches. Tarred first because the
+      # subtree holds thousands of small files, which upload-artifact transfers
+      # individually.
+      - name: Stage artifacts for integration tests
+        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
+        run: tar -czf /tmp/it-stage.tar.gz -C ~/.m2/repository org/operaton
+      - name: Upload staged artifacts
+        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: it-stage
+          path: /tmp/it-stage.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs:
+      - determine-pr-config
+      - build
+    if: needs.determine-pr-config.outputs.needs_integration_build == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        testsuite: ${{ fromJson(needs.determine-pr-config.outputs.testsuites) }}
+        distro: ${{ fromJson(needs.determine-pr-config.outputs.distros) }}
+        database: ${{ fromJson(needs.determine-pr-config.outputs.databases) }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.1
+      - name: Cache Maven packages
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Restore staged artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: it-stage
+          path: /tmp
+      - name: Unpack staged artifacts
+        run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
+      - name: Set up Java
+        uses: actions/setup-java@v5.6.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Execute Engine Integration Tests
+        if: ${{ matrix.testsuite == 'engine' }}
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-integration-tests.sh --no-build --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
+      - name: Execute Webapps Integration Tests
+        if: ${{ matrix.testsuite == 'webapps' && matrix.database == 'h2' }}
+        shell: bash
+        run: |
+          .github/scripts/install-chrome-and-driver.sh
+          .devenv/scripts/build/build-and-run-integration-tests.sh --no-build --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
+      - name: Execute Database Upgrade Tests
+        if: ${{ matrix.database == 'h2' }}
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build
+      - name: Publish Test Report
+        if: ${{ matrix.testsuite != 'webapps' || matrix.database == 'h2' }}
+        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        with:
+          # TEST-*.xml only: the glob must not match failsafe-summary.xml,
+          # which has no testsuite root and makes the action emit annotations
+          report_paths: ${{ github.workspace }}/**/target/*-reports/TEST-*.xml
+          require_passed_tests: true
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
+          path: |
+            ${{ github.workspace }}/**/target/surefire-reports/**
+            ${{ github.workspace }}/**/target/failsafe-reports/**
+            ${{ github.workspace }}/qa/**/target/**/logs/**
+            ${{ github.workspace }}/**/target/cargo.log
+          retention-days: 30
+          overwrite: true
+
+  spring-boot-starter-integration-tests:
+    name: Spring Boot Starter Integration Tests
+    runs-on: ubuntu-latest
+    needs:
+      - determine-pr-config
+      - build
+    if: needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.1
+      - name: Cache Maven packages
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Restore staged artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: it-stage
+          path: /tmp
+      - name: Unpack staged artifacts
+        run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
+      - name: Set up Java
+        uses: actions/setup-java@v5.6.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Execute Spring Boot Starter Integration Tests
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-spring-boot-starter.sh
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        with:
+          report_paths: ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/TEST-*.xml
+          require_passed_tests: true
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: failsafe-reports-spring-boot-starter
+          path: |
+            ${{ github.workspace }}/spring-boot-starter/**/target/surefire-reports/**
+            ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/**
+          retention-days: 30
+          overwrite: true
+
+  quarkus-tests:
+    name: Quarkus Extension Tests
+    runs-on: ubuntu-latest
+    needs:
+      - determine-pr-config
+      - build
+    if: needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.1
+      - name: Cache Maven packages
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Restore staged artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: it-stage
+          path: /tmp
+      - name: Unpack staged artifacts
+        run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
+      - name: Set up Java
+        uses: actions/setup-java@v5.6.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Execute Quarkus Extension Tests
+        shell: bash
+        run: |
+          # The build stage installs the quarkus-extension modules with tests
+          # skipped; the quarkus-tests profile re-enables surefire, resolving
+          # all other Operaton artifacts from the staged ~/.m2 repository.
+          ./mvnw -Pquarkus-tests -f quarkus-extension test
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        with:
+          report_paths: ${{ github.workspace }}/quarkus-extension/**/target/surefire-reports/TEST-*.xml
+          require_passed_tests: true
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: surefire-reports-quarkus
+          path: ${{ github.workspace }}/quarkus-extension/**/target/surefire-reports/**
+          retention-days: 30
+          overwrite: true

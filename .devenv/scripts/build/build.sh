@@ -2,6 +2,7 @@
 
 MVN_ARGS=()
 PROFILES=()
+EXTRA_PROFILES=""
 BUILD_PROFILE="normal"
 SKIP_TESTS="false"
 REPORT_PLUGINS="false"
@@ -30,6 +31,9 @@ parse_args() {
     case "$1" in
       --profile=*)
         BUILD_PROFILE="${1#*=}"
+        ;;
+      --extra-maven-profiles=*)
+        EXTRA_PROFILES="${1#*=}"
         ;;
       --skip-tests)
         SKIP_TESTS="true"
@@ -95,9 +99,14 @@ case "$BUILD_PROFILE" in
     PROFILES+=(distro distro-webjar distro-run distro-tomcat h2-in-memory check-api-compatibility)
     ;;
   "max")
-    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter h2-in-memory check-api-compatibility quarkus-tests)
+    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter h2-in-memory check-api-compatibility quarkus-tests integration-test-operaton-run)
     ;;
 esac
+
+if [ -n "$EXTRA_PROFILES" ]; then
+  IFS=',' read -ra EXTRA <<< "$EXTRA_PROFILES"
+  PROFILES+=("${EXTRA[@]}")
+fi
 
 MVN_CMD="$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
 echo "ℹ️ $MVN_CMD"

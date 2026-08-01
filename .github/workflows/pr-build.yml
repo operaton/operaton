@@ -1,10 +1,6 @@
 # Unified PR pipeline: builds and installs all artifacts ONCE (build stage),
 # then runs unit tests and — when required by PR labels — the integration test
 # matrix against the staged artifacts instead of rebuilding them per matrix cell.
-#
-# Rollout: runs alongside build.yml / integration-build.yml until validated.
-# Afterwards remove the pull_request triggers from those two workflows and
-# update the required status checks in branch protection.
 name: PR Build
 
 on:
@@ -186,7 +182,7 @@ jobs:
           # distro artifacts land in ~/.m2 — the matrix cells then run with
           # --no-build against these staged artifacts instead of rebuilding.
           if [ "${{ needs.determine-pr-config.outputs.needs_integration_build }}" = "true" ]; then
-            BUILD_CMD="$BUILD_CMD --extra-profiles=distro-wildfly,integration-test-operaton-run"
+            BUILD_CMD="$BUILD_CMD --extra-maven-profiles=distro-wildfly,integration-test-operaton-run"
           fi
 
           echo "ℹ️ Executing: $BUILD_CMD"

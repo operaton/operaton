@@ -279,13 +279,6 @@ jobs:
           if [ "$SKIP_TESTS" = "true" ]; then
               CMD="$CMD --skip-tests"
           fi
-          # The Java 17 build stages the artifacts the integration-test matrix
-          # consumes with --no-build; integration-test-operaton-run adds the
-          # run-QA modules (example-plugin, integration-tests) the operaton
-          # distro cells resolve from the staged repository.
-          if [ "${{ matrix.java }}" = "17" ]; then
-              CMD="$CMD --extra-profiles=integration-test-operaton-run"
-          fi
           $CMD
 
           .github/scripts/prepare-reports.sh

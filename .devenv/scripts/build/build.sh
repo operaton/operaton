@@ -32,7 +32,7 @@ parse_args() {
       --profile=*)
         BUILD_PROFILE="${1#*=}"
         ;;
-      --extra-profiles=*)
+      --extra-maven-profiles=*)
         EXTRA_PROFILES="${1#*=}"
         ;;
       --skip-tests)
@@ -99,7 +99,7 @@ case "$BUILD_PROFILE" in
     PROFILES+=(distro distro-webjar distro-run distro-tomcat h2-in-memory check-api-compatibility)
     ;;
   "max")
-    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter h2-in-memory check-api-compatibility quarkus-tests)
+    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter h2-in-memory check-api-compatibility quarkus-tests integration-test-operaton-run)
     ;;
 esac
 

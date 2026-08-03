@@ -21,6 +21,9 @@ import java.io.*;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.instance.DomDocument;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -38,7 +41,7 @@ public final class IoUtil {
   private IoUtil() {
   }
 
-  public static void closeSilently(Closeable closeable) {
+  public static void closeSilently(@Nullable Closeable closeable) {
     try {
       if (closeable != null) {
         closeable.close();
@@ -125,7 +128,7 @@ public final class IoUtil {
    * @param document  the DOM document to transform
    * @param result  the {@link StreamResult} to write to
    */
-  public static void transformDocumentToXml(DomDocument document, StreamResult result) {
+  public static void transformDocumentToXml(@NonNull DomDocument document, @NonNull StreamResult result) {
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     try {
       Transformer transformer = transformerFactory.newTransformer();

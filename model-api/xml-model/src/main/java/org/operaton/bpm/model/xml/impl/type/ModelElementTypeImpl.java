@@ -18,6 +18,9 @@ package org.operaton.bpm.model.xml.impl.type;
 
 import java.util.*;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -87,7 +90,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     }
   }
 
-  public void registerChildElementType(ModelElementType childElementType) {
+  public void registerChildElementType(@NonNull ModelElementType childElementType) {
     if (!childElementTypes.contains(childElementType)) {
       childElementTypes.add(childElementType);
     }
@@ -310,7 +313,7 @@ public class ModelElementTypeImpl implements ModelElementType {
    * @return the attribute or null if it not exists
    */
   @Override
-  public Attribute<?> getAttribute(String attributeName) {
+  public @Nullable Attribute<?> getAttribute(String attributeName) {
     for (Attribute<?> attribute : getAllAttributes()) {
       if (attribute.getAttributeName().equals(attributeName)) {
         return attribute;

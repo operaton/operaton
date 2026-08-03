@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.model.xml.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
@@ -60,14 +58,14 @@ public class ModelImpl implements Model {
    * @param actualNs
    * @throws IllegalArgumentException if the alternative is already used or if the actual namespace has an alternative
    */
-  public void declareAlternativeNamespace(String alternativeNs, String actualNs) {
+  public void declareAlternativeNamespace(@NonNull String alternativeNs, @NonNull String actualNs) {
     actualNsToAlternative.computeIfAbsent(actualNs, k -> new LinkedHashSet<>())
       .add(alternativeNs);
 
     alternativeNsToActual.put(alternativeNs, actualNs);
   }
 
-  public void undeclareAlternativeNamespace(String alternativeNs){
+  public void undeclareAlternativeNamespace(@NonNull String alternativeNs){
     if(!alternativeNsToActual.containsKey(alternativeNs)){
       return;
     }
@@ -76,15 +74,15 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public Set<String> getAlternativeNamespaces(String actualNs) {
-    return actualNsToAlternative.get(actualNs);
+  public @NonNull Set<String> getAlternativeNamespaces(@NonNull String actualNs) {
+    return Optional.ofNullable(actualNsToAlternative.get(actualNs)).orElse(Collections.emptySet());
   }
 
   @Override
-  public String getAlternativeNamespace(String actualNs) {
+  public @Nullable String getAlternativeNamespace(@NonNull String actualNs) {
     Set<String> alternatives = getAlternativeNamespaces(actualNs);
 
-    if (alternatives == null || alternatives.isEmpty()) {
+    if (alternatives.isEmpty()) {
       return null;
     }
     else if (alternatives.size() == 1) {
@@ -97,27 +95,27 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public String getActualNamespace(String alternativeNs) {
+  public @Nullable String getActualNamespace(@NonNull String alternativeNs) {
     return alternativeNsToActual.get(alternativeNs);
   }
 
   @Override
-  public Collection<ModelElementType> getTypes() {
+  public @NonNull Collection<ModelElementType> getTypes() {
     return new ArrayList<>(typesByName.values());
   }
 
   @Override
-  public ModelElementType getType(Class<? extends ModelElementInstance> instanceClass) {
+  public @Nullable ModelElementType getType(@NonNull Class<? extends ModelElementInstance> instanceClass) {
     return typesByClass.get(instanceClass);
   }
 
   @Override
-  public ModelElementType getTypeForName(String typeName) {
+  public @Nullable ModelElementType getTypeForName(@NonNull String typeName) {
     return getTypeForName(null, typeName);
   }
 
   @Override
-  public ModelElementType getTypeForName(String namespaceUri, String typeName) {
+  public @Nullable ModelElementType getTypeForName(@Nullable String namespaceUri, @NonNull String typeName) {
     return typesByName.get(ModelUtil.getQName(namespaceUri, typeName));
   }
 

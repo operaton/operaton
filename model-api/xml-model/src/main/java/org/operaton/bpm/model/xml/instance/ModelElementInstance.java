@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.instance;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
@@ -50,7 +52,7 @@ public interface ModelElementInstance {
    *
    * @return the parent element
    */
-  ModelElementInstance getParentElement();
+  @Nullable ModelElementInstance getParentElement();
 
   /**
    * Returns the element type of this.

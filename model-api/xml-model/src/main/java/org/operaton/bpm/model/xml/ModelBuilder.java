@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.model.xml.impl.ModelBuilderImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
@@ -25,10 +27,9 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
  * This builder is used to define and create a new model.
  *
  * @author Daniel Meyer
- *
  */
+@NullMarked
 public abstract class ModelBuilder {
-
   public abstract ModelBuilder alternativeNamespace(String alternativeNs, String actualNs);
 
   public abstract ModelElementTypeBuilder defineType(Class<? extends ModelElementInstance> modelInstanceType, String typeName);
@@ -40,5 +41,4 @@ public abstract class ModelBuilder {
   public static ModelBuilder createInstance(String modelName) {
     return new ModelBuilderImpl(modelName);
   }
-
 }

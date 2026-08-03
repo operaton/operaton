@@ -19,6 +19,8 @@ package org.operaton.bpm.model.xml.impl.type.child;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
@@ -89,7 +91,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
   }
 
   @Override
-  public ModelElementType getChildElementType(Model model) {
+  public ModelElementType getChildElementType(@NonNull Model model) {
     return model.getType(childElementTypeClass);
   }
 
@@ -177,18 +179,18 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public @NonNull Iterator<T> iterator() {
       Collection<T> modelElementCollection = ModelUtil.getModelElementCollection(getView(modelElement), modelElement.getModelInstance());
       return modelElementCollection.iterator();
     }
 
     @Override
-    public Object[] toArray() {
+    public @NonNull Object[] toArray() {
       Collection<T> modelElementCollection = ModelUtil.getModelElementCollection(getView(modelElement), modelElement.getModelInstance());
       return modelElementCollection.toArray();
     }
 
-    public <U> U[] toArray(U[] a) {
+    public @NonNull <U> U[] toArray(@NonNull U[] a) {
       Collection<T> modelElementCollection = ModelUtil.getModelElementCollection(getView(modelElement), modelElement.getModelInstance());
       return modelElementCollection.toArray(a);
     }

@@ -21,6 +21,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
@@ -38,6 +41,7 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 /**
  * @author Sebastian Menski
  */
+@NullMarked
 public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends  ReferenceImpl<TARGET> implements ElementReferenceCollection<TARGET, SOURCE> {
 
   private final ChildElementCollection<SOURCE> referenceSourceCollection;
@@ -53,7 +57,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   }
 
   @Override
-  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, String referenceIdentifier) {
+  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
     referenceSourceElement.setTextContent(referenceIdentifier);
   }
 
@@ -77,7 +81,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   protected void performRemoveOperation(ModelElementInstanceImpl referenceSourceParentElement, Object referenceTargetElement) {
     Collection<ModelElementInstance> referenceSourceChildElements = referenceSourceParentElement.getChildElementsByType(referenceSourceType);
     for (ModelElementInstance referenceSourceChildElement : referenceSourceChildElements) {
-      if (getReferenceTargetElement(referenceSourceChildElement).equals(referenceTargetElement)) {
+      if (referenceTargetElement.equals(getReferenceTargetElement(referenceSourceChildElement))) {
         referenceSourceParentElement.removeChildElement(referenceSourceChildElement);
       }
     }
@@ -105,6 +109,9 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   @Override
   protected void removeReference(ModelElementInstance referenceSourceElement, ModelElementInstance referenceTargetElement) {
     ModelElementInstance parentElement = referenceSourceElement.getParentElement();
+    if (parentElement == null) {
+      throw new ModelException("Unable to remove reference: reference source element " + referenceSourceElement + " has no parent element");
+    }
     Collection<SOURCE> childElementCollection = referenceSourceCollection.get(parentElement);
     childElementCollection.remove(referenceSourceElement);
   }

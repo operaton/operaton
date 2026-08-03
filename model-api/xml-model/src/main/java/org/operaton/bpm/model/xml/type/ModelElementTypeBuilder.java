@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.type;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.attribute.AttributeBuilder;
@@ -25,6 +27,7 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 /**
  * @author Daniel Meyer
  */
+@NullMarked
 public interface ModelElementTypeBuilder {
 
   ModelElementTypeBuilder namespaceUri(String namespaceUri);

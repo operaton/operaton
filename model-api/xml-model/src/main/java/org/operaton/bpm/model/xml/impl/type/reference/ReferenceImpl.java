@@ -19,6 +19,9 @@ package org.operaton.bpm.model.xml.impl.type.reference;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
@@ -32,12 +35,13 @@ import org.operaton.bpm.model.xml.type.reference.Reference;
  * @author Sebastian Menski
  *
  */
+@NullMarked
 public abstract class ReferenceImpl<T extends ModelElementInstance> implements Reference<T> {
 
-  protected AttributeImpl<String> referenceTargetAttribute;
+  protected @Nullable AttributeImpl<String> referenceTargetAttribute;
 
   /** the actual type, may be different (a subtype of) {@link AttributeImpl#getOwningElementType()} */
-  private ModelElementTypeImpl referenceTargetElementType;
+  private @Nullable ModelElementTypeImpl referenceTargetElementType;
 
 
   /**
@@ -46,7 +50,7 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
    * @param referenceSourceElement the reference source model element instance
    * @param referenceIdentifier the new reference identifier
    */
-  protected abstract void setReferenceIdentifier(ModelElementInstance referenceSourceElement, String referenceIdentifier);
+  protected abstract void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier);
 
   /**
    * Get the reference target model element instance
@@ -56,16 +60,16 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
    */
   @Override
   @SuppressWarnings("unchecked")
-  public T getReferenceTargetElement(ModelElementInstance referenceSourceElement) {
+  public @Nullable T getReferenceTargetElement(ModelElementInstance referenceSourceElement) {
     String identifier = getReferenceIdentifier(referenceSourceElement);
     ModelElementInstance referenceTargetElement = referenceSourceElement.getModelInstance().getModelElementById(identifier);
     if (referenceTargetElement != null) {
       try {
         return (T) referenceTargetElement;
-
-      } catch(ClassCastException e) {
+      } catch (ClassCastException e) {
+        ModelElementType owningElementType = referenceTargetAttribute != null ? referenceTargetAttribute.getOwningElementType() : null;
         throw new ModelReferenceException("Element %s references element %s of wrong type. Expecting %s got %s".formatted(
-          referenceSourceElement, referenceTargetElement, referenceTargetAttribute.getOwningElementType(), referenceTargetElement.getElementType()));
+          referenceSourceElement, referenceTargetElement, owningElementType, referenceTargetElement.getElementType()));
       }
     }
     else {
@@ -82,6 +86,9 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
    */
   @Override
   public void setReferenceTargetElement(ModelElementInstance referenceSourceElement, T referenceTargetElement) {
+    if (referenceTargetAttribute == null) {
+      throw new ModelReferenceException("Reference target attribute is not set");
+    }
     ModelInstance modelInstance = referenceSourceElement.getModelInstance();
     String referenceTargetIdentifier = referenceTargetAttribute.getValue(referenceTargetElement);
     ModelElementInstance existingElement = modelInstance.getModelElementById(referenceTargetIdentifier);
@@ -109,7 +116,7 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
    * @return the reference target string attribute
    */
   @Override
-  public Attribute<String> getReferenceTargetAttribute() {
+  public @Nullable Attribute<String> getReferenceTargetAttribute() {
     return referenceTargetAttribute;
   }
 
@@ -124,7 +131,7 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
 
   @Override
   public Collection<ModelElementInstance> findReferenceSourceElements(ModelElementInstance referenceTargetElement) {
-    if(referenceTargetElementType.isBaseTypeOf(referenceTargetElement.getElementType())) {
+    if(referenceTargetElementType != null && referenceTargetElementType.isBaseTypeOf(referenceTargetElement.getElementType())) {
       ModelElementType owningElementType = getReferenceSourceElementType();
       return referenceTargetElement.getModelInstance().getModelElementsByType(owningElementType);
     }

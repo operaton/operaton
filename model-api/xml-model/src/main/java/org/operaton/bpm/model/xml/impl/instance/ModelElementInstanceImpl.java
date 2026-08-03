@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.ModelException;
@@ -76,7 +78,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public ModelElementInstance getParentElement() {
+  public @Nullable ModelElementInstance getParentElement() {
     DomElement parentElement = domElement.getParentElement();
     if (parentElement != null) {
       return ModelUtil.getModelElement(parentElement, modelInstance);

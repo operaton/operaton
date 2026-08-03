@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.model.xml.impl.type.child;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
 import org.operaton.bpm.model.xml.impl.util.ModelUtil;
@@ -28,6 +32,7 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
  * @author Daniel Meyer
  *
  */
+@NullMarked
 public class ChildElementImpl<T extends ModelElementInstance> extends ChildElementCollectionImpl<T> implements ChildElement<T> {
 
   public ChildElementImpl(Class<T> childElementTypeChild, ModelElementTypeImpl parentElementType) {
@@ -47,7 +52,7 @@ public class ChildElementImpl<T extends ModelElementInstance> extends ChildEleme
 
   @Override
   @SuppressWarnings("unchecked")
-  public T getChild(ModelElementInstance element) {
+  public @Nullable T getChild(@NonNull ModelElementInstance element) {
     ModelElementInstanceImpl elementInstanceImpl = (ModelElementInstanceImpl)element;
 
     ModelElementInstance childElement = elementInstanceImpl.getUniqueChildElementByType(childElementTypeClass);
@@ -60,7 +65,7 @@ public class ChildElementImpl<T extends ModelElementInstance> extends ChildEleme
   }
 
   @Override
-  public boolean removeChild(ModelElementInstance element) {
+  public boolean removeChild(@NonNull ModelElementInstance element) {
     ModelElementInstanceImpl childElement = (ModelElementInstanceImpl) getChild(element);
     ModelElementInstanceImpl elementInstanceImpl = (ModelElementInstanceImpl) element;
     return elementInstanceImpl.removeChildElement(childElement);

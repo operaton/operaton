@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.ModelException;
@@ -123,7 +125,7 @@ public class ModelInstanceImpl implements ModelInstance {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends ModelElementInstance> T getModelElementById(String id) {
+  public <T extends ModelElementInstance> @Nullable T getModelElementById(String id) {
     if (id == null) {
       return null;
     }

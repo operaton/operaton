@@ -21,6 +21,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -187,7 +190,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
   }
 
   @Override
-  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, String referenceIdentifier) {
+  protected void setReferenceIdentifier(@NonNull ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
     if (referenceIdentifier != null && !referenceIdentifier.isEmpty()) {
       super.setReferenceIdentifier(referenceSourceElement, referenceIdentifier);
     } else {

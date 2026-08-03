@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.interceptor;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
@@ -27,10 +28,10 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 @NullMarked
 public class CommandContextFactory {
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected @Nullable ProcessEngineConfigurationImpl processEngineConfiguration;
 
   public CommandContext createCommandContext() {
-    return new CommandContext(processEngineConfiguration);
+    return new CommandContext(getProcessEngineConfiguration());
   }
 
   // getters and setters //////////////////////////////////////////////////////

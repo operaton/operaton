@@ -46,12 +46,12 @@ jobs:
         database: ${{ fromJson(github.event.inputs.database) }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Cache Maven packages
-        uses: actions/cache@v6.1.0
+        uses: actions/cache@v6
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"

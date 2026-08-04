@@ -81,7 +81,7 @@ auto-merge-rules:
       - 'org.slf4j*'
       - 'org.springframework:spring-framework-bom'
       - 'org.wiremock:wiremock'
-      - 'org.xmlunit:xmlunit-core'
+      - 'org.xmlunit:*'
       # version properties
       - 'okhttp-version'
       - 'version.asm'

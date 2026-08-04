@@ -32,6 +32,13 @@ module.exports = (_env, argv = {}) => {
   const devMode = !!argv.devMode;
 
   return {
+    // Webpack 5.109+ auto-enables tsconfig.json resolution for every module on
+    // Node >= 22.6, which breaks on node_modules packages (e.g. side-channel)
+    // that ship a tsconfig.json extending an uninstalled devDependency.
+    // This project has no TypeScript, so keep it off explicitly.
+    experiments: {
+      typescript: false,
+    },
     entry: {
       /* Cockpit */
       'app/cockpit/operaton-cockpit-bootstrap': {

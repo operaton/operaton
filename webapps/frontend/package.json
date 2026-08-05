@@ -34,7 +34,7 @@
     "angular-translate": "2.19.1",
     "bootstrap": "4.6.2",
     "bootstrap-icons": "^1.13.1",
-    "bpmn-font": "0.12.1",
+    "bpmn-font": "0.13.0",
     "bpmn-js": "18.22.0",
     "camunda-dmn-js": "3.7.0",
     "chart.js": "^4.5.1",

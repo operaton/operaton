@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:6f992938-9e6f-4862-8f3e-9b685a2ddb8d",
+  "serialNumber": "urn:uuid:c83f2742-1afb-49ee-b4f4-00da1ed7824b",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-07-28T05:05:48Z",
+    "timestamp": "2026-08-05T14:17:09Z",
     "tools": {
       "components": [
         {
@@ -12,40 +12,40 @@
           "author": "OWASP Foundation",
           "group": "org.cyclonedx",
           "name": "cyclonedx-maven-plugin",
-          "version": "2.9.2",
+          "version": "2.9.3",
           "description": "CycloneDX Maven plugin",
           "hashes": [
             {
               "alg": "MD5",
-              "content": "843a7130400f75d33f563dc7e9f52dea"
+              "content": "e7c87ab327b65b23c681fc9dc8bb620b"
             },
             {
               "alg": "SHA-1",
-              "content": "2cac5a176b9f48801dfc4910d4f6a34bfbb13445"
+              "content": "fa3f0f04f4d5077b5e085d4d09aa2e68aeba5260"
             },
             {
               "alg": "SHA-256",
-              "content": "d9e5a12bac3c1a91d85f3a1ad84307099f457ff24aa65b438ba7de9ca784a54e"
+              "content": "c452d5eebe28bc86bef2e7c72d129f04f60877bef843eac8120f01fb655be293"
             },
             {
               "alg": "SHA-512",
-              "content": "636f788518752c5a23d14bad41d68b0d549e4b3a3d720d66f2f6e2b8b956207942ee12abba968a1e9aac6cf1d78d9e738a4a75eeb8bc6fca2377030fbb482407"
+              "content": "ec0344ed2ffe62d565aaf936a37140d04c7fffa8669a666be0366cd44eec3195232d79841cdec47030b79068216ac7e1a8c805255758e3d418dae32a4b9b9beb"
             },
             {
               "alg": "SHA-384",
-              "content": "72aad41633b92fadd4dbd1c6f5c1b956836b22d3b96afbdd7ca8b8eb0456eec00c2ed658e3c2d4e93d95048bcc23dac8"
+              "content": "3df26b2a00d87fe090851975ebcc30217f98634e7c47d07128e148f325ebfe3bc0790b2f52ad4591734b7b0de738f003"
             },
             {
               "alg": "SHA3-384",
-              "content": "9837cee0f9b7d575f8d88df3ad6f58a075032ad2635e0987abbc102240327f1cec87dc062b3034009f028ab5baf988f9"
+              "content": "470c1b4962379b5b6494c75bd1475da3519bbe2543999c95f26b4021164d3d05419b0c3f704443162fe5433a204250e9"
             },
             {
               "alg": "SHA3-256",
-              "content": "4c654267cde6eb6d295dbc06b33e33528412bee57549dae89c85b8df8202dbcb"
+              "content": "900e9c4edb18940ed3c4a4ba6946957fa613ef0d4b0c380551638f229206373c"
             },
             {
               "alg": "SHA3-512",
-              "content": "f7da73632ef2fd1c2d85f0cf5eebc2b6a3ff1ae2ed0945442e679da71490562a2ff6b67422dbd5285f4042eda6637e6f3544f62825a625b38efacfdebc8df137"
+              "content": "5e36433e18ae24f7460902da27818874df5d1d73df1a97e49e7369335f7cc61ca595466a2d37789fba7eaa7f7f251b29216c3d7a78910b2ec38e2ed68ea84876"
             }
           ]
         },
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.72.0-SNAPSHOT-2c64b8f58"
+          "version": "0.73.0-SNAPSHOT-748a639b1"
         }
       ]
     },
@@ -9540,45 +9540,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.client5",
       "name": "httpclient5",
-      "version": "5.6.2",
+      "version": "5.6.3",
       "description": "Apache HttpComponents Client",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "206eade53e6cde90a9ffe09cc56d4788"
+          "content": "77712afbe4bc4a87b88ff81750f15653"
         },
         {
           "alg": "SHA-1",
-          "content": "10ab45a37a2f4174492045840cdb5eb12c4336e7"
+          "content": "06fce81d328c3bf5d83dbc1815d51201eabbb58c"
         },
         {
           "alg": "SHA-256",
-          "content": "f3bf571b04dffe005ff29b965b9e3a88846aac6e63f24eae38a86d1979ea49a3"
+          "content": "80712ff129210d7c73d9fcc1195cbee5c3c34744965c7a05ea107b3648922f18"
         },
         {
           "alg": "SHA-512",
-          "content": "21707e209f29fba9c903fce4ae448addfd884db4d88d658ec6d05ca8fbb721f88ef873fb1ef4db1d89632a2028536203c86f1810c0e3bc46d3b9056518df3f36"
+          "content": "f4dcbfd8acd06cb052c097cb3286f489ff9957bbad56d6b2628bc7eb20775ef77953f5886289569606421d5305d2ef0fd9b195ed9c7b5f9ce2f74894817ba9fb"
         },
         {
           "alg": "SHA-384",
-          "content": "ffb665436e85caf368f5245f74a8cea475e4ed687a56c16e090f143742862f6a8429134150e14c29dea08faa7b075c72"
+          "content": "3a7ce679f34a948e7aa80b7ef9386a5e918e21cddc48d19dbd56200d1d706d5bcd7bf285a745e8af0d1c5db33ac87dab"
         },
         {
           "alg": "SHA3-384",
-          "content": "1c139ebfc53e51df4c7d402bbb30dd9e3d1b47b918f6329e9edcf6df3401ec1ec70b36cbc0fae92d6f5983742c439e89"
+          "content": "5c7ec0cb23dcb0d29b9bd7c279477eebcbfd036e4783e5c574e9fd8688c5f05d05ba078ac968181a4c140ddb59cf276f"
         },
         {
           "alg": "SHA3-256",
-          "content": "07f7adcb21cb6fe09f3095b83ff996206fd1e899c0cb73e7a41c7d6486fb3313"
+          "content": "c81ff6c4efe09adba190162dae93812a8230572f5ffd492befd0a9622fb7b192"
         },
         {
           "alg": "SHA3-512",
-          "content": "703b17e712f7889557131e3b3bde27287f4e1e070da07013fa55b9e7dd43fcd1daa8e05d3f26ec59f7c56e13078d5e8759307b9f8015227b44a9fc7307d88196"
+          "content": "f12b8dc7837b197197e8d3affc80926b7f4d2cf76beb02f090a5523772b6c856d9e365fed9b7bbbd68ca4fe0868592d32f878c1e12178e339c9eaf11fa922550"
         }
       ],
       "licenses": [
@@ -9588,10 +9588,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-client-5.6.x/5.6.2/httpclient5/",
+          "url": "https://hc.apache.org/httpcomponents-client-5.6.x/5.6.3/httpclient5/",
           "type": "website"
         },
         {
@@ -9607,7 +9607,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-client/tree/5.6.2/httpclient5",
+          "url": "https://github.com/apache/httpcomponents-client/tree/5.6.3/httpclient5",
           "type": "vcs"
         }
       ]
@@ -22797,7 +22797,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "68b5105c-90e6-4657-a687-49b0a7a83a4e",
+      "bom-ref": "592079a5-aa41-4e44-b1ca-b271c6fa1441",
       "name": "package-lock.json",
       "properties": [
         {
@@ -23087,10 +23087,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -23098,11 +23098,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-carbon-styles@1.24.0"
+          "value": "@bpmn-io/form-js-carbon-styles@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23112,10 +23112,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js-editor",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -23123,11 +23123,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-editor@1.24.0"
+          "value": "@bpmn-io/form-js-editor@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23137,10 +23137,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js-playground",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -23148,11 +23148,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-playground@1.24.0"
+          "value": "@bpmn-io/form-js-playground@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23162,10 +23162,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js-viewer",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -23173,11 +23173,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-viewer@1.24.0"
+          "value": "@bpmn-io/form-js-viewer@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23187,10 +23187,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -23198,11 +23198,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js@1.24.0"
+          "value": "@bpmn-io/form-js@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23387,10 +23387,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/grid@11.58.0",
+      "bom-ref": "pkg:npm/%40carbon/grid@11.59.0",
       "group": "@carbon",
       "name": "grid",
-      "version": "11.58.0",
+      "version": "11.59.0",
       "licenses": [
         {
           "license": {
@@ -23398,11 +23398,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/grid@11.58.0",
+      "purl": "pkg:npm/%40carbon/grid@11.59.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/grid@11.58.0"
+          "value": "@carbon/grid@11.59.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23412,10 +23412,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/layout@11.55.0",
+      "bom-ref": "pkg:npm/%40carbon/layout@11.56.0",
       "group": "@carbon",
       "name": "layout",
-      "version": "11.55.0",
+      "version": "11.56.0",
       "licenses": [
         {
           "license": {
@@ -23423,11 +23423,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/layout@11.55.0",
+      "purl": "pkg:npm/%40carbon/layout@11.56.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/layout@11.55.0"
+          "value": "@carbon/layout@11.56.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24468,9 +24468,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-font@0.12.1",
+      "bom-ref": "pkg:npm/bpmn-font@0.13.0",
       "name": "bpmn-font",
-      "version": "0.12.1",
+      "version": "0.13.0",
       "licenses": [
         {
           "license": {
@@ -24478,11 +24478,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-font@0.12.1",
+      "purl": "pkg:npm/bpmn-font@0.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-font@0.12.1"
+          "value": "bpmn-font@0.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24492,9 +24492,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.21.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.22.0",
       "name": "bpmn-js",
-      "version": "18.21.0",
+      "version": "18.22.0",
       "licenses": [
         {
           "license": {
@@ -24502,11 +24502,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.21.0",
+      "purl": "pkg:npm/bpmn-js@18.22.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.21.0"
+          "value": "bpmn-js@18.22.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24588,9 +24588,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/camunda-dmn-js@3.7.0",
+      "bom-ref": "pkg:npm/camunda-dmn-js@3.8.0",
       "name": "camunda-dmn-js",
-      "version": "3.7.0",
+      "version": "3.8.0",
       "licenses": [
         {
           "license": {
@@ -24598,11 +24598,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/camunda-dmn-js@3.7.0",
+      "purl": "pkg:npm/camunda-dmn-js@3.8.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "camunda-dmn-js@3.7.0"
+          "value": "camunda-dmn-js@3.8.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25174,9 +25174,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js-direct-editing@3.4.0",
+      "bom-ref": "pkg:npm/diagram-js-direct-editing@3.5.1",
       "name": "diagram-js-direct-editing",
-      "version": "3.4.0",
+      "version": "3.5.1",
       "licenses": [
         {
           "license": {
@@ -25184,11 +25184,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js-direct-editing@3.4.0",
+      "purl": "pkg:npm/diagram-js-direct-editing@3.5.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js-direct-editing@3.4.0"
+          "value": "diagram-js-direct-editing@3.5.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25246,9 +25246,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@15.22.0",
+      "bom-ref": "pkg:npm/diagram-js@15.23.2",
       "name": "diagram-js",
-      "version": "15.22.0",
+      "version": "15.23.2",
       "licenses": [
         {
           "license": {
@@ -25256,11 +25256,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js@15.22.0",
+      "purl": "pkg:npm/diagram-js@15.23.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@15.22.0"
+          "value": "diagram-js@15.23.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25366,9 +25366,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.9.0",
+      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.10.1",
       "name": "dmn-js-boxed-expression",
-      "version": "17.9.0",
+      "version": "17.10.1",
       "licenses": [
         {
           "license": {
@@ -25376,11 +25376,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-boxed-expression@17.9.0",
+      "purl": "pkg:npm/dmn-js-boxed-expression@17.10.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-boxed-expression@17.9.0"
+          "value": "dmn-js-boxed-expression@17.10.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25390,9 +25390,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-decision-table@17.9.0",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.10.0",
       "name": "dmn-js-decision-table",
-      "version": "17.9.0",
+      "version": "17.10.0",
       "licenses": [
         {
           "license": {
@@ -25400,11 +25400,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-decision-table@17.9.0",
+      "purl": "pkg:npm/dmn-js-decision-table@17.10.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-decision-table@17.9.0"
+          "value": "dmn-js-decision-table@17.10.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25414,9 +25414,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-drd@17.9.0",
+      "bom-ref": "pkg:npm/dmn-js-drd@17.10.0",
       "name": "dmn-js-drd",
-      "version": "17.9.0",
+      "version": "17.10.0",
       "licenses": [
         {
           "license": {
@@ -25424,11 +25424,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-drd@17.9.0",
+      "purl": "pkg:npm/dmn-js-drd@17.10.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-drd@17.9.0"
+          "value": "dmn-js-drd@17.10.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25438,9 +25438,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.9.0",
+      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.10.0",
       "name": "dmn-js-literal-expression",
-      "version": "17.9.0",
+      "version": "17.10.0",
       "licenses": [
         {
           "license": {
@@ -25448,11 +25448,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-literal-expression@17.9.0",
+      "purl": "pkg:npm/dmn-js-literal-expression@17.10.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-literal-expression@17.9.0"
+          "value": "dmn-js-literal-expression@17.10.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25486,9 +25486,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-shared@17.9.0",
+      "bom-ref": "pkg:npm/dmn-js-shared@17.10.0",
       "name": "dmn-js-shared",
-      "version": "17.9.0",
+      "version": "17.10.0",
       "licenses": [
         {
           "license": {
@@ -25496,11 +25496,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-shared@17.9.0",
+      "purl": "pkg:npm/dmn-js-shared@17.10.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-shared@17.9.0"
+          "value": "dmn-js-shared@17.10.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25510,9 +25510,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js@17.9.0",
-      "name": "dmn-js",
-      "version": "17.9.0",
+      "bom-ref": "pkg:npm/dmn-js-shared@17.10.1",
+      "name": "dmn-js-shared",
+      "version": "17.10.1",
       "licenses": [
         {
           "license": {
@@ -25520,11 +25520,35 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js@17.9.0",
+      "purl": "pkg:npm/dmn-js-shared@17.10.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js@17.9.0"
+          "value": "dmn-js-shared@17.10.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-js@17.10.0",
+      "name": "dmn-js",
+      "version": "17.10.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dmn-js@17.10.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-js@17.10.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26646,9 +26670,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/marked@18.0.7",
+      "bom-ref": "pkg:npm/marked@18.0.9",
       "name": "marked",
-      "version": "18.0.7",
+      "version": "18.0.9",
       "licenses": [
         {
           "license": {
@@ -26656,11 +26680,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/marked@18.0.7",
+      "purl": "pkg:npm/marked@18.0.9",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "marked@18.0.7"
+          "value": "marked@18.0.9"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28029,7 +28053,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "3a43f28e-5b68-4eac-97f8-4c2d8e31f07c",
+      "bom-ref": "4b00b089-6ce3-4a65-adcf-9520d4d32d72",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28932,11 +28956,11 @@
       "ref": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.1.4-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.connect/operaton-connect-core@2.1.4-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar"
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
@@ -29182,27 +29206,14 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.4-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.4-SNAPSHOT?classifier=sources\u0026type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.4-SNAPSHOT?classifier=tests\u0026type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.2.Final?type=jar"
+        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.2.Final?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.4-SNAPSHOT?classifier=tests\u0026type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.4-SNAPSHOT?classifier=sources\u0026type=jar",
-      "dependsOn": [
-        "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.1.4-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.5?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.5?type=jar",
-        "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
-        "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.4-SNAPSHOT?classifier=tests\u0026type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
@@ -29261,6 +29272,19 @@
     {
       "ref": "pkg:maven/com.ibm.async/asyncutil@0.1.0?type=jar",
       "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.4-SNAPSHOT?classifier=tests\u0026type=jar",
+      "dependsOn": [
+        "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.1.4-SNAPSHOT?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.5?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.5?type=jar",
+        "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
+        "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar"
+      ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.1.4-SNAPSHOT?type=jar",
@@ -30086,7 +30110,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.1.4-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
         "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.11?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar"
       ]
@@ -30170,7 +30194,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.1.4-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.1.4-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.2?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
@@ -30807,16 +30831,16 @@
       "dependsOn": []
     },
     {
-      "ref": "3a43f28e-5b68-4eac-97f8-4c2d8e31f07c",
+      "ref": "4b00b089-6ce3-4a65-adcf-9520d4d32d72",
       "dependsOn": [
-        "68b5105c-90e6-4657-a687-49b0a7a83a4e"
+        "592079a5-aa41-4e44-b1ca-b271c6fa1441"
       ]
     },
     {
-      "ref": "68b5105c-90e6-4657-a687-49b0a7a83a4e",
+      "ref": "592079a5-aa41-4e44-b1ca-b271c6fa1441",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
-        "pkg:npm/%40bpmn-io/form-js@1.24.0",
+        "pkg:npm/%40bpmn-io/form-js@1.24.1",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/%40popperjs/core@2.11.8",
         "pkg:npm/angular-animate@1.8.3",
@@ -30832,20 +30856,20 @@
         "pkg:npm/angular@1.8.3",
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
-        "pkg:npm/bpmn-font@0.12.1",
-        "pkg:npm/bpmn-js@18.21.0",
-        "pkg:npm/camunda-dmn-js@3.7.0",
+        "pkg:npm/bpmn-font@0.13.0",
+        "pkg:npm/bpmn-js@18.22.0",
+        "pkg:npm/camunda-dmn-js@3.8.0",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
         "pkg:npm/core-js@3.49.0",
         "pkg:npm/dmn-font@0.6.2",
-        "pkg:npm/dmn-js-decision-table@17.9.0",
-        "pkg:npm/dmn-js-drd@17.9.0",
-        "pkg:npm/dmn-js-literal-expression@17.9.0",
+        "pkg:npm/dmn-js-decision-table@17.10.0",
+        "pkg:npm/dmn-js-drd@17.10.0",
+        "pkg:npm/dmn-js-literal-expression@17.10.0",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
-        "pkg:npm/dmn-js-shared@17.9.0",
-        "pkg:npm/dmn-js@17.9.0",
+        "pkg:npm/dmn-js-shared@17.10.0",
+        "pkg:npm/dmn-js@17.10.0",
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.4.12",
         "pkg:npm/events@3.3.0",
@@ -30962,14 +30986,14 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/draggle@4.1.2",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
@@ -30980,11 +31004,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
         "pkg:npm/%40codemirror/autocomplete@6.20.3",
         "pkg:npm/%40codemirror/commands@6.10.4",
         "pkg:npm/%40codemirror/lang-json@6.0.2",
@@ -31001,10 +31025,10 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
-        "pkg:npm/%40carbon/grid@11.58.0",
+        "pkg:npm/%40carbon/grid@11.59.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
@@ -31014,18 +31038,18 @@
         "pkg:npm/ids@3.0.2",
         "pkg:npm/lodash@4.18.1",
         "pkg:npm/luxon@3.7.2",
-        "pkg:npm/marked@18.0.7",
+        "pkg:npm/marked@18.0.9",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/preact@10.29.7"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js@1.24.1",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.0",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
-        "pkg:npm/%40bpmn-io/form-js-playground@1.24.0",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0"
+        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1"
       ]
     },
     {
@@ -31093,14 +31117,14 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40carbon/grid@11.58.0",
+      "ref": "pkg:npm/%40carbon/grid@11.59.0",
       "dependsOn": [
-        "pkg:npm/%40carbon/layout@11.55.0",
+        "pkg:npm/%40carbon/layout@11.56.0",
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
     },
     {
-      "ref": "pkg:npm/%40carbon/layout@11.55.0",
+      "ref": "pkg:npm/%40carbon/layout@11.56.0",
       "dependsOn": [
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
@@ -31335,15 +31359,15 @@
       ]
     },
     {
-      "ref": "pkg:npm/bpmn-font@0.12.1",
+      "ref": "pkg:npm/bpmn-font@0.13.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.21.0",
+      "ref": "pkg:npm/bpmn-js@18.22.0",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.0.0",
-        "pkg:npm/diagram-js-direct-editing@3.4.0",
-        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/diagram-js-direct-editing@3.5.1",
+        "pkg:npm/diagram-js@15.23.2",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.1.0",
@@ -31374,17 +31398,17 @@
       ]
     },
     {
-      "ref": "pkg:npm/camunda-dmn-js@3.7.0",
+      "ref": "pkg:npm/camunda-dmn-js@3.8.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/align-to-origin@0.7.0",
         "pkg:npm/camunda-dmn-moddle@1.3.1",
         "pkg:npm/diagram-js-grid@2.0.1",
         "pkg:npm/diagram-js-origin@1.4.0",
-        "pkg:npm/diagram-js@15.22.0",
-        "pkg:npm/dmn-js-drd@17.9.0",
+        "pkg:npm/diagram-js@15.23.2",
+        "pkg:npm/dmn-js-drd@17.10.0",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
-        "pkg:npm/dmn-js-shared@17.9.0",
-        "pkg:npm/dmn-js@17.9.0",
+        "pkg:npm/dmn-js-shared@17.10.0",
+        "pkg:npm/dmn-js@17.10.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/zeebe-dmn-moddle@1.0.0"
@@ -31531,9 +31555,9 @@
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js-direct-editing@3.4.0",
+      "ref": "pkg:npm/diagram-js-direct-editing@3.5.1",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/diagram-js@15.23.2",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
@@ -31549,12 +31573,12 @@
     {
       "ref": "pkg:npm/diagram-js-origin@1.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/diagram-js@15.23.2",
         "pkg:npm/tiny-svg@3.1.3"
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js@15.22.0",
+      "ref": "pkg:npm/diagram-js@15.23.2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.4",
         "pkg:npm/clsx@2.1.1",
@@ -31594,11 +31618,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dmn-js-boxed-expression@17.9.0",
+      "ref": "pkg:npm/dmn-js-boxed-expression@17.10.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.22.0",
-        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/diagram-js@15.23.2",
+        "pkg:npm/dmn-js-shared@17.10.1",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
@@ -31606,12 +31630,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-decision-table@17.9.0",
+      "ref": "pkg:npm/dmn-js-decision-table@17.10.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
-        "pkg:npm/diagram-js@15.22.0",
-        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/diagram-js@15.23.2",
+        "pkg:npm/dmn-js-shared@17.10.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -31621,11 +31645,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-drd@17.9.0",
+      "ref": "pkg:npm/dmn-js-drd@17.10.0",
       "dependsOn": [
-        "pkg:npm/diagram-js-direct-editing@3.4.0",
-        "pkg:npm/diagram-js@15.22.0",
-        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/diagram-js-direct-editing@3.5.1",
+        "pkg:npm/diagram-js@15.23.2",
+        "pkg:npm/dmn-js-shared@17.10.0",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.1.0",
@@ -31635,11 +31659,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-literal-expression@17.9.0",
+      "ref": "pkg:npm/dmn-js-literal-expression@17.10.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.22.0",
-        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/diagram-js@15.23.2",
+        "pkg:npm/dmn-js-shared@17.10.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -31651,17 +31675,17 @@
       "ref": "pkg:npm/dmn-js-properties-panel@3.11.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
-        "pkg:npm/diagram-js@15.22.0",
-        "pkg:npm/dmn-js@17.9.0",
+        "pkg:npm/diagram-js@15.23.2",
+        "pkg:npm/dmn-js@17.10.0",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-shared@17.9.0",
+      "ref": "pkg:npm/dmn-js-shared@17.10.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
-        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/diagram-js@15.23.2",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dmn-moddle@12.0.1",
         "pkg:npm/ids@3.0.2",
@@ -31674,13 +31698,29 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js@17.9.0",
+      "ref": "pkg:npm/dmn-js-shared@17.10.1",
       "dependsOn": [
-        "pkg:npm/dmn-js-boxed-expression@17.9.0",
-        "pkg:npm/dmn-js-decision-table@17.9.0",
-        "pkg:npm/dmn-js-drd@17.9.0",
-        "pkg:npm/dmn-js-literal-expression@17.9.0",
-        "pkg:npm/dmn-js-shared@17.9.0"
+        "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
+        "pkg:npm/diagram-js@15.23.2",
+        "pkg:npm/didi@11.0.0",
+        "pkg:npm/dmn-moddle@12.0.1",
+        "pkg:npm/ids@3.0.2",
+        "pkg:npm/inferno@5.6.3",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/selection-ranges@4.1.1",
+        "pkg:npm/selection-update@1.1.1",
+        "pkg:npm/table-js@9.4.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-js@17.10.0",
+      "dependsOn": [
+        "pkg:npm/dmn-js-boxed-expression@17.10.1",
+        "pkg:npm/dmn-js-decision-table@17.10.0",
+        "pkg:npm/dmn-js-drd@17.10.0",
+        "pkg:npm/dmn-js-literal-expression@17.10.0",
+        "pkg:npm/dmn-js-shared@17.10.0"
       ]
     },
     {
@@ -31947,7 +31987,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/marked@18.0.7",
+      "ref": "pkg:npm/marked@18.0.9",
       "dependsOn": []
     },
     {
@@ -32200,7 +32240,7 @@
     {
       "ref": "pkg:npm/table-js@9.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/diagram-js@15.23.2",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -33406,7 +33446,7 @@
         }
       ],
       "published": "2026-06-24T21:16:52Z",
-      "updated": "2026-07-20T12:17:52Z",
+      "updated": "2026-08-03T13:17:10Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.3",
@@ -33518,6 +33558,18 @@
           "url": "https://access.redhat.com/errata/RHSA-2026:43052"
         },
         {
+          "url": "https://access.redhat.com/errata/RHSA-2026:44263"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:44267"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:48124"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:48151"
+        },
+        {
           "url": "https://access.redhat.com/security/cve/CVE-2026-12143"
         },
         {
@@ -33558,7 +33610,7 @@
         }
       ],
       "published": "2026-06-12T19:16:26Z",
-      "updated": "2026-07-23T12:17:08Z",
+      "updated": "2026-08-03T13:17:11Z",
       "affects": [
         {
           "ref": "pkg:npm/form-data@4.0.5",

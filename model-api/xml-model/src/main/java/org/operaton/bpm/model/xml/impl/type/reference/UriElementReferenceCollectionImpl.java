@@ -48,7 +48,9 @@ public class UriElementReferenceCollectionImpl<TARGET extends ModelElementInstan
 
   @Override
   protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
-    referenceSourceElement.setAttributeValue("href", "#" + referenceIdentifier);
+    if (referenceIdentifier != null) {
+      referenceSourceElement.setAttributeValue("href", "#" + referenceIdentifier);
+    }
   }
 
 }

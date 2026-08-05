@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.model.xml.impl.type.reference;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
@@ -46,8 +45,10 @@ public class UriElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE
   }
 
   @Override
-  protected void setReferenceIdentifier(@NonNull ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
-    referenceSourceElement.setAttributeValue("href", "#" + referenceIdentifier);
+  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
+    if (referenceIdentifier != null) {
+      referenceSourceElement.setAttributeValue("href", "#" + referenceIdentifier);
+    }
   }
 
 }

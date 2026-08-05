@@ -156,18 +156,18 @@ public interface DomElement {
    * Returns the attribute value for the namespace of this element.
    *
    * @param attributeName  the name of the attribute
-   * @return the value of the attribute or the empty string
+   * @return the value of the attribute or null if the attribute does not exist
    */
-  String getAttribute(String attributeName);
+  @Nullable String getAttribute(String attributeName);
 
   /**
    * Returns the attribute value for the given namespace.
    *
    * @param namespaceUri  the namespaceUri of the namespace
    * @param localName  the name of the attribute
-   * @return the value of the attribute or the empty string
+   * @return the value of the attribute or null if the attribute does not exist
    */
-  String getAttribute(String namespaceUri, String localName);
+  @Nullable String getAttribute(@Nullable String namespaceUri, String localName);
 
   /**
    * Sets the attribute value for the namespace of this element.

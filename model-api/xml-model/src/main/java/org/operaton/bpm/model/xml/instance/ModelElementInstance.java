@@ -67,7 +67,7 @@ public interface ModelElementInstance {
    * @param attributeName  the name of the attribute
    * @return the value of the attribute
    */
-  String getAttributeValue(String attributeName);
+  @Nullable String getAttributeValue(String attributeName);
 
   /**
    * Sets the value by name of a non-ID attribute.
@@ -111,7 +111,7 @@ public interface ModelElementInstance {
    * @param attributeName  the attribute name of the attribute
    * @return the value of the attribute
    */
-  String getAttributeValueNs(String namespaceUri, String attributeName);
+  @Nullable String getAttributeValueNs(String namespaceUri, String attributeName);
 
   /**
    * Sets the value by name and namespace of a non-ID attribute.

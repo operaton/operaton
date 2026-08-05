@@ -83,13 +83,13 @@ public final class ReflectUtil {
    * @param parameters the parameters to pass to the constructor
    * @return the created instance
    */
-  public static <T> T createInstance(Class<T> type, @Nullable Object... parameters) {
+  public static <T> T createInstance(Class<T> type, Object... parameters) {
 
     // get types for parameters
     Class<?>[] parameterTypes = new Class<?>[parameters.length];
     for (int i = 0; i < parameters.length; i++) {
       Object parameter = parameters[i];
-      parameterTypes[i] = parameter != null ? parameter.getClass() : null;
+      parameterTypes[i] = parameter.getClass();
     }
 
     try {

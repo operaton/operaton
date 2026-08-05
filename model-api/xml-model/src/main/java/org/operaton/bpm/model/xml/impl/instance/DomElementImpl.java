@@ -220,13 +220,13 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public String getAttribute(String attributeName) {
+  public @Nullable String getAttribute(String attributeName) {
     return getAttribute(null, attributeName);
   }
 
 
   @Override
-  public String getAttribute(@Nullable String namespaceUri, String localName) {
+  public @Nullable String getAttribute(@Nullable String namespaceUri, String localName) {
     synchronized(document) {
       XmlQName xmlQName = new XmlQName(this, namespaceUri, localName);
       String value;
@@ -237,7 +237,7 @@ public class DomElementImpl implements DomElement {
         value = element.getAttributeNS(xmlQName.getNamespaceUri(), xmlQName.getLocalName());
       }
       if (value.isEmpty()) {
-        return "";
+        return null;
       }
       else {
         return value;

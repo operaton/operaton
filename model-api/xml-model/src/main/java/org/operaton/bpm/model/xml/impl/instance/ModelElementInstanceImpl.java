@@ -90,12 +90,12 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public String getAttributeValue(String attributeName) {
+  public @Nullable String getAttributeValue(String attributeName) {
     return domElement.getAttribute(attributeName);
   }
 
   @Override
-  public String getAttributeValueNs(String namespaceUri, String attributeName) {
+  public @Nullable String getAttributeValueNs(String namespaceUri, String attributeName) {
     return domElement.getAttribute(namespaceUri, attributeName);
   }
 

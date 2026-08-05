@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.validation.ValidationResult;
 import org.operaton.bpm.model.xml.validation.ValidationResultCollector;
@@ -33,7 +35,7 @@ import org.operaton.bpm.model.xml.validation.ValidationResults;
  */
 public class ValidationResultsCollectorImpl implements ValidationResultCollector {
 
-  protected ModelElementInstance currentElement;
+  protected @Nullable ModelElementInstance currentElement;
 
   protected Map<ModelElementInstance, List<ValidationResult>> collectedResults = new HashMap<>();
 

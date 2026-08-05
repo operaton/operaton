@@ -19,12 +19,15 @@ package org.operaton.bpm.model.xml.validation;
 import java.io.StringWriter;
 import java.util.Formatter;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.testmodel.instance.FlyingAnimal;
 
 /**
  * @author Daniel Meyer
  */
+@NullMarked
 public class TestResultFormatter implements ValidationResultFormatter {
 
   public static final String OMITTED_RESULTS_SUFFIX_FORMAT = "and %d more errors and/or warnings";

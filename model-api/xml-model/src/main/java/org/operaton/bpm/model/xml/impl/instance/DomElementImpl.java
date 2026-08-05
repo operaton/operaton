@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.w3c.dom.*;
 
@@ -76,7 +75,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public DomDocument getDocument() {
+  public @Nullable DomDocument getDocument() {
     synchronized(document) {
       Document ownerDocument = element.getOwnerDocument();
       if (ownerDocument != null) {
@@ -89,7 +88,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public DomElement getRootElement() {
+  public @Nullable DomElement getRootElement() {
     synchronized(document) {
       DomDocument doc = getDocument();
       if (doc != null) {
@@ -102,7 +101,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public DomElement getParentElement() {
+  public @Nullable DomElement getParentElement() {
     synchronized(document) {
       Node parentNode = element.getParentNode();
       if (parentNode instanceof Element elem) {
@@ -123,7 +122,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public List<DomElement> getChildElementsByNameNs(@Nullable String namespaceUri, @NonNull String elementName) {
+  public List<DomElement> getChildElementsByNameNs(@Nullable String namespaceUri, String elementName) {
     synchronized(document) {
       NodeList childNodes = element.getChildNodes();
       return DomUtil.filterNodeListByName(childNodes, namespaceUri, elementName);
@@ -131,7 +130,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public @NonNull List<DomElement> getChildElementsByNameNs(@NonNull Set<String> namespaceUris, @NonNull String elementName) {
+  public List<DomElement> getChildElementsByNameNs(Set<String> namespaceUris, String elementName) {
     List<DomElement> result = new ArrayList<>();
     for (String namespace : namespaceUris) {
       if (namespace != null) {
@@ -150,7 +149,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public void replaceChild(@NonNull DomElement newChildDomElement, @NonNull DomElement existingChildDomElement) {
+  public void replaceChild(DomElement newChildDomElement, DomElement existingChildDomElement) {
     synchronized(document) {
       Element newElement = ((DomElementImpl) newChildDomElement).getElement();
       Element existingElement = ((DomElementImpl) existingChildDomElement).getElement();
@@ -164,7 +163,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public boolean removeChild(@NonNull DomElement childDomElement) {
+  public boolean removeChild(DomElement childDomElement) {
     synchronized(document) {
       Element childElement = ((DomElementImpl) childDomElement).getElement();
       try {
@@ -178,7 +177,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public void appendChild(@NonNull DomElement childDomElement) {
+  public void appendChild(DomElement childDomElement) {
     synchronized(document) {
       Element childElement = ((DomElementImpl) childDomElement).getElement();
       element.appendChild(childElement);
@@ -186,7 +185,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public void insertChildElementAfter(@NonNull DomElement elementToInsert, @Nullable DomElement insertAfter) {
+  public void insertChildElementAfter(DomElement elementToInsert, @Nullable DomElement insertAfter) {
     synchronized(document) {
       Element newElement = ((DomElementImpl) elementToInsert).getElement();
       // find node to insert before
@@ -209,25 +208,25 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public boolean hasAttribute(@NonNull String localName) {
+  public boolean hasAttribute(String localName) {
     return hasAttribute(null, localName);
   }
 
   @Override
-  public boolean hasAttribute(@Nullable String namespaceUri, @NonNull String localName) {
+  public boolean hasAttribute(@Nullable String namespaceUri, String localName) {
     synchronized(document) {
       return element.hasAttributeNS(namespaceUri, localName);
     }
   }
 
   @Override
-  public @Nullable String getAttribute(String attributeName) {
+  public String getAttribute(String attributeName) {
     return getAttribute(null, attributeName);
   }
 
 
   @Override
-  public @Nullable String getAttribute(@Nullable String namespaceUri, @NonNull String localName) {
+  public String getAttribute(@Nullable String namespaceUri, String localName) {
     synchronized(document) {
       XmlQName xmlQName = new XmlQName(this, namespaceUri, localName);
       String value;
@@ -238,7 +237,7 @@ public class DomElementImpl implements DomElement {
         value = element.getAttributeNS(xmlQName.getNamespaceUri(), xmlQName.getLocalName());
       }
       if (value.isEmpty()) {
-        return null;
+        return "";
       }
       else {
         return value;
@@ -252,11 +251,11 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public void setAttribute(String namespaceUri, String localName, String value) {
+  public void setAttribute(@Nullable String namespaceUri, String localName, String value) {
     setAttribute(namespaceUri, localName, value, false);
   }
 
-  private void setAttribute(String namespaceUri, String localName, String value, boolean isIdAttribute) {
+  private void setAttribute(@Nullable String namespaceUri, String localName, String value, boolean isIdAttribute) {
     synchronized(document) {
       XmlQName xmlQName = new XmlQName(this, namespaceUri, localName);
       if (xmlQName.hasLocalNamespace()) {
@@ -280,7 +279,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public void setIdAttribute(String namespaceUri, String localName, String value) {
+  public void setIdAttribute(@Nullable String namespaceUri, String localName, String value) {
     setAttribute(namespaceUri, localName, value, true);
   }
 
@@ -290,7 +289,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public void removeAttribute(String namespaceUri, String localName) {
+  public void removeAttribute(@Nullable String namespaceUri, String localName) {
     synchronized(document) {
       XmlQName xmlQName = new XmlQName(this, namespaceUri, localName);
       if (xmlQName.hasLocalNamespace()) {
@@ -339,7 +338,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public @NonNull String registerNamespace(@Nullable String namespaceUri) {
+  public String registerNamespace(@Nullable String namespaceUri) {
     synchronized(document) {
       String lookupPrefix = lookupPrefix(namespaceUri);
       if (lookupPrefix == null) {
@@ -364,7 +363,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public void registerNamespace(@NonNull String prefix, @Nullable String namespaceUri) {
+  public void registerNamespace(String prefix, @Nullable String namespaceUri) {
     synchronized(document) {
       element.setAttributeNS(XMLNS_ATTRIBUTE_NS_URI, XMLNS_ATTRIBUTE + ":" + prefix, namespaceUri);
     }

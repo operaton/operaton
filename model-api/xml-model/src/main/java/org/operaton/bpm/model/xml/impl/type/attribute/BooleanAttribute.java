@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.attribute;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.impl.util.ModelUtil;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
@@ -33,7 +35,7 @@ public class BooleanAttribute extends AttributeImpl<Boolean> {
   }
 
   @Override
-  protected Boolean convertXmlValueToModelValue(String rawValue) {
+  protected Boolean convertXmlValueToModelValue(@Nullable String rawValue) {
     return ModelUtil.valueAsBoolean(rawValue);
   }
 

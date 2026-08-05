@@ -17,11 +17,9 @@
 package org.operaton.bpm.model.xml.impl.util;
 
 import java.io.*;
-
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.instance.DomDocument;
@@ -128,7 +126,7 @@ public final class IoUtil {
    * @param document  the DOM document to transform
    * @param result  the {@link StreamResult} to write to
    */
-  public static void transformDocumentToXml(@NonNull DomDocument document, @NonNull StreamResult result) {
+  public static void transformDocumentToXml(DomDocument document, StreamResult result) {
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     try {
       Transformer transformer = transformerFactory.newTransformer();

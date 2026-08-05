@@ -147,7 +147,7 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
    * @param oldIdentifier the old reference identifier
    * @param newIdentifier the new reference identifier
    */
-  protected abstract void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier);
+  protected abstract void updateReference(ModelElementInstance referenceSourceElement, @Nullable String oldIdentifier, @Nullable String newIdentifier);
 
   /**
    * Update the reference identifier
@@ -156,7 +156,7 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
    * @param oldIdentifier the old reference identifier
    * @param newIdentifier the new reference identifier
    */
-  public void referencedElementUpdated(ModelElementInstance referenceTargetElement, String oldIdentifier, String newIdentifier) {
+  public void referencedElementUpdated(ModelElementInstance referenceTargetElement, @Nullable String oldIdentifier, @Nullable String newIdentifier) {
     for (ModelElementInstance referenceSourceElement : findReferenceSourceElements(referenceTargetElement)) {
       updateReference(referenceSourceElement, oldIdentifier, newIdentifier);
     }

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.reference;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
@@ -28,6 +30,7 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollectionBuild
 /**
  * @author Sebastian Menski
  */
+@NullMarked
 public class ElementReferenceCollectionBuilderImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> implements ElementReferenceCollectionBuilder<TARGET, SOURCE> {
 
   private final Class<SOURCE> childElementType;

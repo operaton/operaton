@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.model.xml.impl.instance;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.jspecify.annotations.Nullable;
 
@@ -219,7 +215,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName) {
+  public @Nullable ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName) {
     Model model = modelInstance.getModel();
     List<DomElement> childElements = domElement.getChildElementsByNameNs(asSet(namespaceUri, model.getAlternativeNamespaces(namespaceUri)), elementName);
     if(!childElements.isEmpty()) {
@@ -231,7 +227,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
 
 
   @Override
-  public ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType) {
+  public @Nullable ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType) {
     List<DomElement> childElements = domElement.getChildElementsByType(modelInstance, elementType);
 
     if(!childElements.isEmpty()) {

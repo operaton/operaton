@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.attribute;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
 /**
@@ -31,7 +33,7 @@ public class StringAttribute extends AttributeImpl<String> {
   }
 
   @Override
-  protected String convertXmlValueToModelValue(String rawValue) {
+  protected @Nullable String convertXmlValueToModelValue(@Nullable String rawValue) {
     return rawValue;
   }
 

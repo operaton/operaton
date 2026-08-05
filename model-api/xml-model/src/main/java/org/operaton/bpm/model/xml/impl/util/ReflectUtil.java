@@ -22,7 +22,6 @@ import java.lang.reflect.Constructor;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.ModelException;
@@ -36,7 +35,7 @@ public final class ReflectUtil {
     // utility class
   }
 
-  public static InputStream getResourceAsStream(@NonNull String name) {
+  public static @Nullable InputStream getResourceAsStream(String name) {
     // Try the current Thread context class loader
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     InputStream resourceStream = classLoader.getResourceAsStream(name);
@@ -49,11 +48,11 @@ public final class ReflectUtil {
     return resourceStream;
   }
 
-  public static @Nullable URL getResource(@NonNull String name) {
+  public static @Nullable URL getResource(String name) {
     return getResource(name, null);
   }
 
-  public static @Nullable URL getResource(@NonNull String name, @Nullable ClassLoader classLoader) {
+  public static @Nullable URL getResource(String name, @Nullable ClassLoader classLoader) {
     if(classLoader == null) {
       // Try the current Thread context class loader
       classLoader = Thread.currentThread().getContextClassLoader();
@@ -84,13 +83,13 @@ public final class ReflectUtil {
    * @param parameters the parameters to pass to the constructor
    * @return the created instance
    */
-  public static @NonNull <T> T createInstance(@NonNull Class<T> type, @Nullable Object... parameters) {
+  public static <T> T createInstance(Class<T> type, @Nullable Object... parameters) {
 
     // get types for parameters
     Class<?>[] parameterTypes = new Class<?>[parameters.length];
     for (int i = 0; i < parameters.length; i++) {
       Object parameter = parameters[i];
-      parameterTypes[i] = parameter.getClass();
+      parameterTypes[i] = parameter != null ? parameter.getClass() : null;
     }
 
     try {

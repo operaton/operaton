@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.model.xml.impl.type.attribute.AttributeImpl;
 import org.operaton.bpm.model.xml.type.reference.AttributeReferenceCollection;
 
@@ -30,7 +32,7 @@ public class AnimalAttributeReferenceCollection extends AttributeReferenceCollec
     super(referenceSourceAttribute);
   }
 
-  protected String getTargetElementIdentifier(Animal referenceTargetElement) {
+  protected @NonNull String getTargetElementIdentifier(@NonNull Animal referenceTargetElement) {
     return referenceTargetElement.getId();
   }
 

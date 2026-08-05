@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.model.xml.impl.type.attribute;
 
-import org.jspecify.annotations.NonNull;
-
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.impl.ModelBuildOperation;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
@@ -42,7 +40,7 @@ public abstract class AttributeBuilderImpl<T> implements AttributeBuilder<T>, Mo
   }
 
   @Override
-  public AttributeBuilder<T> namespace(@NonNull String namespaceUri) {
+  public AttributeBuilder<T> namespace(String namespaceUri) {
     attribute.setNamespaceUri(namespaceUri);
     return this;
   }

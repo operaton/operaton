@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,7 +28,6 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXException;
 
@@ -51,7 +49,7 @@ public abstract class AbstractModelParser {
   protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_ALL = "all";
 
   private final DocumentBuilderFactory documentBuilderFactory;
-  protected SchemaFactory schemaFactory;
+  protected @Nullable SchemaFactory schemaFactory;
   protected Map<String, Schema> schemas = new HashMap<>();
   
   // Lock object for thread-safe validation
@@ -67,7 +65,7 @@ public abstract class AbstractModelParser {
    * allows subclasses to configure the {@link DocumentBuilderFactory}.
    * @param dbf the factory to configure
    */
-  protected void configureFactory(@NonNull DocumentBuilderFactory dbf) {
+  protected void configureFactory(DocumentBuilderFactory dbf) {
     dbf.setValidating(true);
     dbf.setIgnoringComments(false);
     dbf.setIgnoringElementContentWhitespace(false);
@@ -85,7 +83,7 @@ public abstract class AbstractModelParser {
    *
    * @param dbf The factory to configure.
    */
-  private void protectAgainstXxeAttacks(final @NonNull DocumentBuilderFactory dbf) {
+  private void protectAgainstXxeAttacks(final DocumentBuilderFactory dbf) {
     try {
       dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
     } catch (ParserConfigurationException ignored) {
@@ -108,7 +106,7 @@ public abstract class AbstractModelParser {
     dbf.setExpandEntityReferences(false);
   }
 
-  private void enableSecureProcessing(final @NonNull DocumentBuilderFactory dbf) {
+  private void enableSecureProcessing(final DocumentBuilderFactory dbf) {
     try {
       dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
       dbf.setAttribute(JAXP_ACCESS_EXTERNAL_SCHEMA, resolveAccessExternalSchemaProperty());
@@ -124,7 +122,7 @@ public abstract class AbstractModelParser {
    * Since we want users to customize the value, we take the system property into account.
    * The properties file is not supported at the moment.
    */
-  protected @NonNull String resolveAccessExternalSchemaProperty() {
+  protected String resolveAccessExternalSchemaProperty() {
     String systemProperty = System.getProperty(JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY);
 
     if (systemProperty != null) {
@@ -161,7 +159,7 @@ public abstract class AbstractModelParser {
    *
    * @param document the DOM document to validate
    */
-  public void validateModel(@NonNull DomDocument document) {
+  public void validateModel(DomDocument document) {
 
     Schema schema = getSchema(document);
 
@@ -181,17 +179,17 @@ public abstract class AbstractModelParser {
     }
   }
 
-  protected @Nullable Schema getSchema(@NonNull DomDocument document) {
+  protected @Nullable Schema getSchema(DomDocument document) {
     DomElement rootElement = document.getRootElement();
     String namespaceURI = rootElement.getNamespaceURI();
     return schemas.get(namespaceURI);
   }
 
-  protected void addSchema(@NonNull String namespaceURI, @NonNull Schema schema) {
+  protected void addSchema(String namespaceURI, Schema schema) {
     schemas.put(namespaceURI, schema);
   }
 
-  protected @NonNull Schema createSchema(@NonNull String location, @NonNull ClassLoader classLoader) {
+  protected Schema createSchema(String location, ClassLoader classLoader) {
     URL cmmnSchema = ReflectUtil.getResource(location, classLoader);
     try {
       return schemaFactory.newSchema(cmmnSchema);

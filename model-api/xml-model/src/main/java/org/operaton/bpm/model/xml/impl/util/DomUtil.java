@@ -21,12 +21,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -80,7 +79,7 @@ public final class DomUtil {
   public static class ElementNodeListFilter implements NodeListFilter {
 
     @Override
-    public boolean matches(@NonNull Node node) {
+    public boolean matches(Node node) {
       return node.getNodeType() == Node.ELEMENT_NODE;
     }
 
@@ -93,19 +92,19 @@ public final class DomUtil {
   public static class ElementByNameListFilter extends ElementNodeListFilter {
 
     private final String localName;
-    private final String namespaceUri;
+    private final @Nullable String namespaceUri;
 
     /**
      * @param localName the local name to filter for
      * @param namespaceUri the namespaceUri to filter for
      */
-    public ElementByNameListFilter(String localName, String namespaceUri) {
+    public ElementByNameListFilter(String localName, @Nullable String namespaceUri) {
       this.localName = localName;
       this.namespaceUri = namespaceUri;
     }
 
     @Override
-    public boolean matches(@NonNull Node node) {
+    public boolean matches(Node node) {
      return super.matches(node)
         && localName.equals(node.getLocalName())
         && namespaceUri.equals(node.getNamespaceURI());
@@ -118,13 +117,13 @@ public final class DomUtil {
     private final Class<?> type;
     private final ModelInstanceImpl model;
 
-    public ElementByTypeListFilter(@NonNull Class<?> type, @NonNull ModelInstanceImpl modelInstance) {
+    public ElementByTypeListFilter(Class<?> type, ModelInstanceImpl modelInstance) {
       this.type =  type;
       this.model = modelInstance;
     }
 
     @Override
-    public boolean matches(@NonNull Node node) {
+    public boolean matches(Node node) {
       if (! super.matches(node)) {
         return false;
       }
@@ -140,7 +139,7 @@ public final class DomUtil {
    * @param filter the {@link NodeListFilter} to apply to the {@link NodeList}
    * @return the List of all Nodes which match the filter
    */
-  public static @NonNull List<DomElement> filterNodeList(@NonNull NodeList nodeList, @NonNull NodeListFilter filter) {
+  public static List<DomElement> filterNodeList(NodeList nodeList, NodeListFilter filter) {
 
     List<DomElement> filteredList = new ArrayList<>();
     for(int i = 0; i< nodeList.getLength(); i++) {
@@ -160,7 +159,7 @@ public final class DomUtil {
    * @param nodeList  the the {@link NodeList} to filter
    * @return the list of all elements
    */
-  public static @NonNull List<DomElement> filterNodeListForElements(@NonNull NodeList nodeList) {
+  public static List<DomElement> filterNodeListForElements(NodeList nodeList) {
     return filterNodeList(nodeList, new ElementNodeListFilter());
   }
 
@@ -173,7 +172,7 @@ public final class DomUtil {
    * @param localName the local element name to filter for
    * @return the List of all Elements which match the filter
    */
-  public static List<DomElement> filterNodeListByName(NodeList nodeList, String namespaceUri, String localName) {
+  public static List<DomElement> filterNodeListByName(NodeList nodeList, @Nullable String namespaceUri, String localName) {
     return filterNodeList(nodeList, new ElementByNameListFilter(localName, namespaceUri));
   }
 

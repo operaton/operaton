@@ -18,7 +18,6 @@ package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.*;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.Model;
@@ -52,7 +51,7 @@ public final class ModelUtil {
    * @param domElement the child element to create a new {@link ModelElementInstanceImpl ModelElement} for
    * @return the child model element
    */
-  public static @NonNull ModelElementInstance getModelElement(@NonNull DomElement domElement, ModelInstanceImpl modelInstance) {
+  public static ModelElementInstance getModelElement(DomElement domElement, ModelInstanceImpl modelInstance) {
     ModelElementInstance modelElement = domElement.getModelElementInstance();
     if(modelElement == null) {
       ModelElementTypeImpl modelType = getModelElement(domElement, modelInstance, domElement.getNamespaceURI());
@@ -71,7 +70,7 @@ public final class ModelUtil {
    * @param modelType the {@link ModelElementTypeImpl ModelElementType} to create a new {@link ModelElementInstanceImpl ModelElement} for
    * @return the child model element
    */
-  public static @NonNull ModelElementInstance getModelElement(@NonNull DomElement domElement, @NonNull ModelInstanceImpl modelInstance, @NonNull ModelElementTypeImpl modelType) {
+  public static ModelElementInstance getModelElement(DomElement domElement, ModelInstanceImpl modelInstance, ModelElementTypeImpl modelType) {
     ModelElementInstance modelElement = domElement.getModelElementInstance();
 
     if(modelElement == null) {
@@ -81,7 +80,7 @@ public final class ModelUtil {
     return modelElement;
   }
 
-  protected static ModelElementTypeImpl getModelElement(@NonNull DomElement domElement, @NonNull ModelInstanceImpl modelInstance, @NonNull String namespaceUri) {
+  protected static ModelElementTypeImpl getModelElement(DomElement domElement, ModelInstanceImpl modelInstance, String namespaceUri) {
     String localName = domElement.getLocalName();
     ModelElementTypeImpl modelType = (ModelElementTypeImpl) modelInstance.getModel().getTypeForName(namespaceUri, localName);
 
@@ -101,11 +100,11 @@ public final class ModelUtil {
     return modelType;
   }
 
-  public static @NonNull QName getQName(@Nullable String namespaceUri, @NonNull String localName) {
+  public static QName getQName(@Nullable String namespaceUri, String localName) {
     return new QName(namespaceUri, localName);
   }
 
-  public static void ensureInstanceOf(@NonNull Object instance, @NonNull Class<?> type) {
+  public static void ensureInstanceOf(Object instance, Class<?> type) {
     if(!type.isAssignableFrom(instance.getClass())) {
       throw new ModelException("Object is not instance of type "+type.getName());
     }
@@ -117,7 +116,7 @@ public final class ModelUtil {
     return Boolean.parseBoolean(rawValue);
   }
 
-  public static int valueAsInteger(@NonNull String rawValue) {
+  public static int valueAsInteger(String rawValue) {
     try {
       return Integer.parseInt(rawValue);
     } catch(NumberFormatException e) {
@@ -125,7 +124,7 @@ public final class ModelUtil {
     }
   }
 
-  public static float valueAsFloat(@NonNull String rawValue) {
+  public static float valueAsFloat(String rawValue) {
     try {
       return Float.parseFloat(rawValue);
     }catch(NumberFormatException e) {
@@ -133,7 +132,7 @@ public final class ModelUtil {
     }
   }
 
-  public static double valueAsDouble(@NonNull String rawValue) {
+  public static double valueAsDouble(String rawValue) {
     try {
       return Double.parseDouble(rawValue);
     }catch(NumberFormatException e) {
@@ -141,7 +140,7 @@ public final class ModelUtil {
     }
   }
 
-  public static short valueAsShort(@NonNull String rawValue) {
+  public static short valueAsShort(String rawValue) {
     try {
       return Short.parseShort(rawValue);
     }catch(NumberFormatException e) {
@@ -179,7 +178,7 @@ public final class ModelUtil {
    * @return the collection of model element instances of the view
    */
   @SuppressWarnings("unchecked")
-  public static @NonNull  <T extends ModelElementInstance> Collection<T> getModelElementCollection(@NonNull Collection<DomElement> view, @NonNull ModelInstanceImpl model) {
+  public static <T extends ModelElementInstance> Collection<T> getModelElementCollection(Collection<DomElement> view, ModelInstanceImpl model) {
     List<ModelElementInstance> resultList = new ArrayList<>();
     for (DomElement element : view) {
       resultList.add(getModelElement(element, model));
@@ -194,7 +193,7 @@ public final class ModelUtil {
    * @param childElementTypes the list to search the type
    * @return the index of the model element type in the list or -1 if it is not found
    */
-  public static int getIndexOfElementType(@NonNull ModelElementInstance modelElement, @NonNull List<ModelElementType> childElementTypes) {
+  public static int getIndexOfElementType(ModelElementInstance modelElement, List<ModelElementType> childElementTypes) {
     for (int index = 0; index < childElementTypes.size(); index++) {
       ModelElementType childElementType = childElementTypes.get(index);
       Class<? extends ModelElementInstance> instanceType = childElementType.getInstanceType();
@@ -215,7 +214,7 @@ public final class ModelUtil {
    *
    * @param baseTypes the collection of types to calculate the union of all extending types
    */
-  public static @NonNull Collection<ModelElementType> calculateAllExtendingTypes(@NonNull Model model, @NonNull Collection<ModelElementType> baseTypes) {
+  public static Collection<ModelElementType> calculateAllExtendingTypes(Model model, Collection<ModelElementType> baseTypes) {
     Set<ModelElementType> allExtendingTypes = new HashSet<>();
     for (ModelElementType baseType : baseTypes) {
       ModelElementTypeImpl modelElementTypeImpl = (ModelElementTypeImpl) model.getType(baseType.getInstanceType());
@@ -227,7 +226,7 @@ public final class ModelUtil {
   /**
    * Calculate a collection of all base types for the given type
    */
-  public static @NonNull Collection<ModelElementType> calculateAllBaseTypes(@NonNull ModelElementType type) {
+  public static Collection<ModelElementType> calculateAllBaseTypes(ModelElementType type) {
     List<ModelElementType> baseTypes = new ArrayList<>();
     ModelElementTypeImpl typeImpl = (ModelElementTypeImpl) type;
     typeImpl.resolveBaseTypes(baseTypes);
@@ -242,8 +241,8 @@ public final class ModelUtil {
    * @param newId new identifier
    * @param withReferenceUpdate true to update id references in other elements, false otherwise
    */
-  public static void setNewIdentifier(@NonNull ModelElementType type, @NonNull ModelElementInstance modelElementInstance,
-                                   @NonNull String newId, boolean withReferenceUpdate) {
+  public static void setNewIdentifier(ModelElementType type, ModelElementInstance modelElementInstance,
+                                   String newId, boolean withReferenceUpdate) {
     Attribute<?> id = type.getAttribute(ID_ATTRIBUTE_NAME);
     if (id instanceof StringAttribute stringAttr && id.isIdAttribute()) {
       stringAttr.setValue(modelElementInstance, newId, withReferenceUpdate);
@@ -256,7 +255,7 @@ public final class ModelUtil {
    * @param type the type of the model element
    * @param modelElementInstance the model element instance to set the id
    */
-  public static void setGeneratedUniqueIdentifier(@NonNull ModelElementType type, @NonNull ModelElementInstance modelElementInstance) {
+  public static void setGeneratedUniqueIdentifier(ModelElementType type, ModelElementInstance modelElementInstance) {
     setGeneratedUniqueIdentifier(type, modelElementInstance, true);
   }
 
@@ -267,11 +266,11 @@ public final class ModelUtil {
    * @param modelElementInstance the model element instance to set the id
    * @param withReferenceUpdate  true to update id references in other elements, false otherwise
    */
-  public static void setGeneratedUniqueIdentifier(@NonNull ModelElementType type, @NonNull ModelElementInstance modelElementInstance, boolean withReferenceUpdate) {
+  public static void setGeneratedUniqueIdentifier(ModelElementType type, ModelElementInstance modelElementInstance, boolean withReferenceUpdate) {
     setNewIdentifier(type, modelElementInstance, ModelUtil.getUniqueIdentifier(type), withReferenceUpdate);
   }
 
-  public static @NonNull String getUniqueIdentifier(@NonNull ModelElementType type) {
+  public static String getUniqueIdentifier(ModelElementType type) {
     return type.getTypeName() + "_" + UUID.randomUUID();
   }
 }

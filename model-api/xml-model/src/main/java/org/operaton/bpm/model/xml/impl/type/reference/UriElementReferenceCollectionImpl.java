@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.model.xml.impl.type.reference;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 
+@NullMarked
 public class UriElementReferenceCollectionImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceCollectionImpl<TARGET, SOURCE> {
 
   public UriElementReferenceCollectionImpl(ChildElementCollection<SOURCE> referenceSourceCollection) {
@@ -29,7 +30,7 @@ public class UriElementReferenceCollectionImpl<TARGET extends ModelElementInstan
   }
 
   @Override
-  public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
+  public @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     String identifier = referenceSourceElement.getAttributeValue("href");
     if (identifier != null) {
       String[] parts = identifier.split("#");
@@ -46,7 +47,7 @@ public class UriElementReferenceCollectionImpl<TARGET extends ModelElementInstan
   }
 
   @Override
-  protected void setReferenceIdentifier(@NonNull ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
+  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
     referenceSourceElement.setAttributeValue("href", "#" + referenceIdentifier);
   }
 

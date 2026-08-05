@@ -20,7 +20,6 @@ import java.util.List;
 
 import javax.xml.transform.dom.DOMSource;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -43,7 +42,7 @@ public class DomDocumentImpl implements DomDocument {
 
   private final Document document;
 
-  public DomDocumentImpl(@NonNull Document document) {
+  public DomDocumentImpl(Document document) {
     this.document = document;
   }
 
@@ -62,7 +61,7 @@ public class DomDocumentImpl implements DomDocument {
   }
 
   @Override
-  public void setRootElement(@NonNull DomElement rootElement) {
+  public void setRootElement(DomElement rootElement) {
     synchronized(document) {
       Element documentElement = document.getDocumentElement();
       Element newDocumentElement = ((DomElementImpl) rootElement).getElement();
@@ -76,7 +75,7 @@ public class DomDocumentImpl implements DomDocument {
   }
 
   @Override
-  public @NonNull DomElement createElement(String namespaceUri, String localName) {
+  public DomElement createElement(String namespaceUri, String localName) {
     synchronized(document) {
       XmlQName xmlQName = new XmlQName(this, namespaceUri, localName);
       Element element = document.createElementNS(xmlQName.getNamespaceUri(), xmlQName.getPrefixedName());
@@ -98,7 +97,7 @@ public class DomDocumentImpl implements DomDocument {
   }
 
   @Override
-  public @NonNull List<DomElement> getElementsByNameNs(String namespaceUri, String localName) {
+  public List<DomElement> getElementsByNameNs(@Nullable String namespaceUri, String localName) {
     synchronized(document) {
       NodeList elementsByTagNameNS = document.getElementsByTagNameNS(namespaceUri, localName);
       return DomUtil.filterNodeListByName(elementsByTagNameNS, namespaceUri, localName);
@@ -136,7 +135,7 @@ public class DomDocumentImpl implements DomDocument {
     }
   }
 
-  protected @NonNull String getUnusedGenericNsPrefix() {
+  protected String getUnusedGenericNsPrefix() {
     synchronized(document) {
       Element documentElement = document.getDocumentElement();
       if (documentElement == null) {

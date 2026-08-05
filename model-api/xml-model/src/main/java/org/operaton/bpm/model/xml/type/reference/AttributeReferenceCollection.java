@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.ModelException;
@@ -50,7 +49,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
   }
 
   @Override
-  protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
+  protected void updateReference(ModelElementInstance referenceSourceElement, @Nullable String oldIdentifier, @Nullable String newIdentifier) {
     String referencingIdentifier = getReferenceIdentifier(referenceSourceElement);
     List<String> references = StringUtil.splitListBySeparator(referencingIdentifier, separator);
     if(oldIdentifier != null && references.contains(oldIdentifier)) {
@@ -190,7 +189,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
   }
 
   @Override
-  protected void setReferenceIdentifier(@NonNull ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
+  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
     if (referenceIdentifier != null && !referenceIdentifier.isEmpty()) {
       super.setReferenceIdentifier(referenceSourceElement, referenceIdentifier);
     } else {

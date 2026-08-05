@@ -18,7 +18,6 @@ package org.operaton.bpm.model.xml.impl;
 
 import java.util.*;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.Model;
@@ -58,14 +57,14 @@ public class ModelImpl implements Model {
    * @param actualNs
    * @throws IllegalArgumentException if the alternative is already used or if the actual namespace has an alternative
    */
-  public void declareAlternativeNamespace(@NonNull String alternativeNs, @NonNull String actualNs) {
+  public void declareAlternativeNamespace(String alternativeNs, String actualNs) {
     actualNsToAlternative.computeIfAbsent(actualNs, k -> new LinkedHashSet<>())
       .add(alternativeNs);
 
     alternativeNsToActual.put(alternativeNs, actualNs);
   }
 
-  public void undeclareAlternativeNamespace(@NonNull String alternativeNs){
+  public void undeclareAlternativeNamespace(String alternativeNs){
     if(!alternativeNsToActual.containsKey(alternativeNs)){
       return;
     }
@@ -74,12 +73,12 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public @NonNull Set<String> getAlternativeNamespaces(@NonNull String actualNs) {
+  public Set<String> getAlternativeNamespaces(String actualNs) {
     return Optional.ofNullable(actualNsToAlternative.get(actualNs)).orElse(Collections.emptySet());
   }
 
   @Override
-  public @Nullable String getAlternativeNamespace(@NonNull String actualNs) {
+  public @Nullable String getAlternativeNamespace(String actualNs) {
     Set<String> alternatives = getAlternativeNamespaces(actualNs);
 
     if (alternatives.isEmpty()) {
@@ -95,27 +94,27 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public @Nullable String getActualNamespace(@NonNull String alternativeNs) {
+  public @Nullable String getActualNamespace(String alternativeNs) {
     return alternativeNsToActual.get(alternativeNs);
   }
 
   @Override
-  public @NonNull Collection<ModelElementType> getTypes() {
+  public Collection<ModelElementType> getTypes() {
     return new ArrayList<>(typesByName.values());
   }
 
   @Override
-  public @Nullable ModelElementType getType(@NonNull Class<? extends ModelElementInstance> instanceClass) {
+  public @Nullable ModelElementType getType(Class<? extends ModelElementInstance> instanceClass) {
     return typesByClass.get(instanceClass);
   }
 
   @Override
-  public @Nullable ModelElementType getTypeForName(@NonNull String typeName) {
+  public @Nullable ModelElementType getTypeForName(String typeName) {
     return getTypeForName(null, typeName);
   }
 
   @Override
-  public @Nullable ModelElementType getTypeForName(@Nullable String namespaceUri, @NonNull String typeName) {
+  public @Nullable ModelElementType getTypeForName(@Nullable String namespaceUri, String typeName) {
     return typesByName.get(ModelUtil.getQName(namespaceUri, typeName));
   }
 

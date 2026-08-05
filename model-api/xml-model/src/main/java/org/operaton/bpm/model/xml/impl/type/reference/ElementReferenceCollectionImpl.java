@@ -45,7 +45,7 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends  ReferenceImpl<TARGET> implements ElementReferenceCollection<TARGET, SOURCE> {
 
   private final ChildElementCollection<SOURCE> referenceSourceCollection;
-  private ModelElementTypeImpl referenceSourceType;
+  private @Nullable ModelElementTypeImpl referenceSourceType;
 
   public ElementReferenceCollectionImpl(ChildElementCollection<SOURCE> referenceSourceCollection) {
     this.referenceSourceCollection = referenceSourceCollection;
@@ -94,12 +94,12 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   }
 
   @Override
-  public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
+  public @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     return referenceSourceElement.getTextContent();
   }
 
   @Override
-  protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
+  protected void updateReference(ModelElementInstance referenceSourceElement, @Nullable String oldIdentifier, @Nullable String newIdentifier) {
     String referencingTextContent = getReferenceIdentifier(referenceSourceElement);
     if (oldIdentifier != null && Objects.equals(oldIdentifier, referencingTextContent)) {
       setReferenceIdentifier(referenceSourceElement, newIdentifier);
@@ -166,7 +166,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(@Nullable Object o) {
       if (o == null) {
         return false;
       }

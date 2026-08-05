@@ -61,7 +61,7 @@ public class ModelInstanceImpl implements ModelInstance {
   }
 
   @Override
-  public ModelElementInstance getDocumentElement() {
+  public @Nullable ModelElementInstance getDocumentElement() {
     DomElement rootElement = document.getRootElement();
     if(rootElement != null) {
       return ModelUtil.getModelElement(rootElement, this);
@@ -99,7 +99,7 @@ public class ModelInstanceImpl implements ModelInstance {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends ModelElementInstance> T newInstance(ModelElementType type, String id) {
+  public <T extends ModelElementInstance> T newInstance(ModelElementType type, @Nullable String id) {
     ModelElementInstance modelElementInstance = type.newInstance(this);
     if (id != null && !id.isEmpty()) {
       ModelUtil.setNewIdentifier(type, modelElementInstance, id, false);

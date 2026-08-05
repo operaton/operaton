@@ -21,6 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.impl.type.reference.ReferenceImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
@@ -36,16 +38,16 @@ import org.operaton.bpm.model.xml.type.reference.Reference;
 public abstract class AttributeImpl<T> implements Attribute<T> {
 
   /** the local name of the attribute */
-  private String attributeName;
+  private @Nullable String attributeName;
 
   /** the namespace for this attribute */
-  private String namespaceUri;
+  private @Nullable String namespaceUri;
 
   /** the default value for this attribute: the default value is returned
    * by the {@link #getValue(ModelElementInstance)} method in case the attribute is not set on the
    * domElement.
    */
-  private T defaultValue;
+  private @Nullable T defaultValue;
 
   private boolean isRequired;
 
@@ -67,7 +69,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    *
    * @return the converted value
    */
-  protected abstract T convertXmlValueToModelValue(String rawValue);
+  protected abstract @Nullable T convertXmlValueToModelValue(@Nullable String rawValue);
 
   /**
    * to be implemented by subclasses: converts the raw (String) value of the
@@ -97,12 +99,10 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
       if(value == null) {
         Set<String> alternativeNamespaces = owningElementType.getModel().getAlternativeNamespaces(namespaceUri);
 
-        if (alternativeNamespaces != null) {
-          Iterator<String> namespaceIt = alternativeNamespaces.iterator();
+        Iterator<String> namespaceIt = alternativeNamespaces.iterator();
 
-          while (value == null && namespaceIt.hasNext()) {
-            value = modelElement.getAttributeValueNs(namespaceIt.next(), attributeName);
-          }
+        while (value == null && namespaceIt.hasNext()) {
+          value = modelElement.getAttributeValueNs(namespaceIt.next(), attributeName);
         }
       }
     }
@@ -123,7 +123,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    * </p>
    */
   @Override
-  public void setValue(ModelElementInstance modelElement, T value) {
+  public void setValue(ModelElementInstance modelElement, @Nullable T value) {
     setValue(modelElement, value, true);
   }
 
@@ -148,11 +148,11 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   }
 
   @Override
-  public T getDefaultValue() {
+  public @Nullable T getDefaultValue() {
     return defaultValue;
   }
 
-  public void setDefaultValue(T defaultValue) {
+  public void setDefaultValue(@Nullable T defaultValue) {
     this.defaultValue = defaultValue;
   }
 
@@ -179,7 +179,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    * @return the namespaceUri
    */
   @Override
-  public String getNamespaceUri() {
+  public @Nullable String getNamespaceUri() {
     return namespaceUri;
   }
 
@@ -200,7 +200,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    * @return the attributeName
    */
   @Override
-  public String getAttributeName() {
+  public @Nullable String getAttributeName() {
     return attributeName;
   }
 

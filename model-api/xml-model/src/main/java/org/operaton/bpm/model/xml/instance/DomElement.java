@@ -19,6 +19,7 @@ package org.operaton.bpm.model.xml.instance;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Element;
 
 import org.operaton.bpm.model.xml.ModelException;
@@ -57,21 +58,21 @@ public interface DomElement {
    *
    * @return the DOM document or null if the element itself is a document
    */
-  DomDocument getDocument();
+  @Nullable DomDocument getDocument();
 
   /**
    * Returns the root element of the document which contains this element.
    *
    * @return the root element of the document or null if non exists
    */
-  DomElement getRootElement();
+  @Nullable DomElement getRootElement();
 
   /**
    * Returns the parent element of this element.
    *
    * @return the parent element or null if not part of a tree
    */
-  DomElement getParentElement();
+  @Nullable DomElement getParentElement();
 
   /**
    * Returns all child elements of this element.
@@ -132,7 +133,7 @@ public interface DomElement {
    * @param elementToInsert  the new element to insert
    * @param insertAfter  the existing child element to insert after or null
    */
-  void insertChildElementAfter(DomElement elementToInsert, DomElement insertAfter);
+  void insertChildElementAfter(DomElement elementToInsert, @Nullable DomElement insertAfter);
 
   /**
    * Checks if this element has a attribute under the namespace of this element.
@@ -243,7 +244,7 @@ public interface DomElement {
    *
    * @return the {@link ModelElementInstance} or null if non is associated
    */
-  ModelElementInstance getModelElementInstance();
+  @Nullable ModelElementInstance getModelElementInstance();
 
   /**
    * Sets the {@link ModelElementInstance} which should be associated with this element.
@@ -275,5 +276,5 @@ public interface DomElement {
    * @param namespaceUri  the namespaceUri of the namespace
    * @return the prefix or null if non is defined
    */
-  String lookupPrefix(String namespaceUri);
+  @Nullable String lookupPrefix(String namespaceUri);
 }

@@ -48,7 +48,7 @@ public interface ModelInstance {
    *
    * @return the document element or null
    */
-  ModelElementInstance getDocumentElement();
+  @Nullable ModelElementInstance getDocumentElement();
 
   /**
    * Updates the document element.
@@ -93,7 +93,7 @@ public interface ModelInstance {
    * @param <T>   instance type
    * @return  the new created instance
    */
-  <T extends ModelElementInstance> T newInstance(ModelElementType type, String id);
+  <T extends ModelElementInstance> T newInstance(ModelElementType type, @Nullable String id);
 
   /**
    * Returns the underlying model.

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.reference;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -39,7 +41,7 @@ public class ElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE ex
   }
 
   @Override
-  public SOURCE getReferenceSource(ModelElementInstance referenceSourceParent) {
+  public @Nullable SOURCE getReferenceSource(ModelElementInstance referenceSourceParent) {
     return getReferenceSourceChild().getChild(referenceSourceParent);
   }
 
@@ -49,7 +51,7 @@ public class ElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE ex
 
   @Override
   @SuppressWarnings("unchecked")
-  public TARGET getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement) {
+  public @Nullable TARGET getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement) {
     SOURCE referenceSource = getReferenceSource(referenceSourceParentElement);
     if (referenceSource != null) {
       String identifier = getReferenceIdentifier(referenceSource);

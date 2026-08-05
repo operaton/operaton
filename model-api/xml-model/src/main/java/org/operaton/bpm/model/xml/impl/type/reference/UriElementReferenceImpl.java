@@ -29,7 +29,7 @@ public class UriElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE
   }
 
   @Override
-  public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
+  public @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     String identifier = referenceSourceElement.getAttributeValue("href");
     if (identifier != null) {
       String[] parts = identifier.split("#");

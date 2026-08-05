@@ -19,7 +19,6 @@ package org.operaton.bpm.model.xml;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
@@ -47,7 +46,7 @@ public interface Model {
    * @param instanceClass  the instance class to find the type for
    * @return the corresponding element type or null if no type is defined for the instance
    */
-  ModelElementType getType(Class<? extends ModelElementInstance> instanceClass);
+  @Nullable ModelElementType getType(Class<? extends ModelElementInstance> instanceClass);
 
   /**
    * Gets the defined {@link ModelElementType} for a type by its name.
@@ -55,7 +54,7 @@ public interface Model {
    * @param typeName  the name of the type
    * @return the element type or null if no type is defined for the name
    */
-  @Nullable ModelElementType getTypeForName(@NonNull String typeName);
+  @Nullable ModelElementType getTypeForName(String typeName);
 
   /**
    * Gets the defined {@link ModelElementType} for a type by its name and namespace URI.
@@ -65,7 +64,7 @@ public interface Model {
    * @param typeName  the name of the type
    * @return the element type or null if no type is defined for the name and namespace URI
    */
-  @Nullable ModelElementType getTypeForName(@Nullable String namespaceUri, @NonNull String typeName);
+  @Nullable ModelElementType getTypeForName(@Nullable String namespaceUri, String typeName);
 
   /**
    * Returns the model name, which is the identifier of this model.
@@ -79,15 +78,15 @@ public interface Model {
    * @param alternativeNs the alternative namespace URI
    * @return the actual namespace URI or null if none is set
    */
-  @Nullable String getActualNamespace(@NonNull String alternativeNs);
+  @Nullable String getActualNamespace(String alternativeNs);
 
   /**
    * Returns the alternative namespace URI for a namespace URI
    * @param actualNs the actual namespace URI
    * @return the alternative namespace URI or null if none is set
    */
-  @Nullable String getAlternativeNamespace(@NonNull String actualNs);
+  @Nullable String getAlternativeNamespace(String actualNs);
 
-  @NonNull Set<String> getAlternativeNamespaces(@NonNull String actualNs);
+  Set<String> getAlternativeNamespaces(String actualNs);
 
 }

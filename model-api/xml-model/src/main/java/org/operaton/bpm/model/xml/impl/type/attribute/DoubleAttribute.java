@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.attribute;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
 /**
@@ -28,7 +30,7 @@ public class DoubleAttribute extends AttributeImpl<Double> {
   }
 
   @Override
-  protected Double convertXmlValueToModelValue(String rawValue) {
+  protected @Nullable Double convertXmlValueToModelValue(@Nullable String rawValue) {
     if (rawValue != null) {
       try {
         return Double.parseDouble(rawValue);

@@ -18,7 +18,6 @@ package org.operaton.bpm.model.xml.impl.type;
 
 import java.util.*;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.Model;
@@ -49,9 +48,9 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   private final Class<? extends ModelElementInstance> instanceType;
 
-  private String typeNamespace;
+  private @Nullable String typeNamespace;
 
-  private ModelElementTypeImpl baseType;
+  private @Nullable ModelElementTypeImpl baseType;
 
   private final List<ModelElementType> extendingTypes = new ArrayList<>();
 
@@ -61,7 +60,7 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   private final List<ChildElementCollection<?>> childElementCollections = new ArrayList<>();
 
-  private ModelTypeInstanceProvider<?> instanceProvider;
+  private @Nullable ModelTypeInstanceProvider<?> instanceProvider;
 
   private boolean isAbstract;
 
@@ -90,7 +89,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     }
   }
 
-  public void registerChildElementType(@NonNull ModelElementType childElementType) {
+  public void registerChildElementType(ModelElementType childElementType) {
     if (!childElementTypes.contains(childElementType)) {
       childElementTypes.add(childElementType);
     }
@@ -137,7 +136,7 @@ public class ModelElementTypeImpl implements ModelElementType {
   }
 
   @Override
-  public String getTypeNamespace() {
+  public @Nullable String getTypeNamespace() {
     return typeNamespace;
   }
 
@@ -322,7 +321,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     return null;
   }
 
-  public ChildElementCollection<?> getChildElementCollection(ModelElementType childElementType) {
+  public @Nullable ChildElementCollection<?> getChildElementCollection(ModelElementType childElementType) {
     for (ChildElementCollection<?> childElementCollection : getChildElementCollections()) {
       if (childElementType.equals(childElementCollection.getChildElementType(model))) {
         return childElementCollection;

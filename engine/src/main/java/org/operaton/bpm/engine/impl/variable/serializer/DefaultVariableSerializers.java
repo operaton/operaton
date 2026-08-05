@@ -16,14 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.variable.serializer;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -46,12 +50,12 @@ public class DefaultVariableSerializers implements VariableSerializers {
   }
 
   @Override
-  public TypedValueSerializer<?> getSerializerByName(String serializerName) {
+  public @Nullable TypedValueSerializer<?> getSerializerByName(String serializerName) {
      return serializerMap.get(serializerName);
   }
 
   @Override
-  public TypedValueSerializer<?> findSerializerForValue(@NonNull TypedValue value, VariableSerializerFactory fallBackSerializerFactory) {
+  public TypedValueSerializer<?> findSerializerForValue(@NonNull TypedValue value, @Nullable VariableSerializerFactory fallBackSerializerFactory) {
     assertValueTypeNotNull(value);
     List<TypedValueSerializer<?>> matchedSerializers = findMatchingSerializers(value);
 
@@ -89,7 +93,7 @@ public class DefaultVariableSerializers implements VariableSerializers {
     return matchedSerializers;
   }
 
-  private TypedValueSerializer<?> handleNoMatchingSerializers(TypedValue value, VariableSerializerFactory fallBackSerializerFactory) {
+  private TypedValueSerializer<?> handleNoMatchingSerializers(TypedValue value, @Nullable VariableSerializerFactory fallBackSerializerFactory) {
     if (fallBackSerializerFactory != null) {
       TypedValueSerializer<?> serializer = fallBackSerializerFactory.getSerializer(value);
       if (serializer != null) {
@@ -100,7 +104,9 @@ public class DefaultVariableSerializers implements VariableSerializers {
   }
 
   private TypedValueSerializer<?> handleAmbiguousMatches(List<TypedValueSerializer<?>> matchedSerializers) {
-    String defaultSerializationFormat = Context.getProcessEngineConfiguration().getDefaultSerializationFormat();
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    ensureNotNull("processEngineConfiguration", processEngineConfiguration);
+    String defaultSerializationFormat = processEngineConfiguration.getDefaultSerializationFormat();
     if(defaultSerializationFormat != null) {
       for (TypedValueSerializer<?> typedValueSerializer : matchedSerializers) {
         if(defaultSerializationFormat.equals(typedValueSerializer.getSerializationDataformat())) {

@@ -108,7 +108,7 @@ public interface ModelInstance {
    * @param id  the id of the element
    * @return the element with the id or null
    */
-  <T extends ModelElementInstance> @Nullable T getModelElementById(String id);
+  <T extends ModelElementInstance> @Nullable T getModelElementById(@Nullable String id);
 
   /**
    * Find all elements of a type.

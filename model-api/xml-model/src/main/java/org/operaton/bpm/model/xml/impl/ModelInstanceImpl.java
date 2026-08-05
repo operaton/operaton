@@ -125,7 +125,7 @@ public class ModelInstanceImpl implements ModelInstance {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends ModelElementInstance> @Nullable T getModelElementById(String id) {
+  public <T extends ModelElementInstance> @Nullable T getModelElementById(@Nullable String id) {
     if (id == null) {
       return null;
     }

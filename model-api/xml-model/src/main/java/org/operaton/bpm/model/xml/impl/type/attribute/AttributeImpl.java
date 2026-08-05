@@ -77,7 +77,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    *
    * @return the converted value
    */
-  protected abstract String convertModelValueToXmlValue(T modelValue);
+  protected abstract @Nullable String convertModelValueToXmlValue(@Nullable T modelValue);
 
   @Override
   public ModelElementType getOwningElementType() {
@@ -90,7 +90,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    * @return the value of the attribute.
    */
   @Override
-  public T getValue(ModelElementInstance modelElement) {
+  public @Nullable T getValue(ModelElementInstance modelElement) {
     String value;
     if(namespaceUri == null) {
       value = modelElement.getAttributeValue(attributeName);
@@ -128,7 +128,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   }
 
   @Override
-  public void setValue(ModelElementInstance modelElement, T value, boolean withReferenceUpdate) {
+  public void setValue(ModelElementInstance modelElement, @Nullable T value, boolean withReferenceUpdate) {
     String xmlValue = convertModelValueToXmlValue(value);
     if(namespaceUri == null) {
       modelElement.setAttributeValue(attributeName, xmlValue,

@@ -21,8 +21,10 @@ import java.util.Map;
 
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
@@ -138,10 +140,29 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   public static void insert(VariableInstanceEntity variableInstance) {
     if (!variableInstance.isTransient()) {
+      validateTaskIdIfEnabled(variableInstance);
       Context
       .getCommandContext()
       .getDbEntityManager()
       .insert(variableInstance);
+    }
+  }
+
+  protected static void validateTaskIdIfEnabled(VariableInstanceEntity variableInstance) {
+    String taskId = variableInstance.getTaskId();
+
+    if (taskId != null) {
+      ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
+
+      if (configuration != null && configuration.isCheckVariableTaskId()) {
+        TaskEntity task = variableInstance.getTask();
+
+        if (task == null || task.isDeleted()) {
+          throw new ProcessEngineException(("Task with id '%s' doesn't exist or it is already completed. "
+              + "Cannot create variable '%s' with a reference to a not existing task.")
+              .formatted(taskId, variableInstance.getName()));
+        }
+      }
     }
   }
 

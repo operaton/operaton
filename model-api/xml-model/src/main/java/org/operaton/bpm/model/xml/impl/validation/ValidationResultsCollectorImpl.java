@@ -45,7 +45,7 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
   @Override
   public void addError(int code, String message) {
     resultsForCurrentElement()
-      .add(new ModelValidationResultImpl(currentElement, ValidationResultType.ERROR, code, message));
+      .add(new ModelValidationResultImpl(getCurrentElement(), ValidationResultType.ERROR, code, message));
 
     ++errorCount;
   }
@@ -53,7 +53,7 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
   @Override
   public void addWarning(int code, String message) {
     resultsForCurrentElement()
-      .add(new ModelValidationResultImpl(currentElement, ValidationResultType.WARNING, code, message));
+      .add(new ModelValidationResultImpl(getCurrentElement(), ValidationResultType.WARNING, code, message));
 
     ++warningCount;
   }
@@ -62,12 +62,19 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
     this.currentElement = currentElement;
   }
 
+  private ModelElementInstance getCurrentElement() {
+    if(currentElement == null) {
+      throw new IllegalStateException("Current element is not set.");
+    }
+    return currentElement;
+  }
+
   public ValidationResults getResults() {
     return new ModelValidationResultsImpl(collectedResults, errorCount, warningCount);
   }
 
   protected List<ValidationResult> resultsForCurrentElement() {
-    return collectedResults.computeIfAbsent(currentElement, k -> new ArrayList<>());
+    return collectedResults.computeIfAbsent(getCurrentElement(), k -> new ArrayList<>());
   }
 
 }

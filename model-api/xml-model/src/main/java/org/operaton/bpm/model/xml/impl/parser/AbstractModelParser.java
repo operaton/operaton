@@ -181,6 +181,9 @@ public abstract class AbstractModelParser {
 
   protected @Nullable Schema getSchema(DomDocument document) {
     DomElement rootElement = document.getRootElement();
+    if (rootElement == null) {
+      return null;
+    }
     String namespaceURI = rootElement.getNamespaceURI();
     return schemas.get(namespaceURI);
   }

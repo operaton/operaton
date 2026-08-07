@@ -107,7 +107,7 @@ public final class DomUtil {
     public boolean matches(Node node) {
      return super.matches(node)
         && localName.equals(node.getLocalName())
-        && namespaceUri.equals(node.getNamespaceURI());
+        && (namespaceUri != null && namespaceUri.equals(node.getNamespaceURI()) || namespaceUri == null && node.getNamespaceURI() == null);
     }
 
   }

@@ -70,7 +70,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    *
    * @return the converted value
    */
-  protected abstract @Nullable T convertXmlValueToModelValue(String rawValue);
+  protected abstract @Nullable T convertXmlValueToModelValue(@Nullable String rawValue);
 
   /**
    * to be implemented by subclasses: converts the raw (String) value of the
@@ -94,16 +94,16 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   public @Nullable T getValue(ModelElementInstance modelElement) {
     String value;
     if(namespaceUri == null) {
-      value = modelElement.getAttributeValue(attributeName);
+      value = modelElement.getAttributeValue(getAttributeName());
     } else {
-      value = modelElement.getAttributeValueNs(namespaceUri, attributeName);
+      value = modelElement.getAttributeValueNs(namespaceUri, getAttributeName());
       if(value == null) {
         Set<String> alternativeNamespaces = owningElementType.getModel().getAlternativeNamespaces(namespaceUri);
 
         Iterator<String> namespaceIt = alternativeNamespaces.iterator();
 
         while (value == null && namespaceIt.hasNext()) {
-          value = modelElement.getAttributeValueNs(namespaceIt.next(), attributeName);
+          value = modelElement.getAttributeValueNs(namespaceIt.next(), getAttributeName());
         }
       }
     }
@@ -111,10 +111,8 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
     // default value
     if (value == null && defaultValue != null) {
       return defaultValue;
-    } else if (value != null) {
-      return convertXmlValueToModelValue(value);
     } else {
-      return null;
+      return convertXmlValueToModelValue(value);
     }
   }
 
@@ -134,19 +132,11 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   public void setValue(ModelElementInstance modelElement, @Nullable T value, boolean withReferenceUpdate) {
     String xmlValue = convertModelValueToXmlValue(value);
     if(namespaceUri == null) {
-      if (xmlValue != null) {
-        modelElement.setAttributeValue(getAttributeName(), xmlValue,
-          isIdAttribute, withReferenceUpdate);
-      } else {
-        modelElement.removeAttribute(getAttributeName());
-      }
+      modelElement.setAttributeValue(attributeName, xmlValue,
+              isIdAttribute, withReferenceUpdate);
     } else {
-      if (xmlValue != null) {
-        modelElement.setAttributeValueNs(namespaceUri, getAttributeName(),
-          xmlValue, isIdAttribute, withReferenceUpdate);
-}     else {
-        modelElement.removeAttributeNs(namespaceUri, getAttributeName());
-      }
+      modelElement.setAttributeValueNs(namespaceUri, attributeName,
+              xmlValue, isIdAttribute, withReferenceUpdate);
     }
   }
 

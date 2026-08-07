@@ -74,7 +74,9 @@ public class IdsElementReferenceCollectionImpl<TARGET extends ModelElementInstan
     if (referenceIdentifiers.contains(oldIdentifier)) {
       int index = referenceIdentifiers.indexOf(oldIdentifier);
       referenceIdentifiers.remove(oldIdentifier);
-      referenceIdentifiers.add(index, newIdentifier);
+      if (newIdentifier != null) {
+        referenceIdentifiers.add(index, newIdentifier);
+      }
       setReferenceIdentifiers(referenceSourceElement, referenceIdentifiers);
     }
   }

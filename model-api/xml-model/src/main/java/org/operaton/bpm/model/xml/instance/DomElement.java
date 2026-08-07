@@ -37,21 +37,21 @@ public interface DomElement {
    *
    * @return the namespace URI
    */
-  String getNamespaceURI();
+  @Nullable String getNamespaceURI();
 
   /**
    * Returns the local name of this element.
    *
    * @return the local name
    */
-  String getLocalName();
+  @Nullable String getLocalName();
 
   /**
    * Returns the prefix of this element.
    *
    * @return the prefix
    */
-  String getPrefix();
+  @Nullable String getPrefix();
 
   /**
    * Returns the DOM document which contains this element.

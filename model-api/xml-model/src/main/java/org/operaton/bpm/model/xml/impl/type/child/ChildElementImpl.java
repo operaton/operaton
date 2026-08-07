@@ -64,6 +64,9 @@ public class ChildElementImpl<T extends ModelElementInstance> extends ChildEleme
   @Override
   public boolean removeChild(ModelElementInstance element) {
     ModelElementInstanceImpl childElement = (ModelElementInstanceImpl) getChild(element);
+    if (childElement == null) {
+      return false;
+    }
     ModelElementInstanceImpl elementInstanceImpl = (ModelElementInstanceImpl) element;
     return elementInstanceImpl.removeChildElement(childElement);
   }

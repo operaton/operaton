@@ -33,7 +33,7 @@ public class StringAttribute extends AttributeImpl<String> {
   }
 
   @Override
-  protected @Nullable String convertXmlValueToModelValue(String rawValue) {
+  protected @Nullable String convertXmlValueToModelValue(@Nullable String rawValue) {
     return rawValue;
   }
 

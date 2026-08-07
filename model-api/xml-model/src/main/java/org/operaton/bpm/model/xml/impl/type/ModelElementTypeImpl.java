@@ -112,6 +112,9 @@ public class ModelElementTypeImpl implements ModelElementType {
       throw new ModelTypeException("Model element type %s is abstract and no instances can be created.".formatted(getTypeName()));
     }
     else {
+      if (instanceProvider == null) {
+        throw new ModelException("Instance provider has not been set.");
+      }
       return instanceProvider.newInstance(instanceContext);
     }
   }
@@ -136,10 +139,7 @@ public class ModelElementTypeImpl implements ModelElementType {
   }
 
   @Override
-  public String getTypeNamespace() {
-    if (typeNamespace == null) {
-      throw new ModelTypeException("Type namespace has not been set.");
-    }
+  public @Nullable String getTypeNamespace() {
     return typeNamespace;
   }
 

@@ -54,21 +54,21 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public String getNamespaceURI() {
+  public @Nullable String getNamespaceURI() {
     synchronized(document) {
       return element.getNamespaceURI();
     }
   }
 
   @Override
-  public String getLocalName() {
+  public @Nullable String getLocalName() {
     synchronized(document) {
       return element.getLocalName();
     }
   }
 
   @Override
-  public String getPrefix() {
+  public @Nullable String getPrefix() {
     synchronized(document) {
       return element.getPrefix();
     }

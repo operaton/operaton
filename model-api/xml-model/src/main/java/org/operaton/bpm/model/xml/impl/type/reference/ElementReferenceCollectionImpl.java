@@ -63,7 +63,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
 
   protected void performAddOperation(ModelElementInstanceImpl referenceSourceParentElement, TARGET referenceTargetElement) {
     ModelInstanceImpl modelInstance = referenceSourceParentElement.getModelInstance();
-    String referenceTargetIdentifier = referenceTargetAttribute.getValue(referenceTargetElement);
+    String referenceTargetIdentifier = referenceTargetAttribute != null ? referenceTargetAttribute.getValue(referenceTargetElement) : null;
     ModelElementInstance existingElement = modelInstance.getModelElementById(referenceTargetIdentifier);
 
     if (existingElement == null || !existingElement.equals(referenceTargetElement)) {
@@ -122,6 +122,9 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
 
   @Override
   public ModelElementType getReferenceSourceElementType() {
+    if (referenceSourceType == null) {
+      throw new ModelException("referenceSourceType is not initialized");
+    }
     return referenceSourceType;
   }
 

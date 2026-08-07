@@ -36,7 +36,10 @@ public class EnumAttribute<T extends Enum<T>> extends AttributeImpl<T> {
   }
 
   @Override
-  protected @Nullable T convertXmlValueToModelValue(String rawValue) {
+  protected @Nullable T convertXmlValueToModelValue(@Nullable String rawValue) {
+    if (rawValue == null) {
+      return null;
+    }
     try {
       return Enum.valueOf(type, rawValue);
     } catch (IllegalArgumentException e) {

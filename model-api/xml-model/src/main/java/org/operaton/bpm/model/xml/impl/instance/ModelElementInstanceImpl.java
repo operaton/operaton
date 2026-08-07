@@ -320,7 +320,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
       instances.addAll(getChildElementsByType(extendingType));
     }
     Model model = modelInstance.getModel();
-    Set<String> alternativeNamespaces = model.getAlternativeNamespaces(childElementType.getTypeNamespace());
+    Set<String> alternativeNamespaces = childElementType.getTypeNamespace() != null ? model.getAlternativeNamespaces(childElementType.getTypeNamespace()) : Collections.emptySet();
     List<DomElement> elements = domElement.getChildElementsByNameNs(asSet(childElementType.getTypeNamespace(), alternativeNamespaces), childElementType.getTypeName());
     instances.addAll(ModelUtil.getModelElementCollection(elements, modelInstance));
     return instances;
@@ -329,7 +329,12 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> Collection<T> getChildElementsByType(Class<T> childElementClass) {
-    return (Collection<T>) getChildElementsByType(getModelInstance().getModel().getType(childElementClass));
+    ModelElementType type = getModelInstance().getModel().getType(childElementClass);
+    if (type != null) {
+      return (Collection<T>) getChildElementsByType(type);
+    } else  {
+      return Collections.emptyList();
+    }
   }
 
   /**

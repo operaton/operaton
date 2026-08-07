@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.type.reference;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 
@@ -24,9 +26,9 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  */
 public interface ElementReference<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceCollection<TARGET, SOURCE> {
 
-  SOURCE getReferenceSource(ModelElementInstance referenceSourceParent);
+  @Nullable SOURCE getReferenceSource(ModelElementInstance referenceSourceParent);
 
-  TARGET getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement);
+  @Nullable TARGET getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement);
 
   void setReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement, TARGET referenceTargetElement);
 

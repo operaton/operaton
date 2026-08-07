@@ -71,7 +71,7 @@ public class ElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE ex
   @Override
   public void setReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement, TARGET referenceTargetElement) {
     ModelInstanceImpl modelInstance = referenceSourceParentElement.getModelInstance();
-    String identifier = referenceTargetAttribute.getValue(referenceTargetElement);
+    String identifier = referenceTargetAttribute != null ? referenceTargetAttribute.getValue(referenceTargetElement) : null;
     ModelElementInstance existingElement = modelInstance.getModelElementById(identifier);
 
     if (existingElement == null || !existingElement.equals(referenceTargetElement)) {

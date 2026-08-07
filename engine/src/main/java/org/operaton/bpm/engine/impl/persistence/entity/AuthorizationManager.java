@@ -1139,11 +1139,22 @@ public class AuthorizationManager extends AbstractManager {
     if(authenticatedGroupIds == null || authenticatedGroupIds.isEmpty()) {
       return EMPTY_LIST;
     }
+    else if (authenticatedGroupIds.size() < getAuthGroupFilterThreshold()) {
+      return authenticatedGroupIds;
+    }
     else {
       Set<String> groupIntersection = new HashSet<>(getAllGroups());
       groupIntersection.retainAll(authenticatedGroupIds);
       return new ArrayList<>(groupIntersection);
     }
+  }
+
+  protected int getAuthGroupFilterThreshold() {
+    var configuration = Context.getProcessEngineConfiguration();
+    if (configuration != null) {
+      return configuration.getAuthGroupFilterThreshold();
+    }
+    return 0;
   }
 
   protected Set<String> getAllGroups() {

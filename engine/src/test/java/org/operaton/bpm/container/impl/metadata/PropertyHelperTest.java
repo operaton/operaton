@@ -43,6 +43,8 @@ class PropertyHelperTest {
   protected static final String MAIL_SERVER_PORT_PROP = "mailServerPort";
   protected static final String JDBC_URL_PROP = "jdbcUrl";
   protected static final String DB_IDENTITY_USED_PROP = "dbIdentityUsed";
+  protected static final String CRON_TYPE_PROP = "cronType";
+  protected static final String SUPPORT_LEGACY_QUARTZ_SYNTAX_PROP = "supportLegacyQuartzSyntax";
 
   // job executor properties
   protected static final String MAX_JOBS_PER_ACQUISITION = "maxJobsPerAcquisition";
@@ -125,6 +127,22 @@ class PropertyHelperTest {
     PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
 
     assertThat(engineConfiguration.isDbIdentityUsed()).isTrue();
+  }
+
+  @Test
+  void testCronConfigurationProperties() {
+    ProcessEngineConfigurationImpl engineConfiguration = new StandaloneProcessEngineConfiguration();
+
+    assertThat(engineConfiguration.getCronType()).isEqualTo("SPRING53");
+    assertThat(engineConfiguration.isSupportLegacyQuartzSyntax()).isTrue();
+
+    Map<String, String> propertiesToSet = new HashMap<>();
+    propertiesToSet.put(CRON_TYPE_PROP, "QUARTZ");
+    propertiesToSet.put(SUPPORT_LEGACY_QUARTZ_SYNTAX_PROP, "false");
+    PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
+
+    assertThat(engineConfiguration.getCronType()).isEqualTo("QUARTZ");
+    assertThat(engineConfiguration.isSupportLegacyQuartzSyntax()).isFalse();
   }
 
   @Test

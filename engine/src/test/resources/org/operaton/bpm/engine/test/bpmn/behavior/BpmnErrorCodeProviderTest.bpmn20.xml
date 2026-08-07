@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+             targetNamespace="Examples">
+
+  <error id="customError" errorCode="CUSTOM_ERROR_CODE" />
+
+  <process id="bpmnErrorCodeProviderProcess" isExecutable="true">
+    <startEvent id="start" />
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="serviceTask" />
+    <serviceTask id="serviceTask"
+                 operaton:class="org.operaton.bpm.engine.test.bpmn.behavior.BpmnErrorCodeProviderTest$ErrorCodeProviderDelegate" />
+    <sequenceFlow id="flow2" sourceRef="serviceTask" targetRef="end" />
+    <endEvent id="end" />
+
+    <boundaryEvent id="boundaryError" attachedToRef="serviceTask">
+      <errorEventDefinition errorRef="customError" />
+    </boundaryEvent>
+    <sequenceFlow id="flow3" sourceRef="boundaryError" targetRef="handledTask" />
+    <userTask id="handledTask" />
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bpmnErrorCodeProviderProcess">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <dc:Bounds x="100" y="100" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="serviceTask_di" bpmnElement="serviceTask">
+        <dc:Bounds x="190" y="78" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="boundaryError_di" bpmnElement="boundaryError">
+        <dc:Bounds x="220" y="140" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="handledTask_di" bpmnElement="handledTask">
+        <dc:Bounds x="190" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <dc:Bounds x="340" y="100" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flow1_di" bpmnElement="flow1">
+        <di:waypoint x="136" y="118" />
+        <di:waypoint x="190" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow2_di" bpmnElement="flow2">
+        <di:waypoint x="290" y="118" />
+        <di:waypoint x="340" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow3_di" bpmnElement="flow3">
+        <di:waypoint x="238" y="176" />
+        <di:waypoint x="238" y="220" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

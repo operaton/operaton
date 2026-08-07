@@ -170,6 +170,14 @@ class PropertyHelperTest {
   }
 
   @Test
+  void testResolvePropertyKeepsDollarSignsThatOpenNoPlaceholder() {
+    Properties source = new Properties();
+    source.put("operaton.test.someKey", "1234");
+    String result = PropertyHelper.resolveProperty(source, "$HOME/pa$$word-${operaton.test.someKey}$");
+    assertThat(result).isEqualTo("$HOME/pa$$word-1234$");
+  }
+
+  @Test
   void testResolvePropertyNoTemplate() {
     Properties source = new Properties();
     source.put("operaton.test.someKey", "1234");

@@ -202,7 +202,27 @@ public class TaskDecorator {
    * Extract a candidate list from a string.
    */
   protected List<String> extractCandidates(String str) {
-    return Arrays.asList(str.split("\\s*+,\\s*+"));
+    String[] parts = str.split(",\\s*+", -1);
+    if (parts.length == 1) {
+      return List.of(str);
+    }
+    int size = 0;
+    for (int i = 0; i < parts.length; i++) {
+      int end = parts[i].length();
+      while (i < parts.length - 1 && end > 0 && isSpace(parts[i].charAt(end - 1))) {
+        end--;
+      }
+      parts[i] = parts[i].substring(0, end);
+      if (!parts[i].isEmpty()) {
+        size = i + 1; // mirrors String#split dropping trailing empty elements
+      }
+    }
+    return Arrays.asList(Arrays.copyOf(parts, size));
+  }
+
+  /** The regex {@code \s} class, which is narrower than {@link String#strip()}. */
+  private static boolean isSpace(char c) {
+    return c == ' ' || c == '\t' || c == '\n' || c == 0x0B || c == '\f' || c == '\r';
   }
 
   // getters ///////////////////////////////////////////////////////////////

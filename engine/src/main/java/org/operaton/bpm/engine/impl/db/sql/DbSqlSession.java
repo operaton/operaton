@@ -127,7 +127,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     String mappedSelectStatement = dbSqlSessionFactory.mapStatement(selectStatement);
     ensureNotNull("no select statement for %s in the ibatis mapping files".formatted(type), "selectStatement", selectStatement);
 
-    Object result = ExceptionUtil.doWithExceptionWrapper(() -> sqlSession.selectOne(mappedSelectStatement, id));
+    Object result = ExceptionUtil.doWithExceptionWrapper(() -> sqlSession.selectList(mappedSelectStatement, id).stream().findFirst().orElse(null));
     fireEntityLoaded(result);
     return (T) result;
   }

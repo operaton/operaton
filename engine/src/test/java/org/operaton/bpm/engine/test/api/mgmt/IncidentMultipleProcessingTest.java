@@ -97,6 +97,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
    @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
    @Test
+   void shouldExposeThrowableOnIncidentCreation() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
+
+    testRule.executeAvailableJobs();
+
+    List<Incident> incidents = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).list();
+
+    assertThat(incidents).hasSize(1);
+    assertThat(JOB_HANDLER.getCreateEvents()).hasSize(1);
+
+    IncidentContext createContext = JOB_HANDLER.getCreateEvents().get(0);
+    assertThat(createContext.getThrowable())
+      .isNotNull()
+      .hasMessageContaining(AlwaysFailingDelegate.MESSAGE);
+
+    assertThat(JOB_HANDLER.getResolveEvents()).isEmpty();
+    assertThat(JOB_HANDLER.getDeleteEvents()).isEmpty();
+  }
+
+   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldCreateOneIncident.bpmn"})
+   @Test
    void shouldResolveIncidentAfterJobRetriesRefresh() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 

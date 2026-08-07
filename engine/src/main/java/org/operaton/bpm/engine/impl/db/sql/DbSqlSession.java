@@ -37,6 +37,7 @@ import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -110,6 +111,17 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   public List<?> selectList(String statement, Object parameter) {
     statement = dbSqlSessionFactory.mapStatement(statement);
     List<Object> resultList = executeSelectList(statement, parameter);
+    for (Object object : resultList) {
+      fireEntityLoaded(object);
+    }
+    return resultList;
+  }
+
+  @Override
+  public List<?> selectList(String statement, Object parameter, int maxRows) {
+    String mappedStatement = dbSqlSessionFactory.mapStatement(statement);
+    List<Object> resultList = ExceptionUtil.doWithExceptionWrapper(
+        () -> sqlSession.selectList(mappedStatement, parameter, new RowBounds(0, maxRows)));
     for (Object object : resultList) {
       fireEntityLoaded(object);
     }

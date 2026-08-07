@@ -61,6 +61,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogEventEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
@@ -401,6 +402,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     String scopeActivityInstanceId = getScopeActivityInstanceId(variableInstance);
     String sourceActivityInstanceId = getSourceActivityInstanceId(sourceVariableScope);
     ExecutionEntity sourceExecution = getSourceExecution(sourceVariableScope);
+    String taskId = getSourceTaskId(sourceVariableScope, sourceExecution);
 
     // create event
     HistoricVariableUpdateEventEntity evt = newVariableUpdateEventEntity(sourceExecution);
@@ -414,6 +416,10 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
     // set source activity instance id
     evt.setActivityInstanceId(sourceActivityInstanceId);
+
+    if (evt.getTaskId() == null) {
+      evt.setTaskId(taskId);
+    }
 
     // mark initial variables on process start
     if (sourceExecution != null && sourceExecution.isProcessInstanceStarting()
@@ -483,6 +489,39 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
       sourceExecution = taskEntity.getExecution();
     }
     return sourceExecution;
+  }
+
+  private static String getSourceTaskId(VariableScope sourceVariableScope, ExecutionEntity sourceExecution) {
+    if (sourceVariableScope instanceof TaskEntity taskEntity) {
+      if (taskEntity.getId() != null) {
+        return taskEntity.getId();
+      }
+      if (sourceExecution != null
+          && sourceExecution.getTasks() != null
+          && !sourceExecution.getTasks().isEmpty()) {
+        return sourceExecution.getTasks().get(0).getId();
+      }
+    }
+    return null;
+  }
+
+  private void updateCachedHistoricVariableTaskIds(ExecutionEntity executionEntity, String taskId) {
+    String activityInstanceId = executionEntity.getActivityInstanceId();
+    if (activityInstanceId == null || taskId == null) {
+      return;
+    }
+
+    List<HistoricVariableInstanceEntity> cachedHistoricVariableInstances = Context
+      .getCommandContext()
+      .getDbEntityManager()
+      .getCachedEntitiesByType(HistoricVariableInstanceEntity.class);
+
+    for (HistoricVariableInstanceEntity historicVariableInstance : cachedHistoricVariableInstances) {
+      if (historicVariableInstance.getTaskId() == null
+          && activityInstanceId.equals(historicVariableInstance.getActivityInstanceId())) {
+        historicVariableInstance.setTaskId(taskId);
+      }
+    }
   }
 
   // event instance factory ////////////////////////
@@ -731,6 +770,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     if(task != null) {
       evt.setTaskId(task.getId());
       evt.setTaskAssignee(task.getAssignee());
+      updateCachedHistoricVariableTaskIds(executionEntity, task.getId());
     }
 
     return evt;

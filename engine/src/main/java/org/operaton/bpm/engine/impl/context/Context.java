@@ -20,7 +20,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.Callable;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
@@ -166,7 +165,7 @@ public final class Context {
     return stack;
   }
 
-  public static JobExecutorContext getJobExecutorContext() {
+  public static @Nullable JobExecutorContext getJobExecutorContext() {
     return jobExecutorContextThreadLocal.get();
   }
 

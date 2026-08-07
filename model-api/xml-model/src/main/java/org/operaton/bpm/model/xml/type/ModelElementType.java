@@ -34,7 +34,7 @@ public interface ModelElementType {
 
   String getTypeName();
 
-  @Nullable String getTypeNamespace();
+  String getTypeNamespace();
 
   Class<? extends ModelElementInstance> getInstanceType();
 

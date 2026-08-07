@@ -161,12 +161,9 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     else {
       Set<String> alternativeNamespaces = modelInstance.getModel().getAlternativeNamespaces(intendedNamespace);
 
-      if (alternativeNamespaces != null)
-      {
-        for (String alternativeNamespace : alternativeNamespaces) {
-          if (getAttributeValueNs(alternativeNamespace, attributeName) != null) {
-            return alternativeNamespace;
-          }
+      for (String alternativeNamespace : alternativeNamespaces) {
+        if (getAttributeValueNs(alternativeNamespace, attributeName) != null) {
+          return alternativeNamespace;
         }
       }
 
@@ -215,7 +212,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public @Nullable ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName) {
+  public @Nullable ModelElementInstance getUniqueChildElementByNameNs(@Nullable String namespaceUri, String elementName) {
     Model model = modelInstance.getModel();
     List<DomElement> childElements = domElement.getChildElementsByNameNs(asSet(namespaceUri, model.getAlternativeNamespaces(namespaceUri)), elementName);
     if(!childElements.isEmpty()) {
@@ -361,7 +358,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public void insertElementAfter(ModelElementInstance elementToInsert, ModelElementInstance insertAfterElement) {
+  public void insertElementAfter(ModelElementInstance elementToInsert, @Nullable ModelElementInstance insertAfterElement) {
     if (insertAfterElement == null || insertAfterElement.getDomElement() == null) {
       domElement.insertChildElementAfter(elementToInsert.getDomElement(), null);
     }
@@ -405,9 +402,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     Set<T> result = new HashSet<>();
     result.add(element);
 
-    if (elements != null) {
-      result.addAll(elements);
-    }
+    result.addAll(elements);
 
     return result;
   }
@@ -418,7 +413,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if(obj == null) {
       return false;
     } else if(obj == this) {

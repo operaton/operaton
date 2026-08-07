@@ -136,7 +136,10 @@ public class ModelElementTypeImpl implements ModelElementType {
   }
 
   @Override
-  public @Nullable String getTypeNamespace() {
+  public String getTypeNamespace() {
+    if (typeNamespace == null) {
+      throw new ModelTypeException("Type namespace has not been set.");
+    }
     return typeNamespace;
   }
 
@@ -262,12 +265,9 @@ public class ModelElementTypeImpl implements ModelElementType {
     if (elements.isEmpty()) {
       Set<String> alternativeNamespaces = getModel().getAlternativeNamespaces(namespaceURI);
 
-      if (alternativeNamespaces != null)
-      {
-        Iterator<String> namespaceIt = alternativeNamespaces.iterator();
-        while (elements.isEmpty() && namespaceIt.hasNext()) {
-          elements = getElementsByNameNs(document, namespaceIt.next());
-        }
+      Iterator<String> namespaceIt = alternativeNamespaces.iterator();
+      while (elements.isEmpty() && namespaceIt.hasNext()) {
+        elements = getElementsByNameNs(document, namespaceIt.next());
       }
     }
 
@@ -296,8 +296,7 @@ public class ModelElementTypeImpl implements ModelElementType {
    * @return the list of all attributes
    */
   public Collection<Attribute<?>> getAllAttributes() {
-    List<Attribute<?>> allAttributes = new ArrayList<>();
-    allAttributes.addAll(getAttributes());
+    List<Attribute<?>> allAttributes = new ArrayList<>(getAttributes());
     Collection<ModelElementType> baseTypes = ModelUtil.calculateAllBaseTypes(this);
     for (ModelElementType type : baseTypes) {
       allAttributes.addAll(type.getAttributes());

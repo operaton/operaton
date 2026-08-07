@@ -30,16 +30,11 @@ public class DoubleAttribute extends AttributeImpl<Double> {
   }
 
   @Override
-  protected @Nullable Double convertXmlValueToModelValue(@Nullable String rawValue) {
-    if (rawValue != null) {
-      try {
-        return Double.parseDouble(rawValue);
-      }
-      catch (NumberFormatException e) {
-        return null;
-      }
+  protected @Nullable Double convertXmlValueToModelValue(String rawValue) {
+    try {
+      return Double.parseDouble(rawValue);
     }
-    else {
+    catch (NumberFormatException e) {
       return null;
     }
   }

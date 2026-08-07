@@ -35,7 +35,7 @@ public class BooleanAttribute extends AttributeImpl<Boolean> {
   }
 
   @Override
-  protected Boolean convertXmlValueToModelValue(@Nullable String rawValue) {
+  protected @Nullable Boolean convertXmlValueToModelValue(String rawValue) {
     return ModelUtil.valueAsBoolean(rawValue);
   }
 

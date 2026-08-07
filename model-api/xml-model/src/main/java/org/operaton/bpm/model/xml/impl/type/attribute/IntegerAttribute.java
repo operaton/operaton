@@ -30,7 +30,7 @@ public class IntegerAttribute extends AttributeImpl<Integer> {
   }
 
   @Override
-  protected @Nullable Integer convertXmlValueToModelValue(@Nullable String rawValue) {
+  protected @Nullable Integer convertXmlValueToModelValue(String rawValue) {
     try {
       return Integer.parseInt(rawValue);
     }

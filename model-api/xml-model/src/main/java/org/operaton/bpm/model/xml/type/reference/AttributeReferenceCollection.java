@@ -104,7 +104,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
       }
 
       @Override
-      public boolean contains(Object o) {
+      public boolean contains(@Nullable Object o) {
         if (o == null) {
           return false;
         }

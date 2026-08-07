@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 
+import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.type.reference.ReferenceImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
@@ -69,7 +70,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    *
    * @return the converted value
    */
-  protected abstract @Nullable T convertXmlValueToModelValue(@Nullable String rawValue);
+  protected abstract @Nullable T convertXmlValueToModelValue(String rawValue);
 
   /**
    * to be implemented by subclasses: converts the raw (String) value of the
@@ -77,7 +78,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    *
    * @return the converted value
    */
-  protected abstract @Nullable String convertModelValueToXmlValue(@Nullable T modelValue);
+  protected abstract String convertModelValueToXmlValue(T modelValue);
 
   @Override
   public ModelElementType getOwningElementType() {
@@ -110,8 +111,10 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
     // default value
     if (value == null && defaultValue != null) {
       return defaultValue;
-    } else {
+    } else if (value != null) {
       return convertXmlValueToModelValue(value);
+    } else {
+      return null;
     }
   }
 
@@ -131,15 +134,23 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   public void setValue(ModelElementInstance modelElement, @Nullable T value, boolean withReferenceUpdate) {
     String xmlValue = convertModelValueToXmlValue(value);
     if(namespaceUri == null) {
-      modelElement.setAttributeValue(attributeName, xmlValue,
-              isIdAttribute, withReferenceUpdate);
+      if (xmlValue != null) {
+        modelElement.setAttributeValue(getAttributeName(), xmlValue,
+          isIdAttribute, withReferenceUpdate);
+      } else {
+        modelElement.removeAttribute(getAttributeName());
+      }
     } else {
-      modelElement.setAttributeValueNs(namespaceUri, attributeName,
-              xmlValue, isIdAttribute, withReferenceUpdate);
+      if (xmlValue != null) {
+        modelElement.setAttributeValueNs(namespaceUri, getAttributeName(),
+          xmlValue, isIdAttribute, withReferenceUpdate);
+}     else {
+        modelElement.removeAttributeNs(namespaceUri, getAttributeName());
+      }
     }
   }
 
-  public void updateIncomingReferences(ModelElementInstance modelElement, String newIdentifier, String oldIdentifier) {
+  public void updateIncomingReferences(ModelElementInstance modelElement, @Nullable String newIdentifier, @Nullable String oldIdentifier) {
     if (!incomingReferences.isEmpty()) {
       for (Reference<?> incomingReference : incomingReferences) {
         ((ReferenceImpl<?>) incomingReference).referencedElementUpdated(modelElement, oldIdentifier, newIdentifier);
@@ -171,7 +182,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   /**
    * @param namespaceUri the namespaceUri to set
    */
-  public void setNamespaceUri(String namespaceUri) {
+  public void setNamespaceUri(@Nullable String namespaceUri) {
     this.namespaceUri = namespaceUri;
   }
 
@@ -200,7 +211,10 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    * @return the attributeName
    */
   @Override
-  public @Nullable String getAttributeName() {
+  public String getAttributeName() {
+    if (attributeName == null) {
+      throw new ModelException("Attribute name is not set");
+    }
     return attributeName;
   }
 

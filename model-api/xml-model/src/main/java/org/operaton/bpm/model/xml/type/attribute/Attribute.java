@@ -62,7 +62,7 @@ public interface Attribute<T> {
   /**
    * @return the namespaceUri
    */
-  String getNamespaceUri();
+  @Nullable String getNamespaceUri();
 
   /**
    * @return the attributeName

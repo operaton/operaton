@@ -18,6 +18,7 @@ package org.operaton.bpm.model.xml.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.jspecify.annotations.Nullable;
@@ -83,7 +84,7 @@ public class ModelInstanceImpl implements ModelInstance {
   }
 
   @Override
-  public <T extends ModelElementInstance> T newInstance(Class<T> type, String id) {
+  public <T extends ModelElementInstance> T newInstance(Class<T> type, @Nullable String id) {
     ModelElementType modelElementType = model.getType(type);
     if(modelElementType != null) {
       return newInstance(modelElementType, id);
@@ -154,7 +155,11 @@ public class ModelInstanceImpl implements ModelInstance {
   @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> Collection<T> getModelElementsByType(Class<T> referencingClass) {
-    return (Collection<T>) getModelElementsByType(getModel().getType(referencingClass));
+    ModelElementType type = getModel().getType(referencingClass);
+    if (type == null) {
+      return Collections.emptyList();
+    }
+    return (Collection<T>) getModelElementsByType(type);
   }
 
   @Override

@@ -150,7 +150,7 @@ public interface DomElement {
    * @param localName  the name of the attribute
    * @return true if the attribute exists otherwise false
    */
-  boolean hasAttribute(String namespaceUri, String localName);
+  boolean hasAttribute(@Nullable String namespaceUri, String localName);
 
   /**
    * Returns the attribute value for the namespace of this element.
@@ -184,7 +184,7 @@ public interface DomElement {
    * @param localName  the name of the attribute
    * @param value  the value to set
    */
-  void setAttribute(String namespaceUri, String localName, String value);
+  void setAttribute(@Nullable String namespaceUri, String localName, String value);
 
   /**
    * Sets the value of a id attribute for the namespace of this element.
@@ -201,7 +201,7 @@ public interface DomElement {
    * @param localName  the name of the attribute
    * @param value  the value to set
    */
-  void setIdAttribute(String namespaceUri, String localName, String value);
+  void setIdAttribute(@Nullable String namespaceUri, String localName, String value);
 
   /**
    * Removes the attribute for the namespace of this element.
@@ -216,7 +216,7 @@ public interface DomElement {
    * @param namespaceUri  the namespaceUri of the namespace
    * @param localName  the name of the attribute
    */
-  void removeAttribute(String namespaceUri, String localName);
+  void removeAttribute(@Nullable String namespaceUri, String localName);
 
   /**
    * Gets the text content of this element all its descendants.
@@ -242,7 +242,7 @@ public interface DomElement {
   /**
    * Returns the {@link ModelElementInstance} which is associated with this element.
    *
-   * @return the {@link ModelElementInstance} or null if non is associated
+   * @return the {@link ModelElementInstance} or null if none is associated
    */
   @Nullable ModelElementInstance getModelElementInstance();
 

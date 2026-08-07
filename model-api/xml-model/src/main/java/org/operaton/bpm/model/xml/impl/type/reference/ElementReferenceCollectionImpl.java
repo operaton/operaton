@@ -58,7 +58,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
 
   @Override
   protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
-    referenceSourceElement.setTextContent(referenceIdentifier);
+    referenceSourceElement.setTextContent(referenceIdentifier != null ? referenceIdentifier : "");
   }
 
   protected void performAddOperation(ModelElementInstanceImpl referenceSourceParentElement, TARGET referenceTargetElement) {
@@ -134,7 +134,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
     Collection<DomElement> referenceTargetElements = new ArrayList<>();
     for (SOURCE referenceSourceElement : referenceSourceElements) {
       String identifier = getReferenceIdentifier(referenceSourceElement);
-      DomElement referenceTargetElement = document.getElementById(identifier);
+      DomElement referenceTargetElement = identifier != null ? document.getElementById(identifier) : null;
       if (referenceTargetElement != null) {
         referenceTargetElements.add(referenceTargetElement);
       }

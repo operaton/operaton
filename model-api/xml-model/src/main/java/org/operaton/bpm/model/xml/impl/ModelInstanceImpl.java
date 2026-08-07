@@ -115,7 +115,7 @@ public class ModelInstanceImpl implements ModelInstance {
     return model;
   }
 
-  public ModelElementType registerGenericType(String namespaceUri, String localName) {
+  public ModelElementType registerGenericType(@Nullable String namespaceUri, String localName) {
     ModelElementType elementType = model.getTypeForName(namespaceUri, localName);
     if (elementType == null) {
       elementType = modelBuilder.defineGenericType(localName, namespaceUri);

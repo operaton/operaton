@@ -58,8 +58,8 @@ public class XmlQName {
     this(element.getDocument(), element, namespaceUri, localName);
   }
 
-  public XmlQName(DomDocument document, @Nullable DomElement element, @Nullable String namespaceUri, String localName) {
-    this.rootElement = document.getRootElement();
+  public XmlQName(@Nullable DomDocument document, @Nullable DomElement element, @Nullable String namespaceUri, String localName) {
+    this.rootElement = document != null ? document.getRootElement() : null;
     this.element = element;
     this.localName = localName;
     this.namespaceUri = namespaceUri;

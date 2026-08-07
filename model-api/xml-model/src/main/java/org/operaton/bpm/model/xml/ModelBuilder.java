@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.xml;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.impl.ModelBuilderImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
@@ -34,7 +35,7 @@ public abstract class ModelBuilder {
 
   public abstract ModelElementTypeBuilder defineType(Class<? extends ModelElementInstance> modelInstanceType, String typeName);
 
-  public abstract ModelElementType defineGenericType(String typeName, String typeNamespaceUri);
+  public abstract ModelElementType defineGenericType(String typeName, @Nullable String typeNamespaceUri);
 
   public abstract Model build();
 

@@ -48,6 +48,7 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -72,6 +73,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
@@ -103,6 +105,11 @@ class HistoryCleanupTest {
   protected static final String ONE_TASK_PROCESS = "oneTaskProcess";
   protected static final String DECISION = "decision";
   protected static final String ONE_TASK_CASE = "case";
+  protected static final String PARENT_BPMN_HISTORY_CLEANUP_PROCESS_KEY = "parentProcess";
+  protected static final String SUBPROCESS_BPMN_HISTORY_CLEANUP_PROCESS_KEY = "subProcess";
+  protected static final String PARENT_DMN_HISTORY_CLEANUP_PROCESS_KEY = "parentDMNProcess";
+  protected static final String CHILD_DMN_HISTORY_CLEANUP_PROCESS_KEY = "childDmnProcess";
+  protected static final String DECISION_TABLE_HISTORY_CLEANUP_ID = "decisionTable";
 
   private static final int NUMBER_OF_THREADS = 3;
   private static final String USER_ID = "demo";
@@ -150,6 +157,7 @@ class HistoryCleanupTest {
   private ManagementService managementService;
   private CaseService caseService;
   private RepositoryService repositoryService;
+  private TaskService taskService;
   private IdentityService identityService;
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
@@ -1401,6 +1409,113 @@ class HistoryCleanupTest {
     assertThat(cleanupJob.getRetries()).isZero();
   }
 
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupAParentProcess.bpmn20.bpmn",
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupChild.bpmn20.bpmn" })
+  void shouldNotCleanFinishedSubProcessWhenRootProcessIsStillRunning() {
+    setTtlProcessDefinitions(HISTORY_TIME_TO_LIVE, PARENT_BPMN_HISTORY_CLEANUP_PROCESS_KEY,
+        SUBPROCESS_BPMN_HISTORY_CLEANUP_PROCESS_KEY);
+
+    ClockUtil.setCurrentTime(DateUtils.addDays(targetDate, DAYS_IN_THE_PAST));
+    ProcessInstance parentProcessInstance = runtimeService.startProcessInstanceByKey(PARENT_BPMN_HISTORY_CLEANUP_PROCESS_KEY);
+    ProcessInstance subProcessInstance = runtimeService.createProcessInstanceQuery()
+        .processDefinitionKey(SUBPROCESS_BPMN_HISTORY_CLEANUP_PROCESS_KEY)
+        .singleResult();
+
+    completeActiveTask(subProcessInstance.getId());
+    completeActiveTask(subProcessInstance.getId());
+
+    ClockUtil.setCurrentTime(targetDate);
+    runHistoryCleanup(true);
+
+    assertThat(historyService.createHistoricProcessInstanceQuery()
+        .processInstanceId(subProcessInstance.getId())
+        .singleResult()).isNotNull();
+
+    runtimeService.deleteProcessInstance(parentProcessInstance.getId(), null, true, true);
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupAParentProcess.bpmn20.bpmn",
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupChild.bpmn20.bpmn" })
+  void shouldNotCleanFinishedSubProcessBeforeRootProcessTtlIsReached() {
+    setTtlProcessDefinitions(HISTORY_TIME_TO_LIVE, PARENT_BPMN_HISTORY_CLEANUP_PROCESS_KEY,
+        SUBPROCESS_BPMN_HISTORY_CLEANUP_PROCESS_KEY);
+
+    ClockUtil.setCurrentTime(DateUtils.addDays(targetDate, DAYS_IN_THE_PAST));
+    ProcessInstance parentProcessInstance = runtimeService.startProcessInstanceByKey(PARENT_BPMN_HISTORY_CLEANUP_PROCESS_KEY);
+    ProcessInstance subProcessInstance = runtimeService.createProcessInstanceQuery()
+        .processDefinitionKey(SUBPROCESS_BPMN_HISTORY_CLEANUP_PROCESS_KEY)
+        .singleResult();
+
+    completeActiveTask(subProcessInstance.getId());
+    completeActiveTask(subProcessInstance.getId());
+
+    ClockUtil.setCurrentTime(targetDate);
+    completeActiveTask(parentProcessInstance.getId());
+    runHistoryCleanup(true);
+
+    assertThat(historyService.createHistoricProcessInstanceQuery()
+        .processInstanceId(subProcessInstance.getId())
+        .singleResult()).isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupAParentProcess.bpmn20.bpmn",
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupChild.bpmn20.bpmn" })
+  void shouldCleanFinishedSubProcessAfterRootProcessTtlIsReached() {
+    setTtlProcessDefinitions(HISTORY_TIME_TO_LIVE, PARENT_BPMN_HISTORY_CLEANUP_PROCESS_KEY,
+        SUBPROCESS_BPMN_HISTORY_CLEANUP_PROCESS_KEY);
+
+    ClockUtil.setCurrentTime(DateUtils.addDays(targetDate, DAYS_IN_THE_PAST));
+    ProcessInstance parentProcessInstance = runtimeService.startProcessInstanceByKey(PARENT_BPMN_HISTORY_CLEANUP_PROCESS_KEY);
+    ProcessInstance subProcessInstance = runtimeService.createProcessInstanceQuery()
+        .processDefinitionKey(SUBPROCESS_BPMN_HISTORY_CLEANUP_PROCESS_KEY)
+        .singleResult();
+
+    completeActiveTask(subProcessInstance.getId());
+    completeActiveTask(subProcessInstance.getId());
+    completeActiveTask(parentProcessInstance.getId());
+
+    ClockUtil.setCurrentTime(targetDate);
+    runHistoryCleanup(true);
+
+    assertThat(historyService.createHistoricProcessInstanceQuery()
+        .processInstanceId(subProcessInstance.getId())
+        .singleResult()).isNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupDmnParentProcess.bpmn",
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupDmnSubProcess.bpmn",
+      "org/operaton/bpm/engine/test/api/history/HistoryCleanupTest.testEndTimeCleanupDecisionTable.dmn" })
+  void shouldNotCleanDecisionInstanceWhenRootProcessIsStillRunning() {
+    setTtlProcessDefinitions(HISTORY_TIME_TO_LIVE, PARENT_DMN_HISTORY_CLEANUP_PROCESS_KEY,
+        CHILD_DMN_HISTORY_CLEANUP_PROCESS_KEY);
+    setTtlDecisionDefinition(HISTORY_TIME_TO_LIVE, DECISION_TABLE_HISTORY_CLEANUP_ID);
+
+    ClockUtil.setCurrentTime(DateUtils.addDays(targetDate, DAYS_IN_THE_PAST));
+    ProcessInstance parentProcessInstance = runtimeService.startProcessInstanceByKey(PARENT_DMN_HISTORY_CLEANUP_PROCESS_KEY,
+        Variables.createVariables().putValue("inputVariable", "A"));
+
+    HistoricDecisionInstance decisionInstance = historyService.createHistoricDecisionInstanceQuery()
+        .decisionDefinitionKey(DECISION_TABLE_HISTORY_CLEANUP_ID)
+        .singleResult();
+
+    ClockUtil.setCurrentTime(targetDate);
+    runHistoryCleanup(true);
+
+    assertThat(historyService.createHistoricDecisionInstanceQuery()
+        .decisionInstanceId(decisionInstance.getId())
+        .singleResult()).isNotNull();
+
+    runtimeService.deleteProcessInstance(parentProcessInstance.getId(), null, true, true);
+  }
+
 
   private Date getNextRunWithinBatchWindow(Date currentTime) {
     return processEngineConfiguration.getBatchWindowManager().getNextBatchWindow(currentTime, processEngineConfiguration).getStart();
@@ -1409,6 +1524,32 @@ class HistoryCleanupTest {
   private HistoryCleanupJobHandlerConfiguration getConfiguration(JobEntity jobEntity) {
     String jobHandlerConfigurationRaw = jobEntity.getJobHandlerConfigurationRaw();
     return HistoryCleanupJobHandlerConfiguration.fromJson(JsonUtil.asObject(jobHandlerConfigurationRaw));
+  }
+
+  private void setTtlProcessDefinitions(Integer timeToLive, String... processDefinitionKeys) {
+    for (String processDefinitionKey : processDefinitionKeys) {
+      List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
+          .processDefinitionKey(processDefinitionKey)
+          .list();
+      assertThat(processDefinitions).hasSize(1);
+      repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitions.get(0).getId(), timeToLive);
+    }
+  }
+
+  private void setTtlDecisionDefinition(Integer timeToLive, String decisionDefinitionKey) {
+    List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery()
+        .decisionDefinitionKey(decisionDefinitionKey)
+        .list();
+    assertThat(decisionDefinitions).hasSize(1);
+    repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitions.get(0).getId(), timeToLive);
+  }
+
+  private void completeActiveTask(String processInstanceId) {
+    Task task = taskService.createTaskQuery()
+        .processInstanceId(processInstanceId)
+        .singleResult();
+    assertThat(task).isNotNull();
+    taskService.complete(task.getId());
   }
 
   private void prepareData(int instanceCount) {

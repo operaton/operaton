@@ -246,7 +246,7 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Set up Java
-        uses: actions/setup-java@v5.6.0
+        uses: actions/setup-java@v5.7.0
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
@@ -380,7 +380,7 @@ jobs:
         if: needs.build.result == 'success'
         run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
       - name: Set up Java
-        uses: actions/setup-java@v5.6.0
+        uses: actions/setup-java@v5.7.0
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
@@ -448,7 +448,7 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Set up Java
-        uses: actions/setup-java@v5.6.0
+        uses: actions/setup-java@v5.7.0
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -517,7 +517,7 @@ jobs:
         uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 1
-      - uses: actions/setup-java@v5.6.0
+      - uses: actions/setup-java@v5.7.0
         with:
           distribution: zulu
           java-version: 17

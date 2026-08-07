@@ -22,13 +22,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
@@ -36,6 +39,8 @@ import org.operaton.bpm.engine.repository.DeploymentQuery;
 import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
 import org.operaton.bpm.engine.rest.DeploymentRestService;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
+import org.operaton.bpm.engine.rest.dto.repository.DeleteDeploymentResponse;
+import org.operaton.bpm.engine.rest.dto.repository.DeleteDeploymentsDto;
 import org.operaton.bpm.engine.rest.dto.repository.DeploymentDto;
 import org.operaton.bpm.engine.rest.dto.repository.DeploymentQueryDto;
 import org.operaton.bpm.engine.rest.dto.repository.DeploymentWithDefinitionsDto;
@@ -47,6 +52,8 @@ import org.operaton.bpm.engine.rest.sub.repository.impl.DeploymentResourceImpl;
 import org.operaton.bpm.engine.rest.util.QueryUtil;
 
 public class DeploymentRestServiceImpl extends AbstractRestProcessEngineAware implements DeploymentRestService {
+
+  protected static final int MULTI_STATUS_CODE = 207;
 
   public static final String DEPLOYMENT_NAME = "deployment-name";
   public static final String DEPLOYMENT_ACTIVATION_TIME = "deployment-activation-time";
@@ -198,5 +205,48 @@ public class DeploymentRestServiceImpl extends AbstractRestProcessEngineAware im
   @Override
   public Set<String> getRegisteredDeployments(final UriInfo uriInfo) {
     return getProcessEngine().getManagementService().getRegisteredDeployments();
+  }
+
+  @Override
+  public Response deleteDeployments(DeleteDeploymentsDto deleteDeploymentsDto) {
+    if (deleteDeploymentsDto == null || deleteDeploymentsDto.getDeploymentIds() == null) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, "No deployment ids provided.");
+    }
+
+    boolean cascade = deleteDeploymentsDto.isCascade();
+    boolean skipCustomListeners = deleteDeploymentsDto.isSkipCustomListeners();
+    boolean skipIoMappings = deleteDeploymentsDto.isSkipIoMappings();
+
+    List<DeleteDeploymentResponse> responses = deleteDeploymentsDto.getDeploymentIds()
+      .stream()
+      .map(deploymentId -> deleteDeployment(deploymentId, cascade, skipCustomListeners, skipIoMappings))
+      .collect(Collectors.toList());
+
+    boolean hasFailures = responses.stream().anyMatch(DeleteDeploymentResponse::hasFailed);
+
+    if (hasFailures) {
+      return Response.status(MULTI_STATUS_CODE).entity(responses).build();
+    }
+
+    return Response.status(Status.OK).entity(responses).build();
+  }
+
+  private DeleteDeploymentResponse deleteDeployment(String deploymentId, boolean cascade, boolean skipCustomListeners, boolean skipIoMappings) {
+    RepositoryService repositoryService = getProcessEngine().getRepositoryService();
+
+    try {
+      verifyDeploymentExists(deploymentId, repositoryService);
+      repositoryService.deleteDeployment(deploymentId, cascade, skipCustomListeners, skipIoMappings);
+      return new DeleteDeploymentResponse(deploymentId, DeleteDeploymentResponse.SUCCESS, null);
+    } catch (Exception e) {
+      return new DeleteDeploymentResponse(deploymentId, DeleteDeploymentResponse.FAILURE, e.getMessage());
+    }
+  }
+
+  private void verifyDeploymentExists(String deploymentId, RepositoryService repositoryService) {
+    Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(deploymentId).singleResult();
+    if (deployment == null) {
+      throw new InvalidRequestException(Status.NOT_FOUND, "Deployment with id '%s' does not exist".formatted(deploymentId));
+    }
   }
 }

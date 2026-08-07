@@ -1,0 +1,39 @@
+{
+  "engine": {
+    "url": "http://localhost:8084/engine-rest",
+    "auth": { "username": "demo", "password": "demo" }
+  },
+  "seed": 42,
+  "businessKeyPrefix": "loadgen-",
+  "spawner": {
+    "instancesPerMinute": 60,
+    "weights": {
+      "orderFulfillment": 50,
+      "insuranceClaim": 15,
+      "loanApproval": 25,
+      "documentReview": 10
+    }
+  },
+  "userTaskCompleter": {
+    "pollIntervalMs": 2000,
+    "completionDelayMedianMs": 8000,
+    "completionDelaySigma": 1.4,
+    "stallProbability": 0.05
+  },
+  "externalTask": {
+    "lockDurationMs": 30000,
+    "maxTasksPerFetch": 20,
+    "pollIntervalMs": 500,
+    "failureRatePerTopic": {
+      "default": 0.01,
+      "credit-check": 0.02,
+      "charge-payment": 0.03
+    }
+  },
+  "messageDispatcher": {
+    "intervalMs": 5000,
+    "messages": {
+      "loan-application-received": { "weight": 1, "vars": { "amount": "random:int:1000:50000", "credit": "random:enum:good,fair,poor" } }
+    }
+  }
+}

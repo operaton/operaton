@@ -636,6 +636,7 @@
         <module>engine-spring</module>
         <module>engine-rest</module>
         <module>webapps</module>
+        <module>webapps-neo</module>
         <module>examples</module>
         <module>engine-plugins</module>
         <module>distro/jboss</module>
@@ -667,6 +668,7 @@
         <module>engine-spring</module>
         <module>engine-rest</module>
         <module>webapps</module>
+        <module>webapps-neo</module>
         <module>examples</module>
         <module>engine-plugins</module>
         <module>distro/sql-script</module>
@@ -702,6 +704,15 @@
       </activation>
       <modules>
         <module>distro/webjar</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>distro-webjar-neo</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>        
+        <module>distro/webjar-neo</module>
       </modules>
     </profile>
     <profile>
@@ -765,8 +776,10 @@
         <module>freemarker-template-engine</module>
         <module>jakarta-ee/ejb-client</module>
         <module>webapps</module>
+        <module>webapps-neo</module>
         <module>engine-plugins</module>
         <module>distro/webjar</module>
+        <module>distro/webjar-neo</module>
         <module>distro/sql-script</module>
         <module>clients/java</module>
         <module>test-utils/junit5-extension</module>

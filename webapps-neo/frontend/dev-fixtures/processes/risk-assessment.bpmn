@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_RiskAssessment"
+                  targetNamespace="http://operaton.org/dev-fixtures">
+  <bpmn:process id="riskAssessment" name="Risk Assessment" isExecutable="true" camunda:historyTimeToLive="P30D">
+    <bpmn:startEvent id="StartEvent_Begin">
+      <bpmn:outgoing>Flow_StartToAssess</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:serviceTask id="ServiceTask_RiskAssess" name="Assess risk"
+                      camunda:type="external" camunda:topic="risk-assess">
+      <bpmn:incoming>Flow_StartToAssess</bpmn:incoming>
+      <bpmn:outgoing>Flow_AssessToGw</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="Gateway_HighRisk" name="High risk?" default="Flow_Auto">
+      <bpmn:incoming>Flow_AssessToGw</bpmn:incoming>
+      <bpmn:outgoing>Flow_Auto</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ManualReview</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:userTask id="UserTask_HighRiskReview" name="Manual high-risk review"
+                   camunda:assignee="demo">
+      <bpmn:incoming>Flow_ManualReview</bpmn:incoming>
+      <bpmn:outgoing>Flow_ManualToJoin</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:exclusiveGateway id="Gateway_Join">
+      <bpmn:incoming>Flow_Auto</bpmn:incoming>
+      <bpmn:incoming>Flow_ManualToJoin</bpmn:incoming>
+      <bpmn:outgoing>Flow_JoinToEnd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:endEvent id="EndEvent_Done" name="Assessed">
+      <bpmn:incoming>Flow_JoinToEnd</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_StartToAssess" sourceRef="StartEvent_Begin" targetRef="ServiceTask_RiskAssess" />
+    <bpmn:sequenceFlow id="Flow_AssessToGw" sourceRef="ServiceTask_RiskAssess" targetRef="Gateway_HighRisk" />
+    <bpmn:sequenceFlow id="Flow_Auto" sourceRef="Gateway_HighRisk" targetRef="Gateway_Join" />
+    <bpmn:sequenceFlow id="Flow_ManualReview" sourceRef="Gateway_HighRisk" targetRef="UserTask_HighRiskReview">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${risk == "high"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_ManualToJoin" sourceRef="UserTask_HighRiskReview" targetRef="Gateway_Join" />
+    <bpmn:sequenceFlow id="Flow_JoinToEnd" sourceRef="Gateway_Join" targetRef="EndEvent_Done" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_RiskAssessment">
+    <bpmndi:BPMNPlane id="BPMNPlane_RiskAssessment" bpmnElement="riskAssessment">
+      <bpmndi:BPMNShape id="StartEvent_Begin_di" bpmnElement="StartEvent_Begin">
+        <dc:Bounds x="120" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_RiskAssess_di" bpmnElement="ServiceTask_RiskAssess">
+        <dc:Bounds x="220" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_HighRisk_di" bpmnElement="Gateway_HighRisk" isMarkerVisible="true">
+        <dc:Bounds x="375" y="173" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_HighRiskReview_di" bpmnElement="UserTask_HighRiskReview">
+        <dc:Bounds x="480" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Join_di" bpmnElement="Gateway_Join" isMarkerVisible="true">
+        <dc:Bounds x="635" y="173" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Done_di" bpmnElement="EndEvent_Done">
+        <dc:Bounds x="742" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_StartToAssess_di" bpmnElement="Flow_StartToAssess">
+        <di:waypoint x="156" y="198" /><di:waypoint x="220" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_AssessToGw_di" bpmnElement="Flow_AssessToGw">
+        <di:waypoint x="320" y="198" /><di:waypoint x="375" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Auto_di" bpmnElement="Flow_Auto">
+        <di:waypoint x="425" y="198" /><di:waypoint x="635" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ManualReview_di" bpmnElement="Flow_ManualReview">
+        <di:waypoint x="400" y="173" /><di:waypoint x="400" y="120" /><di:waypoint x="480" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ManualToJoin_di" bpmnElement="Flow_ManualToJoin">
+        <di:waypoint x="580" y="120" /><di:waypoint x="660" y="120" /><di:waypoint x="660" y="173" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_JoinToEnd_di" bpmnElement="Flow_JoinToEnd">
+        <di:waypoint x="685" y="198" /><di:waypoint x="742" y="198" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

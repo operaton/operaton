@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+  version="3.0"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+  <!-- development web.xml -->
+  <display-name>Operaton webapp</display-name>
+
+  <!-- http session mutex listener -->
+  <listener>
+    <listener-class>org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener</listener-class>
+  </listener>
+
+  <session-config>
+    <cookie-config>
+      <http-only>true</http-only>
+      <secure>false</secure>
+    </cookie-config>
+  </session-config>
+
+  <!-- Container Based Authentication filter -->
+  <!-- <filter>
+    <filter-name>Container Based Authentication Filter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter</filter-class>
+    <init-param>
+      <param-name>authentication-provider</param-name>
+      <param-value>org.operaton.bpm.engine.rest.security.auth.impl.ContainerBasedAuthenticationProvider</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Container Based Authentication Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping> -->
+
+  <!-- Authentication filter -->
+  <filter>
+    <filter-name>Authentication Filter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter</filter-class>
+    <!-- See https://docs.operaton.org/manual/latest/webapps/shared-options/authentication/#cache -->
+    <init-param>
+      <param-name>cacheTimeToLive</param-name>
+      <param-value>300000</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Authentication Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- Security filter -->
+  <filter>
+    <filter-name>SecurityFilter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.impl.security.filter.SecurityFilter</filter-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>/WEB-INF/securityFilterRules.json</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- CSRF Prevention filter -->
+  <filter>
+    <filter-name>CsrfPreventionFilter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter</filter-class>
+    <!--<init-param>-->
+      <!--<param-name>targetOrigin</param-name>-->
+      <!--<param-value>http://localhost:8080</param-value>-->
+    <!--</init-param>-->
+  </filter>
+  <filter-mapping>
+    <filter-name>CsrfPreventionFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- HTTP Header Security Filter -->
+  <filter>
+    <filter-name>HttpHeaderSecurity</filter-name>
+    <filter-class>org.operaton.bpm.webapp.impl.security.filter.headersec.HttpHeaderSecurityFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>HttpHeaderSecurity</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- Empty body filter -->
+  <filter>
+    <filter-name>EmptyBodyFilter</filter-name>
+    <filter-class>org.operaton.bpm.engine.rest.filter.EmptyBodyFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EmptyBodyFilter</filter-name>
+    <url-pattern>/api/*</url-pattern>
+  </filter-mapping>
+
+  <!-- REST cache control filter -->
+  <filter>
+    <filter-name>CacheControlFilter</filter-name>
+    <filter-class>org.operaton.bpm.engine.rest.filter.CacheControlFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CacheControlFilter</filter-name>
+    <url-pattern>/api/*</url-pattern>
+  </filter-mapping>
+
+  <!-- default error page -->
+  <error-page>
+    <!-- Missing resource -->
+    <error-code>404</error-code>
+    <location>/error-404-page.html</location>
+  </error-page>
+  <error-page>
+    <!-- Uncaught exception -->
+    <error-code>500</error-code>
+    <location>/error-500-page.html</location>
+  </error-page>
+</web-app>

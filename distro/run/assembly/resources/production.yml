@@ -6,6 +6,12 @@ operaton.bpm:
 # https://docs.operaton.org/docs/documentation/user-guide/security/#http-header-security-in-webapps
 # https://docs.operaton.org/docs/documentation/webapps/shared-options/header-security/
   webapp:
+    # The new web apps (webapps-neo) are served at the application root (/) and
+    # are DISABLED by default. Enable them with the
+    # OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS environment variable set to "true".
+    # The legacy web apps remain available at /operaton/app by default.
+    neo:
+      enabled: ${OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS:false}
     csrf:
       enable-same-site-cookie: true
       same-site-cookie-option: STRICT

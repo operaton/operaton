@@ -1,0 +1,17 @@
+{
+  "name": "operaton-dev-fixtures",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Synthetic load and process fixtures for local Operaton development.",
+  "scripts": {
+    "deploy": "node deploy.js",
+    "bot": "node bot.js",
+    "spawn": "node spawn.js",
+    "stress": "node stress.js",
+    "server": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

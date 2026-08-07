@@ -1,0 +1,67 @@
+## Deployment: Operaton (Spring Boot + Keycloak JWT) + Keycloak + Web Apps (nginx)
+##
+## Usage:
+##   docker compose -f docker-compose-deploy.yaml up --build
+##   podman compose -f docker-compose-deploy.yaml up --build
+##
+## Services:
+##   - web-apps:  http://localhost:1111   (SPA + API proxy via nginx)
+##   - operaton:  http://localhost:8084   (Operaton engine REST API)
+##   - keycloak:  http://localhost:8888   (Keycloak admin console)
+##
+## Default credentials:
+##   Keycloak admin:   admin / admin
+##   Operaton user:    demo / demo  (authenticated via Keycloak)
+
+services:
+  operaton:
+    build:
+      context: ./operaton
+      dockerfile: Dockerfile
+    environment:
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_REALM=operaton
+      - KEYCLOAK_CLIENT_ID=operaton-identity-service
+      - KEYCLOAK_CLIENT_SECRET=operaton-identity-secret
+    ports:
+      - "8084:8080"
+    restart: on-failure
+    depends_on:
+      keycloak:
+        condition: service_healthy
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_HEALTH_ENABLED=true
+    command: start-dev --import-realm
+    volumes:
+      - ./keycloak/operaton-realm.json:/opt/keycloak/data/import/operaton-realm.json:z
+    ports:
+      - "8888:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+
+  web-apps:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASSET_DIR=/var/www/html
+      - APP_PREFIX=DOCKER_RUN_PLACEHOLDER_
+      - DOCKER_RUN_PLACEHOLDER_BACKEND=[{\\"name\\":\\"Operaton\\",\\"url\\":\\"http://localhost:1111\\"}]
+      - DOCKER_RUN_PLACEHOLDER_AUTH_MODE=oauth
+      - DOCKER_RUN_PLACEHOLDER_OAUTH_AUTHORITY=http://localhost:8888/realms/operaton
+      - DOCKER_RUN_PLACEHOLDER_OAUTH_CLIENT_ID=operaton-web-apps
+      - DOCKER_RUN_PLACEHOLDER_OAUTH_REDIRECT_URI=http://localhost:1111/
+    ports:
+      - "1111:80"
+    depends_on:
+      - operaton
+      - keycloak

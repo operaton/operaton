@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_LoanApproval"
+                  targetNamespace="http://operaton.org/dev-fixtures">
+  <bpmn:message id="Message_LoanApp" name="loan-application-received" />
+  <bpmn:signal id="Signal_DecisionMade" name="loan-decision-made" />
+
+  <bpmn:process id="loanApproval" name="Loan Approval" isExecutable="true" camunda:historyTimeToLive="P30D">
+    <bpmn:startEvent id="StartEvent_App" name="Application received">
+      <bpmn:outgoing>Flow_StartToCredit</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MsgDef_App" messageRef="Message_LoanApp" />
+    </bpmn:startEvent>
+
+    <bpmn:serviceTask id="ServiceTask_Credit" name="Credit check"
+                      camunda:type="external" camunda:topic="credit-check">
+      <bpmn:incoming>Flow_StartToCredit</bpmn:incoming>
+      <bpmn:outgoing>Flow_CreditToReviewers</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:subProcess id="SubProcess_Reviewers" name="Reviewers (parallel)">
+      <bpmn:incoming>Flow_CreditToReviewers</bpmn:incoming>
+      <bpmn:outgoing>Flow_ReviewersToCall</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="false">
+        <bpmn:loopCardinality>3</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:startEvent id="StartEvent_Reviewer">
+        <bpmn:outgoing>Flow_ReviewerStart</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="UserTask_Reviewer" name="Review (${loopCounter})"
+                     camunda:assignee="demo"
+                     camunda:formKey="camunda-forms:deployment:loan-reviewer.form">
+        <bpmn:incoming>Flow_ReviewerStart</bpmn:incoming>
+        <bpmn:outgoing>Flow_ReviewerEnd</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:endEvent id="EndEvent_Reviewer">
+        <bpmn:incoming>Flow_ReviewerEnd</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_ReviewerStart" sourceRef="StartEvent_Reviewer" targetRef="UserTask_Reviewer" />
+      <bpmn:sequenceFlow id="Flow_ReviewerEnd" sourceRef="UserTask_Reviewer" targetRef="EndEvent_Reviewer" />
+    </bpmn:subProcess>
+
+    <bpmn:callActivity id="CallActivity_Risk" name="Risk Assessment"
+                       calledElement="riskAssessment">
+      <bpmn:extensionElements>
+        <camunda:in source="amount" target="amount" />
+        <camunda:in source="credit" target="credit" />
+        <camunda:out source="risk" target="risk" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_ReviewersToCall</bpmn:incoming>
+      <bpmn:outgoing>Flow_CallToFinal</bpmn:outgoing>
+    </bpmn:callActivity>
+
+    <bpmn:userTask id="UserTask_FinalDecision" name="Final decision"
+                   camunda:assignee="demo"
+                   camunda:formKey="camunda-forms:deployment:loan-final-decision.form">
+      <bpmn:incoming>Flow_CallToFinal</bpmn:incoming>
+      <bpmn:outgoing>Flow_FinalToEnd</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:endEvent id="EndEvent_DecisionMade" name="Decision made">
+      <bpmn:incoming>Flow_FinalToEnd</bpmn:incoming>
+      <bpmn:signalEventDefinition id="SigDef_DecisionMade" signalRef="Signal_DecisionMade" />
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_StartToCredit" sourceRef="StartEvent_App" targetRef="ServiceTask_Credit" />
+    <bpmn:sequenceFlow id="Flow_CreditToReviewers" sourceRef="ServiceTask_Credit" targetRef="SubProcess_Reviewers" />
+    <bpmn:sequenceFlow id="Flow_ReviewersToCall" sourceRef="SubProcess_Reviewers" targetRef="CallActivity_Risk" />
+    <bpmn:sequenceFlow id="Flow_CallToFinal" sourceRef="CallActivity_Risk" targetRef="UserTask_FinalDecision" />
+    <bpmn:sequenceFlow id="Flow_FinalToEnd" sourceRef="UserTask_FinalDecision" targetRef="EndEvent_DecisionMade" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_LoanApproval">
+    <bpmndi:BPMNPlane id="BPMNPlane_LoanApproval" bpmnElement="loanApproval">
+      <bpmndi:BPMNShape id="StartEvent_App_di" bpmnElement="StartEvent_App">
+        <dc:Bounds x="120" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_Credit_di" bpmnElement="ServiceTask_Credit">
+        <dc:Bounds x="220" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_Reviewers_di" bpmnElement="SubProcess_Reviewers" isExpanded="false">
+        <dc:Bounds x="380" y="158" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Risk_di" bpmnElement="CallActivity_Risk">
+        <dc:Bounds x="560" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_FinalDecision_di" bpmnElement="UserTask_FinalDecision">
+        <dc:Bounds x="720" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_DecisionMade_di" bpmnElement="EndEvent_DecisionMade">
+        <dc:Bounds x="880" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_StartToCredit_di" bpmnElement="Flow_StartToCredit">
+        <di:waypoint x="156" y="198" /><di:waypoint x="220" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CreditToReviewers_di" bpmnElement="Flow_CreditToReviewers">
+        <di:waypoint x="320" y="198" /><di:waypoint x="380" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ReviewersToCall_di" bpmnElement="Flow_ReviewersToCall">
+        <di:waypoint x="500" y="198" /><di:waypoint x="560" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CallToFinal_di" bpmnElement="Flow_CallToFinal">
+        <di:waypoint x="660" y="198" /><di:waypoint x="720" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_FinalToEnd_di" bpmnElement="Flow_FinalToEnd">
+        <di:waypoint x="820" y="198" /><di:waypoint x="880" y="198" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

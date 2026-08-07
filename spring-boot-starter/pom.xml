@@ -42,6 +42,8 @@
         <module>starter-client/spring-boot</module>
         <module>starter-webapp-core</module>
         <module>starter-webapp</module>
+        <module>starter-webapp-neo</module>
+        <module>starter-webapp-neo-core</module>
         <module>starter-qa</module>
       </modules>
     </profile>
@@ -53,6 +55,8 @@
       <modules>
         <module>starter-webapp-core</module>
         <module>starter-webapp</module>
+        <module>starter-webapp-neo-core</module>
+        <module>starter-webapp-neo</module>
         <module>starter-qa</module>
       </modules>
     </profile>
@@ -66,6 +70,7 @@
         <module>starter-security</module>
         <module>starter-client/spring-boot</module>
         <module>starter-webapp-core</module>
+        <module>starter-webapp-neo-core</module>
       </modules>
       <build>
         <plugins>

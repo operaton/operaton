@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  id="Definitions_DocumentReview"
+                  targetNamespace="http://operaton.org/dev-fixtures">
+  <bpmn:message id="Message_ReviewCompleted" name="document-review-completed" />
+  <bpmn:signal id="Signal_ReviewCancelled" name="document-review-cancelled" />
+
+  <bpmn:process id="documentReview" name="Document Review" isExecutable="true" camunda:historyTimeToLive="P30D">
+    <bpmn:startEvent id="StartEvent_Begin" name="Document submitted">
+      <bpmn:outgoing>Flow_StartToRequest</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:userTask id="UserTask_RequestReview" name="Request review" camunda:assignee="demo">
+      <bpmn:incoming>Flow_StartToRequest</bpmn:incoming>
+      <bpmn:outgoing>Flow_RequestToGw</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:eventBasedGateway id="Gateway_AwaitOutcome">
+      <bpmn:incoming>Flow_RequestToGw</bpmn:incoming>
+      <bpmn:outgoing>Flow_GwToTimer</bpmn:outgoing>
+      <bpmn:outgoing>Flow_GwToMessage</bpmn:outgoing>
+      <bpmn:outgoing>Flow_GwToSignal</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+
+    <bpmn:intermediateCatchEvent id="Event_TimerTimeout" name="Timeout (24h)">
+      <bpmn:incoming>Flow_GwToTimer</bpmn:incoming>
+      <bpmn:outgoing>Flow_TimerToEnd</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerDef_Timeout">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression"
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">PT24H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+
+    <bpmn:intermediateCatchEvent id="Event_MessageOk" name="Review completed">
+      <bpmn:incoming>Flow_GwToMessage</bpmn:incoming>
+      <bpmn:outgoing>Flow_MessageToEnd</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MsgDef_Ok" messageRef="Message_ReviewCompleted" />
+    </bpmn:intermediateCatchEvent>
+
+    <bpmn:intermediateCatchEvent id="Event_SignalCancel" name="Cancelled">
+      <bpmn:incoming>Flow_GwToSignal</bpmn:incoming>
+      <bpmn:outgoing>Flow_SignalToEnd</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SigDef_Cancel" signalRef="Signal_ReviewCancelled" />
+    </bpmn:intermediateCatchEvent>
+
+    <bpmn:endEvent id="EndEvent_TimedOut" name="Timed out">
+      <bpmn:incoming>Flow_TimerToEnd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_Reviewed" name="Reviewed">
+      <bpmn:incoming>Flow_MessageToEnd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_Cancelled" name="Cancelled">
+      <bpmn:incoming>Flow_SignalToEnd</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_StartToRequest" sourceRef="StartEvent_Begin" targetRef="UserTask_RequestReview" />
+    <bpmn:sequenceFlow id="Flow_RequestToGw" sourceRef="UserTask_RequestReview" targetRef="Gateway_AwaitOutcome" />
+    <bpmn:sequenceFlow id="Flow_GwToTimer" sourceRef="Gateway_AwaitOutcome" targetRef="Event_TimerTimeout" />
+    <bpmn:sequenceFlow id="Flow_GwToMessage" sourceRef="Gateway_AwaitOutcome" targetRef="Event_MessageOk" />
+    <bpmn:sequenceFlow id="Flow_GwToSignal" sourceRef="Gateway_AwaitOutcome" targetRef="Event_SignalCancel" />
+    <bpmn:sequenceFlow id="Flow_TimerToEnd" sourceRef="Event_TimerTimeout" targetRef="EndEvent_TimedOut" />
+    <bpmn:sequenceFlow id="Flow_MessageToEnd" sourceRef="Event_MessageOk" targetRef="EndEvent_Reviewed" />
+    <bpmn:sequenceFlow id="Flow_SignalToEnd" sourceRef="Event_SignalCancel" targetRef="EndEvent_Cancelled" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_DocumentReview">
+    <bpmndi:BPMNPlane id="BPMNPlane_DocumentReview" bpmnElement="documentReview">
+      <bpmndi:BPMNShape id="StartEvent_Begin_di" bpmnElement="StartEvent_Begin">
+        <dc:Bounds x="120" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_RequestReview_di" bpmnElement="UserTask_RequestReview">
+        <dc:Bounds x="220" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_AwaitOutcome_di" bpmnElement="Gateway_AwaitOutcome">
+        <dc:Bounds x="375" y="173" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_TimerTimeout_di" bpmnElement="Event_TimerTimeout">
+        <dc:Bounds x="490" y="80" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_MessageOk_di" bpmnElement="Event_MessageOk">
+        <dc:Bounds x="490" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_SignalCancel_di" bpmnElement="Event_SignalCancel">
+        <dc:Bounds x="490" y="280" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_TimedOut_di" bpmnElement="EndEvent_TimedOut">
+        <dc:Bounds x="600" y="80" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Reviewed_di" bpmnElement="EndEvent_Reviewed">
+        <dc:Bounds x="600" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Cancelled_di" bpmnElement="EndEvent_Cancelled">
+        <dc:Bounds x="600" y="280" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_StartToRequest_di" bpmnElement="Flow_StartToRequest">
+        <di:waypoint x="156" y="198" /><di:waypoint x="220" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_RequestToGw_di" bpmnElement="Flow_RequestToGw">
+        <di:waypoint x="320" y="198" /><di:waypoint x="375" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_GwToTimer_di" bpmnElement="Flow_GwToTimer">
+        <di:waypoint x="400" y="173" /><di:waypoint x="400" y="98" /><di:waypoint x="490" y="98" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_GwToMessage_di" bpmnElement="Flow_GwToMessage">
+        <di:waypoint x="425" y="198" /><di:waypoint x="490" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_GwToSignal_di" bpmnElement="Flow_GwToSignal">
+        <di:waypoint x="400" y="223" /><di:waypoint x="400" y="298" /><di:waypoint x="490" y="298" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TimerToEnd_di" bpmnElement="Flow_TimerToEnd">
+        <di:waypoint x="526" y="98" /><di:waypoint x="600" y="98" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_MessageToEnd_di" bpmnElement="Flow_MessageToEnd">
+        <di:waypoint x="526" y="198" /><di:waypoint x="600" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SignalToEnd_di" bpmnElement="Flow_SignalToEnd">
+        <di:waypoint x="526" y="298" /><di:waypoint x="600" y="298" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

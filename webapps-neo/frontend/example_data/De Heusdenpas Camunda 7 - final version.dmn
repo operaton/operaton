@@ -1,0 +1,2073 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="heusdenpas_drd" name="Heusdenpas" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.36.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <decision id="HeusdenpasAanvraag" name="Heusdenpas aanvraag" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_08c0sdt">
+      <requiredDecision href="#HeusdenpasGoTime" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0pnv41d">
+      <requiredDecision href="#HeusdenKnockoffs" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1gehe8y">
+      <requiredInput href="#InputData_0ixx5bi" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0x5l5t5">
+      <requiredDecision href="#BijstandsnormBedragen" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0o3dbt7" hitPolicy="ANY">
+      <input id="Input_1" label="Een knockoff voor de Heusdenpas is van toepassing">
+        <inputExpression id="InputExpression_1" typeRef="boolean">
+          <text>heusdenPasKnockoff</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1vr55hu" label="Een automatische toekenning voor de Heusdenpas is van toepassing" biodi:width="247">
+        <inputExpression id="LiteralExpression_16z5m3v" typeRef="boolean">
+          <text>automatischeToekenningHeusdenpas</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1obe4rs" label="Het maandelijkse bruto inkomen van de aanvrager is maximaal 1.1 maal de Bijstandsnorm" biodi:width="270">
+        <inputExpression id="LiteralExpression_0e7v0qd" typeRef="boolean">
+          <text>maandelijksBrutoInkomenAanvrager &lt;= 1.1 * bijstandsNorm</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="De aanvrager komt in aanmerking voor de Heusdenpas" name="aanmerkingHeusdenPas" typeRef="boolean" />
+      <rule id="DecisionRule_1anxrsz">
+        <description>Als er een knockoff is, geen Heusdenpas</description>
+        <inputEntry id="UnaryTests_0hwuiw4">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vah6go">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cwz7dw">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ho7ae5">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0fbgu5n">
+        <description>Anders wel Heusdenpas bij automatische toewijzing</description>
+        <inputEntry id="UnaryTests_0a8hxt3">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0l4uyct">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1paql0j">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0faxfxv">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1gddvof">
+        <description>Anders wel Heusdenpas indien inkomensnorm niet overschreden</description>
+        <inputEntry id="UnaryTests_0l6f4zk">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tl8aky">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nprk8z">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0rgrbj6">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_16t5tuf">
+        <description>Anders geen Heusdenpas</description>
+        <inputEntry id="UnaryTests_134t7nu">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16c67tc">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vearag">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0wxwuav">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="HeusdenpasAanvraagKindpakket" name="Heusdenpas aanvraag Kindpakket" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_091ys1f">
+      <requiredInput href="#InputData_1579tjl" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1sg8ek4">
+      <requiredInput href="#InputData_1tqi478" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0rsif9g">
+      <requiredInput href="#InputData_0362rj3" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1co0yzs">
+      <requiredDecision href="#BijstandsnormBedragen" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0o0gvwu" hitPolicy="ANY">
+      <input id="InputClause_1jz5320" label="De aanvrager is een inwoner van Heusden">
+        <inputExpression id="LiteralExpression_0304v57" typeRef="boolean">
+          <text>aanvragerInwonerHeusden</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1y5e6ag" label="De aanvrager heeft een inwonend kind van 4 tm 17 jaar oud">
+        <inputExpression id="LiteralExpression_1hfo47z" typeRef="boolean">
+          <text>aanvragerHeeftKind4Tm17</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0zz3iuk" label="Het inkomen van de aanvrager is maximaal 1.2 keer de basisnorm">
+        <inputExpression id="LiteralExpression_0no49cs" typeRef="boolean">
+          <text>maandelijksBrutoInkomenAanvrager &lt;= 1.2 * bijstandsNorm</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0edhm3o" label="De aanvraag voor het Kindpakket is succesvol " name="aanmerkingKindPakket" typeRef="boolean" />
+      <rule id="DecisionRule_0jxl1zj">
+        <description>Geen Kindpakket indien de aanvrager geen inwoner van Heusden is</description>
+        <inputEntry id="UnaryTests_06rai5r">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1j4qyqi">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06wvtdz">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ueiyti">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jl6pdo">
+        <description>Geen Kindpakket indien de aanvrager geen inwonend kind heeft van 4 t/m 17 jaar oud</description>
+        <inputEntry id="UnaryTests_1hq43i5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ehpbhk">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_023ikt8">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0q9hqmz">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1saj8i2">
+        <description>Geen Kindpakket indien inkomensnorm niet overschreden</description>
+        <inputEntry id="UnaryTests_1j80pmv">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1mwobyi">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f5lzts">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1w5i70y">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1gksqpa">
+        <description>Wel Kindpakket indien de aanvrager aan alle 3 de voorwaarden voldoet</description>
+        <inputEntry id="UnaryTests_09ico4a">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0m8e6xy">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0scdecq">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1y8klt7">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Bijstandsnorm" name="Bijstandsnormtype" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_1sm7odr">
+      <requiredDecision href="#leeftijdsgrenzen" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1j2r41w">
+      <requiredInput href="#InputData_0l5qje2" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0jvbyzs">
+      <requiredInput href="#InputData_1buwq6q" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0obeb87">
+      <input id="InputClause_1u8jh1y" label="Aanvrager alleenstaand">
+        <inputExpression id="LiteralExpression_03vbngz" typeRef="boolean">
+          <text>aanvragerAlleenstaand</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1v2jxla" label="Aanvrager heeft kinderen">
+        <inputExpression id="LiteralExpression_0w2363r" typeRef="boolean">
+          <text>aanvragerHeeftKinderen</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1sn9v01" label="de aanvrager is 18, 19 of 20 jaar oud">
+        <inputExpression id="LiteralExpression_162o4jq" typeRef="boolean">
+          <text>aanvragerIs181920</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_119x1p2" label="de aanvrager is tenminste 21">
+        <inputExpression id="LiteralExpression_0mlwwic" typeRef="boolean">
+          <text>aanvragerIsTenminste21</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0eocu61" label="de aanvrager heeft de AOW-leeftijd bereikt">
+        <inputExpression id="LiteralExpression_0v9v5ic" typeRef="boolean">
+          <text>aanvragerHeeftAOWLeeftijd</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1a4u7s2" label="de partner is 18, 19 of 20 jaar oud">
+        <inputExpression id="LiteralExpression_0i2udco" typeRef="boolean">
+          <text>partnerIs181920</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1yh0zgj" label="de partner is tenminste 21">
+        <inputExpression id="LiteralExpression_1dylc3d" typeRef="boolean">
+          <text>partnerIsTenminste21</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_10cq4dn" label="de partner heeft de AOW-leeftijd bereikt">
+        <inputExpression id="LiteralExpression_1976fac" typeRef="boolean">
+          <text>partnerHeeftAOWLeeftijd</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_07mhrwu" label="Bijstandsnorm type" name="bijstandsnormType" typeRef="string">
+        <outputValues id="UnaryTests_1gczjfh">
+          <text>"M","MK","MM","MMK","MO","MOK","MJ","MJK","J","JK","JJ","JJK","JO","JOK","O","OK","OO","OOK"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_10wvv26">
+        <description></description>
+        <inputEntry id="UnaryTests_0o3ebfg">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hr6tzh">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_022nsoy">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lth91j">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1qkxynj">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0w4jrha">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0w7669n">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cjw115">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dulnh3">
+          <text>"M"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1lo1vqs">
+        <inputEntry id="UnaryTests_0hmmmc7">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kkswbu">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gpwlkx">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1d6h8oz">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f2gx9k">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1e4knez">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18hcry3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_043l1oy">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1er3rhe">
+          <text>"MK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1r4hqns">
+        <inputEntry id="UnaryTests_0x30t52">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14z214g">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tjtznt">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05mt1nd">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1yjg5k2">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ftbt2b">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0juhf3k">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_032ozfv">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xnbn3u">
+          <text>"MM"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0002zku">
+        <inputEntry id="UnaryTests_1gfyo0q">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pbukec">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0y95tdp">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_184z3dr">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1p0vhcc">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_186xeds">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bx3spj">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17wz20o">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xbhakw">
+          <text>"MMK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0a6pk6w">
+        <inputEntry id="UnaryTests_13y8310">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0aimqv8">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ocdjj9">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_154uvvm">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lpn6r7">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0i2mi9d">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jfec2j">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nycb9u">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0d11g2c">
+          <text>"MO"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_16xh0kj">
+        <inputEntry id="UnaryTests_1u8hfew">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1f1uh63">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lfshb8">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dz5g49">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1iiq8if">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dtc1w5">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0o5y22w">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hflw97">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_067t23d">
+          <text>"MOK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1l5i40q">
+        <inputEntry id="UnaryTests_0o6kce3">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0d7qjq8">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ozx8sc">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16ew4rb">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nwun9b">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kdz4tk">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xi6u2k">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03slkkp">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1cqetwk">
+          <text>"MJ"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_14loj8x">
+        <inputEntry id="UnaryTests_0rfmvcp">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19gzbaz">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02wieyq">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1omsq74">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0s0861t">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cppjiq">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vl2jqd">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0uz7y9n">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1w9dz4h">
+          <text>"MJK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vnc3hu">
+        <inputEntry id="UnaryTests_08oewe9">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dptt0b">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06touj1">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17i8yhu">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16u9l13">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_017mo14">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vuhoeg">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pfhlmt">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nagk95">
+          <text>"J"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0v05844">
+        <inputEntry id="UnaryTests_0ukz1s2">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wkx0vx">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1b3koas">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0r4r12t">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0qkua5g">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0uj5yy1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rh4ls4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ymu9w5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13ktdbl">
+          <text>"JK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0wirjbg">
+        <inputEntry id="UnaryTests_1k89zci">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ttxh7d">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_080f5cl">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1b2qd3n">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vc25p2">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_060epm8">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rbsu76">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1dra3w5">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00n4mlx">
+          <text>"JJ"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0p7g927">
+        <inputEntry id="UnaryTests_1kapc27">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pq9fop">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kkdrq7">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1igvrrs">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kiao1k">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1iq0yg4">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04eqecf">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rt8m3l">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0h0r7z3">
+          <text>"JJK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0li8g0a">
+        <inputEntry id="UnaryTests_1nz8ozw">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08nd8vt">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06u65jm">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1h45v0d">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ue61wb">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0djyhyp">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17orzz3">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bbqqjd">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pamo1h">
+          <text>"JO"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vnm5x1">
+        <inputEntry id="UnaryTests_1mcvbuj">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01yc4au">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11o83ut">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16k07mk">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fso3de">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1iebtp3">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1krk58x">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0r01m6m">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zzkunw">
+          <text>"JOK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vnxg6u">
+        <inputEntry id="UnaryTests_1x1xpy9">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rszokg">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tfmzhk">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08qd9um">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1r1zm6h">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1n91lf7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1m8qqy0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ht9zm2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pbnvhr">
+          <text>"O"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tn7n3k">
+        <inputEntry id="UnaryTests_0tphxvf">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08t3cke">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ud4bs9">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0m5p0a3">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ilx891">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10behuw">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14tly9a">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0opqvnk">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1caz6cv">
+          <text>"OK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04p9w7i">
+        <inputEntry id="UnaryTests_11f1cog">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1b5f2sp">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_022c48n">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1e5nyj5">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bl59xy">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wk74yo">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hj98nt">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0axtlow">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03i08bv">
+          <text>"OO"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0t8k5ms">
+        <inputEntry id="UnaryTests_0y31xzj">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xmstoj">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vm5agf">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1qlzfsb">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jjv3t3">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05g4y3r">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1n46zzi">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1evgzof">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_045po5s">
+          <text>"OOK"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="BijstandsnormBedragen" name="Bijstandsnormbedrag" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_03b40ii">
+      <requiredDecision href="#Bijstandsnorm" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1qklfzh">
+      <requiredDecision href="#Decision_1wwq8ag" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0aqno3m">
+      <input id="InputClause_19s4lwo" label="Termijn">
+        <inputExpression id="LiteralExpression_176uwyr" typeRef="string">
+          <text>bijstandsnormTermijn</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1bf0lsa">
+          <text>"2e helft 2024","1e helft 2025"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_01fr83p" label="Bijstandsnorm type" biodi:width="192">
+        <inputExpression id="LiteralExpression_0g1k3qt" typeRef="string">
+          <text>bijstandsnormType</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0d173zk">
+          <text>"M","MK","MM","MMK","MO","MOK","MJ","MJK","J","JK","JJ","JJK","JO","JOK","O","OK","OO","OOK"</text>
+        </inputValues>
+      </input>
+      <output id="OutputClause_1w92pgj" label="Bijstandsnorm" name="bijstandsNorm" typeRef="double" />
+      <rule id="DecisionRule_09gkqi8">
+        <inputEntry id="UnaryTests_0p6qug4">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ghr06b">
+          <text>"M"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13wt20m">
+          <text>1308.45</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1au7xx3">
+        <inputEntry id="UnaryTests_0ngks4f">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1qy6p3x">
+          <text>"MK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1eabzv3">
+          <text>1308.45</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ra51yr">
+        <inputEntry id="UnaryTests_0p84yos">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lnrytu">
+          <text>"MM"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nd2zio">
+          <text>1869.21</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1yk7azl">
+        <inputEntry id="UnaryTests_08lev6q">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0m8ok3i">
+          <text>"MMK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1frn0q8">
+          <text>1869.21</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1d9zhqt">
+        <inputEntry id="UnaryTests_0iun4zi">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0uj60m9">
+          <text>"MO"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0p1edlu">
+          <text>1976.64</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hd83sg">
+        <inputEntry id="UnaryTests_1v7cknc">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ydfp1l">
+          <text>"MOK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0u9a4ix">
+          <text>1976.64</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0d0vtxp">
+        <inputEntry id="UnaryTests_1xqfo4b">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01n9kws">
+          <text>"MJ"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tajxsy">
+          <text>1257.64</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09rut21">
+        <inputEntry id="UnaryTests_0h8mdhr">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_09gv4b3">
+          <text>"MJK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xd0rp2">
+          <text>1631.48</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06n8erq">
+        <inputEntry id="UnaryTests_0bf68vj">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_044kd4v">
+          <text>"J"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ovcib0">
+          <text>323.03</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1yzmbqs">
+        <inputEntry id="UnaryTests_0be9ykf">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0aujnt5">
+          <text>"JK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1lq6awh">
+          <text>323.03</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0cwibn6">
+        <inputEntry id="UnaryTests_187jp8r">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0p1k283">
+          <text>"JJ"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0uifymp">
+          <text>646.06</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_17tr5dq">
+        <inputEntry id="UnaryTests_1sxv7zf">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lmlfs9">
+          <text>"JJK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0utiz4j">
+          <text>1019.90</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0lm7mqj">
+        <inputEntry id="UnaryTests_1285i9e">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bl15pq">
+          <text>"JO"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0guc89z">
+          <text>1631.48</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hrvgp7">
+        <inputEntry id="UnaryTests_0b3vgz6">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1mfxngp">
+          <text>"JOK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0j42xf9">
+          <text>1631.48</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0lbbiiu">
+        <inputEntry id="UnaryTests_184fict">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vlhx8w">
+          <text>"O"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xu9fgz">
+          <text>1456.85</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1x4bubd">
+        <inputEntry id="UnaryTests_00wv3bz">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_051ljdz">
+          <text>"OK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_010cegc">
+          <text>1456.85</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0fg0cf2">
+        <inputEntry id="UnaryTests_0nr4nv7">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03rhsyn">
+          <text>"OO"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1byz91v">
+          <text>1976.64</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jzjdxp">
+        <inputEntry id="UnaryTests_0dq40rz">
+          <text>"2e helft 2024"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mntztw">
+          <text>"OOK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xgm3ck">
+          <text>1976.64</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0sejkdg">
+        <inputEntry id="UnaryTests_0aizdyy">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jh4b25">
+          <text>"M"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r5mw3g">
+          <text>1345.45</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ortpfj">
+        <inputEntry id="UnaryTests_1nrd3ct">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1avytqk">
+          <text>"MK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0w4yp72">
+          <text>1345.45</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0a1ypp2">
+        <inputEntry id="UnaryTests_0vqnfze">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08qorwh">
+          <text>"MM"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_013snvx">
+          <text>1922.07</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13sv6uf">
+        <inputEntry id="UnaryTests_0qe39fa">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ixrev1">
+          <text>"MMK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ybcj5u">
+          <text>1922.07</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jqbr6v">
+        <inputEntry id="UnaryTests_1a1fewr">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ceadim">
+          <text>"MO"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17aihi0">
+          <text>2053.48</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vbg6x0">
+        <inputEntry id="UnaryTests_0emyyvo">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kvcuj1">
+          <text>"MOK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0lzbkf3">
+          <text>2053.48</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0xgfmqd">
+        <inputEntry id="UnaryTests_0nd6s65">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1sy7gyl">
+          <text>"MJ"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0km8w5t">
+          <text>1293.21</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hvbcl7">
+        <inputEntry id="UnaryTests_0epv0bi">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05l7r5f">
+          <text>"MJK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02vpksm">
+          <text>1677.62</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vjzt2e">
+        <inputEntry id="UnaryTests_041755s">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05v21qh">
+          <text>"J"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0l2xo0t">
+          <text>332.17</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_18vgx8p">
+        <inputEntry id="UnaryTests_1149tbx">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0l3qhqv">
+          <text>"JK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1a1t1c1">
+          <text>332.17</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0slpcwu">
+        <inputEntry id="UnaryTests_108zzxz">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_150ygwu">
+          <text>"JJ"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qtoezd">
+          <text>664.34</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_19wzx0s">
+        <inputEntry id="UnaryTests_0dhvw3c">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05p6dpb">
+          <text>"JJK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1uasl0c">
+          <text>1048.75</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zd3wwb">
+        <inputEntry id="UnaryTests_1we14xo">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08n313k">
+          <text>"JO"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1jckljd">
+          <text>1677.62</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jyy1qw">
+        <inputEntry id="UnaryTests_0fhkgc4">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0m36fe0">
+          <text>"JOK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qpg5x4">
+          <text>1677.62</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gglrxb">
+        <inputEntry id="UnaryTests_0ygldad">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fokwu6">
+          <text>"O"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_16hf1b8">
+          <text>1501.07</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0m0qo31">
+        <inputEntry id="UnaryTests_0hyevvp">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0c8w18d">
+          <text>"OK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jfv1p0">
+          <text>1501.07</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0a7cnms">
+        <inputEntry id="UnaryTests_0a193kr">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1sa5721">
+          <text>"OO"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04godcb">
+          <text>2053.48</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pgjx6d">
+        <inputEntry id="UnaryTests_0dt8uh8">
+          <text>"1e helft 2025"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1v48ge6">
+          <text>"OOK"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jnjvqt">
+          <text>2053.48</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="leeftijdsgrenzen" name="leeftijdsgrenzen" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_0n602yd">
+      <requiredDecision href="#BerekenLeeftijden" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0jz8q7q">
+      <requiredInput href="#InputData_023ni8y" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0qwghxc" hitPolicy="ANY">
+      <input id="InputClause_0ex8a4e" label="leeftijd aanvrager">
+        <inputExpression id="LiteralExpression_0p7dzaa" typeRef="integer">
+          <text>leeftijdAanvrager</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0ehcnn7" label="leeftijd partner">
+        <inputExpression id="LiteralExpression_07jourr" typeRef="integer">
+          <text>leeftijdPartner</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_04hsty1" label="AOW-datum aanvrager">
+        <inputExpression id="LiteralExpression_10q2fdc" typeRef="string">
+          <text>AOWDatumAanvrager</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1pobx8r" label="AOW-datum partner">
+        <inputExpression id="LiteralExpression_0vzpqzn" typeRef="string">
+          <text>AOWDatumPartner</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0ta9xqz" label="dag van aanvraag">
+        <inputExpression id="LiteralExpression_0ind91r" typeRef="string">
+          <text>dagVanAanvraag</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0r7luxe" label="de aanvrager is onder de 18" name="aanvragerIsJongerDan18" typeRef="boolean" biodi:width="192" />
+      <output id="OutputClause_1ffpvzy" label="de aanvrager is 18, 19 of 20 jaar oud" name="aanvragerIs181920" typeRef="boolean" />
+      <output id="OutputClause_04fcvai" label="de aanvrager is tenminste 21" name="aanvragerIsTenminste21" typeRef="boolean" />
+      <output id="OutputClause_1l3xq1q" label="de aanvrager heeft de AOW-leeftijd bereikt" name="aanvragerHeeftAOWLeeftijd" typeRef="boolean" />
+      <output id="OutputClause_17dcfkh" label="de partner is onder de 18" name="partnerIsJongerDan18" typeRef="boolean" biodi:width="192" />
+      <output id="OutputClause_14hmj0f" label="de partner is 18, 19 of 20 jaar oud" name="partnerIs181920" typeRef="boolean" />
+      <output id="OutputClause_1kwl5n1" label="de partner is tenminste 21" name="partnerIsTenminste21" typeRef="boolean" />
+      <output id="OutputClause_0wfu0mu" label="de partner heeft de AOW-leeftijd bereikt" name="partnerHeeftAOWLeeftijd" typeRef="boolean" />
+      <rule id="DecisionRule_0rl5538">
+        <inputEntry id="UnaryTests_1f7zmvi">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gsm73z">
+          <text>not(null)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1uyhtmq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lv2qrn">
+          <text>not(null)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1i1evmd">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wdnwkd">
+          <text>leeftijdAanvrager &lt; 18</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_11wlmsg">
+          <text>18 &lt;= leeftijdAanvrager  and leeftijdAanvrager &lt; 21</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_14kney7">
+          <text>leeftijdAanvrager &gt;= 21</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_08qff4w">
+          <text>date(dagVanAanvraag) &gt;= date(AOWDatumAanvrager)</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_14we0sz">
+          <text>leeftijdPartner &lt; 18</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_09thk75">
+          <text>18 &lt;= leeftijdPartner  and leeftijdPartner &lt; 21</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_16zia1b">
+          <text>leeftijdPartner &gt;= 21</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1gq1srt">
+          <text>date(dagVanAanvraag) &gt;= date(AOWDatumPartner)</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0s7s83f">
+        <inputEntry id="UnaryTests_1ynnefp">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zgzk6y">
+          <text>null</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10xj4ow">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1c9vpb9">
+          <text>null</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gnfcb2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0sjs6wz">
+          <text>leeftijdAanvrager &lt; 18</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0vlr4w0">
+          <text>18 &lt;= leeftijdAanvrager  and leeftijdAanvrager &lt; 21</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0njnw2u">
+          <text>leeftijdAanvrager &gt;= 21</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1mqfeyj">
+          <text>date(dagVanAanvraag) &gt;= date(AOWDatumAanvrager)</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_08o9vf4">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0jsgmti">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0us2buo">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1nwbc79">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="BerekenLeeftijden" name="Leeftijden" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_1y5tfdf">
+      <requiredDecision href="#Decision_01q9c1k" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1tbq9i1">
+      <requiredInput href="#InputData_17aghka" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0f6i7xm">
+      <requiredInput href="#InputData_0z4atcw" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0lqn665">
+      <input id="InputClause_1tr2s5e" label="geboortedatum aanvrager">
+        <inputExpression id="LiteralExpression_08mswp7" typeRef="string">
+          <text>geboortedatumAanvrager</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0x60h39" label="geboortedatum partner" biodi:width="192">
+        <inputExpression id="LiteralExpression_1c6r0o9" typeRef="string">
+          <text>geboortedatumPartner</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_08kz7it" label="dag van aanvraag">
+        <inputExpression id="LiteralExpression_1kdgspt" typeRef="string">
+          <text>dagVanAanvraag</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0a9o8ca" label="leeftijd AOW in maanden">
+        <inputExpression id="LiteralExpression_0y6lt3w" typeRef="integer">
+          <text>leeftijdAOWMaanden</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_02uwov5" label="leeftijd aanvrager" name="leeftijdAanvrager" typeRef="integer" />
+      <output id="OutputClause_1chrlip" label="AOW ingangsdatum aanvrager" name="AOWDatumAanvrager" typeRef="string" biodi:width="192" />
+      <output id="OutputClause_0hrkk4x" label="leeftijd partner" name="leeftijdPartner" typeRef="integer" biodi:width="192" />
+      <output id="OutputClause_13y1bhw" label="AOW ingangsdatum partner" name="AOWDatumPartner" typeRef="string" biodi:width="192" />
+      <rule id="DecisionRule_1pgnzkp">
+        <inputEntry id="UnaryTests_0bz85xk">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bcejty">
+          <text>not(null)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1czufwp">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0o9wn5r">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dyda5e">
+          <text>years and months duration(date(geboortedatumAanvrager), 	
+date(dagVanAanvraag)).years</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0nf2itr">
+          <text>date(geboortedatumAanvrager) + duration("P"+string(leeftijdAOWMaanden)+"M")</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0hdfbjc">
+          <text>years and months duration(date(geboortedatumPartner), 	
+date(dagVanAanvraag)).years</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0wardiu">
+          <text>date(geboortedatumPartner) + duration("P"+string(leeftijdAOWMaanden)+"M")</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0r5cv0k">
+        <inputEntry id="UnaryTests_0tlcrhp">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0k9yz8h">
+          <text>null</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_018hfia">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1re19eb">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dikpr9">
+          <text>years and months duration(date(geboortedatumAanvrager), 	
+date(dagVanAanvraag)).years</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_14hjump">
+          <text>date(geboortedatumAanvrager) + duration("P"+string(leeftijdAOWMaanden)+"M")</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1h9uhq0">
+          <text>null</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_01lchxr">
+          <text>null</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="HeusdenpasGoTime" name="Heusdenpas automatisch go" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_1dxxq5p">
+      <requiredInput href="#InputData_0irntr9" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_104g2rm">
+      <requiredInput href="#InputData_17q8pdh" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1mr1rvy">
+      <requiredInput href="#InputData_09atwlf" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_05dwrx2">
+      <requiredInput href="#InputData_1gcyu0z" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_05ybc7l" hitPolicy="ANY">
+      <input id="InputClause_1lobcy3" label="De aanvrager heeft een uitkering van Baanbrekers">
+        <inputExpression id="LiteralExpression_1ao2wvd" typeRef="boolean">
+          <text>aanvragerUitkeringBaanbrekers</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1hd53r0" label="De aanvrager heeft een voedselbankpas van Den Bosch">
+        <inputExpression id="LiteralExpression_0rbm4di" typeRef="boolean">
+          <text>aanvragerVoedselbankpasDenBosch</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_00wh1ke" label="De aanvrager heeft kwijtschelding van Gemeentelijke belastingen">
+        <inputExpression id="LiteralExpression_1eo7a6j" typeRef="boolean">
+          <text>aanvragerKwijtscheldingGemeentelijkeBelastingen</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0jni4do" label="De aanvrager heeft een schuldhulptraject bij de Kredietbank Nederland">
+        <inputExpression id="LiteralExpression_1mywt0b" typeRef="boolean">
+          <text>aanvragerSchuldhulptrajectKredietbankNederland</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_08l68tn" label="Automatische goedkeuring aanvraag Heusdenpas" name="automatischeToekenningHeusdenpas" typeRef="boolean" />
+      <rule id="DecisionRule_1wa1r1e">
+        <inputEntry id="UnaryTests_1nzfyku">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0oacqv9">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fab3ua">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ignea7">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0p1j45i">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0o4uu4c">
+        <inputEntry id="UnaryTests_0xcx6eq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1v1gs25">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16sdjdd">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18b01fi">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tmvzci">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1dbyz61">
+        <inputEntry id="UnaryTests_1c4t3xz">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ike955">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1irdev5">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13qtwbh">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0grcqnu">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_137jxn8">
+        <inputEntry id="UnaryTests_1964cj4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1o73hq5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0odt21y">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1pfye5n">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0h47mlb">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12ivhew">
+        <inputEntry id="UnaryTests_0acog19">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jnxepd">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17lk8oh">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gcjpq5">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ytvh3o">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="HeusdenKnockoffs" name="Heusdenpas Knockoffs" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_1940tvt">
+      <requiredDecision href="#leeftijdsgrenzen" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_03navr1">
+      <requiredInput href="#InputData_12fg4vz" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0sk7rwg">
+      <requiredInput href="#InputData_1gp48jl" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1iv55z2">
+      <requiredInput href="#InputData_0eg67ey" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_090k14z" hitPolicy="ANY">
+      <input id="InputClause_1a7zi61" label="De aanvrager is een inwoner van Heusden">
+        <inputExpression id="LiteralExpression_0y8496o" typeRef="boolean">
+          <text>aanvragerInwonerHeusden</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1dahzlf" label="De aanvrager heeft dit kalenderjaar al een Heusdenpas aangevraagd">
+        <inputExpression id="LiteralExpression_1stda8x" typeRef="boolean">
+          <text>aanvragerDitKalenderjaarAlAangevraagd</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1wvauq8" label="De aanvrager komt in aanmerking voor studiefinanciering">
+        <inputExpression id="LiteralExpression_1nmmwwr" typeRef="boolean">
+          <text>aanvragerAanmerkingStudieFinanciering</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_06d6du3" label="de aanvrager is onder de 18 jaar">
+        <inputExpression id="LiteralExpression_1nlf09s" typeRef="boolean">
+          <text>aanvragerIsJongerDan18</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0mmxzrt" label="Een knockoff voor de Heusdenpas is van toepassing" name="heusdenPasKnockoff" typeRef="boolean" />
+      <rule id="DecisionRule_1vozf97">
+        <inputEntry id="UnaryTests_0crrto1">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1m2o6rw">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1l2mxj5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01tu9if">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1255a9n">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u6hgfi">
+        <inputEntry id="UnaryTests_1bapa26">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07q2xjm">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1yt1nab">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0c4xlkg">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zop5mp">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ubibqr">
+        <inputEntry id="UnaryTests_0hd2l78">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0r60aym">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1macjn6">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bbyt5c">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06t039z">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pg01g5">
+        <inputEntry id="UnaryTests_1u07oo1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1taajz4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kywc9y">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bnvqb0">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_11ostrh">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0c3sk7a">
+        <inputEntry id="UnaryTests_0kcwxbr">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0e9j8m6">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tkz24u">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nvhquu">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1sc06nw">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_01q9c1k" name="AOW leeftijd" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_19mb9wf">
+      <requiredInput href="#InputData_023ni8y" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0yb68ib">
+      <input id="InputClause_1e1pw61" label="jaar van berekening">
+        <inputExpression id="LiteralExpression_12yw4r8" typeRef="integer">
+          <text>date(dagVanAanvraag).year</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_08heeyz" label="leeftijd AOW in maanden" name="leeftijdAOWMaanden" typeRef="integer" />
+      <rule id="DecisionRule_14hwv5m">
+        <inputEntry id="UnaryTests_0uep5df">
+          <text>2020</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yqxnt1">
+          <text>66 * 12 + 4</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00vbt9h">
+        <inputEntry id="UnaryTests_0yub3ab">
+          <text>2021</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0v33ft3">
+          <text>66 * 12 + 7</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1yw88t3">
+        <inputEntry id="UnaryTests_01defq4">
+          <text>2022</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1aug3dx">
+          <text>66 * 12 + 7</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1kaulzh">
+        <inputEntry id="UnaryTests_1v0054t">
+          <text>2023</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1exsn6s">
+          <text>66 * 12 + 10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gi0day">
+        <inputEntry id="UnaryTests_00b4pvf">
+          <text>2024</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_12ixzup">
+          <text>67 * 12</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ijc859">
+        <inputEntry id="UnaryTests_13z4y63">
+          <text>2025</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ipu8ak">
+          <text>67 * 12</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pauknv">
+        <inputEntry id="UnaryTests_0brd50c">
+          <text>2026</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1s2p7lf">
+          <text>67 * 12</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1k7iq99">
+        <inputEntry id="UnaryTests_0751edy">
+          <text>2027</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01018jm">
+          <text>67 * 12 + 3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nwe57d">
+        <inputEntry id="UnaryTests_17dxxcu">
+          <text>2028</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0tvl7jk">
+          <text>67 * 12 + 3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gfkxxh">
+        <inputEntry id="UnaryTests_1u1d5rg">
+          <text>2029</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0h04tlk">
+          <text>67 * 12 + 3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1td17ot">
+        <inputEntry id="UnaryTests_0dmgt8w">
+          <text>2030</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1sfk20v">
+          <text>67 * 12 + 3</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="HeusdenpasAanvraagEindresultaat" name="Eindresultaat Heusdenpas aanvraag" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_0f7faxm">
+      <requiredDecision href="#HeusdenpasAanvraag" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1wz0k8j">
+      <requiredDecision href="#HeusdenpasAanvraagKindpakket" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1j7j7bt">
+      <input id="InputClause_1r90z6c" label="De aanvrager komt in aanmerking voor de Heusdenpas">
+        <inputExpression id="LiteralExpression_1f0qlzk" typeRef="boolean">
+          <text>aanmerkingHeusdenPas</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_06pb1jd" label="De aanvraag voor het Kindpakket is succesvol ">
+        <inputExpression id="LiteralExpression_0gtk7xa" typeRef="boolean">
+          <text>aanmerkingKindPakket</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1rx4hhi" label="De aanvrager komt in aanmerking voor de Heusdenpas" name="aanmerkingHeusdenPas" typeRef="boolean" biodi:width="192" />
+      <output id="OutputClause_16uzilz" label="De aanvraag voor het Kindpakket is succesvol " name="aanmerkingKindPakket" typeRef="boolean" />
+      <rule id="DecisionRule_0oo0hxm">
+        <inputEntry id="UnaryTests_1nmx66b">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17t2cd0">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00z7loa">
+          <text>aanmerkingHeusdenPas</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_023eag2">
+          <text>aanmerkingKindPakket</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_023ni8y" name="dagVanAanvraag" />
+  <inputData id="InputData_0irntr9" name="aanvragerUitkeringBaanbrekers" />
+  <inputData id="InputData_17q8pdh" name="aanvragerVoedselbankpasDenBosch" />
+  <inputData id="InputData_09atwlf" name="aanvragerKwijtscheldingGemeentelijkeBelastingen" />
+  <inputData id="InputData_1gcyu0z" name="aanvragerSchuldhulptrajectKredietbankNederland" />
+  <inputData id="InputData_17aghka" name="geboortedatumAanvrager" />
+  <inputData id="InputData_0z4atcw" name="geboortedatumPartner" />
+  <inputData id="InputData_0l5qje2" name="aanvragerHeeftKinderen" />
+  <inputData id="InputData_1buwq6q" name="aanvragerAlleenstaand" />
+  <inputData id="InputData_1579tjl" name="aanvragerInwonerHeusden" />
+  <inputData id="InputData_0362rj3" name="aanvragerHeeftKind4Tm17" />
+  <inputData id="InputData_1tqi478" name="maandelijksBrutoInkomenAanvrager" />
+  <inputData id="InputData_12fg4vz" name="aanvragerInwonerHeusden" />
+  <inputData id="InputData_1gp48jl" name="aanvragerDitKalenderjaarAlAangevraagd" />
+  <inputData id="InputData_0eg67ey" name="aanvragerAanmerkingStudieFinanciering" />
+  <inputData id="InputData_0ixx5bi" name="maandelijksBrutoInkomenAanvrager" />
+  <decision id="Decision_1wwq8ag" name="Bijstandsnormtermijn" camunda:historyTimeToLive="0">
+    <informationRequirement id="InformationRequirement_0cjmta6">
+      <requiredInput href="#InputData_023ni8y" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_09bmj90">
+      <input id="InputClause_0hbzr8z" label="dag van aanvraag">
+        <inputExpression id="LiteralExpression_0swpcro" typeRef="string">
+          <text>dagVanAanvraag</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0tjt2em" label="Termijn" name="bijstandsnormTermijn" typeRef="string">
+        <outputValues id="UnaryTests_15fmthk">
+          <text>"2e helft 2024","1e helft 2025"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_0og7oyd">
+        <inputEntry id="UnaryTests_0exyoto">
+          <text>date("2024-07-01") &lt;= date(dagVanAanvraag) and date(dagVanAanvraag) &lt;= date("2024-12-31")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0kydw1i">
+          <text>"2e helft 2024"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0kds1av">
+        <inputEntry id="UnaryTests_1usbx0f">
+          <text>date("2025-01-01") &lt;= date(dagVanAanvraag) and date(dagVanAanvraag) &lt;= date("2025-06-30")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09bs2yn">
+          <text>"1e helft 2025"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="HeusdenpasAanvraag">
+        <dc:Bounds height="80" width="180" x="888" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1neo0k0" dmnElementRef="HeusdenpasAanvraagKindpakket">
+        <dc:Bounds height="80" width="180" x="526" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0qv7hdm" dmnElementRef="Bijstandsnorm">
+        <dc:Bounds height="80" width="180" x="700" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_07cc1x7" dmnElementRef="BijstandsnormBedragen">
+        <dc:Bounds height="80" width="180" x="580" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1f6fayg" dmnElementRef="leeftijdsgrenzen">
+        <dc:Bounds height="80" width="180" x="816" y="720" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_082zzva" dmnElementRef="BerekenLeeftijden">
+        <dc:Bounds height="80" width="180" x="846" y="880" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1c8byco" dmnElementRef="HeusdenpasGoTime">
+        <dc:Bounds height="80" width="180" x="1110" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ei67mc" dmnElementRef="HeusdenKnockoffs">
+        <dc:Bounds height="80" width="180" x="870" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0737xxz" dmnElementRef="Decision_01q9c1k">
+        <dc:Bounds height="80" width="180" x="801" y="1040" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0spim4q" dmnElementRef="InformationRequirement_1y5tfdf">
+        <di:waypoint x="891" y="1040" />
+        <di:waypoint x="891" y="980" />
+        <di:waypoint x="891" y="960" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_02xuj9a" dmnElementRef="InformationRequirement_0n602yd">
+        <di:waypoint x="936" y="880" />
+        <di:waypoint x="936" y="820" />
+        <di:waypoint x="936" y="800" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1npy1es" dmnElementRef="InformationRequirement_1940tvt">
+        <di:waypoint x="906" y="720" />
+        <di:waypoint x="906" y="500" />
+        <di:waypoint x="906" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1k4we5u" dmnElementRef="InformationRequirement_1sm7odr">
+        <di:waypoint x="906" y="720" />
+        <di:waypoint x="835" y="660" />
+        <di:waypoint x="835" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0czmfmn" dmnElementRef="InformationRequirement_08c0sdt">
+        <di:waypoint x="1200" y="400" />
+        <di:waypoint x="996" y="340" />
+        <di:waypoint x="996" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1u7h0gb" dmnElementRef="InformationRequirement_0pnv41d">
+        <di:waypoint x="960" y="400" />
+        <di:waypoint x="960" y="340" />
+        <di:waypoint x="960" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0i8dozh" dmnElementRef="HeusdenpasAanvraagEindresultaat">
+        <dc:Bounds height="80" width="180" x="690" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xmoxi1" dmnElementRef="InformationRequirement_0f7faxm">
+        <di:waypoint x="978" y="240" />
+        <di:waypoint x="810" y="180" />
+        <di:waypoint x="810" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_01ncv6o" dmnElementRef="InformationRequirement_1wz0k8j">
+        <di:waypoint x="616" y="240" />
+        <di:waypoint x="750" y="180" />
+        <di:waypoint x="750" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1537kni" dmnElementRef="InputData_023ni8y">
+        <dc:Bounds height="45" width="125" x="357" y="1177" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0is8jh3" dmnElementRef="InformationRequirement_19mb9wf">
+        <di:waypoint x="420" y="1177" />
+        <di:waypoint x="891" y="1140" />
+        <di:waypoint x="891" y="1120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1svbf0k" dmnElementRef="InputData_0irntr9">
+        <dc:Bounds height="45" width="125" x="1407" y="657" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0xbv15r" dmnElementRef="InputData_17q8pdh">
+        <dc:Bounds height="45" width="125" x="1541" y="658" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1jezz2e" dmnElementRef="InputData_09atwlf">
+        <dc:Bounds height="45" width="125" x="1669" y="658" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_16qz99y" dmnElementRef="InputData_1gcyu0z">
+        <dc:Bounds height="45" width="125" x="1799" y="658" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1cc2rgh" dmnElementRef="InformationRequirement_1dxxq5p">
+        <di:waypoint x="1470" y="657" />
+        <di:waypoint x="1146" y="500" />
+        <di:waypoint x="1146" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0l56nsw" dmnElementRef="InformationRequirement_104g2rm">
+        <di:waypoint x="1604" y="658" />
+        <di:waypoint x="1182" y="500" />
+        <di:waypoint x="1182" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_06dn8yw" dmnElementRef="InformationRequirement_1mr1rvy">
+        <di:waypoint x="1732" y="658" />
+        <di:waypoint x="1218" y="500" />
+        <di:waypoint x="1218" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0hffjxb" dmnElementRef="InformationRequirement_05dwrx2">
+        <di:waypoint x="1862" y="658" />
+        <di:waypoint x="1254" y="500" />
+        <di:waypoint x="1254" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0ksf2c4" dmnElementRef="InputData_17aghka">
+        <dc:Bounds height="45" width="125" x="1033" y="1057" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0a8cab3" dmnElementRef="InputData_0z4atcw">
+        <dc:Bounds height="45" width="125" x="1163" y="1057" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_166gm8g" dmnElementRef="InformationRequirement_1tbq9i1">
+        <di:waypoint x="1096" y="1057" />
+        <di:waypoint x="936" y="980" />
+        <di:waypoint x="936" y="960" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0noqcbq" dmnElementRef="InformationRequirement_0f6i7xm">
+        <di:waypoint x="1226" y="1057" />
+        <di:waypoint x="981" y="980" />
+        <di:waypoint x="981" y="960" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1igy5ud" dmnElementRef="InformationRequirement_0cjmta6">
+        <di:waypoint x="420" y="1177" />
+        <di:waypoint x="550" y="660" />
+        <di:waypoint x="550" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1y2etzx" dmnElementRef="InputData_0l5qje2">
+        <dc:Bounds height="45" width="125" x="535" y="737" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_00abt1o" dmnElementRef="InputData_1buwq6q">
+        <dc:Bounds height="45" width="125" x="667" y="737" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1mvnogi" dmnElementRef="InformationRequirement_1j2r41w">
+        <di:waypoint x="598" y="737" />
+        <di:waypoint x="745" y="660" />
+        <di:waypoint x="745" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1m9cy8f" dmnElementRef="InputData_1579tjl">
+        <dc:Bounds height="45" width="125" x="157" y="417" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0fc6w84" dmnElementRef="InformationRequirement_091ys1f">
+        <di:waypoint x="220" y="417" />
+        <di:waypoint x="562" y="340" />
+        <di:waypoint x="562" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1ebeau0" dmnElementRef="InputData_0362rj3">
+        <dc:Bounds height="45" width="125" x="287" y="417" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ee27cy" dmnElementRef="InputData_1tqi478">
+        <dc:Bounds height="45" width="125" x="417" y="417" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xfpk2r" dmnElementRef="InformationRequirement_1sg8ek4">
+        <di:waypoint x="480" y="417" />
+        <di:waypoint x="634" y="340" />
+        <di:waypoint x="634" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_00pdn1w" dmnElementRef="InformationRequirement_0rsif9g">
+        <di:waypoint x="350" y="417" />
+        <di:waypoint x="598" y="340" />
+        <di:waypoint x="598" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1g8ambe" dmnElementRef="InputData_12fg4vz">
+        <dc:Bounds height="45" width="125" x="967" y="657" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0vw5egk" dmnElementRef="InformationRequirement_03navr1">
+        <di:waypoint x="1030" y="657" />
+        <di:waypoint x="942" y="500" />
+        <di:waypoint x="942" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1pyzs8z" dmnElementRef="InputData_1gp48jl">
+        <dc:Bounds height="45" width="125" x="1097" y="657" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0t5j3ww" dmnElementRef="InputData_0eg67ey">
+        <dc:Bounds height="45" width="125" x="1227" y="657" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0d6up2q" dmnElementRef="InformationRequirement_0sk7rwg">
+        <di:waypoint x="1160" y="657" />
+        <di:waypoint x="978" y="500" />
+        <di:waypoint x="978" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1pbndc9" dmnElementRef="InformationRequirement_1iv55z2">
+        <di:waypoint x="1290" y="657" />
+        <di:waypoint x="1014" y="500" />
+        <di:waypoint x="1014" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0e73hvu" dmnElementRef="InputData_0ixx5bi">
+        <dc:Bounds height="45" width="125" x="1337" y="417" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ewkkxy" dmnElementRef="InformationRequirement_1gehe8y">
+        <di:waypoint x="1400" y="417" />
+        <di:waypoint x="1032" y="340" />
+        <di:waypoint x="1032" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1b16yuj" dmnElementRef="InformationRequirement_0x5l5t5">
+        <di:waypoint x="670" y="400" />
+        <di:waypoint x="924" y="340" />
+        <di:waypoint x="924" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1scs5c1" dmnElementRef="InformationRequirement_1co0yzs">
+        <di:waypoint x="670" y="400" />
+        <di:waypoint x="670" y="340" />
+        <di:waypoint x="670" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0bsp5g4" dmnElementRef="InformationRequirement_03b40ii">
+        <di:waypoint x="790" y="560" />
+        <di:waypoint x="700" y="500" />
+        <di:waypoint x="700" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1i3ga9n" dmnElementRef="InformationRequirement_0jz8q7q">
+        <di:waypoint x="420" y="1177" />
+        <di:waypoint x="876" y="820" />
+        <di:waypoint x="876" y="800" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0pvsv1i" dmnElementRef="InformationRequirement_0jvbyzs">
+        <di:waypoint x="730" y="737" />
+        <di:waypoint x="790" y="660" />
+        <di:waypoint x="790" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0u2imch" dmnElementRef="Decision_1wwq8ag">
+        <dc:Bounds height="80" width="180" x="460" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1k5cayn" dmnElementRef="InformationRequirement_1qklfzh">
+        <di:waypoint x="550" y="560" />
+        <di:waypoint x="640" y="500" />
+        <di:waypoint x="640" y="480" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

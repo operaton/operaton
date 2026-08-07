@@ -1,0 +1,47 @@
+{
+  "components": [
+    {
+      "label": "Manual review",
+      "type": "text",
+      "text": "Decide whether this order should proceed to charge.",
+      "id": "Field_intro"
+    },
+    {
+      "label": "Customer",
+      "type": "textfield",
+      "key": "customerEmail",
+      "id": "Field_customer",
+      "disabled": true
+    },
+    {
+      "label": "Order total",
+      "type": "number",
+      "key": "orderTotal",
+      "id": "Field_total",
+      "disabled": true
+    },
+    {
+      "label": "Decision",
+      "type": "radio",
+      "key": "reviewDecision",
+      "id": "Field_decision",
+      "values": [
+        { "label": "Approve", "value": "approve" },
+        { "label": "Reject", "value": "reject" },
+        { "label": "Request changes", "value": "request-changes" }
+      ],
+      "validate": { "required": true }
+    },
+    {
+      "label": "Reason",
+      "type": "textarea",
+      "key": "reviewReason",
+      "id": "Field_reason"
+    }
+  ],
+  "type": "default",
+  "id": "order-manual-review",
+  "schemaVersion": 17,
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.21.0"
+}

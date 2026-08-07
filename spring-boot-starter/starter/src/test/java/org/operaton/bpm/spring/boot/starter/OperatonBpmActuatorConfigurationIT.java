@@ -25,6 +25,8 @@ import org.springframework.http.ResponseEntity;
 
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
+import java.util.regex.Pattern;
+
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @AutoConfigureTestRestTemplate
@@ -41,13 +43,15 @@ class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurati
   @Test
   void jobExecutorHealthIndicatorTest() {
     final String body = getHealthBody();
-    assertTrue("wrong body " + body, body.contains("jobExecutor\":{\"status\":\"UP\""));
+    assertTrue("wrong body " + body, Pattern.compile(
+        "\"jobExecutor\":\\{\"details\":\\{\"jobExecutor\":\\{[^}]*}},\"status\":\"UP\"}").matcher(body).find());
   }
 
   @Test
   void processEngineHealthIndicatorTest() {
     final String body = getHealthBody();
-    assertTrue("wrong body " + body, body.contains("processEngine\":{\"status\":\"UP\",\"details\":{\"name\":\"testEngine\"}}"));
+    assertTrue("wrong body " + body, Pattern.compile(
+        "\"processEngine\":\\{\"details\":\\{\"name\":\"testEngine\".*?},\"status\":\"UP\"}").matcher(body).find());
   }
 
   private String getHealthBody() {

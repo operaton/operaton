@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.type.child;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
@@ -65,7 +67,7 @@ public interface ChildElementCollection<T extends ModelElementInstance> {
    * @param model  the model of the element
    * @return the containing {@link ModelElementType}
    */
-  ModelElementType getChildElementType(Model model);
+  @Nullable ModelElementType getChildElementType(Model model);
 
   /**
    * Get the class of the elements contained in this collection.

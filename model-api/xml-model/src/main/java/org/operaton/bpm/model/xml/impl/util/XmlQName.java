@@ -18,6 +18,9 @@ package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.DomElement;
 
@@ -26,6 +29,7 @@ import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
 /**
  * @author Sebastian Menski
  */
+@NullMarked
 public class XmlQName {
 
   public static final Map<String, String> KNOWN_PREFIXES = Map.of(
@@ -39,30 +43,30 @@ public class XmlQName {
     XMLNS_ATTRIBUTE_NS_URI, ""
   );
 
-  protected DomElement rootElement;
-  protected DomElement element;
+  protected @Nullable DomElement rootElement;
+  protected @Nullable DomElement element;
 
   protected String localName;
-  protected String namespaceUri;
-  protected String prefix;
+  protected @Nullable String namespaceUri;
+  protected @Nullable String prefix;
 
-  public XmlQName(DomDocument document, String namespaceUri, String localName) {
+  public XmlQName(DomDocument document, @Nullable String namespaceUri, String localName) {
     this(document, null, namespaceUri, localName);
   }
 
-  public XmlQName(DomElement element, String namespaceUri, String localName) {
+  public XmlQName(DomElement element, @Nullable String namespaceUri, String localName) {
     this(element.getDocument(), element, namespaceUri, localName);
   }
 
-  public XmlQName(DomDocument document, DomElement element, String namespaceUri, String localName) {
-    this.rootElement = document.getRootElement();
+  public XmlQName(@Nullable DomDocument document, @Nullable DomElement element, @Nullable String namespaceUri, String localName) {
+    this.rootElement = document != null ? document.getRootElement() : null;
     this.element = element;
     this.localName = localName;
     this.namespaceUri = namespaceUri;
     this.prefix = null;
   }
 
-  public String getNamespaceUri() {
+  public @Nullable String getNamespaceUri() {
     return namespaceUri;
   }
 
@@ -86,7 +90,7 @@ public class XmlQName {
     }
   }
 
-  private String determinePrefixAndNamespaceUri() {
+  private @Nullable String determinePrefixAndNamespaceUri() {
     if (namespaceUri == null) {
       return null;
     }
@@ -118,7 +122,7 @@ public class XmlQName {
     }
   }
 
-  private String lookupPrefix() {
+  private @Nullable String lookupPrefix() {
     if (namespaceUri == null) {
       return null;
     }

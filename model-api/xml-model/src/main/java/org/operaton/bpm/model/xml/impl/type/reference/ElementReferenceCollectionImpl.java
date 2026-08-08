@@ -21,6 +21,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
@@ -38,10 +41,11 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 /**
  * @author Sebastian Menski
  */
+@NullMarked
 public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends  ReferenceImpl<TARGET> implements ElementReferenceCollection<TARGET, SOURCE> {
 
   private final ChildElementCollection<SOURCE> referenceSourceCollection;
-  private ModelElementTypeImpl referenceSourceType;
+  private @Nullable ModelElementTypeImpl referenceSourceType;
 
   public ElementReferenceCollectionImpl(ChildElementCollection<SOURCE> referenceSourceCollection) {
     this.referenceSourceCollection = referenceSourceCollection;
@@ -53,13 +57,13 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   }
 
   @Override
-  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, String referenceIdentifier) {
-    referenceSourceElement.setTextContent(referenceIdentifier);
+  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
+    referenceSourceElement.setTextContent(referenceIdentifier != null ? referenceIdentifier : "");
   }
 
   protected void performAddOperation(ModelElementInstanceImpl referenceSourceParentElement, TARGET referenceTargetElement) {
     ModelInstanceImpl modelInstance = referenceSourceParentElement.getModelInstance();
-    String referenceTargetIdentifier = referenceTargetAttribute.getValue(referenceTargetElement);
+    String referenceTargetIdentifier = referenceTargetAttribute != null ? referenceTargetAttribute.getValue(referenceTargetElement) : null;
     ModelElementInstance existingElement = modelInstance.getModelElementById(referenceTargetIdentifier);
 
     if (existingElement == null || !existingElement.equals(referenceTargetElement)) {
@@ -77,7 +81,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   protected void performRemoveOperation(ModelElementInstanceImpl referenceSourceParentElement, Object referenceTargetElement) {
     Collection<ModelElementInstance> referenceSourceChildElements = referenceSourceParentElement.getChildElementsByType(referenceSourceType);
     for (ModelElementInstance referenceSourceChildElement : referenceSourceChildElements) {
-      if (getReferenceTargetElement(referenceSourceChildElement).equals(referenceTargetElement)) {
+      if (referenceTargetElement.equals(getReferenceTargetElement(referenceSourceChildElement))) {
         referenceSourceParentElement.removeChildElement(referenceSourceChildElement);
       }
     }
@@ -90,12 +94,12 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   }
 
   @Override
-  public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
+  public @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     return referenceSourceElement.getTextContent();
   }
 
   @Override
-  protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
+  protected void updateReference(ModelElementInstance referenceSourceElement, @Nullable String oldIdentifier, @Nullable String newIdentifier) {
     String referencingTextContent = getReferenceIdentifier(referenceSourceElement);
     if (oldIdentifier != null && Objects.equals(oldIdentifier, referencingTextContent)) {
       setReferenceIdentifier(referenceSourceElement, newIdentifier);
@@ -105,6 +109,9 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   @Override
   protected void removeReference(ModelElementInstance referenceSourceElement, ModelElementInstance referenceTargetElement) {
     ModelElementInstance parentElement = referenceSourceElement.getParentElement();
+    if (parentElement == null) {
+      throw new ModelException("Unable to remove reference: reference source element " + referenceSourceElement + " has no parent element");
+    }
     Collection<SOURCE> childElementCollection = referenceSourceCollection.get(parentElement);
     childElementCollection.remove(referenceSourceElement);
   }
@@ -115,6 +122,9 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
 
   @Override
   public ModelElementType getReferenceSourceElementType() {
+    if (referenceSourceType == null) {
+      throw new ModelException("referenceSourceType is not initialized");
+    }
     return referenceSourceType;
   }
 
@@ -124,7 +134,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
     Collection<DomElement> referenceTargetElements = new ArrayList<>();
     for (SOURCE referenceSourceElement : referenceSourceElements) {
       String identifier = getReferenceIdentifier(referenceSourceElement);
-      DomElement referenceTargetElement = document.getElementById(identifier);
+      DomElement referenceTargetElement = identifier != null ? document.getElementById(identifier) : null;
       if (referenceTargetElement != null) {
         referenceTargetElements.add(referenceTargetElement);
       }
@@ -159,7 +169,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(@Nullable Object o) {
       if (o == null) {
         return false;
       }

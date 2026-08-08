@@ -19,6 +19,8 @@ package org.operaton.bpm.model.xml.impl.type.child;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelBuildOperation;
@@ -44,7 +46,7 @@ public class ChildElementCollectionBuilderImpl<T extends ModelElementInstance> i
   private final ChildElementCollectionImpl<T> collection;
   protected final Class<T> childElementType;
 
-  private ElementReferenceCollectionBuilder<?, ?> referenceBuilder;
+  private @Nullable ElementReferenceCollectionBuilder<?, ?> referenceBuilder;
 
   private final List<ModelBuildOperation> modelBuildOperations = new ArrayList<>();
 

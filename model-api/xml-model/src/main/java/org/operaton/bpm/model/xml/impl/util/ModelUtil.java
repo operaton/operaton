@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.*;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -78,27 +80,31 @@ public final class ModelUtil {
     return modelElement;
   }
 
-  protected static ModelElementTypeImpl getModelElement(DomElement domElement, ModelInstanceImpl modelInstance, String namespaceUri) {
+  protected static ModelElementTypeImpl getModelElement(DomElement domElement, ModelInstanceImpl modelInstance, @Nullable String namespaceUri) {
     String localName = domElement.getLocalName();
-    ModelElementTypeImpl modelType = (ModelElementTypeImpl) modelInstance.getModel().getTypeForName(namespaceUri, localName);
+    ModelElementTypeImpl modelType = localName != null ? (ModelElementTypeImpl) modelInstance.getModel().getTypeForName(namespaceUri, localName) : null;
 
     if (modelType == null) {
 
       Model model = modelInstance.getModel();
-      String actualNamespaceUri = model.getActualNamespace(namespaceUri);
+      String actualNamespaceUri = namespaceUri != null ? model.getActualNamespace(namespaceUri) : null;
 
       if (actualNamespaceUri != null) {
         modelType = getModelElement(domElement, modelInstance, actualNamespaceUri);
       }
       else {
-        modelType = (ModelElementTypeImpl) modelInstance.registerGenericType(namespaceUri, localName);
+        if (localName != null) {
+          modelType = (ModelElementTypeImpl) modelInstance.registerGenericType(namespaceUri, localName);
+        } else {
+          throw new ModelException("Element %s has no local name.".formatted(domElement));
+        }
       }
 
     }
     return modelType;
   }
 
-  public static QName getQName(String namespaceUri, String localName) {
+  public static QName getQName(@Nullable String namespaceUri, String localName) {
     return new QName(namespaceUri, localName);
   }
 
@@ -110,7 +116,7 @@ public final class ModelUtil {
 
   // String to primitive type converters ////////////////////////////////////
 
-  public static boolean valueAsBoolean(String rawValue) {
+  public static boolean valueAsBoolean(@Nullable String rawValue) {
     return Boolean.parseBoolean(rawValue);
   }
 

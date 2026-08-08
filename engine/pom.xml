@@ -41,6 +41,10 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+    </dependency>
 
     <!-- operaton dependencies -->
 

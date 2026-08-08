@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -184,42 +186,42 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
   }
 
   @Override
-  public HistoricVariableInstanceQuery executionIdIn(String... executionIds) {
+  public HistoricVariableInstanceQuery executionIdIn(@NonNull String... executionIds) {
     ensureNotNull("Execution Ids", (Object[]) executionIds);
     this.executionIds = executionIds;
     return this;
   }
 
   @Override
-  public HistoricVariableInstanceQuery caseExecutionIdIn(String... caseExecutionIds) {
+  public @NonNull HistoricVariableInstanceQuery caseExecutionIdIn(@NonNull String... caseExecutionIds) {
     ensureNotNull("Case execution ids", (Object[]) caseExecutionIds);
     this.caseExecutionIds = caseExecutionIds;
     return this;
   }
 
   @Override
-  public HistoricVariableInstanceQuery caseActivityIdIn(String... caseActivityIds) {
+  public @NonNull HistoricVariableInstanceQuery caseActivityIdIn(@NonNull String... caseActivityIds) {
     ensureNotNull("Case activity ids", (Object[]) caseActivityIds);
     this.caseActivityIds = caseActivityIds;
     return this;
   }
 
   @Override
-  public HistoricVariableInstanceQuery activityInstanceIdIn(String... activityInstanceIds) {
+  public @NonNull HistoricVariableInstanceQuery activityInstanceIdIn(@NonNull String... activityInstanceIds) {
     ensureNotNull("Activity Instance Ids", (Object[]) activityInstanceIds);
     this.activityInstanceIds = activityInstanceIds;
     return this;
   }
 
   @Override
-  public HistoricVariableInstanceQuery variableName(String variableName) {
+  public @NonNull HistoricVariableInstanceQuery variableName(@NonNull String variableName) {
     ensureNotNull("variableName", variableName);
     this.variableName = variableName;
     return this;
   }
 
   @Override
-  public HistoricVariableInstanceQuery variableValueEquals(String variableName, Object variableValue) {
+  public @NonNull HistoricVariableInstanceQuery variableValueEquals(@NonNull String variableName, @NonNull Object variableValue) {
     ensureNotNull("variableName", variableName);
     ensureNotNull("variableValue", variableValue);
     this.variableName = variableName;
@@ -228,7 +230,7 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
   }
 
   @Override
-  public HistoricVariableInstanceQuery variableNameLike(String variableNameLike) {
+  public @NonNull HistoricVariableInstanceQuery variableNameLike(@NonNull String variableNameLike) {
     ensureNotNull("variableNameLike", variableNameLike);
     this.variableNameLike = variableNameLike;
     return this;

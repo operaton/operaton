@@ -19,6 +19,8 @@ package org.operaton.bpm.model.xml.impl.type.child;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
@@ -89,7 +91,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
   }
 
   @Override
-  public ModelElementType getChildElementType(Model model) {
+  public @Nullable ModelElementType getChildElementType(Model model) {
     return model.getType(childElementTypeClass);
   }
 

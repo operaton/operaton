@@ -21,13 +21,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXException;
 
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -48,7 +49,7 @@ public abstract class AbstractModelParser {
   protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_ALL = "all";
 
   private final DocumentBuilderFactory documentBuilderFactory;
-  protected SchemaFactory schemaFactory;
+  protected @Nullable SchemaFactory schemaFactory;
   protected Map<String, Schema> schemas = new HashMap<>();
   
   // Lock object for thread-safe validation
@@ -178,8 +179,11 @@ public abstract class AbstractModelParser {
     }
   }
 
-  protected Schema getSchema(DomDocument document) {
+  protected @Nullable Schema getSchema(DomDocument document) {
     DomElement rootElement = document.getRootElement();
+    if (rootElement == null) {
+      return null;
+    }
     String namespaceURI = rootElement.getNamespaceURI();
     return schemas.get(namespaceURI);
   }

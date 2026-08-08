@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.model.xml.impl.type.reference;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.model.xml.impl.type.child.ChildElementCollectionImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 
 /**
  * @author Sebastian Menski
  */
+@NullMarked
 public class IdsElementReferenceCollectionBuilderImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceCollectionBuilderImpl<TARGET, SOURCE> {
 
   public IdsElementReferenceCollectionBuilderImpl(Class<SOURCE> childElementType, Class<TARGET> referenceTargetClass, ChildElementCollectionImpl<SOURCE> collection) {

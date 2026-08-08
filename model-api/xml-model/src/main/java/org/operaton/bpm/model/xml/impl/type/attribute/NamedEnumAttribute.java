@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.attribute;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
 public class NamedEnumAttribute<T extends Enum<T>> extends AttributeImpl<T> {
@@ -29,9 +31,12 @@ public class NamedEnumAttribute<T extends Enum<T>> extends AttributeImpl<T> {
 
   @Override
   @SuppressWarnings("unchecked")
-  protected T convertXmlValueToModelValue(String rawValue) {
+  protected @Nullable T convertXmlValueToModelValue(@Nullable String rawValue) {
+    if (rawValue == null) {
+      return null;
+    }
     T[] enumConstants = type.getEnumConstants();
-    if (rawValue != null && enumConstants != null) {
+    if (enumConstants != null) {
       for (T enumConstant : enumConstants) {
         if (rawValue.equals(enumConstant.toString())) {
           return enumConstant;

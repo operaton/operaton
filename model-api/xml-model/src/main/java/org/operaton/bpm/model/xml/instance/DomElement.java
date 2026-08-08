@@ -19,6 +19,7 @@ package org.operaton.bpm.model.xml.instance;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Element;
 
 import org.operaton.bpm.model.xml.ModelException;
@@ -36,42 +37,42 @@ public interface DomElement {
    *
    * @return the namespace URI
    */
-  String getNamespaceURI();
+  @Nullable String getNamespaceURI();
 
   /**
    * Returns the local name of this element.
    *
    * @return the local name
    */
-  String getLocalName();
+  @Nullable String getLocalName();
 
   /**
    * Returns the prefix of this element.
    *
    * @return the prefix
    */
-  String getPrefix();
+  @Nullable String getPrefix();
 
   /**
    * Returns the DOM document which contains this element.
    *
    * @return the DOM document or null if the element itself is a document
    */
-  DomDocument getDocument();
+  @Nullable DomDocument getDocument();
 
   /**
    * Returns the root element of the document which contains this element.
    *
    * @return the root element of the document or null if non exists
    */
-  DomElement getRootElement();
+  @Nullable DomElement getRootElement();
 
   /**
    * Returns the parent element of this element.
    *
    * @return the parent element or null if not part of a tree
    */
-  DomElement getParentElement();
+  @Nullable DomElement getParentElement();
 
   /**
    * Returns all child elements of this element.
@@ -132,7 +133,7 @@ public interface DomElement {
    * @param elementToInsert  the new element to insert
    * @param insertAfter  the existing child element to insert after or null
    */
-  void insertChildElementAfter(DomElement elementToInsert, DomElement insertAfter);
+  void insertChildElementAfter(DomElement elementToInsert, @Nullable DomElement insertAfter);
 
   /**
    * Checks if this element has a attribute under the namespace of this element.
@@ -149,24 +150,24 @@ public interface DomElement {
    * @param localName  the name of the attribute
    * @return true if the attribute exists otherwise false
    */
-  boolean hasAttribute(String namespaceUri, String localName);
+  boolean hasAttribute(@Nullable String namespaceUri, String localName);
 
   /**
    * Returns the attribute value for the namespace of this element.
    *
    * @param attributeName  the name of the attribute
-   * @return the value of the attribute or the empty string
+   * @return the value of the attribute or null if the attribute does not exist
    */
-  String getAttribute(String attributeName);
+  @Nullable String getAttribute(String attributeName);
 
   /**
    * Returns the attribute value for the given namespace.
    *
    * @param namespaceUri  the namespaceUri of the namespace
    * @param localName  the name of the attribute
-   * @return the value of the attribute or the empty string
+   * @return the value of the attribute or null if the attribute does not exist
    */
-  String getAttribute(String namespaceUri, String localName);
+  @Nullable String getAttribute(@Nullable String namespaceUri, String localName);
 
   /**
    * Sets the attribute value for the namespace of this element.
@@ -183,7 +184,7 @@ public interface DomElement {
    * @param localName  the name of the attribute
    * @param value  the value to set
    */
-  void setAttribute(String namespaceUri, String localName, String value);
+  void setAttribute(@Nullable String namespaceUri, String localName, String value);
 
   /**
    * Sets the value of a id attribute for the namespace of this element.
@@ -200,7 +201,7 @@ public interface DomElement {
    * @param localName  the name of the attribute
    * @param value  the value to set
    */
-  void setIdAttribute(String namespaceUri, String localName, String value);
+  void setIdAttribute(@Nullable String namespaceUri, String localName, String value);
 
   /**
    * Removes the attribute for the namespace of this element.
@@ -215,7 +216,7 @@ public interface DomElement {
    * @param namespaceUri  the namespaceUri of the namespace
    * @param localName  the name of the attribute
    */
-  void removeAttribute(String namespaceUri, String localName);
+  void removeAttribute(@Nullable String namespaceUri, String localName);
 
   /**
    * Gets the text content of this element all its descendants.
@@ -241,9 +242,9 @@ public interface DomElement {
   /**
    * Returns the {@link ModelElementInstance} which is associated with this element.
    *
-   * @return the {@link ModelElementInstance} or null if non is associated
+   * @return the {@link ModelElementInstance} or null if none is associated
    */
-  ModelElementInstance getModelElementInstance();
+  @Nullable ModelElementInstance getModelElementInstance();
 
   /**
    * Sets the {@link ModelElementInstance} which should be associated with this element.
@@ -275,5 +276,5 @@ public interface DomElement {
    * @param namespaceUri  the namespaceUri of the namespace
    * @return the prefix or null if non is defined
    */
-  String lookupPrefix(String namespaceUri);
+  @Nullable String lookupPrefix(String namespaceUri);
 }

@@ -19,6 +19,9 @@ package org.operaton.bpm.model.xml.impl.type;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelBuildOperation;
@@ -36,6 +39,7 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
  * @author Daniel Meyer
  *
  */
+@NullMarked
 public class ModelElementTypeBuilderImpl implements ModelElementTypeBuilder, ModelBuildOperation {
 
   private final ModelElementTypeImpl modelType;
@@ -43,7 +47,7 @@ public class ModelElementTypeBuilderImpl implements ModelElementTypeBuilder, Mod
   private final Class<? extends ModelElementInstance> instanceType;
 
   private final List<ModelBuildOperation> modelBuildOperations = new ArrayList<>();
-  private Class<? extends ModelElementInstance> extendedType;
+  @Nullable private Class<? extends ModelElementInstance> extendedType;
 
   public ModelElementTypeBuilderImpl(Class<? extends ModelElementInstance> instanceType, String name, ModelImpl model) {
     this.instanceType = instanceType;
@@ -137,7 +141,6 @@ public class ModelElementTypeBuilderImpl implements ModelElementTypeBuilder, Mod
       ModelElementTypeImpl extendedModelElementType = (ModelElementTypeImpl) model.getType(extendedType);
       if(extendedModelElementType == null) {
         throw new ModelException("Type "+modelType+" is defined to extend "+extendedType+" but no such type is defined.");
-
       } else {
         modelType.setBaseType(extendedModelElementType);
         extendedModelElementType.registerExtendingType(modelType);

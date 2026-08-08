@@ -18,7 +18,10 @@ package org.operaton.bpm.model.xml.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelBuilder;
@@ -59,7 +62,7 @@ public class ModelInstanceImpl implements ModelInstance {
   }
 
   @Override
-  public ModelElementInstance getDocumentElement() {
+  public @Nullable ModelElementInstance getDocumentElement() {
     DomElement rootElement = document.getRootElement();
     if(rootElement != null) {
       return ModelUtil.getModelElement(rootElement, this);
@@ -81,7 +84,7 @@ public class ModelInstanceImpl implements ModelInstance {
   }
 
   @Override
-  public <T extends ModelElementInstance> T newInstance(Class<T> type, String id) {
+  public <T extends ModelElementInstance> T newInstance(Class<T> type, @Nullable String id) {
     ModelElementType modelElementType = model.getType(type);
     if(modelElementType != null) {
       return newInstance(modelElementType, id);
@@ -97,7 +100,7 @@ public class ModelInstanceImpl implements ModelInstance {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends ModelElementInstance> T newInstance(ModelElementType type, String id) {
+  public <T extends ModelElementInstance> T newInstance(ModelElementType type, @Nullable String id) {
     ModelElementInstance modelElementInstance = type.newInstance(this);
     if (id != null && !id.isEmpty()) {
       ModelUtil.setNewIdentifier(type, modelElementInstance, id, false);
@@ -112,7 +115,7 @@ public class ModelInstanceImpl implements ModelInstance {
     return model;
   }
 
-  public ModelElementType registerGenericType(String namespaceUri, String localName) {
+  public ModelElementType registerGenericType(@Nullable String namespaceUri, String localName) {
     ModelElementType elementType = model.getTypeForName(namespaceUri, localName);
     if (elementType == null) {
       elementType = modelBuilder.defineGenericType(localName, namespaceUri);
@@ -123,7 +126,7 @@ public class ModelInstanceImpl implements ModelInstance {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends ModelElementInstance> T getModelElementById(String id) {
+  public <T extends ModelElementInstance> @Nullable T getModelElementById(@Nullable String id) {
     if (id == null) {
       return null;
     }
@@ -152,7 +155,11 @@ public class ModelInstanceImpl implements ModelInstance {
   @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> Collection<T> getModelElementsByType(Class<T> referencingClass) {
-    return (Collection<T>) getModelElementsByType(getModel().getType(referencingClass));
+    ModelElementType type = getModel().getType(referencingClass);
+    if (type == null) {
+      return Collections.emptyList();
+    }
+    return (Collection<T>) getModelElementsByType(type);
   }
 
   @Override

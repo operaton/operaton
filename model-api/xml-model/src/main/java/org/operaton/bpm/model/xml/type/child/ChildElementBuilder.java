@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.type.child;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceBuilder;
 
@@ -23,6 +25,7 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceBuilder;
  * @author Daniel Meyer
  *
  */
+@NullMarked
 public interface ChildElementBuilder<T extends ModelElementInstance> extends ChildElementCollectionBuilder<T> {
 
   @Override

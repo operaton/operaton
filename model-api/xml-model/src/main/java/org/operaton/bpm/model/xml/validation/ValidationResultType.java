@@ -21,7 +21,6 @@ package org.operaton.bpm.model.xml.validation;
  *
  */
 public enum ValidationResultType {
-
   ERROR,
   WARNING
 }

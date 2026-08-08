@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.impl.type;
 
 import java.util.*;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -46,9 +48,9 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   private final Class<? extends ModelElementInstance> instanceType;
 
-  private String typeNamespace;
+  private @Nullable String typeNamespace;
 
-  private ModelElementTypeImpl baseType;
+  private @Nullable ModelElementTypeImpl baseType;
 
   private final List<ModelElementType> extendingTypes = new ArrayList<>();
 
@@ -58,7 +60,7 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   private final List<ChildElementCollection<?>> childElementCollections = new ArrayList<>();
 
-  private ModelTypeInstanceProvider<?> instanceProvider;
+  private @Nullable ModelTypeInstanceProvider<?> instanceProvider;
 
   private boolean isAbstract;
 
@@ -110,6 +112,9 @@ public class ModelElementTypeImpl implements ModelElementType {
       throw new ModelTypeException("Model element type %s is abstract and no instances can be created.".formatted(getTypeName()));
     }
     else {
+      if (instanceProvider == null) {
+        throw new ModelException("Instance provider has not been set.");
+      }
       return instanceProvider.newInstance(instanceContext);
     }
   }
@@ -134,7 +139,7 @@ public class ModelElementTypeImpl implements ModelElementType {
   }
 
   @Override
-  public String getTypeNamespace() {
+  public @Nullable String getTypeNamespace() {
     return typeNamespace;
   }
 
@@ -260,12 +265,9 @@ public class ModelElementTypeImpl implements ModelElementType {
     if (elements.isEmpty()) {
       Set<String> alternativeNamespaces = getModel().getAlternativeNamespaces(namespaceURI);
 
-      if (alternativeNamespaces != null)
-      {
-        Iterator<String> namespaceIt = alternativeNamespaces.iterator();
-        while (elements.isEmpty() && namespaceIt.hasNext()) {
-          elements = getElementsByNameNs(document, namespaceIt.next());
-        }
+      Iterator<String> namespaceIt = alternativeNamespaces.iterator();
+      while (elements.isEmpty() && namespaceIt.hasNext()) {
+        elements = getElementsByNameNs(document, namespaceIt.next());
       }
     }
 
@@ -294,8 +296,7 @@ public class ModelElementTypeImpl implements ModelElementType {
    * @return the list of all attributes
    */
   public Collection<Attribute<?>> getAllAttributes() {
-    List<Attribute<?>> allAttributes = new ArrayList<>();
-    allAttributes.addAll(getAttributes());
+    List<Attribute<?>> allAttributes = new ArrayList<>(getAttributes());
     Collection<ModelElementType> baseTypes = ModelUtil.calculateAllBaseTypes(this);
     for (ModelElementType type : baseTypes) {
       allAttributes.addAll(type.getAttributes());
@@ -310,7 +311,7 @@ public class ModelElementTypeImpl implements ModelElementType {
    * @return the attribute or null if it not exists
    */
   @Override
-  public Attribute<?> getAttribute(String attributeName) {
+  public @Nullable Attribute<?> getAttribute(String attributeName) {
     for (Attribute<?> attribute : getAllAttributes()) {
       if (attribute.getAttributeName().equals(attributeName)) {
         return attribute;
@@ -319,7 +320,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     return null;
   }
 
-  public ChildElementCollection<?> getChildElementCollection(ModelElementType childElementType) {
+  public @Nullable ChildElementCollection<?> getChildElementCollection(ModelElementType childElementType) {
     for (ChildElementCollection<?> childElementCollection : getChildElementCollections()) {
       if (childElementType.equals(childElementCollection.getChildElementType(model))) {
         return childElementCollection;

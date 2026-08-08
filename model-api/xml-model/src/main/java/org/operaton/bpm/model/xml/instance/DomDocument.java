@@ -19,6 +19,8 @@ package org.operaton.bpm.model.xml.instance;
 import java.util.List;
 
 import javax.xml.transform.dom.DOMSource;
+
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Document;
 
 /**
@@ -33,7 +35,7 @@ public interface DomDocument {
    *
    * @return the root element or null if non exists
    */
-  DomElement getRootElement();
+  @Nullable DomElement getRootElement();
 
   /**
    * Sets the root element of the DOM document. Replace an existing if necessary.
@@ -57,7 +59,7 @@ public interface DomDocument {
    * @param id  the id to search for
    * @return the element or null if no such element exists
    */
-  DomElement getElementById(String id);
+  @Nullable DomElement getElementById(String id);
 
   /**
    * Gets all elements with the namespace and name.

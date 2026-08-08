@@ -20,6 +20,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -41,6 +44,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
+@NullMarked
 public final class Context {
   private static final ThreadLocal<Deque<CommandContext>> commandContextThreadLocal = new ThreadLocal<>();
 
@@ -54,7 +58,7 @@ public final class Context {
   private Context() {
   }
 
-  public static CommandContext getCommandContext() {
+  @Nullable public static CommandContext getCommandContext() {
     Deque<CommandContext> stack = getStack(commandContextThreadLocal);
     if (stack.isEmpty()) {
       return null;
@@ -70,7 +74,7 @@ public final class Context {
     getStack(commandContextThreadLocal).pop();
   }
 
-  public static CommandInvocationContext getCommandInvocationContext() {
+  @Nullable public static CommandInvocationContext getCommandInvocationContext() {
     Deque<CommandInvocationContext> stack = getStack(commandInvocationContextThreadLocal);
     if (stack.isEmpty()) {
       return null;
@@ -99,7 +103,7 @@ public final class Context {
     }
   }
 
-  public static ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+  @Nullable public static ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
     Deque<ProcessEngineConfigurationImpl> stack = getStack(processEngineConfigurationStackThreadLocal);
     if (stack.isEmpty()) {
       return null;
@@ -119,19 +123,19 @@ public final class Context {
    * @deprecated Use {@link #getBpmnExecutionContext()} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public static ExecutionContext getExecutionContext() {
+  @Nullable public static ExecutionContext getExecutionContext() {
     return getBpmnExecutionContext();
   }
 
-  public static BpmnExecutionContext getBpmnExecutionContext() {
+  @Nullable public static BpmnExecutionContext getBpmnExecutionContext() {
     return (BpmnExecutionContext) getCoreExecutionContext();
   }
 
-  public static CaseExecutionContext getCaseExecutionContext() {
+  @Nullable public static CaseExecutionContext getCaseExecutionContext() {
     return (CaseExecutionContext) getCoreExecutionContext();
   }
 
-  public static CoreExecutionContext<? extends CoreExecution> getCoreExecutionContext() {
+  @Nullable public static CoreExecutionContext<? extends CoreExecution> getCoreExecutionContext() {
     var stack = getStack(executionContextStackThreadLocal);
     if(stack.isEmpty()) {
       return null;
@@ -161,7 +165,7 @@ public final class Context {
     return stack;
   }
 
-  public static JobExecutorContext getJobExecutorContext() {
+  public static @Nullable JobExecutorContext getJobExecutorContext() {
     return jobExecutorContextThreadLocal.get();
   }
 
@@ -173,8 +177,7 @@ public final class Context {
     jobExecutorContextThreadLocal.remove();
   }
 
-
-  public static ProcessApplicationReference getCurrentProcessApplication() {
+  @Nullable public static ProcessApplicationReference getCurrentProcessApplication() {
     Deque<ProcessApplicationReference> stack = getStack(processApplicationContext);
     if(stack.isEmpty()) {
       return null;
@@ -197,11 +200,11 @@ public final class Context {
    * Use {@link #executeWithinProcessApplication(Callable, ProcessApplicationReference, InvocationContext)}
    * instead if an {@link InvocationContext} is available.
    */
-  public static <T> T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference) {
+  @Nullable public static <T> T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference) {
     return executeWithinProcessApplication(callback, processApplicationReference, null);
   }
 
-  public static <T> T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference, InvocationContext invocationContext) {
+  @Nullable public static <T> T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference, @Nullable InvocationContext invocationContext) {
     String paName = processApplicationReference.getName();
     try {
       ProcessApplicationInterface processApplication = processApplicationReference.getProcessApplication();
@@ -213,7 +216,7 @@ public final class Context {
     }
   }
 
-  private static <T> T executeWrappedCallback(Callable<T> callback, InvocationContext invocationContext,
+  @Nullable private static <T> T executeWrappedCallback(Callable<T> callback, @Nullable InvocationContext invocationContext,
       ProcessApplicationInterface processApplication) {
     try {
       // wrap callback

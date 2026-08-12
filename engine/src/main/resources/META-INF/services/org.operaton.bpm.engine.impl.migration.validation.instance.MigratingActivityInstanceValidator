@@ -1,0 +1,3 @@
+org.operaton.bpm.engine.impl.migration.validation.instance.NoUnmappedLeafInstanceValidator
+org.operaton.bpm.engine.impl.migration.validation.instance.VariableConflictActivityInstanceValidator
+org.operaton.bpm.engine.impl.migration.validation.instance.SupportedActivityInstanceValidator

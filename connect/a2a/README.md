@@ -166,7 +166,7 @@ Map any of these with `<operaton:outputParameter name="yourVariable">${output}</
 
 | Output | Meaning |
 |---|---|
-| `text` | The agent's answer as plain text: the text parts of the final status message joined by newlines. The usual one to map. |
+| `text` | The agent's answer as plain text, and the usual one to map. Taken from the text parts of the final status message; when the agent closes the task without one and answers only with artifacts, which is common (google-adk agents do it), it falls back to the artifact text so the one-field case stays one field. |
 | `statusMessage` | The full final message as a map, including all parts. |
 | `artifacts` | **All** artifacts the agent produced, as a list of maps, each with its `parts`. |
 | `artifactText` | The text parts of all artifacts joined by newlines. |
@@ -267,9 +267,14 @@ this less likely:
    not run the work twice.
 2. **A reattach probe.** When no `contextId` is supplied, one is derived from `idempotencyKey`, which means the
    context holds exactly one task per activity instance. Before sending, the connector calls `ListTasks` for that
-   context and, if it finds a task, reattaches with `GetTask` instead of sending again. If the agent does not
-   implement `ListTasks`, the probe is skipped silently. If the probe fails for a transport reason, the job is
-   retried rather than risking a duplicate send.
+   context and, if it finds a task, reattaches with `GetTask` instead of sending again. Only a genuine transport
+   failure during the probe (an `IOException`, or HTTP 408/425/429/5xx) fails the job; anything else degrades to a
+   normal send.
+
+   **`ListTasks` is optional in A2A and many agents do not implement it**, answering `-32601 Method not found`.
+   That is expected and costs you only the extra round trip, but it does mean the probe is no protection on such
+   an agent, and the deterministic `messageId` is all that is left. Verified against a google-adk agent, which
+   does not implement `ListTasks` but does honour a client-supplied `contextId`.
 
 **Be aware of the honest limits.** A2A does not let a client choose the task id: `MessageSendParams` has no field
 for it, and the agent assigns `Task.id` when it creates the task. A `Message.taskId` refers to a task that

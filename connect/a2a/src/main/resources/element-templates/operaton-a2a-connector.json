@@ -385,7 +385,7 @@
         {
           "id": "outputText",
           "label": "Answer text into",
-          "description": "Process variable that receives the agent's answer as plain text",
+          "description": "Process variable that receives the agent's answer as plain text. Falls back to the artifact text when the agent answers with artifacts only.",
           "group": "output",
           "type": "String",
           "value": "a2aText",

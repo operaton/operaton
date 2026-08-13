@@ -107,6 +107,30 @@ class A2aResponseImplTest {
     assertThat(parameters.get(A2aResponse.PARAM_MESSAGE_METADATA)).isEqualTo(Map.of("model", "test-model"));
   }
 
+  /**
+   * Regression test. Agents split into two camps, and a google-adk agent closes its task with no status message
+   * at all, putting the answer in an artifact. Reading only the status message left {@code ${text}} empty against
+   * every such agent, which is the output the examples and the element template lead with.
+   */
+  @Test
+  void textFallsBackToArtifactsWhenTheAgentAnswersWithArtifactsOnly() {
+    A2aAgent.TaskSnapshot snapshot = new A2aAgent.TaskSnapshot("t1", "c1", A2aErrors.STATE_COMPLETED,
+        null, List.of(FakeA2aAgent.artifact("reply", "4")), Map.of(), List.of(), false);
+
+    assertThat(response(snapshot).getText()).isEqualTo("4");
+  }
+
+  @Test
+  void aClosingMessageStillWinsOverTheArtifactText() {
+    A2aAgent.TaskSnapshot snapshot = new A2aAgent.TaskSnapshot("t1", "c1", A2aErrors.STATE_COMPLETED,
+        FakeA2aAgent.message("the summary"),
+        List.of(FakeA2aAgent.artifact("reply", "raw artifact text")), Map.of(), List.of(), false);
+
+    A2aResponse response = response(snapshot);
+    assertThat(response.getText()).isEqualTo("the summary");
+    assertThat(response.getResponseParameters().get(A2aResponse.PARAM_ARTIFACT_TEXT)).isEqualTo("raw artifact text");
+  }
+
   @Test
   void anAnswerWithoutATaskStillMapsItsText() {
     A2aAgent.TaskSnapshot snapshot = new A2aAgent.TaskSnapshot(null, "c1", null,

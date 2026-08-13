@@ -29,8 +29,10 @@ import org.operaton.connect.spi.ConnectorResponse;
 public interface A2aResponse extends ConnectorResponse {
 
   /**
-   * The agent's answer as plain text: the text parts of the final status message joined by newlines. Empty
-   * when the agent answered only with artifacts or non-text parts.
+   * The agent's answer as plain text: the text parts of the final status message joined by newlines. When the
+   * agent closes the task without a status message and answers only with artifacts, this falls back to
+   * {@link #PARAM_ARTIFACT_TEXT}, so the simple case stays a single field whichever way the agent answers.
+   * Empty only when there is no text anywhere.
    */
   String PARAM_TEXT = "text";
 

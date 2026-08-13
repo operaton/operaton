@@ -15,6 +15,7 @@
  */
 package org.operaton.connect.a2a.impl;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -179,11 +180,13 @@ public class SdkA2aAgent implements A2aAgent {
       // first result is the one to reattach to and ordering does not matter.
       return Optional.ofNullable(tasks.get(0).id());
     } catch (Exception e) {
-      A2aCallException classified = classify(e, "Probing for an existing A2A task failed");
-      if (classified.isRetryable()) {
+      // The probe is best-effort. ListTasks is optional in A2A and a great many agents answer it with
+      // "method not found", so anything short of a clear transport problem has to degrade to a plain send.
+      // Treating an unrecognised failure as retryable here would take down every send to such an agent.
+      if (isTransportFailure(e)) {
         // The agent may well be reachable again in a moment. Failing here is better than sending a second
         // message and paying for the same work twice.
-        throw classified;
+        throw classify(e, "Probing for an existing A2A task failed");
       }
       LOG.reattachProbeUnsupported(config.url());
       return Optional.empty();
@@ -519,6 +522,25 @@ public class SdkA2aAgent implements A2aAgent {
       return result;
     }
     return normalize(GSON.fromJson(GSON.toJson(value), Object.class));
+  }
+
+  /**
+   * Whether a failure is positively evidence of a transport problem, rather than merely unrecognised.
+   *
+   * <p>
+   * {@link #classify} deliberately treats an unknown failure as retryable, which is the right default when a call
+   * we need has failed. For the optional reattach probe the safe default is the opposite one, so this asks for
+   * proof instead of assuming.
+   * </p>
+   */
+  // package-private so the reattach-probe decision can be unit tested directly
+  static boolean isTransportFailure(Throwable cause) {
+    A2AClientHTTPError httpError = findCause(cause, A2AClientHTTPError.class);
+    if (httpError != null) {
+      int code = httpError.getCode();
+      return code == 408 || code == 425 || code == 429 || code >= 500;
+    }
+    return findCause(cause, IOException.class) != null;
   }
 
   private A2aCallException classify(Throwable cause, String message) {

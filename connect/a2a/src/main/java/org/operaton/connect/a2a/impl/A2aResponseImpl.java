@@ -71,9 +71,22 @@ public class A2aResponseImpl extends AbstractConnectorResponse implements A2aRes
     }
   }
 
+  /**
+   * The agent's answer as plain text.
+   *
+   * <p>
+   * Agents split into two camps: some close the task with a status message carrying the answer, others return
+   * nothing but artifacts. Reading only the status message would leave {@code ${text}} empty against the second
+   * kind, so artifacts are the fallback and the easy one-field case stays easy either way.
+   * </p>
+   */
   @Override
   public String getText() {
-    return bounded(textOf(partsOf(snapshot.statusMessage())), PARAM_TEXT);
+    String text = textOf(partsOf(snapshot.statusMessage()));
+    if (text.isEmpty()) {
+      text = textOf(artifactParts());
+    }
+    return bounded(text, PARAM_TEXT);
   }
 
   @Override
@@ -104,11 +117,15 @@ public class A2aResponseImpl extends AbstractConnectorResponse implements A2aRes
   }
 
   private String artifactText() {
+    return bounded(textOf(artifactParts()), PARAM_ARTIFACT_TEXT);
+  }
+
+  private List<Map<String, Object>> artifactParts() {
     List<Map<String, Object>> parts = new ArrayList<>();
     for (Map<String, Object> artifact : snapshot.artifacts()) {
       parts.addAll(partsOf(artifact));
     }
-    return bounded(textOf(parts), PARAM_ARTIFACT_TEXT);
+    return parts;
   }
 
   private Map<String, Object> task() {

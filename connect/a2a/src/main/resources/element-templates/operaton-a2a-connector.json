@@ -1,0 +1,502 @@
+{
+  "$schema": "https://unpkg.com/@camunda/element-templates-json-schema/resources/schema.json",
+  "name": "A2A agent call",
+  "id": "org.operaton.connect.a2a",
+  "description": "Delegates work to an AI agent over the Agent2Agent (A2A) protocol",
+  "documentationRef": "https://github.com/operaton/operaton/blob/main/connect/a2a/README.md",
+  "appliesTo": [
+    "bpmn:ServiceTask"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "properties": [],
+  "groups": [
+    {
+      "id": "agent",
+      "label": "Agent"
+    },
+    {
+      "id": "message",
+      "label": "Message"
+    },
+    {
+      "id": "conversation",
+      "label": "Conversation"
+    },
+    {
+      "id": "callback",
+      "label": "Push notification (sendAsync only)"
+    },
+    {
+      "id": "timeouts",
+      "label": "Timeouts"
+    },
+    {
+      "id": "reliability",
+      "label": "Reliability"
+    },
+    {
+      "id": "output",
+      "label": "Result variables"
+    }
+  ],
+  "scopes": [
+    {
+      "type": "camunda:Connector",
+      "properties": [
+        {
+          "type": "Hidden",
+          "value": "a2a",
+          "binding": {
+            "type": "property",
+            "name": "connectorId"
+          }
+        },
+        {
+          "id": "operation",
+          "label": "Operation",
+          "description": "sendSync waits for the agent to finish. sendAsync returns straight away and the agent calls your webhook. getTask reads a task you already know about.",
+          "group": "agent",
+          "type": "Dropdown",
+          "value": "sendSync",
+          "choices": [
+            {
+              "name": "Send and wait (sendSync)",
+              "value": "sendSync"
+            },
+            {
+              "name": "Send and continue (sendAsync)",
+              "value": "sendAsync"
+            },
+            {
+              "name": "Read a task (getTask)",
+              "value": "getTask"
+            }
+          ],
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "operation"
+          }
+        },
+        {
+          "id": "url",
+          "label": "Agent URL",
+          "description": "The agent base URL, for example https://agent.example.com, or a full agent card URL ending in .json",
+          "group": "agent",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "url"
+          },
+          "constraints": {
+            "notEmpty": true
+          }
+        },
+        {
+          "id": "headers",
+          "label": "HTTP headers",
+          "description": "A map of headers, for example ${ {'Authorization': 'Bearer ' + agentToken} }. Keep secrets in process variables or engine configuration, never in the diagram.",
+          "group": "agent",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "headers"
+          }
+        },
+        {
+          "id": "message",
+          "label": "Message",
+          "description": "The plain text to send to the agent",
+          "group": "message",
+          "type": "Text",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "message"
+          }
+        },
+        {
+          "id": "parts",
+          "label": "Additional parts",
+          "description": "A list of maps for file and structured data parts, for example ${ [ {'type':'file','uri':invoiceUrl,'mimeType':'application/pdf'} ] }",
+          "group": "message",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "parts"
+          }
+        },
+        {
+          "id": "metadata",
+          "label": "Message metadata",
+          "description": "A map of metadata to attach to the outgoing message",
+          "group": "message",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "metadata"
+          }
+        },
+        {
+          "id": "extensions",
+          "label": "Extensions",
+          "description": "A2A extension URIs to activate, as a list or a comma-separated string",
+          "group": "message",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "extensions"
+          }
+        },
+        {
+          "id": "acceptedOutputModes",
+          "label": "Accepted output modes",
+          "description": "MIME types you can handle back, for example text/plain, application/json",
+          "group": "message",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "acceptedOutputModes"
+          }
+        },
+        {
+          "id": "requestMetadata",
+          "label": "Request metadata",
+          "description": "A map of metadata attached to the send request rather than to the message",
+          "group": "message",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "requestMetadata"
+          }
+        },
+        {
+          "id": "contextId",
+          "label": "Context id",
+          "description": "Set this to continue an earlier conversation, usually ${a2aContextId} from a previous agent task",
+          "group": "conversation",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "contextId"
+          }
+        },
+        {
+          "id": "taskId",
+          "label": "Task id",
+          "description": "Required for getTask. On a send operation it appends the message to an existing task.",
+          "group": "conversation",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "taskId"
+          }
+        },
+        {
+          "id": "referenceTaskIds",
+          "label": "Reference task ids",
+          "description": "Earlier tasks the agent should treat as context",
+          "group": "conversation",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "referenceTaskIds"
+          }
+        },
+        {
+          "id": "historyLength",
+          "label": "History length",
+          "description": "How many earlier messages the agent should return",
+          "group": "conversation",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "historyLength"
+          }
+        },
+        {
+          "id": "tenant",
+          "label": "Tenant",
+          "description": "The A2A tenant to scope the call to",
+          "group": "conversation",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "tenant"
+          }
+        },
+        {
+          "id": "callbackUrl",
+          "label": "Callback URL",
+          "description": "Where the agent POSTs the push notification. Required for sendAsync, ignored otherwise.",
+          "group": "callback",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "callbackUrl"
+          }
+        },
+        {
+          "id": "callbackToken",
+          "label": "Callback token",
+          "description": "A token the agent echoes back, so your webhook can tell a real notification from a forged one",
+          "group": "callback",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "callbackToken"
+          }
+        },
+        {
+          "id": "callbackAuthScheme",
+          "label": "Callback auth scheme",
+          "description": "For example Bearer",
+          "group": "callback",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "callbackAuthScheme"
+          }
+        },
+        {
+          "id": "callbackAuthCredentials",
+          "label": "Callback auth credentials",
+          "description": "Read this from a process variable, not from the diagram",
+          "group": "callback",
+          "type": "String",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "callbackAuthCredentials"
+          }
+        },
+        {
+          "id": "connectTimeout",
+          "label": "Connect timeout (ms)",
+          "group": "timeouts",
+          "type": "String",
+          "value": "10000",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "connectTimeout"
+          }
+        },
+        {
+          "id": "readTimeout",
+          "label": "Read timeout (ms)",
+          "description": "Applies to each individual HTTP call",
+          "group": "timeouts",
+          "type": "String",
+          "value": "30000",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "readTimeout"
+          }
+        },
+        {
+          "id": "waitTimeout",
+          "label": "Total wait (ms)",
+          "description": "How long sendSync waits for the agent to finish before raising a2a-timeout",
+          "group": "timeouts",
+          "type": "String",
+          "value": "120000",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "waitTimeout"
+          }
+        },
+        {
+          "id": "pollInterval",
+          "label": "Poll interval (ms)",
+          "group": "timeouts",
+          "type": "String",
+          "value": "2000",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "pollInterval"
+          }
+        },
+        {
+          "id": "idempotencyKey",
+          "label": "Idempotency key",
+          "description": "Must be stable across job retries and unique per activity instance. Leave the default unless you have a business key that is a better fit.",
+          "group": "reliability",
+          "type": "String",
+          "value": "${execution.getProcessInstanceId()}-${execution.getActivityInstanceId()}",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "idempotencyKey"
+          }
+        },
+        {
+          "id": "reattachOnRetry",
+          "label": "Reattach on retry",
+          "description": "Before sending, look for a task an earlier failed attempt already created, so a retry does not pay the agent twice",
+          "group": "reliability",
+          "type": "Dropdown",
+          "value": "true",
+          "choices": [
+            {
+              "name": "Yes",
+              "value": "true"
+            },
+            {
+              "name": "No",
+              "value": "false"
+            }
+          ],
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "reattachOnRetry"
+          }
+        },
+        {
+          "id": "maxVariableSize",
+          "label": "Max variable size (bytes)",
+          "description": "Larger returned files are replaced by a reference and larger texts are cut short, to keep the database healthy",
+          "group": "reliability",
+          "type": "String",
+          "value": "65536",
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "maxVariableSize"
+          }
+        },
+        {
+          "id": "includeHistory",
+          "label": "Include history",
+          "group": "reliability",
+          "type": "Dropdown",
+          "value": "false",
+          "choices": [
+            {
+              "name": "No",
+              "value": "false"
+            },
+            {
+              "name": "Yes",
+              "value": "true"
+            }
+          ],
+          "binding": {
+            "type": "camunda:inputParameter",
+            "name": "includeHistory"
+          }
+        },
+        {
+          "id": "outputText",
+          "label": "Answer text into",
+          "description": "Process variable that receives the agent's answer as plain text",
+          "group": "output",
+          "type": "String",
+          "value": "a2aText",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${text}"
+          }
+        },
+        {
+          "id": "outputArtifacts",
+          "label": "Artifacts into",
+          "description": "Process variable that receives every artifact, with all their parts",
+          "group": "output",
+          "type": "String",
+          "value": "a2aArtifacts",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${artifacts}"
+          }
+        },
+        {
+          "id": "outputArtifactText",
+          "label": "Artifact text into",
+          "group": "output",
+          "type": "String",
+          "value": "a2aArtifactText",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${artifactText}"
+          }
+        },
+        {
+          "id": "outputTaskId",
+          "label": "Task id into",
+          "description": "Needed to correlate a push notification back to this process instance",
+          "group": "output",
+          "type": "String",
+          "value": "a2aTaskId",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${taskId}"
+          }
+        },
+        {
+          "id": "outputContextId",
+          "label": "Context id into",
+          "group": "output",
+          "type": "String",
+          "value": "a2aContextId",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${contextId}"
+          }
+        },
+        {
+          "id": "outputState",
+          "label": "State into",
+          "group": "output",
+          "type": "String",
+          "value": "a2aState",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${state}"
+          }
+        },
+        {
+          "id": "outputStatusMessage",
+          "label": "Status message into",
+          "group": "output",
+          "type": "String",
+          "value": "a2aStatusMessage",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${statusMessage}"
+          }
+        },
+        {
+          "id": "outputTaskMetadata",
+          "label": "Task metadata into",
+          "group": "output",
+          "type": "String",
+          "value": "a2aTaskMetadata",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${taskMetadata}"
+          }
+        },
+        {
+          "id": "outputMessageMetadata",
+          "label": "Message metadata into",
+          "group": "output",
+          "type": "String",
+          "value": "a2aMessageMetadata",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${messageMetadata}"
+          }
+        },
+        {
+          "id": "outputTruncated",
+          "label": "Truncated flag into",
+          "description": "True when a value was too large for a process variable",
+          "group": "output",
+          "type": "String",
+          "value": "a2aTruncated",
+          "binding": {
+            "type": "camunda:outputParameter",
+            "source": "${truncated}"
+          }
+        }
+      ]
+    }
+  ]
+}

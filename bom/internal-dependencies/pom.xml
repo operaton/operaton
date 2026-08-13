@@ -149,6 +149,14 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+      <!-- A2A protocol SDK, used by the A2A connect connector -->
+      <dependency>
+        <groupId>org.a2aproject.sdk</groupId>
+        <artifactId>a2a-java-sdk-bom</artifactId>
+        <version>${version.a2a-sdk}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>

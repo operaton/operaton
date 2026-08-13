@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+             id="a2aPollFallbackDefinitions"
+             targetNamespace="http://operaton.org/schema/1.0/bpmn">
+
+  <!--
+    For an agent whose card does not advertise capabilities.pushNotifications.
+
+    Send without a callback URL, then poll with 'getTask' on a timer until the task settles. Each poll is a
+    short-lived job, so nothing holds a job executor thread while the agent thinks. This is the polling
+    fallback for the same work the sendAsync example does with a push notification.
+  -->
+  <process id="a2aPollFallback" name="Delegate to an agent and poll" isExecutable="true">
+
+    <startEvent id="start" name="Work arrived">
+      <outgoing>flowToDelegate</outgoing>
+    </startEvent>
+    <sequenceFlow id="flowToDelegate" sourceRef="start" targetRef="delegateToAgent" />
+
+    <serviceTask id="delegateToAgent" name="Delegate to the agent">
+      <extensionElements>
+        <operaton:connector>
+          <operaton:connectorId>a2a</operaton:connectorId>
+          <operaton:inputOutput>
+            <operaton:inputParameter name="operation">sendAsync</operaton:inputParameter>
+            <operaton:inputParameter name="url">${agentUrl}</operaton:inputParameter>
+            <operaton:inputParameter name="message">${question}</operaton:inputParameter>
+            <operaton:inputParameter name="idempotencyKey">${execution.getProcessInstanceId()}-${execution.getActivityInstanceId()}</operaton:inputParameter>
+            <operaton:outputParameter name="a2aTaskId">${taskId}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aContextId">${contextId}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aState">${state}</operaton:outputParameter>
+          </operaton:inputOutput>
+        </operaton:connector>
+      </extensionElements>
+      <incoming>flowToDelegate</incoming>
+      <outgoing>flowToTimer</outgoing>
+    </serviceTask>
+    <sequenceFlow id="flowToTimer" sourceRef="delegateToAgent" targetRef="waitBeforePoll" />
+
+    <intermediateCatchEvent id="waitBeforePoll" name="Wait 10s">
+      <incoming>flowToTimer</incoming>
+      <incoming>flowKeepPolling</incoming>
+      <outgoing>flowToPoll</outgoing>
+      <timerEventDefinition>
+        <timeDuration>PT10S</timeDuration>
+      </timerEventDefinition>
+    </intermediateCatchEvent>
+    <sequenceFlow id="flowToPoll" sourceRef="waitBeforePoll" targetRef="pollAgent" />
+
+    <serviceTask id="pollAgent" name="Read the task">
+      <extensionElements>
+        <operaton:connector>
+          <operaton:connectorId>a2a</operaton:connectorId>
+          <operaton:inputOutput>
+            <operaton:inputParameter name="operation">getTask</operaton:inputParameter>
+            <operaton:inputParameter name="url">${agentUrl}</operaton:inputParameter>
+            <operaton:inputParameter name="taskId">${a2aTaskId}</operaton:inputParameter>
+            <operaton:outputParameter name="a2aState">${state}</operaton:outputParameter>
+            <operaton:outputParameter name="answer">${text}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aArtifacts">${artifacts}</operaton:outputParameter>
+          </operaton:inputOutput>
+        </operaton:connector>
+      </extensionElements>
+      <incoming>flowToPoll</incoming>
+      <outgoing>flowToDecision</outgoing>
+    </serviceTask>
+    <sequenceFlow id="flowToDecision" sourceRef="pollAgent" targetRef="settled" />
+
+    <exclusiveGateway id="settled" name="Settled?" default="flowKeepPolling">
+      <incoming>flowToDecision</incoming>
+      <outgoing>flowToDone</outgoing>
+      <outgoing>flowKeepPolling</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flowToDone" sourceRef="settled" targetRef="done">
+      <conditionExpression xsi:type="tFormalExpression">${a2aState == 'TASK_STATE_COMPLETED'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowKeepPolling" sourceRef="settled" targetRef="waitBeforePoll" />
+
+    <endEvent id="done" name="Agent answered">
+      <incoming>flowToDone</incoming>
+    </endEvent>
+  </process>
+
+  <bpmndi:BPMNDiagram id="a2aPollFallbackDiagram">
+    <bpmndi:BPMNPlane id="a2aPollFallbackPlane" bpmnElement="a2aPollFallback">
+      <bpmndi:BPMNShape id="startShape" bpmnElement="start">
+        <dc:Bounds x="160" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="delegateShape" bpmnElement="delegateToAgent">
+        <dc:Bounds x="250" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="waitShape" bpmnElement="waitBeforePoll">
+        <dc:Bounds x="410" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="pollShape" bpmnElement="pollAgent">
+        <dc:Bounds x="500" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="settledShape" bpmnElement="settled">
+        <dc:Bounds x="655" y="175" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="doneShape" bpmnElement="done">
+        <dc:Bounds x="770" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flowToDelegateEdge" bpmnElement="flowToDelegate">
+        <di:waypoint x="196" y="200" />
+        <di:waypoint x="250" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToTimerEdge" bpmnElement="flowToTimer">
+        <di:waypoint x="350" y="200" />
+        <di:waypoint x="410" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToPollEdge" bpmnElement="flowToPoll">
+        <di:waypoint x="446" y="200" />
+        <di:waypoint x="500" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToDecisionEdge" bpmnElement="flowToDecision">
+        <di:waypoint x="600" y="200" />
+        <di:waypoint x="655" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToDoneEdge" bpmnElement="flowToDone">
+        <di:waypoint x="705" y="200" />
+        <di:waypoint x="770" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowKeepPollingEdge" bpmnElement="flowKeepPolling">
+        <di:waypoint x="680" y="175" />
+        <di:waypoint x="680" y="110" />
+        <di:waypoint x="428" y="110" />
+        <di:waypoint x="428" y="182" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

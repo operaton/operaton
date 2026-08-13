@@ -32,6 +32,7 @@
     <module>core</module>
     <module>http-client</module>
     <module>soap-http-client</module>
+    <module>a2a</module>
     <module>connectors-all</module>
   </modules>
   <build>

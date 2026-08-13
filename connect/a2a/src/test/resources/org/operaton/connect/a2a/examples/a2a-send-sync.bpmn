@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+             id="a2aSendSyncDefinitions"
+             targetNamespace="http://operaton.org/schema/1.0/bpmn">
+
+  <!--
+    Ask an agent a question and wait for the answer.
+
+    The agent is expected to be quick. If it is not, 'waitTimeout' expires and the connector raises the
+    'a2a-timeout' BPMN error, which is why a real process would usually also attach a boundary event for it.
+  -->
+  <error id="a2aTaskFailedError" name="A2A task failed" errorCode="a2a-task-failed" />
+
+  <process id="a2aSendSync" name="Ask an agent and wait" isExecutable="true">
+
+    <startEvent id="start" name="Question asked">
+      <outgoing>flowToAskAgent</outgoing>
+    </startEvent>
+    <sequenceFlow id="flowToAskAgent" sourceRef="start" targetRef="askAgent" />
+
+    <serviceTask id="askAgent" name="Ask the agent">
+      <extensionElements>
+        <operaton:connector>
+          <operaton:connectorId>a2a</operaton:connectorId>
+          <operaton:inputOutput>
+            <operaton:inputParameter name="operation">sendSync</operaton:inputParameter>
+            <operaton:inputParameter name="url">${agentUrl}</operaton:inputParameter>
+
+            <!-- Secrets come from process variables, never from the diagram. -->
+            <operaton:inputParameter name="headers">
+              <operaton:map>
+                <operaton:entry key="Authorization">Bearer ${agentToken}</operaton:entry>
+              </operaton:map>
+            </operaton:inputParameter>
+
+            <operaton:inputParameter name="message">${question}</operaton:inputParameter>
+            <operaton:inputParameter name="metadata">
+              <operaton:map>
+                <operaton:entry key="processInstanceId">${execution.getProcessInstanceId()}</operaton:entry>
+              </operaton:map>
+            </operaton:inputParameter>
+            <operaton:inputParameter name="acceptedOutputModes">text/plain</operaton:inputParameter>
+
+            <!-- Stable across job retries, unique per activity instance: this is what lets a retry reattach
+                 to a task an earlier attempt already started instead of paying for it twice. -->
+            <operaton:inputParameter name="idempotencyKey">${execution.getProcessInstanceId()}-${execution.getActivityInstanceId()}</operaton:inputParameter>
+
+            <operaton:inputParameter name="connectTimeout">5000</operaton:inputParameter>
+            <operaton:inputParameter name="readTimeout">10000</operaton:inputParameter>
+            <operaton:inputParameter name="waitTimeout">30000</operaton:inputParameter>
+            <operaton:inputParameter name="pollInterval">1000</operaton:inputParameter>
+
+            <operaton:outputParameter name="answer">${text}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aArtifacts">${artifacts}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aArtifactText">${artifactText}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aTaskId">${taskId}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aContextId">${contextId}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aState">${state}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aTruncated">${truncated}</operaton:outputParameter>
+          </operaton:inputOutput>
+        </operaton:connector>
+      </extensionElements>
+      <incoming>flowToAskAgent</incoming>
+      <outgoing>flowToDone</outgoing>
+    </serviceTask>
+    <sequenceFlow id="flowToDone" sourceRef="askAgent" targetRef="done" />
+
+    <boundaryEvent id="agentFailed" name="Agent failed" attachedToRef="askAgent">
+      <outgoing>flowToFailed</outgoing>
+      <errorEventDefinition errorRef="a2aTaskFailedError" />
+    </boundaryEvent>
+    <sequenceFlow id="flowToFailed" sourceRef="agentFailed" targetRef="failed" />
+
+    <endEvent id="done" name="Answered">
+      <incoming>flowToDone</incoming>
+    </endEvent>
+    <endEvent id="failed" name="Handled failure">
+      <incoming>flowToFailed</incoming>
+    </endEvent>
+  </process>
+
+  <bpmndi:BPMNDiagram id="a2aSendSyncDiagram">
+    <bpmndi:BPMNPlane id="a2aSendSyncPlane" bpmnElement="a2aSendSync">
+      <bpmndi:BPMNShape id="startShape" bpmnElement="start">
+        <dc:Bounds x="160" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="askAgentShape" bpmnElement="askAgent">
+        <dc:Bounds x="250" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="agentFailedShape" bpmnElement="agentFailed">
+        <dc:Bounds x="282" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="doneShape" bpmnElement="done">
+        <dc:Bounds x="430" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="failedShape" bpmnElement="failed">
+        <dc:Bounds x="430" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flowToAskAgentEdge" bpmnElement="flowToAskAgent">
+        <di:waypoint x="196" y="100" />
+        <di:waypoint x="250" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToDoneEdge" bpmnElement="flowToDone">
+        <di:waypoint x="350" y="100" />
+        <di:waypoint x="430" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToFailedEdge" bpmnElement="flowToFailed">
+        <di:waypoint x="300" y="158" />
+        <di:waypoint x="300" y="240" />
+        <di:waypoint x="430" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

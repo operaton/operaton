@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+             id="a2aSendAsyncDefinitions"
+             targetNamespace="http://operaton.org/schema/1.0/bpmn">
+
+  <!--
+    Hand work to a long-running agent and carry on.
+
+    The connector registers a push notification config with the agent and returns immediately with the task id,
+    context id and state. The process then waits at a receive task. Your own webhook endpoint receives the
+    agent's callback and correlates it back in:
+
+      runtimeService.createMessageCorrelation("a2aCallback")
+                    .processInstanceVariableEquals("a2aTaskId", taskIdFromCallback)
+                    .correlateWithResult();
+
+    The webhook must tolerate arriving before the process instance has reached the receive task, and retry with
+    a short backoff. The timer boundary event below is the backstop for a notification that never comes at all.
+  -->
+  <message id="a2aCallbackMessage" name="a2aCallback" />
+
+  <process id="a2aSendAsync" name="Delegate to an agent and continue" isExecutable="true">
+
+    <startEvent id="start" name="Work arrived">
+      <outgoing>flowToDelegate</outgoing>
+    </startEvent>
+    <sequenceFlow id="flowToDelegate" sourceRef="start" targetRef="delegateToAgent" />
+
+    <serviceTask id="delegateToAgent" name="Delegate to the agent">
+      <extensionElements>
+        <operaton:connector>
+          <operaton:connectorId>a2a</operaton:connectorId>
+          <operaton:inputOutput>
+            <operaton:inputParameter name="operation">sendAsync</operaton:inputParameter>
+            <operaton:inputParameter name="url">${agentUrl}</operaton:inputParameter>
+            <operaton:inputParameter name="headers">
+              <operaton:map>
+                <operaton:entry key="Authorization">Bearer ${agentToken}</operaton:entry>
+              </operaton:map>
+            </operaton:inputParameter>
+            <operaton:inputParameter name="message">${question}</operaton:inputParameter>
+
+            <!-- A file the agent should work on, sent by reference rather than inline. -->
+            <operaton:inputParameter name="parts">
+              <operaton:list>
+                <operaton:map>
+                  <operaton:entry key="type">file</operaton:entry>
+                  <operaton:entry key="uri">${documentUrl}</operaton:entry>
+                  <operaton:entry key="mimeType">application/pdf</operaton:entry>
+                  <operaton:entry key="name">document.pdf</operaton:entry>
+                </operaton:map>
+              </operaton:list>
+            </operaton:inputParameter>
+
+            <operaton:inputParameter name="callbackUrl">${callbackUrl}</operaton:inputParameter>
+            <operaton:inputParameter name="callbackToken">${callbackToken}</operaton:inputParameter>
+            <operaton:inputParameter name="callbackAuthScheme">Bearer</operaton:inputParameter>
+            <operaton:inputParameter name="callbackAuthCredentials">${callbackCredentials}</operaton:inputParameter>
+
+            <operaton:inputParameter name="idempotencyKey">${execution.getProcessInstanceId()}-${execution.getActivityInstanceId()}</operaton:inputParameter>
+
+            <!-- These three are what makes the callback correlatable. -->
+            <operaton:outputParameter name="a2aTaskId">${taskId}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aContextId">${contextId}</operaton:outputParameter>
+            <operaton:outputParameter name="a2aState">${state}</operaton:outputParameter>
+          </operaton:inputOutput>
+        </operaton:connector>
+      </extensionElements>
+      <incoming>flowToDelegate</incoming>
+      <outgoing>flowToWait</outgoing>
+    </serviceTask>
+    <sequenceFlow id="flowToWait" sourceRef="delegateToAgent" targetRef="waitForAgent" />
+
+    <receiveTask id="waitForAgent" name="Wait for the agent" messageRef="a2aCallbackMessage">
+      <incoming>flowToWait</incoming>
+      <outgoing>flowToDone</outgoing>
+    </receiveTask>
+    <sequenceFlow id="flowToDone" sourceRef="waitForAgent" targetRef="done" />
+
+    <boundaryEvent id="agentTookTooLong" name="30 minutes" attachedToRef="waitForAgent">
+      <outgoing>flowToGaveUp</outgoing>
+      <timerEventDefinition>
+        <timeDuration>PT30M</timeDuration>
+      </timerEventDefinition>
+    </boundaryEvent>
+    <sequenceFlow id="flowToGaveUp" sourceRef="agentTookTooLong" targetRef="gaveUp" />
+
+    <endEvent id="done" name="Agent answered">
+      <incoming>flowToDone</incoming>
+    </endEvent>
+    <endEvent id="gaveUp" name="Gave up waiting">
+      <incoming>flowToGaveUp</incoming>
+    </endEvent>
+  </process>
+
+  <bpmndi:BPMNDiagram id="a2aSendAsyncDiagram">
+    <bpmndi:BPMNPlane id="a2aSendAsyncPlane" bpmnElement="a2aSendAsync">
+      <bpmndi:BPMNShape id="startShape" bpmnElement="start">
+        <dc:Bounds x="160" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="delegateShape" bpmnElement="delegateToAgent">
+        <dc:Bounds x="250" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="waitShape" bpmnElement="waitForAgent">
+        <dc:Bounds x="410" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="tookTooLongShape" bpmnElement="agentTookTooLong">
+        <dc:Bounds x="442" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="doneShape" bpmnElement="done">
+        <dc:Bounds x="580" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gaveUpShape" bpmnElement="gaveUp">
+        <dc:Bounds x="580" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flowToDelegateEdge" bpmnElement="flowToDelegate">
+        <di:waypoint x="196" y="100" />
+        <di:waypoint x="250" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToWaitEdge" bpmnElement="flowToWait">
+        <di:waypoint x="350" y="100" />
+        <di:waypoint x="410" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToDoneEdge" bpmnElement="flowToDone">
+        <di:waypoint x="510" y="100" />
+        <di:waypoint x="580" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flowToGaveUpEdge" bpmnElement="flowToGaveUp">
+        <di:waypoint x="460" y="158" />
+        <di:waypoint x="460" y="240" />
+        <di:waypoint x="580" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

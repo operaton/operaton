@@ -110,9 +110,16 @@ public class A2aConnectorLogger extends ConnectLogger {
         sizeBytes, maxBytes));
   }
 
+  /**
+   * The configured URL locates the agent card, but the endpoint actually called comes from the card itself, so
+   * the cause is included: without it, a card advertising an address unreachable from this host looks identical
+   * to the agent simply being down.
+   */
   public ConnectorRequestException transportFailure(String url, Exception cause) {
     return new ConnectorRequestException(exceptionMessage("018",
-        "Could not reach the A2A agent at '{}'. The job will be retried", url), cause);
+        "Could not reach the A2A agent configured at '{}'. The job will be retried. Note that the endpoint "
+            + "called is the one advertised by the agent card, which may differ from this URL. Cause: {}",
+        url, cause.getMessage()), cause);
   }
 
   public ConnectorRequestException interrupted(String taskId) {

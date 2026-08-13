@@ -16,7 +16,7 @@
   -->
   <error id="a2aTaskFailedError" name="A2A task failed" errorCode="a2a-task-failed" />
 
-  <process id="a2aSendSync" name="Ask an agent and wait" isExecutable="true">
+  <process id="a2aSendSync" name="Ask an agent and wait" isExecutable="true" operaton:historyTimeToLive="P30D">
 
     <startEvent id="start" name="Question asked">
       <outgoing>flowToAskAgent</outgoing>

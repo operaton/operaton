@@ -24,7 +24,7 @@
   -->
   <message id="a2aCallbackMessage" name="a2aCallback" />
 
-  <process id="a2aSendAsync" name="Delegate to an agent and continue" isExecutable="true">
+  <process id="a2aSendAsync" name="Delegate to an agent and continue" isExecutable="true" operaton:historyTimeToLive="P30D">
 
     <startEvent id="start" name="Work arrived">
       <outgoing>flowToDelegate</outgoing>

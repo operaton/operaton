@@ -15,7 +15,7 @@
     short-lived job, so nothing holds a job executor thread while the agent thinks. This is the polling
     fallback for the same work the sendAsync example does with a push notification.
   -->
-  <process id="a2aPollFallback" name="Delegate to an agent and poll" isExecutable="true">
+  <process id="a2aPollFallback" name="Delegate to an agent and poll" isExecutable="true" operaton:historyTimeToLive="P30D">
 
     <startEvent id="start" name="Work arrived">
       <outgoing>flowToDelegate</outgoing>

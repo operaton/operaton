@@ -81,7 +81,7 @@ strings, so `3000` and `"3000"` both work.
 | Input | Meaning |
 |---|---|
 | `operation` | **Required.** `sendSync`, `sendAsync` or `getTask`. |
-| `url` | **Required.** Either a service base URL such as `https://agent.example.com`, in which case the agent card is read from `https://agent.example.com/.well-known/agent-card.json`, or a full agent card URL ending in `.json`, which is fetched as given. |
+| `url` | **Required.** Either a service base URL such as `https://agent.example.com`, in which case the agent card is read from `https://agent.example.com/.well-known/agent-card.json`, or a full agent card URL ending in `.json`, which is fetched as given. **This locates the card only.** The endpoint actually called for A2A requests is the one the card advertises in `supportedInterfaces[].url`, so an agent whose card says `http://localhost:8000` is unusable from anywhere but its own host. If calls fail while the card fetch succeeds, check what the card advertises. |
 | `headers` | A map of HTTP headers sent with every A2A call, including the agent card fetch. This is where `Authorization` goes. |
 
 ### Message

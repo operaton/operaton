@@ -33,10 +33,18 @@
 
   <modules>
     <module>engine-rest</module>
-    <module>engine-rest-openapi</module>
-    <module>engine-rest-openapi-generator</module>
     <module>assembly</module>
-    <module>docs</module>
   </modules>
+
+  <profiles>
+    <profile>
+      <id>docs-engine-rest-openapi</id>
+      <modules>
+        <module>engine-rest-openapi</module>
+        <module>engine-rest-openapi-generator</module>
+        <module>docs</module>
+      </modules>
+    </profile>
+  </profiles>
 
 </project>

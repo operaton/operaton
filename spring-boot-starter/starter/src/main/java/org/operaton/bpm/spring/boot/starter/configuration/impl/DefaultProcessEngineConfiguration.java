@@ -44,6 +44,7 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
     setIdGenerator(configuration);
     setJobExecutorAcquireByPriority(configuration);
     setDefaultNumberOfRetries(configuration);
+    setCronConfiguration(configuration);
   }
 
   private void setIdGenerator(SpringProcessEngineConfiguration configuration) {
@@ -85,5 +86,13 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
   private void setDefaultNumberOfRetries(SpringProcessEngineConfiguration configuration) {
     Optional.ofNullable(operatonBpmProperties.getDefaultNumberOfRetries())
             .ifPresent(configuration::setDefaultNumberOfRetries);
+  }
+
+  private void setCronConfiguration(SpringProcessEngineConfiguration configuration) {
+    String cronType = operatonBpmProperties.getCronType();
+    if (StringUtils.hasText(cronType)) {
+      configuration.setCronType(cronType);
+    }
+    configuration.setSupportLegacyQuartzSyntax(operatonBpmProperties.isSupportLegacyQuartzSyntax());
   }
 }

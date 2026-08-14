@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.bpmn.helper;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.BpmnError;
+import org.operaton.bpm.engine.delegate.BpmnErrorCodeProvider;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.behavior.BpmnBehaviorLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.ErrorEventDefinition;
@@ -60,7 +61,9 @@ public final class BpmnExceptionHandler {
       throw exception;
     }
     else {
-      propagateError(null, exception.getMessage(),exception, execution);
+      BpmnErrorCodeProvider errorCodeProvider = checkIfCauseOfExceptionIsBpmnErrorCodeProvider(exception);
+      String errorCode = errorCodeProvider != null ? errorCodeProvider.getErrorCode() : null;
+      propagateError(errorCode, exception.getMessage(), exception, execution);
     }
   }
 
@@ -88,6 +91,15 @@ public final class BpmnExceptionHandler {
       return null;
     }
     return checkIfCauseOfExceptionIsBpmnError(e.getCause());
+  }
+
+  protected static BpmnErrorCodeProvider checkIfCauseOfExceptionIsBpmnErrorCodeProvider(Throwable e) {
+    if (e instanceof BpmnErrorCodeProvider errorCodeProvider) {
+      return errorCodeProvider;
+    } else if (e.getCause() == null) {
+      return null;
+    }
+    return checkIfCauseOfExceptionIsBpmnErrorCodeProvider(e.getCause());
   }
 
 

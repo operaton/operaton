@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.scripting;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
+import java.util.Objects;
+
 import javax.script.Bindings;
 import javax.script.Compilable;
 import javax.script.CompiledScript;
@@ -44,7 +50,13 @@ public class SourceExecutableScript extends CompiledExecutableScript {
   protected String scriptSource;
 
   /** Flag to signal if the script should be compiled */
-  protected boolean shouldBeCompiled = true;
+  protected volatile boolean shouldBeCompiled = true;
+
+  /**
+   * Digest of the processed script source used to produce the current {@link #compiledScript}.
+   * A {@code null} value indicates no compiled artifact is present.
+   */
+  protected volatile String compiledScriptSourceDigest;
 
   public SourceExecutableScript(String language, String source) {
     super(language);
@@ -53,16 +65,34 @@ public class SourceExecutableScript extends CompiledExecutableScript {
 
   @Override
   public Object evaluate(ScriptEngine engine, VariableScope variableScope, Bindings bindings) {
-    if (shouldBeCompiled) {
-      compileScript(engine);
+    String processedScript = preprocessScript(scriptSource, variableScope);
+    String processedScriptDigest = null;
+    CompiledScript compiledScriptToEvaluate;
+
+    synchronized (this) {
+      boolean hasCompiledScript = compiledScript != null;
+
+      if (hasCompiledScript || shouldBeCompiled) {
+        processedScriptDigest = computeScriptDigest(processedScript);
+      }
+
+      if (hasCompiledScript && !Objects.equals(compiledScriptSourceDigest, processedScriptDigest)) {
+        invalidateCompiledScript();
+      }
+
+      if (shouldBeCompiled) {
+        compileScript(engine, processedScript);
+      }
+
+      compiledScriptToEvaluate = compiledScript;
     }
 
-    if (getCompiledScript() != null) {
-      return super.evaluate(engine, variableScope, bindings);
+    if (compiledScriptToEvaluate != null) {
+      return evaluateCompiledScript(compiledScriptToEvaluate, variableScope, bindings);
     }
     else {
       try {
-        return evaluateScript(engine, bindings);
+        return evaluateScript(engine, processedScript, bindings);
       } catch (ScriptException e) {
         Throwable cause = e.getCause();
         if (cause instanceof BpmnError bpmnError) {
@@ -74,7 +104,7 @@ public class SourceExecutableScript extends CompiledExecutableScript {
     }
   }
 
-  protected void compileScript(ScriptEngine engine) {
+  protected void compileScript(ScriptEngine engine, String processedScript) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     if (processEngineConfiguration.isEnableScriptEngineCaching() && processEngineConfiguration.isEnableScriptCompilation()) {
 
@@ -82,7 +112,8 @@ public class SourceExecutableScript extends CompiledExecutableScript {
         synchronized (this) {
           if (getCompiledScript() == null && shouldBeCompiled) {
             // try to compile script
-            compiledScript = compile(engine, language, scriptSource);
+            compiledScript = compile(engine, language, processedScript);
+            compiledScriptSourceDigest = compiledScript != null ? computeScriptDigest(processedScript) : null;
 
             // either the script was successfully compiled or it can't be
             // compiled but we won't try it again
@@ -119,9 +150,9 @@ public class SourceExecutableScript extends CompiledExecutableScript {
 
   }
 
-  protected Object evaluateScript(ScriptEngine engine, Bindings bindings) throws ScriptException {
-    LOG.debugEvaluatingNonCompiledScript(scriptSource);
-    return engine.eval(scriptSource, bindings);
+  protected Object evaluateScript(ScriptEngine engine, String processedScript, Bindings bindings) throws ScriptException {
+    LOG.debugEvaluatingNonCompiledScript(processedScript);
+    return engine.eval(processedScript, bindings);
   }
 
   public String getScriptSource() {
@@ -134,14 +165,31 @@ public class SourceExecutableScript extends CompiledExecutableScript {
    * @param scriptSource
    *          the new script source code
    */
-  public void setScriptSource(String scriptSource) {
-    this.compiledScript = null;
-    shouldBeCompiled = true;
+  public synchronized void setScriptSource(String scriptSource) {
+    invalidateCompiledScript();
     this.scriptSource = scriptSource;
+  }
+
+  protected synchronized void invalidateCompiledScript() {
+    this.compiledScript = null;
+    this.compiledScriptSourceDigest = null;
+    this.shouldBeCompiled = true;
   }
 
   public boolean isShouldBeCompiled() {
     return shouldBeCompiled;
+  }
+
+  private String computeScriptDigest(String scriptText) {
+    if (scriptText == null) {
+      return null;
+    }
+    try {
+      byte[] digest = MessageDigest.getInstance("SHA-256").digest(scriptText.getBytes(StandardCharsets.UTF_8));
+      return HexFormat.of().formatHex(digest);
+    } catch (NoSuchAlgorithmException e) {
+      throw new ScriptCompilationException("Unable to compute script digest", e);
+    }
   }
 
 }

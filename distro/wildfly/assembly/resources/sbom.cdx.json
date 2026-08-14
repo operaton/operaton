@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:db7b21ac-2708-4178-852b-ba319a236420",
+  "serialNumber": "urn:uuid:b6ec03e5-133f-45cf-90b2-4e86d5f3136b",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-01T15:12:31Z",
+    "timestamp": "2026-08-14T13:44:45Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.72.0-SNAPSHOT-a525f55d3"
+          "version": "0.73.0-SNAPSHOT-ed3557fe0"
         }
       ]
     },
@@ -1139,45 +1139,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.2?type=jar",
+      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.5.0?type=jar",
       "publisher": "TNG Technology Consulting GmbH",
       "group": "com.tngtech.archunit",
       "name": "archunit-junit4",
-      "version": "1.4.2",
+      "version": "1.5.0",
       "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module \u0027archunit-junit4\u0027",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2eb82ce3fc5d1d65cec7583ee150e257"
+          "content": "1ab6e0a316629645e1a464c681dc2639"
         },
         {
           "alg": "SHA-1",
-          "content": "9a2825d1522fa2fcdf9bb4ce6d9a9b78693cf520"
+          "content": "5a23ec265923d90f96f0c9d92ab7c939325b6d5b"
         },
         {
           "alg": "SHA-256",
-          "content": "1d50461a1e9c4d83bd9f03f82e6f585081609ef658c2353bc2963d0e235136ec"
+          "content": "24dceef5049052bc3439654f523a63310e60e3444bd103793957b81b6d411605"
         },
         {
           "alg": "SHA-512",
-          "content": "bce7c1fe25884e1707f6aca1e170fb2b78eb4738dfe9af6ad025bb87f1e44c1a2ebb221674dc9d00ba2423ac4cad19b7b04b1282e3327bac60350b03330828a5"
+          "content": "69d3479bc3371bf0c7a2159f7e63413878e438d56e7ca1d9325f643c3c76d324b431dd031aaad0530ae03a0aede2b5c34167505cdd0fa87f46509516e3a3f8cd"
         },
         {
           "alg": "SHA-384",
-          "content": "25e6edbda261a928bd2d85fd5bfccfcad8489b79f91f8abbc5cb0d3c7aff8fb490384ca1d6d2292ddf05016d02e7fc1c"
+          "content": "3781037d99a2cecbb7ade4abb4b214b073054f7b189ef8993840b9658b9dabed3ef108e438fbe288cea6601aa02b37f9"
         },
         {
           "alg": "SHA3-384",
-          "content": "2260d17d0162e74a27222e162b4d8e39bc85111cb228aa57377df8cb63ad95b94d60f9a90a2bbb11f69973c215271af7"
+          "content": "4138244e90c93f33f79ec9a84657428fcba97c481a582c5dbe4d612e49efa9286cab3c208e632498dc5b1a64bcd5067c"
         },
         {
           "alg": "SHA3-256",
-          "content": "f79713c6ea6078a64dec0a9b31963e588192b1befc50d7525ae441757ff2fe64"
+          "content": "91919d2e88236255c6c744cd757b8ac0bf8fe8771961b3a8510eb657145c8f2a"
         },
         {
           "alg": "SHA3-512",
-          "content": "b65c2ca4b75c7290b4d8b3c4424948ff1a1f745be5d3fa3bb47a0df54a3edd14e39b69464f1d9699570c1a94f390602ef25de33c7f1207ffe6c0122d157b0108"
+          "content": "e70c09e7a71019b281f60b32bb61d97580d84da76f46177400c329ab6d9d54409e7436205a7abd594fb128d2c7b7cffce0b691c7d4302cd41590e213de96375d"
         }
       ],
       "licenses": [
@@ -1187,7 +1187,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.2?type=jar",
+      "purl": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.5.0?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/TNG/ArchUnit",
@@ -1201,45 +1201,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit@1.4.2?type=jar",
+      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit@1.5.0?type=jar",
       "publisher": "TNG Technology Consulting GmbH",
       "group": "com.tngtech.archunit",
       "name": "archunit",
-      "version": "1.4.2",
+      "version": "1.5.0",
       "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module \u0027archunit\u0027",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "956396ed98260153ffee39be34cb37e1"
+          "content": "f7ba9e4d97a385c311210f4c3754bb2f"
         },
         {
           "alg": "SHA-1",
-          "content": "41efd6bf14ed4f016b3efbfc4cf73b88b1d4e0a7"
+          "content": "5076957a58007dd5c512facb5c179d3dd7c3c2b8"
         },
         {
           "alg": "SHA-256",
-          "content": "6d8adf69a3f109ebe1b395764feb07f919e9e0e2ab5e2ea141d2e6251ba7d17f"
+          "content": "5ab139643fa5090af181ff8dc9eab48cb38ca306d3e03e66acacc75831a08fe9"
         },
         {
           "alg": "SHA-512",
-          "content": "591e336a7426fc6bc4abb22e590c98ae696d3a6bfa9a2a95f9da9c6bc5ac58fc4c05085072c033d0c00a46111587d789f56f9503b2bbc3001a34ce01ad1ccb8d"
+          "content": "939304aa002bcaa27ad0b34bfea362e7756996fbe1d2931bdd9853a4508d2cb88958d20ab91855086a06cd8da3b376ef75681541aba4a2dd0da30ce39d3516b3"
         },
         {
           "alg": "SHA-384",
-          "content": "c52023aa464bb4cc4ebe41559a9a469a86e12df838af0b36f237fe321a218a85099cc1a24bd9b358e69c024e3301cef2"
+          "content": "3f93172d1f0bc5d52d01b964ebffc937c6ee430d9f03a6b24586860049cb1d7cc0608ea34f5f5622324e77f9fbad67fc"
         },
         {
           "alg": "SHA3-384",
-          "content": "a362253153db4b18857c8e14437134bed762a15239a8c3e384b4486876d73c00a08d59609a711276cc5079a7430bf663"
+          "content": "3acbf1909424af32d89ef5a5182feda6c2ba4ee3d0ca4305229a60f5062bb8989036a1011086d13d5d4d4a1177836eee"
         },
         {
           "alg": "SHA3-256",
-          "content": "6b206714ada5b37e23217d471ed394c74fab6aa4c5df58deb14f8719ecbfba86"
+          "content": "7b15cba3cf0a8d4b3e2d41482c4b949c887a19c203247438ae3e20399c4dfe02"
         },
         {
           "alg": "SHA3-512",
-          "content": "ed5a521c0cfa8ae1463830dfe7703b42ce92975f8e0ebd76c2958943055ea3742dcca507a809c90de91b0b20b2420790cbe52b7779d35ec4a69ea28fa3205f7c"
+          "content": "4e22802fe7269027c87c87c574f385a56ef4059333eb3d58f6fe0aecf8e7564787bd6a89f20db29d5647de1566dae3d4d31e9416b15ba4e57dc8759c92c283e5"
         }
       ],
       "licenses": [
@@ -1254,7 +1254,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.tngtech.archunit/archunit@1.4.2?type=jar",
+      "purl": "pkg:maven/com.tngtech.archunit/archunit@1.5.0?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/TNG/ArchUnit",
@@ -1262,73 +1262,6 @@
         },
         {
           "url": "https://github.com/TNG/ArchUnit",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-      "publisher": "QOS.ch",
-      "group": "org.slf4j",
-      "name": "slf4j-api",
-      "version": "2.0.17",
-      "description": "The slf4j API",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "b6480d114a23683498ac3f746f959d2f"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "d9e58ac9c7779ba3bf8142aff6c830617a7fe60f"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "9a3e79db6666a6096a3021bb2e1d918f30f589d8de51d6b600f8ebd92515a510ae2d8f87919cc2dfa8365d64f10194cac8dfa0fb950160eef0e9da06f6caaeb9"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "6ea24f814a9b6ece428cfd0535e2f3b8927005745ef61006b50fdb5a90126ee5ea05650155382b3b755c5bce38ef3944"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "9b1015052f0ec43f9be09764e131834157599611cb52f6fe591c4ac6a8ab4817518f2a4b8871e5e738c8678e93af5557"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "00559b4f4066b4917ba4fe2a6f23111eaeada321112d030910d218ced9084b5e"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "9579c2f7e7516e177c2d493ccc9eb8150978cf19f6f09b28d116f6935239fd56dc6af2b62b3336f79b0b462445550cd1fb5377a07001a6f44aaab6a32fa2fa47"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "url": "https://opensource.org/license/mit/"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://www.slf4j.org",
-          "type": "website"
-        },
-        {
-          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/qos-ch/slf4j/slf4j-parent/slf4j-api",
           "type": "vcs"
         }
       ]
@@ -3003,45 +2936,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.7?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.8?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-jsr223",
-      "version": "5.0.7",
+      "version": "5.0.8",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8b594dcabeeba5b76e6ad7745280a1e4"
+          "content": "ce6cf631bd56cf4940844a3d8c05d920"
         },
         {
           "alg": "SHA-1",
-          "content": "bc05af544edf79ee68fa865dde0aa0cd4f1bc453"
+          "content": "2275d44038731c058c1745be3921a64e31cb75e7"
         },
         {
           "alg": "SHA-256",
-          "content": "cc4c177005de1cf6fd139d5c32c488abfd42b959d3fa5d1c6ef254b271594d03"
+          "content": "42673b117c31dbb1d91e8073e2d86baba067c9b0a5f7b4bacdd3d9de5863b8f1"
         },
         {
           "alg": "SHA-512",
-          "content": "cfade87b7635f32831af8b586c1e5a8c9383cb5bcfda8313b4219a40517e2cb1f2d6a68970b04005a1f009c1077b747191568adc638c83b2a3644ded4d720546"
+          "content": "ae4ba4d40417ce314bf2dc2b73d353403a5441373ffe92b8fd2da0de1ff824a80f3ab74fc648fd24b360cad2d5e8e5fcb1f8befa94775c67fd40166a571d236e"
         },
         {
           "alg": "SHA-384",
-          "content": "1d4ea1c45554c2ab994de359d925d3020ca40b0f6890cd1b509d1f20d857393e7d037af3f6e795c9d7fe50793e7994f1"
+          "content": "658ee85dce2df1fc7915698f2a9c87acda54861b926403fee8b303c32fb0c084c413a0e287dedc913fc22578c6dd830b"
         },
         {
           "alg": "SHA3-384",
-          "content": "715f2214e5ff41487e9484e01c54248e510aeeb7172725e99599241413f2ed76af0def900983b4b1117a24c7dad876ca"
+          "content": "6af7c3c2dc3970fe7a1c1d3132de9aa5a9a6d4ca945ad8dc3686749ac478747c28c942832f655926690d3c3aab8195d8"
         },
         {
           "alg": "SHA3-256",
-          "content": "fa0fbc6ce30bf8084e800e5ab14d5adc89c6daf5ea1a08867453dc6e62262d95"
+          "content": "8c86c597dc085970cbcb3a8ad59fb8df618bd00bf86eb8f336ce8a045626b29e"
         },
         {
           "alg": "SHA3-512",
-          "content": "dba7eeeae47897d18bf3803a628ab13a2f549c579cf01bfc8fb2ffaa670a731d776a64cbaa83f4cf52ab0fb740be2f85fd084fbfcbe735f06ba42579b6a9fec0"
+          "content": "0d210f49a2a794f715ce53b3fd5f96fccecfefe2951d7a3911e34a888ad1e4a253d1920313a94274dd3f8bdda39fdb1422e00e8d5705597640d49bf51645aba6"
         }
       ],
       "licenses": [
@@ -3051,7 +2984,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.7?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.8?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -3073,45 +3006,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy",
-      "version": "5.0.7",
+      "version": "5.0.8",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d7e471df1f39f34c0ee8b38589e3115c"
+          "content": "043c4e1cd249443ab30ff5eb7a8fddca"
         },
         {
           "alg": "SHA-1",
-          "content": "462cc090284c3ba8bfb9d9e6dbbcddf09112f1d3"
+          "content": "e2ff7e471b4693d07877409761207c6c27c88b5a"
         },
         {
           "alg": "SHA-256",
-          "content": "82a6c00e293aeb98aa66aebfee716de3eb5f110f724471cecf6c306029c57452"
+          "content": "942993eee2a6a8f5fcbc1bc76c1ab18d179d598c9b29c8fc96a0138b162e0fa8"
         },
         {
           "alg": "SHA-512",
-          "content": "2cf95ade3d7356a2203a715bc1967ee229392b3895b9288ec779398d007dd3bbe14b02d3275d533e018d746bbce99708b62f2b978c002e38599320eca18de2d6"
+          "content": "ae9e908ddb493380e84a49037513109ba7d3a138c7846449a3593dba2c0866d67b174a94662fc1485889c034cb55154e66f8c0db15159b8aaa55a0188b2be6b2"
         },
         {
           "alg": "SHA-384",
-          "content": "50fb1f9069213ee1a7ac926ae0d821d0f65a69256ea31cd8f6dd910608dba5725b7530a08e5bc902d1339c6c810563e4"
+          "content": "a88e41a3df1f762e2c4d7258d31d64923266e6a64bce789171f9a6efb10d0370ddf89aeb1a6be14a8f4b73d5663b7ab6"
         },
         {
           "alg": "SHA3-384",
-          "content": "25e909f8086d6ea2d280c9d1d99aeae071b1ddc40e8f16813734771d01aa25f18071f6863392ba435734251db92a2c99"
+          "content": "41b04266f24bd325ebf82bf9127ae2a73fcf4165864534bf51b5ab2a42eac2821c827b27a0b76d88be1563eb54e20d2f"
         },
         {
           "alg": "SHA3-256",
-          "content": "6922aa69644f1405c197dc490bc563b651049e40775613e91a31b96ad0ce3738"
+          "content": "86aa2885353e5d7b04132ea641d092c992ac20f32cb3a1dd57502cfc0f438ce5"
         },
         {
           "alg": "SHA3-512",
-          "content": "885e97ca2a710695ecd5c588c73a85f18a3467df43f4f78d7dbcdd11b6a8978a337a4a2b05bc9a8216b0e8cead02d09aa15d96f49111c2ad552db33c7dd15572"
+          "content": "cd22862ec88e3b9ff4ae8fa322b5392b71be819d3d90ac4f3eca0a51f964baf5d7b9089ae9886b13bf79c40bfb9c9346afdb9b2ed977566a8e2c4e924c5a21b3"
         }
       ],
       "licenses": [
@@ -3121,7 +3054,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -4462,45 +4395,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+      "bom-ref": "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "commons-codec",
       "name": "commons-codec",
-      "version": "1.22.0",
+      "version": "1.22.1",
       "description": "The Apache Commons Codec component contains encoders and decoders for formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f14b9146cd553f4e8c5c3f5c9e2be611"
+          "content": "7bfd10447817907ffd7f14fbc6493940"
         },
         {
           "alg": "SHA-1",
-          "content": "6b3eb4beb7058c2a638f5f17bcb388649fd339dd"
+          "content": "da09bcdb330deef7cfee70f30c6889fda70d5ebf"
         },
         {
           "alg": "SHA-256",
-          "content": "d164fe79f262c32d9b18a0b5b2d317d1c27653d5e98fd2b998c24bf901c72ce4"
+          "content": "78a5d732fbd715e2d10bd7150d2f8030bae57267f8aacc5c88f642cb6c2e5d3f"
         },
         {
           "alg": "SHA-512",
-          "content": "5b67a5abf63948323101920fec10140d4370b841cc3c522a2b5e9864782640222c3094442861015494ddbc30bb7ef275722a54455c7c8333084842a26d8755da"
+          "content": "1e2023b6e7715339a309226c94635db77fd3d8d7f6fc1048e0138dc4b4ff27540e1e1ff2238a41b94029a9497b2935af6e8b05eeeed69b76600c2f4eed3e36ed"
         },
         {
           "alg": "SHA-384",
-          "content": "1cbfa58c62c4c3fad79f3a808e5d7fca87f4a96d2762f11243011ecf3ea0596638d00163b7fee20bab018a924cafa09f"
+          "content": "29f01c913caa51660ff4a8623255f819961ee63b20b125a1c3e5f061b4a75864c1a349420f6d314009b4cf12524aecfb"
         },
         {
           "alg": "SHA3-384",
-          "content": "1c0b65c0a1ab43e76dab19e4e0a622840dfcd603924f27bbd09c2261955047f1dd33e5c09a372badaa020f13a0b0124a"
+          "content": "de7a0317378663055c9a2f80d30bc543549924e994a27c683ee1ff405587395d00b13d277dd39ceb09fa64a9f110d09e"
         },
         {
           "alg": "SHA3-256",
-          "content": "566a61c3b928e33c5332e4fbb53283411c9f3d88810e84692a72664e711c8c9e"
+          "content": "70d7c377536c088c88d043b4f3297cb58ea9bd7d8374514f16060ca62977253e"
         },
         {
           "alg": "SHA3-512",
-          "content": "d300b773cd81403333626ce99a80a79febcf7e3bc4465c1bbd3e65fc8ad5fe04c07e0a4ab8ca51a61d515c7a095d786c78e8a8b657f7696703a6cc751e9d2421"
+          "content": "7885692a52215d8ea620afc25b22719c835d9079265592a9b790e4c13b1cd5cbb023eb9cf39a304e463cf280dd7931ca966528c9bb14b58c400018699c058ec7"
         }
       ],
       "licenses": [
@@ -4511,7 +4444,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+      "purl": "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
       "externalReferences": [
         {
           "url": "https://commons.apache.org/proper/commons-codec/",
@@ -9604,45 +9537,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.client5",
       "name": "httpclient5",
-      "version": "5.6.3",
+      "version": "5.6.4",
       "description": "Apache HttpComponents Client",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "77712afbe4bc4a87b88ff81750f15653"
+          "content": "42f90ff32bc3f72cb8bdfdf235e28328"
         },
         {
           "alg": "SHA-1",
-          "content": "06fce81d328c3bf5d83dbc1815d51201eabbb58c"
+          "content": "2a8ff1366303ac253e0ea64dab1e5abb5b7687bd"
         },
         {
           "alg": "SHA-256",
-          "content": "80712ff129210d7c73d9fcc1195cbee5c3c34744965c7a05ea107b3648922f18"
+          "content": "bdef5f8841145cd76c4c605ff301bc840eea0d5292332b7b892a93316c0d8ee1"
         },
         {
           "alg": "SHA-512",
-          "content": "f4dcbfd8acd06cb052c097cb3286f489ff9957bbad56d6b2628bc7eb20775ef77953f5886289569606421d5305d2ef0fd9b195ed9c7b5f9ce2f74894817ba9fb"
+          "content": "2acc897cde347dc33d7c180f2b8c9b255f1fb687f6afc75e271b037998cf248d69648f1c92225c2ed1ba370ef212ad08ff36a1b90d5faad2cddb3bcc7129b0cf"
         },
         {
           "alg": "SHA-384",
-          "content": "3a7ce679f34a948e7aa80b7ef9386a5e918e21cddc48d19dbd56200d1d706d5bcd7bf285a745e8af0d1c5db33ac87dab"
+          "content": "43856479fa74a1d193930d26f37fefeb4eadef0dd480c4e840cdaabae6138304ba8aecdaed6a8940d0e971d82c597dd7"
         },
         {
           "alg": "SHA3-384",
-          "content": "5c7ec0cb23dcb0d29b9bd7c279477eebcbfd036e4783e5c574e9fd8688c5f05d05ba078ac968181a4c140ddb59cf276f"
+          "content": "1684a4ccb7c533cc531d96274fc8f6ff33106840f0f1523655b4313393a952ed376b83004d5e0217213ece2035005ee3"
         },
         {
           "alg": "SHA3-256",
-          "content": "c81ff6c4efe09adba190162dae93812a8230572f5ffd492befd0a9622fb7b192"
+          "content": "ab2b8fd38edd948d38fbcc23baa8e6e2437e25610c16bb1df7bbe7d95453bbcd"
         },
         {
           "alg": "SHA3-512",
-          "content": "f12b8dc7837b197197e8d3affc80926b7f4d2cf76beb02f090a5523772b6c856d9e365fed9b7bbbd68ca4fe0868592d32f878c1e12178e339c9eaf11fa922550"
+          "content": "9503f6ec6318d2aecae0e68e3eabbfaa012c512141b89e52d12fa4f13450114482508ef2ded7e9a3262fd7c4b5f08e7f1bfe4fa343b870dae81d5c04acaac6eb"
         }
       ],
       "licenses": [
@@ -9652,10 +9585,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-client-5.6.x/5.6.3/httpclient5/",
+          "url": "https://hc.apache.org/httpcomponents-client-5.6.x/5.6.4/httpclient5/",
           "type": "website"
         },
         {
@@ -9671,7 +9604,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-client/tree/5.6.3/httpclient5",
+          "url": "https://github.com/apache/httpcomponents-client/tree/5.6.4/httpclient5",
           "type": "vcs"
         }
       ]
@@ -10304,45 +10237,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-json@5.0.7?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-json@5.0.8?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-json",
-      "version": "5.0.7",
+      "version": "5.0.8",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "226888d3d2f1b7c0b0c04dbce6c4ce5b"
+          "content": "7273a46af4e322f377cbd3a34355dda9"
         },
         {
           "alg": "SHA-1",
-          "content": "09e752dee94a1e7ca92dc135f1be9ed6fc31d91b"
+          "content": "586342fe9600f7f5c9f0c0ec1661a376412f6970"
         },
         {
           "alg": "SHA-256",
-          "content": "b8ca2a2b922556dc8fdd3ecdd2a130bcefeaec697da47bd03231294ce7122b7f"
+          "content": "b21d772bc57675e24917c55a0a6ab99e03a9efaeb4106bc7d6ef0143a35b153c"
         },
         {
           "alg": "SHA-512",
-          "content": "513ddc468477d82a9e57a611dc757e1762356de7f41b523fd4b875d589aba9f6100609ead4d7b380921350d0fc3339c6bea4a1da1c02b900a5fc28afbe9cdabf"
+          "content": "b47aa6ee0e2fec68eda66888cc75da29fbb5dc4006dffc2499ea0c4d7081f1eb40156fd916b3617e694f54c7a0f3ef1d6d0bbcecd2388e5e7495cee8ca68797b"
         },
         {
           "alg": "SHA-384",
-          "content": "38fba935cc1db8e944bdd1926a77271a4e1d1e8496cbc4d5689cf16788ec2841c8af33322c47388c9b821a892f3c8e06"
+          "content": "01e454331aca0bbeb2a591b9b570994d9078743ff5fb5244fbc28ab05a48613e4a791ecc1174e2228af772541524142f"
         },
         {
           "alg": "SHA3-384",
-          "content": "5814713059febc5dd385295eaf5d532a4420fd0ad9b7bc2031384d259f73d6626f54653bf09edc5e2bc6bc8963b6a465"
+          "content": "3e3a573caef24bb1acbcafcbbf3ca3760b38e6da0fd9a51a0e812e0d85d36284c29a03d200f1b9fec069e5bc930a59ee"
         },
         {
           "alg": "SHA3-256",
-          "content": "ab1ce13fdca7343bc38ee964d3ce938cbcaa298fec7bc8da0be8e22bc1d36ce7"
+          "content": "99c4f75093cb037db5b15c8bf2851ba101e414ebf8d806f92764a960dbb9053e"
         },
         {
           "alg": "SHA3-512",
-          "content": "520c232a079eba111a9980818c944134f0cae62745881ba38f7b18ee7c91250dbcca9c611bad38d107e2094b2d28d3a73266dba429701c76280de0702bb14c3f"
+          "content": "9c0264926f82dab98911401c938db82934da4f22c076f61414b13fae366e6baeef23835e80dd86f591bf12229fe86b54f9f3d338f421533efceb080de419d771"
         }
       ],
       "licenses": [
@@ -10352,7 +10285,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-json@5.0.7?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-json@5.0.8?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -10689,45 +10622,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-xml@5.0.7?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-xml@5.0.8?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-xml",
-      "version": "5.0.7",
+      "version": "5.0.8",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ab259e0bd6f60b740f5fb21eeee43a2e"
+          "content": "cc0f6b7d7df12daf2b1f0f6174b7944e"
         },
         {
           "alg": "SHA-1",
-          "content": "ed68092d85ae235b4f615b7ebc8918964a8d9871"
+          "content": "2e36bcf3603bd78cdae70c223e982bb8bcb3a805"
         },
         {
           "alg": "SHA-256",
-          "content": "f91ac10281248c76a76b7d95edae7c3044b66e7019e4983c076a3bf449ff2113"
+          "content": "91688845e2db9be44f697dcd86f5fe1c4da19f6d896749b8f0e0392788d0d7b9"
         },
         {
           "alg": "SHA-512",
-          "content": "ad0de73876f4fca4a6744fcb7b65d3c6926ebaa5bce44b2f8b0ff4f16dfe77cb1b4a19f9405088498f4db83a27db0b61bf2e5b4db63b15b287f9e3a418e02751"
+          "content": "db0d8097537d9e48ca5d01b676d7f5599f4478e75fff5a3b5b0fc79842d5bbcc6fc63fa69aadd39975df130e53f4f3b1d801987824677339ff6f30ea5b97f05c"
         },
         {
           "alg": "SHA-384",
-          "content": "fd777dc929dbb07e7bb5045819b42aa98dece43c3bd4e9d5afa3f9840a7a8525d422108b283fc61c84e3b0407998c808"
+          "content": "7da1d0def20c6cd7c1b32245b3e4b8ea5f45a69462eaf29fbe540d4c34ecd91256a05d12ab13abc65cfc58cc2a63f528"
         },
         {
           "alg": "SHA3-384",
-          "content": "01d52525bafaa16a9af1f12f5832678d8e96ff927c81c03bfe7bd0d7453a16f60d073106a0d53e6915c4bb26e617fac0"
+          "content": "7fae1560d7586077e18e01806e08f6378a9fb3251420917e35e799ff15cdd75146718eecb43f8956c35201596d718235"
         },
         {
           "alg": "SHA3-256",
-          "content": "19941f5ef1932c96c8c7e93cf62cd11abfe9bfd93ebbb40ad650bbd4851f7dd2"
+          "content": "5d2d59f24e288e20670e224707ba3c8c08c592633ac9388f69682747eb36e74b"
         },
         {
           "alg": "SHA3-512",
-          "content": "165f17859b133078b708d97bb9439ae13c9076f2fedfa9f5667e4495313f1c3d961b8e0fd2a10996479da7d04f7312a5733f688a094819179124c5926d9f08c9"
+          "content": "cdc8589dae6039454c865e5854bf9a51730b7ac4f93131f9d28ac29f22aa4f288fe31a8cc289fba87c41fb4c744946e7b1c80c501c310a9947d38d453b247443"
         }
       ],
       "licenses": [
@@ -10737,7 +10670,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-xml@5.0.7?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-xml@5.0.8?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -15932,45 +15865,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.2.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.3.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core",
-      "version": "7.0.2.Final",
+      "version": "7.0.3.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2912e3003da5023429a87f63827ba419"
+          "content": "0c2b1cae7ac476080f03e4ec1def1108"
         },
         {
           "alg": "SHA-1",
-          "content": "48242114529d88c519f8af64e5f41130482bcce1"
+          "content": "6a73f47dd05a5e993e0a0baee49acb8c73065aff"
         },
         {
           "alg": "SHA-256",
-          "content": "2947462605d01b0041ea9f1ec674b7f27fa558e8d0f0bbe7a21b6df0f4ed3265"
+          "content": "c9eca176929c964488da7c13caef46bc27cf28e73b5380f5b597324a1513ef43"
         },
         {
           "alg": "SHA-512",
-          "content": "4b2fb0fc3df8a666dfb910266c53aac774aff224c106d5638c17eac9c7402bea0fbefbd64fe7bb2c62144bc49116e89143bc7497b1661210f32c2a5e305c98cc"
+          "content": "2875bb7abb9921932a82d9b2e202b8140f456b5922ae83d5f1d344d09806c674f618c1aeb8f8ed2b7ec0150436cd20360b4d82f58414e62adace05ba9cdad06e"
         },
         {
           "alg": "SHA-384",
-          "content": "a396b02e69ee754a38b924ef4e4315b75107ee085f49984cce3d811edb90b5ab3e854ce47fb8e0f22d9b4faec43b8394"
+          "content": "e7d0fa417e0b14f2af07457cd199d7ddde41100532f5bd8565b810aa49446dcd30ef33a4100393953fe875aef3859577"
         },
         {
           "alg": "SHA3-384",
-          "content": "14a20d7667903c07b11855b280b844e352aaf19f47713b5408ffc56d7fc4bc1f9b53271e926d899a3c3151d3bef44913"
+          "content": "b78ced2b278045343f346c4d89fc7e5ba2ca28023405ba414c218b101bfa365ff918f28161a1466dcc8ef771d804d1b0"
         },
         {
           "alg": "SHA3-256",
-          "content": "114573a495e74723d22af07ee3c181efab619c27eba4eb721bb5d99b86049140"
+          "content": "e5e15045ddc9fb2f92560bb91c963704663dfd47e2893f47d87ec2f0f6255fae"
         },
         {
           "alg": "SHA3-512",
-          "content": "31782725b2384ef4e3b1a4ea8250fb175239e84380e078cdb53f99c194734934342a4bdbc4bbf49e4d0cfba18a7403f5ac09a271f8cba8696e4d629bca8d3876"
+          "content": "f8a09bd4ddd0c5556287f3813ec9f34bfdcf8f43256760ed7e6cd454177f199f890c40e8a69b37a5cb54494f75d3b89e50da0e58b750c69bb434d47cee804220"
         }
       ],
       "licenses": [
@@ -15981,7 +15914,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.2.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.3.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -16072,45 +16005,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.2.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.3.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core-spi",
-      "version": "7.0.2.Final",
+      "version": "7.0.3.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "699908ae5294905f308292967daf9b8a"
+          "content": "ca5629a5f95576db90f745ea0b088906"
         },
         {
           "alg": "SHA-1",
-          "content": "583b3cc0ed411e9b44f457901102b4159a0eb928"
+          "content": "0a99fa1b551bcc3996ddcbcb06be03400ef2c6ef"
         },
         {
           "alg": "SHA-256",
-          "content": "fbabfa25230c421eb158d9c8ef90fd072e7655a69eab7fd80d00c8989d072cbc"
+          "content": "191745e75575694ecf93592022e42b262e3c654ea98128020735cd7c55b8341f"
         },
         {
           "alg": "SHA-512",
-          "content": "df8c82d4eb7c053c76efe98d73f2b6ce092325074ba1f4f1acce9063e3d49fe2402d28f40b28b969602c8652472099b65c12689db815689798fb016f6cf03878"
+          "content": "bd602e3031185a156d6b1fa910b361b234725738709aad63fc5072b6c65e3e125273cf9721dc2e1b6f6b051bbca3b5f3fc070c722f527c5613eac7cc857bd87e"
         },
         {
           "alg": "SHA-384",
-          "content": "e0b83d71d5f2a2e3b7760022cb8488a41d29bd89e7f251a57b078b68f48ec9c17c9dce2efe4471a0001a3657ec076c5b"
+          "content": "264831c4a2520de3c06c49168d3cccbea788ecfee4a5a18ba28d634e0e777d4970267860f8f45fe32f5ae5d639e1d202"
         },
         {
           "alg": "SHA3-384",
-          "content": "e3c444314ce191816161c79929f41b75a83df967c87ea2e1d681ef12badfe193cbb16a56a745dbca0ec18dd84b6388a6"
+          "content": "1b31a5d17fce5ae808863fa33706590579f360e22677e34fa63540fd534a188c7649b4e2e2d3ca1428e662b914a888e8"
         },
         {
           "alg": "SHA3-256",
-          "content": "0ef0dc67f52aca02e2c92e1c5ee0dd69105f4dff4937fc2c6df0aaf618bbc9fe"
+          "content": "a4d023d2ec5e647e2d7a0847481bfab71353b7a099340daaec5184d6e7395e80"
         },
         {
           "alg": "SHA3-512",
-          "content": "97d8abd55f5673c38347a8b84d67dd593e1d24374b2da5b34d799f82efd1ed2112b11066b737fc7c193782a27cbc9187c786d8d53c3c223bc0f47f1e87ef2e4d"
+          "content": "a2ef70ac4b644cca62e3ede9b28cc6d006bb8291e098f7bdbcd4d3e600a655bd5e6b99eb8dbf086f2e631720db3572f356baf52db3c2030df5ebe63c1bd625ff"
         }
       ],
       "licenses": [
@@ -16121,7 +16054,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.2.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.3.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -16270,71 +16203,6 @@
         },
         {
           "url": "https://github.com/jakartaee/validation",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.ibm.async/asyncutil@0.1.0?type=jar",
-      "group": "com.ibm.async",
-      "name": "asyncutil",
-      "version": "0.1.0",
-      "description": "Utilities for working with CompletionStages",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "cbf288497b12b8c6c4ca728c57db77fd"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "440941c382166029a299602e6c9ff5abde1b5143"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "cb80a7a5cd1fef63c7ea4c9abbc5138e84136657c19d148879d22e28e144fe04"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "ecad12fbf06fb6713a5ef45bf7ba9b92c3ccb807c755360ecaa19a2bebb1156b335af407712ddfbe197143db8de6b03797c09eeb06aff7957b8d01e94bf23763"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "2d8fd4ed2a0d598877cd5f6ac41a1f925f084a96a03271f8e4df282a3f6f449fe8571129a60833740a324df50420414c"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "7c108ebea7f278658414d7a4dc497b891a4647ee79ef873c58befbfbbee1d1bacef1d96006d736e3c1fa84a7ef264b20"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "469a2b3c3cd89608dd04c1a3113dce745a7a65e21d88f3b5460704622a8af71c"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "e48405b1ffa013f2d5847e9f9d77b03eff534488224717d09c02eab016b1c74721d1414c8a7648ac135213dcc2b32df056d75300f16c4f9519b9da94cb960417"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.ibm.async/asyncutil@0.1.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://github.com/ibm/java-async-util",
-          "type": "website"
-        },
-        {
-          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "http://github.com/ibm/java-async-util",
           "type": "vcs"
         }
       ]
@@ -30410,45 +30278,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.7?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.8?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-templates",
-      "version": "5.0.7",
+      "version": "5.0.8",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "88839c6c14db5478d395b7fdc11edb0c"
+          "content": "6c9279f19d5c78981a725b85391eec07"
         },
         {
           "alg": "SHA-1",
-          "content": "6539a9aa061c5823fbf68fb359bc3e3bbf8f29b2"
+          "content": "e8307d52f737f40a4bbcc2a212e115894834f277"
         },
         {
           "alg": "SHA-256",
-          "content": "0617ede61820d5b9a5a8e08cd2ecf2cece932f9f8a3ddc90df1f6088f6756e8b"
+          "content": "8256cceced5efc462dfa8c32b9a05abb20990e3535d2829fa709b571fa51f35f"
         },
         {
           "alg": "SHA-512",
-          "content": "33168214b574848b7a91891abb9a0d4191d0f13a7a3626e2a292c86a31cce523dae17994a6a26b22ab92585460b11a6b8dcecda3c96a2c9c12c938bfe5a8a7c7"
+          "content": "1cbb0595374abc4067a8295626b45e3967f6498e47186896aad4ed99fb5edbee3d869a21657c1886b60661a8cd004cab528937cf0b162abd4208c438aef5ce56"
         },
         {
           "alg": "SHA-384",
-          "content": "d88f89b324e92387b64eb541960b11f0e1021630a511c55040316afe2a99d942470a5f31d4bdb2fd3abf66732d2f67d3"
+          "content": "babf75065c1511e57d489138458826ad32d1730d3a0e87c92406dcbf1e161f89414379a6bfa4547ee1a70a28e8c392b2"
         },
         {
           "alg": "SHA3-384",
-          "content": "5379cc97209abefd86651c76959da1f4e3182a046983ce434ba2cff9f8f92a9fac3ce06b5a067c08bb3378777ef27bdb"
+          "content": "f84012acdcb164a8672db37c1eac8297bc76c7fa4cd4745759ae672eca77c4f9d7c8e32a0ffcbc9ced749ec5a416996f"
         },
         {
           "alg": "SHA3-256",
-          "content": "6a77619491649b1212eeb2b42878e31c19a6e07c7329ffccd074ee9fa4e9db09"
+          "content": "ad68535a7077860eadb5df9b8b907c0206d793dd68a63f4473c84010947b368a"
         },
         {
           "alg": "SHA3-512",
-          "content": "9130e93caff3c06cf092c638859afeab62f39dbaccf4b3b519ea77e021dd7e107cf9223835c4f74677a574422a2b33cf95e839d03f278a3b0dbcc0504dd04f13"
+          "content": "f86fbbaf896e7c2f8c8f0f4a95504c29f8fb27b7a60eabc8893f48aab192507b0c47f636cf0329d0f89e8412ee790717aeacbefac771c19685db045c8c445695"
         }
       ],
       "licenses": [
@@ -30458,7 +30326,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-templates@5.0.7?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-templates@5.0.8?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -30480,45 +30348,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.7?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.8?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-dateutil",
-      "version": "5.0.7",
+      "version": "5.0.8",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "9ac61023692b06ba65fd28d1249a791c"
+          "content": "3f359fe7fdc2a9e0b072c256c70f6cd0"
         },
         {
           "alg": "SHA-1",
-          "content": "68c36e4a863bfe01210d132ccc55ba37a812c338"
+          "content": "e9e9958839e9a3d5957e972a4438acda54d2689e"
         },
         {
           "alg": "SHA-256",
-          "content": "ed77b53ca588fa9eb5f2aa03323d7fa47e66ea06f0f783132b6e9fe6cfbb298c"
+          "content": "bad2d1c600d223440da390fe8d3586de7b93fae07490cb1c2530ecb0444572c1"
         },
         {
           "alg": "SHA-512",
-          "content": "b84a92af56306c004936e3936c9759b84205e5c1c0133699548e0804280175d5a37a6a6248529e06595a7004d576c89e310ba849c4517793a33cc6d1d91bd45d"
+          "content": "05e3af51986bdb76889720b4335687dc86465eca75d6fac851a4901323c38b7c687b1e577c2f4a257f1168d802b326ac41d5ef0e67a5474f9ea96fcf6799860b"
         },
         {
           "alg": "SHA-384",
-          "content": "b17775ff06dff404dfb3070abb257c11a7f2dfd7a74e578bbaddd52d793f6f538b46d290d1b6ebdca01e48dbea1b7e5a"
+          "content": "b0321d45348da8cdb519552512558393c2eda46bde5fbfa174698366290a9a5dc84ab8c358fd15eaf6d8a2e3c35518a6"
         },
         {
           "alg": "SHA3-384",
-          "content": "22d7a59262cbc2f13fe900a95d5a2b8e02e357deff5343d5ae8775f9c34a677403d9649237afa33f7275c54f015b26a2"
+          "content": "2297c99c3a3ae0236052cb842e6bffec55580bad2c38e9f30213a683a52f086169eae62db7ca5a34af7883656749c5e2"
         },
         {
           "alg": "SHA3-256",
-          "content": "4c167dd7368a2190cc959ef8ee304fc003af2dfde0b58596e592810197a84249"
+          "content": "3c1ed7efa07985878f22cdae7cfd234939c83188e967a5fb7b9eebd54f6b2022"
         },
         {
           "alg": "SHA3-512",
-          "content": "530870bd3bc8176b1a894e6ca533f6315aefb917f5c126d64426f6757d04f7945b09821c589b56815fd35e0ac56483cb032d99f45a42eafc7956efab19713237"
+          "content": "8dd0974b2041de42395e03145ecb3b24a5c070e7bb7021c7eff46d116a9706398d8380c44c2e04b8da3bb560cec20593e230daf3cb315c8f0080bc2bd6eab288"
         }
       ],
       "licenses": [
@@ -30528,7 +30396,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.7?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.8?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -30550,45 +30418,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.7?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.8?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-datetime",
-      "version": "5.0.7",
+      "version": "5.0.8",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "36104419f38db3c6d88da779f2e42f35"
+          "content": "3aed43d92ec4bae6549fec10659797ae"
         },
         {
           "alg": "SHA-1",
-          "content": "511e2cb3c738359444467e5cab8c38bfe2ee6db5"
+          "content": "3e81375a269f3de0bbe7aecd5fc736c23f8a274c"
         },
         {
           "alg": "SHA-256",
-          "content": "5d075d91eb017b4bb4a721d16ca41d6510f258fc83cf9de2f4a12bc98562b694"
+          "content": "7699eb2e3bd33cd4c015e02776111768ccc590a099c64ee77be741d878a54325"
         },
         {
           "alg": "SHA-512",
-          "content": "f640726d6b12c085dfd7ca6fcdd163e13dcc7fe8e08b08a635b44617297621eefa982ce38ad69efb922948715422a6d8b766d7b82f7ca8f87f57746addc41829"
+          "content": "12028bb1c1f4e5bdc86de1daa7661856d12a1d36638461d30bec4ee395f3a309a5c9aa1da21cd2d664a9d9061850e4a46ca955860ce4a0cacf2ebe645ba03b66"
         },
         {
           "alg": "SHA-384",
-          "content": "e75b6fce24d7cf9a3ce03c995fc1ab64714151b3f4cd8b561f6d800a15939fac77e02981d21b2e07342e31a890ad4281"
+          "content": "6ef6b9076e976d93cf48a4b44fa0c274cd1d93bc8bb8fa8502ac8e1beff4aac821e86ce03b7526be293cd139c2a6c95e"
         },
         {
           "alg": "SHA3-384",
-          "content": "c37f502edb8a5f5c73954cd1b8e50fe89188792202b505a56426b431086d25dfdb1d985fd12a41450a9b1e85f2b13c7d"
+          "content": "ce052aed89a4b8f8b7a4ee292f7373105d1f0e9947fad00d69ea39c7c5a2abd233302335cc5f43c533c9e85a248e0546"
         },
         {
           "alg": "SHA3-256",
-          "content": "1e9773b715ca56d05749142fa8eae623957b3085a9c707fefde1fc9b719134a4"
+          "content": "ac897b1b9d72d0d503d09ef9bfd205c3607fe702cab0141e142df94b56542e91"
         },
         {
           "alg": "SHA3-512",
-          "content": "a402b37b6d07f64d6524103b0f00592be35dcf61b0c1ccd3defdc257519f2b52819e365f50acaab1e7c23c6f6f44fa977685b8d6a5487c03cee8e5013f86cf77"
+          "content": "529ed1112bf7065dc7a21359e44cd1d418e30b90362d295c40655e2407ba47a3ed7b8936f4bcb050368f59a994b95416effd65e66c4a8a24cd9b45a347a8912a"
         }
       ],
       "licenses": [
@@ -30598,7 +30466,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.7?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.8?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -31234,7 +31102,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "972caa49-9fe4-450d-a240-221f655883b5",
+      "bom-ref": "cfbd66e4-f13c-4c4b-b286-cccf010cfa2e",
       "name": "package-lock.json",
       "properties": [
         {
@@ -31524,10 +31392,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -31535,11 +31403,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-carbon-styles@1.24.0"
+          "value": "@bpmn-io/form-js-carbon-styles@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -31549,10 +31417,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js-editor",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -31560,11 +31428,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-editor@1.24.0"
+          "value": "@bpmn-io/form-js-editor@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -31574,10 +31442,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js-playground",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -31585,11 +31453,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-playground@1.24.0"
+          "value": "@bpmn-io/form-js-playground@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -31599,10 +31467,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js-viewer",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -31610,11 +31478,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-viewer@1.24.0"
+          "value": "@bpmn-io/form-js-viewer@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -31624,10 +31492,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.24.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.24.1",
       "group": "@bpmn-io",
       "name": "form-js",
-      "version": "1.24.0",
+      "version": "1.24.1",
       "licenses": [
         {
           "license": {
@@ -31635,11 +31503,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js@1.24.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js@1.24.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js@1.24.0"
+          "value": "@bpmn-io/form-js@1.24.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -31824,10 +31692,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/grid@11.58.0",
+      "bom-ref": "pkg:npm/%40carbon/grid@11.59.0",
       "group": "@carbon",
       "name": "grid",
-      "version": "11.58.0",
+      "version": "11.59.0",
       "licenses": [
         {
           "license": {
@@ -31835,11 +31703,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/grid@11.58.0",
+      "purl": "pkg:npm/%40carbon/grid@11.59.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/grid@11.58.0"
+          "value": "@carbon/grid@11.59.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -31849,10 +31717,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/layout@11.55.0",
+      "bom-ref": "pkg:npm/%40carbon/layout@11.56.0",
       "group": "@carbon",
       "name": "layout",
-      "version": "11.55.0",
+      "version": "11.56.0",
       "licenses": [
         {
           "license": {
@@ -31860,11 +31728,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/layout@11.55.0",
+      "purl": "pkg:npm/%40carbon/layout@11.56.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/layout@11.55.0"
+          "value": "@carbon/layout@11.56.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -32905,9 +32773,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-font@0.12.1",
+      "bom-ref": "pkg:npm/bpmn-font@0.13.0",
       "name": "bpmn-font",
-      "version": "0.12.1",
+      "version": "0.13.0",
       "licenses": [
         {
           "license": {
@@ -32915,11 +32783,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-font@0.12.1",
+      "purl": "pkg:npm/bpmn-font@0.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-font@0.12.1"
+          "value": "bpmn-font@0.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -32929,9 +32797,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.22.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.22.1",
       "name": "bpmn-js",
-      "version": "18.22.0",
+      "version": "18.22.1",
       "licenses": [
         {
           "license": {
@@ -32939,11 +32807,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.22.0",
+      "purl": "pkg:npm/bpmn-js@18.22.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.22.0"
+          "value": "bpmn-js@18.22.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33025,9 +32893,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/camunda-dmn-js@3.7.0",
+      "bom-ref": "pkg:npm/camunda-dmn-js@3.8.1",
       "name": "camunda-dmn-js",
-      "version": "3.7.0",
+      "version": "3.8.1",
       "licenses": [
         {
           "license": {
@@ -33035,11 +32903,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/camunda-dmn-js@3.7.0",
+      "purl": "pkg:npm/camunda-dmn-js@3.8.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "camunda-dmn-js@3.7.0"
+          "value": "camunda-dmn-js@3.8.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33419,9 +33287,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/core-js@3.49.0",
+      "bom-ref": "pkg:npm/core-js@3.50.0",
       "name": "core-js",
-      "version": "3.49.0",
+      "version": "3.50.0",
       "licenses": [
         {
           "license": {
@@ -33429,11 +33297,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/core-js@3.49.0",
+      "purl": "pkg:npm/core-js@3.50.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "core-js@3.49.0"
+          "value": "core-js@3.50.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33827,9 +33695,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-decision-table@17.10.0",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.10.1",
       "name": "dmn-js-decision-table",
-      "version": "17.10.0",
+      "version": "17.10.1",
       "licenses": [
         {
           "license": {
@@ -33837,11 +33705,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-decision-table@17.10.0",
+      "purl": "pkg:npm/dmn-js-decision-table@17.10.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-decision-table@17.10.0"
+          "value": "dmn-js-decision-table@17.10.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33851,9 +33719,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-drd@17.10.0",
+      "bom-ref": "pkg:npm/dmn-js-drd@17.10.1",
       "name": "dmn-js-drd",
-      "version": "17.10.0",
+      "version": "17.10.1",
       "licenses": [
         {
           "license": {
@@ -33861,11 +33729,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-drd@17.10.0",
+      "purl": "pkg:npm/dmn-js-drd@17.10.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-drd@17.10.0"
+          "value": "dmn-js-drd@17.10.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33875,9 +33743,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.10.0",
+      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.10.1",
       "name": "dmn-js-literal-expression",
-      "version": "17.10.0",
+      "version": "17.10.1",
       "licenses": [
         {
           "license": {
@@ -33885,11 +33753,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-literal-expression@17.10.0",
+      "purl": "pkg:npm/dmn-js-literal-expression@17.10.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-literal-expression@17.10.0"
+          "value": "dmn-js-literal-expression@17.10.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33923,30 +33791,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-shared@17.10.0",
-      "name": "dmn-js-shared",
-      "version": "17.10.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
-      "purl": "pkg:npm/dmn-js-shared@17.10.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-shared@17.10.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/dmn-js-shared@17.10.1",
       "name": "dmn-js-shared",
       "version": "17.10.1",
@@ -33971,9 +33815,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js@17.10.0",
+      "bom-ref": "pkg:npm/dmn-js@17.10.1",
       "name": "dmn-js",
-      "version": "17.10.0",
+      "version": "17.10.1",
       "licenses": [
         {
           "license": {
@@ -33981,11 +33825,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js@17.10.0",
+      "purl": "pkg:npm/dmn-js@17.10.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js@17.10.0"
+          "value": "dmn-js@17.10.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34108,19 +33952,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.12",
+      "bom-ref": "pkg:npm/dompurify@3.4.13",
       "name": "dompurify",
-      "version": "3.4.12",
+      "version": "3.4.13",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.12",
+      "purl": "pkg:npm/dompurify@3.4.13",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.12"
+          "value": "dompurify@3.4.13"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35131,9 +34975,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/marked@18.0.7",
+      "bom-ref": "pkg:npm/marked@18.0.9",
       "name": "marked",
-      "version": "18.0.7",
+      "version": "18.0.9",
       "licenses": [
         {
           "license": {
@@ -35141,11 +34985,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/marked@18.0.7",
+      "purl": "pkg:npm/marked@18.0.9",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "marked@18.0.7"
+          "value": "marked@18.0.9"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36514,7 +36358,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "7ce92de2-79d3-432c-88ec-1d67bce9cdf4",
+      "bom-ref": "a012a15e-76fe-4654-9fc3-bbc7f57759fc",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36581,25 +36425,21 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.2?type=jar"
+        "pkg:maven/com.tngtech.archunit/archunit-junit4@1.5.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.2?type=jar",
+      "ref": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.5.0?type=jar",
       "dependsOn": [
-        "pkg:maven/com.tngtech.archunit/archunit@1.4.2?type=jar",
+        "pkg:maven/com.tngtech.archunit/archunit@1.5.0?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.tngtech.archunit/archunit@1.4.2?type=jar",
+      "ref": "pkg:maven/com.tngtech.archunit/archunit@1.5.0?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
-    },
-    {
-      "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-      "dependsOn": []
     },
     {
       "ref": "pkg:maven/junit/junit@4.13.2?type=jar",
@@ -36914,13 +36754,13 @@
     {
       "ref": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "dependsOn": [
-        "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+      "ref": "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
       "dependsOn": []
     },
     {
@@ -37445,11 +37285,11 @@
       "ref": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.connect/operaton-connect-core@2.2.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar"
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.2?type=jar",
@@ -37686,7 +37526,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.2.Final?type=jar",
+        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.3.Final?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar"
       ]
     },
@@ -37704,7 +37544,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.2.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.3.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
@@ -37712,12 +37552,11 @@
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/io.smallrye/jandex@3.4.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.2.Final?type=jar",
+        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.3.Final?type=jar",
         "pkg:maven/org.reactivestreams/reactive-streams@1.0.4?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/org.eclipse.angus/angus-activation@2.0.3?type=jar",
-        "pkg:maven/jakarta.validation/jakarta.validation-api@3.1.1?type=jar",
-        "pkg:maven/com.ibm.async/asyncutil@0.1.0?type=jar"
+        "pkg:maven/jakarta.validation/jakarta.validation-api@3.1.1?type=jar"
       ]
     },
     {
@@ -37729,9 +37568,10 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.2.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.3.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
+        "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
@@ -37745,10 +37585,6 @@
     },
     {
       "ref": "pkg:maven/jakarta.validation/jakarta.validation-api@3.1.1?type=jar",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:maven/com.ibm.async/asyncutil@0.1.0?type=jar",
       "dependsOn": []
     },
     {
@@ -37955,7 +37791,7 @@
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
         "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.18?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
@@ -37965,7 +37801,7 @@
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
         "pkg:maven/commons-logging/commons-logging@1.3.6?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar"
       ]
     },
     {
@@ -38185,7 +38021,7 @@
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven-embedded@3.3.7?type=jar",
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-impl-maven@3.3.7?type=jar",
         "pkg:maven/org.apache.maven.shared/maven-invoker@3.3.0?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar"
       ]
@@ -38246,7 +38082,7 @@
         "pkg:maven/org.apache.httpcomponents/httpmime@4.5.13?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpcore-nio@4.4.16?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpasyncclient@4.1.5?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar"
       ]
     },
@@ -38593,7 +38429,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
         "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.11?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar"
       ]
@@ -38684,7 +38520,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.2.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.3?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.5?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
@@ -39952,13 +39788,13 @@
         "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
         "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.2.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-json@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-xml@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-templates@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-datetime@5.0.7?type=jar",
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-json@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-xml@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-templates@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-datetime@5.0.8?type=jar",
         "pkg:maven/org.graalvm.polyglot/js@25.1.3?type=pom",
         "pkg:maven/org.graalvm.polyglot/polyglot@25.1.3?type=jar",
         "pkg:maven/org.graalvm.js/js-scriptengine@25.1.3?type=jar",
@@ -39977,44 +39813,44 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.7?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.8?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-json@5.0.7?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-json@5.0.8?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-xml@5.0.7?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-xml@5.0.8?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.7?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.8?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-xml@5.0.7?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-xml@5.0.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.7?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.8?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.7?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.8?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar"
       ]
     },
     {
@@ -40126,13 +39962,13 @@
         "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes\u0026type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-json@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-xml@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-templates@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-datetime@5.0.7?type=jar",
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-json@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-xml@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-templates@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-datetime@5.0.8?type=jar",
         "pkg:maven/org.graalvm.polyglot/js@25.1.3?type=pom",
         "pkg:maven/org.graalvm.polyglot/polyglot@25.1.3?type=jar",
         "pkg:maven/org.graalvm.js/js-scriptengine@25.1.3?type=jar",
@@ -40204,13 +40040,13 @@
         "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes\u0026type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/org.apache.groovy/groovy@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-json@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-xml@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-templates@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.7?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-datetime@5.0.7?type=jar",
+        "pkg:maven/org.apache.groovy/groovy@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-json@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-xml@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-templates@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.8?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-datetime@5.0.8?type=jar",
         "pkg:maven/org.graalvm.polyglot/js@25.1.3?type=pom",
         "pkg:maven/org.graalvm.polyglot/polyglot@25.1.3?type=jar",
         "pkg:maven/org.graalvm.js/js-scriptengine@25.1.3?type=jar"
@@ -40221,16 +40057,16 @@
       "dependsOn": []
     },
     {
-      "ref": "7ce92de2-79d3-432c-88ec-1d67bce9cdf4",
+      "ref": "a012a15e-76fe-4654-9fc3-bbc7f57759fc",
       "dependsOn": [
-        "972caa49-9fe4-450d-a240-221f655883b5"
+        "cfbd66e4-f13c-4c4b-b286-cccf010cfa2e"
       ]
     },
     {
-      "ref": "972caa49-9fe4-450d-a240-221f655883b5",
+      "ref": "cfbd66e4-f13c-4c4b-b286-cccf010cfa2e",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
-        "pkg:npm/%40bpmn-io/form-js@1.24.0",
+        "pkg:npm/%40bpmn-io/form-js@1.24.1",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/%40popperjs/core@2.11.8",
         "pkg:npm/angular-animate@1.8.3",
@@ -40246,22 +40082,22 @@
         "pkg:npm/angular@1.8.3",
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
-        "pkg:npm/bpmn-font@0.12.1",
-        "pkg:npm/bpmn-js@18.22.0",
-        "pkg:npm/camunda-dmn-js@3.7.0",
+        "pkg:npm/bpmn-font@0.13.0",
+        "pkg:npm/bpmn-js@18.22.1",
+        "pkg:npm/camunda-dmn-js@3.8.1",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
-        "pkg:npm/core-js@3.49.0",
+        "pkg:npm/core-js@3.50.0",
         "pkg:npm/dmn-font@0.6.2",
-        "pkg:npm/dmn-js-decision-table@17.10.0",
-        "pkg:npm/dmn-js-drd@17.10.0",
-        "pkg:npm/dmn-js-literal-expression@17.10.0",
+        "pkg:npm/dmn-js-decision-table@17.10.1",
+        "pkg:npm/dmn-js-drd@17.10.1",
+        "pkg:npm/dmn-js-literal-expression@17.10.1",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
-        "pkg:npm/dmn-js-shared@17.10.0",
-        "pkg:npm/dmn-js@17.10.0",
+        "pkg:npm/dmn-js-shared@17.10.1",
+        "pkg:npm/dmn-js@17.10.1",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.12",
+        "pkg:npm/dompurify@3.4.13",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.10.1",
         "pkg:npm/jquery-ui@1.14.2",
@@ -40376,14 +40212,14 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/draggle@4.1.2",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
@@ -40394,11 +40230,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
         "pkg:npm/%40codemirror/autocomplete@6.20.3",
         "pkg:npm/%40codemirror/commands@6.10.4",
         "pkg:npm/%40codemirror/lang-json@6.0.2",
@@ -40415,31 +40251,31 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
-        "pkg:npm/%40carbon/grid@11.58.0",
+        "pkg:npm/%40carbon/grid@11.59.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.12",
+        "pkg:npm/dompurify@3.4.13",
         "pkg:npm/feelers@3.1.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/lodash@4.18.1",
         "pkg:npm/luxon@3.7.2",
-        "pkg:npm/marked@18.0.7",
+        "pkg:npm/marked@18.0.9",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/preact@10.29.7"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js@1.24.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js@1.24.1",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.0",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.24.0",
-        "pkg:npm/%40bpmn-io/form-js-playground@1.24.0",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0"
+        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1"
       ]
     },
     {
@@ -40507,14 +40343,14 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40carbon/grid@11.58.0",
+      "ref": "pkg:npm/%40carbon/grid@11.59.0",
       "dependsOn": [
-        "pkg:npm/%40carbon/layout@11.55.0",
+        "pkg:npm/%40carbon/layout@11.56.0",
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
     },
     {
-      "ref": "pkg:npm/%40carbon/layout@11.55.0",
+      "ref": "pkg:npm/%40carbon/layout@11.56.0",
       "dependsOn": [
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
@@ -40749,11 +40585,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/bpmn-font@0.12.1",
+      "ref": "pkg:npm/bpmn-font@0.13.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.22.0",
+      "ref": "pkg:npm/bpmn-js@18.22.1",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.0.0",
         "pkg:npm/diagram-js-direct-editing@3.5.1",
@@ -40788,17 +40624,17 @@
       ]
     },
     {
-      "ref": "pkg:npm/camunda-dmn-js@3.7.0",
+      "ref": "pkg:npm/camunda-dmn-js@3.8.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/align-to-origin@0.7.0",
         "pkg:npm/camunda-dmn-moddle@1.3.1",
         "pkg:npm/diagram-js-grid@2.0.1",
         "pkg:npm/diagram-js-origin@1.4.0",
         "pkg:npm/diagram-js@15.23.2",
-        "pkg:npm/dmn-js-drd@17.10.0",
+        "pkg:npm/dmn-js-drd@17.10.1",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
-        "pkg:npm/dmn-js-shared@17.10.0",
-        "pkg:npm/dmn-js@17.10.0",
+        "pkg:npm/dmn-js-shared@17.10.1",
+        "pkg:npm/dmn-js@17.10.1",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/zeebe-dmn-moddle@1.0.0"
@@ -40904,7 +40740,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/core-js@3.49.0",
+      "ref": "pkg:npm/core-js@3.50.0",
       "dependsOn": []
     },
     {
@@ -41020,12 +40856,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-decision-table@17.10.0",
+      "ref": "pkg:npm/dmn-js-decision-table@17.10.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
         "pkg:npm/diagram-js@15.23.2",
-        "pkg:npm/dmn-js-shared@17.10.0",
+        "pkg:npm/dmn-js-shared@17.10.1",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -41035,11 +40871,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-drd@17.10.0",
+      "ref": "pkg:npm/dmn-js-drd@17.10.1",
       "dependsOn": [
         "pkg:npm/diagram-js-direct-editing@3.5.1",
         "pkg:npm/diagram-js@15.23.2",
-        "pkg:npm/dmn-js-shared@17.10.0",
+        "pkg:npm/dmn-js-shared@17.10.1",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.1.0",
@@ -41049,11 +40885,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-literal-expression@17.10.0",
+      "ref": "pkg:npm/dmn-js-literal-expression@17.10.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/diagram-js@15.23.2",
-        "pkg:npm/dmn-js-shared@17.10.0",
+        "pkg:npm/dmn-js-shared@17.10.1",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -41066,25 +40902,9 @@
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/diagram-js@15.23.2",
-        "pkg:npm/dmn-js@17.10.0",
+        "pkg:npm/dmn-js@17.10.1",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
-      ]
-    },
-    {
-      "ref": "pkg:npm/dmn-js-shared@17.10.0",
-      "dependsOn": [
-        "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
-        "pkg:npm/diagram-js@15.23.2",
-        "pkg:npm/didi@11.0.0",
-        "pkg:npm/dmn-moddle@12.0.1",
-        "pkg:npm/ids@3.0.2",
-        "pkg:npm/inferno@5.6.3",
-        "pkg:npm/min-dash@5.1.0",
-        "pkg:npm/min-dom@5.3.0",
-        "pkg:npm/selection-ranges@4.1.1",
-        "pkg:npm/selection-update@1.1.1",
-        "pkg:npm/table-js@9.4.0"
       ]
     },
     {
@@ -41104,13 +40924,13 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js@17.10.0",
+      "ref": "pkg:npm/dmn-js@17.10.1",
       "dependsOn": [
         "pkg:npm/dmn-js-boxed-expression@17.10.1",
-        "pkg:npm/dmn-js-decision-table@17.10.0",
-        "pkg:npm/dmn-js-drd@17.10.0",
-        "pkg:npm/dmn-js-literal-expression@17.10.0",
-        "pkg:npm/dmn-js-shared@17.10.0"
+        "pkg:npm/dmn-js-decision-table@17.10.1",
+        "pkg:npm/dmn-js-drd@17.10.1",
+        "pkg:npm/dmn-js-literal-expression@17.10.1",
+        "pkg:npm/dmn-js-shared@17.10.1"
       ]
     },
     {
@@ -41141,7 +40961,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.12",
+      "ref": "pkg:npm/dompurify@3.4.13",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]
@@ -41383,7 +41203,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/marked@18.0.7",
+      "ref": "pkg:npm/marked@18.0.9",
       "dependsOn": []
     },
     {
@@ -42842,7 +42662,7 @@
         }
       ],
       "published": "2026-06-24T21:16:52Z",
-      "updated": "2026-07-30T12:17:24Z",
+      "updated": "2026-08-05T13:20:35Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.3",

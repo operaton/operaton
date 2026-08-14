@@ -53,6 +53,10 @@
       <artifactId>operaton-identity-ldap</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.operaton.bpm.identity</groupId>
+      <artifactId>operaton-identity-scim</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-cdi</artifactId>
     </dependency>

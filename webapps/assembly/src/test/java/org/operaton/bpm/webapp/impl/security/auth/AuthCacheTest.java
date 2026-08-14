@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpSession;
 
@@ -34,6 +35,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
 import org.operaton.bpm.webapp.impl.security.SecurityActions;
@@ -281,12 +283,10 @@ class AuthCacheTest {
     assertThat(nextAuth.getCacheValidationTime()).isEqualTo(addMinutes(5, ClockUtil.getCurrentTime()));
     assertThat(initialAuthentication).isNotSameAs(nextAuth);
 
-    User user = engineMock.getIdentityService()
+    UserQuery userQuery = engineMock.getIdentityService()
       .createUserQuery()
-      .userId("userId1")
-      .singleResult();
-
-    when(user).thenReturn(null);
+      .userId("userId1");
+    when(userQuery.list()).thenReturn(List.of());
 
     Date currentTime = addDays(ClockUtil.getCurrentTime(), 2);
     ClockUtil.setCurrentTime(currentTime);
@@ -394,12 +394,10 @@ class AuthCacheTest {
     assertThat(nextAuthEngineThree.getCacheValidationTime())
       .isEqualTo(datePlus5Minutes);
 
-    User user = engineMocks[1].getIdentityService()
+    UserQuery userQuery = engineMocks[1].getIdentityService()
       .createUserQuery()
-      .userId("userId2")
-      .singleResult();
-
-    when(user).thenReturn(null);
+      .userId("userId2");
+    when(userQuery.list()).thenReturn(List.of());
 
     Date currentTime = addDays(ClockUtil.getCurrentTime(), 2);
     ClockUtil.setCurrentTime(currentTime);
@@ -462,6 +460,20 @@ class AuthCacheTest {
     assertThat(getAuthByEngine(authentications, "engine1").getCacheValidationTime()).isEqualTo(datePlus5Minutes);
   }
 
+  @Test
+  void shouldPreferExactUserIdWhenAuthenticationQueryReturnsSimilarUsers() {
+    ProcessEngine engineMock = setupEngineMock()[0];
+    UserQuery userQuery = engineMock.getIdentityService()
+        .createUserQuery()
+        .userId("UserId1");
+    List<User> users = List.of(createMockUser("userid1"), createMockUser("UserId1"));
+    when(userQuery.list()).thenReturn(users);
+
+    UserAuthentication authentication = AuthenticationUtil.createAuthentication(engineMock, "UserId1");
+
+    assertThat(authentication.getIdentityId()).isEqualTo("UserId1");
+  }
+
   // helpers ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   protected ProcessEngine[] setupEngineMock(String... engines) {
@@ -474,13 +486,26 @@ class AuthCacheTest {
     List<ProcessEngine> processEngines = new ArrayList<>();
     List.of(engines).forEach(engine -> {
       ProcessEngine processEngineMock = mock(ProcessEngine.class, RETURNS_DEEP_STUBS);
+      UserQuery userQuery = mock(UserQuery.class);
+      AtomicReference<String> requestedUserId = new AtomicReference<>();
       processEngines.add(processEngineMock);
 
       when(processEngineMock.getName()).thenReturn(engine);
+      when(processEngineMock.getIdentityService().createUserQuery()).thenReturn(userQuery);
+      when(userQuery.userId(any())).thenAnswer(invocation -> {
+        String userId = invocation.getArgument(0);
+        requestedUserId.set(userId);
+        return userQuery;
+      });
+      when(userQuery.list()).thenAnswer(invocation -> {
+        String userId = requestedUserId.get();
+        return userId == null ? List.of() : List.of(createMockUser(userId));
+      });
       mockedProcessEngineUtil.when(() -> ProcessEngineUtil.lookupProcessEngine(eq(engine))).thenReturn(processEngineMock);
       mockedAuthenticationUtil.when(() -> AuthenticationUtil.updateCache(any(), any(), anyLong())).thenCallRealMethod();
       mockedAuthenticationUtil.when(() -> AuthenticationUtil.getSessionMutex(any())).thenCallRealMethod();
       mockedAuthenticationUtil.when(() -> AuthenticationUtil.createAuthentication(eq(engine), any())).thenCallRealMethod();
+      mockedAuthenticationUtil.when(() -> AuthenticationUtil.createAuthentication(eq(processEngineMock), any())).thenCallRealMethod();
       mockedAuthenticationUtil.when(() -> AuthenticationUtil.createAuthentication(eq(engine), any(), any(), any())).thenCallRealMethod();
       mockedAuthenticationUtil.when(() -> AuthenticationUtil.createAuthentication(eq(processEngineMock), any(), any(), any())).thenCallRealMethod();
     });
@@ -540,5 +565,10 @@ class AuthCacheTest {
     return new Date(currentTime.getTime() + 1000L * 60L * minutes);
   }
 
-}
+  private User createMockUser(String userId) {
+    User user = mock(User.class);
+    when(user.getId()).thenReturn(userId);
+    return user;
+  }
 
+}

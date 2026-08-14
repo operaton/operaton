@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="https://forum.operaton.org/">Forum</a> ·
-  <a href="https://join.slack.com/t/operaton/shared_invite/zt-43ugangt0-_5dsWrayqvGLMU2HYy0zJQ
+  <a href="https://join.slack.com/t/operaton/shared_invite/zt-46uee9nut-_msh4RxIBD6vXHtzTjZlQA
   <a href="https://docs.operaton.org/">Documentation</a> ·
   <a href="https://operaton.org/roadmap">Roadmap</a>
 </p>
@@ -104,7 +104,7 @@ Operaton is fully compatible with your existing BPMN, DMN models and Forms creat
 - 💡 [Frequently Asked Questions](https://operaton.org/faq/)
 - 🗺️ [Roadmap](https://operaton.org/roadmap)
 - 💬 [Forum](https://forum.operaton.org/)
-- 📡 [Slack](https://join.slack.com/t/operaton/shared_invite/zt-43ugangt0-_5dsWrayqvGLMU2HYy0zJQ)
+- 📡 [Slack](https://join.slack.com/t/operaton/shared_invite/zt-46uee9nut-_msh4RxIBD6vXHtzTjZlQA)
 - 🐛 [Issue Tracker](https://github.com/operaton/operaton/issues)
 - 🏁 [Good First Issues](https://github.com/search?q=org%3Aoperaton+is%3Aopen+label%3A%22good+first+issue%22&type=issues)
 - 📘 [REST API Reference](https://docs.operaton.org/reference/latest/rest-api/)

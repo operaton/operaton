@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
@@ -40,7 +42,7 @@ public abstract class AbstractPatchVariablesCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     getSetVariableCmd().disableLogUserOperation().execute(commandContext);
     getRemoveVariableCmd().disableLogUserOperation().execute(commandContext);
     logVariableOperation(commandContext);

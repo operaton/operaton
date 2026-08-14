@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.application.AbstractProcessApplication;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
@@ -68,7 +70,7 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
     this.updateListeners = new ArrayList<>();
   }
 
-  public Object getValue() {
+  public @Nullable Object getValue() {
     TypedValue typedValue = getTypedValue(false);
     if (typedValue != null) {
       return typedValue.getValue();
@@ -226,7 +228,7 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
     }
   }
 
-  public static TypedValueSerializer<?> getFallbackSerializer(String serializerName) {
+  public static @Nullable TypedValueSerializer<?> getFallbackSerializer(String serializerName) {
     if (Context.getProcessEngineConfiguration() != null) {
       VariableSerializerFactory fallbackSerializerFactory = Context.getProcessEngineConfiguration().getFallbackSerializerFactory();
       if (fallbackSerializerFactory != null) {

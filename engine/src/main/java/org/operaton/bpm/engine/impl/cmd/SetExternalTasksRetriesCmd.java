@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.batch.BatchElementConfiguration;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
@@ -30,7 +32,7 @@ public class SetExternalTasksRetriesCmd extends AbstractSetExternalTaskRetriesCm
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     BatchElementConfiguration elementConfiguration = collectExternalTaskIds(commandContext);
     List<String> collectedIds = elementConfiguration.getIds();
     EnsureUtil.ensureNotEmpty(BadUserRequestException.class, "externalTaskIds", collectedIds);

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -95,7 +97,7 @@ public final class BpmnExceptionHandler {
     propagateError(error.getErrorCode(), error.getMessage(), null, execution);
   }
 
-  public static void propagateError(String errorCode, String errorMessage, Exception origException, ActivityExecution execution) throws Exception {
+  public static void propagateError(String errorCode, String errorMessage, @Nullable Exception origException, ActivityExecution execution) throws Exception {
 
     ActivityExecutionHierarchyWalker walker = new ActivityExecutionHierarchyWalker(execution);
 

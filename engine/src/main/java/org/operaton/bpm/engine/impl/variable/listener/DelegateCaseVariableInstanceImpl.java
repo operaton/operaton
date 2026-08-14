@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.variable.listener;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
@@ -23,6 +25,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -114,7 +117,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
   }
 
   @Override
-  public String getBatchId() {
+  public @Nullable String getBatchId() {
     return null;
   }
 
@@ -138,7 +141,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
   }
 
   @Override
-  public String getTypeName() {
+  public @Nullable String getTypeName() {
     if(value != null) {
       return value.getType().getName();
     }
@@ -153,7 +156,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
   }
 
   @Override
-  public Object getValue() {
+  public @Nullable Object getValue() {
     if(value != null) {
       return value.getValue();
     }

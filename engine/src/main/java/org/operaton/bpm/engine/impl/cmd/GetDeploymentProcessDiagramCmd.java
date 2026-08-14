@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.io.InputStream;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -34,15 +37,15 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 public class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
   protected String processDefinitionId;
 
-  public GetDeploymentProcessDiagramCmd(String processDefinitionId) {
-    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
+  public GetDeploymentProcessDiagramCmd(@NonNull String processDefinitionId) {
+    if (processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
     this.processDefinitionId = processDefinitionId;
   }
 
   @Override
-  public InputStream execute(final CommandContext commandContext) {
+  public @Nullable InputStream execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
             .getProcessEngineConfiguration()
             .getDeploymentCache()

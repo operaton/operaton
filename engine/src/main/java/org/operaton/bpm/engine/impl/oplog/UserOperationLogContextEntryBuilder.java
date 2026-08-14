@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -178,7 +180,7 @@ public class UserOperationLogContextEntryBuilder {
     return this;
   }
 
-  public UserOperationLogContextEntryBuilder inContextOf(HistoryEvent historyEvent, ResourceDefinitionEntity<?> definition, List<PropertyChange> propertyChanges) {
+  public UserOperationLogContextEntryBuilder inContextOf(HistoryEvent historyEvent, @Nullable ResourceDefinitionEntity<?> definition, List<PropertyChange> propertyChanges) {
 
     if ((propertyChanges == null || propertyChanges.isEmpty()) && OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
       propertyChanges = List.of(PropertyChange.EMPTY_CHANGE);
@@ -203,7 +205,7 @@ public class UserOperationLogContextEntryBuilder {
     return this;
   }
 
-  public UserOperationLogContextEntryBuilder inContextOf(HistoricVariableInstanceEntity variable, ResourceDefinitionEntity<?> definition, List<PropertyChange> propertyChanges) {
+  public UserOperationLogContextEntryBuilder inContextOf(HistoricVariableInstanceEntity variable, @Nullable ResourceDefinitionEntity<?> definition, List<PropertyChange> propertyChanges) {
 
     if ((propertyChanges == null || propertyChanges.isEmpty()) && OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
       propertyChanges = List.of(PropertyChange.EMPTY_CHANGE);
@@ -229,7 +231,7 @@ public class UserOperationLogContextEntryBuilder {
     return this;
   }
 
-  public UserOperationLogContextEntryBuilder inContextOf(ExternalTaskEntity task, ExecutionEntity execution, ProcessDefinitionEntity definition) {
+  public UserOperationLogContextEntryBuilder inContextOf(ExternalTaskEntity task, @Nullable ExecutionEntity execution, @Nullable ProcessDefinitionEntity definition) {
     if (execution != null) {
       inContextOf(execution);
     } else if (definition != null) {

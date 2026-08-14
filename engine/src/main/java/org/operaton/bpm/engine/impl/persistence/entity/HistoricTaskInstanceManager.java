@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.authorization.Resources;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.impl.HistoricTaskInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -115,7 +117,7 @@ public class HistoricTaskInstanceManager extends AbstractHistoricManager {
     return Collections.emptyList();
   }
 
-  public HistoricTaskInstanceEntity findHistoricTaskInstanceById(final String taskId) {
+  public @Nullable HistoricTaskInstanceEntity findHistoricTaskInstanceById(final String taskId) {
     ensureNotNull("Invalid historic task id", "taskId", taskId);
 
     if (isHistoryEnabled()) {

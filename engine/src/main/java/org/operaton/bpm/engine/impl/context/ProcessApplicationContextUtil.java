@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.context;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.impl.ProcessApplicationLogger;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -37,7 +39,7 @@ public final class ProcessApplicationContextUtil {
   private ProcessApplicationContextUtil() {
   }
 
-  public static ProcessApplicationReference getTargetProcessApplication(CoreExecution execution) {
+  public static @Nullable ProcessApplicationReference getTargetProcessApplication(CoreExecution execution) {
     if (execution instanceof ExecutionEntity executionEntity) {
       return getTargetProcessApplication(executionEntity);
     } else {
@@ -45,7 +47,7 @@ public final class ProcessApplicationContextUtil {
     }
   }
 
-  public static ProcessApplicationReference getTargetProcessApplication(ExecutionEntity execution) {
+  public static @Nullable ProcessApplicationReference getTargetProcessApplication(@Nullable ExecutionEntity execution) {
     if (execution == null) {
       return null;
     }
@@ -60,7 +62,7 @@ public final class ProcessApplicationContextUtil {
     return processApplicationForDeployment;
   }
 
-  public static ProcessApplicationReference getTargetProcessApplication(CaseExecutionEntity execution) {
+  public static @Nullable ProcessApplicationReference getTargetProcessApplication(@Nullable CaseExecutionEntity execution) {
     if (execution == null) {
       return null;
     }
@@ -75,7 +77,7 @@ public final class ProcessApplicationContextUtil {
     return processApplicationForDeployment;
   }
 
-  public static ProcessApplicationReference getTargetProcessApplication(TaskEntity task) {
+  public static @Nullable ProcessApplicationReference getTargetProcessApplication(TaskEntity task) {
     if (task.getProcessDefinition() != null) {
       return getTargetProcessApplication(task.getProcessDefinition());
     }
@@ -147,7 +149,7 @@ public final class ProcessApplicationContextUtil {
 
   }
 
-  public static boolean requiresContextSwitch(ProcessApplicationReference processApplicationReference) {
+  public static boolean requiresContextSwitch(@Nullable ProcessApplicationReference processApplicationReference) {
 
     final ProcessApplicationReference currentProcessApplication = Context.getCurrentProcessApplication();
 

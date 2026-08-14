@@ -28,6 +28,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.impl.metadata.BpmPlatformXmlParser;
 import org.operaton.bpm.container.impl.metadata.spi.BpmPlatformXml;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
@@ -96,7 +98,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return fileLocation;
   }
 
-  public String autoCompleteUrl(String url) {
+  public String autoCompleteUrl(@Nullable String url) {
     if (url != null) {
       LOG.debugAutoCompleteUrl(url);
 
@@ -121,7 +123,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return url;
   }
 
-  public URL checkValidUrlLocation(String url) throws MalformedURLException {
+  public @Nullable URL checkValidUrlLocation(@Nullable String url) throws MalformedURLException {
     if (url == null || url.isEmpty()) {
       return null;
     }
@@ -141,7 +143,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return null;
   }
 
-  public URL checkValidFileLocation(String url) throws MalformedURLException {
+  public @Nullable URL checkValidFileLocation(@Nullable String url) throws MalformedURLException {
     if (url == null || url.isEmpty()) {
       return null;
     }
@@ -159,7 +161,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return null;
   }
 
-  public URL lookupBpmPlatformXmlLocationFromJndi() {
+  public @Nullable URL lookupBpmPlatformXmlLocationFromJndi() {
     String jndi = "java:comp/env/" + BPM_PLATFORM_XML_LOCATION;
 
     try {

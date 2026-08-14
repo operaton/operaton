@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.util;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
+import org.jspecify.annotations.NonNull;
+
 /**
  * MPSC Condition implementation.
  * <p>
@@ -35,7 +37,7 @@ public class SingleConsumerCondition {
   // and replaced in a meaningful way without breaking the implementation
   private final Thread consumer;
 
-  public SingleConsumerCondition(Thread consumer) {
+  public SingleConsumerCondition(@NonNull Thread consumer) {
     if (consumer == null) {
       throw new IllegalArgumentException("Consumer thread cannot be null");
     }

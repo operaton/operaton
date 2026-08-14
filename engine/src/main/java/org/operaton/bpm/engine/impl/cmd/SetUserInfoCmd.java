@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoEntity;
 
@@ -52,7 +54,7 @@ public class SetUserInfoCmd implements Command<Object> {
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     commandContext
       .getIdentityInfoManager()
       .setUserInfo(userId, type, key, value, accountPassword, accountDetails);

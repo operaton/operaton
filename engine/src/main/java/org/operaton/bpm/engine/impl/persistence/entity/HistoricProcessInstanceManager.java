@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.authorization.Resources;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.CleanableHistoricProcessInstanceReportImpl;
@@ -53,14 +55,14 @@ import org.operaton.commons.utils.CollectionUtil;
  */
 public class HistoricProcessInstanceManager extends AbstractHistoricManager {
 
-  public HistoricProcessInstanceEntity findHistoricProcessInstance(String processInstanceId) {
+  public @Nullable HistoricProcessInstanceEntity findHistoricProcessInstance(String processInstanceId) {
     if (isHistoryEnabled()) {
       return getDbEntityManager().selectById(HistoricProcessInstanceEntity.class, processInstanceId);
     }
     return null;
   }
 
-  public HistoricProcessInstanceEventEntity findHistoricProcessInstanceEvent(String eventId) {
+  public @Nullable HistoricProcessInstanceEventEntity findHistoricProcessInstanceEvent(String eventId) {
     if (isHistoryEnabled()) {
       return getDbEntityManager().selectById(HistoricProcessInstanceEventEntity.class, eventId);
     }

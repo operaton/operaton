@@ -24,6 +24,8 @@ import java.util.Set;
 import javax.management.MBeanServer;
 
 import org.operaton.bpm.ProcessApplicationService;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInfo;
@@ -204,7 +206,7 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
   }
 
   @Override
-  public ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
+  public @Nullable ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
 
     JmxManagedProcessApplication processApplicationService = serviceContainer.getServiceValue(ServiceTypes.PROCESS_APPLICATION, processApplicationName);
 
@@ -216,7 +218,7 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
   }
 
   @Override
-  public ProcessApplicationReference getDeployedProcessApplication(String processApplicationName) {
+  public @Nullable ProcessApplicationReference getDeployedProcessApplication(String processApplicationName) {
     JmxManagedProcessApplication processApplicationService = serviceContainer.getServiceValue(ServiceTypes.PROCESS_APPLICATION, processApplicationName);
 
     if (processApplicationService == null) {

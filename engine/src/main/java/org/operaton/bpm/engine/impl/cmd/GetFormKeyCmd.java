@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -49,9 +51,9 @@ public class GetFormKeyCmd implements Command<String> {
   /**
    * Retrieves a task form key.
    */
-  public GetFormKeyCmd(String processDefinitionId, String taskDefinitionKey) {
+  public GetFormKeyCmd(String processDefinitionId, @NonNull String taskDefinitionKey) {
     setProcessDefinitionId(processDefinitionId);
-    if (taskDefinitionKey == null || taskDefinitionKey.isEmpty()) {
+    if (taskDefinitionKey.isEmpty()) {
       throw new ProcessEngineException("The task definition key is mandatory, but '%s' has been provided.".formatted(taskDefinitionKey));
     }
     this.taskDefinitionKey = taskDefinitionKey;

@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.DeploymentQueryImpl;
 import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
@@ -103,7 +105,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   protected PersistenceSession persistenceSession;
   protected boolean isIgnoreForeignKeysForNextFlush;
 
-  public DbEntityManager(IdGenerator idGenerator, PersistenceSession persistenceSession) {
+  public DbEntityManager(IdGenerator idGenerator, @Nullable PersistenceSession persistenceSession) {
     this.idGenerator = idGenerator;
     this.persistenceSession = persistenceSession;
     if (persistenceSession != null) {
@@ -153,7 +155,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return selectList(statement, parameter, 0, Integer.MAX_VALUE);
   }
 
-  public List selectList(String statement, Object parameter, Page page) {
+  public List selectList(String statement, Object parameter, @Nullable Page page) {
     if(page!=null) {
       return selectList(statement, parameter, page.getFirstResult(), page.getMaxResults());
     } else {
@@ -200,7 +202,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return false;
   }
 
-  public <T extends DbEntity> T selectById(Class<T> entityClass, String id) {
+  public <T extends DbEntity> @Nullable T selectById(Class<T> entityClass, String id) {
     T persistentObject = dbEntityCache.get(entityClass, id);
     if (persistentObject!=null) {
       return persistentObject;

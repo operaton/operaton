@@ -15,6 +15,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
@@ -39,7 +41,7 @@ public final class HistoryLevelUtils {
   /**
    * Returns the history level stored in the database, or {@code null} if none is found.
    */
-  public static Integer databaseHistoryLevel(CommandContext commandContext) {
+  public static @Nullable Integer databaseHistoryLevel(CommandContext commandContext) {
     try {
       PropertyEntity historyLevelProperty = commandContext.getPropertyManager().findPropertyById("historyLevel");
       return historyLevelProperty != null ? Integer.valueOf(historyLevelProperty.getValue()) : null;

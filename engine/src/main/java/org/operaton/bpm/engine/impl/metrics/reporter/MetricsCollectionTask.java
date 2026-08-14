@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.TimerTask;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -94,7 +96,7 @@ public class MetricsCollectionTask extends TimerTask {
     }
 
     @Override
-    public Void execute(CommandContext commandContext) {
+    public @Nullable Void execute(CommandContext commandContext) {
       for (MeterLogEntity meterLogEntity : logs) {
         commandContext.getMeterLogManager().insert(meterLogEntity);
       }

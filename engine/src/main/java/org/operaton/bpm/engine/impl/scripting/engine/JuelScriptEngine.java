@@ -21,6 +21,7 @@ import java.io.Reader;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import jakarta.el.*;
+import org.jspecify.annotations.Nullable;
 import jakarta.el.ELContext;
 
 import javax.script.*;
@@ -217,7 +218,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
     }
 
     @Override
-    public ValueExpression resolveVariable(String variableName) {
+    public @Nullable ValueExpression resolveVariable(String variableName) {
       int scope = scriptContext.getAttributesScope(variableName);
       if (scope != -1) {
         Object value = scriptContext.getAttribute(variableName, scope);
@@ -258,7 +259,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
     }
 
     @Override
-    public Method resolveFunction(String prefix, String localName) {
+    public @Nullable Method resolveFunction(String prefix, String localName) {
       String functionName = getFullFunctionName(prefix, localName);
       int scope = scriptContext.getAttributesScope(functionName);
       if (scope != -1) {

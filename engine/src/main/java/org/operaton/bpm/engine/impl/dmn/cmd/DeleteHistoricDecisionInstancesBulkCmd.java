@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -44,7 +46,7 @@ public class DeleteHistoricDecisionInstancesBulkCmd implements Command<Object> {
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkAuthorization(Permissions.DELETE_HISTORY, Resources.DECISION_DEFINITION);
 
     ensureNotEmpty(BadUserRequestException.class, "decisionInstanceIds", decisionInstanceIds);

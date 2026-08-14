@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -67,7 +69,7 @@ public class SetJobRetriesCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     if(dueDate == null && commandContext.getProcessEngineConfiguration().isEnsureJobDueDateNotNull()) {
       dueDate = ClockUtil.getCurrentTime();
     }

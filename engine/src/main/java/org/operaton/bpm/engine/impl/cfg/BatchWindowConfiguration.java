@@ -20,6 +20,8 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
 
 /**
@@ -40,7 +42,7 @@ public class BatchWindowConfiguration {
   public BatchWindowConfiguration() {
   }
 
-  public BatchWindowConfiguration(String startTime, String endTime) {
+  public BatchWindowConfiguration(String startTime, @Nullable String endTime) {
     this.startTime = startTime;
     initStartTimeAsDate();
     if (endTime != null) {

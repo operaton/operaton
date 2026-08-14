@@ -24,6 +24,8 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation.DeploymentOperationBuilder;
 import org.operaton.bpm.container.impl.spi.PlatformService;
@@ -195,7 +197,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    * Service exists.
    *
    */
-  public <S> S getServiceValue(ObjectName name) {
+  public <S> @Nullable S getServiceValue(ObjectName name) {
     PlatformService<S> service = getService(name);
     if(service != null) {
       return service.getValue();
@@ -211,7 +213,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    *
    */
   @Override
-  public <S> S getServiceValue(ServiceType type, String localName) {
+  public <S> @Nullable S getServiceValue(ServiceType type, String localName) {
     String globalName = composeLocalName(type, localName);
     ObjectName serviceName = getObjectName(globalName);
     return getServiceValue(serviceName);

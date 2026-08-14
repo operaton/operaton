@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
@@ -34,7 +36,7 @@ public class OperatonFormDefinitionManager extends AbstractManager
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   @Override
-  public OperatonFormDefinitionEntity findLatestDefinitionByKey(String key) {
+  public @Nullable OperatonFormDefinitionEntity findLatestDefinitionByKey(String key) {
     @SuppressWarnings("unchecked")
     List<OperatonFormDefinitionEntity> operatonFormDefinitions = getDbEntityManager()
         .selectList("selectLatestOperatonFormDefinitionByKey", configureParameterizedQuery(key));

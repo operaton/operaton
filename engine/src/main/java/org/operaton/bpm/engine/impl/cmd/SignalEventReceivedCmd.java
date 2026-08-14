@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.exception.NotFoundException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.SignalEventReceivedBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -56,7 +58,7 @@ public class SignalEventReceivedCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
 
     String signalName = builder.getSignalName();
     String executionId = builder.getExecutionId();

@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.core.model.CoreActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
@@ -68,7 +70,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   @Override
-  public TransitionImpl findTransition(String transitionId) {
+  public @Nullable TransitionImpl findTransition(String transitionId) {
     for (PvmActivity childActivity : flowActivities) {
       for (PvmTransition transition : childActivity.getOutgoingTransitions()) {
         if (transitionId.equals(transition.getId())) {
@@ -88,7 +90,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   @Override
-  public ActivityImpl findActivityAtLevelOfSubprocess(String activityId) {
+  public @Nullable ActivityImpl findActivityAtLevelOfSubprocess(String activityId) {
     if(!isSubProcessScope()) {
       throw new ProcessEngineException("This is not a sub process scope.");
     }
@@ -103,7 +105,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
 
   /** searches for the activity locally */
   @Override
-  public ActivityImpl getChildActivity(String activityId) {
+  public @Nullable ActivityImpl getChildActivity(String activityId) {
     return namedFlowActivities.get(activityId);
   }
 

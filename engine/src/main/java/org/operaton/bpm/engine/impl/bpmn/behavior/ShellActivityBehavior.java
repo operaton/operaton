@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
@@ -148,7 +150,7 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
     leave(execution);
   }
 
-  public static String convertStreamToStr(InputStream is) throws IOException {
+  public static String convertStreamToStr(@Nullable InputStream is) throws IOException {
 
     if (is != null) {
       Writer writer = new StringWriter();

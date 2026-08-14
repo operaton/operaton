@@ -22,6 +22,8 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -81,7 +83,7 @@ public final class VariableUtil {
     }
   }
 
-  public static void setVariables(Map<String, ?> variables,
+  public static void setVariables(@Nullable Map<String, ?> variables,
                                   SetVariableFunction setVariableFunction) {
     if (variables != null) {
       for (var vars : variables.entrySet()) {

@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -99,7 +101,7 @@ public class SetProcessDefinitionVersionCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
 
     // check that the new process definition is just another version of the same

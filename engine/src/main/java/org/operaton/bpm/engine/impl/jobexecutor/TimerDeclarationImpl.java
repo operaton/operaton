@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
@@ -205,7 +207,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
   /**
    * @return all timers declared in the given scope
    */
-  public static Map<String, TimerDeclarationImpl> getDeclarationsForScope(PvmScope scope) {
+  public static Map<String, TimerDeclarationImpl> getDeclarationsForScope(@Nullable PvmScope scope) {
     if (scope == null) {
       return Collections.emptyMap();
     }
@@ -221,7 +223,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
   /**
    * @return all timeout listeners declared in the given scope
    */
-  public static Map<String, Map<String, TimerDeclarationImpl>> getTimeoutListenerDeclarationsForScope(PvmScope scope) {
+  public static Map<String, Map<String, TimerDeclarationImpl>> getTimeoutListenerDeclarationsForScope(@Nullable PvmScope scope) {
     if (scope == null) {
       return Collections.emptyMap();
     }

@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Roman Smirnov
  *
@@ -63,7 +65,7 @@ public class CmmnSentryDeclaration implements Serializable {
     return onParts;
   }
 
-  public List<CmmnOnPartDeclaration> getOnParts(String sourceId) {
+  public @Nullable List<CmmnOnPartDeclaration> getOnParts(String sourceId) {
     return onPartMap.get(sourceId);
   }
 

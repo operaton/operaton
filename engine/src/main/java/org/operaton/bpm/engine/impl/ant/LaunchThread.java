@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+import org.jspecify.annotations.NonNull;
 
 import org.operaton.bpm.engine.impl.util.IoUtil;
 
@@ -44,7 +45,7 @@ public class LaunchThread extends Thread {
     this.msg = msg;
   }
 
-  public static void launch(Task task, String[] cmd, File dir, String launchCompleteText) {
+  public static void launch(Task task, @NonNull String[] cmd, File dir, String launchCompleteText) {
     if (cmd==null) {
       throw new BuildException("cmd is null");
     }

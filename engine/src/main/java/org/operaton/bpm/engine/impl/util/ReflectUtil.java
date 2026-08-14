@@ -33,6 +33,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -113,7 +115,7 @@ public final class ReflectUtil {
     return Class.forName(className, true, classLoader);
   }
 
-  public static <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {
+  public static <T> Class<? extends T> loadClass(String className, @Nullable ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {
     if(customClassloader != null) {
       return (Class<? extends T>) customClassloader.loadClass(className);
     } else {
@@ -296,7 +298,7 @@ public final class ReflectUtil {
   /**
    * Returns the setter-method for the given field name or null if no setter exists.
    */
-  public static Method getSetter(String fieldName, Class<?> clazz, Class<?> fieldType) {
+  public static @Nullable Method getSetter(String fieldName, Class<?> clazz, Class<?> fieldType) {
     String setterName = buildSetterName(fieldName);
     try {
       // Using getMathods(), getMathod(...) expects exact parameter type
@@ -322,7 +324,7 @@ public final class ReflectUtil {
    * If multiple setters with different parameter types are present, an exception is thrown.
    * If they have the same parameter type, one of those methods is returned.
    */
-  public static Method getSingleSetter(String fieldName, Class<?> clazz) {
+  public static @Nullable Method getSingleSetter(String fieldName, Class<?> clazz) {
     String setterName = buildSetterName(fieldName);
     try {
       // Using getMathods(), getMathod(...) expects exact parameter type

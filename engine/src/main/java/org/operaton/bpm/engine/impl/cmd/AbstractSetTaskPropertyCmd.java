@@ -17,6 +17,8 @@
 
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -70,7 +72,7 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void> {
    * @throws NotFoundException in case the referenced task does not exist
    */
   @Override
-  public Void execute(CommandContext context) {
+  public @Nullable Void execute(CommandContext context) {
     TaskEntity task = validateAndGet(taskId, context);
 
     executeSetOperation(task, value);

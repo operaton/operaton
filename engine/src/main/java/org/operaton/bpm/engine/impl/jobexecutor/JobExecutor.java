@@ -22,6 +22,8 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -155,7 +157,7 @@ public abstract class JobExecutor {
     }
   }
 
-  public void logAcquiredJobs(ProcessEngineImpl engine, int numJobs) {
+  public void logAcquiredJobs(@Nullable ProcessEngineImpl engine, int numJobs) {
     if (engine != null && engine.getProcessEngineConfiguration().isMetricsEnabled()) {
       engine.getProcessEngineConfiguration()
         .getMetricsRegistry()
@@ -163,7 +165,7 @@ public abstract class JobExecutor {
     }
   }
 
-  public void logAcquisitionFailureJobs(ProcessEngineImpl engine, int numJobs) {
+  public void logAcquisitionFailureJobs(@Nullable ProcessEngineImpl engine, int numJobs) {
     if (engine != null && engine.getProcessEngineConfiguration().isMetricsEnabled()) {
       engine.getProcessEngineConfiguration()
         .getMetricsRegistry()
@@ -171,7 +173,7 @@ public abstract class JobExecutor {
     }
   }
 
-  public void logRejectedExecution(ProcessEngineImpl engine, int numJobs) {
+  public void logRejectedExecution(@Nullable ProcessEngineImpl engine, int numJobs) {
     if (engine != null) {
       LOG.rejectedJobExecutions(engine.getName(), numJobs);
       if (engine.getProcessEngineConfiguration().isMetricsEnabled()) {
@@ -182,7 +184,7 @@ public abstract class JobExecutor {
     }
   }
 
-  public void logJobExecutionInfo(ProcessEngineImpl engine,
+  public void logJobExecutionInfo(@Nullable ProcessEngineImpl engine,
                                   int executionQueueSize,
                                   int executionQueueCapacity,
                                   int maxExecutionThreads,
@@ -236,7 +238,7 @@ public abstract class JobExecutor {
    * @deprecated Use {@link #getProcessEngines()} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public CommandExecutor getCommandExecutor() {
+  public @Nullable CommandExecutor getCommandExecutor() {
     if(processEngines.isEmpty()) {
       return null;
     } else {

@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.authorization.Resources;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.DeploymentQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -230,7 +232,7 @@ public class DeploymentManager extends AbstractManager {
     }
   }
 
-  public DeploymentEntity findLatestDeploymentByName(String deploymentName) {
+  public @Nullable DeploymentEntity findLatestDeploymentByName(String deploymentName) {
     List<?> list = getDbEntityManager().selectList("selectDeploymentsByName", deploymentName, 0, 1);
     if (list!=null && !list.isEmpty()) {
       return (DeploymentEntity) list.get(0);

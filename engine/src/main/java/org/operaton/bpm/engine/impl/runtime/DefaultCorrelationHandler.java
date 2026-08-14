@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.EventSubscriptionDeclaration;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
@@ -45,7 +47,7 @@ public class DefaultCorrelationHandler implements CorrelationHandler {
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   @Override
-  public CorrelationHandlerResult correlateMessage(CommandContext commandContext, String messageName, CorrelationSet correlationSet) {
+  public @Nullable CorrelationHandlerResult correlateMessage(CommandContext commandContext, String messageName, CorrelationSet correlationSet) {
 
     // first try to correlate to execution
     List<CorrelationHandlerResult> correlations = correlateMessageToExecutions(commandContext, messageName, correlationSet);

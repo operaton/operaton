@@ -30,6 +30,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -72,7 +74,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
 
   public void scanPaResourceRootPath(final ClassLoader classLoader,
                                      final URL metaFileUrl,
-                                     final String paResourceRootPath,
+      @Nullable final String paResourceRootPath,
                                      String[] additionalResourceSuffixes,
                                      Map<String, byte[]> resourceMap) {
 

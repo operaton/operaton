@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -194,7 +195,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     if (resultType==ResultType.LIST) {
       return evaluateExpressionsAndExecuteList(commandContext, null);
     } else if (resultType==ResultType.SINGLE_RESULT) {
@@ -242,7 +243,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
    */
   public abstract List<U> executeList(CommandContext commandContext, Page page);
 
-  public U executeSingleResult(CommandContext commandContext) {
+  public @Nullable U executeSingleResult(CommandContext commandContext) {
     disableMaxResultsLimit();
     List<U> results = evaluateExpressionsAndExecuteList(commandContext, new Page(0, 2));
     if (results.size() == 1) {

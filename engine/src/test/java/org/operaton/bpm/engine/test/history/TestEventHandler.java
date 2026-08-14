@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Queue;
 
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 
 /**
@@ -40,11 +42,11 @@ public class TestEventHandler implements HistoryEventHandler {
     historyEvents.forEach(queue::offer);
   }
 
-  public HistoryEvent poll() {
+  public @Nullable HistoryEvent poll() {
     return this.queue.poll();
   }
 
-  public HistoryEvent peek() {
+  public @Nullable HistoryEvent peek() {
     return this.queue.peek();
   }
 }

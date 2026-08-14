@@ -25,6 +25,8 @@ import java.util.Set;
 
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Tom Baeyens
  */
@@ -49,7 +51,7 @@ public class IdentityInfoManager extends AbstractManager {
     }
   }
 
-  public IdentityInfoEntity findUserAccountByUserIdAndKey(String userId, String key) {
+  public @Nullable IdentityInfoEntity findUserAccountByUserIdAndKey(String userId, String key) {
     IdentityInfoEntity identityInfoEntity = findUserInfoByUserIdAndKey(userId, key);
     if (identityInfoEntity==null) {
       return null;
@@ -76,7 +78,7 @@ public class IdentityInfoManager extends AbstractManager {
     return getDbEntityManager().selectList("selectIdentityInfoDetails", identityInfoId);
   }
 
-  public void setUserInfo(String userId, String type, String key, String value, String accountPassword, Map<String, String> accountDetails) {
+  public void setUserInfo(String userId, String type, String key, String value, @Nullable String accountPassword, @Nullable Map<String, String> accountDetails) {
     byte[] storedPassword = null;
     if (accountPassword!=null) {
       storedPassword = encryptPassword(accountPassword);

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryTimeToLiveParser;
@@ -41,7 +43,7 @@ public class UpdateProcessDefinitionHistoryTimeToLiveCmd implements Command<Void
   }
 
   @Override
-  public Void execute(CommandContext context) {
+  public @Nullable Void execute(CommandContext context) {
     checkAuthorization(context);
 
     ensureNotNull(BadUserRequestException.class, "processDefinitionId", processDefinitionId);

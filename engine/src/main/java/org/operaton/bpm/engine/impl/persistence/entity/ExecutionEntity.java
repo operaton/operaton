@@ -26,6 +26,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngine;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -1960,7 +1962,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public FlowElement getBpmnModelElementInstance() {
+  public @Nullable FlowElement getBpmnModelElementInstance() {
     BpmnModelInstance bpmnModelInstance = getBpmnModelInstance();
     if (bpmnModelInstance != null) {
 
@@ -1986,7 +1988,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public BpmnModelInstance getBpmnModelInstance() {
+  public @Nullable BpmnModelInstance getBpmnModelInstance() {
     if (processDefinitionId != null) {
       return Context.getProcessEngineConfiguration().getDeploymentCache()
           .findBpmnModelInstanceForProcessDefinition(processDefinitionId);

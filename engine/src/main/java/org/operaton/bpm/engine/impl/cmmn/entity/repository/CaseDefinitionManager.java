@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
@@ -62,7 +64,7 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
    *
    * @see #findLatestCaseDefinitionByKeyAndTenantId(String, String)
    */
-  public CaseDefinitionEntity findLatestCaseDefinitionByKey(String caseDefinitionKey) {
+  public @Nullable CaseDefinitionEntity findLatestCaseDefinitionByKey(String caseDefinitionKey) {
     @SuppressWarnings("unchecked")
     List<CaseDefinitionEntity> caseDefinitions = getDbEntityManager().selectList("selectLatestCaseDefinitionByKey", configureParameterizedQuery(caseDefinitionKey));
 
@@ -82,7 +84,7 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
    *
    * @see #findLatestCaseDefinitionByKeyAndTenantId(String, String)
    */
-  public CaseDefinitionEntity findLatestCaseDefinitionByKeyAndTenantId(String caseDefinitionKey, String tenantId) {
+  public CaseDefinitionEntity findLatestCaseDefinitionByKeyAndTenantId(String caseDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(PARAM_CASE_DEFINITION_KEY, caseDefinitionKey);
     parameters.put(PARAM_TENANT_ID, tenantId);
@@ -142,7 +144,7 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
   }
 
   @Override
-  public CaseDefinitionEntity findLatestDefinitionByKey(String key) {
+  public @Nullable CaseDefinitionEntity findLatestDefinitionByKey(String key) {
     return findLatestCaseDefinitionByKey(key);
   }
 

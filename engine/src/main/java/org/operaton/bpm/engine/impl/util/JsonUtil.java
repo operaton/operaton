@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 
 import com.google.gson.*;
 import com.google.gson.internal.LazilyParsedNumber;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
@@ -37,7 +38,7 @@ public final class JsonUtil {
   private JsonUtil() {
   }
 
-  public static void addFieldRawValue(JsonObject jsonObject, String memberName, Object rawValue) {
+  public static void addFieldRawValue(JsonObject jsonObject, String memberName, @Nullable Object rawValue) {
     if (rawValue != null) {
       JsonElement jsonNode = null;
 
@@ -54,31 +55,31 @@ public final class JsonUtil {
     }
   }
 
-  public static <T> void addField(JsonObject jsonObject, String name, JsonObjectConverter<T> converter, T value) {
+  public static <T> void addField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable JsonObjectConverter<T> converter, @Nullable T value) {
     if (jsonObject != null && name != null && converter != null && value != null) {
       jsonObject.add(name, converter.toJsonObject(value));
     }
   }
 
-  public static void addListField(JsonObject jsonObject, String name, List<String> list) {
+  public static void addListField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable List<String> list) {
     if (jsonObject != null && name != null && list != null) {
       jsonObject.add(name, asArray(list));
     }
   }
 
-  public static void addArrayField(JsonObject jsonObject, String name, String[] array) {
+  public static void addArrayField(@Nullable JsonObject jsonObject, @Nullable String name, String @Nullable[] array) {
     if (jsonObject != null && name != null && array != null) {
       addListField(jsonObject, name, Arrays.asList(array));
     }
   }
 
-  public static void addDateField(JsonObject jsonObject, String name, Date date) {
+  public static void addDateField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable Date date) {
     if (jsonObject != null && name != null && date != null) {
       jsonObject.addProperty(name, date.getTime());
     }
   }
 
-  public static <T> void addElement(JsonArray jsonObject, JsonObjectConverter<T> converter, T value) {
+  public static <T> void addElement(@Nullable JsonArray jsonObject, @Nullable JsonObjectConverter<T> converter, @Nullable T value) {
     if (jsonObject != null && converter != null && value != null) {
       JsonObject jsonElement = converter.toJsonObject(value);
 
@@ -88,7 +89,7 @@ public final class JsonUtil {
     }
   }
 
-  public static <T> void addListField(JsonObject jsonObject, String name, JsonObjectConverter<T> converter, List<T> list) {
+  public static <T> void addListField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable JsonObjectConverter<T> converter, @Nullable List<T> list) {
     if (jsonObject != null && name != null && converter != null && list != null) {
       JsonArray arrayNode = createArray();
 
@@ -105,7 +106,7 @@ public final class JsonUtil {
     }
   }
 
-  public static <T> T asJavaObject(JsonObject jsonObject, JsonObjectConverter<T> converter) {
+  public static <T> @Nullable T asJavaObject(@Nullable JsonObject jsonObject, @Nullable JsonObjectConverter<T> converter) {
     if (jsonObject != null && converter != null) {
       return converter.toObject(jsonObject);
 
@@ -115,61 +116,61 @@ public final class JsonUtil {
     }
   }
 
-  public static void addNullField(JsonObject jsonObject, String name) {
+  public static void addNullField(@Nullable JsonObject jsonObject, @Nullable String name) {
     if (jsonObject != null && name != null) {
       jsonObject.add(name, JsonNull.INSTANCE);
     }
   }
 
-  public static void addField(JsonObject jsonObject, String name, JsonArray value) {
+  public static void addField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable JsonArray value) {
     if (jsonObject != null && name != null && value != null) {
       jsonObject.add(name, value);
     }
   }
 
-  public static void addField(JsonObject jsonObject, String name, String value) {
+  public static void addField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable String value) {
     if (jsonObject != null && name != null && value != null) {
       jsonObject.addProperty(name, value);
     }
   }
 
-  public static void addField(JsonObject jsonObject, String name, Boolean value) {
+  public static void addField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable Boolean value) {
     if (jsonObject != null && name != null && value != null) {
       jsonObject.addProperty(name, value);
     }
   }
 
-  public static void addField(JsonObject jsonObject, String name, Integer value) {
+  public static void addField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable Integer value) {
     if (jsonObject != null && name != null && value != null) {
       jsonObject.addProperty(name, value);
     }
   }
 
-  public static void addField(JsonObject jsonObject, String name, Short value) {
+  public static void addField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable Short value) {
     if (jsonObject != null && name != null && value != null) {
       jsonObject.addProperty(name, value);
     }
   }
 
-  public static void addField(JsonObject jsonObject, String name, Long value) {
+  public static void addField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable Long value) {
     if (jsonObject != null && name != null && value != null) {
       jsonObject.addProperty(name, value);
     }
   }
 
-  public static void addField(JsonObject jsonObject, String name, Double value) {
+  public static void addField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable Double value) {
     if (jsonObject != null && name != null && value != null) {
       jsonObject.addProperty(name, value);
     }
   }
 
-  public static void addDefaultField(JsonObject jsonObject, String name, boolean defaultValue, Boolean value) {
+  public static void addDefaultField(@Nullable JsonObject jsonObject, @Nullable String name, boolean defaultValue, @Nullable Boolean value) {
     if (jsonObject != null && name != null && value != null && !value.equals(defaultValue)) {
       addField(jsonObject, name, value);
     }
   }
 
-  public static byte[] asBytes(JsonElement jsonObject) {
+  public static byte[] asBytes(@Nullable JsonElement jsonObject) {
     String jsonString = null;
 
     if (jsonObject != null) {
@@ -188,7 +189,7 @@ public final class JsonUtil {
     return StringUtil.toByteArray(jsonString);
   }
 
-  public static JsonObject asObject(byte[] byteArray) {
+  public static JsonObject asObject(byte @Nullable[] byteArray) {
     String stringValue = null;
 
     if (byteArray != null) {
@@ -211,7 +212,7 @@ public final class JsonUtil {
     return Objects.requireNonNullElseGet(jsonObject, JsonUtil::createObject);
   }
 
-  public static JsonObject asObject(String jsonString) {
+  public static JsonObject asObject(@Nullable String jsonString) {
     JsonObject jsonObject = null;
 
     if (jsonString != null) {
@@ -226,7 +227,7 @@ public final class JsonUtil {
     return Objects.requireNonNullElseGet(jsonObject, JsonUtil::createObject);
   }
 
-  public static JsonObject asObject(Map<String, Object> properties) {
+  public static JsonObject asObject(@Nullable Map<String, Object> properties) {
     if (properties != null) {
       JsonObject jsonObject = null;
 
@@ -244,7 +245,7 @@ public final class JsonUtil {
     }
   }
 
-  public static List<String> asStringList(JsonElement jsonObject) {
+  public static List<String> asStringList(@Nullable JsonElement jsonObject) {
     JsonArray jsonArray = null;
 
     if (jsonObject != null) {
@@ -280,7 +281,7 @@ public final class JsonUtil {
   }
 
   @SuppressWarnings("unchecked")
-  public static <T, S extends List<T>> S asList(JsonArray jsonArray, JsonObjectConverter<T> converter, Supplier<S> listSupplier) {
+  public static <T, S extends List<T>> S asList(@Nullable JsonArray jsonArray, @Nullable JsonObjectConverter<T> converter, Supplier<S> listSupplier) {
     if (jsonArray == null || converter == null) {
       return (S) Collections.emptyList();
     }
@@ -313,7 +314,7 @@ public final class JsonUtil {
     return asList(jsonArray, converter, ArrayList::new);
   }
 
-  public static List<Object> asList(JsonElement jsonElement) {
+  public static List<Object> asList(@Nullable JsonElement jsonElement) {
     if (jsonElement == null) {
       return Collections.emptyList();
     }
@@ -356,7 +357,7 @@ public final class JsonUtil {
     return list;
   }
 
-  public static Map<String, Object> asMap(JsonElement jsonElement) {
+  public static Map<String, Object> asMap(@Nullable JsonElement jsonElement) {
     if (jsonElement == null) {
       return Collections.emptyMap();
     }
@@ -403,7 +404,7 @@ public final class JsonUtil {
     return map;
   }
 
-  public static String asString(Map<String, Object> properties) {
+  public static String asString(@Nullable Map<String, Object> properties) {
     String stringValue = createObject().toString();
     if (properties != null) {
 
@@ -421,7 +422,7 @@ public final class JsonUtil {
   }
 
 
-  public static JsonArray asArray(List<String> list) {
+  public static JsonArray asArray(@Nullable List<String> list) {
     if (list != null) {
       JsonElement jsonElement = null;
 
@@ -445,7 +446,7 @@ public final class JsonUtil {
     }
   }
 
-  public static Object getRawObject(JsonObject jsonObject, String memberName) {
+  public static @Nullable Object getRawObject(@Nullable JsonObject jsonObject, @Nullable String memberName) {
     if (jsonObject == null || memberName == null) {
       return null;
     }
@@ -471,7 +472,7 @@ public final class JsonUtil {
     return rawValue;
   }
 
-  public static Object asPrimitiveObject(JsonPrimitive jsonValue) {
+  public static @Nullable Object asPrimitiveObject(@Nullable JsonPrimitive jsonValue) {
     if (jsonValue == null) {
       return null;
     }
@@ -537,7 +538,7 @@ public final class JsonUtil {
     return null;
   }
 
-  public static boolean getBoolean(JsonObject json, String memberName) {
+  public static boolean getBoolean(@Nullable JsonObject json, @Nullable String memberName) {
     if (json != null && memberName != null && json.has(memberName)) {
       try {
         return json.get(memberName).getAsBoolean();
@@ -558,7 +559,7 @@ public final class JsonUtil {
     return getString(json, memberName, "");
   }
 
-  public static String getString(JsonObject json, String memberName, String defaultString) {
+  public static String getString(@Nullable JsonObject json, @Nullable String memberName, String defaultString) {
     if (json != null && memberName != null && json.has(memberName)) {
       return getString(json.get(memberName));
 
@@ -568,7 +569,7 @@ public final class JsonUtil {
     }
   }
 
-  public static String getString(JsonElement jsonElement) {
+  public static String getString(@Nullable JsonElement jsonElement) {
     if (jsonElement == null) {
       return "";
     }
@@ -584,7 +585,7 @@ public final class JsonUtil {
     }
   }
 
-  public static int getInt(JsonObject json, String memberName) {
+  public static int getInt(@Nullable JsonObject json, @Nullable String memberName) {
     if (json != null && memberName != null && json.has(memberName)) {
       try {
         return json.get(memberName).getAsInt();
@@ -601,7 +602,7 @@ public final class JsonUtil {
     }
   }
 
-  public static boolean isNull(JsonObject jsonObject, String memberName) {
+  public static boolean isNull(@Nullable JsonObject jsonObject, @Nullable String memberName) {
     if (jsonObject != null && memberName != null && jsonObject.has(memberName)) {
       return jsonObject.get(memberName).isJsonNull();
 
@@ -611,7 +612,7 @@ public final class JsonUtil {
     }
   }
 
-  public static long getLong(JsonObject json, String memberName) {
+  public static long getLong(@Nullable JsonObject json, @Nullable String memberName) {
     if (json != null && memberName != null && json.has(memberName)) {
       try {
         return json.get(memberName).getAsLong();
@@ -628,7 +629,7 @@ public final class JsonUtil {
     }
   }
 
-  public static JsonArray getArray(JsonObject json, String memberName) {
+  public static JsonArray getArray(@Nullable JsonObject json, @Nullable String memberName) {
     if (json != null && memberName != null && json.has(memberName)) {
       return getArray(json.get(memberName));
 
@@ -638,7 +639,7 @@ public final class JsonUtil {
     }
   }
 
-  public static JsonArray getArray(JsonElement json) {
+  public static JsonArray getArray(@Nullable JsonElement json) {
     if (json != null && json.isJsonArray()) {
       return json.getAsJsonArray();
 
@@ -648,7 +649,7 @@ public final class JsonUtil {
     }
   }
 
-  public static JsonObject getObject(JsonObject json, String memberName) {
+  public static JsonObject getObject(@Nullable JsonObject json, @Nullable String memberName) {
     if (json != null && memberName != null && json.has(memberName)) {
       return getObject(json.get(memberName));
 
@@ -658,7 +659,7 @@ public final class JsonUtil {
     }
   }
 
-  public static JsonObject getObject(JsonElement json) {
+  public static JsonObject getObject(@Nullable JsonElement json) {
     if (json != null && json.isJsonObject()) {
       return json.getAsJsonObject();
 

@@ -23,6 +23,7 @@ import java.util.ServiceLoader;
 import java.util.concurrent.Callable;
 import jakarta.el.BeanELResolver;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.Nullable;
 
 import javax.script.ScriptEngine;
 
@@ -200,12 +201,12 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
   }
 
   @Override
-  public ExecutionListener getExecutionListener() {
+  public @Nullable ExecutionListener getExecutionListener() {
     return null;
   }
 
   @Override
-  public TaskListener getTaskListener() {
+  public @Nullable TaskListener getTaskListener() {
     return null;
   }
 

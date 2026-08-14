@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -44,7 +46,7 @@ public class UnregisterProcessApplicationCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
 
     if(deploymentIds == null) {
       throw new ProcessEngineException("Deployment Ids cannot be null.");

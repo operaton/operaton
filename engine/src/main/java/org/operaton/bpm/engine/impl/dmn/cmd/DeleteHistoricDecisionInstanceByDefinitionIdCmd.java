@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.HistoricDecisionInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEntity;
@@ -44,7 +46,7 @@ public class DeleteHistoricDecisionInstanceByDefinitionIdCmd implements Command<
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     ensureNotNull("decisionDefinitionId", decisionDefinitionId);
 
     DecisionDefinitionEntity decisionDefinition = commandContext

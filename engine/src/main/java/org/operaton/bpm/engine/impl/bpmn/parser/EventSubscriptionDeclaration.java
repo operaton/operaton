@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
@@ -65,7 +67,7 @@ public class EventSubscriptionDeclaration {
     this.eventPayload = eventPayload;
   }
 
-  public static Map<String, EventSubscriptionDeclaration> getDeclarationsForScope(PvmScope scope) {
+  public static Map<String, EventSubscriptionDeclaration> getDeclarationsForScope(@Nullable PvmScope scope) {
     if (scope == null) {
       return Collections.emptyMap();
     }
@@ -166,7 +168,7 @@ public class EventSubscriptionDeclaration {
   /**
    * Resolves the event name within the given scope.
    */
-  public String resolveExpressionOfEventName(VariableScope scope) {
+  public @Nullable String resolveExpressionOfEventName(VariableScope scope) {
     if (isExpressionAvailable()) {
       if (scope instanceof BaseDelegateExecution execution) {
         // the variable scope execution is also the current context execution

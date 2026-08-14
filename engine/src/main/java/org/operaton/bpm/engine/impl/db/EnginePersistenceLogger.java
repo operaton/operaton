@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.executor.BatchExecutorException;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -153,7 +154,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
    }
   }
 
-  public void executeDatabaseOperation(String operationType, Object parameter) {
+  public void executeDatabaseOperation(String operationType, @Nullable Object parameter) {
     if(isDebugEnabled()) {
 
       String message;
@@ -313,7 +314,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
     return requiredOperatonAdminOrPermissionException(null);
   }
 
-  public AuthorizationException requiredOperatonAdminOrPermissionException(List<MissingAuthorization> missingAuthorizations) {
+  public AuthorizationException requiredOperatonAdminOrPermissionException(@Nullable List<MissingAuthorization> missingAuthorizations) {
     String exceptionCode = "029";
     String message;
     if(missingAuthorizations != null && !missingAuthorizations.isEmpty()) {

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 import java.io.InputStream;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
@@ -35,8 +37,8 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 public class GetDeploymentCaseDiagramCmd implements Command<InputStream> {
   protected String caseDefinitionId;
 
-  public GetDeploymentCaseDiagramCmd(String caseDefinitionId) {
-    if (caseDefinitionId == null || caseDefinitionId.isEmpty()) {
+  public GetDeploymentCaseDiagramCmd(@NonNull String caseDefinitionId) {
+    if (caseDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The case definition id is mandatory, but '%s' has been provided.".formatted(caseDefinitionId));
     }
     this.caseDefinitionId = caseDefinitionId;

@@ -22,13 +22,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import jakarta.annotation.Nonnull;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
@@ -69,7 +70,7 @@ public class DurationHelper {
     initStart(startDate);
   }
 
-  @Nonnull
+  @NonNull
   private List<String> initExpressions(String inputExpressions) {
     List<String> expressions = new ArrayList<>();
     if(inputExpressions != null) {

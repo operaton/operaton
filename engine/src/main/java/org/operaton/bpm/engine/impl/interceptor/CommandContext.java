@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.operaton.bpm.application.InvocationContext;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -523,7 +525,7 @@ public class CommandContext {
     }
   }
 
-  public String getAuthenticatedUserId() {
+  public @Nullable String getAuthenticatedUserId() {
     IdentityService identityService = processEngineConfiguration.getIdentityService();
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
     if(currentAuthentication == null) {
@@ -607,7 +609,7 @@ public class CommandContext {
     this.restrictUserOperationLogToAuthenticatedUsers = restrictUserOperationLogToAuthenticatedUsers;
   }
 
-  public String getOperationId() {
+  public @Nullable String getOperationId() {
     if (!getOperationLogManager().isUserOperationLogEnabled()) {
       return null;
     }

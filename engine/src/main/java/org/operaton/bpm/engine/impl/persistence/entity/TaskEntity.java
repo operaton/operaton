@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngine;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.BpmnError;
@@ -497,7 +499,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public UserTask getBpmnModelElementInstance() {
+  public @Nullable UserTask getBpmnModelElementInstance() {
     BpmnModelInstance bpmnModelInstance = getBpmnModelInstance();
     if (bpmnModelInstance != null) {
       ModelElementInstance modelElementInstance = bpmnModelInstance.getModelElementById(taskDefinitionKey);
@@ -514,7 +516,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public BpmnModelInstance getBpmnModelInstance() {
+  public @Nullable BpmnModelInstance getBpmnModelInstance() {
     if (processDefinitionId != null) {
       return Context.getProcessEngineConfiguration()
           .getDeploymentCache()
@@ -596,7 +598,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public AbstractVariableScope getParentVariableScope() {
+  public @Nullable AbstractVariableScope getParentVariableScope() {
     if (getExecution() != null) {
       return execution;
     }
@@ -636,7 +638,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return execution;
   }
 
-  public void setExecution(PvmExecutionImpl execution) {
+  public void setExecution(@Nullable PvmExecutionImpl execution) {
     if (execution != null) {
 
       this.execution = (ExecutionEntity) execution;
@@ -677,7 +679,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
   }
 
-  public void setCaseExecution(CaseExecutionEntity caseExecution) {
+  public void setCaseExecution(@Nullable CaseExecutionEntity caseExecution) {
     if (caseExecution != null) {
 
       this.caseExecution = caseExecution;
@@ -717,7 +719,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.caseInstanceId = caseInstanceId;
   }
 
-  public CaseDefinitionEntity getCaseDefinition() {
+  public @Nullable CaseDefinitionEntity getCaseDefinition() {
     if (caseDefinitionId != null) {
       return Context
           .getProcessEngineConfiguration()
@@ -1030,7 +1032,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
    *
    * @param delegationState the delegation state as string
    */
-  public void setDelegationStateString(String delegationState) {
+  public void setDelegationStateString(@Nullable String delegationState) {
     if (delegationState == null) {
       setDelegationStateWithoutCascade(null);
     } else {
@@ -1423,7 +1425,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return executionId == null && caseExecutionId == null;
   }
 
-  public ProcessDefinitionEntity getProcessDefinition() {
+  public @Nullable ProcessDefinitionEntity getProcessDefinition() {
     if (processDefinitionId != null) {
       return Context
           .getProcessEngineConfiguration()
@@ -1509,7 +1511,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return taskDefinitionKey;
   }
 
-  public void setTaskDefinitionKey(String taskDefinitionKey) {
+  public void setTaskDefinitionKey(@Nullable String taskDefinitionKey) {
     if (taskDefinitionKey == null && this.taskDefinitionKey != null
         || taskDefinitionKey != null && !taskDefinitionKey.equals(this.taskDefinitionKey)) {
       this.taskDefinition = null;
@@ -1564,7 +1566,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.delegationState = delegationState;
   }
 
-  public String getDelegationStateString() {
+  public @Nullable String getDelegationStateString() {
     return delegationState != null ? delegationState.toString() : null;
   }
 
@@ -1773,7 +1775,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return referenceIdAndClass;
   }
 
-  public void bpmnError(String errorCode, String errorMessage, Map<String, Object> variables) {
+  public void bpmnError(String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables) {
     ensureTaskActive();
     ActivityExecution activityExecution = getExecution();
     BpmnError bpmnError = null;
@@ -1802,7 +1804,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return commentExists;
   }
 
-  public void escalation(String escalationCode, Map<String, Object> variables) {
+  public void escalation(String escalationCode, @Nullable Map<String, Object> variables) {
     ensureTaskActive();
     ActivityExecution activityExecution = getExecution();
 

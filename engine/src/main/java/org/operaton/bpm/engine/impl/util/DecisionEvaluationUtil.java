@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableResultImpl;
@@ -46,7 +48,7 @@ public final class DecisionEvaluationUtil {
   private DecisionEvaluationUtil() {
   }
 
-  public static DecisionResultMapper getDecisionResultMapperForName(String mapDecisionResult) {
+  public static @Nullable DecisionResultMapper getDecisionResultMapperForName(@Nullable String mapDecisionResult) {
     if ("singleEntry".equals(mapDecisionResult)) {
       return new SingleEntryDecisionResultMapper();
 
@@ -71,8 +73,8 @@ public final class DecisionEvaluationUtil {
   public static void evaluateDecision(AbstractVariableScope execution,
       String defaultTenantId,
       BaseCallableElement callableElement,
-      String resultVariable,
-      DecisionResultMapper decisionResultMapper) throws Exception {
+      @Nullable String resultVariable,
+      @Nullable DecisionResultMapper decisionResultMapper) throws Exception {
 
     DecisionDefinition decisionDefinition = resolveDecisionDefinition(callableElement, execution, defaultTenantId);
     DecisionInvocation invocation = createInvocation(decisionDefinition, execution);

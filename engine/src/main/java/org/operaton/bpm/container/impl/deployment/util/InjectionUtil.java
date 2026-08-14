@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.application.AbstractProcessApplication;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -46,7 +48,7 @@ public final class InjectionUtil {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
-  public static Method detectAnnotatedMethod(Class<?> clazz, Class<? extends Annotation> annotationType) {
+  public static @Nullable Method detectAnnotatedMethod(Class<?> clazz, Class<? extends Annotation> annotationType) {
 
     Method[] methods = clazz.getMethods();
     for (Method method : methods) {

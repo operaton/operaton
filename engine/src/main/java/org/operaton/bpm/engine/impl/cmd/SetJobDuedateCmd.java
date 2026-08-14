@@ -20,6 +20,9 @@ import java.util.Collections;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -37,8 +40,8 @@ public class SetJobDuedateCmd implements Command<Void> {
   private final Date newDuedate;
   private final boolean cascade;
 
-  public SetJobDuedateCmd(String jobId, Date newDuedate, boolean cascade) {
-    if (jobId == null || jobId.isEmpty()) {
+  public SetJobDuedateCmd(@NonNull String jobId, Date newDuedate, boolean cascade) {
+    if (jobId.isEmpty()) {
       throw new ProcessEngineException("The job id is mandatory, but '%s' has been provided.".formatted(jobId));
     }
     this.jobId = jobId;
@@ -47,7 +50,7 @@ public class SetJobDuedateCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     JobEntity job = commandContext
             .getJobManager()
             .findJobById(jobId);

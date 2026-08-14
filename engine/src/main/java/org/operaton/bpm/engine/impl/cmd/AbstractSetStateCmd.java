@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
@@ -46,7 +48,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     checkParameters(commandContext);
     checkAuthorization(commandContext);
 

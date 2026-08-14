@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl;
 import java.util.UUID;
 
 import org.operaton.bpm.engine.ProcessEngineBootstrapCommand;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -42,7 +44,7 @@ public class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
   protected static final String INSTALLATION_PROPERTY_NAME = "operaton.installation.id";
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
 
     initializeInstallationId(commandContext);
 

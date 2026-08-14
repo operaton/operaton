@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 import jakarta.el.ELContext;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -183,7 +184,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
     }
   }
 
-  public CoreVariableInstance getVariableInstance(String variableName) {
+  public @Nullable CoreVariableInstance getVariableInstance(String variableName) {
     CoreVariableInstance variableInstance = getVariableInstanceLocal(variableName);
     if (variableInstance!=null) {
       return variableInstance;

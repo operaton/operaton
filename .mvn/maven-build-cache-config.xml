@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Configuration for the Maven Build Cache Extension (declared in extensions.xml).
+
+  The cache is DISABLED by default via -Dmaven.build.cache.enabled=false in
+  .mvn/maven.config so local developer builds behave exactly as before.
+  Opt in per invocation with -Dmaven.build.cache.enabled=true.
+
+  Only the local filesystem cache is used (default location ~/.m2/build-cache);
+  no remote cache is configured.
+-->
+<cache xmlns="http://maven.apache.org/BUILD-CACHE-CONFIG/1.0.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://maven.apache.org/BUILD-CACHE-CONFIG/1.0.0 https://maven.apache.org/xsd/build-cache-config-1.0.0.xsd">
+  <configuration>
+    <enabled>true</enabled>
+    <remote enabled="false">
+      <url>http://localhost</url>
+    </remote>
+    <local>
+      <maxBuildsCached>3</maxBuildsCached>
+    </local>
+  </configuration>
+  <input>
+    <global>
+      <excludes>
+        <!-- IDE/tooling state and frontend build side effects must not
+             feed the module checksum, or identical rebuilds miss the cache -->
+        <exclude>.claude</exclude>
+        <exclude>node_modules</exclude>
+        <exclude>node</exclude>
+      </excludes>
+    </global>
+  </input>
+  <executionControl>
+    <runAlways>
+      <plugins>
+        <!-- reserve-network-port writes runtime properties (e.g.
+             tomcat.connector.http.port) that other plugin configurations
+             reference; it must execute even when a module is restored -->
+        <plugin artifactId="build-helper-maven-plugin"/>
+        <!-- the npm build writes webapps/frontend/target/webapp, which the
+             operaton-webapp WAR consumes as a resource directory across
+             module boundaries; restoring only Maven artifacts silently
+             produces a WAR without the frontend -->
+        <plugin artifactId="frontend-maven-plugin"/>
+      </plugins>
+      <goalsLists>
+        <!-- forced npm builds (above) consume files that dependency:unpack
+             writes into target/, e.g. the OpenAPI spec in engine-rest/docs;
+             a forced step needs its producers forced as well -->
+        <goalsList artifactId="maven-dependency-plugin">
+          <goals>
+            <goal>unpack</goal>
+          </goals>
+        </goalsList>
+      </goalsLists>
+    </runAlways>
+  </executionControl>
+</cache>

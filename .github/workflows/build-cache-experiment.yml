@@ -1,0 +1,73 @@
+# Phase-2 experiment for the Maven build cache PoC (see .mvn/extensions.xml):
+# measures cold vs. warm build times WITH tests on real runner hardware.
+#
+# Run this workflow twice on the PoC branch: the first run builds cold
+# and saves ~/.m2/build-cache, the second run restores it and shows the
+# warm numbers. Mirrors the pr-build "Build & Unit Tests" job setup; the
+# regular pipeline is untouched. Remove after the phase-2 decision.
+#
+# Trigger: push to the PoC branch (workflow_dispatch only works for
+# workflows that exist on the default branch). The cold run starts with
+# the push of this file; trigger the warm run with an empty commit:
+#   git commit --allow-empty -m "chore: trigger warm build cache run" && git push
+name: Build Cache Experiment
+
+on:
+  push:
+    branches:
+      - chore/build-cache-poc
+
+# Queue runs instead of cancelling: the warm run must not kill the cold
+# run before its cache save.
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build with build cache (mvnd)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Restore Maven packages
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Restore build cache
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2/build-cache
+          key: "${{ runner.os }}-build-cache-experiment-${{ github.run_id }}"
+          restore-keys: ${{ runner.os }}-build-cache-experiment-
+      - name: Setup Node
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: Setup mvnd
+        uses: ./.github/actions/mvnd-setup
+      - name: Maven Build
+        shell: bash
+        run: |
+          .github/scripts/jacoco-create-flag-files.sh
+          .devenv/scripts/build/build.sh --profile=normal --runner=mvnd -Dmaven.build.cache.enabled=true
+      - name: Build cache statistics
+        if: always()
+        shell: bash
+        run: |
+          du -sh ~/.m2/build-cache 2>/dev/null || echo "no build cache present"
+          echo "cached module builds: $(find ~/.m2/build-cache -name buildinfo.xml 2>/dev/null | wc -l)"
+      - name: Save build cache
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: ~/.m2/build-cache
+          key: "${{ runner.os }}-build-cache-experiment-${{ github.run_id }}"

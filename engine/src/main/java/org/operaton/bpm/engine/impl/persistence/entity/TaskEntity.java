@@ -1451,7 +1451,12 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   private void initializeFormKeyFromTaskDefinition(TaskDefinition taskDef) {
     Expression taskDefFormKey = taskDef.getFormKey();
     if (taskDefFormKey != null) {
-      this.formKey = (String) taskDefFormKey.getValue(this);
+      try {
+        this.formKey = (String) taskDefFormKey.getValue(this);
+      } catch (Exception e) {
+        LOG.logFormKeyExpressionEvaluationException(id, taskDefFormKey.getExpressionText(), e);
+        this.formKey = null;
+      }
     } else {
       initializeFormRefFromTaskDefinition(taskDef);
     }

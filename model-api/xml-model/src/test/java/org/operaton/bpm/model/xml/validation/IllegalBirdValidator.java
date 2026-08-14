@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.model.xml.validation;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
 
 /**
  * @author Daniel Meyer
  *
  */
+@NullMarked
 public class IllegalBirdValidator implements ModelElementValidator<Bird> {
 
   protected String nameOfBird;

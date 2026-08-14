@@ -17,9 +17,10 @@
 package org.operaton.bpm.model.xml.impl.util;
 
 import java.io.*;
-
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.instance.DomDocument;
 
@@ -38,7 +39,7 @@ public final class IoUtil {
   private IoUtil() {
   }
 
-  public static void closeSilently(Closeable closeable) {
+  public static void closeSilently(@Nullable Closeable closeable) {
     try {
       if (closeable != null) {
         closeable.close();

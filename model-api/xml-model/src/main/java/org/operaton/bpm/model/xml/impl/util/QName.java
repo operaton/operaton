@@ -16,25 +16,27 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Daniel Meyer
  *
  */
 public class QName {
 
-  private final String qualifier;
+  private final @Nullable String qualifier;
   private final String localName;
 
   public QName(String localName) {
     this(null, localName);
   }
 
-  public QName(String qualifier, String localName) {
+  public QName(@Nullable String qualifier, String localName) {
     this.localName = localName;
     this.qualifier = qualifier;
   }
 
-  public String getQualifier() {
+  public @Nullable String getQualifier() {
     return qualifier;
   }
 
@@ -63,7 +65,7 @@ public class QName {
     return combine(qualifier, localName);
   }
 
-  public static String combine(String qualifier, String localName) {
+  public static String combine(@Nullable String qualifier, String localName) {
     if (qualifier == null || qualifier.isEmpty()) {
       return localName;
     }

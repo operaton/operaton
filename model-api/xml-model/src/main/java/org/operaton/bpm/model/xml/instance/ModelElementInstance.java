@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.instance;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
@@ -50,7 +52,7 @@ public interface ModelElementInstance {
    *
    * @return the parent element
    */
-  ModelElementInstance getParentElement();
+  @Nullable ModelElementInstance getParentElement();
 
   /**
    * Returns the element type of this.
@@ -65,7 +67,7 @@ public interface ModelElementInstance {
    * @param attributeName  the name of the attribute
    * @return the value of the attribute
    */
-  String getAttributeValue(String attributeName);
+  @Nullable String getAttributeValue(String attributeName);
 
   /**
    * Sets the value by name of a non-ID attribute.
@@ -109,7 +111,7 @@ public interface ModelElementInstance {
    * @param attributeName  the attribute name of the attribute
    * @return the value of the attribute
    */
-  String getAttributeValueNs(String namespaceUri, String attributeName);
+  @Nullable String getAttributeValueNs(String namespaceUri, String attributeName);
 
   /**
    * Sets the value by name and namespace of a non-ID attribute.
@@ -139,7 +141,7 @@ public interface ModelElementInstance {
    * @param isIdAttribute  true if the attribute is an ID attribute, false otherwise
    * @param withReferenceUpdate  true to update incoming references in other elements, false otherwise
    */
-  void setAttributeValueNs(String namespaceUri, String attributeName, String xmlValue,
+  void setAttributeValueNs(@Nullable String namespaceUri, String attributeName, String xmlValue,
                            boolean isIdAttribute, boolean withReferenceUpdate);
 
   /**
@@ -186,7 +188,7 @@ public interface ModelElementInstance {
    * @param elementName the namespace of the element
    * @return the child element or null.
    */
-  ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName);
+  @Nullable ModelElementInstance getUniqueChildElementByNameNs(@Nullable String namespaceUri, String elementName);
 
   /**
    * Returns a child element with the given type
@@ -194,7 +196,7 @@ public interface ModelElementInstance {
    * @param elementType  the type of the element
    * @return the child element or null
    */
-  ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType);
+  @Nullable ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType);
 
   /**
    * Adds or replaces a child element by name. Replaces an existing Child Element with the same name
@@ -252,7 +254,7 @@ public interface ModelElementInstance {
    * @param elementToInsert  the new element to insert
    * @param insertAfterElement  the element to insert after or null to insert at first position
    */
-  void insertElementAfter(ModelElementInstance elementToInsert, ModelElementInstance insertAfterElement);
+  void insertElementAfter(ModelElementInstance elementToInsert, @Nullable ModelElementInstance insertAfterElement);
 
   /**
    * Execute updates after the element was inserted as a replacement of another element.

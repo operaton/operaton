@@ -18,6 +18,9 @@ package org.operaton.bpm.model.xml.impl.type.reference;
 
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.impl.type.attribute.AttributeImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
@@ -27,6 +30,7 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 /**
  * @author Sebastian Menski
  */
+@NullMarked
 public class AttributeReferenceImpl<T extends ModelElementInstance> extends ReferenceImpl<T> implements AttributeReference<T> {
 
   protected final AttributeImpl<String> referenceSourceAttribute;
@@ -36,12 +40,12 @@ public class AttributeReferenceImpl<T extends ModelElementInstance> extends Refe
   }
 
   @Override
-  public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
+  public @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     return referenceSourceAttribute.getValue(referenceSourceElement);
   }
 
   @Override
-  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, String referenceIdentifier) {
+  protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, @Nullable String referenceIdentifier) {
     referenceSourceAttribute.setValue(referenceSourceElement, referenceIdentifier);
   }
 
@@ -61,7 +65,7 @@ public class AttributeReferenceImpl<T extends ModelElementInstance> extends Refe
   }
 
   @Override
-  protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
+  protected void updateReference(ModelElementInstance referenceSourceElement, @Nullable String oldIdentifier, @Nullable String newIdentifier) {
     String referencingAttributeValue = getReferenceIdentifier(referenceSourceElement);
     if(oldIdentifier != null && Objects.equals(oldIdentifier, referencingAttributeValue)) {
       setReferenceIdentifier(referenceSourceElement, newIdentifier);

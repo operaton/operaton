@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.variable.serializer;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -38,7 +40,7 @@ public interface VariableSerializers {
    * @return the VariableValueserializer selected for persisting the value or 'null' in case no serializer can be found
    */
   @SuppressWarnings("rawtypes")
-  TypedValueSerializer findSerializerForValue(TypedValue value, VariableSerializerFactory fallBackSerializerFactory);
+  TypedValueSerializer findSerializerForValue(TypedValue value, @Nullable VariableSerializerFactory fallBackSerializerFactory);
 
   /**
    * Same as calling {@link VariableSerializers#findSerializerForValue(TypedValue, VariableSerializerFactory)}
@@ -52,7 +54,7 @@ public interface VariableSerializers {
    * @return the serializer for the given serializerName name.
    * Returns null if no type was found with the name.
    */
-  TypedValueSerializer<?> getSerializerByName(String serializerName);
+  @Nullable TypedValueSerializer<?> getSerializerByName(String serializerName);
 
   VariableSerializers addSerializer(TypedValueSerializer<?> serializer);
 

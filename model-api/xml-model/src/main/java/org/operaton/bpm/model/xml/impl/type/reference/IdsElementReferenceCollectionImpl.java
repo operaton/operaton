@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.StringUtil;
@@ -67,12 +69,14 @@ public class IdsElementReferenceCollectionImpl<TARGET extends ModelElementInstan
   }
 
   @Override
-  protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
+  protected void updateReference(ModelElementInstance referenceSourceElement, @Nullable String oldIdentifier, @Nullable String newIdentifier) {
     List<String> referenceIdentifiers = getReferenceIdentifiers(referenceSourceElement);
     if (referenceIdentifiers.contains(oldIdentifier)) {
       int index = referenceIdentifiers.indexOf(oldIdentifier);
       referenceIdentifiers.remove(oldIdentifier);
-      referenceIdentifiers.add(index, newIdentifier);
+      if (newIdentifier != null) {
+        referenceIdentifiers.add(index, newIdentifier);
+      }
       setReferenceIdentifiers(referenceSourceElement, referenceIdentifiers);
     }
   }

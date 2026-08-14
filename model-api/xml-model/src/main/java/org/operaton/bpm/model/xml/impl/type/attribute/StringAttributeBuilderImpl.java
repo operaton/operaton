@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.attribute;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelBuildOperation;
@@ -37,7 +39,7 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReferenceCollectionBui
  */
 public class StringAttributeBuilderImpl extends AttributeBuilderImpl<String> implements StringAttributeBuilder {
 
-  private AttributeReferenceBuilder<?> referenceBuilder;
+  private @Nullable AttributeReferenceBuilder<?> referenceBuilder;
 
   public StringAttributeBuilderImpl(String attributeName, ModelElementTypeImpl modelType) {
     super(attributeName, modelType, new StringAttribute(modelType));

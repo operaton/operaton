@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.attribute;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
 /**
@@ -34,11 +36,13 @@ public class EnumAttribute<T extends Enum<T>> extends AttributeImpl<T> {
   }
 
   @Override
-  protected T convertXmlValueToModelValue(String rawValue) {
-    if (rawValue != null) {
-      return Enum.valueOf(type, rawValue);
+  protected @Nullable T convertXmlValueToModelValue(@Nullable String rawValue) {
+    if (rawValue == null) {
+      return null;
     }
-    else {
+    try {
+      return Enum.valueOf(type, rawValue);
+    } catch (IllegalArgumentException e) {
       return null;
     }
   }

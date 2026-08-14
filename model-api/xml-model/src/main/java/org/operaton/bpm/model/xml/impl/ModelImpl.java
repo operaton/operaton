@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.model.xml.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
@@ -77,14 +74,14 @@ public class ModelImpl implements Model {
 
   @Override
   public Set<String> getAlternativeNamespaces(String actualNs) {
-    return actualNsToAlternative.get(actualNs);
+    return Optional.ofNullable(actualNsToAlternative.get(actualNs)).orElse(Collections.emptySet());
   }
 
   @Override
-  public String getAlternativeNamespace(String actualNs) {
+  public @Nullable String getAlternativeNamespace(String actualNs) {
     Set<String> alternatives = getAlternativeNamespaces(actualNs);
 
-    if (alternatives == null || alternatives.isEmpty()) {
+    if (alternatives.isEmpty()) {
       return null;
     }
     else if (alternatives.size() == 1) {
@@ -97,7 +94,7 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public String getActualNamespace(String alternativeNs) {
+  public @Nullable String getActualNamespace(String alternativeNs) {
     return alternativeNsToActual.get(alternativeNs);
   }
 
@@ -107,17 +104,17 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public ModelElementType getType(Class<? extends ModelElementInstance> instanceClass) {
+  public @Nullable ModelElementType getType(Class<? extends ModelElementInstance> instanceClass) {
     return typesByClass.get(instanceClass);
   }
 
   @Override
-  public ModelElementType getTypeForName(String typeName) {
+  public @Nullable ModelElementType getTypeForName(String typeName) {
     return getTypeForName(null, typeName);
   }
 
   @Override
-  public ModelElementType getTypeForName(String namespaceUri, String typeName) {
+  public @Nullable ModelElementType getTypeForName(@Nullable String namespaceUri, String typeName) {
     return typesByName.get(ModelUtil.getQName(namespaceUri, typeName));
   }
 
@@ -146,7 +143,7 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }

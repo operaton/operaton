@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.validation.ValidationResult;
 import org.operaton.bpm.model.xml.validation.ValidationResultCollector;
@@ -33,7 +35,7 @@ import org.operaton.bpm.model.xml.validation.ValidationResults;
  */
 public class ValidationResultsCollectorImpl implements ValidationResultCollector {
 
-  protected ModelElementInstance currentElement;
+  protected @Nullable ModelElementInstance currentElement;
 
   protected Map<ModelElementInstance, List<ValidationResult>> collectedResults = new HashMap<>();
 
@@ -43,7 +45,7 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
   @Override
   public void addError(int code, String message) {
     resultsForCurrentElement()
-      .add(new ModelValidationResultImpl(currentElement, ValidationResultType.ERROR, code, message));
+      .add(new ModelValidationResultImpl(getCurrentElement(), ValidationResultType.ERROR, code, message));
 
     ++errorCount;
   }
@@ -51,7 +53,7 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
   @Override
   public void addWarning(int code, String message) {
     resultsForCurrentElement()
-      .add(new ModelValidationResultImpl(currentElement, ValidationResultType.WARNING, code, message));
+      .add(new ModelValidationResultImpl(getCurrentElement(), ValidationResultType.WARNING, code, message));
 
     ++warningCount;
   }
@@ -60,12 +62,19 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
     this.currentElement = currentElement;
   }
 
+  private ModelElementInstance getCurrentElement() {
+    if(currentElement == null) {
+      throw new IllegalStateException("Current element is not set.");
+    }
+    return currentElement;
+  }
+
   public ValidationResults getResults() {
     return new ModelValidationResultsImpl(collectedResults, errorCount, warningCount);
   }
 
   protected List<ValidationResult> resultsForCurrentElement() {
-    return collectedResults.computeIfAbsent(currentElement, k -> new ArrayList<>());
+    return collectedResults.computeIfAbsent(getCurrentElement(), k -> new ArrayList<>());
   }
 
 }

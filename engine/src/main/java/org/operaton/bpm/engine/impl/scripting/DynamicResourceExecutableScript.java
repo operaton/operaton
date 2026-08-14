@@ -16,8 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.scripting;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableScope;
+import org.operaton.bpm.engine.impl.context.BpmnExecutionContext;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.util.ResourceUtil;
@@ -41,7 +44,9 @@ public class DynamicResourceExecutableScript extends DynamicExecutableScript {
   }
 
   protected DeploymentEntity getDeployment() {
-    return Context.getBpmnExecutionContext().getDeployment();
+    BpmnExecutionContext bpmnExecutionContext = Context.getBpmnExecutionContext();
+    ensureNotNull("bpmnExecutionContext", bpmnExecutionContext);
+    return bpmnExecutionContext.getDeployment();
   }
 
 }

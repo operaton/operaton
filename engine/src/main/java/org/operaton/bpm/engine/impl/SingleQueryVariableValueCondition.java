@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
@@ -73,7 +75,7 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
   }
 
   @SuppressWarnings("rawtypes")
-  protected TypedValueSerializer determineSerializer(VariableSerializers serializers, TypedValue value) {
+  protected TypedValueSerializer determineSerializer(@NonNull VariableSerializers serializers, @NonNull TypedValue value) {
     TypedValueSerializer serializer = serializers.findSerializerForValue(value);
 
     if(serializer.getType() == ValueType.BYTES){

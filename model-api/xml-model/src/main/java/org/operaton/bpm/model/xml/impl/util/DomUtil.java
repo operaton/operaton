@@ -21,10 +21,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -91,13 +92,13 @@ public final class DomUtil {
   public static class ElementByNameListFilter extends ElementNodeListFilter {
 
     private final String localName;
-    private final String namespaceUri;
+    private final @Nullable String namespaceUri;
 
     /**
      * @param localName the local name to filter for
      * @param namespaceUri the namespaceUri to filter for
      */
-    public ElementByNameListFilter(String localName, String namespaceUri) {
+    public ElementByNameListFilter(String localName, @Nullable String namespaceUri) {
       this.localName = localName;
       this.namespaceUri = namespaceUri;
     }
@@ -106,7 +107,7 @@ public final class DomUtil {
     public boolean matches(Node node) {
      return super.matches(node)
         && localName.equals(node.getLocalName())
-        && namespaceUri.equals(node.getNamespaceURI());
+        && (namespaceUri != null && namespaceUri.equals(node.getNamespaceURI()) || namespaceUri == null && node.getNamespaceURI() == null);
     }
 
   }
@@ -171,7 +172,7 @@ public final class DomUtil {
    * @param localName the local element name to filter for
    * @return the List of all Elements which match the filter
    */
-  public static List<DomElement> filterNodeListByName(NodeList nodeList, String namespaceUri, String localName) {
+  public static List<DomElement> filterNodeListByName(NodeList nodeList, @Nullable String namespaceUri, String localName) {
     return filterNodeList(nodeList, new ElementByNameListFilter(localName, namespaceUri));
   }
 

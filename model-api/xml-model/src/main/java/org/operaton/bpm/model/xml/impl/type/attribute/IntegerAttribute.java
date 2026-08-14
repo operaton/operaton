@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.attribute;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
 /**
@@ -28,7 +30,10 @@ public class IntegerAttribute extends AttributeImpl<Integer> {
   }
 
   @Override
-  protected Integer convertXmlValueToModelValue(String rawValue) {
+  protected @Nullable Integer convertXmlValueToModelValue(@Nullable String rawValue) {
+    if (rawValue == null) {
+      return null;
+    }
     try {
       return Integer.parseInt(rawValue);
     }

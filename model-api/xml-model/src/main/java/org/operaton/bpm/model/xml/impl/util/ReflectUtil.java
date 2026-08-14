@@ -22,6 +22,8 @@ import java.lang.reflect.Constructor;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 
 
@@ -33,7 +35,7 @@ public final class ReflectUtil {
     // utility class
   }
 
-  public static InputStream getResourceAsStream(String name) {
+  public static @Nullable InputStream getResourceAsStream(String name) {
     // Try the current Thread context class loader
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     InputStream resourceStream = classLoader.getResourceAsStream(name);
@@ -46,11 +48,11 @@ public final class ReflectUtil {
     return resourceStream;
   }
 
-  public static URL getResource(String name) {
+  public static @Nullable URL getResource(String name) {
     return getResource(name, null);
   }
 
-  public static URL getResource(String name, ClassLoader classLoader) {
+  public static @Nullable URL getResource(String name, @Nullable ClassLoader classLoader) {
     if(classLoader == null) {
       // Try the current Thread context class loader
       classLoader = Thread.currentThread().getContextClassLoader();

@@ -19,6 +19,8 @@ package org.operaton.bpm.model.xml.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
@@ -33,6 +35,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
  * @author Daniel Meyer
  *
  */
+@NullMarked
 public class ModelBuilderImpl extends ModelBuilder {
 
   private final List<ModelElementTypeBuilderImpl> typeBuilders = new ArrayList<>();

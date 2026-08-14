@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.type.attribute;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.reference.Reference;
@@ -34,7 +36,7 @@ public interface Attribute<T> {
    *
    * @return the value of the attribute.
    */
-  T getValue(ModelElementInstance modelElement);
+  @Nullable T getValue(ModelElementInstance modelElement);
 
   /**
    * sets the value of the attribute.
@@ -51,7 +53,7 @@ public interface Attribute<T> {
    */
   void setValue(ModelElementInstance modelElement, T value, boolean withReferenceUpdate);
 
-  T getDefaultValue();
+  @Nullable T getDefaultValue();
 
   void removeAttribute(ModelElementInstance modelElement);
 
@@ -60,7 +62,7 @@ public interface Attribute<T> {
   /**
    * @return the namespaceUri
    */
-  String getNamespaceUri();
+  @Nullable String getNamespaceUri();
 
   /**
    * @return the attributeName

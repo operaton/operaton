@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.model.xml.impl.instance;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelBuilder;
@@ -76,7 +74,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public ModelElementInstance getParentElement() {
+  public @Nullable ModelElementInstance getParentElement() {
     DomElement parentElement = domElement.getParentElement();
     if (parentElement != null) {
       return ModelUtil.getModelElement(parentElement, modelInstance);
@@ -92,12 +90,12 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public String getAttributeValue(String attributeName) {
+  public @Nullable String getAttributeValue(String attributeName) {
     return domElement.getAttribute(attributeName);
   }
 
   @Override
-  public String getAttributeValueNs(String namespaceUri, String attributeName) {
+  public @Nullable String getAttributeValueNs(String namespaceUri, String attributeName) {
     return domElement.getAttribute(namespaceUri, attributeName);
   }
 
@@ -163,12 +161,9 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     else {
       Set<String> alternativeNamespaces = modelInstance.getModel().getAlternativeNamespaces(intendedNamespace);
 
-      if (alternativeNamespaces != null)
-      {
-        for (String alternativeNamespace : alternativeNamespaces) {
-          if (getAttributeValueNs(alternativeNamespace, attributeName) != null) {
-            return alternativeNamespace;
-          }
+      for (String alternativeNamespace : alternativeNamespaces) {
+        if (getAttributeValueNs(alternativeNamespace, attributeName) != null) {
+          return alternativeNamespace;
         }
       }
 
@@ -217,7 +212,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName) {
+  public @Nullable ModelElementInstance getUniqueChildElementByNameNs(@Nullable String namespaceUri, String elementName) {
     Model model = modelInstance.getModel();
     List<DomElement> childElements = domElement.getChildElementsByNameNs(asSet(namespaceUri, model.getAlternativeNamespaces(namespaceUri)), elementName);
     if(!childElements.isEmpty()) {
@@ -229,7 +224,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
 
 
   @Override
-  public ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType) {
+  public @Nullable ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType) {
     List<DomElement> childElements = domElement.getChildElementsByType(modelInstance, elementType);
 
     if(!childElements.isEmpty()) {
@@ -325,7 +320,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
       instances.addAll(getChildElementsByType(extendingType));
     }
     Model model = modelInstance.getModel();
-    Set<String> alternativeNamespaces = model.getAlternativeNamespaces(childElementType.getTypeNamespace());
+    Set<String> alternativeNamespaces = childElementType.getTypeNamespace() != null ? model.getAlternativeNamespaces(childElementType.getTypeNamespace()) : Collections.emptySet();
     List<DomElement> elements = domElement.getChildElementsByNameNs(asSet(childElementType.getTypeNamespace(), alternativeNamespaces), childElementType.getTypeName());
     instances.addAll(ModelUtil.getModelElementCollection(elements, modelInstance));
     return instances;
@@ -334,7 +329,12 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> Collection<T> getChildElementsByType(Class<T> childElementClass) {
-    return (Collection<T>) getChildElementsByType(getModelInstance().getModel().getType(childElementClass));
+    ModelElementType type = getModelInstance().getModel().getType(childElementClass);
+    if (type != null) {
+      return (Collection<T>) getChildElementsByType(type);
+    } else  {
+      return Collections.emptyList();
+    }
   }
 
   /**
@@ -363,7 +363,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public void insertElementAfter(ModelElementInstance elementToInsert, ModelElementInstance insertAfterElement) {
+  public void insertElementAfter(ModelElementInstance elementToInsert, @Nullable ModelElementInstance insertAfterElement) {
     if (insertAfterElement == null || insertAfterElement.getDomElement() == null) {
       domElement.insertChildElementAfter(elementToInsert.getDomElement(), null);
     }
@@ -407,9 +407,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     Set<T> result = new HashSet<>();
     result.add(element);
 
-    if (elements != null) {
-      result.addAll(elements);
-    }
+    result.addAll(elements);
 
     return result;
   }
@@ -420,7 +418,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if(obj == null) {
       return false;
     } else if(obj == this) {

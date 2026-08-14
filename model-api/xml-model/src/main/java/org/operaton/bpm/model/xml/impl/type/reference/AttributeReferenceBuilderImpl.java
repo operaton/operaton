@@ -63,8 +63,11 @@ public class AttributeReferenceBuilderImpl<T extends ModelElementInstance> imple
     ModelElementTypeImpl referenceTargetType = (ModelElementTypeImpl) model.getType(referenceTargetElement);
 
     // the actual referenced type
-    attributeReferenceImpl.setReferenceTargetElementType(referenceTargetType);
+    if (referenceTargetType == null) {
+      throw new ModelException("Unknown reference target type for " + referenceTargetElement.getName());
+    }
 
+    attributeReferenceImpl.setReferenceTargetElementType(referenceTargetType);
     // the referenced attribute may be declared on a base type of the referenced type.
     AttributeImpl<String> idAttribute = (AttributeImpl<String>) referenceTargetType.getAttribute("id");
     if(idAttribute != null) {

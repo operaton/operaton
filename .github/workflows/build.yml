@@ -86,8 +86,9 @@ jobs:
         uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
-      - name: Cache Maven packages
-        uses: actions/cache@v6.1.0
+      - name: Restore Maven packages
+        id: m2-cache
+        uses: actions/cache/restore@v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -180,6 +181,22 @@ jobs:
             distro/**/target/operaton-*.gz
             distro/webjar/target/operaton-webapp-webjar-*.jar
           key: ${{ github.run_id }}-build-artifacts
+      # This job is the only m2-cache producer: cache entries written from PR
+      # branches are readable only by that same PR, so PR-side writes just fill
+      # the shared 10 GB pool (the LRU evictions behind the recurring nightly
+      # failures). All other jobs restore-only. The freshly installed
+      # org/operaton artifacts are purged before saving — restoring them into
+      # later builds would make them accidentally incremental and can mask
+      # stale-artifact bugs.
+      - name: Purge Operaton artifacts before cache save
+        if: steps.m2-cache.outputs.cache-hit != 'true'
+        run: rm -rf ~/.m2/repository/org/operaton
+      - name: Save Maven packages
+        if: steps.m2-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
 
   publish:
     name: Publish

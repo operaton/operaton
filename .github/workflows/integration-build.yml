@@ -239,8 +239,8 @@ jobs:
         uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
-      - name: Cache Maven packages
-        uses: actions/cache@v6.1.0
+      - name: Restore Maven packages
+        uses: actions/cache/restore@v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -371,8 +371,8 @@ jobs:
         uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
-      - name: Cache Maven packages
-        uses: actions/cache@v6.1.0
+      - name: Restore Maven packages
+        uses: actions/cache/restore@v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -448,8 +448,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7.0.1
-      - name: Cache Maven packages
-        uses: actions/cache@v6.1.0
+      - name: Restore Maven packages
+        uses: actions/cache/restore@v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -528,6 +528,12 @@ jobs:
         with:
           distribution: zulu
           java-version: 17
+      - name: Restore Maven packages
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
       - name: Import GPG key
         shell: bash
         run: |

@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,6 +29,13 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 
 import static org.assertj.core.api.Assertions.fail;
 
+// Tagged "sequential": these tests hand-orchestrate real background threads with
+// blocking wait()/notify() and no timeout, to deterministically reproduce race
+// conditions. Under forkCount > 1 (this module runs multiple concurrent JVMs), CPU
+// contention across forks can delay thread scheduling enough to break these tests'
+// timing assumptions and hang them indefinitely - see the surefire-plugin config in
+// this module's pom.xml. Tag inherited by all subclasses (ConcurrencyTestCase et al).
+@Tag("sequential")
 public abstract class ConcurrencyTestHelper {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -110,8 +118,12 @@ public abstract class ConcurrencyTestHelper {
       this.executingThread = executingThread;
     }
 
+    // Bounded so a broken sync choreography fails the test instead of blocking
+    // the fork forever
+    public static final long DEFAULT_SYNC_TIMEOUT_MILLIS = 5 * 60 * 1000L;
+
     public void waitForSync() {
-      waitForSync(Long.MAX_VALUE);
+      waitForSync(DEFAULT_SYNC_TIMEOUT_MILLIS);
     }
 
     public void waitForSync(long timeout) {
@@ -124,13 +136,19 @@ public abstract class ConcurrencyTestHelper {
           }
         }
         try {
-          if (!syncAvailable) {
+          long deadline = System.currentTimeMillis() + timeout;
+          while (!syncAvailable) {
+            long remaining = deadline - System.currentTimeMillis();
+            if (remaining <= 0) {
+              fail("timed out after " + timeout + " ms waiting for sync");
+            }
             try {
-              wait(timeout);
+              wait(remaining);
             } catch (InterruptedException e) {
               if (!reportFailure || exception == null) {
                 fail("unexpected interruption");
               }
+              return;
             }
           }
         } finally {

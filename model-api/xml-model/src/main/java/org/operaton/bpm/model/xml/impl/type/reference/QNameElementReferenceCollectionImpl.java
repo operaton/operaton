@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.type.reference;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.impl.util.QName;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -30,7 +32,7 @@ public class QNameElementReferenceCollectionImpl<TARGET extends ModelElementInst
   }
 
   @Override
-  public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
+  public @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     String identifier = super.getReferenceIdentifier(referenceSourceElement);
     if (identifier != null) {
       QName qName = QName.parseQName(identifier);

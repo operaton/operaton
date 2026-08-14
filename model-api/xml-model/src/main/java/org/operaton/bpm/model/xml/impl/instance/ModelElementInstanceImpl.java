@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.operaton.bpm.model.xml.Model;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -76,7 +78,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public ModelElementInstance getParentElement() {
+  public @Nullable ModelElementInstance getParentElement() {
     DomElement parentElement = domElement.getParentElement();
     if (parentElement != null) {
       return ModelUtil.getModelElement(parentElement, modelInstance);
@@ -217,7 +219,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName) {
+  public @Nullable ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName) {
     Model model = modelInstance.getModel();
     List<DomElement> childElements = domElement.getChildElementsByNameNs(asSet(namespaceUri, model.getAlternativeNamespaces(namespaceUri)), elementName);
     if(!childElements.isEmpty()) {
@@ -227,9 +229,8 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
-
   @Override
-  public ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType) {
+  public @Nullable ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType) {
     List<DomElement> childElements = domElement.getChildElementsByType(modelInstance, elementType);
 
     if(!childElements.isEmpty()) {

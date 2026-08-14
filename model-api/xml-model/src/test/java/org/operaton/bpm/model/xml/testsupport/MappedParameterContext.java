@@ -21,6 +21,7 @@ import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.platform.commons.util.AnnotationUtils;
 
@@ -48,7 +49,7 @@ public class MappedParameterContext implements ParameterContext {
   }
 
   @Override
-  public <A extends Annotation> List<A> findRepeatableAnnotations(Class<A> annotationType) {
+  public <A extends Annotation> @Nullable List<A> findRepeatableAnnotations(Class<A> annotationType) {
     return null;
   }
 

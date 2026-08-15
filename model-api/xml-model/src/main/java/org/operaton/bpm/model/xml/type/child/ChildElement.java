@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.type.child;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 
 /**
@@ -48,7 +50,7 @@ public interface ChildElement<T extends ModelElementInstance> extends ChildEleme
    * @param element the parent element of the child element
    * @return the child element of the parent, or null if not exist
    */
-  T getChild(ModelElementInstance element);
+  @Nullable T getChild(ModelElementInstance element);
 
   /**
    * Removes the child element.

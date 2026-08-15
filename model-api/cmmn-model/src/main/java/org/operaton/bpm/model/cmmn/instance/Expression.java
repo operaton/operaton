@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.model.cmmn.instance;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Roman Smirnov
  *
  */
 public interface Expression extends CmmnElement {
 
-  String getText();
+  @Nullable String getText();
 
   void setText(String text);
 
@@ -30,7 +32,7 @@ public interface Expression extends CmmnElement {
    * @deprecated since 1.0, use {@link #getText()} instead for consistency with expression content access.
    */
   @Deprecated(since = "1.0")
-  String getBody();
+  @Nullable String getBody();
 
   /**
    * @deprecated since 1.0, use {@link #setText(String)} instead for consistency with expression content modification.

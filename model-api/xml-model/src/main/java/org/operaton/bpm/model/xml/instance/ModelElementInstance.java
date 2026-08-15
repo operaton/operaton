@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.instance;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
@@ -50,7 +52,7 @@ public interface ModelElementInstance {
    *
    * @return the parent element
    */
-  ModelElementInstance getParentElement();
+  @Nullable ModelElementInstance getParentElement();
 
   /**
    * Returns the element type of this.
@@ -186,7 +188,7 @@ public interface ModelElementInstance {
    * @param elementName the namespace of the element
    * @return the child element or null.
    */
-  ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName);
+  @Nullable ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName);
 
   /**
    * Returns a child element with the given type
@@ -194,7 +196,7 @@ public interface ModelElementInstance {
    * @param elementType  the type of the element
    * @return the child element or null
    */
-  ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType);
+  @Nullable ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType);
 
   /**
    * Adds or replaces a child element by name. Replaces an existing Child Element with the same name

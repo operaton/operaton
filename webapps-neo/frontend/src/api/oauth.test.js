@@ -6,17 +6,19 @@ import {
   restore_oauth_session,
 } from "./oauth.js";
 import { create_mock_state } from "../test/helpers.js";
+import { set_config } from "../config.js";
 
-// No VITE_AUTH_MODE is set in tests, so the module is in "basic" mode.
+// No VITE_AUTH_MODE is set in tests, so the runtime config resolves to "basic".
 describe("api/oauth (basic mode defaults)", () => {
   let state;
   beforeEach(() => {
     state = create_mock_state();
     sessionStorage.clear();
+    set_config(null);
   });
 
-  it("reports is_oauth === false when auth mode is not 'oauth'", () => {
-    expect(is_oauth).toBe(false);
+  it("reports is_oauth() === false when auth mode is not oauth2", () => {
+    expect(is_oauth()).toBe(false);
   });
 
   it("handle_oauth_callback returns false when there is no code/verifier", async () => {

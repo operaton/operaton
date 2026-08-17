@@ -7,6 +7,7 @@
 import { signal } from "@preact/signals";
 import { createContext } from "preact";
 import { plugin_state_branches } from "./plugins/registry.js";
+import { get_config } from "./config.js";
 
 /**
  * Create the global app state by invoking the function in the root [Tasks.jsx`]
@@ -20,7 +21,9 @@ import { plugin_state_branches } from "./plugins/registry.js";
 const createAppState = () => {
   const server = signal(get_stored_server());
   const auth = {
-    mode: import.meta.env.VITE_AUTH_MODE || "basic",
+    // "basic" or "oauth2"; resolved from the runtime configuration, which has
+    // already been fetched by the time the app first renders
+    mode: get_config().auth_mode,
     logged_in: signal({ data: "unknown" }),
     credentials: signal({ username: null, password: null }),
     token: signal(null),
@@ -240,7 +243,7 @@ const createAppState = () => {
 const AppState = createContext(undefined);
 
 const get_stored_server = () => {
-  const servers = JSON.parse(import.meta.env.VITE_BACKEND),
+  const servers = get_config().backends,
     stored = localStorage.getItem("server");
 
   if (stored) {

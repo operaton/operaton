@@ -96,8 +96,9 @@ const logout = (state) => {
 };
 
 const is_authenticated = async (state) => {
-  if (is_oauth) {
-    // OAuth: try to restore session from sessionStorage
+  if (is_oauth()) {
+    // OAuth: restore an existing session — a server-side one reported by
+    // config.json, or tokens held in sessionStorage for the PKCE flow
     const restored = await restore_oauth_session(state);
     if (restored) return state.auth.logged_in.value;
     // Check for OAuth callback (authorization code in URL)
@@ -144,7 +145,8 @@ const is_authenticated = async (state) => {
 };
 
 const auth = {
-  logout: is_oauth ? oauth_logout : logout,
+  // Dispatch at call time: the mode is only known once config.json has loaded
+  logout: (state) => (is_oauth() ? oauth_logout(state) : logout(state)),
   login,
   cookies,
   is_authenticated,

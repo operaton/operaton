@@ -1,4 +1,4 @@
-import { GET, POST, PUT, DELETE, RESPONSE_STATE, _url_engine_rest, get_auth_header } from "../helper.jsx";
+import { GET, POST, PUT, DELETE, RESPONSE_STATE, _url_engine_rest, set_auth_header } from "../helper.jsx";
 
 const get_filters = (state) =>
   GET("/filter?resourceType=Task", state, state.api.filter.list);
@@ -20,7 +20,7 @@ const execute_filter = async (state, filter_id, firstResult = 0, maxResults = 15
   if (firstResult === 0) state.api.task.list.value = { status: RESPONSE_STATE.LOADING };
 
   const headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
   headers.set("Content-Type", "application/json");
 
   const body = {

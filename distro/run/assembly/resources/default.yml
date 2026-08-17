@@ -15,6 +15,15 @@ operaton.bpm:
     # (or start run.sh / run.bat with the --webapps-neo flag).
     neo:
       enabled: ${OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS:false}
+      # How the new web apps authenticate. "auto" (the default) means basic
+      # authentication, switching to OAuth2 by itself as soon as Spring Security
+      # client registrations are configured — see the OAuth2 section below. Force
+      # one with "basic" or "oauth2".
+      auth-mode: ${OPERATON_BPM_RUN_WEBAPPS_NEO_AUTH_MODE:auto}
+      # URL of the runtime plugin manifest. Empty means /plugins/plugins.json on
+      # the application's own origin.
+      plugins-url: ${OPERATON_BPM_RUN_WEBAPPS_NEO_PLUGINS_URL:}
+      hide-release-warning: ${OPERATON_BPM_RUN_WEBAPPS_NEO_HIDE_RELEASE_WARNING:false}
     # The legacy web apps are served at /operaton/app and are enabled by default.
     # Disable them via the OPERATON_BPM_WEBAPP_ENABLED environment variable or by
     # setting operaton.bpm.webapp.enabled: false here.
@@ -46,22 +55,28 @@ spring.web.resources:
   static-locations: NULL
 
 # ---------------------------------------------------------------------------
-# OAuth2 for the new web apps (webapps-neo)
+# Single sign-on for the web apps
 # ---------------------------------------------------------------------------
-# Start Operaton with the --oauth2 flag and uncomment the blocks below to let
-# webapps-neo authenticate against the backend through the Spring OAuth2 module
-# (server-side session) instead of HTTP Basic auth. Replace the sample values
-# with your identity provider's settings. With same-origin embedded webapps you
-# typically also want to disable the wildcard CORS above
-# (operaton.bpm.run.cors.enabled: false).
+# Out of the box the web apps ask for a username and password. To use an
+# identity provider instead, start Operaton with the --oauth2 flag and uncomment
+# the blocks below. No rebuild of the web apps is needed: they read their
+# configuration from the server at startup and switch to the SSO login by
+# themselves once client registrations exist.
+#
+# With same-origin embedded web apps you typically also want to disable the
+# wildcard CORS above (operaton.bpm.run.cors.enabled: false).
+#
+# 1. Authenticate the REST API against the identity provider instead of using
+#    HTTP Basic. Equivalent env vars: OPERATON_BPM_RUN_AUTH_ENABLED=true and
+#    OPERATON_BPM_RUN_AUTH_AUTHENTICATION=oauth2.
 #
 # operaton.bpm.run.auth:
 #   enabled: true
 #   authentication: oauth2
 #
-# operaton.bpm.oauth2:
-#   identity-provider:
-#     group-name-attribute: groups
+# 2. The login flow itself. This is what makes the web apps show "Login with
+#    SSO"; the browser is sent to /oauth2/authorization/<registration> and comes
+#    back with a session.
 #
 # spring.security.oauth2.client:
 #   registration:
@@ -74,3 +89,25 @@ spring.web.resources:
 #   provider:
 #     operaton:
 #       issuer-uri: https://your-idp.example.com/realms/operaton
+#
+# 3. Where users and groups come from. The step above authenticates people, but
+#    Operaton still needs to know which groups they are in to authorize them.
+#    Map them out of the token:
+#
+# operaton.bpm.oauth2:
+#   identity-provider:
+#     group-name-attribute: groups
+#
+#    Or, for Keycloak, let the Keycloak plugin read them from the realm. Drop
+#    operaton-keycloak (org.operaton.bpm.extension:operaton-keycloak) into
+#    configuration/userlib/ and configure it — it is a read-only identity
+#    provider, so it complements the login flow above rather than replacing it.
+#    See https://github.com/operaton/operaton-keycloak
+#
+# plugin.identity.keycloak:
+#   keycloakIssuerUrl: https://your-idp.example.com/realms/operaton
+#   keycloakAdminUrl: https://your-idp.example.com/admin/realms/operaton
+#   clientId: operaton-identity-service
+#   clientSecret: "********"
+#   useEmailAsOperatonUserId: true
+#   administratorGroupName: operaton-admin

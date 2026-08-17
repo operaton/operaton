@@ -6,13 +6,27 @@
  */
 
 import { RESPONSE_STATE } from "./helper.jsx"
+import { get_config } from "../config.js"
 
-const AUTH_MODE = import.meta.env.VITE_AUTH_MODE || "basic",
-  AUTHORITY = import.meta.env.VITE_OAUTH_AUTHORITY,
-  CLIENT_ID = import.meta.env.VITE_OAUTH_CLIENT_ID,
-  REDIRECT_URI = import.meta.env.VITE_OAUTH_REDIRECT_URI
+const oauth_config = () => get_config().oauth ?? {}
 
-export const is_oauth = AUTH_MODE === "oauth"
+const AUTHORITY = () => oauth_config().authority,
+  CLIENT_ID = () => oauth_config().client_id,
+  REDIRECT_URI = () => oauth_config().redirect_uri
+
+/**
+ * Whether the web apps authenticate through an identity provider. Read at call
+ * time, not at import time: the mode is only known once the runtime
+ * configuration has been fetched.
+ */
+export const is_oauth = () => get_config().auth_mode === "oauth2"
+
+/**
+ * Whether the identity provider handshake is performed by the server (Spring
+ * Security establishes a session and we ride the cookie) rather than by the
+ * browser talking to the provider directly with PKCE.
+ */
+export const is_session_flow = () => is_oauth() && oauth_config().flow !== "pkce"
 
 // --- PKCE helpers ---
 
@@ -39,6 +53,14 @@ const generate_pkce = async () => {
 // --- OAuth flow ---
 
 export const start_oauth_login = async () => {
+  // Server-side flow: hand the browser to Spring Security, which redirects on to
+  // the identity provider and comes back with a session. This has to be a
+  // top-level navigation — fetch() cannot follow a cross-origin login redirect.
+  if (is_session_flow()) {
+    window.location.href = oauth_config().login ?? "/oauth2/authorization"
+    return
+  }
+
   const { verifier, challenge } = await generate_pkce()
   const oauth_state = base64url_encode(generate_random(16))
 
@@ -48,18 +70,22 @@ export const start_oauth_login = async () => {
 
   const params = new URLSearchParams({
     response_type: "code",
-    client_id: CLIENT_ID,
-    redirect_uri: REDIRECT_URI,
+    client_id: CLIENT_ID(),
+    redirect_uri: REDIRECT_URI(),
     scope: "openid profile email",
     state: oauth_state,
     code_challenge: challenge,
     code_challenge_method: "S256",
   })
 
-  window.location.href = `${AUTHORITY}/protocol/openid-connect/auth?${params}`
+  window.location.href = `${AUTHORITY()}/protocol/openid-connect/auth?${params}`
 }
 
 export const handle_oauth_callback = async (state) => {
+  // Server-side flow: Spring Security consumed the authorization code at its own
+  // redirect endpoint before the SPA was ever loaded. Nothing to exchange here.
+  if (is_session_flow()) return false
+
   const params = new URLSearchParams(window.location.search),
     code = params.get("code"),
     returned_state = params.get("state"),
@@ -82,15 +108,15 @@ export const handle_oauth_callback = async (state) => {
 
   const body = new URLSearchParams({
     grant_type: "authorization_code",
-    client_id: CLIENT_ID,
-    redirect_uri: REDIRECT_URI,
+    client_id: CLIENT_ID(),
+    redirect_uri: REDIRECT_URI(),
     code,
     code_verifier: verifier,
   })
 
   try {
     const response = await fetch(
-      `${AUTHORITY}/protocol/openid-connect/token`,
+      `${AUTHORITY()}/protocol/openid-connect/token`,
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -128,13 +154,13 @@ export const refresh_oauth_token = async (state) => {
 
   const body = new URLSearchParams({
     grant_type: "refresh_token",
-    client_id: CLIENT_ID,
+    client_id: CLIENT_ID(),
     refresh_token,
   })
 
   try {
     const response = await fetch(
-      `${AUTHORITY}/protocol/openid-connect/token`,
+      `${AUTHORITY()}/protocol/openid-connect/token`,
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -155,18 +181,41 @@ export const refresh_oauth_token = async (state) => {
 }
 
 export const oauth_logout = (state) => {
+  // Server-side flow: the session lives in a cookie, so only the server can end
+  // it. Spring Security's /logout clears it and, when sso-logout is enabled,
+  // propagates to the identity provider.
+  if (is_session_flow()) {
+    clear_tokens(state)
+    window.location.href = oauth_config().logout ?? "/logout"
+    return
+  }
+
   const id_token = sessionStorage.getItem("oauth_id_token")
   clear_tokens(state)
 
   const params = new URLSearchParams({
-    post_logout_redirect_uri: REDIRECT_URI,
+    post_logout_redirect_uri: REDIRECT_URI(),
   })
   if (id_token) params.set("id_token_hint", id_token)
 
-  window.location.href = `${AUTHORITY}/protocol/openid-connect/logout?${params}`
+  window.location.href = `${AUTHORITY()}/protocol/openid-connect/logout?${params}`
 }
 
 export const restore_oauth_session = async (state) => {
+  // Server-side flow: config.json already told us whether this browser has a
+  // session, so there is no token to inspect and no request to make.
+  if (is_session_flow()) {
+    const user = get_config().user
+    if (!user) return false
+
+    state.auth.user.id.value = user.id
+    state.auth.logged_in.value = {
+      status: RESPONSE_STATE.SUCCESS,
+      data: "authenticated",
+    }
+    return true
+  }
+
   const access_token = sessionStorage.getItem("oauth_access_token")
   if (!access_token) return false
 

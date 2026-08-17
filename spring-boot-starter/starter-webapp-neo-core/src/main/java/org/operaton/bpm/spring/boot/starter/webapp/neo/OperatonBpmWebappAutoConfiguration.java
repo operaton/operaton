@@ -23,10 +23,17 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.function.RequestPredicates;
+import org.springframework.web.servlet.function.RouterFunction;
+import org.springframework.web.servlet.function.RouterFunctions;
+import org.springframework.web.servlet.function.ServerResponse;
 
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.NeoWebappProperty;
@@ -49,13 +56,21 @@ import org.operaton.bpm.spring.boot.starter.webapp.neo.filter.ResourceLoaderDepe
 @AutoConfigureAfter(OperatonBpmAutoConfiguration.class)
 public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
 
+  /** Document the SPA fetches at boot to learn how it was configured. */
+  protected static final String CONFIG_PATH = "/config.json";
+
   private final ResourceLoader resourceLoader;
 
   private final OperatonBpmProperties properties;
 
-  public OperatonBpmWebappAutoConfiguration(ResourceLoader resourceLoader, OperatonBpmProperties properties) {
+  private final Environment environment;
+
+  public OperatonBpmWebappAutoConfiguration(ResourceLoader resourceLoader,
+                                            OperatonBpmProperties properties,
+                                            Environment environment) {
     this.resourceLoader = resourceLoader;
     this.properties = properties;
+    this.environment = environment;
   }
 
   @Bean
@@ -79,6 +94,42 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
   @Bean
   FaviconResourceResolver neoFaviconResourceResolver() {
     return new FaviconResourceResolver();
+  }
+
+  @Bean
+  NeoClientConfigResolver neoClientConfigResolver() {
+    return new NeoClientConfigResolver(properties, environment);
+  }
+
+  /**
+   * Serves the SPA's runtime configuration.
+   *
+   * <p>Deliberately mounted outside {@code {applicationPath}/api/**}: that namespace
+   * is guarded by the webapp filter chain and, when OAuth2 is enabled, by the
+   * security starter's filter chain too — but the SPA has to read this document
+   * <em>before</em> it can know how to authenticate. Here it stays reachable
+   * anonymously. {@link SpaResourceResolver} does not shadow it either, because a
+   * last path segment containing a dot is treated as an asset rather than a client
+   * route.</p>
+   *
+   * <p>A router function rather than a {@code @GetMapping} because the path depends
+   * on the configured application path.</p>
+   */
+  @Bean
+  RouterFunction<ServerResponse> neoClientConfigEndpoint(NeoClientConfigResolver resolver) {
+    String base = properties.getWebapp().getNeo().getApplicationPath();
+
+    return RouterFunctions.route(RequestPredicates.GET(base + CONFIG_PATH), request -> {
+      NeoClientConfig config = resolver.resolve(
+        request.servletRequest().getContextPath(),
+        request.servletRequest().getUserPrincipal());
+
+      // Never cached: it carries whether this caller currently has a session.
+      return ServerResponse.ok()
+          .contentType(MediaType.APPLICATION_JSON)
+          .header(HttpHeaders.CACHE_CONTROL, "no-store, no-cache, must-revalidate, max-age=0")
+          .body(config);
+    });
   }
 
   @Override

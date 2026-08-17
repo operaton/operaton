@@ -5,7 +5,7 @@ import { useLocation } from "preact-iso";
 import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
 import { RESPONSE_STATE } from "../api/engine_rest.jsx";
-import { _url_engine_rest, get_auth_header } from "../api/helper.jsx";
+import { _url_engine_rest, set_auth_header } from "../api/helper.jsx";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
 
@@ -168,7 +168,7 @@ const do_lookup = async (query, state) => {
   lookup_signal.value = { status: "loading" };
 
   const headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
   const base = _url_engine_rest(state);
 
   const lookups = [

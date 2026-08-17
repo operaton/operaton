@@ -50,7 +50,7 @@ services:
     environment:
       - ASSET_DIR=/var/www/html
       - APP_PREFIX=DOCKER_RUN_PLACEHOLDER_
-      - DOCKER_RUN_PLACEHOLDER_BACKEND=[{\\"name\\":\\"Operaton\\",\\"url\\":\\"http://localhost:8084\\"}]
+      - DOCKER_RUN_PLACEHOLDER_BACKEND=[{"name":"Operaton","url":"http://localhost:8084"}]
       - DOCKER_RUN_PLACEHOLDER_AUTH_MODE=oauth
       - DOCKER_RUN_PLACEHOLDER_OAUTH_AUTHORITY=http://localhost:8888/realms/operaton
       - DOCKER_RUN_PLACEHOLDER_OAUTH_CLIENT_ID=operaton-web-apps

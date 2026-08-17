@@ -14,7 +14,7 @@ import {
   GET,
   POST,
   _url_engine_rest,
-  get_auth_header,
+  set_auth_header,
 } from "../api/helper.jsx";
 import { plugin_descriptor } from "./registry.js";
 
@@ -31,7 +31,7 @@ const request_absolute = async (
 ) => {
   signl.value = { status: RESPONSE_STATE.LOADING, data: signl.peek?.()?.data };
   const headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
   if (body) headers.set("Content-Type", "application/json");
 
   try {

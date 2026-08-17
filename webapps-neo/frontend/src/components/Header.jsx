@@ -9,11 +9,10 @@ import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
-
-const servers = JSON.parse(import.meta.env.VITE_BACKEND);
+import { get_config } from "../config.js";
 
 const swap_server = (e, state) => {
-  const server = servers.find((s) => s.url === e.target.value);
+  const server = get_config().backends.find((s) => s.url === e.target.value);
   state.server.value = server;
   localStorage.setItem("server", JSON.stringify(server));
 };
@@ -153,7 +152,7 @@ export function Header() {
               <span>{t("nav.server")}</span>
               <select onChange={(e) => swap_server(e, state)}>
                 <option disabled>{t("nav.choose-server")}</option>
-                {servers.map((server) => (
+                {get_config().backends.map((server) => (
                   <option
                     key={server.url}
                     value={server.url}
@@ -257,7 +256,7 @@ export function Header() {
                 onChange={(e) => swap_server(e, state)}
               >
                 <option disabled>{t("nav.choose-server")}</option>
-                {servers.map((server) => (
+                {get_config().backends.map((server) => (
                   <option
                     key={server.url}
                     value={server.url}

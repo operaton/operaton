@@ -19,7 +19,7 @@ services:
     environment:
       - ASSET_DIR=/var/www/html
       - APP_PREFIX=DOCKER_RUN_PLACEHOLDER_
-      - DOCKER_RUN_PLACEHOLDER_BACKEND=[{\"name\":\"Operaton\",\"url\":\"https://operaton-webapps-test.lambdaschmiede.com\"}]
+      - DOCKER_RUN_PLACEHOLDER_BACKEND=[{"name":"Operaton","url":"https://operaton-webapps-test.lambdaschmiede.com"}]
       - DOCKER_RUN_PLACEHOLDER_AUTH_MODE=basic
       - DOCKER_RUN_PLACEHOLDER_HIDE_RELEASE_WARNING=true
     ports:

@@ -12,6 +12,7 @@
  * a slow/broken manifest server can never brick the app (see `with_timeout`).
  */
 import { register } from "./registry.js";
+import { get_config } from "../config.js";
 
 const VERSION = import.meta.env.VITE_APP_VERSION || "dev";
 
@@ -40,14 +41,7 @@ const register_bundled = () => {
  * injection) wins; otherwise fetch the static manifest. A missing manifest is
  * not an error — it just means no remote plugins.
  */
-const manifest_url = () => {
-  const configured = import.meta.env.VITE_PLUGINS_URL;
-  // Ignore an empty value or an unreplaced Docker runtime placeholder
-  // (env.sh only substitutes DOCKER_RUN_PLACEHOLDER_* when the operator sets it).
-  return configured && !configured.includes("PLACEHOLDER")
-    ? configured
-    : "/plugins/plugins.json";
-};
+const manifest_url = () => get_config().plugins_url ?? "/plugins/plugins.json";
 
 const discover_packages = async () => {
   if (Array.isArray(window.PLUGIN_PACKAGES)) return window.PLUGIN_PACKAGES;

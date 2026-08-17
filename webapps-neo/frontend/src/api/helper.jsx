@@ -14,10 +14,32 @@ export const _url_engine_rest = (state) =>
 export const get_credentials = (state) =>
   `${state.auth.credentials.value.username}:${state.auth.credentials.value.password}`;
 
-export const get_auth_header = (state) =>
-  state.auth.mode === "oauth"
-    ? `Bearer ${state.auth.token.value}`
-    : `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`;
+/**
+ * The Authorization header value, or `undefined` when the request authenticates
+ * some other way. With a server-side OAuth2 session there is no token to send —
+ * the session cookie carries the identity, which is why every request sets
+ * `credentials: "include"`.
+ */
+export const get_auth_header = (state) => {
+  if (state.auth.mode === "oauth2") {
+    return state.auth.token.value ? `Bearer ${state.auth.token.value}` : undefined;
+  }
+  return `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`;
+};
+
+/**
+ * Apply the Authorization header, leaving it off entirely when the request
+ * authenticates with a session cookie instead of a header.
+ */
+export const set_auth_header = (headers, state) => {
+  const value = get_auth_header(state);
+  if (value) {
+    headers.set("Authorization", value);
+  } else {
+    headers.delete("Authorization");
+  }
+  return headers;
+};
 
 let headers = new Headers();
 headers.set("credentials", "include");
@@ -169,7 +191,7 @@ export const PAGINATED_GET = async (
   const paged_url = `${url}${sep}firstResult=${firstResult}&maxResults=${maxResults}`;
 
   let headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${paged_url}`, {
@@ -201,7 +223,7 @@ export const GET = async (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING, data: signl.peek?.()?.data };
 
   let headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${url}`, {
@@ -218,7 +240,7 @@ export const GET_SERVER_URL = (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
   let headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
   headers.set(
     "Content-Type",
     "application/x-www-form-urlencoded;charset=UTF-8",
@@ -239,7 +261,7 @@ export const POST_SERVER_URL = (url, body, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
   let headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
   headers.set(
     "Content-Type",
     "application/x-www-form-urlencoded;charset=UTF-8",
@@ -266,7 +288,7 @@ export const GET_TEXT = (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
   let headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
 
   return fetch(`${_url_engine_rest(state)}${url}`, { headers })
     .then((response) =>
@@ -282,7 +304,7 @@ const fetch_with_body = async (method, url, body, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
   let headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
   headers.set("Content-Type", "application/json");
 
   try {
@@ -314,7 +336,7 @@ export const POST_FORM = async (url, body, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
   let headers = new Headers();
-  headers.set("Authorization", get_auth_header(state));
+  set_auth_header(headers, state);
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${url}`, {

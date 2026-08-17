@@ -26,6 +26,7 @@ import { useContext } from "preact/hooks";
 import engine_rest from "./api/engine_rest.jsx";
 import { useSignal } from "@preact/signals";
 import { is_oauth } from "./api/oauth.js";
+import { get_config, load_config } from "./config.js";
 import { useTranslation } from "react-i18next";
 import { load_plugins } from "./plugins/loader.js";
 import { install_plugin_host } from "./plugins/host.js";
@@ -44,8 +45,6 @@ export const App = () => {
   );
 };
 
-const servers = JSON.parse(import.meta.env.VITE_BACKEND);
-
 const languages = [
   { code: "en-US", label: "English" },
   { code: "de-DE", label: "Deutsch" },
@@ -55,7 +54,7 @@ const languages = [
 ];
 
 const swap_server = (e, state) => {
-  const server = servers.find((s) => s.url === e.target.value);
+  const server = get_config().backends.find((s) => s.url === e.target.value);
   state.server.value = server;
   localStorage.setItem("server", JSON.stringify(server));
 };
@@ -133,14 +132,14 @@ const Routing = () => {
           <h1>{t("login.title")}</h1>
 
           <div class="login-card">
-            {servers.length > 1 && (
+            {get_config().backends.length > 1 && (
               <>
                 <label>
                   {t("login.backend")}
                   <small>{t("login.backend-hint")}</small>
                   <select onChange={(e) => swap_server(e, state)}>
                     <option disabled>{t("login.choose-server")}</option>
-                    {servers.map((server) => (
+                    {get_config().backends.map((server) => (
                       <option
                         key={server.url}
                         value={server.url}
@@ -156,7 +155,7 @@ const Routing = () => {
               </>
             )}
 
-            {is_oauth ? (
+            {is_oauth() ? (
               <button
                 type="button"
                 onClick={() => engine_rest.auth.start_oauth_login()}
@@ -237,4 +236,8 @@ const Routing = () => {
 // every seam — routes, nav, tabs, state — sees a stable plugin list. A broken
 // plugin server can never block boot; the loader guards itself with a timeout.
 install_plugin_host();
-load_plugins().finally(() => render(<App />, document.getElementById("app")));
+// The runtime configuration must be in place before anything reads it, and the
+// plugin loader needs it to know where the manifest lives.
+load_config()
+  .then(load_plugins)
+  .finally(() => render(<App />, document.getElementById("app")));

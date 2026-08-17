@@ -17,6 +17,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
+import java.util.List;
+
 import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties.joinOn;
 
 /**
@@ -30,6 +32,15 @@ import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmPropertie
 public class NeoWebappProperty {
 
   public static final String DEFAULT_APP_PATH = "";
+
+  /** Resolve the authentication mode from the application configuration. */
+  public static final String AUTH_MODE_AUTO = "auto";
+  /** Username and password against the REST API. */
+  public static final String AUTH_MODE_BASIC = "basic";
+  /** Server-side session established by the Spring Security OAuth2 login flow. */
+  public static final String AUTH_MODE_OAUTH2 = "oauth2";
+
+  private static final List<String> AUTH_MODES = List.of(AUTH_MODE_AUTO, AUTH_MODE_BASIC, AUTH_MODE_OAUTH2);
 
   /**
    * Enables the embedded webapps-neo auto configuration. Disabled by default;
@@ -51,6 +62,26 @@ public class NeoWebappProperty {
   protected String securityConfigFile = "/securityFilterRules.json";
 
   protected boolean indexRedirectEnabled = true;
+
+  /**
+   * Authentication mode the SPA is told to use, one of {@code auto}, {@code basic}
+   * or {@code oauth2}. With {@code auto} (the default) the mode is derived from the
+   * application configuration: {@code oauth2} when Spring Security OAuth2 client
+   * registrations are present, {@code basic} otherwise. Set it explicitly to
+   * override that detection.
+   */
+  protected String authMode = AUTH_MODE_AUTO;
+
+  /**
+   * URL of the runtime plugin manifest handed to the SPA. Empty means the SPA
+   * falls back to {@code /plugins/plugins.json} on its own origin.
+   */
+  protected String pluginsUrl = "";
+
+  /**
+   * Hides the pre-release warning banner in the SPA.
+   */
+  protected boolean hideReleaseWarning = false;
 
   public boolean isEnabled() {
     return enabled;
@@ -108,6 +139,34 @@ public class NeoWebappProperty {
     this.indexRedirectEnabled = indexRedirectEnabled;
   }
 
+  public String getAuthMode() {
+    return authMode;
+  }
+
+  public void setAuthMode(String authMode) {
+    if (authMode != null && !AUTH_MODES.contains(authMode)) {
+      throw new IllegalArgumentException(
+        "Please provide a valid authentication mode. The available ones are: " + AUTH_MODES);
+    }
+    this.authMode = authMode == null ? AUTH_MODE_AUTO : authMode;
+  }
+
+  public String getPluginsUrl() {
+    return pluginsUrl;
+  }
+
+  public void setPluginsUrl(String pluginsUrl) {
+    this.pluginsUrl = pluginsUrl == null ? "" : pluginsUrl;
+  }
+
+  public boolean isHideReleaseWarning() {
+    return hideReleaseWarning;
+  }
+
+  public void setHideReleaseWarning(boolean hideReleaseWarning) {
+    this.hideReleaseWarning = hideReleaseWarning;
+  }
+
   @Override
   public String toString() {
     return joinOn(this.getClass())
@@ -116,6 +175,9 @@ public class NeoWebappProperty {
       .add("webjarClasspath='" + webjarClasspath + '\'')
       .add("securityConfigFile='" + securityConfigFile + '\'')
       .add("indexRedirectEnabled=" + indexRedirectEnabled)
+      .add("authMode='" + authMode + '\'')
+      .add("pluginsUrl='" + pluginsUrl + '\'')
+      .add("hideReleaseWarning=" + hideReleaseWarning)
       .toString();
   }
 }

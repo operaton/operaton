@@ -105,9 +105,15 @@ describe("api/helper", () => {
 
     it("builds a Bearer header from the token in oauth mode", () => {
       const state = {
-        auth: { mode: "oauth", token: { value: "abc.def.ghi" } },
+        auth: { mode: "oauth2", token: { value: "abc.def.ghi" } },
       };
       expect(get_auth_header(state)).toBe("Bearer abc.def.ghi");
+    });
+
+    it("sends no header in oauth mode when the session carries the identity", () => {
+      // Server-side OAuth2: there is no token, the session cookie authenticates
+      const state = { auth: { mode: "oauth2", token: { value: null } } };
+      expect(get_auth_header(state)).toBeUndefined();
     });
 
     it("encodes non-ASCII credentials safely", () => {

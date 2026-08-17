@@ -66,8 +66,10 @@ class ConcurrentInstallationIdInitializationTest extends ConcurrencyTestCase {
 
     thread2.makeContinue();
 
-    await().atMost(2, TimeUnit.SECONDS)
-           .until(() -> thread2.syncAvailable || thread2.getException() != null);
+    // thread2 is expected to stay blocked on the exclusive lock held by thread1,
+    // so there is no condition to wait for; just give thread2 time to run into
+    // the lock before thread1 is allowed to finish
+    await().pollDelay(2, TimeUnit.SECONDS).until(() -> true);
 
     thread1.waitUntilDone();
 

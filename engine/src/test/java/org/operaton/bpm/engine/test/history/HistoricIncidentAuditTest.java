@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.ManagementService;
@@ -36,10 +36,12 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.mockito.Mockito.*;
+
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
 class HistoricIncidentAuditTest {
 
-  private static SessionFactory sessionFactory = Mockito.spy(new MockSessionFactory());
+  private static SessionFactory sessionFactory = spy(new MockSessionFactory());
 
   public static class MockSessionFactory implements SessionFactory {
 
@@ -76,14 +78,14 @@ class HistoricIncidentAuditTest {
     ManagementService managementService = engineRule.getManagementService();
     Job job = managementService.createJobQuery().singleResult();
 
-    Mockito.reset(sessionFactory);
+    reset(sessionFactory);
 
     // when
     managementService.setJobRetries(job.getId(), 0);
 
 
     // then
-    Mockito.verify(sessionFactory, Mockito.never()).openSession();
+    verify(sessionFactory, never()).openSession();
   }
 
 
@@ -101,12 +103,12 @@ class HistoricIncidentAuditTest {
     ExternalTaskService externalTaskService = engineRule.getExternalTaskService();
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().singleResult();
 
-    Mockito.reset(sessionFactory);
+    reset(sessionFactory);
 
     // when
     externalTaskService.setRetries(externalTask.getId(), 0);
 
     // then
-    Mockito.verify(sessionFactory, Mockito.never()).openSession();
+    verify(sessionFactory, never()).openSession();
   }
 }

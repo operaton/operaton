@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.dto.telemetry;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -62,26 +62,6 @@
     <dependency>
       <groupId>org.operaton.bpm.dmn</groupId>
       <artifactId>operaton-engine-dmn</artifactId>
-      <exclusions>
-        <!-- these exclusions are needed when building with Maven >= 3.3
-          see CAM-11822 for details -->
-        <exclusion>
-          <groupId>com.lihaoyi</groupId>
-          <artifactId>fastparse_2.13</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.lihaoyi</groupId>
-          <artifactId>sourcecode_2.13</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.lihaoyi</groupId>
-          <artifactId>geny_2.13</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.scala-lang</groupId>
-          <artifactId>scala-library</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>

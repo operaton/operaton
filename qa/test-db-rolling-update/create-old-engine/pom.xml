@@ -20,6 +20,37 @@
       <artifactId>operaton-qa-db-rolling-update-util</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!--
+      The old engine's released pom pins operaton-engine-dmn to a fixed version, which
+      dependencyManagement overrides to the current one - so the unshaded feel-engine ends up
+      on this classpath. The old pom's CAM-11822 exclusions strip its Scala runtime
+      (scala-library, fastparse, geny, sourcecode), so it is restored explicitly here.
+    -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${version.scala}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.lihaoyi</groupId>
+      <artifactId>fastparse_2.13</artifactId>
+      <version>${version.fastparse}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.lihaoyi</groupId>
+      <artifactId>geny_2.13</artifactId>
+      <version>${version.geny}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.lihaoyi</groupId>
+      <artifactId>sourcecode_2.13</artifactId>
+      <version>${version.sourcecode}</version>
+      <scope>runtime</scope>
+    </dependency>
+
   </dependencies>
   <build>
     <resources>

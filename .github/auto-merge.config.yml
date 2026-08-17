@@ -50,6 +50,7 @@ auto-merge-rules:
       - 'com.google.guava*'
       - 'com.h2database:h2'
       - 'com.jayway.jsonpath:json-path'
+      - 'com.lihaoyi*'
       - 'com.networknt:json-schema-validator'
       - 'com.nimbusds:nimbus-jose-jwt'
       - 'com.tngtech.archunit:archunit-junit4'
@@ -80,7 +81,7 @@ auto-merge-rules:
       - 'org.slf4j*'
       - 'org.springframework:spring-framework-bom'
       - 'org.wiremock:wiremock'
-      - 'org.xmlunit:xmlunit-core'
+      - 'org.xmlunit:*'
       # version properties
       - 'okhttp-version'
       - 'version.asm'
@@ -96,6 +97,7 @@ auto-merge-rules:
       - 'version.testcontainers'
       - 'version.undertow'
       # Maven plugins
+      - 'com.mycila:license-maven-plugin'
       - 'org.apache.felix:maven-bundle-plugin'
       - 'org.apache.maven.plugins'
       - 'org.codehaus.cargo:cargo-maven3-plugin'

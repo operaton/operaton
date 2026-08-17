@@ -16,15 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -35,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
@@ -58,11 +49,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class ProcessInstanceRestServiceQueryTest extends
@@ -159,7 +146,7 @@ public class ProcessInstanceRestServiceQueryTest extends
         .when().get(PROCESS_INSTANCE_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     inOrder.verify(mockedQuery).processDefinitionKey(queryKey);
     inOrder.verify(mockedQuery).list();
 
@@ -1092,27 +1079,27 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("instanceId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessInstanceId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("definitionKey", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionKey();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("definitionId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("tenantId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByTenantId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("businessKey", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByBusinessKey();
     inOrder.verify(mockedQuery).asc();
@@ -1120,7 +1107,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   void testSecondarySortingAsPost() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("definitionKey").desc()
@@ -1215,7 +1202,7 @@ public class ProcessInstanceRestServiceQueryTest extends
           .get(PROCESS_INSTANCE_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(instanceQuery);
+    InOrder inOrder = inOrder(instanceQuery);
     Set<String> expectedSet = MockProvider.createMockSetFromList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID_LIST);
 
     inOrder.verify(instanceQuery).processInstanceIds(expectedSet);
@@ -1258,7 +1245,7 @@ public class ProcessInstanceRestServiceQueryTest extends
           .post(PROCESS_INSTANCE_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(instanceQuery);
+    InOrder inOrder = inOrder(instanceQuery);
 
     inOrder.verify(instanceQuery).processInstanceIds(processInstanceIds);
     inOrder.verify(instanceQuery).list();
@@ -1295,7 +1282,7 @@ public class ProcessInstanceRestServiceQueryTest extends
           .get(PROCESS_INSTANCE_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(instanceQuery);
+    InOrder inOrder = inOrder(instanceQuery);
     Set<String> expectedSet = MockProvider.createMockSetFromList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID_LIST);
 
     inOrder.verify(instanceQuery).processInstanceIds(expectedSet);
@@ -1338,7 +1325,7 @@ public class ProcessInstanceRestServiceQueryTest extends
           .post(PROCESS_INSTANCE_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(instanceQuery);
+    InOrder inOrder = inOrder(instanceQuery);
     inOrder.verify(instanceQuery).processInstanceIds(processInstanceIds);
     inOrder.verify(instanceQuery).list();
 

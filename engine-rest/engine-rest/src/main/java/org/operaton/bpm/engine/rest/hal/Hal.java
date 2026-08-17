@@ -20,11 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import jakarta.ws.rs.core.MediaType;
 
-import org.operaton.bpm.engine.rest.CaseDefinitionRestService;
-import org.operaton.bpm.engine.rest.GroupRestService;
-import org.operaton.bpm.engine.rest.IdentityRestService;
-import org.operaton.bpm.engine.rest.ProcessDefinitionRestService;
-import org.operaton.bpm.engine.rest.UserRestService;
+import org.operaton.bpm.engine.rest.*;
 import org.operaton.bpm.engine.rest.cache.Cache;
 import org.operaton.bpm.engine.rest.hal.casedefinition.HalCaseDefinitionResolver;
 import org.operaton.bpm.engine.rest.hal.group.HalGroupResolver;

@@ -21,25 +21,6 @@ on:
       - 'LICENSE'
       - 'NOTICE'
       - 'jreleaser.yml'
-  pull_request:
-    branches:
-      - main
-      - release/**
-    paths-ignore:
-      - '.github/workflows/**'
-      - '!.github/workflows/build.yml'
-      - '.github/jreleaser/changelog.tpl'
-      - '.github/ISSUE_TEMPLATE/**'
-      - '.github/PULL_REQUEST_TEMPLATE/**'
-      - '.github/dependabot.yml'
-      - '.github/auto-merge.config.yml'
-      - '**/*.md'
-      - 'distro/**'
-      - 'settings/**'
-      - '.gitingore'
-      - 'LICENSE'
-      - 'NOTICE'
-      - 'qa/**'
   workflow_dispatch:
     inputs:
       profile:
@@ -82,13 +63,13 @@ jobs:
       contents: read
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           sparse-checkout: |
             docs/decisions
       - name: Lint ADR files
         # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@8de2aa07cae85fd17c0b35642db70cf5495f1d25
+        uses: DavidAnson/markdownlint-cli2-action@21c1be1b93ad9ed58fa840aacc3f279cde2a72ff
         with:
           globs: |
             docs/decisions/*.md
@@ -102,11 +83,12 @@ jobs:
       actions: write
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
-      - name: Cache Maven packages
-        uses: actions/cache@v6.1.0
+      - name: Restore Maven packages
+        id: m2-cache
+        uses: actions/cache/restore@v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -118,7 +100,7 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: 24
           cache: 'npm'
@@ -199,6 +181,22 @@ jobs:
             distro/**/target/operaton-*.gz
             distro/webjar/target/operaton-webapp-webjar-*.jar
           key: ${{ github.run_id }}-build-artifacts
+      # This job is the only m2-cache producer: cache entries written from PR
+      # branches are readable only by that same PR, so PR-side writes just fill
+      # the shared 10 GB pool (the LRU evictions behind the recurring nightly
+      # failures). All other jobs restore-only. The freshly installed
+      # org/operaton artifacts are purged before saving — restoring them into
+      # later builds would make them accidentally incremental and can mask
+      # stale-artifact bugs.
+      - name: Purge Operaton artifacts before cache save
+        if: steps.m2-cache.outputs.cache-hit != 'true'
+        run: rm -rf ~/.m2/repository/org/operaton
+      - name: Save Maven packages
+        if: steps.m2-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
 
   publish:
     name: Publish
@@ -212,7 +210,7 @@ jobs:
     continue-on-error: true
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
       - name: Restore build artifacts cache

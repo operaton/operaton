@@ -18,14 +18,7 @@ package org.operaton.bpm.engine.rest;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
@@ -43,14 +36,7 @@ import org.mockito.Mockito;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -73,25 +59,14 @@ import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.hal.Hal;
-import org.operaton.bpm.engine.rest.helper.EqualsMap;
-import org.operaton.bpm.engine.rest.helper.EqualsVariableMap;
-import org.operaton.bpm.engine.rest.helper.ErrorMessageHelper;
-import org.operaton.bpm.engine.rest.helper.MockObjectValue;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.helper.VariableTypeHelper;
+import org.operaton.bpm.engine.rest.helper.*;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsObjectValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
 import org.operaton.bpm.engine.rest.util.EncodingUtil;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.operaton.bpm.engine.task.Attachment;
-import org.operaton.bpm.engine.task.Comment;
-import org.operaton.bpm.engine.task.DelegationState;
-import org.operaton.bpm.engine.task.IdentityLink;
-import org.operaton.bpm.engine.task.IdentityLinkType;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.task.TaskQuery;
+import org.operaton.bpm.engine.task.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
@@ -107,22 +82,11 @@ import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class TaskRestServiceInteractionTest extends
@@ -240,7 +204,7 @@ public class TaskRestServiceInteractionTest extends
     when(formServiceMock.getTaskFormKey(any(), any())).thenReturn(MockProvider.EXAMPLE_FORM_KEY);
 
     VariableMap variablesMock = MockProvider.createMockFormVariables();
-    when(formServiceMock.getTaskFormVariables(eq(EXAMPLE_TASK_ID), Mockito.any(), anyBoolean())).thenReturn(variablesMock);
+    when(formServiceMock.getTaskFormVariables(eq(EXAMPLE_TASK_ID), any(), anyBoolean())).thenReturn(variablesMock);
 
     repositoryServiceMock = mock(RepositoryService.class);
     when(processEngine.getRepositoryService()).thenReturn(repositoryServiceMock);
@@ -1144,7 +1108,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void shouldReturnErrorOnSubmitTaskForm() {
     doThrow(new ProcessEngineException("foo", 123))
-        .when(formServiceMock).submitTaskForm(anyString(), Mockito.any());
+        .when(formServiceMock).submitTaskForm(anyString(), any());
 
     given().pathParam("id", EXAMPLE_TASK_ID)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -1180,7 +1144,7 @@ public class TaskRestServiceInteractionTest extends
 
   @Test
   void testUnsuccessfulSubmitForm() {
-    doThrow(new ProcessEngineException("expected exception")).when(formServiceMock).submitTaskForm(any(String.class), Mockito.any());
+    doThrow(new ProcessEngineException("expected exception")).when(formServiceMock).submitTaskForm(any(String.class), any());
 
     given().pathParam("id", EXAMPLE_TASK_ID)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -1195,7 +1159,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void testSubmitFormThrowsAuthorizationException() {
     String message = "expected exception";
-    doThrow(new AuthorizationException(message)).when(formServiceMock).submitTaskForm(anyString(), Mockito.any());
+    doThrow(new AuthorizationException(message)).when(formServiceMock).submitTaskForm(anyString(), any());
 
     given()
       .pathParam("id", EXAMPLE_TASK_ID)
@@ -1214,7 +1178,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void testSubmitTaskFormThrowsFormFieldValidationException() {
     String message = "expected exception";
-    doThrow(new FormFieldValidationException("form-exception", message)).when(formServiceMock).submitTaskForm(anyString(), Mockito.any());
+    doThrow(new FormFieldValidationException("form-exception", message)).when(formServiceMock).submitTaskForm(anyString(), any());
 
     given()
       .pathParam("id", EXAMPLE_TASK_ID)
@@ -1297,7 +1261,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void testGetTaskFormVariablesThrowsAuthorizationException() {
     String message = "expected exception";
-    doThrow(new AuthorizationException(message)).when(formServiceMock).getTaskFormVariables(anyString(), Mockito.any(), anyBoolean());
+    doThrow(new AuthorizationException(message)).when(formServiceMock).getTaskFormVariables(anyString(), any(), anyBoolean());
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_TASK_ID)
@@ -1988,7 +1952,7 @@ public class TaskRestServiceInteractionTest extends
 
   @Test
   void testUnsuccessfulCompleteTask() {
-    doThrow(new ProcessEngineException("expected exception")).when(taskServiceMock).complete(any(String.class), Mockito.any());
+    doThrow(new ProcessEngineException("expected exception")).when(taskServiceMock).complete(any(String.class), any());
 
     given().pathParam("id", EXAMPLE_TASK_ID)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -2003,7 +1967,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void shouldReturnErrorOnCompletingTask() {
     doThrow(new ProcessEngineException("foo", 123))
-        .when(taskServiceMock).complete(any(String.class), Mockito.any());
+        .when(taskServiceMock).complete(any(String.class), any());
 
     given().pathParam("id", EXAMPLE_TASK_ID)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -2019,7 +1983,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void testCompleteTaskThrowsAuthorizationException() {
     String message = "expected exception";
-    doThrow(new AuthorizationException(message)).when(taskServiceMock).complete(anyString(), Mockito.any());
+    doThrow(new AuthorizationException(message)).when(taskServiceMock).complete(anyString(), any());
 
     given()
       .pathParam("id", EXAMPLE_TASK_ID)
@@ -2193,7 +2157,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void testResolveTaskThrowsAuthorizationException() {
     String message = "expected exception";
-    doThrow(new AuthorizationException(message)).when(taskServiceMock).resolveTask(anyString(), Mockito.any());
+    doThrow(new AuthorizationException(message)).when(taskServiceMock).resolveTask(anyString(), any());
 
     given()
       .pathParam("id", EXAMPLE_TASK_ID)

@@ -1,15 +1,21 @@
 <module xmlns="urn:jboss:module:1.0" name="org.camunda.feel.feel-engine">
   <resources>
-    <resource-root path="feel-engine-@version.feel-scala@-scala-shaded.jar" />
+    <resource-root path="feel-engine-@version.feel-scala@.jar" />
   </resources>
 
   <dependencies>
     <module name="org.slf4j" />
-    <!-- Needed for feel-engine 1.20.0+ due to jackson-module-scala -->
-    <module name="org.scala-lang.scala-library" />
-    <!-- Needed for feel-engine 1.20.0+ to use Operaton's Jackson version -->
+    <module name="org.scala-lang.scala-library" export="true"/>
+    <module name="com.lihaoyi.fastparse" slot="2.13" />
+    <!-- fastparse inlines sourcecode.Name instantiations into feel-engine's parser bytecode;
+         they only execute when a parse error message is built, so a missing dependency here
+         goes unnoticed by tests that never evaluate an invalid FEEL expression -->
+    <module name="com.lihaoyi.sourcecode" slot="2.13" />
+    <module name="com.fasterxml.uuid.java-uuid-generator" />
+    <!-- Use Operaton's Jackson version -->
     <module name="com.fasterxml.jackson.core.jackson-core" slot="@version.jackson@" />
     <module name="com.fasterxml.jackson.core.jackson-annotations" slot="@version.jackson@" />
     <module name="com.fasterxml.jackson.core.jackson-databind" slot="@version.jackson@" />
+    <module name="com.fasterxml.jackson.module.jackson-module-scala" slot="2.13" />
   </dependencies>
 </module>

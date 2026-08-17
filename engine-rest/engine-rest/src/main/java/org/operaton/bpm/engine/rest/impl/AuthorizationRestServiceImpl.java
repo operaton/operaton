@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.authorization.Authorization;
-import org.operaton.bpm.engine.authorization.AuthorizationQuery;
-import org.operaton.bpm.engine.authorization.Permission;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.authorization.*;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.identity.Authentication;

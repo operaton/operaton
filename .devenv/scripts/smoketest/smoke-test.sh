@@ -68,6 +68,8 @@ if [ ! -d "${PLAYWRIGHT_DIR}/node_modules/playwright" ]; then
   echo "Installing playwright..."
   cd "$PLAYWRIGHT_DIR" && npm install playwright --save-quiet 2>/dev/null || true
 fi
+# Install/update browser executable (no-op if already current)
+cd "$PLAYWRIGHT_DIR" && npx playwright install chromium --quiet 2>/dev/null || true
 
 # ── Teardown on exit ─────────────────────────────────────────────────────────
 cleanup() {

@@ -213,55 +213,6 @@
               </execution>
             </executions>
           </plugin>
-          <!--
-            Verify that the distribution zip does not contain any jackson-module-scala jars,
-            which are not needed and could cause NoClassDefFoundError if present.
-            See https://github.com/operaton/operaton/issues/2875
-          -->
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>verify-no-jackson-scala</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <delete dir="${project.build.directory}/verify-temp/"/>
-                    <mkdir dir="${project.build.directory}/verify-temp/"/>
-                    <unzip src="${project.build.directory}/operaton-bpm-${project.version}.zip"
-                           dest="${project.build.directory}/verify-temp/">
-                      <patternset>
-                        <include name="internal/operaton-bpm.jar"/>
-                      </patternset>
-                    </unzip>
-                    <available file="${project.build.directory}/verify-temp/internal/operaton-bpm.jar"
-                               property="inner.jar.present"/>
-                    <fail unless="inner.jar.present"
-                          message="verify-no-jackson-scala: internal/operaton-bpm.jar not found in the distribution zip — assembly structure may have changed."/>
-                    <mkdir dir="${project.build.directory}/verify-temp/scala-check/"/>
-                    <unzip src="${project.build.directory}/verify-temp/internal/operaton-bpm.jar"
-                           dest="${project.build.directory}/verify-temp/scala-check/">
-                      <patternset>
-                        <include name="BOOT-INF/lib/jackson-module-scala*.jar"/>
-                      </patternset>
-                    </unzip>
-                    <fileset id="scala.jars.found"
-                             dir="${project.build.directory}/verify-temp/scala-check"
-                             includes="BOOT-INF/lib/jackson-module-scala*.jar"/>
-                    <condition property="scala.jars.present">
-                      <resourcecount refid="scala.jars.found" when="greater" count="0"/>
-                    </condition>
-                    <fail if="scala.jars.present"
-                          message="Found jackson-module-scala in BOOT-INF/lib of operaton-bpm.jar — this Scala dependency must not be bundled in the distribution."/>
-                    <delete dir="${project.build.directory}/verify-temp/"/>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
         </plugins>
       </build>
     </profile>

@@ -30,7 +30,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.TenantQuery;
@@ -43,11 +42,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -219,7 +214,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
     .when()
       .get(QUERY_URL);
 
-    InOrder inOrder = Mockito.inOrder(mockQuery);
+    InOrder inOrder = inOrder(mockQuery);
     inOrder.verify(mockQuery).orderByTenantId();
     inOrder.verify(mockQuery).asc();
   }
@@ -234,7 +229,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
     .when()
       .get(QUERY_URL);
 
-    InOrder inOrder = Mockito.inOrder(mockQuery);
+    InOrder inOrder = inOrder(mockQuery);
     inOrder.verify(mockQuery).orderByTenantName();
     inOrder.verify(mockQuery).desc();
   }

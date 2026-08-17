@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 import jakarta.ws.rs.core.Response.Status;
@@ -34,7 +30,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
@@ -63,11 +58,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class MessageRestServiceTest extends AbstractRestServiceTest {
@@ -99,11 +90,11 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
     when(messageCorrelationBuilderMock.processInstanceId(anyString())).thenReturn(messageCorrelationBuilderMock);
     when(messageCorrelationBuilderMock.processInstanceBusinessKey(anyString())).thenReturn(messageCorrelationBuilderMock);
     when(messageCorrelationBuilderMock.processInstanceVariableEquals(anyString(), any())).thenReturn(messageCorrelationBuilderMock);
-    when(messageCorrelationBuilderMock.setVariables(Mockito.any())).thenReturn(messageCorrelationBuilderMock);
+    when(messageCorrelationBuilderMock.setVariables(any())).thenReturn(messageCorrelationBuilderMock);
     when(messageCorrelationBuilderMock.setVariable(anyString(), any())).thenReturn(messageCorrelationBuilderMock);
-    when(messageCorrelationBuilderMock.setVariablesLocal(Mockito.any())).thenReturn(messageCorrelationBuilderMock);
+    when(messageCorrelationBuilderMock.setVariablesLocal(any())).thenReturn(messageCorrelationBuilderMock);
     when(messageCorrelationBuilderMock.setVariableLocal(anyString(), any())).thenReturn(messageCorrelationBuilderMock);
-    when(messageCorrelationBuilderMock.setVariablesToTriggeredScope(Mockito.any())).thenReturn(messageCorrelationBuilderMock);
+    when(messageCorrelationBuilderMock.setVariablesToTriggeredScope(any())).thenReturn(messageCorrelationBuilderMock);
     when(messageCorrelationBuilderMock.setVariableToTriggeredScope(anyString(), any())).thenReturn(messageCorrelationBuilderMock);
 
     executionResult = MockProvider.createMessageCorrelationResult(MessageCorrelationResultType.Execution);
@@ -791,7 +782,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
 
     verify(runtimeServiceMock).createMessageCorrelation(messageName);
 
-    verify(messageCorrelationBuilderMock, Mockito.never()).processInstanceBusinessKey(anyString());
+    verify(messageCorrelationBuilderMock, never()).processInstanceBusinessKey(anyString());
     verify(messageCorrelationBuilderMock).correlateWithResult();
     verifyNoMoreInteractions(messageCorrelationBuilderMock);
   }

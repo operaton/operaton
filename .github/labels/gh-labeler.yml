@@ -107,9 +107,12 @@ scope:quarkus:
       - '!**/src/test/**'
 
 scope:webapp:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'webapps/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'webapps/**'
+    - any-glob-to-any-file:
+        - '!**/src/test/**'
 
 scope:ldap:
 - all:

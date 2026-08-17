@@ -15,18 +15,18 @@
  */
 package org.operaton.bpm.engine.impl.health;
 
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.operaton.bpm.engine.health.FrontendHealthContributor;
-import org.operaton.bpm.engine.health.HealthResult;
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import javax.sql.DataSource;
+
+import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.health.FrontendHealthContributor;
+import org.operaton.bpm.engine.health.HealthResult;
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -38,7 +38,7 @@ class DefaultHealthServiceTest {
     JobExecutor jobExecutor = mock(JobExecutor.class);
     when(jobExecutor.isActive()).thenReturn(true);
     @SuppressWarnings("unchecked")
-    Iterator<Object> it = (Iterator<Object>) Mockito.mock(Iterator.class);
+    Iterator<Object> it = (Iterator<Object>) mock(Iterator.class);
     when(it.hasNext()).thenReturn(true);
     when(jobExecutor.engineIterator()).thenReturn((Iterator) it);
 

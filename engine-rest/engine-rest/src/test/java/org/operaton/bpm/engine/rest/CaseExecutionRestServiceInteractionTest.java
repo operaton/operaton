@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -32,7 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -66,18 +61,10 @@ import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 /**
@@ -131,8 +118,8 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     when(caseServiceMock.getVariableLocalTyped(anyString(), eq(EXAMPLE_BYTES_VARIABLE_KEY), eq(false))).thenReturn(EXAMPLE_VARIABLE_VALUE_BYTES);
     when(caseServiceMock.getVariablesLocalTyped(anyString(), eq(true))).thenReturn(EXAMPLE_VARIABLES);
 
-    when(caseServiceMock.getVariablesTyped(anyString(), Mockito.any(), eq(true))).thenReturn(EXAMPLE_VARIABLES);
-    when(caseServiceMock.getVariablesLocalTyped(anyString(), Mockito.any(), eq(true))).thenReturn(EXAMPLE_VARIABLES);
+    when(caseServiceMock.getVariablesTyped(anyString(), any(), eq(true))).thenReturn(EXAMPLE_VARIABLES);
+    when(caseServiceMock.getVariablesLocalTyped(anyString(), any(), eq(true))).thenReturn(EXAMPLE_VARIABLES);
 
     caseExecutionCommandBuilderMock = mock(CaseExecutionCommandBuilder.class);
 
@@ -140,13 +127,13 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
     when(caseExecutionCommandBuilderMock.setVariable(anyString(), any())).thenReturn(caseExecutionCommandBuilderMock);
     when(caseExecutionCommandBuilderMock.setVariableLocal(anyString(), any())).thenReturn(caseExecutionCommandBuilderMock);
-    when(caseExecutionCommandBuilderMock.setVariables(Mockito.any())).thenReturn(caseExecutionCommandBuilderMock);
-    when(caseExecutionCommandBuilderMock.setVariablesLocal(Mockito.any())).thenReturn(caseExecutionCommandBuilderMock);
+    when(caseExecutionCommandBuilderMock.setVariables(any())).thenReturn(caseExecutionCommandBuilderMock);
+    when(caseExecutionCommandBuilderMock.setVariablesLocal(any())).thenReturn(caseExecutionCommandBuilderMock);
 
     when(caseExecutionCommandBuilderMock.removeVariable(anyString())).thenReturn(caseExecutionCommandBuilderMock);
     when(caseExecutionCommandBuilderMock.removeVariableLocal(anyString())).thenReturn(caseExecutionCommandBuilderMock);
-    when(caseExecutionCommandBuilderMock.removeVariables(Mockito.any())).thenReturn(caseExecutionCommandBuilderMock);
-    when(caseExecutionCommandBuilderMock.removeVariablesLocal(Mockito.any())).thenReturn(caseExecutionCommandBuilderMock);
+    when(caseExecutionCommandBuilderMock.removeVariables(any())).thenReturn(caseExecutionCommandBuilderMock);
+    when(caseExecutionCommandBuilderMock.removeVariablesLocal(any())).thenReturn(caseExecutionCommandBuilderMock);
 
   }
 

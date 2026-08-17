@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -54,7 +53,7 @@ class DefaultJobConfigurationTest {
 
   @Test
   void delegate_to_specialized_configurations() {
-    DefaultJobConfiguration configurationSpy = Mockito.spy(jobConfiguration);
+    DefaultJobConfiguration configurationSpy = spy(jobConfiguration);
     configurationSpy.preInit(processEngineConfiguration);
     verify(configurationSpy).configureJobExecutor(processEngineConfiguration);
     verify(configurationSpy).registerCustomJobHandlers(processEngineConfiguration);

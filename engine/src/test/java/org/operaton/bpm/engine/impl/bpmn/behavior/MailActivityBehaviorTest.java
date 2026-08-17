@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -34,13 +33,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class MailActivityBehaviorTest {
 
@@ -49,7 +42,7 @@ class MailActivityBehaviorTest {
   @Test
   void execute_configuresAndSendsEmail() throws Exception {
     // given
-    MailActivityBehavior behavior = Mockito.spy(new MailActivityBehavior());
+    MailActivityBehavior behavior = spy(new MailActivityBehavior());
     Email email = mock(Email.class);
     ExecutionEntity execution = mock(ExecutionEntity.class);
 
@@ -114,7 +107,7 @@ class MailActivityBehaviorTest {
   @Test
   void execute_sendThrowsEmailException_wrapped() throws Exception {
     // given
-    MailActivityBehavior behavior = Mockito.spy(new MailActivityBehavior());
+    MailActivityBehavior behavior = spy(new MailActivityBehavior());
     Email email = mock(Email.class);
     ExecutionEntity execution = mock(ExecutionEntity.class);
 

@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.operaton.bpm.engine.CaseService;
@@ -100,13 +99,13 @@ public class CmmnAwareTestsTest {
     //because we need control over the CaseDefinitionAssert created
     final MockedStatic<CaseDefinitionAssert> caseDefinitionAssertMockedStatic = mockStatic(CaseDefinitionAssert.class);
     CaseDefinitionAssert caseDefinitionAssert = mock(CaseDefinitionAssert.class);
-    caseDefinitionAssertMockedStatic.when(() -> CaseDefinitionAssert.assertThat(Mockito.any(), any())).thenReturn(caseDefinitionAssert);
+    caseDefinitionAssertMockedStatic.when(() -> CaseDefinitionAssert.assertThat(any(), any())).thenReturn(caseDefinitionAssert);
 
     //when calling the method under test with a non-null CaseDefinition object
     CaseDefinitionAssert actualCaseDefinitionAssert = CmmnAwareTests.assertThat(caseDefinition);
 
     //then the delegate is called with that CaseDefinition object
-    caseDefinitionAssertMockedStatic.verify(() -> CaseDefinitionAssert.assertThat(Mockito.any(), any()));
+    caseDefinitionAssertMockedStatic.verify(() -> CaseDefinitionAssert.assertThat(any(), any()));
     //and whatever the delegate returns, is returned by the tested method, too
     assertThat(actualCaseDefinitionAssert).isSameAs(caseDefinitionAssert);
 
@@ -120,13 +119,13 @@ public class CmmnAwareTestsTest {
     //because we need control over the CaseExecutionAssert created
     final MockedStatic<CaseExecutionAssert> caseExecutionAssertMockedStatic = mockStatic(CaseExecutionAssert.class);
     CaseExecutionAssert caseExecutionAssert = mock(CaseExecutionAssert.class);
-    caseExecutionAssertMockedStatic.when(() -> CaseExecutionAssert.assertThat(Mockito.any(), any())).thenReturn(caseExecutionAssert);
+    caseExecutionAssertMockedStatic.when(() -> CaseExecutionAssert.assertThat(any(), any())).thenReturn(caseExecutionAssert);
 
     //when calling the method under test with a non-null CaseExecution object
     CaseExecutionAssert actualCaseExecutionAssert = CmmnAwareTests.assertThat(caseExecution);
 
     //then the delegate is called with that CaseExecution object
-    caseExecutionAssertMockedStatic.verify(() -> CaseExecutionAssert.assertThat(Mockito.any(), any()));
+    caseExecutionAssertMockedStatic.verify(() -> CaseExecutionAssert.assertThat(any(), any()));
     //and whatever the delegate returns, is returned by the tested method, too
     assertThat(actualCaseExecutionAssert).isSameAs(caseExecutionAssert);
 

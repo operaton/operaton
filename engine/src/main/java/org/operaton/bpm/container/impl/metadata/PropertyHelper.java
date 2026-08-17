@@ -46,7 +46,7 @@ public final class PropertyHelper {
   /**
    * Regex for Ant-style property placeholders
    */
-  private static final Pattern PROPERTY_TEMPLATE = Pattern.compile("([^\\$]*)\\$\\{(.+?)\\}([^\\$]*)");
+  private static final Pattern PROPERTY_TEMPLATE = Pattern.compile("([^$]*+)\\$\\{([^\\n\\r\\u0085\\u2028\\u2029][^}\\n\\r\\u0085\\u2028\\u2029]*+)\\}([^$]*+)");
 
   public static boolean getBooleanProperty(Map<String, String> properties, String name, boolean defaultValue) {
     String value = properties.get(name);

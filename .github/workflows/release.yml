@@ -40,12 +40,12 @@ jobs:
       next_version: ${{steps.compute-next-version.outputs.next_version}}
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v5.4.0
+        uses: actions/setup-java@v5.7.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -112,12 +112,12 @@ jobs:
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v5.4.0
+        uses: actions/setup-java@v5.7.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -152,8 +152,10 @@ jobs:
           echo "database_version=$DATABASE_VERSION"
           .github/scripts/set-project-version.sh $RELEASE_VERSION
           if [ -z "$QUALIFIER" ]; then
-            chmod +x .github/scripts/finalize-qa-db-fixture.sh
             .github/scripts/finalize-qa-db-fixture.sh $DATABASE_VERSION $RELEASE_VERSION
+          else
+            # prevent deployment of non-final sql scripts - a db schemaa can only deployed once
+            touch distro/sql-script/.skip-deploy
           fi
 
       - name: Maven Build
@@ -207,7 +209,7 @@ jobs:
       contents: write
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -299,7 +301,7 @@ jobs:
           fi
 
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
       - name: Update the release branch
         run: |
           git pull

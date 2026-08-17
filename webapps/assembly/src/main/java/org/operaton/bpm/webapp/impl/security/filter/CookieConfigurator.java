@@ -27,6 +27,7 @@ import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.
 
 public class CookieConfigurator {
 
+  protected static final String COOKIE_NAME_PARAM = "cookieName";
   protected static final String ENABLE_SECURE_PARAM = "enableSecureCookie";
   protected static final String ENABLE_SAME_SITE_PARAM = "enableSameSiteCookie";
   protected static final String SAME_SITE_OPTION_PARAM = "sameSiteCookieOption";
@@ -44,7 +45,7 @@ public class CookieConfigurator {
       isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookieInitParam);
     }
 
-    String cookieNameParam = filterConfig.getInitParameter("cookieName");
+    String cookieNameParam = filterConfig.getInitParameter(COOKIE_NAME_PARAM);
     if (cookieNameParam != null && !cookieNameParam.isBlank()) {
       String trimmed = cookieNameParam.trim();
       if (trimmed.matches(COOKIE_NAME_FORBIDDEN)) {

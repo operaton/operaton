@@ -33,11 +33,7 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
 import static io.restassured.RestAssured.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 
 @ExtendWith(TestContainerExtension.class)
 class OptimizeCompletedTaskInstanceRestServiceTest extends AbstractRestServiceTest {

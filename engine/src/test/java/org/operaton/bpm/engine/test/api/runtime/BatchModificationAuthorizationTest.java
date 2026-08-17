@@ -104,10 +104,7 @@ public class BatchModificationAuthorizationTest {
   @AfterEach
   void tearDown() {
     authRule.deleteUsersAndGroups();
-  }
 
-  @AfterEach
-  void cleanBatch() {
     Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
     if (batch != null) {
       engineRule.getManagementService().deleteBatch(
@@ -119,10 +116,7 @@ public class BatchModificationAuthorizationTest {
       engineRule.getHistoryService().deleteHistoricBatch(
           historicBatch.getId());
     }
-  }
 
-  @AfterEach
-  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 

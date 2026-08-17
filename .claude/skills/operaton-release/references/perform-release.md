@@ -28,6 +28,7 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
    gh run list --repo operaton/operaton --workflow release.yml -L 1
    gh run watch <run-id> --repo operaton/operaton
    ```
+3. Update the documentation. In repository operaton/documentation, update the versions by executing thd script `.devenv/scripts/update-version.py`.
 
 ## Verification (after real run)
 - [ ] GitHub Release created with the tag (`gh release view vX.Y.Z --repo operaton/operaton`). For `-Mx`/`-RCx`, it should be a prerelease.

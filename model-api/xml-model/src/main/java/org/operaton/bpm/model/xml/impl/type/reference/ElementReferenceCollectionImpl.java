@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
@@ -90,7 +92,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   }
 
   @Override
-  public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
+  public @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     return referenceSourceElement.getTextContent();
   }
 

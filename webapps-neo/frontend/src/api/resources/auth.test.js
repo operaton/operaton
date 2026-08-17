@@ -29,12 +29,14 @@ describe("api/resources/auth (basic mode)", () => {
   });
   afterEach(() => vi.unstubAllGlobals());
 
+  const verified = (user = "bob") => ({
+    ok: true,
+    json: async () => ({ authenticated: true, authenticatedUser: user }),
+  });
+
   describe("login", () => {
     it("stores credentials, marks authenticated and persists the session on success", async () => {
-      fetchMock.mockResolvedValue({
-        ok: true,
-        json: async () => ({ id: "bob" }),
-      });
+      fetchMock.mockResolvedValue(verified());
       auth.login(state, "bob", "secret");
 
       await vi.waitFor(() =>
@@ -48,10 +50,51 @@ describe("api/resources/auth (basic mode)", () => {
         username: "bob",
         password: "secret",
       });
-      // Sends a Basic auth header derived from the supplied credentials.
-      expect(fetchMock.mock.calls[0][1].headers.get("Authorization")).toMatch(
-        /^Basic /,
+    });
+
+    it("checks the credentials against the identity service", async () => {
+      fetchMock.mockResolvedValue(verified());
+      auth.login(state, "bob", "secret");
+
+      await vi.waitFor(() =>
+        expect(state.auth.logged_in.value.data).toBe("authenticated"),
       );
+      const [url, options] = fetchMock.mock.calls[0];
+      expect(url).toBe("http://localhost:8080/engine-rest/identity/verify");
+      expect(options.method).toBe("POST");
+      expect(JSON.parse(options.body)).toEqual({
+        username: "bob",
+        password: "secret",
+      });
+    });
+
+    it("records the user the identity service resolved", async () => {
+      // The web apps need to know who is looking in order to load anything
+      // user-specific, whether or not the REST API demanded credentials.
+      fetchMock.mockResolvedValue(verified("bob.smith"));
+      auth.login(state, "bob", "secret");
+
+      await vi.waitFor(() =>
+        expect(state.auth.logged_in.value.data).toBe("authenticated"),
+      );
+      expect(state.auth.user.id.value).toBe("bob.smith");
+    });
+
+    // The endpoint answers 200 with authenticated:false, so an ok response is
+    // not by itself a successful login. Probing an arbitrary endpoint with a
+    // Basic header used to accept ANY password against an unauthenticated API.
+    it("rejects a wrong password even when the API needs no authentication", async () => {
+      fetchMock.mockResolvedValue({
+        ok: true,
+        json: async () => ({ authenticated: false, authenticatedUser: "bob" }),
+      });
+      auth.login(state, "bob", "wrong");
+
+      await vi.waitFor(() =>
+        expect(state.auth.logged_in.value.data).toBe("wrong_login"),
+      );
+      // nothing is persisted, so a reload lands back on the login screen
+      expect(sessionStorage.getItem(BASIC_AUTH_KEY)).toBeNull();
     });
 
     it("marks wrong_login on a failed response", async () => {
@@ -98,17 +141,18 @@ describe("api/resources/auth (basic mode)", () => {
       });
     });
 
-    it("verifies stored credentials against /authorization and authenticates", async () => {
-      fetchMock.mockResolvedValue({ ok: true, json: async () => [] });
+    it("re-checks stored credentials against the identity service", async () => {
+      fetchMock.mockResolvedValue(verified());
       await auth.is_authenticated(state);
 
       expect(fetchMock.mock.calls[0][0]).toBe(
-        "http://localhost:8080/engine-rest/authorization",
+        "http://localhost:8080/engine-rest/identity/verify",
       );
       expect(state.auth.logged_in.value).toEqual({
         status: RESPONSE_STATE.SUCCESS,
         data: "authenticated",
       });
+      expect(state.auth.user.id.value).toBe("bob");
     });
 
     it("is unauthenticated when the verification request fails", async () => {
@@ -117,13 +161,28 @@ describe("api/resources/auth (basic mode)", () => {
       expect(state.auth.logged_in.value.data).toBe("unauthenticated");
     });
 
+    it("discards a stored session the identity service rejects", async () => {
+      sessionStorage.setItem(
+        BASIC_AUTH_KEY,
+        JSON.stringify({ username: "bob", password: "stale" }),
+      );
+      fetchMock.mockResolvedValue({
+        ok: true,
+        json: async () => ({ authenticated: false }),
+      });
+      await auth.is_authenticated(state);
+
+      expect(state.auth.logged_in.value.data).toBe("unauthenticated");
+      expect(sessionStorage.getItem(BASIC_AUTH_KEY)).toBeNull();
+    });
+
     it("restores a persisted basic-auth session before checking", async () => {
       state.auth.credentials.value = { username: null, password: null };
       sessionStorage.setItem(
         BASIC_AUTH_KEY,
         JSON.stringify({ username: "carol", password: "pw" }),
       );
-      fetchMock.mockResolvedValue({ ok: true, json: async () => [] });
+      fetchMock.mockResolvedValue(verified("carol"));
       await auth.is_authenticated(state);
 
       expect(state.auth.credentials.value).toEqual({

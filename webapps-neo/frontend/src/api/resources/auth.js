@@ -31,6 +31,35 @@ const restore_basic_session = (state) => {
 };
 
 /**
+ * Check a username and password against the engine's identity service.
+ *
+ * Deliberately not a plain request to some endpoint with an Authorization
+ * header: the REST API may be configured without authentication, in which case
+ * every request succeeds and any password would be accepted. This endpoint
+ * verifies the credentials whether or not the API itself demands them, and
+ * answers with the resolved user, which the web apps need in order to load
+ * anything user-specific.
+ *
+ * @param {Object} state - Application state
+ * @returns {Promise<string>} the authenticated user id
+ */
+const verify_credentials = (state, username, password) =>
+  fetch(`${_url_engine_rest(state)}/identity/verify`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ username, password }),
+  })
+    .then((response) =>
+      response.ok ? response.json() : Promise.reject(response),
+    )
+    .then((result) =>
+      result.authenticated
+        ? (result.authenticatedUser ?? username)
+        : Promise.reject(result),
+    );
+
+/**
  * Login new user
  * @param {Object} state - Application state
  * @param username User name
@@ -40,22 +69,11 @@ const login = (
   state,
   /** @type {string} */ username,
   /** @type {string} */ password,
-) => {
-  const login_form_data = new FormData();
-  login_form_data.append("username", username);
-  login_form_data.append("password", password);
-  let headers = new Headers();
-  headers.set(
-    "Authorization",
-    `Basic ${window.btoa(unescape(encodeURIComponent(`${username}:${password}`)))}`,
-  ); //TODO authentication
-
-  fetch(`${_url_engine_rest(state)}/user`, { headers })
-    .then((response) =>
-      response.ok ? response.json() : Promise.reject(response),
-    )
-    .then(() => {
+) =>
+  verify_credentials(state, username, password)
+    .then((user_id) => {
       state.auth.credentials.value = { username, password };
+      state.auth.user.id.value = user_id;
       state.auth.logged_in.value = {
         status: RESPONSE_STATE.SUCCESS,
         data: "authenticated",
@@ -72,7 +90,6 @@ const login = (
           data: "wrong_login",
         }),
     );
-};
 /**
  * Logout current user
  * @param {Object} state - Application state
@@ -125,18 +142,20 @@ const is_authenticated = async (state) => {
   const { username, password } = state.auth.credentials.value;
 
   try {
-    const response = await fetch(`${_url_engine_rest(state)}/authorization`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Basic ${window.btoa(unescape(encodeURIComponent(`${username}:${password}`)))}`,
-      },
-    });
-    await (response.ok ? response.json() : Promise.reject(response));
+    // Re-verify rather than probing an arbitrary endpoint, for the same reason
+    // login does: against an unauthenticated REST API a probe proves nothing.
+    state.auth.user.id.value = await verify_credentials(
+      state,
+      username,
+      password,
+    );
     return (signal.value = {
       status: RESPONSE_STATE.SUCCESS,
       data: "authenticated",
     });
   } catch {
+    sessionStorage.removeItem(BASIC_AUTH_KEY);
+    state.auth.credentials.value = { username: null, password: null };
     return (signal.value = {
       status: RESPONSE_STATE.ERROR,
       data: "unauthenticated",

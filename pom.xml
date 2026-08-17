@@ -841,8 +841,10 @@
         <module>freemarker-template-engine</module>
         <module>jakarta-ee/ejb-client</module>
         <module>webapps</module>
+        <module>webapps-neo</module>
         <module>engine-plugins</module>
         <module>distro/webjar</module>
+        <module>distro/webjar-neo</module>
         <!--
         Excluded since the version is final and already deployed
         <module>distro/sql-script</module>

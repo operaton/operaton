@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,13 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.auth.cache.time-to-live=0"
 })
 @DirtiesContext
+@Disabled("""
+    Copied unadapted from the legacy webapp starter: it logs in through the legacy \
+    admin auth API (/api/admin/auth/user/{engine}/login/{app}) and expects the \
+    X-Authorized-Apps header to list the four legacy apps. webapps-neo registers no \
+    JAX-RS servlets, so that endpoint does not exist here, and the SPA authenticates \
+    either with basic auth against /engine-rest or through the server-side OAuth2 \
+    session. Re-enable once webapps-neo has an authentication API of its own.""")
 class AuthCacheTTLValidateAllRequestsIT {
 
   @RegisterExtension

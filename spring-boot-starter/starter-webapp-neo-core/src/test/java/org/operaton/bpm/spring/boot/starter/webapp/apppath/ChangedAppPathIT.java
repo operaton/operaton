@@ -110,13 +110,13 @@ class ChangedAppPathIT {
   }
 
   @Test
-  void shouldCheckPresenceOfRestApi() {
+  void shouldServeSpaFromAppPath() {
     // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/api/engine/engine/", String.class);
+    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH + "/", String.class);
 
     // then
-    assertThat(response.getBody()).isEqualTo("[{\"name\":\"default\"}]");
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).contains("<title>Operaton</title>");
   }
 
   @Test

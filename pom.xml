@@ -122,7 +122,7 @@
             <recipe>org.operaton.recipe.CodeCleanup</recipe>
           </activeRecipes>
           <activeStyles>
-            <!--<style>org.operaton.style.OperatonJavaStyle</style>-->
+            <style>org.operaton.style.OperatonJavaStyle</style>
           </activeStyles>
           <failOnDryRunResults>true</failOnDryRunResults>
           <exclusions>

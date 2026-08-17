@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.builder;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.CatchEvent;
 import org.operaton.bpm.model.bpmn.instance.CompensateEventDefinition;
@@ -111,7 +113,7 @@ public abstract class AbstractCatchEventBuilder<B extends  AbstractCatchEventBui
     return compensateEventDefinition(null);
   }
 
-  public CompensateEventDefinitionBuilder compensateEventDefinition(String id) {
+  public CompensateEventDefinitionBuilder compensateEventDefinition(@Nullable String id) {
     CompensateEventDefinition eventDefinition = createInstance(CompensateEventDefinition.class);
     if (id != null) {
       eventDefinition.setId(id);
@@ -125,7 +127,7 @@ public abstract class AbstractCatchEventBuilder<B extends  AbstractCatchEventBui
     return conditionalEventDefinition(null);
   }
 
-  public ConditionalEventDefinitionBuilder conditionalEventDefinition(String id) {
+  public ConditionalEventDefinitionBuilder conditionalEventDefinition(@Nullable String id) {
     ConditionalEventDefinition eventDefinition = createInstance(ConditionalEventDefinition.class);
     if (id != null) {
       eventDefinition.setId(id);

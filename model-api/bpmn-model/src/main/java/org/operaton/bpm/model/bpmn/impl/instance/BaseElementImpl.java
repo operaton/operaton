@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 import org.operaton.bpm.model.bpmn.instance.BaseElement;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.bpmn.instance.Documentation;
 import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
 import org.operaton.bpm.model.bpmn.instance.di.DiagramElement;
@@ -100,7 +102,7 @@ public abstract class BaseElementImpl extends BpmnModelElementInstanceImpl imple
 
   @Override
   @SuppressWarnings("rawtypes")
-  public DiagramElement getDiagramElement() {
+  public @Nullable DiagramElement getDiagramElement() {
     Collection<Reference> incomingReferences = getIncomingReferencesByType(DiagramElement.class);
     for (Reference<?> reference : incomingReferences) {
       for (ModelElementInstance sourceElement : reference.findReferenceSourceElements(this)) {

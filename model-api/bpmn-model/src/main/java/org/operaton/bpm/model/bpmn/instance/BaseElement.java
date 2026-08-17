@@ -18,6 +18,8 @@ package org.operaton.bpm.model.bpmn.instance;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.instance.di.DiagramElement;
 
 /**
@@ -37,6 +39,6 @@ public interface BaseElement extends BpmnModelElementInstance {
 
   void setExtensionElements(ExtensionElements extensionElements);
 
-  DiagramElement getDiagramElement();
+  @Nullable DiagramElement getDiagramElement();
 
 }

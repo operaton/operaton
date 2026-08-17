@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.model.xml.Model;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.util.ModelUtil;
 import org.operaton.bpm.model.xml.impl.util.QName;
@@ -76,12 +78,12 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public Set<String> getAlternativeNamespaces(String actualNs) {
+  public @Nullable Set<String> getAlternativeNamespaces(String actualNs) {
     return actualNsToAlternative.get(actualNs);
   }
 
   @Override
-  public String getAlternativeNamespace(String actualNs) {
+  public @Nullable String getAlternativeNamespace(String actualNs) {
     Set<String> alternatives = getAlternativeNamespaces(actualNs);
 
     if (alternatives == null || alternatives.isEmpty()) {
@@ -97,7 +99,7 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public String getActualNamespace(String alternativeNs) {
+  public @Nullable String getActualNamespace(String alternativeNs) {
     return alternativeNsToActual.get(alternativeNs);
   }
 
@@ -107,17 +109,17 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public ModelElementType getType(Class<? extends ModelElementInstance> instanceClass) {
+  public @Nullable ModelElementType getType(Class<? extends ModelElementInstance> instanceClass) {
     return typesByClass.get(instanceClass);
   }
 
   @Override
-  public ModelElementType getTypeForName(String typeName) {
+  public @Nullable ModelElementType getTypeForName(String typeName) {
     return getTypeForName(null, typeName);
   }
 
   @Override
-  public ModelElementType getTypeForName(String namespaceUri, String typeName) {
+  public @Nullable ModelElementType getTypeForName(String namespaceUri, String typeName) {
     return typesByName.get(ModelUtil.getQName(namespaceUri, typeName));
   }
 

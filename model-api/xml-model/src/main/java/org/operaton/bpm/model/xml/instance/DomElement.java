@@ -21,6 +21,8 @@ import java.util.Set;
 
 import org.w3c.dom.Element;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
 
@@ -57,21 +59,21 @@ public interface DomElement {
    *
    * @return the DOM document or null if the element itself is a document
    */
-  DomDocument getDocument();
+  @Nullable DomDocument getDocument();
 
   /**
    * Returns the root element of the document which contains this element.
    *
    * @return the root element of the document or null if non exists
    */
-  DomElement getRootElement();
+  @Nullable DomElement getRootElement();
 
   /**
    * Returns the parent element of this element.
    *
    * @return the parent element or null if not part of a tree
    */
-  DomElement getParentElement();
+  @Nullable DomElement getParentElement();
 
   /**
    * Returns all child elements of this element.
@@ -157,7 +159,7 @@ public interface DomElement {
    * @param attributeName  the name of the attribute
    * @return the value of the attribute or the empty string
    */
-  String getAttribute(String attributeName);
+  @Nullable String getAttribute(String attributeName);
 
   /**
    * Returns the attribute value for the given namespace.
@@ -166,7 +168,7 @@ public interface DomElement {
    * @param localName  the name of the attribute
    * @return the value of the attribute or the empty string
    */
-  String getAttribute(String namespaceUri, String localName);
+  @Nullable String getAttribute(String namespaceUri, String localName);
 
   /**
    * Sets the attribute value for the namespace of this element.

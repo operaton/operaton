@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.builder;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.CompensateEventDefinition;
 import org.operaton.bpm.model.bpmn.instance.EscalationEventDefinition;
@@ -63,7 +65,7 @@ public abstract class AbstractThrowEventBuilder<B extends AbstractThrowEventBuil
    * @param id the id of the message event definition
    * @return the message event definition builder object
    */
-  public MessageEventDefinitionBuilder messageEventDefinition(String id) {
+  public MessageEventDefinitionBuilder messageEventDefinition(@Nullable String id) {
     MessageEventDefinition messageEventDefinition = createEmptyMessageEventDefinition();
     if (id != null) {
       messageEventDefinition.setId(id);
@@ -121,7 +123,7 @@ public abstract class AbstractThrowEventBuilder<B extends AbstractThrowEventBuil
     return compensateEventDefinition(null);
   }
 
-  public CompensateEventDefinitionBuilder compensateEventDefinition(String id) {
+  public CompensateEventDefinitionBuilder compensateEventDefinition(@Nullable String id) {
     CompensateEventDefinition eventDefinition = createInstance(CompensateEventDefinition.class);
     if (id != null) {
       eventDefinition.setId(id);

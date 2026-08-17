@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -47,10 +48,22 @@ class WebappTest {
     ResponseEntity<String> response =
         testRestTemplate.getForEntity("/app-neo/", String.class);
 
-    // First request gets 302 from CsrfPreventionFilter (sets XSRF-TOKEN cookie)
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FOUND);
-    assertThat(response.getHeaders().getLocation()).isNotNull();
-    assertThat(response.getHeaders().getLocation().getPath()).isEqualTo("/app-neo/");
+    // the view controller forwards to index.html, which the resource handler
+    // resolves from the operaton-webapp-neo webjar
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).contains("<title>Operaton</title>");
+  }
+
+  @Test
+  void testNeoAppFilterChainApplied() {
+    ResponseEntity<String> response =
+        testRestTemplate.getForEntity("/app-neo/", String.class);
+
+    // the CsrfPreventionFilter is mapped over the application path and hands out
+    // an XSRF token on the first (non-modifying) request
+    assertThat(response.getHeaders().get(HttpHeaders.SET_COOKIE))
+        .anyMatch(cookie -> cookie.matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/app-neo;SameSite=Lax"));
+    assertThat(response.getHeaders().getFirst("X-XSRF-TOKEN")).matches("[A-Z0-9]{32}");
   }
 
 }

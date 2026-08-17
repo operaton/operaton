@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.operaton.bpm.springboot</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-webapp-neo</artifactId>
-  <name>Operaton - Spring Boot Starter - Webapps</name>
+  <name>Operaton - Spring Boot Starter - Webapps-Neo</name>
   <description>${project.name}</description>
   <dependencies>
     <dependency>

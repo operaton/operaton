@@ -182,7 +182,7 @@ jobs:
           .devenv/scripts/build/build-sbom.sh
           pip install --only-binary :all: pystache==0.6.8
       - name: Commit changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "chore(release) Releasing version ${{steps.version.outputs.version}}"
@@ -339,7 +339,7 @@ jobs:
           echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"

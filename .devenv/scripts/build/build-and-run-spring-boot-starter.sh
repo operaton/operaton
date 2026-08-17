@@ -14,6 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Without this, a failure while staging artifacts is swallowed and only shows up
+# later as an unresolvable dependency in the verify run, pointing at the wrong
+# module entirely.
+set -euo pipefail
+
 rm -rf ~/.m2/repository/org/operaton
 
 ./mvnw -f bom install

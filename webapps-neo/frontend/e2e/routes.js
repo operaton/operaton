@@ -33,7 +33,16 @@ const auth_header = ({ username, password }) =>
 // Ask the engine for real ids so deep-route scans land on populated pages.
 // Missing data degrades gracefully (that route is simply skipped) rather than
 // failing the whole run — mirrors the discovery in processes-instance-detail.spec.js.
-export const discover_deep_routes = async ({ backend = BACKEND, credentials }) => {
+//
+// `include_unavailable` (used by the report generator) keeps a placeholder entry
+// for routes the engine had no data for, so the report's set of sections is
+// fixed by this manifest rather than by whatever the engine happened to hold —
+// a missing page then reads as "not scanned", instead of silently vanishing.
+export const discover_deep_routes = async ({
+  backend = BACKEND,
+  credentials,
+  include_unavailable = false,
+} = {}) => {
   const headers = { Authorization: auth_header(credentials) };
   const first = async (path) => {
     try {
@@ -47,30 +56,34 @@ export const discover_deep_routes = async ({ backend = BACKEND, credentials }) =
   };
 
   const routes = [];
+  const add = (name, entity, to_path, reason) =>
+    entity
+      ? routes.push({ path: to_path(entity), name, auth: true, available: true })
+      : include_unavailable &&
+        routes.push({ path: null, name, auth: true, available: false, reason });
 
-  const inst = await first(
-    "/history/process-instance?sortBy=startTime&sortOrder=desc&maxResults=1",
+  add(
+    "process-instance-detail",
+    await first(
+      "/history/process-instance?sortBy=startTime&sortOrder=desc&maxResults=1",
+    ),
+    (i) => `/processes/${i.processDefinitionId}/instances/${i.id}/vars`,
+    "engine holds no process instances",
   );
-  if (inst)
-    routes.push({
-      path: `/processes/${inst.processDefinitionId}/instances/${inst.id}/vars`,
-      name: "process-instance-detail",
-      auth: true,
-    });
 
-  const task = await first("/task?maxResults=1");
-  if (task)
-    routes.push({ path: `/tasks/${task.id}`, name: "task-detail", auth: true });
-
-  const decision = await first(
-    "/decision-definition?latestVersion=true&maxResults=1",
+  add(
+    "task-detail",
+    await first("/task?maxResults=1"),
+    (t) => `/tasks/${t.id}`,
+    "engine holds no user tasks",
   );
-  if (decision)
-    routes.push({
-      path: `/decisions/${decision.id}`,
-      name: "decision-detail",
-      auth: true,
-    });
+
+  add(
+    "decision-detail",
+    await first("/decision-definition?latestVersion=true&maxResults=1"),
+    (d) => `/decisions/${d.id}`,
+    "engine holds no decision definitions",
+  );
 
   return routes;
 };

@@ -39,4 +39,20 @@ export default [
     files: ["e2e/**"],
     rules: { "react-hooks/rules-of-hooks": "off" },
   },
+  {
+    // The accessibility report's pure modules (normalisation, markdown) need no
+    // browser, so their tests run under vitest with globals enabled — same as
+    // the colocated tests in src/.
+    files: ["e2e/**/*.test.js"],
+    languageOptions: {
+      globals: {
+        describe: "readonly",
+        it: "readonly",
+        expect: "readonly",
+        vi: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+      },
+    },
+  },
 ];

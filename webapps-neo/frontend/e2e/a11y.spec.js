@@ -2,6 +2,7 @@ import { test, CREDENTIALS } from "./fixtures.js";
 import { test as base } from "@playwright/test";
 import { STATIC_ROUTES, LOGIN_ROUTE, discover_deep_routes } from "./routes.js";
 import { expect_no_a11y_violations } from "./a11y.js";
+import { prepare_page } from "./a11y-scan.js";
 
 // Automated WCAG 2.x A/AA scans (axe-core) over every page in the shared route
 // manifest (routes.js). The `test` fixture is pre-authenticated (fixtures.js)
@@ -11,16 +12,10 @@ import { expect_no_a11y_violations } from "./a11y.js";
 
 // Navigate, wait for the page's readiness landmark, then assert no violations.
 // `ready` defaults to the <main> landmark every authed page renders; the login
-// screen has none, so it overrides.
-const scan = async (page, path, ready = "main") => {
-  await page.goto(path, { waitUntil: "domcontentloaded" });
-  await page.locator(ready).first().waitFor({ timeout: 30_000 });
-  // Freeze fade-in animations/transitions to their end state so axe never
-  // samples a mid-animation (reduced-opacity) frame as a false contrast failure.
-  await page.addStyleTag({
-    content:
-      "*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition:none!important}",
-  });
+// screen has none, so it overrides. The navigation/freeze half is shared with
+// the report generator (a11y-scan.js).
+const scan = async (page, path, ready) => {
+  await prepare_page(page, { path, ready });
   await expect_no_a11y_violations(page);
 };
 

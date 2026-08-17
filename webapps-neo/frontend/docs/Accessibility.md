@@ -41,12 +41,67 @@ adjustment, but can circumvent the accessibility and some UX issues.
 
 ## Testing
 
-Accessibility testing shall be part of automated browser tests. This is
-important for checking features like keyboard navigation.
+There are three layers, and they do different jobs.
 
-Additionally, we want to use pa11y-ci in the build pipeline to statically test
-the resulting HTML/CSS according to the latest WCAG guidelines.
+### 1. The gate — `npm run test:a11y`
 
-Lastly, it is important to manually test the web apps. This means using
-assistive technology like screen-readers. If possible we have a test group with 
-personal experience using assistive tools, who can provide feedback as users.   
+Runs on the same route manifest with two engines and **fails** on a violation:
+
+- `npm run test:a11y:axe` — axe-core via Playwright (`e2e/a11y.spec.js`), WCAG
+  2.0/2.1 level A + AA.
+- `npm run test:a11y:pa11y` — pa11y / HTML_CodeSniffer (`e2e/a11y-pa11y.mjs`), a
+  techniques-based ruleset that catches things axe deliberately stays silent on.
+
+`e2e/keyboard.spec.js` covers keyboard operability that no scanner can assert:
+skip-link ordering, `aria-current="page"`, roving tabindex, Escape handling.
+
+Keep this layer narrow. It only earns its place while it stays green.
+
+### 2. The report — `npm run a11y:report`
+
+Generates [`docs/accessibility/REPORT.md`](./accessibility/REPORT.md) and
+[`docs/accessibility/timeline.md`](./accessibility/timeline.md). Wider than the
+gate (adds WCAG 2.2 AA and axe's best-practice rules) and scans states the gate
+never sees — dark mode, mobile viewport, open dialogs, empty and error states.
+It is informational and **always exits 0**; it never fails a build.
+
+```sh
+# engine only, REST auth off, no load-generating bot
+docker compose -f docker-compose.a11y.yaml up -d      # podman compose -f docker-compose.a11y.yaml up -d
+cd dev-fixtures/bot && node deploy.js \
+  && node spawn.js --process orderFulfillment --count 3 \
+  && node spawn.js --process insuranceClaim   --count 2
+cd ../.. && npm run a11y:report
+```
+
+The report is committed and refreshed by the `Accessibility Report` workflow, so
+its git history is the trend line.
+
+### 3. Manual testing — the part that matters most
+
+**Automated tooling finds a minority of accessibility problems.** Deque's own
+study puts axe-core at roughly 57% of issues by volume, and the commonly cited
+figure against WCAG success criteria is 30–40%. Everything below is invisible to
+layers 1 and 2:
+
+- whether alt text and labels are *meaningful*, not merely present
+- reading and tab order actually matching the visual and logical order
+- focus management across route changes and dialog open/close
+- screen-reader announcement quality (NVDA, JAWS, VoiceOver)
+- error recovery, plain language, cognitive load
+- colour used as the only carrier of meaning
+- reflow at 400% zoom, and motion sensitivity
+
+So manual testing with assistive technology stays essential. Where possible we
+want a test group with personal experience of assistive tools who can give
+feedback as users.
+
+### Known third-party limitation: diagrams
+
+The process and decision views embed [bpmn-js](https://github.com/bpmn-io/bpmn-js),
+dmn-js and form-js, which render an **SVG canvas** — not screen-reader
+accessible by default. bpmn-js publishes no WCAG conformance level. There is an
+early upstream effort at [bpmn-io/a11y](https://github.com/bpmn-io/a11y), and
+diagram-js has had keyboard improvements since bpmn-js 3.0.0. Until an upstream
+text alternative exists, treat every diagram surface as unusable without sight
+and make sure the surrounding controls carry the information a user needs.

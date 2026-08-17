@@ -1,0 +1,34 @@
+# Backend for the accessibility report only (`npm run a11y:report`).
+#
+#   docker compose -f docker-compose.a11y.yaml up -d
+#   podman compose -f docker-compose.a11y.yaml up -d
+#
+# Differs from docker-compose.yaml in one way: the REST API is unauthenticated,
+# so the report generator can probe /version and discover deep routes without
+# carrying credentials, and a scan can never be derailed by a 401.
+#
+# It is deliberately NOT the compose file for development or for the e2e suite:
+# without REST auth the engine's authorization checks are not exercised, so it
+# is only appropriate for a read-only scanning run.
+#
+# It is also NOT docker-compose.dev-fixtures.yaml, which starts a load-generating
+# bot. Continuously changing data would make the report's timeline show phantom
+# regressions and recoveries, so seeding is a one-shot step instead:
+#
+#   node dev-fixtures/bot/deploy.js
+#   node dev-fixtures/bot/spawn.js --process orderFulfillment --count 3
+#   node dev-fixtures/bot/spawn.js --process insuranceClaim   --count 2
+services:
+  operaton:
+    image: operaton/operaton:latest
+    environment:
+      - OPERATON_BPM_RUN_CORS_ENABLED=true
+      - OPERATON_BPM_RUN_CORS_ALLOW_CREDENTIALS=true
+      - OPERATON_BPM_RUN_CORS_ALLOWED_ORIGINS=http://127.0.0.1:5173
+      - OPERATON_BPM_RUN_CORS_ALLOWED_HEADERS=Origin,X-Requested-With,Content-Type,Accept,Authorization
+      # The whole point of this file: no REST auth for the scanning run.
+      - OPERATON_BPM_RUN_AUTH_ENABLED=false
+      - REST_AUTH_ENABLED=false
+      - LOGGING_LEVEL_ROOT=WARN
+    ports:
+      - "8084:8080"

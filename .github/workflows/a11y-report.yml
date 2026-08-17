@@ -1,0 +1,85 @@
+name: Accessibility Report
+
+# Regenerates the webapps-neo accessibility report and commits it, following the
+# same generate-and-commit shape as update-sbom.yml.
+#
+# This job is INFORMATIONAL. The generator always exits 0, and nothing here gates
+# a merge — the gating accessibility check is `npm run test:a11y:axe`, which runs
+# a deliberately narrower ruleset.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - ci-dev/**
+    # Only the sources that can change what a scan sees. The report's own output
+    # directory is excluded so a commit from this job cannot retrigger it.
+    paths:
+      - 'webapps-neo/frontend/src/**'
+      - 'webapps-neo/frontend/public/**'
+      - 'webapps-neo/frontend/e2e/**'
+      - 'webapps-neo/frontend/index.html'
+      - 'webapps-neo/frontend/package-lock.json'
+      - '.github/workflows/a11y-report.yml'
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  a11y_report:
+    name: Generate accessibility report
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: webapps-neo/frontend
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Node
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: webapps-neo/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      # Engine only, REST auth disabled, and NOT docker-compose.dev-fixtures.yaml:
+      # its load-generating bot would change the data mid-run and make the
+      # timeline show regressions that are really just new rows.
+      - name: Start the Operaton engine
+        run: docker compose -f docker-compose.a11y.yaml up -d
+
+      - name: Wait for the engine
+        run: timeout 240 bash -c 'until curl -sf http://localhost:8084/engine-rest/engine >/dev/null; do sleep 3; done'
+
+      - name: Seed deterministic fixtures
+        working-directory: webapps-neo/frontend/dev-fixtures/bot
+        run: |
+          npm ci
+          node deploy.js
+          node spawn.js --process orderFulfillment --count 3
+          node spawn.js --process insuranceClaim   --count 2
+
+      - name: Generate the report
+        run: npm run a11y:report
+
+      - name: Show the engine log on failure
+        if: failure()
+        run: docker compose -f docker-compose.a11y.yaml logs --tail=200
+
+      - name: Commit the report
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        with:
+          add: 'webapps-neo/frontend/docs/accessibility/'
+          message: "chore(webapps-neo) Update accessibility report"

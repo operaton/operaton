@@ -8,7 +8,9 @@ export default defineConfig({
     environment: "happy-dom",
     setupFiles: ["src/test/setup.js"],
     // Playwright specs under e2e/ are run by `npm run test:e2e`, not vitest.
-    exclude: [...configDefaults.exclude, "e2e/**"],
+    // The *.test.js files there cover the report's pure modules (normalisation
+    // and markdown rendering), which need no browser, so they stay with vitest.
+    exclude: [...configDefaults.exclude, "e2e/**/*.spec.js"],
     coverage: {
       reporter: ["text", "json", "html"],
       exclude: [

@@ -1,8 +1,26 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect } from "@playwright/test";
 
-// WCAG 2.0 / 2.1 level A + AA — the levels the web apps target.
+// WCAG 2.0 / 2.1 level A + AA — the levels the web apps target. Used by the
+// gating spec (a11y.spec.js), which must stay narrow enough to keep passing.
 const DEFAULT_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
+
+// The wider set used by the informational report (a11y-report.mjs): adds WCAG
+// 2.2 AA and axe's best-practice rules.
+export const REPORT_TAGS = [
+  "wcag2a",
+  "wcag2aa",
+  "wcag21a",
+  "wcag21aa",
+  "wcag22aa",
+  "best-practice",
+];
+
+// `target-size` is the ONLY wcag22aa rule in axe-core, and axe ships it
+// disabled by default — so `withTags(["wcag22aa"])` on its own contributes
+// nothing at all. It has to be turned on explicitly or "WCAG 2.2 AA" is a
+// label with no rules behind it.
+export const REPORT_ENABLED_RULES = ["target-size"];
 
 /**
  * Run an axe-core scan against the current page (optionally scoped) and return
@@ -12,16 +30,29 @@ const DEFAULT_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
  * @param opts.include  CSS selector to scope the scan to
  * @param opts.exclude  CSS selector(s) to skip
  * @param opts.disableRules  axe rule ids to skip (with a comment explaining why)
+ * @param opts.enableRules  axe rule ids to force on (for default-off rules)
  * @param opts.tags  override the default WCAG tag set
  */
 export const analyze_a11y = async (
   page,
-  { include, exclude, disableRules, tags } = {},
+  { include, exclude, disableRules, enableRules, tags } = {},
 ) => {
-  let builder = new AxeBuilder({ page }).withTags(tags ?? DEFAULT_TAGS);
+  // AxeBuilder#options() REPLACES the whole option object and
+  // AxeBuilder#disableRules() REPLACES option.rules, so enabling and disabling
+  // rules cannot be chained — build one merged map and apply it first, then
+  // withTags(), which only sets option.runOnly on what is already there.
+  const rules = {
+    ...Object.fromEntries((enableRules ?? []).map((r) => [r, { enabled: true }])),
+    ...Object.fromEntries(
+      (disableRules ?? []).map((r) => [r, { enabled: false }]),
+    ),
+  };
+
+  let builder = new AxeBuilder({ page });
+  if (Object.keys(rules).length) builder = builder.options({ rules });
+  builder = builder.withTags(tags ?? DEFAULT_TAGS);
   if (include) builder = builder.include(include);
   if (exclude) builder = builder.exclude(exclude);
-  if (disableRules?.length) builder = builder.disableRules(disableRules);
   return builder.analyze();
 };
 

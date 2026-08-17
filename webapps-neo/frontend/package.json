@@ -15,6 +15,8 @@
     "test:a11y:axe": "playwright test a11y",
     "test:a11y:pa11y": "node e2e/a11y-pa11y.mjs",
     "test:a11y": "npm run test:a11y:axe && npm run test:a11y:pa11y",
+    "a11y:report": "node e2e/a11y-report.mjs",
+    "a11y:report:axe": "node e2e/a11y-report.mjs --engines=axe",
     "prepare": "simple-git-hooks"
   },
   "simple-git-hooks": {

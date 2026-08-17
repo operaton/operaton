@@ -27,6 +27,8 @@ spring-boot-starter/starter-test,\
 spring-boot-starter/starter-test-junit5,\
 spring-boot-starter/starter-webapp,\
 spring-boot-starter/starter-webapp-core,\
+spring-boot-starter/starter-webapp-neo,\
+spring-boot-starter/starter-webapp-neo-core,\
 examples/invoice,\
 qa/arquillian-extensions,\
 qa/integration-tests-webapps \

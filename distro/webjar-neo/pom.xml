@@ -9,7 +9,7 @@
   </parent>
   <groupId>org.operaton.bpm.webapp-neo</groupId>
   <artifactId>operaton-webapp-neo-webjar</artifactId>
-  <name>Operaton - Webapp - Webjar</name>
+  <name>Operaton - Webapp-Neo - Webjar</name>
   <description>${project.name}</description>
   <properties>
     <skipTests>true</skipTests>

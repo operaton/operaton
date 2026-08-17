@@ -277,9 +277,19 @@ describe("ProcessesPage — definition tabs", () => {
     expect(engine_rest.history.process_instance.all).toHaveBeenCalled();
   });
 
+  it("instances tab forwards the finished filter from the URL into params", () => {
+    mockParams = { definition_id: "proc:1", panel: "instances" };
+    mockQuery = { history: "true", "q.finished": "true" };
+    renderPage(state);
+    expect(engine_rest.history.process_instance.all).toHaveBeenCalled();
+    const params_arg =
+      engine_rest.history.process_instance.all.mock.lastCall[2];
+    expect(params_arg.finished).toBe("true");
+  });
+
   it("instances tab renders rows from the instance list signal", () => {
     mockParams = { definition_id: "proc:1", panel: "instances" };
-    signal_response(state.api.process.instance.list, [
+    signal_response(state.api.history.process_instance.list, [
       {
         id: "abcdef1234567890",
         startTime: "2024-01-01T00:00:00Z",
@@ -295,22 +305,23 @@ describe("ProcessesPage — definition tabs", () => {
     expect(getByText("BK-1")).toBeTruthy();
   });
 
-  it("incidents tab fetches and renders definition incidents", () => {
+  it("incidents tab fetches live definition incidents and can retry", () => {
     mockParams = { definition_id: "proc:1", panel: "incidents" };
-    signal_response(state.api.history.incident.by_process_definition, [
+    signal_response(state.api.incident.by_process_definition, [
       {
         id: "inc1",
         incidentMessage: "boom",
         incidentType: "failedJob",
-        configuration: "cfg",
+        configuration: "job-cfg",
       },
     ]);
     const { getByText } = renderPage(state);
-    expect(
-      engine_rest.history.incident.by_process_definition,
-    ).toHaveBeenCalled();
+    expect(engine_rest.incident.by_process_definition).toHaveBeenCalled();
     expect(getByText("boom")).toBeTruthy();
-    expect(getByText("cfg")).toBeTruthy();
+
+    fireEvent.click(getByText("processes.incidents.retry"));
+    expect(engine_rest.job.set_retries).toHaveBeenCalled();
+    expect(engine_rest.job.set_retries.mock.lastCall[1]).toBe("job-cfg");
   });
 
   it("called-definitions tab fetches and renders called definitions", () => {
@@ -404,7 +415,7 @@ describe("ProcessesPage — instance details", () => {
       sub_panel: "vars",
     };
     mockQuery = { history: "true" };
-    signal_response(state.api.process.instance.variables, [
+    signal_response(state.api.history.variable_instance.by_process_instance, [
       { name: "amount", type: "Integer", value: 7 },
     ]);
     const { getByText } = renderPage(state);
@@ -414,26 +425,131 @@ describe("ProcessesPage — instance details", () => {
     expect(getByText("amount")).toBeTruthy();
   });
 
-  it("instance-incidents sub-panel fetches and renders incidents", () => {
+  it("instance-incidents sub-panel fetches live incidents and can retry", () => {
     mockParams = {
       definition_id: "proc:1",
       panel: "instances",
       selection_id: "inst-9999",
       sub_panel: "instance_incidents",
     };
-    signal_response(state.api.history.incident.by_process_instance, [
+    signal_response(state.api.incident.by_process_instance, [
       {
         id: "ii1",
         incidentMessage: "instance boom",
+        processInstanceId: "inst-9999",
+        incidentTimestamp: "2024-01-01T00:00:00Z",
+        activityId: "act1",
+        incidentType: "failedJob",
+        configuration: "job-42",
+      },
+    ]);
+    const { getByText } = renderPage(state);
+    expect(engine_rest.incident.by_process_instance).toHaveBeenCalled();
+    expect(getByText("instance boom")).toBeTruthy();
+
+    fireEvent.click(getByText("processes.incidents.retry"));
+    // Assert on lastCall (not toHaveBeenCalledWith) to avoid recursing into the
+    // signal tree passed as `state`.
+    expect(engine_rest.job.set_retries).toHaveBeenCalled();
+    const call = engine_rest.job.set_retries.mock.lastCall;
+    expect(call[1]).toBe("job-42");
+    expect(call[2]).toBe(1);
+  });
+
+  it("instance-incidents in history mode uses the read-only history endpoint", () => {
+    mockParams = {
+      definition_id: "proc:1",
+      panel: "instances",
+      selection_id: "inst-9999",
+      sub_panel: "instance_incidents",
+    };
+    mockQuery = { history: "true" };
+    signal_response(state.api.history.incident.by_process_instance, [
+      {
+        id: "ii1",
+        incidentMessage: "old boom",
         processInstanceId: "inst-9999",
         createTime: "2024-01-01T00:00:00Z",
         activityId: "act1",
         incidentType: "failedJob",
       },
     ]);
-    const { getByText } = renderPage(state);
+    const { getByText, queryByText } = renderPage(state);
     expect(engine_rest.history.incident.by_process_instance).toHaveBeenCalled();
-    expect(getByText("instance boom")).toBeTruthy();
+    expect(getByText("old boom")).toBeTruthy();
+    // No action buttons in the read-only history view.
+    expect(queryByText("processes.incidents.retry")).toBeNull();
+  });
+
+  it("jobs sub-panel fetches jobs and retries a failed job", () => {
+    mockParams = {
+      definition_id: "proc:1",
+      panel: "instances",
+      selection_id: "inst-1",
+      sub_panel: "jobs",
+    };
+    signal_response(state.api.job.by_process_instance, [
+      {
+        id: "job-1",
+        retries: 0,
+        dueDate: null,
+        suspended: false,
+        exceptionMessage: "kaboom",
+      },
+    ]);
+    const { getByText } = renderPage(state);
+    expect(engine_rest.job.by_process_instance).toHaveBeenCalled();
+    expect(getByText("kaboom")).toBeTruthy();
+
+    fireEvent.click(getByText("processes.jobs.retry"));
+    expect(engine_rest.job.set_retries).toHaveBeenCalled();
+    expect(engine_rest.job.set_retries.mock.lastCall[1]).toBe("job-1");
+  });
+
+  it("external-tasks sub-panel fetches tasks and retries", () => {
+    mockParams = {
+      definition_id: "proc:1",
+      panel: "instances",
+      selection_id: "inst-1",
+      sub_panel: "external_tasks",
+    };
+    signal_response(state.api.external_task.by_process_instance, [
+      {
+        id: "et-1",
+        topicName: "charge-card",
+        workerId: "worker-7",
+        activityId: "chargeCard",
+        retries: 0,
+        errorMessage: "gateway down",
+      },
+    ]);
+    const { getByText } = renderPage(state);
+    expect(engine_rest.external_task.by_process_instance).toHaveBeenCalled();
+    expect(getByText("charge-card")).toBeTruthy();
+    expect(getByText("gateway down")).toBeTruthy();
+
+    fireEvent.click(getByText("processes.jobs.retry"));
+    expect(engine_rest.external_task.set_retries).toHaveBeenCalled();
+    expect(engine_rest.external_task.set_retries.mock.lastCall[1]).toBe("et-1");
+  });
+
+  it("instance detail suspends a running instance", () => {
+    mockParams = {
+      definition_id: "proc:1",
+      panel: "instances",
+      selection_id: "inst-1",
+      sub_panel: "vars",
+    };
+    signal_response(state.api.process.instance.one, {
+      id: "inst-1",
+      suspended: false,
+    });
+    const { getByText } = renderPage(state);
+    fireEvent.click(getByText("processes.instance.suspend"));
+    expect(engine_rest.process_instance.set_suspended).toHaveBeenCalled();
+    const call = engine_rest.process_instance.set_suspended.mock.lastCall;
+    expect(call[1]).toBe("inst-1");
+    expect(call[2]).toBe(true);
   });
 
   it("called-instances sub-panel fetches and renders called instances", () => {
@@ -472,6 +588,50 @@ describe("ProcessesPage — instance details", () => {
     expect(engine_rest.task.get_process_instance_tasks).toHaveBeenCalled();
     expect(getByText("Approve")).toBeTruthy();
     expect(getByText("boss")).toBeTruthy();
+  });
+
+  it("user-tasks sub-panel uses the historic task endpoint in history mode", () => {
+    mockParams = {
+      definition_id: "proc:1",
+      panel: "instances",
+      selection_id: "inst-9999",
+      sub_panel: "user_tasks",
+    };
+    mockQuery = { history: "true" };
+    signal_response(state.api.history.task.by_process_instance, [
+      {
+        id: "ht-1",
+        name: "Approve (historic)",
+        assignee: "demo",
+        owner: "boss",
+        startTime: "2024-01-01T00:00:00Z",
+        priority: 50,
+      },
+    ]);
+    const { getByText } = renderPage(state);
+    expect(engine_rest.history.task.by_process_instance).toHaveBeenCalled();
+    expect(getByText("Approve (historic)")).toBeTruthy();
+  });
+
+  it("called-instances sub-panel uses the historic endpoint in history mode", () => {
+    mockParams = {
+      definition_id: "proc:1",
+      panel: "instances",
+      selection_id: "inst-9999",
+      sub_panel: "called_instances",
+    };
+    mockQuery = { history: "true" };
+    signal_response(state.api.history.process_instance.called, [
+      {
+        id: "hist-child-1",
+        state: "COMPLETED",
+        processDefinitionId: "child:def",
+      },
+    ]);
+    const { getByText } = renderPage(state);
+    expect(engine_rest.history.process_instance.called).toHaveBeenCalled();
+    expect(getByText("hist-child-1")).toBeTruthy();
+    expect(getByText("COMPLETED")).toBeTruthy();
   });
 
   it("fetches activity-instances for a live selected instance", () => {
@@ -557,15 +717,13 @@ describe("ProcessesPage — sub navigation", () => {
   });
   afterEach(cleanup);
 
-  it("disables the child nav entries on the definitions list", () => {
-    const { getByText } = renderPage(state);
-    // On the bare list, instances/incidents are rendered as disabled spans.
-    const instances = getByText("processes.subnav.instances");
-    expect(instances.tagName.toLowerCase()).toBe("span");
-    expect(instances.getAttribute("class")).toContain("disabled");
+  it("does not show the sub-page sidebar on the definitions list", () => {
+    const { queryByText } = renderPage(state);
+    // No definition selected → no sidebar, so no child sub-page entries.
+    expect(queryByText("processes.subnav.instances")).toBeNull();
   });
 
-  it("links the child nav entries once a definition is selected", () => {
+  it("links the sidebar sub-page entries once a definition is selected", () => {
     mockParams = { definition_id: "proc:1" };
     signal_response(state.api.process.definition.one, {
       id: "proc:1",

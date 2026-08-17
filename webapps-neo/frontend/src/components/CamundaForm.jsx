@@ -142,7 +142,7 @@ const Component = ({ component: c, value, on_change, disabled }) => {
 
     case 'radio':
       return (
-        <Field c={c} required={required}>
+        <FieldGroup c={c} required={required}>
           <div class="form-radio-group">
             {(c.values ?? []).map((v) => (
               <label key={v.value} class="form-inline-label">
@@ -159,7 +159,7 @@ const Component = ({ component: c, value, on_change, disabled }) => {
               </label>
             ))}
           </div>
-        </Field>
+        </FieldGroup>
       )
 
     case 'select':
@@ -182,7 +182,7 @@ const Component = ({ component: c, value, on_change, disabled }) => {
 
     case 'checklist':
       return (
-        <Field c={c} required={required}>
+        <FieldGroup c={c} required={required}>
           <div class="form-checklist">
             {(c.values ?? []).map((v) => {
               const checked = Array.isArray(value) && value.includes(v.value)
@@ -206,7 +206,7 @@ const Component = ({ component: c, value, on_change, disabled }) => {
               )
             })}
           </div>
-        </Field>
+        </FieldGroup>
       )
 
     case 'datetime': {
@@ -247,6 +247,18 @@ const Field = ({ c, required, children }) => (
     </label>
     <div class="form-input-cell">{children}</div>
   </>
+)
+
+// For grouped inputs (radio-group, checklist) where no single control owns
+// the label — a <fieldset>/<legend> names the group instead of a dangling
+// `<label for>`. Spans both grid columns.
+const FieldGroup = ({ c, required, children }) => (
+  <fieldset class="form-fullspan form-field-group">
+    <legend>
+      {c.label}{required && <span class="form-required-mark">*</span>}
+    </legend>
+    {children}
+  </fieldset>
 )
 
 // For elements that should span both columns (text, separators, etc.).

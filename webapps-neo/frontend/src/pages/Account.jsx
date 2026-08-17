@@ -18,17 +18,17 @@ const AccountPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page_id])
 
-  const is_selected = (page) => (page_id === page) ? 'selected' : ''
+  const current = (page) => (page_id === page) ? 'page' : undefined
 
-  return <div id="account-page">
-    <nav>
-      <ul class="list">
-        <li class={is_selected('profile')}><a href="/account/profile">{t("account.profile")}</a></li>
-        <li class={is_selected('account')}><a href="/account/account">{t("account.password")}</a></li>
-        <li class={is_selected('groups')}><a href="/account/groups">{t("admin.groups")}</a></li>
-        <li class={is_selected('tenants')}><a href="/account/tenants">{t("admin.tenants")}</a></li>
-        <li class={is_selected('settings')}><a href="/account/settings">{t("account.settings")}</a></li>
-      </ul>
+  return <main id="content" class="account-page">
+    <nav aria-label={t("nav.account")}>
+      <menu class="list">
+        <li><a href="/account/profile" aria-current={current('profile')}>{t("account.profile")}</a></li>
+        <li><a href="/account/account" aria-current={current('account')}>{t("account.password")}</a></li>
+        <li><a href="/account/groups" aria-current={current('groups')}>{t("admin.groups")}</a></li>
+        <li><a href="/account/tenants" aria-current={current('tenants')}>{t("admin.tenants")}</a></li>
+        <li><a href="/account/settings" aria-current={current('settings')}>{t("account.settings")}</a></li>
+      </menu>
     </nav>
 
     {({
@@ -38,7 +38,7 @@ const AccountPage = () => {
       tenants: <TenantsAccountPage />,
       settings: <SettingsAccountPage />,
     })[page_id] ?? <p>{t("common.select-page")}</p>}
-  </div>
+  </main>
 }
 
 const ProfileAccountPage = () => {
@@ -47,7 +47,9 @@ const ProfileAccountPage = () => {
     state = useContext(AppState)
 
   useEffect(() => {
-    if (!state.api.user.profile.value) {
+    // The signal starts out holding the login placeholder ({ id }), not a
+    // response, so check for fetched data rather than for any value at all.
+    if (!state.api.user.profile.value?.data) {
       void engine_rest.user.profile.get(state)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,45 +64,53 @@ const ProfileAccountPage = () => {
 const ProfileEditPage = () => {
   const
     state = useContext(AppState),
-    { user_profile, user_profile_edit, user_profile_edit_response } = state,
+    { profile, update } = state.api.user,
+    // Ephemeral edit buffer — local UI state, seeded from the fetched profile
+    // (which the parent RequestState guarantees is loaded before we mount).
+    edit = useSignal({ ...profile.value?.data }),
     [t] = useTranslation()
 
+  // Re-seed when the profile refetches; drop any stale update feedback on mount
+  // so a previous session's success/error banner can't flash.
   useEffect(() => {
-    user_profile_edit.value = { ...user_profile.value?.data }
+    edit.value = { ...profile.value?.data }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user_profile.value?.data])
+  }, [profile.value?.data])
+  useEffect(() => {
+    update.value = null
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const
-    set_value = (k, v) => user_profile_edit.value = { ...user_profile_edit.peek(), [k]: v.currentTarget.value },
+    set_value = (k, v) => edit.value = { ...edit.peek(), [k]: v.currentTarget.value },
     on_submit = e => {
       e.preventDefault()
-      engine_rest.user.profile.update(state).then(() => engine_rest.user.profile.get(state))
+      engine_rest.user.profile.update(state, null, edit.value).then(() => engine_rest.user.profile.get(state))
     }
 
   return <section>
     <h2>{t("account.edit-profile")}</h2>
-    {user_profile_edit_response.value !== undefined
-      ? <>
-        {user_profile_edit_response.value?.status}
-        <RequestState
-          signal={user_profile_edit_response}
-          on_success={() => <p className="success">{t("account.success-updated")}</p>}
-          on_error={() => <p className="error">{t("common.error")} {user_profile_edit_response.value?.message}</p>} />
-      </>
-      : ''}
+    <div aria-live="polite">
+      {update.value != null
+        ? <RequestState
+            signal={update}
+            on_success={() => <p class="success">{t("account.success-updated")}</p>}
+            on_error={() => <p class="error">{t("common.error")} {update.value?.message}</p>} />
+        : ''}
+    </div>
 
 
     <form onSubmit={on_submit}>
       <label for="first-name">{t("account.first-name")}</label>
-      <input id="first-name" type="text" value={user_profile_edit.value.firstName}
+      <input id="first-name" type="text" value={edit.value.firstName}
              onInput={(e) => set_value('firstName', e)} required />
 
       <label for="last-name">{t("account.last-name")}</label>
-      <input id="last-name" type="text" value={user_profile_edit.value.lastName}
+      <input id="last-name" type="text" value={edit.value.lastName}
              onInput={(e) => set_value('lastName', e)} required />
 
       <label for="email">{t("account.email")}</label>
-      <input id="email" type="email" value={user_profile_edit.value.email}
+      <input id="email" type="email" value={edit.value.email}
              onInput={(e) => set_value('email', e)} required />
 
       <div class="button-group">
@@ -134,8 +144,6 @@ const ProfileDetails = () => {
 const AccountAccountPage = () => {
   const
     state = useContext(AppState),
-    // , user_credentials, user_credentials_response, user_unlock_response
-    { api: { user: { credentials, unlock } } } = state,
     [t] = useTranslation(),
     // local state
     old_password = useSignal(''),
@@ -166,9 +174,10 @@ const AccountAccountPage = () => {
       <input id="new-pw-repeat" type="password" onInput={(e) => password_repeat.value = e.currentTarget.value}
              required />
 
-      <div className="button-group">
-        {show_repeated_pw_hint.value && <div class="danger">{t("account.passwords-must-match")}</div>}
-          <div class="danger">{t("account.password-change-failed")}</div>
+      <div class="button-group">
+        <div aria-live="assertive">
+          {show_repeated_pw_hint.value && <div class="danger">{t("account.passwords-must-match")}</div>}
+        </div>
         <button type="submit" disabled={is_change_pw_button_disabled.value}>{t("account.change-password")}</button>
       </div>
     </form>
@@ -217,17 +226,12 @@ const GroupAccountPage = () => {
 
 const TenantsAccountPage = () => {
   const
+    { params: { selection_id } } = useRoute(),
     state = useContext(AppState),
     { api: { tenant: { list: tenants, by_member: user_tenants }} } = state,
     [t] = useTranslation(),
     // computed local state
     tenants_without_user_tenants = useComputed(() => tenants.value?.data?.filter(tenant => !user_tenants.value?.data?.map(user_tenant => user_tenant.id).includes(tenant.id))),
-    //dialog functions
-    close_add_tenant_dialog = () => document.getElementById('add-tenant-dialog').close(),
-    show_add_tenant_dialog = () => {
-      void engine_rest.tenant.by_member(state)
-      document.getElementById('add-tenant-dialog').showModal()
-    },
     //button handlers
     handle_add_tenant = (tenant_id) => engine_rest.tenant.add_user(state, tenant_id, null).then(() => engine_rest.tenant.by_member(state, null)),
     handle_remove_tenant = (tenant_id) => engine_rest.tenant.delete(state, tenant_id, null).then(() => engine_rest.tenant.by_member(state, null))
@@ -239,38 +243,24 @@ const TenantsAccountPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <section>
-    <h2>{t("account.your-tenants")}</h2>
-    {user_tenants.value?.data?.length > 0 ? <table>
-        <thead>
-        <tr>
-          <th>{t("account.tenant-id")}</th>
-          <th>{t("account.tenant-name")}</th>
-          <th>{t("common.action")}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {user_tenants.value.data.map((tenant) => (
-          <tr key={tenant.id}>
-            <td><a href={`/admin/tenants/${tenant.id}`}>{tenant.id}</a></td>
-            <td>{tenant.name}</td>
-            <td><a onClick={() => handle_remove_tenant(tenant.id)}>{t("common.remove")}</a></td>
-          </tr>
-        ))}
-        </tbody>
-      </table>
-      : <p>{t("account.no-tenants")}</p>
+  useEffect(() => {
+    if (selection_id === 'add') {
+      void engine_rest.tenant.all(state)
     }
-    <br />
-    {/*<button class="primary" onClick={show_add_tenant_dialog}>Add Tenant +</button>*/}
-    <dialog id="add-tenant-dialog" className="fade-in">
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selection_id])
+
+  // Add-tenant is its own route (/account/tenants/add) rather than a JS-toggled dialog,
+  // so the picker is linkable and survives a reload.
+  if (selection_id === 'add') {
+    return <section>
       <h2>{t("account.add-tenants")}</h2>
       {tenants_without_user_tenants.value?.length > 0 ? <table>
           <thead>
           <tr>
-            <th>{t("account.tenant-id")}</th>
-            <th>{t("account.tenant-name")}</th>
-            <th>{t("common.action")}</th>
+            <th scope="col">{t("account.tenant-id")}</th>
+            <th scope="col">{t("account.tenant-name")}</th>
+            <th scope="col">{t("common.action")}</th>
           </tr>
           </thead>
           <tbody>
@@ -278,18 +268,44 @@ const TenantsAccountPage = () => {
             <tr key={tenant.id}>
               <td><a href={`/admin/tenants/${tenant.id}`}>{tenant.id}</a></td>
               <td class="fill">{tenant.name}</td>
-              <td><a onClick={() => handle_add_tenant(tenant.id)}>{t("account.add")}</a></td>
+              <td><button type="button" class="link" onClick={() => handle_add_tenant(tenant.id)}>{t("account.add")}</button></td>
             </tr>
           ))}
           </tbody>
         </table>
         : <p>{t("account.no-additional-tenants")}</p>
       }
-      <br />
-      <div className="button-group">
-        <button onClick={close_add_tenant_dialog}>{t("common.close")}</button>
+      <div class="button-group">
+        <a href="/account/tenants" class="button secondary">{t("common.back")}</a>
       </div>
-    </dialog>
+    </section>
+  }
+
+  return <section>
+    <h2>{t("account.your-tenants")}</h2>
+    {user_tenants.value?.data?.length > 0 ? <table>
+        <thead>
+        <tr>
+          <th scope="col">{t("account.tenant-id")}</th>
+          <th scope="col">{t("account.tenant-name")}</th>
+          <th scope="col">{t("common.action")}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {user_tenants.value.data.map((tenant) => (
+          <tr key={tenant.id}>
+            <td><a href={`/admin/tenants/${tenant.id}`}>{tenant.id}</a></td>
+            <td>{tenant.name}</td>
+            <td><button type="button" class="link" onClick={() => handle_remove_tenant(tenant.id)}>{t("common.remove")}</button></td>
+          </tr>
+        ))}
+        </tbody>
+      </table>
+      : <p>{t("account.no-tenants")}</p>
+    }
+    <div class="button-group">
+      <a href="/account/tenants/add" class="button primary">{t("account.add-tenants")}</a>
+    </div>
   </section>
 }
 

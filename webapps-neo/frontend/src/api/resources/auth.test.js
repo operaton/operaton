@@ -12,7 +12,7 @@ vi.mock("../helper.jsx", async (importOriginal) => {
   };
 });
 
-import { POST_SERVER_URL, RESPONSE_STATE } from "../helper.jsx";
+import { POST, RESPONSE_STATE } from "../helper.jsx";
 import { create_mock_state } from "../../test/helpers.js";
 import auth from "./auth.js";
 
@@ -72,9 +72,9 @@ describe("api/resources/auth (basic mode)", () => {
       );
       auth.logout(state);
 
-      expect(POST_SERVER_URL).toHaveBeenCalled();
-      expect(POST_SERVER_URL.mock.lastCall[0]).toBe(
-        "/api/admin/auth/user/default/logout",
+      expect(POST).toHaveBeenCalled();
+      expect(POST.mock.lastCall[0]).toBe(
+        "/operaton/api/admin/auth/user/default/logout",
       );
       expect(sessionStorage.getItem(BASIC_AUTH_KEY)).toBeNull();
       expect(state.auth.credentials.value).toEqual({

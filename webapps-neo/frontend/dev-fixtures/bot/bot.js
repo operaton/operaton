@@ -264,6 +264,11 @@ const default_vars_for = (key) => {
       return { amount: 'random:int:1000:50000', credit: 'random:enum:good,fair,poor' }
     case 'documentReview':
       return { documentId: 'random:int:1:10000' }
+    case 'kyc-agent':
+      return {
+        fullName: 'random:enum:Alice Chan,Bob Ruiz,Carol Ndiaye,Dan Ivanov,Eve Kim',
+        address: 'random:enum:12 Oak St,44 Elm Ave,7 Pine Rd,90 Cedar Ln',
+      }
     default:
       return {}
   }

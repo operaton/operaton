@@ -26,6 +26,6 @@ test.describe("navigation", () => {
     await page.goto("/");
     await page.locator('nav a[href="/processes"]').first().click();
     await expect(page).toHaveURL(/\/processes/);
-    await expect(page.locator("main#processes")).toBeVisible();
+    await expect(page.locator("main.processes")).toBeVisible();
   });
 });

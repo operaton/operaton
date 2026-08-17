@@ -6,6 +6,9 @@ import { AppState } from '../state.js'
 import { useLocation, useRoute } from 'preact-iso'
 import { useTranslation } from 'react-i18next'
 import NavigatedViewer from 'bpmn-js/lib/NavigatedViewer'
+// bpmn-js 18 dropped the outline from the viewer bundle; the diagram is
+// click-interactive here, so add it back to keep the selection feedback.
+import OutlineModule from 'bpmn-js/lib/features/outline'
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
@@ -44,12 +47,31 @@ const FLOW_NODE_TYPES = new Set([
 const is_flow_node = (element) =>
   !!element && FLOW_NODE_TYPES.has(element.type)
 
+// Recolor a taken sequence flow to `color`: the connection line and the
+// arrowhead. bpmn-js renders each flow's arrowhead as a per-connection
+// <marker> inside the flow's own `.djs-visual > defs`, so recolor that
+// marker's fill/stroke rather than injecting a separate one (which would
+// double up and misalign). `:scope > path` targets only the line, not the
+// marker's inner path.
+const recolor_flow = (gfx, color) => {
+  const visual = gfx.querySelector('.djs-visual')
+  if (!visual) return
+  visual.querySelectorAll(':scope > path').forEach((p) => {
+    p.style.setProperty('stroke', color, 'important')
+    p.style.setProperty('stroke-width', '2.5px', 'important')
+  })
+  visual.querySelectorAll('marker path').forEach((mp) => {
+    mp.style.setProperty('fill', color, 'important')
+    mp.style.setProperty('stroke', color, 'important')
+  })
+}
+
 /**
  * BPMN Diagram Viewer
  * @param xml a xml string of a bpmn diagram
  * @param container the html id for an element which gets filled with the diagram
  * @param tokens elements shown on the diagram
- * @param mode 'definition' (default) shows aggregate action buttons; 'instance' shows draggable token dots
+ * @param mode 'definition' (default) shows aggregate action buttons; 'instance' shows draggable token dots; 'history' shows non-interactive executed-activity badges
  * @param instance_id required when mode='instance'; the process instance id used for modification
  * @returns {Element}
  * @constructor
@@ -69,6 +91,7 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
       if (!viewerRef.current) {
         viewerRef.current = new NavigatedViewer({
           container: containerEl,
+          additionalModules: [OutlineModule],
         })
       }
       return viewerRef.current
@@ -214,17 +237,30 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
       const icon_incident = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" /></svg>',
         icon_link = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>'
 
-      tokens?.forEach(({ id, instances, incidents, activity_instance_ids }) => {
+      tokens?.forEach(({ id, instances, incidents, activity_instance_ids, canceled }) => {
         const element = elementRegistry.get(id)
         if (!element) return
         const is_call_activity = element.type === 'bpmn:CallActivity'
-
-        // Draggable token handle — both modes support drag-to-modify. In
-        // instance mode the drag modifies the selected instance; in definition
-        // mode it creates a batch modification across all instances here.
-        const ids_attr = (activity_instance_ids ?? []).join(',')
         const gfx = elementRegistry.getGraphics(id)
         if (gfx) gfx.classList.add('bpmn-highlight')
+
+        // History mode: non-interactive badges only — highlight the executed
+        // element, show how many times it ran, and mark canceled activities.
+        if (mode === 'history') {
+          if (canceled && gfx) gfx.classList.add('bpmn-canceled')
+          if (instances > 0) {
+            overlays.add(id, {
+              position: { top: -10, right: -10 },
+              html: `<div class="bpmn-token-count${canceled ? ' bpmn-token-canceled' : ''}">${instances}</div>`,
+            })
+          }
+          return
+        }
+
+        // Draggable token handle — both interactive modes support drag-to-modify.
+        // In instance mode the drag modifies the selected instance; in definition
+        // mode it creates a batch modification across all instances here.
+        const ids_attr = (activity_instance_ids ?? []).join(',')
         const w = element.width ?? 100
         const h = element.height ?? 80
         overlays.add(id, {
@@ -254,11 +290,11 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
         let actions_html = `<button class="bpmn-badge bpmn-badge-running bpmn-action-btn" data-action="instances" data-activity-id="${id}" title="${t('bpmn.show-instances')}">${instances}</button>`
 
         if (incidents?.length > 0) {
-          actions_html += `<button class="bpmn-action-btn" data-action="incidents" data-activity-id="${id}" title="${t('bpmn.show-incidents')}">${icon_incident}</button>`
+          actions_html += `<button class="bpmn-action-btn" data-action="incidents" data-activity-id="${id}" aria-label="${t('bpmn.show-incidents')}" title="${t('bpmn.show-incidents')}">${icon_incident}</button>`
         }
 
         if (is_call_activity) {
-          actions_html += `<button class="bpmn-action-btn" data-action="called" data-activity-id="${id}" title="${t('bpmn.show-called-activity')}">${icon_link}</button>`
+          actions_html += `<button class="bpmn-action-btn" data-action="called" data-activity-id="${id}" aria-label="${t('bpmn.show-called-activity')}" title="${t('bpmn.show-called-activity')}">${icon_link}</button>`
         }
 
         overlays.add(id, {
@@ -266,6 +302,31 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
           html: `<div class="bpmn-actions">${actions_html}</div>`,
         })
       })
+
+      // History mode: mark the sequence flows that were taken. For a single
+      // instance a flow was traversed iff both its endpoints executed, so
+      // highlight connections whose source and target are both executed.
+      if (mode === 'history') {
+        const executed_ids = new Set((tokens ?? []).map((tk) => tk.id))
+        const primary =
+          getComputedStyle(document.documentElement)
+            .getPropertyValue('--color-primary')
+            .trim() || '#126bbe'
+        elementRegistry.getAll().forEach((el) => {
+          if (el.type !== 'bpmn:SequenceFlow') return
+          if (
+            el.source &&
+            el.target &&
+            executed_ids.has(el.source.id) &&
+            executed_ids.has(el.target.id)
+          ) {
+            const gfx = elementRegistry.getGraphics(el.id)
+            if (!gfx) return
+            gfx.classList.add('bpmn-flow-highlight')
+            recolor_flow(gfx, primary)
+          }
+        })
+      }
 
       highlight?.forEach((elementId) => {
         const gfx = elementRegistry.getGraphics(elementId)
@@ -344,7 +405,14 @@ const ModifyInstanceDialog = ({ request, mode, instance_id, definition_id }) => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [request.value])
 
-  if (!request.value) return <dialog ref={dialogRef} class="modify-instance-dialog" />
+  if (!request.value)
+    return (
+      <dialog
+        ref={dialogRef}
+        class="modify-instance-dialog"
+        onClose={() => (request.value = null)}
+      />
+    )
 
   const {
     source_activity_id,
@@ -441,7 +509,11 @@ const ModifyInstanceDialog = ({ request, mode, instance_id, definition_id }) => 
   const batch_done = is_batch && created_batch.value
 
   return (
-    <dialog ref={dialogRef} class="modify-instance-dialog">
+    <dialog
+      ref={dialogRef}
+      class="modify-instance-dialog"
+      onClose={() => (request.value = null)}
+    >
       <h2>{t('bpmn.modify.title')}</h2>
       <dl>
         <dt>{t('bpmn.modify.source')}</dt>

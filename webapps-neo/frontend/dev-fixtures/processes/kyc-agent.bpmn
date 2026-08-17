@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Defs_KycAgent" targetNamespace="http://operaton.org/examples" exporter="Camunda Modeler" exporterVersion="5.29.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <message id="Msg_AddressCorrected" name="AddressCorrected" />
+  <error id="Error_SanctionsUnavailable" name="SanctionsUnavailable" errorCode="SANCTIONS_UNAVAILABLE" />
+  <process id="kyc-agent" name="KYC Agent (Operaton, agent-as-process)" isExecutable="true" camunda:historyTimeToLive="P30D">
+    <startEvent id="start" name="KYC application received">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="fullName" label="Full name" type="string" defaultValue="Erika Mustermann">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="dateOfBirth" label="Date of birth (YYYY-MM-DD)" type="string" defaultValue="1985-04-12">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="address" label="Address" type="string" defaultValue="Musterstrasse 1, 55116 Mainz">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </extensionElements>
+    </startEvent>
+    <sequenceFlow id="f1" sourceRef="start" targetRef="loop_merge" />
+    <exclusiveGateway id="loop_merge" name="" />
+    <sequenceFlow id="f2" sourceRef="loop_merge" targetRef="agent_decide" />
+    <serviceTask id="agent_decide" name="Agent: decide next action" camunda:type="external" camunda:topic="agent-decide" />
+    <sequenceFlow id="f3" sourceRef="agent_decide" targetRef="policy_guard" />
+    <businessRuleTask id="policy_guard" name="Policy guardrail (DMN)" camunda:resultVariable="policy" camunda:decisionRef="tool-policy" camunda:mapDecisionResult="singleResult" />
+    <sequenceFlow id="f24" sourceRef="policy_guard" targetRef="gw_policy" />
+    <exclusiveGateway id="gw_policy" name="Policy?" default="f25" />
+    <sequenceFlow id="f25" sourceRef="gw_policy" targetRef="route" />
+    <sequenceFlow id="f26" sourceRef="gw_policy" targetRef="deny_inject">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${policy.verdict == 'deny'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f27" sourceRef="gw_policy" targetRef="escalate">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${policy.verdict == 'require_human'}</conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="deny_inject" name="Inject policy denial into context" camunda:type="external" camunda:topic="policy-denied" />
+    <sequenceFlow id="f28" sourceRef="deny_inject" targetRef="loop_merge" />
+    <exclusiveGateway id="route" name="Next action?" default="f10" />
+    <sequenceFlow id="f4" sourceRef="route" targetRef="check_sanctions">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${nextAction == 'check_sanctions'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f5" sourceRef="route" targetRef="verify_address">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${nextAction == 'verify_address'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f6" sourceRef="route" targetRef="calculate_risk">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${nextAction == 'calculate_risk'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f7" sourceRef="route" targetRef="create_customer">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${nextAction == 'create_customer_record'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f8" sourceRef="route" targetRef="request_document">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${nextAction == 'request_document'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f9" sourceRef="route" targetRef="escalate">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${nextAction == 'escalate_to_human'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f10" sourceRef="route" targetRef="approve" />
+    <serviceTask id="check_sanctions" name="Tool: check sanctions" camunda:type="external" camunda:topic="check-sanctions" />
+    <boundaryEvent id="err_sanctions" name="service unavailable" attachedToRef="check_sanctions">
+      <errorEventDefinition errorRef="Error_SanctionsUnavailable" />
+    </boundaryEvent>
+    <sequenceFlow id="f17" sourceRef="err_sanctions" targetRef="loop_merge" />
+    <sequenceFlow id="f11" sourceRef="check_sanctions" targetRef="loop_merge" />
+    <serviceTask id="verify_address" name="Tool: verify address" camunda:type="external" camunda:topic="verify-address" />
+    <sequenceFlow id="f12" name="" sourceRef="verify_address" targetRef="loop_merge" />
+    <serviceTask id="calculate_risk" name="Tool: calculate risk" camunda:type="external" camunda:topic="calculate-risk" />
+    <sequenceFlow id="f13" sourceRef="calculate_risk" targetRef="loop_merge" />
+    <serviceTask id="create_customer" name="Tool: create customer record" camunda:type="external" camunda:topic="create-customer-record" />
+    <boundaryEvent id="comp_boundary" attachedToRef="create_customer">
+      <compensateEventDefinition />
+    </boundaryEvent>
+    <serviceTask id="delete_customer" name="Compensate: delete customer record" isForCompensation="true" camunda:type="external" camunda:topic="delete-customer-record" />
+    <sequenceFlow id="f14" sourceRef="create_customer" targetRef="loop_merge" />
+    <userTask id="request_document" name="Clerk: provide requested document" camunda:candidateGroups="clerk">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="agentQuestion" label="The agent is requesting:" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="agentQuestionContext" label="Reason:" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="humanResponse" label="Your response (folded back into the case as the tool result):" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="f15" sourceRef="request_document" targetRef="loop_merge" />
+    <userTask id="escalate" name="Clerk: judgment call (near-match)" camunda:candidateGroups="clerk">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="agentQuestion" label="The agent is asking:" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="agentQuestionContext" label="Context:" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="humanResponse" label="Your judgment call (folded back into the case as the tool result):" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="f16" sourceRef="escalate" targetRef="loop_merge" />
+    <userTask id="approve" name="Approver: sign off KYC decision" camunda:formRef="kyc-approve-form" camunda:formRefBinding="deployment" camunda:candidateGroups="approver" />
+    <sequenceFlow id="f18" sourceRef="approve" targetRef="approved_gw" />
+    <exclusiveGateway id="approved_gw" name="Approved?" default="f20" />
+    <sequenceFlow id="f19" sourceRef="approved_gw" targetRef="end_ok">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression">${approved}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f20" sourceRef="approved_gw" targetRef="compensate_throw" />
+    <intermediateThrowEvent id="compensate_throw" name="undo side effects">
+      <compensateEventDefinition />
+    </intermediateThrowEvent>
+    <sequenceFlow id="f21" sourceRef="compensate_throw" targetRef="end_rejected" />
+    <endEvent id="end_ok" name="Customer onboarded" />
+    <endEvent id="end_rejected" name="Rejected, side effects compensated" />
+    <subProcess id="sub_correction" name="Mid-flight correction" triggeredByEvent="true">
+      <startEvent id="msg_start" name="Address corrected" isInterrupting="false">
+        <messageEventDefinition messageRef="Msg_AddressCorrected" />
+      </startEvent>
+      <sequenceFlow id="f22" sourceRef="msg_start" targetRef="inject_context" />
+      <serviceTask id="inject_context" name="Inject correction into agent context" camunda:type="external" camunda:topic="inject-context" />
+      <sequenceFlow id="f23" sourceRef="inject_context" targetRef="end_sub" />
+      <endEvent id="end_sub" />
+    </subProcess>
+    <association id="assoc_comp" associationDirection="One" sourceRef="comp_boundary" targetRef="delete_customer" />
+  </process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="kyc-agent">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <dc:Bounds x="172" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="151" y="228" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="loop_merge_di" bpmnElement="loop_merge" isMarkerVisible="true">
+        <dc:Bounds x="265" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="agent_decide_di" bpmnElement="agent_decide">
+        <dc:Bounds x="400" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="policy_guard_di" bpmnElement="policy_guard">
+        <dc:Bounds x="570" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gw_policy_di" bpmnElement="gw_policy" isMarkerVisible="true">
+        <dc:Bounds x="805" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="812" y="235" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="deny_inject_di" bpmnElement="deny_inject">
+        <dc:Bounds x="780" y="80" width="100" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="route_di" bpmnElement="route" isMarkerVisible="true">
+        <dc:Bounds x="945" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="939" y="161" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="check_sanctions_di" bpmnElement="check_sanctions">
+        <dc:Bounds x="1065" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="verify_address_di" bpmnElement="verify_address">
+        <dc:Bounds x="1065" y="478" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="calculate_risk_di" bpmnElement="calculate_risk">
+        <dc:Bounds x="1065" y="596" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="create_customer_di" bpmnElement="create_customer">
+        <dc:Bounds x="1065" y="714" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="delete_customer_di" bpmnElement="delete_customer">
+        <dc:Bounds x="1320" y="780" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="request_document_di" bpmnElement="request_document">
+        <dc:Bounds x="1065" y="832" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="escalate_di" bpmnElement="escalate">
+        <dc:Bounds x="1065" y="950" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="approve_di" bpmnElement="approve">
+        <dc:Bounds x="1065" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="approved_gw_di" bpmnElement="approved_gw" isMarkerVisible="true">
+        <dc:Bounds x="1255" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1253" y="161" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="compensate_throw_di" bpmnElement="compensate_throw">
+        <dc:Bounds x="1332" y="300" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1309" y="336" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_rejected_di" bpmnElement="end_rejected">
+        <dc:Bounds x="1452" y="300" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1435" y="336" width="70" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_ok_di" bpmnElement="end_ok">
+        <dc:Bounds x="1452" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1444" y="228" width="53" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sub_correction_di" bpmnElement="sub_correction" isExpanded="true">
+        <dc:Bounds x="290" y="1110" width="480" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="msg_start_di" bpmnElement="msg_start">
+        <dc:Bounds x="330" y="1172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="303" y="1208" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="inject_context_di" bpmnElement="inject_context">
+        <dc:Bounds x="420" y="1150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_sub_di" bpmnElement="end_sub">
+        <dc:Bounds x="590" y="1172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="f22_di" bpmnElement="f22">
+        <di:waypoint x="366" y="1190" />
+        <di:waypoint x="420" y="1190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f23_di" bpmnElement="f23">
+        <di:waypoint x="520" y="1190" />
+        <di:waypoint x="590" y="1190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="comp_boundary_di" bpmnElement="comp_boundary">
+        <dc:Bounds x="1097" y="776" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="err_sanctions_di" bpmnElement="err_sanctions">
+        <dc:Bounds x="1097" y="382" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1052" y="418" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="f1_di" bpmnElement="f1">
+        <di:waypoint x="208" y="210" />
+        <di:waypoint x="265" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f2_di" bpmnElement="f2">
+        <di:waypoint x="315" y="210" />
+        <di:waypoint x="400" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f3_di" bpmnElement="f3">
+        <di:waypoint x="500" y="210" />
+        <di:waypoint x="570" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f24_di" bpmnElement="f24">
+        <di:waypoint x="670" y="210" />
+        <di:waypoint x="805" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f25_di" bpmnElement="f25">
+        <di:waypoint x="855" y="210" />
+        <di:waypoint x="945" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f26_di" bpmnElement="f26">
+        <di:waypoint x="830" y="185" />
+        <di:waypoint x="830" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f27_di" bpmnElement="f27">
+        <di:waypoint x="830" y="235" />
+        <di:waypoint x="830" y="990" />
+        <di:waypoint x="1065" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f28_di" bpmnElement="f28">
+        <di:waypoint x="780" y="115" />
+        <di:waypoint x="290" y="115" />
+        <di:waypoint x="290" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f4_di" bpmnElement="f4">
+        <di:waypoint x="970" y="235" />
+        <di:waypoint x="970" y="360" />
+        <di:waypoint x="1065" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f5_di" bpmnElement="f5">
+        <di:waypoint x="970" y="235" />
+        <di:waypoint x="970" y="518" />
+        <di:waypoint x="1065" y="518" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f6_di" bpmnElement="f6">
+        <di:waypoint x="970" y="235" />
+        <di:waypoint x="970" y="636" />
+        <di:waypoint x="1065" y="636" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f7_di" bpmnElement="f7">
+        <di:waypoint x="970" y="235" />
+        <di:waypoint x="970" y="754" />
+        <di:waypoint x="1065" y="754" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f8_di" bpmnElement="f8">
+        <di:waypoint x="970" y="235" />
+        <di:waypoint x="970" y="872" />
+        <di:waypoint x="1065" y="872" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f9_di" bpmnElement="f9">
+        <di:waypoint x="970" y="235" />
+        <di:waypoint x="970" y="970" />
+        <di:waypoint x="1065" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f10_di" bpmnElement="f10">
+        <di:waypoint x="995" y="210" />
+        <di:waypoint x="1065" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f17_di" bpmnElement="f17">
+        <di:waypoint x="1115" y="418" />
+        <di:waypoint x="1115" y="440" />
+        <di:waypoint x="1195" y="440" />
+        <di:waypoint x="1195" y="1070" />
+        <di:waypoint x="290" y="1070" />
+        <di:waypoint x="290" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f11_di" bpmnElement="f11">
+        <di:waypoint x="1165" y="360" />
+        <di:waypoint x="1195" y="360" />
+        <di:waypoint x="1195" y="1070" />
+        <di:waypoint x="290" y="1070" />
+        <di:waypoint x="290" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f12_di" bpmnElement="f12">
+        <di:waypoint x="1165" y="518" />
+        <di:waypoint x="1195" y="518" />
+        <di:waypoint x="1195" y="1070" />
+        <di:waypoint x="290" y="1070" />
+        <di:waypoint x="290" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f13_di" bpmnElement="f13">
+        <di:waypoint x="1165" y="636" />
+        <di:waypoint x="1195" y="636" />
+        <di:waypoint x="1195" y="1070" />
+        <di:waypoint x="290" y="1070" />
+        <di:waypoint x="290" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f14_di" bpmnElement="f14">
+        <di:waypoint x="1165" y="754" />
+        <di:waypoint x="1195" y="754" />
+        <di:waypoint x="1195" y="1070" />
+        <di:waypoint x="290" y="1070" />
+        <di:waypoint x="290" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f15_di" bpmnElement="f15">
+        <di:waypoint x="1165" y="872" />
+        <di:waypoint x="1195" y="872" />
+        <di:waypoint x="1195" y="1070" />
+        <di:waypoint x="290" y="1070" />
+        <di:waypoint x="290" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f16_di" bpmnElement="f16">
+        <di:waypoint x="1165" y="990" />
+        <di:waypoint x="1195" y="990" />
+        <di:waypoint x="1195" y="1070" />
+        <di:waypoint x="290" y="1070" />
+        <di:waypoint x="290" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f18_di" bpmnElement="f18">
+        <di:waypoint x="1165" y="210" />
+        <di:waypoint x="1255" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f19_di" bpmnElement="f19">
+        <di:waypoint x="1305" y="210" />
+        <di:waypoint x="1452" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f20_di" bpmnElement="f20">
+        <di:waypoint x="1280" y="235" />
+        <di:waypoint x="1280" y="318" />
+        <di:waypoint x="1332" y="318" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f21_di" bpmnElement="f21">
+        <di:waypoint x="1368" y="318" />
+        <di:waypoint x="1452" y="318" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="assoc_comp_di" bpmnElement="assoc_comp">
+        <di:waypoint x="1115" y="812" />
+        <di:waypoint x="1115" y="820" />
+        <di:waypoint x="1320" y="820" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

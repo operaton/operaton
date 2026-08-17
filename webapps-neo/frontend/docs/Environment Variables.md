@@ -1,6 +1,6 @@
 # Environment Variables
 
-We use Vite as a build tool: https://vite.dev/guide/env-and-mode  
+We use Vite as a build tool: https://vite.dev/guide/env-and-mode
 
 ## Overview on our Env Vars
 
@@ -8,7 +8,7 @@ We use Vite as a build tool: https://vite.dev/guide/env-and-mode
 
 A list of possible backends a user can switch between when using the
 application.
-The data is a JSON list with objects consisting of a `name` and `url` string. If you use Camunda 7 (C7) as a backend, you need to additionally set `c7_mode` to true. 
+The data is a JSON list with objects consisting of a `name` and `url` string. If you use Camunda 7 (C7) as a backend, you need to additionally set `c7_mode` to true.
 
 ```JSON
 [
@@ -23,7 +23,6 @@ The data is a JSON list with objects consisting of a `name` and `url` string. If
   }
 ]
 ```
-
 
 The URL string has the following structure:  
 `{http|https}` + `://` + `{your.domain}` + `{port|_}`
@@ -40,8 +39,20 @@ The resulting entry in the `.env`-files can look like the following
 VITE_BACKEND=[{"name": "Dev Operaton", "url": "http://localhost:8084"}, {"name": "Dev c7", "url": "http://localhost:8088", "c7_mode": true}]
 ```
 
-> **Important**: This config works with the `docker-compose.yaml` setup and is also 
-> already set in `.env.development`. You can use the `.env.development.local` file 
-> to change this config to you preferences. For IntelliJ users this is also provided 
+> **Important**: This config works with the `docker-compose.yaml` setup and is also
+> already set in `.env.development`. You can use the `.env.development.local` file
+> to change this config to you preferences. For IntelliJ users this is also provided
 > as run configuration.
 
+### VITE_PLUGINS_URL
+
+URL of the runtime plugin manifest — a JSON array of remote plugin packages the
+app loads at boot. Optional; defaults to `/plugins/plugins.json` when unset.
+
+```properties
+# .env
+VITE_PLUGINS_URL=/plugins/plugins.json
+```
+
+See [Plugin System.md](Plugin%20System.md) for the manifest shape and the full
+plugin mechanism.

@@ -5,6 +5,10 @@
   --color-secondary-2: #27f3e044;
 
   --color-primary: #126bbe;
+  /* Darker brand blue for text/links only: #126bbe is 4.2:1 on the #e1e3e6
+     button surface (below WCAG AA). --color-link clears 4.5:1 (5.5:1 there),
+     while fills/borders keep the brighter --color-primary. */
+  --color-link: #0d5aa0;
   --color-primary-transparent: color-mix(
     in srgb,
     var(--color-primary) 40%,
@@ -29,21 +33,39 @@
     transparent
   );
 
-  --background-1: #fff;
-  --background-2: #f2f2f4;
-  --background-3: #dadadc;
+  /* One blue hue for the whole neutral scale. Lightness roughly tracks Apple's
+     systemGray6→4; chroma rises as the surface darkens (and drops toward
+     white), so darker surfaces read a touch more blue. */
+  --hue: 255;
+  --background-1: oklch(1 0 var(--hue)); /* pure-white primary surface */
+  --background-2: oklch(0.968 0.004 var(--hue));
+  --background-3: oklch(0.928 0.008 var(--hue));
+  --background-4: oklch(0.868 0.012 var(--hue));
 
-  --border-color: #ccc;
-  --border-color-2: #aaa;
+  /* Borders are a translucent overlay, not fixed colors: a low-alpha near-black
+     darkens whatever surface sits under it (a low-alpha near-white lightens it
+     in dark mode), so one value composites correctly over every background. A
+     little blue in the tint keeps it consistent with the surfaces. */
+  --border-color: oklch(0.2 0.03 var(--hue) / 0.14);
+  --border-color-2: oklch(0.2 0.03 var(--hue) / 0.3);
+  /* Stronger still — for buttons, which need a clearly defined edge. */
+  --border-color-3: oklch(0.2 0.03 var(--hue) / 0.5);
+  /* Button fill: a translucent tint that composites over whatever surface the
+     button sits on, so it stays a distinct control on any background. */
+  --button-background: oklch(0.2 0.03 var(--hue) / 0.08);
 
   --text: #000;
   --text-2: #555;
-  --text-disabled: #888;
+  /* #6b6b6b meets WCAG AA (4.5:1) even on the --background-2 (#f2f2f4) surfaces
+     where disabled text appears (e.g. the processes sub-nav) */
+  --text-disabled: #6b6b6b;
   --text-inverted: #fff;
 
   /* font */
   --base-font-size: 1rem;
   --small-font-size: 0.85rem;
+  /* One step below small — the top header row (server / go-to / account). */
+  --smaller-font-size: 0.75rem;
   --h1-size: 3rem;
   --h2-size: 2rem;
   --h3-size: 1.5rem;
@@ -58,6 +80,10 @@
   --spacing-4: 4rem;
   --spacing-5: 8rem;
   --spacing-6: 16rem;
+
+  /* Height of the instance tab row, which sticks to the top of the scrolling
+     content pane — sticky table headers inside it start below this. */
+  --tertiary-nav-height: 2rem;
 
   --border-radius: 0.3rem;
   --border-radius-2: 0.4rem;
@@ -74,11 +100,20 @@
   :root {
     color-scheme: dark;
     --color-primary: #5ca2e4;
-    --background-1: #111113;
-    --background-2: #222224;
-    --background-3: #333335;
-    --border-color: #555;
-    --border-color-2: #777;
+    /* On dark surfaces the light-blue primary already clears AA as text, so the
+       link colour tracks it (a darker link would fail against the dark bg). */
+    --color-link: #5ca2e4;
+    /* Same hue; here the darkest surface (background-1) carries the most chroma
+       and it drops as surfaces lighten. Borders flip to a translucent near-white
+       so they lighten whatever they sit on. */
+    --background-1: oklch(0.22 0.013 var(--hue));
+    --background-2: oklch(0.275 0.01 var(--hue));
+    --background-3: oklch(0.33 0.008 var(--hue));
+    --background-4: oklch(0.39 0.006 var(--hue));
+    --border-color: oklch(0.95 0.02 var(--hue) / 0.16);
+    --border-color-2: oklch(0.95 0.02 var(--hue) / 0.32);
+    --border-color-3: oklch(0.95 0.02 var(--hue) / 0.44);
+    --button-background: oklch(0.95 0.02 var(--hue) / 0.1);
     --text: #fff;
     --text-2: #ccc;
     --text-disabled: #aaa;
@@ -99,13 +134,14 @@
 }
 
 @layer components {
-  @media (width <= 70em) {
+  @media (width <=70em) {
     #mobile-logo {
       display: block !important;
       font-weight: bold;
       color: var(--text);
       text-decoration: none;
     }
+
     #mobile-menu-toggle {
       display: block !important;
       background: transparent;
@@ -116,15 +152,20 @@
       font-size: 1.8em;
       line-height: 1;
     }
+
     #mobile-menu-toggle:after {
       content: "\2630";
     }
-    #nav-wrapper {
+
+    #nav-wrapper,
+    #logo {
       display: none !important;
     }
+
     #mobile-menu > nav {
       padding: 0;
     }
+
     #mobile-menu nav li {
       padding-left: 0;
     }
@@ -141,21 +182,25 @@
     border-radius: 0;
     box-sizing: border-box;
   }
+
   #mobile-menu > header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-2);
   }
+
   #mobile-menu > header button {
     margin: 0;
   }
+
   #mobile-menu nav menu {
     list-style: none;
     padding: 0;
     display: flex;
     flex-direction: column;
   }
+
   #mobile-menu nav menu li a {
     display: block;
     padding: var(--spacing-1);
@@ -163,18 +208,22 @@
     text-decoration: none;
     border-radius: var(--border-radius);
   }
+
   #mobile-menu nav menu li a:visited {
     color: var(--text);
   }
-  #mobile-menu nav menu li a.active {
-    color: var(--color-primary);
+
+  #mobile-menu nav menu li a[aria-current="page"] {
+    color: var(--color-link);
     background: var(--background-3);
   }
+
   #mobile-menu nav menu:last-child {
     margin-top: var(--spacing-2);
     padding-top: var(--spacing-1);
     border-top: var(--border);
   }
+
   #mobile-menu > menu {
     list-style: none;
     padding: 0;
@@ -185,16 +234,19 @@
     flex-direction: column;
     gap: var(--spacing-1);
   }
+
   #mobile-menu > menu button {
     margin: 0;
     width: 100%;
     justify-content: center;
   }
+
   #mobile-server-selector {
     display: flex;
     align-items: center;
     gap: var(--spacing-1);
   }
+
   #mobile-server-selector select {
     border: none;
     background: transparent;
@@ -208,34 +260,43 @@
   .task-form form {
     column-width: auto;
   }
+
   .task-form .has-error {
     display: none;
   }
+
   .task-form .input-group-btn {
     display: none;
   }
+
   .task-form .form-fields {
     display: flex;
     flex-wrap: wrap;
   }
+
   .task-form .form-fields .form-group {
     width: 40%;
   }
+
   .task-form label {
     margin-top: 1em;
   }
+
   .task-form .task-form [type="checkbox"],
   .task-form input[type="radio"] {
     margin-left: var(--spacing-2);
     width: auto;
   }
+
   .task-form input:not([type="checkbox"]) {
     width: 85%;
   }
+
   .task-form select {
     box-sizing: border-box;
     width: 90%;
   }
+
   .task-form .error {
     color: var(--color-danger);
     margin-top: var(--spacing-2);
@@ -270,13 +331,16 @@
     width: 100%;
     margin-top: var(--spacing-3);
   }
+
   .task-form .form-buttons button {
     display: inline-block;
     margin-right: var(--spacing-1);
   }
+
   .task-form .task-text {
     margin-top: var(--spacing-2);
   }
+
   .task-form input[type="checkbox"],
   .task-form input[type="radio"] {
     width: auto;
@@ -304,18 +368,134 @@
 
 @layer pages {
   .login-page {
+    --login-width: 22rem;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-3);
     padding: var(--spacing-3);
-    align-items: start;
+    /* The page sits one shade behind the white card so the card reads as
+       elevated; in dark mode the pair flips so the card stays the brighter
+       surface (see the media query below). */
+    background: var(--background-2);
+  }
+
+  /* The logo sits at the top of the page; everything else fills the remaining
+     height and centres within it. */
+  .login-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: var(--spacing-2);
+  }
+
+  .login-page h1 {
+    margin: 0;
+    max-width: var(--login-width);
+    text-align: center;
+  }
+
+  .login-logo {
+    height: 5rem;
+    width: auto;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: var(--login-width);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    background: var(--background-1);
+    border-radius: 1rem;
+  }
+
+  .login-card > label,
+  .login-card form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--spacing-1);
+    margin: 0;
+  }
+
+  .login-card label {
+    font-weight: 600;
+  }
+
+  .login-card small {
+    font-weight: normal;
+    color: var(--text-2);
+  }
+
+  .login-card select,
+  .login-card input {
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: normal;
+  }
+
+  .login-card hr {
+    width: 100%;
+    margin: 0;
+    border: none;
+    border-top: var(--border);
+  }
+
+  /* Same font size on all three controls so their em-based padding yields an
+     identical height. */
+  .login-card :is(select, input, button) {
+    font-size: var(--base-font-size);
+  }
+
+  .login-card button {
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    margin-top: var(--spacing-1);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--text-inverted);
+  }
+
+  .login-card button:hover {
+    background: var(--color-link);
+    border-color: var(--color-link);
+  }
+
+  .login-language {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    font-size: var(--small-font-size);
+    color: var(--text-2);
+  }
+
+  .login-links {
+    color: var(--text-2);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .login-page {
+      background: var(--background-1);
+    }
+
+    .login-card {
+      background: var(--background-2);
+    }
   }
 
   #app {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow: hidden;
+    /* Bounded to the viewport so `main` scrolls internally (overflow-y: auto)
+       and flex children like the processes split get a definite height. */
   }
 
   main {
@@ -328,13 +508,25 @@
     top: 0;
     position: sticky;
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    gap: var(--spacing-1);
     min-height: 2rem;
     padding: 0 var(--spacing-1);
-    justify-content: space-between;
-    background: var(--background-2);
+    background: var(--background-3);
     z-index: 10;
-    border-bottom: var(--border);
+  }
+
+  /* Logo on the left, spanning both header rows. */
+  #logo {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-1) var(--spacing-2) var(--spacing-1) var(--spacing-1);
+  }
+
+  #logo img {
+    display: block;
+    height: 2.75em;
+    width: auto;
   }
 
   #mobile-logo,
@@ -342,16 +534,48 @@
     display: none;
   }
 
+  /* Two stacked rows; column-reverse puts the DOM-first primary nav on the
+     lower row and the secondary group on the top row (keeps primary nav first
+     in tab order for a11y). */
   #nav-wrapper {
     flex: 1;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: var(--spacing-1);
     font-size: var(--small-font-size);
   }
+
+  /* Secondary row: server selector left, go-to centred, the rest right. A step
+     below the primary nav's font size, so it reads as the quieter row. */
   #nav-wrapper > div:last-child {
     display: flex;
     gap: var(--spacing-2);
     align-items: center;
+    justify-content: space-between;
+    font-size: var(--smaller-font-size);
+  }
+
+  /* The controls set their own font-size globally; in this row they follow it. */
+  #nav-wrapper > div:last-child :is(button, select) {
+    font-size: inherit;
+  }
+
+  /* Help / Account / Logout stay together at the right end. */
+  #nav-wrapper > div:last-child > div {
+    display: flex;
+    gap: var(--spacing-2);
+    align-items: center;
+  }
+
+  /* One height for every control in the row: left to themselves a button sizes
+     from its line box plus padding while a select adds the UA's own metrics, so
+     the three pills end up a couple of pixels apart. */
+  #nav-wrapper > div:last-child :is(button, select) {
+    box-sizing: border-box;
+    height: 1.5rem;
+    padding-block: 0;
+    border: none;
   }
 
   #skip-links {
@@ -364,6 +588,7 @@
     background: var(--background-1);
     padding: var(--spacing-2);
   }
+
   #skip-links:focus-within {
     width: auto;
     height: auto;
@@ -376,37 +601,45 @@
   nav {
     padding: 0 var(--spacing-1);
   }
+
   nav menu {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
     padding: 0;
   }
+
   nav menu li a {
     color: var(--text);
     display: block;
     padding: var(--spacing-1);
   }
+
   nav menu li a:visited {
     color: var(--text);
   }
-  nav menu li a.active {
-    color: var(--color-primary);
+
+  nav menu li a[aria-current="page"] {
+    color: var(--color-link);
   }
 
+  /* Main pages: normal left-aligned row on the lower row (the reverse is only
+     on the parent #nav-wrapper column, to stack this row below the secondary). */
   #primary-navigation {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-1) var(--spacing-2);
-    justify-content: space-between;
-    align-items: center;
+    display: block;
     padding: 0;
+  }
+
+  #primary-navigation > menu {
+    justify-content: flex-start;
+    gap: var(--spacing-1) var(--spacing-2);
   }
 
   #secondary-navigation {
     display: flex;
     flex-wrap: wrap;
   }
+
   #secondary-navigation > menu {
     gap: var(--spacing-1);
   }
@@ -415,11 +648,18 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-1);
+    /* Matches the nav links' padding below, so "Server" lines up with "Tasks". */
+    padding-left: var(--spacing-1);
   }
+
+  /* Same pill as the go-to button next to it: a borderless button fill, so both
+     read as controls sitting on the header surface. */
   #server-selector select {
-    border: none;
-    background: transparent;
-    padding: 0 var(--spacing-1) 0 0;
+    border-radius: 50em;
+    background: var(--button-background);
+    background-clip: padding-box;
+    font-weight: 600;
+    padding: 0.25em var(--spacing-1);
     letter-spacing: 0.03rem;
     width: 12ch;
     text-overflow: ellipsis;
@@ -431,25 +671,44 @@
     padding: 0;
     letter-spacing: 0.03rem;
   }
+
   #app > header nav menu > li > a {
     padding: var(--spacing-1);
     box-sizing: border-box;
+    /* Fill the (stretched) li so the active indicator can sit on its edge. */
+    height: 100%;
   }
-  #app > header nav menu > li > a.active {
+
+  #app > header nav menu > li > a[aria-current="page"] {
     color: var(--text);
+    /* The indicator ends flush with the header's bottom edge; the padding is
+       reduced by the border width so the link keeps its height. */
     border-bottom: 0.2em solid var(--color-primary);
     padding-bottom: calc(var(--spacing-1) - 0.2em);
   }
+
   #app > header nav menu a {
     color: var(--text);
     text-decoration: none;
   }
 
+  /* Canonical visually-hidden: stays in the accessibility tree (readable by
+     screen readers) but is clipped to a 1-unit box so it never renders visibly
+     or creates a non-focusable scroll region (axe scrollable-region-focusable).
+     0.0625rem == 1px at the default root size; kept relative per project rules.
+     !important guards the hiding against unlayered layout rules (e.g. the
+     `overflow-y: auto` in components.css) — the standard for sr-only utilities. */
   .screen-hidden {
-    position: absolute;
-    left: -999vw;
-    height: 0;
-    width: 0;
+    position: absolute !important;
+    width: 0.0625rem !important;
+    height: 0.0625rem !important;
+    padding: 0 !important;
+    margin: -0.0625rem !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
   }
 
   #migration {
@@ -577,29 +836,18 @@
     position: relative;
     max-height: 100%;
     box-sizing: border-box;
-    max-width: 40vw;
+    /* Readable at any zoom (WCAG reflow): clamp a 30em floor, a 40vw goal and
+       a 100% cap. When the 30em floor exceeds the viewport the details pane
+       wraps to a new row (.tasks is flex-wrap: wrap). flex-shrink: 0 stops
+       flexbox from shrinking the list back below the clamped width. */
+    flex-shrink: 0;
+    width: clamp(30em, 40vw, 100%);
     background: var(--background-2);
 
     > div {
       box-sizing: content-box;
     }
-    #task-actions {
-      display: flex;
-      gap: var(--spacing-1);
-      align-items: center;
-      padding: var(--spacing-1);
-      flex-wrap: wrap;
 
-      > div {
-        display: flex;
-        gap: var(--spacing-1);
-        align-items: center;
-
-        > * {
-          margin: 0;
-        }
-      }
-    }
     table {
       width: 100%;
 
@@ -611,6 +859,7 @@
         background-color: var(--background-1);
       }
     }
+
     .start-process {
       margin: auto auto var(--spacing-1);
     }
@@ -747,6 +996,7 @@
           &:first-child {
             border-radius: var(--border-radius) 0 0 var(--border-radius);
           }
+
           &:last-child {
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
           }
@@ -766,7 +1016,7 @@
     table {
       width: calc(100% - var(--spacing-1));
 
-      tr.selected {
+      tr[aria-selected="true"] {
         a {
           color: var(--text);
         }
@@ -777,6 +1027,7 @@
           &:first-child {
             border-radius: var(--border-radius) 0 0 var(--border-radius);
           }
+
           &:last-child {
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
           }
@@ -789,35 +1040,33 @@
     padding: var(--spacing-2);
   }
 
-  /* Two-row, two-column layout:
-       row 1: deployments table, spans both columns
-       row 2: resources list (left) + details pane (right) */
+  /* Single vertical column that fills the viewport; the page itself does not
+     scroll — only the details pane does.
+       row 1: deployment list (content height, capped at 30rem, scrolls internally)
+       row 2: resource list (content height)
+       row 3: resource details (fills the rest, scrolls internally) */
   .deployments {
-    display: grid;
-    grid-template-rows: minmax(5em, 30vh) 1fr;
-    grid-template-columns: minmax(15em, 25em) 1fr;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
-  .deployments > :first-child {
-    grid-column: 1 / -1;
+
+  .deployments .deployment-list {
+    flex: none;
+    max-height: 30rem;
     overflow-y: auto;
     border-bottom: var(--border-width-2) solid var(--border-color);
   }
-  .deployments > :nth-child(2) {
-    overflow-y: auto;
-    border-right: var(--border);
+
+  .deployments .resource-list {
+    flex: none;
+    border-bottom: var(--border);
   }
-  .deployments > :nth-child(3) {
-    overflow: auto;
-  }
+
   .deployment-empty {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
+    padding: var(--spacing-2);
     color: var(--text-2);
     font-size: var(--small-font-size);
-    text-align: center;
   }
 
   /* Batches: list (left) + details pane (right). */
@@ -826,15 +1075,18 @@
     grid-template-columns: minmax(20em, 32em) 1fr;
     height: 100%;
   }
+
   .batches > :first-child {
     overflow-y: auto;
     border-right: var(--border);
     padding: var(--spacing-2);
   }
+
   .batches > :nth-child(2) {
     overflow: auto;
     padding: var(--spacing-2);
   }
+
   .batch-empty {
     display: flex;
     height: 100%;
@@ -845,12 +1097,13 @@
     text-align: center;
   }
 
-  #admin-page {
+  .admin-page {
     display: flex;
     flex: 1;
     min-height: 0;
   }
-  #admin-page > div {
+
+  .admin-page > div {
     padding: var(--spacing-2);
     overflow-y: auto;
     width: calc(100% - var(--spacing-3));
@@ -859,8 +1112,8 @@
   }
 
   /* keep the hover/selected background, but drop the negative margin shift */
-  #admin-page tbody tr:hover :where(td, th),
-  #admin-page tbody tr[aria-selected="true"] :where(td, th) {
+  .admin-page tbody tr:hover :where(td, th),
+  .admin-page tbody tr[aria-selected="true"] :where(td, th) {
     margin: 0;
   }
 
@@ -874,6 +1127,7 @@
     margin: var(--spacing-1) 0;
     max-width: 40em;
   }
+
   .link-list li a {
     display: block;
     padding: var(--spacing-1);
@@ -881,6 +1135,7 @@
     text-decoration: none;
     border-bottom: var(--border);
   }
+
   .link-list li a:hover {
     background: var(--background-2);
   }
@@ -890,12 +1145,22 @@
   .dashboard {
     padding: var(--spacing-2);
   }
+
+  /* The two columns inside carry their own padding and scroll separately. */
+  .start-process-page {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+  }
+
   .dashboard > div {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
     gap: var(--spacing-2);
     margin-bottom: var(--spacing-3);
   }
+
   .dashboard > div > a {
     display: flex;
     flex-direction: column;
@@ -906,12 +1171,15 @@
     text-decoration: none;
     color: var(--text);
   }
+
   .dashboard > div > a:visited {
     color: var(--text);
   }
+
   .dashboard > div > a:hover {
     background: var(--background-3);
   }
+
   .dashboard > div > a h3 {
     margin: 0;
     font-size: 0.875em;
@@ -919,31 +1187,38 @@
     letter-spacing: 0.05em;
     color: var(--text-2);
   }
+
   .dashboard > div > a strong {
     font-size: 2em;
     line-height: 1;
   }
+
   .dashboard .incidents {
     color: var(--color-danger);
   }
+
   .dashboard > section {
     background: var(--background-2);
     border-radius: var(--border-radius);
     padding: var(--spacing-2);
     margin-top: var(--spacing-2);
   }
+
   .dashboard > section > header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-1);
   }
+
   .dashboard > section h3 {
     margin: 0;
   }
+
   .dashboard > section th {
     background: var(--background-2);
   }
+
   .dashboard > section td:first-child,
   .dashboard > section th:first-child {
     padding-left: 0;
@@ -1012,7 +1287,7 @@
   }
 
   .hint {
-    color: var(--color-primary);
+    color: var(--color-link);
   }
 
   .danger {
@@ -1062,15 +1337,14 @@
   button,
   .button,
   .button:visited {
-    border: none;
+    /* border: none; */
     margin-top: 1em;
     box-sizing: content-box;
 
-    background: var(--color-primary);
-    color: white;
-
+    background: var(--button-background);
     background-clip: padding-box;
-    border-radius: 999em;
+    border-radius: 0.3em;
+    border: 0.13em outset var(--border-color-3);
     padding: 0.3em 0.7em;
     font-weight: 600;
     line-height: 1;
@@ -1084,12 +1358,15 @@
 
     &[type="submit"],
     &.primary {
-      background: var(--color-primary);
-      color: white;
+      outline: 0.23em solid var(--color-primary-transparent);
+      outline-offset: -0.23em;
+      /* background: var(--color-primary); */
+      /* color: white; */
+      /* border-color: var(--color-primary-2); */
     }
 
     &.secondary {
-      border: var(--border-width) solid var(--border-color-2);
+      border: var(--border-width) solid var(--border-color-3);
       background: transparent;
       color: var(--text);
     }
@@ -1101,6 +1378,7 @@
       font-weight: normal;
       font-size: var(--base-font-size);
     }
+
     &.danger {
       background: var(--background-1);
       border-color: var(--color-danger-transparent);
@@ -1114,6 +1392,7 @@
 
   #logout {
     margin-top: 0;
+    border-radius: 50em;
   }
 
   button.link {
@@ -1139,9 +1418,14 @@
 
   :where(button, .button, select, input):hover {
     cursor: pointer;
-    outline-style: solid;
+    outline: dashed 0.15rem;
     z-index: 999;
     transition: 50ms all;
+  }
+
+  /* On hover a button's fill deepens to its border colour. */
+  :where(button, .button):hover {
+    background: var(--border-color-3);
   }
 
   :where(a, button, input, select):focus {
@@ -1196,11 +1480,13 @@
     color: var(--text);
     max-width: 100%;
   }
+
   select {
     border-radius: var(--border-radius);
     font-size: var(--small-font-size);
     padding: 0.3em 0.7em;
   }
+
   input,
   textarea {
     cursor: text !important;
@@ -1247,10 +1533,12 @@
     0% {
       opacity: 0;
     }
+
     100% {
       opacity: 1;
     }
   }
+
   .fade-in {
     animation: 150ms ease-in 0s 1 fade-in;
   }
@@ -1259,13 +1547,16 @@
     0% {
       opacity: 0;
     }
+
     50% {
       opacity: 0;
     }
+
     100% {
       opacity: 1;
     }
   }
+
   .fade-in-delayed {
     animation: 250ms ease-in 0s 1 fade-in-delayed;
   }
@@ -1274,6 +1565,13 @@
 @layer normalize {
   :root {
     color-scheme: light;
+  }
+
+  /* No rubber-band overscroll: dragging past the end of a scroll pane must not
+     pull empty space into view, and must not chain the scroll to the pane
+     behind it. Only has an effect on elements that actually scroll. */
+  * {
+    overscroll-behavior: none;
   }
 
   body {
@@ -1289,7 +1587,7 @@
 
   a,
   a:visited {
-    color: var(--color-primary);
+    color: var(--color-link);
     cursor: pointer;
   }
 
@@ -1327,6 +1625,7 @@
     letter-spacing: 0.02em;
     z-index: 1;
   }
+
   table thead th:first-child {
     position: sticky;
     left: 0;
@@ -1388,16 +1687,46 @@
     box-shadow: 0 0 var(--spacing-2) #0002;
     padding: var(--spacing-2);
   }
+
   dialog > header {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   dialog > header > button {
     width: unset;
   }
+
   ::backdrop {
     background: #fff4;
     backdrop-filter: blur(6px);
   }
+}
+
+/* Historic process-instance state badge (see #101). */
+.instance-state {
+  display: inline-block;
+  padding: 0.1em 0.6em;
+  border-radius: 1em;
+  font-size: 0.85em;
+  font-weight: 600;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.instance-state.state-active {
+  color: var(--color-success);
+}
+
+.instance-state.state-completed {
+  color: var(--color-muted, #666);
+}
+
+.instance-state.state-externally_terminated,
+.instance-state.state-internally_terminated {
+  color: var(--color-danger);
+}
+
+.instance-state.state-suspended {
+  color: var(--color-warning);
 }

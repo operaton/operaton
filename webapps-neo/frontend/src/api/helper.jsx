@@ -14,33 +14,18 @@ export const _url_engine_rest = (state) =>
 export const get_credentials = (state) =>
   `${state.auth.credentials.value.username}:${state.auth.credentials.value.password}`;
 
-export const get_auth_header = (state) => {
-  if (state.auth.mode === "oauth") {
-    // Embedded webapps-neo authenticates against the backend through the Spring
-    // OAuth2 module: the browser holds a session cookie established by the
-    // server-side oauth2 login, so no Authorization header is sent. A Bearer
-    // header is only used in the standalone client-side (PKCE) flow, where a
-    // token is present.
-    return state.auth.token.value ? `Bearer ${state.auth.token.value}` : null;
-  }
-  return `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`;
-};
+export const get_auth_header = (state) =>
+  state.auth.mode === "oauth"
+    ? `Bearer ${state.auth.token.value}`
+    : `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`;
 
-/**
- * Builds request headers, attaching the Authorization header only when an auth
- * value is available (in server-session oauth mode it is omitted and the
- * session cookie carries the identity).
- */
-const auth_headers = (state, extra) => {
-  const headers = new Headers(extra);
-  const auth = get_auth_header(state);
-  if (auth) {
-    headers.set("Authorization", auth);
-  }
-  return headers;
-};
-
-const FORM_URLENCODED = { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" };
+let headers = new Headers();
+headers.set("credentials", "include");
+let headers_form_urlencoded = headers;
+headers_form_urlencoded.set(
+  "Content-Type",
+  "application/x-www-form-urlencoded;charset=UTF-8",
+);
 
 /* helpers */
 
@@ -121,7 +106,11 @@ const resolve_signal = (signal, on_load, on_success, on_error, t) => {
   }
 
   if (signal.value.status === RESPONSE_STATE.LOADING) {
-    return on_load ? on_load : <p class="fade-in-delayed">{t("common.loading")}</p>;
+    return on_load ? (
+      on_load
+    ) : (
+      <p class="fade-in-delayed">{t("common.loading")}</p>
+    );
   }
 
   if (signal.value.status === RESPONSE_STATE.SUCCESS) {
@@ -179,12 +168,12 @@ export const PAGINATED_GET = async (
   const sep = url.includes("?") ? "&" : "?";
   const paged_url = `${url}${sep}firstResult=${firstResult}&maxResults=${maxResults}`;
 
-  const headers = auth_headers(state);
+  let headers = new Headers();
+  headers.set("Authorization", get_auth_header(state));
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${paged_url}`, {
       headers,
-      credentials: "include",
     });
     const json = await (response.ok
       ? response.json()
@@ -211,12 +200,12 @@ export const PAGINATED_GET = async (
 export const GET = async (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING, data: signl.peek?.()?.data };
 
-  const headers = auth_headers(state);
+  let headers = new Headers();
+  headers.set("Authorization", get_auth_header(state));
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${url}`, {
         headers,
-        credentials: "include",
       }),
       json = await (response.ok ? response.json() : Promise.reject(response));
     return (signl.value = { status: RESPONSE_STATE.SUCCESS, data: json });
@@ -228,9 +217,14 @@ export const GET = async (url, state, signl) => {
 export const GET_SERVER_URL = (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
-  const headers = auth_headers(state, FORM_URLENCODED);
+  let headers = new Headers();
+  headers.set("Authorization", get_auth_header(state));
+  headers.set(
+    "Content-Type",
+    "application/x-www-form-urlencoded;charset=UTF-8",
+  );
 
-  return fetch(`${_url_server(state)}${url}`, { headers, credentials: "include" })
+  return fetch(`${_url_server(state)}${url}`, { headers })
     .then((response) =>
       response.ok ? response.text() : Promise.reject(response),
     )
@@ -244,10 +238,15 @@ export const GET_SERVER_URL = (url, state, signl) => {
 export const POST_SERVER_URL = (url, body, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
-  const headers = auth_headers(state, FORM_URLENCODED);
+  let headers = new Headers();
+  headers.set("Authorization", get_auth_header(state));
+  headers.set(
+    "Content-Type",
+    "application/x-www-form-urlencoded;charset=UTF-8",
+  );
 
   return fetch(`${_url_server(state)}${url}`, {
-    headers,
+    headers: headers_form_urlencoded,
     method: "POST",
     body,
     credentials: "include",
@@ -266,9 +265,10 @@ export const POST_SERVER_URL = (url, body, state, signl) => {
 export const GET_TEXT = (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
-  const headers = auth_headers(state);
+  let headers = new Headers();
+  headers.set("Authorization", get_auth_header(state));
 
-  return fetch(`${_url_engine_rest(state)}${url}`, { headers, credentials: "include" })
+  return fetch(`${_url_engine_rest(state)}${url}`, { headers })
     .then((response) =>
       response.ok ? response.text() : Promise.reject(response),
     )
@@ -281,7 +281,9 @@ export const GET_TEXT = (url, state, signl) => {
 const fetch_with_body = async (method, url, body, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
-  const headers = auth_headers(state, { "Content-Type": "application/json" });
+  let headers = new Headers();
+  headers.set("Authorization", get_auth_header(state));
+  headers.set("Content-Type", "application/json");
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${url}`, {
@@ -294,7 +296,40 @@ const fetch_with_body = async (method, url, body, state, signl) => {
     return (signl.value = { status: RESPONSE_STATE.SUCCESS, data: json });
   } catch (error) {
     if (error instanceof Response) {
-      const json = await error.json().catch(() => ({ message: error.statusText }));
+      const json = await error
+        .json()
+        .catch(() => ({ message: error.statusText }));
+      return (signl.value = { status: RESPONSE_STATE.ERROR, error: json });
+    }
+    return (signl.value = { status: RESPONSE_STATE.ERROR, error });
+  }
+};
+
+/**
+ * Multipart POST for file uploads (deployments, attachments). `body` is a
+ * FormData; deliberately does NOT set Content-Type so the browser adds the
+ * multipart boundary itself.
+ */
+export const POST_FORM = async (url, body, state, signl) => {
+  signl.value = { status: RESPONSE_STATE.LOADING };
+
+  let headers = new Headers();
+  headers.set("Authorization", get_auth_header(state));
+
+  try {
+    const response = await fetch(`${_url_engine_rest(state)}${url}`, {
+      headers,
+      method: "POST",
+      body,
+      credentials: "include",
+    });
+    const json = await response_data(response);
+    return (signl.value = { status: RESPONSE_STATE.SUCCESS, data: json });
+  } catch (error) {
+    if (error instanceof Response) {
+      const json = await error
+        .json()
+        .catch(() => ({ message: error.statusText }));
       return (signl.value = { status: RESPONSE_STATE.ERROR, error: json });
     }
     return (signl.value = { status: RESPONSE_STATE.ERROR, error });

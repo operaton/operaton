@@ -1,0 +1,66 @@
+{
+  "type": "default",
+  "id": "kyc-approve-form",
+  "schemaVersion": 16,
+  "exporter": { "name": "kyc-agent-operaton", "version": "1.0" },
+  "components": [
+    {
+      "type": "text",
+      "id": "heading",
+      "text": "## Sign off KYC decision\n\nReview the agent's recommendation below, then approve or reject. Rejecting triggers compensation (the customer record is deleted)."
+    },
+    {
+      "type": "textfield",
+      "id": "field_fullName",
+      "key": "fullName",
+      "label": "Applicant",
+      "readonly": true
+    },
+    {
+      "type": "textfield",
+      "id": "field_address",
+      "key": "address",
+      "label": "Address",
+      "readonly": true
+    },
+    {
+      "type": "textfield",
+      "id": "field_decision",
+      "key": "agentDecision",
+      "label": "Agent recommendation",
+      "readonly": true
+    },
+    {
+      "type": "textfield",
+      "id": "field_risk",
+      "key": "riskLevel",
+      "label": "Risk level",
+      "readonly": true
+    },
+    {
+      "type": "textarea",
+      "id": "field_reasoning",
+      "key": "agentReasoning",
+      "label": "Reasoning",
+      "readonly": true
+    },
+    {
+      "type": "textfield",
+      "id": "field_customer",
+      "key": "customerId",
+      "label": "Customer record created",
+      "readonly": true
+    },
+    {
+      "type": "separator",
+      "id": "sep"
+    },
+    {
+      "type": "checkbox",
+      "id": "field_approved",
+      "key": "approved",
+      "label": "I approve this decision (leave unchecked to reject)",
+      "defaultValue": true
+    }
+  ]
+}

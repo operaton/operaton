@@ -1,7 +1,7 @@
 import { useLocation, useRoute } from 'preact-iso'
 import { useTranslation } from 'react-i18next'
 
-const Tabs = ({ base_url, tabs, param_name = 'tab', className = '' }) => {
+const Tabs = ({ base_url, tabs, param_name = 'tab', className = '', label }) => {
   const { params } = useRoute()
   const { route, path } = useLocation()
   const [t] = useTranslation()
@@ -11,28 +11,29 @@ const Tabs = ({ base_url, tabs, param_name = 'tab', className = '' }) => {
     route(`${path}/${tabs[0].id}`)
   }
 
+  const go_to_tab = (new_tab) => {
+    document.getElementById(`${param_name}-${new_tab.id}`).focus()
+    route(`${base_url}/${new_tab.id}`)
+  }
+
   const change_tab = (event, current_tab) => {
     if (event.key === 'ArrowRight') {
-      const new_tab = tabs[
-        tabs.length !== current_tab.pos + 1
-          ? current_tab.pos + 1
-          : 0]
-      document.getElementById(`${param_name}-${new_tab.id}`).focus()
-      route(`${base_url}/${new_tab.id}`)
+      go_to_tab(tabs[tabs.length !== current_tab.pos + 1 ? current_tab.pos + 1 : 0])
     } else if (event.key === 'ArrowLeft') {
-      const new_tab = tabs[
-        0 !== current_tab.pos
-          ? current_tab.pos - 1
-          : tabs.length - 1]
-      document.getElementById(`${param_name}-${new_tab.id}`).focus()
-      route(`${base_url}/${new_tab.id}`)
+      go_to_tab(tabs[0 !== current_tab.pos ? current_tab.pos - 1 : tabs.length - 1])
+    } else if (event.key === 'Home') {
+      event.preventDefault()
+      go_to_tab(tabs[0])
+    } else if (event.key === 'End') {
+      event.preventDefault()
+      go_to_tab(tabs[tabs.length - 1])
     }
   }
 
   return (
     <div class={`tabs ${className}`}>
       <div class="tab-selection" role="tablist"
-           aria-labelledby="tablist-1">
+           aria-label={label}>
 
         {tabs.map(tab_name => {
             return (
@@ -40,7 +41,7 @@ const Tabs = ({ base_url, tabs, param_name = 'tab', className = '' }) => {
                  id={`${param_name}-${tab_name.id}`}
                  role="tab"
                  aria-selected={tab === tab_name.id}
-                 aria-controls={`tabpanel-${tab_name.id}}`}
+                 aria-controls={`tabpanel-${tab_name.id}`}
                  href={`${base_url}/${tab_name.id}`}
                  tabIndex={tab !== tab_name.id ? '-1' : null}
                  // title={tab_name.name}

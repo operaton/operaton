@@ -30,7 +30,11 @@
     "suspended": "Angehalten",
     "active": "Aktiv",
     "running": "Laufend",
-    "select-page": "Seite auswählen"
+    "select-page": "Seite auswählen",
+    "activate": "Aktivieren",
+    "load-more": "Mehr laden",
+    "breadcrumb": "Brotkrümelnavigation",
+    "confirmation": "Bestätigung"
   },
   "nav": {
     "tasks": "Aufgaben",
@@ -46,9 +50,10 @@
     "menu": "Menü",
     "close-menu": "Menü schließen",
     "mobile-navigation": "Mobile Navigation",
+    "main-navigation": "Hauptnavigation",
     "skip-to-content": "Zum Inhalt springen",
-    "skip-to-navigation": "Zur Hauptnavigation springen",
     "go-to": "Gehe zu",
+    "server": "Server",
     "choose-server": "Server auswählen",
     "release-warning": "Öffentliche Alpha-Version – Nicht getestet und nicht für den Produktivbetrieb geeignet – Teilen Sie Ihr Feedback in einem",
     "release-warning-issue": "Issue",
@@ -135,6 +140,7 @@
     "unclaim": "Freigeben",
     "you": "Sie",
     "reset-assignee": "Verantwortlichen zurücksetzen",
+    "assignee-menu": "Zuständigkeits-Aktionen",
     "comment": "Kommentar",
     "comment-add": "Kommentar hinzufügen",
     "comment-none": "Noch keine Kommentare.",
@@ -171,9 +177,11 @@
       "remove-groups": "Gruppen entfernen"
     },
     "tabs": {
+      "label": "Aufgabendetails",
       "form": "Formular",
       "history": "Verlauf",
-      "diagram": "Diagramm"
+      "diagram": "Diagramm",
+      "attachments": "Anhänge"
     },
     "history": {
       "title": "Verlauf",
@@ -190,16 +198,24 @@
       "unknown-error": "Ein unbekannter Fehler ist aufgetreten.",
       "form-title": "Formular",
       "fetch-failed": "Formular konnte nicht geladen werden",
-      "validation-error": "Bitte beheben Sie die obigen Fehler und versuchen Sie es erneut."
+      "validation-error": "Bitte beheben Sie die obigen Fehler und versuchen Sie es erneut.",
+      "complete-directly": "Ohne Formular abschließen",
+      "legacy-html-unsupported": "Ältere AngularJS-Formulare werden von den neuen Web-Anwendungen nicht unterstützt. Bitte wechseln Sie zu form-js.",
+      "legacy-html-migrate-link": "Anleitung zur Migration",
+      "unsupported": "Dieser Startformular-Typ wird noch nicht unterstützt."
     },
     "start-process": {
       "title": "Aufgabe starten",
       "search-placeholder": "Nach Prozessname suchen.",
       "definition-name": "Definitionsname",
       "version": "Version",
+      "version-abbr": "Ver.",
       "description": "Beschreibung",
+      "description-abbr": "Beschr.",
       "select-definition": "Wählen Sie eine Prozessdefinition aus",
-      "start": "Prozess starten"
+      "start": "Prozess starten",
+      "no-form": "Dieser Prozess hat kein Startformular. Sie können ihn direkt starten.",
+      "business-key": "Geschäftsschlüssel (optional)"
     },
     "filter": {
       "title": "Filter-Editor",
@@ -218,7 +234,8 @@
       "variables-hint": "Die hier gesetzten Variablen werden in der Aufgabenliste angezeigt.",
       "show-undefined": "Undefinierte Variablen anzeigen",
       "add-variable": "Variable hinzufügen",
-      "label": "Bezeichnung"
+      "label": "Bezeichnung",
+      "manage_title": "Aufgaben-Filter verwalten"
     },
     "sort": {
       "label": "Sortieren nach",
@@ -235,13 +252,50 @@
       "task-variable": "Aufgabenvariable",
       "case-execution-variable": "Fallausführungsvariable",
       "case-instance-variable": "Fallinstanzvariable"
+    },
+    "filter_keys": {
+      "assignee": "assignee",
+      "assigneeLike": "assigneeLike",
+      "candidateGroup": "candidateGroup",
+      "candidateUser": "candidateUser",
+      "involvedUser": "involvedUser",
+      "unassigned": "unassigned",
+      "processDefinitionKey": "processDefinitionKey",
+      "processDefinitionName": "processDefinitionName",
+      "processDefinitionNameLike": "processDefinitionNameLike",
+      "processInstanceBusinessKey": "processInstanceBusinessKey",
+      "processInstanceBusinessKeyLike": "processInstanceBusinessKeyLike",
+      "taskDefinitionKey": "taskDefinitionKey",
+      "taskDefinitionKeyLike": "taskDefinitionKeyLike",
+      "name": "name",
+      "nameLike": "nameLike",
+      "description": "description",
+      "descriptionLike": "descriptionLike",
+      "priority": "priority",
+      "dueBefore": "dueBefore",
+      "dueAfter": "dueAfter",
+      "followUpBefore": "followUpBefore",
+      "followUpAfter": "followUpAfter",
+      "createdBefore": "createdBefore",
+      "createdAfter": "createdAfter",
+      "active": "active",
+      "suspended": "suspended"
+    },
+    "attachments": {
+      "empty": "Keine Anhänge.",
+      "add": "Anhang hinzufügen",
+      "description": "Beschreibung",
+      "file": "Datei",
+      "upload": "Hochladen"
     }
   },
   "processes": {
     "title": "Prozessdefinitionen",
+    "subnav-label": "Unternavigation",
     "version": "Version",
     "change-definition": "Definition wechseln",
     "definition-id": "Definitions-ID",
+    "all-definitions": "Alle Prozessdefinitionen",
     "definition-details": "Definitionsdetails",
     "tenant-id": "Mandanten-ID",
     "click-to-copy": "Klicken zum Kopieren",
@@ -249,8 +303,19 @@
     "enable-history-mode": "Verlaufsmodus aktivieren",
     "start-time": "Startzeit",
     "business-key": "Geschäftsschlüssel",
+    "state": "Status",
+    "end-time": "Endzeit",
+    "duration": "Dauer",
+    "started-by": "Gestartet von",
+    "delete-reason": "Löschgrund",
     "instance-id": "Instanz-ID",
     "change-instance": "Instanz wechseln",
+    "col-abbr": {
+      "incidents": "Inzid.",
+      "instances": "Inst.",
+      "version": "Ver.",
+      "tenant-id": "Mandant"
+    },
     "tabs": {
       "instances": "Instanzen",
       "incidents": "Inzidente",
@@ -260,9 +325,12 @@
       "instance-incidents": "Instanz-Inzidente",
       "called-instances": "Aufgerufene Instanzen",
       "user-tasks": "Benutzeraufgaben",
-      "external-tasks": "Externe Aufgaben"
+      "external-tasks": "Externe Aufgaben",
+      "activity": "Aktivitäten",
+      "audit-log": "Audit-Log"
     },
     "subnav": {
+      "details": "Definitionsdetails",
       "definitions": "Definitionen",
       "instances": "Instanzen",
       "incidents": "Inzidente",
@@ -295,7 +363,10 @@
       "cause-process-instance-id": "Verursachende Prozessinstanz-ID",
       "root-cause-process-instance-id": "Ursprüngliche Prozessinstanz-ID",
       "annotation": "Anmerkung",
-      "configuration": "Konfiguration"
+      "configuration": "Konfiguration",
+      "retry": "Wiederholen",
+      "set-annotation": "Anmerkung bearbeiten",
+      "annotation-placeholder": "Anmerkung eingeben…"
     },
     "user-tasks": {
       "owner": "Besitzer",
@@ -316,7 +387,99 @@
     "jobs": {
       "overriding-job-priority": "Überschriebene Job-Priorität",
       "suspend": "Anhalten",
-      "change-priority": "Job-Priorität ändern"
+      "change-priority": "Job-Priorität ändern",
+      "retry": "Wiederholen",
+      "job-id": "Job-ID",
+      "due-date": "Fälligkeitsdatum",
+      "retries": "Wiederholungen",
+      "set-due-date": "Fälligkeitsdatum setzen",
+      "exception": "Fehler",
+      "set-retries": "Wiederholungen setzen",
+      "stacktrace": "Stacktrace"
+    },
+    "sort": {
+      "name": "Name",
+      "key": "Schlüssel",
+      "category": "Kategorie",
+      "id": "ID",
+      "version": "Version",
+      "deploymentId": "Deployment-ID",
+      "tenantId": "Mandanten-ID"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "key": "key",
+      "keyLike": "keyLike",
+      "category": "category",
+      "categoryLike": "categoryLike",
+      "versionTag": "versionTag",
+      "active": "active",
+      "suspended": "suspended",
+      "latestVersion": "latestVersion",
+      "startableInTasklist": "startableInTasklist"
+    },
+    "instance": {
+      "sort": {
+        "startTime": "Startzeit",
+        "instanceId": "Instanz-ID",
+        "definitionKey": "Definitionsschlüssel",
+        "businessKey": "Business Key",
+        "tenantId": "Mandanten-ID"
+      },
+      "filter_keys": {
+        "businessKey": "businessKey",
+        "businessKeyLike": "businessKeyLike",
+        "active": "active",
+        "suspended": "suspended",
+        "withIncidents": "withIncidents",
+        "withoutIncidents": "withoutIncidents",
+        "startedBefore": "startedBefore",
+        "startedAfter": "startedAfter",
+        "finished": "finished"
+      },
+      "manage_title": "Prozessinstanz-Filter verwalten",
+      "suspend": "Anhalten",
+      "activate": "Aktivieren",
+      "cancel": "Abbrechen",
+      "confirm-cancel": "Diese Prozessinstanz wirklich abbrechen?",
+      "keep-running": "Weiterlaufen lassen"
+    },
+    "history-mode-na": "Live-Daten – der Verlaufsmodus gilt hier nicht.",
+    "filter": {
+      "manage_title": "Prozessdefinitions-Filter verwalten"
+    },
+    "variables": {
+      "add": "Variable hinzufügen",
+      "edit": "Variable bearbeiten",
+      "confirm-delete": "Variable \"{{name}}\" löschen?"
+    },
+    "external-tasks": {
+      "topic": "Thema",
+      "worker": "Worker",
+      "lock-expiration": "Sperre läuft ab",
+      "unlock": "Entsperren",
+      "priority": "Priorität",
+      "error-details": "Fehlerdetails"
+    },
+    "activity-history": {
+      "empty": "Keine Aktivitätshistorie für diese Instanz.",
+      "canceled": "Abgebrochen"
+    },
+    "audit": {
+      "empty": "Keine Audit-Log-Einträge für diese Instanz.",
+      "time": "Zeit",
+      "user": "Benutzer",
+      "operation": "Operation",
+      "entity": "Entität",
+      "property": "Eigenschaft",
+      "original-value": "Ursprünglicher Wert",
+      "new-value": "Neuer Wert",
+      "annotation": "Anmerkung",
+      "edit-annotation": "Anmerkung bearbeiten",
+      "clear-annotation": "Löschen",
+      "annotation-placeholder": "Notiz zu dieser Operation hinzufügen…",
+      "confirm-clear": "Anmerkung für diese Operation löschen?"
     }
   },
   "decisions": {
@@ -328,7 +491,40 @@
     "version-tag": "Versions-Tag",
     "deployment-id": "Deployment-ID",
     "decision-requirements-id": "Entscheidungsanforderungs-Definitions-ID",
-    "history-ttl": "Verlaufs-Aufbewahrungsdauer"
+    "history-ttl": "Verlaufs-Aufbewahrungsdauer",
+    "sort": {
+      "name": "Name",
+      "key": "Schlüssel",
+      "category": "Kategorie",
+      "id": "ID",
+      "version": "Version",
+      "deploymentId": "Deployment-ID",
+      "tenantId": "Mandanten-ID"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "key": "key",
+      "keyLike": "keyLike",
+      "category": "category",
+      "categoryLike": "categoryLike",
+      "versionTag": "versionTag",
+      "latestVersion": "latestVersion",
+      "decisionRequirementsDefinitionKey": "decisionRequirementsDefinitionKey"
+    },
+    "filter": {
+      "manage_title": "Decision-Filter verwalten"
+    },
+    "tabs": {
+      "details": "Details",
+      "instances": "Instanzen"
+    },
+    "instances": {
+      "empty": "Keine Entscheidungsauswertungen vorhanden.",
+      "evaluation-time": "Auswertungszeit",
+      "inputs": "Eingaben",
+      "outputs": "Ausgaben"
+    }
   },
   "deployments": {
     "deployed": "Bereitgestellt",
@@ -340,7 +536,32 @@
     "instance-count": "Instanzanzahl",
     "empty-response": "Leere Antwort",
     "form-preview": "Formularvorschau",
-    "raw-data-json": "Rohdaten (JSON)"
+    "raw-data-json": "Rohdaten (JSON)",
+    "sort": {
+      "deploymentTime": "Deployment-Zeit",
+      "name": "Name",
+      "id": "ID",
+      "tenantId": "Mandanten-ID"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "source": "source",
+      "tenantIdIn": "tenantIdIn",
+      "after": "after",
+      "before": "before"
+    },
+    "filter": {
+      "manage_title": "Deployment-Filter verwalten"
+    },
+    "upload": {
+      "title": "Bereitstellen",
+      "name": "Name der Bereitstellung",
+      "files": "Dateien",
+      "duplicate-filtering": "Duplikatfilterung aktivieren",
+      "deploy-changed-only": "Nur geänderte Ressourcen bereitstellen",
+      "submit": "Bereitstellen"
+    }
   },
   "batches": {
     "title": "Stapelverarbeitung",
@@ -361,7 +582,26 @@
     "suspend": "Aussetzen",
     "resume": "Fortsetzen",
     "delete": "Löschen",
-    "confirm-delete": "Diesen Batch löschen und seine verbleibenden Jobs abbrechen?"
+    "confirm-delete": "Diesen Batch löschen und seine verbleibenden Jobs abbrechen?",
+    "sort": {
+      "batchId": "Batch-ID",
+      "tenantId": "Mandanten-ID"
+    },
+    "filter_keys": {
+      "batchId": "batchId",
+      "type": "type",
+      "tenantIdIn": "tenantIdIn",
+      "suspended": "suspended",
+      "withoutTenantId": "withoutTenantId"
+    },
+    "filter": {
+      "manage_title": "Batch-Filter verwalten"
+    },
+    "retry-failed": "Fehlgeschlagene Jobs wiederholen",
+    "show-history": "Verlauf anzeigen",
+    "show-running": "Laufende anzeigen",
+    "end-time": "Endzeit",
+    "start-time": "Startzeit"
   },
   "migrations": {
     "title": "Migrationen",
@@ -630,5 +870,48 @@
       "batch-created": "Batch erstellt:",
       "view-batch": "Batch anzeigen"
     }
+  },
+  "list_filter": {
+    "saved_filter": "Filter",
+    "all": "Alle",
+    "my": "Meine",
+    "sort_by": "Sortieren nach",
+    "sort_order": "Sortierreihenfolge",
+    "asc": "Aufsteigend",
+    "desc": "Absteigend",
+    "new_filter": "Neuer Filter",
+    "new_filter_title": "Neuer Filter",
+    "edit": "Bearbeiten",
+    "edit_filter_title": "Filter bearbeiten",
+    "delete": "Löschen",
+    "confirm_delete": "Filter löschen",
+    "delete_confirm": "Diesen gespeicherten Filter löschen?",
+    "share_link": "Link teilen",
+    "advanced": "Erweiterter Editor",
+    "name": "Name",
+    "criteria": "Kriterien",
+    "add_criterion": "Kriterium hinzufügen",
+    "sort_override": "Standardsortierung",
+    "sort_override_by": "Sortieren nach",
+    "sort_override_order": "Sortierreihenfolge",
+    "no_override": "Keine",
+    "back": "Zurück zur Liste",
+    "duplicate": "Duplizieren",
+    "duplicate_suffix": "(Kopie)",
+    "share_link_copied": "Link kopiert",
+    "empty": "Noch keine gespeicherten Filter."
+  },
+  "login": {
+    "title": "Anmelden",
+    "backend": "Backend",
+    "backend-hint": "Wählen Sie den Backend-Server für Ihre Anmeldung.",
+    "choose-server": "ℹ️ Wählen Sie einen Server, um Ihre Prozesse abzurufen",
+    "language": "Sprache",
+    "username": "Benutzername*",
+    "password": "Passwort*",
+    "submit": "Anmelden",
+    "sso": "Mit SSO anmelden",
+    "documentation": "Dokumentation",
+    "source": "Quellcode"
   }
 }

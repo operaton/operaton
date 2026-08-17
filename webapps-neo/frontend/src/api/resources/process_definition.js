@@ -1,8 +1,8 @@
 import { GET, GET_TEXT, POST, PUT, DELETE } from '../helper.jsx'
 
-export const get_process_definitions = (state, filter = '') => {
-  const qs = filter ? `?nameLike=${encodeURIComponent(`%${filter}%`)}` : ''
-  return GET(`/process-definition/statistics${qs}`, state, state.api.process.definition.list)
+export const get_process_definitions = (state, params = {}) => {
+  const qs = new URLSearchParams(params).toString()
+  return GET(`/process-definition/statistics${qs ? `?${qs}` : ''}`, state, state.api.process.definition.list)
 }
 
 export const get_process_definition_statistics_with_incidents = (state, id) =>
@@ -24,40 +24,15 @@ export const get_diagram = (state, process_definition_id, signal = state.api.pro
   GET(`/process-definition/${process_definition_id}/xml`, state, signal)
 
 /**
- * Fetches statistics and all details for a single process definition
- * @param {Object} state - Application state
- * @param {string} process_definition_id - Process definition ID
- * @sideeffects Updates state.selected_process_statistics
- */
-// export const get_process_definition_statistics = (state, process_definition_id) =>
-//   get(`/process-definition/${id}`, state, state.api.process.definition.single)
-//
-// {
-//   return fetch(`${_url(state)}/process-definition/statistics`)
-//     .then((res) => res.json())
-//     .then((data) => {
-//       const filteredData = data.filter(
-//         (item) => item.definition.id === process_definition_id
-//       )
-//       state.selected_process_statistics.value = filteredData[0] || null
-//     })
-//     .catch((error) => {
-//       console.error('Error fetching statistics:', error)
-//       state.selected_process_statistics.value = null
-//     })
-// }
-
-/**
- * Fetches process definition by deployment ID and resource name
+ * Fetches the process definition for a deployment resource. The engine returns
+ * an *array* (a filtered list), so this lands in its own signal rather than
+ * process.definition.one (which holds a single object) — see #94 fallout.
  * @param {Object} state - Application state
  * @param {string} deployment_id - Deployment ID
  * @param {string} resource_name - Resource name
- * @sideeffects Triggers statistics fetch
  */
 export const get_process_definition_by_deployment_id = (state, deployment_id, resource_name) =>
-  GET(`/process-definition?deploymentId=${deployment_id}&resourceName=${encodeURIComponent(resource_name)}`, state, state.api.process.definition.one)
-
-// .then(() => state.api.process.definition.one = state.api.process.definition.one[0])
+  GET(`/process-definition?deploymentId=${deployment_id}&resourceName=${encodeURIComponent(resource_name)}`, state, state.api.deployment.process_definition)
 
 const url_params = () =>
   new URLSearchParams({
@@ -70,18 +45,17 @@ const url_params = () =>
   }).toString()
 
 const get_startable_process_definitions = (state) =>
-  GET(`/process-definition?${url_params()}`, state, state.api.process.definition.list)
+  GET(`/process-definition?${url_params()}`, state, state.api.process.definition.list_startable)
 
 const get_deployed_start_form = (state, processId) =>
   GET(`/process-definition/${processId}/deployed-start-form`, state, state.api.process.definition.deployed_start_form)
 
+// Start form metadata ({ key, contextPath }) by definition id.
 const get_start_form = (state, processId) =>
-  // GET(`/process-definition/${processId}/deployed-start-form`, state, state.api.process.definition.start_form)
-  GET(`/process-definition/key/${processId}/startForm`, state, state.api.process.definition.start_form)
-  // GET(`/process-definition/${processId}/rendered-form`, state, state.api.process.definition.start_form)
+  GET(`/process-definition/${processId}/startForm`, state, state.api.process.definition.start_form)
 
-export const get_rendered_start_form = async (state, id) =>
-  GET_TEXT(`/process-definition/${id}/rendered-form`, state, state.api.process.definition.rendered_form)
+export const get_rendered_start_form = async (state, id, signal = state.api.process.definition.rendered_form) =>
+  GET_TEXT(`/process-definition/${id}/rendered-form`, state, signal)
 
 export const start_process_submit_form = (state, id, body = {}) =>
   POST(`/process-definition/${id}/submit-form`, body, state, state.api.process.definition.submit_form)

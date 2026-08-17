@@ -1,5 +1,4 @@
 import DmnJS from 'dmn-js'
-import { useLayoutEffect } from 'preact/hooks'
 
 
 

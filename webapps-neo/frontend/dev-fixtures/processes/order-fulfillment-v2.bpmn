@@ -32,7 +32,7 @@
 
     <bpmn:userTask id="UserTask_ManualReview" name="Manual review"
                    camunda:assignee="demo"
-                   camunda:formKey="camunda-forms:deployment:order-manual-review.form">
+                   camunda:formRef="order-manual-review" camunda:formRefBinding="deployment">
       <bpmn:incoming>Flow_ManualReview</bpmn:incoming>
       <bpmn:outgoing>Flow_ReviewToCharge</bpmn:outgoing>
     </bpmn:userTask>

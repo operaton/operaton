@@ -211,7 +211,8 @@
       "variables-hint": "Las variables que defina aquí se mostrarán en la vista de lista de tareas.",
       "show-undefined": "Mostrar variables no definidas",
       "add-variable": "Añadir variable",
-      "label": "Etiqueta"
+      "label": "Etiqueta",
+      "manage_title": "Gestionar filtros de tareas"
     },
     "sort": {
       "label": "Ordenar por",
@@ -228,6 +229,34 @@
       "task-variable": "Variable de tarea",
       "case-execution-variable": "Variable de ejecución de caso",
       "case-instance-variable": "Variable de instancia de caso"
+    },
+    "filter_keys": {
+      "assignee": "assignee",
+      "assigneeLike": "assigneeLike",
+      "candidateGroup": "candidateGroup",
+      "candidateUser": "candidateUser",
+      "involvedUser": "involvedUser",
+      "unassigned": "unassigned",
+      "processDefinitionKey": "processDefinitionKey",
+      "processDefinitionName": "processDefinitionName",
+      "processDefinitionNameLike": "processDefinitionNameLike",
+      "processInstanceBusinessKey": "processInstanceBusinessKey",
+      "processInstanceBusinessKeyLike": "processInstanceBusinessKeyLike",
+      "taskDefinitionKey": "taskDefinitionKey",
+      "taskDefinitionKeyLike": "taskDefinitionKeyLike",
+      "name": "name",
+      "nameLike": "nameLike",
+      "description": "description",
+      "descriptionLike": "descriptionLike",
+      "priority": "priority",
+      "dueBefore": "dueBefore",
+      "dueAfter": "dueAfter",
+      "followUpBefore": "followUpBefore",
+      "followUpAfter": "followUpAfter",
+      "createdBefore": "createdBefore",
+      "createdAfter": "createdAfter",
+      "active": "active",
+      "suspended": "suspended"
     }
   },
   "processes": {
@@ -284,6 +313,53 @@
       "overriding-job-priority": "Prioridad de job sobreescrita",
       "suspend": "Suspender",
       "change-priority": "Cambiar prioridad de job"
+    },
+    "sort": {
+      "name": "Nombre",
+      "key": "Clave",
+      "category": "Categoría",
+      "id": "ID",
+      "version": "Versión",
+      "deploymentId": "ID de despliegue",
+      "tenantId": "ID de inquilino"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "key": "key",
+      "keyLike": "keyLike",
+      "category": "category",
+      "categoryLike": "categoryLike",
+      "versionTag": "versionTag",
+      "active": "active",
+      "suspended": "suspended",
+      "latestVersion": "latestVersion",
+      "startableInTasklist": "startableInTasklist"
+    },
+    "instance": {
+      "sort": {
+        "startTime": "Hora de inicio",
+        "instanceId": "ID de instancia",
+        "definitionKey": "Clave de definición",
+        "businessKey": "Clave de negocio",
+        "tenantId": "ID de inquilino"
+      },
+      "filter_keys": {
+        "businessKey": "businessKey",
+        "businessKeyLike": "businessKeyLike",
+        "active": "active",
+        "suspended": "suspended",
+        "withIncidents": "withIncidents",
+        "withoutIncidents": "withoutIncidents",
+        "startedBefore": "startedBefore",
+        "startedAfter": "startedAfter",
+        "finished": "finished"
+      },
+      "manage_title": "Gestionar filtros de instancia de proceso"
+    },
+    "history-mode-na": "Datos en vivo: el modo histórico no se aplica aquí.",
+    "filter": {
+      "manage_title": "Gestionar filtros de definición de proceso"
     }
   },
   "decisions": {
@@ -295,7 +371,30 @@
     "version-tag": "Etiqueta de versión",
     "deployment-id": "ID de despliegue",
     "decision-requirements-id": "ID de definición de requisitos de decisión",
-    "history-ttl": "Tiempo de vida del historial"
+    "history-ttl": "Tiempo de vida del historial",
+    "sort": {
+      "name": "Nombre",
+      "key": "Clave",
+      "category": "Categoría",
+      "id": "ID",
+      "version": "Versión",
+      "deploymentId": "ID de despliegue",
+      "tenantId": "ID de inquilino"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "key": "key",
+      "keyLike": "keyLike",
+      "category": "category",
+      "categoryLike": "categoryLike",
+      "versionTag": "versionTag",
+      "latestVersion": "latestVersion",
+      "decisionRequirementsDefinitionKey": "decisionRequirementsDefinitionKey"
+    },
+    "filter": {
+      "manage_title": "Gestionar filtros de definición de decisión"
+    }
   },
   "deployments": {
     "deployed": "Desplegado",
@@ -305,7 +404,24 @@
     "no-resource": "Ningún recurso seleccionado",
     "no-process-name": "N/A – El nombre del proceso no está definido",
     "instance-count": "Cantidad de instancias",
-    "empty-response": "Respuesta vacía"
+    "empty-response": "Respuesta vacía",
+    "sort": {
+      "deploymentTime": "Hora de despliegue",
+      "name": "Nombre",
+      "id": "ID",
+      "tenantId": "ID de inquilino"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "source": "source",
+      "tenantIdIn": "tenantIdIn",
+      "after": "after",
+      "before": "before"
+    },
+    "filter": {
+      "manage_title": "Gestionar filtros de despliegues"
+    }
   },
   "migrations": {
     "title": "Migraciones",
@@ -521,5 +637,64 @@
     "show-instances": "Mostrar instancias en ejecución para esta actividad",
     "show-incidents": "Mostrar incidentes para esta actividad",
     "show-called-activity": "Mostrar actividad llamada (subproceso)"
+  },
+  "list_filter": {
+    "saved_filter": "Filtro",
+    "all": "Todos",
+    "my": "Míos",
+    "sort_by": "Ordenar por",
+    "sort_order": "Orden",
+    "asc": "Ascendente",
+    "desc": "Descendente",
+    "new_filter": "Nuevo filtro",
+    "new_filter_title": "Nuevo filtro",
+    "edit": "Editar",
+    "edit_filter_title": "Editar filtro",
+    "delete": "Eliminar",
+    "confirm_delete": "Eliminar filtro",
+    "delete_confirm": "¿Eliminar este filtro guardado?",
+    "share_link": "Compartir enlace",
+    "advanced": "Editor avanzado",
+    "name": "Nombre",
+    "criteria": "Criterios",
+    "add_criterion": "Añadir criterio",
+    "sort_override": "Orden por defecto",
+    "sort_override_by": "Ordenar por",
+    "sort_override_order": "Orden",
+    "no_override": "Ninguno",
+    "back": "Volver a la lista",
+    "duplicate": "Duplicar",
+    "duplicate_suffix": "(copia)",
+    "share_link_copied": "Enlace copiado",
+    "empty": "Aún no hay filtros guardados."
+  },
+  "batches": {
+    "sort": {
+      "batchId": "ID de lote",
+      "tenantId": "ID de inquilino"
+    },
+    "filter_keys": {
+      "batchId": "batchId",
+      "type": "type",
+      "tenantIdIn": "tenantIdIn",
+      "suspended": "suspended",
+      "withoutTenantId": "withoutTenantId"
+    },
+    "filter": {
+      "manage_title": "Gestionar filtros de lotes"
+    }
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "backend": "Backend",
+    "backend-hint": "Seleccione el servidor backend para su inicio de sesión.",
+    "choose-server": "ℹ️ Elija un servidor para recuperar sus procesos",
+    "language": "Idioma",
+    "username": "Nombre de usuario*",
+    "password": "Contraseña*",
+    "submit": "Iniciar sesión",
+    "sso": "Iniciar sesión con SSO",
+    "documentation": "Documentación",
+    "source": "Código fuente"
   }
 }

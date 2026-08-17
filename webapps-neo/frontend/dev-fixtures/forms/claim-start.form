@@ -1,0 +1,37 @@
+{
+  "components": [
+    {
+      "type": "text",
+      "text": "## File a new insurance claim",
+      "id": "Field_start_title"
+    },
+    {
+      "label": "Claim type",
+      "type": "select",
+      "key": "claimType",
+      "id": "Field_start_claimType",
+      "values": [
+        { "label": "Health", "value": "health" },
+        { "label": "Auto", "value": "auto" },
+        { "label": "Home", "value": "home" }
+      ],
+      "validate": { "required": true }
+    },
+    {
+      "label": "Amount",
+      "type": "number",
+      "key": "amount",
+      "id": "Field_start_amount",
+      "validate": { "required": true, "min": 0 }
+    },
+    {
+      "label": "Description",
+      "type": "textarea",
+      "key": "description",
+      "id": "Field_start_description"
+    }
+  ],
+  "type": "default",
+  "id": "claim-start",
+  "schemaVersion": 17
+}

@@ -10,7 +10,15 @@ import engine_rest, {
 import * as Icons from "../assets/icons.jsx";
 import { BPMNViewer } from "../components/BPMNViewer.jsx";
 import { Tabs } from "../components/Tabs.jsx";
-import * as formatter from "../helper/date_formatter.js";
+import { ListFilter } from "../components/ListFilter.jsx";
+import { ManageFilters } from "../components/ManageFilters.jsx";
+import {
+  filter_share_link,
+  parse_list_query,
+  with_manage,
+  without_manage,
+  write_list_query,
+} from "../helper/list_query.js";
 import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
@@ -34,7 +42,121 @@ const SORT_OPTIONS = [
   { key: "caseInstanceVariable", nameKey: "tasks.sort.case-instance-variable" },
 ];
 
+const FILTER_KEYS = [
+  { key: "assignee", nameKey: "tasks.filter_keys.assignee", type: "string" },
+  {
+    key: "assigneeLike",
+    nameKey: "tasks.filter_keys.assigneeLike",
+    type: "string",
+  },
+  {
+    key: "candidateGroup",
+    nameKey: "tasks.filter_keys.candidateGroup",
+    type: "string",
+  },
+  {
+    key: "candidateUser",
+    nameKey: "tasks.filter_keys.candidateUser",
+    type: "string",
+  },
+  {
+    key: "involvedUser",
+    nameKey: "tasks.filter_keys.involvedUser",
+    type: "string",
+  },
+  {
+    key: "unassigned",
+    nameKey: "tasks.filter_keys.unassigned",
+    type: "boolean",
+  },
+  {
+    key: "processDefinitionKey",
+    nameKey: "tasks.filter_keys.processDefinitionKey",
+    type: "string",
+  },
+  {
+    key: "processDefinitionName",
+    nameKey: "tasks.filter_keys.processDefinitionName",
+    type: "string",
+  },
+  {
+    key: "processDefinitionNameLike",
+    nameKey: "tasks.filter_keys.processDefinitionNameLike",
+    type: "string",
+  },
+  {
+    key: "processInstanceBusinessKey",
+    nameKey: "tasks.filter_keys.processInstanceBusinessKey",
+    type: "string",
+  },
+  {
+    key: "processInstanceBusinessKeyLike",
+    nameKey: "tasks.filter_keys.processInstanceBusinessKeyLike",
+    type: "string",
+  },
+  {
+    key: "taskDefinitionKey",
+    nameKey: "tasks.filter_keys.taskDefinitionKey",
+    type: "string",
+  },
+  {
+    key: "taskDefinitionKeyLike",
+    nameKey: "tasks.filter_keys.taskDefinitionKeyLike",
+    type: "string",
+  },
+  { key: "name", nameKey: "tasks.filter_keys.name", type: "string" },
+  { key: "nameLike", nameKey: "tasks.filter_keys.nameLike", type: "string" },
+  {
+    key: "description",
+    nameKey: "tasks.filter_keys.description",
+    type: "string",
+  },
+  {
+    key: "descriptionLike",
+    nameKey: "tasks.filter_keys.descriptionLike",
+    type: "string",
+  },
+  { key: "priority", nameKey: "tasks.filter_keys.priority", type: "number" },
+  { key: "dueBefore", nameKey: "tasks.filter_keys.dueBefore", type: "date" },
+  { key: "dueAfter", nameKey: "tasks.filter_keys.dueAfter", type: "date" },
+  {
+    key: "followUpBefore",
+    nameKey: "tasks.filter_keys.followUpBefore",
+    type: "date",
+  },
+  {
+    key: "followUpAfter",
+    nameKey: "tasks.filter_keys.followUpAfter",
+    type: "date",
+  },
+  {
+    key: "createdBefore",
+    nameKey: "tasks.filter_keys.createdBefore",
+    type: "date",
+  },
+  {
+    key: "createdAfter",
+    nameKey: "tasks.filter_keys.createdAfter",
+    type: "date",
+  },
+  { key: "active", nameKey: "tasks.filter_keys.active", type: "boolean" },
+  { key: "suspended", nameKey: "tasks.filter_keys.suspended", type: "boolean" },
+];
+
 const is_saved_filter = (value) => value && value !== "all" && value !== "my";
+
+const derive_query = (current_query, patch) => {
+  const out = { ...current_query };
+  if ("saved_filter_id" in patch) {
+    if (patch.saved_filter_id == null || patch.saved_filter_id === "all")
+      delete out.filter;
+    else out.filter = patch.saved_filter_id;
+  }
+  if ("sortBy" in patch && patch.sortBy != null) out.sortBy = patch.sortBy;
+  if ("sortOrder" in patch && patch.sortOrder != null)
+    out.sortOrder = patch.sortOrder;
+  return out;
+};
 
 const load_tasks = (state, query, firstResult = 0) => {
   const filterValue = query?.filter,
@@ -85,7 +207,7 @@ const TasksPage = () => {
 
   if (params?.task_id === "start") {
     return (
-      <main id="content" class="fade-in">
+      <main id="content" class="start-process-page fade-in">
         <StartProcessList />
       </main>
     );
@@ -99,11 +221,78 @@ const TasksPage = () => {
     );
   }
 
+  if (query?.filters === "manage") {
+    return (
+      <main id="content" class="fade-in">
+        <TasksManage />
+      </main>
+    );
+  }
+
   return (
     <main id="content" class="tasks fade-in">
       <TaskList />
       {params?.task_id === undefined ? <NoSelectedTask /> : <Task />}
     </main>
+  );
+};
+
+const TasksManage = () => {
+  const state = useContext(AppState),
+    { route } = useLocation(),
+    [t] = useTranslation();
+
+  useEffect(() => {
+    if (state.api.filter.list.value === null) {
+      void engine_rest.filter.get_filters(state);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const refresh = () => engine_rest.filter.get_filters(state);
+  const on_save = (filter) => {
+    const body = {
+      resourceType: "Task",
+      name: filter.name,
+      owner: state.api.user.profile.value?.id,
+      query: filter.query,
+      properties: {},
+    };
+    const result = engine_rest.filter.create_filter(state, body);
+    if (result && typeof result.then === "function") result.then(refresh);
+    else refresh();
+  };
+  const on_update = (id, filter) => {
+    const body = {
+      resourceType: "Task",
+      name: filter.name,
+      owner: state.api.user.profile.value?.id,
+      query: filter.query,
+      properties: {},
+    };
+    const result = engine_rest.filter.update_filter(state, id, body);
+    if (result && typeof result.then === "function") result.then(refresh);
+    else refresh();
+  };
+  const on_delete = (id) => {
+    const result = engine_rest.filter.delete_filter(state, id);
+    if (result && typeof result.then === "function") result.then(refresh);
+    else refresh();
+  };
+
+  return (
+    <ManageFilters
+      title={t("tasks.filter.manage_title")}
+      saved_filters_signal={state.api.filter.list}
+      filter_keys={FILTER_KEYS}
+      sort_options={SORT_OPTIONS}
+      on_save={on_save}
+      on_update={on_update}
+      on_delete={on_delete}
+      on_close={() => route(without_manage(), true)}
+      build_share_link={(f) => filter_share_link(window.location.href, f)}
+      advanced_editor_href="/tasks/filter"
+    />
   );
 };
 
@@ -118,85 +307,42 @@ const TaskList = () => {
       const current = taskList.value?.data?.length ?? 0;
       load_tasks(state, query, current);
     },
-    change_filter = (e) => {
-      const value = e.currentTarget.value;
-      const url = new URL(window.location.href);
-      if (value === "all") url.searchParams.delete("filter");
-      else url.searchParams.set("filter", value);
-      route(url.pathname + url.search, true);
-      load_tasks(state, { ...query, filter: value });
+    apply_patch = (patch) => {
+      const next_pathname = write_list_query(window.location.href, patch);
+      route(next_pathname, true);
+      load_tasks(state, derive_query(query, patch));
     },
-    change_sort = (e) => {
-      const url = new URL(window.location.href);
-      url.searchParams.set("sortBy", e.currentTarget.value);
-      route(url.pathname + url.search, true);
-      load_tasks(state, { ...query, sortBy: e.currentTarget.value });
-    },
-    change_sort_order = (e) => {
-      const url = new URL(window.location.href);
-      url.searchParams.set("sortOrder", e.currentTarget.value);
-      route(url.pathname + url.search, true);
-      load_tasks(state, { ...query, sortOrder: e.currentTarget.value });
-    },
-    savedFilters = (state.api.filter.list.value?.data ?? []).filter(
-      (f) => Object.keys(f.query ?? {}).length > 0,
-    );
+    open_manage = () => route(with_manage(), false);
+
+  const list_current = {
+    saved_filter_id: query?.filter ?? null,
+    sortBy: query?.sortBy ?? "name",
+    sortOrder: query?.sortOrder ?? "asc",
+    criteria: parse_list_query(query).criteria,
+  };
 
   return (
     <div id="task-list">
       <h2 class="screen-hidden">{t("tasks.title")}</h2>
-      <div id="task-actions">
-        <div>
-          <label for="filter-list">{t("tasks.current-filter")}</label>
-          <select
-            id="filter-list"
-            onChange={change_filter}
-            value={query?.filter ?? "all"}
-          >
-            <option value="all">{t("tasks.all-tasks")}</option>
-            <option value="my">{t("tasks.my-tasks")}</option>
-            {savedFilters.length > 0 && <option disabled>──────────</option>}
-            {savedFilters.map((f) => (
-              <option key={f.id} value={f.id}>
-                {f.name}
-              </option>
-            ))}
-          </select>
-          <a href="/tasks/filter" className="button">
-            {t("tasks.edit-filters")}
-          </a>
-        </div>
-        <div>
-          <label for="sort-by">{t("tasks.sort.label")}</label>
-          <select
-            id="sort-by"
-            onChange={change_sort}
-            value={query?.sortBy ?? "name"}
-          >
-            {SORT_OPTIONS.map((o) => (
-              <option key={o.key} value={o.key}>
-                {t(o.nameKey)}
-              </option>
-            ))}
-          </select>
-          <select
-            id="sort-order"
-            onChange={change_sort_order}
-            value={query?.sortOrder ?? "asc"}
-            aria-label={t("tasks.sort.order")}
-          >
-            <option value="asc">{t("tasks.sort.asc")}</option>
-            <option value="desc">{t("tasks.sort.desc")}</option>
-          </select>
-        </div>
-      </div>
+      <ListFilter
+        sort_options={SORT_OPTIONS}
+        saved_filters_signal={state.api.filter.list}
+        filter_predicate={(f) =>
+          f && f.id && Object.keys(f.query ?? {}).length > 0
+        }
+        current={list_current}
+        defaults={{ sortBy: "name", sortOrder: "asc" }}
+        include_my_filter
+        on_change={apply_patch}
+        on_manage={open_manage}
+      />
       <div id="task-table-wrapper">
         <table>
           <thead>
             <tr>
-              <th>{t("tasks.task-list.table-headings.task-name")}</th>
-              <th>{t("tasks.task-list.table-headings.assignee")}</th>
-              <th>{t("tasks.task-list.table-headings.due-in")}</th>
+              <th scope="col">{t("tasks.task-list.table-headings.task-name")}</th>
+              <th scope="col">{t("tasks.task-list.table-headings.assignee")}</th>
+              <th scope="col">{t("tasks.task-list.table-headings.due-in")}</th>
             </tr>
           </thead>
           <tbody>
@@ -243,9 +389,7 @@ const TaskRowEntry = ({ task, selected }) => {
   return (
     <tr id={id} key={id} aria-selected={selected}>
       <th scope="row">
-        <a href={`/tasks/${id}/${task_tabs[0].id}`} aria-labelledby={id}>
-          {name}
-        </a>
+        <a href={`/tasks/${id}/${task_tabs[0].id}`}>{name}</a>
       </th>
       <td>{assignee ? assignee : "—"}</td>
       <td>
@@ -359,12 +503,10 @@ const TaskTabs = () => {
   const { params } = useRoute();
   const [t] = useTranslation();
 
-  // Load the task and reset claim/assign result state whenever the active
-  // task changes. Clean stale per-task data on unmount so the next task's
-  // panes don't render against the previous task's signals.
+  // Load the task whenever the active task changes. Clean stale per-task data
+  // on unmount so the next task's panes don't render against the previous
+  // task's signals.
   useEffect(() => {
-    state.task_claim_result.value = null;
-    state.task_assign_result.value = null;
     void load_task_chain(state, params.task_id);
     return () => {
       state.api.task.one.value = null;
@@ -382,6 +524,7 @@ const TaskTabs = () => {
           tabs={task_tabs}
           base_url={`/tasks/${state.api.task.one.value.data.id}`}
           className="fade-in"
+          label={t("tasks.tabs.label")}
         />
       ) : (
         t("common.loading")
@@ -431,21 +574,21 @@ const SetDueDateButton = () => {
 
   return (
     <>
-      <button onClick={show} class="task-card">
+      <button type="button" onClick={show} class="task-card">
         <small>{t("tasks.due-date.label")}</small>
         <span>{due_date !== null ? due_date.toLocaleString() : "—"}</span>
         <Icons.pencil />
       </button>
 
-      <dialog id="set_due_date">
+      <dialog id="set_due_date" aria-labelledby="set-due-date-title">
         <button onClick={close}>{t("common.close")}</button>
-        <h2>{t("tasks.due-date.title")}</h2>
+        <h2 id="set-due-date-title">{t("tasks.due-date.title")}</h2>
 
         <form onSubmit={submit}>
-          <label for="date">{t("tasks.due-date.date")}</label>
+          <label for="due-date">{t("tasks.due-date.date")}</label>
           <input
             type="date"
-            id="date"
+            id="due-date"
             value={
               due_date !== null ? due_date?.toISOString().split("T")[0] : null
             }
@@ -456,10 +599,10 @@ const SetDueDateButton = () => {
               })
             }
           />
-          <label for="time">{t("tasks.due-date.time")}</label>
+          <label for="due-time">{t("tasks.due-date.time")}</label>
           <input
             type="time"
-            id="time"
+            id="due-time"
             value={
               due_date !== null
                 ? due_date?.toISOString().split("T")[1].substring(0, 5)
@@ -523,7 +666,7 @@ const SetFollowUpDateButton = () => {
 
   return (
     <>
-      <button onClick={show} class="task-card">
+      <button type="button" onClick={show} class="task-card">
         <small>{t("tasks.follow-up.label")}</small>
         <span>
           {followUpDate !== null ? followUpDate.toLocaleString() : "—"}
@@ -531,15 +674,18 @@ const SetFollowUpDateButton = () => {
         <Icons.pencil />
       </button>
 
-      <dialog id="set_follow_up_date">
+      <dialog
+        id="set_follow_up_date"
+        aria-labelledby="set-follow-up-date-title"
+      >
         <button onClick={close}>{t("common.close")}</button>
-        <h2>{t("tasks.follow-up.title")}</h2>
+        <h2 id="set-follow-up-date-title">{t("tasks.follow-up.title")}</h2>
 
         <form onSubmit={submit}>
-          <label for="date">{t("tasks.due-date.date")}</label>
+          <label for="follow-up-date">{t("tasks.due-date.date")}</label>
           <input
             type="date"
-            id="date"
+            id="follow-up-date"
             value={
               followUpDate !== null
                 ? followUpDate?.toISOString().split("T")[0]
@@ -552,10 +698,10 @@ const SetFollowUpDateButton = () => {
               })
             }
           />
-          <label for="time">{t("tasks.due-date.time")}</label>
+          <label for="follow-up-time">{t("tasks.due-date.time")}</label>
           <input
             type="time"
-            id="time"
+            id="follow-up-time"
             value={
               followUpDate !== null
                 ? followUpDate?.toISOString().split("T")[1].substring(0, 5)
@@ -590,11 +736,6 @@ const GroupsList = () => {
 const SetGroupsButton = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
-    {
-      api: {
-        task: { identity_links },
-      },
-    } = state,
     close = () => document.getElementById("add_groups").close(),
     show = () => document.getElementById("add_groups").showModal(),
     group_state = useSignal(null),
@@ -619,7 +760,7 @@ const SetGroupsButton = () => {
 
   return (
     <>
-      <button onClick={show} class="task-card">
+      <button type="button" onClick={show} class="task-card">
         <small>{t("tasks.groups.set")}</small>
         <span>
           <GroupsList />
@@ -627,10 +768,15 @@ const SetGroupsButton = () => {
         <Icons.pencil />
       </button>
 
-      <dialog id="add_groups">
+      <dialog id="add_groups" aria-labelledby="add-groups-title">
         <header>
-          <h2>{t("tasks.groups.manage")}</h2>
-          <button onClick={close} class="neutral">
+          <h2 id="add-groups-title">{t("tasks.groups.manage")}</h2>
+          <button
+            type="button"
+            onClick={close}
+            class="neutral"
+            aria-label={t("common.close")}
+          >
             <Icons.close />
           </button>
         </header>
@@ -704,11 +850,13 @@ const CommentButton = () => {
 
   return (
     <>
-      <button onClick={show}>{t("tasks.comment-add")}</button>
+      <button type="button" onClick={show}>
+        {t("tasks.comment-add")}
+      </button>
 
-      <dialog id="add_comment">
+      <dialog id="add_comment" aria-labelledby="add-comment-title">
         <button onClick={close}>{t("common.close")}</button>
-        <h2>{t("tasks.comment")}</h2>
+        <h2 id="add-comment-title">{t("tasks.comment")}</h2>
 
         <form onSubmit={submit}>
           <label for="comment_message">{t("tasks.comment-message")}</label>
@@ -748,34 +896,39 @@ const ClaimButton = () => {
       signal={state.api.task.one}
       on_success={() => (
         <>
-          <button onClick={show} class="task-card">
+          <button type="button" onClick={show} class="task-card">
             <small>{t("tasks.task-list.table-headings.assignee")}</small>
             <span>{task?.assignee ?? "—"}</span>
             <Icons.pencil />
           </button>
 
-          <dialog id="set_assignee">
-            <button onClick={close}>{t("common.close")}</button>
+          <dialog id="set_assignee" aria-label={t("tasks.assignee-menu")}>
+            <button type="button" onClick={close}>
+              {t("common.close")}
+            </button>
             {assignee_is_different && !assigned ? (
               <button
+                type="button"
                 onClick={() =>
                   engine_rest.task.assign_task(state, null, task.id)
                 }
-                className="secondary"
+                class="secondary"
               >
                 <Icons.user_minus /> {t("tasks.reset-assignee")}
               </button>
             ) : (user_is_assignee || claimed) && !unclaimed ? (
               <button
+                type="button"
                 onClick={() => engine_rest.task.unclaim_task(state, task.id)}
-                className="secondary"
+                class="secondary"
               >
                 <Icons.user_minus /> {t("tasks.unclaim")}
               </button>
             ) : (
               <button
+                type="button"
                 onClick={() => engine_rest.task.claim_task(state, task.id)}
-                className="secondary"
+                class="secondary"
               >
                 <Icons.user_plus /> {t("tasks.claim")}
               </button>
@@ -1130,7 +1283,7 @@ const HistoryTab = () => {
     {
       api: {
         history: { user_operation },
-        task: { one, comment },
+        task: { comment },
       },
     } = state;
 
@@ -1183,6 +1336,132 @@ const HistoryTab = () => {
   );
 };
 
+const AttachmentsTab = () => {
+  const state = useContext(AppState),
+    { params } = useRoute(),
+    [t] = useTranslation(),
+    name = useSignal(""),
+    description = useSignal(""),
+    file = useSignal(null);
+
+  const load = () =>
+    void engine_rest.task.get_attachments(state, params.task_id);
+
+  useEffect(() => {
+    load();
+    return () => {
+      state.api.task.attachment.list.value = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.task_id]);
+
+  const submit = async (event) => {
+    event.preventDefault();
+    if (!file.value) return;
+    const fd = new FormData();
+    fd.append("attachment-name", name.value || file.value.name);
+    fd.append("attachment-description", description.value);
+    fd.append("attachment-type", file.value.type || "application/octet-stream");
+    fd.append("content", file.value);
+    await engine_rest.task.create_attachment(state, params.task_id, fd);
+    name.value = "";
+    description.value = "";
+    file.value = null;
+    load();
+  };
+
+  const remove = async (id) => {
+    await engine_rest.task.delete_attachment(state, params.task_id, id);
+    load();
+  };
+
+  return (
+    <div class="task-attachments">
+      <RequestState
+        signal={state.api.task.attachment.list}
+        on_success={() => {
+          const rows = state.api.task.attachment.list.value?.data ?? [];
+          if (rows.length === 0)
+            return <p class="info-box">{t("tasks.attachments.empty")}</p>;
+          return (
+            <table>
+              <thead>
+                <tr>
+                  <th>{t("common.name")}</th>
+                  <th>{t("tasks.attachments.description")}</th>
+                  <th>{t("common.action")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((a) => (
+                  <tr key={a.id}>
+                    <td>
+                      <a
+                        href={engine_rest.task.attachment_url(
+                          state,
+                          params.task_id,
+                          a.id,
+                        )}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {a.name ?? a.id}
+                      </a>
+                    </td>
+                    <td>{a.description}</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="danger"
+                        onClick={() => remove(a.id)}
+                      >
+                        {t("common.delete")}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          );
+        }}
+      />
+      <form onSubmit={submit}>
+        <h3>{t("tasks.attachments.add")}</h3>
+        <div class="dialog-fields">
+          <label>
+            {t("common.name")}
+            <input
+              type="text"
+              value={name.value}
+              onInput={(e) => (name.value = e.currentTarget.value)}
+            />
+          </label>
+          <label>
+            {t("tasks.attachments.description")}
+            <input
+              type="text"
+              value={description.value}
+              onInput={(e) => (description.value = e.currentTarget.value)}
+            />
+          </label>
+          <label>
+            {t("tasks.attachments.file")}
+            <input
+              type="file"
+              onChange={(e) => (file.value = e.currentTarget.files[0])}
+            />
+          </label>
+        </div>
+        <div class="button-group">
+          <button type="submit" disabled={!file.value}>
+            {t("tasks.attachments.upload")}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
 const task_tabs = [
   {
     nameKey: "tasks.tabs.form",
@@ -1197,9 +1476,15 @@ const task_tabs = [
     Component: HistoryTab,
   },
   {
+    nameKey: "tasks.tabs.attachments",
+    id: "attachments",
+    pos: 2,
+    Component: AttachmentsTab,
+  },
+  {
     nameKey: "tasks.tabs.diagram",
     id: "diagram",
-    pos: 2,
+    pos: 3,
     Component: Diagram,
   },
 ];

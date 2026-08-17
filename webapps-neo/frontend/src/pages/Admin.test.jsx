@@ -66,7 +66,7 @@ describe("AdminPage", () => {
     it("renders the admin sub-navigation links", () => {
       mockParams = { page_id: "users" };
       const { container } = renderPage(state);
-      const nav = container.querySelector("#admin-page > nav");
+      const nav = container.querySelector(".admin-page > nav");
       const href = (text) =>
         Array.from(nav.querySelectorAll("a"))
           .find((a) => a.textContent === text)
@@ -104,12 +104,10 @@ describe("AdminPage", () => {
     });
 
     it("submits the create-user form via engine_rest.user.create", () => {
-      mockParams = { page_id: "users" };
+      mockParams = { page_id: "users", selection_id: "create" };
       // create signal must report SUCCESS for the post-submit has_data branch.
       signal_response(state.api.user.create, { id: "newbie" });
-      const { container, getAllByText } = renderPage(state);
-
-      fireEvent.click(getAllByText("admin.user.create")[0]);
+      const { container } = renderPage(state);
 
       const set = (sel, value) =>
         fireEvent.input(container.querySelector(sel), { target: { value } });
@@ -130,9 +128,8 @@ describe("AdminPage", () => {
     });
 
     it("does not submit when the password fields do not match", () => {
-      mockParams = { page_id: "users" };
-      const { container, getAllByText, getByText } = renderPage(state);
-      fireEvent.click(getAllByText("admin.user.create")[0]);
+      mockParams = { page_id: "users", selection_id: "create" };
+      const { container, getByText } = renderPage(state);
 
       const set = (sel, value) =>
         fireEvent.input(container.querySelector(sel), { target: { value } });
@@ -197,11 +194,10 @@ describe("AdminPage", () => {
     });
 
     it("submits the create-group form via engine_rest.group.create", () => {
-      mockParams = { page_id: "groups" };
+      mockParams = { page_id: "groups", selection_id: "create" };
       signal_response(state.api.group.create, { id: "g2" });
-      const { container, getAllByText } = renderPage(state);
+      const { container } = renderPage(state);
 
-      fireEvent.click(getAllByText("admin.group.create")[0]);
       const set = (sel, value) =>
         fireEvent.input(container.querySelector(sel), { target: { value } });
       set("#group-id", "g2");
@@ -278,11 +274,10 @@ describe("AdminPage", () => {
     });
 
     it("submits the create-tenant form via engine_rest.tenant.create", () => {
-      mockParams = { page_id: "tenants" };
+      mockParams = { page_id: "tenants", selection_id: "create" };
       signal_response(state.api.tenant.create, { id: "t2" });
-      const { container, getAllByText } = renderPage(state);
+      const { container } = renderPage(state);
 
-      fireEvent.click(getAllByText("admin.tenant.create")[0]);
       fireEvent.input(container.querySelector("#tenant-id"), {
         target: { value: "t2" },
       });

@@ -211,7 +211,8 @@
       "variables-hint": "De variabelen die u hier instelt worden getoond in de takenlijstweergave.",
       "show-undefined": "Ongedefinieerde variabelen tonen",
       "add-variable": "Variabele toevoegen",
-      "label": "Label"
+      "label": "Label",
+      "manage_title": "Taakfilters beheren"
     },
     "sort": {
       "label": "Sorteren op",
@@ -228,6 +229,34 @@
       "task-variable": "Taakvariabele",
       "case-execution-variable": "Zaakuitvoeringsvariabele",
       "case-instance-variable": "Zaakinstantievariabele"
+    },
+    "filter_keys": {
+      "assignee": "assignee",
+      "assigneeLike": "assigneeLike",
+      "candidateGroup": "candidateGroup",
+      "candidateUser": "candidateUser",
+      "involvedUser": "involvedUser",
+      "unassigned": "unassigned",
+      "processDefinitionKey": "processDefinitionKey",
+      "processDefinitionName": "processDefinitionName",
+      "processDefinitionNameLike": "processDefinitionNameLike",
+      "processInstanceBusinessKey": "processInstanceBusinessKey",
+      "processInstanceBusinessKeyLike": "processInstanceBusinessKeyLike",
+      "taskDefinitionKey": "taskDefinitionKey",
+      "taskDefinitionKeyLike": "taskDefinitionKeyLike",
+      "name": "name",
+      "nameLike": "nameLike",
+      "description": "description",
+      "descriptionLike": "descriptionLike",
+      "priority": "priority",
+      "dueBefore": "dueBefore",
+      "dueAfter": "dueAfter",
+      "followUpBefore": "followUpBefore",
+      "followUpAfter": "followUpAfter",
+      "createdBefore": "createdBefore",
+      "createdAfter": "createdAfter",
+      "active": "active",
+      "suspended": "suspended"
     }
   },
   "processes": {
@@ -284,6 +313,53 @@
       "overriding-job-priority": "Overschreven jobprioriteit",
       "suspend": "Opschorten",
       "change-priority": "Jobprioriteit wijzigen"
+    },
+    "sort": {
+      "name": "Naam",
+      "key": "Sleutel",
+      "category": "Categorie",
+      "id": "ID",
+      "version": "Versie",
+      "deploymentId": "Deployment-ID",
+      "tenantId": "Tenant-ID"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "key": "key",
+      "keyLike": "keyLike",
+      "category": "category",
+      "categoryLike": "categoryLike",
+      "versionTag": "versionTag",
+      "active": "active",
+      "suspended": "suspended",
+      "latestVersion": "latestVersion",
+      "startableInTasklist": "startableInTasklist"
+    },
+    "instance": {
+      "sort": {
+        "startTime": "Starttijd",
+        "instanceId": "Instance-ID",
+        "definitionKey": "Definitiesleutel",
+        "businessKey": "Business key",
+        "tenantId": "Tenant-ID"
+      },
+      "filter_keys": {
+        "businessKey": "businessKey",
+        "businessKeyLike": "businessKeyLike",
+        "active": "active",
+        "suspended": "suspended",
+        "withIncidents": "withIncidents",
+        "withoutIncidents": "withoutIncidents",
+        "startedBefore": "startedBefore",
+        "startedAfter": "startedAfter",
+        "finished": "finished"
+      },
+      "manage_title": "Procesinstantiefilters beheren"
+    },
+    "history-mode-na": "Live data – geschiedenismodus is hier niet van toepassing.",
+    "filter": {
+      "manage_title": "Procesdefinitiefilters beheren"
     }
   },
   "decisions": {
@@ -295,7 +371,30 @@
     "version-tag": "Versietag",
     "deployment-id": "Deployment-ID",
     "decision-requirements-id": "Beslissingsvereisten-definitie-ID",
-    "history-ttl": "Bewaartermijn geschiedenis"
+    "history-ttl": "Bewaartermijn geschiedenis",
+    "sort": {
+      "name": "Naam",
+      "key": "Sleutel",
+      "category": "Categorie",
+      "id": "ID",
+      "version": "Versie",
+      "deploymentId": "Deployment-ID",
+      "tenantId": "Tenant-ID"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "key": "key",
+      "keyLike": "keyLike",
+      "category": "category",
+      "categoryLike": "categoryLike",
+      "versionTag": "versionTag",
+      "latestVersion": "latestVersion",
+      "decisionRequirementsDefinitionKey": "decisionRequirementsDefinitionKey"
+    },
+    "filter": {
+      "manage_title": "Beslisdefinitiefilters beheren"
+    }
   },
   "deployments": {
     "deployed": "Gedeployd",
@@ -305,7 +404,24 @@
     "no-resource": "Geen bron geselecteerd",
     "no-process-name": "N.v.t. – Procesnaam is niet gedefinieerd",
     "instance-count": "Aantal instanties",
-    "empty-response": "Leeg antwoord"
+    "empty-response": "Leeg antwoord",
+    "sort": {
+      "deploymentTime": "Deployment-tijd",
+      "name": "Naam",
+      "id": "ID",
+      "tenantId": "Tenant-ID"
+    },
+    "filter_keys": {
+      "name": "name",
+      "nameLike": "nameLike",
+      "source": "source",
+      "tenantIdIn": "tenantIdIn",
+      "after": "after",
+      "before": "before"
+    },
+    "filter": {
+      "manage_title": "Deploymentfilters beheren"
+    }
   },
   "migrations": {
     "title": "Migraties",
@@ -521,5 +637,64 @@
     "show-instances": "Lopende instanties voor deze activiteit tonen",
     "show-incidents": "Incidenten voor deze activiteit tonen",
     "show-called-activity": "Aangeroepen activiteit (subproces) tonen"
+  },
+  "list_filter": {
+    "saved_filter": "Filter",
+    "all": "Alle",
+    "my": "Mijn",
+    "sort_by": "Sorteren op",
+    "sort_order": "Sorteervolgorde",
+    "asc": "Oplopend",
+    "desc": "Aflopend",
+    "new_filter": "Nieuw filter",
+    "new_filter_title": "Nieuw filter",
+    "edit": "Bewerken",
+    "edit_filter_title": "Filter bewerken",
+    "delete": "Verwijderen",
+    "confirm_delete": "Filter verwijderen",
+    "delete_confirm": "Dit opgeslagen filter verwijderen?",
+    "share_link": "Link delen",
+    "advanced": "Geavanceerde editor",
+    "name": "Naam",
+    "criteria": "Criteria",
+    "add_criterion": "Criterium toevoegen",
+    "sort_override": "Standaardsortering",
+    "sort_override_by": "Sorteren op",
+    "sort_override_order": "Sorteervolgorde",
+    "no_override": "Geen",
+    "back": "Terug naar lijst",
+    "duplicate": "Dupliceren",
+    "duplicate_suffix": "(kopie)",
+    "share_link_copied": "Link gekopieerd",
+    "empty": "Nog geen opgeslagen filters."
+  },
+  "batches": {
+    "sort": {
+      "batchId": "Batch-ID",
+      "tenantId": "Tenant-ID"
+    },
+    "filter_keys": {
+      "batchId": "batchId",
+      "type": "type",
+      "tenantIdIn": "tenantIdIn",
+      "suspended": "suspended",
+      "withoutTenantId": "withoutTenantId"
+    },
+    "filter": {
+      "manage_title": "Batchfilters beheren"
+    }
+  },
+  "login": {
+    "title": "Inloggen",
+    "backend": "Backend",
+    "backend-hint": "Selecteer de backendserver voor uw aanmelding.",
+    "choose-server": "ℹ️ Kies een server om uw processen op te halen",
+    "language": "Taal",
+    "username": "Gebruikersnaam*",
+    "password": "Wachtwoord*",
+    "submit": "Inloggen",
+    "sso": "Inloggen met SSO",
+    "documentation": "Documentatie",
+    "source": "Broncode"
   }
 }

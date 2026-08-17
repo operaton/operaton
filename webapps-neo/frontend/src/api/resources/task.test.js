@@ -8,7 +8,9 @@ vi.mock("../helper.jsx", async (importOriginal) => {
     ...actual,
     GET: vi.fn(),
     POST: vi.fn(),
+    POST_FORM: vi.fn(),
     PUT: vi.fn(() => Promise.resolve()),
+    DELETE: vi.fn(),
     GET_TEXT: vi.fn(),
     GET_SERVER_URL: vi.fn(),
   };
@@ -23,7 +25,9 @@ vi.mock("../engine_rest.jsx", () => ({
 import {
   GET,
   POST,
+  POST_FORM,
   PUT,
+  DELETE,
   GET_TEXT,
   GET_SERVER_URL,
   RESPONSE_STATE,
@@ -170,6 +174,57 @@ describe("api/resources/task", () => {
       state,
       signal: state.api.task.submit_form,
     });
+  });
+
+  it("complete_task POSTs variables to /task/:id/complete", () => {
+    task.complete_task(state, "t1", { approved: { value: true } });
+    expect_api_call(POST, {
+      url: "/task/t1/complete",
+      body: { variables: { approved: { value: true } } },
+      state,
+      signal: state.api.task.complete,
+    });
+  });
+
+  it("complete_task defaults to empty variables", () => {
+    task.complete_task(state, "t1");
+    expect(POST.mock.lastCall[1]).toEqual({ variables: {} });
+  });
+
+  it("get_attachments GETs /task/:id/attachment", () => {
+    task.get_attachments(state, "t1");
+    expect_api_call(GET, {
+      url: "/task/t1/attachment",
+      state,
+      signal: state.api.task.attachment.list,
+    });
+  });
+
+  it("create_attachment POST_FORMs the FormData", () => {
+    const fd = new FormData();
+    task.create_attachment(state, "t1", fd);
+    expect_api_call(POST_FORM, {
+      url: "/task/t1/attachment/create",
+      body: fd,
+      state,
+      signal: state.api.task.attachment.create,
+    });
+  });
+
+  it("delete_attachment DELETEs /task/:id/attachment/:aid", () => {
+    task.delete_attachment(state, "t1", "a1");
+    expect_api_call(DELETE, {
+      url: "/task/t1/attachment/a1",
+      body: null,
+      state,
+      signal: state.api.task.attachment.delete,
+    });
+  });
+
+  it("attachment_url builds the engine data URL", () => {
+    expect(task.attachment_url(state, "t1", "a1")).toContain(
+      "/task/t1/attachment/a1/data",
+    );
   });
 
   describe("update_task", () => {

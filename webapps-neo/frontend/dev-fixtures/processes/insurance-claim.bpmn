@@ -10,13 +10,14 @@
   <bpmn:error id="Error_FraudSuspected" name="FraudSuspected" errorCode="FRAUD" />
 
   <bpmn:process id="insuranceClaim" name="Insurance Claim" isExecutable="true" camunda:historyTimeToLive="P30D">
-    <bpmn:startEvent id="StartEvent_Filed" name="Claim filed">
+    <bpmn:startEvent id="StartEvent_Filed" name="Claim filed"
+                     camunda:formRef="claim-start" camunda:formRefBinding="deployment">
       <bpmn:outgoing>Flow_StartToSubmit</bpmn:outgoing>
     </bpmn:startEvent>
 
     <bpmn:userTask id="UserTask_Submit" name="Submit claim form"
                    camunda:assignee="demo"
-                   camunda:formKey="camunda-forms:deployment:insurance-submit.form">
+                   camunda:formRef="insurance-submit" camunda:formRefBinding="deployment">
       <bpmn:incoming>Flow_StartToSubmit</bpmn:incoming>
       <bpmn:outgoing>Flow_SubmitToRouting</bpmn:outgoing>
     </bpmn:userTask>

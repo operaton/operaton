@@ -19,17 +19,17 @@ const AdminPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page_id])
 
-  const is_selected = (page) => (page_id === page) ? 'selected' : ''
+  const is_current = (page) => (page_id === page) ? 'page' : undefined
 
-  return <div id="admin-page">
-    <nav>
-      <ul class="list">
-        <li class={is_selected('users')}><a href="/admin/users">{t("admin.users")}</a></li>
-        <li class={is_selected('groups')}><a href="/admin/groups">{t("admin.groups")}</a></li>
-        <li class={is_selected('tenants')}><a href="/admin/tenants">{t("admin.tenants")}</a></li>
-        <li class={is_selected('authorizations')}><a href="/admin/authorizations">{t("admin.authorizations")}</a></li>
-        <li class={is_selected('system')}><a href="/admin/system">{t("admin.system")}</a></li>
-      </ul>
+  return <main id="content" class="admin-page">
+    <nav aria-label={t("nav.admin")}>
+      <menu class="list">
+        <li><a href="/admin/users" aria-current={is_current('users')}>{t("admin.users")}</a></li>
+        <li><a href="/admin/groups" aria-current={is_current('groups')}>{t("admin.groups")}</a></li>
+        <li><a href="/admin/tenants" aria-current={is_current('tenants')}>{t("admin.tenants")}</a></li>
+        <li><a href="/admin/authorizations" aria-current={is_current('authorizations')}>{t("admin.authorizations")}</a></li>
+        <li><a href="/admin/system" aria-current={is_current('system')}>{t("admin.system")}</a></li>
+      </menu>
     </nav>
 
     {({
@@ -39,15 +39,17 @@ const AdminPage = () => {
       authorizations: <AuthorizationsPage />,
       system: <SystemPage />,
     })[page_id] ?? <p>{t("common.select-page")}</p>}
-  </div>
+  </main>
 }
 
 /** Shows the success/error result of an action signal once it has fired. */
 const ActionResult = ({ signal, success }) =>
-  <RequestState
-    signal={signal}
-    on_nothing={() => <></>}
-    on_success={() => <p class="success">{success}</p>} />
+  <div aria-live="polite">
+    <RequestState
+      signal={signal}
+      on_nothing={() => <></>}
+      on_success={() => <p class="success">{success}</p>} />
+  </div>
 
 /* ----------------------------------------------------------------- Tenants */
 
@@ -56,15 +58,16 @@ const TenantsPage = () => {
 
   return (selection_id === undefined)
     ? <TenantList />
-    : <TenantDetails tenant_id={selection_id} />
+    : selection_id === 'create'
+      ? <TenantCreate />
+      : <TenantDetails tenant_id={selection_id} />
 }
 
 const TenantList = () => {
   const
     state = useContext(AppState),
     { api: { tenant: { list: tenants } } } = state,
-    [t] = useTranslation(),
-    create_open = useSignal(false)
+    [t] = useTranslation()
 
   useEffect(() => {
     void engine_rest.tenant.all(state)
@@ -75,12 +78,10 @@ const TenantList = () => {
     <Breadcrumbs paths={[
       { name: t("nav.admin"), route: '/admin' },
       { name: t("admin.tenants") }]} />
-    <h2>{t("admin.tenants")}</h2>
-
-    <div class="button-group">
-      <button onClick={() => (create_open.value = true)}>{t("admin.tenant.create")}</button>
+    <div class="page-heading">
+      <h2>{t("admin.tenants")}</h2>
+      <a class="button" href="/admin/tenants/create">{t("admin.tenant.create")}</a>
     </div>
-    <TenantCreate open={create_open} />
 
     <RequestState
       signal={tenants}
@@ -105,11 +106,12 @@ const TenantList = () => {
   </div>
 }
 
-const TenantCreate = ({ open }) => {
+const TenantCreate = () => {
   const
     state = useContext(AppState),
     { api: { tenant: { create: tenant_create } } } = state,
     [t] = useTranslation(),
+    { route } = useLocation(),
     form = useSignal({})
 
   const
@@ -119,12 +121,17 @@ const TenantCreate = ({ open }) => {
       void engine_rest.tenant.create(state, form.value).then(() => {
         if (has_data(tenant_create)) {
           engine_rest.tenant.all(state)
-          open.value = false
+          route('/admin/tenants')
         }
       })
     }
 
-  return <Dialog open={open} title={t("admin.tenant.create-title")}>
+  return <div class="content fade-in">
+    <Breadcrumbs paths={[
+      { name: t("nav.admin"), route: '/admin' },
+      { name: t("admin.tenants"), route: '/admin/tenants' },
+      { name: t("common.create") }]} />
+    <h2>{t("admin.tenant.create-title")}</h2>
     <ActionResult signal={tenant_create} success={t("admin.tenant.success-created")} />
     <form onSubmit={on_submit}>
       <label for="tenant-id">{t("admin.tenant.tenant-id")}</label>
@@ -135,10 +142,10 @@ const TenantCreate = ({ open }) => {
 
       <div class="button-group">
         <button type="submit">{t("admin.tenant.create")}</button>
-        <button type="button" class="secondary" onClick={() => (open.value = false)}>{t("common.cancel")}</button>
+        <a class="button secondary" href="/admin/tenants">{t("common.cancel")}</a>
       </div>
     </form>
-  </Dialog>
+  </div>
 }
 
 const TenantDetails = ({ tenant_id }) => {
@@ -233,7 +240,9 @@ const GroupsPage = () => {
 
   return (selection_id === undefined)
     ? <GroupsList />
-    : <GroupDetails group_id={selection_id} />
+    : selection_id === 'create'
+      ? <GroupCreate />
+      : <GroupDetails group_id={selection_id} />
 }
 
 const GroupsList = () => {
@@ -241,7 +250,6 @@ const GroupsList = () => {
     state = useContext(AppState),
     { api: { group: { list: groups, delete: group_delete } } } = state,
     [t] = useTranslation(),
-    create_open = useSignal(false),
     delete_open = useSignal(false),
     pending_delete = useSignal(null)
 
@@ -261,11 +269,10 @@ const GroupsList = () => {
     <Breadcrumbs paths={[
       { name: t("nav.admin"), route: '/admin' },
       { name: t("admin.groups") }]} />
-    <h2>{t("admin.groups")}</h2>
-    <div class="button-group">
-      <button onClick={() => (create_open.value = true)}>{t("admin.group.create")}</button>
+    <div class="page-heading">
+      <h2>{t("admin.groups")}</h2>
+      <a class="button" href="/admin/groups/create">{t("admin.group.create")}</a>
     </div>
-    <GroupCreate open={create_open} />
     <ActionResult signal={group_delete} success={t("admin.group.success-deleted")} />
 
     <RequestState
@@ -297,11 +304,12 @@ const GroupsList = () => {
   </div>
 }
 
-const GroupCreate = ({ open }) => {
+const GroupCreate = () => {
   const
     state = useContext(AppState),
     { api: { group: { create: group_create } } } = state,
     [t] = useTranslation(),
+    { route } = useLocation(),
     form = useSignal({})
 
   const
@@ -311,12 +319,17 @@ const GroupCreate = ({ open }) => {
       void engine_rest.group.create(state, form.value).then(() => {
         if (has_data(group_create)) {
           engine_rest.group.all(state)
-          open.value = false
+          route('/admin/groups')
         }
       })
     }
 
-  return <Dialog open={open} title={t("admin.group.create")}>
+  return <div class="content fade-in">
+    <Breadcrumbs paths={[
+      { name: t("nav.admin"), route: '/admin' },
+      { name: t("admin.groups"), route: '/admin/groups' },
+      { name: t("common.create") }]} />
+    <h2>{t("admin.group.create")}</h2>
     <ActionResult signal={group_create} success={t("admin.group.success-created")} />
     <form onSubmit={on_submit}>
       <label for="group-id">{t("admin.group.group-id")}</label>
@@ -330,10 +343,10 @@ const GroupCreate = ({ open }) => {
 
       <div class="button-group">
         <button type="submit">{t("admin.group.create")}</button>
-        <button type="button" class="secondary" onClick={() => (open.value = false)}>{t("common.cancel")}</button>
+        <a class="button secondary" href="/admin/groups">{t("common.cancel")}</a>
       </div>
     </form>
-  </Dialog>
+  </div>
 }
 
 const GroupDetails = ({ group_id }) => {
@@ -517,15 +530,16 @@ const UserPage = () => {
 
   return (selection_id === undefined)
     ? <UserList />
-    : <UserDetails user_id={selection_id} />
+    : selection_id === 'create'
+      ? <UserCreate />
+      : <UserDetails user_id={selection_id} />
 }
 
 const UserList = () => {
   const
     state = useContext(AppState),
     { api: { user: { list: users } } } = state,
-    [t] = useTranslation(),
-    create_open = useSignal(false)
+    [t] = useTranslation()
 
   useEffect(() => {
     void engine_rest.user.all(state)
@@ -536,11 +550,10 @@ const UserList = () => {
     <Breadcrumbs paths={[
       { name: t("nav.admin"), route: '/admin' },
       { name: t("admin.users") }]} />
-    <h2>{t("admin.users")}</h2>
-    <div class="button-group">
-      <button onClick={() => (create_open.value = true)}>{t("admin.user.create")}</button>
+    <div class="page-heading">
+      <h2>{t("admin.users")}</h2>
+      <a class="button" href="/admin/users/create">{t("admin.user.create")}</a>
     </div>
-    <UserCreate open={create_open} />
 
     <table class="fade-in">
       <thead>
@@ -569,11 +582,12 @@ const UserList = () => {
   </div>
 }
 
-const UserCreate = ({ open }) => {
+const UserCreate = () => {
   const
     state = useContext(AppState),
     { api: { user: { create: user_create } } } = state,
     [t] = useTranslation(),
+    { route } = useLocation(),
     form = useSignal({ profile: {}, credentials: {} }),
     password_repeat = useSignal(''),
     mismatch = useSignal(false)
@@ -592,14 +606,21 @@ const UserCreate = ({ open }) => {
       void engine_rest.user.create(state, form.value).then(() => {
         if (has_data(user_create)) {
           engine_rest.user.all(state)
-          open.value = false
+          route('/admin/users')
         }
       })
     }
 
-  return <Dialog open={open} title={t("admin.user.create")}>
+  return <div class="content fade-in">
+    <Breadcrumbs paths={[
+      { name: t("nav.admin"), route: '/admin' },
+      { name: t("admin.users"), route: '/admin/users' },
+      { name: t("common.create") }]} />
+    <h2>{t("admin.user.create")}</h2>
     <ActionResult signal={user_create} success={t("admin.user.success-created")} />
-    {mismatch.value ? <p class="error">{t("admin.user.password-mismatch")}</p> : null}
+    <div aria-live="polite">
+      {mismatch.value ? <p class="error">{t("admin.user.password-mismatch")}</p> : null}
+    </div>
     <form onSubmit={on_submit}>
       <label for="user-id">{t("admin.user.user-id")}</label>
       <input id="user-id" type="text" onInput={(e) => set_p('id', e)} required />
@@ -621,10 +642,10 @@ const UserCreate = ({ open }) => {
 
       <div class="button-group">
         <button type="submit">{t("admin.user.create")}</button>
-        <button type="button" class="secondary" onClick={() => (open.value = false)}>{t("common.cancel")}</button>
+        <a class="button secondary" href="/admin/users">{t("common.cancel")}</a>
       </div>
     </form>
-  </Dialog>
+  </div>
 }
 
 const UserDetails = ({ user_id }) => {
@@ -730,7 +751,9 @@ const UserPassword = ({ user_id }) => {
   return <>
     <h3>{t("admin.user.password")}</h3>
     <ActionResult signal={credentials} success={t("admin.user.password-success")} />
-    {mismatch.value ? <p class="error">{t("admin.user.password-mismatch")}</p> : null}
+    <div aria-live="polite">
+      {mismatch.value ? <p class="error">{t("admin.user.password-mismatch")}</p> : null}
+    </div>
     <form onSubmit={on_submit}>
       <label for="new-password">{t("admin.user.new-password")}</label>
       <input id="new-password" type="password" value={password.value}
@@ -1043,9 +1066,9 @@ const AuthorizationResourceRow = ({ authorization }) => {
         <td>
           <form id={form_id} onSubmit={on_submit}>
             {groupId
-              ? <input name="groupId" value={form.value.groupId}
+              ? <input name="groupId" aria-label={t("admin.authorization.user-group")} value={form.value.groupId}
                        onInput={(e) => { set_value('groupId', e); set_null('userId') }} />
-              : <input name="userId" value={form.value.userId}
+              : <input name="userId" aria-label={t("admin.authorization.user-group")} value={form.value.userId}
                        onInput={(e) => { set_value('userId', e); set_null('groupId') }} />}
           </form>
         </td>
@@ -1059,7 +1082,7 @@ const AuthorizationResourceRow = ({ authorization }) => {
           </select>
         </td>
         <td>
-          <input form={form_id} name="resourceId" value={form.value.resourceId}
+          <input form={form_id} name="resourceId" aria-label={t("admin.authorization.resource-id")} value={form.value.resourceId}
                  onInput={(e) => set_value('resourceId', e)}
                  placeholder={resource?.resource_id} title={resource?.resource_id} />
         </td>

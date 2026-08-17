@@ -4,7 +4,8 @@ export const Home = () => {
   const [t] = useTranslation();
 
   return (
-    <div class="p-3">
+    <main id="content" class="p-3">
+      <h1 class="screen-hidden">{t("home.welcome")}</h1>
       <h2>{t("home.welcome")}</h2>
       <p>
         {t("home.info-text")} <a href="https://operaton.org">{t("home.operaton-org")}</a>.
@@ -57,6 +58,6 @@ export const Home = () => {
           <a href="https://github.com/operaton/operaton/issues">{t("home.feature-github")}</a>
         </li>
       </ul>
-    </div>
+    </main>
   );
 };

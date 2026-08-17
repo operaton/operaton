@@ -1,12 +1,14 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+// @vitest-environment jsdom
+// rendered_form_to_schema parses engine HTML via DOMParser and custom-attribute
+// selectors (cam-variable-name); jsdom parses these reliably where happy-dom is
+// flaky, so this file opts into jsdom.
+import { describe, it, expect } from "vitest";
 import {
   vars_to_form_data,
   form_data_to_vars,
   infer_type,
-  build_legacy_form_data,
-  parse_html,
+  rendered_form_to_schema,
 } from "./TaskForm_helpers.js";
-import { create_mock_state } from "../test/helpers.js";
 
 describe("TaskForm helpers", () => {
   describe("infer_type", () => {
@@ -50,75 +52,96 @@ describe("TaskForm helpers", () => {
     });
   });
 
-  describe("build_legacy_form_data (reads the #generated-form DOM)", () => {
-    afterEach(() => {
-      document.body.innerHTML = "";
+  describe("rendered_form_to_schema (engine HTML -> form-js schema)", () => {
+    it("maps a required string field to a textfield with its label", () => {
+      const schema = rendered_form_to_schema(
+        `<form>
+          <label>Full name</label>
+          <input type="text" cam-variable-name="fullName" cam-variable-type="String" required />
+        </form>`,
+      );
+      expect(schema.type).toBe("default");
+      expect(schema.components).toEqual([
+        {
+          id: "fullName",
+          key: "fullName",
+          label: "Full name",
+          validate: { required: true },
+          type: "textfield",
+        },
+      ]);
     });
 
-    const mount = (innerHTML) => {
-      document.body.innerHTML = `<div id="generated-form">${innerHTML}</div>`;
-    };
+    it("maps number, boolean and date fields by variable/input type", () => {
+      const schema = rendered_form_to_schema(
+        `<form>
+          <label>Age</label>
+          <input type="number" cam-variable-name="age" cam-variable-type="Long" />
+          <label>Agree</label>
+          <input type="checkbox" cam-variable-name="agree" cam-variable-type="Boolean" />
+          <label>DOB</label>
+          <input type="text" cam-variable-name="dob" cam-variable-type="Date" uib-datepicker-popup />
+        </form>`,
+      );
+      expect(
+        schema.components.map((c) => [c.key, c.type, c.subtype]),
+      ).toEqual([
+        ["age", "number", undefined],
+        ["agree", "checkbox", undefined],
+        ["dob", "datetime", "date"],
+      ]);
+    });
 
-    it("collects text, checkbox, number and date fields", () => {
-      mount(`
-        <input class="form-control" name="username" type="text" value="john" />
-        <input class="form-control" name="agree" type="checkbox" checked />
-        <input class="form-control" name="age" type="number" value="25" />
-        <input class="form-control" name="dob" type="date" value="2000-12-25" />
-      `);
-      expect(build_legacy_form_data()).toEqual({
-        username: { value: "john" },
-        agree: { value: true },
-        age: { value: 25 },
-        dob: { value: "25/12/2000" },
+    it("maps a select to values, dropping the empty placeholder option", () => {
+      const schema = rendered_form_to_schema(
+        `<form>
+          <label>Colour</label>
+          <select cam-variable-name="colour" cam-variable-type="String">
+            <option value="">—</option>
+            <option value="r">Red</option>
+            <option value="g">Green</option>
+          </select>
+        </form>`,
+      );
+      expect(schema.components[0]).toMatchObject({
+        key: "colour",
+        type: "select",
+        values: [
+          { value: "r", label: "Red" },
+          { value: "g", label: "Green" },
+        ],
       });
     });
 
-    it("keeps the raw date format for a temporary (draft) save", () => {
-      mount(
-        `<input class="form-control" name="dob" type="date" value="2000-12-25" />`,
+    it("marks disabled/readonly fields and drops fields without a variable name", () => {
+      const schema = rendered_form_to_schema(
+        `<form>
+          <label>Read only</label>
+          <input type="text" cam-variable-name="ro" cam-variable-type="String" readonly />
+          <input type="text" name="ignored" />
+        </form>`,
       );
-      expect(build_legacy_form_data(true)).toEqual({
-        dob: { value: "2000-12-25" },
-      });
+      expect(schema.components).toHaveLength(1);
+      expect(schema.components[0]).toMatchObject({ key: "ro", disabled: true });
     });
 
-    it("skips fields without a name", () => {
-      mount(`<input class="form-control" type="text" value="x" />`);
-      expect(build_legacy_form_data()).toEqual({});
-    });
-  });
-
-  describe("parse_html", () => {
-    let state;
-    beforeEach(() => {
-      state = create_mock_state();
-      // current user is the assignee -> fields stay enabled
-      state.api.user.profile.value = { id: "demo" };
-      state.api.task.one.value = { data: { id: "t1" } };
-      state.api.task.value = { data: { assignee: "demo" } };
-      localStorage.clear();
-    });
-
-    it("returns an info box when there is no <form>", () => {
-      expect(parse_html(state, "<div>nope</div>")).toContain("info-box");
-    });
-
-    it("marks required fields with an asterisk", () => {
-      const out = parse_html(
-        state,
-        `<form><label>Name</label><input type="text" name="n" required /></form>`,
+    it("falls back to the variable name and strips a trailing required marker", () => {
+      const schema = rendered_form_to_schema(
+        `<form>
+          <input type="text" cam-variable-name="noLabel" cam-variable-type="String" />
+          <label>Response *</label>
+          <input type="text" cam-variable-name="withStar" cam-variable-type="String" required />
+        </form>`,
       );
-      expect(out).toContain("Name*");
+      expect(schema.components[0].label).toBe("noLabel");
+      expect(schema.components[1].label).toBe("Response");
     });
 
-    it("disables fields when the user is not the assignee", () => {
-      state.api.task.value = { data: { assignee: "someone-else" } };
-      const out = parse_html(
-        state,
-        `<form><input type="text" name="n" /></form>`,
+    it("returns no components when there are no form fields", () => {
+      expect(rendered_form_to_schema("<div>nothing</div>").components).toEqual(
+        [],
       );
-      expect(out).toContain("disabled");
+      expect(rendered_form_to_schema("").components).toEqual([]);
     });
   });
 });

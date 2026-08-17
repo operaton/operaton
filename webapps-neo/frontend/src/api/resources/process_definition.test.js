@@ -27,10 +27,15 @@ describe("api/resources/process_definition", () => {
     });
   });
 
-  it("list() encodes the nameLike filter", () => {
-    process_definition.list(state, "foo bar");
+  it("list() forwards arbitrary Camunda 7 query params", () => {
+    process_definition.list(state, {
+      nameLike: "%foo%",
+      active: "true",
+      sortBy: "name",
+      sortOrder: "asc",
+    });
     expect_api_call(GET, {
-      url: "/process-definition/statistics?nameLike=%25foo%20bar%25",
+      url: "/process-definition/statistics?nameLike=%25foo%25&active=true&sortBy=name&sortOrder=asc",
       state,
       signal: state.api.process.definition.list,
     });
@@ -59,7 +64,7 @@ describe("api/resources/process_definition", () => {
     expect_api_call(GET, {
       url: "/process-definition?deploymentId=dep-1&resourceName=my%20process.bpmn",
       state,
-      signal: state.api.process.definition.one,
+      signal: state.api.deployment.process_definition,
     });
   });
 
@@ -99,14 +104,14 @@ describe("api/resources/process_definition", () => {
     expect_api_call(GET, {
       url: "/process-definition?latest=true&active=true&startableInTasklist=true&startablePermissionCheck=true&firstResult=0&maxResults=15",
       state,
-      signal: state.api.process.definition.list,
+      signal: state.api.process.definition.list_startable,
     });
   });
 
-  it("start_form() GETs the start form by key", () => {
-    process_definition.start_form(state, "myKey");
+  it("start_form() GETs the start form metadata by definition id", () => {
+    process_definition.start_form(state, "def-1");
     expect_api_call(GET, {
-      url: "/process-definition/key/myKey/startForm",
+      url: "/process-definition/def-1/startForm",
       state,
       signal: state.api.process.definition.start_form,
     });

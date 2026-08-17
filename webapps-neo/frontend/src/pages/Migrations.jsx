@@ -5,7 +5,7 @@ import engine_rest, { RequestState } from "../api/engine_rest.jsx";
 import { AppState } from "../state.js";
 import { createContext } from "preact";
 import ReactBpmn from "react-bpmn";
-import BpmnModdle from "bpmn-moddle";
+import { BpmnModdle } from "bpmn-moddle";
 import { useLocation } from "preact-iso/router";
 import { has_data } from "../api/helper.jsx";
 import {
@@ -63,7 +63,7 @@ const MigrationsPage = () => {
 
   return (
     <MigrationState.Provider value={migration_state}>
-      <main>
+      <main id="content" class="migrations">
         <ProcessSelection />
       </main>
     </MigrationState.Provider>
@@ -245,6 +245,7 @@ const ProcessSelection = () => {
             <div>
               <label>{t("migrations.source")} </label>
               <select
+                aria-label={t("migrations.select-source-definition")}
                 onChange={(e) => add_query_params("source", e.target.value)}
               >
                 <option
@@ -275,6 +276,7 @@ const ProcessSelection = () => {
             <div>
               <label>{t("migrations.target")} </label>
               <select
+                aria-label={t("migrations.select-target-definition")}
                 onChange={(e) => add_query_params("target", e.target.value)}
               >
                 <option
@@ -570,9 +572,9 @@ const Mappings = () => {
           <table>
             <thead>
               <tr>
-                <th scope="column">{t("migrations.source-activity")}</th>
-                <th scope="column">{t("migrations.target-activity")}</th>
-                <th scope="column">{t("migrations.valid")}</th>
+                <th scope="col">{t("migrations.source-activity")}</th>
+                <th scope="col">{t("migrations.target-activity")}</th>
+                <th scope="col">{t("migrations.valid")}</th>
               </tr>
             </thead>
             <tbody>{generate_mapping_rows(migration_state, state, t)}</tbody>
@@ -617,10 +619,10 @@ const Variables = () => {
         <table>
           <thead>
             <tr>
-              <th scope="column">{t("common.name")}</th>
-              <th scope="column">{t("common.type")}</th>
-              <th scope="column">{t("common.value")}</th>
-              <th scope="column">{t("common.actions")}</th>
+              <th scope="col">{t("common.name")}</th>
+              <th scope="col">{t("common.type")}</th>
+              <th scope="col">{t("common.value")}</th>
+              <th scope="col">{t("common.actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -713,9 +715,9 @@ const ProcessInstanceQuery = () => {
         <table>
           <thead>
             <tr>
-              <th scope="column">{t("migrations.filter")}</th>
-              <th scope="column">{t("common.value")}</th>
-              <th scope="column">{t("common.actions")}</th>
+              <th scope="col">{t("migrations.filter")}</th>
+              <th scope="col">{t("common.value")}</th>
+              <th scope="col">{t("common.actions")}</th>
             </tr>
           </thead>
           <tbody>

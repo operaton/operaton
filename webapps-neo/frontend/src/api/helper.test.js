@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { signal } from "@preact/signals";
 import {
   _url_server,
@@ -6,6 +6,7 @@ import {
   get_credentials,
   get_auth_header,
   has_data,
+  POST_FORM,
   RESPONSE_STATE,
 } from "./helper.jsx";
 
@@ -141,6 +142,40 @@ describe("api/helper", () => {
       expect(
         has_data(signal({ status: RESPONSE_STATE.SUCCESS, data: [1] })),
       ).toBe(true);
+    });
+  });
+
+  describe("POST_FORM", () => {
+    afterEach(() => vi.restoreAllMocks());
+
+    const state = {
+      server: { value: { url: "http://x" } },
+      auth: {
+        mode: "basic",
+        credentials: { value: { username: "demo", password: "demo" } },
+      },
+    };
+
+    it("sends the FormData body without setting Content-Type", async () => {
+      const fetchMock = vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => ({ id: "dep-1" }),
+      });
+      vi.stubGlobal("fetch", fetchMock);
+
+      const signl = signal(null);
+      const fd = new FormData();
+      await POST_FORM("/deployment/create", fd, state, signl);
+
+      const [url, opts] = fetchMock.mock.lastCall;
+      expect(url).toBe("http://x/engine-rest/deployment/create");
+      expect(opts.method).toBe("POST");
+      expect(opts.body).toBe(fd);
+      expect(opts.headers.has("Content-Type")).toBe(false);
+      expect(opts.headers.get("Authorization")).toContain("Basic ");
+      expect(signl.value.status).toBe(RESPONSE_STATE.SUCCESS);
+      expect(signl.value.data).toEqual({ id: "dep-1" });
     });
   });
 

@@ -19,8 +19,9 @@ vi.mock("../api/engine_rest.jsx", async (importOriginal) => {
 });
 
 let mockParams = {};
+let mockQuery = {};
 vi.mock("preact-iso", () => ({
-  useRoute: () => ({ params: mockParams }),
+  useRoute: () => ({ params: mockParams, query: mockQuery }),
   useLocation: () => ({ route: vi.fn(), path: "/batches" }),
 }));
 
@@ -49,6 +50,7 @@ describe("BatchesPage", () => {
   beforeEach(() => {
     state = create_mock_state();
     mockParams = {};
+    mockQuery = {};
   });
   afterEach(cleanup);
 
@@ -103,6 +105,49 @@ describe("BatchesPage", () => {
     const { getByText } = renderPage(state);
     fireEvent.click(getByText("batches.resume"));
     expect(engine_rest.batch.set_suspended.mock.lastCall[2]).toBe(false);
+  });
+
+  it("retries failed jobs, scoped to the batch job definition", () => {
+    mockParams = { batch_id: "batch-1234abcd" };
+    signal_response(state.api.batch.one, [
+      sample_batch({ failedJobs: 3, batchJobDefinitionId: "jd-batch-1" }),
+    ]);
+    engine_rest.batch.retry.mockResolvedValue(undefined);
+    const { getByText } = renderPage(state);
+    fireEvent.click(getByText("batches.retry-failed"));
+    expect(engine_rest.batch.retry).toHaveBeenCalled();
+    expect(engine_rest.batch.retry.mock.lastCall[1]).toBe("jd-batch-1");
+  });
+
+  it("hides the retry button when there are no failed jobs", () => {
+    mockParams = { batch_id: "batch-1234abcd" };
+    signal_response(state.api.batch.one, [sample_batch({ failedJobs: 0 })]);
+    const { queryByText } = renderPage(state);
+    expect(queryByText("batches.retry-failed")).toBeNull();
+  });
+
+  it("history mode lists finished batches from the history endpoint", () => {
+    mockQuery = { history: "true" };
+    signal_response(state.api.history.batch.list, [
+      sample_batch({ endTime: "2026-06-01T10:00:00Z" }),
+    ]);
+    const { getByText } = renderPage(state);
+    expect(engine_rest.history.batch.all).toHaveBeenCalled();
+    expect(getByText("batches.show-running")).toBeTruthy();
+  });
+
+  it("history mode renders a read-only batch detail without actions", () => {
+    mockParams = { batch_id: "batch-1234abcd" };
+    mockQuery = { history: "true" };
+    signal_response(
+      state.api.history.batch.one,
+      sample_batch({ endTime: "z" }),
+    );
+    const { queryByText } = renderPage(state);
+    expect(engine_rest.history.batch.one).toHaveBeenCalled();
+    // No suspend/delete/retry actions on a finished batch.
+    expect(queryByText("batches.suspend")).toBeNull();
+    expect(queryByText("batches.delete")).toBeNull();
   });
 
   it("deletes a batch after confirming in the dialog", () => {

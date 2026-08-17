@@ -29,6 +29,9 @@ import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { DashboardPage } from "./Dashboard.jsx";
 import { create_mock_state, signal_response } from "../test/helpers.js";
+import { register, _reset_registry } from "../plugins/registry.js";
+import { PLUGIN_POINTS } from "../plugins/points.js";
+import { plugin_apis } from "../api/plugins.js";
 
 const renderPage = (state) =>
   render(h(AppState.Provider, { value: state }, h(DashboardPage, {})));
@@ -143,5 +146,39 @@ describe("DashboardPage", () => {
     ]);
     const { getByText } = renderPage(state);
     expect(getByText("dashboard.no-incidents")).toBeTruthy();
+  });
+});
+
+describe("DashboardPage — plugin widgets", () => {
+  let state;
+  beforeEach(() => {
+    _reset_registry();
+    for (const key of Object.keys(plugin_apis)) delete plugin_apis[key];
+    state = create_mock_state();
+    mockParams = {};
+  });
+  afterEach(() => {
+    cleanup();
+    _reset_registry();
+  });
+
+  it("renders a registered DASHBOARD_WIDGET after the built-in sections", () => {
+    register({
+      id: "widget-demo",
+      point: PLUGIN_POINTS.DASHBOARD_WIDGET,
+      properties: {},
+      Component: () =>
+        h("section", { "data-testid": "demo-widget" }, "hello widget"),
+    });
+
+    const { getByTestId, getByText } = renderPage(state);
+    expect(getByTestId("demo-widget").textContent).toBe("hello widget");
+    // The built-in dashboard content still renders alongside the widget.
+    expect(getByText("nav.tasks")).toBeTruthy();
+  });
+
+  it("renders no widget markup when no widget plugin is registered", () => {
+    const { queryByTestId } = renderPage(state);
+    expect(queryByTestId("demo-widget")).toBeNull();
   });
 });

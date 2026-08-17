@@ -4,9 +4,10 @@ vi.mock("../helper.jsx", () => ({
   GET: vi.fn(),
   DELETE: vi.fn(),
   GET_TEXT: vi.fn(),
+  POST_FORM: vi.fn(),
 }));
 
-import { GET, DELETE, GET_TEXT } from "../helper.jsx";
+import { GET, DELETE, GET_TEXT, POST_FORM } from "../helper.jsx";
 import { create_mock_state, expect_api_call } from "../../test/helpers.js";
 import deployment from "./deployment.js";
 
@@ -63,6 +64,18 @@ describe("api/resources/deployment", () => {
       body: null,
       state,
       signal: state.api.deployment.delete,
+    });
+  });
+
+  it("create() POST_FORMs the FormData to /deployment/create", () => {
+    const fd = new FormData();
+    fd.append("deployment-name", "my-deploy");
+    deployment.create(state, fd);
+    expect_api_call(POST_FORM, {
+      url: "/deployment/create",
+      body: fd,
+      state,
+      signal: state.api.deployment.create,
     });
   });
 });

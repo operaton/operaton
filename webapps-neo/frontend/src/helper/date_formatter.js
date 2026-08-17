@@ -36,7 +36,25 @@ const formatRelativeDateTime = (date, ignoreTime) => {
     return timeFormatter.format(Math.floor(secondsDiff / divisor), unitStrings[unitIndex]);
 }
 
+// returns a humanized duration from milliseconds, e.g. "3d 4h", "12m 5s", "800ms".
+// Shows at most the two largest non-zero units so it stays glanceable.
+const formatDuration = (ms) => {
+    if (ms == null || Number.isNaN(ms)) return "";
+    if (ms < 1000) return `${ms}ms`;
+    const s = Math.floor(ms / 1000) % 60;
+    const m = Math.floor(ms / 60000) % 60;
+    const h = Math.floor(ms / 3600000) % 24;
+    const d = Math.floor(ms / 86400000);
+    const parts = [];
+    if (d) parts.push(`${d}d`);
+    if (h) parts.push(`${h}h`);
+    if (m) parts.push(`${m}m`);
+    if (s) parts.push(`${s}s`);
+    return parts.slice(0, 2).join(" ");
+};
+
 export {
     formatRelativeDate,
-    formatRelativeDateTime
+    formatRelativeDateTime,
+    formatDuration
 };

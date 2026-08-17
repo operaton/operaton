@@ -6,6 +6,7 @@
 
 import { signal } from "@preact/signals";
 import { createContext } from "preact";
+import { plugin_state_branches } from "./plugins/registry.js";
 
 /**
  * Create the global app state by invoking the function in the root [Tasks.jsx`]
@@ -27,17 +28,6 @@ const createAppState = () => {
     login_response: signal(null),
     logout_response: signal(null),
   };
-
-  const deployments_page = {
-    selected_resource: signal(null),
-    selected_deployment: signal(null),
-    selected_process_statistics: signal(null),
-  };
-  const user_profile = signal(null);
-  const user_profile_edit = signal({});
-  const user_profile_edit_response = signal(undefined);
-  const task_claim_result = signal(null);
-  const task_assign_result = signal(null);
 
   const api = {
     authorization: {
@@ -82,6 +72,8 @@ const createAppState = () => {
       one: signal(null),
       delete: signal(null),
       update: signal(null),
+      retry: signal(null),
+      saved_filters: signal(null),
     },
     tenant: {
       list: signal(null),
@@ -100,6 +92,7 @@ const createAppState = () => {
       definition: {
         one: signal(null),
         list: signal(null),
+        list_startable: signal(null),
         called: signal(null),
         diagram: signal(null),
         statistics: signal(null),
@@ -110,6 +103,7 @@ const createAppState = () => {
         activity_instance_statistics: signal(null),
         suspend: signal(null),
         remove: signal(null),
+        saved_filters: signal(null),
       },
       instance: {
         called: signal(null),
@@ -117,10 +111,29 @@ const createAppState = () => {
         list: signal(null),
         count: signal(null),
         variables: signal(null),
+        variables_update: signal(null),
         by_defintion_id: signal(null),
         activity_instances: signal(null),
         modification: signal(null),
+        suspend: signal(null),
+        delete: signal(null),
+        saved_filters: signal(null),
       },
+    },
+    incident: {
+      by_process_instance: signal(null),
+      by_process_definition: signal(null),
+      annotation: signal(null),
+    },
+    job: {
+      by_process_instance: signal(null),
+      update: signal(null),
+      stacktrace: signal(null),
+    },
+    external_task: {
+      by_process_instance: signal(null),
+      update: signal(null),
+      error_details: signal(null),
     },
     task: {
       list: signal(null),
@@ -134,12 +147,18 @@ const createAppState = () => {
       unclaim_result: signal(null),
       assign_result: signal(null),
       submit_form: signal(null),
+      complete: signal(null),
       add_group: signal(null),
       delete_group: signal(null),
       identity_links: signal(null),
       comment: {
         list: signal(null),
         create: signal(null),
+      },
+      attachment: {
+        list: signal(null),
+        create: signal(null),
+        delete: signal(null),
       },
     },
     filter: {
@@ -154,37 +173,67 @@ const createAppState = () => {
       all: signal(null),
       resources: signal(null),
       resource: signal(null),
+      // The process definition matching a deployment resource. Its own slot
+      // (not process.definition.one) because the engine returns it as an
+      // *array* here, whereas process.definition.one holds a single object.
+      process_definition: signal(null),
       delete: signal(null),
+      create: signal(null),
+      saved_filters: signal(null),
     },
     decision: {
       definitions: signal(null),
       definition: signal(null),
       dmn: signal(null),
+      instances: signal(null),
+      instance: signal(null),
+      saved_filters: signal(null),
     },
     history: {
       incident: {
         by_process_definition: signal(null),
         by_process_instance: signal(null),
       },
+      task: {
+        by_process_instance: signal(null),
+      },
+      activity_instance: {
+        by_process_instance: signal(null),
+      },
+      variable_instance: {
+        by_process_instance: signal(null),
+      },
+      process_instance: {
+        called: signal(null),
+        // Historic instance detail / list. Separate from the runtime
+        // process.instance.{one,list} because the historic payload has a
+        // different shape (state/startTime/endTime/hasMore); sharing one slot
+        // let a stale runtime shape render in history mode and vice versa.
+        one: signal(null),
+        list: signal(null),
+      },
+      batch: {
+        list: signal(null),
+        one: signal(null),
+      },
       user_operation: signal(null),
+      user_operation_annotation: signal(null),
     },
     job_definition: {
       all: {
         by_process_definition: signal(null),
       },
+      update: signal(null),
     },
+    // Plugin-contributed signal branches, as state.api.plugins.<plugin-id>.
+    // Populated from the registry, which is frozen before the first render.
+    plugins: plugin_state_branches(),
   };
 
   return {
     server,
     auth,
     api,
-    deployments_page,
-    user_profile,
-    user_profile_edit,
-    user_profile_edit_response,
-    task_claim_result,
-    task_assign_result,
   };
 };
 

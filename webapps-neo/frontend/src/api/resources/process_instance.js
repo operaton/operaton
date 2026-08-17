@@ -1,4 +1,4 @@
-import { GET, POST } from "../helper.jsx";
+import { GET, POST, PUT, DELETE } from "../helper.jsx";
 
 const get_process_instance = (state, instance_id) =>
   GET(
@@ -26,9 +26,11 @@ const get_process_instances_by_activity_ids = (
     state.api.process.instance.list,
   );
 
+// deserializeValues=false so Object/Json/Xml come back as their serialized
+// string form (displayable, and avoids server-side deserialization) (#91).
 const get_process_instance_variables = (state, instance_id) =>
   GET(
-    `/process-instance/${instance_id}/variables`,
+    `/process-instance/${instance_id}/variables?deserializeValues=false`,
     state,
     state.api.process.instance.variables,
   );
@@ -102,6 +104,58 @@ const modify_process_instance_async = (
     state.api.process.instance.modification,
   );
 
+/**
+ * Add/update and/or delete variables on a running instance in one request.
+ * @see https://docs.operaton.org/reference/latest/rest-api/#tag/Process-Instance/operation/modifyProcessInstanceVariables
+ */
+const modify_process_instance_variables = (
+  state,
+  instance_id,
+  { modifications = {}, deletions = [] } = {},
+) =>
+  POST(
+    `/process-instance/${instance_id}/variables`,
+    { modifications, deletions },
+    state,
+    state.api.process.instance.variables_update,
+  );
+
+const set_process_instance_variable = (state, instance_id, name, body) =>
+  PUT(
+    `/process-instance/${instance_id}/variables/${name}`,
+    body,
+    state,
+    state.api.process.instance.variables_update,
+  );
+
+const delete_process_instance_variable = (state, instance_id, name) =>
+  DELETE(
+    `/process-instance/${instance_id}/variables/${name}`,
+    null,
+    state,
+    state.api.process.instance.variables_update,
+  );
+
+const set_process_instance_suspended = (state, instance_id, suspended) =>
+  PUT(
+    `/process-instance/${instance_id}/suspended`,
+    { suspended },
+    state,
+    state.api.process.instance.suspend,
+  );
+
+const delete_process_instance = (
+  state,
+  instance_id,
+  skipCustomListeners = false,
+) =>
+  DELETE(
+    `/process-instance/${instance_id}?skipCustomListeners=${skipCustomListeners}`,
+    null,
+    state,
+    state.api.process.instance.delete,
+  );
+
 const process_instance = {
   one: get_process_instance,
   variables: get_process_instance_variables,
@@ -113,6 +167,11 @@ const process_instance = {
   activity_instances: get_activity_instances,
   modify: modify_process_instance,
   modify_async: modify_process_instance_async,
+  modify_variables: modify_process_instance_variables,
+  set_variable: set_process_instance_variable,
+  delete_variable: delete_process_instance_variable,
+  set_suspended: set_process_instance_suspended,
+  delete: delete_process_instance,
 };
 
 export default process_instance;

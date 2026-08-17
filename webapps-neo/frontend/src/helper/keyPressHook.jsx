@@ -1,11 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'preact/hooks'
 
-const modifier_keys = {
-  Shift: 'Shift',
-  Alt: 'Alt',
-  Ctrl: 'Ctrl',
-}
-
 export const useKeyPress = (keys, callback, modifier = [], node = null) => {
   const callbackRef = useRef(callback)
   useLayoutEffect(() => {

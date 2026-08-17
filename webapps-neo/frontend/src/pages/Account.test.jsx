@@ -92,14 +92,6 @@ describe("AccountPage", () => {
       lastName: "Lovelace",
       email: "ada@example.com",
     });
-    state.user_profile.value = {
-      data: {
-        id: "demo",
-        firstName: "Ada",
-        lastName: "Lovelace",
-        email: "ada@example.com",
-      },
-    };
     engine_rest.user.profile.update.mockResolvedValue(undefined);
     const { container } = renderPage(state);
 

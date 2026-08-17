@@ -10,11 +10,21 @@
 
 .list {
   list-style: none;
-  padding: var(--spacing-1);
+  padding: 0;
   margin: var(--spacing-1) 0;
   overflow-y: auto;
   position: relative;
-  width: calc(clamp(20ch, 20vw, 30ch) - var(--spacing-1) * 2);
+  width: clamp(20ch, 20vw, 30ch);
+  /* Always a column, overriding the global row-wrapping `nav menu`. */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+/* A nav holding a .list is a page sidebar (admin, account, processes): a
+   full-height column of links on a recessed surface. */
+nav:has(> menu.list) {
+  background: var(--background-2);
 }
 
 .list li {
@@ -24,7 +34,7 @@
 }
 
 .list li a {
-  padding: var(--spacing-2);
+  padding: var(--spacing-1);
   border-radius: var(--border-radius);
   color: var(--text);
   text-decoration: none;
@@ -33,21 +43,22 @@
   line-height: 1;
 }
 
-.list li.selected {
+.list li:has(> a[aria-current="page"]) {
   border-radius: var(--border-radius);
   border-top-color: transparent;
 }
 
-.list li.selected a {
+.list li a[aria-current="page"] {
   background-color: var(--background-3);
+  font-weight: 600;
 }
 
-.list li.selected a:focus {
+.list li a[aria-current="page"]:focus {
   background-color: var(--color-primary-transparent);
 }
 
-.list li:first-child:not(.selected),
-.list li.selected + li {
+.list li:first-child:not(:has(> a[aria-current="page"])),
+.list li:has(> a[aria-current="page"]) + li {
   border-color: transparent;
 }
 
@@ -157,8 +168,124 @@ section.task-tabs {
   min-height: 0;
 }
 
-#task-list #task-actions {
+#task-list #list-filter {
   flex: none;
+}
+
+/* Shared toolbar used by every list page. Two flex groups: saved-filter +
+   Edit on the left, sort key + sort order on the right (space-between).
+   Wraps on narrow viewports. */
+#list-filter {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-1);
+  align-items: center;
+  padding: var(--spacing-1);
+  flex-wrap: wrap;
+}
+
+#list-filter .list-filter-group {
+  display: flex;
+  gap: var(--spacing-1);
+  align-items: center;
+}
+
+#list-filter .list-filter-group > * {
+  margin: 0;
+}
+
+/* The manage-filters page that opens when ?filters=manage is present. */
+#manage-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1);
+}
+
+#manage-filters header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-2);
+}
+
+#manage-filters .manage-filters-actions {
+  display: flex;
+  gap: var(--spacing-1);
+}
+
+#manage-filters table {
+  width: 100%;
+}
+
+#manage-filters td.actions {
+  display: flex;
+  gap: var(--spacing-1);
+  flex-wrap: wrap;
+}
+
+#manage-filters td.actions button {
+  margin: 0;
+}
+
+/* Stacked field list for action dialogs (variable edit/add etc.). Without this
+   the bare <label>s flow inline and sit side-by-side; force one field per row
+   with its label above the control. */
+.dialog-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  margin: var(--spacing-1) 0;
+}
+
+.dialog-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.dialog-fields input,
+.dialog-fields select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* The dialog form used by <ListFilter> for create/edit. The global `form`
+   rule sets a 2-column label/input grid, which would put the criteria
+   fieldset and the sort-override fieldset side-by-side and overlap them
+   inside the dialog. Force a single-column stack and align controls to
+   the start so labels sit above their inputs. */
+.filter-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  align-items: stretch;
+}
+
+.filter-edit-form fieldset {
+  padding: var(--spacing-1);
+}
+
+.filter-edit-form fieldset > label {
+  margin-right: var(--spacing-1);
+}
+
+.filter-edit-form fieldset > select {
+  margin-right: var(--spacing-1);
+}
+
+.filter-edit-form fieldset > button {
+  margin-top: var(--spacing-1);
+}
+
+.filter-edit-form table {
+  width: 100%;
+}
+
+.filter-edit-form .button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-1);
 }
 
 #task-list #task-table-wrapper {
@@ -215,59 +342,260 @@ section.task-tabs {
 }
 
 /* Processes page — column layout: top nav · content · diagram pane.
-   Page-specific styling cascades from `#processes`; only genuinely
+   Page-specific styling cascades from `.processes`; only genuinely
    idiosyncratic things (diagram pane, history-mode pill, maximize button)
    keep their own class. */
-main#processes {
+main.processes {
   display: flex;
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
 }
 
-/* Wrapper that holds the .content + .diagram split panes. */
-#processes > div {
+/* Row: sidebar (when a definition is selected) + the content/diagram split. */
+.processes-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: var(--spacing-1);
+}
+
+/* Left sidebar of definition sub-pages, same pattern as the Admin page. Fixed
+   width so a long definition id wraps inside it rather than stretching it. Flex
+   column with spacing between the details / nav / toggle blocks. */
+.processes-body > nav {
+  flex: none;
+  width: clamp(20ch, 20vw, 30ch);
+  display: flex;
+  flex-direction: column;
+  /* Drop the generic `nav` side padding here so the scroll container (and its
+     scrollbar) reach the right edge; the inset is carried by the children
+     below instead. */
+  padding: 0;
+  /* The sidebar itself is transparent; each block below carries the recessed
+     surface as its own card. */
+  background: none;
+}
+
+/* Everything above the history toggle scrolls as one block; the toggle stays
+   pinned at the bottom of the sidebar. */
+.processes-body > nav .sidebar-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  /* Even inset on the top and sides (the nav dropped its padding). */
+  padding: var(--spacing-1) var(--spacing-1) 0;
+}
+
+/* Cards keep their natural height instead of shrinking to fit; otherwise the
+   list card (overflow: hidden, for its rounded corners) would clip its items
+   rather than overflow, and the scroll container would never scroll. */
+.processes-body > nav .sidebar-scroll > * {
+  flex: none;
+}
+
+/* The nav list no longer scrolls on its own — the sidebar-scroll wrapper does.
+   Drop its default vertical margin so it sits closer to the definition details
+   (the flex gap already separates them). */
+.processes-body > nav .sidebar-scroll .list {
+  /* hidden (not visible) both stops the list scrolling on its own — the
+     sidebar-scroll wrapper does that — and clips items to the card's rounded
+     corners. */
+  overflow: hidden;
+  margin: 0;
+  /* Override the fixed .list width (= full nav width) so it fits the padded
+     scroll container instead of overflowing it horizontally. */
+  width: auto;
+}
+
+/* Each top-level block in the sidebar is its own recessed card on the
+   transparent column. */
+.processes-body > nav .definition-block,
+.processes-body > nav .sidebar-scroll .list {
+  background: var(--background-2);
+  border-radius: var(--border-radius);
+}
+
+/* Item separators inset horizontally so they line up with the link padding
+   (matching the instance-details divider) instead of running edge-to-edge. */
+.processes-body > nav .list li {
+  position: relative;
+  border-top: none;
+}
+
+.processes-body > nav .list li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--spacing-1);
+  right: var(--spacing-1);
+  border-top: var(--border);
+}
+
+/* No separator above the first item, the active item, or the item right after
+   it. */
+.processes-body > nav .list li:first-child::before,
+.processes-body > nav .list li:has(> a[aria-current="page"])::before,
+.processes-body > nav .list li:has(> a[aria-current="page"]) + li::before {
+  content: none;
+}
+
+/* Heading + definition ID/version share one card. */
+.processes-body > nav .definition-block {
+  padding: var(--spacing-1);
+}
+
+/* Heading with the selected definition's name, at the top of the sidebar. */
+.processes-body > nav .definition-heading {
+  margin: 0 0 var(--spacing-1);
+  font-size: var(--h4-size);
+  font-weight: 600;
+  word-break: break-word;
+}
+
+/* Definition ID + version. Block (not the global .processes dl grid) so each
+   label sits atop its value, and the long mono id wraps within the column. */
+.processes-body > nav .definition-summary {
+  display: block;
+  margin: 0;
+  font-size: var(--small-font-size);
+}
+
+.processes-body > nav .definition-summary dt {
+  color: var(--text-2);
+}
+
+.processes-body > nav .definition-summary dd:last-child {
+  margin-bottom: 0;
+}
+
+.processes-body > nav .definition-summary dd {
+  margin: 0 0 var(--spacing-1);
+}
+
+/* The id <dd>s stay on one line, truncated with an ellipsis within the card
+   width rather than wrapping. */
+.processes-body > nav .entity-id {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The history toggle is pinned to the bottom of the sidebar. */
+.processes-body > nav .history-toggle {
+  flex: none;
+  /* Extra inline margin makes up for the nav side padding removed above. */
+  margin: var(--spacing-2) calc(var(--spacing-2) + var(--spacing-1));
+}
+
+/* While an instance is drilled in, the whole Instances entry (nav link + the
+   nested details) carries the entry highlight, so the details read as a child
+   sitting on that surface. */
+.processes-body > nav .list li:has(.selected-instance) {
+  background: var(--background-3);
+  border-radius: var(--border-radius);
+}
+
+/* Instance details sit under the Instances entry, set off by a top border.
+   The border is drawn via a pseudo-element inset by the horizontal padding so
+   it doesn't run edge-to-edge. */
+.processes-body > nav .selected-instance {
+  position: relative;
+  padding: var(--spacing-1);
+  font-size: var(--small-font-size);
+}
+
+.processes-body > nav .selected-instance::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--spacing-1);
+  right: var(--spacing-1);
+  border-top: var(--border);
+}
+
+.processes-body > nav .selected-instance dl {
+  display: block;
+  margin: 0;
+}
+
+.processes-body > nav .selected-instance dt {
+  color: var(--text-2);
+}
+
+.processes-body > nav .selected-instance dd {
+  margin: 0 0 var(--spacing-1);
+}
+
+.processes-body > nav .selected-instance .button-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-1);
+  margin-top: var(--spacing-1);
+}
+
+/* Even-width buttons that share the row and wrap when they don't fit. */
+.processes-body > nav .selected-instance .button-group button {
+  flex: 1 1 0;
+  margin: 0;
+}
+
+/* Wrapper that holds the .content + .diagram split panes (stacked vertically). */
+.processes .split {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
   min-height: 0;
 }
 
-#processes .content {
-  flex: 1 1 70%;
+.processes .content {
+  flex: 1 1 50%;
   min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  /* Single scroll container for both axes so the global sticky `thead` anchors
+     here. Wrapping the table in its own overflow-x container would make that
+     wrapper a two-axis scroller (overflow-x/y are coupled) and steal the
+     sticky, scrolling the header off. */
+  overflow: auto;
   padding: var(--spacing-2);
 }
 
-/* Scroll the table horizontally on its own; header and toolbar stay put. */
-#processes .content div:has(> table) {
-  overflow-x: auto;
-}
-
-#processes .content h1 {
+.processes .content h1 {
   font-size: 2em;
 }
 
-#processes .diagram {
-  flex: 0 0 30%;
+/* The diagram sits above the sub-page content, each taking ~half the column. */
+.processes .diagram {
+  flex: 1 1 50%;
   min-height: 0;
   position: relative;
-  border-top: var(--border);
   background: var(--background-1);
   display: flex;
   flex-direction: column;
 }
 
-#processes .diagram.maximized {
+.processes .diagram.maximized {
   flex: 1 1 100%;
 }
 
-#processes .diagram #canvas {
+.processes .diagram #canvas {
   flex: 1;
   min-height: 0;
   position: relative;
+}
+
+/* Keep the bpmn.io watermark anchored to the diagram box. The global
+   `.bjs-powered-by` rule pins it fixed to the page corner (!important), so
+   override it here to sit in the bottom-right of this diagram's container. */
+.processes .diagram .bjs-powered-by {
+  position: absolute !important;
+  bottom: var(--spacing-1) !important;
+  right: var(--spacing-1) !important;
 }
 
 .diagram-maximize-btn {
@@ -297,31 +625,55 @@ main#processes {
   height: 1rem;
 }
 
-/* Sub-nav and tertiary nav share an underline-tab pattern. */
-#processes nav {
+/* Breadcrumb row at the top of the right column — plain, no bar/border. On the
+   definitions list it also holds the history toggle (pushed right). */
+.processes .process-breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
+}
+
+/* Tertiary nav (instance sub-pages): a horizontal underline-tab row inside
+   .content (which has its own padding); the negative side-margins let its
+   bottom border span edge-to-edge. */
+.processes nav.tertiary {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  min-height: 2rem;
+  min-height: var(--tertiary-nav-height);
   padding: 0 var(--spacing-2);
-  border-bottom: var(--border);
-  background: var(--background-1);
+  margin: calc(-1 * var(--spacing-2)) calc(-1 * var(--spacing-2))
+    var(--spacing-1);
+  background: var(--background-2);
   font-size: var(--small-font-size);
   flex-wrap: wrap;
+  /* Stays put while .content scrolls. Sticky offsets are measured from the
+     pane's padding edge, so the negative offset pins it flush with the pane's
+     top the way its negative margin places it at rest — otherwise rows would
+     scroll through the strip of padding above it. Sits above the sticky table
+     headers (z-index 3 vs their 2), so where the header sticks a hair high it
+     is covered by the tab row rather than overhanging it. */
+  position: sticky;
+  top: calc(-1 * var(--spacing-2));
+  z-index: 3;
 }
 
-/* The top sub-nav puts the history toggle on the right edge. */
-#processes > nav:first-of-type {
-  justify-content: space-between;
+/* Sticky `thead` in the same scroll container: flush with the pane's top edge,
+   subtracting the pane padding the offset is measured from. */
+.processes .content thead th {
+  top: calc(-1 * var(--spacing-2));
 }
 
-/* The tertiary nav lives inside .content (which has its own padding); the
-   negative side-margins let its bottom border span edge-to-edge. */
-#processes nav.tertiary {
-  margin: 0 calc(-1 * var(--spacing-2)) var(--spacing-1);
+/* Where the tab row is present it holds the top, so headers start below it.
+   Erring a hair high lets the row cover the header's top padding rather than
+   leaving a gap for scrolling rows to show through. */
+.processes .content:has(nav.tertiary) thead th {
+  top: calc(var(--tertiary-nav-height) - var(--spacing-2));
 }
 
-#processes nav menu {
+.processes nav.tertiary menu {
   display: flex;
   align-items: center;
   gap: var(--spacing-1);
@@ -331,8 +683,7 @@ main#processes {
   padding: 0;
 }
 
-#processes nav a,
-#processes nav .disabled {
+.processes nav.tertiary a {
   color: var(--text);
   text-decoration: none;
   padding: 0;
@@ -340,47 +691,44 @@ main#processes {
   border-bottom: 0.15em solid transparent;
 }
 
-#processes nav a:hover {
-  color: var(--color-primary);
+.processes nav.tertiary a:hover {
+  color: var(--color-link);
 }
 
-#processes nav a[aria-current] {
-  color: var(--color-primary);
+.processes nav.tertiary a[aria-current] {
+  color: var(--color-link);
   border-bottom-color: var(--color-primary);
   font-weight: 600;
 }
 
-#processes nav .disabled {
-  color: var(--text-disabled);
-  cursor: not-allowed;
-}
-
-#processes nav .chevron {
-  color: var(--text-2, var(--muted));
-  font-size: 1.1em;
-  user-select: none;
-}
-
-#processes .history-toggle {
-  background: transparent;
+.processes .history-toggle {
   color: var(--text);
   border: var(--border);
   padding: 0.25em 0.75em;
   border-radius: 999em;
-  font-size: inherit;
   cursor: pointer;
   margin: 0;
+  justify-content: center;
 }
 
-#processes .history-toggle.active {
+.processes .history-toggle.active {
   background: var(--color-primary);
   color: #fff;
   border-color: var(--color-primary);
 }
 
+/* Caption rendered on tabs that have no historic equivalent (job
+   definitions, called definitions) when the history toggle is on. */
+.processes .history-na {
+  display: block;
+  margin: 0 0 var(--spacing-1);
+  color: var(--text-2, var(--muted));
+  font-style: italic;
+}
+
 /* Page header: title (+ optional muted breadcrumb in <small>) on the left,
    action button on the right. */
-#processes header {
+.processes header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -388,50 +736,60 @@ main#processes {
   margin-bottom: var(--spacing-1);
 }
 
-#processes header h1 {
+.processes header h1 {
   margin: 0;
 }
 
-#processes header h1 small {
+.processes header h1 small {
   color: var(--text-2, var(--muted));
   font-weight: 400;
   font-size: inherit;
 }
 
 /* Tables: only the overrides the global stylesheet doesn't already cover. */
-#processes table {
+.processes table {
   width: 100%;
   border-collapse: collapse;
   white-space: normal;
 }
 
-#processes th,
-#processes td {
+.processes th,
+.processes td {
   padding: 0.4rem 0.6rem;
   text-align: left;
-  border-bottom: var(--border);
+  border-bottom: var(--border-width) solid var(--border-color);
 }
 
-#processes .num {
+/* Head row: darker separator, same thickness. */
+.processes thead th {
+  border-bottom-color: var(--border-color-2);
+}
+
+/* Body rows: keep their color, but a slightly thinner separator. */
+.processes tbody :where(th, td) {
+  border-bottom-width: 0.07rem;
+}
+
+.processes .num {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#processes tbody tr:hover {
+.processes tbody tr:hover {
   background: var(--background-2);
 }
 
-#processes tbody tr[aria-selected="true"] {
+.processes tbody tr[aria-selected="true"] {
   background: color-mix(in srgb, var(--color-primary) 8%, transparent);
 }
 
-#processes input[type="search"] {
+.processes input[type="search"] {
   flex: 0 1 24rem;
   max-width: 40%;
 }
 
 /* Definition / instance metadata renders as a <dl> grid. */
-#processes dl {
+.processes dl {
   display: grid;
   grid-template-columns: max-content 1fr;
   gap: 0.25rem 1rem;
@@ -439,31 +797,31 @@ main#processes {
   margin-bottom: var(--spacing-1);
 }
 
-#processes dl dt {
+.processes dl dt {
   color: var(--text-2, var(--muted));
   font-size: var(--small-font-size);
   font-weight: normal;
   margin: 0;
 }
 
-#processes dl dd {
+.processes dl dd {
   margin: 0;
 }
 
 /* Collapsible meta panel above each tab's table. */
-#processes details {
+.processes details {
   margin: 0 0 var(--spacing-2);
   font-size: var(--small-font-size);
 }
 
-#processes details > summary {
+.processes details > summary {
   cursor: pointer;
   color: var(--text-2, var(--muted));
   user-select: none;
   padding: 0.15rem 0;
 }
 
-#processes details > summary:hover {
+.processes details > summary:hover {
   color: var(--text);
 }
 
@@ -515,6 +873,20 @@ form.camunda-form {
 
 .camunda-form .form-input-cell input[type="checkbox"] {
   align-self: start;
+}
+
+/* Grouped fields (radio-group, checklist) use a <fieldset>/<legend> for the
+   group name; reset the native chrome so it matches the surrounding grid form. */
+.camunda-form .form-field-group {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.camunda-form .form-field-group > legend {
+  padding: 0;
+  margin-bottom: var(--spacing-1);
 }
 
 .camunda-form .form-radio-group,
@@ -576,7 +948,7 @@ form.camunda-form {
 }
 
 .tabs > .tab-selection > a[aria-selected="true"] {
-  color: var(--color-primary);
+  color: var(--color-link);
   font-weight: bold;
   text-decoration: underline;
   text-decoration-thickness: 0.2em;
@@ -909,6 +1281,31 @@ div.accordion {
   box-shadow: 0 0 0 2px #fff;
 }
 
+/* History mode: canceled activity badge + element outline (see #99). */
+.bpmn-token-count.bpmn-token-canceled {
+  background: var(--color-danger, #bb2511);
+}
+
+.bpmn-canceled .djs-visual rect,
+.bpmn-canceled .djs-visual circle,
+.bpmn-canceled .djs-visual polygon {
+  stroke: var(--color-danger, #bb2511) !important;
+  stroke-dasharray: 5 3 !important;
+  filter: drop-shadow(0 0 6px var(--color-danger, #bb2511));
+}
+
+/* Job stacktrace / external-task error-details drill-down (see #98). */
+.failure-log {
+  max-height: 60vh;
+  max-width: 80vw;
+  overflow: auto;
+  padding: var(--spacing-1, 0.5em);
+  background: var(--color-background-alt, #f5f5f5);
+  border-radius: var(--border-radius-1, 4px);
+  font-size: 0.8em;
+  white-space: pre;
+}
+
 .bpmn-drop-target .djs-visual rect,
 .bpmn-drop-target .djs-visual circle,
 .bpmn-drop-target .djs-visual polygon {
@@ -999,6 +1396,15 @@ div.accordion {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
+  /* Rendered as a <button> for keyboard access — strip the native button chrome
+     so it reads as the inline value it wraps. */
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  text-align: inherit;
 
   &:hover {
     cursor: copy;
@@ -1090,7 +1496,27 @@ dialog#global-search {
   border: 2px solid var(--color-primary);
 }
 
+/* Page heading row: title and primary action share a line, with
+   space-between, wrapping the action onto the next line when too narrow. */
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  margin: var(--spacing-2) 0;
+}
+
+.page-heading > * {
+  margin: 0;
+}
+
 /* breadcrumbs */
+
+/* The breadcrumb nav shouldn't inherit the generic side padding on <nav>. */
+nav:has(> .breadcrumbs) {
+  padding: 0;
+}
 
 .breadcrumbs {
   display: inline-flex;
@@ -1126,25 +1552,52 @@ dialog#global-search {
 
 /* deployments page */
 
+/* Toolbar row: filter + sort clustered on the left, Deploy button on the
+   right. Overrides the shared #list-filter space-between just for this page. */
+.deployment-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex-wrap: wrap;
+}
+.deployment-toolbar #list-filter {
+  flex: 1;
+  justify-content: flex-start;
+  gap: var(--spacing-3);
+}
+.deployment-toolbar .button-group {
+  margin-right: var(--spacing-1);
+}
+.deployment-toolbar .button-group button {
+  margin: 0;
+}
+
 .process-details {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
-  overflow-y: auto;
   padding: var(--spacing-2);
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.deployments #diagram-container {
+  height: 40vh;
 }
 
 .bpmn-viewer .djs-parent {
   min-height: 40vh;
 }
 
-/* account */
-#account-page {
+/* account — sidebar + content row, same layout as the Admin page. */
+.account-page {
   display: flex;
+  flex: 1;
+  min-height: 0;
 }
 
-#account-page > section {
+.account-page > section {
   margin: 0;
   padding: var(--spacing-2);
   overflow-y: auto;
@@ -1153,17 +1606,24 @@ dialog#global-search {
   background-clip: padding-box;
 }
 
-#account-page dialog table td.fill {
+.account-page dialog table td.fill {
   width: 100%;
 }
 
+/* Centre piece of the top header row: a wide outlined pill that reads as a
+   search field rather than a button, with the shortcut hint spaced off the
+   label. Shares its outline with the server select next to it. */
 #go-to {
-  font-size: 0.8em;
-  font-weight: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  min-width: 24ch;
   margin: 0;
-  background: var(--background-3);
   color: var(--text);
-  padding: 0.2em 0.5em;
+  padding: 0.25em var(--spacing-1);
+  border: none;
+  border-radius: 50em;
 }
 #go-to kbd {
   font-size: 0.85em;
@@ -1173,21 +1633,65 @@ dialog#global-search {
 
 /* StartProcessList */
 
+/* Two columns: the startable definitions on a recessed surface, the selected
+   definition's start form (or the hint to pick one) beside them. Each column
+   scrolls on its own so the page itself never does. */
 #start-task {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
+  flex: 1;
+  min-height: 0;
 
   header {
     padding: var(--spacing-2);
   }
 
-  > .row {
-    padding: var(--spacing-2);
+  /* Title + search above the table (now nested inside the left column). */
+  .row {
+    padding: var(--spacing-2) 0;
     gap: var(--spacing-2);
 
     > div:last-child {
       flex-grow: 1;
+    }
+  }
+
+  > .definitions {
+    flex: 1 1 50%;
+    min-width: 0;
+    overflow: auto;
+    padding: 0 var(--spacing-2) var(--spacing-2);
+    background: var(--background-2);
+    border-right: var(--border);
+  }
+
+  > .start-form {
+    flex: 1 1 50%;
+    min-width: 0;
+    overflow-y: auto;
+    padding: var(--spacing-2);
+  }
+
+  /* The list keeps its own inner spacing; the table spans the column. */
+  > .definitions table {
+    width: 100%;
+  }
+
+  > .definitions thead th {
+    background: var(--background-2);
+  }
+
+  /* The business key is an engine-level property, not part of the form schema,
+     so it sits above the form and mirrors the global form label/input grid. */
+  .business-key {
+    display: grid;
+    grid-template-columns: 12em min(calc(100% - 2 * var(--spacing-1) - 12em),
+        30em);
+    align-items: center;
+    gap: var(--spacing-1);
+    padding: var(--spacing-1);
+
+    input {
+      width: 100%;
     }
   }
 }

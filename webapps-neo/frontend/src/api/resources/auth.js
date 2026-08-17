@@ -1,20 +1,16 @@
 import {
   GET_SERVER_URL,
-  POST_SERVER_URL,
-  GET,
+  POST,
   _url_engine_rest,
-  get_auth_header,
   RESPONSE_STATE,
 } from "../helper.jsx";
 import {
   is_oauth,
-  is_server_session,
   start_oauth_login,
   handle_oauth_callback,
   restore_oauth_session,
   oauth_logout,
 } from "../oauth.js";
-import user from "./user.js";
 
 const cookies = (state) =>
   GET_SERVER_URL("/operaton/app/cockpit/default/", state, state.auth.cookies);
@@ -58,7 +54,7 @@ const login = (
     .then((response) =>
       response.ok ? response.json() : Promise.reject(response),
     )
-    .then((data) => {
+    .then(() => {
       state.auth.credentials.value = { username, password };
       state.auth.logged_in.value = {
         status: RESPONSE_STATE.SUCCESS,
@@ -70,7 +66,7 @@ const login = (
       );
     })
     .catch(
-      (error) =>
+      () =>
         (state.auth.logged_in.value = {
           status: RESPONSE_STATE.ERROR,
           data: "wrong_login",
@@ -83,10 +79,9 @@ const login = (
  */
 const logout = (state) => {
   // Dispatch the server logout while credentials are still valid, then clear
-  // the client session and drop back to the login screen. The admin webapp
-  // logout endpoint lives on the same origin (not under /engine-rest).
-  const response = POST_SERVER_URL(
-    "/api/admin/auth/user/default/logout",
+  // the client session and drop back to the login screen.
+  const response = POST(
+    "/operaton/api/admin/auth/user/default/logout",
     null,
     state,
     state.auth.logout_response,
@@ -100,42 +95,7 @@ const logout = (state) => {
   return response;
 };
 
-/**
- * Probe the backend for an established server-side OAuth2 session. A protected
- * endpoint is requested with the session cookie; a 200 means authenticated,
- * while a redirect to the identity provider (or any error) means not.
- * @param {Object} state - Application state
- */
-const check_server_session = async (state) => {
-  const signal = state.auth.logged_in;
-  signal.value = { status: RESPONSE_STATE.LOADING };
-  try {
-    const response = await fetch(`${_url_engine_rest(state)}/user/count`, {
-      headers: { Accept: "application/json" },
-      credentials: "include",
-      redirect: "manual", // a 302 to the IdP surfaces as an opaque (not-ok) response
-    });
-    if (response.ok) {
-      return (signal.value = {
-        status: RESPONSE_STATE.SUCCESS,
-        data: "authenticated",
-      });
-    }
-  } catch (error) {
-    // network error or blocked redirect — treat as unauthenticated
-  }
-  return (signal.value = {
-    status: RESPONSE_STATE.ERROR,
-    data: "unauthenticated",
-  });
-};
-
 const is_authenticated = async (state) => {
-  if (is_server_session) {
-    // Embedded OAuth2: identity is carried by the Spring session cookie
-    return await check_server_session(state);
-  }
-
   if (is_oauth) {
     // OAuth: try to restore session from sessionStorage
     const restored = await restore_oauth_session(state);
@@ -175,7 +135,7 @@ const is_authenticated = async (state) => {
       status: RESPONSE_STATE.SUCCESS,
       data: "authenticated",
     });
-  } catch (error) {
+  } catch {
     return (signal.value = {
       status: RESPONSE_STATE.ERROR,
       data: "unauthenticated",

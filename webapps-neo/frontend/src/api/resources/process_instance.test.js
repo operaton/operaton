@@ -3,9 +3,11 @@ import { describe, it, vi, beforeEach } from "vitest";
 vi.mock("../helper.jsx", () => ({
   GET: vi.fn(),
   POST: vi.fn(),
+  PUT: vi.fn(),
+  DELETE: vi.fn(),
 }));
 
-import { GET, POST } from "../helper.jsx";
+import { GET, POST, PUT, DELETE } from "../helper.jsx";
 import { create_mock_state, expect_api_call } from "../../test/helpers.js";
 import process_instance from "./process_instance.js";
 
@@ -27,7 +29,7 @@ describe("api/resources/process_instance", () => {
   it("variables() GETs /process-instance/:id/variables", () => {
     process_instance.variables(state, "inst-1");
     expect_api_call(GET, {
-      url: "/process-instance/inst-1/variables",
+      url: "/process-instance/inst-1/variables?deserializeValues=false",
       state,
       signal: state.api.process.instance.variables,
     });
@@ -120,6 +122,65 @@ describe("api/resources/process_instance", () => {
       },
       state,
       signal: state.api.process.instance.modification,
+    });
+  });
+
+  it("modify_variables() POSTs modifications/deletions to /variables", () => {
+    process_instance.modify_variables(state, "inst-1", {
+      modifications: { foo: { value: 1, type: "Integer" } },
+      deletions: ["bar"],
+    });
+    expect_api_call(POST, {
+      url: "/process-instance/inst-1/variables",
+      body: {
+        modifications: { foo: { value: 1, type: "Integer" } },
+        deletions: ["bar"],
+      },
+      state,
+      signal: state.api.process.instance.variables_update,
+    });
+  });
+
+  it("set_variable() PUTs the value to /variables/:name", () => {
+    process_instance.set_variable(state, "inst-1", "foo", {
+      value: 1,
+      type: "Integer",
+    });
+    expect_api_call(PUT, {
+      url: "/process-instance/inst-1/variables/foo",
+      body: { value: 1, type: "Integer" },
+      state,
+      signal: state.api.process.instance.variables_update,
+    });
+  });
+
+  it("delete_variable() DELETEs /variables/:name", () => {
+    process_instance.delete_variable(state, "inst-1", "foo");
+    expect_api_call(DELETE, {
+      url: "/process-instance/inst-1/variables/foo",
+      body: null,
+      state,
+      signal: state.api.process.instance.variables_update,
+    });
+  });
+
+  it("set_suspended() PUTs {suspended} to /process-instance/:id/suspended", () => {
+    process_instance.set_suspended(state, "inst-1", true);
+    expect_api_call(PUT, {
+      url: "/process-instance/inst-1/suspended",
+      body: { suspended: true },
+      state,
+      signal: state.api.process.instance.suspend,
+    });
+  });
+
+  it("delete() DELETEs /process-instance/:id with skipCustomListeners", () => {
+    process_instance.delete(state, "inst-1");
+    expect_api_call(DELETE, {
+      url: "/process-instance/inst-1?skipCustomListeners=false",
+      body: null,
+      state,
+      signal: state.api.process.instance.delete,
     });
   });
 });

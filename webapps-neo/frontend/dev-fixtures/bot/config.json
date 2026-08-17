@@ -11,7 +11,8 @@
       "orderFulfillment": 50,
       "insuranceClaim": 15,
       "loanApproval": 25,
-      "documentReview": 10
+      "documentReview": 10,
+      "kyc-agent": 10
     }
   },
   "userTaskCompleter": {

@@ -6,7 +6,6 @@
   - We use Signals for state management
   - We use vanilla CSS for styling
   - We MAYBE use JSX files for inline HTML (and therefore depend on )
-  
 
 ## Structure
 
@@ -24,3 +23,9 @@ We use vanilla CSS to style all our elements in `src/css`.
 - `fonts.css` imports fonts
 - `form.css` defines all styles for form components in
 - `components.css` / `components/` contains the styling for custom components which are not part of the native HTML elements
+
+### Plugins
+
+The app can be extended at runtime with plugins — new pages, tabs, dashboard
+widgets, and API/state namespaces. See [Plugin System.md](Plugin%20System.md)
+for the concept, how to author one, and the implementation.

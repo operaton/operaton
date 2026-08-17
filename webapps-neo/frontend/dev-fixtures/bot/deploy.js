@@ -1,5 +1,8 @@
 #!/usr/bin/env node
-// Deploys every *.bpmn and *.dmn under processes/ and rules/ as one deployment.
+// Deploys every deployable resource (*.bpmn, *.dmn, *.form) found under
+// processes/, rules/ and forms/ as one deployment — a resource is picked up by
+// its extension, not by which of those folders it lives in (e.g. a DMN kept
+// next to the process that calls it, in processes/, still deploys).
 // Idempotent: enable-duplicate-filtering + deploy-changed-only mean unchanged
 // resources are skipped.
 //
@@ -53,10 +56,11 @@ const main = async () => {
   const config = await load_config()
   const client = make_engine_client(config)
 
+  const deployable = (n) => /\.(bpmn|dmn|form)$/.test(n)
   const all = [
-    ...(await collect(resolve(root, 'processes'), (n) => n.endsWith('.bpmn'))),
-    ...(await collect(resolve(root, 'rules'), (n) => n.endsWith('.dmn'))),
-    ...(await collect(resolve(root, 'forms'), (n) => n.endsWith('.form'))),
+    ...(await collect(resolve(root, 'processes'), deployable)),
+    ...(await collect(resolve(root, 'rules'), deployable)),
+    ...(await collect(resolve(root, 'forms'), deployable)),
   ]
   if (all.length === 0) {
     console.error('No .bpmn / .dmn / .form files found under dev-fixtures/.')

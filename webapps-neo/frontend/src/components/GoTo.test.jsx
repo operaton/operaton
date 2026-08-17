@@ -18,6 +18,8 @@ import {
   signal_response,
   RESPONSE_STATE,
 } from "../test/helpers.js";
+import { register, _reset_registry } from "../plugins/registry.js";
+import { PLUGIN_POINTS } from "../plugins/points.js";
 
 const renderGoTo = (state) =>
   render(h(AppState.Provider, { value: state }, h(GoTo, {})));
@@ -93,5 +95,38 @@ describe("GoTo", () => {
     // First match (selected index 0) is the /processes page entry.
     fireEvent.keyDown(input, { key: "Enter" });
     expect(route).toHaveBeenCalledWith("/processes");
+  });
+});
+
+describe("GoTo — plugin pages", () => {
+  let state;
+  beforeEach(() => {
+    _reset_registry();
+    register({
+      id: "test-goto",
+      point: PLUGIN_POINTS.PAGE,
+      properties: {
+        href: "/plugin/test-goto",
+        nameKey: "plugins.test-goto.nav",
+      },
+      Component: () => null,
+    });
+    state = create_mock_state();
+    route.mockClear();
+  });
+  afterEach(() => {
+    cleanup();
+    _reset_registry();
+  });
+
+  it("surfaces a PAGE plugin in the search results", () => {
+    const { container } = renderGoTo(state);
+    const input = container.querySelector("input.goto-input");
+    // label is the translation key here; "test-goto" is a substring of it.
+    type(input, "test-goto");
+    const link = container.querySelector(
+      '.goto-item[href="/plugin/test-goto"]',
+    );
+    expect(link).toBeTruthy();
   });
 });

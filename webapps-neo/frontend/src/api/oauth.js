@@ -10,17 +10,9 @@ import { RESPONSE_STATE } from "./helper.jsx"
 const AUTH_MODE = import.meta.env.VITE_AUTH_MODE || "basic",
   AUTHORITY = import.meta.env.VITE_OAUTH_AUTHORITY,
   CLIENT_ID = import.meta.env.VITE_OAUTH_CLIENT_ID,
-  REDIRECT_URI = import.meta.env.VITE_OAUTH_REDIRECT_URI,
-  // Server login/logout endpoints exposed by the Spring OAuth2 module
-  LOGIN_URI = import.meta.env.VITE_OAUTH_LOGIN_URI || "/oauth2/authorization/operaton",
-  LOGOUT_URI = import.meta.env.VITE_OAUTH_LOGOUT_URI || "/logout"
+  REDIRECT_URI = import.meta.env.VITE_OAUTH_REDIRECT_URI
 
 export const is_oauth = AUTH_MODE === "oauth"
-
-// When no OIDC authority is configured the SPA is embedded and delegates the
-// OAuth2 handshake to the Spring OAuth2 module (server-side session + cookie)
-// rather than running the client-side PKCE flow itself.
-export const is_server_session = is_oauth && !AUTHORITY
 
 // --- PKCE helpers ---
 
@@ -47,13 +39,6 @@ const generate_pkce = async () => {
 // --- OAuth flow ---
 
 export const start_oauth_login = async () => {
-  if (is_server_session) {
-    // hand off to the Spring OAuth2 module; it redirects to the IdP and
-    // establishes a server session, then returns to the SPA root
-    window.location.href = LOGIN_URI
-    return
-  }
-
   const { verifier, challenge } = await generate_pkce()
   const oauth_state = base64url_encode(generate_random(16))
 
@@ -75,10 +60,6 @@ export const start_oauth_login = async () => {
 }
 
 export const handle_oauth_callback = async (state) => {
-  // the server-session flow has no client-side callback; Spring handles the
-  // /login/oauth2/code/* redirect and sets the session cookie
-  if (is_server_session) return false
-
   const params = new URLSearchParams(window.location.search),
     code = params.get("code"),
     returned_state = params.get("state"),
@@ -174,15 +155,9 @@ export const refresh_oauth_token = async (state) => {
 }
 
 export const oauth_logout = (state) => {
+  const id_token = sessionStorage.getItem("oauth_id_token")
   clear_tokens(state)
 
-  if (is_server_session) {
-    // end the Spring session; the server invalidates it and redirects back
-    window.location.href = LOGOUT_URI
-    return
-  }
-
-  const id_token = sessionStorage.getItem("oauth_id_token")
   const params = new URLSearchParams({
     post_logout_redirect_uri: REDIRECT_URI,
   })
@@ -192,10 +167,6 @@ export const oauth_logout = (state) => {
 }
 
 export const restore_oauth_session = async (state) => {
-  // in server-session mode the identity lives in the session cookie, not in
-  // sessionStorage; auth.js probes the backend instead
-  if (is_server_session) return false
-
   const access_token = sessionStorage.getItem("oauth_access_token")
   if (!access_token) return false
 

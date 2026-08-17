@@ -33,7 +33,7 @@
       </bpmn:startEvent>
       <bpmn:userTask id="UserTask_Reviewer" name="Review (${loopCounter})"
                      camunda:assignee="demo"
-                     camunda:formKey="camunda-forms:deployment:loan-reviewer.form">
+                     camunda:formRef="loan-reviewer" camunda:formRefBinding="deployment">
         <bpmn:incoming>Flow_ReviewerStart</bpmn:incoming>
         <bpmn:outgoing>Flow_ReviewerEnd</bpmn:outgoing>
       </bpmn:userTask>
@@ -57,7 +57,7 @@
 
     <bpmn:userTask id="UserTask_FinalDecision" name="Final decision"
                    camunda:assignee="demo"
-                   camunda:formKey="camunda-forms:deployment:loan-final-decision.form">
+                   camunda:formRef="loan-final-decision" camunda:formRefBinding="deployment">
       <bpmn:incoming>Flow_CallToFinal</bpmn:incoming>
       <bpmn:outgoing>Flow_FinalToEnd</bpmn:outgoing>
     </bpmn:userTask>

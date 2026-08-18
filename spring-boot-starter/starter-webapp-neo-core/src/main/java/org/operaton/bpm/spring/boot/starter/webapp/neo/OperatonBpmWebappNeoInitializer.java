@@ -78,10 +78,10 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
 
     // The webapp filter chain guards the API namespace (/api/*) and the SPA app
     // paths. When served from a sub-path we can safely map the app wildcard
-    // (basePath + "/*"). At the root we must NOT use "/*": it would wrap the
-    // whole server, including /engine-rest/* and the legacy /operaton webapp, so
-    // only the API namespace is guarded there (the SPA shell is static and is
-    // served via Spring MVC resource handlers).
+    // (basePath + "/*"). At the root the request-rejecting filters must NOT use "/*":
+    // that would wrap the whole server, including /engine-rest/* and the legacy
+    // /operaton webapp. The header filter is the exception and is mapped separately
+    // below, because it only decorates responses.
     boolean servedAtRoot = basePath.isEmpty();
     String[] webappPaths = servedAtRoot
         ? new String[] { apiWildcardPath }
@@ -108,9 +108,19 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
       .getHeaderSecurity()
       .getInitParams();
 
+    // The header filter deliberately gets a wider mapping than the rest of the chain.
+    // Served at the root, webappPaths covers only /api/*, which would leave the SPA
+    // shell — the HTML at "/" and at every client-side route — without CSP,
+    // X-Frame-Options, X-Content-Type-Options or HSTS. Those headers matter most on
+    // exactly the document responses the resource handlers serve. Unlike the auth,
+    // CSRF and session filters, this one only sets response headers, so widening it to
+    // "/*" is safe: it cannot reject a request or touch a session, and the headers it
+    // adds to /engine-rest responses are inert there.
+    String[] headerSecurityPaths = servedAtRoot ? new String[] { "/*" } : webappPaths;
+
     registerFilter("Neo HttpHeaderSecurity", HttpHeaderSecurityFilter.class,
         headerSecurityProperties,
-        webappPaths);
+        headerSecurityPaths);
 
     registerFilter("Neo EmptyBodyFilter", EmptyBodyFilter.class,
         webappPaths);

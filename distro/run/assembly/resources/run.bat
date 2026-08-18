@@ -76,11 +76,15 @@ REM inspect arguments
 :Loop
 IF [%~1]==[] GOTO Continue
 
+REM The SPA is useless without an engine API, so bring REST along rather than
+REM starting a UI that cannot talk to anything.
 IF [%~1]==[--webapps-neo] (
   SET optionalComponentChosen=true
-  SET classPath=%WEBAPPS_NEO_PATH%,%classPath%
+  SET restChosen=true
+  SET classPath=%WEBAPPS_NEO_PATH%,%REST_PATH%,%classPath%
   SET NEO_PROP=-Doperaton.bpm.webapp.neo.enabled=true
   ECHO WebApps Neo enabled
+  ECHO REST API enabled
 )
 
 IF [%~1]==[--webapps] (
@@ -126,20 +130,26 @@ GOTO Loop
 :Continue
 
 REM If no optional component is chosen, enable REST and the legacy Webapps.
-REM The new Webapps (neo) stay on the classpath but dormant; enable them via
-REM OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true or the --webapps-neo flag.
+REM The new Webapps (neo) only join the classpath when actually asked for, via
+REM OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true or the --webapps-neo flag, so a
+REM default start loads exactly one webapp rather than two.
 REM If production mode is not chosen, also enable the example application.
 setlocal enabledelayedexpansion
 IF [%optionalComponentChosen%]==[false] (
   SET restChosen=true
   ECHO REST API enabled
   ECHO Legacy WebApps enabled
-  ECHO WebApps Neo available (enable with OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true)
+  IF /I "%OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS%"=="true" (
+    SET classPath=%WEBAPPS_NEO_PATH%,!classPath!
+    ECHO WebApps Neo enabled
+  ) ELSE (
+    ECHO WebApps Neo available (enable with OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true)
+  )
   IF [%productionChosen%]==[false] (
     ECHO Invoice Example included - needs to be enabled in application configuration as well
-    SET classPath=%EXAMPLE_PATH%,%classPath%
+    SET classPath=%EXAMPLE_PATH%,!classPath!
   )
-  SET classPath=%WEBAPPS_PATH%,%WEBAPPS_NEO_PATH%,%REST_PATH%,!classPath!
+  SET classPath=%WEBAPPS_PATH%,%REST_PATH%,!classPath!
 )
 setlocal disabledelayedexpansion
 
@@ -177,7 +187,8 @@ GOTO End
 ECHO Usage: run.bat [start^|stop] (options...)
 :ArgsHelp
 ECHO Options:
-ECHO   --webapps-neo - Enables the new Operaton Webapps at the root path (also via OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true)
+ECHO   --webapps-neo - Enables the new Operaton Webapps at the root path, and the REST API they
+ECHO                   need (also via OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true)
 ECHO   --webapps     - Enables the legacy Operaton Webapps (served at /operaton/app)
 ECHO   --oauth2      - Enables the Operaton Platform Spring Security OAuth2 integration
 ECHO   --rest        - Enables the REST API

@@ -16,20 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.operaton.bpm.engine.ProcessEngine;
+import java.util.*;
 
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.BpmnError;
@@ -131,7 +122,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected Date followUpDate;
   protected int suspensionState = SuspensionState.ACTIVE.getStateCode();
   protected TaskState lifecycleState = TaskState.STATE_INIT;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   /**
    * Task State of task
    */
@@ -141,24 +132,24 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected transient List<IdentityLinkEntity> taskIdentityLinkEntities = new ArrayList<>();
 
   // execution
-  protected String executionId;
+  protected @Nullable String executionId;
   protected transient ExecutionEntity execution;
 
-  protected String processInstanceId;
+  protected @Nullable String processInstanceId;
   protected transient ExecutionEntity processInstance;
 
-  protected String processDefinitionId;
+  protected @Nullable String processDefinitionId;
 
   // caseExecution
-  protected String caseExecutionId;
+  protected @Nullable String caseExecutionId;
   protected transient CaseExecutionEntity caseExecution;
 
-  protected String caseInstanceId;
-  protected String caseDefinitionId;
+  protected @Nullable String caseInstanceId;
+  protected @Nullable String caseDefinitionId;
 
   // taskDefinition
   protected transient TaskDefinition taskDefinition;
-  protected String taskDefinitionKey;
+  protected @Nullable String taskDefinitionKey;
 
   protected boolean isDeleted;
   protected String deleteReason;
@@ -699,7 +690,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public String getCaseExecutionId() {
+  public @Nullable String getCaseExecutionId() {
     return caseExecutionId;
   }
 
@@ -708,7 +699,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public String getCaseInstanceId() {
+  public @Nullable String getCaseInstanceId() {
     return caseInstanceId;
   }
 
@@ -730,7 +721,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public String getCaseDefinitionId() {
+  public @Nullable String getCaseDefinitionId() {
     return caseDefinitionId;
   }
 
@@ -1412,12 +1403,12 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public String getExecutionId() {
+  public @Nullable String getExecutionId() {
     return executionId;
   }
 
   @Override
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 
@@ -1436,7 +1427,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
@@ -1507,7 +1498,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public String getTaskDefinitionKey() {
+  public @Nullable String getTaskDefinitionKey() {
     return taskDefinitionKey;
   }
 
@@ -1607,7 +1598,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

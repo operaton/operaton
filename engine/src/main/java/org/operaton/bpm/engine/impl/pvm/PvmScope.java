@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.pvm;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 
@@ -94,7 +96,7 @@ public interface PvmScope extends PvmProcessElement {
    * @param activityId the id of the activity to find.
    * @return the activity or null
    */
-  PvmActivity findActivity(String activityId);
+  @Nullable PvmActivity findActivity(String activityId);
 
   /**
    * Finds an activity at the same level of subprocess.
@@ -102,13 +104,13 @@ public interface PvmScope extends PvmProcessElement {
    * @param activityId the id of the activity to find.
    * @return the activity or null
    */
-  PvmActivity findActivityAtLevelOfSubprocess(String activityId);
+  @Nullable PvmActivity findActivityAtLevelOfSubprocess(String activityId);
 
   /**
    * Recursively finds a transition.
    * @param transitionId the transiton to find
    * @return the transition or null
    */
-  TransitionImpl findTransition(String transitionId);
+  @Nullable TransitionImpl findTransition(String transitionId);
 
 }

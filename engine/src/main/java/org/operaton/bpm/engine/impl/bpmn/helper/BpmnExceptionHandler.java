@@ -83,7 +83,7 @@ public final class BpmnExceptionHandler {
    * @return the BpmnError that was the cause of this exception or null if no
    *         BpmnError was found
    */
-  protected static BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
+  protected static @Nullable BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
     if (e instanceof BpmnError bpmnError) {
       return bpmnError;
     } else if (e.getCause() == null) {

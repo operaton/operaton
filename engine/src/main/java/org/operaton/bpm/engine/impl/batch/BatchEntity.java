@@ -21,21 +21,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.Nameable;
-import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
 import org.operaton.bpm.engine.impl.persistence.entity.util.ByteArrayField;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
@@ -60,7 +54,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
 
   protected ByteArrayField configuration = new ByteArrayField(this, ResourceTypes.RUNTIME);
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String createUserId;
 
   protected int suspensionState = SuspensionState.ACTIVE.getStateCode();
@@ -165,7 +159,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

@@ -22,45 +22,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
-import org.operaton.bpm.engine.authorization.BatchPermissions;
-import org.operaton.bpm.engine.authorization.Groups;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.authorization.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.BatchQuery;
 import org.operaton.bpm.engine.batch.BatchStatisticsQuery;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
-import org.operaton.bpm.engine.management.DeploymentStatisticsQuery;
-import org.operaton.bpm.engine.management.JobDefinition;
-import org.operaton.bpm.engine.management.JobDefinitionQuery;
-import org.operaton.bpm.engine.management.MetricsQuery;
-import org.operaton.bpm.engine.management.ProcessDefinitionStatisticsQuery;
-import org.operaton.bpm.engine.management.SchemaLogQuery;
-import org.operaton.bpm.engine.management.SetJobRetriesBuilder;
-import org.operaton.bpm.engine.management.SetJobRetriesByJobsAsyncBuilder;
-import org.operaton.bpm.engine.management.SetJobRetriesByProcessAsyncBuilder;
-import org.operaton.bpm.engine.management.TableMetaData;
-import org.operaton.bpm.engine.management.TablePage;
-import org.operaton.bpm.engine.management.TablePageQuery;
-import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateBuilder;
-import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateSelectBuilder;
-import org.operaton.bpm.engine.management.UpdateJobSuspensionStateBuilder;
-import org.operaton.bpm.engine.management.UpdateJobSuspensionStateSelectBuilder;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.JobQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.bpm.engine.management.*;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
-
-
 
 /**
  * Service for admin and maintenance operations on the process engine.
@@ -1324,7 +1299,7 @@ public interface ManagementService {
    *
    * @param timestamp or null
    */
-  void deleteMetrics(Date timestamp);
+  void deleteMetrics(@Nullable Date timestamp);
 
   /**
    * Deletes all metrics events which are older than the specified timestamp
@@ -1337,7 +1312,7 @@ public interface ManagementService {
    * @param timestamp or null
    * @param reporter or null
    */
-  void deleteMetrics(Date timestamp, String reporter);
+  void deleteMetrics(@Nullable Date timestamp, @Nullable String reporter);
 
   /**
    * Forces this engine to commit its pending collected metrics to the database.

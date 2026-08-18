@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.variable.serializer;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
@@ -85,7 +87,7 @@ public interface TypedValueSerializer<T extends TypedValue> {
    *
    * @return the dataformat used by the serializer or null if this is not an object serializer
    */
-  String getSerializationDataformat();
+  @Nullable String getSerializationDataformat();
 
   /**
    * @return whether values serialized by this serializer can be mutable and

@@ -131,7 +131,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
     return getVariable(variableName, true);
   }
 
-  public Object getVariable(String variableName, boolean deserializeObjectValue) {
+  public @Nullable Object getVariable(String variableName, boolean deserializeObjectValue) {
     return getValueFromVariableInstance(deserializeObjectValue, getVariableInstance(variableName));
   }
 
@@ -140,11 +140,11 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
     return getVariableLocal(variableName, true);
   }
 
-  public Object getVariableLocal(String variableName, boolean deserializeObjectValue) {
+  public @Nullable Object getVariableLocal(String variableName, boolean deserializeObjectValue) {
     return getValueFromVariableInstance(deserializeObjectValue, getVariableInstanceLocal(variableName));
   }
 
-  protected Object getValueFromVariableInstance(boolean deserializeObjectValue, CoreVariableInstance variableInstance) {
+  protected @Nullable Object getValueFromVariableInstance(boolean deserializeObjectValue, CoreVariableInstance variableInstance) {
     if(variableInstance != null) {
       TypedValue typedValue = variableInstance.getTypedValue(deserializeObjectValue);
       if (typedValue != null) {
@@ -160,22 +160,22 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String variableName, boolean deserializeValue) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String variableName, boolean deserializeValue) {
     return getTypedValueFromVariableInstance(deserializeValue, getVariableInstance(variableName));
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String variableName) {
     return getVariableLocalTyped(variableName, true);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String variableName, boolean deserializeValue) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String variableName, boolean deserializeValue) {
     return getTypedValueFromVariableInstance(deserializeValue, getVariableInstanceLocal(variableName));
   }
 
   @SuppressWarnings("unchecked")
-  private <T extends TypedValue> T getTypedValueFromVariableInstance(boolean deserializeValue, CoreVariableInstance variableInstance) {
+  private <T extends TypedValue> @Nullable T getTypedValueFromVariableInstance(boolean deserializeValue, CoreVariableInstance variableInstance) {
     if(variableInstance != null) {
       return (T) variableInstance.getTypedValue(deserializeValue);
     }

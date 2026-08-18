@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -196,7 +197,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
   }
 
   @Override
-  public GroupEntity findGroupById(String groupId) {
+  public @Nullable GroupEntity findGroupById(String groupId) {
     if (springSecurityAuthentication()) {
       var groups = transformGroups();
       return (GroupEntity) groups.stream().filter(g -> g.getId().equals(groupId)).findFirst().orElse(null);
@@ -228,7 +229,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
   }
 
   @Override
-  public TenantEntity findTenantById(String tenantId) {
+  public @Nullable TenantEntity findTenantById(String tenantId) {
     return springSecurityAuthentication() ? null : super.findTenantById(tenantId);
   }
 

@@ -21,6 +21,8 @@ import java.util.concurrent.Callable;
 import jakarta.el.BeanELResolver;
 import jakarta.el.ELResolver;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.impl.EjbProcessApplication;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
@@ -209,7 +211,7 @@ public interface ProcessApplicationInterface {
    *
    * @return an {@link ExecutionListener} or null.
    */
-  ExecutionListener getExecutionListener();
+  @Nullable ExecutionListener getExecutionListener();
 
   /**
    * <p>Allows the process application to provide a {@link TaskListener} which is notified about
@@ -219,6 +221,6 @@ public interface ProcessApplicationInterface {
    *
    * @return a {@link TaskListener} or null.
    */
-  TaskListener getTaskListener();
+  @Nullable TaskListener getTaskListener();
 
 }

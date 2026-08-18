@@ -20,6 +20,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
+import org.jspecify.annotations.Nullable;
+
 public interface ScriptEngineResolver {
 
   void addScriptEngineFactory(ScriptEngineFactory scriptEngineFactory);
@@ -32,5 +34,5 @@ public interface ScriptEngineResolver {
    * @param language the language (such as 'groovy' for the script engine)
    * @return the cached engine or null if no script engine can be created for the given language
    */
-  ScriptEngine getScriptEngine(String language, boolean resolveFromCache);
+  @Nullable ScriptEngine getScriptEngine(String language, boolean resolveFromCache);
 }

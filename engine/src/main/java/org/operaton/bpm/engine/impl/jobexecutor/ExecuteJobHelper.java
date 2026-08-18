@@ -115,7 +115,7 @@ public final class ExecuteJobHelper {
    *
    * @return exception or null if succeeded
    */
-  private static OptimisticLockingException callFailedJobListenerWithRetries(CommandExecutor commandExecutor, FailedJobListener failedJobListener) {
+  private static @Nullable OptimisticLockingException callFailedJobListenerWithRetries(CommandExecutor commandExecutor, FailedJobListener failedJobListener) {
     try {
       commandExecutor.execute(failedJobListener);
       return null;

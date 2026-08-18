@@ -20,12 +20,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.joda.time.DateTime;
 import org.jspecify.annotations.Nullable;
@@ -45,7 +40,6 @@ import org.operaton.bpm.engine.query.QueryProperty;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 
 /**
  * Abstract superclass for all query types.
@@ -137,7 +131,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
 
   @Override
   @SuppressWarnings("unchecked")
-  public U singleResult() {
+  public @Nullable U singleResult() {
     this.resultType = ResultType.SINGLE_RESULT;
     return (U) executeResult(resultType);
   }
@@ -158,7 +152,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     return (List<U>) executeResult(resultType);
   }
 
-  public Object executeResult(ResultType resultType) {
+  public @Nullable Object executeResult(ResultType resultType) {
 
     if (commandExecutor != null) {
       if (!maxResultsLimitEnabled) {

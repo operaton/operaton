@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmmn.execution;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.exception.cmmn.CaseIllegalStateTransitionException;
@@ -28,17 +30,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.impl.task.TaskDecorator;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.model.cmmn.instance.CaseTask;
-import org.operaton.bpm.model.cmmn.instance.EventListener;
-import org.operaton.bpm.model.cmmn.instance.HumanTask;
-import org.operaton.bpm.model.cmmn.instance.IfPart;
-import org.operaton.bpm.model.cmmn.instance.Milestone;
-import org.operaton.bpm.model.cmmn.instance.PlanItemOnPart;
-import org.operaton.bpm.model.cmmn.instance.ProcessTask;
-import org.operaton.bpm.model.cmmn.instance.Sentry;
-import org.operaton.bpm.model.cmmn.instance.Stage;
-import org.operaton.bpm.model.cmmn.instance.Task;
-import org.operaton.bpm.model.cmmn.instance.UserEventListener;
+import org.operaton.bpm.model.cmmn.instance.*;
 
 /**
  * @author Roman Smirnov
@@ -52,7 +44,7 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
 
    * @return a {@link CmmnActivityExecution parent} or null.
    */
-  CmmnActivityExecution getParent();
+  @Nullable CmmnActivityExecution getParent();
 
   /**
    * <p>Returns <code>true</code> if <code>this</code> case execution

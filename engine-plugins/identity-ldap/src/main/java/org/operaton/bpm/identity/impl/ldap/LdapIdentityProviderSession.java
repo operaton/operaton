@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
@@ -31,21 +30,12 @@ import javax.naming.ldap.LdapContext;
 import javax.naming.ldap.PagedResultsResponseControl;
 import javax.naming.ldap.SortKey;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.Resource;
-import org.operaton.bpm.engine.identity.Group;
-import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.identity.NativeUserQuery;
-import org.operaton.bpm.engine.identity.Tenant;
-import org.operaton.bpm.engine.identity.TenantQuery;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.identity.UserQuery;
-import org.operaton.bpm.engine.impl.AbstractQuery;
-import org.operaton.bpm.engine.impl.Direction;
-import org.operaton.bpm.engine.impl.GroupQueryProperty;
-import org.operaton.bpm.engine.impl.QueryOrderingProperty;
-import org.operaton.bpm.engine.impl.UserQueryImpl;
-import org.operaton.bpm.engine.impl.UserQueryProperty;
+import org.operaton.bpm.engine.identity.*;
+import org.operaton.bpm.engine.impl.*;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
 import org.operaton.bpm.engine.impl.identity.ReadOnlyIdentityProvider;
@@ -335,7 +325,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   // Groups ///////////////////////////////////////////////
 
   @Override
-  public Group findGroupById(String groupId) {
+  public @Nullable Group findGroupById(String groupId) {
     return createGroupQuery(getCommandContext()).groupId(groupId).singleResult();
   }
 
@@ -781,7 +771,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   }
 
   @Override
-  public Tenant findTenantById(String id) {
+  public @Nullable Tenant findTenantById(String id) {
     // since multi-tenancy is not supported for the LDAP plugin, always return null
     return null;
   }

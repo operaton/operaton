@@ -24,9 +24,11 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 
 import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
+import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.COOKIE_NAME_FORBIDDEN;
 
 public class CookieConfigurator {
 
+  protected static final String COOKIE_NAME_PARAM = "cookieName";
   protected static final String ENABLE_SECURE_PARAM = "enableSecureCookie";
   protected static final String ENABLE_SAME_SITE_PARAM = "enableSameSiteCookie";
   protected static final String SAME_SITE_OPTION_PARAM = "sameSiteCookieOption";
@@ -44,9 +46,23 @@ public class CookieConfigurator {
       isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookieInitParam);
     }
 
-    String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
-    if (hasText(sessionCookieName) && !CookieConstants.JSESSION_ID.equals(sessionCookieName)) {
-      cookieName = sessionCookieName;
+    String cookieNameParam = filterConfig.getInitParameter(COOKIE_NAME_PARAM);
+    if (cookieNameParam != null && !cookieNameParam.isBlank()) {
+      String trimmed = cookieNameParam.trim();
+      if (trimmed.matches(COOKIE_NAME_FORBIDDEN)) {
+        throw new IllegalArgumentException("cookieName contains forbidden characters (CTLs, whitespace, or separators).");
+      }
+      cookieName = trimmed;
+    } else {
+      String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
+      if (sessionCookieName != null && !sessionCookieName.isBlank()
+              && !CookieConstants.JSESSION_ID.equals(sessionCookieName.trim())) {
+        String trimmed = sessionCookieName.trim();
+        if (trimmed.matches(COOKIE_NAME_FORBIDDEN)) {
+          throw new IllegalArgumentException("cookieName from session cookie config contains forbidden characters (CTLs, whitespace, or separators).");
+        }
+        cookieName = trimmed;
+      }
     }
 
     String enableSameSiteCookieInitParam = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);

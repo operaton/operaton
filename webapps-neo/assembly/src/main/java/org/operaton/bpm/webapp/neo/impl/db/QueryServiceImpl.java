@@ -44,7 +44,7 @@ public class QueryServiceImpl implements QueryService {
   }
 
   public <T> T executeQuery(String statement, Object parameter, Class<T> clazz) {
-    return commandExecutor.executeCommand(new ExecuteSingleQueryCmd<T>(statement, parameter, clazz));
+    return commandExecutor.executeCommand(new ExecuteSingleQueryCmd<>(statement, parameter, clazz));
   }
 
   @Override

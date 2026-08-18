@@ -24,9 +24,9 @@ import java.util.regex.Pattern;
  */
 public final class CsrfConstants {
 
-  public static final String CSRF_SESSION_MUTEX = "CAMUNDA_CSRF_SESSION_MUTEX";
+  public static final String CSRF_SESSION_MUTEX = "OPERATON_NEO_CSRF_SESSION_MUTEX";
 
-  public static final String CSRF_TOKEN_SESSION_ATTR_NAME = "CAMUNDA_CSRF_TOKEN";
+  public static final String CSRF_TOKEN_SESSION_ATTR_NAME = "OPERATON_NEO_CSRF_TOKEN";
 
   public static final String CSRF_TOKEN_HEADER_NAME = "X-XSRF-TOKEN";
 

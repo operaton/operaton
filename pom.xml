@@ -31,7 +31,13 @@
     <maven.compiler.release>17</maven.compiler.release>
     <sonar.organization>operaton</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <sonar.coverage.jacoco.xmlReportPaths>**/target/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <!-- The jacoco-maven-plugin report goal writes to
+         ${project.reporting.outputDirectory}/jacoco, i.e. target/site/jacoco.
+         Nothing overrides that, so the previous **/target/jacoco/jacoco.xml
+         matched no file. Kept in sync with the site/jacoco entry in
+         .mvn/maven-build-cache-config.xml, which is what a restored module
+         brings back for SonarQube. -->
+    <sonar.coverage.jacoco.xmlReportPaths>**/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <!-- Set to false for each module that must be deployed -->
     <deploy.skip>true</deploy.skip>
     <!-- Set to true for each module with packaging default/jar that does not have 'main' sources -->

@@ -73,21 +73,21 @@ const only_pages = args.pages ? String(args.pages).split(",") : null;
 // Human labels for the report's page column. Falls back to the route name.
 const PAGE_LABELS = {
   dashboard: "Dashboard",
-  tasks: "Tasks",
-  "start-process": "Start process",
-  processes: "Processes",
-  decisions: "Decisions",
+  tasks: "Aufgaben",
+  "start-process": "Prozess starten",
+  processes: "Prozesse",
+  decisions: "Entscheidungen",
   deployments: "Deployments",
   batches: "Batches",
-  migrations: "Migrations",
-  account: "Account",
-  admin: "Admin",
-  help: "Help",
-  "not-found": "Not found (404)",
-  login: "Login (unauthenticated)",
-  "process-instance-detail": "Process instance detail",
-  "task-detail": "Task detail",
-  "decision-detail": "Decision detail",
+  migrations: "Migrationen",
+  account: "Konto",
+  admin: "Administration",
+  help: "Hilfe",
+  "not-found": "Nicht gefunden (404)",
+  login: "Anmeldung (nicht authentifiziert)",
+  "process-instance-detail": "Prozessinstanz-Detail",
+  "task-detail": "Aufgaben-Detail",
+  "decision-detail": "Entscheidungs-Detail",
 };
 
 const label_for = (name) => PAGE_LABELS[name] ?? name;
@@ -123,11 +123,16 @@ const wait_for = async (url, timeout_ms) => {
  */
 const start_dev_server = async () => {
   if (await server_is_up(BASE_URL)) {
-    log(
-      `! reusing the dev server already on ${BASE_URL} — it may not be running ` +
-        `in --mode a11y, which can make this report non-reproducible`,
+    // Refuse rather than reuse. A foreign server answering on this port serves
+    // an unknown codebase in an unknown mode, and the report it produces looks
+    // completely normal — there is no marker in the output saying it scanned
+    // the wrong application. Pass --no-server to point deliberately at a server
+    // you control (with E2E_BASE_URL).
+    throw new Error(
+      `something is already listening on ${BASE_URL}, so vite cannot start in ` +
+        `--mode a11y. Stop it and re-run, or pass --no-server if that server is ` +
+        `deliberately yours.`,
     );
-    return null;
   }
   log(`> starting vite --mode a11y on ${BASE_URL}`);
   const child = spawn(
@@ -182,18 +187,27 @@ const scan_one = async (context, { route, state }) => {
     if (state.mock) await state.mock(page);
     // Wait for either the app landmark or the login screen, so a failed login
     // surfaces as a clear diagnostic instead of a 60s timeout on `main`.
+    //
+    // `state.ready` describes the DOM *after* `state.prepare` has run — a dialog
+    // that only exists once its trigger is clicked. Waiting for it here would
+    // block on the very thing `prepare` is about to produce, so a prepare-state
+    // waits for the ordinary landmark first and for `state.ready` further down.
+    const initial_ready = state.prepare
+      ? `${DEFAULT_READY}, section.login-page`
+      : (state.ready ??
+        (expects_login ? "section.login-page" : `${DEFAULT_READY}, section.login-page`));
     await prepare_page(page, {
       path: route.path,
-      ready:
-        state.ready ??
-        (expects_login ? "section.login-page" : `${DEFAULT_READY}, section.login-page`),
+      ready: initial_ready,
       timeout: 60_000,
     });
 
     // An authenticated route that rendered the login screen means the session
     // was never established. Scanning it anyway would quietly fill the report
-    // with clean login pages and read as "no accessibility problems".
-    if (!expects_login && !state.ready) {
+    // with clean login pages and read as "no accessibility problems". Only
+    // meaningful when the wait above could actually have matched the login
+    // screen, which is exactly when it used the generic landmark.
+    if (!expects_login && initial_ready.includes("section.login-page")) {
       const landed_on_login = await page
         .locator("section.login-page")
         .first()
@@ -330,7 +344,7 @@ const build_pages = (routes, axe_results, pa11y_by_page) =>
     if (pa11y?.length)
       states.push({
         id: "pa11y",
-        label: "HTML_CodeSniffer (pa11y) · light · desktop",
+        label: "HTML_CodeSniffer (pa11y) · hell · Desktop",
         findings: sorted_findings(pa11y),
         incomplete: [],
         failed: null,
@@ -387,17 +401,32 @@ const main = async () => {
     try {
       const { run_pa11y } = await import("./a11y-pa11y.mjs");
       log("> running pa11y (HTML_CodeSniffer)");
-      for (const { route, issues } of await run_pa11y({
+      const pa11y_failures = [];
+      for (const { route, issues, failed } of await run_pa11y({
         routes: routes.filter((r) => r.available !== false),
         base_url: BASE_URL,
-      }))
+      })) {
+        // A failed pa11y scan yields an empty issue list, which is
+        // indistinguishable from a clean page once it reaches the report. Say so
+        // out loud rather than letting a broken scan read as "no problems".
+        if (failed) {
+          pa11y_failures.push(`${route.name} (${failed})`);
+          continue;
+        }
         pa11y_by_page.set(
           route.name,
           findings_from_pa11y({
             page: route.name,
-            state: "HTML_CodeSniffer (pa11y) · light · desktop",
+            state: "HTML_CodeSniffer (pa11y) · hell · Desktop",
             issues,
           }),
+        );
+      }
+      if (pa11y_failures.length)
+        log(
+          `! pa11y could not scan ${pa11y_failures.length} page(s): ` +
+            `${pa11y_failures.join(", ")} — they are absent from the pa11y ` +
+            `column, NOT clean`,
         );
     } catch (error) {
       log(`! pa11y stage failed (${error.constructor.name}) — continuing`);
@@ -419,16 +448,18 @@ const main = async () => {
     rule_count: require("axe-core").getRules(REPORT_TAGS).length,
     axe_version: require("axe-core/package.json").version,
     pa11y_version: use_pa11y ? require("pa11y/package.json").version : null,
-    axis: "light / dark × desktop 1440×900 / mobile 390×844",
+    axis: "hell / dunkel × Desktop 1440×900 / Mobil 390×844",
     page_count: routes.length,
     scan_count: `${scan_count} axe${use_pa11y ? ` · ${pa11y_by_page.size} pa11y` : ""}`,
     backend: `Operaton ${backend_version}`,
-    data_state: "seeded via dev-fixtures (deploy + fixed spawn counts, no load bot)",
+    data_state:
+      "über dev-fixtures befüllt (Deployment + feste Instanzzahlen, kein Last-Bot)",
     locale: "en-US",
-    notes: `The \`LOADING\` request state is deliberately not scanned: sampling a
-transient state is racy and would churn this report on every run. The document's
-\`<html lang="en">\` is static (\`index.html\`), so a non-English rendering is a real
-WCAG 3.1.1 failure that **no automated engine here can detect**.`,
+    notes: `Der Anfragezustand \`LOADING\` wird bewusst nicht geprüft: Einen
+flüchtigen Zustand zu erfassen ist zeitkritisch und würde diesen Bericht bei
+jedem Lauf verändern. Das \`<html lang="en">\` des Dokuments ist statisch
+(\`index.html\`); eine nicht-englische Darstellung ist daher ein echter Verstoß
+gegen WCAG 3.1.1, den **keine der hier eingesetzten Engines erkennen kann**.`,
   };
 
   await mkdir(OUT_DIR, { recursive: true });

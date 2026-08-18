@@ -3,6 +3,8 @@ import {
   parse_timeline_state,
   render_report,
   render_timeline,
+  render_toc,
+  slug,
 } from "./a11y-markdown.js";
 
 const finding = (over = {}) => ({
@@ -73,24 +75,48 @@ const pages = [
 describe("render_report", () => {
   const md = render_report({ meta, pages });
 
-  it("states the limits of automated testing before any numbers", () => {
-    const scope = md.indexOf("What this report does and does not tell you");
-    const summary = md.indexOf("## Summary");
-    expect(scope).toBeGreaterThan(-1);
-    expect(scope).toBeLessThan(summary);
+  it("opens with the logo, then the title, then the contents", () => {
+    const logo = md.indexOf("![Operaton](../../public/operaton-logo.svg)");
+    const title = md.indexOf("# Barrierefreiheitsbericht");
+    const toc = md.indexOf("## Inhalt");
+    const first = md.indexOf("## Scan-Umgebung");
+    expect(logo).toBeGreaterThan(-1);
+    expect(logo).toBeLessThan(title);
+    expect(title).toBeLessThan(toc);
+    // The contents sit after the title but still ahead of the body.
+    expect(toc).toBeLessThan(first);
   });
 
-  it("names what automated testing cannot cover", () => {
-    expect(md).toContain("NOT checked");
-    expect(md).toContain("Meaningful alt text");
-    expect(md).toContain("NVDA");
+  it("lists every rendered section in the contents", () => {
+    const toc_block = md.slice(md.indexOf("## Inhalt"), md.indexOf("## Scan-Umgebung"));
+    for (const title of ["Scan-Umgebung", "Zusammenfassung", "Seiten"])
+      expect(toc_block).toContain(`- [${title}](#${slug(title)})`);
+    // "## Contents" is emitted before the body it describes, so it must not
+    // list itself.
+    expect(toc_block).not.toContain("- [Inhalt]");
+  });
+
+  it("leads with the tables rather than a prose preamble", () => {
+    // The scope section was removed on request; the first section after the
+    // contents is now the third-party note, then straight into the tables.
+    expect(md).not.toContain("What this report does and does not tell you");
+    expect(md).not.toContain("NOT checked");
+    expect(md.indexOf("## Scan-Umgebung")).toBeLessThan(md.indexOf("## Seiten"));
+    // The bpmn-js caveat trails the findings rather than preceding them.
+    expect(md.indexOf("## Seiten")).toBeLessThan(
+      md.indexOf("## Komponenten von Drittanbietern"),
+    );
+  });
+
+  it("does not link out to the timeline", () => {
+    expect(md).not.toContain("timeline.md");
   });
 
   it("documents the bpmn-js diagram dependency and its a11y status", () => {
     expect(md).toContain("bpmn-js");
     expect(md).toContain("https://github.com/bpmn-io/bpmn-js");
     expect(md).toContain("https://github.com/bpmn-io/a11y");
-    expect(md).toContain("no WCAG conformance level");
+    expect(md).toContain("keine WCAG-Konformitätsstufe");
   });
 
   it("collapses a rule seen in several states into one block", () => {
@@ -108,7 +134,7 @@ describe("render_report", () => {
   });
 
   it("surfaces axe incomplete results as manual review", () => {
-    expect(md).toContain("Needs manual review");
+    expect(md).toContain("Manuelle Prüfung erforderlich");
     expect(md).toContain("check the gradient");
   });
 
@@ -148,7 +174,7 @@ describe("timeline", () => {
     });
     expect(entry.baseline).toBe(true);
     expect(entry.new_rules).toEqual([]);
-    expect(render_timeline({ history: [entry] })).toContain("*(baseline)*");
+    expect(render_timeline({ history: [entry] })).toContain("*(Ausgangswert)*");
   });
 
   it("computes the delta and names new and resolved rules", () => {
@@ -195,5 +221,34 @@ describe("timeline", () => {
       history: [],
       rules: null,
     });
+  });
+});
+
+describe("slug", () => {
+  it("matches GitHub's anchor derivation", () => {
+    expect(slug("Scan environment")).toBe("scan-environment");
+    expect(slug("What this report does and does not tell you")).toBe(
+      "what-this-report-does-and-does-not-tell-you",
+    );
+    // Punctuation is dropped, not hyphenated.
+    expect(slug("Needs manual review!")).toBe("needs-manual-review");
+    // Umlauts survive: GitHub and pandoc both keep them in the anchor.
+    expect(slug("Manuelle Prüfung erforderlich")).toBe(
+      "manuelle-prüfung-erforderlich",
+    );
+    expect(slug("Scan-Umgebung")).toBe("scan-umgebung");
+  });
+});
+
+describe("render_toc", () => {
+  it("lists level-two headings only", () => {
+    const toc = render_toc("## One\n\n### Nested\n\ntext\n\n## Two");
+    expect(toc).toContain("- [One](#one)");
+    expect(toc).toContain("- [Two](#two)");
+    expect(toc).not.toContain("Nested");
+  });
+
+  it("returns null when there is nothing to list", () => {
+    expect(render_toc("just prose")).toBeNull();
   });
 });

@@ -6,6 +6,17 @@
 
 import { compare, impact_rank, sorted, tally } from "./a11y-normalize.js";
 
+// axe reports impact in English and the normalisation layer keys off those raw
+// values, so only the DISPLAY is translated here.
+export const IMPACT_LABELS = {
+  critical: "kritisch",
+  serious: "schwerwiegend",
+  moderate: "mittel",
+  minor: "gering",
+};
+
+export const impact_label = (impact) => IMPACT_LABELS[impact] ?? impact ?? "—";
+
 /** Table cells must not contain a raw pipe or a newline. */
 const cell = (value) =>
   String(value ?? "")
@@ -37,63 +48,27 @@ const all_findings = (pages) =>
 // be read as a clean bill of health.
 // ---------------------------------------------------------------------------
 
-const SCOPE = `## What this report does and does not tell you
+export const THIRD_PARTY = `## Komponenten von Drittanbietern
 
-**Automated testing finds a minority of accessibility problems.** Deque's study of
-~13,000 pages puts axe-core's coverage at roughly **57% of issues by volume**;
-measured against WCAG success criteria the commonly cited figure is **30–40%**.
-A page reported as clean below is *not* a page known to be accessible — it is a
-page where these particular machine-checkable rules found nothing.
+Die Prozess- und Entscheidungsansichten binden **[bpmn-js](https://github.com/bpmn-io/bpmn-js)**,
+**dmn-js** und **@bpmn-io/form-js** von [bpmn.io](https://bpmn.io) ein. Diese stellen
+Diagramme als **SVG-Canvas** dar, was für Screenreader standardmäßig nicht
+zugänglich ist — Screenreader vermitteln Text, keine Grafiken.
 
-**Checked automatically**
-
-| Area | Examples |
-| --- | --- |
-| Colour | Text contrast against its background |
-| Names | Buttons, links, form fields and dialogs having accessible names |
-| ARIA | Valid roles, valid attributes, required parent/child relationships |
-| Structure | Landmark regions, heading order, list nesting, table headers |
-| Images | Presence of \`alt\` text |
-| Keyboard | \`tabindex\` misuse, focusable elements hidden from assistive tech |
-| Documents | \`lang\` attribute, unique \`id\`s, page title |
-| Targets | Minimum pointer target size (WCAG 2.2) |
-
-**NOT checked — needs a human and assistive technology**
-
-| Area | Why a machine cannot decide |
-| --- | --- |
-| Meaningful alt text | \`alt="image"\` passes every automated rule and tells a user nothing |
-| Reading and tab order | Requires knowing what order the content is *meant* to be in |
-| Focus management | Whether focus lands somewhere sensible after a route change or dialog close |
-| Screen-reader output | Whether announcements are timely, correct and not overwhelming |
-| Error recovery | Whether a user can understand and correct a mistake |
-| Plain language | Reading level, jargon, cognitive load |
-| Colour as meaning | Whether colour is the *only* thing conveying a distinction |
-| Reflow | Usability at 400% zoom and at narrow widths |
-| Motion | Whether animation can trigger vestibular symptoms |
-| Real AT testing | NVDA, JAWS and VoiceOver behaviour on real hardware |
-
-The project's manual testing commitments are in [Accessibility.md](../Accessibility.md).`;
-
-const THIRD_PARTY = `## Third-party components
-
-The process and decision views embed **[bpmn-js](https://github.com/bpmn-io/bpmn-js)**,
-**dmn-js** and **@bpmn-io/form-js** from [bpmn.io](https://bpmn.io). These render
-diagrams as an **SVG canvas**, which is not screen-reader accessible by default —
-screen readers convey text, not graphics.
-
-- bpmn-js publishes **no WCAG conformance level**, and its README has no
-  accessibility section.
-- There is an early upstream initiative,
+- bpmn-js weist **keine WCAG-Konformitätsstufe** aus, und die README enthält
+  keinen Abschnitt zur Barrierefreiheit.
+- Es gibt eine frühe Upstream-Initiative,
   [\`@bpmn-io/a11y\`](https://github.com/bpmn-io/a11y) — *"Minimal tool to achieve
-  bpmn.io accessibility goals"* (MIT, v0.1.0, minimal activity so far).
-- diagram-js, which bpmn-js builds on, has had keyboard-navigation improvements
-  since bpmn-js 3.0.0, and its context pad and popup menu are keyboard reachable.
+  bpmn.io accessibility goals"* (MIT, v0.1.0, bislang wenig Aktivität).
+- diagram-js, worauf bpmn-js aufbaut, hat seit bpmn-js 3.0.0 Verbesserungen bei
+  der Tastaturnavigation erhalten; Kontextmenü und Popup-Menü sind per Tastatur
+  erreichbar.
 
-Treat every diagram surface in this report as **known-inaccessible to screen
-reader users** until an upstream text alternative exists. Findings reported
-against those subtrees are a floor, not a ceiling: axe can check the surrounding
-controls, but it cannot tell you that a BPMN diagram is unusable without sight.`;
+Jede Diagrammfläche in diesem Bericht gilt als **für Screenreader-Nutzende nicht
+zugänglich**, solange es keine Textalternative von Upstream gibt. Befunde zu
+diesen Teilbäumen sind eine Untergrenze, keine Obergrenze: axe kann die
+umgebenden Bedienelemente prüfen, aber nicht feststellen, dass ein
+BPMN-Diagramm ohne Sehvermögen unbenutzbar ist.`;
 
 // ---------------------------------------------------------------------------
 // Report
@@ -101,17 +76,17 @@ controls, but it cannot tell you that a BPMN diagram is unusable without sight.`
 
 const environment_table = (meta) =>
   table(
-    ["Setting", "Value"],
+    ["Einstellung", "Wert"],
     [
-      ["Generated", cell(meta.generated_at)],
+      ["Erstellt", cell(meta.generated_at)],
       ["Commit", code(meta.commit)],
-      ["Ruleset", "WCAG 2.0 / 2.1 / 2.2 Level A + AA, plus axe best-practice"],
-      ["axe-core tags", meta.tags.map(code).join(" ")],
+      ["Regelsatz", "WCAG 2.0 / 2.1 / 2.2 Stufe A + AA, zzgl. axe Best Practice"],
+      ["axe-core-Tags", meta.tags.map(code).join(" ")],
       [
-        "Rules enabled",
-        `${cell(meta.rule_count)} axe rules${
+        "Aktive Regeln",
+        `${cell(meta.rule_count)} axe-Regeln${
           meta.enabled_rules?.length
-            ? ` (incl. ${code_list(meta.enabled_rules)}, off by default)`
+            ? ` (inkl. ${code_list(meta.enabled_rules)}, standardmäßig deaktiviert)`
             : ""
         }`,
       ],
@@ -123,12 +98,12 @@ const environment_table = (meta) =>
             : ""
         }`,
       ],
-      ["Global axis", cell(meta.axis)],
-      ["Pages", cell(meta.page_count)],
+      ["Globale Achse", cell(meta.axis)],
+      ["Seiten", cell(meta.page_count)],
       ["Scans", cell(meta.scan_count)],
       ["Backend", cell(meta.backend)],
-      ["Data state", cell(meta.data_state)],
-      ["Locale", cell(meta.locale)],
+      ["Datenstand", cell(meta.data_state)],
+      ["Sprache", cell(meta.locale)],
     ],
   );
 
@@ -143,7 +118,7 @@ const summary_table = (pages) => {
         "—",
         "—",
         "0",
-        cell(page.reason ?? "not scanned"),
+        cell(page.reason ?? "nicht geprüft"),
       ];
     const findings = page.states.flatMap((state) => state.findings);
     const counts = tally(findings);
@@ -169,7 +144,7 @@ const summary_table = (pages) => {
 
   const totals = tally(all_findings(pages));
   rows.push([
-    "**Total**",
+    "**Gesamt**",
     "",
     `**${totals.critical}**`,
     `**${totals.serious}**`,
@@ -181,14 +156,14 @@ const summary_table = (pages) => {
 
   return table(
     [
-      "Page",
+      "Seite",
       "Route",
-      "Critical",
-      "Serious",
-      "Moderate",
-      "Minor",
-      "States",
-      "Worst state",
+      "Kritisch",
+      "Schwerwiegend",
+      "Mittel",
+      "Gering",
+      "Zustände",
+      "Schlechtester Zustand",
     ],
     rows,
   );
@@ -196,7 +171,7 @@ const summary_table = (pages) => {
 
 const by_rule_table = (pages) => {
   const findings = all_findings(pages);
-  if (!findings.length) return "No violations found by either engine.";
+  if (!findings.length) return "Keine Verstöße durch eine der Engines gefunden.";
 
   const rules = new Map();
   for (const finding of findings) {
@@ -222,15 +197,15 @@ const by_rule_table = (pages) => {
     )
     .map((entry) => [
       code(entry.rule),
-      cell(entry.impact),
+      cell(impact_label(entry.impact)),
       String(entry.pages.size),
       sorted(entry.wcag).join(", ") || "—",
       sorted(entry.engines).join(", "),
-      entry.help_url ? `[How to fix](${entry.help_url})` : "—",
+      entry.help_url ? `[Behebung](${entry.help_url})` : "—",
     ]);
 
   return table(
-    ["Rule", "Impact", "Pages", "WCAG", "Engines", "Reference"],
+    ["Regel", "Auswirkung", "Seiten", "WCAG", "Engines", "Referenz"],
     rows,
   );
 };
@@ -248,16 +223,16 @@ const agreement_line = (pages) => {
   const pa11y = criteria("pa11y");
   if (!pa11y.size) return null;
   const both = [...axe].filter((c) => pa11y.has(c));
-  return `## Engine agreement
+  return `## Übereinstimmung der Engines
 
-**${both.length}** WCAG criteria found by both engines · **${
+**${both.length}** WCAG-Kriterien von beiden Engines gefunden · **${
     axe.size - both.length
-  }** by axe-core only · **${pa11y.size - both.length}** by pa11y only.
+  }** nur von axe-core · **${pa11y.size - both.length}** nur von pa11y.
 
-Two engines are carried because HTML_CodeSniffer is techniques-based where
-axe-core is heuristic-based, so their overlap is partial by construction. If the
-pa11y-only column reaches zero and stays there, the second engine has stopped
-earning its runtime.`;
+Zwei Engines werden mitgeführt, weil HTML_CodeSniffer technikbasiert arbeitet,
+axe-core dagegen heuristisch — ihre Überschneidung ist daher bauartbedingt nur
+teilweise. Fällt die pa11y-Spalte dauerhaft auf null, lohnt die zweite Engine
+ihre Laufzeit nicht mehr.`;
 };
 
 const manual_review_section = (pages) => {
@@ -286,13 +261,14 @@ const manual_review_section = (pages) => {
     grouped.set(item.rule, existing);
   }
 
-  return `## Needs manual review
+  return `## Manuelle Prüfung erforderlich
 
-axe could not decide these automatically — usually because it cannot read a
-colour behind an image or gradient. Each needs a human to confirm or dismiss.
+axe konnte diese nicht automatisch entscheiden — meist, weil eine Farbe hinter
+einem Bild oder Verlauf nicht auslesbar ist. Jeder Punkt muss von einer Person
+bestätigt oder verworfen werden.
 
 ${table(
-  ["Rule", "Pages", "What to check"],
+  ["Regel", "Seiten", "Zu prüfen"],
   [...grouped.values()]
     .sort((a, b) => compare(a.rule, b.rule))
     .map((entry) => [
@@ -307,27 +283,27 @@ const finding_block = (finding, states) => {
   const locations = finding.locations
     .map((location) => `  - ${code(location)}`)
     .join("\n");
-  return `#### \`${finding.rule}\` — ${finding.impact}
+  return `#### \`${finding.rule}\` — ${impact_label(finding.impact)}
 
 ${cell(finding.help)}${
     finding.wcag.length ? ` · WCAG ${finding.wcag.join(", ")}` : ""
   }${finding.help_url ? ` · [How to fix](${finding.help_url})` : ""}
 
-- States: ${code_list(states)}
-- Locations${finding.truncated ? " (first few)" : ""}:
-${locations}${finding.truncated ? "\n  - …and more" : ""}
-- Example: ${code(finding.example_html)}`;
+- Zustände: ${code_list(states)}
+- Fundstellen${finding.truncated ? " (Auszug)" : ""}:
+${locations}${finding.truncated ? "\n  - …und weitere" : ""}
+- Beispiel: ${code(finding.example_html)}`;
 };
 
 const page_section = (page) => {
   if (!page.scanned)
     return `### ${page.label} — \`${page.path ?? "—"}\`
 
-Not scanned: ${cell(page.reason ?? "unavailable")}.`;
+Nicht geprüft: ${cell(page.reason ?? "nicht verfügbar")}.`;
 
   const state_rows = page.states.map((state) => {
     if (state.failed)
-      return [cell(state.label), "—", "—", "—", "—", `scan failed (${cell(state.failed)})`];
+      return [cell(state.label), "—", "—", "—", "—", `Scan fehlgeschlagen (${cell(state.failed)})`];
     const counts = tally(state.findings);
     return [
       cell(state.label),
@@ -375,33 +351,71 @@ Not scanned: ${cell(page.reason ?? "unavailable")}.`;
   return section([
     `### ${page.label} — \`${page.path}\``,
     table(
-      ["State", "Critical", "Serious", "Moderate", "Minor", "Note"],
+      ["Zustand", "Kritisch", "Schwerwiegend", "Mittel", "Gering", "Hinweis"],
       state_rows,
     ),
-    blocks.length ? blocks.join("\n\n") : "_No violations in any scanned state._",
+    blocks.length ? blocks.join("\n\n") : "_Keine Verstöße in einem geprüften Zustand._",
   ]);
 };
 
-export const render_report = ({ meta, pages }) =>
-  `${section([
-    "# Accessibility Report — Operaton Web Apps",
-    "<!-- GENERATED FILE — do not edit. Regenerate with `npm run a11y:report`. -->",
-    `Informational only: this report never fails a build. Trend over time:
-[timeline.md](./timeline.md).`,
-    SCOPE,
-    THIRD_PARTY,
-    "## Scan environment",
+// The logo lives in the app's own public/ directory; this path is relative to
+// docs/accessibility/REPORT.md so it resolves both on GitHub and for pandoc.
+const LOGO = "![Operaton](../../public/operaton-logo.svg)";
+
+/**
+ * GitHub's heading-anchor slug: lowercased, punctuation dropped, spaces to
+ * hyphens. Pandoc derives its own identifiers the same way, so one table of
+ * contents works for the rendered markdown and for the PDF alike.
+ */
+export const slug = (text) =>
+  String(text ?? "")
+    .toLowerCase()
+    // Unicode-aware: \w would drop the umlauts out of German headings, and
+    // GitHub keeps them ("prüfung", not "prfung"). Pandoc keeps them too.
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .trim()
+    .replace(/\s+/g, "-");
+
+/**
+ * Build the contents list from the body that was actually rendered, rather than
+ * from a hardcoded list — sections like "Engine agreement" and "Needs manual
+ * review" only appear when they have something to say.
+ */
+export const render_toc = (body) => {
+  const entries = [...body.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
+  if (!entries.length) return null;
+  return `## Inhalt
+
+${entries.map((title) => `- [${title}](#${slug(title)})`).join("\n")}`;
+};
+
+export const render_report = ({ meta, pages }) => {
+  const body = section([
+    "## Scan-Umgebung",
     environment_table(meta),
     meta.notes,
-    "## Summary",
+    "## Zusammenfassung",
     summary_table(pages),
-    "### By rule",
+    "### Nach Regel",
     by_rule_table(pages),
     agreement_line(pages),
     manual_review_section(pages),
-    "## Pages",
+    "## Seiten",
     pages.map(page_section).join("\n\n"),
+    // Trails the findings: it is a standing caveat about a dependency, not
+    // something the reader needs before the tables.
+    THIRD_PARTY,
+  ]);
+
+  return `${section([
+    LOGO,
+    "# Barrierefreiheitsbericht — Operaton Web Apps",
+    "<!-- GENERIERTE DATEI — nicht bearbeiten. Neu erzeugen mit `npm run a11y:report`. -->",
+    "Nur zur Information: Dieser Bericht lässt niemals einen Build fehlschlagen.",
+    render_toc(body),
+    body,
   ])}\n`;
+};
 
 // ---------------------------------------------------------------------------
 // Timeline
@@ -438,7 +452,7 @@ export const render_timeline = ({ history }) => {
     String(entry.counts.moderate),
     String(entry.counts.minor),
     String(entry.counts.total),
-    entry.baseline ? "*(baseline)*" : `**${signed(entry.delta)}**`,
+    entry.baseline ? "*(Ausgangswert)*" : `**${signed(entry.delta)}**`,
     entry.baseline ? "—" : code_list(entry.new_rules),
     entry.baseline ? "—" : code_list(entry.resolved_rules),
   ]);
@@ -450,27 +464,28 @@ export const render_timeline = ({ history }) => {
   );
 
   return `${section([
-    "# Accessibility Timeline — Operaton Web Apps",
-    "<!-- GENERATED FILE — do not edit. Regenerate with `npm run a11y:report`. -->",
-    `One row per generated report, newest first. \`Δ\` is the change in total
-violations; **New rules** and **Resolved rules** name the axe/pa11y rules that
-appeared or disappeared, which is the actionable part — a change in \`Δ\` alone
-can just mean a page gained a row.
+    "# Barrierefreiheits-Verlauf — Operaton Web Apps",
+    "<!-- GENERIERTE DATEI — nicht bearbeiten. Neu erzeugen mit `npm run a11y:report`. -->",
+    `Eine Zeile je erzeugtem Bericht, neueste zuerst. \`Δ\` ist die Änderung der
+Gesamtzahl der Verstöße; **Neue Regeln** und **Behobene Regeln** benennen die
+axe-/pa11y-Regeln, die hinzugekommen oder entfallen sind — das ist der
+handlungsrelevante Teil. Eine Änderung von \`Δ\` allein kann auch nur bedeuten,
+dass eine Seite eine Zeile mehr enthält.
 
-Counts come from the same normalised findings as
-[REPORT.md](./REPORT.md), so they do not move when engine data does.`,
+Die Zahlen stammen aus denselben normalisierten Befunden wie
+[REPORT.md](./REPORT.md) und bewegen sich daher nicht, wenn sich Engine-Daten ändern.`,
     table(
       [
-        "Generated (UTC)",
+        "Erstellt (UTC)",
         "Commit",
-        "Critical",
-        "Serious",
-        "Moderate",
-        "Minor",
-        "Total",
+        "Kritisch",
+        "Schwerwiegend",
+        "Mittel",
+        "Gering",
+        "Gesamt",
         "Δ",
-        "New rules",
-        "Resolved rules",
+        "Neue Regeln",
+        "Behobene Regeln",
       ],
       rows,
     ),

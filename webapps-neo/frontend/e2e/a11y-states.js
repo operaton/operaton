@@ -13,8 +13,9 @@
 // The app has no theme toggle — `prefers-color-scheme` is the only driver
 // (src/css/style.css) — so the theme axis is a browser context option.
 export const THEMES = [
-  { id: "light", color_scheme: "light" },
-  { id: "dark", color_scheme: "dark" },
+  // `id` keys the scan-result map and must stay stable; `name` is display only.
+  { id: "light", name: "hell", color_scheme: "light" },
+  { id: "dark", name: "dunkel", color_scheme: "dark" },
 ];
 
 // The mobile breakpoint is `@media (width <= 70em)` = 1120px
@@ -22,8 +23,8 @@ export const THEMES = [
 // one above. Below the breakpoint the header swaps a <menu> for a <dialog>,
 // which is genuinely different DOM rather than a reflow.
 export const VIEWPORTS = [
-  { id: "desktop", width: 1440, height: 900 },
-  { id: "mobile", width: 390, height: 844 },
+  { id: "desktop", name: "Desktop", width: 1440, height: 900 },
+  { id: "mobile", name: "Mobil", width: 390, height: 844 },
 ];
 
 // ---------------------------------------------------------------------------
@@ -104,7 +105,7 @@ export const mock_oauth_config = (page) =>
 export const INTERACTION_STATES = [
   {
     id: "global-search",
-    label: "Global search dialog (open)",
+    label: "Globale Suche (Dialog geöffnet)",
     pages: ["tasks"],
     viewports: ["desktop"],
     themes: ["light", "dark"],
@@ -113,7 +114,7 @@ export const INTERACTION_STATES = [
   },
   {
     id: "mobile-menu",
-    label: "Mobile navigation dialog (open)",
+    label: "Mobile Navigation (Dialog geöffnet)",
     pages: ["tasks"],
     viewports: ["mobile"],
     themes: ["light", "dark"],
@@ -122,7 +123,7 @@ export const INTERACTION_STATES = [
   },
   {
     id: "upload-dialog",
-    label: "Deployment upload dialog (open)",
+    label: "Deployment-Upload (Dialog geöffnet)",
     pages: ["deployments"],
     viewports: ["desktop"],
     prepare: (page) =>
@@ -131,21 +132,21 @@ export const INTERACTION_STATES = [
   },
   {
     id: "empty-data",
-    label: "Empty result set",
+    label: "Leere Ergebnismenge",
     pages: ["tasks", "processes", "batches", "decisions", "deployments"],
     viewports: ["desktop"],
     mock: mock_empty,
   },
   {
     id: "backend-error",
-    label: "Backend error (RequestState ERROR)",
+    label: "Backend-Fehler (RequestState ERROR)",
     pages: ["tasks", "processes"],
     viewports: ["desktop"],
     mock: mock_error,
   },
   {
     id: "sso-login",
-    label: "SSO login card (OAuth2 mode)",
+    label: "SSO-Anmeldung (OAuth2-Modus)",
     pages: ["login"],
     viewports: ["desktop"],
     themes: ["light", "dark"],
@@ -163,7 +164,7 @@ export const base_states = () =>
   THEMES.flatMap((theme) =>
     VIEWPORTS.map((viewport) => ({
       id: `${theme.id}-${viewport.id}`,
-      label: `default · ${theme.id} · ${viewport.id}`,
+      label: `Standard · ${theme.name} · ${viewport.name}`,
       theme,
       viewport,
     })),
@@ -179,7 +180,7 @@ export const interaction_states_for = (page_name) =>
             viewport = VIEWPORTS.find((v) => v.id === viewport_id);
           return {
             id: `${state.id}-${theme_id}-${viewport_id}`,
-            label: `${state.label} · ${theme_id} · ${viewport_id}`,
+            label: `${state.label} · ${theme.name} · ${viewport.name}`,
             theme,
             viewport,
             mock: state.mock,

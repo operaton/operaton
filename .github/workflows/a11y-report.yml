@@ -65,8 +65,9 @@ jobs:
 
       - name: Seed deterministic fixtures
         working-directory: webapps-neo/frontend/dev-fixtures/bot
+        # dev-fixtures/bot declares no dependencies and ships no package-lock.json,
+        # so there is nothing to install and `npm ci` would fail outright.
         run: |
-          npm ci
           node deploy.js
           node spawn.js --process orderFulfillment --count 3
           node spawn.js --process insuranceClaim   --count 2

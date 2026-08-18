@@ -63,8 +63,45 @@ const inject_css = (href) => {
   document.head.appendChild(link);
 };
 
-const load_remote = async (packages, importer) => {
+/**
+ * Whether `location` may be loaded from.
+ *
+ * A remote plugin is imported as a module and runs with the full privileges of the
+ * app — same DOM, same session, same access to the API helpers. Loading one is
+ * therefore a decision for whoever deploys the webapp, not something to infer from
+ * a manifest. Same-origin locations are allowed once remote plugins are switched on;
+ * any other origin has to be listed explicitly.
+ */
+export const is_allowed_location = (location, allow_origins = []) => {
+  // Guard explicitly: `new URL(undefined, base)` resolves to "<base>/undefined",
+  // which would pass the same-origin check below for a manifest entry that simply
+  // has no location.
+  if (typeof location !== "string" || !location.trim()) return false;
+  let origin;
+  try {
+    origin = new URL(location, document.baseURI).origin;
+  } catch {
+    return false;
+  }
+  if (origin === window.location.origin) return true;
+  return allow_origins.some((allowed) => {
+    try {
+      return new URL(allowed).origin === origin;
+    } catch {
+      return false;
+    }
+  });
+};
+
+const load_remote = async (packages, importer, allow_origins) => {
   for (const pkg of packages) {
+    if (!is_allowed_location(pkg.location, allow_origins)) {
+      console.error(
+        `[plugins] remote plugin "${pkg.name ?? pkg.location}" refused: ` +
+          `"${pkg.location}" is not same-origin and is not in remotePluginsAllowOrigins`,
+      );
+      continue;
+    }
     try {
       if (pkg.css) inject_css(`${pkg.location}/${pkg.css}?bust=${VERSION}`);
       const module = await importer(
@@ -97,7 +134,16 @@ export const load_plugins = async ({
   timeout = 3000,
 } = {}) => {
   register_bundled();
+
+  // Bundled plugins ship with the app and are always registered. Remote ones are
+  // third-party code and stay off until a deployment opts in.
+  const config = get_config();
+  if (!config.remote_plugins_enabled) return;
+
   const packages = (await with_timeout(discover_packages(), timeout)) ?? [];
   if (packages.length)
-    await with_timeout(load_remote(packages, importer), timeout);
+    await with_timeout(
+      load_remote(packages, importer, config.remote_plugins_allow_origins ?? []),
+      timeout,
+    );
 };

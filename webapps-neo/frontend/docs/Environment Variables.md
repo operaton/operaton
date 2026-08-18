@@ -96,5 +96,29 @@ app loads at boot. Optional; defaults to `/plugins/plugins.json` when unset.
 VITE_PLUGINS_URL=/plugins/plugins.json
 ```
 
+Note that the manifest is only fetched when `VITE_REMOTE_PLUGINS_ENABLED=true`.
+
+### VITE_REMOTE_PLUGINS_ENABLED
+
+Whether to load remote plugins at all. Defaults to `false`: remote plugins run with
+the full privileges of the app, so a deployment has to opt in. Bundled plugins are
+unaffected.
+
+```properties
+# .env
+VITE_REMOTE_PLUGINS_ENABLED=true
+```
+
+### VITE_REMOTE_PLUGINS_ALLOW_ORIGINS
+
+Comma-separated origins a remote plugin may be loaded from, in addition to the
+origin the webapp itself is served from. Only consulted when remote plugins are
+enabled; a package from any other origin is skipped.
+
+```properties
+# .env
+VITE_REMOTE_PLUGINS_ALLOW_ORIGINS=https://plugins.example.com
+```
+
 See [Plugin System.md](Plugin%20System.md) for the manifest shape and the full
 plugin mechanism.

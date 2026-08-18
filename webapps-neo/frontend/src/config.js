@@ -31,6 +31,10 @@ const clean = (value) =>
     ? value
     : undefined
 
+// Comma- or whitespace-separated list of origins, as it arrives from an env var.
+const split_origins = (raw) =>
+  raw ? raw.split(/[\s,]+/).map((o) => o.trim()).filter(Boolean) : []
+
 const parse_backends = (raw) => {
   const value = clean(raw)
   if (!value) return undefined
@@ -67,6 +71,10 @@ const from_env = () => {
         }
       : undefined,
     plugins_url: clean(import.meta.env.VITE_PLUGINS_URL),
+    // Remote plugins execute with the full privileges of the app, so loading them
+    // is opt-in. See `remote_plugins_allow_origins` for cross-origin sources.
+    remote_plugins_enabled: clean(import.meta.env.VITE_REMOTE_PLUGINS_ENABLED) === "true",
+    remote_plugins_allow_origins: split_origins(clean(import.meta.env.VITE_REMOTE_PLUGINS_ALLOW_ORIGINS)),
     hide_release_warning: clean(import.meta.env.VITE_HIDE_RELEASE_WARNING) === "true",
     user: undefined,
   }
@@ -106,6 +114,11 @@ const from_document = (json) => {
     auth_mode: is_oauth && oauth ? AUTH_MODE_OAUTH2 : AUTH_MODE_BASIC,
     oauth,
     plugins_url: clean(json.pluginsUrl),
+    remote_plugins_enabled:
+      json.remotePluginsEnabled === true || clean(json.remotePluginsEnabled) === "true",
+    remote_plugins_allow_origins: Array.isArray(json.remotePluginsAllowOrigins)
+      ? json.remotePluginsAllowOrigins.map(clean).filter(Boolean)
+      : split_origins(clean(json.remotePluginsAllowOrigins)),
     hide_release_warning:
       json.hideReleaseWarning === true || clean(json.hideReleaseWarning) === "true",
     user: json.user?.id ? { id: json.user.id } : undefined,

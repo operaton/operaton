@@ -212,6 +212,39 @@ Each seam simply reads the frozen registry:
 
 ## Configuration
 
+### Remote plugins are opt-in
+
+A remote plugin is imported as an ES module and runs with the full privileges of
+the app: same DOM, same session, same access to the API helpers. Loading one is a
+deployment decision, so it is off unless switched on. With it off, the manifest is
+not even fetched; bundled plugins are unaffected and always register.
+
+```properties
+# .env
+VITE_REMOTE_PLUGINS_ENABLED=true
+```
+
+or, at runtime, in `config.json`:
+
+```JSON
+{ "remotePluginsEnabled": true }
+```
+
+Once enabled, packages served from the same origin as the webapp load without
+further configuration. Any other origin has to be named explicitly:
+
+```properties
+VITE_REMOTE_PLUGINS_ALLOW_ORIGINS=https://plugins.example.com
+```
+
+```JSON
+{ "remotePluginsAllowOrigins": ["https://plugins.example.com"] }
+```
+
+A package whose `location` resolves to an origin that is neither same-origin nor
+listed is skipped with an error on the console; the rest of the manifest still
+loads.
+
 ### VITE_PLUGINS_URL
 
 URL of the remote plugin **manifest**, a JSON array of plugin packages. Defaults

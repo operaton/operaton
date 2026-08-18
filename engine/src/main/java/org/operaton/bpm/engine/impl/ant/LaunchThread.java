@@ -46,9 +46,6 @@ public class LaunchThread extends Thread {
   }
 
   public static void launch(Task task, @NonNull String[] cmd, File dir, String launchCompleteText) {
-    if (cmd==null) {
-      throw new BuildException("cmd is null");
-    }
     try {
       LaunchThread launchThread = new LaunchThread(task, cmd, dir, launchCompleteText);
       launchThread.start();

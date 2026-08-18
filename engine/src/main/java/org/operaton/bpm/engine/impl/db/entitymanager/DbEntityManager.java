@@ -20,47 +20,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.operaton.bpm.engine.OptimisticLockingException;
-
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.DeploymentQueryImpl;
-import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
-import org.operaton.bpm.engine.impl.GroupQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricActivityInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricDetailQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricJobLogQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricTaskInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricVariableInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.JobQueryImpl;
-import org.operaton.bpm.engine.impl.Page;
-import org.operaton.bpm.engine.impl.ProcessDefinitionQueryImpl;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.TaskQueryImpl;
-import org.operaton.bpm.engine.impl.UserQueryImpl;
+import org.operaton.bpm.engine.impl.*;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionQueryImpl;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.db.DbEntity;
-import org.operaton.bpm.engine.impl.db.DbEntityLifecycleAware;
-import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
-import org.operaton.bpm.engine.impl.db.EntityLoadListener;
-import org.operaton.bpm.engine.impl.db.FlushResult;
-import org.operaton.bpm.engine.impl.db.HistoricEntity;
-import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
-import org.operaton.bpm.engine.impl.db.PersistenceSession;
+import org.operaton.bpm.engine.impl.db.*;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.CachedDbEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityCache;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbBulkOperation;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbEntityOperation;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
+import org.operaton.bpm.engine.impl.db.entitymanager.operation.*;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation.State;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationManager;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType;
 import org.operaton.bpm.engine.impl.identity.db.DbGroupQueryImpl;
 import org.operaton.bpm.engine.impl.identity.db.DbUserQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Session;
@@ -70,17 +45,8 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.commons.utils.CollectionUtil;
 
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_MERGED;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_PERSISTENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_TRANSIENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.MERGED;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.PERSISTENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.TRANSIENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE_BULK;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.INSERT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.UPDATE;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.UPDATE_BULK;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.*;
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.*;
 
 /**
  *
@@ -225,7 +191,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return dbEntityCache.getEntitiesByType(type);
   }
 
-  protected List filterLoadedObjects(List<Object> loadedObjects) {
+  protected @NonNull List filterLoadedObjects(@NonNull List<Object> loadedObjects) {
     if (loadedObjects.isEmpty() || loadedObjects.get(0) == null) {
       return loadedObjects;
     }
@@ -242,7 +208,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
 
   /** returns the object in the cache.  if this object was loaded before,
    * then the original object is returned. */
-  protected DbEntity cacheFilter(DbEntity persistentObject) {
+  protected @NonNull DbEntity cacheFilter(@NonNull DbEntity persistentObject) {
     DbEntity cachedPersistentObject = dbEntityCache.get(persistentObject.getClass(), persistentObject.getId());
     if (cachedPersistentObject!=null) {
       return cachedPersistentObject;
@@ -254,7 +220,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   }
 
   @Override
-  public void onEntityLoaded(DbEntity entity) {
+  public void onEntityLoaded(@NonNull DbEntity entity) {
     // we get a callback when the persistence session loads an object from the database
     DbEntity cachedPersistentObject = dbEntityCache.get(entity.getClass(), entity.getId());
     if(cachedPersistentObject == null) {

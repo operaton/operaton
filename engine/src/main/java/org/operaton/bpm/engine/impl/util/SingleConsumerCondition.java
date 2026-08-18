@@ -38,10 +38,6 @@ public class SingleConsumerCondition {
   private final Thread consumer;
 
   public SingleConsumerCondition(@NonNull Thread consumer) {
-    if (consumer == null) {
-      throw new IllegalArgumentException("Consumer thread cannot be null");
-    }
-
     this.consumer = consumer;
   }
 

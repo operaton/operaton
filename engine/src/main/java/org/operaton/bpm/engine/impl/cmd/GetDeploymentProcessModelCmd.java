@@ -18,9 +18,9 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-
 import org.jspecify.annotations.NonNull;
+
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;

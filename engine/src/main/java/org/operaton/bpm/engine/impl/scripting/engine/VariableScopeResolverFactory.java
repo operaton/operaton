@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 public class VariableScopeResolverFactory implements ResolverFactory {
 
   @Override
-  public @Nullable Resolver createResolver(VariableScope variableScope) {
+  public @Nullable Resolver createResolver(@Nullable VariableScope variableScope) {
     if (variableScope!=null) {
       return new VariableScopeResolver(variableScope);
     }

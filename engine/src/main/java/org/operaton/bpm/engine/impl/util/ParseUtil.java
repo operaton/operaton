@@ -20,9 +20,9 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.FailedJobRetryConfiguration;
@@ -45,7 +45,7 @@ public final class ParseUtil {
    * Parse History Time To Live in ISO-8601 format to integer and set into the given entity
    * @param historyTimeToLive
    */
-  public static Integer parseHistoryTimeToLive(@Nullable String historyTimeToLive) {
+  public static @Nullable Integer parseHistoryTimeToLive(@Nullable String historyTimeToLive) {
     Integer timeToLive = null;
 
     if (historyTimeToLive != null && !historyTimeToLive.isEmpty()) {

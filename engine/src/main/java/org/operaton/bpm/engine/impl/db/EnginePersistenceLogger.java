@@ -17,21 +17,14 @@
 package org.operaton.bpm.engine.impl.db;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.ibatis.executor.BatchExecutorException;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.OptimisticLockingException;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.SuspendedEntityInteractionException;
-import org.operaton.bpm.engine.WrongDbException;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -311,13 +304,13 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
   }
 
   public AuthorizationException requiredOperatonAdmin() {
-    return requiredOperatonAdminOrPermissionException(null);
+    return requiredOperatonAdminOrPermissionException(Collections.emptyList());
   }
 
-  public AuthorizationException requiredOperatonAdminOrPermissionException(@Nullable List<MissingAuthorization> missingAuthorizations) {
+  public AuthorizationException requiredOperatonAdminOrPermissionException(@NonNull List<MissingAuthorization> missingAuthorizations) {
     String exceptionCode = "029";
     String message;
-    if(missingAuthorizations != null && !missingAuthorizations.isEmpty()) {
+    if(!missingAuthorizations.isEmpty()) {
       message = "Required admin authenticated group or user or any of the following permissions: %s.".formatted(
           AuthorizationException.generateMissingAuthorizationsList(missingAuthorizations));
       exceptionCode = "110";

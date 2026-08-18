@@ -45,12 +45,12 @@ export const App = () => {
   );
 };
 
+// es-ES, fr-FR and nl-NL exist under public/locales but are only ~75% translated,
+// so offering them means a quarter of the UI silently falls back to English. They
+// stay in the repo and come back here once complete.
 const languages = [
   { code: "en-US", label: "English" },
   { code: "de-DE", label: "Deutsch" },
-  { code: "es-ES", label: "Español" },
-  { code: "fr-FR", label: "Français" },
-  { code: "nl-NL", label: "Nederlands" },
 ];
 
 const swap_server = (e, state) => {

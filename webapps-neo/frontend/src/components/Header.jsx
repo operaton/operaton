@@ -106,16 +106,24 @@ export function Header() {
   return (
     <>
       <header id="top">
-        {/* {import.meta.env.VITE_HIDE_RELEASE_WARNING === "true"
-          ? null
-          : <div id="release-warning">
-              {t("nav.release-warning")}{" "}
-              <a href="https://github.com/operaton/web-apps/issues">{t("nav.release-warning-issue")}</a>{" "}
-              {t("nav.release-warning-forum") !== t("nav.release-warning-issue") && <>
+        {/* Reads the runtime flag, not a build-time env var, so a distro operator can
+            turn the notice off without rebuilding the bundle. */}
+        {get_config().hide_release_warning ? null : (
+          <div id="release-warning">
+            {t("nav.release-warning")}{" "}
+            <a href="https://github.com/operaton/operaton/issues">
+              {t("nav.release-warning-issue")}
+            </a>{" "}
+            {t("nav.release-warning-forum") !== t("nav.release-warning-issue") && (
+              <>
                 {t("nav.release-warning-or")}{" "}
-                <a href="https://forum.operaton.org/">{t("nav.release-warning-forum")}</a>
-              </>}
-            </div>}*/}
+                <a href="https://forum.operaton.org/">
+                  {t("nav.release-warning-forum")}
+                </a>
+              </>
+            )}
+          </div>
+        )}
 
         <menu id="skip-links">
           <li>

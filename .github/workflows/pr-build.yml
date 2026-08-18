@@ -214,6 +214,7 @@ jobs:
           ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=operaton_operaton \
           -Dsonar.exclusions=webapps/assembly/**,\
+              webapps-neo/assembly/**,\
               qa/performance-tests-engine/**,\
               qa/integration-tests-webapps/**,\
               qa/integration-tests-engine/** \
@@ -408,3 +409,28 @@ jobs:
           path: ${{ github.workspace }}/quarkus-extension/**/target/surefire-reports/**
           retention-days: 30
           overwrite: true
+
+  webapps-neo-frontend:
+    name: Webapps Neo Frontend
+    runs-on: ubuntu-latest
+    # Independent of the Maven build: the Vite bundle the Java build produces is
+    # never linted or unit tested by it, so this job is the only thing that runs
+    # the frontend's own suite.
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7.0.1
+      - name: Setup Node
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24
+          cache: 'npm'
+          cache-dependency-path: webapps-neo/frontend/package-lock.json
+      - name: Install dependencies
+        working-directory: webapps-neo/frontend
+        run: npm ci
+      - name: Lint
+        working-directory: webapps-neo/frontend
+        run: npm run lint
+      - name: Unit tests
+        working-directory: webapps-neo/frontend
+        run: npx vitest run

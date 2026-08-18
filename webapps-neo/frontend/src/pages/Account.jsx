@@ -309,12 +309,10 @@ const TenantsAccountPage = () => {
   </section>
 }
 
+// Kept in step with `languages` in index.jsx: only fully translated locales are offered.
 const LANGUAGES = [
   { code: 'en-US', label: 'English' },
   { code: 'de-DE', label: 'Deutsch' },
-  { code: 'fr-FR', label: 'Français' },
-  { code: 'es-ES', label: 'Español' },
-  { code: 'nl-NL', label: 'Nederlands' },
 ]
 
 const SettingsAccountPage = () => {

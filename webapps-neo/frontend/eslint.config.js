@@ -13,6 +13,9 @@ export default [
   {
     ignores: [
       "dist/**",
+      // Maven writes the Vite bundle here; linting it reports thousands of
+      // problems in generated, minified code.
+      "target/**",
       "test-results/**",
       "playwright-report/**",
       // Standalone Node scripts for the local load-test fixtures, not app code.

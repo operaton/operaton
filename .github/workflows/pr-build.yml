@@ -156,6 +156,15 @@ jobs:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
+      # Restore-only, like the m2 cache above: entries written here would be
+      # readable only by this PR and would just churn the shared pool. The
+      # producer is the build job of build.yml on the default branch.
+      - name: Restore Maven build cache
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2/build-cache
+          key: "${{ runner.os }}-build-cache-${{ github.sha }}"
+          restore-keys: ${{ runner.os }}-build-cache-
       - name: Cache SonarCloud packages
         uses: actions/cache@v6.1.0
         with:
@@ -184,6 +193,12 @@ jobs:
           if [ "${{ needs.determine-pr-config.outputs.needs_integration_build }}" = "true" ]; then
             BUILD_CMD="$BUILD_CMD --extra-maven-profiles=distro-wildfly,integration-test-operaton-run"
           fi
+
+          # Modules unchanged since the last default-branch build are restored
+          # instead of rebuilt. They bring their surefire-reports and coverage
+          # XML with them, so the Publish Test Report gate below still sees the
+          # results that belong to this source state.
+          BUILD_CMD="$BUILD_CMD -Dmaven.build.cache.enabled=true"
 
           echo "ℹ️ Executing: $BUILD_CMD"
           $BUILD_CMD

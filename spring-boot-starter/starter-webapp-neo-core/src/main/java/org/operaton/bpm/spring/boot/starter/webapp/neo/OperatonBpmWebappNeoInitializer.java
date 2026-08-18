@@ -22,6 +22,7 @@ import java.util.EnumSet;
 import java.util.Map;
 import jakarta.servlet.*;
 
+import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -32,14 +33,17 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 import org.operaton.bpm.spring.boot.starter.webapp.neo.filter.AppendTrailingSlashFilter;
 import org.operaton.bpm.spring.boot.starter.webapp.neo.filter.LazySecurityFilter;
+import org.operaton.bpm.webapp.neo.impl.engine.EngineRestApplication;
 import org.operaton.bpm.webapp.neo.impl.security.auth.AuthenticationFilter;
 import org.operaton.bpm.webapp.neo.impl.security.filter.CsrfPreventionFilter;
 import org.operaton.bpm.webapp.neo.impl.security.filter.SessionCookieFilter;
 import org.operaton.bpm.webapp.neo.impl.security.filter.headersec.HttpHeaderSecurityFilter;
 import org.operaton.bpm.webapp.neo.impl.security.filter.util.HttpSessionMutexListener;
 import org.operaton.bpm.webapp.neo.impl.util.ServletContextUtil;
+import org.operaton.bpm.webapp.neo.impl.web.AdminApplication;
 
 import static java.util.Collections.singletonMap;
+import static org.glassfish.jersey.servlet.ServletProperties.JAXRS_APPLICATION_CLASS;
 
 public class OperatonBpmWebappNeoInitializer implements ServletContextInitializer {
 
@@ -127,6 +131,13 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
 
     registerFilter("Neo CacheControlFilter", CacheControlFilter.class,
         apiWildcardPath, basePath + "/assets/*");
+
+    // The filters above guard /api/*; these servlets are what actually answers there.
+    // Without them the namespace fell through to the SPA's index.html catch-all, which
+    // is why the login and logout endpoints could not be reached and the SPA had to
+    // authenticate against the standalone /engine-rest deployment instead.
+    registerServlet("Neo Admin Api", AdminApplication.class, basePath + "/api/admin/*");
+    registerServlet("Neo Engine Api", EngineRestApplication.class, basePath + "/api/engine/*");
   }
 
   protected String getAuthCacheTTL(WebappProperty webapp) {
@@ -137,6 +148,20 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
     } else {
       return "";
     }
+  }
+
+  private ServletRegistration registerServlet(final String servletName, final Class<?> applicationClass, final String... urlPatterns) {
+    ServletRegistration servletRegistration = servletContext.getServletRegistration(servletName);
+
+    if (servletRegistration == null) {
+      servletRegistration = servletContext.addServlet(servletName, ServletContainer.class);
+      servletRegistration.addMapping(urlPatterns);
+      servletRegistration.setInitParameters(singletonMap(JAXRS_APPLICATION_CLASS, applicationClass.getName()));
+
+      log.debug("Servlet {} for URL {} registered.", servletName, urlPatterns);
+    }
+
+    return servletRegistration;
   }
 
   private FilterRegistration registerFilter(final String filterName, final Class<? extends Filter> filterClass, final String... urlPatterns) {

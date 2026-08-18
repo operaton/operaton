@@ -34,7 +34,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
+import static org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

@@ -27,8 +27,8 @@ import org.springframework.core.io.ResourceLoader;
 
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
-import org.operaton.bpm.webapp.impl.security.filter.SecurityFilter;
-import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
+import org.operaton.bpm.webapp.neo.impl.security.filter.SecurityFilter;
+import org.operaton.bpm.webapp.neo.impl.security.filter.util.FilterRules;
 
 @SuppressWarnings("unused")
 class ResourceLoadingSecurityFilter extends SecurityFilter implements ResourceLoaderDependingFilter {

@@ -10,7 +10,7 @@
 
   <!-- http session mutex listener -->
   <listener>
-    <listener-class>org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener</listener-class>
+    <listener-class>org.operaton.bpm.webapp.neo.impl.security.filter.util.HttpSessionMutexListener</listener-class>
   </listener>
 
   <session-config>
@@ -23,7 +23,7 @@
   <!-- Container Based Authentication filter -->
   <!-- <filter>
     <filter-name>Container Based Authentication Filter</filter-name>
-    <filter-class>org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.auth.ContainerBasedAuthenticationFilter</filter-class>
     <init-param>
       <param-name>authentication-provider</param-name>
       <param-value>org.operaton.bpm.engine.rest.security.auth.impl.ContainerBasedAuthenticationProvider</param-value>
@@ -38,7 +38,7 @@
   <!-- Authentication filter -->
   <filter>
     <filter-name>Authentication Filter</filter-name>
-    <filter-class>org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.auth.AuthenticationFilter</filter-class>
     <!-- See https://docs.operaton.org/manual/latest/webapps/shared-options/authentication/#cache -->
     <init-param>
       <param-name>cacheTimeToLive</param-name>
@@ -54,7 +54,7 @@
   <!-- Security filter -->
   <filter>
     <filter-name>SecurityFilter</filter-name>
-    <filter-class>org.operaton.bpm.webapp.impl.security.filter.SecurityFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.SecurityFilter</filter-class>
     <init-param>
       <param-name>configFile</param-name>
       <param-value>/WEB-INF/securityFilterRules.json</param-value>
@@ -69,7 +69,7 @@
   <!-- CSRF Prevention filter -->
   <filter>
     <filter-name>CsrfPreventionFilter</filter-name>
-    <filter-class>org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.CsrfPreventionFilter</filter-class>
     <!--<init-param>-->
       <!--<param-name>targetOrigin</param-name>-->
       <!--<param-value>http://localhost:8080</param-value>-->
@@ -83,7 +83,7 @@
   <!-- HTTP Header Security Filter -->
   <filter>
     <filter-name>HttpHeaderSecurity</filter-name>
-    <filter-class>org.operaton.bpm.webapp.impl.security.filter.headersec.HttpHeaderSecurityFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.headersec.HttpHeaderSecurityFilter</filter-class>
   </filter>
 
   <filter-mapping>

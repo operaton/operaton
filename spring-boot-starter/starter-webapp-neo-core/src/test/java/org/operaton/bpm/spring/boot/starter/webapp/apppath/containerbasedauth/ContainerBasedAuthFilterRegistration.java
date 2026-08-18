@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
-import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
+import org.operaton.bpm.webapp.neo.impl.security.auth.ContainerBasedAuthenticationFilter;
 
 @Configuration
 @Order(Ordered.LOWEST_PRECEDENCE - 20)

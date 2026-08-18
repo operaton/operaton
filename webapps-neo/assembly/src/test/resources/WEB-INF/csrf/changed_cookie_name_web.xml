@@ -12,7 +12,7 @@
 
   <filter>
     <filter-name>CsrfPreventionFilter</filter-name>
-    <filter-class>org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.CsrfPreventionFilter</filter-class>
     <init-param>
       <param-name>cookieName</param-name>
       <param-value>myCookieName</param-value>

@@ -6,7 +6,7 @@
 
   <filter>
     <filter-name>SessionCookieFilter</filter-name>
-    <filter-class>org.operaton.bpm.webapp.impl.security.filter.SessionCookieFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.SessionCookieFilter</filter-class>
     <init-param>
       <param-name>enableSameSiteCookie</param-name>
       <param-value>false</param-value>

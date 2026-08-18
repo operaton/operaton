@@ -5,7 +5,7 @@
     ],
     "allowedPaths": [
       { "path": "/api/engine/engine/", "methods": "GET" },
-      { "path": "/api/engine/engine/{engine}/.*", "methods": "*", "authorizer": "org.operaton.bpm.webapp.impl.security.filter.EngineRequestAuthorizer" }
+      { "path": "/api/engine/engine/{engine}/.*", "methods": "*", "authorizer": "org.operaton.bpm.webapp.neo.impl.security.filter.EngineRequestAuthorizer" }
     ]
   }
 }

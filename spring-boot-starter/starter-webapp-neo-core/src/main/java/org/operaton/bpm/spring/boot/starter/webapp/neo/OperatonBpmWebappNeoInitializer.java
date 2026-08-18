@@ -32,12 +32,12 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 import org.operaton.bpm.spring.boot.starter.webapp.neo.filter.AppendTrailingSlashFilter;
 import org.operaton.bpm.spring.boot.starter.webapp.neo.filter.LazySecurityFilter;
-import org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter;
-import org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter;
-import org.operaton.bpm.webapp.impl.security.filter.SessionCookieFilter;
-import org.operaton.bpm.webapp.impl.security.filter.headersec.HttpHeaderSecurityFilter;
-import org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener;
-import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
+import org.operaton.bpm.webapp.neo.impl.security.auth.AuthenticationFilter;
+import org.operaton.bpm.webapp.neo.impl.security.filter.CsrfPreventionFilter;
+import org.operaton.bpm.webapp.neo.impl.security.filter.SessionCookieFilter;
+import org.operaton.bpm.webapp.neo.impl.security.filter.headersec.HttpHeaderSecurityFilter;
+import org.operaton.bpm.webapp.neo.impl.security.filter.util.HttpSessionMutexListener;
+import org.operaton.bpm.webapp.neo.impl.util.ServletContextUtil;
 
 import static java.util.Collections.singletonMap;
 
@@ -69,18 +69,12 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
     String basePath = webapp.getNeo().getApplicationPath();
     String apiWildcardPath = basePath + "/api/*";
 
-    // ServletContextUtil is a static utility shared with the legacy webapp
-    // (same package, same APP_PATH_ATTR_NAME). ServletContextInitializer
-    // ordering is not deterministic, so an unconditional setAppPath here would
-    // race with OperatonBpmWebappInitializer and overwrite "/operaton" with the
-    // neo basePath (default ""). That breaks legacy's
-    // ResourceLoadingProcessEnginesFilter, whose APP_PREFIX_PATTERN matches
-    // "/app/..." after stripping applicationPath, not "/operaton/app/...".
-    // Only claim the attribute when the legacy webapp is disabled or hasn't
-    // written its own value yet.
-    if (ServletContextUtil.getAppPath(servletContext).isEmpty()) {
-      ServletContextUtil.setAppPath(basePath, servletContext);
-    }
+    // Neo's ServletContextUtil keeps its own attribute name, so this no longer races with
+    // OperatonBpmWebappInitializer: each webapp records its own application path and reads
+    // back only its own. Previously both shared one key and the legacy value ("/operaton")
+    // always won, which made CsrfPreventionFilter scope the neo XSRF cookie to a path the
+    // SPA never requests.
+    ServletContextUtil.setAppPath(basePath, servletContext);
 
     // The webapp filter chain guards the API namespace (/api/*) and the SPA app
     // paths. When served from a sub-path we can safely map the app wildcard

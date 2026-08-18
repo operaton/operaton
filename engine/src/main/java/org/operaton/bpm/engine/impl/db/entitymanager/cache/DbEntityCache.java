@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
@@ -82,7 +84,7 @@ public class DbEntityCache {
    * @throws ProcessEngineException if an object for the given id can be found but is of the wrong type.
    */
   @SuppressWarnings("unchecked")
-  public <T extends DbEntity> T get(Class<T> type, String id) {
+  public <T extends DbEntity> @Nullable T get(Class<T> type, String id) {
     Class<?> cacheKey = cacheKeyMapping.getEntityCacheKey(type);
     CachedDbEntity cachedDbEntity = getCachedEntity(cacheKey, id);
     if(cachedDbEntity != null) {
@@ -132,7 +134,7 @@ public class DbEntityCache {
    * @param id the id of the CachedEntity to lookup
    * @return the cached entity or null if the entity does not exist.
    */
-  public CachedDbEntity getCachedEntity(Class<?> type, String id) {
+  public @Nullable CachedDbEntity getCachedEntity(Class<?> type, String id) {
     Class<?> cacheKey = cacheKeyMapping.getEntityCacheKey(type);
     Map<String, CachedDbEntity> entitiesByType = cachedEntites.get(cacheKey);
     if(entitiesByType != null) {
@@ -147,7 +149,7 @@ public class DbEntityCache {
    * @param dbEntity the entity for which the CachedEntity should be looked up
    * @return the cached entity or null if the entity does not exist.
    */
-  public CachedDbEntity getCachedEntity(DbEntity dbEntity) {
+  public @Nullable CachedDbEntity getCachedEntity(DbEntity dbEntity) {
     return getCachedEntity(dbEntity.getClass(), dbEntity.getId());
   }
 

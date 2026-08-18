@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -40,7 +43,7 @@ public final class ExecuteJobHelper {
     return loggingHandler;
   }
 
-  public static void setLoggingHandler(ExceptionLoggingHandler loggingHandler) {
+  public static void setLoggingHandler(@NonNull ExceptionLoggingHandler loggingHandler) {
     ExecuteJobHelper.loggingHandler = requireNonNull(loggingHandler);
   }
 
@@ -57,7 +60,7 @@ public final class ExecuteJobHelper {
   }
 
   public static void executeJob(CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector, Command<Void> cmd,
-      ProcessEngineConfigurationImpl configuration) {
+      @Nullable ProcessEngineConfigurationImpl configuration) {
     try {
       commandExecutor.execute(cmd);
     } catch (RuntimeException exception) {
@@ -112,7 +115,7 @@ public final class ExecuteJobHelper {
    *
    * @return exception or null if succeeded
    */
-  private static OptimisticLockingException callFailedJobListenerWithRetries(CommandExecutor commandExecutor, FailedJobListener failedJobListener) {
+  private static @Nullable OptimisticLockingException callFailedJobListenerWithRetries(CommandExecutor commandExecutor, FailedJobListener failedJobListener) {
     try {
       commandExecutor.execute(failedJobListener);
       return null;

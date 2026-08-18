@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.ProcessInstanceModificationBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -52,9 +54,8 @@ public class ModifyProcessInstanceCmd implements Command<Void> {
     this.writeOperationLog = writeOperationLog;
   }
 
-
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     String processInstanceId = builder.getProcessInstanceId();
 
     ExecutionManager executionManager = commandContext.getExecutionManager();

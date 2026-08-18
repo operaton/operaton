@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Util class for comparisons.
  *
@@ -44,7 +46,7 @@ public final class CompareUtil {
    * @param <T> the type of the comparable
    * @return {@code false} if the not null values are in an ascending order or all the values are null, {@code true} otherwise
    */
-  public static <T extends Comparable<T>> boolean areNotInAscendingOrder(T... values) {
+  public static <T extends Comparable<T>> boolean areNotInAscendingOrder(@Nullable T... values) {
     boolean excluding = false;
     if (values != null) {
       excluding = areNotInAscendingOrder(Arrays.asList(values));
@@ -91,7 +93,7 @@ public final class CompareUtil {
    * @param <T> the type of the element
    * @return {@code true} if the element and values are not {@code null} and the values does not contain the element, {@code false} otherwise
    */
-  public static <T> boolean elementIsNotContainedInList(T element, Collection<T> values) {
+  public static <T> boolean elementIsNotContainedInList(@Nullable T element, @Nullable Collection<T> values) {
     if (element != null && values != null) {
       return !values.contains(element);
     }
@@ -108,7 +110,7 @@ public final class CompareUtil {
    * @param <T> the type of the element
    * @return {@code true} if the element and values are not {@code null} and the values does not contain the element, {@code false} otherwise
    */
-  public static <T> boolean elementIsNotContainedInArray(T element, T... values) {
+  public static <T> boolean elementIsNotContainedInArray(@Nullable T element, @Nullable T... values) {
     if (element != null && values != null) {
       return elementIsNotContainedInList(element, Arrays.asList(values));
     }
@@ -126,7 +128,7 @@ public final class CompareUtil {
    * @return {@code true} if the element and values are not {@code null} and the values contain the element,
    *   {@code false} otherwise
    */
-  public static <T> boolean elementIsContainedInList(T element, Collection<T> values) {
+  public static <T> boolean elementIsContainedInList(@Nullable T element, @Nullable Collection<T> values) {
     if (element != null && values != null) {
       return values.contains(element);
     }
@@ -144,7 +146,7 @@ public final class CompareUtil {
    * @return {@code true} if the element and values are not {@code null} and the values contain the element,
    *   {@code false} otherwise
    */
-  public static <T> boolean elementIsContainedInArray(T element, T... values) {
+  public static <T> boolean elementIsContainedInArray(@Nullable T element, @Nullable T... values) {
     if (element != null && values != null) {
       return elementIsContainedInList(element, Arrays.asList(values));
     }
@@ -167,7 +169,7 @@ public final class CompareUtil {
     return obj1.compareTo(obj2) >= 0 ? obj1 : obj2;
   }
 
-  public static <T> boolean elementsAreContainedInArray(Collection<T>  subset, T[]  superset) {
+  public static <T> boolean elementsAreContainedInArray(@Nullable Collection<T>  subset, T @Nullable[]  superset) {
     if (subset != null && !subset.isEmpty() && superset != null && superset.length > 0 && superset.length >= subset.size()) {
       return new HashSet<>(Arrays.asList(superset)).containsAll(subset);
     }

@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.AuthorizationException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
@@ -76,7 +78,7 @@ public class AuthorizationScenarioInstance {
     }
   }
 
-  public void assertAuthorizationException(AuthorizationException e) {
+  public void assertAuthorizationException(@Nullable AuthorizationException e) {
     if (!missingAuthorizations.isEmpty() && e != null) {
       String message = e.getMessage();
 

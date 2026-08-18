@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.migration;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -113,7 +115,7 @@ public class MigrationLogger extends ProcessEngineLogger {
         targetTenantId));
   }
 
-  public ProcessEngineException cannotMigrateInstanceBetweenTenants(String processInstanceId, String sourceTenantId, String targetTenantId) {
+  public ProcessEngineException cannotMigrateInstanceBetweenTenants(String processInstanceId, @Nullable String sourceTenantId, String targetTenantId) {
 
     String detailMessage = null;
     if (sourceTenantId != null) {

@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -1262,7 +1264,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     }
   }
 
-  public void addVariable(String name, Object value, QueryOperator operator, boolean isTaskVariable,
+  public void addVariable(String name, @Nullable Object value, QueryOperator operator, boolean isTaskVariable,
       boolean isProcessInstanceVariable) {
     ensureNotNull("name", name);
 
@@ -1591,7 +1593,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     return noDelegationState;
   }
 
-  public String getDelegationStateString() {
+  public @Nullable String getDelegationStateString() {
     return delegationState != null ? delegationState.toString() : null;
   }
 

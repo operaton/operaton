@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -59,7 +61,7 @@ public final class EnsureUtil {
     }
   }
 
-  public static void ensureNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Object value) {
+  public static void ensureNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, @Nullable Object value) {
     if (value != null) {
       throw generateException(exceptionClass, message, variableName, "is not null");
     }
@@ -147,7 +149,7 @@ public final class EnsureUtil {
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, Collection collection) {
+  public static void ensureEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, @Nullable Collection collection) {
     if (collection != null && !collection.isEmpty()) {
       String variableName = collection.iterator().next().toString();
       throw generateException(exceptionClass, message, variableName, "is not empty");

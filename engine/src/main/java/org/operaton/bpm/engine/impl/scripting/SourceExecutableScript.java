@@ -23,6 +23,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
 import org.operaton.bpm.engine.ScriptCompilationException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.delegate.VariableScope;
@@ -98,7 +100,7 @@ public class SourceExecutableScript extends CompiledExecutableScript {
     }
   }
 
-  public CompiledScript compile(ScriptEngine scriptEngine, String language, String src) {
+  public @Nullable CompiledScript compile(ScriptEngine scriptEngine, String language, String src) {
     if (scriptEngine instanceof Compilable compilingEngine && !"ecmascript".equalsIgnoreCase(scriptEngine.getFactory().getLanguageName())) {
       try {
         CompiledScript compiledScript = compilingEngine.compile(src);

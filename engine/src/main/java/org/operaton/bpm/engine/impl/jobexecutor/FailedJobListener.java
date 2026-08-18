@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -44,7 +46,7 @@ public class FailedJobListener implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     if (isJobReacquired(commandContext)) {
       // skip failed listener if job has been already re-acquired
       LOG.debugFailedJobListenerSkipped(jobFailureCollector.getJobId());
@@ -118,7 +120,7 @@ public class FailedJobListener implements Command<Void> {
     }
 
     @Override
-    public Void execute(CommandContext commandContext) {
+    public @Nullable Void execute(CommandContext commandContext) {
       JobEntity job = commandContext
           .getJobManager()
           .findJobById(jobId);

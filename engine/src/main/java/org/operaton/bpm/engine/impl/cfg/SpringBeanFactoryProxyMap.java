@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.BeanFactory;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -38,7 +39,7 @@ public class SpringBeanFactoryProxyMap implements Map<Object, Object> {
   }
 
   @Override
-  public Object get(Object key) {
+  public @Nullable Object get(Object key) {
     if ( (key==null) || (!String.class.isAssignableFrom(key.getClass())) ) {
       return null;
     }

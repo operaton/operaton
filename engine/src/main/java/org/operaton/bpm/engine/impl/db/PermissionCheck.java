@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.db;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 
@@ -46,7 +48,7 @@ public class PermissionCheck {
     return permission;
   }
 
-  public void setPermission(Permission permission) {
+  public void setPermission(@Nullable Permission permission) {
     this.permission = permission;
     if (permission != null) {
       perms = permission.getValue();
@@ -61,7 +63,7 @@ public class PermissionCheck {
     return resource;
   }
 
-  public void setResource(Resource resource) {
+  public void setResource(@Nullable Resource resource) {
     this.resource = resource;
 
     if (resource != null) {

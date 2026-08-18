@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ModificationBuilderImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.ProcessInstanceModificationBuilderImpl;
@@ -44,7 +46,7 @@ public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void
    }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     List<AbstractProcessInstanceModificationCommand> instructions = builder.getInstructions();
     ensureNotEmpty(BadUserRequestException.class,
         "Modification instructions cannot be empty", instructions);

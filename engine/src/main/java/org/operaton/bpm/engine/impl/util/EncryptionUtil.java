@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 public final class EncryptionUtil {
 
   private EncryptionUtil() {
   }
 
-  public static String saltPassword(String password, String salt) {
+  public static String saltPassword(String password, @Nullable String salt) {
     // Before version 7.7 no salt was used. Thus, if no salt
     // is available an empty salt should be used.
     if(salt == null){

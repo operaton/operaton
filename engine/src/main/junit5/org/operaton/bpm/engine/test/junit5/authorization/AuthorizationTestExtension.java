@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -111,7 +112,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    *
    * @param userId the user ID to authenticate (can be null)
    */
-  public void enableAuthorization(String userId) {
+  public void enableAuthorization(@Nullable String userId) {
     processEngineExtension.getProcessEngine().getProcessEngineConfiguration().setAuthorizationEnabled(true);
     if (userId != null) {
       processEngineExtension.getProcessEngine().getIdentityService().setAuthenticatedUserId(userId);

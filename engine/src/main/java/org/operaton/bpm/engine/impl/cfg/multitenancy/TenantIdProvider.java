@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cfg.multitenancy;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 /**
@@ -38,7 +40,7 @@ public interface TenantIdProvider {
    * @param ctx holds information about the process instance which is about to be started.
    * @return a tenant id or null if case the implementation does not assign a tenant id to the process instance
    */
-  String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx);
+  @Nullable String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx);
 
   /**
    * Invoked when a case instance is started and the Case Definition does not have a tenant id.
@@ -48,7 +50,7 @@ public interface TenantIdProvider {
    * @param ctx holds information about the case instance which is about to be started.
    * @return a tenant id or null if case the implementation does not assign a tenant id to case process instance
    */
-  String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx);
+  @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx);
 
   /**
    * Invoked when a historic decision instance is created and the Decision Definition or the Execution does not have a tenant id.
@@ -58,6 +60,6 @@ public interface TenantIdProvider {
    * @param ctx holds information about the decision definition and the execution.
    * @return a tenant id or null if case the implementation does not assign a tenant id to the historic decision instance
    */
-  String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx);
+  @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx);
 
 }

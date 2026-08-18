@@ -32,6 +32,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.operaton.bpm.engine.ActivityTypes;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -1635,7 +1637,7 @@ public class BpmnParse extends Parse {
     }
   }
 
-  public ActivityImpl parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scopeElement) {
+  public @Nullable ActivityImpl parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scopeElement) {
     Element signalEventDefinitionElement = intermediateEventElement.element(SIGNAL_EVENT_DEFINITION);
     Element compensateEventDefinitionElement = intermediateEventElement.element(COMPENSATE_EVENT_DEFINITION);
     Element linkEventDefinitionElement = intermediateEventElement.element(LINK_EVENT_DEFINITION);
@@ -1821,7 +1823,7 @@ public class BpmnParse extends Parse {
    * Parses loopCharacteristics (standardLoop/Multi-instance) of an activity, if
    * any is defined.
    */
-  public ScopeImpl parseMultiInstanceLoopCharacteristics(Element activityElement, ScopeImpl scope) {
+  public @Nullable ScopeImpl parseMultiInstanceLoopCharacteristics(Element activityElement, ScopeImpl scope) {
 
     Element miLoopCharacteristics = activityElement.element("multiInstanceLoopCharacteristics");
     if (miLoopCharacteristics == null) {
@@ -2048,7 +2050,7 @@ public class BpmnParse extends Parse {
     }
   }
 
-  public String parseDocumentation(Element element) {
+  public @Nullable String parseDocumentation(Element element) {
     List<Element> docElements = element.elements(PROPERTYNAME_DOCUMENTATION);
     List<String> docStrings = new ArrayList<>();
     for (Element e : docElements) {
@@ -2058,7 +2060,7 @@ public class BpmnParse extends Parse {
     return parseDocumentation(docStrings);
   }
 
-  public static String parseDocumentation(List<String> docStrings) {
+  public static @Nullable String parseDocumentation(List<String> docStrings) {
     if (docStrings.isEmpty()) {
       return null;
     }
@@ -4260,7 +4262,7 @@ public class BpmnParse extends Parse {
    * @param propertyType
    *          The type of the property.
    */
-  public void parsePropertyCustomExtensions(ActivityImpl activity, Element propertyElement, String propertyName, String propertyType) {
+  public void parsePropertyCustomExtensions(ActivityImpl activity, Element propertyElement, String propertyName, @Nullable String propertyType) {
 
     if (propertyType == null) {
       String type = propertyElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, TYPE);
@@ -4686,7 +4688,7 @@ public class BpmnParse extends Parse {
     return processDefinitions;
   }
 
-  public ProcessDefinitionEntity getProcessDefinition(String processDefinitionKey) {
+  public @Nullable ProcessDefinitionEntity getProcessDefinition(String processDefinitionKey) {
     for (ProcessDefinitionEntity processDefinition : processDefinitions) {
       if (processDefinition.getKey().equals(processDefinitionKey)) {
         return processDefinition;
@@ -4737,7 +4739,7 @@ public class BpmnParse extends Parse {
     return this;
   }
 
-  public Boolean parseBooleanAttribute(String booleanText, boolean defaultValue) {
+  public @Nullable Boolean parseBooleanAttribute(@Nullable String booleanText, boolean defaultValue) {
     if (booleanText == null) {
       return defaultValue;
     } else {
@@ -4745,7 +4747,7 @@ public class BpmnParse extends Parse {
     }
   }
 
-  public Boolean parseBooleanAttribute(String booleanText) {
+  public @Nullable Boolean parseBooleanAttribute(String booleanText) {
     if (TRUE.equals(booleanText) || "enabled".equals(booleanText) || "on".equals(booleanText) || "active".equals(booleanText) || "yes".equals(booleanText)) {
       return Boolean.TRUE;
     }
@@ -4805,7 +4807,7 @@ public class BpmnParse extends Parse {
     return jobDeclarations;
   }
 
-  public List<JobDeclaration<?, ?>> getJobDeclarationsByKey(String processDefinitionKey) {
+  public @Nullable List<JobDeclaration<?, ?>> getJobDeclarationsByKey(String processDefinitionKey) {
     return jobDeclarations.get(processDefinitionKey);
   }
 

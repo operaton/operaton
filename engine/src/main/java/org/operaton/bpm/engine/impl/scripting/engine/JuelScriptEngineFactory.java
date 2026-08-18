@@ -24,6 +24,8 @@ import java.util.List;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Factory to create {@link JuelScriptEngine}s.
  *
@@ -107,7 +109,7 @@ public class JuelScriptEngineFactory implements ScriptEngineFactory {
   }
 
   @Override
-  public String getParameter(String key) {
+  public @Nullable String getParameter(String key) {
     if (ScriptEngine.NAME.equals(key)) {
       return getLanguageName();
     } else if (ScriptEngine.ENGINE.equals(key)) {

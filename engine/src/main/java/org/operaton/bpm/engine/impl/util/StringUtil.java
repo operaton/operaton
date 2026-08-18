@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngine;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -71,7 +73,7 @@ public final class StringUtil {
     return !expressionManager.createExpression(text).isLiteralText();
   }
 
-  public static String[] split(String text, String regex) {
+  public static String[] split(@Nullable String text, @Nullable String regex) {
     if (text == null) {
       return new String[0];
     }
@@ -161,7 +163,7 @@ public final class StringUtil {
    * @param string the input that might be trimmed if maximum length is exceeded
    * @return the input, eventually trimmed to {@link #DB_MAX_STRING_LENGTH}
    */
-  public static String trimToMaximumLengthAllowed(String string) {
+  public static String trimToMaximumLengthAllowed(@Nullable String string) {
     if (string != null && string.length() > DB_MAX_STRING_LENGTH) {
       return string.substring(0, DB_MAX_STRING_LENGTH);
     }

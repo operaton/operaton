@@ -16,14 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
@@ -44,11 +40,7 @@ import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableCollectionProvider;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceFactory;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableListenerInvocationListener;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore;
+import org.operaton.bpm.engine.impl.core.variable.scope.*;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore.VariablesProvider;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
@@ -893,7 +885,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   /** ensures initialization and returns the parent */
   @Override
-  public ExecutionEntity getParent() {
+  public @Nullable ExecutionEntity getParent() {
     ensureParentInitialized();
     return parent;
   }
@@ -927,7 +919,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public ExecutionEntity getSuperExecution() {
+  public @NonNull ExecutionEntity getSuperExecution() {
     ensureSuperExecutionInitialized();
     return superExecution;
   }
@@ -1960,7 +1952,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public FlowElement getBpmnModelElementInstance() {
+  public @Nullable FlowElement getBpmnModelElementInstance() {
     BpmnModelInstance bpmnModelInstance = getBpmnModelInstance();
     if (bpmnModelInstance != null) {
 
@@ -1986,7 +1978,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public BpmnModelInstance getBpmnModelInstance() {
+  public @Nullable BpmnModelInstance getBpmnModelInstance() {
     if (processDefinitionId != null) {
       return Context.getProcessEngineConfiguration().getDeploymentCache()
           .findBpmnModelInstanceForProcessDefinition(processDefinitionId);

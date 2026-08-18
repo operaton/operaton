@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.digest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * In order to distinguish between the used hashed algorithm
  * for the password encryption, as prefix is persisted with the
@@ -35,7 +37,7 @@ public class DatabasePrefixHandler {
     return "{%s}".formatted(algorithmName);
   }
 
-  public String retrieveAlgorithmName(String encryptedPasswordWithPrefix) {
+  public @Nullable String retrieveAlgorithmName(String encryptedPasswordWithPrefix) {
     Matcher matcher = pattern.matcher(encryptedPasswordWithPrefix);
     if(matcher.find()){
       return matcher.group(1);
@@ -43,7 +45,7 @@ public class DatabasePrefixHandler {
     return null;
   }
 
-  public String removePrefix(String encryptedPasswordWithPrefix) {
+  public @Nullable String removePrefix(String encryptedPasswordWithPrefix) {
     int index = encryptedPasswordWithPrefix.indexOf("}");
     if(!encryptedPasswordWithPrefix.startsWith("{") || index < 0){
       return null;

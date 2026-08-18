@@ -50,6 +50,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -1835,7 +1836,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   @SuppressWarnings("unused")
-  public static void initSqlSessionFactoryProperties(Properties properties, String databaseTablePrefix, String databaseType) {
+  public static void initSqlSessionFactoryProperties(Properties properties, String databaseTablePrefix, @Nullable String databaseType) {
 
     if (databaseType != null) {
       properties.put("limitBefore", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeStatements().get(databaseType));
@@ -2906,7 +2907,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     this.historyLevel = historyLevel;
   }
 
-  public HistoryLevel getDefaultHistoryLevel() {
+  public @Nullable HistoryLevel getDefaultHistoryLevel() {
     if (historyLevels != null) {
       for (HistoryLevel historyLvl : historyLevels) {
         if (HISTORY_DEFAULT.equalsIgnoreCase(historyLvl.getName())) {
@@ -3733,7 +3734,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public EventHandler getEventHandler(String eventType) {
+  public @Nullable EventHandler getEventHandler(String eventType) {
     return eventHandlers.get(eventType);
   }
 
@@ -3874,7 +3875,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     this.customHistoryEventHandlers = customHistoryEventHandlers;
   }
 
-  public IncidentHandler getIncidentHandler(String incidentType) {
+  public @Nullable IncidentHandler getIncidentHandler(String incidentType) {
     return incidentHandlers.get(incidentType);
   }
 

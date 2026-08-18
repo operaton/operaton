@@ -19,12 +19,9 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.CLOSED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.FAILED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
+import org.jspecify.annotations.Nullable;
+
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.*;
 
 /**
  * @author Sebastian Menski
@@ -43,10 +40,10 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
   protected int state;
 
   /** the case instance which started this case instance */
-  protected String superCaseInstanceId;
+  protected @Nullable String superCaseInstanceId;
 
   /** the process instance which started this case instance */
-  protected String superProcessInstanceId;
+  protected @Nullable String superProcessInstanceId;
 
   /** id of the tenant which belongs to the case instance  */
   protected String tenantId;
@@ -83,7 +80,7 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
     createUserId = userId;
   }
 
-  public String getSuperCaseInstanceId() {
+  public @Nullable String getSuperCaseInstanceId() {
     return superCaseInstanceId;
   }
 
@@ -91,7 +88,7 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
     this.superCaseInstanceId = superCaseInstanceId;
   }
 
-  public String getSuperProcessInstanceId() {
+  public @Nullable String getSuperProcessInstanceId() {
     return superProcessInstanceId;
   }
 

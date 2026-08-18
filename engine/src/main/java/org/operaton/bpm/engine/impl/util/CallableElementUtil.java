@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
@@ -53,7 +55,7 @@ public final class CallableElementUtil {
     return getCalledProcessDefinition(execution, callableElement, processDefinitionKey, tenantId);
   }
 
-  public static ProcessDefinition getStaticallyBoundProcessDefinition(
+  public static @Nullable ProcessDefinition getStaticallyBoundProcessDefinition(
       String callingProcessDefinitionId,
       String activityId,
       BaseCallableElement callableElement,

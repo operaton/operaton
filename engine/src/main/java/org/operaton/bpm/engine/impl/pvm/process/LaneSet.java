@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.pvm.process;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
  * A BPMN 2.0 LaneSet, containg {@link Lane}s, currently only used for
@@ -61,7 +63,7 @@ public class LaneSet {
     getLanes().add(laneToAdd);
   }
 
-  public Lane getLaneForId(String id) {
+  public @Nullable Lane getLaneForId(String id) {
     if(lanes != null && !lanes.isEmpty()) {
       for(Lane lane : lanes) {
         if(id.equals(lane.getId())) {

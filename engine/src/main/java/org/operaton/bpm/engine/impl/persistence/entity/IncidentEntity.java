@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -349,7 +351,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     this.processInstanceId = processInstanceId;
   }
 
-  public ProcessDefinitionEntity getProcessDefinition() {
+  public @Nullable ProcessDefinitionEntity getProcessDefinition() {
     if (processDefinitionId != null) {
       return Context
           .getProcessEngineConfiguration()
@@ -414,7 +416,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     return jobDefinitionId;
   }
 
-  public void setExecution(ExecutionEntity execution) {
+  public void setExecution(@Nullable ExecutionEntity execution) {
     ExecutionEntity oldExecution = getExecution();
     if (oldExecution != null) {
       oldExecution.removeIncident(this);
@@ -431,7 +433,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     }
   }
 
-  public ExecutionEntity getExecution() {
+  public @Nullable ExecutionEntity getExecution() {
     if(executionId != null) {
       ExecutionEntity execution = Context.getCommandContext()
         .getExecutionManager()

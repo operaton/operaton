@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -54,7 +56,7 @@ public class RepeatingFailedJobListener implements TransactionListener {
     }
 
     @Override
-    public Void execute(CommandContext commandContext) {
+    public @Nullable Void execute(CommandContext commandContext) {
 
       TimerEntity failedJob = (TimerEntity) commandContext
           .getJobManager()

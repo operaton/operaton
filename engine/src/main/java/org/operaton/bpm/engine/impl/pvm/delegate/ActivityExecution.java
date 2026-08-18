@@ -19,14 +19,12 @@ package org.operaton.bpm.engine.impl.pvm.delegate;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnCaseInstance;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
-import org.operaton.bpm.engine.impl.pvm.PvmActivity;
-import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
-import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
-import org.operaton.bpm.engine.impl.pvm.PvmScope;
-import org.operaton.bpm.engine.impl.pvm.PvmTransition;
+import org.operaton.bpm.engine.impl.pvm.*;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
@@ -117,9 +115,9 @@ public interface ActivityExecution extends DelegateExecution {
   CmmnCaseInstance createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey);
 
   /**
-   * returns the parent of this execution, or null if there no parent.
+   * returns the parent of this execution, or null if there is no parent.
    */
-  ActivityExecution getParent();
+  @Nullable ActivityExecution getParent();
 
   /**
    * returns the list of execution of which this execution the parent of.

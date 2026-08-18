@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
@@ -32,7 +34,7 @@ public class DeleteUserInfoCmd implements Command<Object> {
   }
 
   @Override
-  public String execute(CommandContext commandContext) {
+  public @Nullable String execute(CommandContext commandContext) {
     commandContext
       .getIdentityInfoManager()
       .deleteUserInfoByUserIdAndKey(userId, key);

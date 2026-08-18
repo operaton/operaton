@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.context.Context;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
@@ -183,7 +185,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
     return execution;
   }
 
-  public void setExecution(ExecutionEntity execution) {
+  public void setExecution(@Nullable ExecutionEntity execution) {
     if(execution != null) {
       this.execution = execution;
       this.executionId = execution.getId();
@@ -218,7 +220,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
     }
   }
 
-  public void setActivity(ActivityImpl activity) {
+  public void setActivity(@Nullable ActivityImpl activity) {
     this.activity = activity;
     if(activity != null) {
       this.activityId = activity.getId();

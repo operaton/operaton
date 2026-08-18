@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.delegate.ScriptInvocation;
@@ -67,7 +69,7 @@ public class ScriptTaskActivityBehavior extends TaskActivityBehavior {
    * @return the BpmnError that was the cause of this exception or null if no
    *         BpmnError was found
    */
-  protected BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
+  protected @Nullable BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
     if (e instanceof BpmnError bpmnError) {
       return bpmnError;
     } else if (e.getCause() == null) {

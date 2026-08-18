@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -50,7 +52,7 @@ public class DeleteIdentityLinkForProcessDefinitionCmd implements Command<Object
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
       .getCommandContext()
       .getProcessDefinitionManager()

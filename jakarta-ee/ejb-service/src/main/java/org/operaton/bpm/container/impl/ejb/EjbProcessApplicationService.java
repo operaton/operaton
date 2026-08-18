@@ -17,11 +17,9 @@
 package org.operaton.bpm.container.impl.ejb;
 
 import java.util.Set;
-import jakarta.ejb.EJB;
-import jakarta.ejb.Local;
-import jakarta.ejb.Stateless;
-import jakarta.ejb.TransactionAttribute;
-import jakarta.ejb.TransactionAttributeType;
+import jakarta.ejb.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationInfo;
@@ -46,7 +44,7 @@ public class EjbProcessApplicationService implements ProcessApplicationService {
   }
 
   @Override
-  public ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
+  public @Nullable ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
     return ejbBpmPlatform.getProcessApplicationService().getProcessApplicationInfo(processApplicationName);
   }
 

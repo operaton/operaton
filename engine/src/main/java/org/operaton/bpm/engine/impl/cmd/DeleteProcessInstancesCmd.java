@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 /**
@@ -41,7 +43,7 @@ public class DeleteProcessInstancesCmd extends AbstractDeleteProcessInstanceCmd 
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     deleteProcessInstances(commandContext, processInstanceIds);
     return null;
   }

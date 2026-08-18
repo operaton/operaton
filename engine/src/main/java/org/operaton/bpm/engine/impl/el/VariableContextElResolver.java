@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.el;
 
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -31,7 +32,7 @@ public class VariableContextElResolver extends ELResolver {
   public static final String VAR_CTX_KEY = "variableContext";
 
   @Override
-  public Object getValue(ELContext context, Object base, Object property) {
+  public @Nullable Object getValue(ELContext context, Object base, Object property) {
     if (base == null) {
       VariableContext variableContext = (VariableContext) context.getContext(VariableContext.class);
       if(variableContext != null) {

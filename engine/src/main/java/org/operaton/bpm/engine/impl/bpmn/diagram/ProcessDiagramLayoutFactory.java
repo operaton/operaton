@@ -33,6 +33,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -82,7 +84,7 @@ public class ProcessDiagramLayoutFactory {
    *          by {@link ImageIO} may also work)
    * @return Layout of the process diagram. Will return {@code null} when parameter imageStream is {@code null}.
    */
-  public DiagramLayout getProcessDiagramLayout(InputStream bpmnXmlStream, InputStream imageStream) {
+  public @Nullable DiagramLayout getProcessDiagramLayout(InputStream bpmnXmlStream, InputStream imageStream) {
     Document bpmnModel = parseXml(bpmnXmlStream);
     return getBpmnProcessDiagramLayout(bpmnModel, imageStream);
   }
@@ -98,7 +100,7 @@ public class ProcessDiagramLayoutFactory {
    *          by {@link ImageIO} may also work)
    * @return Layout of the process. Will return {@code null} when parameter imageStream is {@code null}.
    */
-  public DiagramLayout getBpmnProcessDiagramLayout(Document bpmnModel, InputStream imageStream) {
+  public @Nullable DiagramLayout getBpmnProcessDiagramLayout(Document bpmnModel, @Nullable InputStream imageStream) {
     if (imageStream == null) {
       return null;
     }

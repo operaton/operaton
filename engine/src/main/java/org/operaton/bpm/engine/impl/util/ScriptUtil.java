@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -66,7 +68,7 @@ public final class ScriptUtil {
    * @return the newly created script
    * @throws NotValidException if language is null or empty or both of source and resource are invalid
    */
-  public static ExecutableScript getScript(String language, String source, String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScript(String language, String source, @Nullable String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureAtLeastOneNotNull(NotValidException.class, "No script source or resource was given", source, resource);
     if (resource != null && !resource.isEmpty()) {

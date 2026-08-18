@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -48,7 +50,7 @@ public class HistoryCleanupSchedulerCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
       reportMetrics(commandContext);
 
     JobEntity jobEntity = commandContext.getJobManager().findJobById(jobId);

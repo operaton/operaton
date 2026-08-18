@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.Page;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.auth.ResourceAuthorizationProvider;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
@@ -68,7 +70,7 @@ public class DecisionRequirementsDefinitionManager extends AbstractManager imple
   /**
    * @return the latest version of the decision requirements definition with the given key and tenant id
    */
-  public DecisionRequirementsDefinitionEntity findLatestDecisionRequirementsDefinitionByKeyAndTenantId(String decisionRequirementsDefinitionKey, String tenantId) {
+  public DecisionRequirementsDefinitionEntity findLatestDecisionRequirementsDefinitionByKeyAndTenantId(String decisionRequirementsDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put("decisionRequirementsDefinitionKey", decisionRequirementsDefinitionKey);
     parameters.put("tenantId", tenantId);
@@ -104,9 +106,8 @@ public class DecisionRequirementsDefinitionManager extends AbstractManager imple
     getTenantManager().configureQuery(query);
   }
 
-
   @Override
-  public DecisionRequirementsDefinitionEntity findLatestDefinitionByKey(String key) {
+  public @Nullable DecisionRequirementsDefinitionEntity findLatestDefinitionByKey(String key) {
     return null;
   }
 
@@ -116,22 +117,22 @@ public class DecisionRequirementsDefinitionManager extends AbstractManager imple
   }
 
   @Override
-  public DecisionRequirementsDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
     return null;
   }
 
   @Override
-  public DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId) {
     return null;
   }
 
   @Override
-  public DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId) {
     return null;
   }
 
   @Override
-  public DecisionRequirementsDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     return null;
   }
 

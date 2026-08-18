@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.batch;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ManagementService;
 
 /**
@@ -100,7 +102,7 @@ public interface Batch {
   /**
    * @return the batch's tenant id or null
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * @return the batch creator's user id

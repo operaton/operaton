@@ -19,9 +19,11 @@ package org.operaton.bpm.container.impl.jmx;
 import java.lang.management.ManagementFactory;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
@@ -175,7 +177,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    *
    */
   @Override
-  public <S> S getService(ServiceType type, String localName) {
+  public <S> @Nullable S getService(ServiceType type, String localName) {
     String globalName = composeLocalName(type, localName);
     ObjectName serviceName = getObjectName(globalName);
     return getService(serviceName);
@@ -186,7 +188,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    *
    */
   @SuppressWarnings("unchecked")
-  public <S> S getService(ObjectName name) {
+  public <S> @Nullable S getService(ObjectName name) {
     return (S) servicesByName.get(name);
   }
 
@@ -195,7 +197,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    * Service exists.
    *
    */
-  public <S> S getServiceValue(ObjectName name) {
+  public <S> @Nullable S getServiceValue(ObjectName name) {
     PlatformService<S> service = getService(name);
     if(service != null) {
       return service.getValue();
@@ -211,7 +213,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    *
    */
   @Override
-  public <S> S getServiceValue(ServiceType type, String localName) {
+  public <S> @Nullable S getServiceValue(ServiceType type, String localName) {
     String globalName = composeLocalName(type, localName);
     ObjectName serviceName = getObjectName(globalName);
     return getServiceValue(serviceName);
@@ -255,7 +257,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    */
   @Override
   @SuppressWarnings("unchecked")
-  public <S> List<S> getServiceValuesByType(ServiceType type) {
+  public <S> @NonNull List<S> getServiceValuesByType(ServiceType type) {
 
     // query the MBeanServer for all services of the given type
     Set<String> serviceNames = getServiceNames(type);

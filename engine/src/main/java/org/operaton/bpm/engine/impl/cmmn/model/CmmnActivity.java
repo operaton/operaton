@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.delegate.VariableListener;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.core.model.CoreActivity;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
@@ -90,7 +92,7 @@ public class CmmnActivity extends CoreActivity {
   // child activity ////////////////////////////////////////////
 
   @Override
-  public CmmnActivity getChildActivity(String activityId) {
+  public @Nullable CmmnActivity getChildActivity(String activityId) {
     return namedActivities.get(activityId);
   }
 
@@ -141,7 +143,7 @@ public class CmmnActivity extends CoreActivity {
     return sentries;
   }
 
-  public CmmnSentryDeclaration getSentry(String sentryId) {
+  public @Nullable CmmnSentryDeclaration getSentry(String sentryId) {
     return sentryMap.get(sentryId);
   }
 

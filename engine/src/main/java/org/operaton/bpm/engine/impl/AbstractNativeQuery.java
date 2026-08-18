@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -82,7 +84,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
 
   @Override
   @SuppressWarnings("unchecked")
-  public U singleResult() {
+  public @Nullable U singleResult() {
     this.resultType = ResultType.SINGLE_RESULT;
     if (commandExecutor != null) {
       return (U) commandExecutor.execute(this);
@@ -122,7 +124,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     if (resultType == ResultType.LIST) {
       return executeList(commandContext, getParameterMap(), 0, Integer.MAX_VALUE);
     } else if (resultType == ResultType.LIST_PAGE) {
@@ -162,7 +164,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
    */
   public abstract List<U> executeList(CommandContext commandContext, Map<String, Object> parameterMap, int firstResult, int maxResults);
 
-  public U executeSingleResult(CommandContext commandContext) {
+  public @Nullable U executeSingleResult(CommandContext commandContext) {
     List<U> results = executeList(commandContext, getParameterMap(), 0, Integer.MAX_VALUE);
     if (results.size() == 1) {
       return results.get(0);

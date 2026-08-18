@@ -21,6 +21,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import org.operaton.bpm.engine.ArtifactFactory;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -59,7 +61,7 @@ public final class ClassDelegateUtil {
 
   }
 
-  public static void applyFieldDeclaration(List<FieldDeclaration> fieldDeclarations, Object target) {
+  public static void applyFieldDeclaration(@Nullable List<FieldDeclaration> fieldDeclarations, Object target) {
     if(fieldDeclarations != null) {
       for(FieldDeclaration declaration : fieldDeclarations) {
         applyFieldDeclaration(declaration, target);

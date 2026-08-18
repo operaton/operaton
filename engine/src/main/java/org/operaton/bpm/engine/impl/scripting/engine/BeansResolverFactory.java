@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.scripting.engine;
 import java.util.Set;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 
 
@@ -38,7 +40,7 @@ public class BeansResolverFactory implements ResolverFactory, Resolver {
   }
 
   @Override
-  public Object get(Object key) {
+  public @Nullable Object get(Object key) {
     return Context.getProcessEngineConfiguration().getBeans().get(key);
   }
 

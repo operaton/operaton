@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
@@ -67,7 +69,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     return createOutgoingTransition(null);
   }
 
-  public TransitionImpl createOutgoingTransition(String transitionId) {
+  public TransitionImpl createOutgoingTransition(@Nullable String transitionId) {
     TransitionImpl transition = new TransitionImpl(transitionId, processDefinition);
     transition.setSource(this);
     outgoingTransitions.add(transition);
@@ -83,7 +85,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   }
 
   @Override
-  public TransitionImpl findOutgoingTransition(String transitionId) {
+  public @Nullable TransitionImpl findOutgoingTransition(String transitionId) {
     return namedOutgoingTransitions.get(transitionId);
   }
 
@@ -189,7 +191,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     return eventScope;
   }
 
-  public void setEventScope(ScopeImpl eventScope) {
+  public void setEventScope(@Nullable ScopeImpl eventScope) {
     if (this.eventScope != null) {
       this.eventScope.getEventActivities().remove(this);
     }
@@ -258,7 +260,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     this.height = height;
   }
 
-  public ActivityImpl getParentFlowScopeActivity() {
+  public @Nullable ActivityImpl getParentFlowScopeActivity() {
     ScopeImpl scope = getFlowScope();
     if(scope != getProcessDefinition()) {
       return (ActivityImpl) scope;
@@ -283,7 +285,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
    *
    * @return the compensation handler or <code>null</code>, if this activity has no compensation handler.
    */
-  public ActivityImpl findCompensationHandler() {
+  public @Nullable ActivityImpl findCompensationHandler() {
     String compensationHandlerId = (String) getProperty(BpmnParse.PROPERTYNAME_COMPENSATION_HANDLER_ID);
     if(compensationHandlerId != null) {
       return getProcessDefinition().findActivity(compensationHandlerId);

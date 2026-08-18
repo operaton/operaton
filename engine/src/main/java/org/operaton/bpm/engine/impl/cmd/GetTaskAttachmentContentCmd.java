@@ -20,6 +20,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
@@ -37,7 +39,7 @@ public class GetTaskAttachmentContentCmd implements Command<InputStream> {
   }
 
   @Override
-  public InputStream execute(CommandContext commandContext) {
+  public @Nullable InputStream execute(CommandContext commandContext) {
     AttachmentEntity attachment = (AttachmentEntity) commandContext
         .getAttachmentManager()
         .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);

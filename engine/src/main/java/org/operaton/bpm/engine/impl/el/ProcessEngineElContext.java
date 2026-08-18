@@ -20,6 +20,7 @@ import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 import jakarta.el.FunctionMapper;
 import jakarta.el.VariableMapper;
+import org.jspecify.annotations.Nullable;
 
 
 /**
@@ -55,7 +56,7 @@ public class ProcessEngineElContext extends ELContext {
   }
 
   @Override
-  public VariableMapper getVariableMapper() {
+  public @Nullable VariableMapper getVariableMapper() {
     return null;
   }
 

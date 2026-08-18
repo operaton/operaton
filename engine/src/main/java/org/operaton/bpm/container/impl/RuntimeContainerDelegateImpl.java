@@ -20,8 +20,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.management.MBeanServer;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.ProcessEngineService;
@@ -30,17 +32,7 @@ import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
-import org.operaton.bpm.container.impl.deployment.Attachments;
-import org.operaton.bpm.container.impl.deployment.DeployProcessArchivesStep;
-import org.operaton.bpm.container.impl.deployment.NotifyPostProcessApplicationUndeployedStep;
-import org.operaton.bpm.container.impl.deployment.ParseProcessesXmlStep;
-import org.operaton.bpm.container.impl.deployment.PostDeployInvocationStep;
-import org.operaton.bpm.container.impl.deployment.PreUndeployInvocationStep;
-import org.operaton.bpm.container.impl.deployment.ProcessesXmlStartProcessEnginesStep;
-import org.operaton.bpm.container.impl.deployment.ProcessesXmlStopProcessEnginesStep;
-import org.operaton.bpm.container.impl.deployment.StartProcessApplicationServiceStep;
-import org.operaton.bpm.container.impl.deployment.StopProcessApplicationServiceStep;
-import org.operaton.bpm.container.impl.deployment.UndeployProcessArchivesStep;
+import org.operaton.bpm.container.impl.deployment.*;
 import org.operaton.bpm.container.impl.jmx.MBeanServiceContainer;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessEngine;
@@ -172,12 +164,12 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
   }
 
   @Override
-  public ProcessEngine getProcessEngine(String name) {
+  public @Nullable ProcessEngine getProcessEngine(String name) {
     return serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, name);
   }
 
   @Override
-  public List<ProcessEngine> getProcessEngines() {
+  public @NonNull List<ProcessEngine> getProcessEngines() {
     return serviceContainer.getServiceValuesByType(ServiceTypes.PROCESS_ENGINE);
   }
 
@@ -204,7 +196,7 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
   }
 
   @Override
-  public ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
+  public @Nullable ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
 
     JmxManagedProcessApplication processApplicationService = serviceContainer.getServiceValue(ServiceTypes.PROCESS_APPLICATION, processApplicationName);
 
@@ -216,7 +208,7 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
   }
 
   @Override
-  public ProcessApplicationReference getDeployedProcessApplication(String processApplicationName) {
+  public @Nullable ProcessApplicationReference getDeployedProcessApplication(String processApplicationName) {
     JmxManagedProcessApplication processApplicationService = serviceContainer.getServiceValue(ServiceTypes.PROCESS_APPLICATION, processApplicationName);
 
     if (processApplicationService == null) {

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
@@ -49,7 +51,7 @@ public class CallableElement extends BaseCallableElement {
 
   // businessKey /////////////////////////////////////////////////////////////////
 
-  public String getBusinessKey(VariableScope variableScope) {
+  public @Nullable String getBusinessKey(VariableScope variableScope) {
     if (businessKeyValueProvider == null) {
       return null;
     }

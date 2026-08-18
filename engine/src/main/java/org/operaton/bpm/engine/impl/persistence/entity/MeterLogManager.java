@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.Direction;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.QueryPropertyImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -139,7 +141,7 @@ public class MeterLogManager extends AbstractManager {
     getDbEntityManager().delete(MeterLogEntity.class, DELETE_ALL_METER, null);
   }
 
-  public void deleteByTimestampAndReporter(Date timestamp, String reporter) {
+  public void deleteByTimestampAndReporter(@Nullable Date timestamp, String reporter) {
     Map<String, Object> parameters = new HashMap<>();
     if (timestamp != null) {
       parameters.put(MILLISECONDS, timestamp.getTime());

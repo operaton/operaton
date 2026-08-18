@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -42,7 +44,7 @@ public class SetAnnotationForIncidentCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     EnsureUtil.ensureNotNull(NotValidException.class, "incident id", incidentId);
 
     IncidentEntity incident = (IncidentEntity) commandContext.getIncidentManager().findIncidentById(incidentId);

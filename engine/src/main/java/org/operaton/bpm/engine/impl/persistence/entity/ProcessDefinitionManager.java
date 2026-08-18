@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessDefinitionQueryImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -67,7 +69,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
    *
    * @see #findLatestProcessDefinitionByKeyAndTenantId(String, String)
    */
-  public ProcessDefinitionEntity findLatestProcessDefinitionByKey(String processDefinitionKey) {
+  public @Nullable ProcessDefinitionEntity findLatestProcessDefinitionByKey(String processDefinitionKey) {
     List<ProcessDefinitionEntity> processDefinitions = findLatestProcessDefinitionsByKey(processDefinitionKey);
 
     if (processDefinitions.isEmpty()) {
@@ -98,7 +100,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
    *
    * @see #findLatestProcessDefinitionByKeyAndTenantId(String, String)
    */
-  public ProcessDefinitionEntity findLatestProcessDefinitionByKeyAndTenantId(String processDefinitionKey, String tenantId) {
+  public ProcessDefinitionEntity findLatestProcessDefinitionByKeyAndTenantId(String processDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
     parameters.put(TENANT_ID, tenantId);
@@ -406,7 +408,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
   }
 
   @Override
-  public ProcessDefinitionEntity findLatestDefinitionByKey(String key) {
+  public @Nullable ProcessDefinitionEntity findLatestDefinitionByKey(String key) {
     return findLatestProcessDefinitionByKey(key);
   }
 

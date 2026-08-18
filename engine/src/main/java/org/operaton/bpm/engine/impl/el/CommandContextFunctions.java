@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.context.Context;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 /**
@@ -32,7 +34,7 @@ public final class CommandContextFunctions {
   private CommandContextFunctions() {
   }
 
-  public static String currentUser() {
+  public static @Nullable String currentUser() {
     CommandContext commandContext = Context.getCommandContext();
     if (commandContext != null) {
       return commandContext.getAuthenticatedUserId();

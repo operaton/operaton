@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.auth.ResourceAuthorizationProvider;
@@ -56,7 +58,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
    *
    * @see #findLatestDecisionDefinitionByKeyAndTenantId(String, String)
    */
-  public DecisionDefinitionEntity findLatestDecisionDefinitionByKey(String decisionDefinitionKey) {
+  public @Nullable DecisionDefinitionEntity findLatestDecisionDefinitionByKey(String decisionDefinitionKey) {
     @SuppressWarnings("unchecked")
     List<DecisionDefinitionEntity> decisionDefinitions = getDbEntityManager().selectList("selectLatestDecisionDefinitionByKey", configureParameterizedQuery(decisionDefinitionKey));
 
@@ -76,7 +78,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
    *
    * @see #findLatestDecisionDefinitionByKey(String)
    */
-  public DecisionDefinitionEntity findLatestDecisionDefinitionByKeyAndTenantId(String decisionDefinitionKey, String tenantId) {
+  public DecisionDefinitionEntity findLatestDecisionDefinitionByKeyAndTenantId(String decisionDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
     parameters.put(TENANT_ID, tenantId);
@@ -95,7 +97,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
     return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByKeyAndVersion", configureParameterizedQuery(parameters));
   }
 
-  public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, String tenantId) {
+  public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -108,7 +110,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   }
 
   @SuppressWarnings("unchecked")
-  public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, String decisionDefinitionVersionTag, String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, String decisionDefinitionVersionTag, String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersionTag", decisionDefinitionVersionTag);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -184,7 +186,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   }
 
   @Override
-  public DecisionDefinitionEntity findLatestDefinitionByKey(String key) {
+  public @Nullable DecisionDefinitionEntity findLatestDefinitionByKey(String key) {
     return findLatestDecisionDefinitionByKey(key);
   }
 
@@ -204,7 +206,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   }
 
   @Override
-  public DecisionDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId) {
     return findDecisionDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId);
   }
 

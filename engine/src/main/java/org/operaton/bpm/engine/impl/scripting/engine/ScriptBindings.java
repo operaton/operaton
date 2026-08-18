@@ -28,6 +28,8 @@ import javax.script.Bindings;
 import javax.script.ScriptEngine;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 
@@ -168,7 +170,7 @@ public class ScriptBindings implements Bindings {
   }
 
   @Override
-  public Object remove(Object key) {
+  public @Nullable Object remove(Object key) {
     if (UNSTORED_KEYS.contains(key)) {
       return null;
     }

@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -40,7 +42,7 @@ public class UnregisterDeploymentCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkUnregisterDeployment);
     Context.getProcessEngineConfiguration().getRegisteredDeployments().removeAll(deploymentIds);
     return null;

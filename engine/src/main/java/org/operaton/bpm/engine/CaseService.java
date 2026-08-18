@@ -19,16 +19,12 @@ package org.operaton.bpm.engine;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
-import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.CaseInstanceBuilder;
-import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
@@ -717,7 +713,7 @@ public interface CaseService {
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  Object getVariable(String caseExecutionId, String variableName);
+  @Nullable Object getVariable(String caseExecutionId, String variableName);
 
   /**
    * <p>Searching for the variable is done in all scopes that are visible
@@ -735,7 +731,7 @@ public interface CaseService {
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  <T extends TypedValue> T getVariableTyped(String caseExecutionId, String variableName);
+  <T extends TypedValue> @Nullable T getVariableTyped(String caseExecutionId, String variableName);
 
   /**
    * <p>Searching for the variable is done in all scopes that are visible
@@ -754,7 +750,7 @@ public interface CaseService {
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  <T extends TypedValue> T getVariableTyped(String caseExecutionId, String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableTyped(String caseExecutionId, String variableName, boolean deserializeValue);
 
   /**
    * <p>The variable value for an case execution. Returns the value when the variable is set
@@ -772,7 +768,7 @@ public interface CaseService {
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  Object getVariableLocal(String caseExecutionId, String variableName);
+  @Nullable Object getVariableLocal(String caseExecutionId, String variableName);
 
   /**
    * <p>The variable value for an case execution. Returns the value when the variable is set
@@ -790,7 +786,7 @@ public interface CaseService {
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  <T extends TypedValue> T getVariableLocalTyped(String caseExecutionId, String variableName);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String caseExecutionId, String variableName);
 
   /**
    * <p>The variable value for an case execution. Returns the value when the variable is set
@@ -809,7 +805,7 @@ public interface CaseService {
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  <T extends TypedValue> T getVariableLocalTyped(String caseExecutionId, String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String caseExecutionId, String variableName, boolean deserializeValue);
 
   /**
    * <p>Pass a map of variables to the case execution. If the variables do not already

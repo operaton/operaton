@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
  * Stores a two-dimensional graph layout.
@@ -39,7 +41,7 @@ public class DiagramLayout implements Serializable {
     this.setElements(elements);
   }
 
-  public DiagramNode getNode(String id) {
+  public @Nullable DiagramNode getNode(String id) {
     DiagramElement element = getElements().get(id);
     if (element instanceof DiagramNode diagramNode) {
       return diagramNode;
@@ -48,7 +50,7 @@ public class DiagramLayout implements Serializable {
     }
   }
 
-  public DiagramEdge getEdge(String id) {
+  public @Nullable DiagramEdge getEdge(String id) {
     DiagramElement element = getElements().get(id);
     if (element instanceof DiagramEdge diagramEdge) {
       return diagramEdge;

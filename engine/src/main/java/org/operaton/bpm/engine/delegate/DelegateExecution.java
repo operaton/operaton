@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.Incident;
 
@@ -92,7 +94,7 @@ public interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecu
    *
    * @return the super execution or null.
    */
-  DelegateExecution getSuperExecution();
+  @Nullable DelegateExecution getSuperExecution();
 
   /**
    * Returns whether this execution has been canceled.

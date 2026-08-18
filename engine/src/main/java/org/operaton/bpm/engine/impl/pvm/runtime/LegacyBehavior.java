@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.pvm.runtime;
 import java.util.*;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.behavior.*;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -223,7 +225,7 @@ public final class LegacyBehavior {
    * @param activityExecutionMapping
    * @return
    */
-  public static PvmExecutionImpl getScopeExecution(ScopeImpl scope, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping) {
+  public static @Nullable PvmExecutionImpl getScopeExecution(ScopeImpl scope, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping) {
     ScopeImpl flowScope = scope.getFlowScope();
     return activityExecutionMapping.get(flowScope);
   }

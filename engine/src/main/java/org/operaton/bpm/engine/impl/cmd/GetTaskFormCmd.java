@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
@@ -37,7 +39,7 @@ public class GetTaskFormCmd implements Command<TaskFormData> {
   }
 
   @Override
-  public TaskFormData execute(CommandContext commandContext) {
+  public @Nullable TaskFormData execute(CommandContext commandContext) {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
     ensureNotNull("No task found for taskId '%s'".formatted(taskId), "task", task);

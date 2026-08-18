@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEntity;
@@ -52,7 +54,7 @@ public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
    */
   protected Map<Class<?>, List> deployedArtifacts;
 
-  public ResourceEntity getResource(String resourceName) {
+  public @Nullable ResourceEntity getResource(String resourceName) {
     return getResources().get(resourceName);
   }
 
@@ -111,7 +113,7 @@ public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> getDeployedArtifacts(Class<T> clazz) {
+  public <T> @Nullable List<T> getDeployedArtifacts(Class<T> clazz) {
     if(deployedArtifacts == null) {
       return Collections.emptyList();
     } else {
@@ -200,22 +202,22 @@ public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
   }
 
   @Override
-  public List<ProcessDefinition> getDeployedProcessDefinitions() {
+  public @Nullable List<ProcessDefinition> getDeployedProcessDefinitions() {
     return deployedArtifacts == null ? null : deployedArtifacts.get(ProcessDefinitionEntity.class);
   }
 
   @Override
-  public List<CaseDefinition> getDeployedCaseDefinitions() {
+  public @Nullable List<CaseDefinition> getDeployedCaseDefinitions() {
     return deployedArtifacts == null ? null : deployedArtifacts.get(CaseDefinitionEntity.class);
   }
 
   @Override
-  public List<DecisionDefinition> getDeployedDecisionDefinitions() {
+  public @Nullable List<DecisionDefinition> getDeployedDecisionDefinitions() {
     return deployedArtifacts == null ? null : deployedArtifacts.get(DecisionDefinitionEntity.class);
   }
 
   @Override
-  public List<DecisionRequirementsDefinition> getDeployedDecisionRequirementsDefinitions() {
+  public @Nullable List<DecisionRequirementsDefinition> getDeployedDecisionRequirementsDefinitions() {
     return deployedArtifacts == null ? null : deployedArtifacts.get(DecisionRequirementsDefinitionEntity.class);
   }
 

@@ -23,14 +23,9 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -113,7 +108,7 @@ public final class ReflectUtil {
     return Class.forName(className, true, classLoader);
   }
 
-  public static <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {
+  public static <T> Class<? extends T> loadClass(String className, @Nullable ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {
     if(customClassloader != null) {
       return (Class<? extends T>) customClassloader.loadClass(className);
     } else {
@@ -222,16 +217,16 @@ public final class ReflectUtil {
   }
 
   /**
-   * Returns the field of the given object or null if it doesnt exist.
+   * Returns the field of the given object or null if it doesn't exist.
    */
-  public static Field getField(String fieldName, Object object) {
+  public static @Nullable Field getField(String fieldName, Object object) {
     return getField(fieldName, object.getClass());
   }
 
   /**
-   * Returns the field of the given class or null if it doesnt exist.
+   * Returns the field of the given class or null if it doesn't exist.
    */
-  public static Field getField(String fieldName, Class<?> clazz) {
+  public static @Nullable Field getField(String fieldName, Class<?> clazz) {
     Field field = null;
     try {
       field = clazz.getDeclaredField(fieldName);
@@ -240,7 +235,7 @@ public final class ReflectUtil {
       throw LOG.unableToAccessField(field, clazz.getName());
     }
     catch (NoSuchFieldException e) {
-      // for some reason getDeclaredFields doesnt search superclasses
+      // for some reason getDeclaredFields doesn't search superclasses
       // (which getFields() does ... but that gives only public fields)
       Class<?> superClass = clazz.getSuperclass();
       if (superClass != null) {
@@ -296,7 +291,7 @@ public final class ReflectUtil {
   /**
    * Returns the setter-method for the given field name or null if no setter exists.
    */
-  public static Method getSetter(String fieldName, Class<?> clazz, Class<?> fieldType) {
+  public static @Nullable Method getSetter(String fieldName, Class<?> clazz, Class<?> fieldType) {
     String setterName = buildSetterName(fieldName);
     try {
       // Using getMathods(), getMathod(...) expects exact parameter type
@@ -305,7 +300,7 @@ public final class ReflectUtil {
       for(Method method : methods) {
         if(method.getName().equals(setterName)) {
           Class<?>[] paramTypes = method.getParameterTypes();
-          if(paramTypes != null && paramTypes.length == 1 && paramTypes[0].isAssignableFrom(fieldType)) {
+          if(paramTypes.length == 1 && paramTypes[0].isAssignableFrom(fieldType)) {
             return method;
           }
         }
@@ -322,7 +317,7 @@ public final class ReflectUtil {
    * If multiple setters with different parameter types are present, an exception is thrown.
    * If they have the same parameter type, one of those methods is returned.
    */
-  public static Method getSingleSetter(String fieldName, Class<?> clazz) {
+  public static @Nullable Method getSingleSetter(String fieldName, Class<?> clazz) {
     String setterName = buildSetterName(fieldName);
     try {
       // Using getMathods(), getMathod(...) expects exact parameter type

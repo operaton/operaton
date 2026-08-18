@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.el;
 import java.util.List;
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
@@ -48,7 +49,7 @@ public class VariableScopeElResolver extends ELResolver {
   public static final String LOGGED_IN_USER_KEY = "authenticatedUserId";
 
   @Override
-  public Object getValue(ELContext context, Object base, Object property) {
+  public @Nullable Object getValue(ELContext context, Object base, Object property) {
     if (base != null) {
       return null;
     }

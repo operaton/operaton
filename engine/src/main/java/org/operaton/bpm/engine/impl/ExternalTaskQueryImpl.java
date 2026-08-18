@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -278,7 +280,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
     return this;
   }
 
-  public void addVariable(String name, Object value, QueryOperator operator) {
+  public void addVariable(String name, @Nullable Object value, QueryOperator operator) {
     ensureNotNull("name", name);
 
     if(value == null || isBoolean(value)) {

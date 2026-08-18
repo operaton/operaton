@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -65,7 +67,7 @@ public class MessageEventReceivedCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull("executionId", executionId);
 
     EventSubscriptionManager eventSubscriptionManager = commandContext.getEventSubscriptionManager();

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cfg.auth;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
@@ -779,7 +781,7 @@ public class AuthorizationCommandChecker implements CommandChecker {
     }
   }
 
-  public void checkUserOperationLog(UserOperationLogEntry entry,
+  public void checkUserOperationLog(@Nullable UserOperationLogEntry entry,
                                     ProcessDefinitionPermissions processDefinitionPermission,
                                     UserOperationLogCategoryPermissions operationLogCategoryPermission) {
     /*

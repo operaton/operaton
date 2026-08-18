@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.task;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -87,16 +89,16 @@ public interface Task {
   void setDelegationState(DelegationState delegationState);
 
   /** Reference to the process instance or null if it is not related to a process instance. */
-  String getProcessInstanceId();
+  @Nullable String getProcessInstanceId();
 
   /** Reference to the path of execution or null if it is not related to a process instance. */
-  String getExecutionId();
+  @Nullable String getExecutionId();
 
   /** Reference to the process definition or null if it is not related to a process. */
-  String getProcessDefinitionId();
+  @Nullable String getProcessDefinitionId();
 
   /** Reference to the case instance or null if it is not related to a case instance. */
-  String getCaseInstanceId();
+  @Nullable String getCaseInstanceId();
 
   /**
    * The case instance id for which this task is associated for.
@@ -104,10 +106,10 @@ public interface Task {
   void setCaseInstanceId(String caseInstanceId);
 
   /** Reference to the path of case execution or null if it is not related to a case instance. */
-  String getCaseExecutionId();
+  @Nullable String getCaseExecutionId();
 
   /** Reference to the case definition or null if it is not related to a case. */
-  String getCaseDefinitionId();
+  @Nullable String getCaseDefinitionId();
 
   /** The date/time when this task was created */
   Date getCreateTime();
@@ -120,7 +122,7 @@ public interface Task {
   Date getLastUpdated();
 
   /** The id of the activity in the process defining this task or null if this is not related to a process */
-  String getTaskDefinitionKey();
+  @Nullable String getTaskDefinitionKey();
 
   /** Due date of the task. */
   Date getDueDate();
@@ -177,7 +179,7 @@ public interface Task {
    * @return the task's tenant id or null
    *
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * Sets the tenant id for this task.

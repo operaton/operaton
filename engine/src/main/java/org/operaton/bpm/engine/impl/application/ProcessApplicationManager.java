@@ -24,6 +24,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.ProcessApplicationLogger;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -48,7 +50,7 @@ public class ProcessApplicationManager {
 
   protected Map<String, DefaultProcessApplicationRegistration> registrationsByDeploymentId = new HashMap<>();
 
-  public ProcessApplicationReference getProcessApplicationForDeployment(String deploymentId) {
+  public @Nullable ProcessApplicationReference getProcessApplicationForDeployment(String deploymentId) {
     DefaultProcessApplicationRegistration registration = registrationsByDeploymentId.get(deploymentId);
     if (registration != null) {
       return registration.getReference();

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.el;
 import java.util.Map;
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 
@@ -38,7 +39,7 @@ public class ReadOnlyMapELResolver extends ELResolver {
   }
 
   @Override
-  public Object getValue(ELContext context, Object base, Object property) {
+  public @Nullable Object getValue(ELContext context, Object base, Object property) {
     if (base == null && wrappedMap.containsKey(property)) {
       context.setPropertyResolved(true);
       return wrappedMap.get(property);

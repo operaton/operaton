@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.authorization.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
@@ -47,7 +48,7 @@ public class AuthorizationTestBaseRule extends TestWatcher {
     this.engineRule = engineRule;
   }
 
-  public void enableAuthorization(String userId) {
+  public void enableAuthorization(@Nullable String userId) {
     engineRule.getProcessEngine().getProcessEngineConfiguration().setAuthorizationEnabled(true);
     if (userId != null) {
       engineRule.getIdentityService().setAuthenticatedUserId(userId);

@@ -70,6 +70,7 @@ const from_env = () => {
           redirect_uri: clean(import.meta.env.VITE_OAUTH_REDIRECT_URI),
         }
       : undefined,
+    engine: clean(import.meta.env.VITE_ENGINE) ?? 'default',
     plugins_url: clean(import.meta.env.VITE_PLUGINS_URL),
     // Remote plugins execute with the full privileges of the app, so loading them
     // is opt-in. See `remote_plugins_allow_origins` for cross-origin sources.
@@ -113,6 +114,7 @@ const from_document = (json) => {
     // instead of showing a login button that cannot work.
     auth_mode: is_oauth && oauth ? AUTH_MODE_OAUTH2 : AUTH_MODE_BASIC,
     oauth,
+    engine: clean(json.engine) ?? 'default',
     plugins_url: clean(json.pluginsUrl),
     remote_plugins_enabled:
       json.remotePluginsEnabled === true || clean(json.remotePluginsEnabled) === "true",

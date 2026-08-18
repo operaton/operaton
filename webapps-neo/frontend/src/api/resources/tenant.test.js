@@ -5,6 +5,7 @@ vi.mock("../helper.jsx", () => ({
   POST: vi.fn(),
   PUT: vi.fn(),
   DELETE: vi.fn(),
+  resolve_user: (state, user_name) => user_name ?? state.auth.user.id.value,
 }));
 
 import { GET, POST, PUT, DELETE } from "../helper.jsx";
@@ -58,10 +59,11 @@ describe("api/resources/tenant", () => {
     });
   });
 
-  it("by_member() defaults to demo when no user given", () => {
+  it("by_member() defaults to the signed-in user when no user given", () => {
+    state.auth.user.id.value = "carol";
     tenant.by_member(state);
     expect_api_call(GET, {
-      url: "/tenant?userMember=demo&maxResults=50&firstResult=0",
+      url: "/tenant?userMember=carol&maxResults=50&firstResult=0",
       state,
       signal: state.api.tenant.by_member,
     });

@@ -12,7 +12,7 @@ vi.mock("../helper.jsx", async (importOriginal) => {
   };
 });
 
-import { POST, RESPONSE_STATE } from "../helper.jsx";
+import { RESPONSE_STATE } from "../helper.jsx";
 import { create_mock_state } from "../../test/helpers.js";
 import auth from "./auth.js";
 
@@ -35,21 +35,22 @@ describe("api/resources/auth (basic mode)", () => {
   });
 
   describe("login", () => {
-    it("stores credentials, marks authenticated and persists the session on success", async () => {
+    it("keeps credentials in memory for a remote backend, and never on disk", async () => {
       fetchMock.mockResolvedValue(verified());
       auth.login(state, "bob", "secret");
 
       await vi.waitFor(() =>
         expect(state.auth.logged_in.value.data).toBe("authenticated"),
       );
+      // A backend configured elsewhere has no session with us, so its requests
+      // still carry a Basic header and the credentials have to stay reachable.
       expect(state.auth.credentials.value).toEqual({
         username: "bob",
         password: "secret",
       });
-      expect(JSON.parse(sessionStorage.getItem(BASIC_AUTH_KEY))).toEqual({
-        username: "bob",
-        password: "secret",
-      });
+      // ...but only for this tab. They used to be mirrored into sessionStorage
+      // in cleartext, where any script in the page could read them.
+      expect(sessionStorage.getItem(BASIC_AUTH_KEY)).toBeNull();
     });
 
     it("checks the credentials against the identity service", async () => {
@@ -108,18 +109,11 @@ describe("api/resources/auth (basic mode)", () => {
   });
 
   describe("logout", () => {
-    it("clears the persisted session and resets auth state", () => {
-      sessionStorage.setItem(
-        BASIC_AUTH_KEY,
-        JSON.stringify({ username: "bob" }),
-      );
-      auth.logout(state);
+    it("resets auth state for a remote backend, which has no session to end", async () => {
+      state.auth.credentials.value = { username: "bob", password: "secret" };
+      await auth.logout(state);
 
-      expect(POST).toHaveBeenCalled();
-      expect(POST.mock.lastCall[0]).toBe(
-        "/operaton/api/admin/auth/user/default/logout",
-      );
-      expect(sessionStorage.getItem(BASIC_AUTH_KEY)).toBeNull();
+      expect(fetchMock).not.toHaveBeenCalled();
       expect(state.auth.credentials.value).toEqual({
         username: null,
         password: null,
@@ -161,11 +155,8 @@ describe("api/resources/auth (basic mode)", () => {
       expect(state.auth.logged_in.value.data).toBe("unauthenticated");
     });
 
-    it("discards a stored session the identity service rejects", async () => {
-      sessionStorage.setItem(
-        BASIC_AUTH_KEY,
-        JSON.stringify({ username: "bob", password: "stale" }),
-      );
+    it("drops credentials the identity service rejects", async () => {
+      state.auth.credentials.value = { username: "bob", password: "stale" };
       fetchMock.mockResolvedValue({
         ok: true,
         json: async () => ({ authenticated: false }),
@@ -173,23 +164,93 @@ describe("api/resources/auth (basic mode)", () => {
       await auth.is_authenticated(state);
 
       expect(state.auth.logged_in.value.data).toBe("unauthenticated");
-      expect(sessionStorage.getItem(BASIC_AUTH_KEY)).toBeNull();
-    });
-
-    it("restores a persisted basic-auth session before checking", async () => {
-      state.auth.credentials.value = { username: null, password: null };
-      sessionStorage.setItem(
-        BASIC_AUTH_KEY,
-        JSON.stringify({ username: "carol", password: "pw" }),
-      );
-      fetchMock.mockResolvedValue(verified("carol"));
-      await auth.is_authenticated(state);
-
       expect(state.auth.credentials.value).toEqual({
-        username: "carol",
-        password: "pw",
+        username: null,
+        password: null,
       });
-      expect(state.auth.logged_in.value.data).toBe("authenticated");
     });
+  });
+});
+
+describe("api/resources/auth (own backend, session)", () => {
+  let state, fetchMock;
+
+  beforeEach(() => {
+    state = create_mock_state();
+    // No configured backend URL: requests go to the webapp that served us, so
+    // the session cookie authenticates them.
+    state.server.value = { name: "Operaton", url: "" };
+    sessionStorage.clear();
+    fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+  });
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("logs in against the webapp's own auth resource and stores no password", async () => {
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ userId: "bob" }) });
+
+    await auth.login(state, "bob", "secret");
+
+    const [url, options] = fetchMock.mock.calls[0];
+    expect(url).toContain("/api/admin/auth/user/default/login/");
+    expect(options.method).toBe("POST");
+    expect(options.credentials).toBe("include");
+    expect(state.auth.user.id.value).toBe("bob");
+    expect(state.auth.logged_in.value.data).toBe("authenticated");
+    // The whole point: nothing on the client can re-send the password.
+    expect(state.auth.credentials.value.password).toBeNull();
+    expect(sessionStorage.getItem(BASIC_AUTH_KEY)).toBeNull();
+  });
+
+  it("marks wrong_login when the auth resource refuses", async () => {
+    fetchMock.mockResolvedValue({ ok: false, status: 401 });
+
+    await auth.login(state, "bob", "wrong");
+
+    expect(state.auth.logged_in.value.data).toBe("wrong_login");
+  });
+
+  it("restores a session from the server rather than from stored credentials", async () => {
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ userId: "carol" }) });
+
+    await auth.is_authenticated(state);
+
+    expect(fetchMock.mock.calls[0][0]).toContain("/api/admin/auth/user/default");
+    expect(state.auth.user.id.value).toBe("carol");
+    expect(state.auth.logged_in.value.data).toBe("authenticated");
+  });
+
+  it("is unauthenticated when the server reports no session", async () => {
+    fetchMock.mockResolvedValue({ ok: true, json: async () => ({}) });
+
+    await auth.is_authenticated(state);
+
+    expect(state.auth.logged_in.value.data).toBe("unauthenticated");
+  });
+
+  it("keeps the user signed in when logout fails", async () => {
+    // Previously the local session was torn down regardless, so a rejected
+    // logout showed the user as signed out while the server session lived on.
+    state.auth.logged_in.value = {
+      status: RESPONSE_STATE.SUCCESS,
+      data: "authenticated",
+    };
+    fetchMock.mockResolvedValue({ ok: false, status: 403 });
+
+    await auth.logout(state);
+
+    expect(state.auth.logged_in.value.data).toBe("authenticated");
+    expect(state.auth.logout_response.value.data).toBe("logout_failed");
+  });
+
+  it("clears the session once the server confirms the logout", async () => {
+    fetchMock.mockResolvedValue({ ok: true, status: 204 });
+
+    await auth.logout(state);
+
+    const [url, options] = fetchMock.mock.calls[0];
+    expect(url).toContain("/api/admin/auth/user/default/logout");
+    expect(options.method).toBe("POST");
+    expect(state.auth.logged_in.value.data).toBe("unauthenticated");
   });
 });

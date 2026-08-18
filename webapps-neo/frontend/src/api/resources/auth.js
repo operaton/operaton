@@ -1,7 +1,9 @@
 import {
   GET_SERVER_URL,
-  POST,
+  _is_own_backend,
+  _url_auth,
   _url_engine_rest,
+  set_request_headers,
   RESPONSE_STATE,
 } from "../helper.jsx";
 import {
@@ -15,19 +17,52 @@ import {
 const cookies = (state) =>
   GET_SERVER_URL("/operaton/app/cockpit/default/", state, state.auth.cookies);
 
-const BASIC_AUTH_KEY = "basic_auth";
+// The webapp records which app a session was opened for. There is only one here.
+const APP_NAME = "neo";
 
 /**
- * Restore Basic Auth credentials persisted in sessionStorage into the signal.
- * Survives page reloads within the tab; cleared when the tab is closed.
+ * Establish a server-side session with the webapp.
+ *
+ * The credentials are sent once, to the webapp's own authentication resource, and
+ * the session cookie that comes back authenticates everything afterwards — so
+ * nothing has to keep the password around to re-send. They used to be held in a
+ * signal and mirrored into sessionStorage in cleartext, which any script running
+ * in the page could read.
+ *
  * @param {Object} state - Application state
- * @returns {boolean} whether credentials were restored
+ * @returns {Promise<string>} the authenticated user id
  */
-const restore_basic_session = (state) => {
-  const stored = sessionStorage.getItem(BASIC_AUTH_KEY);
-  if (!stored) return false;
-  state.auth.credentials.value = JSON.parse(stored);
-  return true;
+const start_session = (state, username, password) => {
+  const headers = new Headers();
+  set_request_headers(headers, state);
+  headers.set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+
+  return fetch(`${_url_auth()}/login/${APP_NAME}`, {
+    method: "POST",
+    headers,
+    credentials: "include",
+    body: new URLSearchParams({ username, password }).toString(),
+  })
+    .then((response) =>
+      response.ok ? response.json() : Promise.reject(response),
+    )
+    .then((result) => {
+      // Once the session exists the password has no further use here, so make
+      // sure nothing is left holding one.
+      state.auth.credentials.value = { username: null, password: null };
+      return result.userId ?? username;
+    });
+};
+
+/** Whoever the current session belongs to, or `null` when there is none. */
+const session_user = (state) => {
+  const headers = new Headers();
+  set_request_headers(headers, state);
+
+  return fetch(_url_auth(), { headers, credentials: "include" })
+    .then((response) => (response.ok ? response.json() : null))
+    .then((result) => result?.userId ?? null)
+    .catch(() => null);
 };
 
 /**
@@ -69,19 +104,23 @@ const login = (
   state,
   /** @type {string} */ username,
   /** @type {string} */ password,
-) =>
-  verify_credentials(state, username, password)
+) => {
+  // Our own backend authenticates by session; one configured elsewhere has no
+  // session with us, so it keeps verifying credentials and re-sending them.
+  const authenticate = _is_own_backend(state)
+    ? start_session(state, username, password)
+    : verify_credentials(state, username, password).then((user_id) => {
+        state.auth.credentials.value = { username, password };
+        return user_id;
+      });
+
+  return authenticate
     .then((user_id) => {
-      state.auth.credentials.value = { username, password };
       state.auth.user.id.value = user_id;
       state.auth.logged_in.value = {
         status: RESPONSE_STATE.SUCCESS,
         data: "authenticated",
       };
-      sessionStorage.setItem(
-        BASIC_AUTH_KEY,
-        JSON.stringify({ username, password }),
-      );
     })
     .catch(
       () =>
@@ -90,26 +129,58 @@ const login = (
           data: "wrong_login",
         }),
     );
-/**
- * Logout current user
- * @param {Object} state - Application state
- */
-const logout = (state) => {
-  // Dispatch the server logout while credentials are still valid, then clear
-  // the client session and drop back to the login screen.
-  const response = POST(
-    "/operaton/api/admin/auth/user/default/logout",
-    null,
-    state,
-    state.auth.logout_response,
-  );
-  sessionStorage.removeItem(BASIC_AUTH_KEY);
+};
+
+/** Forget everything this tab knows about who is signed in. */
+const clear_local_session = (state) => {
   state.auth.credentials.value = { username: null, password: null };
+  state.auth.user.id.value = null;
   state.auth.logged_in.value = {
     status: RESPONSE_STATE.ERROR,
     data: "unauthenticated",
   };
-  return response;
+};
+
+/**
+ * Logout current user.
+ *
+ * Awaits the server before clearing anything. It used to fire the request and
+ * tear down the local session regardless of the outcome, so a rejected logout
+ * still showed the user as signed out while their server session lived on — and
+ * the request went to the *legacy* webapp's path, which a neo-only deployment
+ * does not even serve.
+ *
+ * @param {Object} state - Application state
+ */
+const logout = async (state) => {
+  if (!_is_own_backend(state)) {
+    // Nothing to end: those requests only ever carried a header.
+    clear_local_session(state);
+    return;
+  }
+
+  const headers = new Headers();
+  set_request_headers(headers, state);
+
+  const response = await fetch(`${_url_auth()}/logout`, {
+    method: "POST",
+    headers,
+    credentials: "include",
+  }).catch(() => null);
+
+  if (!response?.ok) {
+    state.auth.logout_response.value = {
+      status: RESPONSE_STATE.ERROR,
+      data: "logout_failed",
+    };
+    return;
+  }
+
+  state.auth.logout_response.value = {
+    status: RESPONSE_STATE.SUCCESS,
+    data: "logged_out",
+  };
+  clear_local_session(state);
 };
 
 const is_authenticated = async (state) => {
@@ -128,9 +199,29 @@ const is_authenticated = async (state) => {
     });
   }
 
-  // Basic auth: restore a persisted session, then require credentials
-  restore_basic_session(state);
   const signal = state.auth.logged_in;
+
+  if (_is_own_backend(state)) {
+    // Ask the server who we are. A reload keeps the user signed in because the
+    // session cookie survives it — no credentials are held on the client to
+    // re-verify with, which is the point.
+    signal.value = { status: RESPONSE_STATE.LOADING };
+    const user_id = await session_user(state);
+    if (!user_id) {
+      return (signal.value = {
+        status: RESPONSE_STATE.ERROR,
+        data: "unauthenticated",
+      });
+    }
+    state.auth.user.id.value = user_id;
+    return (signal.value = {
+      status: RESPONSE_STATE.SUCCESS,
+      data: "authenticated",
+    });
+  }
+
+  // A backend configured elsewhere still authenticates per request, so it needs
+  // credentials — held in memory for this tab only, never persisted.
   if (!state.auth.credentials.value?.username) {
     return (signal.value = {
       status: RESPONSE_STATE.ERROR,
@@ -154,12 +245,8 @@ const is_authenticated = async (state) => {
       data: "authenticated",
     });
   } catch {
-    sessionStorage.removeItem(BASIC_AUTH_KEY);
-    state.auth.credentials.value = { username: null, password: null };
-    return (signal.value = {
-      status: RESPONSE_STATE.ERROR,
-      data: "unauthenticated",
-    });
+    clear_local_session(state);
+    return signal.value;
   }
 };
 

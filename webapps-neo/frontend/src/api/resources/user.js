@@ -1,4 +1,4 @@
-import { GET, POST, DELETE, PUT } from '../helper.jsx'
+import { GET, POST, DELETE, PUT, resolve_user } from '../helper.jsx'
 
 /**
  * Get all users
@@ -19,20 +19,16 @@ const get_user_count = (state) =>
   GET('/user', state, state.api.user.count)
 
 const get_user_profile = (state, user_name) =>
-  // TODO remove `?? 'demo'` when we have working authentication
-  GET(`/user/${user_name ?? 'demo'}/profile`, state, state.api.user.profile)
+  GET(`/user/${resolve_user(state, user_name)}/profile`, state, state.api.user.profile)
 
 const update_user_profile = (state, user_name, profile) =>
-  // TODO remove `?? 'demo'` when we have working authentication
-  PUT(`/user/${user_name ?? 'demo'}/profile`, profile, state, state.api.user.update)
+  PUT(`/user/${resolve_user(state, user_name)}/profile`, profile, state, state.api.user.update)
 
 const update_credentials = (state, user_name, credentials_body) =>
-  // TODO remove `?? 'demo'` when we have working authentication
-  PUT(`/user/${user_name ?? 'demo'}/credentials`, credentials_body, state, state.api.user.credentials)
+  PUT(`/user/${resolve_user(state, user_name)}/credentials`, credentials_body, state, state.api.user.credentials)
 
 const unlock_user = (state, user_name) =>
-  // TODO remove `?? 'demo'` when we have working authentication
-  POST(`/user/${user_name ?? 'demo'}/unlock`, {}, state, state.api.user.unlock)
+  POST(`/user/${resolve_user(state, user_name)}/unlock`, {}, state, state.api.user.unlock)
 
 const user =
   {

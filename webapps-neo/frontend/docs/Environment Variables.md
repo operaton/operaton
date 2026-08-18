@@ -86,6 +86,17 @@ VITE_BACKEND=[{"name": "Dev Operaton", "url": "http://localhost:8084"}, {"name":
 > to change this config to you preferences. For IntelliJ users this is also provided
 > as run configuration.
 
+### VITE_ENGINE
+
+Name of the process engine the web apps talk to. Defaults to `default`. Requests go
+to `{applicationPath}/api/engine/engine/{engine}`, served by the webapp itself, so
+the session cookie authenticates them.
+
+```properties
+# .env
+VITE_ENGINE=default
+```
+
 ### VITE_PLUGINS_URL
 
 URL of the runtime plugin manifest — a JSON array of remote plugin packages the

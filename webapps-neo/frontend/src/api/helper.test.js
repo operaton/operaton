@@ -118,6 +118,7 @@ describe("api/helper", () => {
 
     it("encodes non-ASCII credentials safely", () => {
       const state = {
+        server: { value: { url: "http://elsewhere:8080" } },
         auth: {
           mode: "basic",
           credentials: { value: { username: "übör", password: "pä" } },
@@ -126,6 +127,18 @@ describe("api/helper", () => {
       // Should not throw and should be valid base64 of the UTF-8 bytes.
       const header = get_auth_header(state);
       expect(header.startsWith("Basic ")).toBe(true);
+    });
+
+    it("sends no header for our own backend, where the session cookie authenticates", () => {
+      // Basic credentials are only re-sent to a backend we hold no session with.
+      const state = {
+        server: { value: { url: "" } },
+        auth: {
+          mode: "basic",
+          credentials: { value: { username: "bob", password: "secret" } },
+        },
+      };
+      expect(get_auth_header(state)).toBeUndefined();
     });
   });
 

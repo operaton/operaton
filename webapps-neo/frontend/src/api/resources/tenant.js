@@ -1,9 +1,8 @@
-import { GET, DELETE, PUT, POST } from '../helper.jsx'
+import { GET, DELETE, PUT, POST, resolve_user } from '../helper.jsx'
 
 // Tenants the given user is a member of (used on the user details page).
 const get_user_tenants = (state, user_name) =>
-  // TODO remove `?? 'demo'` when we have working authentication
-  GET(`/tenant?userMember=${user_name ?? 'demo'}&maxResults=50&firstResult=0`, state, state.api.tenant.by_member)
+  GET(`/tenant?userMember=${resolve_user(state, user_name)}&maxResults=50&firstResult=0`, state, state.api.tenant.by_member)
 
 const get_tenants = (state) =>
   GET(`/tenant?firstResult=0&maxResults=50&sortBy=id&sortOrder=asc`, state, state.api.tenant.list)

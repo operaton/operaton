@@ -8,7 +8,7 @@ import {
   POST_FORM,
   PUT,
   DELETE,
-  get_credentials,
+  set_request_headers,
 } from "../helper.jsx";
 import engine_rest from "../engine_rest.jsx";
 
@@ -142,11 +142,7 @@ const get_tasks = (state, sort_key = "name", sort_order = "asc", firstResult = 0
     data: prev?.data,
     hasMore: prev?.hasMore,
   };
-  let headers = new Headers();
-  headers.set(
-    "Authorization",
-    `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`,
-  );
+  const headers = set_request_headers(new Headers(), state);
 
   const params = new URLSearchParams({
     sortBy: sort_key,
@@ -186,9 +182,8 @@ const get_task_process_definitions = (state, ids) =>
   fetch(
     `${_url_engine_rest(state)}/process-definition?processDefinitionIdIn=${ids}`,
     {
-      headers: new Headers({
-        Authorization: `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`,
-      }),
+      headers: set_request_headers(new Headers(), state),
+      credentials: "include",
     },
   ).then((r) => r.json());
 

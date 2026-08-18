@@ -5,6 +5,7 @@ vi.mock("../helper.jsx", () => ({
   POST: vi.fn(),
   PUT: vi.fn(),
   DELETE: vi.fn(),
+  resolve_user: (state, user_name) => user_name ?? state.auth.user.id.value,
 }));
 
 import { GET, POST, PUT, DELETE } from "../helper.jsx";
@@ -56,10 +57,13 @@ describe("api/resources/user", () => {
     });
   });
 
-  it("profile.get() defaults to demo when no name given", () => {
+  it("profile.get() defaults to the signed-in user when no name given", () => {
+    // It used to fall back to the literal "demo", so an anonymous or
+    // differently-named user silently read the demo account's profile.
+    state.auth.user.id.value = "carol";
     user.profile.get(state);
     expect_api_call(GET, {
-      url: "/user/demo/profile",
+      url: "/user/carol/profile",
       state,
       signal: state.api.user.profile,
     });

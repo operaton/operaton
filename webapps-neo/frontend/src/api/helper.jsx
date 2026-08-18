@@ -7,47 +7,107 @@
  * learn how we organize the code in this file.
  */
 import { useTranslation } from "react-i18next";
+import { get_config } from "../config.js";
+
 export const _url_server = (state) => `${state.server.value.url}`;
+
+/**
+ * Whether requests go to the webapp that served us, rather than to a backend
+ * configured elsewhere. Only then can a session cookie authenticate them.
+ */
+export const _is_own_backend = (state) => !state.server?.value?.url;
+
+/** Base of the webapp's own API, honouring a sub-path deployment. */
+export const _url_api = () =>
+  new URL("api", document.baseURI).href.replace(/\/$/, "");
+
+/**
+ * Where engine requests go.
+ *
+ * For our own backend that is the engine API the webapp serves at
+ * `{app}/api/engine/engine/{engine}`, which the session cookie authenticates and
+ * which passes through the CSRF and header-security filters. Resource paths below
+ * it are the same ones the standalone deployment serves, so callers are unaffected.
+ *
+ * A backend configured to live somewhere else has no session with us, so those
+ * requests still go to its standalone `/engine-rest` and still carry credentials.
+ */
 export const _url_engine_rest = (state) =>
-  `${state.server.value.url}/engine-rest`;
+  _is_own_backend(state)
+    ? `${_url_api()}/engine/engine/${get_config().engine}`
+    : `${state.server.value.url}/engine-rest`;
+
+/** Base of the webapp's authentication resource. */
+export const _url_auth = () =>
+  `${_url_api()}/admin/auth/user/${get_config().engine}`;
+
+/**
+ * Which user a user-scoped call is about: the one named explicitly, else whoever
+ * is signed in.
+ *
+ * These call sites used to fall back to the literal "demo", left over from before
+ * there was any authentication. That silently acted on the demo account instead —
+ * the account settings page passes no name, so its "change password" form was
+ * PUTting to /user/demo/credentials.
+ */
+export const resolve_user = (state, user_name) =>
+  user_name ?? state.auth.user.id.value;
 
 export const get_credentials = (state) =>
   `${state.auth.credentials.value.username}:${state.auth.credentials.value.password}`;
 
 /**
  * The Authorization header value, or `undefined` when the request authenticates
- * some other way. With a server-side OAuth2 session there is no token to send —
- * the session cookie carries the identity, which is why every request sets
- * `credentials: "include"`.
+ * some other way. Neither an OAuth2 session nor a webapp session has a token to
+ * send — the session cookie carries the identity, which is why every request sets
+ * `credentials: "include"`. Only a separately configured backend still needs a
+ * Basic header, because we hold no session with it.
  */
 export const get_auth_header = (state) => {
   if (state.auth.mode === "oauth2") {
     return state.auth.token.value ? `Bearer ${state.auth.token.value}` : undefined;
   }
+  if (_is_own_backend(state)) return undefined;
   return `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`;
 };
 
+/** The CSRF token the server handed us, as a cookie, on an earlier request. */
+export const get_xsrf_token = () =>
+  document.cookie
+    .split(";")
+    .map((entry) => entry.trim())
+    .find((entry) => entry.startsWith("XSRF-TOKEN="))
+    ?.slice("XSRF-TOKEN=".length);
+
 /**
- * Apply the Authorization header, leaving it off entirely when the request
- * authenticates with a session cookie instead of a header.
+ * Apply the headers every request needs: the Authorization header when this
+ * request authenticates with one, and the CSRF token the webapp's filter demands
+ * on anything that is not a plain fetch. Sending the token on reads too is
+ * harmless and keeps every call site identical.
  */
-export const set_auth_header = (headers, state) => {
+export const set_request_headers = (headers, state) => {
   const value = get_auth_header(state);
   if (value) {
     headers.set("Authorization", value);
   } else {
     headers.delete("Authorization");
   }
+
+  const token = get_xsrf_token();
+  if (token) headers.set("X-XSRF-TOKEN", token);
+
   return headers;
 };
 
-let headers = new Headers();
-headers.set("credentials", "include");
-let headers_form_urlencoded = headers;
-headers_form_urlencoded.set(
-  "Content-Type",
-  "application/x-www-form-urlencoded;charset=UTF-8",
-);
+/** @deprecated use {@link set_request_headers}; kept so plugins keep working. */
+export const set_auth_header = set_request_headers;
+
+const form_urlencoded_headers = (state) => {
+  const headers = new Headers();
+  set_request_headers(headers, state);
+  headers.set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+  return headers;
+};
 
 /* helpers */
 
@@ -191,11 +251,12 @@ export const PAGINATED_GET = async (
   const paged_url = `${url}${sep}firstResult=${firstResult}&maxResults=${maxResults}`;
 
   let headers = new Headers();
-  set_auth_header(headers, state);
+  set_request_headers(headers, state);
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${paged_url}`, {
       headers,
+      credentials: "include",
     });
     const json = await (response.ok
       ? response.json()
@@ -223,11 +284,12 @@ export const GET = async (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING, data: signl.peek?.()?.data };
 
   let headers = new Headers();
-  set_auth_header(headers, state);
+  set_request_headers(headers, state);
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${url}`, {
         headers,
+        credentials: "include",
       }),
       json = await (response.ok ? response.json() : Promise.reject(response));
     return (signl.value = { status: RESPONSE_STATE.SUCCESS, data: json });
@@ -239,14 +301,12 @@ export const GET = async (url, state, signl) => {
 export const GET_SERVER_URL = (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
-  let headers = new Headers();
-  set_auth_header(headers, state);
-  headers.set(
-    "Content-Type",
-    "application/x-www-form-urlencoded;charset=UTF-8",
-  );
+  const headers = form_urlencoded_headers(state);
 
-  return fetch(`${_url_server(state)}${url}`, { headers })
+  return fetch(`${_url_server(state)}${url}`, {
+    headers,
+    credentials: "include",
+  })
     .then((response) =>
       response.ok ? response.text() : Promise.reject(response),
     )
@@ -260,15 +320,10 @@ export const GET_SERVER_URL = (url, state, signl) => {
 export const POST_SERVER_URL = (url, body, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
-  let headers = new Headers();
-  set_auth_header(headers, state);
-  headers.set(
-    "Content-Type",
-    "application/x-www-form-urlencoded;charset=UTF-8",
-  );
+  const headers = form_urlencoded_headers(state);
 
   return fetch(`${_url_server(state)}${url}`, {
-    headers: headers_form_urlencoded,
+    headers,
     method: "POST",
     body,
     credentials: "include",
@@ -288,9 +343,12 @@ export const GET_TEXT = (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
   let headers = new Headers();
-  set_auth_header(headers, state);
+  set_request_headers(headers, state);
 
-  return fetch(`${_url_engine_rest(state)}${url}`, { headers })
+  return fetch(`${_url_engine_rest(state)}${url}`, {
+    headers,
+    credentials: "include",
+  })
     .then((response) =>
       response.ok ? response.text() : Promise.reject(response),
     )
@@ -304,7 +362,7 @@ const fetch_with_body = async (method, url, body, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
   let headers = new Headers();
-  set_auth_header(headers, state);
+  set_request_headers(headers, state);
   headers.set("Content-Type", "application/json");
 
   try {
@@ -336,7 +394,7 @@ export const POST_FORM = async (url, body, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 
   let headers = new Headers();
-  set_auth_header(headers, state);
+  set_request_headers(headers, state);
 
   try {
     const response = await fetch(`${_url_engine_rest(state)}${url}`, {

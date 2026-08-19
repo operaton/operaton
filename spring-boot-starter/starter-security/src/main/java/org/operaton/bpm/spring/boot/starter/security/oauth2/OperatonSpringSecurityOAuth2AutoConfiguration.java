@@ -66,7 +66,9 @@ import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFi
 public class OperatonSpringSecurityOAuth2AutoConfiguration {
 
   private static final Logger logger = LoggerFactory.getLogger(OperatonSpringSecurityOAuth2AutoConfiguration.class);
-  public static final int OPERATON_OAUTH2_ORDER = Ordered.HIGHEST_PRECEDENCE + 100;
+  static final int OPERATON_OAUTH2_ORDER = Ordered.HIGHEST_PRECEDENCE + 100;
+  private static final String API_PATH = "/api/*";
+  private static final String APP_PATH = "/app/*";
   private final OAuth2Properties oAuth2Properties;
   private final String webappPath;
   private final boolean neoEnabled;
@@ -92,9 +94,9 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
     filterRegistration.setOrder(SecurityFilterProperties.DEFAULT_FILTER_ORDER + 1);
     if (neoEnabled) {
       // the webapps-neo plugin APIs live under the neo application path
-      filterRegistration.addUrlPatterns(webappPath + "/app/*", webappPath + "/api/*", neoPath + "/api/*");
+      filterRegistration.addUrlPatterns(webappPath + APP_PATH, webappPath + API_PATH, neoPath + API_PATH);
     } else {
-      filterRegistration.addUrlPatterns(webappPath + "/app/*", webappPath + "/api/*");
+      filterRegistration.addUrlPatterns(webappPath + APP_PATH, webappPath + API_PATH);
     }
     filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
     return filterRegistration;
@@ -172,7 +174,7 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
           new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
           new OrRequestMatcher(
               PathPatternRequestMatcher.withDefaults().matcher("/engine-rest/**"),
-              PathPatternRequestMatcher.withDefaults().matcher(neoPath + "/api/**"))));
+              PathPatternRequestMatcher.withDefaults().matcher(neoPath + OperatonSpringSecurityOAuth2AutoConfiguration.API_PATH))));
     }
 
     if (oAuth2Properties.getSsoLogout().isEnabled()) {

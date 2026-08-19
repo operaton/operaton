@@ -23,7 +23,7 @@
     <version.geny>1.1.1</version.geny>
     <version.sourcecode>0.4.4</version.sourcecode>
     <version.paranamer>2.8.3</version.paranamer>
-    <version.quarkus>3.33.2.1</version.quarkus>
+    <version.quarkus>3.33.3.1</version.quarkus>
     <version.java>17</version.java>
     <version.spring>7.0.8</version.spring>
     <version.spring-boot>4.1.0</version.spring-boot>

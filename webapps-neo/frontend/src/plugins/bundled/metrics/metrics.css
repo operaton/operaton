@@ -1,0 +1,30 @@
+/*
+ * Engine Metrics plugin styles.
+ *
+ * Everything lives in the top-priority `custom` cascade layer and is scoped
+ * under the plugin's own ids/classes — the convention every plugin follows so
+ * its styles predictably win without specificity wars and never leak.
+ */
+@layer custom {
+  #content.metrics-page .metrics-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3, 1rem);
+    margin-block-start: var(--spacing-3, 1rem);
+  }
+
+  #content.metrics-page .metrics-cards article {
+    flex: 1 1 12rem;
+    padding: var(--spacing-3, 1rem);
+    border: var(--border, 1px solid);
+    border-color: var(--border-color, #ccc);
+    border-radius: var(--border-radius-2, 0.5rem);
+    background: var(--background-2, transparent);
+  }
+
+  #content.metrics-page .metric-value {
+    margin-block-start: var(--spacing-2, 0.5rem);
+    font-size: 2rem;
+    font-weight: 600;
+  }
+}

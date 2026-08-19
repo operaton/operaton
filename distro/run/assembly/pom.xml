@@ -57,6 +57,37 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- The assembly copies these two modules' target/dependency directories in
+    fileSets. A fileSet is an opaque path to Maven, so without these declarations
+    there is no ordering edge: a parallel build (-T) can assemble the archive
+    before the modules have populated those directories, and the result is a
+    silently incomplete distribution rather than a failure. -->
+    <dependency>
+      <groupId>org.operaton.bpm.run</groupId>
+      <artifactId>operaton-bpm-run-modules-webapps</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <exclusions>
+        <!-- do not add transitive dependencies to generated dependency list -->
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm.run</groupId>
+      <artifactId>operaton-bpm-run-modules-webapps-neo</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <exclusions>
+        <!-- do not add transitive dependencies to generated dependency list -->
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
     <dependency>
       <groupId>org.operaton.bpm.run</groupId>
       <artifactId>operaton-bpm-run-modules-example-invoice</artifactId>

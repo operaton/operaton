@@ -1,0 +1,46 @@
+{
+  "components": [
+    {
+      "type": "text",
+      "text": "## Reviewer assessment",
+      "id": "Field_title"
+    },
+    {
+      "label": "Amount",
+      "type": "number",
+      "key": "amount",
+      "id": "Field_amount",
+      "disabled": true
+    },
+    {
+      "label": "Credit",
+      "type": "textfield",
+      "key": "credit",
+      "id": "Field_credit",
+      "disabled": true
+    },
+    {
+      "label": "Recommendation",
+      "type": "radio",
+      "key": "reviewerRecommendation",
+      "id": "Field_recommendation",
+      "values": [
+        { "label": "Approve", "value": "approve" },
+        { "label": "Reject", "value": "reject" },
+        { "label": "Defer", "value": "defer" }
+      ],
+      "validate": { "required": true }
+    },
+    {
+      "label": "Comments",
+      "type": "textarea",
+      "key": "reviewerComments",
+      "id": "Field_comments"
+    }
+  ],
+  "type": "default",
+  "id": "loan-reviewer",
+  "schemaVersion": 17,
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.21.0"
+}

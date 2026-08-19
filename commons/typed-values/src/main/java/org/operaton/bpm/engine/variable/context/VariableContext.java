@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.variable.context;
 
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -40,7 +41,7 @@ public interface VariableContext {
    * @param variableName the name of the variable to resolve.
    * @return the value of the variable or null in case the variable does not exist.
    */
-  TypedValue resolve(String variableName);
+  @Nullable TypedValue resolve(@Nullable String variableName);
 
   /**
    * Checks whether a variable with the given name is resolve through this context.
@@ -48,7 +49,7 @@ public interface VariableContext {
    * @param variableName the name of the variable to check
    * @return true if the variable is resolve.
    */
-  boolean containsVariable(String variableName);
+  boolean containsVariable(@Nullable String variableName);
 
   /**
    * @return a set of all variable names resolvable through this Context.

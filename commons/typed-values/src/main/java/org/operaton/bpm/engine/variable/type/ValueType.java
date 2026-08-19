@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.variable.type;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
 import org.operaton.bpm.engine.variable.impl.type.ObjectTypeImpl;
 import org.operaton.bpm.engine.variable.impl.type.PrimitiveValueTypeImpl.BooleanTypeImpl;
@@ -106,7 +107,7 @@ public interface ValueType extends Serializable {
    * supported when the parent value type's implementation of {@link #isAbstract()}
    * returns <code>true</code>.</p>
    */
-  ValueType getParent();
+  @Nullable ValueType getParent();
 
   /**
    * Determines whether the argument typed value can be converted to a

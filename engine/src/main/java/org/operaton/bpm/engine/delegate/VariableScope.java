@@ -45,17 +45,17 @@ public interface VariableScope {
 
   VariableMap getVariablesLocalTyped(boolean deserializeValues);
 
-  Object getVariable(String variableName);
+  @Nullable Object getVariable(String variableName);
 
-  Object getVariableLocal(String variableName);
+  @Nullable Object getVariableLocal(String variableName);
 
-  <T extends TypedValue> T getVariableTyped(String variableName);
+  <T extends TypedValue> @Nullable T getVariableTyped(String variableName);
 
   <T extends TypedValue> @Nullable T getVariableTyped(String variableName, boolean deserializeValue);
 
-  <T extends TypedValue> T getVariableLocalTyped(String variableName);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String variableName);
 
-  <T extends TypedValue> T getVariableLocalTyped(String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String variableName, boolean deserializeValue);
 
   default Set<String> getVariableNames() {
     return Collections.emptySet();

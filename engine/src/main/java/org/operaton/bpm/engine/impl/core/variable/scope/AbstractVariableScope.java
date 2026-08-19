@@ -35,6 +35,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  * @author Roman Smirnov
@@ -127,7 +129,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
   // get single variable /////////////////////////////////////
 
   @Override
-  public Object getVariable(String variableName) {
+  public @Nullable Object getVariable(String variableName) {
     return getVariable(variableName, true);
   }
 
@@ -136,7 +138,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
   }
 
   @Override
-  public Object getVariableLocal(String variableName) {
+  public @Nullable Object getVariableLocal(String variableName) {
     return getVariableLocal(variableName, true);
   }
 
@@ -155,7 +157,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String variableName) {
     return getVariableTyped(variableName, true);
   }
 
@@ -363,7 +365,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
     if (variableStore.containsKey(variableName)) {
       CoreVariableInstance existingInstance = variableStore.getVariable(variableName);
 
-      TypedValue previousValue = existingInstance.getTypedValue(false);
+      TypedValue previousValue = requireNonNull(existingInstance).getTypedValue(false);
 
       if (value.isTransient() != previousValue.isTransient()) {
         throw ProcessEngineLogger.CORE_LOGGER.transientVariableException(variableName);
@@ -376,7 +378,8 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
 
       CoreVariableInstance existingInstance = variableStore.getRemovedVariable(variableName);
 
-      TypedValue previousValue = existingInstance.getTypedValue(false);
+      TypedValue previousValue = requireNonNull(existingInstance).getTypedValue(false);
+      requireNonNull(previousValue, existingInstance.getName() + " has no value.");
 
       if (value.isTransient() != previousValue.isTransient()) {
         throw ProcessEngineLogger.CORE_LOGGER.transientVariableException(variableName);
@@ -387,7 +390,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
       invokeVariableLifecycleListenersUpdate(existingInstance, sourceActivityExecution);
 
       if (!value.isTransient()) {
-        DbEntityManager dbEntityManager = Context.getCommandContext().getDbEntityManager();
+        DbEntityManager dbEntityManager = requireNonNull(Context.getCommandContext()).getDbEntityManager();
         dbEntityManager.undoDelete((VariableInstanceEntity) existingInstance);
       }
     }

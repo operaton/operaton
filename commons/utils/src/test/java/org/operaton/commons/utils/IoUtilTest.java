@@ -116,6 +116,7 @@ public class IoUtilTest {
 
   @Test
   void shouldFailGetFileFromClassPathWithNull() {
+    // noinspection ConstantConditions
     assertThatThrownBy(() -> IoUtil.getClasspathFile(null))
         .isInstanceOf(IoUtilException.class);
   }

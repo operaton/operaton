@@ -20,7 +20,7 @@ package org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.impl
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Map;
-import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRequest;
 
 import org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.HeaderSecurityProvider;
 import org.operaton.bpm.webapp.neo.impl.util.ServletFilterUtil;
@@ -95,9 +95,9 @@ public class ContentSecurityPolicyProvider extends HeaderSecurityProvider {
   }
 
   @Override
-  public String getHeaderValue(final ServletContext servletContext) {
+  public String getHeaderValue(final ServletRequest request) {
     final String nonce = generateNonce();
-    servletContext.setAttribute(ATTR_CSP_FILTER_NONCE, nonce);
+    request.setAttribute(ATTR_CSP_FILTER_NONCE, nonce);
     return value.replaceAll("\\" + HEADER_NONCE_PLACEHOLDER, "'nonce-%s'".formatted(nonce));
   }
 

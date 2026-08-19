@@ -19,7 +19,7 @@ package org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider;
 
 import java.util.HashMap;
 import java.util.Map;
-import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRequest;
 
 /**
  * @author Tassilo Weidner
@@ -36,7 +36,12 @@ public abstract class HeaderSecurityProvider {
 
   public abstract String getHeaderName();
 
-  public String getHeaderValue(final ServletContext servletContext) {
+  /**
+   * The request is passed rather than the servlet context so a provider can stash per-response
+   * state on it. A context attribute is application-global and would be overwritten by every
+   * concurrent request; see {@code ContentSecurityPolicyProvider} and its nonce.
+   */
+  public String getHeaderValue(final ServletRequest request) {
     return value;
   }
 

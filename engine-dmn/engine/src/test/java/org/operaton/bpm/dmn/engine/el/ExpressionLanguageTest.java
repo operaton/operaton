@@ -37,9 +37,8 @@ import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.mockito.Mockito.*;
 
 class ExpressionLanguageTest extends DmnEngineTest {
@@ -216,16 +215,11 @@ class ExpressionLanguageTest extends DmnEngineTest {
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN, decisionKey = "decision2")
   void failFeelUseOfEmptyInputExpression() {
-    try {
-      evaluateDecisionTable();
-      failBecauseExceptionWasNotThrown(FeelException.class);
-    }
-    catch (FeelException e) {
-      assertThat(e)
-              .hasMessageStartingWith("FEEL-01017")
-              .hasMessageContaining("'10'");
-      assertThat(e.getMessage()).doesNotContain("cellInput");
-    }
+    assertThatThrownBy(this::evaluateDecisionTable)
+      .isInstanceOf(FeelException.class)
+      .hasMessageStartingWith("FEEL-01017")
+      .hasMessageContaining("10")
+      .hasMessageNotContaining("cellInput");
   }
 
   @Test

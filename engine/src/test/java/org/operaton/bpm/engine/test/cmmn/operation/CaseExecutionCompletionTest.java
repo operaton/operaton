@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-
 import org.operaton.bpm.engine.exception.cmmn.CaseIllegalStateTransitionException;
 import org.operaton.bpm.engine.impl.cmmn.behavior.StageActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionImpl;
@@ -31,13 +30,13 @@ import org.operaton.bpm.engine.impl.cmmn.model.CaseDefinitionBuilder;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Roman Smirnov
  *
  */
+@SuppressWarnings("ConstantConditions")
 class CaseExecutionCompletionTest {
 
   /**
@@ -203,18 +202,14 @@ class CaseExecutionCompletionTest {
     // task A is enabled
     assertThat(taskA.isEnabled()).isTrue();
 
-    try {
-      // when
-      // completing task A
-      taskA.complete();
-      fail("It should not be possible to complete an enabled task.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // task A is still enabled
-      assertThat(taskA.isEnabled()).isTrue();
-    }
-
+    // when completing task A
+    assertThatThrownBy(taskA::complete)
+            .withFailMessage("It should not be possible to complete an enabled task.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e ->
+                    // task A is still enabled
+                    assertThat(taskA.isEnabled()).isTrue()
+            );
   }
 
   /**
@@ -256,18 +251,14 @@ class CaseExecutionCompletionTest {
     // task A is enabled
     assertThat(taskA.isEnabled()).isTrue();
 
-    try {
-      // when
-      // completing task A
-      taskA.manualComplete();
-      fail("It should not be possible to complete an enabled task.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // task A is still enabled
-      assertThat(taskA.isEnabled()).isTrue();
-    }
-
+    // when completing task A
+    assertThatThrownBy(taskA::manualComplete)
+            .withFailMessage("It should not be possible to complete an enabled task.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e ->
+                    // task A is still enabled
+                    assertThat(taskA.isEnabled()).isTrue()
+            );
   }
 
   /**
@@ -310,18 +301,14 @@ class CaseExecutionCompletionTest {
     // task A is completed
     assertThat(taskA.isCompleted()).isTrue();
 
-    try {
-      // when
-      // complete A
-      taskA.complete();
-      fail("It should not be possible to complete an already completed task.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // task A is still completed
-      assertThat(taskA.isCompleted()).isTrue();
-    }
-
+    // when completing task A
+    assertThatThrownBy(taskA::complete)
+            .withFailMessage("It should not be possible to complete an already completed task.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e ->
+                    // task A is still enabled
+                    assertThat(taskA.isCompleted()).isTrue()
+            );
   }
 
   /**
@@ -364,18 +351,14 @@ class CaseExecutionCompletionTest {
     // task A is completed
     assertThat(taskA.isCompleted()).isTrue();
 
-    try {
-      // when
-      // complete A
-      taskA.manualComplete();
-      fail("It should not be possible to complete an already completed task.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // task A is still completed
-      assertThat(taskA.isCompleted()).isTrue();
-    }
-
+    // when completing task A
+    assertThatThrownBy(taskA::manualComplete)
+            .withFailMessage("It should not be possible to complete an already completed task.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e ->
+                    // task A is still enabled
+                    assertThat(taskA.isCompleted()).isTrue()
+            );
   }
 
   /**
@@ -417,17 +400,14 @@ class CaseExecutionCompletionTest {
     // task A is completed
     assertThat(taskA.isTerminated()).isTrue();
 
-    try {
-      // when
-      // complete A
-      taskA.complete();
-      fail("It should not be possible to complete an already completed task.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // task A is still completed
-      assertThat(taskA.isTerminated()).isTrue();
-    }
+    // when completing task A
+    assertThatThrownBy(taskA::complete)
+            .withFailMessage("It should not be possible to complete an already terminated task.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e ->
+                    // task A is still enabled
+                    assertThat(taskA.isTerminated()).isTrue()
+            );
   }
 
   /**
@@ -468,17 +448,14 @@ class CaseExecutionCompletionTest {
     // task A is completed
     assertThat(taskA.isTerminated()).isTrue();
 
-    try {
-      // when
-      // complete A
-      taskA.manualComplete();
-      fail("It should not be possible to complete an already completed task.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // task A is still completed
-      assertThat(taskA.isTerminated()).isTrue();
-    }
+    // when completing task A
+    assertThatThrownBy(taskA::manualComplete)
+            .withFailMessage("It should not be possible to complete an already terminated task.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e ->
+                    // task A is still enabled
+                    assertThat(taskA.isTerminated()).isTrue()
+            );
   }
 
   /**
@@ -766,17 +743,14 @@ class CaseExecutionCompletionTest {
     // task A is active
     assertThat(taskA.isActive()).isTrue();
 
-    try {
-      // when
-      caseInstance.complete();
-      fail("It should not be possible to complete a case instance containing an active task.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // the case instance is still active
-      assertThat(caseInstance.isActive()).isTrue();
-      assertThat(caseInstance.isCompleted()).isFalse();
-    }
+    assertThatThrownBy(caseInstance::complete)
+            .withFailMessage("It should not be possible to complete a case instance containing an active task.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e -> {
+              // the case instance is still active
+              assertThat(caseInstance.isActive()).isTrue();
+              assertThat(caseInstance.isCompleted()).isFalse();
+            });
   }
 
   /**
@@ -815,17 +789,14 @@ class CaseExecutionCompletionTest {
     CmmnActivityExecution taskA = caseInstance.findCaseExecution("A");
     assertThat(taskA).isNotNull();
 
-    try {
-      // when
-      caseInstance.manualComplete();
-      fail("It should not be possible to complete a case instance containing an active task.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // the case instance is still active
-      assertThat(caseInstance.isActive()).isTrue();
-      assertThat(caseInstance.isCompleted()).isFalse();
-    }
+    assertThatThrownBy(caseInstance::manualComplete)
+            .withFailMessage("It should not be possible to complete a case instance containing an active task.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e -> {
+              // the case instance is still active
+              assertThat(caseInstance.isActive()).isTrue();
+              assertThat(caseInstance.isCompleted()).isFalse();
+            });
   }
 
   /**
@@ -870,17 +841,13 @@ class CaseExecutionCompletionTest {
     // case instance is already completed
     caseInstance.manualComplete();
 
-    try {
-      // when
-      caseInstance.complete();
-      fail("It should not be possible to complete an already completed case instance.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      // the case instance is still completed
-      assertThat(caseInstance.isCompleted()).isTrue();
-    }
-
+    assertThatThrownBy(caseInstance::complete)
+            .withFailMessage("It should not be possible to complete an already completed case instance.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e -> {
+              // the case instance is still completed
+              assertThat(caseInstance.isCompleted()).isTrue();
+            });
   }
 
   /**
@@ -925,16 +892,13 @@ class CaseExecutionCompletionTest {
     // case instance is already completed
     caseInstance.manualComplete();
 
-    try {
-      // when
-      caseInstance.manualComplete();
-      fail("It should not be possible to complete an already completed case instance.");
-    } catch (CaseIllegalStateTransitionException e) {
-      // then
-
-      assertThat(caseInstance.isCompleted()).describedAs("the case instance is still completed").isTrue();
-    }
-
+    assertThatThrownBy(caseInstance::manualComplete)
+            .withFailMessage("It should not be possible to complete an already completed case instance.")
+            .isInstanceOf(CaseIllegalStateTransitionException.class)
+            .satisfies(e -> {
+              // the case instance is still completed
+              assertThat(caseInstance.isCompleted()).isTrue();
+            });
   }
 
   /**

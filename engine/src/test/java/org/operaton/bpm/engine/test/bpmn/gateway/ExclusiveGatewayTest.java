@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
@@ -44,6 +45,7 @@ import static org.assertj.core.api.Assertions.*;
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings("ConstantConditions")
 class ExclusiveGatewayTest {
 
   @RegisterExtension
@@ -224,16 +226,9 @@ class ExclusiveGatewayTest {
             "  </process>" +
             "</definitions>";
     var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", flowWithoutConditionNoDefaultFlow);
-    try {
-      deploymentBuilder.deploy();
-      fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
-    }
-    catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' without condition which is not the default flow.");
-      Problem error = e.getResourceReports().get(0).getErrors().get(0);
-      assertThat(error.getMainElementId()).isEqualTo("exclusiveGw");
-      assertThat(error.getElementIds()).containsExactlyInAnyOrder("exclusiveGw", "flow3");
-    }
+    assertDeployParseExceptionForExclusiveGateway(deploymentBuilder,
+            "Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' without condition which is not the default flow.",
+            "exclusiveGw", "flow3");
   }
 
   @Test
@@ -257,16 +252,9 @@ class ExclusiveGatewayTest {
             "  </process>" +
             "</definitions>";
     var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", defaultFlowWithCondition);
-    try {
-      deploymentBuilder.deploy();
-      fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
-    }
-    catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' which is the default flow but has a condition too.");
-      Problem error = e.getResourceReports().get(0).getErrors().get(0);
-      assertThat(error.getMainElementId()).isEqualTo("exclusiveGw");
-      assertThat(error.getElementIds()).containsExactlyInAnyOrder("exclusiveGw", "flow3");
-    }
+    assertDeployParseExceptionForExclusiveGateway(deploymentBuilder,
+            "Exclusive Gateway 'exclusiveGw' has outgoing sequence flow 'flow3' which is the default flow but has a condition too.",
+            "exclusiveGw", "flow3");
   }
 
   @Test
@@ -279,16 +267,22 @@ class ExclusiveGatewayTest {
             "    <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' /> " +
             "  </process>" +
             "</definitions>";
-    var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", noOutgoingFlow);
-    try {
-      deploymentBuilder.deploy();
-      fail("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition with is not the default flow.");
-    }
-    catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Exclusive Gateway 'exclusiveGw' has no outgoing sequence flows.");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("exclusiveGw");
-    }
 
+    var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", noOutgoingFlow);
+    assertDeployParseExceptionForExclusiveGateway(deploymentBuilder,
+            "Exclusive Gateway 'exclusiveGw' has no outgoing sequence flows.", "exclusiveGw");
+  }
+
+  private void assertDeployParseExceptionForExclusiveGateway(DeploymentBuilder deploymentBuilder, String expectedMessage, String... expectedElementIds) {
+    assertThatThrownBy(deploymentBuilder::deploy)
+            .withFailMessage("Could deploy a process definition with a sequence flow out of a XOR Gateway without condition which is not the default flow.")
+            .isInstanceOf(ParseException.class)
+            .hasMessageContaining(expectedMessage)
+            .satisfies(e -> {
+              Problem error = ((ParseException)e).getResourceReports().get(0).getErrors().get(0);
+              assertThat(error.getMainElementId()).isEqualTo(expectedElementIds[0]);
+              assertThat(error.getElementIds()).containsExactlyInAnyOrder(expectedElementIds);
+            });
   }
 
   // see CAM-4172

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_adr_process" targetNamespace="http://operaton.org/schema/adr" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:collaboration id="Collaboration_adr">
+    <bpmn:documentation>ADR creation and approval process as agreed in operaton/operaton#993.</bpmn:documentation>
+    <bpmn:participant id="Participant_adr" name="Operaton ADR process" processRef="adr-decision-process" />
+  </bpmn:collaboration>
+  <bpmn:process id="adr-decision-process" name="ADR creation and approval" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_adr">
+      <bpmn:lane id="Lane_core" name="Core contributors (committers)">
+        <bpmn:flowNodeRef>Task_review_pr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_00lvx0z</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_approved</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_merge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_accepted</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_proposer" name="Proposer (anyone) &#38; community">
+        <bpmn:flowNodeRef>Task_draft</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_open_proposal</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_adr_needed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_discuss</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_consensus</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_open_pr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_rework</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_withdrawn</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:userTask id="Task_draft" name="Draft ADR in collaborative editor" camunda:candidateGroups="everyone">
+      <bpmn:documentation>Anyone may propose an ADR. The draft is written in a lightweight collaborative editor instead of a PR, because commenting on and editing long texts in a GitHub diff is cumbersome. No ADR number is assigned yet, to avoid collisions between concurrent drafts.</bpmn:documentation>
+      <bpmn:incoming>Flow_start_draft</bpmn:incoming>
+      <bpmn:outgoing>Flow_draft_proposal</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_open_proposal" name="Open ADR proposal issue linking the draft" camunda:candidateGroups="everyone">
+      <bpmn:documentation>A proposed ADR states the problem, the considered options and their consequences (as pros and cons per option). It must not contain a decision outcome yet.</bpmn:documentation>
+      <bpmn:incoming>Flow_draft_proposal</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ve3lc5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_adr_needed" name="Architectural decision needed">
+      <bpmn:outgoing>Flow_start_draft</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_start_draft" sourceRef="StartEvent_adr_needed" targetRef="Task_draft" />
+    <bpmn:sequenceFlow id="Flow_draft_proposal" sourceRef="Task_draft" targetRef="Task_open_proposal" />
+    <bpmn:sequenceFlow id="Flow_consensus_refine" name="Objections open, needs refinement" sourceRef="Gateway_consensus" targetRef="Task_discuss" />
+    <bpmn:sequenceFlow id="Flow_discuss_join" sourceRef="Task_discuss" targetRef="Gateway_consensus" />
+    <bpmn:sequenceFlow id="Flow_consensus_withdrawn" name="Withdrawn" sourceRef="Gateway_consensus" targetRef="EndEvent_withdrawn">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${outcome == 'withdrawn'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_consensus_finalize" name="Option chosen" sourceRef="Gateway_consensus" targetRef="Task_open_pr">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${outcome == 'decided'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_pr_review" sourceRef="Task_open_pr" targetRef="Gateway_00lvx0z" />
+    <bpmn:sequenceFlow id="Flow_rework_review" sourceRef="Task_rework" targetRef="Gateway_00lvx0z" />
+    <bpmn:sequenceFlow id="Flow_review_gateway" sourceRef="Task_review_pr" targetRef="Gateway_approved" />
+    <bpmn:sequenceFlow id="Flow_approved_merge" name="Yes" sourceRef="Gateway_approved" targetRef="Task_merge">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${approvals &gt;= 3 &amp;&amp; !veto}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_changes_rework" name="Veto / changes requested" sourceRef="Gateway_approved" targetRef="Task_rework" />
+    <bpmn:sequenceFlow id="Flow_merge_end" sourceRef="Task_merge" targetRef="EndEvent_accepted" />
+    <bpmn:sequenceFlow id="Flow_1ve3lc5" sourceRef="Task_open_proposal" targetRef="Task_discuss" />
+    <bpmn:userTask id="Task_discuss" name="Discuss options, weigh pros &#38; cons, refine draft" camunda:candidateGroups="everyone">
+      <bpmn:documentation>Anyone may comment and raise a well-founded objection, backed by technical, architectural or operational reasoning.</bpmn:documentation>
+      <bpmn:incoming>Flow_consensus_refine</bpmn:incoming>
+      <bpmn:incoming>Flow_1ve3lc5</bpmn:incoming>
+      <bpmn:outgoing>Flow_discuss_join</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_consensus" name="Proposal ready to be decided?" default="Flow_consensus_refine">
+      <bpmn:incoming>Flow_discuss_join</bpmn:incoming>
+      <bpmn:outgoing>Flow_consensus_finalize</bpmn:outgoing>
+      <bpmn:outgoing>Flow_consensus_withdrawn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_consensus_refine</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_open_pr" name="Assign ADR number and open PR against docs/decisions" camunda:candidateGroups="everyone">
+      <bpmn:documentation>The ADR number is assigned at PR creation time, when the previously merged numbers are known.</bpmn:documentation>
+      <bpmn:incoming>Flow_consensus_finalize</bpmn:incoming>
+      <bpmn:outgoing>Flow_pr_review</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_review_pr" name="Review and approve ADR PR" camunda:assignee="${coreContributor}" camunda:candidateGroups="core-contributors">
+      <bpmn:documentation>Three core contributors other than the author must approve. A core contributor is someone with repository access rights, either from the original fork team or voted in via committer nomination. Any committer may veto, which requires changes to the ADR.</bpmn:documentation>
+      <bpmn:incoming>Flow_0dfa8q0</bpmn:incoming>
+      <bpmn:outgoing>Flow_review_gateway</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="${reviewers}" camunda:elementVariable="coreContributor">
+        <bpmn:completionCondition xsi:type="bpmn:tFormalExpression">${approvals &gt;= 3 || veto}</bpmn:completionCondition>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0dfa8q0" sourceRef="Gateway_00lvx0z" targetRef="Task_review_pr" />
+    <bpmn:exclusiveGateway id="Gateway_00lvx0z">
+      <bpmn:incoming>Flow_pr_review</bpmn:incoming>
+      <bpmn:incoming>Flow_rework_review</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dfa8q0</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_approved" name="Approved by 2 core contributors (author excluded) and no veto?" default="Flow_changes_rework">
+      <bpmn:incoming>Flow_review_gateway</bpmn:incoming>
+      <bpmn:outgoing>Flow_approved_merge</bpmn:outgoing>
+      <bpmn:outgoing>Flow_changes_rework</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_rework" name="Rework ADR according to objections" camunda:candidateGroups="everyone">
+      <bpmn:incoming>Flow_changes_rework</bpmn:incoming>
+      <bpmn:outgoing>Flow_rework_review</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_withdrawn" name="Proposal withdrawn">
+      <bpmn:incoming>Flow_consensus_withdrawn</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_merge" name="Merge ADR PR" camunda:candidateGroups="core-contributors">
+      <bpmn:incoming>Flow_approved_merge</bpmn:incoming>
+      <bpmn:outgoing>Flow_merge_end</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_accepted" name="ADR accepted">
+      <bpmn:incoming>Flow_merge_end</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_adr">
+    <bpmndi:BPMNPlane id="BPMNPlane_adr" bpmnElement="Collaboration_adr">
+      <bpmndi:BPMNShape id="Participant_adr_di" bpmnElement="Participant_adr" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1680" height="520" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_core_di" bpmnElement="Lane_core" isHorizontal="true">
+        <dc:Bounds x="190" y="330" width="1650" height="270" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_proposer_di" bpmnElement="Lane_proposer" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1650" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_draft_di" bpmnElement="Task_draft">
+        <dc:Bounds x="370" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_open_proposal_di" bpmnElement="Task_open_proposal">
+        <dc:Bounds x="520" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_adr_needed_di" bpmnElement="StartEvent_adr_needed">
+        <dc:Bounds x="262" y="152" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="241" y="195" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_discuss_di" bpmnElement="Task_discuss">
+        <dc:Bounds x="670" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_consensus_di" bpmnElement="Gateway_consensus" isMarkerVisible="true">
+        <dc:Bounds x="875" y="145" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="801" y="195" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_open_pr_di" bpmnElement="Task_open_pr">
+        <dc:Bounds x="1080" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_review_pr_di" bpmnElement="Task_review_pr">
+        <dc:Bounds x="1270" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_00lvx0z_di" bpmnElement="Gateway_00lvx0z" isMarkerVisible="true">
+        <dc:Bounds x="1195" y="445" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_approved_di" bpmnElement="Gateway_approved" isMarkerVisible="true">
+        <dc:Bounds x="1425" y="445" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1407" y="505" width="86" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_rework_di" bpmnElement="Task_rework">
+        <dc:Bounds x="1400" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_withdrawn_di" bpmnElement="EndEvent_withdrawn">
+        <dc:Bounds x="982" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="976" y="275" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_merge_di" bpmnElement="Task_merge">
+        <dc:Bounds x="1540" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_accepted_di" bpmnElement="EndEvent_accepted">
+        <dc:Bounds x="1692" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1676" y="495" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_start_draft_di" bpmnElement="Flow_start_draft">
+        <di:waypoint x="298" y="170" />
+        <di:waypoint x="370" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_draft_proposal_di" bpmnElement="Flow_draft_proposal">
+        <di:waypoint x="470" y="170" />
+        <di:waypoint x="520" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_consensus_refine_di" bpmnElement="Flow_consensus_refine">
+        <di:waypoint x="900" y="145" />
+        <di:waypoint x="900" y="105" />
+        <di:waypoint x="720" y="105" />
+        <di:waypoint x="720" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="787" y="116" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_discuss_join_di" bpmnElement="Flow_discuss_join">
+        <di:waypoint x="770" y="170" />
+        <di:waypoint x="875" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_consensus_withdrawn_di" bpmnElement="Flow_consensus_withdrawn">
+        <di:waypoint x="900" y="195" />
+        <di:waypoint x="900" y="250" />
+        <di:waypoint x="982" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="908" y="263" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_consensus_finalize_di" bpmnElement="Flow_consensus_finalize">
+        <di:waypoint x="925" y="170" />
+        <di:waypoint x="1080" y="170" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="964" y="146" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_pr_review_di" bpmnElement="Flow_pr_review">
+        <di:waypoint x="1130" y="210" />
+        <di:waypoint x="1130" y="470" />
+        <di:waypoint x="1195" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_rework_review_di" bpmnElement="Flow_rework_review">
+        <di:waypoint x="1400" y="170" />
+        <di:waypoint x="1220" y="170" />
+        <di:waypoint x="1220" y="445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_review_gateway_di" bpmnElement="Flow_review_gateway">
+        <di:waypoint x="1370" y="470" />
+        <di:waypoint x="1425" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_approved_merge_di" bpmnElement="Flow_approved_merge">
+        <di:waypoint x="1475" y="470" />
+        <di:waypoint x="1540" y="470" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1488" y="449" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_changes_rework_di" bpmnElement="Flow_changes_rework">
+        <di:waypoint x="1450" y="445" />
+        <di:waypoint x="1450" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1460" y="362" width="73" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_merge_end_di" bpmnElement="Flow_merge_end">
+        <di:waypoint x="1640" y="470" />
+        <di:waypoint x="1692" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ve3lc5_di" bpmnElement="Flow_1ve3lc5">
+        <di:waypoint x="620" y="170" />
+        <di:waypoint x="670" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dfa8q0_di" bpmnElement="Flow_0dfa8q0">
+        <di:waypoint x="1245" y="470" />
+        <di:waypoint x="1270" y="470" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -25,7 +25,7 @@
     <version.paranamer>2.8.3</version.paranamer>
     <version.quarkus>3.33.2.1</version.quarkus>
     <version.java>17</version.java>
-    <version.spring>7.0.7</version.spring>
+    <version.spring>7.0.8</version.spring>
     <version.spring-boot>4.1.0</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
     <maven.compiler.release>17</maven.compiler.release>

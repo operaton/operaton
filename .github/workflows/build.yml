@@ -165,15 +165,8 @@ jobs:
         run: |
           ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=operaton_operaton \
-          -Dsonar.exclusions=webapps/assembly/**,\
-              webapps-neo/assembly/**,\
-              qa/performance-tests-engine/**,\
-              qa/integration-tests-webapps/**,\
-              qa/integration-tests-engine/** \
-          -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
-              qa/integration-tests-webapps/**,\
-              qa/integration-tests-engine/**,\
-              webapps/**
+          "-Dsonar.exclusions=webapps/assembly/**,webapps-neo/assembly/**,qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**" \
+          "-Dsonar.coverage.exclusions=qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**,webapps/**"
         continue-on-error: true
       - name: Cache build artifacts
         uses: actions/cache/save@v6.1.0

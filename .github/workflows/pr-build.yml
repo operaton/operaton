@@ -213,15 +213,8 @@ jobs:
         run: |
           ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=operaton_operaton \
-          -Dsonar.exclusions=webapps/assembly/**,\
-              webapps-neo/assembly/**,\
-              qa/performance-tests-engine/**,\
-              qa/integration-tests-webapps/**,\
-              qa/integration-tests-engine/** \
-          -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
-              qa/integration-tests-webapps/**,\
-              qa/integration-tests-engine/**,\
-              webapps/**
+          "-Dsonar.exclusions=webapps/assembly/**,webapps-neo/assembly/**,qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**" \
+          "-Dsonar.coverage.exclusions=qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**,webapps/**"
         continue-on-error: true
       # Handed off as a run-scoped artifact, NOT via actions/cache: the repo cache
       # pool is a shared 10 GB LRU and run-id-keyed entries both get evicted
@@ -413,6 +406,9 @@ jobs:
   webapps-neo-frontend:
     name: Webapps Neo Frontend
     runs-on: ubuntu-latest
+    env:
+      # Carbon pulls in @ibm/telemetry-js, which reports to IBM on every install.
+      IBM_TELEMETRY_DISABLED: "true"
     # Independent of the Maven build: the Vite bundle the Java build produces is
     # never linted or unit tested by it, so this job is the only thing that runs
     # the frontend's own suite.
@@ -426,11 +422,16 @@ jobs:
           cache: 'npm'
           cache-dependency-path: webapps-neo/frontend/package-lock.json
       - name: Install dependencies
+        # Nothing here needs a lifecycle script: the platform binaries ship as their
+        # own packages. Skipping them also keeps Puppeteer from pulling Chromium,
+        # which lint and the unit tests never use.
         working-directory: webapps-neo/frontend
-        run: npm ci
+        run: npm ci --ignore-scripts
       - name: Lint
         working-directory: webapps-neo/frontend
         run: npm run lint
       - name: Unit tests
+        # npm run, not npx: npx would resolve and install on demand, running the
+        # lifecycle scripts the install above deliberately skipped.
         working-directory: webapps-neo/frontend
-        run: npx vitest run
+        run: npm run test:run

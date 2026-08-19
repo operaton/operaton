@@ -47,6 +47,13 @@
           <workingDirectory>./frontend</workingDirectory>
           <outputdir>${project.build.directory}/webapp</outputdir>
           <skip>${skip.frontend.build}</skip>
+          <!-- The Carbon packages ship telemetry.yml and pull in @ibm/telemetry-js,
+               which reports to IBM from a postinstall hook. Skipping lifecycle
+               scripts on the install below stops it running at all; this flag is the
+               documented opt-out for anything that consults it outside install. -->
+          <environmentVariables>
+            <IBM_TELEMETRY_DISABLED>true</IBM_TELEMETRY_DISABLED>
+          </environmentVariables>
         </configuration>
         <executions>
           <execution>
@@ -62,7 +69,11 @@
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>ci</arguments>
+              <!-- No dependency needs a lifecycle script to build: the platform
+                   binaries ship as their own packages. Skipping them keeps the
+                   Carbon telemetry hook and Puppeteer's Chromium download, neither
+                   of which the bundle needs, out of every build. -->
+              <arguments>ci --ignore-scripts</arguments>
             </configuration>
           </execution>
           <execution>

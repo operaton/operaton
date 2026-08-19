@@ -34,7 +34,6 @@ const remove_member = (state, group_id, user_name) =>
 // Groups the given user is a member of (used on the user details page).
 const get_user_groups = (state, user_name) =>
   POST('/group', {
-    // TODO remove `?? 'demo'` when we have working authentication
     member: user_name ?? state.auth.user.id.value,
     firstResult: 0,
     maxResults: 50

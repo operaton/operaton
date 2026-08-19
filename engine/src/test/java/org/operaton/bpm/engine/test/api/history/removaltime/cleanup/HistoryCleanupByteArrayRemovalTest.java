@@ -42,12 +42,11 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.RemoveAfter;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 @RequiredHistoryLevel(HISTORY_FULL)
 class HistoryCleanupByteArrayRemovalTest {
@@ -110,19 +109,15 @@ class HistoryCleanupByteArrayRemovalTest {
     engineConfiguration.setHistoryCleanupJobLogTimeToLive("1");
     overrideFailingCleanupJobHandler();
 
-    try {
-      // when
-      runHistoryCleanup();
-      fail("This test should fail during history cleanup and not reach this point");
-    } catch (Exception e) {
-      HistoricJobLogEvent event = getLastFailingHistoryCleanupJobEvent();
-      String exceptionByteArrayId = event.getExceptionByteArrayId();
-      ByteArrayEntity byteArray = findByteArrayById(exceptionByteArrayId);
-
-      // then
-      assertThat(byteArray).isNotNull();
-      assertThat(byteArray.getRemovalTime()).isNotNull();
-    }
+    assertThatThrownBy(this::runHistoryCleanup)
+            .extracting(e -> {
+              HistoricJobLogEvent event = getLastFailingHistoryCleanupJobEvent();
+              String exceptionByteArrayId = event.getExceptionByteArrayId();
+              return findByteArrayById(exceptionByteArrayId);
+            })
+            .isNotNull()
+            .extracting(ByteArrayEntity::getRemovalTime)
+            .isNotNull();
   }
 
   protected ByteArrayEntity findByteArrayById(String byteArrayId) {

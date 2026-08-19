@@ -32,8 +32,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 
 /**
@@ -108,26 +107,22 @@ class LinkEventTest {
   @Test
   void testInvalidEventLinkMultipleTargets() {
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/link/LinkEventTest.testInvalidEventLinkMultipleTargets.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("process should not deploy because it contains multiple event link targets which is invalid in the BPMN 2.0 spec");
-    }
-    catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Multiple Intermediate Catch Events with the same link event name ('LinkA') are not allowed");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("IntermediateCatchEvent_2");
-    }
+    assertThatThrownBy(deploymentBuilder::deploy)
+            .withFailMessage("process should not deploy because it contains multiple event link targets which is invalid in the BPMN 2.0 spec")
+            .isInstanceOf(ParseException.class)
+            .hasMessageContaining("Multiple Intermediate Catch Events with the same link event name ('LinkA') are not allowed")
+            .extracting(e -> ((ParseException)e).getResourceReports().get(0).getErrors().get(0).getMainElementId())
+            .isEqualTo("IntermediateCatchEvent_2");
   }
 
   @Test
   void testCatchLinkEventAfterEventBasedGatewayNotAllowed() {
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/link/LinkEventTest.testCatchLinkEventAfterEventBasedGatewayNotAllowed.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("process should not deploy because it contains multiple event link targets which is invalid in the BPMN 2.0 spec");
-    }
-    catch (ParseException e) {
-      assertThat(e.getMessage()).contains("IntermediateCatchLinkEvent is not allowed after an EventBasedGateway.");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("IntermediateCatchEvent_2");
-    }
+    assertThatThrownBy(deploymentBuilder::deploy)
+            .withFailMessage("process should not deploy because it contains multiple event link targets which is invalid in the BPMN 2.0 spec")
+            .isInstanceOf(ParseException.class)
+            .hasMessageContaining("IntermediateCatchLinkEvent is not allowed after an EventBasedGateway.")
+            .extracting(e -> ((ParseException)e).getResourceReports().get(0).getErrors().get(0).getMainElementId())
+            .isEqualTo("IntermediateCatchEvent_2");
   }
 }

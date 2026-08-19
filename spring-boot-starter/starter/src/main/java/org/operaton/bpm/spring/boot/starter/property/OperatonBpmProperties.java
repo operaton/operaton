@@ -378,7 +378,7 @@ public class OperatonBpmProperties {
       .add("filter=" + filter)
       .add("idGenerator=" + idGenerator)
       .add("jobExecutorAcquireByPriority=" + jobExecutorAcquireByPriority)
-      .add("jobExecutorAcquireWithSkipLocked= " + jobExecutorAcquireWithSkipLocked)
+      .add("jobExecutorAcquireWithSkipLocked=" + jobExecutorAcquireWithSkipLocked)
       .add("defaultNumberOfRetries" + defaultNumberOfRetries)
       .toString();
   }

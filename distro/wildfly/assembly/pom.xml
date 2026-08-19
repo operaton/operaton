@@ -29,7 +29,7 @@
       <groupId>org.wildfly</groupId>
       <artifactId>wildfly-dist</artifactId>
       <version>${version.wildfly}</version>
-      <type>tar.gz</type>
+      <type>zip</type>
     </dependency>
 
     <dependency>

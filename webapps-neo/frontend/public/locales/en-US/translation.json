@@ -912,6 +912,20 @@
     "submit": "Login",
     "sso": "Login with SSO",
     "documentation": "Documentation",
-    "source": "Source"
+    "source": "Source",
+    "error": "Login failed. Please check your user name and password."
+  },
+  "setup": {
+    "title": "Set up Operaton",
+    "intro": "This engine has no administrator yet. Create the first one to get started.",
+    "user-id": "User name*",
+    "password": "Password*",
+    "password-repeated": "Repeat password*",
+    "first-name": "First name*",
+    "last-name": "Last name*",
+    "email": "Email*",
+    "submit": "Create administrator",
+    "password-mismatch": "The passwords do not match.",
+    "failed": "The administrator could not be created. It may already exist, or the password may not meet the password policy."
   }
 }

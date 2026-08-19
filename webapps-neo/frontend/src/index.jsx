@@ -16,13 +16,14 @@ import { AdminPage } from "./pages/Admin.jsx";
 import { DeploymentsPage } from "./pages/Deployments.jsx";
 import { BatchesPage } from "./pages/Batches.jsx";
 import { NotFound } from "./pages/_404.jsx";
+import { SetupPage } from "./pages/Setup.jsx";
 import { AccountPage } from "./pages/Account.jsx";
 
 import "./css/style.css";
 import "./css/components.css";
 
 import { DecisionsPage } from "./pages/Decisions.jsx";
-import { useContext } from "preact/hooks";
+import { useContext, useEffect } from "preact/hooks";
 import engine_rest from "./api/engine_rest.jsx";
 import { useSignal } from "@preact/signals";
 import { is_oauth } from "./api/oauth.js";
@@ -76,7 +77,23 @@ const Routing = () => {
         credentials.value.username,
         credentials.value.password,
       );
-    };
+    },
+    // null until the probe answers. An engine with no administrator cannot be logged
+    // into at all, so before showing the login mask we ask whether this deployment
+    // still needs its first user.
+    setup_available = useSignal(null);
+
+  useEffect(() => {
+    if (
+      logged_in.value.data !== "unauthenticated" ||
+      setup_available.value !== null
+    ) {
+      return;
+    }
+    void engine_rest.setup
+      .is_setup_available()
+      .then((available) => (setup_available.value = available));
+  }, [logged_in.value.data]);
 
   if (logged_in.value.data === "authenticated") {
     return (
@@ -123,7 +140,32 @@ const Routing = () => {
     );
   } else if (logged_in.value.data === "unknown") {
     void engine_rest.auth.is_authenticated(state);
-  } else if (logged_in.value.data === "unauthenticated") {
+  } else if (
+    logged_in.value.data === "unauthenticated" ||
+    logged_in.value.data === "wrong_login"
+  ) {
+    // Still asking whether this engine needs its first user; render nothing rather than
+    // flashing a login mask that may be about to be replaced by the setup screen.
+    if (
+      logged_in.value.data === "unauthenticated" &&
+      setup_available.value === null
+    ) {
+      return null;
+    }
+
+    if (
+      logged_in.value.data === "unauthenticated" &&
+      setup_available.value === true
+    ) {
+      return (
+        <SetupPage
+          on_created={() => {
+            setup_available.value = false;
+          }}
+        />
+      );
+    }
+
     return (
       <section class="login-page">
         <img class="login-logo" src="/operaton-logo.svg" alt="Operaton" />
@@ -154,6 +196,12 @@ const Routing = () => {
                 <hr />
               </>
             )}
+
+            <div aria-live="polite">
+              {logged_in.value.data === "wrong_login" ? (
+                <p class="error">{t("login.error")}</p>
+              ) : null}
+            </div>
 
             {is_oauth() ? (
               <button

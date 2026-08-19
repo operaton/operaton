@@ -180,12 +180,12 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
         } else {
           // serve the index page as a setup page
           // setup will be handled by app
-          serveIndexPage(appName, engineName, applicationPath, contextPath, response, request.getServletContext());
+          serveIndexPage(appName, engineName, applicationPath, contextPath, response, request);
         }
       } else {
         if (!setupPage) {
           // correctly serving index page
-          serveIndexPage(appName, engineName, applicationPath, contextPath, response, request.getServletContext());
+          serveIndexPage(appName, engineName, applicationPath, contextPath, response, request);
         } else {
           response.sendRedirect("%s%s/app/%s/%s/".formatted(contextPath, applicationPath,
             appName, engineName));
@@ -261,10 +261,15 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
                                 String applicationPath,
                                 String contextPath,
                                 HttpServletResponse response,
-                                ServletContext servletContext) throws IOException {
+                                HttpServletRequest request) throws IOException {
+    ServletContext servletContext = request.getServletContext();
     setWebappInTelemetry(engineName, appName, servletContext);
     String data = getWebResourceContents("/app/%s/index.html".formatted(appName));
-    final String cspNonce = (String) servletContext.getAttribute(ContentSecurityPolicyProvider.ATTR_CSP_FILTER_NONCE);
+    // Read from the request, not the servlet context: the nonce is per-response, and a
+    // context attribute is overwritten by every concurrent request, so under load the nonce
+    // embedded here would not match the one in this response's Content-Security-Policy header
+    // and the browser would block every inline script on the page.
+    final String cspNonce = (String) request.getAttribute(ContentSecurityPolicyProvider.ATTR_CSP_FILTER_NONCE);
 
     data = replacePlaceholder(data, appName, engineName, applicationPath, contextPath, cspNonce);
 

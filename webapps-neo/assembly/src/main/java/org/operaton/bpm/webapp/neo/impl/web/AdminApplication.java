@@ -36,7 +36,7 @@ import org.operaton.bpm.webapp.neo.impl.security.auth.UserAuthenticationResource
  * logout calls mean the same thing in both.</p>
  *
  * <p>Much narrower than the legacy admin application on purpose: webapps-neo has no
- * admin plugin SPI and no setup resource, so authentication is all that lives here.
+ * admin plugin SPI, so authentication and first-run setup are all that live here.
  * Everything else the SPA needs comes from {@link EngineRestApplication}.</p>
  */
 public class AdminApplication extends Application {
@@ -51,6 +51,7 @@ public class AdminApplication extends Application {
     classes.add(ExceptionHandler.class);
 
     classes.add(UserAuthenticationResource.class);
+    classes.add(SetupResource.class);
 
     return classes;
   }

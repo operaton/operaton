@@ -42,6 +42,9 @@ const createAppState = () => {
     engine: {
       telemetry: signal(null),
     },
+    setup: {
+      create_initial_user: signal(null),
+    },
     user: {
       count: signal(null),
       list: signal(null),

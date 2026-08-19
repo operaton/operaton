@@ -215,6 +215,112 @@ class UserAuthenticationResourceTest {
     }
   }
 
+  /**
+   * The SPA logs in as the "neo" application. This is the regression guard for that app id
+   * being absent from {@link AuthenticationUtil#APPS}, which made every neo login answer 403
+   * even with correct credentials — the SPA could not be signed into at all.
+   */
+  @Test
+  void shouldLoginToNeoAppWithAuthorizationDisabled() {
+    // given
+    User jonny = identityService.newUser("jonny");
+    jonny.setPassword("jonnyspassword");
+    identityService.saveUser(jonny);
+
+    // authorization disabled: every known app is granted
+    UserAuthenticationResource authResource = new UserAuthenticationResource();
+    authResource.request = new MockHttpServletRequest();
+
+    // when
+    Response response = authResource.doLogin("webapps-test-engine", "neo", "jonny", "jonnyspassword");
+
+    // then
+    assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
+  }
+
+  @Test
+  void shouldLoginToNeoAppWhenAuthorizedForIt() {
+    // given
+    User jonny = identityService.newUser("jonny");
+    jonny.setPassword("jonnyspassword");
+    identityService.saveUser(jonny);
+
+    Authorization authorization = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+    authorization.setResource(Resources.APPLICATION);
+    authorization.setResourceId("neo");
+    authorization.setPermissions(new Permissions[] {Permissions.ACCESS});
+    authorization.setUserId(jonny.getId());
+    authorizationService.saveAuthorization(authorization);
+
+    processEngineConfiguration.setAuthorizationEnabled(true);
+    setAuthentication("jonny", "webapps-test-engine");
+
+    // when
+    UserAuthenticationResource authResource = new UserAuthenticationResource();
+    authResource.request = new MockHttpServletRequest();
+    Response response = authResource.doLogin("webapps-test-engine", "neo", "jonny", "jonnyspassword");
+
+    // then
+    assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
+  }
+
+  /**
+   * An {@code APPLICATION/*} grant is what every member of the admin group holds, so this is
+   * the path a real administrator takes into the SPA.
+   */
+  @Test
+  void shouldLoginToNeoAppWithAnyApplicationGrant() {
+    // given
+    User jonny = identityService.newUser("jonny");
+    jonny.setPassword("jonnyspassword");
+    identityService.saveUser(jonny);
+
+    Authorization authorization = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+    authorization.setResource(Resources.APPLICATION);
+    authorization.setResourceId(Authorization.ANY);
+    authorization.setPermissions(new Permissions[] {Permissions.ACCESS});
+    authorization.setUserId(jonny.getId());
+    authorizationService.saveAuthorization(authorization);
+
+    processEngineConfiguration.setAuthorizationEnabled(true);
+    setAuthentication("jonny", "webapps-test-engine");
+
+    // when
+    UserAuthenticationResource authResource = new UserAuthenticationResource();
+    authResource.request = new MockHttpServletRequest();
+    Response response = authResource.doLogin("webapps-test-engine", "neo", "jonny", "jonnyspassword");
+
+    // then
+    assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
+  }
+
+  @Test
+  void shouldRejectNeoLoginWithoutAuthorizationForIt() {
+    // given
+    User jonny = identityService.newUser("jonny");
+    jonny.setPassword("jonnyspassword");
+    identityService.saveUser(jonny);
+
+    // granted the tasklist, but not the SPA
+    Authorization authorization = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+    authorization.setResource(Resources.APPLICATION);
+    authorization.setResourceId("tasklist");
+    authorization.setPermissions(new Permissions[] {Permissions.ACCESS});
+    authorization.setUserId(jonny.getId());
+    authorizationService.saveAuthorization(authorization);
+
+    processEngineConfiguration.setAuthorizationEnabled(true);
+    setAuthentication("jonny", "webapps-test-engine");
+
+    // when
+    UserAuthenticationResource authResource = new UserAuthenticationResource();
+    authResource.request = new MockHttpServletRequest();
+    Response response = authResource.doLogin("webapps-test-engine", "neo", "jonny", "jonnyspassword");
+
+    // then
+    assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
+  }
+
   protected void setAuthentication(String user, String engineName) {
     Authentications authentications = new Authentications();
     authentications.addOrReplace(new UserAuthentication(user, engineName));

@@ -40,7 +40,14 @@ public final class AuthenticationUtil {
 
   protected static final String CAM_AUTH_SESSION_KEY = "authenticatedUser";
 
-  public static final String[] APPS = new String[]{"cockpit", "tasklist", "admin"};
+  /**
+   * The application ids a login may be granted for. "neo" is the single-page app this module
+   * serves; without it {@code doLogin} rejects every neo login with 403, because it checks the
+   * requested app against the set this array produces. Admin users already hold an
+   * {@code APPLICATION/*} grant, so they gain access automatically, and operators can grant
+   * {@code APPLICATION ACCESS "neo"} to anyone else.
+   */
+  public static final String[] APPS = new String[]{"cockpit", "tasklist", "admin", "neo"};
   public static final String APP_WELCOME = "welcome";
 
   private AuthenticationUtil() {

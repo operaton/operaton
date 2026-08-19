@@ -20,7 +20,7 @@ package org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.impl
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Map;
-import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRequest;
 
 import org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.HeaderSecurityProvider;
 import org.operaton.bpm.webapp.neo.impl.util.ServletFilterUtil;
@@ -29,9 +29,27 @@ public class ContentSecurityPolicyProvider extends HeaderSecurityProvider {
 
   public static final String HEADER_NAME = "Content-Security-Policy";
   public static final String HEADER_NONCE_PLACEHOLDER = "$NONCE";
+  /**
+   * Deliberately different from the legacy webapp's policy.
+   *
+   * <p>Legacy templates its {@code index.html} through {@code ProcessEnginesFilter} and stamps the
+   * nonce onto its inline scripts, so a nonce plus {@code 'strict-dynamic'} works there. The neo
+   * SPA is a static document served straight off the classpath: its one {@code <script src>} tag
+   * carries no nonce and nothing substitutes one. Since {@code 'strict-dynamic'} makes browsers
+   * ignore {@code 'self'}, {@code https:} and {@code 'unsafe-inline'} whenever it appears, that
+   * policy blocked the SPA's own bundle and the page rendered blank.</p>
+   *
+   * <p>So: no nonce and no {@code 'strict-dynamic'}, and in exchange the host allowlist is narrowed
+   * to {@code 'self'}. The bundle is same-origin, there are no inline scripts to permit, and remote
+   * plugins are opt-in and origin-checked separately — so dropping {@code https:} and
+   * {@code 'unsafe-inline'} costs nothing and leaves a stricter policy than the legacy one.
+   * {@code 'unsafe-eval'} stays: the bundled BPMN/DMN and FEEL viewers need it.</p>
+   *
+   * <p>{@code $NONCE} still works if an operator configures a custom value containing it.</p>
+   */
   public static final String HEADER_DEFAULT_VALUE = ""
     + "base-uri 'self';"
-    + "script-src " + HEADER_NONCE_PLACEHOLDER + " 'strict-dynamic' 'unsafe-eval' https: 'self' 'unsafe-inline';"
+    + "script-src 'self' 'unsafe-eval';"
     + "style-src 'unsafe-inline' 'self';"
     + "default-src 'self';"
     + "img-src 'self' data:;"
@@ -95,9 +113,14 @@ public class ContentSecurityPolicyProvider extends HeaderSecurityProvider {
   }
 
   @Override
-  public String getHeaderValue(final ServletContext servletContext) {
+  public String getHeaderValue(final ServletRequest request) {
+    // Only mint a nonce when the configured policy actually has somewhere to put it.
+    if (!value.contains(HEADER_NONCE_PLACEHOLDER)) {
+      return value;
+    }
+
     final String nonce = generateNonce();
-    servletContext.setAttribute(ATTR_CSP_FILTER_NONCE, nonce);
+    request.setAttribute(ATTR_CSP_FILTER_NONCE, nonce);
     return value.replaceAll("\\" + HEADER_NONCE_PLACEHOLDER, "'nonce-%s'".formatted(nonce));
   }
 

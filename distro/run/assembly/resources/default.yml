@@ -24,6 +24,13 @@ operaton.bpm:
       # the application's own origin.
       plugins-url: ${OPERATON_BPM_RUN_WEBAPPS_NEO_PLUGINS_URL:}
       hide-release-warning: ${OPERATON_BPM_RUN_WEBAPPS_NEO_HIDE_RELEASE_WARNING:false}
+    csrf:
+      # The CSRF filter always validates a synchroniser token. It can additionally check
+      # that the Origin/Referer of a modifying request matches this deployment, but only
+      # when target-origin is set — left unset, that second check is skipped entirely.
+      # Set it to the externally visible origin (scheme, host and port as browsers see it,
+      # which behind a reverse proxy is the proxy's address, not this server's):
+      # target-origin: https://operaton.example.com
     # The legacy web apps are served at /operaton/app and are enabled by default.
     # Disable them via the OPERATON_BPM_WEBAPP_ENABLED environment variable or by
     # setting operaton.bpm.webapp.enabled: false here.

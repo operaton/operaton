@@ -91,23 +91,6 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
         ? new String[] { apiWildcardPath }
         : new String[] { apiWildcardPath, basePath + "/*" };
 
-    if (!servedAtRoot) {
-      // ensures a trailing slash is added when the SPA is served from a sub-path
-      registerFilter("Neo AppendTrailingSlashFilter", AppendTrailingSlashFilter.class, basePath);
-    }
-    registerFilter("Neo Authentication Filter", AuthenticationFilter.class,
-        Collections.singletonMap("cacheTimeToLive", getAuthCacheTTL(webapp)),
-        webappPaths);
-    registerFilter("Neo Security Filter", LazySecurityFilter.class,
-        singletonMap("configFile", webapp.getNeo().getSecurityConfigFile()),
-        webappPaths);
-    registerFilter("Neo CsrfPreventionFilter", CsrfPreventionFilter.class,
-        webapp.getCsrf().getInitParams(),
-        webappPaths);
-    registerFilter("Neo SessionCookieFilter", SessionCookieFilter.class,
-        webapp.getSessionCookie().getInitParams(),
-        webappPaths);
-
     Map<String, String> headerSecurityProperties = webapp
       .getHeaderSecurity()
       .getInitParams();
@@ -122,9 +105,33 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
     // adds to /engine-rest responses are inert there.
     String[] headerSecurityPaths = servedAtRoot ? new String[] { "/*" } : webappPaths;
 
+    // Registration order is chain order, and the two response-shaping filters come first
+    // on purpose. The auth, security and CSRF filters below all reject requests outright:
+    // if they ran first, a 401 or 403 would leave the chain before the header filter
+    // could add CSP/nosniff/HSTS, and before SessionCookieFilter — which wraps the
+    // response — could stamp SameSite/Secure onto the JSESSIONID that AuthenticationFilter
+    // mints via getSession(true). Both filters only decorate, so nothing downstream
+    // depends on them having run last.
     registerFilter("Neo HttpHeaderSecurity", HttpHeaderSecurityFilter.class,
         headerSecurityProperties,
         headerSecurityPaths);
+    registerFilter("Neo SessionCookieFilter", SessionCookieFilter.class,
+        webapp.getSessionCookie().getInitParams(),
+        webappPaths);
+
+    if (!servedAtRoot) {
+      // ensures a trailing slash is added when the SPA is served from a sub-path
+      registerFilter("Neo AppendTrailingSlashFilter", AppendTrailingSlashFilter.class, basePath);
+    }
+    registerFilter("Neo Authentication Filter", AuthenticationFilter.class,
+        Collections.singletonMap("cacheTimeToLive", getAuthCacheTTL(webapp)),
+        webappPaths);
+    registerFilter("Neo Security Filter", LazySecurityFilter.class,
+        singletonMap("configFile", webapp.getNeo().getSecurityConfigFile()),
+        webappPaths);
+    registerFilter("Neo CsrfPreventionFilter", CsrfPreventionFilter.class,
+        webapp.getCsrf().getInitParams(),
+        webappPaths);
 
     registerFilter("Neo EmptyBodyFilter", EmptyBodyFilter.class,
         webappPaths);

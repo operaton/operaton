@@ -22,6 +22,7 @@ import task from "./resources/task.js";
 import authorization from "./resources/authorization.js";
 import decision from "./resources/decision.js";
 import filter from "./resources/filter.js";
+import setup from "./resources/setup.js";
 
 const engine_rest = {
   auth,
@@ -40,6 +41,7 @@ const engine_rest = {
   migration,
   process_definition,
   process_instance,
+  setup,
   task,
   tenant,
   user,

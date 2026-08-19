@@ -912,6 +912,20 @@
     "submit": "Anmelden",
     "sso": "Mit SSO anmelden",
     "documentation": "Dokumentation",
-    "source": "Quellcode"
+    "source": "Quellcode",
+    "error": "Anmeldung fehlgeschlagen. Bitte Benutzernamen und Passwort prüfen."
+  },
+  "setup": {
+    "title": "Operaton einrichten",
+    "intro": "Für diese Engine existiert noch kein Administrator. Legen Sie den ersten an, um zu beginnen.",
+    "user-id": "Benutzername*",
+    "password": "Passwort*",
+    "password-repeated": "Passwort wiederholen*",
+    "first-name": "Vorname*",
+    "last-name": "Nachname*",
+    "email": "E-Mail*",
+    "submit": "Administrator anlegen",
+    "password-mismatch": "Die Passwörter stimmen nicht überein.",
+    "failed": "Der Administrator konnte nicht angelegt werden. Möglicherweise existiert er bereits oder das Passwort erfüllt die Passwortrichtlinie nicht."
   }
 }

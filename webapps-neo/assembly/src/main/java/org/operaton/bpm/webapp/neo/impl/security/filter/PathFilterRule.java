@@ -36,8 +36,13 @@ import org.operaton.bpm.webapp.neo.impl.security.filter.util.FilterRules;
  * <li> A path that is listed in <code>deniedPaths</code> is then also checked against <code>allowedPaths</code>.
  * <li> A path that is listed in <code>allowedPaths</code> is checked by the
  *  corresponding {@link RequestAuthorizer} that can decide to grant/deny (identified or anonymous) access.
- * <li> A path that is not listed in <code>allowedPaths</code> is always granted anonymous access
- *  (via {@link FilterRules#authorize(String, String, List)})
+ * <li> A path that is listed in <code>deniedPaths</code> but in no <code>allowedPaths</code>
+ *  entry is denied. This is where webapps-neo diverges from the legacy webapp, which returns
+ *  {@code null} here and so lets {@link FilterRules#authorize(String, String, List)} grant
+ *  anonymous access — making a deny rule silently ineffective for any path the allow list
+ *  does not also enumerate. Denying is what the rule file reads as, and it means a resource
+ *  added under an already-denied prefix is unreachable until it is deliberately allowed,
+ *  rather than being exposed by default.
  *
  * @author Daniel Meyer
  * @author nico.rehwaldt
@@ -74,7 +79,9 @@ public class PathFilterRule implements SecurityFilterRule {
       }
     }
 
-    return null;
+    // Denied and not explicitly allowed: refuse. Returning null here would hand the decision
+    // back to FilterRules, which grants anonymous access to anything no rule claimed.
+    return Authorization.denied(Authentication.ANONYMOUS);
   }
 
   public List<RequestMatcher> getAllowedPaths() {

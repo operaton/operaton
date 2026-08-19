@@ -19,6 +19,12 @@ operaton.bpm:
       plugins-url: ${OPERATON_BPM_RUN_WEBAPPS_NEO_PLUGINS_URL:}
       hide-release-warning: ${OPERATON_BPM_RUN_WEBAPPS_NEO_HIDE_RELEASE_WARNING:false}
     csrf:
+      # The CSRF filter always validates a synchroniser token. It can additionally check
+      # that the Origin/Referer of a modifying request matches this deployment, but only
+      # when target-origin is set — left unset, that second check is skipped entirely.
+      # Strongly recommended in production. Use the externally visible origin, which
+      # behind a reverse proxy is the proxy's address, not this server's:
+      # target-origin: https://operaton.example.com
       enable-same-site-cookie: true
       same-site-cookie-option: STRICT
     header-security:

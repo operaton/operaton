@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.variable;
 
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -37,9 +38,9 @@ public interface VariableMap extends Map<String, Object> {
 
   // retrieving variables ///////////////////////////////////////
 
-  <T> T getValue(String name, Class<T> type);
+  <T> @Nullable T getValue(String name, Class<T> type);
 
-  <T extends TypedValue> T getValueTyped(String name);
+  <T extends TypedValue> @Nullable T getValueTyped(@Nullable String name);
 
   /**
    * Interprets the variable map as variable context

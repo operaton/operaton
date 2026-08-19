@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.dmn.invocation;
 
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -38,12 +39,12 @@ public class VariableScopeContext implements VariableContext {
   }
 
   @Override
-  public TypedValue resolve(String variableName) {
+  public @Nullable TypedValue resolve(@Nullable String variableName) {
     return variableScope.getVariableTyped(variableName);
   }
 
   @Override
-  public boolean containsVariable(String variableName) {
+  public boolean containsVariable(@Nullable String variableName) {
     return variableScope.hasVariable(variableName);
   }
 

@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.variable.impl.context;
 
 import java.util.Collections;
 import java.util.Set;
-
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -39,7 +39,7 @@ public class SingleVariableContext implements VariableContext {
   }
 
   @Override
-  public TypedValue resolve(String variableName) {
+  public @Nullable TypedValue resolve(@Nullable String variableName) {
     if(containsVariable(variableName)) {
       return typedValue;
     }
@@ -49,7 +49,7 @@ public class SingleVariableContext implements VariableContext {
   }
 
   @Override
-  public boolean containsVariable(String name) {
+  public boolean containsVariable(@Nullable String name) {
     if(this.name == null) {
       return name == null;
     }

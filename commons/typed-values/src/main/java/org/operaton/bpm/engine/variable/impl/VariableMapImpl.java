@@ -25,7 +25,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
@@ -45,7 +46,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     variables = new HashMap<>(map.variables);
   }
 
-  public VariableMapImpl(Map<String, Object> map) {
+  public VariableMapImpl(@Nullable Map<String, Object> map) {
     if(map != null) {
       putAll(map);
     }
@@ -70,7 +71,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T> T getValue(String name, Class<T> type) {
+  public <T> @Nullable T getValue(String name, Class<T> type) {
     Object object = get(name);
     if(object == null) {
       return null;
@@ -85,7 +86,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends TypedValue> T getValueTyped(String name) {
+  public <T extends TypedValue> @Nullable T getValueTyped(@Nullable String name) {
     return (T) variables.get(name);
   }
 
@@ -117,7 +118,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   }
 
   @Override
-  public Object get(Object key) {
+  public @Nullable Object get(Object key) {
     TypedValue typedValue = variables.get(key);
 
     if(typedValue != null) {
@@ -129,7 +130,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   }
 
   @Override
-  public Object put(String key, Object value) {
+  public @Nullable Object put(String key, Object value) {
 
     TypedValue typedValue = Variables.untypedValue(value);
 
@@ -144,7 +145,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   }
 
   @Override
-  public Object remove(Object key) {
+  public @Nullable Object remove(Object key) {
     TypedValue prevValue = variables.remove(key);
 
     if(prevValue != null) {
@@ -155,7 +156,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     }
   }
 
-  public void putAll(Map<? extends String, ? extends Object> m) {
+  public void putAll(@Nullable Map<? extends String, ? extends Object> m) {
     if(m != null) {
       if(m instanceof VariableMapImpl variableMapImpl) {
         variables.putAll(variableMapImpl.variables);
@@ -174,12 +175,12 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   }
 
   @Override
-  public Set<String> keySet() {
+  public @NonNull Set<String> keySet() {
     return variables.keySet();
   }
 
   @Override
-  public Collection<Object> values() {
+  public @NonNull Collection<Object> values() {
 
     // NOTE: cannot naively return List of values here. A proper implementation must return a
     // Collection which is backed by the actual variable map
@@ -187,7 +188,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     return new AbstractCollection<>() {
 
       @Override
-      public Iterator<Object> iterator() {
+      public @NonNull Iterator<Object> iterator() {
         return new VariableMapValueIterator(variables.values().iterator());
       }
 
@@ -200,7 +201,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   }
 
   @Override
-  public Set<java.util.Map.Entry<String, Object>> entrySet() {
+  public @NonNull Set<java.util.Map.Entry<String, Object>> entrySet() {
     // NOTE: cannot naively return Set of entries here. A proper implementation must
     // return a Set which is backed by the actual map
     return new VariableMapEntrySet();
@@ -209,7 +210,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   private class VariableMapEntrySet extends AbstractSet<java.util.Map.Entry<String, Object>> {
 
     @Override
-    public Iterator<java.util.Map.Entry<String, Object>> iterator() {
+    public @NonNull Iterator<java.util.Map.Entry<String, Object>> iterator() {
       return new VariableMapEntryIterator(variables.entrySet().iterator());
     }
 
@@ -343,7 +344,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   }
 
   @Override
-  public TypedValue resolve(String variableName) {
+  public @Nullable TypedValue resolve(@Nullable String variableName) {
     return getValueTyped(variableName);
   }
 

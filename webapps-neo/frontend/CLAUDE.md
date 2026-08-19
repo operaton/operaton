@@ -26,7 +26,7 @@ Operaton BPM Web Apps — the frontend SPA for the [Operaton](https://github.com
 | Lint              | `npx eslint src/`                                 |
 | Start backend     | `docker compose up` (Operaton on port 8084)       |
 
-Dev login is `demo`/`demo`. The dev server is started automatically by Playwright when running e2e. Vitest excludes `e2e/**`; specs there belong to Playwright. Alternate compose files exist for `keycloak`, `full`, `dev-fixtures`, `webapps-test`, and `deploy` — see filenames in the repo root.
+Dev login is `demo`/`demo`. The dev server is started automatically by Playwright when running e2e. Vitest excludes `e2e/**`; specs there belong to Playwright. Alternate compose files exist for `keycloak`, `dev-fixtures`, and `webapps-test` — see filenames in the repo root.
 
 ## Architecture
 

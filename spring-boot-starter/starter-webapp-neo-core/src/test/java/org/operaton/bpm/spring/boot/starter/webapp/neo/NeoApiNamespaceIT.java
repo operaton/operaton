@@ -116,14 +116,18 @@ class NeoApiNamespaceIT {
                "Cookie", sessionCookie + "; XSRF-TOKEN=" + token),
         "username=nobody&password=wrong"));
 
-    // then the resource itself answered and refused. The exact code depends on whether
-    // the surrounding context registered the engine (401 for bad credentials, 400 for
-    // an unknown engine) — what matters is that something rejected it, because before
-    // the servlet existed this path fell through to the SPA shell and returned 200
-    // with index.html, which throws nothing at all.
+    // then the resource itself answered and refused, rather than the SPA's index.html
+    // catch-all returning 200 — which is what this test exists to prove.
+    //
+    // No process engine is registered in this context, so the engine lookup fails first and
+    // the code is 400; with one it would be 401 for bad credentials. Either is a refusal by
+    // the auth resource. 403 is excluded deliberately: that is "not authorized for this
+    // app", which is what every neo login used to get because the app id was missing from
+    // AuthenticationUtil.APPS. This IT cannot reach that check, so the actual guard for it
+    // is UserAuthenticationResourceTest, which runs against a real engine.
     assertThat(thrown)
         .as("the auth resource should answer, not the index.html catch-all")
-        .hasMessageMatching("(?s).*response code: 4\\d\\d.*");
+        .hasMessageMatching("(?s).*response code: (400|401).*");
   }
 
   @Test

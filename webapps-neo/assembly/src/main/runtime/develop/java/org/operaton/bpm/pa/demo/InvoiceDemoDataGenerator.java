@@ -109,30 +109,22 @@ public class InvoiceDemoDataGenerator {
       engine.getIdentityService().createMembership("mary", "accounting");
       engine.getIdentityService().createMembership("peter", "management");
 
-      // authorize groups for tasklist:
+      // authorize groups for the apps that show tasks: the legacy tasklist and the neo SPA,
+      // which serves the same task list. Without the "neo" grant these demo users can sign in
+      // to the legacy webapp but get a 403 from the new one.
 
       AuthorizationService authorizationService = engine.getAuthorizationService();
 
-      Authorization salesTasklistAuth = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-      salesTasklistAuth.setGroupId("sales");
-      salesTasklistAuth.addPermission(ACCESS);
-      salesTasklistAuth.setResourceId("tasklist");
-      salesTasklistAuth.setResource(APPLICATION);
-      authorizationService.saveAuthorization(salesTasklistAuth);
-
-      Authorization accountingTasklistAuth = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-      accountingTasklistAuth.setGroupId("accounting");
-      accountingTasklistAuth.addPermission(ACCESS);
-      accountingTasklistAuth.setResourceId("tasklist");
-      accountingTasklistAuth.setResource(APPLICATION);
-      authorizationService.saveAuthorization(accountingTasklistAuth);
-
-      Authorization managementTasklistAuth = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-      managementTasklistAuth.setGroupId("management");
-      managementTasklistAuth.addPermission(ACCESS);
-      managementTasklistAuth.setResourceId("tasklist");
-      managementTasklistAuth.setResource(APPLICATION);
-      authorizationService.saveAuthorization(managementTasklistAuth);
+      for (String groupId : new String[]{"sales", "accounting", "management"}) {
+        for (String application : new String[]{"tasklist", "neo"}) {
+          Authorization appAuth = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
+          appAuth.setGroupId(groupId);
+          appAuth.addPermission(ACCESS);
+          appAuth.setResourceId(application);
+          appAuth.setResource(APPLICATION);
+          authorizationService.saveAuthorization(appAuth);
+        }
+      }
 
       Authorization salesDemoAuth = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
       salesDemoAuth.setGroupId("sales");

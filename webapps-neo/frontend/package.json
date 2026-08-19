@@ -30,7 +30,7 @@
     "bpmn-js": "^18.21.0",
     "bpmn-moddle": "^10.0.0",
     "dmn-js": "^17.3.0",
-    "dompurify": "^3.1.2",
+    "dompurify": "^3.4.14",
     "htm": "^3.1.1",
     "i18next": "^26.2.0",
     "i18next-browser-languagedetector": "^8.2.0",

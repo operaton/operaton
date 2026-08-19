@@ -140,6 +140,14 @@ public class RequestFilter {
       }
     }
 
+    // String.split drops trailing empty segments, so a configured pattern ending in "/"
+    // would compile without it and never match the URI it names. That silently disabled
+    // the engine-list rule ("/api/engine/engine/"), which only appeared to work because an
+    // unmatched path used to fall through to an anonymous grant.
+    if (pattern.endsWith("/") && !regexBuilder.isEmpty()) {
+      regexBuilder.append("/");
+    }
+
     this.groups = groupList.toArray(new String[0]);
     this.pattern = Pattern.compile(regexBuilder.toString());
   }

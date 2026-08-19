@@ -21,11 +21,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 
-import org.operaton.bpm.engine.rest.exception.ExceptionHandler;
-import org.operaton.bpm.engine.rest.exception.JsonMappingExceptionHandler;
-import org.operaton.bpm.engine.rest.exception.JsonParseExceptionHandler;
-import org.operaton.bpm.engine.rest.exception.ProcessEngineExceptionHandler;
-import org.operaton.bpm.engine.rest.exception.RestExceptionHandler;
+import org.operaton.bpm.engine.rest.exception.*;
 import org.operaton.bpm.engine.rest.hal.JacksonHalJsonProvider;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 import org.operaton.bpm.engine.rest.mapper.MultipartPayloadProvider;

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Daniel Meyer
  * @author Christian Lipphardt
@@ -50,7 +52,7 @@ public class HistoricScopeInstanceEvent extends HistoryEvent {
     this.startTime = startTime;
   }
 
-  public Long getDurationInMillis() {
+  public @Nullable Long getDurationInMillis() {
     if(durationInMillis != null) {
       return durationInMillis;
 

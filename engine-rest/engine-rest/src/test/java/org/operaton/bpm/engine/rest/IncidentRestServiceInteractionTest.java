@@ -34,12 +34,7 @@ import org.operaton.bpm.engine.runtime.IncidentQuery;
 
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION;
 import static io.restassured.RestAssured.given;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 
 public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest {
 

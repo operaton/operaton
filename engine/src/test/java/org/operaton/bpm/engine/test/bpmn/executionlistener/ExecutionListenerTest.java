@@ -81,12 +81,8 @@ public class ExecutionListenerTest {
   RepositoryService repositoryService;
 
   @BeforeEach
-  void clearRecorderListener() {
+  void setUp() {
     RecorderExecutionListener.clear();
-  }
-
-  @BeforeEach
-  void resetListener() {
     ThrowBPMNErrorDelegate.reset();
     ThrowRuntimeExceptionDelegate.reset();
   }

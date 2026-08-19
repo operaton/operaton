@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
@@ -142,7 +144,7 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
   }
 
   @Override
-  public byte[] getByteArrayValue() {
+  public byte @Nullable[] getByteArrayValue() {
     return null;
   }
 

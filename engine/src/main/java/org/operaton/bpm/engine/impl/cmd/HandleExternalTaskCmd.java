@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -42,7 +44,7 @@ public abstract class HandleExternalTaskCmd extends ExternalTaskCmd {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     validateInput();
 
     ExternalTaskEntity externalTask = commandContext.getExternalTaskManager().findExternalTaskById(externalTaskId);

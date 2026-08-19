@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -39,7 +41,7 @@ public abstract class AbstractSetBatchStateCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull(BadUserRequestException.class, "Batch id must not be null", "batch id", batchId);
 
     BatchManager batchManager = commandContext.getBatchManager();

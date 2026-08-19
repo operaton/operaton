@@ -25,7 +25,6 @@ import jakarta.ws.rs.core.UriInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto;
 import org.operaton.bpm.cockpit.impl.plugin.resources.ProcessDefinitionRestService;
@@ -35,6 +34,8 @@ import org.operaton.bpm.engine.rest.dto.CountResultDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginTest {
 
@@ -58,8 +59,8 @@ class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginT
 
     resource = new ProcessDefinitionRestService(getProcessEngine().getName());
 
-    uriInfo = Mockito.mock(UriInfo.class);
-    Mockito.doReturn(queryParameters).when(uriInfo).getQueryParameters();
+    uriInfo = mock(UriInfo.class);
+    doReturn(queryParameters).when(uriInfo).getQueryParameters();
     queryParameters.add("sortBy", "tenantId");
     queryParameters.add("sortOrder", "asc");
   }

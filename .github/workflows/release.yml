@@ -40,12 +40,12 @@ jobs:
       next_version: ${{steps.compute-next-version.outputs.next_version}}
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v5.3.0
+        uses: actions/setup-java@v5.7.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -112,12 +112,12 @@ jobs:
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Set up JDK
-        uses: actions/setup-java@v5.3.0
+        uses: actions/setup-java@v5.7.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -151,13 +151,19 @@ jobs:
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
           .github/scripts/set-project-version.sh $RELEASE_VERSION
+          if [ -z "$QUALIFIER" ]; then
+            .github/scripts/finalize-qa-db-fixture.sh $DATABASE_VERSION $RELEASE_VERSION
+          else
+            # prevent deployment of non-final sql scripts - a db schemaa can only deployed once
+            touch distro/sql-script/.skip-deploy
+          fi
 
       - name: Maven Build
         run: |
           PROJECT_ROOT=$(pwd)
           # Make a verification build. Also the deploy step will need the tomcat distro for building, but we don't want to deploy it.
           ./mvnw \
-            -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \
+            -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-webjar-neo,distro-starter,distro-serverless,h2-in-memory \
             install \
             versions:dependency-updates-aggregate-report \
             versions:plugin-updates-aggregate-report \
@@ -176,12 +182,12 @@ jobs:
           .devenv/scripts/build/build-sbom.sh
           pip install --only-binary :all: pystache==0.6.8
       - name: Commit changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "chore(release) Releasing version ${{steps.version.outputs.version}}"
       - name: Cache build artifacts
-        uses: actions/cache@v5.0.5
+        uses: actions/cache@v6.1.0
         with:
           path: |
             distro/**/*.tar.gz
@@ -203,12 +209,12 @@ jobs:
       contents: write
     steps:
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Restore build artifacts cache
-        uses: actions/cache@v5.0.5
+        uses: actions/cache@v6.1.0
         with:
           path: |
             distro/**/*.tar.gz
@@ -295,7 +301,7 @@ jobs:
           fi
 
       - name: Check out the code
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
       - name: Update the release branch
         run: |
           git pull
@@ -333,7 +339,7 @@ jobs:
           echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@645ecc0dd0a57f4d86d26c0aa5fc42c0a856fbca # v11.0.0
         if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"

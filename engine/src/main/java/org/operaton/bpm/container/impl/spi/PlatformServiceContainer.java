@@ -21,6 +21,9 @@ import java.util.Set;
 
 import javax.management.ObjectName;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.container.impl.spi.DeploymentOperation.DeploymentOperationBuilder;
 
 /**
@@ -47,14 +50,14 @@ public interface PlatformServiceContainer {
    * get a specific service by name or null if no such Service exists.
    *
    */
-  <S> S getService(ServiceType type, String localName);
+  <S> @Nullable S getService(ServiceType type, String localName);
 
   /**
    * get the service value for a specific service by name or null if no such
    * Service exists.
    *
    */
-  <S> S getServiceValue(ServiceType type, String localName);
+  <S> @Nullable S getServiceValue(ServiceType type, String localName);
 
   /**
    * @return all services for a specific {@link ServiceType}
@@ -69,7 +72,7 @@ public interface PlatformServiceContainer {
   /**
    * @return the values of all services for a specific {@link ServiceType}
    */
-  <S> List<S> getServiceValuesByType(ServiceType type);
+  <S> @NonNull List<S> getServiceValuesByType(ServiceType type);
 
   void executeDeploymentOperation(DeploymentOperation operation);
 

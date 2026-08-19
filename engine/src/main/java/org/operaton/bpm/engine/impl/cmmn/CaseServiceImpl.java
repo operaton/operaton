@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmmn;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -30,11 +32,7 @@ import org.operaton.bpm.engine.impl.cmmn.cmd.GetCaseExecutionVariableTypedCmd;
 import org.operaton.bpm.engine.impl.cmmn.cmd.GetCaseExecutionVariablesCmd;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionQueryImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseInstanceQueryImpl;
-import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
-import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.CaseInstanceBuilder;
-import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -132,16 +130,16 @@ public class CaseServiceImpl extends ServiceImpl implements CaseService {
   }
 
   @Override
-  public Object getVariable(String caseExecutionId, String variableName) {
+  public @Nullable Object getVariable(String caseExecutionId, String variableName) {
     return getCaseExecutionVariable(caseExecutionId, variableName, false);
   }
 
   @Override
-  public Object getVariableLocal(String caseExecutionId, String variableName) {
+  public @Nullable Object getVariableLocal(String caseExecutionId, String variableName) {
     return getCaseExecutionVariable(caseExecutionId, variableName, true);
   }
 
-  protected Object getCaseExecutionVariable(String caseExecutionId, String variableName, boolean isLocal) {
+  protected @Nullable Object getCaseExecutionVariable(String caseExecutionId, String variableName, boolean isLocal) {
     try {
       return commandExecutor.execute(new GetCaseExecutionVariableCmd(caseExecutionId, variableName, isLocal));
     }
@@ -154,27 +152,27 @@ public class CaseServiceImpl extends ServiceImpl implements CaseService {
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String caseExecutionId, String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String caseExecutionId, String variableName) {
     return getVariableTyped(caseExecutionId, variableName, true);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String caseExecutionId, String variableName, boolean deserializeValue) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String caseExecutionId, String variableName, boolean deserializeValue) {
     return getCaseExecutionVariableTyped(caseExecutionId, variableName, false, deserializeValue);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String caseExecutionId, String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String caseExecutionId, String variableName) {
     return getVariableLocalTyped(caseExecutionId, variableName, true);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String caseExecutionId, String variableName, boolean deserializeValue) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String caseExecutionId, String variableName, boolean deserializeValue) {
     return getCaseExecutionVariableTyped(caseExecutionId, variableName, true, deserializeValue);
   }
 
   @SuppressWarnings("unchecked")
-  protected <T extends TypedValue> T getCaseExecutionVariableTyped(String caseExecutionId, String variableName, boolean isLocal, boolean deserializeValue) {
+  protected <T extends TypedValue> @Nullable T getCaseExecutionVariableTyped(String caseExecutionId, String variableName, boolean isLocal, boolean deserializeValue) {
     try {
       return (T) commandExecutor.execute(new GetCaseExecutionVariableTypedCmd(caseExecutionId, variableName, isLocal, deserializeValue));
     }

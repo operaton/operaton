@@ -17,13 +17,9 @@
 package org.operaton.bpm.engine.impl.pvm.process;
 
 import java.io.Serial;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -32,7 +28,6 @@ import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
-
 
 /**
  * A Bpmn scope. The scope has references to two lists of activities:
@@ -63,12 +58,12 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   @Override
-  public ActivityImpl findActivity(String activityId) {
+  public @Nullable ActivityImpl findActivity(String activityId) {
     return (ActivityImpl) super.findActivity(activityId);
   }
 
   @Override
-  public TransitionImpl findTransition(String transitionId) {
+  public @Nullable TransitionImpl findTransition(String transitionId) {
     for (PvmActivity childActivity : flowActivities) {
       for (PvmTransition transition : childActivity.getOutgoingTransitions()) {
         if (transitionId.equals(transition.getId())) {
@@ -88,7 +83,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   @Override
-  public ActivityImpl findActivityAtLevelOfSubprocess(String activityId) {
+  public @Nullable ActivityImpl findActivityAtLevelOfSubprocess(String activityId) {
     if(!isSubProcessScope()) {
       throw new ProcessEngineException("This is not a sub process scope.");
     }
@@ -103,7 +98,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
 
   /** searches for the activity locally */
   @Override
-  public ActivityImpl getChildActivity(String activityId) {
+  public @Nullable ActivityImpl getChildActivity(String activityId) {
     return namedFlowActivities.get(activityId);
   }
 

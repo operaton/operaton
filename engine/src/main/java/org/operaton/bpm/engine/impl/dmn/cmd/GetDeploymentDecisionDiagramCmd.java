@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.dmn.cmd;
 import java.io.InputStream;
 
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -34,7 +36,7 @@ public class GetDeploymentDecisionDiagramCmd implements Command<InputStream> {
   }
 
   @Override
-  public InputStream execute(final CommandContext commandContext) {
+  public @Nullable InputStream execute(final CommandContext commandContext) {
     DecisionDefinition decisionDefinition = new GetDeploymentDecisionDefinitionCmd(decisionDefinitionId).execute(commandContext);
 
     final String deploymentId = decisionDefinition.getDeploymentId();

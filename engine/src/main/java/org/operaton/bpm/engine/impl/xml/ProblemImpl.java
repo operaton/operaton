@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.xml;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXParseException;
 
 import org.operaton.bpm.engine.BpmnParseException;
@@ -63,7 +64,7 @@ public class ProblemImpl implements Problem {
     extractElementDetails(exception.getElement());
   }
 
-  public ProblemImpl(BpmnParseException exception, String elementId) {
+  public ProblemImpl(BpmnParseException exception, @Nullable String elementId) {
     this(exception);
     this.mainElementId = elementId;
     if(elementId != null && !elementId.isEmpty()) {

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.cmmn.instance.Body;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.cmmn.instance.Expression;
@@ -50,7 +52,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
   }
 
   @Override
-  public String getText() {
+  public @Nullable String getText() {
     if (isCmmn11()) {
       return getTextContent();
     }
@@ -71,7 +73,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
 
   @Override
   @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
-  public String getBody() {
+  public @Nullable String getBody() {
     Body body = bodyChild.getChild(this);
     if (body != null) {
       return body.getTextContent();

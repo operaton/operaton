@@ -21,6 +21,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 
@@ -68,7 +70,7 @@ public class FormTypes {
     return formType;
   }
 
-  public AbstractFormFieldType getFormType(String name) {
+  public @Nullable AbstractFormFieldType getFormType(String name) {
     return formTypes.get(name);
   }
 }

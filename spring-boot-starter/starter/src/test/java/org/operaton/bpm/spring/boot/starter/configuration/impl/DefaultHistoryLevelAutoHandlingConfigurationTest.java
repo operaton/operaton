@@ -20,7 +20,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
@@ -53,7 +52,7 @@ class DefaultHistoryLevelAutoHandlingConfigurationTest {
     when(historyLevelDeterminator.determineHistoryLevel()).thenReturn("audit");
     historyLevelAutoHandlingConfiguration.preInit(springProcessEngineConfiguration);
     verify(historyLevelDeterminator).determineHistoryLevel();
-    verify(springProcessEngineConfiguration).setHistory(Mockito.anyString());
+    verify(springProcessEngineConfiguration).setHistory(anyString());
   }
 
   @Test
@@ -61,7 +60,7 @@ class DefaultHistoryLevelAutoHandlingConfigurationTest {
     when(historyLevelDeterminator.determineHistoryLevel()).thenReturn(null);
     historyLevelAutoHandlingConfiguration.preInit(springProcessEngineConfiguration);
     verify(historyLevelDeterminator).determineHistoryLevel();
-    verify(springProcessEngineConfiguration, times(0)).setHistory(Mockito.anyString());
+    verify(springProcessEngineConfiguration, times(0)).setHistory(anyString());
   }
 
 }

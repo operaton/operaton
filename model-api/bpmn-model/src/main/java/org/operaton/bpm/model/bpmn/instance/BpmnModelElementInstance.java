@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.builder.AbstractBaseElementBuilder;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 
@@ -47,6 +49,6 @@ public interface BpmnModelElementInstance extends ModelElementInstance {
    *
    * @return the scope element or null if non is found
    */
-  BpmnModelElementInstance getScope();
+  @Nullable BpmnModelElementInstance getScope();
 
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:operaton="http://operaton.org/schema/1.0/dmn"
+             id="tool-policy-definitions"
+             name="Tool Policy"
+             namespace="http://operaton.org/examples">
+
+  <!--
+    The deterministic guardrail around the non-deterministic agent.
+    Evaluated on EVERY loop cycle, between the agent's decision and the
+    dispatch to the chosen tool. Each evaluation is a Decision Instance
+    in the engine's history: which rule allowed or blocked which action,
+    with which inputs — declarative, versioned, changeable by the business
+    without touching the process model or the prompt.
+  -->
+  <decision id="tool-policy" name="Tool policy guardrail" operaton:historyTimeToLive="P30D">
+    <decisionTable id="tool-policy-table" hitPolicy="FIRST">
+
+      <input id="in_action" label="Requested action">
+        <inputExpression id="in_action_expr" typeRef="string">
+          <text>nextAction</text>
+        </inputExpression>
+      </input>
+      <input id="in_addr" label="Address verified">
+        <inputExpression id="in_addr_expr" typeRef="boolean">
+          <text>addressVerified</text>
+        </inputExpression>
+      </input>
+      <input id="in_sanctions" label="Sanctions status">
+        <inputExpression id="in_sanctions_expr" typeRef="string">
+          <text>sanctionsStatus</text>
+        </inputExpression>
+      </input>
+
+      <output id="out_verdict" label="Verdict" name="verdict" typeRef="string"/>
+      <output id="out_reason" label="Reason" name="reason" typeRef="string"/>
+
+      <rule id="r1">
+        <description>No customer record without a verified address</description>
+        <inputEntry id="r1i1"><text>"create_customer_record"</text></inputEntry>
+        <inputEntry id="r1i2"><text>false</text></inputEntry>
+        <inputEntry id="r1i3"><text>-</text></inputEntry>
+        <outputEntry id="r1o1"><text>"deny"</text></outputEntry>
+        <outputEntry id="r1o2"><text>"address not verified"</text></outputEntry>
+      </rule>
+
+      <rule id="r2">
+        <description>No customer record without a clear sanctions screen</description>
+        <inputEntry id="r2i1"><text>"create_customer_record"</text></inputEntry>
+        <inputEntry id="r2i2"><text>-</text></inputEntry>
+        <inputEntry id="r2i3"><text>not("none")</text></inputEntry>
+        <outputEntry id="r2o1"><text>"deny"</text></outputEntry>
+        <outputEntry id="r2o2"><text>"sanctions screening not clear"</text></outputEntry>
+      </rule>
+
+      <rule id="r3">
+        <description>Never finalize a case while the sanctions screen is unresolved</description>
+        <inputEntry id="r3i1"><text>"final_answer"</text></inputEntry>
+        <inputEntry id="r3i2"><text>-</text></inputEntry>
+        <inputEntry id="r3i3"><text>"unknown"</text></inputEntry>
+        <outputEntry id="r3o1"><text>"require_human"</text></outputEntry>
+        <outputEntry id="r3o2"><text>"cannot finalize without sanctions screening"</text></outputEntry>
+      </rule>
+
+      <rule id="r4">
+        <description>Default: the action is within policy</description>
+        <inputEntry id="r4i1"><text>-</text></inputEntry>
+        <inputEntry id="r4i2"><text>-</text></inputEntry>
+        <inputEntry id="r4i3"><text>-</text></inputEntry>
+        <outputEntry id="r4o1"><text>"allow"</text></outputEntry>
+        <outputEntry id="r4o2"><text>""</text></outputEntry>
+      </rule>
+
+    </decisionTable>
+  </decision>
+</definitions>

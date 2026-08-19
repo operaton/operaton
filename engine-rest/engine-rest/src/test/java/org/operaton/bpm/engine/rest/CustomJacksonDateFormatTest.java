@@ -40,10 +40,7 @@ import static org.operaton.bpm.engine.rest.mapper.JacksonConfigurator.DEFAULT_DA
 import static io.restassured.RestAssured.given;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @Disabled("See PR#52: Causes an issue resolving operaton-core-internal-dependencies")

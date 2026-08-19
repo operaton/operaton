@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest;
+
 import java.util.*;
 import java.util.stream.Stream;
 import jakarta.ws.rs.core.MediaType;
@@ -29,7 +30,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
@@ -44,11 +44,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 
 /**
  * @author Thorben Lindhauer
@@ -121,7 +117,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
       .then().expect().statusCode(Status.OK.getStatusCode())
       .when().get(EXTERNAL_TASK_QUERY_URL);
 
-    Mockito.verify(mockQuery).list();
+    verify(mockQuery).list();
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
@@ -278,72 +274,72 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   @Test
   void testSortingParameters() {
     // desc
-    InOrder inOrder = Mockito.inOrder(mockQuery);
+    InOrder inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("id", "desc", Status.OK);
     inOrder.verify(mockQuery).orderById();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("lockExpirationTime", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByLockExpirationTime();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("processInstanceId", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByProcessInstanceId();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("processDefinitionId", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByProcessDefinitionId();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("processDefinitionKey", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByProcessDefinitionKey();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("tenantId", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTenantId();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("taskPriority", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByPriority();
     inOrder.verify(mockQuery).desc();
     // asc
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("id", "asc", Status.OK);
     inOrder.verify(mockQuery).orderById();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("lockExpirationTime", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByLockExpirationTime();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("processInstanceId", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByProcessInstanceId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("processDefinitionId", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByProcessDefinitionId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("processDefinitionKey", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByProcessDefinitionKey();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("tenantId", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTenantId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifyGETSorting("taskPriority", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByPriority();
     inOrder.verify(mockQuery).asc();
@@ -358,7 +354,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testPOSTQuerySorting() {
-    InOrder inOrder = Mockito.inOrder(mockQuery);
+    InOrder inOrder = inOrder(mockQuery);
     executeAndVerifyPOSTSorting(
       OrderingBuilder.create()
         .orderBy("processDefinitionKey").desc()
@@ -681,7 +677,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   @MethodSource("variableParameterProvider")
   void testProcessVariableParameters(String operator, boolean variableNamesIgnoreCase, boolean variableValuesIgnoreCase) {
     // clear previous interactions but keep stubbing
-    Mockito.clearInvocations(mockQuery);
+    clearInvocations(mockQuery);
 
     String queryValue = SAMPLE_VAR_NAME + "_" + operator + "_" + SAMPLE_VAR_VALUE;
 

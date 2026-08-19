@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -34,7 +36,7 @@ public class DeleteTaskMetricsCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkDeleteTaskMetrics);
 
     writeUserOperationLog(commandContext);

@@ -28,7 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.management.JobDefinitionQuery;
@@ -41,10 +40,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -144,73 +140,73 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   @Test
   void testSortingParameters() {
     // asc
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("jobDefinitionId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByJobDefinitionId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("activityId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByActivityId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("processDefinitionId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("processDefinitionKey", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionKey();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("jobType", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByJobType();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("jobConfiguration", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByJobConfiguration();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("tenantId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByTenantId();
     inOrder.verify(mockedQuery).asc();
 
     // desc
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("jobDefinitionId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByJobDefinitionId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("activityId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByActivityId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("processDefinitionId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("processDefinitionKey", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionKey();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("jobType", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByJobType();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("jobConfiguration", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByJobConfiguration();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("tenantId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByTenantId();
     inOrder.verify(mockedQuery).desc();
@@ -218,7 +214,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testSecondarySortingAsPost() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("jobType").desc()
@@ -281,7 +277,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
         .when().get(JOB_DEFINITION_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     inOrder.verify(mockedQuery).jobDefinitionId(queryJobDefinitionId);
     inOrder.verify(mockedQuery).list();
 
@@ -323,7 +319,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
         .when().post(JOB_DEFINITION_QUERY_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     inOrder.verify(mockedQuery).jobDefinitionId(queryJobDefinitionId);
     inOrder.verify(mockedQuery).list();
 

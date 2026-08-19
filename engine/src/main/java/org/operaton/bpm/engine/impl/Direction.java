@@ -21,6 +21,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
  * @author Tom Baeyens
@@ -49,7 +51,7 @@ public class Direction implements Serializable {
     return "Direction[name=%s]".formatted(name);
   }
 
-  public static Direction findByName(String directionName) {
+  public static @Nullable Direction findByName(String directionName) {
     return directions.get(directionName);
   }
 }

@@ -28,7 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.history.CleanableHistoricCaseInstanceReport;
@@ -43,11 +42,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRestServiceTest {
 
@@ -126,7 +121,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
       .contentType(ContentType.JSON)
     .when().get(HISTORIC_REPORT_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicCaseInstanceReport);
+    InOrder inOrder = inOrder(historicCaseInstanceReport);
     inOrder.verify(historicCaseInstanceReport).list();
     verifyNoMoreInteractions(historicCaseInstanceReport);
   }
@@ -140,7 +135,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
     .when().get(HISTORIC_REPORT_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(historicCaseInstanceReport);
+    InOrder inOrder = inOrder(historicCaseInstanceReport);
     inOrder.verify(historicCaseInstanceReport).list();
 
     String content = response.asString();

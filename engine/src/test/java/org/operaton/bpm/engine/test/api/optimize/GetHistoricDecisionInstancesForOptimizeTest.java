@@ -72,30 +72,13 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   AuthorizationService authorizationService;
 
   @BeforeEach
-  void init() {
+  void setUp() {
     ProcessEngineConfigurationImpl config =
       engineRule.getProcessEngineConfiguration();
     optimizeService = config.getOptimizeService();
 
     createUser(userId);
-  }
 
-  @AfterEach
-  void cleanUp() {
-    for (User user : identityService.createUserQuery().list()) {
-      identityService.deleteUser(user.getId());
-    }
-    for (Group group : identityService.createGroupQuery().list()) {
-      identityService.deleteGroup(group.getId());
-    }
-    for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
-      authorizationService.deleteAuthorization(authorization.getId());
-    }
-    ClockUtil.reset();
-  }
-
-  @BeforeEach
-  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();
@@ -106,7 +89,17 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   }
 
   @AfterEach
-  void disableDmnFeelLegacyBehavior() {
+  void tearDown() {
+    for (User user : identityService.createUserQuery().list()) {
+      identityService.deleteUser(user.getId());
+    }
+    for (Group group : identityService.createGroupQuery().list()) {
+      identityService.deleteGroup(group.getId());
+    }
+    for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
+      authorizationService.deleteAuthorization(authorization.getId());
+    }
+    ClockUtil.reset();
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()

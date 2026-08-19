@@ -96,10 +96,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     for (HistoricBatch historicBatch : historyService.createHistoricBatchQuery().list()) {
       historyService.deleteHistoricBatch(historicBatch.getId());
     }
-  }
 
-  @AfterEach
-  void clearAuthentication() {
     identityService.clearAuthentication();
   }
 

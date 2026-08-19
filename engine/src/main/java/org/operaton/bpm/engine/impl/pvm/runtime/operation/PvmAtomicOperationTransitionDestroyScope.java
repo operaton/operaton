@@ -19,9 +19,10 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import jakarta.annotation.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
@@ -143,8 +144,7 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
     return concurrentExecution;
   }
 
-  @Nullable
-  private static PvmExecutionImpl getReplacingExecution(PvmExecutionImpl propagatingExecution, PvmExecutionImpl scopeExecution) {
+  private static @Nullable PvmExecutionImpl getReplacingExecution(PvmExecutionImpl propagatingExecution, PvmExecutionImpl scopeExecution) {
     PvmExecutionImpl replacingExecution = null;
     for (PvmExecutionImpl concurrentChild : scopeExecution.getNonEventScopeExecutions())  {
       if (concurrentChild != propagatingExecution) {

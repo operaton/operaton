@@ -74,11 +74,6 @@ public class HistoricDecisionInstanceInputOutputValueTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
 
-  @AfterEach
-  void tearDown() {
-    ClockUtil.setCurrentTime(new Date());
-  }
-
   @BeforeEach
   void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
@@ -91,7 +86,8 @@ public class HistoricDecisionInstanceInputOutputValueTest {
   }
 
   @AfterEach
-  void disableDmnFeelLegacyBehavior() {
+  void tearDown() {
+    ClockUtil.setCurrentTime(new Date());
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()

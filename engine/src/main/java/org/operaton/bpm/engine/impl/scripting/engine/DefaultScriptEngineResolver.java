@@ -24,6 +24,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 
@@ -54,7 +56,7 @@ public class DefaultScriptEngineResolver implements ScriptEngineResolver {
    * @return the cached engine or null if no script engine can be created for the given language
    */
   @Override
-  public ScriptEngine getScriptEngine(String language, boolean resolveFromCache) {
+  public @Nullable ScriptEngine getScriptEngine(String language, boolean resolveFromCache) {
 
     ScriptEngine scriptEngine = null;
 

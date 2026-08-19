@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.response.Response;
@@ -28,7 +24,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
@@ -40,10 +35,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -92,7 +84,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
           .when().get(EVENT_SUBSCRIPTION_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(mockedEventSubscriptionQuery);
+    InOrder inOrder = inOrder(mockedEventSubscriptionQuery);
     inOrder.verify(mockedEventSubscriptionQuery).list();
 
     String content = response.asString();
@@ -220,22 +212,22 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(mockedEventSubscriptionQuery);
+    InOrder inOrder = inOrder(mockedEventSubscriptionQuery);
     executeAndVerifySorting("created", "asc", Status.OK);
     inOrder.verify(mockedEventSubscriptionQuery).orderByCreated();
     inOrder.verify(mockedEventSubscriptionQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedEventSubscriptionQuery);
+    inOrder = inOrder(mockedEventSubscriptionQuery);
     executeAndVerifySorting("created", "desc", Status.OK);
     inOrder.verify(mockedEventSubscriptionQuery).orderByCreated();
     inOrder.verify(mockedEventSubscriptionQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedEventSubscriptionQuery);
+    inOrder = inOrder(mockedEventSubscriptionQuery);
     executeAndVerifySorting("tenantId", "asc", Status.OK);
     inOrder.verify(mockedEventSubscriptionQuery).orderByTenantId();
     inOrder.verify(mockedEventSubscriptionQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedEventSubscriptionQuery);
+    inOrder = inOrder(mockedEventSubscriptionQuery);
     executeAndVerifySorting("tenantId", "desc", Status.OK);
     inOrder.verify(mockedEventSubscriptionQuery).orderByTenantId();
     inOrder.verify(mockedEventSubscriptionQuery).desc();

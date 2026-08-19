@@ -27,7 +27,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReport;
@@ -42,9 +41,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CleanableHistoricBatchReportServiceTest extends AbstractRestServiceTest {
 
@@ -103,7 +100,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
       .contentType(ContentType.JSON)
     .when().get(HISTORIC_REPORT_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicBatchReport);
+    InOrder inOrder = inOrder(historicBatchReport);
     inOrder.verify(historicBatchReport).list();
   }
 
@@ -116,7 +113,7 @@ public class CleanableHistoricBatchReportServiceTest extends AbstractRestService
     .when().get(HISTORIC_REPORT_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(historicBatchReport);
+    InOrder inOrder = inOrder(historicBatchReport);
     inOrder.verify(historicBatchReport).list();
 
     String content = response.asString();

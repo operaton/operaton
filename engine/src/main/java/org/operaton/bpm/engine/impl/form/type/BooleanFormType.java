@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.type;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.BooleanValue;
@@ -55,7 +57,7 @@ public class BooleanFormType extends SimpleFormFieldType {
   // deprecated /////////////////////////////////////////////////
 
   @Override
-  public Object convertFormValueToModelValue(Object propertyValue) {
+  public @Nullable Object convertFormValueToModelValue(Object propertyValue) {
     if (propertyValue==null || "".equals(propertyValue)) {
       return null;
     }
@@ -63,7 +65,7 @@ public class BooleanFormType extends SimpleFormFieldType {
   }
 
   @Override
-  public String convertModelValueToFormValue(Object modelValue) {
+  public @Nullable String convertModelValueToFormValue(Object modelValue) {
 
     if (modelValue==null) {
       return null;

@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.Date;
 
 import org.operaton.bpm.engine.history.ExternalTaskState;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
@@ -105,7 +107,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     return errorMessage;
   }
 
-  public void setErrorMessage(String errorMessage) {
+  public void setErrorMessage(@Nullable String errorMessage) {
     // note: it is not a clean way to truncate where the history event is produced, since truncation is only
     //   relevant for relational history databases that follow our schema restrictions;
     //   a similar problem exists in ExternalTaskEntity#setErrorMessage where truncation may not be required for custom

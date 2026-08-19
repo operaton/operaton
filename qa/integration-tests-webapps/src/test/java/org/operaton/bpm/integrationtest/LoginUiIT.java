@@ -56,15 +56,19 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
         return;
       } catch (WebDriverException e) {
         last = e;
+        // clear cookies so the next attempt starts from a clean session/CSRF state
+        // instead of retrying against whatever the failed attempt left behind
+        driver.manage().deleteAllCookies();
       }
     }
     throw last;
   }
 
   void login(String appName) {
-    driver.manage().deleteAllCookies();
-
-    driver.get("%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName));
+    // each test runs in a fresh browser (see AbstractWebappUiIntegrationTest), so no cookie or
+    // storage reset is required here - the browser starts without any session or CSRF state
+    String appUrl = "%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName);
+    driver.get(appUrl);
 
     WebDriverWait loginWait = new WebDriverWait(driver, LOGIN_TIMEOUT);
 
@@ -74,9 +78,10 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
     WebElement passwordInput = loginWait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"password\"]")));
     sendKeys(passwordInput, "demo");
 
-    // wait until the button is actually clickable to avoid submitting before the SPA is bound
+    // wait until the button is actually clickable to avoid clicking before the SPA is bound;
+    // use a real click so the browser goes through the same ng-submit path as a user interaction
     loginWait.until(elementToBeClickable(By.cssSelector("button[type=\"submit\"]")))
-        .submit();
+        .click();
 
     // verify the submit took effect: the login form must disappear. Otherwise we are still
     // on the login page and withRetries() should re-run the flow rather than wait in vain.

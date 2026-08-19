@@ -17,13 +17,13 @@
 package org.operaton.spin.json;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mockito;
 
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.spi.DataFormatMapper;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class JsonSerializationWithValidationTest extends JsonSerializationTest {
 
@@ -32,7 +32,7 @@ class JsonSerializationWithValidationTest extends JsonSerializationTest {
   @BeforeEach
   void setUpValidator() {
     validator = mock(DeserializationTypeValidator.class);
-    Mockito.when(validator.validate(anyString())).thenReturn(true);
+    when(validator.validate(anyString())).thenReturn(true);
   }
 
   @Override

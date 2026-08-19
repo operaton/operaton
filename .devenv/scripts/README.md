@@ -14,6 +14,7 @@ Use this script to perform the build of the project.
 The script has the following options:
 
 - `--profile=<PROFILE>` - The build profile to use. Valid values: `fast`, `normal` (default), `max`. This will activate a different amount of Maven profiles.
+- `--extra-maven-profiles=<PROFILES>` - Comma-separated list of additional Maven profiles to activate on top of those selected by `--profile`.
 - `--reports` - Execute Reporting plugins to generate update reports, code statistics.
 - `--skip-tests` - Skip the test execution.
 
@@ -35,6 +36,11 @@ build.sh --reports
 Build the project with the `max` profile and execute just a specific test:
 ```bash
 build.sh --profile=max -Dsurefire.includes="**/MyTest*"
+```
+
+Build the project with the `normal` profile and additional Maven profiles:
+```bash
+build.sh --extra-maven-profiles=distro-wildfly,integration-test-operaton-run
 ```
 
 ## `build-and-run-integration-tests.sh`

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.type;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.form.FormType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -45,7 +47,7 @@ public abstract class AbstractFormFieldType implements FormType {
   public abstract String convertModelValueToFormValue(Object modelValue);
 
   @Override
-  public Object getInformation(String key) {
+  public @Nullable Object getInformation(String key) {
     return null;
   }
 

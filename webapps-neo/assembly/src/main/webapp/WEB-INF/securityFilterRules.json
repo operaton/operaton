@@ -1,0 +1,11 @@
+{
+  "pathFilter": {
+    "deniedPaths": [
+      { "path": "/api/engine/.*", "methods": "*" }
+    ],
+    "allowedPaths": [
+      { "path": "/api/engine/engine/", "methods": "GET" },
+      { "path": "/api/engine/engine/{engine}/.*", "methods": "*", "authorizer": "org.operaton.bpm.webapp.neo.impl.security.filter.EngineRequestAuthorizer" }
+    ]
+  }
+}

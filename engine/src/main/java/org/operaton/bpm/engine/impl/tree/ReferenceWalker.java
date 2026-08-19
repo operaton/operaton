@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * <p>A walker for walking through an object reference structure (e.g. an execution tree).
  * Any visited element can have any number of following elements. The elements are visited
@@ -61,15 +63,15 @@ public abstract class ReferenceWalker<T> {
     return this;
   }
 
-  public T walkWhile() {
+  public @Nullable T walkWhile() {
     return walkWhile(new ReferenceWalker.NullCondition<>());
   }
 
-  public T walkUntil() {
+  public @Nullable T walkUntil() {
     return walkUntil(new ReferenceWalker.NullCondition<>());
   }
 
-  public T walkWhile(ReferenceWalker.WalkCondition<T> condition) {
+  public @Nullable T walkWhile(ReferenceWalker.WalkCondition<T> condition) {
     while (!condition.isFulfilled(getCurrentElement())) {
       for (TreeVisitor<T> collector : preVisitor) {
         collector.visit(getCurrentElement());
@@ -85,7 +87,7 @@ public abstract class ReferenceWalker<T> {
     return getCurrentElement();
   }
 
-  public T walkUntil(ReferenceWalker.WalkCondition<T> condition) {
+  public @Nullable T walkUntil(ReferenceWalker.WalkCondition<T> condition) {
     do {
       for (TreeVisitor<T> collector : preVisitor) {
         collector.visit(getCurrentElement());
@@ -101,7 +103,7 @@ public abstract class ReferenceWalker<T> {
     return getCurrentElement();
   }
 
-  public T getCurrentElement() {
+  public @Nullable T getCurrentElement() {
     return currentElements.isEmpty() ? null : currentElements.get(0);
   }
 

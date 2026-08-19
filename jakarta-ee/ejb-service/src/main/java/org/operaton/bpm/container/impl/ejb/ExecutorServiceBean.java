@@ -17,8 +17,6 @@
 package org.operaton.bpm.container.impl.ejb;
 
 import java.util.List;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
@@ -46,32 +44,32 @@ public class ExecutorServiceBean implements ExecutorService {
   @Resource(mappedName="eis/JcaExecutorServiceConnectionFactory")
   protected JcaExecutorServiceConnectionFactory executorConnectionFactory;
 
-  protected JcaExecutorServiceConnection executorConnection;
-
-  @PostConstruct
-  protected void openConnection() {
+  @Override
+  public boolean schedule(Runnable runnable, boolean isLongRunning) {
+    JcaExecutorServiceConnection executorConnection = openConnection();
     try {
-      executorConnection = executorConnectionFactory.getConnection();
-    } catch (ResourceException e) {
-      throw new ProcessEngineException("Could not open connection to executor service connection factory ", e);
-    }
-  }
-
-  @PreDestroy
-  protected void closeConnection() {
-    if(executorConnection != null) {
+      return executorConnection.schedule(runnable, isLongRunning);
+    } finally {
       executorConnection.closeConnection();
     }
   }
 
   @Override
-  public boolean schedule(Runnable runnable, boolean isLongRunning) {
-    return executorConnection.schedule(runnable, isLongRunning);
+  public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
+    JcaExecutorServiceConnection executorConnection = openConnection();
+    try {
+      return executorConnection.getExecuteJobsRunnable(jobIds, processEngine);
+    } finally {
+      executorConnection.closeConnection();
+    }
   }
 
-  @Override
-  public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
-    return executorConnection.getExecuteJobsRunnable(jobIds, processEngine);
+  protected JcaExecutorServiceConnection openConnection() {
+    try {
+      return executorConnectionFactory.getConnection();
+    } catch (ResourceException e) {
+      throw new ProcessEngineException("Could not open connection to executor service connection factory ", e);
+    }
   }
 
 }

@@ -14,6 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Without this, a failure while staging artifacts is swallowed and only shows up
+# later as an unresolvable dependency in the verify run, pointing at the wrong
+# module entirely.
+set -euo pipefail
+
 rm -rf ~/.m2/repository/org/operaton
 
 ./mvnw -f bom install
@@ -27,6 +32,8 @@ spring-boot-starter/starter-test,\
 spring-boot-starter/starter-test-junit5,\
 spring-boot-starter/starter-webapp,\
 spring-boot-starter/starter-webapp-core,\
+spring-boot-starter/starter-webapp-neo,\
+spring-boot-starter/starter-webapp-neo-core,\
 examples/invoice,\
 qa/arquillian-extensions,\
 qa/integration-tests-webapps \

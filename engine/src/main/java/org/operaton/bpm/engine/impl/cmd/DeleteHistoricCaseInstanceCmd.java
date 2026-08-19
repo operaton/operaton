@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -39,7 +41,7 @@ public class DeleteHistoricCaseInstanceCmd implements Command<Object> {
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     ensureNotNull("caseInstanceId", caseInstanceId);
     // Check if case instance is still running
     HistoricCaseInstance instance = commandContext

@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.exception.NotFoundException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -73,7 +75,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull("processDefinitionIds", processDefinitionIds);
 
     List<ProcessDefinition> processDefinitions;

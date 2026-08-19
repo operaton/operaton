@@ -86,12 +86,9 @@ public class HistoricDecisionInstanceDecisionServiceEvaluationTest {
   HistoryService historyService;
 
   @BeforeEach
-  void init() {
+  void setUp() {
     testRule.deploy(DECISION_DMN, process);
-  }
 
-  @BeforeEach
-  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
             .getDmnEngineConfiguration();

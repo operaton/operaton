@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.sub.identity;
 
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.OPTIONS;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;

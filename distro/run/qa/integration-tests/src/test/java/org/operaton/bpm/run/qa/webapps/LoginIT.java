@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import java.lang.reflect.Method;
 import java.net.URI;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -206,10 +204,11 @@ class LoginIT extends AbstractWebappUiIT {
     wait.until(currentURIIs(URI.create(appUrl + "app/" + appName + "/default/#!/welcome")));
   }
 
+  @Override
   @BeforeEach
-  void setup(TestInfo testInfo) {
-    Optional<Method> testMethod = testInfo.getTestMethod();
-    testMethod.ifPresent(method -> this.name = method.getName());
+  void setUp(TestInfo testInfo) {
+    super.setUp(testInfo);
+    testInfo.getTestMethod().ifPresent(method -> this.name = method.getName());
   }
 
   void initLoginIT(String[] commands) {

@@ -21,6 +21,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
@@ -54,8 +55,10 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
 
   protected static final HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
 
+  public static final String PROPERTY_CHARSET = "org.operaton.bpm.connect.httpclient.charset";
+
   protected CloseableHttpClient httpClient;
-  protected final Charset charset;
+  protected Charset charset;
   private Map<String, Object> connectionConfigOptions;
   private final HttpClientConnectionManager connectionManager;
 
@@ -63,7 +66,8 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
     super(connectorId);
     connectionManager = new PoolingHttpClientConnectionManager();
     httpClient = createClient();
-    charset = StandardCharsets.UTF_8;
+    String charsetProperty = System.getProperty(PROPERTY_CHARSET);
+    charset = charsetProperty != null ? Charset.forName(charsetProperty) : StandardCharsets.UTF_8;
   }
 
   protected CloseableHttpClient createClient() {
@@ -79,6 +83,20 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
 
   public void setHttpClient(CloseableHttpClient httpClient) {
     this.httpClient = httpClient;
+  }
+
+  Charset getCharset() {
+    return charset;
+  }
+
+  /**
+   * Sets the charset used to encode request payloads.
+   *
+   * @param charset the charset to use; must not be {@code null}
+   * @since 2.2
+   */
+  public void setCharset(Charset charset) {
+    this.charset = Objects.requireNonNull(charset, "charset must not be null");
   }
 
   @Override

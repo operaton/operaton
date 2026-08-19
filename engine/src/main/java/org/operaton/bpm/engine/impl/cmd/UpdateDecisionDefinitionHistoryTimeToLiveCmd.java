@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryTimeToLiveParser;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -44,7 +46,7 @@ public class UpdateDecisionDefinitionHistoryTimeToLiveCmd implements Command<Voi
   }
 
   @Override
-  public Void execute(CommandContext context) {
+  public @Nullable Void execute(CommandContext context) {
     checkAuthorization(context);
 
     ensureNotNull(BadUserRequestException.class, "decisionDefinitionId", decisionDefinitionId);

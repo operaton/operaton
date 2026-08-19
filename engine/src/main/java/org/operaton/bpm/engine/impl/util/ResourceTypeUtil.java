@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.*;
 
 import static org.operaton.bpm.engine.authorization.Resources.*;
@@ -113,7 +115,7 @@ public final class ResourceTypeUtil {
    * Iterates over the {@link Resources} and
    * returns either the resource with specified <code>resourceType</code> or <code>null</code>.
    */
-  public static Resource getResourceByType(int resourceType) {
+  public static @Nullable Resource getResourceByType(int resourceType) {
     for (Resource resource : Resources.values()) {
       if (resource.resourceType() == resourceType) {
         return resource;

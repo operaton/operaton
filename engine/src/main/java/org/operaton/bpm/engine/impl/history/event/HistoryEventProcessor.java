@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
@@ -52,7 +54,7 @@ public final class HistoryEventProcessor {
      * @param producer the producer which is used for the creation
      * @return the created {@link HistoryEvent}
      */
-    public HistoryEvent createHistoryEvent(HistoryEventProducer producer) {
+    public @Nullable HistoryEvent createHistoryEvent(HistoryEventProducer producer) {
       return null;
     }
 

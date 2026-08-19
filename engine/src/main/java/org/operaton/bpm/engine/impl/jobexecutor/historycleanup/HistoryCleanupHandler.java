@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -70,7 +72,7 @@ public abstract class HistoryCleanupHandler implements TransactionListener {
 
   protected class HistoryCleanupHandlerCmd implements Command<Void> {
     @Override
-    public Void execute(CommandContext commandContext) {
+    public @Nullable Void execute(CommandContext commandContext) {
 
       Map<String, Long> report = reportMetrics();
       boolean isRescheduleNow = shouldRescheduleNow();

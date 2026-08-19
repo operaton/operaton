@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Daniel Meyer
  *
@@ -63,7 +65,7 @@ public class QName {
     return combine(qualifier, localName);
   }
 
-  public static String combine(String qualifier, String localName) {
+  public static String combine(@Nullable String qualifier, String localName) {
     if (qualifier == null || qualifier.isEmpty()) {
       return localName;
     }

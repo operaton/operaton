@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
 import org.operaton.bpm.engine.impl.util.StringUtil;
@@ -33,7 +35,12 @@ import org.operaton.bpm.engine.task.Event;
 
 /**
  * @author Tom Baeyens
+ *
+ * Implements the deprecated {@link Event} interface only to remain compatible with
+ * {@code TaskService#getTaskEvents} (backed by {@code GetTaskEventsCmd}), for as long
+ * as that deprecated API still exists.
  */
+@SuppressWarnings("removal")
 public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
 
   public static final String TYPE_EVENT = "event";
@@ -61,7 +68,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
     return persistentState;
   }
 
-  public byte[] getFullMessageBytes() {
+  public byte @Nullable[] getFullMessageBytes() {
     return fullMessage != null ? StringUtil.toByteArray(fullMessage) : null;
   }
 

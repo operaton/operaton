@@ -27,7 +27,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.history.HistoricActivityStatistics;
 import org.operaton.bpm.engine.history.HistoricActivityStatisticsQuery;
@@ -41,13 +40,8 @@ import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_T
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 
 /**
  *
@@ -96,7 +90,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
     .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).includeCanceled();
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -111,7 +105,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
     .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).includeFinished();
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -126,7 +120,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
     .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).includeCompleteScope();
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -142,7 +136,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
       .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).startedAfter(testDate);
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -158,7 +152,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
       .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).startedBefore(testDate);
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -174,7 +168,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
       .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).finishedAfter(testDate);
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -190,7 +184,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
       .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).finishedBefore(testDate);
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -287,7 +281,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
       .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).processInstanceIdIn(new String[] {"foo", "bar"});
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -302,7 +296,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
       .statusCode(Status.OK.getStatusCode())
       .when().get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).includeIncidents();
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
     inOrder.verifyNoMoreInteractions();
@@ -418,7 +412,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
     .when()
       .get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    InOrder inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).orderByActivityId();
     inOrder.verify(historicActivityStatisticsQuery).asc();
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();
@@ -433,7 +427,7 @@ public class HistoricActivityStatisticsRestServiceQueryTest extends AbstractRest
     .when()
       .get(HISTORIC_ACTIVITY_STATISTICS_URL);
 
-    inOrder = Mockito.inOrder(historicActivityStatisticsQuery);
+    inOrder = inOrder(historicActivityStatisticsQuery);
     inOrder.verify(historicActivityStatisticsQuery).orderByActivityId();
     inOrder.verify(historicActivityStatisticsQuery).desc();
     inOrder.verify(historicActivityStatisticsQuery).unlimitedList();

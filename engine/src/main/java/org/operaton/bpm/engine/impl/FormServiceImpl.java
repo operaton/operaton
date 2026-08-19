@@ -20,22 +20,15 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.form.TaskFormData;
-import org.operaton.bpm.engine.impl.cmd.GetDeployedStartFormCmd;
-import org.operaton.bpm.engine.impl.cmd.GetFormKeyCmd;
-import org.operaton.bpm.engine.impl.cmd.GetRenderedStartFormCmd;
-import org.operaton.bpm.engine.impl.cmd.GetRenderedTaskFormCmd;
-import org.operaton.bpm.engine.impl.cmd.GetStartFormCmd;
-import org.operaton.bpm.engine.impl.cmd.GetStartFormVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskFormCmd;
-import org.operaton.bpm.engine.impl.cmd.GetTaskFormVariablesCmd;
-import org.operaton.bpm.engine.impl.cmd.SubmitStartFormCmd;
-import org.operaton.bpm.engine.impl.cmd.SubmitTaskFormCmd;
+import org.operaton.bpm.engine.impl.cmd.*;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
-
 
 /**
  * @author Tom Baeyens
@@ -99,7 +92,7 @@ public class FormServiceImpl extends ServiceImpl implements FormService {
   }
 
   @Override
-  public String getTaskFormKey(String processDefinitionId, String taskDefinitionKey) {
+  public @Nullable String getTaskFormKey(@NonNull String processDefinitionId, @NonNull String taskDefinitionKey) {
     return commandExecutor.execute(new GetFormKeyCmd(processDefinitionId, taskDefinitionKey));
   }
 

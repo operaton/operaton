@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
@@ -81,7 +83,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
     commandInvocationContext.performOperation(atomicOperation, execution);
   }
 
-  public PvmAtomicOperation findMatchingAtomicOperation(String operationName) {
+  public @Nullable PvmAtomicOperation findMatchingAtomicOperation(@Nullable String operationName) {
     if (operationName == null) {
       // default operation for backwards compatibility
       return PvmAtomicOperation.TRANSITION_CREATE_SCOPE;

@@ -81,22 +81,14 @@ class BoundedNumberOfMaxResultsTest {
   void enableMaxResultsLimit() {
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(10);
-  }
-
-  @BeforeEach
-  void authenticate() {
     engineRule.getIdentityService()
         .setAuthenticatedUserId("foo");
   }
 
   @AfterEach
-  void clearAuthentication() {
+  void tearDown() {
     engineRule.getIdentityService()
         .clearAuthentication();
-  }
-
-  @AfterEach
-  void resetQueryMaxResultsLimit() {
     engineRule.getProcessEngineConfiguration()
         .setQueryMaxResultsLimit(Integer.MAX_VALUE);
   }

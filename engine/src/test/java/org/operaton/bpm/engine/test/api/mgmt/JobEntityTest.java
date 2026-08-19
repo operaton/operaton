@@ -65,20 +65,13 @@ class JobEntityTest {
     jobIds = new ArrayList<>();
 
     activityIdLoggingProperty = engineRule.getProcessEngineConfiguration().getLoggingContextActivityId();
-  }
-
-  @BeforeEach
-  void setClock() {
     ClockUtil.setCurrentTime(CREATE_DATE);
   }
 
   @AfterEach
-  void resetClock() {
+  void tearDown() {
     ClockUtil.reset();
-  }
 
-  @AfterEach
-  void cleanup() {
     for (String jobId : jobIds) {
       managementService.deleteJob(jobId);
     }

@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.ejb.EJB;
+import jakarta.ejb.Lock;
+import jakarta.ejb.LockType;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.ejb.TransactionAttribute;
@@ -103,10 +105,14 @@ public class EjbBpmPlatformBootstrap {
 
   // getters //////////////////////////////////////////////
 
+  @Lock(LockType.READ)
+  @TransactionAttribute(TransactionAttributeType.SUPPORTS)
   public ProcessEngineService getProcessEngineService() {
     return processEngineService;
   }
 
+  @Lock(LockType.READ)
+  @TransactionAttribute(TransactionAttributeType.SUPPORTS)
   public ProcessApplicationService getProcessApplicationService() {
     return processApplicationService;
   }

@@ -51,7 +51,7 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
   private Long jobExecutorPriorityRangeMax;
 
   @BeforeEach
-  public void saveProcessEngineConfiguration() {
+  protected void setUpBase() {
     jobExecutorAcquireByDueDate = configuration.isJobExecutorAcquireByDueDate();
     jobExecutorAcquireByPriority = configuration.isJobExecutorAcquireByPriority();
     jobExecutorAcquireWithSkipLocked = configuration.isJobExecutorAcquireWithSkipLocked();
@@ -59,15 +59,11 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
     jobEnsureDueDateSet = configuration.isEnsureJobDueDateNotNull();
     jobExecutorPriorityRangeMin = configuration.getJobExecutorPriorityRangeMin();
     jobExecutorPriorityRangeMax = configuration.getJobExecutorPriorityRangeMax();
-  }
-
-  @BeforeEach
-  public void setClock() {
     ClockTestUtil.setClockToDateWithoutMilliseconds();
   }
 
   @AfterEach
-  public void restoreProcessEngineConfiguration() {
+  protected void tearDownBase() {
     configuration.setJobExecutorAcquireByDueDate(jobExecutorAcquireByDueDate);
     configuration.setJobExecutorAcquireByPriority(jobExecutorAcquireByPriority);
     configuration.setJobExecutorAcquireWithSkipLocked(jobExecutorAcquireWithSkipLocked);
@@ -75,10 +71,6 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
     configuration.setEnsureJobDueDateNotNull(jobEnsureDueDateSet);
     configuration.setJobExecutorPriorityRangeMin(jobExecutorPriorityRangeMin);
     configuration.setJobExecutorPriorityRangeMax(jobExecutorPriorityRangeMax);
-  }
-
-  @AfterEach
-  public void resetClock() {
     ClockUtil.reset();
   }
 

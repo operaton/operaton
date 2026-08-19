@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 public class VariableScopeResolverFactory implements ResolverFactory {
 
   @Override
-  public Resolver createResolver(VariableScope variableScope) {
+  public @Nullable Resolver createResolver(@Nullable VariableScope variableScope) {
     if (variableScope!=null) {
       return new VariableScopeResolver(variableScope);
     }

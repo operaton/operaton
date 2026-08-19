@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
 
@@ -40,7 +42,7 @@ public abstract class CoreActivity extends CoreModelElement {
   }
 
   /** searches for the activity recursively */
-  public CoreActivity findActivity(String activityId) {
+  public @Nullable CoreActivity findActivity(String activityId) {
     CoreActivity localActivity = getChildActivity(activityId);
     if (localActivity!=null) {
       return localActivity;

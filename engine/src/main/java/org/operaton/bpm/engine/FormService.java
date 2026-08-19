@@ -20,6 +20,9 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -326,7 +329,7 @@ public interface FormService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  String getTaskFormKey(String processDefinitionId, String taskDefinitionKey);
+  @Nullable String getTaskFormKey(@NonNull String processDefinitionId, @NonNull String taskDefinitionKey);
 
   /**
    * Retrieves a deployed start form for a process definition with a given id.

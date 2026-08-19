@@ -44,17 +44,9 @@ public abstract class DmnEngineTest {
   }
 
   @BeforeEach
-  public void initDmnEngine() {
+  protected void setUp() {
     dmnEngine = dmnEngineRule.getDmnEngine();
-  }
-
-  @BeforeEach
-  public void initDecision() {
     decision = dmnEngineRule.getDecision();
-  }
-
-  @BeforeEach
-  public void initVariables() {
     variables = Variables.createVariables();
   }
 

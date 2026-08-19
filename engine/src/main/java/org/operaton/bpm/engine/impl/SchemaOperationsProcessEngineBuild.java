@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.SchemaOperationsCommand;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -32,7 +34,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 public class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommand {
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     String databaseSchemaUpdate = Context.getProcessEngineConfiguration().getDatabaseSchemaUpdate();
     PersistenceSession persistenceSession = commandContext.getSession(PersistenceSession.class);
     if (ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_DROP_CREATE.equals(databaseSchemaUpdate)) {

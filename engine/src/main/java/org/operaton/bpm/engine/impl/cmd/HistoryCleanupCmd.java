@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -58,7 +60,7 @@ public class HistoryCleanupCmd implements Command<Job> {
   }
 
   @Override
-  public Job execute(CommandContext context) {
+  public @Nullable Job execute(CommandContext context) {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = context.getProcessEngineConfiguration();
 

@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.interceptor;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Tom Baeyens
  */
 public interface Command<T> {
 
-  T execute(CommandContext commandContext);
+  @Nullable T execute(CommandContext commandContext);
 
 }

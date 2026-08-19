@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.parser.EventSubscriptionDeclaration;
 import org.operaton.bpm.engine.impl.jobexecutor.ProcessEventJobHandler.EventSubscriptionJobConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
@@ -105,7 +107,7 @@ public class EventSubscriptionJobDeclaration extends JobDeclaration<EventSubscri
   /**
    * Assumes that an activity has at most one declaration of a certain eventType.
    */
-  public static EventSubscriptionJobDeclaration findDeclarationForSubscription(EventSubscriptionEntity eventSubscription) {
+  public static @Nullable EventSubscriptionJobDeclaration findDeclarationForSubscription(EventSubscriptionEntity eventSubscription) {
     List<EventSubscriptionJobDeclaration> declarations = getDeclarationsForActivity(eventSubscription.getActivity());
 
     for (EventSubscriptionJobDeclaration declaration : declarations) {

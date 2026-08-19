@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -43,7 +45,7 @@ public class DeleteHistoricDecisionInstanceByInstanceIdCmd implements Command<Ob
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     ensureNotNull("historicDecisionInstanceId", historicDecisionInstanceId);
 
     HistoricDecisionInstance historicDecisionInstance = commandContext

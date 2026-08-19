@@ -20,6 +20,8 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
@@ -213,7 +215,7 @@ public final class CompensationUtil {
     return eventSubscriptionsForActivity;
   }
 
-  public static ExecutionEntity getCompensatingExecution(EventSubscriptionEntity eventSubscription) {
+  public static @Nullable ExecutionEntity getCompensatingExecution(EventSubscriptionEntity eventSubscription) {
     String configuration = eventSubscription.getConfiguration();
     if (configuration != null) {
       return Context.getCommandContext().getExecutionManager().findExecutionById(configuration);

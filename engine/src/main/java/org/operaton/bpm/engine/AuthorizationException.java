@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * <p>Exception thrown by the process engine in case a user tries to
  * interact with a resource in an unauthorized way.</p>
@@ -112,7 +114,7 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public String getViolatedPermissionName() {
+  public @Nullable String getViolatedPermissionName() {
     if (missingAuthorizations.size() == 1) {
       return missingAuthorizations.get(0).getViolatedPermissionName();
     }
@@ -134,7 +136,7 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public String getResourceId() {
+  public @Nullable String getResourceId() {
     if (missingAuthorizations.size() == 1) {
       return missingAuthorizations.get(0).getResourceId();
     }

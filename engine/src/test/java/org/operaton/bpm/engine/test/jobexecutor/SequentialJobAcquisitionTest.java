@@ -61,17 +61,9 @@ class SequentialJobAcquisitionTest {
   }
   
   @AfterEach
-  void stopJobExecutor() {
+  void tearDown() {
     jobExecutor.shutdown();
-  }
-
-  @AfterEach
-  void resetClock() {
     ClockUtil.reset();
-  }
-
-  @AfterEach
-  void closeProcessEngines() {
     Iterator<ProcessEngine> iterator = createdProcessEngines.iterator();
     while (iterator.hasNext()) {
       ProcessEngine processEngine = iterator.next();

@@ -106,20 +106,12 @@ public class ModificationExecutionAsyncTest {
   }
 
   @BeforeEach
-  void setClock() {
+  void setUp() {
     ClockUtil.setCurrentTime(START_DATE);
-  }
-
-  @BeforeEach
-  void storeEngineSettings() {
     defaultBatchJobsPerSeed = configuration.getBatchJobsPerSeed();
     defaultInvocationsPerBatchJob = configuration.getInvocationsPerBatchJob();
     defaultEnsureJobDueDateSet = configuration.isEnsureJobDueDateNotNull();
     configuration.setEnsureJobDueDateNotNull(ensureJobDueDateSet);
-  }
-
-  @BeforeEach
-  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -130,24 +122,12 @@ public class ModificationExecutionAsyncTest {
   }
 
   @AfterEach
-  void resetClock() {
+  void tearDown() {
     ClockUtil.reset();
-  }
-
-  @AfterEach
-  void restoreEngineSettings() {
     configuration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     configuration.setInvocationsPerBatchJob(defaultInvocationsPerBatchJob);
     configuration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
-  }
-
-  @AfterEach
-  void removeInstanceIds() {
     helper.currentProcessInstances = new ArrayList<>();
-  }
-
-  @AfterEach
-  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
   }
 

@@ -18,12 +18,10 @@ package org.operaton.bpm.container.impl.ejb;
 
 import java.util.List;
 import java.util.Set;
-import jakarta.annotation.PostConstruct;
-import jakarta.ejb.EJB;
-import jakarta.ejb.Local;
-import jakarta.ejb.Stateless;
-import jakarta.ejb.TransactionAttribute;
-import jakarta.ejb.TransactionAttributeType;
+import jakarta.ejb.*;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -42,32 +40,24 @@ public class EjbProcessEngineService implements ProcessEngineService {
   @EJB
   protected EjbBpmPlatformBootstrap ejbBpmPlatform;
 
-  /** the processEngineServiceDelegate */
-  protected ProcessEngineService processEngineServiceDelegate;
-
-  @PostConstruct
-  protected void initProcessEngineServiceDelegate() {
-    processEngineServiceDelegate = ejbBpmPlatform.getProcessEngineService();
-  }
-
   @Override
   public ProcessEngine getDefaultProcessEngine() {
-    return processEngineServiceDelegate.getDefaultProcessEngine();
+    return ejbBpmPlatform.getProcessEngineService().getDefaultProcessEngine();
   }
 
   @Override
-  public List<ProcessEngine> getProcessEngines() {
-    return processEngineServiceDelegate.getProcessEngines();
+  public @NonNull List<ProcessEngine> getProcessEngines() {
+    return ejbBpmPlatform.getProcessEngineService().getProcessEngines();
   }
 
   @Override
   public Set<String> getProcessEngineNames() {
-    return processEngineServiceDelegate.getProcessEngineNames();
+    return ejbBpmPlatform.getProcessEngineService().getProcessEngineNames();
   }
 
   @Override
-  public ProcessEngine getProcessEngine(String name) {
-    return processEngineServiceDelegate.getProcessEngine(name);
+  public @Nullable ProcessEngine getProcessEngine(String name) {
+    return ejbBpmPlatform.getProcessEngineService().getProcessEngine(name);
   }
 
 }

@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.impl.cfg;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.ProcessEngine;
 
@@ -89,7 +89,7 @@ class CompositeProcessEnginePluginTest {
   }
 
   private static ProcessEnginePlugin processEnginePlugin(final String name) {
-    ProcessEnginePlugin plugin = Mockito.mock(ProcessEnginePlugin.class);
+    ProcessEnginePlugin plugin = mock(ProcessEnginePlugin.class);
     when(plugin.toString()).thenReturn(name);
 
     return plugin;

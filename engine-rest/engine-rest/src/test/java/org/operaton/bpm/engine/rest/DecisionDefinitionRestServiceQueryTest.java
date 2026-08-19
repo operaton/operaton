@@ -28,7 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -43,11 +42,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class DecisionDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -396,7 +391,7 @@ public class DecisionDefinitionRestServiceQueryTest extends AbstractRestServiceT
 
     // assert query invocation
     InOrder inOrder = inOrder(mockedQuery);
-    inOrder.verify(mockedQuery, never()).decisionDefinitionIdIn(Mockito.any());
+    inOrder.verify(mockedQuery, never()).decisionDefinitionIdIn(any());
     inOrder.verify(mockedQuery).list();
   }
 

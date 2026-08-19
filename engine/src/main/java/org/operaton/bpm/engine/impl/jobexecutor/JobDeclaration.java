@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
 import org.operaton.bpm.engine.impl.bpmn.parser.FailedJobRetryConfiguration;
@@ -240,7 +242,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
   }
 
   @SuppressWarnings("unused")
-  public Date resolveDueDate(S context) {
+  public @Nullable Date resolveDueDate(S context) {
     ProcessEngineConfiguration processEngineConfiguration = Context.getProcessEngineConfiguration();
     if (processEngineConfiguration != null && (processEngineConfiguration.isJobExecutorAcquireByDueDate() || processEngineConfiguration.isEnsureJobDueDateNotNull())) {
       return ClockUtil.getCurrentTime();
@@ -258,7 +260,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
     this.exclusive = exclusive;
   }
 
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     if (activity != null) {
       return activity.getId();
     }
@@ -275,7 +277,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
     this.activity = activity;
   }
 
-  public ProcessDefinitionImpl getProcessDefinition() {
+  public @Nullable ProcessDefinitionImpl getProcessDefinition() {
     if (activity != null) {
       return activity.getProcessDefinition();
     }

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.test.api.runtime.migration;
 import java.util.Collection;
 
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.bpmn.builder.AbstractActivityBuilder;
 import org.operaton.bpm.model.bpmn.builder.AbstractBaseElementBuilder;
 import org.operaton.bpm.model.bpmn.builder.AbstractFlowNodeBuilder;
@@ -341,7 +343,7 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
   }
 
   @Override
-  public ValidationResults validate(Collection<ModelElementValidator<?>> validators) {
+  public @Nullable ValidationResults validate(Collection<ModelElementValidator<?>> validators) {
     return null;
   }
 

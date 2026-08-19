@@ -25,6 +25,7 @@ import org.operaton.bpm.dmn.engine.*;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DmnEvaluationException;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
+import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.commons.utils.IoUtil;
 
@@ -299,7 +300,6 @@ class DmnDecisionEvaluationTest extends DmnEngineTest {
   @Test
   void shouldEvaluateDecisionWithCollectHitPolicyReturningAList() {
     DmnDecisionRequirementsGraph graph = dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_COLLECT_DMN));
-    initVariables();
     variables.putValue("dayType","WeekDay");
 
     DmnDecisionResult result = dmnEngine.evaluateDecision(graph.getDecision("dish-decision"), variables);
@@ -311,7 +311,6 @@ class DmnDecisionEvaluationTest extends DmnEngineTest {
   @Test
   void shouldEvaluateDecisionWithRuleOrderHitPolicyReturningAList() {
     DmnDecisionRequirementsGraph graph = dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_RULE_ORDER_DMN));
-    initVariables();
     variables.putValue("dayType","WeekDay");
 
     DmnDecisionResult result = dmnEngine.evaluateDecision(graph.getDecision("dish-decision"), variables);

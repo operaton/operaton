@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -49,7 +51,7 @@ public interface VariableScope {
 
   <T extends TypedValue> T getVariableTyped(String variableName);
 
-  <T extends TypedValue> T getVariableTyped(String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableTyped(String variableName, boolean deserializeValue);
 
   <T extends TypedValue> T getVariableLocalTyped(String variableName);
 

@@ -105,10 +105,7 @@ public class BulkHistoryDeleteTest {
   @BeforeEach
   void init() {
     identityService.setAuthenticatedUserId(USER_ID);
-  }
 
-  @BeforeEach
-  void enableDmnFeelLegacyBehavior() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
         .getDmnEngineConfiguration();
@@ -119,7 +116,8 @@ public class BulkHistoryDeleteTest {
   }
 
   @AfterEach
-  void disableDmnFeelLegacyBehavior() {
+  void tearDown() {
+    identityService.clearAuthentication();
 
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         engineRule.getProcessEngineConfiguration()
@@ -128,11 +126,6 @@ public class BulkHistoryDeleteTest {
     ResetDmnConfigUtil.reset(dmnEngineConfiguration)
         .enableFeelLegacyBehavior(false)
         .init();
-  }
-
-  @AfterEach
-  void tearDown() {
-    identityService.clearAuthentication();
   }
 
   @Test

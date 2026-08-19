@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -37,7 +36,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 
 class VariableDeserializationTypeValidationTest {
   AbstractVariablesResource variablesResourceSpy;
@@ -45,14 +44,14 @@ class VariableDeserializationTypeValidationTest {
 
   @BeforeEach
   void setUpMocks() {
-    validator = Mockito.mock(DeserializationTypeValidator.class);
+    validator = mock(DeserializationTypeValidator.class);
 
-    ProcessEngineConfiguration configurationMock = Mockito.mock(ProcessEngineConfiguration.class);
-    Mockito.when(configurationMock.isDeserializationTypeValidationEnabled()).thenReturn(true);
-    Mockito.when(configurationMock.getDeserializationTypeValidator()).thenReturn(validator);
+    ProcessEngineConfiguration configurationMock = mock(ProcessEngineConfiguration.class);
+    when(configurationMock.isDeserializationTypeValidationEnabled()).thenReturn(true);
+    when(configurationMock.getDeserializationTypeValidator()).thenReturn(validator);
 
     variablesResourceSpy = createVariablesResourceSpy();
-    Mockito.when(variablesResourceSpy.getProcessEngineConfiguration()).thenReturn(configurationMock);
+    when(variablesResourceSpy.getProcessEngineConfiguration()).thenReturn(configurationMock);
   }
 
   @Test
@@ -65,7 +64,7 @@ class VariableDeserializationTypeValidationTest {
     variablesResourceSpy.validateType(type);
 
     // then
-    Mockito.verifyNoInteractions(validator);
+    verifyNoInteractions(validator);
   }
 
   @Test
@@ -78,8 +77,8 @@ class VariableDeserializationTypeValidationTest {
     variablesResourceSpy.validateType(type);
 
     // then
-    Mockito.verify(validator).validate("java.lang.String");
-    Mockito.verifyNoMoreInteractions(validator);
+    verify(validator).validate("java.lang.String");
+    verifyNoMoreInteractions(validator);
   }
 
   @Test
@@ -92,8 +91,8 @@ class VariableDeserializationTypeValidationTest {
     variablesResourceSpy.validateType(type);
 
     // then
-    Mockito.verify(validator).validate("org.operaton.bpm.engine.rest.sub.impl.VariableDeserializationTypeValidationTest$Complex");
-    Mockito.verifyNoMoreInteractions(validator);
+    verify(validator).validate("org.operaton.bpm.engine.rest.sub.impl.VariableDeserializationTypeValidationTest$Complex");
+    verifyNoMoreInteractions(validator);
   }
 
   @Test
@@ -106,8 +105,8 @@ class VariableDeserializationTypeValidationTest {
     variablesResourceSpy.validateType(type);
 
     // then
-    Mockito.verify(validator).validate("java.lang.Integer");
-    Mockito.verifyNoMoreInteractions(validator);
+    verify(validator).validate("java.lang.Integer");
+    verifyNoMoreInteractions(validator);
   }
 
   @Test
@@ -120,9 +119,9 @@ class VariableDeserializationTypeValidationTest {
     variablesResourceSpy.validateType(type);
 
     // then
-    Mockito.verify(validator).validate("java.util.ArrayList");
-    Mockito.verify(validator).validate("java.lang.String");
-    Mockito.verifyNoMoreInteractions(validator);
+    verify(validator).validate("java.util.ArrayList");
+    verify(validator).validate("java.lang.String");
+    verifyNoMoreInteractions(validator);
   }
 
   @Test
@@ -135,9 +134,9 @@ class VariableDeserializationTypeValidationTest {
     variablesResourceSpy.validateType(type);
 
     // then
-    Mockito.verify(validator, times(2)).validate("java.util.ArrayList");
-    Mockito.verify(validator).validate("java.lang.String");
-    Mockito.verifyNoMoreInteractions(validator);
+    verify(validator, times(2)).validate("java.util.ArrayList");
+    verify(validator).validate("java.lang.String");
+    verifyNoMoreInteractions(validator);
   }
 
   @Test
@@ -150,10 +149,10 @@ class VariableDeserializationTypeValidationTest {
     variablesResourceSpy.validateType(type);
 
     // then
-    Mockito.verify(validator).validate("java.util.HashMap");
-    Mockito.verify(validator).validate("java.lang.String");
-    Mockito.verify(validator).validate("java.lang.Integer");
-    Mockito.verifyNoMoreInteractions(validator);
+    verify(validator).validate("java.util.HashMap");
+    verify(validator).validate("java.lang.String");
+    verify(validator).validate("java.lang.Integer");
+    verifyNoMoreInteractions(validator);
   }
 
   @ParameterizedTest(name = "{0}")
@@ -197,11 +196,11 @@ class VariableDeserializationTypeValidationTest {
   }
 
   protected void setValidatorMockResult(boolean result) {
-    Mockito.when(validator.validate(Mockito.anyString())).thenReturn(result);
+    when(validator.validate(anyString())).thenReturn(result);
   }
 
   protected AbstractVariablesResource createVariablesResourceSpy() {
-    return Mockito.spy(new AbstractVariablesResource(Mockito.mock(ProcessEngine.class), "test", Mockito.mock(ObjectMapper.class)) {
+    return spy(new AbstractVariablesResource(mock(ProcessEngine.class), "test", mock(ObjectMapper.class)) {
 
       @Override
       protected void updateVariableEntities(VariableMap variables, List<String> deletions) {

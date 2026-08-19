@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
@@ -29,7 +25,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
@@ -42,11 +37,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -119,7 +110,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testDeploymentRetrieval() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
 
     String queryKey = "Name";
     Response response = given().queryParam("nameLike", queryKey)
@@ -319,42 +310,42 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("id", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByDeploymentId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("id", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByDeploymentId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("deploymentTime", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByDeploymentTime();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("deploymentTime", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByDeploymentTime();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("name", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByDeploymentName();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("name", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByDeploymentName();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("tenantId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByTenantId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySuccessfulSorting("tenantId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByTenantId();
     inOrder.verify(mockedQuery).desc();

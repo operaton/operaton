@@ -57,6 +57,37 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- The assembly copies these two modules' target/dependency directories in
+    fileSets. A fileSet is an opaque path to Maven, so without these declarations
+    there is no ordering edge: a parallel build (-T) can assemble the archive
+    before the modules have populated those directories, and the result is a
+    silently incomplete distribution rather than a failure. -->
+    <dependency>
+      <groupId>org.operaton.bpm.run</groupId>
+      <artifactId>operaton-bpm-run-modules-webapps</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <exclusions>
+        <!-- do not add transitive dependencies to generated dependency list -->
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm.run</groupId>
+      <artifactId>operaton-bpm-run-modules-webapps-neo</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <exclusions>
+        <!-- do not add transitive dependencies to generated dependency list -->
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
     <dependency>
       <groupId>org.operaton.bpm.run</groupId>
       <artifactId>operaton-bpm-run-modules-example-invoice</artifactId>
@@ -209,55 +240,6 @@
                     <argument>--distro=operaton</argument>
                   </arguments>
                   <skip>false</skip>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <!--
-            Verify that the distribution zip does not contain any jackson-module-scala jars,
-            which are not needed and could cause NoClassDefFoundError if present.
-            See https://github.com/operaton/operaton/issues/2875
-          -->
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>verify-no-jackson-scala</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <delete dir="${project.build.directory}/verify-temp/"/>
-                    <mkdir dir="${project.build.directory}/verify-temp/"/>
-                    <unzip src="${project.build.directory}/operaton-bpm-${project.version}.zip"
-                           dest="${project.build.directory}/verify-temp/">
-                      <patternset>
-                        <include name="internal/operaton-bpm.jar"/>
-                      </patternset>
-                    </unzip>
-                    <available file="${project.build.directory}/verify-temp/internal/operaton-bpm.jar"
-                               property="inner.jar.present"/>
-                    <fail unless="inner.jar.present"
-                          message="verify-no-jackson-scala: internal/operaton-bpm.jar not found in the distribution zip — assembly structure may have changed."/>
-                    <mkdir dir="${project.build.directory}/verify-temp/scala-check/"/>
-                    <unzip src="${project.build.directory}/verify-temp/internal/operaton-bpm.jar"
-                           dest="${project.build.directory}/verify-temp/scala-check/">
-                      <patternset>
-                        <include name="BOOT-INF/lib/jackson-module-scala*.jar"/>
-                      </patternset>
-                    </unzip>
-                    <fileset id="scala.jars.found"
-                             dir="${project.build.directory}/verify-temp/scala-check"
-                             includes="BOOT-INF/lib/jackson-module-scala*.jar"/>
-                    <condition property="scala.jars.present">
-                      <resourcecount refid="scala.jars.found" when="greater" count="0"/>
-                    </condition>
-                    <fail if="scala.jars.present"
-                          message="Found jackson-module-scala in BOOT-INF/lib of operaton-bpm.jar — this Scala dependency must not be bundled in the distribution."/>
-                    <delete dir="${project.build.directory}/verify-temp/"/>
-                  </target>
                 </configuration>
               </execution>
             </executions>

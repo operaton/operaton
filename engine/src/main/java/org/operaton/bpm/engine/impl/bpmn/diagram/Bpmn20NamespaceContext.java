@@ -26,6 +26,8 @@ import java.util.Set;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.xpath.XPath;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
  * XML {@link NamespaceContext} containing the namespaces used by BPMN 2.0 XML documents.
@@ -56,7 +58,7 @@ public class Bpmn20NamespaceContext implements NamespaceContext {
   }
 
   @Override
-  public String getNamespaceURI(String prefix) {
+  public @Nullable String getNamespaceURI(String prefix) {
     return namespaceUris.get(prefix);
   }
 

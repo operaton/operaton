@@ -27,7 +27,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.BatchQuery;
@@ -41,12 +40,7 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -208,22 +202,22 @@ public class BatchRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(queryMock);
+    InOrder inOrder = inOrder(queryMock);
     executeAndVerifySorting("batchId", "desc", Status.OK);
     inOrder.verify(queryMock).orderById();
     inOrder.verify(queryMock).desc();
 
-    inOrder = Mockito.inOrder(queryMock);
+    inOrder = inOrder(queryMock);
     executeAndVerifySorting("batchId", "asc", Status.OK);
     inOrder.verify(queryMock).orderById();
     inOrder.verify(queryMock).asc();
 
-    inOrder = Mockito.inOrder(queryMock);
+    inOrder = inOrder(queryMock);
     executeAndVerifySorting("tenantId", "asc", Status.OK);
     inOrder.verify(queryMock).orderByTenantId();
     inOrder.verify(queryMock).asc();
 
-    inOrder = Mockito.inOrder(queryMock);
+    inOrder = inOrder(queryMock);
     executeAndVerifySorting("tenantId", "desc", Status.OK);
     inOrder.verify(queryMock).orderByTenantId();
     inOrder.verify(queryMock).desc();

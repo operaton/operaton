@@ -28,7 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReport;
@@ -43,11 +42,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractRestServiceTest {
 
@@ -124,7 +119,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
       .contentType(ContentType.JSON)
     .when().get(HISTORIC_REPORT_URL);
 
-    InOrder inOrder = Mockito.inOrder(historicProcessInstanceReport);
+    InOrder inOrder = inOrder(historicProcessInstanceReport);
     inOrder.verify(historicProcessInstanceReport).list();
     verifyNoMoreInteractions(historicProcessInstanceReport);
   }
@@ -138,7 +133,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
     .when().get(HISTORIC_REPORT_URL);
 
     // assert query invocation
-    InOrder inOrder = Mockito.inOrder(historicProcessInstanceReport);
+    InOrder inOrder = inOrder(historicProcessInstanceReport);
     inOrder.verify(historicProcessInstanceReport).list();
 
     String content = response.asString();

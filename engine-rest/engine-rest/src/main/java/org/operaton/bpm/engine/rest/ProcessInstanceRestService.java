@@ -17,25 +17,14 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.List;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
 
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceSuspensionStateAsyncDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceSuspensionStateDto;
-import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesByProcessDto;
+import org.operaton.bpm.engine.rest.dto.runtime.*;
 import org.operaton.bpm.engine.rest.dto.runtime.batch.CorrelationMessageAsyncDto;
 import org.operaton.bpm.engine.rest.dto.runtime.batch.DeleteProcessInstancesDto;
 import org.operaton.bpm.engine.rest.dto.runtime.batch.SetVariablesAsyncDto;

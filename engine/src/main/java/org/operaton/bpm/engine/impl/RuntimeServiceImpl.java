@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -38,25 +36,7 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanBuilder;
 import org.operaton.bpm.engine.migration.MigrationPlanExecutionBuilder;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.ConditionEvaluationBuilder;
-import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
-import org.operaton.bpm.engine.runtime.ExecutionQuery;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.IncidentQuery;
-import org.operaton.bpm.engine.runtime.MessageCorrelationAsyncBuilder;
-import org.operaton.bpm.engine.runtime.MessageCorrelationBuilder;
-import org.operaton.bpm.engine.runtime.ModificationBuilder;
-import org.operaton.bpm.engine.runtime.NativeExecutionQuery;
-import org.operaton.bpm.engine.runtime.NativeProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceModificationBuilder;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
-import org.operaton.bpm.engine.runtime.RestartProcessInstanceBuilder;
-import org.operaton.bpm.engine.runtime.SignalEventReceivedBuilder;
-import org.operaton.bpm.engine.runtime.UpdateProcessInstanceSuspensionStateSelectBuilder;
-import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -360,32 +340,32 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   }
 
   @Override
-  public Object getVariable(String executionId, String variableName) {
+  public @Nullable Object getVariable(String executionId, String variableName) {
     return commandExecutor.execute(new GetExecutionVariableCmd(executionId, variableName, false));
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String executionId, String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String executionId, String variableName) {
     return getVariableTyped(executionId, variableName, true);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String executionId, String variableName, boolean deserializeObjectValue) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String executionId, String variableName, boolean deserializeObjectValue) {
     return commandExecutor.execute(new GetExecutionVariableTypedCmd<T>(executionId, variableName, false, deserializeObjectValue));
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String executionId, String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String executionId, String variableName) {
     return getVariableLocalTyped(executionId, variableName, true);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String executionId, String variableName, boolean deserializeObjectValue) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String executionId, String variableName, boolean deserializeObjectValue) {
     return commandExecutor.execute(new GetExecutionVariableTypedCmd<T>(executionId, variableName, true, deserializeObjectValue));
   }
 
   @Override
-  public Object getVariableLocal(String executionId, String variableName) {
+  public @Nullable Object getVariableLocal(String executionId, String variableName) {
     return commandExecutor.execute(new GetExecutionVariableCmd(executionId, variableName, true));
   }
 
@@ -544,7 +524,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   }
 
   @Override
-  public ActivityInstance getActivityInstance(String processInstanceId) {
+  public @Nullable ActivityInstance getActivityInstance(String processInstanceId) {
     return commandExecutor.execute(new GetActivityInstanceCmd(processInstanceId));
   }
 

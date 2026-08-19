@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
@@ -89,7 +91,7 @@ public class BaseCallableElement {
     return CallableElementBinding.VERSION_TAG.equals(getBinding());
   }
 
-  public Integer getVersion(VariableScope variableScope) {
+  public @Nullable Integer getVersion(VariableScope variableScope) {
     Object result = versionValueProvider.getValue(variableScope);
 
     if (result != null) {
@@ -113,7 +115,7 @@ public class BaseCallableElement {
     this.versionValueProvider = version;
   }
 
-  public String getVersionTag(VariableScope variableScope) {
+  public @Nullable String getVersionTag(VariableScope variableScope) {
     Object result = versionTagValueProvider.getValue(variableScope);
 
     if (result != null) {

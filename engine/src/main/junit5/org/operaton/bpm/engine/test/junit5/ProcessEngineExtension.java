@@ -30,6 +30,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -240,7 +241,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   @Override
-  public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
+  public @Nullable Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
     if (ProcessEngine.class.equals(parameterContext.getParameter().getType())) {
       LOG.debug("resolve the processEngine as parameter");

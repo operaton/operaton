@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.webapp.plugin.resource;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Collection;
@@ -27,7 +28,6 @@ import jakarta.ws.rs.core.StreamingOutput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
@@ -39,9 +39,8 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
 
 import static org.operaton.bpm.webapp.plugin.resource.AbstractAppPluginRootResource.MIME_TYPE_TEXT_CSS;
 import static org.operaton.bpm.webapp.plugin.resource.AbstractAppPluginRootResource.MIME_TYPE_TEXT_JAVASCRIPT;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @Parameterized
 public class AbstractAppPluginRootResourceTest {
@@ -84,16 +83,16 @@ public class AbstractAppPluginRootResourceTest {
 
   @BeforeEach
   void setup() {
-    runtimeDelegate = Mockito.mock(AppRuntimeDelegate.class);
-    pluginRegistry = Mockito.mock(AppPluginRegistry.class);
-    AppPlugin plugin = Mockito.mock(AppPlugin.class);
+    runtimeDelegate = mock(AppRuntimeDelegate.class);
+    pluginRegistry = mock(AppPluginRegistry.class);
+    AppPlugin plugin = mock(AppPlugin.class);
 
-    Mockito.doReturn(pluginRegistry).when(runtimeDelegate).getAppPluginRegistry();
-    Mockito.doReturn(plugin).when(pluginRegistry).getPlugin(PLUGIN_NAME);
-    Mockito.doReturn(ASSET_DIR).when(plugin).getAssetDirectory();
+    doReturn(pluginRegistry).when(runtimeDelegate).getAppPluginRegistry();
+    doReturn(plugin).when(pluginRegistry).getPlugin(PLUGIN_NAME);
+    doReturn(ASSET_DIR).when(plugin).getAssetDirectory();
 
     pluginRootResource = new AbstractAppPluginRootResource<>(PLUGIN_NAME, runtimeDelegate);
-    mockServletContext = Mockito.mock(ServletContext.class);
+    mockServletContext = mock(ServletContext.class);
     pluginRootResource.servletContext = mockServletContext;
     pluginRootResource.allowedAssets.add("app/asset.js");
     pluginRootResource.allowedAssets.add("app/asset.css");
@@ -106,7 +105,7 @@ public class AbstractAppPluginRootResourceTest {
     // given
     String resourceName = "/" + ASSET_DIR + "/" + assetName;
     ByteArrayInputStream inputStream = new ByteArrayInputStream(ASSET_CONTENT.getBytes());
-    Mockito.doReturn(inputStream).when(mockServletContext).getResourceAsStream(resourceName);
+    doReturn(inputStream).when(mockServletContext).getResourceAsStream(resourceName);
 
     if (assetAllowed) {
       // when/then - should not throw exception
@@ -122,18 +121,18 @@ public class AbstractAppPluginRootResourceTest {
         assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE).get(0)).hasToString(assetMediaType);
       }).doesNotThrowAnyException();
 
-      Mockito.verify(runtimeDelegate).getAppPluginRegistry();
-      Mockito.verify(pluginRegistry).getPlugin(PLUGIN_NAME);
-      Mockito.verify(mockServletContext).getResourceAsStream(resourceName);
+      verify(runtimeDelegate).getAppPluginRegistry();
+      verify(pluginRegistry).getPlugin(PLUGIN_NAME);
+      verify(mockServletContext).getResourceAsStream(resourceName);
     } else {
       // when/then - should throw RestException
       assertThatThrownBy(() -> pluginRootResource.getAsset(assetName))
         .isInstanceOf(RestException.class)
         .hasMessage("Not allowed to load the following file '%s'.".formatted(assetName));
 
-      Mockito.verify(runtimeDelegate, Mockito.never()).getAppPluginRegistry();
-      Mockito.verify(pluginRegistry, Mockito.never()).getPlugin(PLUGIN_NAME);
-      Mockito.verify(mockServletContext, Mockito.never()).getResourceAsStream(assetName);
+      verify(runtimeDelegate, never()).getAppPluginRegistry();
+      verify(pluginRegistry, never()).getPlugin(PLUGIN_NAME);
+      verify(mockServletContext, never()).getResourceAsStream(assetName);
     }
   }
 

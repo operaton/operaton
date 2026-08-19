@@ -184,14 +184,20 @@ def create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version):
         return
     shutil.copytree(src, dst)
 
-    # update ENGINE_VERSION in TestFixture.java
+    # update SCHEMA_VERSION in TestFixture.java
     tf_java = os.path.join(dst, "src/main/java/org/operaton/bpm/qa/upgrade/TestFixture.java")
     if os.path.isfile(tf_java):
         with open(tf_java, "r", encoding="utf-8") as f:
             content = f.read()
         content = re.sub(
-            rf'public static final String ENGINE_VERSION = "{re.escape(current_version)}";',
-            f'public static final String ENGINE_VERSION = "{new_version}";',
+            rf'private static final String SCHEMA_VERSION = "{re.escape(current_version)}";',
+            f'private static final String SCHEMA_VERSION = "{new_version}";',
+            content
+        )
+        # Replace getScenarios() method to return empty list
+        content = re.sub(
+            r'private static List<Class<\?>> getScenarios\(\) \{[\s\S]*?return scenarios;\s*\}',
+            'private static List<Class<?>> getScenarios() {\n        return List.of();\n    }',
             content
         )
         with open(tf_java, "w", encoding="utf-8") as f:

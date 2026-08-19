@@ -38,10 +38,7 @@ import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_T
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(TestContainerExtension.class)
 class OptimizeCompletedActivityInstanceRestServiceTest extends AbstractRestServiceTest {

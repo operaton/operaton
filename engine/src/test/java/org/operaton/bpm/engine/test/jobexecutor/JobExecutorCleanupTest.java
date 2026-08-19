@@ -45,25 +45,8 @@ class JobExecutorCleanupTest {
   ProcessEngineConfigurationImpl configuration;
 
   @AfterEach
-  void resetConfig() {
+  void tearDown() {
     configuration.setHistoryCleanupEnabled(true);
-  }
-
-  @Test
-  void shouldNotExecuteCleanupJob() {
-    // given
-    historyService.cleanUpHistoryAsync(true); // schedule cleanup job
-    configuration.setHistoryCleanupEnabled(false);
-
-    // when/then
-    // then: job cannot be acquired & executed
-    assertThatThrownBy(() -> testRule.waitForJobExecutorToProcessAllJobs())
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Time limit of 20000 was exceeded (still 1 jobs available)");
-  }
-
-  @AfterEach
-  void resetDatabase() {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
       String handlerType = "history-cleanup";
       List<Job> jobsByHandlerType = commandContext.getJobManager()
@@ -81,6 +64,19 @@ class JobExecutorCleanupTest {
 
       return null;
     });
+  }
+
+  @Test
+  void shouldNotExecuteCleanupJob() {
+    // given
+    historyService.cleanUpHistoryAsync(true); // schedule cleanup job
+    configuration.setHistoryCleanupEnabled(false);
+
+    // when/then
+    // then: job cannot be acquired & executed
+    assertThatThrownBy(() -> testRule.waitForJobExecutorToProcessAllJobs())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Time limit of 20000 was exceeded (still 1 jobs available)");
   }
 
 }

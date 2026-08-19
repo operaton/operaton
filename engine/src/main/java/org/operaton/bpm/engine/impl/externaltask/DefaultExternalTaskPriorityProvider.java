@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.externaltask;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.DefaultPriorityProvider;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -39,7 +41,7 @@ public class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
   }
 
   @Override
-  public Long getSpecificPriority(ExecutionEntity execution, ExternalTaskActivityBehavior param, String jobDefinitionId) {
+  public @Nullable Long getSpecificPriority(ExecutionEntity execution, ExternalTaskActivityBehavior param, String jobDefinitionId) {
     ParameterValueProvider priorityProvider = param.getPriorityValueProvider();
     if (priorityProvider != null) {
       return evaluateValueProvider(priorityProvider, execution, "");

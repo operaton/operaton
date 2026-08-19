@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -61,7 +63,7 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     List<AbstractProcessInstanceModificationCommand> instructions = builder.getInstructions();
 
     ensureNotEmpty(BadUserRequestException.class,

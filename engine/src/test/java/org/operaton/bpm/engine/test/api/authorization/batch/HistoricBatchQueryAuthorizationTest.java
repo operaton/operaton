@@ -72,10 +72,7 @@ class HistoricBatchQueryAuthorizationTest {
   @BeforeEach
   void setUp() {
     authRule.createUserAndGroup("user", "group");
-  }
 
-  @BeforeEach
-  void deployProcessesAndCreateMigrationPlan() {
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 

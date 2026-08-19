@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.*;
 
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
@@ -45,7 +47,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     ActivityInstance actInstTree = getActivityInstanceTree(commandContext);
     List<AbstractInstanceCancellationCmd> commands = createActivityInstanceCancellations(actInstTree, commandContext);
 

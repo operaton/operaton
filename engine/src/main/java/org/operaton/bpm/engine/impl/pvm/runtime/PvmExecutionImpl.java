@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.*;
 
 import org.operaton.bpm.engine.ActivityTypes;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
@@ -859,8 +861,8 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    *
    * @param activityStack The most deeply nested activity is the last element in the list
    */
-  public void executeActivitiesConcurrent(List<PvmActivity> activityStack, PvmActivity targetActivity,
-                                          PvmTransition targetTransition, Map<String, Object> variables, Map<String, Object> localVariables,
+  public void executeActivitiesConcurrent(List<PvmActivity> activityStack, @Nullable PvmActivity targetActivity,
+      @Nullable PvmTransition targetTransition, Map<String, Object> variables, Map<String, Object> localVariables,
                                           boolean skipCustomListeners, boolean skipIoMappings) {
 
 
@@ -931,8 +933,8 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    *
    * @param activityStack The most deeply nested activity is the last element in the list
    */
-  public void executeActivities(List<PvmActivity> activityStack, PvmActivity targetActivity,
-                                PvmTransition targetTransition, Map<String, Object> variables, Map<String, Object> localVariables,
+  public void executeActivities(List<PvmActivity> activityStack, @Nullable PvmActivity targetActivity,
+      @Nullable PvmTransition targetTransition, Map<String, Object> variables, Map<String, Object> localVariables,
                                 boolean skipCustomListeners, boolean skipIoMappings) {
 
 
@@ -1124,7 +1126,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   @Override
-  public PvmExecutionImpl findExecution(String activityId) {
+  public @Nullable PvmExecutionImpl findExecution(String activityId) {
     if ((getActivity() != null)
       && (getActivity().getId().equals(activityId))
       ) {
@@ -1251,7 +1253,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     return activity;
   }
 
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     ActivityImpl act = getActivity();
     if (act != null) {
       return act.getId();
@@ -1261,7 +1263,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   @Override
-  public String getCurrentActivityName() {
+  public @Nullable String getCurrentActivityName() {
     ActivityImpl act = getActivity();
     if (act != null) {
       return act.getName();
@@ -1271,7 +1273,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   @Override
-  public String getCurrentActivityId() {
+  public @Nullable String getCurrentActivityId() {
     return getActivityId();
   }
 
@@ -1360,7 +1362,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   public abstract PvmExecutionImpl getParent();
 
   @Override
-  public String getParentId() {
+  public @Nullable String getParentId() {
     PvmExecutionImpl parent = getParent();
     if (parent != null) {
       return parent.getId();
@@ -1379,7 +1381,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * child executions
    */
   @SuppressWarnings("unchecked")
-  public void setParent(PvmExecutionImpl parent) {
+  public void setParent(@Nullable PvmExecutionImpl parent) {
     PvmExecutionImpl currentParent = getParent();
 
     setParentExecution(parent);
@@ -1756,7 +1758,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   @Override
-  public String getCurrentTransitionId() {
+  public @Nullable String getCurrentTransitionId() {
     TransitionImpl trans = getTransition();
     if (trans != null) {
       return trans.getId();
@@ -1914,7 +1916,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     this.payloadForTriggeredScope = payloadForTriggeredScope;
   }
 
-  public PvmExecutionImpl getParentScopeExecution(boolean considerSuperExecution) {
+  public @Nullable PvmExecutionImpl getParentScopeExecution(boolean considerSuperExecution) {
     if (isProcessInstanceExecution()) {
       if (considerSuperExecution && getSuperExecution() != null) {
         PvmExecutionImpl superExecution = getSuperExecution();
@@ -2265,7 +2267,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     IncidentHandling.removeIncidents(incident.getIncidentType(), incidentContext, true);
   }
 
-  public IncidentHandler findIncidentHandler(String incidentType) {
+  public @Nullable IncidentHandler findIncidentHandler(String incidentType) {
     Map<String, IncidentHandler> incidentHandlers = Context.getProcessEngineConfiguration().getIncidentHandlers();
     return incidentHandlers.get(incidentType);
   }

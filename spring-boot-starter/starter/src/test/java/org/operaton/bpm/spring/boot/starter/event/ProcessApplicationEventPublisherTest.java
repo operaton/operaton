@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
@@ -41,7 +40,7 @@ class ProcessApplicationEventPublisherTest {
   void handleApplicationReadyEventTest() {
     ApplicationReadyEvent applicationReadyEventMock = mock(ApplicationReadyEvent.class);
     processApplicationEventPublisher.handleApplicationReadyEvent(applicationReadyEventMock);
-    verify(publisherMock).publishEvent(Mockito.any(ProcessApplicationStartedEvent.class));
+    verify(publisherMock).publishEvent(any(ProcessApplicationStartedEvent.class));
   }
 
   @Test
@@ -50,11 +49,11 @@ class ProcessApplicationEventPublisherTest {
     ContextClosedEvent contextClosedEventMock = mock(ContextClosedEvent.class);
     processApplicationEventPublisher.handleContextStoppedEvent(contextClosedEventMock);
 
-    verify(publisherMock, never()).publishEvent(Mockito.any(ProcessApplicationStoppedEvent.class));
+    verify(publisherMock, never()).publishEvent(any(ProcessApplicationStoppedEvent.class));
 
     when(contextClosedEventMock.getApplicationContext()).thenReturn(publisherMock);
     processApplicationEventPublisher.handleContextStoppedEvent(contextClosedEventMock);
-    verify(publisherMock).publishEvent(Mockito.any(ProcessApplicationStoppedEvent.class));
+    verify(publisherMock).publishEvent(any(ProcessApplicationStoppedEvent.class));
   }
 
 }

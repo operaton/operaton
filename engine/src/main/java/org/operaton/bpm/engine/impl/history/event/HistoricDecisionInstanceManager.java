@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.authorization.Resources;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.CleanableHistoricDecisionInstanceReportResult;
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
@@ -253,7 +255,7 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
     }
   }
 
-  public HistoricDecisionInstanceEntity findHistoricDecisionInstance(String historicDecisionInstanceId) {
+  public @Nullable HistoricDecisionInstanceEntity findHistoricDecisionInstance(String historicDecisionInstanceId) {
     if (isHistoryEnabled()) {
       return (HistoricDecisionInstanceEntity) getDbEntityManager().selectOne(
           "selectHistoricDecisionInstanceByDecisionInstanceId", configureParameterizedQuery(historicDecisionInstanceId));

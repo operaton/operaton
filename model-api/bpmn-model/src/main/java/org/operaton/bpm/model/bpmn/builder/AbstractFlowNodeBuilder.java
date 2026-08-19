@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.builder;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.AssociationDirection;
 import org.operaton.bpm.model.bpmn.BpmnModelException;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
@@ -47,7 +49,7 @@ public abstract class AbstractFlowNodeBuilder<B extends AbstractFlowNodeBuilder<
     return currentSequenceFlowBuilder;
   }
 
-  public B condition(String name, String condition) {
+  public B condition(@Nullable String name, String condition) {
     if (name != null) {
       getCurrentSequenceFlowBuilder().name(name);
     }

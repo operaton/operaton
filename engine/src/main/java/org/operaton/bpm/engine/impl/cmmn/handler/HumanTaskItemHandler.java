@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.Expression;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
@@ -50,7 +52,7 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonTaskListener;
 public class HumanTaskItemHandler extends TaskItemHandler {
 
   @Override
-  public CmmnActivity handleElement(CmmnElement element, CmmnHandlerContext context) {
+  public @Nullable CmmnActivity handleElement(CmmnElement element, CmmnHandlerContext context) {
     HumanTask definition = getDefinition(element);
 
     if (!definition.isBlocking()) {

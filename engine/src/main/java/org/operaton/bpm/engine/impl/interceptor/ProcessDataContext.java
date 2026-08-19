@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -262,7 +264,7 @@ public class ProcessDataContext {
    * @return the latest value of the activity id property if exists, <code>null</code>
    *         otherwise
    */
-  public String getLatestActivityId() {
+  public @Nullable String getLatestActivityId() {
     return activityIdStack.getCurrentValue();
   }
 
@@ -316,7 +318,7 @@ public class ProcessDataContext {
       return deque.isEmpty();
     }
 
-    public String getCurrentValue() {
+    public @Nullable String getCurrentValue() {
       return deque.peekFirst();
     }
 

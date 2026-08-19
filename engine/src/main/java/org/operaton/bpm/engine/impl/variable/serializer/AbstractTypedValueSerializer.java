@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.variable.serializer;
 import java.util.Set;
 
 import org.operaton.bpm.engine.variable.type.ValueType;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -41,7 +43,7 @@ public abstract class AbstractTypedValueSerializer<T extends TypedValue> impleme
   }
 
   @Override
-  public String getSerializationDataformat() {
+  public @Nullable String getSerializationDataformat() {
     // default implementation returns null
     return null;
   }

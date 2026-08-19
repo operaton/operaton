@@ -29,18 +29,11 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.operaton.bpm.engine.telemetry.ApplicationServer;
-import org.operaton.bpm.engine.telemetry.Database;
-import org.operaton.bpm.engine.telemetry.Internals;
-import org.operaton.bpm.engine.telemetry.Jdk;
-import org.operaton.bpm.engine.telemetry.Product;
-import org.operaton.bpm.engine.telemetry.TelemetryData;
+import org.operaton.bpm.engine.telemetry.*;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TelemetryRestServiceTest extends AbstractRestServiceTest {
 

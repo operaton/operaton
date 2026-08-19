@@ -22,7 +22,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
@@ -64,7 +63,7 @@ class DefaultHistoryConfigurationTest {
   @Test
   void noHistoryEventHandlerTest() {
     defaultHistoryConfiguration.preInit(springProcessEngineConfiguration);
-    verify(springProcessEngineConfiguration, times(0)).setHistoryEventHandler(Mockito.any(HistoryEventHandler.class));
+    verify(springProcessEngineConfiguration, times(0)).setHistoryEventHandler(any(HistoryEventHandler.class));
   }
 
   @Test

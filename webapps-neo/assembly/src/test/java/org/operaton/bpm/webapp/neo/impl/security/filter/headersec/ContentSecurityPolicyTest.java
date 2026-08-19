@@ -45,6 +45,32 @@ class ContentSecurityPolicyTest {
     assertThat(headerRule.getHeader(HEADER_NAME)).matches(expectedHeaderPattern);
   }
 
+  /**
+   * The SPA is a static document whose single script tag carries no nonce. 'strict-dynamic' makes
+   * browsers ignore 'self', so its presence in the default policy blocked the SPA's own bundle and
+   * the page rendered blank. This pins the policy that actually lets the app load.
+   */
+  @Test
+  void shouldServeADefaultPolicyThatPermitsTheSpaBundle() {
+    // given
+    headerRule.startServer("web.xml", "headersec");
+
+    // when
+    headerRule.performRequest();
+
+    // then
+    String header = headerRule.getHeader(HEADER_NAME);
+    assertThat(header)
+        .as("the same-origin bundle must be allowed")
+        .contains("script-src 'self'");
+    assertThat(header)
+        .as("'strict-dynamic' would disable the 'self' allowance and block the bundle")
+        .doesNotContain("strict-dynamic");
+    assertThat(header)
+        .as("no nonce is issued when nothing substitutes one into the document")
+        .doesNotContain("nonce-");
+  }
+
   @Test
   void shouldConfigureDisabled() {
     // given

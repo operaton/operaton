@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:b98be692-7834-4fb9-afa1-57df8ef06f79",
+  "serialNumber": "urn:uuid:3dfd9a01-294b-4b78-8d9e-e133bf3dc1fd",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-19T17:40:00Z",
+    "timestamp": "2026-08-20T12:39:19Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.74.0-SNAPSHOT-64e17158b"
+          "version": "0.74.0-SNAPSHOT-c99f2517b"
         }
       ]
     },
@@ -182,6 +182,67 @@
         },
         {
           "url": "https://github.com/operaton/operaton/operaton-commons-logging",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
+      "group": "org.jspecify",
+      "name": "jspecify",
+      "version": "1.0.1",
+      "description": "An artifact of well-named and well-specified annotations to power static analysis checks",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "d4fe1ea4d953b66fcb1d6043c22bffcf"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "3d60fd98eb8ade73004f4195c37b6317e02cf3d7"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "070d75f261fe4c5b8202508366715f7f2d4660f88c8ef7e6d3575e48c9683b66"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "8f5ca6f5c25ee353bfbe3e5e5cd9847b3b3ed1e954a14a52c9aa016c673e02bfbc2e0f9308ad576c2a58720f8bf2139ad9883c7a881050fe96a2f87e2e623711"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "f7c6aea402675ed6d9286e6107d4bf6c2d1f757f9fce4c74807cbd43d426569324cf4c7faed28dc777e90ddb3a63db68"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "d462ead4749cc7b404b1699aedf472664e9bb38db769f2ec78a6457d2d080602f673af8b3114724dd92ee2262f464c41"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "f9392a7b674c37a7617d7e5ab4a6197c235c0a036244eaf550291d6756c0f1c9"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "3154b4940937103d74b77eede7abc7034168dc986284ef00ab4e4d5b537ed6370c6856787ae50711e62906b3011243c9a656b659ddd025c1e6b828c44b980855"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://jspecify.dev/",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/jspecify/jspecify/",
           "type": "vcs"
         }
       ]
@@ -827,67 +888,6 @@
         },
         {
           "url": "https://github.com/apiguardian-team/apiguardian",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
-      "group": "org.jspecify",
-      "name": "jspecify",
-      "version": "1.0.1",
-      "description": "An artifact of well-named and well-specified annotations to power static analysis checks",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "d4fe1ea4d953b66fcb1d6043c22bffcf"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "3d60fd98eb8ade73004f4195c37b6317e02cf3d7"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "070d75f261fe4c5b8202508366715f7f2d4660f88c8ef7e6d3575e48c9683b66"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "8f5ca6f5c25ee353bfbe3e5e5cd9847b3b3ed1e954a14a52c9aa016c673e02bfbc2e0f9308ad576c2a58720f8bf2139ad9883c7a881050fe96a2f87e2e623711"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "f7c6aea402675ed6d9286e6107d4bf6c2d1f757f9fce4c74807cbd43d426569324cf4c7faed28dc777e90ddb3a63db68"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "d462ead4749cc7b404b1699aedf472664e9bb38db769f2ec78a6457d2d080602f673af8b3114724dd92ee2262f464c41"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "f9392a7b674c37a7617d7e5ab4a6197c235c0a036244eaf550291d6756c0f1c9"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "3154b4940937103d74b77eede7abc7034168dc986284ef00ab4e4d5b537ed6370c6856787ae50711e62906b3011243c9a656b659ddd025c1e6b828c44b980855"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://jspecify.dev/",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/jspecify/jspecify/",
           "type": "vcs"
         }
       ]
@@ -22794,7 +22794,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "183374a7-39ed-46c8-9506-70779a77ec20",
+      "bom-ref": "2a4f56cc-ef44-4b5d-97a3-390ea49bb8ac",
       "name": "package-lock.json",
       "properties": [
         {
@@ -28050,7 +28050,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "180427ed-823a-4ffc-a592-e302568ee373",
+      "bom-ref": "fbdc77e7-0ccf-4d98-8c10-6d32ec18e33a",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28100,8 +28100,13 @@
     {
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
+        "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
+    },
+    {
+      "ref": "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
+      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
@@ -28110,6 +28115,7 @@
     {
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
+        "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.2.0-SNAPSHOT?type=jar"
       ]
     },
@@ -28152,10 +28158,6 @@
         "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.2.0-SNAPSHOT?type=jar"
       ]
-    },
-    {
-      "ref": "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
-      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
@@ -28230,6 +28232,7 @@
     {
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
+        "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar"
       ]
@@ -30878,13 +30881,7 @@
       "dependsOn": []
     },
     {
-      "ref": "180427ed-823a-4ffc-a592-e302568ee373",
-      "dependsOn": [
-        "183374a7-39ed-46c8-9506-70779a77ec20"
-      ]
-    },
-    {
-      "ref": "183374a7-39ed-46c8-9506-70779a77ec20",
+      "ref": "2a4f56cc-ef44-4b5d-97a3-390ea49bb8ac",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.24.1",
@@ -30931,6 +30928,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "fbdc77e7-0ccf-4d98-8c10-6d32ec18e33a",
+      "dependsOn": [
+        "2a4f56cc-ef44-4b5d-97a3-390ea49bb8ac"
       ]
     },
     {

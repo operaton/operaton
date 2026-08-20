@@ -7,6 +7,12 @@ describe('date_formatter', () => {
   beforeEach(() => {
     // Save original navigator
     originalNavigator = global.navigator;
+
+    // Freeze the clock at local midday. Tests that shift "now" by a couple of
+    // hours would otherwise cross midnight and flip the expected relative day
+    // whenever CI happens to run shortly after midnight.
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(2024, 5, 15, 12, 0, 0));
   });
 
   afterEach(() => {

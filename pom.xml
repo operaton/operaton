@@ -20,8 +20,8 @@
     <version.scala>2.13.18</version.scala>
     <version.quarkus>3.33.3.1</version.quarkus>
     <version.java>17</version.java>
-    <version.spring>7.0.8</version.spring>
-    <version.spring-boot>4.0.7</version.spring-boot>
+    <version.spring>7.0.9</version.spring>
+    <version.spring-boot>4.0.8</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
     <maven.compiler.release>17</maven.compiler.release>
     <sonar.organization>operaton</sonar.organization>

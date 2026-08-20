@@ -39,14 +39,14 @@ Common examples include:
 
 ![image](adr-decision-process.png)
 
-* Open a new discussion on a shared editor (Etherpad, etc.)
-* Create a new issue, link the shared editor in it
-* Discuss options, weigh pros & cons until the proposal is deemed ready by participants
-* If no agreement is reached, withdraw the proposal
-* If an agreement is reached, assign an ADR number, open a PR with the ADR in this folder
-* Core contributors review, approve and request changes
-* If two core contributors (the author excluded) agree on the ADR and no veto is present by others, it is approved
-* Merge the PR, close the issue
+- Open a new discussion on a shared editor (Etherpad, etc.)
+- Create a new issue, link the shared editor in it
+- Discuss options, weigh pros & cons until the proposal is deemed ready by participants
+- If no agreement is reached, withdraw the proposal
+- If an agreement is reached, assign an ADR number, open a PR with the ADR in this folder
+- Core contributors review, approve and request changes
+- If two core contributors (the author excluded) agree on the ADR and no veto is present by others, it is approved
+- Merge the PR, close the issue
 
 ## File Naming Convention
 

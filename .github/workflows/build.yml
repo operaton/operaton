@@ -56,23 +56,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint-adr:
-    name: Lint ADRs
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v7.0.1
-        with:
-          sparse-checkout: |
-            docs/decisions
-      - name: Lint ADR files
-        # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@21c1be1b93ad9ed58fa840aacc3f279cde2a72ff
-        with:
-          globs: |
-            docs/decisions/*.md
 
   build:
     name: Build

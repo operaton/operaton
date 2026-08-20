@@ -37,7 +37,7 @@ class AsyncEmailTaskTest extends EmailTestCase {
   // copied from org.operaton.bpm.engine.test.bpmn.mail.EmailServiceTaskTest
   @Deployment
   @Test
-  void testSimpleTextMail() {
+  void testSimpleTextMail() throws Exception {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<Message> messages = getReceivedEmails();
@@ -57,7 +57,7 @@ class AsyncEmailTaskTest extends EmailTestCase {
   // copied from org.operaton.bpm.engine.test.bpmn.mail.EmailSendTaskTest
   @Deployment
   @Test
-  void testSimpleTextMailSendTask() {
+  void testSimpleTextMailSendTask() throws Exception {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
     List<Message> messages = getReceivedEmails();

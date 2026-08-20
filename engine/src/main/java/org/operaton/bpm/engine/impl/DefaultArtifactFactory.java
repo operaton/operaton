@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ArtifactFactory;
 import org.operaton.bpm.engine.ProcessEngineException;
 
@@ -28,6 +29,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
+@NullMarked
 public class DefaultArtifactFactory implements ArtifactFactory {
   @Override
   public <T> T getArtifact(Class<T> clazz) {

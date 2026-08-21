@@ -81,6 +81,27 @@ jobs:
       contents: read
       checks: write
       actions: write
+    env:
+      # Build cache, but never for a max-profile run.
+      #
+      # Restoring a module skips its Surefire and JaCoCo executions and replays
+      # the stored surefire-reports instead. For an ordinary push that is the
+      # point. For the nightly it is not: the nightly exists to re-run
+      # everything and surface non-determinism, and a module unchanged since the
+      # last default-branch build would never be tested again. Both flaky
+      # failures found in August 2026 - the missing reactor edge in
+      # quarkus-extension and the fixed Jetty port in webapps/assembly - sat in
+      # unchanged modules and would have been restored rather than run.
+      #
+      # Keyed on the profile, not on github.event_name: nightly-trigger.yml
+      # dispatches this workflow with profile=max, and a manual dispatch used to
+      # reproduce a nightly failure passes the same value. Keying on the event
+      # would make that reproduction behave differently from the run it is meant
+      # to reproduce.
+      #
+      # Consequence: pushes (profile=normal) produce the cache that pr-build.yml
+      # restores; max runs neither read nor write it.
+      USE_BUILD_CACHE: ${{ (github.event.inputs.profile || 'normal') != 'max' }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7.0.1
@@ -98,6 +119,7 @@ jobs:
       # readable only by that PR, so only a default-branch job can populate a
       # cache that PR builds are able to restore.
       - name: Restore Maven build cache
+        if: env.USE_BUILD_CACHE == 'true'
         uses: actions/cache/restore@v6.1.0
         with:
           path: ~/.m2/build-cache
@@ -152,7 +174,11 @@ jobs:
           # caches surefire-reports, site/jacoco and classes alongside the
           # artifact, so this job stays the authoritative source of test and
           # coverage data even when most of the reactor is restored.
-          BUILD_CMD="$BUILD_CMD -Dmaven.build.cache.enabled=true"
+          # See USE_BUILD_CACHE at the job level for why max runs opt out.
+          BUILD_CMD="$BUILD_CMD -Dmaven.build.cache.enabled=${USE_BUILD_CACHE}"
+          if [ "$USE_BUILD_CACHE" != "true" ]; then
+            echo "ℹ️ profile=max — build cache off, every module is rebuilt and retested"
+          fi
 
           echo "ℹ️ Executing: $BUILD_CMD"
           $BUILD_CMD
@@ -164,7 +190,11 @@ jobs:
         run: |
           echo "build cache size: $(du -sh ~/.m2/build-cache 2>/dev/null | cut -f1 || echo none)"
           echo "cached module builds: $(find ~/.m2/build-cache -name buildinfo.xml 2>/dev/null | wc -l)"
+      # A max run builds with the extension disabled, so nothing new lands in
+      # ~/.m2/build-cache. Saving would burn a fresh sha-keyed entry in the
+      # shared 10 GB pool for no content.
       - name: Save Maven build cache
+        if: env.USE_BUILD_CACHE == 'true'
         uses: actions/cache/save@v6.1.0
         with:
           path: ~/.m2/build-cache

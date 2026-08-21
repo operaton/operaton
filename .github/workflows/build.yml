@@ -65,7 +65,7 @@ jobs:
       checks: write
       actions: write
     env:
-      # Build cache, but never for a max-profile run.
+      # Build cache, but never for a max-profile or a skip_tests run.
       #
       # Restoring a module skips its Surefire and JaCoCo executions and replays
       # the stored surefire-reports instead. For an ordinary push that is the
@@ -82,9 +82,18 @@ jobs:
       # would make that reproduction behave differently from the run it is meant
       # to reproduce.
       #
-      # Consequence: pushes (profile=normal) produce the cache that pr-build.yml
-      # restores; max runs neither read nor write it.
-      USE_BUILD_CACHE: ${{ (github.event.inputs.profile || 'normal') != 'max' }}
+      # The skip_tests opt-out is about what such a run leaves behind: module
+      # artifacts with no surefire-reports beside them. Saving those would
+      # hand pr-build.yml modules it restores instead of tests, leaving the
+      # Publish Test Report gate below with no results for them - a red PR whose
+      # cause sits in an unrelated dispatch from days earlier. Restoring is
+      # disabled along with saving: a restored module contributes reports the
+      # run was explicitly asked not to produce.
+      #
+      # Consequence: pushes (profile=normal, skip_tests unset) produce the cache
+      # that pr-build.yml restores; max and skip_tests runs neither read nor
+      # write it.
+      USE_BUILD_CACHE: ${{ (github.event.inputs.profile || 'normal') != 'max' && github.event.inputs.skip_tests != 'true' }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7.0.1
@@ -157,10 +166,11 @@ jobs:
           # caches surefire-reports, site/jacoco and classes alongside the
           # artifact, so this job stays the authoritative source of test and
           # coverage data even when most of the reactor is restored.
-          # See USE_BUILD_CACHE at the job level for why max runs opt out.
+          # See USE_BUILD_CACHE at the job level for why max and skip_tests runs
+          # opt out.
           BUILD_CMD="$BUILD_CMD -Dmaven.build.cache.enabled=${USE_BUILD_CACHE}"
           if [ "$USE_BUILD_CACHE" != "true" ]; then
-            echo "ℹ️ profile=max — build cache off, every module is rebuilt and retested"
+            echo "ℹ️ profile=$PROFILE, skip_tests=$SKIP_TESTS — build cache off, nothing is restored or saved"
           fi
 
           echo "ℹ️ Executing: $BUILD_CMD"
@@ -182,8 +192,12 @@ jobs:
         with:
           path: ~/.m2/build-cache
           key: "${{ runner.os }}-build-cache-${{ github.sha }}"
+      # require_passed_tests turns an empty report set into a failure, which is
+      # what we want for a normal build - see the build cache notes above, a
+      # restored module has to bring its reports with it. A skip_tests dispatch
+      # legitimately produces none, so it skips the gate rather than failing it.
       - name: Publish Test Report
-        if: always()
+        if: always() && github.event.inputs.skip_tests != 'true'
         uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml

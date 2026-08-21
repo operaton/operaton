@@ -41,3 +41,4 @@ The `MM` page already exists. Decide whether this patch needs an **addition** (t
 - Branch name e.g. `release-notes/X.Y.Z`.
 - Open as **draft** unless the user asks otherwise; release notes usually want human review.
 - Use the Haiku model for mechanical gathering (commit/PR lists, version extraction); use the main model for the prose and the noteworthiness judgement.
+- Add a link to the MD file on the branch to the PR description.

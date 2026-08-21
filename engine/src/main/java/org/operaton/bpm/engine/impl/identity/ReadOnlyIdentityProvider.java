@@ -16,13 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.identity;
 
-import org.operaton.bpm.engine.identity.Group;
-import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.identity.NativeUserQuery;
-import org.operaton.bpm.engine.identity.Tenant;
-import org.operaton.bpm.engine.identity.TenantQuery;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.identity.UserQuery;
+import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.Session;
 
@@ -44,7 +40,7 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @return a {@link User} object for the given user id or null if no such user exists.
    * @throws IdentityProviderException in case an error occurs
    */
-  User findUserById(String userId);
+  @Nullable User findUserById(String userId);
 
 
   /**
@@ -77,7 +73,7 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @return a {@link Group} object for the given group id or null if no such group exists.
    * @throws IdentityProviderException in case an error occurs
    */
-  Group findGroupById(String groupId);
+  @Nullable Group findGroupById(String groupId);
 
   /**
    * @return a {@link GroupQuery} object which can be used for querying for groups.
@@ -99,7 +95,7 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @throws IdentityProviderException
    *           in case an error occurs
    */
-  Tenant findTenantById(String tenantId);
+  @Nullable Tenant findTenantById(String tenantId);
 
   /**
    * @return a {@link TenantQuery} object which can be used for querying for

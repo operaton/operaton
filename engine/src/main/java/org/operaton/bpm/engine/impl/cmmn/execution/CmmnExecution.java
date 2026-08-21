@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.*;
 
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -93,7 +95,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   protected abstract List<? extends CmmnExecution> getCaseExecutionsInternal();
 
   @Override
-  public CmmnExecution findCaseExecution(String activityId) {
+  public @Nullable CmmnExecution findCaseExecution(String activityId) {
     if ((getActivity()!=null) && (getActivity().getId().equals(activityId))) {
      return this;
    }

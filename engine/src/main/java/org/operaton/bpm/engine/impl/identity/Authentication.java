@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.identity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
  * <p>Allows to expose the id of the currently authenticated user,
@@ -52,7 +54,7 @@ public class Authentication {
     this(authenticatedUserId, groupIds, null);
   }
 
-  public Authentication(String authenticatedUserId, List<String> authenticatedGroupIds, List<String> authenticatedTenantIds) {
+  public Authentication(String authenticatedUserId, @Nullable List<String> authenticatedGroupIds, @Nullable List<String> authenticatedTenantIds) {
     this.authenticatedUserId = authenticatedUserId;
 
     if (authenticatedGroupIds != null) {

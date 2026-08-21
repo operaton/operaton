@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.ActivityExecutionTreeMapping;
 import org.operaton.bpm.engine.impl.bpmn.behavior.SequentialMultiInstanceActivityBehavior;
@@ -95,7 +97,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
     final ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();
 

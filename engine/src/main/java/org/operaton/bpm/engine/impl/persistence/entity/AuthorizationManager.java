@@ -28,6 +28,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import org.operaton.bpm.engine.AuthorizationException;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Groups;
@@ -176,7 +179,7 @@ public class AuthorizationManager extends AbstractManager {
     return findAuthorization(type, null, groupId, resource, resourceId);
   }
 
-  public AuthorizationEntity findAuthorization(int type, String userId, String groupId, Resource resource, String resourceId) {
+  public AuthorizationEntity findAuthorization(int type, String userId, String groupId, @Nullable Resource resource, String resourceId) {
     Map<String, Object> params = new HashMap<>();
 
     params.put(TYPE, type);
@@ -447,22 +450,14 @@ public class AuthorizationManager extends AbstractManager {
   // delete authorizations //////////////////////////////////////////////////
 
   public void deleteAuthorizationsByResourceIds(Resources resource,
-                                                List<String> resourceIds) {
-
-    if(resourceIds == null) {
-      throw new IllegalArgumentException("Resource ids cannot be null");
-    }
+      @NonNull List<String> resourceIds) {
 
     resourceIds.forEach(resourceId ->
         deleteAuthorizationsByResourceId(resource, resourceId));
 
   }
 
-  public void deleteAuthorizationsByResourceId(Resource resource, String resourceId) {
-
-    if(resourceId == null) {
-      throw new IllegalArgumentException("Resource id cannot be null");
-    }
+  public void deleteAuthorizationsByResourceId(Resource resource, @NonNull String resourceId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -473,11 +468,7 @@ public class AuthorizationManager extends AbstractManager {
 
   }
 
-  public void deleteAuthorizationsByResourceIdAndUserId(Resource resource, String resourceId, String userId) {
-
-    if(resourceId == null) {
-      throw new IllegalArgumentException("Resource id cannot be null");
-    }
+  public void deleteAuthorizationsByResourceIdAndUserId(Resource resource, @NonNull String resourceId, String userId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -489,11 +480,7 @@ public class AuthorizationManager extends AbstractManager {
 
   }
 
-  public void deleteAuthorizationsByResourceIdAndGroupId(Resource resource, String resourceId, String groupId) {
-
-    if(resourceId == null) {
-      throw new IllegalArgumentException("Resource id cannot be null");
-    }
+  public void deleteAuthorizationsByResourceIdAndGroupId(Resource resource, @NonNull String resourceId, String groupId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -1135,7 +1122,7 @@ public class AuthorizationManager extends AbstractManager {
     configureQuery(query, BATCH, QUERYPARAM_RES_ID, READ);
   }
 
-  public List<String> filterAuthenticatedGroupIds(List<String> authenticatedGroupIds) {
+  public List<String> filterAuthenticatedGroupIds(@Nullable List<String> authenticatedGroupIds) {
     if(authenticatedGroupIds == null || authenticatedGroupIds.isEmpty()) {
       return EMPTY_LIST;
     }

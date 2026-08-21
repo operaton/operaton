@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
@@ -54,12 +56,12 @@ public class StartProcessVariableScope implements VariableScope {
   }
 
   @Override
-  public Object getVariable(String variableName) {
+  public @Nullable Object getVariable(String variableName) {
     return null;
   }
 
   @Override
-  public Object getVariableLocal(String variableName) {
+  public @Nullable Object getVariableLocal(String variableName) {
     return null;
   }
 
@@ -84,32 +86,32 @@ public class StartProcessVariableScope implements VariableScope {
   }
 
   @SuppressWarnings("unused")
-  public Object getVariable(String variableName, boolean deserializeObjectValue) {
+  public @Nullable Object getVariable(String variableName, boolean deserializeObjectValue) {
     return null;
   }
 
   @SuppressWarnings("unused")
-  public Object getVariableLocal(String variableName, boolean deserializeObjectValue) {
+  public @Nullable Object getVariableLocal(String variableName, boolean deserializeObjectValue) {
     return null;
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String variableName) {
     return null;
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String variableName, boolean deserializeObjectValue) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String variableName, boolean deserializeObjectValue) {
     return null;
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String variableName) {
     return null;
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String variableName, boolean deserializeObjectValue) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String variableName, boolean deserializeObjectValue) {
     return null;
   }
 
@@ -188,7 +190,7 @@ public class StartProcessVariableScope implements VariableScope {
   }
 
   @SuppressWarnings("unused")
-  public CoreVariableInstance getVariableInstance(String name) {
+  public @Nullable CoreVariableInstance getVariableInstance(String name) {
     return null;
   }
 
@@ -197,7 +199,7 @@ public class StartProcessVariableScope implements VariableScope {
   }
 
   @SuppressWarnings("unused")
-  public CoreVariableInstance getVariableInstanceLocal(String name) {
+  public @Nullable CoreVariableInstance getVariableInstanceLocal(String name) {
     return null;
   }
 

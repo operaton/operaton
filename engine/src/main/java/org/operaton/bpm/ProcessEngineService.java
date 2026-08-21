@@ -19,6 +19,9 @@ package org.operaton.bpm;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngine;
 
 /**
@@ -40,7 +43,7 @@ public interface ProcessEngineService {
   /**
    * @return all {@link ProcessEngine ProcessEngines} managed by the Operaton.
    */
-  List<ProcessEngine> getProcessEngines();
+  @NonNull List<ProcessEngine> getProcessEngines();
 
   /**
    *
@@ -52,6 +55,6 @@ public interface ProcessEngineService {
    *
    * @return the {@link ProcessEngine} for the given name or null if no such process engine exists.
    */
-  ProcessEngine getProcessEngine(String name);
+  @Nullable ProcessEngine getProcessEngine(String name);
 
 }

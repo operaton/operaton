@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -38,8 +39,7 @@ public class DeploymentExtension implements AfterEachCallback, BeforeEachCallbac
     protected Set<String> deploymentIds = new HashSet<>();
 
     public DeploymentExtension() {}
-    public DeploymentExtension(RepositoryService repositoryService) {
-        requireNonNull(repositoryService);
+    public DeploymentExtension(@NonNull RepositoryService repositoryService) {
         this.repositoryService = repositoryService;
     }
     public  String deploymentForTenant(String tenantId, BpmnModelInstance... bpmnModelInstances) {

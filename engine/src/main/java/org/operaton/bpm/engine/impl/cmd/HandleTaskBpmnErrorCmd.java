@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Map;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -56,7 +58,7 @@ public class HandleTaskBpmnErrorCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     validateInput();
 
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);

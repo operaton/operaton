@@ -78,7 +78,7 @@
     <dependency>
       <groupId>org.wildfly.core</groupId>
       <artifactId>wildfly-subsystem-test-framework</artifactId>
-      <version>30.0.0.Final</version>
+      <version>${version.wildfly.core}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

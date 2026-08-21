@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.history.CleanableHistoricCaseInstanceReportResult;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.impl.CleanableHistoricCaseInstanceReportImpl;
 import org.operaton.bpm.engine.impl.HistoricCaseInstanceQueryImpl;
@@ -36,14 +38,14 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  */
 public class HistoricCaseInstanceManager extends AbstractHistoricManager {
 
-  public HistoricCaseInstanceEntity findHistoricCaseInstance(String caseInstanceId) {
+  public @Nullable HistoricCaseInstanceEntity findHistoricCaseInstance(String caseInstanceId) {
     if (isHistoryEnabled()) {
       return getDbEntityManager().selectById(HistoricCaseInstanceEntity.class, caseInstanceId);
     }
     return null;
   }
 
-  public HistoricCaseInstanceEventEntity findHistoricCaseInstanceEvent(String eventId) {
+  public @Nullable HistoricCaseInstanceEventEntity findHistoricCaseInstanceEvent(String eventId) {
     if (isHistoryEnabled()) {
       return getDbEntityManager().selectById(HistoricCaseInstanceEventEntity.class, eventId);
     }

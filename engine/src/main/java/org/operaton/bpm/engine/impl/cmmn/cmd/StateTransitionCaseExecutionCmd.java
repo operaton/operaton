@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.cmmn.CaseExecutionCommandBuilderImpl;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
@@ -38,7 +40,7 @@ public abstract class StateTransitionCaseExecutionCmd extends CaseExecutionVaria
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     super.execute(commandContext);
 
     CaseExecutionEntity caseExecution = getCaseExecution();

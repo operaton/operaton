@@ -17,11 +17,9 @@
 package org.operaton.bpm.engine.impl;
 
 import java.sql.Connection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
@@ -44,30 +42,13 @@ import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobHelper;
-import org.operaton.bpm.engine.impl.management.PurgeReport;
-import org.operaton.bpm.engine.impl.management.SetJobRetriesBuilderImpl;
-import org.operaton.bpm.engine.impl.management.SetJobRetriesByJobsAsyncBuilderImpl;
-import org.operaton.bpm.engine.impl.management.SetJobRetriesByProcessAsyncBuilderImpl;
-import org.operaton.bpm.engine.impl.management.UpdateJobDefinitionSuspensionStateBuilderImpl;
-import org.operaton.bpm.engine.impl.management.UpdateJobSuspensionStateBuilderImpl;
+import org.operaton.bpm.engine.impl.management.*;
 import org.operaton.bpm.engine.impl.metrics.MetricsQueryImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
-import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
-import org.operaton.bpm.engine.management.DeploymentStatisticsQuery;
-import org.operaton.bpm.engine.management.JobDefinitionQuery;
-import org.operaton.bpm.engine.management.MetricsQuery;
-import org.operaton.bpm.engine.management.ProcessDefinitionStatisticsQuery;
-import org.operaton.bpm.engine.management.SchemaLogQuery;
-import org.operaton.bpm.engine.management.SetJobRetriesByJobsAsyncBuilder;
-import org.operaton.bpm.engine.management.SetJobRetriesByProcessAsyncBuilder;
-import org.operaton.bpm.engine.management.TableMetaData;
-import org.operaton.bpm.engine.management.TablePageQuery;
-import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateSelectBuilder;
-import org.operaton.bpm.engine.management.UpdateJobSuspensionStateSelectBuilder;
+import org.operaton.bpm.engine.management.*;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
-
 
 /**
  * @author Tom Baeyens
@@ -539,7 +520,7 @@ public class ManagementServiceImpl extends ServiceImpl implements ManagementServ
   }
 
   @Override
-  public void deleteMetrics(Date timestamp, String reporter) {
+  public void deleteMetrics(@Nullable Date timestamp, @Nullable String reporter) {
     commandExecutor.execute(new DeleteMetricsCmd(timestamp, reporter));
 
   }

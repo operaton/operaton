@@ -152,6 +152,8 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
           - 'ageduldig'
           - 'Copilot'
           - 'Claude Sonnet 4.6'
+          - 'Claude Opus 5'
+          - 'Claude Opus 5 (1M context)'
         categories:
           - 'merge'
           - 'wip'

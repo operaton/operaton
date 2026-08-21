@@ -19,6 +19,8 @@ package org.operaton.bpm.model.bpmn.impl.instance.operaton;
 import java.util.List;
 
 import org.operaton.bpm.model.bpmn.impl.instance.BpmnModelElementInstanceImpl;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonGenericValueElement;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
@@ -40,7 +42,7 @@ public class OperatonGenericValueElementImpl extends BpmnModelElementInstanceImp
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends BpmnModelElementInstance> T getValue() {
+  public <T extends BpmnModelElementInstance> @Nullable T getValue() {
     List<DomElement> childElements = getDomElement().getChildElements();
     if (childElements.isEmpty()) {
       return null;

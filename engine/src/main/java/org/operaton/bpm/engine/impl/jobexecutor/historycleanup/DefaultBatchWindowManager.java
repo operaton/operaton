@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.cfg.BatchWindowConfiguration;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 /**
@@ -60,7 +62,7 @@ public class DefaultBatchWindowManager implements BatchWindowManager {
   }
 
   @Override
-  public BatchWindow getCurrentOrNextBatchWindow(Date date, ProcessEngineConfigurationImpl configuration) {
+  public @Nullable BatchWindow getCurrentOrNextBatchWindow(Date date, ProcessEngineConfigurationImpl configuration) {
     final BatchWindow previousDayBatchWindow = getPreviousDayBatchWindow(date, configuration);
     if (previousDayBatchWindow != null && previousDayBatchWindow.isWithin(date)) {
       return previousDayBatchWindow;
@@ -84,7 +86,7 @@ public class DefaultBatchWindowManager implements BatchWindowManager {
   }
 
   @Override
-  public BatchWindow getNextBatchWindow(Date date, ProcessEngineConfigurationImpl configuration) {
+  public @Nullable BatchWindow getNextBatchWindow(Date date, ProcessEngineConfigurationImpl configuration) {
     final BatchWindow currentDayBatchWindow = getBatchWindowForDate(date, configuration);
     if (currentDayBatchWindow != null && date.before(currentDayBatchWindow.getStart())) {
       return currentDayBatchWindow;

@@ -93,13 +93,18 @@ fi
 
 case "$BUILD_PROFILE" in
   "fast")
-    PROFILES+=(distro h2-in-memory)
+    # distro-webjar-neo is activeByDefault, but an explicit -P disables every
+    # activeByDefault profile. Without it the neo webjar is never built while
+    # starter-webapp-neo-core, which needs it, stays in the reactor. The neo
+    # frontend is already built here via the distro profile, so this only adds
+    # the webjar packaging step.
+    PROFILES+=(distro distro-webjar-neo h2-in-memory)
     ;;
   "normal")
-    PROFILES+=(distro distro-webjar distro-run distro-tomcat h2-in-memory check-api-compatibility)
+    PROFILES+=(distro distro-webjar distro-webjar-neo distro-run distro-tomcat h2-in-memory check-api-compatibility)
     ;;
   "max")
-    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter h2-in-memory check-api-compatibility quarkus-tests integration-test-operaton-run)
+    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-webjar-neo distro-starter h2-in-memory check-api-compatibility quarkus-tests integration-test-operaton-run)
     ;;
 esac
 

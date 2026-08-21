@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
 
 /**
@@ -27,7 +29,7 @@ import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
  */
 public interface OperatonGenericValueElement {
 
-  <T extends BpmnModelElementInstance> T getValue();
+  <T extends BpmnModelElementInstance> @Nullable T getValue();
 
   void removeValue();
 

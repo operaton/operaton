@@ -23,6 +23,7 @@ import java.util.function.Supplier;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.BatchExecutorException;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEnginePersistenceException;
@@ -58,7 +59,7 @@ public final class ExceptionUtil {
     return stringWriter.toString();
   }
 
-  public static String getExceptionStacktrace(ByteArrayEntity byteArray) {
+  public static @Nullable String getExceptionStacktrace(@Nullable ByteArrayEntity byteArray) {
     if (byteArray == null) {
       return null;
     }
@@ -66,7 +67,7 @@ public final class ExceptionUtil {
     return StringUtil.fromBytes(byteArray.getBytes());
   }
 
-  public static ByteArrayEntity createJobExceptionByteArray(byte[] byteArray, ResourceType type) {
+  public static @Nullable ByteArrayEntity createJobExceptionByteArray(byte[] byteArray, ResourceType type) {
     return createExceptionByteArray("job.exceptionByteArray", byteArray, type);
   }
 
@@ -83,7 +84,7 @@ public final class ExceptionUtil {
    * @param type - resource type of the exception
    * @return persisted entity
    */
-  public static ByteArrayEntity createExceptionByteArray(String name, byte[] byteArray, ResourceType type) {
+  public static @Nullable ByteArrayEntity createExceptionByteArray(String name, byte @Nullable[] byteArray, ResourceType type) {
     if (byteArray == null) {
       return null;
     }
@@ -104,7 +105,7 @@ public final class ExceptionUtil {
     }
   }
 
-  public static SQLException unwrapException(PersistenceException persistenceException) {
+  public static @Nullable SQLException unwrapException(PersistenceException persistenceException) {
     Throwable cause = getPersistenceCauseException(persistenceException);
     if (cause instanceof SQLException sqlException) {
       SQLException nextException = sqlException.getNextException();
@@ -118,7 +119,7 @@ public final class ExceptionUtil {
     }
   }
 
-  public static SQLException unwrapException(ProcessEngineException genericPersistenceException) {
+  public static @Nullable SQLException unwrapException(ProcessEngineException genericPersistenceException) {
     Throwable cause = genericPersistenceException.getCause();
 
     if (cause instanceof ProcessEngineException processEngineException) {
@@ -284,7 +285,7 @@ public final class ExceptionUtil {
         H2.equals(errorCode, sqlState);
   }
 
-  public static BatchExecutorException findBatchExecutorException(PersistenceException exception) {
+  public static @Nullable BatchExecutorException findBatchExecutorException(PersistenceException exception) {
     Throwable cause = exception;
     do {
       if (cause instanceof BatchExecutorException batchExecutorException) {

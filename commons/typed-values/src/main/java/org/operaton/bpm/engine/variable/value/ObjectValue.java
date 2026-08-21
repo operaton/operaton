@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.variable.value;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 /**
  * <p>A typed value representing a Java Object.</p>
  *
@@ -53,7 +56,7 @@ public interface ObjectValue extends SerializableValue {
    * @return the object represented by this TypedValue.
    * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
    */
-  <T> T getValue(Class<T> type);
+  <T> @NonNull T getValue(Class<T> type);
 
   /**
    * Returns the Class this object is an instance of.
@@ -61,7 +64,7 @@ public interface ObjectValue extends SerializableValue {
    * @return the Class this object is an instance of
    * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
    */
-  Class<?> getObjectType();
+  @Nullable Class<?> getObjectType();
 
   /**
    * A String representation of the Object's type name.

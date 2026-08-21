@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.history;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
@@ -91,28 +93,28 @@ public interface HistoricProcessInstance {
   /**
    * The process instance id of a potential super process instance or null if no super process instance exists
    */
-  String getSuperProcessInstanceId();
+  @Nullable String getSuperProcessInstanceId();
 
   /**
    * The process instance id of the top-level (root) process instance or null if no root process instance exists
    */
-  String getRootProcessInstanceId();
+  @Nullable String getRootProcessInstanceId();
 
   /**
    * The case instance id of a potential super case instance or null if no super case instance exists
    */
-  String getSuperCaseInstanceId();
+  @Nullable String getSuperCaseInstanceId();
 
   /**
    * The case instance id of a potential super case instance or null if no super case instance exists
    */
-  String getCaseInstanceId();
+  @Nullable String getCaseInstanceId();
 
   /**
    * The id of the tenant this historic process instance belongs to. Can be <code>null</code>
    * if the historic process instance belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * Return current state of HistoricProcessInstance, following values are recognized during process engine operations:

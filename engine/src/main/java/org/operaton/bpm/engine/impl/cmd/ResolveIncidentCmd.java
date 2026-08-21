@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -44,7 +46,7 @@ public class ResolveIncidentCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     final Incident incident = commandContext.getIncidentManager().findIncidentById(incidentId);
 
     EnsureUtil.ensureNotNull(NotFoundException.class, "Cannot find an incident with id '%s'".formatted(incidentId),

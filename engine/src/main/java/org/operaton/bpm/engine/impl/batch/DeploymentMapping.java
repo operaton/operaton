@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Aggregated information on deployment ids and the number of related resources
  */
@@ -34,7 +36,7 @@ public class DeploymentMapping {
     this.count = count;
   }
 
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return NULL_ID.equals(deploymentId) ? null : deploymentId;
   }
 

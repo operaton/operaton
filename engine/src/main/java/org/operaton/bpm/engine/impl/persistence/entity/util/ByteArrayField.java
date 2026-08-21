@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.persistence.entity.util;
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.context.Context;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.Nameable;
 import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
@@ -61,7 +63,7 @@ public class ByteArrayField {
     this.byteArrayValue = null;
   }
 
-  public byte[] getByteArrayValue() {
+  public byte @Nullable[] getByteArrayValue() {
     getByteArrayEntity();
 
     if (byteArrayValue != null) {
@@ -90,7 +92,7 @@ public class ByteArrayField {
     setByteArrayValue(bytes, false);
   }
 
-  public void setByteArrayValue(byte[] bytes, boolean isTransient) {
+  public void setByteArrayValue(byte @Nullable[] bytes, boolean isTransient) {
     if (bytes != null) {
       // note: there can be cases where byteArrayId is not null
       //   but the corresponding byte array entity has been removed in parallel;

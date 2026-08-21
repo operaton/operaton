@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.*;
 
 import org.operaton.bpm.engine.ProcessEngine;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -855,7 +857,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   }
 
   @Override
-  public CmmnModelInstance getCmmnModelInstance() {
+  public @Nullable CmmnModelInstance getCmmnModelInstance() {
     if (caseDefinitionId != null) {
 
       return Context.getProcessEngineConfiguration()
@@ -869,7 +871,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   }
 
   @Override
-  public CmmnElement getCmmnModelElementInstance() {
+  public @Nullable CmmnElement getCmmnModelElementInstance() {
     CmmnModelInstance cmmnModelInstance = getCmmnModelInstance();
     if (cmmnModelInstance != null) {
       ModelElementInstance modelElementInstance = cmmnModelInstance.getModelElementById(activityId);

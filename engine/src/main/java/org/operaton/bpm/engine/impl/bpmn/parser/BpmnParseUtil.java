@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.operaton.bpm.engine.BpmnParseException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.mapping.InputParameter;
@@ -53,11 +55,11 @@ public final class BpmnParseUtil {
    * Returns the operaton extension element in the operaton namespace
    * and the given name.
    *
-    * @param element the parent element of the extension element
+   * @param element the parent element of the extension element
    * @param extensionElementName the name of the extension element to find
    * @return the extension element or null if not found
    */
-  public static Element findOperatonExtensionElement(Element element, String extensionElementName) {
+  public static @Nullable Element findOperatonExtensionElement(Element element, String extensionElementName) {
     return findExtensionElement(element, BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, extensionElementName);
   }
 
@@ -69,7 +71,7 @@ public final class BpmnParseUtil {
    * @param extensionElementName the name of the extension element to find
    * @return the extension element or null if not found
    */
-  public static Element findExtensionElement(Element element, Namespace namespace, String extensionElementName) {
+  public static @Nullable Element findExtensionElement(Element element, Namespace namespace, String extensionElementName) {
     Element extensionElements = element.element("extensionElements");
     if (extensionElements != null) {
       return extensionElements.elementNS(namespace, extensionElementName);
@@ -85,7 +87,7 @@ public final class BpmnParseUtil {
    * @return the input output mapping or null if non defined
    * @throws BpmnParseException if a input/output parameter element is malformed
    */
-  public static IoMapping parseInputOutput(Element element) {
+  public static @Nullable IoMapping parseInputOutput(Element element) {
     Element inputOutputElement = element.elementNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, "inputOutput");
     if(inputOutputElement != null) {
       IoMapping ioMapping = new IoMapping();

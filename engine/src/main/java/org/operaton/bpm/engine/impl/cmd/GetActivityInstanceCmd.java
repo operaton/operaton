@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -74,7 +76,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   @Override
-  public ActivityInstance execute(CommandContext commandContext) {
+  public @Nullable ActivityInstance execute(CommandContext commandContext) {
     ensureNotNull("processInstanceId", processInstanceId);
 
     List<ExecutionEntity> executionList = loadProcessInstance(processInstanceId, commandContext);

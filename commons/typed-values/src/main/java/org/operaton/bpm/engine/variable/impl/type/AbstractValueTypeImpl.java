@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.variable.impl.type;
 
 import java.io.Serial;
 import java.util.Map;
-
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -52,7 +52,7 @@ public abstract class AbstractValueTypeImpl implements ValueType {
   }
 
   @Override
-  public ValueType getParent() {
+  public @Nullable ValueType getParent() {
     return null;
   }
 
@@ -63,10 +63,14 @@ public abstract class AbstractValueTypeImpl implements ValueType {
 
   @Override
   public TypedValue convertFromTypedValue(TypedValue typedValue) {
-    throw unsupportedConversion(typedValue.getType());
+    ValueType type = typedValue.getType();
+    throw unsupportedConversion(type);
   }
 
-  protected IllegalArgumentException unsupportedConversion(ValueType typeToConvertTo) {
+  protected IllegalArgumentException unsupportedConversion(@Nullable ValueType typeToConvertTo) {
+    if  (typeToConvertTo == null) {
+      return new IllegalArgumentException("The type %s supports no conversion from null".formatted(getName()));
+    }
     return new IllegalArgumentException("The type %s supports no conversion from type: %s".formatted(getName(), typeToConvertTo.getName()));
   }
 

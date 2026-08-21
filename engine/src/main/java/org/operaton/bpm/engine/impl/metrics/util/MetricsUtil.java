@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.metrics.util;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.management.Metrics;
 
 public final class MetricsUtil {
@@ -29,7 +31,7 @@ public final class MetricsUtil {
    * @param publicName the public name
    * @return the internal name
    */
-  public static String resolveInternalName(final String publicName) {
+  public static @Nullable String resolveInternalName(@Nullable final String publicName) {
     if (publicName == null) {
       return null;
     }
@@ -48,7 +50,7 @@ public final class MetricsUtil {
    * @param internalName the internal name
    * @return the public name
    */
-  public static String resolvePublicName(final String internalName) {
+  public static @Nullable String resolvePublicName(@Nullable final String internalName) {
     if (internalName == null) {
       return null;
     }

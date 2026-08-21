@@ -73,7 +73,7 @@ See `references/perform-release.md`. In short:
 
 See `references/announce.md`. **Only after PERFORM verified the release is live.** Every channel is public and irreversible — draft, show the user, post only on explicit confirmation. In short:
 
-1. **Website** (`operaton/operaton.org`, PR) — update the `index.html` `#changelog` card to the **highest** version released that day; write a blog post in `_posts/` modelled on `2026-04-24-operaton-2-1-released.md`. Scaffolds via `.devenv/scripts/release/update-website.py`.
+1. **Website** (`operaton/operaton.org`, PR) — update the `index.html` `#changelog` card to the **highest** version released that day; write a blog post in `_posts/` modelled on `2026-04-24-operaton-2-1-released.md`. Scaffolds via `.devenv/scripts/release/update-website.py`. Add a link to the MD file on the branch to the PR description.
 2. **Slack** `general` — compact `@channel` post with highlights + release-notes link. Draft → confirm → post.
 3. **Forum** (forum.operaton.org, "Announcement" category) — fuller markdown version. Draft → confirm → post.
 4. **Branch cleanup** — `.devenv/scripts/release/list-merged-branches.sh "<MILESTONE>"` lists merged branches with links. **List only — you MUST NOT delete any branch.** Hand the list to the user.

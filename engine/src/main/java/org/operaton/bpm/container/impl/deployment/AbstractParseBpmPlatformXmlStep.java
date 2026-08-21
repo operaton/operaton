@@ -23,9 +23,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.metadata.BpmPlatformXmlParser;
@@ -96,32 +97,34 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return fileLocation;
   }
 
-  public String autoCompleteUrl(String url) {
-    if (url != null) {
-      LOG.debugAutoCompleteUrl(url);
+  public @Nullable String autoCompleteUrl(@Nullable String url) {
+    if (url == null) {
+      return null;
+    }
 
-      if (!url.endsWith(BPM_PLATFORM_XML_FILE)) {
-        String appender;
-        if (url.contains("/")) {
-          appender = "/";
-        } else {
-          appender = "\\";
-        }
+    LOG.debugAutoCompleteUrl(url);
 
-        if (!(url.endsWith("/") || url.endsWith("\\\\"))) {
-          url += appender;
-        }
-
-        url += BPM_PLATFORM_XML_FILE;
+    if (!url.endsWith(BPM_PLATFORM_XML_FILE)) {
+      String appender;
+      if (url.contains("/")) {
+        appender = "/";
+      } else {
+        appender = "\\";
       }
 
-      LOG.debugAutoCompletedUrl(url);
+      if (!(url.endsWith("/") || url.endsWith("\\\\"))) {
+        url += appender;
+      }
+
+      url += BPM_PLATFORM_XML_FILE;
     }
+
+    LOG.debugAutoCompletedUrl(url);
 
     return url;
   }
 
-  public URL checkValidUrlLocation(String url) throws MalformedURLException {
+  public @Nullable URL checkValidUrlLocation(@Nullable String url) throws MalformedURLException {
     if (url == null || url.isEmpty()) {
       return null;
     }
@@ -141,7 +144,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return null;
   }
 
-  public URL checkValidFileLocation(String url) throws MalformedURLException {
+  public @Nullable URL checkValidFileLocation(@Nullable String url) throws MalformedURLException {
     if (url == null || url.isEmpty()) {
       return null;
     }
@@ -159,7 +162,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return null;
   }
 
-  public URL lookupBpmPlatformXmlLocationFromJndi() {
+  public @Nullable URL lookupBpmPlatformXmlLocationFromJndi() {
     String jndi = "java:comp/env/" + BPM_PLATFORM_XML_LOCATION;
 
     try {

@@ -1,0 +1,38 @@
+# Engine + dev-fixtures bot, runnable together with:
+#   docker compose -f docker-compose.dev-fixtures.yaml up
+# Operaton at http://localhost:8084 ; bot control panel at http://localhost:3001 .
+
+services:
+  operaton:
+    image: operaton/operaton:latest
+    environment:
+      - OPERATON_BPM_RUN_CORS_ENABLED=true
+      - OPERATON_BPM_RUN_AUTH_ENABLED=true
+      - OPERATON_BPM_RUN_CORS_ALLOW_CREDENTIALS=true
+      - OPERATON_BPM_RUN_CORS_ALLOWED_ORIGINS=http://127.0.0.1:5173,http://localhost:3001
+      - OPERATON_BPM_RUN_CORS_ALLOWED_HEADERS=Origin,X-Requested-With,Content-Type,Accept,Authorization
+      - LOGGING_LEVEL_ROOT=INFO
+      - REST_AUTH_ENABLED=true
+    ports:
+      - "8084:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/engine-rest/engine || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  dev-fixtures:
+    build:
+      context: ./dev-fixtures
+    init: true
+    stop_grace_period: 5s
+    environment:
+      - DEV_FIXTURES_ENGINE_URL=http://operaton:8080/engine-rest
+      - DEV_FIXTURES_ENGINE_USERNAME=demo
+      - DEV_FIXTURES_ENGINE_PASSWORD=demo
+      - PORT=3000
+    ports:
+      - "3001:3000"
+    depends_on:
+      operaton:
+        condition: service_healthy

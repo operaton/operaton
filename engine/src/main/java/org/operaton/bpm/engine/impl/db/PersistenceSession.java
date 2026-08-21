@@ -62,6 +62,17 @@ public interface PersistenceSession extends Session {
 
   List<?> selectList(String statement, Object parameter);
 
+  /**
+   * Like {@link #selectList(String, Object)}, but stops fetching from the cursor
+   * after {@code maxRows} rows instead of relying on a row limit in the SQL.
+   * Needed for locking reads on databases where a SQL row limit is applied before
+   * lock-skipping (Oracle, DB2), which would under-fill the result with rows that
+   * are then discarded as locked.
+   */
+  default List<?> selectList(String statement, Object parameter, int maxRows) {
+    return selectList(statement, parameter);
+  }
+
   <T extends DbEntity> T selectById(Class<T> type, String id);
 
   Object selectOne(String statement, Object parameter);

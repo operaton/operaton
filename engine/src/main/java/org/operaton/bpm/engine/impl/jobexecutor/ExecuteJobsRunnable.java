@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -41,7 +43,7 @@ public class ExecuteJobsRunnable implements Runnable {
   protected JobExecutor jobExecutor;
   protected ProcessEngineImpl processEngine;
 
-  public ExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
+  public ExecuteJobsRunnable(List<String> jobIds, @NonNull ProcessEngineImpl processEngine) {
     this.jobIds = jobIds;
     this.processEngine = processEngine;
     this.jobExecutor = processEngine.getProcessEngineConfiguration().getJobExecutor();

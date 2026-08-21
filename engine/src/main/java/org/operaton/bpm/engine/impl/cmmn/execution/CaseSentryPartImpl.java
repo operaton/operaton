@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmmn.execution;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Roman Smirnov
  *
@@ -64,14 +66,14 @@ public class CaseSentryPartImpl extends CmmnSentryPart {
     return String.valueOf(System.identityHashCode(this));
   }
 
-  public String getCaseInstanceId() {
+  public @Nullable String getCaseInstanceId() {
     if (caseInstance != null) {
       return caseInstance.getId();
     }
     return null;
   }
 
-  public String getCaseExecutionId() {
+  public @Nullable String getCaseExecutionId() {
     if (caseExecution != null) {
       return caseExecution.getId();
     }
@@ -79,7 +81,7 @@ public class CaseSentryPartImpl extends CmmnSentryPart {
   }
 
   @Override
-  public String getSourceCaseExecutionId() {
+  public @Nullable String getSourceCaseExecutionId() {
     if (sourceCaseExecution != null) {
       return sourceCaseExecution.getId();
     }

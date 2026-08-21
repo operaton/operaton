@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
@@ -281,14 +278,14 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
    * @param definitionKey the definition key
    * @return the corresponding definition entity or null if non is found
    */
-  protected abstract DEFINITION_ENTITY findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey);
+  protected abstract @Nullable DEFINITION_ENTITY findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey);
 
   /**
    * Find the last deployed definition entity by definition key and tenant id.
    *
    * @return the corresponding definition entity or null if non is found
    */
-  protected abstract DEFINITION_ENTITY findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId);
+  protected abstract @Nullable DEFINITION_ENTITY findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId);
 
   /**
    * Persist definition entity into the database.

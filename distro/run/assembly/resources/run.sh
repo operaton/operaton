@@ -5,17 +5,20 @@ BASEDIR=$(dirname "$0")
 PARENTDIR=$(builtin cd "$BASEDIR/.."; pwd)
 DEPLOYMENT_DIR=$PARENTDIR/configuration/resources
 WEBAPPS_PATH=$BASEDIR/webapps/
+WEBAPPS_NEO_PATH=$BASEDIR/webapps-neo/
 OAUTH2_PATH=$BASEDIR/oauth2/
 REST_PATH=$BASEDIR/rest/
 EXAMPLE_PATH=$BASEDIR/example
 PID_PATH=$BASEDIR/run.pid
 OPTIONS_HELP="Options:
-  --webapps    - Enables the Operaton Webapps
-  --oauth2     - Enables the Operaton Platform Spring Security OAuth2 integration
-  --rest       - Enables the REST API
-  --example    - Enables the example application
-  --production - Applies the production.yaml configuration file
-  --detached   - Starts Operaton as a detached process
+  --webapps-neo - Enables the new Operaton Webapps at the root path, and the REST API they
+                  need (also via OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true)
+  --webapps     - Enables the legacy Operaton Webapps (served at /operaton/app)
+  --oauth2      - Enables the Operaton Platform Spring Security OAuth2 integration
+  --rest        - Enables the REST API
+  --example     - Enables the example application
+  --production  - Applies the production.yaml configuration file
+  --detached    - Starts Operaton as a detached process
 "
 
 # set environment parameters
@@ -25,6 +28,7 @@ productionChosen=false
 detachProcess=false
 classPath=$PARENTDIR/configuration/userlib/,$PARENTDIR/configuration/keystore/
 configuration=$PARENTDIR/configuration/default.yml
+neoEnabledProperty=""
 
 if [ "$1" = "start" ] ; then
   shift
@@ -55,9 +59,18 @@ if [ "$1" = "start" ] ; then
   # inspect arguments
   while [ "$1" != "" ]; do
     case $1 in
+      --webapps-neo ) optionalComponentChosen=true
+                     # The SPA is useless without an engine API, so bring REST along
+                     # rather than starting a UI that cannot talk to anything.
+                     restChosen=true
+                     classPath=$WEBAPPS_NEO_PATH,$REST_PATH,$classPath
+                     neoEnabledProperty="-Doperaton.bpm.webapp.neo.enabled=true"
+                     echo WebApps Neo enabled
+                     echo REST API enabled
+                     ;;
       --webapps )    optionalComponentChosen=true
                      classPath=$WEBAPPS_PATH,$classPath
-                     echo WebApps enabled
+                     echo Legacy WebApps enabled
                      ;;
       --oauth2 )     optionalComponentChosen=true
                      classPath=$OAUTH2_PATH,$classPath
@@ -90,12 +103,21 @@ if [ "$1" = "start" ] ; then
     shift
   done
 
-  # If no optional component is chosen, enable REST and Webapps.
+  # If no optional component is chosen, enable REST and the legacy Webapps.
+  # The new Webapps (neo) only join the classpath when actually asked for, via
+  # OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true or the --webapps-neo flag, so a
+  # default start loads exactly one webapp rather than two.
   # If production mode is not chosen, also enable the example application.
   if [ "$optionalComponentChosen" = "false" ]; then
     restChosen=true
     echo REST API enabled
-    echo WebApps enabled
+    echo Legacy WebApps enabled
+    if [ "$OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS" = "true" ]; then
+      classPath=$WEBAPPS_NEO_PATH,$classPath
+      echo WebApps Neo enabled
+    else
+      echo "WebApps Neo available (enable with OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS=true)"
+    fi
     if [ "$productionChosen" = "false" ]; then
       echo Invoice Example included - needs to be enabled in application configuration as well
       classPath=$EXAMPLE_PATH,$classPath
@@ -124,12 +146,12 @@ Please stop it or remove the file $PID_PATH."
 
     # start Operaton detached
     echo ""
-    "$JAVA" -Dloader.path="$classPath" -Doperaton.deploymentDir="$DEPLOYMENT_DIR" $JAVA_OPTS -jar "$BASEDIR/operaton-bpm.jar" --spring.config.location=file:"$configuration" &
+    "$JAVA" -Dloader.path="$classPath" $neoEnabledProperty -Doperaton.deploymentDir="$DEPLOYMENT_DIR" $JAVA_OPTS -jar "$BASEDIR/operaton-bpm.jar" --spring.config.location=file:"$configuration" &
     # store the process id
     echo $! > "$PID_PATH"
 
   else
-    "$JAVA" -Dloader.path="$classPath" -Doperaton.deploymentDir="$DEPLOYMENT_DIR" $JAVA_OPTS -jar "$BASEDIR/operaton-bpm.jar" --spring.config.location=file:"$configuration"
+    "$JAVA" -Dloader.path="$classPath" $neoEnabledProperty -Doperaton.deploymentDir="$DEPLOYMENT_DIR" $JAVA_OPTS -jar "$BASEDIR/operaton-bpm.jar" --spring.config.location=file:"$configuration"
   fi
 
 elif [ "$1" = "stop" ] ; then

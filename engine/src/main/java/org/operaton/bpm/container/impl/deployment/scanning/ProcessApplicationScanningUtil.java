@@ -22,6 +22,8 @@ import java.net.URL;
 import java.util.Map;
 
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -95,7 +97,7 @@ public final class ProcessApplicationScanningUtil {
     return isDeployable(filename) || hasSuffix(filename, additionalResourceSuffixes);
   }
 
-  public static boolean hasSuffix(String filename, String[] suffixes) {
+  public static boolean hasSuffix(String filename, String @Nullable[] suffixes) {
     if (suffixes == null || suffixes.length == 0) {
       return false;
     } else {

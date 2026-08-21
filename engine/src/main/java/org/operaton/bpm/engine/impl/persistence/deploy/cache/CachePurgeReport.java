@@ -23,6 +23,8 @@ import java.util.Set;
 
 import org.operaton.bpm.engine.impl.management.PurgeReporting;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
@@ -64,7 +66,7 @@ public class CachePurgeReport implements PurgeReporting<Set<String>> {
   }
 
   @Override
-  public Set<String> getReportValue(String key) {
+  public @Nullable Set<String> getReportValue(String key) {
     return deletedCache.get(key);
   }
 

@@ -21,6 +21,8 @@ import java.util.Deque;
 import java.util.concurrent.Callable;
 
 import org.operaton.bpm.application.InvocationContext;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
@@ -54,7 +56,7 @@ public final class Context {
   private Context() {
   }
 
-  public static CommandContext getCommandContext() {
+  public static @Nullable CommandContext getCommandContext() {
     Deque<CommandContext> stack = getStack(commandContextThreadLocal);
     if (stack.isEmpty()) {
       return null;
@@ -70,7 +72,7 @@ public final class Context {
     getStack(commandContextThreadLocal).pop();
   }
 
-  public static CommandInvocationContext getCommandInvocationContext() {
+  public static @Nullable CommandInvocationContext getCommandInvocationContext() {
     Deque<CommandInvocationContext> stack = getStack(commandInvocationContextThreadLocal);
     if (stack.isEmpty()) {
       return null;
@@ -99,7 +101,7 @@ public final class Context {
     }
   }
 
-  public static ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+  public static @Nullable ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
     Deque<ProcessEngineConfigurationImpl> stack = getStack(processEngineConfigurationStackThreadLocal);
     if (stack.isEmpty()) {
       return null;
@@ -131,7 +133,7 @@ public final class Context {
     return (CaseExecutionContext) getCoreExecutionContext();
   }
 
-  public static CoreExecutionContext<? extends CoreExecution> getCoreExecutionContext() {
+  public static @Nullable CoreExecutionContext<? extends CoreExecution> getCoreExecutionContext() {
     var stack = getStack(executionContextStackThreadLocal);
     if(stack.isEmpty()) {
       return null;
@@ -173,8 +175,7 @@ public final class Context {
     jobExecutorContextThreadLocal.remove();
   }
 
-
-  public static ProcessApplicationReference getCurrentProcessApplication() {
+  public static @Nullable ProcessApplicationReference getCurrentProcessApplication() {
     Deque<ProcessApplicationReference> stack = getStack(processApplicationContext);
     if(stack.isEmpty()) {
       return null;

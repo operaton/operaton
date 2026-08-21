@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
@@ -135,7 +137,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
   protected String id;
 
   /** the root process instance in which the event has happened */
-  protected String rootProcessInstanceId;
+  protected @Nullable String rootProcessInstanceId;
 
   /** the process instance in which the event has happened */
   protected String processInstanceId;
@@ -156,7 +158,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
   protected Integer processDefinitionVersion;
 
   /** the case instance in which the event has happened */
-  protected String caseInstanceId;
+  protected @Nullable String caseInstanceId;
 
   /** the id of the case execution in which the event has happened */
   protected String caseExecutionId;
@@ -191,7 +193,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
     this.processInstanceId = processInstanceId;
   }
 
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
@@ -263,7 +265,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
     this.caseDefinitionId = caseDefinitionId;
   }
 
-  public String getCaseInstanceId() {
+  public @Nullable String getCaseInstanceId() {
     return caseInstanceId;
   }
 

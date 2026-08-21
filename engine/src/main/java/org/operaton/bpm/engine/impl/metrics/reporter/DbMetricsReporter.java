@@ -20,6 +20,8 @@ package org.operaton.bpm.engine.impl.metrics.reporter;
 import java.util.Timer;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
@@ -123,7 +125,7 @@ public class DbMetricsReporter {
     }
 
     @Override
-    public Void execute(CommandContext commandContext) {
+    public @Nullable Void execute(CommandContext commandContext) {
       commandContext.getMeterLogManager().insert(new MeterLogEntity(name, reporterId, value, ClockUtil.getCurrentTime()));
       return null;
     }

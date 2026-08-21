@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
 import org.operaton.bpm.engine.impl.util.StringUtil;
@@ -66,7 +68,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
     return persistentState;
   }
 
-  public byte[] getFullMessageBytes() {
+  public byte @Nullable[] getFullMessageBytes() {
     return fullMessage != null ? StringUtil.toByteArray(fullMessage) : null;
   }
 

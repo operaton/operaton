@@ -18,11 +18,10 @@ package org.operaton.bpm.container.impl.ejb;
 
 import java.util.List;
 import java.util.Set;
-import jakarta.ejb.EJB;
-import jakarta.ejb.Local;
-import jakarta.ejb.Stateless;
-import jakarta.ejb.TransactionAttribute;
-import jakarta.ejb.TransactionAttributeType;
+import jakarta.ejb.*;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.ProcessEngineService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -47,7 +46,7 @@ public class EjbProcessEngineService implements ProcessEngineService {
   }
 
   @Override
-  public List<ProcessEngine> getProcessEngines() {
+  public @NonNull List<ProcessEngine> getProcessEngines() {
     return ejbBpmPlatform.getProcessEngineService().getProcessEngines();
   }
 
@@ -57,7 +56,7 @@ public class EjbProcessEngineService implements ProcessEngineService {
   }
 
   @Override
-  public ProcessEngine getProcessEngine(String name) {
+  public @Nullable ProcessEngine getProcessEngine(String name) {
     return ejbBpmPlatform.getProcessEngineService().getProcessEngine(name);
   }
 

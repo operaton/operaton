@@ -18,6 +18,8 @@ package org.operaton.bpm;
 
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.application.ProcessApplicationInfo;
 
 /**
@@ -40,6 +42,6 @@ public interface ProcessApplicationService {
    *
    * @return the {@link ProcessApplicationInfo} object or null if no such process application is deployed.
    */
-  ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName);
+  @Nullable ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName);
 
 }

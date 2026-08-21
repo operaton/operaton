@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.management;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
@@ -52,7 +54,7 @@ public class DatabasePurgeReport implements PurgeReporting<Long> {
   }
 
   @Override
-  public Long getReportValue(String key) {
+  public @Nullable Long getReportValue(String key) {
     return deletedEntities.get(key);
   }
 

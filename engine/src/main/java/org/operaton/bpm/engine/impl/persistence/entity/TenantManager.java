@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.context.Context;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.db.TenantCheck;
 import org.operaton.bpm.engine.impl.identity.Authentication;
@@ -58,7 +60,7 @@ public class TenantManager extends AbstractManager {
     return configureQuery(queryObject);
   }
 
-  public boolean isAuthenticatedTenant(String tenantId) {
+  public boolean isAuthenticatedTenant(@Nullable String tenantId) {
     if (tenantId != null && isTenantCheckEnabled()) {
 
       Authentication currentAuthentication = getCurrentAuthentication();

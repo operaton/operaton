@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
@@ -46,7 +48,7 @@ public interface ModelInstance {
    *
    * @return the document element or null
    */
-  ModelElementInstance getDocumentElement();
+  @Nullable ModelElementInstance getDocumentElement();
 
   /**
    * Updates the document element.
@@ -106,7 +108,7 @@ public interface ModelInstance {
    * @param id  the id of the element
    * @return the element with the id or null
    */
-  <T extends ModelElementInstance> T getModelElementById(String id);
+  <T extends ModelElementInstance> @Nullable T getModelElementById(String id);
 
   /**
    * Find all elements of a type.

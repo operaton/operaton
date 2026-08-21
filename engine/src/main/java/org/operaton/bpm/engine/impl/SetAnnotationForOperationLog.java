@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -35,7 +37,7 @@ public class SetAnnotationForOperationLog implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     EnsureUtil.ensureNotNull(NotValidException.class, "operation id", operationId);
 
     UserOperationLogEntry operationLogEntry = commandContext.getOperationLogManager().findOperationLogByOperationId(operationId);

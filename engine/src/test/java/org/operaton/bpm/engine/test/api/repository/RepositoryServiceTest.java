@@ -928,8 +928,8 @@ class RepositoryServiceTest {
   @Test
   void testGetProcessModelByNullId() {
     assertThatThrownBy(() -> repositoryService.getProcessModel(null))
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("The process definition id is mandatory");
+      .isInstanceOf(NullPointerException.class)
+      .hasMessageContaining("\"processDefinitionId\" is null");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)

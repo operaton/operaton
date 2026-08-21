@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.query.QueryProperty;
@@ -43,7 +45,7 @@ public final class MybatisJoinHelper {
   private MybatisJoinHelper() {
   }
 
-  public static String tableAlias(String relation, int index) {
+  public static String tableAlias(@Nullable String relation, int index) {
     if (relation == null) {
       return "RES";
     } else {

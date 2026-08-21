@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -61,7 +63,7 @@ public class RecalculateJobDuedateCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     final JobEntity job = commandContext.getJobManager().findJobById(jobId);
     ensureNotNull(NotFoundException.class, "No job found with id '%s'".formatted(jobId), "job", job);
 

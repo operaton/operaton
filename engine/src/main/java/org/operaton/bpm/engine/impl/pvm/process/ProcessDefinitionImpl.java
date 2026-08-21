@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
@@ -132,12 +134,12 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   }
 
   @Override
-  public String getDiagramResourceName() {
+  public @Nullable String getDiagramResourceName() {
     return null;
   }
 
   @Override
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return null;
   }
 
@@ -145,7 +147,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     getLaneSets().add(newLaneSet);
   }
 
-  public Lane getLaneForId(String id) {
+  public @Nullable Lane getLaneForId(String id) {
     if(laneSets != null && !laneSets.isEmpty()) {
       Lane lane;
       for(LaneSet set : laneSets) {
@@ -159,7 +161,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   }
 
   @Override
-  public CoreActivityBehavior<? extends BaseDelegateExecution> getActivityBehavior() {
+  public @Nullable CoreActivityBehavior<? extends BaseDelegateExecution> getActivityBehavior() {
     // unsupported in PVM
     return null;
   }
@@ -210,17 +212,17 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   }
 
   @Override
-  public PvmScope getEventScope() {
+  public @Nullable PvmScope getEventScope() {
     return null;
   }
 
   @Override
-  public ScopeImpl getFlowScope() {
+  public @Nullable ScopeImpl getFlowScope() {
     return null;
   }
 
   @Override
-  public PvmScope getLevelOfSubprocessScope() {
+  public @Nullable PvmScope getLevelOfSubprocessScope() {
     return null;
   }
 

@@ -30,6 +30,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 
@@ -112,7 +114,7 @@ public final class IoUtil {
    * Closes the given stream. The same as calling {@link Closeable#close()}, but
    * errors while closing are silently ignored.
    */
-  public static void closeSilently(Closeable closeable) {
+  public static void closeSilently(@Nullable Closeable closeable) {
     try {
       if(closeable != null) {
         closeable.close();
@@ -127,7 +129,7 @@ public final class IoUtil {
    * Flushes the given object. The same as calling {@link Flushable#flush()}, but
    * errors while flushing are silently ignored.
    */
-  public static void flushSilently(Flushable flushable) {
+  public static void flushSilently(@Nullable Flushable flushable) {
     try {
       if(flushable != null) {
         flushable.flush();

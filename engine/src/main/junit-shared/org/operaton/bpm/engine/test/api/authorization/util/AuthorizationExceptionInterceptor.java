@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.util;
 
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.AuthorizationException;
@@ -37,7 +38,7 @@ public class AuthorizationExceptionInterceptor extends CommandInterceptor {
   protected int count;
 
   @Override
-  public <T> T execute(Command<T> command) {
+  public <T> @Nullable T execute(Command<T> command) {
     try {
       count++; // only catch exception if we are at the top of the command stack
                // (there may be multiple nested command invocations and we need

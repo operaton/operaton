@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.HistoryLevelUtils;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -36,7 +38,7 @@ public class DetermineHistoryLevelCmd implements Command<HistoryLevel> {
   }
 
   @Override
-  public HistoryLevel execute(final CommandContext commandContext) {
+  public @Nullable HistoryLevel execute(final CommandContext commandContext) {
     final Integer databaseHistoryLevel = HistoryLevelUtils.databaseHistoryLevel(commandContext);
 
     HistoryLevel result = null;

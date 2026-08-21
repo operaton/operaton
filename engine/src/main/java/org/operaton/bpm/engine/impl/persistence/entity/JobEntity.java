@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.*;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.*;
@@ -233,7 +235,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     return persistentState;
   }
 
-  public void setExecution(ExecutionEntity execution) {
+  public void setExecution(@Nullable ExecutionEntity execution) {
     if (execution != null) {
       this.execution = execution;
       executionId = execution.getId();
@@ -488,7 +490,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     return jobDefinition;
   }
 
-  public void setJobDefinition(JobDefinition jobDefinition) {
+  public void setJobDefinition(@Nullable JobDefinition jobDefinition) {
     this.jobDefinition = jobDefinition;
     if (jobDefinition != null) {
       jobDefinitionId = jobDefinition.getId();

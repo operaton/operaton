@@ -36,7 +36,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  void testSimpleTextMail() {
+  void testSimpleTextMail() throws Exception {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<Message> receivedEmails = getReceivedEmails();
@@ -71,7 +71,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  void testTextMailExpressions() {
+  void testTextMailExpressions() throws Exception {
 
     String sender = "mispiggy@activiti.org";
     String recipient = "fozziebear@activiti.org";
@@ -96,7 +96,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  void testCcAndBcc() {
+  void testCcAndBcc() throws Exception {
     runtimeService.startProcessInstanceByKey("ccAndBcc");
 
     List<Message> messages = getReceivedEmails();
@@ -113,7 +113,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  void testHtmlMail() {
+  void testHtmlMail() throws Exception {
     runtimeService.startProcessInstanceByKey("htmlMail", CollectionUtil.singletonMap("gender", "male"));
 
     List<Message> messages = getReceivedEmails();

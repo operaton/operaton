@@ -341,6 +341,14 @@
         <artifactId>httpcore5</artifactId>
         <version>${version.httpcore5}</version>
       </dependency>
+      <!-- Pulled in transitively by httpclient5 alongside httpcore5. Managed here so
+        both halves of the core5 family stay on the same version instead of h2 falling
+        through to whatever spring-boot-dependencies happens to manage. -->
+      <dependency>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5-h2</artifactId>
+        <version>${version.httpcore5-h2}</version>
+      </dependency>
       <dependency>
         <groupId>org.glassfish.jaxb</groupId>
         <artifactId>jaxb-runtime</artifactId>
@@ -356,6 +364,11 @@
         <artifactId>ant</artifactId>
         <version>1.10.17</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jspecify</groupId>
+        <artifactId>jspecify</artifactId>
+        <version>1.0.1</version>
       </dependency>
       <dependency>
         <groupId>com.cronutils</groupId>

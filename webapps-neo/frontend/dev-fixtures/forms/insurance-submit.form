@@ -1,0 +1,54 @@
+{
+  "components": [
+    {
+      "type": "text",
+      "text": "## Submit insurance claim\n\nProvide the basic details. Routing and assessment follow.",
+      "id": "Field_header"
+    },
+    {
+      "label": "Claim type",
+      "type": "select",
+      "key": "claimType",
+      "id": "Field_claimType",
+      "values": [
+        { "label": "Auto", "value": "auto" },
+        { "label": "Home", "value": "home" },
+        { "label": "Health", "value": "health" }
+      ],
+      "validate": { "required": true }
+    },
+    {
+      "label": "Amount (€)",
+      "type": "number",
+      "key": "amount",
+      "id": "Field_amount",
+      "validate": { "required": true, "min": 0 }
+    },
+    {
+      "label": "Description",
+      "type": "textarea",
+      "key": "description",
+      "id": "Field_description",
+      "validate": { "required": true }
+    },
+    {
+      "label": "Urgent",
+      "type": "checkbox",
+      "key": "urgent",
+      "id": "Field_urgent"
+    },
+    {
+      "label": "Date of incident",
+      "type": "datetime",
+      "key": "incidentDate",
+      "id": "Field_date",
+      "subtype": "date",
+      "dateLabel": "Date of incident"
+    }
+  ],
+  "type": "default",
+  "id": "insurance-submit",
+  "schemaVersion": 17,
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.21.0"
+}

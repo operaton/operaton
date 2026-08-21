@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.application.InvocationContext;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -226,7 +228,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     this.caseExecutionId = caseExecutionId;
   }
 
-  public void setCaseExecution(CaseExecutionEntity caseExecution) {
+  public void setCaseExecution(@Nullable CaseExecutionEntity caseExecution) {
     if (caseExecution != null) {
       this.caseInstanceId = caseExecution.getCaseInstanceId();
       this.caseExecutionId = caseExecution.getId();
@@ -359,7 +361,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     return execution;
   }
 
-  public void setExecution(ExecutionEntity execution) {
+  public void setExecution(@Nullable ExecutionEntity execution) {
     this.execution = execution;
 
     if (execution == null) {
@@ -379,7 +381,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   // case execution ///////////////////////////////////////////////////////////
 
-  public CaseExecutionEntity getCaseExecution() {
+  public @Nullable CaseExecutionEntity getCaseExecution() {
     if (caseExecutionId != null) {
       return Context
           .getCommandContext()
@@ -515,7 +517,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     this.batchId = batchId;
   }
 
-  public void setTask(TaskEntity task) {
+  public void setTask(@Nullable TaskEntity task) {
     if (task != null) {
       this.taskId = task.getId();
       this.tenantId = task.getTenantId();

@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.exception.NotFoundException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -48,7 +50,7 @@ public abstract class ExternalTaskCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     EnsureUtil.ensureNotNull("externalTaskId", externalTaskId);
     validateInput();
 

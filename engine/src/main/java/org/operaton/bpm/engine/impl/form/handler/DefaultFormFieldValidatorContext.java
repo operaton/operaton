@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.form.handler;
 import java.util.Map;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.form.validator.FormFieldValidatorContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -50,7 +52,7 @@ public class DefaultFormFieldValidatorContext implements FormFieldValidatorConte
   }
 
   @Override
-  public DelegateExecution getExecution() {
+  public @Nullable DelegateExecution getExecution() {
     if(variableScope instanceof DelegateExecution delegateExecution) {
       return delegateExecution;
     }

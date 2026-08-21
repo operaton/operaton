@@ -6,7 +6,25 @@ operaton.bpm:
 # https://docs.operaton.org/docs/documentation/user-guide/security/#http-header-security-in-webapps
 # https://docs.operaton.org/docs/documentation/webapps/shared-options/header-security/
   webapp:
+    # The new web apps (webapps-neo) are served at the application root (/) and
+    # are DISABLED by default. Enable them with the
+    # OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS environment variable set to "true".
+    # The legacy web apps remain available at /operaton/app by default.
+    neo:
+      enabled: ${OPERATON_BPM_RUN_ENABLE_NEW_WEB_APPS:false}
+      # "auto" uses basic authentication, switching to OAuth2 by itself once
+      # Spring Security client registrations are configured. Force one with
+      # "basic" or "oauth2".
+      auth-mode: ${OPERATON_BPM_RUN_WEBAPPS_NEO_AUTH_MODE:auto}
+      plugins-url: ${OPERATON_BPM_RUN_WEBAPPS_NEO_PLUGINS_URL:}
+      hide-release-warning: ${OPERATON_BPM_RUN_WEBAPPS_NEO_HIDE_RELEASE_WARNING:false}
     csrf:
+      # The CSRF filter always validates a synchroniser token. It can additionally check
+      # that the Origin/Referer of a modifying request matches this deployment, but only
+      # when target-origin is set — left unset, that second check is skipped entirely.
+      # Strongly recommended in production. Use the externally visible origin, which
+      # behind a reverse proxy is the proxy's address, not this server's:
+      # target-origin: https://operaton.example.com
       enable-same-site-cookie: true
       same-site-cookie-option: STRICT
     header-security:

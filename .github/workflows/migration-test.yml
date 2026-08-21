@@ -30,6 +30,6 @@ jobs:
 
       - name: Run QA script
         run: |
-          ./mvnw clean install -DskipTests -PskipFrontendBuild
+          ./mvnw clean install -DskipTests -Dskip.frontend.build=true
           cd qa/test-database-container
           ./test.sh ${{ matrix.db }}

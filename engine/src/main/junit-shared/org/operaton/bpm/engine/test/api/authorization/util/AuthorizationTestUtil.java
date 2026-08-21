@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.authorization.Authorization;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
@@ -42,7 +44,7 @@ public final class AuthorizationTestUtil {
     }
   }
 
-  public static Resource getResourceByType(int type) {
+  public static @Nullable Resource getResourceByType(int type) {
     return resourcesByType.get(type);
   }
 

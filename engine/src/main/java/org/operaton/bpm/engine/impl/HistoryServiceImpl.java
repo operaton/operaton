@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.HistoryService;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReport;
@@ -189,7 +191,7 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
   }
 
   @Override
-  public Job findHistoryCleanupJob() {
+  public @Nullable Job findHistoryCleanupJob() {
     final List<Job> jobs = commandExecutor.execute(new FindHistoryCleanupJobsCmd());
     if (!jobs.isEmpty()) {
       return jobs.get(0);

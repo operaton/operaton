@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmmn.execution;
 
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 
 /**
@@ -49,6 +51,6 @@ public interface CmmnCaseInstance extends CmmnActivityExecution {
    * @return returns a case execution or null if a case execution could
    *         not be found.
    */
-  CmmnActivityExecution findCaseExecution(String activityId);
+  @Nullable CmmnActivityExecution findCaseExecution(String activityId);
 
 }

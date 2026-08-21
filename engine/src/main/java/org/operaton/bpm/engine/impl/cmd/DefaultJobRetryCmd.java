@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.parser.DefaultFailedJobParseListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.FailedJobRetryConfiguration;
 import org.operaton.bpm.engine.impl.calendar.DurationHelper;
@@ -57,7 +59,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     JobEntity job = getJob();
 
     ActivityImpl activity = getCurrentActivity(commandContext, job);

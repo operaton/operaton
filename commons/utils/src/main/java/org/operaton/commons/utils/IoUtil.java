@@ -21,6 +21,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Sebastian Menski
@@ -90,7 +92,7 @@ public class IoUtil {
    *
    * @param closeable the closable to close
    */
-  public static void closeSilently(Closeable closeable) {
+  public static void closeSilently(@Nullable Closeable closeable) {
     try {
       if (closeable != null) {
         closeable.close();
@@ -173,7 +175,7 @@ public class IoUtil {
    * @param filename the filename to load
    * @return the file object
    */
-  public static File getClasspathFile(String filename) {
+  public static File getClasspathFile(@NonNull String filename) {
     if(filename == null) {
       throw LOG.nullParameter("filename");
     }
@@ -189,10 +191,7 @@ public class IoUtil {
    * @return the file object
    * @throws IoUtilException if the file cannot be loaded
    */
-  public static File getClasspathFile(String filename, ClassLoader classLoader) {
-    if(filename == null) {
-      throw LOG.nullParameter("filename");
-    }
+  public static File getClasspathFile(@NonNull String filename, @Nullable ClassLoader classLoader) {
 
     URL fileUrl = null;
 

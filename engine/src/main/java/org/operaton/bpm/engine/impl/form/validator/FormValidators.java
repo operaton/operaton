@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -45,7 +47,7 @@ public class FormValidators {
    * factory method for creating validator instances
    *
    */
-  public FormFieldValidator createValidator(Element constraint, BpmnParse bpmnParse, ExpressionManager expressionManager) {
+  public @Nullable FormFieldValidator createValidator(Element constraint, BpmnParse bpmnParse, ExpressionManager expressionManager) {
 
     String name = constraint.attribute("name");
     String config = constraint.attribute("config");

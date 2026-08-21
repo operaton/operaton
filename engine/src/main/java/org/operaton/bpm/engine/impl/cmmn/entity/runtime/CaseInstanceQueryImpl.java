@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.exception.NotValidException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.AbstractVariableQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
@@ -219,7 +221,7 @@ public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanc
     return caseExecutionId;
   }
 
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     return null;
   }
 

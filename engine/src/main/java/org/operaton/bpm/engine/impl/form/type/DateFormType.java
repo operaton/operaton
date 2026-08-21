@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -48,7 +50,7 @@ public class DateFormType extends AbstractFormFieldType {
   }
 
   @Override
-  public Object getInformation(String key) {
+  public @Nullable Object getInformation(String key) {
     if ("datePattern".equals(key)) {
       return datePattern;
     }
@@ -95,7 +97,7 @@ public class DateFormType extends AbstractFormFieldType {
   // deprecated //////////////////////////////////////////////////////////
 
   @Override
-  public Object convertFormValueToModelValue(Object propertyValue) {
+  public @Nullable Object convertFormValueToModelValue(Object propertyValue) {
     if (propertyValue==null || "".equals(propertyValue)) {
       return null;
     }
@@ -110,7 +112,7 @@ public class DateFormType extends AbstractFormFieldType {
   }
 
   @Override
-  public String convertModelValueToFormValue(Object modelValue) {
+  public @Nullable String convertModelValueToFormValue(Object modelValue) {
     if (modelValue==null) {
       return null;
     }

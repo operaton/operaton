@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.util.xml;
 
 import java.util.*;
 
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 
@@ -47,7 +48,7 @@ public class Element {
   protected StringBuilder text = new StringBuilder();
   protected List<Element> elements = new ArrayList<>();
 
-  public Element(String uri, String localName, String qName, Attributes attributes, Locator locator) {
+  public Element(String uri, String localName, String qName, @Nullable Attributes attributes, @Nullable Locator locator) {
     this.uri = uri;
     this.tagName = uri == null || "".equals(uri) ? qName : localName;
 
@@ -89,11 +90,11 @@ public class Element {
     return selectedElements;
   }
 
-  public Element element(String tagName) {
+  public @Nullable Element element(String tagName) {
     return elementNS(new Namespace(null), tagName);
   }
 
-  public Element elementNS(Namespace nameSpace, String tagName) {
+  public @Nullable Element elementNS(Namespace nameSpace, String tagName) {
     List<Element> elementList = elementsNS(nameSpace.getNamespaceUri(), tagName);
     if (elementList.isEmpty() && nameSpace.hasAlternativeUri()) {
       elementList = elementsNS(nameSpace.getAlternativeUri(), tagName);
@@ -110,7 +111,7 @@ public class Element {
     elements.add(element);
   }
 
-  public String attribute(String name) {
+  public @Nullable String attribute(String name) {
     if (attributeMap.containsKey(name)) {
       return attributeMap.get(name).getValue();
     }

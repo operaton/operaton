@@ -4,6 +4,7 @@ target
 .classpath
 .project
 .settings
+.factorypath
 .editorconfig
 .m2
 build.properties

@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -57,7 +59,7 @@ public class DeleteDeploymentCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     ensureNotNull("deploymentId", deploymentId);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {

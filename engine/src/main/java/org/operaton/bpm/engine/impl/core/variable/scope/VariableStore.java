@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 
 /**
@@ -93,11 +95,11 @@ public class VariableStore<T extends CoreVariableInstance> {
     return result;
   }
 
-  public T getRemovedVariable(String name) {
+  public @Nullable T getRemovedVariable(String name) {
     return removedVariables.get(name);
   }
 
-  public T getVariable(String name) {
+  public @Nullable T getVariable(String name) {
 
     return getVariablesMap().get(name);
   }
@@ -165,7 +167,7 @@ public class VariableStore<T extends CoreVariableInstance> {
     }
   }
 
-  public T removeVariable(String variableName) {
+  public @Nullable T removeVariable(String variableName) {
 
     if (!getVariablesMap().containsKey(variableName)) {
       return null;

@@ -46,6 +46,9 @@ public class WebappProperty {
   @NestedConfigurationProperty
   protected AuthenticationProperties auth = new AuthenticationProperties();
 
+  @NestedConfigurationProperty
+  protected NeoWebappProperty neo = new NeoWebappProperty();
+
   public boolean isIndexRedirectEnabled() {
     return indexRedirectEnabled;
   }
@@ -126,6 +129,14 @@ public class WebappProperty {
     this.auth = authentication;
   }
 
+  public NeoWebappProperty getNeo() {
+    return neo;
+  }
+
+  public void setNeo(NeoWebappProperty neo) {
+    this.neo = neo;
+  }
+
   @Override
   public String toString() {
     return joinOn(this.getClass())
@@ -137,6 +148,7 @@ public class WebappProperty {
       .add("headerSecurityProperties='" + headerSecurity + '\'')
       .add("sessionCookie='" + sessionCookie + '\'')
       .add("auth='" + auth + '\'')
+      .add("neo='" + neo + '\'')
       .toString();
   }
 }

@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmd.UnregisterDeploymentCmd;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -49,7 +51,7 @@ public class DeploymentFailListener implements TransactionListener {
   protected class DeleteDeploymentListenerCmd implements Command<Void> {
 
     @Override
-    public Void execute(final CommandContext commandContext) {
+    public @Nullable Void execute(final CommandContext commandContext) {
 
       commandContext.runWithoutAuthorization(new UnregisterDeploymentCmd(deploymentIds));
 

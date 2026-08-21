@@ -20,11 +20,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.operaton.bpm.engine.authorization.BatchPermissions;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.Resources;
+import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.authorization.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -36,31 +34,10 @@ import org.operaton.bpm.engine.migration.MigrationPlanBuilder;
 import org.operaton.bpm.engine.migration.MigrationPlanExecutionBuilder;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.ConditionEvaluationBuilder;
-import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.ExecutionQuery;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.IncidentQuery;
-import org.operaton.bpm.engine.runtime.MessageCorrelationAsyncBuilder;
-import org.operaton.bpm.engine.runtime.MessageCorrelationBuilder;
-import org.operaton.bpm.engine.runtime.ModificationBuilder;
-import org.operaton.bpm.engine.runtime.NativeExecutionQuery;
-import org.operaton.bpm.engine.runtime.NativeProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceModificationBuilder;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
-import org.operaton.bpm.engine.runtime.RestartProcessInstanceBuilder;
-import org.operaton.bpm.engine.runtime.SignalEventReceivedBuilder;
-import org.operaton.bpm.engine.runtime.UpdateProcessInstanceSuspensionStateBuilder;
-import org.operaton.bpm.engine.runtime.UpdateProcessInstanceSuspensionStateSelectBuilder;
-import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-
 
 /** Service which provides access to {@link Deployment}s,
  * {@link ProcessDefinition}s and {@link ProcessInstance}s.
@@ -1105,7 +1082,7 @@ public interface RuntimeService {
    *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
    */
-  ActivityInstance getActivityInstance(String processInstanceId);
+  @Nullable ActivityInstance getActivityInstance(String processInstanceId);
 
   /**
    * Sends an external trigger to an activity instance that is waiting inside the given execution.
@@ -1378,7 +1355,7 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    */
-  Object getVariable(String executionId, String variableName);
+  @Nullable Object getVariable(String executionId, String variableName);
 
   /**
    * Returns a {@link TypedValue} for the variable. Searching for the variable is done in all scopes that are visible
@@ -1399,7 +1376,7 @@ public interface RuntimeService {
    *
    *
    */
-  <T extends TypedValue> T getVariableTyped(String executionId, String variableName);
+  <T extends TypedValue> @Nullable T getVariableTyped(String executionId, String variableName);
 
   /**
    * Returns a {@link TypedValue} for the variable. Searching for the variable is done in all scopes that are visible
@@ -1421,7 +1398,7 @@ public interface RuntimeService {
    *
    *
    */
-  <T extends TypedValue> T getVariableTyped(String executionId, String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableTyped(String executionId, String variableName, boolean deserializeValue);
 
   /**
    * The variable value for an execution. Returns the value when the variable is set
@@ -1440,7 +1417,7 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    */
-  Object getVariableLocal(String executionId, String variableName);
+  @Nullable Object getVariableLocal(String executionId, String variableName);
 
   /**
    * Returns a {@link TypedValue} for the variable. Returns the value when the variable is set
@@ -1461,7 +1438,7 @@ public interface RuntimeService {
    *
    *
    */
-  <T extends TypedValue> T getVariableLocalTyped(String executionId, String variableName);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String executionId, String variableName);
 
   /**
    * Returns a {@link TypedValue} for the variable. Searching for the variable is done in all scopes that are visible
@@ -1483,7 +1460,7 @@ public interface RuntimeService {
    *
    *
    */
-  <T extends TypedValue> T getVariableLocalTyped(String executionId, String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String executionId, String variableName, boolean deserializeValue);
 
   /**
    * Update or create a variable for an execution.  If the variable does not already exist

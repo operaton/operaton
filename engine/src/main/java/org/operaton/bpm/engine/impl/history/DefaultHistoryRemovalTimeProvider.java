@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.batch.history.HistoricBatchEntity;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.event.HistoricDecisionInstanceEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEntity;
@@ -32,7 +34,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 public class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider {
 
   @Override
-  public Date calculateRemovalTime(HistoricProcessInstanceEventEntity historicRootProcessInstance, ProcessDefinition processDefinition) {
+  public @Nullable Date calculateRemovalTime(HistoricProcessInstanceEventEntity historicRootProcessInstance, ProcessDefinition processDefinition) {
 
     Integer historyTimeToLive = processDefinition.getHistoryTimeToLive();
 
@@ -52,7 +54,7 @@ public class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProv
   }
 
   @Override
-  public Date calculateRemovalTime(HistoricDecisionInstanceEntity historicRootDecisionInstance, DecisionDefinition decisionDefinition) {
+  public @Nullable Date calculateRemovalTime(HistoricDecisionInstanceEntity historicRootDecisionInstance, DecisionDefinition decisionDefinition) {
 
     Integer historyTimeToLive = decisionDefinition.getHistoryTimeToLive();
 
@@ -65,7 +67,7 @@ public class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProv
   }
 
   @Override
-  public Date calculateRemovalTime(HistoricBatchEntity historicBatch) {
+  public @Nullable Date calculateRemovalTime(HistoricBatchEntity historicBatch) {
     String batchOperation = historicBatch.getType();
     if (batchOperation != null) {
       Integer historyTimeToLive = getTTLByBatchOperation(batchOperation);

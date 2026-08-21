@@ -17,15 +17,7 @@
 package org.operaton.bpm.engine.test.api.form;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import org.apache.groovy.util.Maps;
@@ -34,17 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -79,16 +61,10 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.commons.utils.IoUtil;
 
-import static java.lang.Boolean.TRUE;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
-import static org.operaton.bpm.engine.variable.Variables.booleanValue;
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.operaton.bpm.engine.variable.Variables.stringValue;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.entry;
+import static org.operaton.bpm.engine.variable.Variables.*;
+import static java.lang.Boolean.TRUE;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Joram Barrez
@@ -766,10 +742,6 @@ class FormServiceTest {
     assertThatThrownBy(() -> formService.getTaskFormKey("", "23"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("The process definition id is mandatory, but '' has been provided.");
-
-    assertThatThrownBy(() -> formService.getTaskFormKey("42", null))
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("The task definition key is mandatory, but 'null' has been provided.");
 
     assertThatThrownBy(() -> formService.getTaskFormKey("42", ""))
       .isInstanceOf(ProcessEngineException.class)

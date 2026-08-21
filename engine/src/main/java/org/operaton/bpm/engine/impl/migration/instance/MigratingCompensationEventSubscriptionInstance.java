@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.migration.MigrationLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
@@ -80,7 +82,7 @@ public class MigratingCompensationEventSubscriptionInstance extends MigratingPro
   }
 
   @Override
-  public ExecutionEntity resolveRepresentativeExecution() {
+  public @Nullable ExecutionEntity resolveRepresentativeExecution() {
     return null;
   }
 

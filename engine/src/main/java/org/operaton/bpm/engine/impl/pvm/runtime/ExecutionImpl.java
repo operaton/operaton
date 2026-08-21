@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.BpmnModelExecutionContext;
@@ -62,7 +64,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   private ExecutionImpl processInstance;
 
   /** the parent execution */
-  private ExecutionImpl parent;
+  private @Nullable ExecutionImpl parent;
 
   /** nested executions representing scopes or concurrent paths */
   private List<ExecutionImpl> executions;
@@ -134,7 +136,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
 
   /** ensures initialization and returns the parent */
   @Override
-  public ExecutionImpl getParent() {
+  public @Nullable ExecutionImpl getParent() {
     return parent;
   }
 

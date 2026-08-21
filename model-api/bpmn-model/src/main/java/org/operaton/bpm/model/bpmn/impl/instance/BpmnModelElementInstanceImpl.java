@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.BpmnModelException;
 import org.operaton.bpm.model.bpmn.builder.AbstractBaseElementBuilder;
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
@@ -47,7 +49,7 @@ public abstract class BpmnModelElementInstanceImpl extends ModelElementInstanceI
   }
 
   @Override
-  public BpmnModelElementInstance getScope() {
+  public @Nullable BpmnModelElementInstance getScope() {
     BpmnModelElementInstance parentElement = (BpmnModelElementInstance) getParentElement();
     if (parentElement != null) {
       if (parentElement.isScope()) {

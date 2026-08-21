@@ -33,6 +33,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.operaton.bpm.engine.impl.ProcessEngineInfoImpl;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
@@ -272,19 +274,19 @@ public final class ProcessEngines {
    * {@link ProcessEngineInfo} is available for engines which were registered
    * programmatically.
    */
-  public static ProcessEngineInfo getProcessEngineInfo(String processEngineName) {
+  public static @Nullable ProcessEngineInfo getProcessEngineInfo(String processEngineName) {
     return PROCESS_ENGINE_INFOS_BY_NAME.get(processEngineName);
   }
 
-  public static ProcessEngine getDefaultProcessEngine() {
+  public static @Nullable ProcessEngine getDefaultProcessEngine() {
     return getDefaultProcessEngine(true);
   }
 
-  public static ProcessEngine getDefaultProcessEngine(boolean forceCreate) {
+  public static @Nullable ProcessEngine getDefaultProcessEngine(boolean forceCreate) {
     return getProcessEngine(NAME_DEFAULT, forceCreate);
   }
 
-  public static ProcessEngine getProcessEngine(String processEngineName) {
+  public static @Nullable ProcessEngine getProcessEngine(String processEngineName) {
     return getProcessEngine(processEngineName, true);
   }
 
@@ -294,7 +296,7 @@ public final class ProcessEngines {
    * @param processEngineName is the name of the process engine or null for the
    *                          default process engine.
    */
-  public static ProcessEngine getProcessEngine(String processEngineName, boolean forceCreate) {
+  public static @Nullable ProcessEngine getProcessEngine(String processEngineName, boolean forceCreate) {
     if (!isInitialized) {
       init(forceCreate);
     }

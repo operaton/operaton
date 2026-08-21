@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
@@ -485,7 +487,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     }
   }
 
-  public void addVariable(String name, Object value, QueryOperator operator, boolean isTaskVariable, boolean isProcessInstanceVariable) {
+  public void addVariable(String name, @Nullable Object value, QueryOperator operator, boolean isTaskVariable, boolean isProcessInstanceVariable) {
     ensureNotNull("name", name);
     if(value == null || isBoolean(value)) {
       // Null-values and booleans can only be used in EQUALS and NOT_EQUALS

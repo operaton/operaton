@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.Nullable;
 
 /**
  * <p>{@link HistoryEvent} signifying a top-level event in a process instance.</p>
@@ -37,10 +38,10 @@ public class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEve
   protected String startUserId;
 
   /** the id of the super process instance */
-  protected String superProcessInstanceId;
+  protected @Nullable String superProcessInstanceId;
 
   /** the id of the super case instance */
-  protected String superCaseInstanceId;
+  protected @Nullable String superCaseInstanceId;
 
   /** the reason why this process instance was cancelled (deleted) */
   protected String deleteReason;
@@ -93,7 +94,7 @@ public class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEve
     this.startUserId = startUserId;
   }
 
-  public String getSuperProcessInstanceId() {
+  public @Nullable String getSuperProcessInstanceId() {
     return superProcessInstanceId;
   }
 
@@ -101,7 +102,7 @@ public class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEve
     this.superProcessInstanceId = superProcessInstanceId;
   }
 
-  public String getSuperCaseInstanceId() {
+  public @Nullable String getSuperCaseInstanceId() {
     return superCaseInstanceId;
   }
 

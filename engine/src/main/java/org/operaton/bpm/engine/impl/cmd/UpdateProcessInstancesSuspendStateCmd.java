@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collection;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.UpdateProcessInstancesSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -34,7 +36,7 @@ public class UpdateProcessInstancesSuspendStateCmd extends AbstractUpdateProcess
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
 
     Collection<String> processInstanceIds = collectProcessInstanceIds(commandContext).getIds();
 

@@ -17,6 +17,8 @@
 package org.operaton.bpm.engine.impl.interceptor;
 
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.ProcessEngineServicesAware;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -77,7 +79,7 @@ public class CommandContextInterceptor extends CommandInterceptor {
   }
 
   @Override
-  public <T> T execute(Command<T> command) {
+  public <T> @Nullable T execute(Command<T> command) {
     CommandContext context = null;
 
     if(!alwaysOpenNew) {

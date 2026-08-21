@@ -21,6 +21,8 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Keeps track of scope instances (activity instances; event scope instances) created in a branch
  * of the activity/event scope tree from the process instance downwards
@@ -44,7 +46,7 @@ public class MigratingScopeInstanceBranch {
         new HashMap<>(scopeInstances));
   }
 
-  public MigratingScopeInstance getInstance(ScopeImpl scope) {
+  public @Nullable MigratingScopeInstance getInstance(ScopeImpl scope) {
     return scopeInstances.get(scope);
   }
 

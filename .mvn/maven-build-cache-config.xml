@@ -115,9 +115,33 @@
             <reconcile propertyName="testFailureIgnore" skipValue="true"/>
           </reconciles>
         </plugin>
+        <!-- No skip property here, deliberately. `skip` belongs to the
+             testCompile goal; the compile goal only knows `skipMain`. A
+             reconcile on a property the goal does not have can never be
+             recorded when an entry is written, yet is demanded when one is
+             read, so every module carrying a default-compile execution is
+             refused with
+
+               Tracked property `skip` not found in cached build
+               Cached build violates cache rules, cannot restore
+
+             even on a perfect checksum match. That cost us 71 of 104 modules
+             in build 32507034533 - every module with Java in it - leaving
+             only the pom aggregators restorable.
+
+             `skipMain` is not the fix either: it has no default-value in the
+             plugin descriptor and this project never configures it, so it is
+             just as unrecordable. Nothing is lost by leaving it out. The
+             concern that motivates the reconciles above is a test-skipping
+             build poisoning entries, and that is what the surefire and
+             failsafe entries are for - skipTests and maven.test.skip do not
+             touch main compilation.
+
+             The two remaining properties do resolve: `debug` has
+             default-value=true in the descriptor, `release` comes from
+             maven.compiler.release in the root pom. -->
         <plugin artifactId="maven-compiler-plugin" goal="compile">
           <reconciles>
-            <reconcile propertyName="skip" skipValue="true"/>
             <reconcile propertyName="debug"/>
             <reconcile propertyName="release"/>
           </reconciles>

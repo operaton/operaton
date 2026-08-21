@@ -67,7 +67,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   private static final String PROP_TENANT_ID = "tenantId";
   private static final String PROP_USER_ID = "userId";
 
-  public UserOperationLogEntry findOperationLogById(String entryId) {
+  public @Nullable UserOperationLogEntry findOperationLogById(String entryId) {
     return getDbEntityManager().selectById(UserOperationLogEntryEventEntity.class, entryId);
   }
 
@@ -241,7 +241,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logTaskOperations(String operation, HistoricTaskInstance historicTask, List<PropertyChange> propertyChanges) {
+  public void logTaskOperations(String operation, @Nullable HistoricTaskInstance historicTask, List<PropertyChange> propertyChanges) {
     if (isUserOperationLogEnabled()) {
       UserOperationLogContext context = new UserOperationLogContext();
       UserOperationLogContextEntryBuilder entryBuilder =
@@ -271,11 +271,11 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     logProcessInstanceOperation(operation, null, null, null, propertyChanges);
   }
 
-  public void logProcessInstanceOperation(String operation, String processInstanceId, String processDefinitionId, String processDefinitionKey, List<PropertyChange> propertyChanges) {
+  public void logProcessInstanceOperation(String operation, @Nullable String processInstanceId, @Nullable String processDefinitionId, @Nullable String processDefinitionKey, List<PropertyChange> propertyChanges) {
     logProcessInstanceOperation(operation, processInstanceId, processDefinitionId, processDefinitionKey, propertyChanges, null);
   }
 
-  public void logProcessInstanceOperation(String operation, @Nullable String processInstanceId, @Nullable String processDefinitionId, String processDefinitionKey, List<PropertyChange> propertyChanges, @Nullable String annotation) {
+  public void logProcessInstanceOperation(String operation, @Nullable String processInstanceId, @Nullable String processDefinitionId, @Nullable String processDefinitionKey, List<PropertyChange> propertyChanges, @Nullable String annotation) {
     if (isUserOperationLogEnabled()) {
 
       UserOperationLogContext context = new UserOperationLogContext();
@@ -331,7 +331,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
           .category(UserOperationLogEntry.CATEGORY_OPERATOR);
 
       if (processDefinitionId != null) {
-        ProcessDefinitionEntity definition = getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
+        ProcessDefinitionEntity definition = requireNonNull(getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId));
         entryBuilder.inContextOf(definition);
       }
 
@@ -804,7 +804,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected String getPermissionStringList(AuthorizationEntity authorization) {
-    Permission[] permissionsForResource = Context.getProcessEngineConfiguration().getPermissionProvider().getPermissionsForResource(authorization.getResourceType());
+    Permission[] permissionsForResource = Context.getRequiredProcessEngineConfiguration().getPermissionProvider().getPermissionsForResource(authorization.getResourceType());
     Permission[] permissions = authorization.getPermissions(permissionsForResource);
     String[] namesForPermissions = PermissionConverter.getNamesForPermissions(authorization, permissions);
     if (namesForPermissions.length == 0) {
@@ -814,7 +814,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected String getResourceName(int resourceType) {
-    return Context.getProcessEngineConfiguration().getPermissionProvider().getNameForResource(resourceType);
+    return Context.getRequiredProcessEngineConfiguration().getPermissionProvider().getNameForResource(resourceType);
   }
 
   public boolean isUserOperationLogEnabled() {
@@ -824,7 +824,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected boolean isHistoryEventProduced() {
-    HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
+    HistoryLevel historyLevel = Context.getRequiredProcessEngineConfiguration().getHistoryLevel();
     return historyLevel.isHistoryEventProduced(HistoryEventTypes.USER_OPERATION_LOG, null);
   }
 
@@ -834,8 +834,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected String getAuthenticatedUserId() {
-    CommandContext commandContext = Context.getCommandContext();
-    return commandContext.getAuthenticatedUserId();
+    return Context.getRequiredCommandContext().getAuthenticatedUserId();
   }
 
   protected void fireUserOperationLog(final UserOperationLogContext context) {
@@ -852,16 +851,14 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected boolean writeUserOperationLogOnlyWithLoggedInUser() {
-    CommandContext commandContext = requireNonNull(Context.getCommandContext());
-    return commandContext.isRestrictUserOperationLogToAuthenticatedUsers();
+    return Context.getRequiredCommandContext().isRestrictUserOperationLogToAuthenticatedUsers();
   }
 
   protected boolean isUserOperationLogEnabledOnCommandContext() {
-    CommandContext commandContext = requireNonNull(Context.getCommandContext());
-    return commandContext.isUserOperationLogEnabled();
+    return Context.getRequiredCommandContext().isUserOperationLogEnabled();
   }
 
-  protected String getOperationType(IdentityOperationResult operationResult) {
+  protected @Nullable String getOperationType(IdentityOperationResult operationResult) {
     return switch (operationResult.getOperation()) {
       case IdentityOperationResult.OPERATION_CREATE -> UserOperationLogEntry.OPERATION_TYPE_CREATE;
       case IdentityOperationResult.OPERATION_UPDATE -> UserOperationLogEntry.OPERATION_TYPE_UPDATE;

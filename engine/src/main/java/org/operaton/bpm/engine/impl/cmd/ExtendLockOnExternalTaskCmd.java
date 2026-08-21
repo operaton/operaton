@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Anna.Pazola
  *
  */
-public class ExtendLockOnExternalTaskCmd extends HandleExternalTaskCmd {
+public @NullMarked class ExtendLockOnExternalTaskCmd extends HandleExternalTaskCmd {
 
   private final long newLockTime;
 

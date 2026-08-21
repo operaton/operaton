@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.impl.form.entity.OperatonFormDefinitionManager;
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.OperatonFormDefinitionEntity;
 import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 
-public class GetOperatonFormDefinitionCmd implements Command<OperatonFormDefinition> {
+public @NullMarked class GetOperatonFormDefinitionCmd implements Command<OperatonFormDefinition> {
 
   protected OperatonFormRef operatonFormRef;
   protected String deploymentId;
@@ -36,7 +38,7 @@ public class GetOperatonFormDefinitionCmd implements Command<OperatonFormDefinit
   }
 
   @Override
-  public OperatonFormDefinition execute(CommandContext commandContext) {
+  public @Nullable OperatonFormDefinition execute(CommandContext commandContext) {
     String binding = operatonFormRef.getBinding();
     String key = operatonFormRef.getKey();
     OperatonFormDefinitionEntity definition = null;

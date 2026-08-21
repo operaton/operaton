@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class GetTableNameCmd implements Command<String> {
+public @NullMarked class GetTableNameCmd implements Command<String> {
   private final Class<?> entityClass;
 
   public GetTableNameCmd(Class< ? > entityClass) {

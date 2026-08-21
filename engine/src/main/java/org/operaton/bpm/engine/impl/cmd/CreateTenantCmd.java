@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class CreateTenantCmd extends AbstractWritableIdentityServiceCmd<Tenant> implements Command<Tenant> {
+public @NullMarked class CreateTenantCmd extends AbstractWritableIdentityServiceCmd<Tenant> implements Command<Tenant> {
   protected final String tenantId;
 
   public CreateTenantCmd(String tenantId) {

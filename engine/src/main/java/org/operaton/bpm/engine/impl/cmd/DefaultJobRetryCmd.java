@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 import org.jspecify.annotations.Nullable;
@@ -43,7 +44,7 @@ import org.operaton.bpm.engine.impl.util.ParseUtil;
 /**
  * @author Roman Smirnov
  */
-public class DefaultJobRetryCmd extends JobRetryCmd {
+public @NullMarked class DefaultJobRetryCmd extends JobRetryCmd {
   private static final List<String> SUPPORTED_TYPES = List.of(
       TimerExecuteNestedActivityJobHandler.TYPE,
       TimerCatchIntermediateEventJobHandler.TYPE,
@@ -54,7 +55,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
-  public DefaultJobRetryCmd(String jobId, Throwable exception) {
+  public DefaultJobRetryCmd(String jobId, @Nullable Throwable exception) {
     super(jobId, exception);
   }
 
@@ -127,7 +128,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
   }
 
   @SuppressWarnings("unused")
-  public ActivityImpl getCurrentActivity(CommandContext commandContext, JobEntity job) {
+  public @Nullable ActivityImpl getCurrentActivity(CommandContext commandContext, JobEntity job) {
     String type = job.getJobHandlerType();
     ActivityImpl activity = null;
 
@@ -144,13 +145,13 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
     return activity;
   }
 
-  protected ExecutionEntity fetchExecutionEntity(String executionId) {
-    return Context.getCommandContext()
+  protected @Nullable ExecutionEntity fetchExecutionEntity(String executionId) {
+    return Context.getRequiredCommandContext()
                   .getExecutionManager()
                   .findExecutionById(executionId);
   }
 
-  public FailedJobRetryConfiguration getFailedJobRetryConfiguration(JobEntity job, ActivityImpl activity) {
+  public @Nullable FailedJobRetryConfiguration getFailedJobRetryConfiguration(JobEntity job, ActivityImpl activity) {
     FailedJobRetryConfiguration retryConfiguration = activity.getProperties().get(DefaultFailedJobParseListener.FAILED_JOB_CONFIGURATION);
 
     while (retryConfiguration != null && retryConfiguration.getExpression() != null) {
@@ -161,7 +162,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
     return retryConfiguration;
   }
 
-  protected String getFailedJobRetryTimeCycle(JobEntity job, Expression expression) {
+  protected @Nullable String getFailedJobRetryTimeCycle(JobEntity job, @Nullable Expression expression) {
 
     String executionId = job.getExecutionId();
     ExecutionEntity execution = null;

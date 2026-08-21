@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -28,7 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class GetExecutionVariableCmd implements Command<Object> {
+public @NullMarked class GetExecutionVariableCmd implements Command<Object> {
   protected String executionId;
   protected String variableName;
   protected boolean isLocal;

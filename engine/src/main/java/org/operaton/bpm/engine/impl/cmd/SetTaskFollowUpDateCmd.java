@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -26,7 +28,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 /**
  * Command to change task followUpDate to a new value.
  */
-public class SetTaskFollowUpDateCmd extends AbstractSetTaskPropertyCmd<Date> {
+public @NullMarked class SetTaskFollowUpDateCmd extends AbstractSetTaskPropertyCmd<Date> {
 
   /**
    * Constructor to create a SetTaskFollowUpDateCmd.
@@ -45,7 +47,7 @@ public class SetTaskFollowUpDateCmd extends AbstractSetTaskPropertyCmd<Date> {
   }
 
   @Override
-  protected void executeSetOperation(TaskEntity task, Date value) {
+  protected void executeSetOperation(TaskEntity task, @Nullable Date value) {
     task.setFollowUpDate(value);
   }
 }

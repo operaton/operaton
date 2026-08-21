@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Tom Baeyens
  */
-public class DeleteUserInfoCmd implements Command<Object> {
+public @NullMarked class DeleteUserInfoCmd implements Command<Object> {
   protected String userId;
   protected String key;
 

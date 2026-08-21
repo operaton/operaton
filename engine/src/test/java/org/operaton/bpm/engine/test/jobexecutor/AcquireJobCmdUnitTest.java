@@ -22,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.Page;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -37,15 +38,15 @@ import static org.mockito.Mockito.when;
 
 class AcquireJobCmdUnitTest {
 
-  protected static final String PROCESS_INSTANCE_ID_1 = "pi_1";
-  protected static final String PROCESS_INSTANCE_ID_2 = "pi_2";
+  static final String PROCESS_INSTANCE_ID_1 = "pi_1";
+  static final String PROCESS_INSTANCE_ID_2 = "pi_2";
 
-  protected static final String JOB_ID_1 = "job_1";
-  protected static final String JOB_ID_2 = "job_2";
+  static final String JOB_ID_1 = "job_1";
+  static final String JOB_ID_2 = "job_2";
 
-  protected AcquireJobsCmd acquireJobsCmd;
-  protected JobManager jobManager;
-  protected CommandContext commandContext;
+  AcquireJobsCmd acquireJobsCmd;
+  JobManager jobManager;
+  CommandContext commandContext;
 
   @BeforeEach
   void initCommand() {
@@ -63,6 +64,9 @@ class AcquireJobCmdUnitTest {
 
     jobManager = mock(JobManager.class);
     when(commandContext.getJobManager()).thenReturn(jobManager);
+
+    var processEngineConfiguration = mock(ProcessEngineConfigurationImpl.class);
+    when(commandContext.getProcessEngineConfiguration()).thenReturn(processEngineConfiguration);
   }
 
   @Test

@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.test.api.authorization.history;
 
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -282,9 +284,10 @@ class AuthorizationUserOperationLogTest extends AuthorizationTest {
     assertThat(query.count()).isZero();
   }
 
+  @NullMarked
   public static class TestPermissionProvider extends DefaultPermissionProvider {
     @Override
-    public String getNameForResource(int resourceType) {
+    public @Nullable String getNameForResource(int resourceType) {
       for (Resource resource : TestResource.values()) {
         if (resourceType == resource.resourceType()) {
           return resource.resourceName();

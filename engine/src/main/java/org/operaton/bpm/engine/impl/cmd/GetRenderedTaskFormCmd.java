@@ -20,6 +20,7 @@ import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.form.engine.FormEngine;
 import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
@@ -28,6 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -47,8 +49,10 @@ public class GetRenderedTaskFormCmd  implements Command<Object> {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
     ensureNotNull("Task '%s' not found".formatted(taskId), "task", task);
+    requireNonNull(task);
 
-    for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
+    for(CommandChecker checker : processEngineConfiguration.getCommandCheckers()) {
       checker.checkReadTaskVariable(task);
     }
     ensureNotNull("Task form definition for '%s' not found".formatted(taskId), "task.getTaskDefinition()", task.getTaskDefinition());
@@ -58,8 +62,7 @@ public class GetRenderedTaskFormCmd  implements Command<Object> {
       return null;
     }
 
-    FormEngine formEngine = Context
-      .getProcessEngineConfiguration()
+    FormEngine formEngine = processEngineConfiguration
       .getFormEngines()
       .get(formEngineName);
 

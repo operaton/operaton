@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.ActivityExecutionTreeMapping;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,11 +24,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ActivityInstanceCancellationCmd extends AbstractInstanceCancellationCmd {
+public @NullMarked class ActivityInstanceCancellationCmd extends AbstractInstanceCancellationCmd {
 
   protected String activityInstanceId;
 
@@ -48,18 +51,21 @@ public class ActivityInstanceCancellationCmd extends AbstractInstanceCancellatio
   @Override
   protected ExecutionEntity determineSourceInstanceExecution(final CommandContext commandContext) {
     ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
+    requireNonNull(processInstance);
 
     // rebuild the mapping because the execution tree changes with every iteration
     ActivityExecutionTreeMapping mapping = new ActivityExecutionTreeMapping(commandContext, processInstanceId);
 
     ActivityInstance instance = commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId));
+    requireNonNull(instance);
 
     ActivityInstance instanceToCancel = findActivityInstance(instance, activityInstanceId);
     EnsureUtil.ensureNotNull(NotValidException.class,
         describeFailure("Activity instance '%s' does not exist".formatted(activityInstanceId)),
         "activityInstance",
         instanceToCancel);
-    return getScopeExecutionForActivityInstance(processInstance, mapping, instanceToCancel);
+
+    return getScopeExecutionForActivityInstance(processInstance, mapping, requireNonNull(instanceToCancel));
   }
 
   @Override

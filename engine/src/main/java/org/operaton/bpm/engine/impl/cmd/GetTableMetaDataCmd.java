@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,7 +27,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Joram Barrez
  */
-public class GetTableMetaDataCmd implements Command<TableMetaData> {
+public @NullMarked class GetTableMetaDataCmd implements Command<TableMetaData> {
   protected String tableName;
 
   public GetTableMetaDataCmd(String tableName) {

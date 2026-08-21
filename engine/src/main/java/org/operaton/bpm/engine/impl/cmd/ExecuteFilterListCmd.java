@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.query.Query;
 /**
  * @author Sebastian Menski
  */
-public class ExecuteFilterListCmd extends AbstractExecuteFilterCmd implements Command<List<?>> {
+public @NullMarked class ExecuteFilterListCmd extends AbstractExecuteFilterCmd implements Command<List<?>> {
   public ExecuteFilterListCmd(String filterId) {
     super(filterId);
   }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.TaskAlreadyClaimedException;
@@ -31,11 +32,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Joram Barrez
  */
-public class ClaimTaskCmd implements Command<Void> {
+public @NullMarked class ClaimTaskCmd implements Command<Void> {
   protected String taskId;
-  protected String userId;
+  protected @Nullable String userId;
 
-  public ClaimTaskCmd(String taskId, String userId) {
+  public ClaimTaskCmd(String taskId, @Nullable String userId) {
     this.taskId = taskId;
     this.userId = userId;
   }

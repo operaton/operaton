@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
@@ -35,14 +36,14 @@ public abstract class JobRetryCmd implements Command<Object> {
   protected String jobId;
   protected Throwable exception;
 
-  protected JobRetryCmd(String jobId, Throwable exception) {
+  protected JobRetryCmd(String jobId, @Nullable Throwable exception) {
     this.jobId = jobId;
     this.exception = exception;
   }
 
   protected JobEntity getJob() {
     return Context
-        .getCommandContext()
+        .getRequiredCommandContext()
         .getJobManager()
         .findJobById(jobId);
   }
@@ -69,7 +70,7 @@ public abstract class JobRetryCmd implements Command<Object> {
   }
 
   protected void notifyAcquisition(CommandContext commandContext) {
-    JobExecutor jobExecutor = Context.getProcessEngineConfiguration().getJobExecutor();
+    JobExecutor jobExecutor = Context.getRequiredProcessEngineConfiguration().getJobExecutor();
     MessageAddedNotification messageAddedNotification = new MessageAddedNotification(jobExecutor);
     TransactionContext transactionContext = commandContext.getTransactionContext();
     transactionContext.addTransactionListener(TransactionState.COMMITTED, messageAddedNotification);

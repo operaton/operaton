@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  * @author Thorben Lindhauer
  *
  */
-public class PatchExecutionVariablesCmd extends AbstractPatchVariablesCmd {
+public @NullMarked class PatchExecutionVariablesCmd extends AbstractPatchVariablesCmd {
   public PatchExecutionVariablesCmd(String executionId, Map<String, ? extends Object> modifications, Collection<String> deletions, boolean isLocal) {
     super(executionId, modifications, deletions, isLocal);
   }

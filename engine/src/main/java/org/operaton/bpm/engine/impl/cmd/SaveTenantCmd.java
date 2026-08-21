@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -24,7 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureWhitelistedResourceId;
 
-public class SaveTenantCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
+public @NullMarked class SaveTenantCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
   protected Tenant tenant;
 
   public SaveTenantCmd(Tenant tenant) {
@@ -32,7 +34,7 @@ public class SaveTenantCmd extends AbstractWritableIdentityServiceCmd<Void> impl
   }
 
   @Override
-  protected Void executeCmd(CommandContext commandContext) {
+  protected @Nullable Void executeCmd(CommandContext commandContext) {
     ensureNotNull("tenant", tenant);
     ensureWhitelistedResourceId(commandContext, "Tenant", tenant.getId());
 

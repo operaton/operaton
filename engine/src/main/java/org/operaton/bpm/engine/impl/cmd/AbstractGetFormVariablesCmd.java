@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -39,7 +41,7 @@ public abstract class AbstractGetFormVariablesCmd implements Command<VariableMap
   }
 
   @SuppressWarnings("unused")
-  protected TypedValue createVariable(FormField formField, VariableScope variableScope) {
+  protected @Nullable TypedValue createVariable(FormField formField, VariableScope variableScope) {
     TypedValue value = formField.getValue();
 
     if(value != null) {
@@ -48,7 +50,5 @@ public abstract class AbstractGetFormVariablesCmd implements Command<VariableMap
     else {
       return null;
     }
-
   }
-
 }

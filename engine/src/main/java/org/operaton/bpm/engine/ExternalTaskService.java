@@ -19,6 +19,7 @@ package org.operaton.bpm.engine;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -176,7 +177,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void complete(String externalTaskId, String workerId, Map<String, Object> variables, Map<String, Object> localVariables);
+  void complete(String externalTaskId, String workerId, @Nullable Map<String, Object> variables, @Nullable Map<String, Object> localVariables);
 
   /**
    * <p>Extends a lock of an external task on behalf of a worker.

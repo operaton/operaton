@@ -18,7 +18,9 @@ package org.operaton.bpm.engine;
 
 import java.io.Serial;
 import java.util.Date;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class AuthenticationException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;

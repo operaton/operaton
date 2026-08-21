@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -39,7 +40,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 import static org.operaton.bpm.engine.impl.ProcessEngineLogger.CMD_LOGGER;
 
-public class GetStaticCalledProcessDefinitionCmd implements Command<Collection<CalledProcessDefinition>> {
+public @NullMarked class GetStaticCalledProcessDefinitionCmd implements Command<Collection<CalledProcessDefinition>> {
 
   protected String processDefinitionId;
 

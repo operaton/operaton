@@ -18,12 +18,14 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 
 /**
  * @author Stefan Hentschel.
  */
+@NullMarked
 public abstract class AbstractRemoveVariableCmd extends AbstractVariableCmd {
   protected final Collection<String> variableNames;
 

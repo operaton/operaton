@@ -18,6 +18,7 @@ package org.operaton.bpm.model.xml;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;

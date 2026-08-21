@@ -45,6 +45,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.commons.utils.CollectionUtil;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.*;
 import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.*;
 
@@ -428,8 +429,9 @@ public class DbEntityManager implements Session, EntityLoadListener {
    */
   protected boolean canIgnoreHistoryModificationFailure(DbOperation dbOperation) {
     DbEntity dbEntity = ((DbEntityOperation) dbOperation).getEntity();
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
     return
-        Context.getProcessEngineConfiguration().isSkipHistoryOptimisticLockingExceptions()
+        processEngineConfiguration.isSkipHistoryOptimisticLockingExceptions()
         && (dbEntity instanceof HistoricEntity || isHistoricByteArray(dbEntity));
   }
 

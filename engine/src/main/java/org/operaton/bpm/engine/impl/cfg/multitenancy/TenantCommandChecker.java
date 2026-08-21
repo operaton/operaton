@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cfg.multitenancy;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
@@ -49,7 +51,7 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
  * {@link CommandChecker} to ensure that commands are only executed for
  * entities which belongs to one of the authenticated tenants.
  */
-public class TenantCommandChecker implements CommandChecker {
+public @NullMarked class TenantCommandChecker implements CommandChecker {
 
   protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -143,7 +145,7 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkUpdateProcessInstance(ExecutionEntity execution) {
-    if (execution != null && !getTenantManager().isAuthenticatedTenant(execution.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(execution.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("update the process instance '%s'".formatted(execution.getId()));
     }
   }
@@ -155,7 +157,7 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkUpdateJob(JobEntity job) {
-    if (job != null && !getTenantManager().isAuthenticatedTenant(job.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(job.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("update the job '%s'".formatted(job.getId()));
     }
   }
@@ -220,14 +222,14 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkReadJob(JobEntity job) {
-    if (job != null && !getTenantManager().isAuthenticatedTenant(job.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(job.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("read the job '%s'".formatted(job.getId()));
     }
   }
 
   @Override
   public void checkReadProcessInstance(ExecutionEntity execution) {
-    if (execution != null && !getTenantManager().isAuthenticatedTenant(execution.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(execution.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("read the process instance '%s'".formatted(execution.getId()));
     }
   }
@@ -239,7 +241,7 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkDeleteProcessInstance(ExecutionEntity execution) {
-    if (execution != null && !getTenantManager().isAuthenticatedTenant(execution.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(execution.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete the process instance '%s'".formatted(execution.getId()));
     }
   }
@@ -261,7 +263,7 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkReadTask(TaskEntity task) {
-    if (task != null && !getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("read the task '%s'".formatted(task.getId()));
     }
   }
@@ -273,7 +275,7 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkUpdateTaskVariable(TaskEntity task) {
-    if (task != null && !getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("update the task '%s'".formatted(task.getId()));
     }
   }
@@ -285,28 +287,28 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkDeleteBatch(BatchEntity batch) {
-    if (batch != null && !getTenantManager().isAuthenticatedTenant(batch.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(batch.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete batch '%s'".formatted(batch.getId()));
     }
   }
 
   @Override
   public void checkDeleteHistoricBatch(HistoricBatchEntity batch) {
-    if (batch != null && !getTenantManager().isAuthenticatedTenant(batch.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(batch.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete historic batch '%s'".formatted(batch.getId()));
     }
   }
 
   @Override
   public void checkSuspendBatch(BatchEntity batch) {
-    if (batch != null && !getTenantManager().isAuthenticatedTenant(batch.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(batch.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("suspend batch '%s'".formatted(batch.getId()));
     }
   }
 
   @Override
   public void checkActivateBatch(BatchEntity batch) {
-    if (batch != null && !getTenantManager().isAuthenticatedTenant(batch.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(batch.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("activate batch '%s'".formatted(batch.getId()));
     }
   }
@@ -343,21 +345,21 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkDeleteTask(TaskEntity task) {
-    if (task != null && !getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete the task '%s'".formatted(task.getId()));
     }
   }
 
   @Override
   public void checkTaskAssign(TaskEntity task) {
-    if (task != null && !getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("assign the task '%s'".formatted(task.getId()));
     }
   }
 
   @Override
   public void checkCreateTask(TaskEntity task) {
-    if (task != null && !getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("create the task '%s'".formatted(task.getId()));
     }
   }
@@ -369,14 +371,14 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkTaskWork(TaskEntity task) {
-    if (task != null && !getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("work on task '%s'".formatted(task.getId()));
     }
   }
 
   @Override
   public void checkReadDecisionDefinition(DecisionDefinitionEntity decisionDefinition) {
-    if (decisionDefinition != null && !getTenantManager().isAuthenticatedTenant(decisionDefinition.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(decisionDefinition.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("get the decision definition '%s'".formatted(decisionDefinition.getId()));
     }
   }
@@ -393,42 +395,42 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkReadDecisionRequirementsDefinition(DecisionRequirementsDefinitionEntity decisionRequirementsDefinition) {
-    if (decisionRequirementsDefinition != null && !getTenantManager().isAuthenticatedTenant(decisionRequirementsDefinition.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(decisionRequirementsDefinition.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("get the decision requirements definition '%s'".formatted(decisionRequirementsDefinition.getId()));
     }
   }
 
   @Override
   public void checkReadCaseDefinition(CaseDefinition caseDefinition) {
-    if (caseDefinition != null && !getTenantManager().isAuthenticatedTenant(caseDefinition.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(caseDefinition.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("get the case definition '%s'".formatted(caseDefinition.getId()));
     }
   }
 
   @Override
   public void checkUpdateCaseDefinition(CaseDefinition caseDefinition) {
-    if (caseDefinition != null && !getTenantManager().isAuthenticatedTenant(caseDefinition.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(caseDefinition.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("update the case definition '%s'".formatted(caseDefinition.getId()));
     }
   }
 
   @Override
   public void checkDeleteHistoricTaskInstance(HistoricTaskInstanceEntity task) {
-    if (task != null && !getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(task.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete the historic task instance '%s'".formatted(task.getId()));
     }
   }
 
   @Override
   public void checkDeleteHistoricProcessInstance(HistoricProcessInstance instance) {
-    if (instance != null && !getTenantManager().isAuthenticatedTenant(instance.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(instance.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete the historic process instance '%s'".formatted(instance.getId()));
     }
   }
 
   @Override
   public void checkDeleteHistoricCaseInstance(HistoricCaseInstance instance) {
-    if (instance != null && !getTenantManager().isAuthenticatedTenant(instance.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(instance.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete the historic case instance '%s'".formatted(instance.getId()));
     }
   }
@@ -446,7 +448,7 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkDeleteHistoricDecisionInstance(HistoricDecisionInstance decisionInstance) {
-    if (decisionInstance != null && !getTenantManager().isAuthenticatedTenant(decisionInstance.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(decisionInstance.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant(
           "delete the historic decision instance '%s'".formatted(decisionInstance.getId())
       );
@@ -455,21 +457,21 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkDeleteHistoricVariableInstance(HistoricVariableInstanceEntity variable) {
-    if (variable != null && !getTenantManager().isAuthenticatedTenant(variable.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(variable.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete the historic variable instance '%s'".formatted(variable.getId()));
     }
   }
 
   @Override
   public void checkDeleteHistoricVariableInstancesByProcessInstance(HistoricProcessInstanceEntity instance) {
-    if (instance != null && !getTenantManager().isAuthenticatedTenant(instance.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(instance.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete the historic variable instances of process instance '%s'".formatted(instance.getId()));
     }
   }
 
   @Override
   public void checkReadHistoricJobLog(HistoricJobLogEventEntity historicJobLog) {
-    if (historicJobLog != null && !getTenantManager().isAuthenticatedTenant(historicJobLog.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(historicJobLog.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("get the historic job log '%s'".formatted(historicJobLog.getId()));
     }
   }
@@ -492,35 +494,35 @@ public class TenantCommandChecker implements CommandChecker {
 
   @Override
   public void checkUpdateCaseInstance(CaseExecution caseExecution) {
-    if (caseExecution != null && !getTenantManager().isAuthenticatedTenant(caseExecution.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(caseExecution.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("update the case execution '%s'".formatted(caseExecution.getId()));
     }
   }
 
   @Override
   public void checkReadCaseInstance(CaseExecution caseExecution) {
-    if (caseExecution != null && !getTenantManager().isAuthenticatedTenant(caseExecution.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(caseExecution.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("get the case execution '%s'".formatted(caseExecution.getId()));
     }
   }
 
   @Override
   public void checkDeleteUserOperationLog(UserOperationLogEntry entry) {
-    if (entry != null && !getTenantManager().isAuthenticatedTenant(entry.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(entry.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("delete the user operation log entry '%s'".formatted(entry.getId()));
     }
   }
 
   @Override
   public void checkUpdateUserOperationLog(UserOperationLogEntry entry) {
-    if (entry != null && !getTenantManager().isAuthenticatedTenant(entry.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(entry.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("update the user operation log entry '%s'".formatted(entry.getId()));
     }
   }
 
   @Override
   public void checkReadHistoricExternalTaskLog(HistoricExternalTaskLogEntity historicExternalTaskLog) {
-    if (historicExternalTaskLog != null && !getTenantManager().isAuthenticatedTenant(historicExternalTaskLog.getTenantId())) {
+    if (!getTenantManager().isAuthenticatedTenant(historicExternalTaskLog.getTenantId())) {
       throw LOG.exceptionCommandWithUnauthorizedTenant("get the historic external task log '%s'".formatted(historicExternalTaskLog.getId()));
     }
   }
@@ -613,23 +615,23 @@ public class TenantCommandChecker implements CommandChecker {
   // helper //////////////////////////////////////////////////
 
   protected TenantManager getTenantManager() {
-    return Context.getCommandContext().getTenantManager();
+    return Context.getRequiredCommandContext().getTenantManager();
   }
 
-  protected ProcessDefinitionEntity findLatestProcessDefinitionById(String processDefinitionId) {
-    return Context.getCommandContext().getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
+  protected @Nullable ProcessDefinitionEntity findLatestProcessDefinitionById(String processDefinitionId) {
+    return Context.getRequiredCommandContext().getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
   }
 
-  protected DecisionDefinitionEntity findLatestDecisionDefinitionById(String decisionDefinitionId) {
-    return Context.getCommandContext().getDecisionDefinitionManager().findDecisionDefinitionById(decisionDefinitionId);
+  protected @Nullable DecisionDefinitionEntity findLatestDecisionDefinitionById(String decisionDefinitionId) {
+    return Context.getRequiredCommandContext().getDecisionDefinitionManager().findDecisionDefinitionById(decisionDefinitionId);
   }
 
-  protected ExecutionEntity findExecutionById(String processInstanceId) {
-    return Context.getCommandContext().getExecutionManager().findExecutionById(processInstanceId);
+  protected @Nullable ExecutionEntity findExecutionById(String processInstanceId) {
+    return Context.getRequiredCommandContext().getExecutionManager().findExecutionById(processInstanceId);
   }
 
-  protected DeploymentEntity findDeploymentById(String deploymentId) {
-    return Context.getCommandContext().getDeploymentManager().findDeploymentById(deploymentId);
+  protected @Nullable DeploymentEntity findDeploymentById(String deploymentId) {
+    return Context.getRequiredCommandContext().getDeploymentManager().findDeploymentById(deploymentId);
   }
 
 }

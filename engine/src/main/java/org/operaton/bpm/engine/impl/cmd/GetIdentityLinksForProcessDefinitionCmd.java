@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -29,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tijs Rademakers
  */
-public class GetIdentityLinksForProcessDefinitionCmd implements Command<List<IdentityLink>> {
+public @NullMarked class GetIdentityLinksForProcessDefinitionCmd implements Command<List<IdentityLink>> {
   protected String processDefinitionId;
 
   public GetIdentityLinksForProcessDefinitionCmd(String processDefinitionId) {
@@ -40,7 +41,7 @@ public class GetIdentityLinksForProcessDefinitionCmd implements Command<List<Ide
   @SuppressWarnings({"unchecked", "rawtypes"})
   public List<IdentityLink> execute(CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
-      .getCommandContext()
+      .getRequiredCommandContext()
       .getProcessDefinitionManager()
       .findLatestProcessDefinitionById(processDefinitionId);
 

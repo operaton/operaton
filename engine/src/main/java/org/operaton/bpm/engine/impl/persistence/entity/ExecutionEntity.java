@@ -709,7 +709,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
         ensureExecutionTreeInitialized();
 
       } else {
-        this.executions = Context.getCommandContext().getExecutionManager().findChildExecutionsByParentExecutionId(id);
+        this.executions = Context.getRequiredCommandContext().getExecutionManager().findChildExecutionsByParentExecutionId(id);
       }
 
     }
@@ -919,7 +919,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public @NonNull ExecutionEntity getSuperExecution() {
+  public @Nullable ExecutionEntity getSuperExecution() {
     ensureSuperExecutionInitialized();
     return superExecution;
   }

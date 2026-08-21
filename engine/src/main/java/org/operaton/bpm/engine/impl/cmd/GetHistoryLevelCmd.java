@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -24,12 +25,12 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Sebastian Menski
  */
-public class GetHistoryLevelCmd implements Command<Integer> {
+public @NullMarked class GetHistoryLevelCmd implements Command<Integer> {
 
   @Override
   public Integer execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkReadHistoryLevel);
-    return Context.getProcessEngineConfiguration().getHistoryLevel().getId();
+    return Context.getRequiredProcessEngineConfiguration().getHistoryLevel().getId();
   }
 
 }

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
@@ -29,7 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureWhitelistedReso
 /**
  * @author Joram Barrez
  */
-public class SaveUserCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
+public @NullMarked class SaveUserCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
   protected User user;
   protected boolean skipPasswordPolicy;
 
@@ -43,7 +45,7 @@ public class SaveUserCmd extends AbstractWritableIdentityServiceCmd<Void> implem
   }
 
   @Override
-  protected Void executeCmd(CommandContext commandContext) {
+  protected @Nullable Void executeCmd(CommandContext commandContext) {
     ensureNotNull("user", user);
     ensureWhitelistedResourceId(commandContext, "User", user.getId());
 

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 
 import org.jspecify.annotations.Nullable;
@@ -31,6 +32,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.task.Comment;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -38,17 +40,17 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * of a given processInstanceId
  */
 
-public class DeleteProcessInstanceCommentCmd implements Command<Object> {
-  protected String commentId;
+public @NullMarked class DeleteProcessInstanceCommentCmd implements Command<Object> {
+  protected @Nullable String commentId;
   protected String processInstanceId;
 
-  public DeleteProcessInstanceCommentCmd(String processInstanceId, String commentId) {
+  public DeleteProcessInstanceCommentCmd(String processInstanceId, @Nullable String commentId) {
     this.processInstanceId = processInstanceId;
     this.commentId = commentId;
   }
 
   public DeleteProcessInstanceCommentCmd(String processInstanceId) {
-    this.processInstanceId = processInstanceId;
+    this(processInstanceId, null);
   }
 
   @Override
@@ -74,7 +76,7 @@ public class DeleteProcessInstanceCommentCmd implements Command<Object> {
       }
     }
 
-    logOperation(processInstance, commandContext);
+    logOperation(requireNonNull(processInstance), commandContext);
 
     return null;
   }

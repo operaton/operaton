@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.task.Attachment;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.task.Attachment;
 /**
  * @author Tom Baeyens
  */
-public class GetProcessInstanceAttachmentsCmd implements Command<List<Attachment>> {
+public @NullMarked class GetProcessInstanceAttachmentsCmd implements Command<List<Attachment>> {
   protected String processInstanceId;
 
   public GetProcessInstanceAttachmentsCmd(String taskId) {

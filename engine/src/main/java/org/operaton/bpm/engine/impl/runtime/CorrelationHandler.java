@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.runtime;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 /**
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  * @author Michael Scholz
  */
-public interface CorrelationHandler {
+public @NullMarked interface CorrelationHandler {
 
   /**
    * Correlate the given message to either a waiting execution or a process
@@ -37,7 +39,7 @@ public interface CorrelationHandler {
    * @return the matched correlation target or <code>null</code> if the message
    *         could not be correlated.
    */
-  CorrelationHandlerResult correlateMessage(CommandContext commandContext, String messageName, CorrelationSet correlationSet);
+  @Nullable CorrelationHandlerResult correlateMessage(CommandContext commandContext, String messageName, CorrelationSet correlationSet);
 
   /**
    * Correlate the given message to all waiting executions and all process

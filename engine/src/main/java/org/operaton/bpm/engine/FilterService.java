@@ -18,6 +18,7 @@ package org.operaton.bpm.engine;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.filter.Filter;
@@ -129,7 +130,7 @@ public interface FilterService {
    *  {@link Integer#MAX_VALUE}).
    *  Please use {@link #listPage(String, Query, int, int)} instead.
    */
-  <T, Q extends Query<?, T>> List<T> list(String filterId, Q extendingQuery);
+  <T, Q extends Query<?, T>> List<T> list(String filterId, @Nullable Q extendingQuery);
 
   /**
    * Executes the query of the filter and returns the result in the given boundaries as list.
@@ -169,7 +170,7 @@ public interface FilterService {
    *  be specified with the process engine configuration property <code>queryMaxResultsLimit</code>
    *  (default {@link Integer#MAX_VALUE}).
    */
-  <T, Q extends Query<?, T>> List<T> listPage(String filterId, Q extendingQuery, int firstResult, int maxResults);
+  <T, Q extends Query<?, T>> List<T> listPage(String filterId, @Nullable Q extendingQuery, int firstResult, int maxResults);
 
   /**
    * Executes the query of the filter and returns the a single result.
@@ -199,7 +200,7 @@ public interface FilterService {
    *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
    *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
    */
-  <T, Q extends Query<?, T>> T singleResult(String filterId, Q extendingQuery);
+  <T, Q extends Query<?, T>> T singleResult(String filterId, @Nullable Q extendingQuery);
 
   /**
    * Executes the query of the filter and returns the result count.
@@ -229,6 +230,6 @@ public interface FilterService {
    *  <code>enableExpressionsInAdhocQueries</code> (default <code>false</code>) and
    *  <code>enableExpressionsInStoredQueries</code> (default <code>true</code>) to <code>true</code>.
    */
-  Long count(String filterId, Query<?, ?> extendingQuery);
+  Long count(String filterId, @Nullable Query<?, ?> extendingQuery);
 
 }

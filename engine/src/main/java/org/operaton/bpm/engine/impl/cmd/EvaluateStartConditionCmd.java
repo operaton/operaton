@@ -20,6 +20,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ConditionEvaluationBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  * @author Yana Vasileva
  *
  */
-public class EvaluateStartConditionCmd implements Command<List<ProcessInstance>> {
+public @NullMarked class EvaluateStartConditionCmd implements Command<List<ProcessInstance>> {
 
   protected ConditionEvaluationBuilderImpl builder;
 

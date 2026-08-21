@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.runtime.Incident;
  * @author Anna Pazola
  *
  */
-public class CreateIncidentCmd implements Command<Incident> {
+public @NullMarked class CreateIncidentCmd implements Command<Incident> {
 
   protected String incidentType;
   protected String executionId;

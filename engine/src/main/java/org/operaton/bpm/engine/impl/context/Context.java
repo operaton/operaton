@@ -20,6 +20,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.application.InvocationContext;
 
 import org.jspecify.annotations.Nullable;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandInvocationContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 /**
  * Holds the context of the current command being executed.
@@ -63,6 +64,18 @@ public final class Context {
     }
     return stack.peek();
   }
+
+  /**
+   * Returns the current command context. If no command context is active, an exception is thrown.
+   *
+   * @return the current command context
+   * @throws IllegalStateException if no command context is active
+   * @since 2.2
+   */
+  public static @NonNull CommandContext getRequiredCommandContext() {
+    return EnsureUtil.ensureActiveCommandContext(getCommandContext());
+  }
+
 
   public static void setCommandContext(CommandContext commandContext) {
     getStack(commandContextThreadLocal).push(commandContext);
@@ -109,6 +122,21 @@ public final class Context {
     return stack.peek();
   }
 
+  /**
+   * Returns the current process engine configuration. If no process engine configuration is active, an exception is thrown.
+   *
+   * @return the current process engine configuration
+   * @throws IllegalStateException if no process engine configuration is active
+   * @since 2.2
+   */
+  public static @NonNull ProcessEngineConfigurationImpl getRequiredProcessEngineConfiguration() {
+    ProcessEngineConfigurationImpl processEngineConfiguration = getProcessEngineConfiguration();
+    if (processEngineConfiguration == null) {
+      throw new IllegalStateException("No process engine configuration active on thread " + Thread.currentThread());
+    }
+    return processEngineConfiguration;
+  }
+
   public static void setProcessEngineConfiguration(ProcessEngineConfigurationImpl processEngineConfiguration) {
     getStack(processEngineConfigurationStackThreadLocal).push(processEngineConfiguration);
   }
@@ -121,15 +149,15 @@ public final class Context {
    * @deprecated Use {@link #getBpmnExecutionContext()} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public static ExecutionContext getExecutionContext() {
+  public static @Nullable ExecutionContext getExecutionContext() {
     return getBpmnExecutionContext();
   }
 
-  public static BpmnExecutionContext getBpmnExecutionContext() {
+  public static @Nullable BpmnExecutionContext getBpmnExecutionContext() {
     return (BpmnExecutionContext) getCoreExecutionContext();
   }
 
-  public static CaseExecutionContext getCaseExecutionContext() {
+  public static @Nullable CaseExecutionContext getCaseExecutionContext() {
     return (CaseExecutionContext) getCoreExecutionContext();
   }
 
@@ -198,11 +226,11 @@ public final class Context {
    * Use {@link #executeWithinProcessApplication(Callable, ProcessApplicationReference, InvocationContext)}
    * instead if an {@link InvocationContext} is available.
    */
-  public static <T> T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference) {
+  public static <T> @Nullable T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference) {
     return executeWithinProcessApplication(callback, processApplicationReference, null);
   }
 
-  public static <T> T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference, InvocationContext invocationContext) {
+  public static <T> @Nullable T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference, InvocationContext invocationContext) {
     String paName = processApplicationReference.getName();
     try {
       ProcessApplicationInterface processApplication = processApplicationReference.getProcessApplication();
@@ -214,7 +242,7 @@ public final class Context {
     }
   }
 
-  private static <T> T executeWrappedCallback(Callable<T> callback, InvocationContext invocationContext,
+  private static <T> @Nullable T executeWrappedCallback(Callable<T> callback, InvocationContext invocationContext,
       ProcessApplicationInterface processApplication) {
     try {
       // wrap callback

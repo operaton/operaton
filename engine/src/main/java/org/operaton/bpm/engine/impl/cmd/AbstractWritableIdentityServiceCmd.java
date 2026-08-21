@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -24,6 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  *
  */
+@NullMarked
 public abstract class AbstractWritableIdentityServiceCmd<T> implements Command<T> {
   @Override
   public final T execute(CommandContext commandContext) {
@@ -36,6 +39,6 @@ public abstract class AbstractWritableIdentityServiceCmd<T> implements Command<T
     return executeCmd(commandContext);
   }
 
-  protected abstract T executeCmd(CommandContext commandContext);
+  protected abstract @Nullable T executeCmd(CommandContext commandContext);
 
 }

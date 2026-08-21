@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,12 +24,11 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Tom Baeyens
  */
-public class CreateGroupQueryCmd implements Command<GroupQuery> {
+public @NullMarked class CreateGroupQueryCmd implements Command<GroupQuery> {
   @Override
   public GroupQuery execute(CommandContext commandContext) {
     return commandContext
       .getReadOnlyIdentityProvider()
       .createGroupQuery();
   }
-
 }

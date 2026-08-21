@@ -49,19 +49,17 @@ public class ProcessEngineServicesProducer {
   @Named
   @ApplicationScoped
   public ProcessEngine processEngine() {
-
     ProcessEngine processEngine =  BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
     if(processEngine != null) {
       return processEngine;
-    } else {
-      List<ProcessEngine> processEngines = BpmPlatform.getProcessEngineService().getProcessEngines();
-      if (processEngines != null && processEngines.size() == 1) {
-        return processEngines.get(0);
-      } else {
-        return ProcessEngines.getDefaultProcessEngine(false);
-      }
     }
 
+    List<ProcessEngine> processEngines = BpmPlatform.getProcessEngineService().getProcessEngines();
+    if (processEngines.size() == 1) {
+      return processEngines.get(0);
+    } else {
+      return ProcessEngines.getDefaultProcessEngine(false);
+    }
   }
 
   @Produces @Named @ApplicationScoped public RuntimeService runtimeService() { return processEngine().getRuntimeService(); }

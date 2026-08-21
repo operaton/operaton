@@ -892,7 +892,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public void setDescription(String description) {
+  public void setDescription(@Nullable String description) {
     registerCommandContextCloseListener();
     propertyChanged(DESCRIPTION, this.description, description);
     this.description = description;

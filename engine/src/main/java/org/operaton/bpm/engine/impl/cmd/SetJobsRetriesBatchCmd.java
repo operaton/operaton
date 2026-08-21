@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.JobQueryImpl;
 import org.operaton.bpm.engine.impl.batch.BatchElementConfiguration;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -29,12 +31,12 @@ import org.operaton.commons.utils.CollectionUtil;
 /**
  * @author Askar Akhmerov
  */
-public class SetJobsRetriesBatchCmd extends AbstractSetJobsRetriesBatchCmd {
+public @NullMarked class SetJobsRetriesBatchCmd extends AbstractSetJobsRetriesBatchCmd {
 
   protected List<String> ids;
   protected JobQuery jobQuery;
 
-  public SetJobsRetriesBatchCmd(List<String> ids, JobQuery jobQuery, int retries, Date dueDate, boolean isDueDateSet) {
+  public SetJobsRetriesBatchCmd(List<String> ids, JobQuery jobQuery, int retries, @Nullable Date dueDate, boolean isDueDateSet) {
     this.jobQuery = jobQuery;
     this.ids = ids;
     this.retries = retries;

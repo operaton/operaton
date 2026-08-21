@@ -137,12 +137,18 @@ public class UserOperationLogContextEntryBuilder {
     return this;
   }
 
-  public UserOperationLogContextEntryBuilder inContextOf(HistoricTaskInstance task, List<PropertyChange> propertyChanges) {
+  public UserOperationLogContextEntryBuilder inContextOf(@Nullable HistoricTaskInstance task, List<PropertyChange> propertyChanges) {
 
     if ((propertyChanges == null || propertyChanges.isEmpty()) && OPERATION_TYPE_CREATE.equals(entry.getOperationType())) {
       propertyChanges = List.of(PropertyChange.EMPTY_CHANGE);
     }
     entry.setPropertyChanges(propertyChanges);
+
+    if (task == null) {
+      // the task no longer exists, e.g. when deleting an unexisting historic task instance;
+      // the operation is still logged, just without any task context
+      return this;
+    }
 
     entry.setProcessDefinitionKey(task.getProcessDefinitionKey());
     entry.setProcessDefinitionId(task.getProcessDefinitionId());

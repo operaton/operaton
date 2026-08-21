@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  * @author Daniel Meyer
  *
  */
-public class DeleteMetricsCmd implements Command<Void> {
+public @NullMarked class DeleteMetricsCmd implements Command<Void> {
   protected @Nullable Date timestamp;
   protected @Nullable String reporter;
 

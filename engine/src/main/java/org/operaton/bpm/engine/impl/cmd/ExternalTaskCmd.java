@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.NotFoundException;
 
 import org.jspecify.annotations.Nullable;
@@ -38,7 +39,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public abstract class ExternalTaskCmd implements Command<Void> {
+public abstract @NullMarked class ExternalTaskCmd implements Command<Void> {
 
   /**
    * The corresponding external task id.
@@ -70,7 +71,7 @@ public abstract class ExternalTaskCmd implements Command<Void> {
     return null;
   }
 
-  protected void writeUserOperationLog(CommandContext commandContext, ExternalTaskEntity externalTask, String operationType, List<PropertyChange> propertyChanges) {
+  protected void writeUserOperationLog(CommandContext commandContext, ExternalTaskEntity externalTask, @Nullable String operationType, @Nullable List<PropertyChange> propertyChanges) {
     if (operationType != null) {
       commandContext.getOperationLogManager().logExternalTaskOperation(operationType, externalTask,
           propertyChanges == null || propertyChanges.isEmpty() ?
@@ -78,7 +79,7 @@ public abstract class ExternalTaskCmd implements Command<Void> {
     }
   }
 
-  protected String getUserOperationLogOperationType() {
+  protected @Nullable String getUserOperationLogOperationType() {
     return null;
   }
 

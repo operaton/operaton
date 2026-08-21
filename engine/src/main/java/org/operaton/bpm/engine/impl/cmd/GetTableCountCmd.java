@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Tom Baeyens
  */
-public class GetTableCountCmd implements Command<Map<String,Long>> {
+public @NullMarked class GetTableCountCmd implements Command<Map<String,Long>> {
   @Override
   public Map<String, Long> execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkReadTableCount);

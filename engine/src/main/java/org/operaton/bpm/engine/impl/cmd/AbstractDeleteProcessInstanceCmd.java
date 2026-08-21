@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -47,10 +49,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * Provide common logic for process instance deletion operations.
  * Permissions checking and single process instance removal included.
  */
+@NullMarked
 public abstract class AbstractDeleteProcessInstanceCmd {
 
   protected boolean externallyTerminated;
-  protected String deleteReason;
+  protected @Nullable String deleteReason;
   protected boolean skipCustomListeners;
   protected boolean skipSubprocesses;
   protected boolean failIfNotExists = true;

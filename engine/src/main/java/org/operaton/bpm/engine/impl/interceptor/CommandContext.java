@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.InvocationContext;
 
 import org.jspecify.annotations.Nullable;
@@ -56,6 +58,7 @@ import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.jobexecutor.FailedJobCommandFactory;
 import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.entity.*;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static java.util.Collections.emptyList;
@@ -65,7 +68,7 @@ import static java.util.Collections.emptyList;
  * @author Agim Emruli
  * @author Daniel Meyer
  */
-public class CommandContext {
+public @NullMarked class CommandContext {
 
   private static final ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
@@ -81,11 +84,11 @@ public class CommandContext {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected FailedJobCommandFactory failedJobCommandFactory;
 
-  protected JobEntity currentJob;
+  protected @Nullable JobEntity currentJob;
 
   protected List<CommandContextListener> commandContextListeners = new LinkedList<>();
 
-  protected String operationId;
+  protected @Nullable String operationId;
 
   public CommandContext(ProcessEngineConfigurationImpl processEngineConfiguration) {
     this(processEngineConfiguration, processEngineConfiguration.getTransactionContextFactory());
@@ -124,7 +127,7 @@ public class CommandContext {
     return processEngineConfiguration;
   }
 
-  protected ProcessApplicationReference getTargetProcessApplication(CaseExecutionEntity execution) {
+  protected @Nullable ProcessApplicationReference getTargetProcessApplication(CaseExecutionEntity execution) {
     return ProcessApplicationContextUtil.getTargetProcessApplication(execution);
   }
 
@@ -499,13 +502,13 @@ public class CommandContext {
     return identityService.getCurrentAuthentication();
   }
 
-  public <T> T runWithoutAuthorization(Callable<T> runnable) {
-    CommandContext commandContext = Context.getCommandContext();
+  public <T> @Nullable T runWithoutAuthorization(Callable<T> runnable) {
+    CommandContext commandContext = EnsureUtil.ensureActiveCommandContext(Context.getCommandContext());
     return runWithoutAuthorization(runnable, commandContext);
   }
 
-  public <T> T runWithoutAuthorization(Command<T> command) {
-    CommandContext commandContext = Context.getCommandContext();
+  public <T> @Nullable T runWithoutAuthorization(Command<T> command) {
+    CommandContext commandContext = EnsureUtil.ensureActiveCommandContext(Context.getCommandContext());
     return runWithoutAuthorization(() -> command.execute(commandContext), commandContext);
   }
 
@@ -593,7 +596,7 @@ public class CommandContext {
     return tenantCheckEnabled;
   }
 
-  public JobEntity getCurrentJob() {
+  public @Nullable JobEntity getCurrentJob() {
     return currentJob;
   }
 

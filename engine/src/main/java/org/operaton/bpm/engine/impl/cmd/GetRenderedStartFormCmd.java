@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ScriptEvaluationException;
@@ -37,7 +38,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class GetRenderedStartFormCmd implements Command<Object> {
+public @NullMarked class GetRenderedStartFormCmd implements Command<Object> {
   protected String processDefinitionId;
   protected String formEngineName;
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
@@ -49,7 +50,7 @@ public class GetRenderedStartFormCmd implements Command<Object> {
 
   @Override
   public @Nullable Object execute(CommandContext commandContext) {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getRequiredProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
     ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);

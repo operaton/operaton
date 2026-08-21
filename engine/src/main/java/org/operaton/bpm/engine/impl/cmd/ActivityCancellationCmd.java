@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 import org.jspecify.annotations.Nullable;
@@ -27,21 +28,23 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand {
+public @NullMarked class ActivityCancellationCmd extends AbstractProcessInstanceModificationCommand {
 
   protected String activityId;
   protected boolean cancelCurrentActiveActivityInstances;
-  protected ActivityInstance activityInstanceTree;
+  protected @Nullable ActivityInstance activityInstanceTree;
 
   public ActivityCancellationCmd(String activityId) {
     this(null, activityId);
   }
 
-  public ActivityCancellationCmd(String processInstanceId, String activityId) {
+  public ActivityCancellationCmd(@Nullable String processInstanceId, String activityId) {
     super(processInstanceId);
     this.activityId = activityId;
   }
@@ -114,7 +117,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
     return instances;
   }
 
-  public ActivityInstance getActivityInstanceTree(final CommandContext commandContext) {
+  public @Nullable ActivityInstance getActivityInstanceTree(final CommandContext commandContext) {
     return commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId));
   }
 
@@ -122,7 +125,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
     return activityId;
   }
 
-  public void setActivityInstanceTreeToCancel(ActivityInstance activityInstanceTreeToCancel) {
+  public void setActivityInstanceTreeToCancel(@Nullable ActivityInstance activityInstanceTreeToCancel) {
     this.activityInstanceTree = activityInstanceTreeToCancel;
   }
 
@@ -134,7 +137,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
   public List<AbstractInstanceCancellationCmd> createActivityInstanceCancellations(ActivityInstance activityInstanceTree, CommandContext commandContext) {
     List<AbstractInstanceCancellationCmd> commands = new ArrayList<>();
 
-    ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
+    ExecutionEntity processInstance = requireNonNull(commandContext.getExecutionManager().findExecutionById(processInstanceId));
     ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();
     Set<String> parentScopeIds = collectParentScopeIdsForActivity(processDefinition, activityId);
 

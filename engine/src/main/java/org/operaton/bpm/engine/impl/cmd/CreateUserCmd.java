@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -25,7 +26,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class CreateUserCmd extends AbstractWritableIdentityServiceCmd<User> implements Command<User> {
+public @NullMarked class CreateUserCmd extends AbstractWritableIdentityServiceCmd<User> implements Command<User> {
   protected String userId;
 
   public CreateUserCmd(String userId) {

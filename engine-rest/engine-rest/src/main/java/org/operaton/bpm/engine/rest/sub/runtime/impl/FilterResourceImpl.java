@@ -26,6 +26,7 @@ import jakarta.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -140,7 +141,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   @Override
-  public Object querySingleResult(Request request, String extendingQuery) {
+  public @Nullable Object querySingleResult(Request request, String extendingQuery) {
     Variant variant = request.selectVariant(VARIANTS);
     if (variant != null) {
       if (MediaType.APPLICATION_JSON_TYPE.equals(variant.getMediaType())) {
@@ -337,7 +338,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     return dto;
   }
 
-  protected Query<?,?> convertQuery(String queryString) {
+  protected @Nullable Query<?,?> convertQuery(String queryString) {
     if (isEmptyJson(queryString)) {
       return null;
     }

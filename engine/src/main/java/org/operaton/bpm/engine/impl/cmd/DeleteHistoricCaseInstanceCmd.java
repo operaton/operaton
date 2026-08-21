@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 
 import org.jspecify.annotations.Nullable;
@@ -28,12 +29,13 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Sebastian Menski
  */
-public class DeleteHistoricCaseInstanceCmd implements Command<Object> {
+public @NullMarked class DeleteHistoricCaseInstanceCmd implements Command<Object> {
   protected String caseInstanceId;
 
   public DeleteHistoricCaseInstanceCmd(String caseInstanceId) {
@@ -49,6 +51,7 @@ public class DeleteHistoricCaseInstanceCmd implements Command<Object> {
       .findHistoricCaseInstance(caseInstanceId);
 
     ensureNotNull("No historic case instance found with id: %s".formatted(caseInstanceId), "instance", instance);
+    requireNonNull(instance);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteHistoricCaseInstance(instance);

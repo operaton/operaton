@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
@@ -106,7 +107,7 @@ public class TaskManager extends AbstractManager {
     }
   }
 
-  public TaskEntity findTaskById(String id) {
+  public @Nullable TaskEntity findTaskById(String id) {
     ensureNotNull("Invalid task id", "id", id);
     return getDbEntityManager().selectById(TaskEntity.class, id);
   }

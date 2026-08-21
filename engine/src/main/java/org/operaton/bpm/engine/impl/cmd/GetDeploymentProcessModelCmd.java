@@ -20,6 +20,8 @@ import java.io.InputStream;
 
 import org.jspecify.annotations.NonNull;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -33,10 +35,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  *
  * @author Falko Menge
  */
-public class GetDeploymentProcessModelCmd implements Command<InputStream> {
+public @NullMarked class GetDeploymentProcessModelCmd implements Command<InputStream> {
   protected String processDefinitionId;
 
-  public GetDeploymentProcessModelCmd(@NonNull String processDefinitionId) {
+  public GetDeploymentProcessModelCmd(String processDefinitionId) {
     if (processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
@@ -44,9 +46,9 @@ public class GetDeploymentProcessModelCmd implements Command<InputStream> {
   }
 
   @Override
-  public InputStream execute(final CommandContext commandContext) {
+  public @Nullable InputStream execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
-            .getProcessEngineConfiguration()
+            .getRequiredProcessEngineConfiguration()
             .getDeploymentCache()
             .findDeployedProcessDefinitionById(processDefinitionId);
 
@@ -56,6 +58,10 @@ public class GetDeploymentProcessModelCmd implements Command<InputStream> {
 
     final String deploymentId = processDefinition.getDeploymentId();
     final String resourceName = processDefinition.getResourceName();
+
+    if (deploymentId == null || resourceName == null) {
+      return null;
+    }
 
     return commandContext.runWithoutAuthorization(
         new GetDeploymentResourceCmd(deploymentId, resourceName));

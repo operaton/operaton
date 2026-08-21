@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * Read the already configured historyLevel from DB and map to given list of total levels.
  */
-public class DetermineHistoryLevelCmd implements Command<HistoryLevel> {
+public @NullMarked class DetermineHistoryLevelCmd implements Command<HistoryLevel> {
 
   private final List<HistoryLevel> historyLevels;
 
@@ -63,6 +64,5 @@ public class DetermineHistoryLevelCmd implements Command<HistoryLevel> {
       return null;
     }
   }
-
 
 }

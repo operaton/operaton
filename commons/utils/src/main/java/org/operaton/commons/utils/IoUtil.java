@@ -176,10 +176,6 @@ public class IoUtil {
    * @return the file object
    */
   public static File getClasspathFile(@NonNull String filename) {
-    if(filename == null) {
-      throw LOG.nullParameter("filename");
-    }
-
     return getClasspathFile(filename, null);
   }
 
@@ -192,6 +188,9 @@ public class IoUtil {
    * @throws IoUtilException if the file cannot be loaded
    */
   public static File getClasspathFile(@NonNull String filename, @Nullable ClassLoader classLoader) {
+    if(filename == null) {
+      throw LOG.nullParameter("filename");
+    }
 
     URL fileUrl = null;
 

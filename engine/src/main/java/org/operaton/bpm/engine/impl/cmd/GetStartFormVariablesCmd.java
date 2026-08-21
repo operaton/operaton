@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  * @author Daniel Meyer
  *
  */
-public class GetStartFormVariablesCmd extends AbstractGetFormVariablesCmd {
+public @NullMarked class GetStartFormVariablesCmd extends AbstractGetFormVariablesCmd {
   public GetStartFormVariablesCmd(String resourceId, Collection<String> formVariableNames, boolean deserializeObjectValues) {
     super(resourceId, formVariableNames, deserializeObjectValues);
   }

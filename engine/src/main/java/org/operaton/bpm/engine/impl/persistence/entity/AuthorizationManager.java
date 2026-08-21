@@ -150,7 +150,7 @@ public class AuthorizationManager extends AbstractManager {
     return new PermissionCheckBuilder();
   }
 
-  public Authorization createNewAuthorization(int type) {
+  public @NonNull Authorization createNewAuthorization(int type) {
     checkAuthorization(CREATE, AUTHORIZATION, null);
     return new AuthorizationEntity(type);
   }
@@ -300,7 +300,7 @@ public class AuthorizationManager extends AbstractManager {
     Boolean isRevokeAuthCheckEnabled = this.isRevokeAuthCheckUsed;
 
     if(isRevokeAuthCheckEnabled == null) {
-      String configuredMode = Context.getProcessEngineConfiguration().getAuthorizationCheckRevokes();
+      String configuredMode = Context.getRequiredProcessEngineConfiguration().getAuthorizationCheckRevokes();
       if(configuredMode != null) {
         configuredMode = configuredMode.toLowerCase();
       }
@@ -550,8 +550,7 @@ public class AuthorizationManager extends AbstractManager {
   public boolean isOperatonAdmin(Authentication authentication) {
     List<String> groupIds = authentication.getGroupIds();
     if (groupIds != null) {
-      CommandContext commandContext = Context.getCommandContext();
-      List<String> adminGroups = commandContext.getProcessEngineConfiguration().getAdminGroups();
+      List<String> adminGroups = Context.getRequiredProcessEngineConfiguration().getAdminGroups();
       for (String adminGroup : adminGroups) {
         if (groupIds.contains(adminGroup)) {
           return true;
@@ -561,8 +560,7 @@ public class AuthorizationManager extends AbstractManager {
 
     String userId = authentication.getUserId();
     if (userId != null) {
-      CommandContext commandContext = Context.getCommandContext();
-      List<String> adminUsers = commandContext.getProcessEngineConfiguration().getAdminUsers();
+      List<String> adminUsers = Context.getRequiredProcessEngineConfiguration().getAdminUsers();
       return adminUsers != null && adminUsers.contains(userId);
     }
 
@@ -1149,7 +1147,7 @@ public class AuthorizationManager extends AbstractManager {
   protected boolean isAuthCheckExecuted() {
 
     Authentication currentAuthentication = getCurrentAuthentication();
-    CommandContext commandContext = Context.getCommandContext();
+    CommandContext commandContext = Context.getRequiredCommandContext();
 
     return isAuthorizationEnabled()
         && commandContext.isAuthorizationCheckEnabled()
@@ -1159,11 +1157,11 @@ public class AuthorizationManager extends AbstractManager {
   }
 
   public boolean isEnsureSpecificVariablePermission() {
-    return Context.getProcessEngineConfiguration().isEnforceSpecificVariablePermission();
+    return Context.getRequiredProcessEngineConfiguration().isEnforceSpecificVariablePermission();
   }
 
   protected boolean isHistoricInstancePermissionsEnabled() {
-    return Context.getProcessEngineConfiguration().isEnableHistoricInstancePermissions();
+    return Context.getRequiredProcessEngineConfiguration().isEnableHistoricInstancePermissions();
   }
 
   public DbOperation addRemovalTimeToAuthorizationsByRootProcessInstanceId(String rootProcessInstanceId,

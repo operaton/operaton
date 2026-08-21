@@ -112,7 +112,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
     }
   }
 
-  public ProcessDefinitionEntity findLatestProcessDefinitionById(String processDefinitionId) {
+  public @Nullable ProcessDefinitionEntity findLatestProcessDefinitionById(String processDefinitionId) {
     return getDbEntityManager().selectById(ProcessDefinitionEntity.class, processDefinitionId);
   }
 
@@ -134,15 +134,15 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
     return (ProcessDefinitionEntity) getDbEntityManager().selectOne("selectProcessDefinitionByDeploymentAndKey", parameters);
   }
 
-  public ProcessDefinitionEntity findProcessDefinitionByKeyVersionAndTenantId(String processDefinitionKey, Integer processDefinitionVersion, String tenantId) {
+  public @Nullable ProcessDefinitionEntity findProcessDefinitionByKeyVersionAndTenantId(String processDefinitionKey, Integer processDefinitionVersion, String tenantId) {
     return findProcessDefinitionByKeyVersionOrVersionTag(processDefinitionKey, processDefinitionVersion, null, tenantId);
   }
 
-  public ProcessDefinitionEntity findProcessDefinitionByKeyVersionTagAndTenantId(String processDefinitionKey, String processDefinitionVersionTag, String tenantId) {
+  public @Nullable ProcessDefinitionEntity findProcessDefinitionByKeyVersionTagAndTenantId(String processDefinitionKey, String processDefinitionVersionTag, String tenantId) {
     return findProcessDefinitionByKeyVersionOrVersionTag(processDefinitionKey, null, processDefinitionVersionTag, tenantId);
   }
 
-  protected ProcessDefinitionEntity findProcessDefinitionByKeyVersionOrVersionTag(String processDefinitionKey, Integer processDefinitionVersion, String processDefinitionVersionTag,
+  protected @Nullable ProcessDefinitionEntity findProcessDefinitionByKeyVersionOrVersionTag(String processDefinitionKey, Integer processDefinitionVersion, String processDefinitionVersionTag,
       String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     if (processDefinitionVersion != null) {
@@ -376,7 +376,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
 
     // remove process definition from cache:
     Context
-      .getProcessEngineConfiguration()
+      .getRequiredProcessEngineConfiguration()
       .getDeploymentCache()
       .removeProcessDefinition(processDefinitionId);
 

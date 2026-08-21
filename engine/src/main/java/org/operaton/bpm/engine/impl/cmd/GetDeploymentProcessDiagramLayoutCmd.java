@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.NonNull;
@@ -37,10 +39,10 @@ import org.operaton.bpm.engine.repository.DiagramLayout;
  * </p>
  * @author Falko Menge
  */
-public class GetDeploymentProcessDiagramLayoutCmd implements Command<DiagramLayout> {
+public @NullMarked class GetDeploymentProcessDiagramLayoutCmd implements Command<DiagramLayout> {
   protected String processDefinitionId;
 
-  public GetDeploymentProcessDiagramLayoutCmd(@NonNull String processDefinitionId) {
+  public GetDeploymentProcessDiagramLayoutCmd(String processDefinitionId) {
     if (processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
@@ -48,9 +50,9 @@ public class GetDeploymentProcessDiagramLayoutCmd implements Command<DiagramLayo
   }
 
   @Override
-  public DiagramLayout execute(final CommandContext commandContext) {
+  public @Nullable DiagramLayout execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
-        .getProcessEngineConfiguration()
+        .getRequiredProcessEngineConfiguration()
         .getDeploymentCache()
         .findDeployedProcessDefinitionById(processDefinitionId);
 

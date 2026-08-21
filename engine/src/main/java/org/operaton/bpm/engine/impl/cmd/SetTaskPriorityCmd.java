@@ -16,13 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+import org.operaton.bpm.engine.impl.DefaultPriorityProvider;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
 /**
  * Command to change task priority to a new value.
  */
-public class SetTaskPriorityCmd extends AbstractSetTaskPropertyCmd<Integer> {
+public @NullMarked class SetTaskPriorityCmd extends AbstractSetTaskPropertyCmd<Integer> {
 
   /**
    * Public constructor.
@@ -40,7 +43,7 @@ public class SetTaskPriorityCmd extends AbstractSetTaskPropertyCmd<Integer> {
   }
 
   @Override
-  protected void executeSetOperation(TaskEntity task, Integer priority) {
-    task.setPriority(priority);
+  protected void executeSetOperation(TaskEntity task, @Nullable Integer priority) {
+    task.setPriority(priority != null ? priority : (int) DefaultPriorityProvider.DEFAULT_PRIORITY);
   }
 }

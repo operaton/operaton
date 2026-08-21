@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.NotFoundException;
 
 import org.jspecify.annotations.Nullable;
@@ -41,6 +42,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -49,7 +51,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Tassilo Weidner
  */
-public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
+public @NullMarked class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
   protected final Set<String> processDefinitionIds;
   protected boolean cascadeToHistory;
   protected boolean cascadeToInstances;
@@ -108,7 +110,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
     ProcessDefinition processDefinition = commandContext.getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
     ensureNotNull(NotFoundException.class, "No process definition found with id '%s'".formatted(processDefinitionId), "processDefinition", processDefinition);
 
-    return processDefinition;
+    return requireNonNull(processDefinition);
   }
 
   protected Set<ProcessDefinitionGroup> groupByKeyAndTenant(List<ProcessDefinition> processDefinitions) {
@@ -137,7 +139,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
     return groups;
   }
 
-  protected ProcessDefinitionEntity findNewLatestProcessDefinition(ProcessDefinitionGroup group) {
+  protected @Nullable ProcessDefinitionEntity findNewLatestProcessDefinition(ProcessDefinitionGroup group) {
     ProcessDefinitionEntity newLatestProcessDefinition = null;
 
     List<ProcessDefinitionEntity> processDefinitions = group.processDefinitions;
@@ -147,7 +149,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
       for (ProcessDefinitionEntity processDefinition : processDefinitions) {
         String previousProcessDefinitionId = processDefinition.getPreviousProcessDefinitionId();
         if (previousProcessDefinitionId != null && !this.processDefinitionIds.contains(previousProcessDefinitionId)) {
-          CommandContext commandContext = Context.getCommandContext();
+          CommandContext commandContext = Context.getRequiredCommandContext();
           ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
           newLatestProcessDefinition = processDefinitionManager.findLatestDefinitionById(previousProcessDefinitionId);
           break;
@@ -159,7 +161,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
   }
 
   protected boolean isLatestProcessDefinition(ProcessDefinitionEntity processDefinition) {
-    ProcessDefinitionManager processDefinitionManager = Context.getCommandContext().getProcessDefinitionManager();
+    ProcessDefinitionManager processDefinitionManager = Context.getRequiredCommandContext().getProcessDefinitionManager();
     String key = processDefinition.getKey();
     String tenantId = processDefinition.getTenantId();
     ProcessDefinitionEntity latestProcessDefinition = processDefinitionManager.findLatestDefinitionByKeyAndTenantId(key, tenantId);
@@ -167,7 +169,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
   }
 
   protected void checkAuthorization(ProcessDefinitionGroup group) {
-    List<CommandChecker> commandCheckers = Context.getCommandContext().getProcessEngineConfiguration().getCommandCheckers();
+    List<CommandChecker> commandCheckers = Context.getRequiredProcessEngineConfiguration().getCommandCheckers();
     List<ProcessDefinitionEntity> processDefinitions = group.processDefinitions;
     for (ProcessDefinitionEntity processDefinition : processDefinitions) {
       for (CommandChecker commandChecker : commandCheckers) {
@@ -179,7 +181,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
   protected void deleteProcessDefinitions(ProcessDefinitionGroup group) {
     ProcessDefinitionEntity newLatestProcessDefinition = findNewLatestProcessDefinition(group);
 
-    CommandContext commandContext = Context.getCommandContext();
+    CommandContext commandContext = Context.getRequiredCommandContext();
     UserOperationLogManager userOperationLogManager = commandContext.getOperationLogManager();
     ProcessDefinitionManager definitionManager = commandContext.getProcessDefinitionManager();
 
@@ -196,7 +198,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
     }
 
     if (newLatestProcessDefinition != null) {
-      ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
+      ProcessEngineConfigurationImpl configuration = Context.getRequiredProcessEngineConfiguration();
       DeploymentCache deploymentCache = configuration.getDeploymentCache();
       newLatestProcessDefinition = deploymentCache.resolveProcessDefinition(newLatestProcessDefinition);
 
@@ -212,8 +214,8 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
 
   private static class ProcessDefinitionGroup {
 
-    String key;
-    String tenant;
+    @Nullable String key;
+    @Nullable String tenant;
     List<ProcessDefinitionEntity> processDefinitions = new ArrayList<>();
 
     @Override

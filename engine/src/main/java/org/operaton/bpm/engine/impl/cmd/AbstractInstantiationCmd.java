@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -32,6 +33,7 @@ import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
@@ -47,11 +49,13 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificationCommand {
+public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProcessInstanceModificationCommand {
 
   protected VariableMap variables;
   protected VariableMap variablesLocal;
@@ -98,7 +102,8 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
 
   @Override
   public @Nullable Void execute(final CommandContext commandContext) {
-    ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
+    ExecutionManager executionManager = commandContext.getExecutionManager();
+    ExecutionEntity processInstance = requireNonNull(executionManager.findExecutionById(processInstanceId));
     final ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();
 
     CoreModelElement elementToInstantiate = getTargetElement(processDefinition);
@@ -183,7 +188,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   private ExecutionEntity determineScopeExecutionWithAncestorActivity(final CommandContext commandContext,
       ExecutionEntity processInstance, final ProcessDefinitionImpl processDefinition,
       CoreModelElement elementToInstantiate, final ActivityExecutionTreeMapping mapping, FlowScopeWalker walker) {
-    ActivityInstance tree = commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId));
+    ActivityInstance tree = requireNonNull(commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId)));
 
     ActivityInstance ancestorInstance = findActivityInstance(tree, ancestorActivityInstanceId);
     EnsureUtil.ensureNotNull(NotValidException.class,
@@ -209,7 +214,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return ancestorScopeExecution;
   }
 
-  private ActivityImpl determineTopMostActivity(List<PvmActivity> activitiesToInstantiate,
+  private @Nullable ActivityImpl determineTopMostActivity(List<PvmActivity> activitiesToInstantiate,
       CoreModelElement elementToInstantiate) {
     if (!activitiesToInstantiate.isEmpty()) {
       return (ActivityImpl) activitiesToInstantiate.get(0);
@@ -220,7 +225,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return null;
   }
 
-  private ScopeImpl determineFlowScope(List<PvmActivity> activitiesToInstantiate, CoreModelElement elementToInstantiate,
+  private @Nullable ScopeImpl determineFlowScope(List<PvmActivity> activitiesToInstantiate, CoreModelElement elementToInstantiate,
       ActivityImpl topMostActivity) {
     if (!activitiesToInstantiate.isEmpty() || ActivityImpl.class.isAssignableFrom(elementToInstantiate.getClass())) {
       return topMostActivity.getFlowScope();
@@ -328,7 +333,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return !(behavior instanceof SequentialMultiInstanceActivityBehavior);
   }
 
-  protected ExecutionEntity getSingleExecutionForScope(ActivityExecutionTreeMapping mapping, ScopeImpl scope) {
+  protected @Nullable ExecutionEntity getSingleExecutionForScope(ActivityExecutionTreeMapping mapping, ScopeImpl scope) {
     Set<ExecutionEntity> executions = mapping.getExecutions(scope);
 
     if (!executions.isEmpty()) {
@@ -377,7 +382,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
 
   protected abstract ScopeImpl getTargetFlowScope(ProcessDefinitionImpl processDefinition);
 
-  protected abstract CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition);
+  protected abstract @Nullable CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition);
 
   protected abstract String getTargetElementId();
 

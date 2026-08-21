@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -24,11 +26,13 @@ import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd {
+public @NullMarked class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd {
 
   protected String activityId;
 
@@ -36,19 +40,19 @@ public class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd {
     this(null, activityId);
   }
 
-  public ActivityBeforeInstantiationCmd(String processInstanceId, String activityId) {
+  public ActivityBeforeInstantiationCmd(@Nullable String processInstanceId, String activityId) {
     this(processInstanceId, activityId, null);
   }
 
-  public ActivityBeforeInstantiationCmd(String processInstanceId, String activityId,
-      String ancestorActivityInstanceId) {
+  public ActivityBeforeInstantiationCmd(@Nullable String processInstanceId, String activityId,
+      @Nullable String ancestorActivityInstanceId) {
     super(processInstanceId, ancestorActivityInstanceId);
     this.activityId = activityId;
   }
 
   @Override
   public Void execute(CommandContext commandContext) {
-    ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
+    ExecutionEntity processInstance = requireNonNull(commandContext.getExecutionManager().findExecutionById(processInstanceId));
     ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();
 
     PvmActivity activity = processDefinition.findActivity(activityId);
@@ -63,12 +67,12 @@ public class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd {
 
   @Override
   protected ScopeImpl getTargetFlowScope(ProcessDefinitionImpl processDefinition) {
-    PvmActivity activity = processDefinition.findActivity(activityId);
+    PvmActivity activity = requireNonNull(processDefinition.findActivity(activityId));
     return activity.getFlowScope();
   }
 
   @Override
-  protected CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition) {
+  protected @Nullable CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition) {
     return processDefinition.findActivity(activityId);
   }
 

@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.OptimisticLockingListener;
@@ -41,7 +42,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  * @author Nick Burch
  * @author Daniel Meyer
  */
-public class AcquireJobsCmd implements Command<AcquiredJobs>, OptimisticLockingListener {
+public @NullMarked class AcquireJobsCmd implements Command<AcquiredJobs>, OptimisticLockingListener {
 
   private final JobExecutor jobExecutor;
 
@@ -55,13 +56,11 @@ public class AcquireJobsCmd implements Command<AcquiredJobs>, OptimisticLockingL
   public AcquireJobsCmd(JobExecutor jobExecutor, int numJobsToAcquire) {
     this.jobExecutor = jobExecutor;
     this.numJobsToAcquire = numJobsToAcquire;
+    this.acquiredJobs = new AcquiredJobs(numJobsToAcquire);
   }
 
   @Override
   public AcquiredJobs execute(CommandContext commandContext) {
-
-    acquiredJobs = new AcquiredJobs(numJobsToAcquire);
-
     List<AcquirableJobEntity> jobs = commandContext
       .getJobManager()
       .findNextJobsToExecute(new Page(0, numJobsToAcquire));
@@ -133,9 +132,7 @@ public class AcquireJobsCmd implements Command<AcquiredJobs>, OptimisticLockingL
   }
 
   protected boolean isAcquireExclusiveOverProcessHierarchies(CommandContext context) {
-    var engineConfig = context.getProcessEngineConfiguration();
-
-    return engineConfig != null && engineConfig.isJobExecutorAcquireExclusiveOverProcessHierarchies();
+    return context.getProcessEngineConfiguration().isJobExecutorAcquireExclusiveOverProcessHierarchies();
   }
 
   protected String selectProcessInstanceId(AcquirableJobEntity job, boolean isAcquireExclusiveOverProcessHierarchies) {

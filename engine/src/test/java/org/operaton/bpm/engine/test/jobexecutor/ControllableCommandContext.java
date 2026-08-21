@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandInvocationContext;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper;
 
+@NullMarked
 public class ControllableCommandContext extends CommandContext {
 
   protected ConcurrencyTestHelper.ThreadControl executionThread;

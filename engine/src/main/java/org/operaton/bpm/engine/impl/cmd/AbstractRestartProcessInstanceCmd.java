@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
@@ -34,6 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+@NullMarked
 public abstract class AbstractRestartProcessInstanceCmd<T> implements Command<T> {
 
   protected CommandExecutor commandExecutor;
@@ -45,7 +47,6 @@ public abstract class AbstractRestartProcessInstanceCmd<T> implements Command<T>
   }
 
   protected Collection<String> collectProcessInstanceIds() {
-
     Set<String> collectedProcessInstanceIds = new HashSet<>();
 
     List<String> processInstanceIds = builder.getProcessInstanceIds();
@@ -82,7 +83,6 @@ public abstract class AbstractRestartProcessInstanceCmd<T> implements Command<T>
   }
 
   protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
-
     return commandContext
         .getProcessEngineConfiguration()
         .getDeploymentCache()

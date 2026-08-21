@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,7 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class DeleteUserPictureCmd implements Command<Void> {
+public @NullMarked class DeleteUserPictureCmd implements Command<Void> {
 
   protected String userId;
 

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.context.Context;
 
 import org.jspecify.annotations.Nullable;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 /**
  * @author Tom Baeyens
  */
-public class DeleteJobsCmd implements Command<Void> {
+public @NullMarked class DeleteJobsCmd implements Command<Void> {
 
   protected List<String> jobIds;
   protected boolean cascade;
@@ -58,8 +59,7 @@ public class DeleteJobsCmd implements Command<Void> {
   public @Nullable Void execute(CommandContext commandContext) {
     JobEntity jobToDelete = null;
     for (String jobId: jobIds) {
-      jobToDelete = Context
-        .getCommandContext()
+      jobToDelete = commandContext
         .getJobManager()
         .findJobById(jobId);
 

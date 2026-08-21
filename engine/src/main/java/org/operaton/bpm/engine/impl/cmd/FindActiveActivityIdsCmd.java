@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -29,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class FindActiveActivityIdsCmd implements Command<List<String>> {
+public @NullMarked class FindActiveActivityIdsCmd implements Command<List<String>> {
   protected String executionId;
 
   public FindActiveActivityIdsCmd(String executionId) {

@@ -20,7 +20,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serial;
 import java.nio.charset.Charset;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.type.FileValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -62,7 +61,7 @@ public class FileValueImpl implements FileValue {
     return mimeType;
   }
 
-  public void setMimeType(@NonNull String mimeType) {
+  public void setMimeType(@Nullable String mimeType) {
     this.mimeType = mimeType;
   }
 
@@ -83,7 +82,7 @@ public class FileValueImpl implements FileValue {
     return type;
   }
 
-  public void setEncoding(@NonNull String encoding) {
+  public void setEncoding(@Nullable String encoding) {
     this.encoding = encoding;
   }
 

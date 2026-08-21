@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  *
  */
-public class RegisterProcessApplicationCmd implements Command<ProcessApplicationRegistration> {
+public @NullMarked class RegisterProcessApplicationCmd implements Command<ProcessApplicationRegistration> {
 
   protected ProcessApplicationReference reference;
   protected Set<String> deploymentsToRegister;
@@ -53,7 +54,7 @@ public class RegisterProcessApplicationCmd implements Command<ProcessApplication
   public ProcessApplicationRegistration execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkRegisterProcessApplication);
 
-    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getRequiredProcessEngineConfiguration();
     final ProcessApplicationManager processApplicationManager = processEngineConfiguration.getProcessApplicationManager();
 
     return processApplicationManager.registerProcessApplicationForDeployments(deploymentsToRegister, reference);

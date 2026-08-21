@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -33,7 +34,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Joram Barrez
  */
 
-public class DeleteJobCmd implements Command<Object> {
+public @NullMarked class DeleteJobCmd implements Command<Object> {
   protected String jobId;
 
   public DeleteJobCmd(String jobId) {

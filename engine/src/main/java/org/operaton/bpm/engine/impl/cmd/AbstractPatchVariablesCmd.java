@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
 import org.jspecify.annotations.Nullable;
@@ -28,6 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Stefan Hentschel.
  */
+@NullMarked
 public abstract class AbstractPatchVariablesCmd implements Command<Void> {
   protected String entityId;
   protected Map<String, ? extends Object> variables;

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 
 import org.jspecify.annotations.Nullable;
@@ -35,10 +36,11 @@ import org.jspecify.annotations.Nullable;
  * @author Daniel Meyer
  *
  */
+@NullMarked
 @SuppressWarnings("java:S5738")
 public class AuthorizationException extends ProcessEngineException {
 
-  protected final String userId;
+  protected final @Nullable String userId;
   protected final transient List<MissingAuthorization> missingAuthorizations;
 
   // These properties have been replaced by the list of missingAuthorizations
@@ -49,19 +51,19 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected String resourceType;
+  protected @Nullable String resourceType;
   /**
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected String permissionName;
+  protected @Nullable String permissionName;
   /**
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected String resourceId;
+  protected @Nullable String resourceId;
 
   public AuthorizationException(String message) {
     super(message);
@@ -98,7 +100,7 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public String getResourceType() {
+  public @Nullable String getResourceType() {
     String result = null;
     if (missingAuthorizations.size() == 1) {
       result = missingAuthorizations.get(0).getResourceType();
@@ -125,7 +127,7 @@ public class AuthorizationException extends ProcessEngineException {
    * @return id of the user in which context the request was made and who misses authorizations
    *  to perform it successfully.
    */
-  public String getUserId() {
+  public @Nullable String getUserId() {
     return userId;
   }
 

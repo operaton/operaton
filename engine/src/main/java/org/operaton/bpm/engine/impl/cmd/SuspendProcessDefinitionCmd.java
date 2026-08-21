@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;
 import org.operaton.bpm.engine.impl.management.UpdateJobDefinitionSuspensionStateBuilderImpl;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.runtime.UpdateProcessInstanceSuspensionState
  * @author Joram Barrez
  * @author roman.smirnov
  */
-public class SuspendProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd {
+public @NullMarked class SuspendProcessDefinitionCmd extends AbstractSetProcessDefinitionStateCmd {
 
   public SuspendProcessDefinitionCmd(UpdateProcessDefinitionSuspensionStateBuilderImpl builder) {
     super(builder);

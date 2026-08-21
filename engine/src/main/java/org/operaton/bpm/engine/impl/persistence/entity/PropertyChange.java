@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Contains data about a property change.
@@ -34,12 +35,12 @@ public class PropertyChange {
   protected String propertyName;
 
   /** the original value */
-  protected Object orgValue;
+  protected @Nullable Object orgValue;
 
   /** the new value */
-  protected Object newValue;
+  protected @Nullable Object newValue;
 
-  public PropertyChange(String propertyName, Object orgValue, Object newValue) {
+  public PropertyChange(String propertyName, @Nullable Object orgValue, @Nullable Object newValue) {
     this.propertyName = propertyName;
     this.orgValue = orgValue;
     this.newValue = newValue;
@@ -53,31 +54,31 @@ public class PropertyChange {
     this.propertyName = propertyName;
   }
 
-  public Object getOrgValue() {
+  public @Nullable Object getOrgValue() {
     return orgValue;
   }
 
-  public void setOrgValue(Object orgValue) {
+  public void setOrgValue(@Nullable Object orgValue) {
     this.orgValue = orgValue;
   }
 
-  public Object getNewValue() {
+  public @Nullable Object getNewValue() {
     return newValue;
   }
 
-  public void setNewValue(Object newValue) {
+  public void setNewValue(@Nullable Object newValue) {
     this.newValue = newValue;
   }
 
-  public String getNewValueString() {
+  public @Nullable String getNewValueString() {
     return valueAsString(newValue);
   }
 
-  public String getOrgValueString() {
+  public @Nullable String getOrgValueString() {
     return valueAsString(orgValue);
   }
 
-  protected String valueAsString(Object value) {
+  protected @Nullable String valueAsString(@Nullable Object value) {
     if(value == null) {
       return null;
 

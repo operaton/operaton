@@ -18,9 +18,9 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -34,10 +34,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  *
  * @author Falko Menge
  */
-public class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
+public @NullMarked class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
   protected String processDefinitionId;
 
-  public GetDeploymentProcessDiagramCmd(@NonNull String processDefinitionId) {
+  public GetDeploymentProcessDiagramCmd(String processDefinitionId) {
     if (processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
@@ -47,7 +47,7 @@ public class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
   @Override
   public @Nullable InputStream execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
-            .getProcessEngineConfiguration()
+            .getRequiredProcessEngineConfiguration()
             .getDeploymentCache()
             .findDeployedProcessDefinitionById(processDefinitionId);
 
@@ -58,7 +58,7 @@ public class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
     final String deploymentId = processDefinition.getDeploymentId();
     final String resourceName = processDefinition.getDiagramResourceName();
 
-    if (resourceName == null ) {
+    if (deploymentId == null || resourceName == null ) {
       return null;
     } else {
 

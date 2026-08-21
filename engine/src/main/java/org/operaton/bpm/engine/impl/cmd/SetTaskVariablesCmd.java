@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
@@ -32,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
+public @NullMarked class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
   protected boolean taskLocalVariablesUpdated;
 
   public SetTaskVariablesCmd(String taskId, Map<String, ? extends Object> variables, boolean isLocal) {
@@ -43,7 +44,7 @@ public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements Varia
   protected TaskEntity getEntity() {
     ensureNotNull("taskId", entityId);
 
-    TaskEntity task =  commandContext
+    TaskEntity task =  getCommandContext()
       .getTaskManager()
       .findTaskById(entityId);
 
@@ -77,12 +78,12 @@ public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements Varia
   @Override
   protected void logVariableOperation(AbstractVariableScope scope) {
     TaskEntity task = (TaskEntity) scope;
-    commandContext.getOperationLogManager().logVariableOperation(getLogEntryOperation(), null, task.getId(),
+    getCommandContext().getOperationLogManager().logVariableOperation(getLogEntryOperation(), null, task.getId(),
       PropertyChange.EMPTY_CHANGE);
   }
 
   protected void checkSetTaskVariables(TaskEntity task) {
-    for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+    for(CommandChecker checker : getCommandContext().getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateTaskVariable(task);
     }
   }

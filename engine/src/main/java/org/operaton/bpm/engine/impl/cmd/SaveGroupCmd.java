@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,7 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureWhitelistedReso
 /**
  * @author Joram Barrez
  */
-public class SaveGroupCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
+public @NullMarked class SaveGroupCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
   protected Group group;
 
   public SaveGroupCmd(Group group) {
@@ -35,7 +37,7 @@ public class SaveGroupCmd extends AbstractWritableIdentityServiceCmd<Void> imple
   }
 
   @Override
-  protected Void executeCmd(CommandContext commandContext) {
+  protected @Nullable Void executeCmd(CommandContext commandContext) {
     ensureNotNull("group", group);
     ensureWhitelistedResourceId(commandContext, "Group", group.getId());
 

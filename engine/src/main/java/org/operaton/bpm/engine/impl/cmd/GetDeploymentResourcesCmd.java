@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -29,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author kristin.polenz@camunda.com
  */
 @SuppressWarnings("rawtypes")
-public class GetDeploymentResourcesCmd implements Command<List> {
+public @NullMarked class GetDeploymentResourcesCmd implements Command<List> {
   protected String deploymentId;
 
   public GetDeploymentResourcesCmd(String deploymentId) {
@@ -45,7 +46,7 @@ public class GetDeploymentResourcesCmd implements Command<List> {
     }
 
     return Context
-      .getCommandContext()
+      .getRequiredCommandContext()
       .getResourceManager()
       .findResourcesByDeploymentId(deploymentId);
   }

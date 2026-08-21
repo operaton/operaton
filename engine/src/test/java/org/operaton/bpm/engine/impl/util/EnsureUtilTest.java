@@ -14,28 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.impl.cmd;
+package org.operaton.bpm.engine.impl.util;
 
-import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
-import org.operaton.bpm.engine.impl.interceptor.Command;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-/**
- * @author Tom Baeyens
- */
-public @NullMarked class CheckPassword implements Command<Boolean> {
-  @Nullable String userId;
-  @Nullable String password;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-  public CheckPassword(@Nullable String userId, @Nullable String password) {
-    this.userId = userId;
-    this.password = password;
+class EnsureUtilTest {
+  @Test
+  void ensureActiveCommandContext_logsOperation_whenCommandContextIsNull() {
+    CommandContext commandContext = null;
+    assertThatThrownBy(() -> EnsureUtil.ensureActiveCommandContext(commandContext))
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("Operation EnsureUtilTest#ensureActiveCommandContext_logsOperation_whenCommandContextIsNull requires active command context.");
   }
-
-  @Override
-  public Boolean execute(CommandContext commandContext) {
-    return commandContext.getReadOnlyIdentityProvider().checkPassword(userId, password);
-  }
-
 }

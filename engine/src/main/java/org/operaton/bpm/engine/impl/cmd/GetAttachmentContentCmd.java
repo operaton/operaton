@@ -41,6 +41,9 @@ public class GetAttachmentContentCmd implements Command<InputStream> {
   public @Nullable InputStream execute(CommandContext commandContext) {
     DbEntityManager dbEntityManger = commandContext.getDbEntityManager();
     AttachmentEntity attachment = dbEntityManger.selectById(AttachmentEntity.class, attachmentId);
+    if (attachment==null) {
+      return null;
+    }
 
     String contentId = attachment.getContentId();
     if (contentId==null) {
@@ -48,6 +51,9 @@ public class GetAttachmentContentCmd implements Command<InputStream> {
     }
 
     ByteArrayEntity byteArray = dbEntityManger.selectById(ByteArrayEntity.class, contentId);
+    if (byteArray==null) {
+      return null;
+    }
     byte[] bytes = byteArray.getBytes();
 
     return new ByteArrayInputStream(bytes);

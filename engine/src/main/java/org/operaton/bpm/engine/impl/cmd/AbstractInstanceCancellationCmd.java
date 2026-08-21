@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,13 +27,14 @@ import org.operaton.bpm.engine.impl.util.ModificationUtil;
  * @author Thorben Lindhauer
  *
  */
+@NullMarked
 public abstract class AbstractInstanceCancellationCmd extends AbstractProcessInstanceModificationCommand {
 
   protected String cancellationReason;
 
   protected AbstractInstanceCancellationCmd(String processInstanceId) {
     super(processInstanceId);
-    this.cancellationReason = "Cancellation due to process instance modifcation";
+    this.cancellationReason = "Cancellation due to process instance modification";
   }
 
   protected AbstractInstanceCancellationCmd(String processInstanceId, String cancellationReason) {
@@ -73,9 +75,9 @@ public abstract class AbstractInstanceCancellationCmd extends AbstractProcessIns
     return null;
   }
 
-  protected abstract ExecutionEntity determineSourceInstanceExecution(CommandContext commandContext);
+  protected abstract @Nullable ExecutionEntity determineSourceInstanceExecution(CommandContext commandContext);
 
-  protected ExecutionEntity findSuperExecution(ExecutionEntity parentScopeExecution, ExecutionEntity topmostCancellableExecution){
+  protected @Nullable ExecutionEntity findSuperExecution(@Nullable ExecutionEntity parentScopeExecution, ExecutionEntity topmostCancellableExecution){
     ExecutionEntity superExecution = null;
     if(parentScopeExecution == null) {
       superExecution = topmostCancellableExecution.getSuperExecution();

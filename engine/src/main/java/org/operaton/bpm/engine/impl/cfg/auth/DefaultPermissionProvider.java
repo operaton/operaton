@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg.auth;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.authorization.Permission;
@@ -29,6 +30,7 @@ import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
  * @author Tobias Metzke
  *
  */
+@NullMarked
 public class DefaultPermissionProvider implements PermissionProvider {
 
   @Override

@@ -33,6 +33,8 @@ out/jreleaser
 .env
 .mvn/*
 !.mvn/wrapper/*
+!.mvn/extensions.xml
+!.mvn/maven-build-cache-config.xml
 *.log
 .jython_cache
 *.jar

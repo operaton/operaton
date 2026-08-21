@@ -20,6 +20,11 @@
     <cargo.timeout>240000</cargo.timeout>
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
     <cargo.start.jvmargs>-Dpolyglot.js.nashorn-compat=true</cargo.start.jvmargs>
+
+    <!-- The build cache cannot handle this module: Cargo's configuration
+      references runtime-reserved ports (see comment above), which fail URL
+      parsing when the extension replays the cached mojo list -->
+    <maven.build.cache.enabled>false</maven.build.cache.enabled>
   </properties>
   <dependencyManagement>
     <dependencies>

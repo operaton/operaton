@@ -64,6 +64,27 @@ jobs:
       contents: read
       checks: write
       actions: write
+    env:
+      # Build cache, but never for a max-profile run.
+      #
+      # Restoring a module skips its Surefire and JaCoCo executions and replays
+      # the stored surefire-reports instead. For an ordinary push that is the
+      # point. For the nightly it is not: the nightly exists to re-run
+      # everything and surface non-determinism, and a module unchanged since the
+      # last default-branch build would never be tested again. Both flaky
+      # failures found in August 2026 - the missing reactor edge in
+      # quarkus-extension and the fixed Jetty port in webapps/assembly - sat in
+      # unchanged modules and would have been restored rather than run.
+      #
+      # Keyed on the profile, not on github.event_name: nightly-trigger.yml
+      # dispatches this workflow with profile=max, and a manual dispatch used to
+      # reproduce a nightly failure passes the same value. Keying on the event
+      # would make that reproduction behave differently from the run it is meant
+      # to reproduce.
+      #
+      # Consequence: pushes (profile=normal) produce the cache that pr-build.yml
+      # restores; max runs neither read nor write it.
+      USE_BUILD_CACHE: ${{ (github.event.inputs.profile || 'normal') != 'max' }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7.0.1
@@ -76,6 +97,17 @@ jobs:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
+      # Sole producer of the Maven build cache, for the same reason this job is
+      # the sole m2-cache producer: entries written from a PR branch are
+      # readable only by that PR, so only a default-branch job can populate a
+      # cache that PR builds are able to restore.
+      - name: Restore Maven build cache
+        if: env.USE_BUILD_CACHE == 'true'
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2/build-cache
+          key: "${{ runner.os }}-build-cache-${{ github.sha }}"
+          restore-keys: ${{ runner.os }}-build-cache-
       - name: Cache SonarCloud packages
         uses: actions/cache@v6.1.0
         with:
@@ -121,14 +153,38 @@ jobs:
             BUILD_CMD="$BUILD_CMD --skip-tests"
           fi
 
+          # Restored modules keep reporting: .mvn/maven-build-cache-config.xml
+          # caches surefire-reports, site/jacoco and classes alongside the
+          # artifact, so this job stays the authoritative source of test and
+          # coverage data even when most of the reactor is restored.
+          # See USE_BUILD_CACHE at the job level for why max runs opt out.
+          BUILD_CMD="$BUILD_CMD -Dmaven.build.cache.enabled=${USE_BUILD_CACHE}"
+          if [ "$USE_BUILD_CACHE" != "true" ]; then
+            echo "ℹ️ profile=max — build cache off, every module is rebuilt and retested"
+          fi
+
           echo "ℹ️ Executing: $BUILD_CMD"
           $BUILD_CMD
 
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
+      - name: Build cache statistics
+        if: always()
+        shell: bash
+        run: |
+          echo "build cache size: $(du -sh ~/.m2/build-cache 2>/dev/null | cut -f1 || echo none)"
+          echo "cached module builds: $(find ~/.m2/build-cache -name buildinfo.xml 2>/dev/null | wc -l)"
+      # A max run builds with the extension disabled, so nothing new lands in
+      # ~/.m2/build-cache. Saving would burn a fresh sha-keyed entry in the
+      # shared 10 GB pool for no content.
+      - name: Save Maven build cache
+        if: env.USE_BUILD_CACHE == 'true'
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: ~/.m2/build-cache
+          key: "${{ runner.os }}-build-cache-${{ github.sha }}"
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
-        continue-on-error: true
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
@@ -211,6 +267,20 @@ jobs:
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
         continue-on-error: true
         run: gh cache delete ${{ github.run_id }}-build-artifacts
+      # The Maven build cache is saved under a new sha-keyed entry per default
+      # branch build, so without pruning it would accumulate in the shared
+      # 10 GB pool and evict the m2 and sonar caches. Keep the newest only.
+      - name: Prune superseded Maven build caches
+        continue-on-error: true
+        run: |
+          gh cache list --limit 100 --json id,key,createdAt \
+            | jq -r --arg prefix "${{ runner.os }}-build-cache-" \
+                '[.[] | select(.key | startswith($prefix))]
+                 | sort_by(.createdAt) | reverse | .[1:] | .[].id' \
+            | while read -r cache_id; do
+                echo "deleting superseded build cache $cache_id"
+                gh cache delete "$cache_id"
+              done
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'

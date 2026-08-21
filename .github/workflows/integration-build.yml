@@ -266,14 +266,18 @@ jobs:
           echo "database_version=$DATABASE_VERSION"
           SKIP_TESTS=${{ github.event.inputs.skip_tests || false }}
 
-          CMD=".devenv/scripts/build/build.sh --profile=max --reports"
+          # -Dmaven.build.cache.enabled=false: this job publishes artifacts, so
+          # everything it ships is built from source. The build cache is
+          # enabled only in build.yml and pr-build.yml. Passed explicitly
+          # rather than relying on the default in .mvn/maven.config.
+          CMD=".devenv/scripts/build/build.sh --profile=max --reports -Dmaven.build.cache.enabled=false"
           if [ "$SKIP_TESTS" = "true" ]; then
               CMD="$CMD --skip-tests"
           fi
           $CMD
 
           .github/scripts/prepare-reports.sh
-          ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
+          ./mvnw -Dmaven.build.cache.enabled=false -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       # Run-scoped handoffs go through artifacts, NOT actions/cache: the repo
@@ -553,7 +557,7 @@ jobs:
           EOF
       - name: Deploy to Maven Central
         run: |
-          ./mvnw deploy -DskipTests -s ./.mvn/settings.xml -Psonatype-oss-snapshot,-distro
+          ./mvnw -Dmaven.build.cache.enabled=false deploy -DskipTests -s ./.mvn/settings.xml -Psonatype-oss-snapshot,-distro
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 

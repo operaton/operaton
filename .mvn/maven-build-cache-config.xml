@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Configuration for the Maven Build Cache Extension (declared in extensions.xml).
+
+  The cache is DISABLED by default via -Dmaven.build.cache.enabled=false in
+  .mvn/maven.config so local developer builds behave exactly as before.
+  Opt in per invocation with -Dmaven.build.cache.enabled=true.
+
+  Only the local filesystem cache is used (default location ~/.m2/build-cache);
+  no remote cache is configured.
+
+  Restoring a module skips its Surefire and JaCoCo executions. Everything a
+  restored module would otherwise have written and a later step still reads
+  therefore has to be cached with it, or the pipeline keeps building but
+  quietly stops reporting: see attachedOutputs below.
+
+  The release pipeline never uses this cache. release.yml and the publishing
+  jobs of integration-build.yml pass -Dmaven.build.cache.enabled=false
+  explicitly; released artifacts are always built from source.
+-->
+<cache xmlns="http://maven.apache.org/BUILD-CACHE-CONFIG/1.0.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://maven.apache.org/BUILD-CACHE-CONFIG/1.0.0 https://maven.apache.org/xsd/build-cache-config-1.0.0.xsd">
+  <configuration>
+    <enabled>true</enabled>
+    <remote enabled="false">
+      <url>http://localhost</url>
+    </remote>
+    <local>
+      <maxBuildsCached>3</maxBuildsCached>
+    </local>
+    <attachedOutputs>
+      <dirNames>
+        <!-- Restoring a module puts back its packaged artifact, but not the
+             directories the reporting steps read afterwards. Without these,
+             a cached build still succeeds and silently reports nothing:
+
+             classes          sonar-maven-plugin derives sonar.java.binaries
+                              from ${project.build.outputDirectory}; a
+                              restored module without it cannot be analysed.
+             surefire-reports the Publish Test Report steps read these, and
+                              require_passed_tests fails a build that has
+                              none. A restored module has to bring back the
+                              reports of the run that produced its artifact.
+             site/jacoco      per-module coverage XML consumed by SonarQube.
+
+             Not cached: target/jacoco.exec. dirNames attaches directories,
+             not single files, and the only consumer is the report-aggregate
+             call in build.yml, which runs non-recursively against a root pom
+             that declares no dependencies and so aggregates nothing. -->
+        <dirName>classes</dirName>
+        <dirName>surefire-reports</dirName>
+        <dirName>site/jacoco</dirName>
+      </dirNames>
+    </attachedOutputs>
+  </configuration>
+  <input>
+    <global>
+      <excludes>
+        <!-- IDE/tooling state and frontend build side effects must not
+             feed the module checksum, or identical rebuilds miss the cache -->
+        <exclude>.claude</exclude>
+        <exclude>node_modules</exclude>
+        <exclude>node</exclude>
+      </excludes>
+    </global>
+  </input>
+  <executionControl>
+    <runAlways>
+      <plugins>
+        <!-- reserve-network-port writes runtime properties (e.g.
+             tomcat.connector.http.port) that other plugin configurations
+             reference; it must execute even when a module is restored -->
+        <plugin artifactId="build-helper-maven-plugin"/>
+        <!-- the npm build writes webapps/frontend/target/webapp, which the
+             operaton-webapp WAR consumes as a resource directory across
+             module boundaries; restoring only Maven artifacts silently
+             produces a WAR without the frontend -->
+        <plugin artifactId="frontend-maven-plugin"/>
+      </plugins>
+      <goalsLists>
+        <!-- forced npm builds (above) consume files that dependency:unpack
+             writes into target/, e.g. the OpenAPI spec in engine-rest/docs;
+             a forced step needs its producers forced as well -->
+        <goalsList artifactId="maven-dependency-plugin">
+          <goals>
+            <goal>unpack</goal>
+          </goals>
+        </goalsList>
+      </goalsLists>
+    </runAlways>
+    <reconcile>
+      <plugins>
+        <!-- Without these the extension has no reason to tell a build that
+             ran the tests apart from one that skipped them: the module
+             checksum is identical either way. A test-skipping build would
+             populate entries that a later testing build accepts as a hit,
+             and the tests would stay skipped until the entry is evicted.
+             This project runs test-skipping builds routinely (the skip-tests
+             flag of build.sh, and the skip_tests input of
+             integration-build.yml, which defaults to true). -->
+        <plugin artifactId="maven-surefire-plugin" goal="test">
+          <reconciles>
+            <reconcile propertyName="skip" skipValue="true"/>
+            <reconcile propertyName="skipExec" skipValue="true"/>
+            <reconcile propertyName="skipTests" skipValue="true"/>
+            <reconcile propertyName="testFailureIgnore" skipValue="true"/>
+          </reconciles>
+        </plugin>
+        <plugin artifactId="maven-failsafe-plugin" goal="integration-test">
+          <reconciles>
+            <reconcile propertyName="skip" skipValue="true"/>
+            <reconcile propertyName="skipExec" skipValue="true"/>
+            <reconcile propertyName="skipTests" skipValue="true"/>
+            <reconcile propertyName="testFailureIgnore" skipValue="true"/>
+          </reconciles>
+        </plugin>
+        <plugin artifactId="maven-compiler-plugin" goal="compile">
+          <reconciles>
+            <reconcile propertyName="skip" skipValue="true"/>
+            <reconcile propertyName="debug"/>
+            <reconcile propertyName="release"/>
+          </reconciles>
+        </plugin>
+      </plugins>
+    </reconcile>
+  </executionControl>
+</cache>

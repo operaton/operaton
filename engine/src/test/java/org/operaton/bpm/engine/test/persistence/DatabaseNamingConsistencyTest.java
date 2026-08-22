@@ -34,7 +34,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DatabaseNamingConsistencyTest {
 
-  public static final String COLUMN_NAME_REGEX = "(?<![a-zA-Z_])(?=[A-Z_]*[a-z])([a-zA-Z_]+_)[,\\s]";
+  // Quantifier bounds keep the scan linear (java:S8786); no scanned identifier exceeds 74 chars.
+  public static final String COLUMN_NAME_REGEX = "(?<![a-zA-Z_])(?=[A-Z_]{0,200}[a-z])([a-zA-Z_]{1,200}_)[,\\s]";
   public static final String[] SCANNED_FOLDERS = {
       "org/operaton/bpm/engine/impl/mapping/entity/",
       "org/operaton/bpm/engine/db/create", "org/operaton/bpm/engine/db/drop",

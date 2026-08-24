@@ -1,5 +1,8 @@
 name: GitHub Actions Security Analysis with zizmor 🌈
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: ["main", "release/**"]

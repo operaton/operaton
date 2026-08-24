@@ -1,5 +1,7 @@
 name: Integration Build
 
+permissions: {}
+
 on:
   workflow_dispatch:        # Allows manual trigger
     inputs:
@@ -97,6 +99,8 @@ jobs:
   determine-pr-config:
     name: Determine PR Configuration
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     if: github.event_name == 'pull_request' || github.event_name == 'push'
     outputs:
       needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
@@ -224,6 +228,8 @@ jobs:
       matrix:
         java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21", "25"]') }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs:
       - determine-pr-config
     if: |
@@ -333,6 +339,9 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     needs:
       - determine-pr-config
       - build
@@ -452,6 +461,9 @@ jobs:
   spring-boot-starter-integration-tests:
     name: Spring Boot Starter Integration Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     needs:
       - determine-pr-config
     if: |
@@ -500,6 +512,8 @@ jobs:
   documentation:
     name: Documentation
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs:
       - determine-pr-config
     if: |
@@ -532,6 +546,8 @@ jobs:
       - build
       - integration-tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     if: |
       always() && !cancelled() && (
         github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false'
@@ -589,6 +605,9 @@ jobs:
       - integration-tests
       - documentation
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      checks: write
     if: |
       always() && !cancelled() && (
         github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false'

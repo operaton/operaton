@@ -1,5 +1,9 @@
 name: Add Good First Issue Comment from Template
 
+permissions:
+  contents: read
+  issues: write
+
 on:
   issues:
     types: [labeled]

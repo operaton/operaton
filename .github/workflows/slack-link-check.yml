@@ -1,5 +1,9 @@
 name: Check Slack Invite Link
 
+permissions:
+  contents: read
+  issues: write
+
 on:
   schedule:
     - cron: "0 6 * * *"

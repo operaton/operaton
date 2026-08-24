@@ -3,6 +3,8 @@
 # matrix against the staged artifacts instead of rebuilding them per matrix cell.
 name: PR Build
 
+permissions: {}
+
 on:
   pull_request:
     branches:
@@ -33,6 +35,8 @@ jobs:
   determine-pr-config:
     name: Determine PR Configuration
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
       needs_spring_boot_starter_tests: ${{ steps.check-pr.outputs.needs_spring_boot_starter_tests }}
@@ -254,6 +258,9 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     needs:
       - determine-pr-config
       - build
@@ -337,6 +344,9 @@ jobs:
   spring-boot-starter-integration-tests:
     name: Spring Boot Starter Integration Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     needs:
       - determine-pr-config
       - build
@@ -388,6 +398,9 @@ jobs:
   quarkus-tests:
     name: Quarkus Extension Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     needs:
       - determine-pr-config
       - build
@@ -440,6 +453,8 @@ jobs:
   webapps-neo-frontend:
     name: Webapps Neo Frontend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       # Carbon pulls in @ibm/telemetry-js, which reports to IBM on every install.
       IBM_TELEMETRY_DISABLED: "true"

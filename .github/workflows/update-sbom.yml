@@ -1,5 +1,8 @@
 name: Update SBOMs
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:        # Allows manual trigger
   push:

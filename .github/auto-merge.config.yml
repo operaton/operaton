@@ -99,6 +99,7 @@ auto-merge-rules:
       # Maven plugins
       - 'com.mycila:license-maven-plugin'
       - 'org.apache.felix:maven-bundle-plugin'
+      - 'org.apache.maven.extensions:maven-build-cache-extension'
       - 'org.apache.maven.plugins'
       - 'org.codehaus.cargo:cargo-maven3-plugin'
       - 'org.codehaus.mojo:*'

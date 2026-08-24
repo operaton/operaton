@@ -3,10 +3,13 @@ name: GitHub Actions Security Analysis with zizmor 🌈
 on:
   push:
     branches: ["main", "release/**"]
+    paths:
+      - .github/workflows/*.yml
+      - .github/actions/*.yml
   pull_request:
-    branches: ["**"] # If the runtime is quick enough
-
-permissions: {}
+    paths:
+      - .github/workflows/*.yml
+      - .github/actions/*.yml
 
 jobs:
   zizmor:

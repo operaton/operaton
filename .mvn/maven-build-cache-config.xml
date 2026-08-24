@@ -77,6 +77,8 @@
              module boundaries; restoring only Maven artifacts silently
              produces a WAR without the frontend -->
         <plugin artifactId="frontend-maven-plugin"/>
+        <!-- restored modules must still reach ~/.m2 -->
+        <plugin artifactId="maven-install-plugin"/>
       </plugins>
       <goalsLists>
         <!-- forced npm builds (above) consume files that dependency:unpack

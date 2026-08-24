@@ -322,8 +322,8 @@ jobs:
 
       - name: Check out the code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
+        # required by add-and-commit action to push with the same credentials
+        persist-credentials: true
       - name: Update the release branch
         run: |
           git pull

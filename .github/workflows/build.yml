@@ -137,6 +137,11 @@ jobs:
       - name: Maven Build
         id: maven-build
         shell: bash
+        env:
+          INPUT_PROFILE: ${{ github.event.inputs.profile || 'normal' }}
+          INPUT_RUNNER: ${{ github.event.inputs.runner || 'mvnd' }}
+          INPUT_REPORTS: ${{ github.event.inputs.reports || 'false' }}
+          INPUT_SKIP_TESTS: ${{ github.event.inputs.skip_tests || 'false' }}
         run: |
           .github/scripts/jacoco-create-flag-files.sh
 
@@ -144,21 +149,21 @@ jobs:
           BUILD_CMD=".devenv/scripts/build/build.sh"
 
           # Add profile parameter
-          PROFILE="${{ github.event.inputs.profile || 'normal' }}"
+          PROFILE="${INPUT_PROFILE}"
           BUILD_CMD="$BUILD_CMD --profile=$PROFILE"
 
           # Add runner parameter
-          RUNNER="${{ github.event.inputs.runner || 'mvnd' }}"
+          RUNNER="${INPUT_RUNNER}"
           BUILD_CMD="$BUILD_CMD --runner=$RUNNER"
 
           # Add reports flag if enabled
-          REPORTS="${{ github.event.inputs.reports || 'false' }}"
+          REPORTS="${INPUT_REPORTS}"
           if [ "$REPORTS" = "true" ]; then
             BUILD_CMD="$BUILD_CMD --reports"
           fi
 
           # Add skip-tests flag if enabled
-          SKIP_TESTS="${{ github.event.inputs.skip_tests || 'false' }}"
+          SKIP_TESTS="${INPUT_SKIP_TESTS}"
           if [ "$SKIP_TESTS" = "true" ]; then
             BUILD_CMD="$BUILD_CMD --skip-tests"
           fi

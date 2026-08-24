@@ -147,7 +147,7 @@ jobs:
             echo "🍃 PR has scope:spring-boot label"
             NEEDS_SBS_TESTS=true
           elif [ "${{ github.event_name }}" = "pull_request" ]; then
-            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD 2>/dev/null || true)
+            CHANGED_FILES=$(git diff --name-only origin/${GITHUB_BASE_REF}...HEAD 2>/dev/null || true)
             if echo "$CHANGED_FILES" | grep -qE '^(parent/pom\.xml|bom/|engine/pom\.xml|engine-dmn/)'; then
               echo "📦 Changes to platform core files (parent/pom.xml, bom/, engine/pom.xml, engine-dmn/) affect the Spring Boot Starter"
               NEEDS_SBS_TESTS=true
@@ -255,6 +255,8 @@ jobs:
       - name: Maven Build
         id: maven-build
         shell: bash
+        env:
+          INPUT_SKIP_TESTS: ${{ github.event.inputs.skip_tests || false }}
         run: |
           .github/scripts/jacoco-create-flag-files.sh
           PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
@@ -266,7 +268,7 @@ jobs:
           DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
-          SKIP_TESTS=${{ github.event.inputs.skip_tests || false }}
+          SKIP_TESTS="${INPUT_SKIP_TESTS}"
 
           # -Dmaven.build.cache.enabled=false: this job publishes artifacts, so
           # everything it ships is built from source. The build cache is
@@ -305,7 +307,9 @@ jobs:
             target/*.zip; do
             [ -f "$f" ] && printf '%s\n' "$f"
           done > /tmp/build-artifacts.lst
-          tar -czf /tmp/build-artifacts-${{ matrix.java }}.tar.gz --files-from /tmp/build-artifacts.lst
+          tar -czf /tmp/build-artifacts-${MATRIX_JAVA}.tar.gz --files-from /tmp/build-artifacts.lst
+        env:
+          MATRIX_JAVA: ${{ matrix.java }}
       - name: Upload build artifacts
         if: matrix.java == '17'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -395,25 +399,35 @@ jobs:
         id: maven-engine-integration-tests
         if: ${{ matrix.testsuite == 'engine' }}
         shell: bash
+        env:
+          MATRIX_TESTSUITE: ${{ matrix.testsuite }}
+          MATRIX_DISTRO: ${{ matrix.distro }}
+          MATRIX_DATABASE: ${{ matrix.database }}
         run: |
           NO_BUILD=""
           if [ "${{ needs.build.result }}" = "success" ]; then NO_BUILD="--no-build"; fi
-          .devenv/scripts/build/build-and-run-integration-tests.sh $NO_BUILD --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
+          .devenv/scripts/build/build-and-run-integration-tests.sh $NO_BUILD --testsuite=${MATRIX_TESTSUITE} --distro=${MATRIX_DISTRO} --db=${MATRIX_DATABASE}
       - name: Execute Webapps Integration Tests
         id: maven-webapps-integration-tests
         if: ${{ matrix.testsuite == 'webapps' && matrix.database == 'h2' }}
         shell: bash
+        env:
+          MATRIX_TESTSUITE: ${{ matrix.testsuite }}
+          MATRIX_DISTRO: ${{ matrix.distro }}
+          MATRIX_DATABASE: ${{ matrix.database }}
         run: |
           NO_BUILD=""
           if [ "${{ needs.build.result }}" = "success" ]; then NO_BUILD="--no-build"; fi
           .github/scripts/install-chrome-and-driver.sh
-          .devenv/scripts/build/build-and-run-integration-tests.sh $NO_BUILD --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
+          .devenv/scripts/build/build-and-run-integration-tests.sh $NO_BUILD --testsuite=${MATRIX_TESTSUITE} --distro=${MATRIX_DISTRO} --db=${MATRIX_DATABASE}
       - name: Execute Database Upgrade Tests
         id: maven-db-upgrade-tests
         if: ${{ matrix.database == 'h2' }}
         shell: bash
+        env:
+          MATRIX_DATABASE: ${{ matrix.database }}
         run: |
-          .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build
+          .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${MATRIX_DATABASE} --no-build
       - name: Publish Test Report
         if: ${{ matrix.testsuite != 'webapps' || matrix.database == 'h2' }}
         uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
@@ -654,12 +668,13 @@ jobs:
       - name: Notify Docker Repository
         env:
           DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
+          NEEDS_BUILD_OUTPUTS_VERSION: ${{ needs.build.outputs.version}}
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"ref":"main","inputs":{"version": "${{ needs.build.outputs.version}}","snapshot": "true"}}' \
+            -d '{"ref":"main","inputs":{"version": "${NEEDS_BUILD_OUTPUTS_VERSION}","snapshot": "true"}}' \
             https://api.github.com/repos/operaton/operaton-docker/actions/workflows/build-test-and-publish.yml/dispatches)
           if [ "$response" -ne 204 ]; then
             echo "Failed to notify Docker repository. HTTP response code: $response"

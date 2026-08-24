@@ -24,8 +24,10 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: Update Slack Invitation URL
+        env:
+          GITHUB_EVENT_INPUTS_SLACK_URL: ${{ github.event.inputs.slack_url}}
         run: |
-          .devenv/scripts/maintenance/update-slack-link.sh ${{ github.event.inputs.slack_url}}
+          .devenv/scripts/maintenance/update-slack-link.sh ${GITHUB_EVENT_INPUTS_SLACK_URL}
         shell: bash
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7.2.0

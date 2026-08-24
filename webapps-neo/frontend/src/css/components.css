@@ -1697,3 +1697,12 @@ nav:has(> .breadcrumbs) {
 }
 
 /* migrations page */
+
+/* help page */
+
+/* WCAG 2.5.8 asks for 24px targets. */
+.help-page li a {
+  display: inline-block;
+  min-height: 24px;
+  padding-block: 2px;
+}

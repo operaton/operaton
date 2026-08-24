@@ -19,10 +19,8 @@
 const AUTH_MODE_BASIC = "basic",
   AUTH_MODE_OAUTH2 = "oauth2"
 
-// Where config.json lives, relative to the document. Honours a sub-path
-// deployment (`operaton.bpm.webapp.neo.application-path`) because index.html is
-// served from that path too.
-const config_url = () => new URL("config.json", document.baseURI).href
+// Where config.json lives. Root deployment only.
+const config_url = () => new URL("config.json", location.origin).href
 
 // A DOCKER_RUN_PLACEHOLDER_* name that was never substituted must be treated as
 // unset, otherwise it is taken for a real value. See env.sh.

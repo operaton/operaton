@@ -17,9 +17,8 @@ export const _url_server = (state) => `${state.server.value.url}`;
  */
 export const _is_own_backend = (state) => !state.server?.value?.url;
 
-/** Base of the webapp's own API, honouring a sub-path deployment. */
-export const _url_api = () =>
-  new URL("api", document.baseURI).href.replace(/\/$/, "");
+/** API base. Root deployments only. */
+export const _url_api = () => new URL("api", location.origin).href;
 
 /**
  * Where engine requests go.
@@ -138,6 +137,7 @@ export const RequestState = ({
   on_error = null,
   on_nothing = null,
   on_load = null,
+  cell_span = null,
 }) => {
   const [t] = useTranslation(),
     is_array = Array.isArray(signal),
@@ -155,61 +155,72 @@ export const RequestState = ({
         (sig) => sig.value.status === RESPONSE_STATE.ERROR,
       );
       if (error) {
-        return resolve_signal(error, on_load, on_success, on_error, t);
+        return resolve_signal(error, on_load, on_success, on_error, t, cell_span);
       }
 
       const not_init = signal.find(
         (sig) => sig.value.status === RESPONSE_STATE.NOT_INITIALIZED,
       );
       if (not_init) {
-        return resolve_signal(not_init, on_load, on_success, on_error, t);
+        return resolve_signal(not_init, on_load, on_success, on_error, t, cell_span);
       }
 
       const loading = signal.find(
         (sig) => sig.value.status === RESPONSE_STATE.LOADING,
       );
       if (loading) {
-        return resolve_signal(loading, on_load, on_success, on_error, t);
+        return resolve_signal(loading, on_load, on_success, on_error, t, cell_span);
       }
 
-      return resolve_signal(signal[0], on_load, on_success, on_error, t);
+      return resolve_signal(signal[0], on_load, on_success, on_error, t, cell_span);
     }
-    return resolve_signal(signal, on_load, on_success, on_error, t);
+    return resolve_signal(signal, on_load, on_success, on_error, t, cell_span);
   }
   if (on_nothing) {
     return on_nothing();
   }
-  return <p class="fade-in-delayed">{t("common.fetching")}</p>;
+  return status(cell_span, <p class="fade-in-delayed">{t("common.fetching")}</p>);
 };
 
-const resolve_signal = (signal, on_load, on_success, on_error, t) => {
+/** A tbody status must be a row. */
+const status = (cell_span, content) =>
+  cell_span ? (
+    <tr>
+      <td colSpan={cell_span}>{content}</td>
+    </tr>
+  ) : (
+    content
+  );
+
+const resolve_signal = (signal, on_load, on_success, on_error, t, cell_span) => {
   if (signal.value.status === RESPONSE_STATE.NOT_INITIALIZED) {
-    return <p>{t("common.no-data-requested")}</p>;
+    return status(cell_span, <p>{t("common.no-data-requested")}</p>);
   }
 
   if (signal.value.status === RESPONSE_STATE.LOADING) {
-    return on_load ? (
-      on_load
-    ) : (
-      <p class="fade-in-delayed">{t("common.loading")}</p>
-    );
+    return on_load
+      ? on_load
+      : status(cell_span, <p class="fade-in-delayed">{t("common.loading")}</p>);
   }
 
   if (signal.value.status === RESPONSE_STATE.SUCCESS) {
-    return signal.value?.data ? on_success() : <p>{t("common.no-data")}</p>;
+    return signal.value?.data
+      ? on_success()
+      : status(cell_span, <p>{t("common.no-data")}</p>);
   }
 
   if (signal.value.status === RESPONSE_STATE.ERROR) {
-    return on_error ? (
-      on_error
-    ) : (
-      <p class="error">
-        <strong>{t("common.error")}</strong>
-        {signal.value.error !== undefined
-          ? signal.value.error.message
-          : t("common.no-error-message")}
-      </p>
-    );
+    return on_error
+      ? on_error
+      : status(
+          cell_span,
+          <p class="error">
+            <strong>{t("common.error")}</strong>
+            {signal.value.error !== undefined
+              ? signal.value.error.message
+              : t("common.no-error-message")}
+          </p>,
+        );
   }
 };
 

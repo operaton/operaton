@@ -130,6 +130,12 @@
     padding: 0.2em;
     background-color: #fff4f2;
     color: #bb2511;
+
+    a {
+      /* Dark theme link colour drops to 2.5:1. */
+      color: inherit;
+      text-decoration: underline;
+    }
   }
 }
 

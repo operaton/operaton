@@ -94,6 +94,7 @@ const StartableProcessesList = () => {
       </thead>
       <tbody>
       <RequestState
+        cell_span={4}
         signal={state.api.process.definition.list_startable}
         on_success={() =>
           <>

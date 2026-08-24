@@ -4,7 +4,7 @@ export const Home = () => {
   const [t] = useTranslation();
 
   return (
-    <main id="content" class="p-3">
+    <main id="content" class="p-3 help-page">
       <h1 class="screen-hidden">{t("home.welcome")}</h1>
       <h2>{t("home.welcome")}</h2>
       <p>

@@ -3,6 +3,7 @@ import { signal } from "@preact/signals";
 import {
   _url_server,
   _url_engine_rest,
+  _url_api,
   get_credentials,
   get_auth_header,
   has_data,
@@ -50,6 +51,14 @@ describe("api/helper", () => {
     it("should handle URLs without trailing slash", () => {
       const state = createMockState("http://127.0.0.1:5173");
       expect(_url_engine_rest(state)).toBe("http://127.0.0.1:5173/engine-rest");
+    });
+
+    it("should build the API URL independent of the route", () => {
+      const origin = location.origin;
+      for (const path of ["/", "/tasks", "/tasks/an-id", "/a/b/c/d"]) {
+        window.happyDOM.setURL(origin + path);
+        expect(_url_api()).toBe(`${origin}/api`);
+      }
     });
   });
 

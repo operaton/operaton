@@ -215,6 +215,7 @@ const DeploymentsList = () => {
         </thead>
         <tbody>
           <RequestState
+            cell_span={2}
             signal={state.api.deployment.all}
             on_success={() =>
               state.api.deployment.all.value?.data.map((deployment) => (
@@ -365,6 +366,7 @@ const ResourcesList = () => {
         </thead>
         <tbody>
           <RequestState
+            cell_span={1}
             signal={state.api.deployment.resources}
             on_success={() =>
               state.api.deployment.resources.value?.data.map((resource) => (
@@ -372,7 +374,7 @@ const ResourcesList = () => {
                   key={resource.id}
                   aria-selected={params.resource_name === resource.name}
                 >
-                  <th scope="row">
+                  <td>
                     <a
                       href={`/deployments/${params.deployment_id}/${resource.name}`}
                     >
@@ -380,7 +382,7 @@ const ResourcesList = () => {
                         ? resource.name.split("/").pop().trim()
                         : resource.name || "N/A"}
                     </a>
-                  </th>
+                  </td>
                 </tr>
               ))
             }

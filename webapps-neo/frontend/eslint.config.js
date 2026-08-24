@@ -35,6 +35,13 @@ export default [
       // attribute so it doesn't flag correctly-associated Preact labels.
       "jsx-a11y": { attributes: { for: ["htmlFor", "for"] } },
     },
+    rules: {
+      // A scrollable region needs tabindex for keyboard scrolling.
+      "jsx-a11y/no-noninteractive-tabindex": [
+        "error",
+        { tags: [], roles: ["tabpanel", "region"] },
+      ],
+    },
   },
   {
     // Playwright fixtures take a `use` callback, which the React Hooks rule

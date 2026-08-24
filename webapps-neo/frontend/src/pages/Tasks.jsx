@@ -336,7 +336,12 @@ const TaskList = () => {
         on_change={apply_patch}
         on_manage={open_manage}
       />
-      <div id="task-table-wrapper">
+      <div
+        id="task-table-wrapper"
+        role="region"
+        aria-label={t("tasks.title")}
+        tabindex="0"
+      >
         <table>
           <thead>
             <tr>
@@ -347,6 +352,7 @@ const TaskList = () => {
           </thead>
           <tbody>
             <RequestState
+              cell_span={3}
               signal={taskList}
               on_success={() =>
                 taskList.value?.data?.map((task) => (

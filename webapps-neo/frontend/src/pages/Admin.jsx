@@ -566,6 +566,7 @@ const UserList = () => {
       </thead>
       <tbody>
       <RequestState
+        cell_span={4}
         signal={users}
         on_success={() => users.value?.data.map(({ id, firstName, lastName, email }) => (
           <tr key={id}>
@@ -941,6 +942,7 @@ const AuthorizationsPage = () => {
           </thead>
           <tbody>
           <RequestState
+            cell_span={5}
             signal={state.api.authorization.all}
             on_success={() => state.api.authorization.all.value.data.map((authorization) =>
               <AuthorizationResourceRow key={authorization.id} authorization={authorization} />)} />

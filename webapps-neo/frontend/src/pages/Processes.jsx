@@ -1316,21 +1316,32 @@ const InstanceVariables = () => {
     load();
   };
 
+  /** An empty tbody leaves the headers undescribed. */
+  const or_empty = (rows) =>
+    rows.length ? (
+      rows
+    ) : (
+      <tr>
+        <td colSpan={4}>{t("common.no-data")}</td>
+      </tr>
+    );
+
   return (
     <div>
       <table>
         <thead>
           <tr>
-            <th>{t("common.name")}</th>
-            <th>{t("common.type")}</th>
-            <th>{t("common.value")}</th>
-            <th>{t("common.actions")}</th>
+            <th scope="col">{t("common.name")}</th>
+            <th scope="col">{t("common.type")}</th>
+            <th scope="col">{t("common.value")}</th>
+            <th scope="col">{t("common.actions")}</th>
           </tr>
         </thead>
         <tbody>
           {vars_ready
-            ? !history_mode
-              ? Object.entries(vars_data).map(([name, { type, value }]) => (
+            ? or_empty(
+                !history_mode
+                  ? Object.entries(vars_data).map(([name, { type, value }]) => (
                   <tr key={name}>
                     <td>{name}</td>
                     <td>{type}</td>
@@ -1356,16 +1367,21 @@ const InstanceVariables = () => {
                       </div>
                     </td>
                   </tr>
-                ))
-              : vars_data.map(({ id, name, type, value }) => (
-                  <tr key={id ?? name}>
-                    <td>{name}</td>
-                    <td>{type}</td>
-                    <td>{format_variable_value(value)}</td>
-                    <td />
-                  </tr>
-                ))
-            : t("common.loading")}
+                    ))
+                  : vars_data.map(({ id, name, type, value }) => (
+                      <tr key={id ?? name}>
+                        <td>{name}</td>
+                        <td>{type}</td>
+                        <td>{format_variable_value(value)}</td>
+                        <td />
+                      </tr>
+                    )),
+              )
+            : (
+                <tr>
+                  <td colSpan={4}>{t("common.loading")}</td>
+                </tr>
+              )}
         </tbody>
       </table>
       {!history_mode && (

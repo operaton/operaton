@@ -96,12 +96,12 @@ jobs:
       USE_BUILD_CACHE: ${{ (github.event.inputs.profile || 'normal') != 'max' && github.event.inputs.skip_tests != 'true' }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
       - name: Restore Maven packages
         id: m2-cache
-        uses: actions/cache/restore@v6.1.0
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -112,19 +112,19 @@ jobs:
       # cache that PR builds are able to restore.
       - name: Restore Maven build cache
         if: env.USE_BUILD_CACHE == 'true'
-        uses: actions/cache/restore@v6.1.0
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2/build-cache
           key: "${{ runner.os }}-build-cache-${{ github.sha }}"
           restore-keys: ${{ runner.os }}-build-cache-
       - name: Cache SonarCloud packages
-        uses: actions/cache@v6.1.0
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Setup Node
-        uses: actions/setup-node@v7.0.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
           cache: 'npm'
@@ -188,7 +188,7 @@ jobs:
       # shared 10 GB pool for no content.
       - name: Save Maven build cache
         if: env.USE_BUILD_CACHE == 'true'
-        uses: actions/cache/save@v6.1.0
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2/build-cache
           key: "${{ runner.os }}-build-cache-${{ github.sha }}"
@@ -204,7 +204,7 @@ jobs:
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
@@ -222,7 +222,7 @@ jobs:
           "-Dsonar.coverage.exclusions=qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**,webapps/**"
         continue-on-error: true
       - name: Cache build artifacts
-        uses: actions/cache/save@v6.1.0
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             distro/**/target/operaton-*.gz
@@ -240,7 +240,7 @@ jobs:
         run: rm -rf ~/.m2/repository/org/operaton
       - name: Save Maven packages
         if: steps.m2-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v6.1.0
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -257,12 +257,12 @@ jobs:
     continue-on-error: true
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
       - name: Restore build artifacts cache
         id: restore-build-artifacts
-        uses: actions/cache/restore@v6.1.0
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             distro/**/target/operaton-*.gz
@@ -298,7 +298,7 @@ jobs:
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
@@ -307,7 +307,7 @@ jobs:
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-*.tar.gz

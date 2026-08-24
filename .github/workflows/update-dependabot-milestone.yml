@@ -32,6 +32,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Update dependabot milestone
         env:

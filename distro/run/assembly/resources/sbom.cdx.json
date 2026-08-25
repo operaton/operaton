@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:f4fa8111-2c6b-46b8-9651-91af8067c3cd",
+  "serialNumber": "urn:uuid:e6496300-03a3-453c-9035-fe6cda05cc18",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-25T06:54:09Z",
+    "timestamp": "2026-08-25T18:58:29Z",
     "tools": {
       "components": [
         {
@@ -22810,7 +22810,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "f6bfae6c-3562-4256-b9e3-104c73ae390c",
+      "bom-ref": "8bc904fc-cdc3-47e9-ab0e-3c50aae9abb1",
       "name": "package-lock.json",
       "properties": [
         {
@@ -25922,9 +25922,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.10.1",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.11.0",
       "name": "fast-xml-parser",
-      "version": "5.10.1",
+      "version": "5.11.0",
       "licenses": [
         {
           "license": {
@@ -25932,11 +25932,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.10.1",
+      "purl": "pkg:npm/fast-xml-parser@5.11.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.10.1"
+          "value": "fast-xml-parser@5.11.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -27706,9 +27706,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/strnum@2.4.1",
+      "bom-ref": "pkg:npm/strnum@2.4.2",
       "name": "strnum",
-      "version": "2.4.1",
+      "version": "2.4.2",
       "licenses": [
         {
           "license": {
@@ -27716,11 +27716,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/strnum@2.4.1",
+      "purl": "pkg:npm/strnum@2.4.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "strnum@2.4.1"
+          "value": "strnum@2.4.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28066,7 +28066,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "7820154e-2eb5-4857-9a0f-62a923a5b566",
+      "bom-ref": "69a391e6-f5d1-4ef1-a380-dfa2a7e56d83",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -30897,13 +30897,13 @@
       "dependsOn": []
     },
     {
-      "ref": "7820154e-2eb5-4857-9a0f-62a923a5b566",
+      "ref": "69a391e6-f5d1-4ef1-a380-dfa2a7e56d83",
       "dependsOn": [
-        "f6bfae6c-3562-4256-b9e3-104c73ae390c"
+        "8bc904fc-cdc3-47e9-ab0e-3c50aae9abb1"
       ]
     },
     {
-      "ref": "f6bfae6c-3562-4256-b9e3-104c73ae390c",
+      "ref": "8bc904fc-cdc3-47e9-ab0e-3c50aae9abb1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.25.0",
@@ -30939,7 +30939,7 @@
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.4.13",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.10.1",
+        "pkg:npm/fast-xml-parser@5.11.0",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.18.1",
@@ -31861,13 +31861,13 @@
       ]
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.10.1",
+      "ref": "pkg:npm/fast-xml-parser@5.11.0",
       "dependsOn": [
         "pkg:npm/%40nodable/entities@3.0.0",
         "pkg:npm/fast-xml-builder@1.2.0",
         "pkg:npm/is-unsafe@2.0.0",
         "pkg:npm/path-expression-matcher@1.6.2",
-        "pkg:npm/strnum@2.4.1",
+        "pkg:npm/strnum@2.4.2",
         "pkg:npm/xml-naming@0.3.0"
       ]
     },
@@ -32266,7 +32266,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/strnum@2.4.1",
+      "ref": "pkg:npm/strnum@2.4.2",
       "dependsOn": [
         "pkg:npm/anynum@1.0.1"
       ]

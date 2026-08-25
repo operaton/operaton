@@ -34,44 +34,49 @@ runs:
   using: "composite"
   steps:
     - name: Define mvnd Variables
+      id: set-mvnd-vars
       env:
         MVND_VERSION: ${{ inputs.mvnd-version }}
         MVND_PLATFORM: ${{ inputs.platform }}
       shell: bash
       run: |
         MVND_DIR="$HOME/mvnd"
-        
-        echo "MVND_VERSION=$MVND_VERSION" >> $GITHUB_ENV
-        echo "MVND_PLATFORM=$MVND_PLATFORM" >> $GITHUB_ENV
-        echo "MVND_DIR=$MVND_DIR" >> $GITHUB_ENV
-        
         MVND_FILENAME="maven-mvnd-$MVND_VERSION-$MVND_PLATFORM.zip"
         MVND_URL="https://downloads.apache.org/maven/mvnd/$MVND_VERSION/$MVND_FILENAME"
-        
-        echo "MVND_URL=$MVND_URL" >> $GITHUB_ENV
-        echo "MVND_FILENAME=$MVND_FILENAME" >> $GITHUB_ENV
+
+        echo "mvnd-version=$MVND_VERSION" >> "$GITHUB_OUTPUT"
+        echo "mvnd-platform=$MVND_PLATFORM" >> "$GITHUB_OUTPUT"
+        echo "mvnd-dir=$MVND_DIR" >> "$GITHUB_OUTPUT"
+        echo "mvnd-url=$MVND_URL" >> "$GITHUB_OUTPUT"
 
     - name: Download and Extract mvnd
       shell: bash
+      env:
+        MVND_VERSION: ${{ steps.set-mvnd-vars.outputs.mvnd-version }}
+        MVND_PLATFORM: ${{ steps.set-mvnd-vars.outputs.mvnd-platform }}
+        MVND_DIR: ${{ steps.set-mvnd-vars.outputs.mvnd-dir }}
+        MVND_URL: ${{ steps.set-mvnd-vars.outputs.mvnd-url }}
       run: |
-        echo "Downloading ${{ env.MVND_URL }}"
+        echo "Downloading ${MVND_URL}"
         # Download the ZIP archive
-        curl -sL ${{ env.MVND_URL }} -o mvnd.zip
-        
+        curl -sL "${MVND_URL}" -o mvnd.zip
+
         # Create installation directory
-        mkdir -p ${{ env.MVND_DIR }}
-        
+        mkdir -p "${MVND_DIR}"
+
         # Unzip to the designated directory
-        unzip -q mvnd.zip -d ${{ env.MVND_DIR }}
-        
+        unzip -q mvnd.zip -d "${MVND_DIR}"
+
         # The extracted folder name contains the version and platform,
         # so we rename it to a stable path for easier use.
-        EXTRACTED_DIR_NAME="maven-mvnd-${{ env.MVND_VERSION }}-${{ env.MVND_PLATFORM }}"
-        mv ${{ env.MVND_DIR }}/$EXTRACTED_DIR_NAME ${{ env.MVND_DIR }}/mvnd-bin
+        EXTRACTED_DIR_NAME="maven-mvnd-${MVND_VERSION}-${MVND_PLATFORM}"
+        mv "${MVND_DIR}/$EXTRACTED_DIR_NAME" "${MVND_DIR}/mvnd-bin"
 
     - name: Add mvnd to PATH
       shell: bash
-      run: echo "${{ env.MVND_DIR }}/mvnd-bin/bin" >> $GITHUB_PATH
+      env:
+        MVND_DIR: ${{ steps.set-mvnd-vars.outputs.mvnd-dir }}
+      run: echo "${MVND_DIR}/mvnd-bin/bin" >> "$GITHUB_PATH" # zizmor: ignore[github-env] extending PATH is this step's job; MVND_DIR is action-computed, not attacker input
 
     - name: Verify mvnd availability
       shell: bash

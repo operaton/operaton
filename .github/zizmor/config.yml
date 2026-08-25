@@ -1,0 +1,28 @@
+rules:
+  dependabot-cooldown:
+    ignore:
+      # Spring Boot/Framework patches wanted immediately; intentional zero cooldown.
+      - dependabot.yml:18
+      - dependabot.yml:70
+  cache-poisoning:
+    ignore:
+      # Both need restore+save for incremental caching (SonarCloud analysis,
+      # npm via setup-node); this job only runs on push to main/release or a
+      # maintainer-triggered workflow_dispatch, both of which already require
+      # repo write access, so poisoning these caches buys an attacker nothing
+      # they don't already have. No restore-only fix exists for either.
+      - build.yml:122
+      - build.yml:128
+  dangerous-triggers:
+    ignore:
+      # pull_request_target used only for metadata reads and issue/PR comments;
+      # never checks out or executes PR head content.
+      - check-for-new-contributor.yml:4
+      # pull_request_target used only to sparse-checkout the base ref's
+      # .github/labels (never PR head) with persist-credentials: false.
+      - label-pr.yml:3
+  adhoc-packages:
+    ignore:
+      # Version pinned explicitly; no lockfile needed for this single
+      # throwaway dependency used only to check a Slack invite link.
+      - slack-link-check.yml:44

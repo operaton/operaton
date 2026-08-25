@@ -1,5 +1,8 @@
 name: Update SBOMs
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:        # Allows manual trigger
   push:
@@ -36,6 +39,8 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          # required by add-and-commit action to push with the same credentials
+          persist-credentials: true
 
       - name: Set up JDK 17
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0

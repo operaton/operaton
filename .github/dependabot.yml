@@ -18,6 +18,7 @@ updates:
     cooldown:
       exclude:
         - "org.springframework.boot:*"
+        - "org.springframework:spring-framework-bom"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -69,6 +70,7 @@ updates:
     cooldown:
       exclude:
         - "org.springframework.boot:*"
+        - "org.springframework:spring-framework-bom"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]

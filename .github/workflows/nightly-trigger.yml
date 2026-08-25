@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: List Release Branches
         id: list-branches
@@ -76,16 +77,19 @@ jobs:
         with:
           ref: ${{ matrix.branch }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Check for recent commits
         id: check-commits
+        env:
+          MATRIX_BRANCH: ${{ matrix.branch }}
         run: |
           COMMITS=$(git rev-list --since="24 hours ago" HEAD)
           if [ -z "$COMMITS" ]; then
-            echo "🔎❌ No commits in the last 24 hours on ${{ matrix.branch }}."
+            echo "🔎❌ No commits in the last 24 hours on ${MATRIX_BRANCH}."
             echo "recent_changes=false" >> $GITHUB_OUTPUT
           else
-            echo "🔎✔️ Commits within the last 24 hours on ${{ matrix.branch }}."
+            echo "🔎✔️ Commits within the last 24 hours on ${MATRIX_BRANCH}."
             echo "recent_changes=true" >> $GITHUB_OUTPUT
           fi
 
@@ -95,15 +99,16 @@ jobs:
         if: ${{ github.event_name != 'schedule' || steps.check-commits.outputs.recent_changes == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MATRIX_BRANCH: ${{ matrix.branch }}
         run: |
-          echo "Triggering integration build for branch: ${{ matrix.branch }}"
+          echo "Triggering integration build for branch: ${MATRIX_BRANCH}"
 
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -d '{
-              "ref": "${{ matrix.branch }}",
+              "ref": "${MATRIX_BRANCH}",
               "inputs": {
                 "java_version": "[\"17\", \"21\", \"25\"]",
                 "skip_build": "false",
@@ -117,15 +122,17 @@ jobs:
             https://api.github.com/repos/${{ github.repository }}/actions/workflows/integration-build.yml/dispatches)
 
           if [ "$response" -ne 204 ]; then
-            echo "❌ Failed to trigger integration build for ${{ matrix.branch }}. HTTP response code: $response"
+            echo "❌ Failed to trigger integration build for ${MATRIX_BRANCH}. HTTP response code: $response"
             exit 1
           else
-            echo "✅ Successfully triggered integration build for ${{ matrix.branch }}"
+            echo "✅ Successfully triggered integration build for ${MATRIX_BRANCH}"
           fi
 
       - name: Skip notice
         if: ${{ github.event_name == 'schedule' && steps.check-commits.outputs.recent_changes == 'false' }}
-        run: echo "⏭️ Skipping integration build for ${{ matrix.branch }}, no commits in the last 24 hours."
+        env:
+          MATRIX_BRANCH: ${{ matrix.branch }}
+        run: echo "⏭️ Skipping integration build for ${MATRIX_BRANCH}, no commits in the last 24 hours."
 
   trigger-builds:
     name: Trigger Build for ${{ matrix.branch }}
@@ -141,15 +148,16 @@ jobs:
       - name: Trigger Build Workflow
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MATRIX_BRANCH: ${{ matrix.branch }}
         run: |
-          echo "Triggering build for branch: ${{ matrix.branch }}"
+          echo "Triggering build for branch: ${MATRIX_BRANCH}"
 
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -d '{
-              "ref": "${{ matrix.branch }}",
+              "ref": "${MATRIX_BRANCH}",
               "inputs": {
                 "profile": "max",
                 "reports": "true",
@@ -159,8 +167,8 @@ jobs:
             https://api.github.com/repos/${{ github.repository }}/actions/workflows/build.yml/dispatches)
 
           if [ "$response" -ne 204 ]; then
-            echo "❌ Failed to trigger build for ${{ matrix.branch }}. HTTP response code: $response"
+            echo "❌ Failed to trigger build for ${MATRIX_BRANCH}. HTTP response code: $response"
             exit 1
           else
-            echo "✅ Successfully triggered build for ${{ matrix.branch }}"
+            echo "✅ Successfully triggered build for ${MATRIX_BRANCH}"
           fi

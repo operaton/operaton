@@ -31,3 +31,4 @@ jobs:
         with:
           persona: regular # More critical: pedantic, auditor
           advanced-security: false # We don't have this enabled atm
+          config: .github/zizmor/config.yml

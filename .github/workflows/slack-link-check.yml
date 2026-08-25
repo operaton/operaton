@@ -41,7 +41,7 @@ jobs:
           node-version: 20
 
       - name: Install Playwright core only
-        run: npm install --ignore-scripts playwright@1.59.1 # zizmor: ignore[adhoc-packages] version pinned explicitly, no lockfile needed for this single throwaway dependency
+        run: npm install --ignore-scripts playwright@1.59.1
       - name: Extract Slack link from README
         id: extract
         run: |

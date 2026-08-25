@@ -119,19 +119,12 @@ jobs:
           key: "${{ runner.os }}-build-cache-${{ github.sha }}"
           restore-keys: ${{ runner.os }}-build-cache-
       - name: Cache SonarCloud packages
-        # zizmor: ignore[cache-poisoning] needs restore+save for incremental
-        # analysis; this job only runs on push to main/release or a
-        # maintainer-triggered workflow_dispatch, both of which already
-        # require repo write access.
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Setup Node
-        # zizmor: ignore[cache-poisoning] setup-node's npm cache is restore+save
-        # only as a unit (no restore-only mode); same trust boundary as the
-        # SonarCloud cache above (push to main/release or workflow_dispatch).
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24

@@ -15,7 +15,7 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-    cooldown: # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
+    cooldown:
       exclude:
         - "org.springframework.boot:*"
         - "org.springframework:spring-framework-bom"
@@ -67,7 +67,7 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-    cooldown: # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
+    cooldown:
       exclude:
         - "org.springframework.boot:*"
         - "org.springframework:spring-framework-bom"

@@ -1,7 +1,7 @@
 name: Label PR
 
 on:
-  pull_request_target: # zizmor: ignore[dangerous-triggers] sparse-checkout of base ref only (.github/labels), never PR head; persist-credentials: false
+  pull_request_target:
     types:
       - opened
       - synchronize

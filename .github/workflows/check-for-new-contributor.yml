@@ -2,7 +2,7 @@
 name: First-time Contributor Check
 
 on:
-  pull_request_target: # zizmor: ignore[dangerous-triggers] no checkout/execution of PR head; metadata reads and comments only
+  pull_request_target:
     types: [opened]
   issues:
     types: [opened]

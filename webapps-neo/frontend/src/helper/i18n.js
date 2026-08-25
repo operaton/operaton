@@ -8,6 +8,13 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 // have a look at the Quick start guide
 // for passing in lng and translations on init
 
+// Translation files are region-specific (see /public/locales), but browsers
+// report language-only codes like `de`. Map the detected code to a region file.
+const SUPPORTED_LNGS = ['de-DE', 'en-US', 'es-ES', 'fr-FR', 'nl-NL'];
+const REGION_BY_LANG = Object.fromEntries(
+  SUPPORTED_LNGS.map((lng) => [lng.split('-')[0], lng])
+);
+
 i18n
   // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
   // learn more: https://github.com/i18next/i18next-http-backend
@@ -22,6 +29,15 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     fallbackLng: 'en-US',
+    supportedLngs: SUPPORTED_LNGS,
+    // Only load the resolved language (+ fallback); never the language-only
+    // `/locales/de/…` or `/dev/…`, which 404'd / failed JSON parse on startup.
+    load: 'currentOnly',
+    detection: {
+      // e.g. `de`, `de-AT` → `de-DE`; unknown codes fall through to fallbackLng.
+      convertDetectedLanguage: (lng) =>
+        REGION_BY_LANG[lng.split('-')[0].toLowerCase()] ?? lng,
+    },
     debug: true,
 
     interpolation: {

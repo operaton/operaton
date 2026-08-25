@@ -5,11 +5,10 @@
   "description": "Delegates work to an AI agent over the Agent2Agent (A2A) protocol",
   "documentationRef": "https://github.com/operaton/operaton/blob/main/connect/a2a/README.md",
   "appliesTo": [
-    "bpmn:ServiceTask"
+    "bpmn:ServiceTask",
+    "bpmn:SendTask",
+    "bpmn:BusinessRuleTask"
   ],
-  "elementType": {
-    "value": "bpmn:ServiceTask"
-  },
   "properties": [],
   "groups": [
     {

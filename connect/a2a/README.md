@@ -50,6 +50,13 @@ The connector is not part of `operaton-connect-connectors-all`, so it has to be 
    </dependency>
    ```
 
+### Where the connector can be used
+
+Operaton's `ConnectorParseListener` hooks five element types, so the same `operaton:connector` block works on a
+**service task**, a **send task**, a **business rule task**, and on a **message end event** or **message
+intermediate throw event**. The element template offers the first three; the two event types need a
+`messageEventDefinition`, which a template's `appliesTo` cannot express, so configure those by hand.
+
 The connector registers itself through `java.util.ServiceLoader`
 (`META-INF/services/org.operaton.connect.spi.ConnectorProvider`) under the id **`a2a`**.
 

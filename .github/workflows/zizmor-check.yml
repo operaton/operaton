@@ -1,4 +1,4 @@
-name: GitHub Actions Security Analysis with zizmor 🌈
+name: Check GitHub Workflow Security
 
 permissions:
   contents: read
@@ -18,7 +18,7 @@ on:
 
 jobs:
   zizmor:
-    name: Run zizmor
+    name: Analyze workflow security
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -31,4 +31,3 @@ jobs:
         with:
           persona: regular # More critical: pedantic, auditor
           advanced-security: false # We don't have this enabled atm
-          #config: .github/zizmor/config.yml # No need now, but exclusions live here

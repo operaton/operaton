@@ -94,6 +94,8 @@ jobs:
       # that pr-build.yml restores; max and skip_tests runs neither read nor
       # write it.
       USE_BUILD_CACHE: ${{ (github.event.inputs.profile || 'normal') != 'max' && github.event.inputs.skip_tests != 'true' }}
+      # Only main and release branches write caches.
+      CACHE_WRITES: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/') }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -193,7 +195,7 @@ jobs:
       # ~/.m2/build-cache. Saving would burn a fresh sha-keyed entry in the
       # shared 10 GB pool for no content.
       - name: Save Maven build cache
-        if: env.USE_BUILD_CACHE == 'true'
+        if: env.USE_BUILD_CACHE == 'true' && env.CACHE_WRITES == 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2/build-cache
@@ -242,10 +244,10 @@ jobs:
       # later builds would make them accidentally incremental and can mask
       # stale-artifact bugs.
       - name: Purge Operaton artifacts before cache save
-        if: steps.m2-cache.outputs.cache-hit != 'true'
+        if: steps.m2-cache.outputs.cache-hit != 'true' && env.CACHE_WRITES == 'true'
         run: rm -rf ~/.m2/repository/org/operaton
       - name: Save Maven packages
-        if: steps.m2-cache.outputs.cache-hit != 'true'
+        if: steps.m2-cache.outputs.cache-hit != 'true' && env.CACHE_WRITES == 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2

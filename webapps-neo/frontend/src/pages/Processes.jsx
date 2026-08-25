@@ -826,7 +826,7 @@ const DefinitionsEmpty = () => {
       <p>{t("processes.empty.heading")}</p>
       <a href="/deployments">{t("processes.empty.upload")}</a>
       <a
-        href="https://docs.operaton.org/manual/latest/installation/full/tomcat/manual/"
+        href="https://docs.operaton.org/docs/documentation/user-guide/process-engine/deployments"
         target="_blank"
         rel="noreferrer"
       >

@@ -25,7 +25,7 @@ const is_legacy_start_key = (key) =>
   (key.startsWith(EMBEDDED_APP_PREFIX) ||
     key.startsWith(EMBEDDED_DEPLOYMENT_PREFIX))
 const FORM_JS_MIGRATION_DOCS =
-  'https://docs.operaton.org/documentation/user-guide/task-forms/'
+  'https://docs.operaton.org/docs/documentation/user-guide/task-forms/'
 
 const StartProcessList = () => {
   const

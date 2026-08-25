@@ -41,7 +41,7 @@ jobs:
           node-version: 20
 
       - name: Install Playwright core only
-        run: npm install --ignore-scripts playwright@1.59.1
+        run: npm install --ignore-scripts playwright@1.59.1 # zizmor: ignore[adhoc-packages] version pinned explicitly, no lockfile needed for this single throwaway dependency
       - name: Extract Slack link from README
         id: extract
         run: |
@@ -120,6 +120,8 @@ jobs:
       - name: Create issue if expired and does not exist
         if: ${{ steps.expired.outputs.expired == 'true' && steps.find_issue.outputs.result == '' }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          SLACK_URL: ${{ steps.extract.outputs.url }}
         with:
           script: |
             await github.rest.issues.create({
@@ -127,5 +129,5 @@ jobs:
               repo: context.repo.repo,
               assignees: ["kthoms"],
               title: "Slack invite link expired",
-              body: `Hi,\n\nThe Slack invite link in README appears to be expired.\n\nURL: ${{ steps.extract.outputs.url }}`
+              body: "Hi,\n\nThe Slack invite link in README appears to be expired.\n\nURL: $SLACK_URL"
             });

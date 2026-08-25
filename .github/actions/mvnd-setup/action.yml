@@ -76,7 +76,7 @@ runs:
       shell: bash
       env:
         MVND_DIR: ${{ steps.set-mvnd-vars.outputs.mvnd-dir }}
-      run: echo "${MVND_DIR}/mvnd-bin/bin" >> "$GITHUB_PATH"
+      run: echo "${MVND_DIR}/mvnd-bin/bin" >> "$GITHUB_PATH" # zizmor: ignore[github-env] extending PATH is this step's job; MVND_DIR is action-computed, not attacker input
 
     - name: Verify mvnd availability
       shell: bash

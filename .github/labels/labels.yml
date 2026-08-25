@@ -279,7 +279,11 @@
 
 - name: "scope:webapp"
   color: "#FEF1B4"
-  description: "Changes affecting all the webapps."
+  description: "Changes affecting the legacy webapps."
+
+- name: "scope:webapp-neo"
+  color: "#FEF1B4"
+  description: "Changes affecting the new webapps."
 
 # Backporting
 - name: "backport:c7"

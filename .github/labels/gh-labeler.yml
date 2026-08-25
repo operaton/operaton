@@ -107,12 +107,20 @@ scope:quarkus:
       - '!**/src/test/**'
 
 scope:webapp:
-- all:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'webapps/**'
-    - any-glob-to-any-file:
-        - '!**/src/test/**'
+  - all:
+      - changed-files:
+          - any-glob-to-any-file:
+              - 'webapps/**'
+          - any-glob-to-any-file:
+              - '!**/src/test/**'
+
+scope:webapp-neo:
+  - all:
+      - changed-files:
+          - any-glob-to-any-file:
+              - 'webapps-neo/**'
+          - any-glob-to-any-file:
+              - '!**/src/test/**'
 
 scope:ldap:
 - all:

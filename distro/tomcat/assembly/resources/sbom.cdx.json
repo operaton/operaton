@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:5245703c-1227-433f-994a-84253b38e060",
+  "serialNumber": "urn:uuid:d132bd3e-c5c5-4676-bb39-1be9928c0b88",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-24T14:13:30Z",
+    "timestamp": "2026-08-25T06:54:09Z",
     "tools": {
       "components": [
         {
@@ -19507,7 +19507,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "648d6324-f563-4191-9def-560a3b8f415f",
+      "bom-ref": "f6bfae6c-3562-4256-b9e3-104c73ae390c",
       "name": "package-lock.json",
       "properties": [
         {
@@ -19797,10 +19797,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.25.0",
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
-      "version": "1.24.1",
+      "version": "1.25.0",
       "licenses": [
         {
           "license": {
@@ -19808,11 +19808,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.25.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-carbon-styles@1.24.1"
+          "value": "@bpmn-io/form-js-carbon-styles@1.25.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -19822,10 +19822,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.25.0",
       "group": "@bpmn-io",
       "name": "form-js-editor",
-      "version": "1.24.1",
+      "version": "1.25.0",
       "licenses": [
         {
           "license": {
@@ -19833,11 +19833,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.25.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-editor@1.24.1"
+          "value": "@bpmn-io/form-js-editor@1.25.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -19847,10 +19847,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.25.0",
       "group": "@bpmn-io",
       "name": "form-js-playground",
-      "version": "1.24.1",
+      "version": "1.25.0",
       "licenses": [
         {
           "license": {
@@ -19858,11 +19858,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.25.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-playground@1.24.1"
+          "value": "@bpmn-io/form-js-playground@1.25.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -19872,10 +19872,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.25.0",
       "group": "@bpmn-io",
       "name": "form-js-viewer",
-      "version": "1.24.1",
+      "version": "1.25.0",
       "licenses": [
         {
           "license": {
@@ -19883,11 +19883,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.25.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-viewer@1.24.1"
+          "value": "@bpmn-io/form-js-viewer@1.25.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -19897,10 +19897,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.24.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.25.0",
       "group": "@bpmn-io",
       "name": "form-js",
-      "version": "1.24.1",
+      "version": "1.25.0",
       "licenses": [
         {
           "license": {
@@ -19908,11 +19908,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js@1.24.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js@1.25.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js@1.24.1"
+          "value": "@bpmn-io/form-js@1.25.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -20097,10 +20097,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/grid@11.59.0",
+      "bom-ref": "pkg:npm/%40carbon/grid@11.60.0",
       "group": "@carbon",
       "name": "grid",
-      "version": "11.59.0",
+      "version": "11.60.0",
       "licenses": [
         {
           "license": {
@@ -20108,11 +20108,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/grid@11.59.0",
+      "purl": "pkg:npm/%40carbon/grid@11.60.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/grid@11.59.0"
+          "value": "@carbon/grid@11.60.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -20122,10 +20122,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/layout@11.56.0",
+      "bom-ref": "pkg:npm/%40carbon/layout@11.57.0",
       "group": "@carbon",
       "name": "layout",
-      "version": "11.56.0",
+      "version": "11.57.0",
       "licenses": [
         {
           "license": {
@@ -20133,11 +20133,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/layout@11.56.0",
+      "purl": "pkg:npm/%40carbon/layout@11.57.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/layout@11.56.0"
+          "value": "@carbon/layout@11.57.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23380,9 +23380,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/marked@18.0.9",
+      "bom-ref": "pkg:npm/marked@18.0.10",
       "name": "marked",
-      "version": "18.0.9",
+      "version": "18.0.10",
       "licenses": [
         {
           "license": {
@@ -23390,11 +23390,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/marked@18.0.9",
+      "purl": "pkg:npm/marked@18.0.10",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "marked@18.0.9"
+          "value": "marked@18.0.10"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24763,7 +24763,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "38247be0-749d-461f-9528-79795295440d",
+      "bom-ref": "7820154e-2eb5-4857-9a0f-62a923a5b566",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27197,16 +27197,16 @@
       "dependsOn": []
     },
     {
-      "ref": "38247be0-749d-461f-9528-79795295440d",
+      "ref": "7820154e-2eb5-4857-9a0f-62a923a5b566",
       "dependsOn": [
-        "648d6324-f563-4191-9def-560a3b8f415f"
+        "f6bfae6c-3562-4256-b9e3-104c73ae390c"
       ]
     },
     {
-      "ref": "648d6324-f563-4191-9def-560a3b8f415f",
+      "ref": "f6bfae6c-3562-4256-b9e3-104c73ae390c",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
-        "pkg:npm/%40bpmn-io/form-js@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js@1.25.0",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/%40popperjs/core@2.11.8",
         "pkg:npm/angular-animate@1.8.3",
@@ -27352,14 +27352,14 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.25.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.25.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/draggle@4.1.2",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.25.0",
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
@@ -27370,11 +27370,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.25.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.25.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.25.0",
         "pkg:npm/%40codemirror/autocomplete@6.20.3",
         "pkg:npm/%40codemirror/commands@6.10.4",
         "pkg:npm/%40codemirror/lang-json@6.0.2",
@@ -27391,10 +27391,10 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.25.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
-        "pkg:npm/%40carbon/grid@11.59.0",
+        "pkg:npm/%40carbon/grid@11.60.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
@@ -27404,18 +27404,18 @@
         "pkg:npm/ids@3.0.2",
         "pkg:npm/lodash@4.18.1",
         "pkg:npm/luxon@3.7.2",
-        "pkg:npm/marked@18.0.9",
+        "pkg:npm/marked@18.0.10",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/preact@10.29.7"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js@1.24.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js@1.25.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.24.1",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.24.1",
-        "pkg:npm/%40bpmn-io/form-js-playground@1.24.1",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.1"
+        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.25.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.25.0",
+        "pkg:npm/%40bpmn-io/form-js-playground@1.25.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.25.0"
       ]
     },
     {
@@ -27483,14 +27483,14 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40carbon/grid@11.59.0",
+      "ref": "pkg:npm/%40carbon/grid@11.60.0",
       "dependsOn": [
-        "pkg:npm/%40carbon/layout@11.56.0",
+        "pkg:npm/%40carbon/layout@11.57.0",
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
     },
     {
-      "ref": "pkg:npm/%40carbon/layout@11.56.0",
+      "ref": "pkg:npm/%40carbon/layout@11.57.0",
       "dependsOn": [
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
@@ -28343,7 +28343,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/marked@18.0.9",
+      "ref": "pkg:npm/marked@18.0.10",
       "dependsOn": []
     },
     {

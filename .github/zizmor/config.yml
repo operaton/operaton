@@ -11,8 +11,8 @@ rules:
       # maintainer-triggered workflow_dispatch, both of which already require
       # repo write access, so poisoning these caches buys an attacker nothing
       # they don't already have. No restore-only fix exists for either.
-      - build.yml:122
-      - build.yml:128
+      - build.yml:124
+      - build.yml:130
   dangerous-triggers:
     ignore:
       # pull_request_target used only for metadata reads and issue/PR comments;

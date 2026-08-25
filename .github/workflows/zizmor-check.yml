@@ -9,10 +9,12 @@ on:
     paths:
       - .github/workflows/*.yml
       - .github/actions/*.yml
+      - .github/dependabot.yml
   pull_request:
     paths:
       - .github/workflows/*.yml
       - .github/actions/*.yml
+      - .github/dependabot.yml
 
 jobs:
   zizmor:

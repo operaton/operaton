@@ -15,9 +15,10 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-    cooldown:
+    cooldown: # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
       exclude:
         - "org.springframework.boot:*"
+        - "org.springframework:spring-framework-bom"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -66,9 +67,10 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-    cooldown:
+    cooldown: # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
       exclude:
         - "org.springframework.boot:*"
+        - "org.springframework:spring-framework-bom"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]

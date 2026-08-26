@@ -48,7 +48,7 @@
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.commonj>1.1.0</version.commonj>
     <!-- application servers -->
-    <version.wildfly>41.0.0.Final</version.wildfly>
+    <version.wildfly>41.0.1.Final</version.wildfly>
     <!-- WildFly Core version matching version.wildfly (WildFly 41 -> Core 33) -->
     <version.wildfly.core>33.0.0.Final</version.wildfly.core>
     <version.tomcat>11.0.25</version.tomcat>

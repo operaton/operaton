@@ -6,6 +6,16 @@
  * its styles predictably win without specificity wars and never leak.
  */
 @layer custom {
+  /* `main` carries no padding of its own; give the page the same breathing room
+     the other pages get (Home uses `p-3`), so content isn't flush to the edges. */
+  #content.metrics-page {
+    padding: var(--spacing-4, 1.5rem);
+  }
+
+  #content.metrics-page h1 {
+    margin-block: 0 var(--spacing-3, 1rem);
+  }
+
   #content.metrics-page .metrics-cards {
     display: flex;
     flex-wrap: wrap;
@@ -26,5 +36,108 @@
     margin-block-start: var(--spacing-2, 0.5rem);
     font-size: 2rem;
     font-weight: 600;
+  }
+
+  #content.metrics-page .metrics-charts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3, 1rem);
+    margin-block-start: var(--spacing-3, 1rem);
+  }
+
+  #content.metrics-page .metrics-snapshot {
+    flex: 1 1 20rem;
+    padding: var(--spacing-3, 1rem);
+    border: var(--border, 1px solid);
+    border-color: var(--border-color, #ccc);
+    border-radius: var(--border-radius-2, 0.5rem);
+    background: var(--background-2, transparent);
+  }
+
+  #content.metrics-page .snapshot-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-4, 1.5rem);
+    margin-block-start: var(--spacing-2, 0.5rem);
+  }
+
+  #content.metrics-page .metrics-donut {
+    inline-size: 9rem;
+    block-size: 9rem;
+    flex: none;
+  }
+
+  #content.metrics-page .donut-track {
+    fill: none;
+    stroke: var(--background-3, #e5e7eb);
+    stroke-width: 4;
+  }
+
+  #content.metrics-page .donut-seg {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: butt;
+    transition: stroke-dasharray 0.4s ease;
+  }
+
+  #content.metrics-page .donut-running {
+    stroke: var(--color-primary, #3b82f6);
+  }
+
+  #content.metrics-page .donut-completed {
+    stroke: var(--color-success, #16a34a);
+  }
+
+  #content.metrics-page .donut-center {
+    fill: var(--color-text, currentColor);
+    font-size: 0.55rem;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+
+  #content.metrics-page .snapshot-legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--spacing-2, 0.5rem);
+  }
+
+  #content.metrics-page .snapshot-legend li a {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 0.5rem);
+    padding: var(--spacing-1, 0.25rem) var(--spacing-2, 0.5rem);
+    border-radius: var(--border-radius-1, 0.25rem);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #content.metrics-page .snapshot-legend li a:hover,
+  #content.metrics-page .snapshot-legend li a:focus-visible {
+    background: var(--background-3, #f0f0f0);
+    text-decoration: underline;
+  }
+
+  #content.metrics-page .snapshot-legend b {
+    margin-inline-start: auto;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #content.metrics-page .snapshot-legend .dot {
+    inline-size: 0.75rem;
+    block-size: 0.75rem;
+    border-radius: 50%;
+    flex: none;
+  }
+
+  #content.metrics-page .snapshot-legend .dot-running {
+    background: var(--color-primary, #3b82f6);
+  }
+
+  #content.metrics-page .snapshot-legend .dot-completed {
+    background: var(--color-success, #16a34a);
   }
 }

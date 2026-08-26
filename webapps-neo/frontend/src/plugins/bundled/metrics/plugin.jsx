@@ -47,6 +47,17 @@ const api = {
       state,
       state.api.plugins[PLUGIN_ID].flow_nodes,
     ),
+  // Snapshot for the "running vs. completed" donut. Running comes from the
+  // runtime (currently active), completed from history (`finished` = no longer
+  // running, i.e. completed or terminated).
+  running: (state) =>
+    GET("/process-instance/count", state, state.api.plugins[PLUGIN_ID].running),
+  completed: (state) =>
+    GET(
+      "/history/process-instance/count?finished=true",
+      state,
+      state.api.plugins[PLUGIN_ID].completed,
+    ),
 };
 
 // State branch — mounted at state.api.plugins.metrics.
@@ -54,6 +65,8 @@ const make_signals = () => ({
   version: signal(null),
   process_starts: signal(null),
   flow_nodes: signal(null),
+  running: signal(null),
+  completed: signal(null),
 });
 
 const MetricValue = ({ signal: signl, format = (v) => v }) => (
@@ -63,6 +76,40 @@ const MetricValue = ({ signal: signl, format = (v) => v }) => (
   />
 );
 
+// Two-segment SVG donut. The circle's circumference is normalised to 100
+// (r = 100 / 2π) so dash lengths are read straight as percentages. Segments are
+// laid clockwise from 12 o'clock: `completed` first (offset 25), then `running`
+// starting where it ends (offset 25 − completed%).
+const Donut = ({ running, completed }) => {
+  const total = running + completed;
+  const completed_pct = total ? (completed / total) * 100 : 0;
+  const running_pct = total ? (running / total) * 100 : 0;
+  return (
+    <svg class="metrics-donut" viewBox="0 0 42 42" aria-hidden="true">
+      <circle class="donut-track" cx="21" cy="21" r="15.91549" />
+      <circle
+        class="donut-seg donut-completed"
+        cx="21"
+        cy="21"
+        r="15.91549"
+        stroke-dasharray={`${completed_pct} ${100 - completed_pct}`}
+        stroke-dashoffset="25"
+      />
+      <circle
+        class="donut-seg donut-running"
+        cx="21"
+        cy="21"
+        r="15.91549"
+        stroke-dasharray={`${running_pct} ${100 - running_pct}`}
+        stroke-dashoffset={`${25 - completed_pct}`}
+      />
+      <text class="donut-center" x="21" y="21">
+        {total}
+      </text>
+    </svg>
+  );
+};
+
 const MetricsPage = () => {
   const { state, api: metrics, signals } = use_plugin_api(PLUGIN_ID);
   const [t] = useTranslation();
@@ -71,6 +118,8 @@ const MetricsPage = () => {
     metrics.version(state);
     metrics.process_starts(state);
     metrics.flow_nodes(state);
+    metrics.running(state);
+    metrics.completed(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,6 +143,39 @@ const MetricsPage = () => {
           <MetricValue signal={signals.flow_nodes} format={(d) => d.result} />
         </article>
       </section>
+      <section class="metrics-charts">
+        <article class="metrics-snapshot">
+          <h2>{t("plugins.metrics.snapshot")}</h2>
+          <RequestState
+            signal={[signals.running, signals.completed]}
+            on_success={() => {
+              const running = signals.running.value.data.count;
+              const completed = signals.completed.value.data.count;
+              return (
+                <div class="snapshot-body">
+                  <Donut running={running} completed={completed} />
+                  <ul class="snapshot-legend">
+                    <li>
+                      <a href="/processes">
+                        <span class="dot dot-running" />
+                        {t("plugins.metrics.running")}
+                        <b>{running}</b>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/processes?history=true">
+                        <span class="dot dot-completed" />
+                        {t("plugins.metrics.completed")}
+                        <b>{completed}</b>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              );
+            }}
+          />
+        </article>
+      </section>
     </main>
   );
 };
@@ -107,6 +189,9 @@ const translations = {
         version: "Engine version",
         "process-starts": "Process starts (12 mo)",
         "flow-nodes": "Flow nodes executed (12 mo)",
+        snapshot: "Process instances: running vs. completed",
+        running: "Running",
+        completed: "Completed",
       },
     },
   },
@@ -118,6 +203,9 @@ const translations = {
         version: "Engine-Version",
         "process-starts": "Prozessstarts (12 Mon.)",
         "flow-nodes": "Ausgeführte Flow-Knoten (12 Mon.)",
+        snapshot: "Prozessinstanzen: laufend vs. abgeschlossen",
+        running: "Laufend",
+        completed: "Abgeschlossen",
       },
     },
   },

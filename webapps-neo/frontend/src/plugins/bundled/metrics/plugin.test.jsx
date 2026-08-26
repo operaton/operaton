@@ -42,6 +42,12 @@ describe("Engine Metrics plugin — page", () => {
     vi.spyOn(engine_rest.plugins.metrics, "flow_nodes").mockImplementation(
       () => {},
     );
+    vi.spyOn(engine_rest.plugins.metrics, "running").mockImplementation(
+      () => {},
+    );
+    vi.spyOn(engine_rest.plugins.metrics, "completed").mockImplementation(
+      () => {},
+    );
     signal_response(state.api.plugins.metrics.version, { version: "7.99.0" });
 
     render_with_state(<MetricsPage />, { state });
@@ -51,5 +57,27 @@ describe("Engine Metrics plugin — page", () => {
     expect(engine_rest.plugins.metrics.version).toHaveBeenCalled();
     expect(engine_rest.plugins.metrics.version.mock.lastCall[0]).toBe(state);
     expect(screen.getByText("7.99.0")).toBeTruthy();
+  });
+
+  it("renders the running-vs-completed donut with the total in its centre", () => {
+    const state = create_mock_state();
+    for (const fn of [
+      "version",
+      "process_starts",
+      "flow_nodes",
+      "running",
+      "completed",
+    ]) {
+      vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
+    }
+    signal_response(state.api.plugins.metrics.running, { count: 3 });
+    signal_response(state.api.plugins.metrics.completed, { count: 7 });
+
+    render_with_state(<MetricsPage />, { state });
+
+    // Legend shows both counts; donut centre shows the total (3 + 7 = 10).
+    expect(screen.getByText("3")).toBeTruthy();
+    expect(screen.getByText("7")).toBeTruthy();
+    expect(screen.getByText("10")).toBeTruthy();
   });
 });

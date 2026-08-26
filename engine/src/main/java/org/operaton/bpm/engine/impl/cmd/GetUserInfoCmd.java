@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoEntity;
 /**
  * @author Tom Baeyens
  */
-public class GetUserInfoCmd implements Command<String> {
+public @NullMarked class GetUserInfoCmd implements Command<String> {
   protected String userId;
   protected String key;
 

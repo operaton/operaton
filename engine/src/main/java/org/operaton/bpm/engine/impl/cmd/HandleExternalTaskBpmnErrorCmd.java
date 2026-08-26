@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
@@ -26,13 +28,13 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  *
  * @author Christopher Zell
  */
-public class HandleExternalTaskBpmnErrorCmd extends HandleExternalTaskCmd {
+public @NullMarked class HandleExternalTaskBpmnErrorCmd extends HandleExternalTaskCmd {
   /**
    * The error code of the corresponding bpmn error.
    */
   protected String errorCode;
-  protected String errorMessage;
-  protected Map<String, Object> variables;
+  protected @Nullable String errorMessage;
+  protected @Nullable Map<String, Object> variables;
 
   public HandleExternalTaskBpmnErrorCmd(String externalTaskId, String workerId, String errorCode) {
     super(externalTaskId, workerId);

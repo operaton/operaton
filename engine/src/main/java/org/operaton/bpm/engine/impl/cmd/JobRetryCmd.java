@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
@@ -31,10 +32,10 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 /**
  * @author Roman Smirnov
  */
-public abstract class JobRetryCmd implements Command<Object> {
+public abstract @NullMarked class JobRetryCmd implements Command<Object> {
 
   protected String jobId;
-  protected Throwable exception;
+  protected @Nullable Throwable exception;
 
   protected JobRetryCmd(String jobId, @Nullable Throwable exception) {
     this.jobId = jobId;

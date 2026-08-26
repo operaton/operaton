@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collections;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -35,11 +37,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Yana Vasileva
  *
  */
-public class ModifyProcessInstanceAsyncCmd implements Command<Batch> {
+public @NullMarked class ModifyProcessInstanceAsyncCmd implements Command<Batch> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -57,6 +61,7 @@ public class ModifyProcessInstanceAsyncCmd implements Command<Batch> {
     ExecutionEntity processInstance = executionManager.findExecutionById(processInstanceId);
 
     ensureProcessInstanceExists(processInstanceId, processInstance);
+    requireNonNull(processInstance);
 
     String processDefinitionId = processInstance.getProcessDefinitionId();
     String tenantId = processInstance.getTenantId();
@@ -76,7 +81,7 @@ public class ModifyProcessInstanceAsyncCmd implements Command<Batch> {
   }
 
   protected void ensureProcessInstanceExists(String processInstanceId,
-                                             ExecutionEntity processInstance) {
+                                             @Nullable ExecutionEntity processInstance) {
     if (processInstance == null) {
       throw LOG.processInstanceDoesNotExist(processInstanceId);
     }

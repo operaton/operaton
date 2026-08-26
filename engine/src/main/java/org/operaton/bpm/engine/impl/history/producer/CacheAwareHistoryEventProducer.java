@@ -116,7 +116,7 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
   @Override
   protected @Nullable ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
-    if (Context.hasActiveCommandContext()) {
+    if (!Context.hasActiveCommandContext()) {
       return null;
     }
 

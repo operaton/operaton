@@ -41,6 +41,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -82,6 +83,7 @@ public abstract class AbstractDeleteProcessInstanceCmd {
 
     ensureNotNull(NotFoundException.class, "No process instance found for id '%s'".formatted(processInstanceId),
         "processInstance", execution);
+    requireNonNull(execution);
 
     checkDeleteProcessInstance(execution, commandContext);
 
@@ -117,9 +119,6 @@ public abstract class AbstractDeleteProcessInstanceCmd {
 
   public void triggerHistoryEvent(List<ProcessInstance> subProcesslist) {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
-    if(configuration == null) {
-      return;
-    }
 
     HistoryLevel historyLevel = configuration.getHistoryLevel();
     for (final ProcessInstance processInstance : subProcesslist) {

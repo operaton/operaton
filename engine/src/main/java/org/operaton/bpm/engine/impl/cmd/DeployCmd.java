@@ -292,11 +292,11 @@ public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions>
     }
   }
 
-  protected ProcessApplicationRegistration registerProcessApplication(CommandContext commandContext,
+  protected @Nullable ProcessApplicationRegistration registerProcessApplication(CommandContext commandContext,
       DeploymentEntity deploymentToRegister,
       CandidateDeployment candidateDeployment, Collection<Resource> ignoredResources) {
 
-    ProcessApplicationDeploymentBuilderImpl appDeploymentBuilder = (ProcessApplicationDeploymentBuilderImpl) deploymentBuilder;
+    ProcessApplicationDeploymentBuilderImpl appDeploymentBuilder = (ProcessApplicationDeploymentBuilderImpl) requireNonNull(deploymentBuilder);
     final ProcessApplicationReference appReference = appDeploymentBuilder.getProcessApplicationReference();
 
     // build set of deployment ids this process app should be registered for:

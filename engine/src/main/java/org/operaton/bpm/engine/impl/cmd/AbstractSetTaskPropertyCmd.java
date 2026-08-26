@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -102,6 +103,7 @@ public abstract @NullMarked class AbstractSetTaskPropertyCmd<T> implements Comma
     TaskEntity task = taskManager.findTaskById(taskId);
 
     ensureNotNull(NotFoundException.class, "Cannot find task with id %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkTaskAgainstContext(task, context);
 

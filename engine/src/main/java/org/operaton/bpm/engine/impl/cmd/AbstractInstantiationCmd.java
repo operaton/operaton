@@ -59,9 +59,9 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
 
   protected VariableMap variables;
   protected VariableMap variablesLocal;
-  protected String ancestorActivityInstanceId;
+  protected @Nullable String ancestorActivityInstanceId;
 
-  protected AbstractInstantiationCmd(String processInstanceId, String ancestorActivityInstanceId) {
+  protected AbstractInstantiationCmd(@Nullable String processInstanceId, @Nullable String ancestorActivityInstanceId) {
     super(processInstanceId);
     this.ancestorActivityInstanceId = ancestorActivityInstanceId;
     this.variables = new VariableMapImpl();
@@ -92,7 +92,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
     return variablesLocal;
   }
 
-  public String getAncestorActivityInstanceId() {
+  public @Nullable String getAncestorActivityInstanceId() {
     return ancestorActivityInstanceId;
   }
 
@@ -110,6 +110,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
     EnsureUtil.ensureNotNull(NotValidException.class, describeFailure(
         "Element '%s' does not exist in process '%s'".formatted(getTargetElementId(), processDefinition.getId())),
       "element", elementToInstantiate);
+    requireNonNull(elementToInstantiate);
     // rebuild the mapping because the execution tree changes with every iteration
     final ActivityExecutionTreeMapping mapping = new ActivityExecutionTreeMapping(commandContext, processInstanceId);
 
@@ -194,6 +195,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
     EnsureUtil.ensureNotNull(NotValidException.class,
         describeFailure("Ancestor activity instance '%s' does not exist".formatted(ancestorActivityInstanceId)),
         "ancestorInstance", ancestorInstance);
+    requireNonNull(ancestorInstance);
 
     // determine ancestor activity scope execution and activity
     final ExecutionEntity ancestorScopeExecution = getScopeExecutionForActivityInstance(processInstance, mapping,
@@ -226,9 +228,9 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
   }
 
   private @Nullable ScopeImpl determineFlowScope(List<PvmActivity> activitiesToInstantiate, CoreModelElement elementToInstantiate,
-      ActivityImpl topMostActivity) {
+      @Nullable ActivityImpl topMostActivity) {
     if (!activitiesToInstantiate.isEmpty() || ActivityImpl.class.isAssignableFrom(elementToInstantiate.getClass())) {
-      return topMostActivity.getFlowScope();
+      return topMostActivity != null ? topMostActivity.getFlowScope() : null;
     } else if (TransitionImpl.class.isAssignableFrom(elementToInstantiate.getClass())) {
       TransitionImpl transitionToInstantiate = (TransitionImpl) elementToInstantiate;
       return transitionToInstantiate.getSource().getFlowScope();
@@ -245,7 +247,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
   }
 
   private ActivityStartBehavior determineStartBehavior(CoreModelElement elementToInstantiate,
-      List<PvmActivity> activitiesToInstantiate, ActivityImpl topMostActivity) {
+      List<PvmActivity> activitiesToInstantiate, @Nullable ActivityImpl topMostActivity) {
     ActivityStartBehavior startBehavior = ActivityStartBehavior.CONCURRENT_IN_FLOW_SCOPE;
     if (topMostActivity != null) {
       startBehavior = topMostActivity.getActivityStartBehavior();
@@ -272,7 +274,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
   }
 
   private void executeInstantiation(CoreModelElement elementToInstantiate, final ActivityExecutionTreeMapping mapping,
-      ExecutionEntity scopeExecution, List<PvmActivity> activitiesToInstantiate, ActivityImpl topMostActivity,
+      ExecutionEntity scopeExecution, List<PvmActivity> activitiesToInstantiate, @Nullable ActivityImpl topMostActivity,
       ActivityStartBehavior startBehavior) {
     switch (startBehavior) {
     case CANCEL_EVENT_SCOPE: {

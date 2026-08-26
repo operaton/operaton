@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.cfg;
 
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
@@ -297,7 +296,7 @@ public interface CommandChecker {
   /**
    * Checks if it is allowed to delete the given historic task instance.
    */
-  void checkDeleteHistoricTaskInstance(@Nullable HistoricTaskInstanceEntity task);
+  void checkDeleteHistoricTaskInstance(HistoricTaskInstanceEntity task);
 
   /**
    * Checks if it is allowed to delete the given historic process instance.

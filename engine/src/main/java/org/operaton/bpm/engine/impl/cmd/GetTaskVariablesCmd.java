@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -31,13 +33,13 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class GetTaskVariablesCmd implements Command<VariableMap> {
+public @NullMarked class GetTaskVariablesCmd implements Command<VariableMap> {
   protected String taskId;
-  protected Collection<String> variableNames;
+  protected @Nullable Collection<String> variableNames;
   protected boolean isLocal;
   protected boolean deserializeValues;
 
-  public GetTaskVariablesCmd(String taskId, Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
+  public GetTaskVariablesCmd(String taskId, @Nullable Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
     this.taskId = taskId;
     this.variableNames = variableNames;
     this.isLocal = isLocal;
@@ -49,7 +51,7 @@ public class GetTaskVariablesCmd implements Command<VariableMap> {
     ensureNotNull("taskId", taskId);
 
     TaskEntity task = Context
-      .getCommandContext()
+      .getRequiredCommandContext()
       .getTaskManager()
       .findTaskById(taskId);
 

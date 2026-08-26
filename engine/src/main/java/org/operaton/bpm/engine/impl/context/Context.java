@@ -67,6 +67,8 @@ public final class Context {
 
   /**
    * Returns the current command context. If no command context is active, an exception is thrown.
+   * This is a null-safe version of {@link #getCommandContext()}, which is useful in cases where the command context is
+   * required to be present. This supports the IDE in detecting potential null pointer exceptions at compile time.
    *
    * @return the current command context
    * @throws IllegalStateException if no command context is active
@@ -124,6 +126,8 @@ public final class Context {
 
   /**
    * Returns the current process engine configuration. If no process engine configuration is active, an exception is thrown.
+   * This is a null-safe version of {@link #getRequiredProcessEngineConfiguration()}, which is useful in cases where the command context is
+   * required to be present. This supports the IDE in detecting potential null pointer exceptions at compile time.
    *
    * @return the current process engine configuration
    * @throws IllegalStateException if no process engine configuration is active

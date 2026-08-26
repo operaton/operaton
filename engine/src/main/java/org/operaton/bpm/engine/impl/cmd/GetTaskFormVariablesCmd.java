@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.TaskFormData;
@@ -35,7 +36,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd {
+public @NullMarked class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd {
   public GetTaskFormVariablesCmd(String taskId, Collection<String> variableNames, boolean deserializeObjectValues) {
     super(taskId, variableNames, deserializeObjectValues);
   }

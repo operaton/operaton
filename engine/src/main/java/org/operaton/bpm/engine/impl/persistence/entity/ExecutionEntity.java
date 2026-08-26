@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -896,7 +895,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
         ensureExecutionTreeInitialized();
 
       } else {
-        parent = Context.getCommandContext().getExecutionManager().findExecutionById(parentId);
+        parent = Context.getRequiredCommandContext().getExecutionManager().findExecutionById(parentId);
       }
     }
   }
@@ -943,7 +942,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void ensureSuperExecutionInitialized() {
     if (superExecution == null && superExecutionId != null) {
-      superExecution = Context.getCommandContext().getExecutionManager().findExecutionById(superExecutionId);
+      superExecution = Context.getRequiredCommandContext().getExecutionManager().findExecutionById(superExecutionId);
     }
   }
 
@@ -961,7 +960,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void ensureSubProcessInstanceInitialized() {
     if (shouldQueryForSubprocessInstance && subProcessInstance == null) {
-      subProcessInstance = Context.getCommandContext().getExecutionManager().findSubProcessInstanceBySuperExecutionId(id);
+      subProcessInstance = Context.getRequiredCommandContext().getExecutionManager().findSubProcessInstanceBySuperExecutionId(id);
     }
   }
 
@@ -1004,7 +1003,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void ensureSuperCaseExecutionInitialized() {
     if (superCaseExecution == null && superCaseExecutionId != null) {
-      superCaseExecution = Context.getCommandContext().getCaseExecutionManager().findCaseExecutionById(superCaseExecutionId);
+      superCaseExecution = Context.getRequiredCommandContext().getCaseExecutionManager().findCaseExecutionById(superCaseExecutionId);
     }
   }
 
@@ -1025,7 +1024,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void ensureSubCaseInstanceInitialized() {
     if (shouldQueryForSubCaseInstance && subCaseInstance == null) {
-      subCaseInstance = Context.getCommandContext().getCaseExecutionManager().findSubCaseInstanceBySuperExecutionId(id);
+      subCaseInstance = Context.getRequiredCommandContext().getCaseExecutionManager().findSubCaseInstanceBySuperExecutionId(id);
     }
   }
 
@@ -1044,7 +1043,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     removeEventSubscriptions();
 
     // finally delete this execution
-    Context.getCommandContext().getExecutionManager().deleteExecution(this);
+    Context.getRequiredCommandContext().getExecutionManager().deleteExecution(this);
   }
 
   protected void removeEventSubscriptionsExceptCompensation() {

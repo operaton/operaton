@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -24,15 +25,13 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 
-public class GetTelemetryDataCmd implements Command<TelemetryDataImpl> {
-
-  ProcessEngineConfigurationImpl configuration;
+public @NullMarked class GetTelemetryDataCmd implements Command<TelemetryDataImpl> {
 
   @Override
   public TelemetryDataImpl execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkReadDiagnosticsData);
 
-    configuration = commandContext.getProcessEngineConfiguration();
+    var configuration = commandContext.getProcessEngineConfiguration();
 
     DiagnosticsCollector diagnosticsCollector = configuration.getDiagnosticsCollector();
     if (diagnosticsCollector != null) {

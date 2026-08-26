@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Daniel Meyer
  */
-public class GetTaskVariableCmdTyped implements Command<TypedValue> {
+public @NullMarked class GetTaskVariableCmdTyped implements Command<TypedValue> {
   protected String taskId;
   protected String variableName;
   protected boolean isLocal;
@@ -42,12 +44,12 @@ public class GetTaskVariableCmdTyped implements Command<TypedValue> {
   }
 
   @Override
-  public TypedValue execute(CommandContext commandContext) {
+  public @Nullable TypedValue execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
     ensureNotNull("variableName", variableName);
 
     TaskEntity task = Context
-      .getCommandContext()
+      .getRequiredCommandContext()
       .getTaskManager()
       .findTaskById(taskId);
 

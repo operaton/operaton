@@ -58,6 +58,13 @@ const api = {
       state,
       state.api.plugins[PLUGIN_ID].completed,
     ),
+  // Per-definition runtime counts (+ incidents) for the "top processes" ranking.
+  definition_stats: (state) =>
+    GET(
+      "/process-definition/statistics?incidents=true",
+      state,
+      state.api.plugins[PLUGIN_ID].definition_stats,
+    ),
 };
 
 // State branch — mounted at state.api.plugins.metrics.
@@ -67,6 +74,7 @@ const make_signals = () => ({
   flow_nodes: signal(null),
   running: signal(null),
   completed: signal(null),
+  definition_stats: signal(null),
 });
 
 const MetricValue = ({ signal: signl, format = (v) => v }) => (
@@ -110,6 +118,80 @@ const Donut = ({ running, completed }) => {
   );
 };
 
+// Collapse the per-definition statistics (one row per version) into one row per
+// process key: sum running instances and incidents across versions, and keep the
+// newest version's id as the link target.
+const top_processes = (stats, limit = 5) => {
+  const by_key = {};
+  for (const row of stats) {
+    const def = row.definition;
+    const entry = (by_key[def.key] ??= {
+      key: def.key,
+      name: def.name || def.key,
+      instances: 0,
+      incidents: 0,
+      version: -1,
+      definition_id: def.id,
+    });
+    entry.instances += row.instances;
+    entry.incidents += (row.incidents ?? []).reduce(
+      (sum, i) => sum + i.incidentCount,
+      0,
+    );
+    if (def.version > entry.version) {
+      entry.version = def.version;
+      entry.definition_id = def.id;
+    }
+  }
+  return Object.values(by_key)
+    .filter((e) => e.instances > 0)
+    .sort((a, b) => b.instances - a.instances)
+    .slice(0, limit);
+};
+
+const TopProcesses = ({ stats }) => {
+  const [t] = useTranslation();
+  const rows = top_processes(stats);
+  if (rows.length === 0) {
+    return <p class="fade-in">{t("plugins.metrics.no-running")}</p>;
+  }
+  const max = rows[0].instances;
+  return (
+    <ol class="ranking">
+      {rows.map((r) => (
+        <li key={r.key}>
+          <a href={`/processes/${r.definition_id}`}>
+            <span class="ranking-name" title={r.name}>
+              {r.name}
+            </span>
+            <span class="ranking-bar-track">
+              <span
+                class="ranking-bar"
+                style={{ inlineSize: `${(r.instances / max) * 100}%` }}
+              >
+                {r.incidents > 0 && (
+                  <span
+                    class="ranking-bar-incidents"
+                    style={{
+                      inlineSize: `${Math.min(r.incidents / r.instances, 1) * 100}%`,
+                    }}
+                  />
+                )}
+              </span>
+            </span>
+            <span class="ranking-meta">
+              <span class="ranking-count">{r.instances}</span>
+              {r.incidents > 0 && (
+                <span class="ranking-incidents">({r.incidents})</span>
+              )}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+};
+
 const MetricsPage = () => {
   const { state, api: metrics, signals } = use_plugin_api(PLUGIN_ID);
   const [t] = useTranslation();
@@ -120,6 +202,7 @@ const MetricsPage = () => {
     metrics.flow_nodes(state);
     metrics.running(state);
     metrics.completed(state);
+    metrics.definition_stats(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -175,6 +258,13 @@ const MetricsPage = () => {
             }}
           />
         </article>
+        <article class="metrics-ranking">
+          <h2>{t("plugins.metrics.top-processes")}</h2>
+          <RequestState
+            signal={signals.definition_stats}
+            on_success={() => <TopProcesses stats={signals.definition_stats.value.data} />}
+          />
+        </article>
       </section>
     </main>
   );
@@ -192,6 +282,8 @@ const translations = {
         snapshot: "Process instances: running vs. completed",
         running: "Running",
         completed: "Completed",
+        "top-processes": "Top processes by running instances",
+        "no-running": "No running instances.",
       },
     },
   },
@@ -206,6 +298,8 @@ const translations = {
         snapshot: "Prozessinstanzen: laufend vs. abgeschlossen",
         running: "Laufend",
         completed: "Abgeschlossen",
+        "top-processes": "Top-Prozesse nach laufenden Instanzen",
+        "no-running": "Keine laufenden Instanzen.",
       },
     },
   },

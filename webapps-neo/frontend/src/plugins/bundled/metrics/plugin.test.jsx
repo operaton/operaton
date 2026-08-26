@@ -48,6 +48,10 @@ describe("Engine Metrics plugin — page", () => {
     vi.spyOn(engine_rest.plugins.metrics, "completed").mockImplementation(
       () => {},
     );
+    vi.spyOn(
+      engine_rest.plugins.metrics,
+      "definition_stats",
+    ).mockImplementation(() => {});
     signal_response(state.api.plugins.metrics.version, { version: "7.99.0" });
 
     render_with_state(<MetricsPage />, { state });
@@ -67,6 +71,7 @@ describe("Engine Metrics plugin — page", () => {
       "flow_nodes",
       "running",
       "completed",
+      "definition_stats",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -79,5 +84,47 @@ describe("Engine Metrics plugin — page", () => {
     expect(screen.getByText("3")).toBeTruthy();
     expect(screen.getByText("7")).toBeTruthy();
     expect(screen.getByText("10")).toBeTruthy();
+  });
+
+  it("ranks top processes, summing running instances across versions", () => {
+    const state = create_mock_state();
+    for (const fn of [
+      "version",
+      "process_starts",
+      "flow_nodes",
+      "running",
+      "completed",
+      "definition_stats",
+    ]) {
+      vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
+    }
+    // orderFulfillment spans two versions (4 + 6 = 10) and outranks invoice (2).
+    signal_response(state.api.plugins.metrics.definition_stats, [
+      {
+        instances: 4,
+        incidents: [],
+        definition: { id: "of:1", key: "orderFulfillment", name: "Order Fulfillment", version: 1 },
+      },
+      {
+        instances: 6,
+        incidents: [{ incidentType: "failedJob", incidentCount: 2 }],
+        definition: { id: "of:2", key: "orderFulfillment", name: "Order Fulfillment", version: 2 },
+      },
+      {
+        instances: 2,
+        incidents: [],
+        definition: { id: "inv:1", key: "invoice", name: "Invoice", version: 1 },
+      },
+    ]);
+
+    render_with_state(<MetricsPage />, { state });
+
+    // Aggregated running count for orderFulfillment is 10, incidents 2.
+    expect(screen.getByText("Order Fulfillment")).toBeTruthy();
+    expect(screen.getByText("10")).toBeTruthy();
+    expect(screen.getByText("(2)")).toBeTruthy();
+    // Links to the newest version's definition (of:2).
+    const link = screen.getByText("Order Fulfillment").closest("a");
+    expect(link.getAttribute("href")).toBe("/processes/of:2");
   });
 });

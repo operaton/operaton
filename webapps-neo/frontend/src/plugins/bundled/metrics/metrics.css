@@ -46,12 +46,108 @@
   }
 
   #content.metrics-page .metrics-snapshot {
-    flex: 1 1 20rem;
+    flex: 1 1 18rem;
     padding: var(--spacing-3, 1rem);
     border: var(--border, 1px solid);
     border-color: var(--border-color, #ccc);
     border-radius: var(--border-radius-2, 0.5rem);
     background: var(--background-2, transparent);
+  }
+
+  #content.metrics-page .metrics-ranking {
+    flex: 2 1 24rem;
+    padding: var(--spacing-3, 1rem);
+    border: var(--border, 1px solid);
+    border-color: var(--border-color, #ccc);
+    border-radius: var(--border-radius-2, 0.5rem);
+    background: var(--background-2, transparent);
+  }
+
+  #content.metrics-page .ranking {
+    list-style: none;
+    margin: var(--spacing-2, 0.5rem) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--spacing-1, 0.25rem);
+    counter-reset: rank;
+  }
+
+  #content.metrics-page .ranking li a {
+    display: grid;
+    /* Fixed rank + meta columns so 4-digit counts like "8888 (8888)" never shift
+       the bar column; the name (ellipsis) and bar share the remaining space. */
+    grid-template-columns: 1.5rem minmax(5rem, 1fr) 2fr 7rem;
+    align-items: center;
+    gap: var(--spacing-2, 0.5rem);
+    padding: var(--spacing-1, 0.25rem) var(--spacing-2, 0.5rem);
+    border-radius: var(--border-radius-1, 0.25rem);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #content.metrics-page .ranking li a:hover,
+  #content.metrics-page .ranking li a:focus-visible {
+    background: var(--background-3, #f0f0f0);
+  }
+
+  #content.metrics-page .ranking li a::before {
+    counter-increment: rank;
+    content: counter(rank);
+    color: var(--color-text-secondary, #888);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  #content.metrics-page .ranking-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #content.metrics-page .ranking-bar-track {
+    block-size: 0.6rem;
+    background: var(--background-3, #eee);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  #content.metrics-page .ranking-bar {
+    position: relative;
+    display: block;
+    block-size: 100%;
+    background: var(--color-primary, #3b82f6);
+    border-radius: 999px;
+    overflow: hidden;
+    transition: inline-size 0.4s ease;
+  }
+
+  /* Red share of the bar, proportional to incidents / running instances. Sits at
+     the start and is clipped to the bar's rounded shape. */
+  #content.metrics-page .ranking-bar-incidents {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    background: var(--color-danger, #dc2626);
+    transition: inline-size 0.4s ease;
+  }
+
+  #content.metrics-page .ranking-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: var(--spacing-1, 0.25rem);
+    white-space: nowrap;
+  }
+
+  #content.metrics-page .ranking-count {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  #content.metrics-page .ranking-incidents {
+    color: var(--color-danger, #dc2626);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
   #content.metrics-page .snapshot-body {

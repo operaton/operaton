@@ -72,7 +72,7 @@ public @NullMarked class GetFormKeyCmd implements Command<String> {
 
   @Override
   public @Nullable String execute(CommandContext commandContext) {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getRequiredProcessEngineConfiguration();
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
 

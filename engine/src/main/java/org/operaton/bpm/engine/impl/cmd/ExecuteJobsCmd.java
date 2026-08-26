@@ -61,7 +61,7 @@ public @NullMarked class ExecuteJobsCmd implements Command<Void> {
 
     final JobEntity job = commandContext.getDbEntityManager().selectById(JobEntity.class, jobId);
 
-    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getRequiredProcessEngineConfiguration();
+    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     final IdentityService identityService = processEngineConfiguration.getIdentityService();
 
     final JobExecutorContext jobExecutorContext = Context.getJobExecutorContext();

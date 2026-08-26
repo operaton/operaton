@@ -376,7 +376,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
 
     // remove process definition from cache:
     Context
-      .getRequiredProcessEngineConfiguration()
+      .getProcessEngineConfiguration()
       .getDeploymentCache()
       .removeProcessDefinition(processDefinitionId);
 

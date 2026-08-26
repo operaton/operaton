@@ -95,12 +95,10 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
     ensureNotNull(NotValidException.class, "periodUnit", periodUnit);
     this.durationPeriodUnit = periodUnit;
 
-    CommandContext commandContext = Context.getCommandContext();
-
-    if (commandContext == null) {
+    if (!Context.hasActiveCommandContext()) {
       return commandExecutor.execute(new ExecuteDurationReportCmd());
     } else {
-      return executeDurationReport(commandContext);
+      return executeDurationReport(Context.getCommandContext());
     }
 
   }

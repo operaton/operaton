@@ -188,7 +188,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
   }
 
   protected ExecutionEntity getExecutionFromContext() {
-    if(Context.getCommandContext() != null) {
+    if(Context.hasActiveCommandContext()) {
       BpmnExecutionContext executionContext = Context.getBpmnExecutionContext();
       if(executionContext != null) {
         return executionContext.getExecution();
@@ -228,7 +228,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
   }
 
   protected void ensureCommandContextNotActive() {
-    if(Context.getCommandContext() != null) {
+    if(Context.hasActiveCommandContext()) {
       throw new ProcessEngineCdiException("Cannot work with scoped associations inside command context.");
     }
   }

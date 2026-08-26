@@ -51,6 +51,9 @@ public final class VariableUtil {
    * @param value
    */
   public static boolean isJavaSerializationProhibited(TypedValue value) {
+    if (!Context.hasActiveProcessEngineConfiguration()) {
+      return false;
+    }
     ProcessEngineConfigurationImpl processEngineConfiguration =
         Context.getProcessEngineConfiguration();
 

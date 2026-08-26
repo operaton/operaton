@@ -41,7 +41,7 @@ public @NullMarked class GetIdentityLinksForProcessDefinitionCmd implements Comm
   @SuppressWarnings({"unchecked", "rawtypes"})
   public List<IdentityLink> execute(CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
-      .getRequiredCommandContext()
+      .getCommandContext()
       .getProcessDefinitionManager()
       .findLatestProcessDefinitionById(processDefinitionId);
 

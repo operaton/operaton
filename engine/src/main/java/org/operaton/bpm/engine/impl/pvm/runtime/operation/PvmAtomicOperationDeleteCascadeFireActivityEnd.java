@@ -75,14 +75,16 @@ public class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOpe
 
     } else {
       if (execution.isScope()) {
-        ProcessEngineConfigurationImpl engineConfiguration = Context.getProcessEngineConfiguration();
+        boolean isSkipOutputMappingOnCanceledActivities = Context.getProcessEngineConfigurationWhenAvailable()
+            .map(ProcessEngineConfigurationImpl::isSkipOutputMappingOnCanceledActivities)
+            .orElse(false);
 
         // execution was canceled and output mapping for activity is marked as skippable
         boolean alwaysSkipIoMappings =
             execution instanceof ExecutionEntity &&
             !execution.isProcessInstanceExecution() &&
             execution.isCanceled() &&
-            engineConfiguration.isSkipOutputMappingOnCanceledActivities();
+            isSkipOutputMappingOnCanceledActivities;
 
         execution.destroy(alwaysSkipIoMappings);
       }

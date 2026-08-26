@@ -43,7 +43,7 @@ public abstract class JobRetryCmd implements Command<Object> {
 
   protected JobEntity getJob() {
     return Context
-        .getRequiredCommandContext()
+        .getCommandContext()
         .getJobManager()
         .findJobById(jobId);
   }
@@ -70,7 +70,7 @@ public abstract class JobRetryCmd implements Command<Object> {
   }
 
   protected void notifyAcquisition(CommandContext commandContext) {
-    JobExecutor jobExecutor = Context.getRequiredProcessEngineConfiguration().getJobExecutor();
+    JobExecutor jobExecutor = Context.getProcessEngineConfiguration().getJobExecutor();
     MessageAddedNotification messageAddedNotification = new MessageAddedNotification(jobExecutor);
     TransactionContext transactionContext = commandContext.getTransactionContext();
     transactionContext.addTransactionListener(TransactionState.COMMITTED, messageAddedNotification);

@@ -615,23 +615,23 @@ public @NullMarked class TenantCommandChecker implements CommandChecker {
   // helper //////////////////////////////////////////////////
 
   protected TenantManager getTenantManager() {
-    return Context.getRequiredCommandContext().getTenantManager();
+    return Context.getCommandContext().getTenantManager();
   }
 
   protected @Nullable ProcessDefinitionEntity findLatestProcessDefinitionById(String processDefinitionId) {
-    return Context.getRequiredCommandContext().getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
+    return Context.getCommandContext().getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
   }
 
   protected @Nullable DecisionDefinitionEntity findLatestDecisionDefinitionById(String decisionDefinitionId) {
-    return Context.getRequiredCommandContext().getDecisionDefinitionManager().findDecisionDefinitionById(decisionDefinitionId);
+    return Context.getCommandContext().getDecisionDefinitionManager().findDecisionDefinitionById(decisionDefinitionId);
   }
 
   protected @Nullable ExecutionEntity findExecutionById(String processInstanceId) {
-    return Context.getRequiredCommandContext().getExecutionManager().findExecutionById(processInstanceId);
+    return Context.getCommandContext().getExecutionManager().findExecutionById(processInstanceId);
   }
 
   protected @Nullable DeploymentEntity findDeploymentById(String deploymentId) {
-    return Context.getRequiredCommandContext().getDeploymentManager().findDeploymentById(deploymentId);
+    return Context.getCommandContext().getDeploymentManager().findDeploymentById(deploymentId);
   }
 
 }

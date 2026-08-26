@@ -708,7 +708,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
         ensureExecutionTreeInitialized();
 
       } else {
-        this.executions = Context.getRequiredCommandContext().getExecutionManager().findChildExecutionsByParentExecutionId(id);
+        this.executions = Context.getCommandContext().getExecutionManager().findChildExecutionsByParentExecutionId(id);
       }
 
     }
@@ -895,7 +895,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
         ensureExecutionTreeInitialized();
 
       } else {
-        parent = Context.getRequiredCommandContext().getExecutionManager().findExecutionById(parentId);
+        parent = Context.getCommandContext().getExecutionManager().findExecutionById(parentId);
       }
     }
   }
@@ -942,7 +942,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void ensureSuperExecutionInitialized() {
     if (superExecution == null && superExecutionId != null) {
-      superExecution = Context.getRequiredCommandContext().getExecutionManager().findExecutionById(superExecutionId);
+      superExecution = Context.getCommandContext().getExecutionManager().findExecutionById(superExecutionId);
     }
   }
 
@@ -960,7 +960,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void ensureSubProcessInstanceInitialized() {
     if (shouldQueryForSubprocessInstance && subProcessInstance == null) {
-      subProcessInstance = Context.getRequiredCommandContext().getExecutionManager().findSubProcessInstanceBySuperExecutionId(id);
+      subProcessInstance = Context.getCommandContext().getExecutionManager().findSubProcessInstanceBySuperExecutionId(id);
     }
   }
 
@@ -1003,7 +1003,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void ensureSuperCaseExecutionInitialized() {
     if (superCaseExecution == null && superCaseExecutionId != null) {
-      superCaseExecution = Context.getRequiredCommandContext().getCaseExecutionManager().findCaseExecutionById(superCaseExecutionId);
+      superCaseExecution = Context.getCommandContext().getCaseExecutionManager().findCaseExecutionById(superCaseExecutionId);
     }
   }
 
@@ -1024,7 +1024,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void ensureSubCaseInstanceInitialized() {
     if (shouldQueryForSubCaseInstance && subCaseInstance == null) {
-      subCaseInstance = Context.getRequiredCommandContext().getCaseExecutionManager().findSubCaseInstanceBySuperExecutionId(id);
+      subCaseInstance = Context.getCommandContext().getCaseExecutionManager().findSubCaseInstanceBySuperExecutionId(id);
     }
   }
 
@@ -1043,7 +1043,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     removeEventSubscriptions();
 
     // finally delete this execution
-    Context.getRequiredCommandContext().getExecutionManager().deleteExecution(this);
+    Context.getCommandContext().getExecutionManager().deleteExecution(this);
   }
 
   protected void removeEventSubscriptionsExceptCompensation() {

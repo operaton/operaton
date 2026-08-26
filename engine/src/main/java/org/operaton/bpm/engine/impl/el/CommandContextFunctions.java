@@ -35,22 +35,14 @@ public final class CommandContextFunctions {
   }
 
   public static @Nullable String currentUser() {
-    CommandContext commandContext = Context.getCommandContext();
-    if (commandContext != null) {
-      return commandContext.getAuthenticatedUserId();
-    }
-    else {
-      return null;
-    }
+    return Context.getCommandContextWhenAvailable()
+      .map(CommandContext::getAuthenticatedUserId)
+      .orElse(null);
   }
 
   public static List<String> currentUserGroups() {
-    CommandContext commandContext = Context.getCommandContext();
-    if (commandContext != null) {
-      return commandContext.getAuthenticatedGroupIds();
-    }
-    else {
-      return Collections.emptyList();
-    }
+    return Context.getCommandContextWhenAvailable()
+      .map(CommandContext::getAuthenticatedGroupIds)
+      .orElse(Collections.emptyList());
   }
 }

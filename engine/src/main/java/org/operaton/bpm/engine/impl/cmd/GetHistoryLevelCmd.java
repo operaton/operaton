@@ -30,7 +30,7 @@ public @NullMarked class GetHistoryLevelCmd implements Command<Integer> {
   @Override
   public Integer execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkReadHistoryLevel);
-    return Context.getRequiredProcessEngineConfiguration().getHistoryLevel().getId();
+    return Context.getProcessEngineConfiguration().getHistoryLevel().getId();
   }
 
 }

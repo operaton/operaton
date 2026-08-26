@@ -149,7 +149,7 @@ public @NullMarked class DeleteProcessDefinitionsByIdsCmd implements Command<Voi
       for (ProcessDefinitionEntity processDefinition : processDefinitions) {
         String previousProcessDefinitionId = processDefinition.getPreviousProcessDefinitionId();
         if (previousProcessDefinitionId != null && !this.processDefinitionIds.contains(previousProcessDefinitionId)) {
-          CommandContext commandContext = Context.getRequiredCommandContext();
+          CommandContext commandContext = Context.getCommandContext();
           ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
           newLatestProcessDefinition = processDefinitionManager.findLatestDefinitionById(previousProcessDefinitionId);
           break;
@@ -161,7 +161,7 @@ public @NullMarked class DeleteProcessDefinitionsByIdsCmd implements Command<Voi
   }
 
   protected boolean isLatestProcessDefinition(ProcessDefinitionEntity processDefinition) {
-    ProcessDefinitionManager processDefinitionManager = Context.getRequiredCommandContext().getProcessDefinitionManager();
+    ProcessDefinitionManager processDefinitionManager = Context.getCommandContext().getProcessDefinitionManager();
     String key = processDefinition.getKey();
     String tenantId = processDefinition.getTenantId();
     ProcessDefinitionEntity latestProcessDefinition = processDefinitionManager.findLatestDefinitionByKeyAndTenantId(key, tenantId);
@@ -169,7 +169,7 @@ public @NullMarked class DeleteProcessDefinitionsByIdsCmd implements Command<Voi
   }
 
   protected void checkAuthorization(ProcessDefinitionGroup group) {
-    List<CommandChecker> commandCheckers = Context.getRequiredProcessEngineConfiguration().getCommandCheckers();
+    List<CommandChecker> commandCheckers = Context.getProcessEngineConfiguration().getCommandCheckers();
     List<ProcessDefinitionEntity> processDefinitions = group.processDefinitions;
     for (ProcessDefinitionEntity processDefinition : processDefinitions) {
       for (CommandChecker commandChecker : commandCheckers) {
@@ -181,7 +181,7 @@ public @NullMarked class DeleteProcessDefinitionsByIdsCmd implements Command<Voi
   protected void deleteProcessDefinitions(ProcessDefinitionGroup group) {
     ProcessDefinitionEntity newLatestProcessDefinition = findNewLatestProcessDefinition(group);
 
-    CommandContext commandContext = Context.getRequiredCommandContext();
+    CommandContext commandContext = Context.getCommandContext();
     UserOperationLogManager userOperationLogManager = commandContext.getOperationLogManager();
     ProcessDefinitionManager definitionManager = commandContext.getProcessDefinitionManager();
 
@@ -198,7 +198,7 @@ public @NullMarked class DeleteProcessDefinitionsByIdsCmd implements Command<Voi
     }
 
     if (newLatestProcessDefinition != null) {
-      ProcessEngineConfigurationImpl configuration = Context.getRequiredProcessEngineConfiguration();
+      ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
       DeploymentCache deploymentCache = configuration.getDeploymentCache();
       newLatestProcessDefinition = deploymentCache.resolveProcessDefinition(newLatestProcessDefinition);
 

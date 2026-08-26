@@ -471,11 +471,7 @@ public final @NullMarked class EnsureUtil {
   }
 
   public static CommandContext ensureActiveCommandContext(String operation) {
-    CommandContext commandContext = Context.getCommandContext();
-    if (commandContext == null) {
-      throw LOG.notInsideCommandContext(operation);
-    }
-    return requireNonNull(commandContext);
+    return Context.getCommandContextWhenAvailable().orElseThrow(() -> LOG.notInsideCommandContext(operation));
   }
 
   public static CommandContext ensureActiveCommandContext(@Nullable CommandContext commandContext) {

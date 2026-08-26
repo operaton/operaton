@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.context;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import org.jspecify.annotations.NonNull;
@@ -57,12 +58,19 @@ public final class Context {
   private Context() {
   }
 
-  public static @Nullable CommandContext getCommandContext() {
+  /**
+   * @since 2.2
+   */
+  public static boolean hasActiveCommandContext() {
+    return getCommandContextWhenAvailable().isPresent();
+  }
+
+  public static Optional<CommandContext> getCommandContextWhenAvailable() {
     Deque<CommandContext> stack = getStack(commandContextThreadLocal);
     if (stack.isEmpty()) {
-      return null;
+      return Optional.empty();
     }
-    return stack.peek();
+    return Optional.of(stack.peek());
   }
 
   /**
@@ -74,12 +82,12 @@ public final class Context {
    * @throws IllegalStateException if no command context is active
    * @since 2.2
    */
-  public static @NonNull CommandContext getRequiredCommandContext() {
-    return EnsureUtil.ensureActiveCommandContext(getCommandContext());
+  public static @NonNull CommandContext getCommandContext() {
+    return EnsureUtil.ensureActiveCommandContext(getCommandContextWhenAvailable().orElse(null));
   }
 
 
-  public static void setCommandContext(CommandContext commandContext) {
+  public static void setCommandContext(@NonNull CommandContext commandContext) {
     getStack(commandContextThreadLocal).push(commandContext);
   }
 
@@ -116,29 +124,33 @@ public final class Context {
     }
   }
 
-  public static @Nullable ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+  public static boolean hasActiveProcessEngineConfiguration() {
+    return getProcessEngineConfigurationWhenAvailable().isPresent();
+  }
+
+  public static Optional<ProcessEngineConfigurationImpl> getProcessEngineConfigurationWhenAvailable() {
     Deque<ProcessEngineConfigurationImpl> stack = getStack(processEngineConfigurationStackThreadLocal);
     if (stack.isEmpty()) {
-      return null;
+      return Optional.empty();
     }
-    return stack.peek();
+    return Optional.of(stack.peek());
   }
 
   /**
    * Returns the current process engine configuration. If no process engine configuration is active, an exception is thrown.
-   * This is a null-safe version of {@link #getRequiredProcessEngineConfiguration()}, which is useful in cases where the command context is
+   * This is a null-safe version of {@link #getProcessEngineConfiguration()}, which is useful in cases where the command context is
    * required to be present. This supports the IDE in detecting potential null pointer exceptions at compile time.
    *
    * @return the current process engine configuration
    * @throws IllegalStateException if no process engine configuration is active
    * @since 2.2
    */
-  public static @NonNull ProcessEngineConfigurationImpl getRequiredProcessEngineConfiguration() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = getProcessEngineConfiguration();
-    if (processEngineConfiguration == null) {
+  public static @NonNull ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+    Optional<ProcessEngineConfigurationImpl> processEngineConfiguration = getProcessEngineConfigurationWhenAvailable();
+    if (processEngineConfiguration.isEmpty()) {
       throw new IllegalStateException("No process engine configuration active on thread " + Thread.currentThread());
     }
-    return processEngineConfiguration;
+    return processEngineConfiguration.get();
   }
 
   public static void setProcessEngineConfiguration(ProcessEngineConfigurationImpl processEngineConfiguration) {

@@ -39,6 +39,8 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static org.operaton.bpm.engine.impl.context.Context.hasActiveCommandContext;
+
 /**
  * Bean supporting contextual business process management. This allows us to
  * implement a unit of work, in which a particular CDI scope (Conversation /
@@ -742,7 +744,7 @@ public class BusinessProcess implements Serializable {
   }
 
   protected void assertCommandContextNotActive() {
-    if(Context.getCommandContext() != null) {
+    if(hasActiveCommandContext()) {
       throw new ProcessEngineCdiException("Cannot use this method of the BusinessProcess bean from an active command context.");
     }
   }

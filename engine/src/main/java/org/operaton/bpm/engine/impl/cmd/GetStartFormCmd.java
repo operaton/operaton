@@ -41,7 +41,7 @@ public @NullMarked class GetStartFormCmd implements Command<StartFormData> {
 
   @Override
   public StartFormData execute(CommandContext commandContext) {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getRequiredProcessEngineConfiguration();
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
     ensureNotNull("No process definition found for id '%s'".formatted(processDefinitionId), "processDefinition", processDefinition);

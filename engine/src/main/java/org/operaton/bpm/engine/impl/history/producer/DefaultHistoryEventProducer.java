@@ -1416,15 +1416,11 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   }
 
   protected ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
+    if (!Context.hasActiveCommandContext()) {
+      return null;
+    }
     CommandContext commandContext = Context.getCommandContext();
-    if (commandContext == null) {
-      return null;
-    }
-
     DbEntityManager dbEntityManager = commandContext.getDbEntityManager();
-    if (dbEntityManager == null) {
-      return null;
-    }
 
     return dbEntityManager.selectById(ProcessDefinitionEntity.class, processDefinitionId);
   }

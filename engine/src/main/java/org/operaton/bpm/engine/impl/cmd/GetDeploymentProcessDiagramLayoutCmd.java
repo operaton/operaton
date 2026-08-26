@@ -52,7 +52,7 @@ public @NullMarked class GetDeploymentProcessDiagramLayoutCmd implements Command
   @Override
   public @Nullable DiagramLayout execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
-        .getRequiredProcessEngineConfiguration()
+        .getProcessEngineConfiguration()
         .getDeploymentCache()
         .findDeployedProcessDefinitionById(processDefinitionId);
 

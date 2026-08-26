@@ -48,7 +48,7 @@ public @NullMarked class GetDeploymentProcessModelCmd implements Command<InputSt
   @Override
   public @Nullable InputStream execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
-            .getRequiredProcessEngineConfiguration()
+            .getProcessEngineConfiguration()
             .getDeploymentCache()
             .findDeployedProcessDefinitionById(processDefinitionId);
 

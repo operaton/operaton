@@ -300,7 +300,7 @@ public class AuthorizationManager extends AbstractManager {
     Boolean isRevokeAuthCheckEnabled = this.isRevokeAuthCheckUsed;
 
     if(isRevokeAuthCheckEnabled == null) {
-      String configuredMode = Context.getRequiredProcessEngineConfiguration().getAuthorizationCheckRevokes();
+      String configuredMode = Context.getProcessEngineConfiguration().getAuthorizationCheckRevokes();
       if(configuredMode != null) {
         configuredMode = configuredMode.toLowerCase();
       }
@@ -550,7 +550,7 @@ public class AuthorizationManager extends AbstractManager {
   public boolean isOperatonAdmin(Authentication authentication) {
     List<String> groupIds = authentication.getGroupIds();
     if (groupIds != null) {
-      List<String> adminGroups = Context.getRequiredProcessEngineConfiguration().getAdminGroups();
+      List<String> adminGroups = Context.getProcessEngineConfiguration().getAdminGroups();
       for (String adminGroup : adminGroups) {
         if (groupIds.contains(adminGroup)) {
           return true;
@@ -560,7 +560,7 @@ public class AuthorizationManager extends AbstractManager {
 
     String userId = authentication.getUserId();
     if (userId != null) {
-      List<String> adminUsers = Context.getRequiredProcessEngineConfiguration().getAdminUsers();
+      List<String> adminUsers = Context.getProcessEngineConfiguration().getAdminUsers();
       return adminUsers != null && adminUsers.contains(userId);
     }
 
@@ -1147,7 +1147,7 @@ public class AuthorizationManager extends AbstractManager {
   protected boolean isAuthCheckExecuted() {
 
     Authentication currentAuthentication = getCurrentAuthentication();
-    CommandContext commandContext = Context.getRequiredCommandContext();
+    CommandContext commandContext = Context.getCommandContext();
 
     return isAuthorizationEnabled()
         && commandContext.isAuthorizationCheckEnabled()
@@ -1157,11 +1157,11 @@ public class AuthorizationManager extends AbstractManager {
   }
 
   public boolean isEnsureSpecificVariablePermission() {
-    return Context.getRequiredProcessEngineConfiguration().isEnforceSpecificVariablePermission();
+    return Context.getProcessEngineConfiguration().isEnforceSpecificVariablePermission();
   }
 
   protected boolean isHistoricInstancePermissionsEnabled() {
-    return Context.getRequiredProcessEngineConfiguration().isEnableHistoricInstancePermissions();
+    return Context.getProcessEngineConfiguration().isEnableHistoricInstancePermissions();
   }
 
   public DbOperation addRemovalTimeToAuthorizationsByRootProcessInstanceId(String rootProcessInstanceId,

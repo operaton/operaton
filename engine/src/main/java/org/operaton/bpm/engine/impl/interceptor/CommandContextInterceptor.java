@@ -26,6 +26,8 @@ import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
 
+import java.util.Optional;
+
 /**
  * <p>Interceptor used for opening the {@link CommandContext} and {@link CommandInvocationContext}.</p>
  *
@@ -84,9 +86,9 @@ public class CommandContextInterceptor extends CommandInterceptor {
 
     if(!alwaysOpenNew) {
       // check whether we can reuse the command context
-      CommandContext existingCommandContext = Context.getCommandContext();
-      if(existingCommandContext != null && isFromSameEngine(existingCommandContext)) {
-        context = existingCommandContext;
+      Optional<CommandContext> existingCommandContext = Context.getCommandContextWhenAvailable();
+      if(existingCommandContext.isPresent() && isFromSameEngine(existingCommandContext.get())) {
+        context = existingCommandContext.get();
       }
     }
 
@@ -102,10 +104,8 @@ public class CommandContextInterceptor extends CommandInterceptor {
       if(openNew) {
         LOG.debugOpeningNewCommandContext();
         context = commandContextFactory.createCommandContext();
-
       } else {
         LOG.debugReusingExistingCommandContext();
-
       }
 
       Context.setCommandContext(context);
@@ -116,7 +116,6 @@ public class CommandContextInterceptor extends CommandInterceptor {
 
     } catch (Throwable t) {
       commandInvocationContext.trySetThrowable(t);
-
     } finally {
       try {
         if (openNew) {

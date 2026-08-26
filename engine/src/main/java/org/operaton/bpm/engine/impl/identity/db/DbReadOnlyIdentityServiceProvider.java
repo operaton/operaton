@@ -62,7 +62,7 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   @Override
   public UserQuery createUserQuery() {
-    return new DbUserQueryImpl(Context.getRequiredProcessEngineConfiguration().getCommandExecutorTxRequired());
+    return new DbUserQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
   }
 
   @Override
@@ -71,7 +71,7 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   }
 
   @Override public NativeUserQuery createNativeUserQuery() {
-    return new NativeUserQueryImpl(Context.getRequiredProcessEngineConfiguration().getCommandExecutorTxRequired());
+    return new NativeUserQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
   }
 
   public long findUserCountByQueryCriteria(DbUserQueryImpl query) {

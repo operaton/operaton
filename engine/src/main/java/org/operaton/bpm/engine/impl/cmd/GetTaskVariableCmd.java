@@ -46,7 +46,7 @@ public @NullMarked class GetTaskVariableCmd implements Command<Object> {
     ensureNotNull("variableName", variableName);
 
     TaskEntity task = Context
-      .getRequiredCommandContext()
+      .getCommandContext()
       .getTaskManager()
       .findTaskById(taskId);
 

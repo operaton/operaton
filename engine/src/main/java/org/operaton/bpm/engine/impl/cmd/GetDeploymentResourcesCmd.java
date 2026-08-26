@@ -46,7 +46,7 @@ public @NullMarked class GetDeploymentResourcesCmd implements Command<List> {
     }
 
     return Context
-      .getRequiredCommandContext()
+      .getCommandContext()
       .getResourceManager()
       .findResourcesByDeploymentId(deploymentId);
   }

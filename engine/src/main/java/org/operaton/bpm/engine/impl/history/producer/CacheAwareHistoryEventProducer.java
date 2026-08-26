@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.producer;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.batch.history.HistoricBatchEntity;
@@ -114,16 +115,14 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
   }
 
   @Override
-  protected ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
-    CommandContext commandContext = Context.getCommandContext();
-    if (commandContext == null) {
+  protected @Nullable ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
+    if (Context.hasActiveCommandContext()) {
       return null;
     }
 
+    CommandContext commandContext = Context.getCommandContext();
+
     DbEntityManager dbEntityManager = commandContext.getDbEntityManager();
-    if (dbEntityManager == null) {
-      return null;
-    }
 
     ProcessDefinitionEntity cachedEntity = dbEntityManager.getCachedEntity(ProcessDefinitionEntity.class, processDefinitionId);
 

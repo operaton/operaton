@@ -804,7 +804,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected String getPermissionStringList(AuthorizationEntity authorization) {
-    Permission[] permissionsForResource = Context.getRequiredProcessEngineConfiguration().getPermissionProvider().getPermissionsForResource(authorization.getResourceType());
+    Permission[] permissionsForResource = Context.getProcessEngineConfiguration().getPermissionProvider().getPermissionsForResource(authorization.getResourceType());
     Permission[] permissions = authorization.getPermissions(permissionsForResource);
     String[] namesForPermissions = PermissionConverter.getNamesForPermissions(authorization, permissions);
     if (namesForPermissions.length == 0) {
@@ -814,7 +814,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected String getResourceName(int resourceType) {
-    return Context.getRequiredProcessEngineConfiguration().getPermissionProvider().getNameForResource(resourceType);
+    return Context.getProcessEngineConfiguration().getPermissionProvider().getNameForResource(resourceType);
   }
 
   public boolean isUserOperationLogEnabled() {
@@ -824,7 +824,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected boolean isHistoryEventProduced() {
-    HistoryLevel historyLevel = Context.getRequiredProcessEngineConfiguration().getHistoryLevel();
+    HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
     return historyLevel.isHistoryEventProduced(HistoryEventTypes.USER_OPERATION_LOG, null);
   }
 
@@ -834,7 +834,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected String getAuthenticatedUserId() {
-    return Context.getRequiredCommandContext().getAuthenticatedUserId();
+    return Context.getCommandContext().getAuthenticatedUserId();
   }
 
   protected void fireUserOperationLog(final UserOperationLogContext context) {
@@ -851,11 +851,11 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected boolean writeUserOperationLogOnlyWithLoggedInUser() {
-    return Context.getRequiredCommandContext().isRestrictUserOperationLogToAuthenticatedUsers();
+    return Context.getCommandContext().isRestrictUserOperationLogToAuthenticatedUsers();
   }
 
   protected boolean isUserOperationLogEnabledOnCommandContext() {
-    return Context.getRequiredCommandContext().isUserOperationLogEnabled();
+    return Context.getCommandContext().isUserOperationLogEnabled();
   }
 
   protected @Nullable String getOperationType(IdentityOperationResult operationResult) {

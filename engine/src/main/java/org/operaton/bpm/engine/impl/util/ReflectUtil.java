@@ -414,10 +414,10 @@ public final class ReflectUtil {
   }
 
   private static ClassLoader getCustomClassLoader() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    if(processEngineConfiguration != null) {
-      final ClassLoader classLoader = processEngineConfiguration.getClassLoader();
-      if(classLoader != null) {
+    Optional<ProcessEngineConfigurationImpl> processEngineConfiguration = Context.getProcessEngineConfigurationWhenAvailable();
+    if(processEngineConfiguration.isPresent()) {
+      final ClassLoader classLoader = processEngineConfiguration.get().getClassLoader();
+      if (classLoader != null) {
         return classLoader;
       }
     }

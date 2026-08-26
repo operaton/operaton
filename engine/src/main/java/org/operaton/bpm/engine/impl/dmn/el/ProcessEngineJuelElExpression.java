@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 
+import static org.operaton.bpm.engine.impl.context.Context.hasActiveCommandContext;
+
 /**
  * @author Daniel Meyer
  *
@@ -41,7 +43,7 @@ public class ProcessEngineJuelElExpression implements ElExpression {
 
   @Override
   public Object getValue(VariableContext variableContext) {
-    if(Context.getCommandContext() == null) {
+    if(!hasActiveCommandContext()) {
       throw new ProcessEngineException("Expression can only be evaluated inside the context of the process engine");
     }
 

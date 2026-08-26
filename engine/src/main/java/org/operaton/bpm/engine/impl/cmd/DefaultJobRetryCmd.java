@@ -146,7 +146,7 @@ public @NullMarked class DefaultJobRetryCmd extends JobRetryCmd {
   }
 
   protected @Nullable ExecutionEntity fetchExecutionEntity(String executionId) {
-    return Context.getRequiredCommandContext()
+    return Context.getCommandContext()
                   .getExecutionManager()
                   .findExecutionById(executionId);
   }

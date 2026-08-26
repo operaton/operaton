@@ -54,7 +54,7 @@ public @NullMarked class RegisterProcessApplicationCmd implements Command<Proces
   public ProcessApplicationRegistration execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkRegisterProcessApplication);
 
-    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getRequiredProcessEngineConfiguration();
+    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     final ProcessApplicationManager processApplicationManager = processEngineConfiguration.getProcessApplicationManager();
 
     return processApplicationManager.registerProcessApplicationForDeployments(deploymentsToRegister, reference);

@@ -41,7 +41,7 @@ public @NullMarked class GetProcessApplicationForDeploymentCmd implements Comman
   public @Nullable String execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkReadProcessApplicationForDeployment);
 
-    ProcessApplicationReference reference = Context.getRequiredProcessEngineConfiguration()
+    ProcessApplicationReference reference = Context.getProcessEngineConfiguration()
       .getProcessApplicationManager()
       .getProcessApplicationForDeployment(deploymentId);
 

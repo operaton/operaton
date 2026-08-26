@@ -95,11 +95,9 @@ public class ScriptBindings implements Bindings {
   }
 
   protected boolean isAutoStoreScriptVariablesEnabled() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    if(processEngineConfiguration != null) {
-      return processEngineConfiguration.isAutoStoreScriptVariables();
-    }
-    return false;
+    return Context.getProcessEngineConfigurationWhenAvailable()
+      .map(ProcessEngineConfigurationImpl::isAutoStoreScriptVariables)
+      .orElse(false);
   }
 
   @Override

@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -55,6 +56,7 @@ public @NullMarked class GetExecutionVariablesCmd implements Command<VariableMap
       .findExecutionById(executionId);
 
     ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
+    requireNonNull(execution);
 
     checkGetExecutionVariables(execution, commandContext);
 

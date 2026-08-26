@@ -51,7 +51,7 @@ public @NullMarked class ActivityCancellationCmd extends AbstractProcessInstance
 
   @Override
   public @Nullable Void execute(final CommandContext commandContext) {
-    ActivityInstance actInstTree = getActivityInstanceTree(commandContext);
+    ActivityInstance actInstTree = requireNonNull(getActivityInstanceTree(commandContext));
     List<AbstractInstanceCancellationCmd> commands = createActivityInstanceCancellations(actInstTree, commandContext);
 
     for (AbstractInstanceCancellationCmd cmd : commands) {

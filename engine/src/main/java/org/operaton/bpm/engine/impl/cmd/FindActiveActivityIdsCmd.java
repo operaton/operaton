@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -45,6 +46,7 @@ public @NullMarked class FindActiveActivityIdsCmd implements Command<List<String
     ExecutionManager executionManager = commandContext.getExecutionManager();
     ExecutionEntity execution = executionManager.findExecutionById(executionId);
     ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
+    requireNonNull(execution);
 
     checkGetActivityIds(execution, commandContext);
 

@@ -59,6 +59,7 @@ public @NullMarked class DeleteHistoricProcessInstancesCmd implements Command<Vo
     // Check if process instance is still running
     List<HistoricProcessInstance> instances = commandContext.runWithoutAuthorization(
         () -> new HistoricProcessInstanceQueryImpl().processInstanceIds(new HashSet<>(processInstanceIds)).list());
+    requireNonNull(instances);
 
     if (failIfNotExists) {
       if (processInstanceIds.size() == 1) {

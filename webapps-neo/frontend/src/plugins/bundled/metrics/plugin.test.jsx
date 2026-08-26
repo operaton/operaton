@@ -52,6 +52,10 @@ describe("Engine Metrics plugin — page", () => {
       engine_rest.plugins.metrics,
       "definition_stats",
     ).mockImplementation(() => {});
+    vi.spyOn(
+      engine_rest.plugins.metrics,
+      "activity_series",
+    ).mockImplementation(() => {});
     signal_response(state.api.plugins.metrics.version, { version: "7.99.0" });
 
     render_with_state(<MetricsPage />, { state });
@@ -72,6 +76,7 @@ describe("Engine Metrics plugin — page", () => {
       "running",
       "completed",
       "definition_stats",
+      "activity_series",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -95,6 +100,7 @@ describe("Engine Metrics plugin — page", () => {
       "running",
       "completed",
       "definition_stats",
+      "activity_series",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -126,5 +132,38 @@ describe("Engine Metrics plugin — page", () => {
     // Links to the newest version's definition (of:2).
     const link = screen.getByText("Order Fulfillment").closest("a");
     expect(link.getAttribute("href")).toBe("/processes/of:2");
+  });
+
+  it("renders a gap-free 30-day activity chart from sparse buckets", () => {
+    const state = create_mock_state();
+    for (const fn of [
+      "version",
+      "process_starts",
+      "flow_nodes",
+      "running",
+      "completed",
+      "definition_stats",
+      "activity_series",
+    ]) {
+      vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
+    }
+    // A single bucket for today; the other 29 days must be filled with 0.
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const iso_day = today.toISOString().slice(0, 10);
+    signal_response(state.api.plugins.metrics.activity_series, [
+      { timestamp: `${iso_day}T00:00:00.000+0000`, value: 100 },
+    ]);
+
+    render_with_state(<MetricsPage />, { state });
+
+    const cols = document.querySelectorAll(".activity-col");
+    expect(cols.length).toBe(30);
+    // Today's column carries the value; at least one column is the 0-filled gap.
+    const tips = [...document.querySelectorAll(".activity-tip")].map(
+      (t) => t.textContent,
+    );
+    expect(tips.some((x) => x.endsWith(" 100"))).toBe(true);
+    expect(tips.some((x) => x.endsWith(" 0"))).toBe(true);
   });
 });

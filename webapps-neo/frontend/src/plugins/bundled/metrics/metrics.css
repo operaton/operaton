@@ -38,6 +38,76 @@
     font-weight: 600;
   }
 
+  #content.metrics-page .metrics-timeseries {
+    margin-block-start: var(--spacing-3, 1rem);
+  }
+
+  #content.metrics-page .metrics-timeseries article {
+    padding: var(--spacing-3, 1rem);
+    border: var(--border, 1px solid);
+    border-color: var(--border-color, #ccc);
+    border-radius: var(--border-radius-2, 0.5rem);
+    background: var(--background-2, transparent);
+  }
+
+  #content.metrics-page .activity-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    block-size: 8rem;
+    margin-block-start: var(--spacing-2, 0.5rem);
+  }
+
+  #content.metrics-page .activity-col {
+    position: relative;
+    flex: 1 1 0;
+    min-inline-size: 0;
+    display: flex;
+    align-items: flex-end;
+    block-size: 100%;
+  }
+
+  #content.metrics-page .activity-tip {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    padding: 0.1rem 0.4rem;
+    background: var(--background-1, #fff);
+    border: var(--border, 1px solid);
+    border-color: var(--border-color, #ccc);
+    border-radius: var(--border-radius-1, 0.25rem);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+    z-index: 2;
+  }
+
+  #content.metrics-page .activity-col:hover .activity-tip,
+  #content.metrics-page .activity-col:focus-within .activity-tip {
+    opacity: 1;
+  }
+
+  #content.metrics-page .activity-bar {
+    inline-size: 100%;
+    min-block-size: 1px;
+    background: var(--color-primary, #3b82f6);
+    border-radius: var(--border-radius-1, 0.25rem) var(--border-radius-1, 0.25rem) 0 0;
+    transition: block-size 0.4s ease;
+  }
+
+  #content.metrics-page .activity-axis {
+    display: flex;
+    justify-content: space-between;
+    margin-block-start: var(--spacing-1, 0.25rem);
+    font-size: 0.85em;
+    color: var(--color-text-secondary, #888);
+    font-variant-numeric: tabular-nums;
+  }
+
   #content.metrics-page .metrics-charts {
     display: flex;
     flex-wrap: wrap;

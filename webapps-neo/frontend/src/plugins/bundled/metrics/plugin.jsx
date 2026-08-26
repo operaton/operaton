@@ -29,6 +29,15 @@ const months_ago_param = (n) => {
   return encodeURIComponent(date.toISOString().replace("Z", "+0000"));
 };
 
+// Start-of-day (UTC) N days ago, encoded like months_ago_param. Midnight so the
+// interval buckets line up with calendar days.
+const days_ago_midnight_param = (n) => {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() - n);
+  date.setUTCHours(0, 0, 0, 0);
+  return encodeURIComponent(date.toISOString().replace("Z", "+0000"));
+};
+
 // API namespace — mounted at engine_rest.plugins.metrics. Each function follows
 // the host convention (state, ...args) => VERB(url, state, signal), so auth,
 // error shapes and RESPONSE_STATE all come for free from helper.jsx.
@@ -58,6 +67,13 @@ const api = {
       state,
       state.api.plugins[PLUGIN_ID].completed,
     ),
+  // Daily activity time series (last 30 days) for the activity chart.
+  activity_series: (state) =>
+    GET(
+      `/metrics?name=activity-instance-start&startDate=${days_ago_midnight_param(29)}&interval=86400`,
+      state,
+      state.api.plugins[PLUGIN_ID].activity_series,
+    ),
   // Per-definition runtime counts (+ incidents) for the "top processes" ranking.
   definition_stats: (state) =>
     GET(
@@ -74,6 +90,7 @@ const make_signals = () => ({
   flow_nodes: signal(null),
   running: signal(null),
   completed: signal(null),
+  activity_series: signal(null),
   definition_stats: signal(null),
 });
 
@@ -115,6 +132,59 @@ const Donut = ({ running, completed }) => {
         {total}
       </text>
     </svg>
+  );
+};
+
+// Turn the sparse metric buckets (only days with activity are returned) into a
+// gap-free daily series of the last `days`, missing days filled with 0.
+const build_activity_series = (buckets, days = 30) => {
+  const by_day = {};
+  for (const b of buckets) by_day[b.timestamp.slice(0, 10)] = b.value;
+  const series = [];
+  const day = new Date();
+  day.setUTCHours(0, 0, 0, 0);
+  day.setUTCDate(day.getUTCDate() - (days - 1));
+  for (let i = 0; i < days; i++) {
+    const key = day.toISOString().slice(0, 10);
+    series.push({ key, value: by_day[key] ?? 0 });
+    day.setUTCDate(day.getUTCDate() + 1);
+  }
+  return series;
+};
+
+// "2026-08-26" -> "26.08."
+const short_day = (key) => `${key.slice(8, 10)}.${key.slice(5, 7)}.`;
+
+const ActivityChart = ({ buckets }) => {
+  const [t] = useTranslation();
+  const series = build_activity_series(buckets);
+  const max = Math.max(1, ...series.map((p) => p.value));
+  const total = series.reduce((sum, p) => sum + p.value, 0);
+  if (total === 0) {
+    return <p class="fade-in">{t("plugins.metrics.no-activity")}</p>;
+  }
+  return (
+    <>
+      <div
+        class="activity-chart"
+        role="img"
+        aria-label={t("plugins.metrics.activity")}
+      >
+        {series.map((p) => (
+          <div class="activity-col" key={p.key}>
+            <span class="activity-tip">{`${short_day(p.key)} ${p.value}`}</span>
+            <div
+              class="activity-bar"
+              style={{ blockSize: `${(p.value / max) * 100}%` }}
+            />
+          </div>
+        ))}
+      </div>
+      <div class="activity-axis">
+        <span>{short_day(series[0].key)}</span>
+        <span>{short_day(series[series.length - 1].key)}</span>
+      </div>
+    </>
   );
 };
 
@@ -202,6 +272,7 @@ const MetricsPage = () => {
     metrics.flow_nodes(state);
     metrics.running(state);
     metrics.completed(state);
+    metrics.activity_series(state);
     metrics.definition_stats(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -224,6 +295,17 @@ const MetricsPage = () => {
         <article>
           <h2>{t("plugins.metrics.flow-nodes")}</h2>
           <MetricValue signal={signals.flow_nodes} format={(d) => d.result} />
+        </article>
+      </section>
+      <section class="metrics-timeseries">
+        <article>
+          <h2>{t("plugins.metrics.activity")}</h2>
+          <RequestState
+            signal={signals.activity_series}
+            on_success={() => (
+              <ActivityChart buckets={signals.activity_series.value.data} />
+            )}
+          />
         </article>
       </section>
       <section class="metrics-charts">
@@ -282,6 +364,8 @@ const translations = {
         snapshot: "Process instances: running vs. completed",
         running: "Running",
         completed: "Completed",
+        activity: "Activity (last 30 days)",
+        "no-activity": "No activity in the last 30 days.",
         "top-processes": "Top processes by running instances",
         "no-running": "No running instances.",
       },
@@ -298,6 +382,8 @@ const translations = {
         snapshot: "Prozessinstanzen: laufend vs. abgeschlossen",
         running: "Laufend",
         completed: "Abgeschlossen",
+        activity: "Aktivitätsverlauf (letzte 30 Tage)",
+        "no-activity": "Keine Aktivität in den letzten 30 Tagen.",
         "top-processes": "Top-Prozesse nach laufenden Instanzen",
         "no-running": "Keine laufenden Instanzen.",
       },

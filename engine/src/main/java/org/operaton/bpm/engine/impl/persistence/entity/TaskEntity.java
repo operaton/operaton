@@ -694,7 +694,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return caseExecutionId;
   }
 
-  public void setCaseExecutionId(String caseExecutionId) {
+  public void setCaseExecutionId(@Nullable String caseExecutionId) {
     this.caseExecutionId = caseExecutionId;
   }
 
@@ -725,7 +725,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return caseDefinitionId;
   }
 
-  public void setCaseDefinitionId(String caseDefinitionId) {
+  public void setCaseDefinitionId(@Nullable String caseDefinitionId) {
     this.caseDefinitionId = caseDefinitionId;
   }
 
@@ -1188,7 +1188,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     switch (state) {
     case STATE_CREATED:
-      Context.getCommandContextWhenAvailable().ifPresent(commandContext -> commandContext.getHistoricTaskInstanceManager().createHistoricTask(this));
+      Context.findCommandContext().ifPresent(commandContext -> commandContext.getHistoricTaskInstanceManager().createHistoricTask(this));
       return fireEvent(TaskListener.EVENTNAME_CREATE) && fireAssignmentEvent();
 
     case STATE_COMPLETED:
@@ -1490,7 +1490,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return operatonFormRef;
   }
 
-  public void setProcessDefinitionId(String processDefinitionId) {
+  public void setProcessDefinitionId(@Nullable String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
 
@@ -1524,7 +1524,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.eventName = eventName;
   }
 
-  public void setExecutionId(String executionId) {
+  public void setExecutionId(@Nullable String executionId) {
     this.executionId = executionId;
   }
 
@@ -1539,7 +1539,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.processInstance = processInstance;
   }
 
-  public void setProcessInstanceId(String processInstanceId) {
+  public void setProcessInstanceId(@Nullable String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 
@@ -1643,7 +1643,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   protected void registerCommandContextCloseListener() {
-    Context.getCommandContextWhenAvailable().ifPresent(commandContext -> commandContext.registerCommandContextListener(this));
+    Context.findCommandContext().ifPresent(commandContext -> commandContext.registerCommandContextListener(this));
   }
 
   public Map<String, PropertyChange> getPropertyChanges() {

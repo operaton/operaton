@@ -86,7 +86,7 @@ public class CommandContextInterceptor extends CommandInterceptor {
 
     if(!alwaysOpenNew) {
       // check whether we can reuse the command context
-      Optional<CommandContext> existingCommandContext = Context.getCommandContextWhenAvailable();
+      Optional<CommandContext> existingCommandContext = Context.findCommandContext();
       if(existingCommandContext.isPresent() && isFromSameEngine(existingCommandContext.get())) {
         context = existingCommandContext.get();
       }

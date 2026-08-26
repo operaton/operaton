@@ -202,13 +202,9 @@ public final class ScriptUtil {
    * Returns the configured script factory in the context or a new one.
    */
   public static ScriptFactory getScriptFactory() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    if (processEngineConfiguration != null) {
-      return processEngineConfiguration.getScriptFactory();
-    }
-    else {
-      return new ScriptFactory();
-    }
+    return Context.findProcessEngineConfiguration()
+      .map(ProcessEngineConfigurationImpl::getScriptFactory)
+      .orElse(new ScriptFactory());
   }
 
   private static void ensureScriptLanguageNotEmpty(String language) {

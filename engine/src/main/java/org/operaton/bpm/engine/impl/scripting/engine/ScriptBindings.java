@@ -27,6 +27,7 @@ import java.util.Set;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 import org.jspecify.annotations.Nullable;
@@ -95,7 +96,7 @@ public class ScriptBindings implements Bindings {
   }
 
   protected boolean isAutoStoreScriptVariablesEnabled() {
-    return Context.getProcessEngineConfigurationWhenAvailable()
+    return Context.findProcessEngineConfiguration()
       .map(ProcessEngineConfigurationImpl::isAutoStoreScriptVariables)
       .orElse(false);
   }
@@ -141,12 +142,12 @@ public class ScriptBindings implements Bindings {
   }
 
   @Override
-  public Set<java.util.Map.Entry<String, Object>> entrySet() {
+  public @NonNull Set<java.util.Map.Entry<String, Object>> entrySet() {
     return calculateBindingMap().entrySet();
   }
 
   @Override
-  public Set<String> keySet() {
+  public @NonNull Set<String> keySet() {
     return calculateBindingMap().keySet();
   }
 
@@ -156,7 +157,7 @@ public class ScriptBindings implements Bindings {
   }
 
   @Override
-  public Collection<Object> values() {
+  public @NonNull Collection<Object> values() {
     return calculateBindingMap().values();
   }
 

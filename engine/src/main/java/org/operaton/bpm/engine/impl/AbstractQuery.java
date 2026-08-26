@@ -157,7 +157,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
 
     if (commandExecutor != null) {
       if (!maxResultsLimitEnabled) {
-        maxResultsLimitEnabled = Context.getCommandContextWhenAvailable().isEmpty();
+        maxResultsLimitEnabled = Context.findCommandContext().isEmpty();
       }
 
       return commandExecutor.execute(this);

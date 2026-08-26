@@ -59,13 +59,22 @@ public final class Context {
   }
 
   /**
+   * @return {@code true} if a command context is active on the current thread
    * @since 2.2
    */
   public static boolean hasActiveCommandContext() {
-    return getCommandContextWhenAvailable().isPresent();
+    return findCommandContext().isPresent();
   }
 
-  public static Optional<CommandContext> getCommandContextWhenAvailable() {
+  /**
+   * Returns the current command context, if any is active on the current thread.
+   * Use this over {@link #getCommandContext()} when the absence of a command context
+   * is a valid case to be handled rather than an error.
+   *
+   * @return the current command context, or {@link Optional#empty()} if none is active
+   * @since 2.2
+   */
+  public static Optional<CommandContext> findCommandContext() {
     Deque<CommandContext> stack = getStack(commandContextThreadLocal);
     if (stack.isEmpty()) {
       return Optional.empty();
@@ -75,15 +84,16 @@ public final class Context {
 
   /**
    * Returns the current command context. If no command context is active, an exception is thrown.
-   * This is a null-safe version of {@link #getCommandContext()}, which is useful in cases where the command context is
-   * required to be present. This supports the IDE in detecting potential null pointer exceptions at compile time.
+   * This is a null-safe alternative to reading the top of the command context stack directly,
+   * useful in cases where the command context is required to be present. It supports the IDE
+   * in detecting potential null pointer exceptions at compile time. Use {@link #findCommandContext()}
+   * instead if the absence of a command context is expected and should be handled explicitly.
    *
    * @return the current command context
    * @throws IllegalStateException if no command context is active
-   * @since 2.2
    */
   public static @NonNull CommandContext getCommandContext() {
-    return EnsureUtil.ensureActiveCommandContext(getCommandContextWhenAvailable().orElse(null));
+    return EnsureUtil.ensureActiveCommandContext(findCommandContext().orElse(null));
   }
 
 
@@ -124,11 +134,23 @@ public final class Context {
     }
   }
 
+  /**
+   * @return {@code true} if a process engine configuration is active on the current thread
+   * @since 2.2
+   */
   public static boolean hasActiveProcessEngineConfiguration() {
-    return getProcessEngineConfigurationWhenAvailable().isPresent();
+    return findProcessEngineConfiguration().isPresent();
   }
 
-  public static Optional<ProcessEngineConfigurationImpl> getProcessEngineConfigurationWhenAvailable() {
+  /**
+   * Returns the current process engine configuration, if any is active on the current thread.
+   * Use this over {@link #getProcessEngineConfiguration()} when the absence of a process engine
+   * configuration is a valid case to be handled rather than an error.
+   *
+   * @return the current process engine configuration, or {@link Optional#empty()} if none is active
+   * @since 2.2
+   */
+  public static Optional<ProcessEngineConfigurationImpl> findProcessEngineConfiguration() {
     Deque<ProcessEngineConfigurationImpl> stack = getStack(processEngineConfigurationStackThreadLocal);
     if (stack.isEmpty()) {
       return Optional.empty();
@@ -138,15 +160,16 @@ public final class Context {
 
   /**
    * Returns the current process engine configuration. If no process engine configuration is active, an exception is thrown.
-   * This is a null-safe version of {@link #getProcessEngineConfiguration()}, which is useful in cases where the command context is
-   * required to be present. This supports the IDE in detecting potential null pointer exceptions at compile time.
+   * This is a null-safe alternative to reading the top of the process engine configuration stack directly,
+   * useful in cases where the process engine configuration is required to be present. It supports the IDE
+   * in detecting potential null pointer exceptions at compile time. Use {@link #findProcessEngineConfiguration()}
+   * instead if the absence of a process engine configuration is expected and should be handled explicitly.
    *
    * @return the current process engine configuration
    * @throws IllegalStateException if no process engine configuration is active
-   * @since 2.2
    */
   public static @NonNull ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
-    Optional<ProcessEngineConfigurationImpl> processEngineConfiguration = getProcessEngineConfigurationWhenAvailable();
+    Optional<ProcessEngineConfigurationImpl> processEngineConfiguration = findProcessEngineConfiguration();
     if (processEngineConfiguration.isEmpty()) {
       throw new IllegalStateException("No process engine configuration active on thread " + Thread.currentThread());
     }

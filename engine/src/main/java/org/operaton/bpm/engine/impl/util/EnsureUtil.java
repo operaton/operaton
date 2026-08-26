@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
@@ -101,7 +102,7 @@ public final @NullMarked class EnsureUtil {
     ensureNotNull(exceptionClass, message, variableName, (Object[]) values);
   }
 
-  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, Object... values) {
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Object @Nullable... values) {
     if(values == null) {
       throw generateException(exceptionClass, message, variableName, "is null");
     }
@@ -289,7 +290,7 @@ public final @NullMarked class EnsureUtil {
     ensureAtLeastOneNotNull(NullValueException.class, message, values);
   }
 
-  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String... values) {
+  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, @Nullable String... values) {
     ensureAtLeastOneNotNull(exceptionClass, message, (Object[]) values);
   }
 
@@ -471,7 +472,7 @@ public final @NullMarked class EnsureUtil {
   }
 
   public static CommandContext ensureActiveCommandContext(String operation) {
-    return Context.getCommandContextWhenAvailable().orElseThrow(() -> LOG.notInsideCommandContext(operation));
+    return Context.findCommandContext().orElseThrow(() -> LOG.notInsideCommandContext(operation));
   }
 
   public static CommandContext ensureActiveCommandContext(@Nullable CommandContext commandContext) {

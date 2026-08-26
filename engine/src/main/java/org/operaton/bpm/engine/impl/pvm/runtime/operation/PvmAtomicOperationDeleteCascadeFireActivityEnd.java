@@ -75,7 +75,7 @@ public class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOpe
 
     } else {
       if (execution.isScope()) {
-        boolean isSkipOutputMappingOnCanceledActivities = Context.getProcessEngineConfigurationWhenAvailable()
+        boolean isSkipOutputMappingOnCanceledActivities = Context.findProcessEngineConfiguration()
             .map(ProcessEngineConfigurationImpl::isSkipOutputMappingOnCanceledActivities)
             .orElse(false);
 

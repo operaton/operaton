@@ -89,7 +89,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   protected void initializeEntityCache() {
 
     final JobExecutorContext jobExecutorContext = Context.getJobExecutorContext();
-    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.findProcessEngineConfiguration().orElse(null);
 
     if(processEngineConfiguration != null
         && processEngineConfiguration.isDbEntityCacheReuseEnabled()

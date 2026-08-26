@@ -83,12 +83,9 @@ public abstract class Parser {
   }
 
   public Boolean isEnableXxeProcessing() {
-    ProcessEngineConfigurationImpl engineConfig = Context.getProcessEngineConfiguration();
-    if (engineConfig != null) {
-      return engineConfig.isEnableXxeProcessing();
-    } else {  // can be null if implementation is called outside command context
-      return false;
-    }
+    return Context.findProcessEngineConfiguration()
+      .map(ProcessEngineConfigurationImpl::isEnableXxeProcessing)
+      .orElse(false);
   }
 
 }

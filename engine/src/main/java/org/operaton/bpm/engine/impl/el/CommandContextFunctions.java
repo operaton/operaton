@@ -35,13 +35,13 @@ public final class CommandContextFunctions {
   }
 
   public static @Nullable String currentUser() {
-    return Context.getCommandContextWhenAvailable()
+    return Context.findCommandContext()
       .map(CommandContext::getAuthenticatedUserId)
       .orElse(null);
   }
 
   public static List<String> currentUserGroups() {
-    return Context.getCommandContextWhenAvailable()
+    return Context.findCommandContext()
       .map(CommandContext::getAuthenticatedGroupIds)
       .orElse(Collections.emptyList());
   }

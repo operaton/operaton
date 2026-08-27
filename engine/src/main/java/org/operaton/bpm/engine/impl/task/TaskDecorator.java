@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.task;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -204,20 +205,25 @@ public class TaskDecorator {
   protected List<String> extractCandidates(String str) {
     String[] parts = str.split(",\\s*+", -1);
     if (parts.length == 1) {
-      return List.of(str);
+      return Arrays.asList(parts);
     }
-    int size = 0;
-    for (int i = 0; i < parts.length; i++) {
-      int end = parts[i].length();
-      while (i < parts.length - 1 && end > 0 && isSpace(parts[i].charAt(end - 1))) {
-        end--;
-      }
-      parts[i] = parts[i].substring(0, end);
-      if (!parts[i].isEmpty()) {
-        size = i + 1; // mirrors String#split dropping trailing empty elements
-      }
+    List<String> result = new ArrayList<>(parts.length);
+    for (int i = 0; i < parts.length - 1; i++) {
+      result.add(stripTrailingSpace(parts[i]));
     }
-    return Arrays.asList(Arrays.copyOf(parts, size));
+    result.add(parts[parts.length - 1]);
+    while (!result.isEmpty() && result.get(result.size() - 1).isEmpty()) {
+      result.remove(result.size() - 1); // mirrors String#split dropping trailing empty elements
+    }
+    return result;
+  }
+
+  private static String stripTrailingSpace(String part) {
+    int end = part.length();
+    while (end > 0 && isSpace(part.charAt(end - 1))) {
+      end--;
+    }
+    return part.substring(0, end);
   }
 
   /** The regex {@code \s} class, which is narrower than {@link String#strip()}. */

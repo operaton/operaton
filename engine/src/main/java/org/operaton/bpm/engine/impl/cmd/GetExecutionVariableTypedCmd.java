@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -24,13 +25,14 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class GetExecutionVariableTypedCmd<T extends TypedValue> implements Command<T> {
+public @NullMarked class GetExecutionVariableTypedCmd<T extends TypedValue> implements Command<T> {
   protected String executionId;
   protected String variableName;
   protected boolean isLocal;
@@ -53,6 +55,7 @@ public class GetExecutionVariableTypedCmd<T extends TypedValue> implements Comma
       .findExecutionById(executionId);
 
     ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
+    requireNonNull(execution);
 
     checkGetExecutionVariableTyped(execution, commandContext);
 

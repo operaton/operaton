@@ -20,9 +20,11 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -31,6 +33,7 @@ import org.operaton.bpm.engine.impl.runtime.CorrelationHandlerResult;
 import org.operaton.bpm.engine.impl.runtime.CorrelationSet;
 import org.operaton.bpm.engine.impl.runtime.MessageCorrelationResultImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 
 /**
@@ -39,7 +42,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNu
  * @author Michael Scholz
  * @author Christopher Zell
  */
-public class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements Command<MessageCorrelationResultImpl> {
+public @NullMarked class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements Command<MessageCorrelationResultImpl> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -61,12 +64,14 @@ public class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements 
         "At least one of the following correlation criteria has to be present: " + "messageName, businessKey, correlationKeys, processInstanceId", messageName,
         builder.getBusinessKey(), builder.getCorrelationProcessInstanceVariables(), builder.getProcessInstanceId());
 
-    final CorrelationHandler correlationHandler = Context.getProcessEngineConfiguration().getCorrelationHandler();
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    final CorrelationHandler correlationHandler = processEngineConfiguration.getCorrelationHandler();
     final CorrelationSet correlationSet = new CorrelationSet(builder);
 
     CorrelationHandlerResult correlationResult = null;
     if (startMessageOnly) {
       List<CorrelationHandlerResult> correlationResults = commandContext.runWithoutAuthorization((Callable<List<CorrelationHandlerResult>>) () -> correlationHandler.correlateStartMessages(commandContext, messageName, correlationSet));
+      requireNonNull(correlationResults);
       if (correlationResults.isEmpty()) {
         throw new MismatchingMessageCorrelationException(messageName, "No process definition matches the parameters");
       } else if (correlationResults.size() > 1) {

@@ -31,13 +31,14 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
 import org.operaton.bpm.engine.cdi.impl.context.ContextAssociationManager;
-import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static org.operaton.bpm.engine.impl.context.Context.hasActiveCommandContext;
 
 /**
  * Bean supporting contextual business process management. This allows us to
@@ -742,7 +743,7 @@ public class BusinessProcess implements Serializable {
   }
 
   protected void assertCommandContextNotActive() {
-    if(Context.getCommandContext() != null) {
+    if(hasActiveCommandContext()) {
       throw new ProcessEngineCdiException("Cannot use this method of the BusinessProcess bean from an active command context.");
     }
   }

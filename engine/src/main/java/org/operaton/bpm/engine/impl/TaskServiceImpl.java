@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.TaskService;
@@ -472,7 +473,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
   }
 
   @Override
-  public void deleteTaskAttachment(String taskId, String attachmentId) {
+  public void deleteTaskAttachment(@Nullable String taskId, String attachmentId) {
     commandExecutor.execute(new DeleteAttachmentCmd(taskId, attachmentId));
   }
 

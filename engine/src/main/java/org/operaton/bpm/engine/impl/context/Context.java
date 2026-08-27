@@ -18,8 +18,10 @@ package org.operaton.bpm.engine.impl.context;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.application.InvocationContext;
 
 import org.jspecify.annotations.Nullable;
@@ -34,7 +36,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandInvocationContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 /**
  * Holds the context of the current command being executed.
@@ -56,15 +58,46 @@ public final class Context {
   private Context() {
   }
 
-  public static @Nullable CommandContext getCommandContext() {
-    Deque<CommandContext> stack = getStack(commandContextThreadLocal);
-    if (stack.isEmpty()) {
-      return null;
-    }
-    return stack.peek();
+  /**
+   * @return {@code true} if a command context is active on the current thread
+   * @since 2.2
+   */
+  public static boolean hasActiveCommandContext() {
+    return findCommandContext().isPresent();
   }
 
-  public static void setCommandContext(CommandContext commandContext) {
+  /**
+   * Returns the current command context, if any is active on the current thread.
+   * Use this over {@link #getCommandContext()} when the absence of a command context
+   * is a valid case to be handled rather than an error.
+   *
+   * @return the current command context, or {@link Optional#empty()} if none is active
+   * @since 2.2
+   */
+  public static Optional<CommandContext> findCommandContext() {
+    Deque<CommandContext> stack = getStack(commandContextThreadLocal);
+    if (stack.isEmpty()) {
+      return Optional.empty();
+    }
+    return Optional.of(stack.peek());
+  }
+
+  /**
+   * Returns the current command context. If no command context is active, an exception is thrown.
+   * This is a null-safe alternative to reading the top of the command context stack directly,
+   * useful in cases where the command context is required to be present. It supports the IDE
+   * in detecting potential null pointer exceptions at compile time. Use {@link #findCommandContext()}
+   * instead if the absence of a command context is expected and should be handled explicitly.
+   *
+   * @return the current command context
+   * @throws IllegalStateException if no command context is active
+   */
+  public static @NonNull CommandContext getCommandContext() {
+    return EnsureUtil.ensureActiveCommandContext(findCommandContext().orElse(null));
+  }
+
+
+  public static void setCommandContext(@NonNull CommandContext commandContext) {
     getStack(commandContextThreadLocal).push(commandContext);
   }
 
@@ -101,12 +134,46 @@ public final class Context {
     }
   }
 
-  public static @Nullable ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+  /**
+   * @return {@code true} if a process engine configuration is active on the current thread
+   * @since 2.2
+   */
+  public static boolean hasActiveProcessEngineConfiguration() {
+    return findProcessEngineConfiguration().isPresent();
+  }
+
+  /**
+   * Returns the current process engine configuration, if any is active on the current thread.
+   * Use this over {@link #getProcessEngineConfiguration()} when the absence of a process engine
+   * configuration is a valid case to be handled rather than an error.
+   *
+   * @return the current process engine configuration, or {@link Optional#empty()} if none is active
+   * @since 2.2
+   */
+  public static Optional<ProcessEngineConfigurationImpl> findProcessEngineConfiguration() {
     Deque<ProcessEngineConfigurationImpl> stack = getStack(processEngineConfigurationStackThreadLocal);
     if (stack.isEmpty()) {
-      return null;
+      return Optional.empty();
     }
-    return stack.peek();
+    return Optional.of(stack.peek());
+  }
+
+  /**
+   * Returns the current process engine configuration. If no process engine configuration is active, an exception is thrown.
+   * This is a null-safe alternative to reading the top of the process engine configuration stack directly,
+   * useful in cases where the process engine configuration is required to be present. It supports the IDE
+   * in detecting potential null pointer exceptions at compile time. Use {@link #findProcessEngineConfiguration()}
+   * instead if the absence of a process engine configuration is expected and should be handled explicitly.
+   *
+   * @return the current process engine configuration
+   * @throws IllegalStateException if no process engine configuration is active
+   */
+  public static @NonNull ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+    Optional<ProcessEngineConfigurationImpl> processEngineConfiguration = findProcessEngineConfiguration();
+    if (processEngineConfiguration.isEmpty()) {
+      throw new IllegalStateException("No process engine configuration active on thread " + Thread.currentThread());
+    }
+    return processEngineConfiguration.get();
   }
 
   public static void setProcessEngineConfiguration(ProcessEngineConfigurationImpl processEngineConfiguration) {
@@ -121,15 +188,15 @@ public final class Context {
    * @deprecated Use {@link #getBpmnExecutionContext()} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public static ExecutionContext getExecutionContext() {
+  public static @Nullable ExecutionContext getExecutionContext() {
     return getBpmnExecutionContext();
   }
 
-  public static BpmnExecutionContext getBpmnExecutionContext() {
+  public static @Nullable BpmnExecutionContext getBpmnExecutionContext() {
     return (BpmnExecutionContext) getCoreExecutionContext();
   }
 
-  public static CaseExecutionContext getCaseExecutionContext() {
+  public static @Nullable CaseExecutionContext getCaseExecutionContext() {
     return (CaseExecutionContext) getCoreExecutionContext();
   }
 
@@ -198,11 +265,11 @@ public final class Context {
    * Use {@link #executeWithinProcessApplication(Callable, ProcessApplicationReference, InvocationContext)}
    * instead if an {@link InvocationContext} is available.
    */
-  public static <T> T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference) {
+  public static <T> @Nullable T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference) {
     return executeWithinProcessApplication(callback, processApplicationReference, null);
   }
 
-  public static <T> T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference, InvocationContext invocationContext) {
+  public static <T> @Nullable T executeWithinProcessApplication(Callable<T> callback, ProcessApplicationReference processApplicationReference, InvocationContext invocationContext) {
     String paName = processApplicationReference.getName();
     try {
       ProcessApplicationInterface processApplication = processApplicationReference.getProcessApplication();
@@ -214,7 +281,7 @@ public final class Context {
     }
   }
 
-  private static <T> T executeWrappedCallback(Callable<T> callback, InvocationContext invocationContext,
+  private static <T> @Nullable T executeWrappedCallback(Callable<T> callback, InvocationContext invocationContext,
       ProcessApplicationInterface processApplication) {
     try {
       // wrap callback

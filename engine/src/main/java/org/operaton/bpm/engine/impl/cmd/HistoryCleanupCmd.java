@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 
 import org.jspecify.annotations.Nullable;
@@ -45,7 +46,7 @@ import org.operaton.bpm.engine.runtime.Job;
 /**
  * @author Svetlana Dorokhova
  */
-public class HistoryCleanupCmd implements Command<Job> {
+public @NullMarked class HistoryCleanupCmd implements Command<Job> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 

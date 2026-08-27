@@ -18,18 +18,20 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+ import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author roman.smirnov
  * @author Joram Barrez
  */
-public class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd {
+public @NullMarked class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd {
   public RemoveExecutionVariablesCmd(String executionId, Collection<String> variableNames, boolean isLocal) {
     super(executionId, variableNames, isLocal);
   }
@@ -38,11 +40,12 @@ public class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd {
   protected ExecutionEntity getEntity() {
     ensureNotNull("executionId", entityId);
 
-    ExecutionEntity execution = commandContext
+    ExecutionEntity execution = getCommandContext()
       .getExecutionManager()
       .findExecutionById(entityId);
 
     ensureNotNull("execution %s doesn't exist".formatted(entityId), "execution", execution);
+    requireNonNull(execution);
 
     checkRemoveExecutionVariables(execution);
 
@@ -57,11 +60,11 @@ public class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd {
   @Override
   protected void logVariableOperation(AbstractVariableScope scope) {
     ExecutionEntity execution = (ExecutionEntity) scope;
-    commandContext.getOperationLogManager().logVariableOperation(getLogEntryOperation(), execution.getId(), null, PropertyChange.EMPTY_CHANGE);
+    getCommandContext().getOperationLogManager().logVariableOperation(getLogEntryOperation(), execution.getId(), null, PropertyChange.EMPTY_CHANGE);
   }
 
   protected void checkRemoveExecutionVariables(ExecutionEntity execution) {
-    for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+    for(CommandChecker checker : getCommandContext().getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstanceVariables(execution);
     }
   }

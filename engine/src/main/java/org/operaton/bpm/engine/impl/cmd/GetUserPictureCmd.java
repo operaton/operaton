@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.identity.Picture;
@@ -30,7 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  * @author Tom Baeyens
  */
-public class GetUserPictureCmd implements Command<Picture> {
+public @NullMarked class GetUserPictureCmd implements Command<Picture> {
   protected String userId;
 
   public GetUserPictureCmd(String userId) {
@@ -49,7 +50,7 @@ public class GetUserPictureCmd implements Command<Picture> {
       if (pictureByteArrayId != null) {
         ByteArrayEntity byteArray = commandContext.getDbEntityManager()
           .selectById(ByteArrayEntity.class, pictureByteArrayId);
-        return new Picture(byteArray.getBytes(), byteArray.getName());
+        return byteArray != null ? new Picture(byteArray.getBytes(), byteArray.getName()) : null;
       }
     }
 

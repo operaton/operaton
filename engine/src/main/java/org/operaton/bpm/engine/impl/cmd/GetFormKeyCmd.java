@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -31,15 +31,16 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * Command for retrieving start or task form keys.
  *
  * @author Falko Menge (Camunda)
  */
-public class GetFormKeyCmd implements Command<String> {
+public @NullMarked class GetFormKeyCmd implements Command<String> {
 
-  protected String taskDefinitionKey;
+  protected @Nullable String taskDefinitionKey;
   protected String processDefinitionId;
 
   /**
@@ -47,20 +48,22 @@ public class GetFormKeyCmd implements Command<String> {
    */
   public GetFormKeyCmd(String processDefinitionId) {
     setProcessDefinitionId(processDefinitionId);
+    requireNonNull(this.processDefinitionId);
   }
 
   /**
    * Retrieves a task form key.
    */
-  public GetFormKeyCmd(String processDefinitionId, @NonNull String taskDefinitionKey) {
+  public GetFormKeyCmd(String processDefinitionId, String taskDefinitionKey) {
     setProcessDefinitionId(processDefinitionId);
+    requireNonNull(this.processDefinitionId);
     if (taskDefinitionKey.isEmpty()) {
       throw new ProcessEngineException("The task definition key is mandatory, but '%s' has been provided.".formatted(taskDefinitionKey));
     }
     this.taskDefinitionKey = taskDefinitionKey;
   }
 
-  protected void setProcessDefinitionId(String processDefinitionId) {
+  protected void setProcessDefinitionId(@Nullable String processDefinitionId) {
     if (processDefinitionId == null || processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }

@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class CreateTenantUserMembershipCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
+public @NullMarked class CreateTenantUserMembershipCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
   protected final String tenantId;
   protected final String userId;
 
@@ -32,7 +34,7 @@ public class CreateTenantUserMembershipCmd extends AbstractWritableIdentityServi
   }
 
   @Override
-  protected Void executeCmd(CommandContext commandContext) {
+  protected @Nullable Void executeCmd(CommandContext commandContext) {
     ensureNotNull("tenantId", tenantId);
     ensureNotNull("userId", userId);
 

@@ -20,6 +20,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -46,7 +48,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Thorben Lindhauer
  *
  */
-public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
+public @NullMarked class CreateMigrationPlanCmd implements Command<MigrationPlan> {
 
   public static final MigrationLogger LOG = ProcessEngineLogger.MIGRATION_LOGGER;
 
@@ -209,7 +211,7 @@ public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
     }
   }
 
-  private void validateActivityIds(MigrationInstructionValidationReportImpl instructionReport, String sourceActivityId, String targetActivityId) {
+  private void validateActivityIds(MigrationInstructionValidationReportImpl instructionReport, @Nullable String sourceActivityId, @Nullable String targetActivityId) {
     if (sourceActivityId == null) {
       instructionReport.addFailure("Source activity id is null");
     }

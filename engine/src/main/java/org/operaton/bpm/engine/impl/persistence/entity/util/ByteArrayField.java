@@ -26,6 +26,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.Nameable;
 import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
 import org.operaton.bpm.engine.repository.ResourceType;
 
+import static org.operaton.bpm.engine.impl.context.Context.hasActiveCommandContext;
+
 /**
  * A byte array value field what load and save {@link ByteArrayEntity}. It can
  * be used in an entity which implements {@link ValueFields}.
@@ -77,7 +79,7 @@ public class ByteArrayField {
   protected ByteArrayEntity getByteArrayEntity() {
 
     // no lazy fetching outside of command context
-    if (byteArrayValue == null && byteArrayId != null && Context.getCommandContext() != null) {
+    if (byteArrayValue == null && byteArrayId != null && hasActiveCommandContext()) {
         byteArrayValue = Context
             .getCommandContext()
             .getDbEntityManager()

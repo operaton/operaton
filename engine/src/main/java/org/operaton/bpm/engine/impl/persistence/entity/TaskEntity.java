@@ -694,7 +694,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return caseExecutionId;
   }
 
-  public void setCaseExecutionId(String caseExecutionId) {
+  public void setCaseExecutionId(@Nullable String caseExecutionId) {
     this.caseExecutionId = caseExecutionId;
   }
 
@@ -725,7 +725,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return caseDefinitionId;
   }
 
-  public void setCaseDefinitionId(String caseDefinitionId) {
+  public void setCaseDefinitionId(@Nullable String caseDefinitionId) {
     this.caseDefinitionId = caseDefinitionId;
   }
 
@@ -892,7 +892,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public void setDescription(String description) {
+  public void setDescription(@Nullable String description) {
     registerCommandContextCloseListener();
     propertyChanged(DESCRIPTION, this.description, description);
     this.description = description;
@@ -913,18 +913,19 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     propertyChanged(ASSIGNEE, oldAssignee, assignee);
     this.assignee = assignee;
 
+    if (!Context.hasActiveCommandContext()) {
+      // if there is no command context, then it means that the user is calling the
+      // setAssignee outside a service method. E.g. while creating a new task.
+      return;
+    }
     CommandContext commandContext = Context.getCommandContext();
-    // if there is no command context, then it means that the user is calling the
-    // setAssignee outside a service method. E.g. while creating a new task.
-    if (commandContext != null) {
-      if (commandContext.getDbEntityManager().contains(this)) {
-        fireAssigneeAuthorizationProvider(oldAssignee, assignee);
-        fireHistoricIdentityLinks();
-      }
-      if (commandContext.getProcessEngineConfiguration().isTaskMetricsEnabled() && assignee != null && !assignee.equals(oldAssignee)) {
-        // assignee has changed and is not null, so mark a new task worker
-        commandContext.getMeterLogManager().insert(new TaskMeterLogEntity(assignee, timestamp));
-      }
+    if (commandContext.getDbEntityManager().contains(this)) {
+      fireAssigneeAuthorizationProvider(oldAssignee, assignee);
+      fireHistoricIdentityLinks();
+    }
+    if (commandContext.getProcessEngineConfiguration().isTaskMetricsEnabled() && assignee != null && !assignee.equals(oldAssignee)) {
+      // assignee has changed and is not null, so mark a new task worker
+      commandContext.getMeterLogManager().insert(new TaskMeterLogEntity(assignee, timestamp));
     }
   }
 
@@ -942,10 +943,14 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     propertyChanged(OWNER, oldOwner, owner);
     this.owner = owner;
 
+    if (!Context.hasActiveCommandContext()) {
+      // if there is no command context, then it means that the user is calling the
+      // setOwner outside a service method. E.g. while creating a new task.
+      return;
+    }
+
     CommandContext commandContext = Context.getCommandContext();
-    // if there is no command context, then it means that the user is calling the
-    // setOwner outside a service method. E.g. while creating a new task.
-    if (commandContext != null && commandContext.getDbEntityManager().contains(this)) {
+    if (commandContext.getDbEntityManager().contains(this)) {
       fireOwnerAuthorizationProvider(oldOwner, owner);
       this.fireHistoricIdentityLinks();
     }
@@ -1183,10 +1188,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     switch (state) {
     case STATE_CREATED:
-      CommandContext commandContext = Context.getCommandContext();
-      if (commandContext != null) {
-        commandContext.getHistoricTaskInstanceManager().createHistoricTask(this);
-      }
+      Context.findCommandContext().ifPresent(commandContext -> commandContext.getHistoricTaskInstanceManager().createHistoricTask(this));
       return fireEvent(TaskListener.EVENTNAME_CREATE) && fireAssignmentEvent();
 
     case STATE_COMPLETED:
@@ -1488,7 +1490,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return operatonFormRef;
   }
 
-  public void setProcessDefinitionId(String processDefinitionId) {
+  public void setProcessDefinitionId(@Nullable String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
 
@@ -1522,7 +1524,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.eventName = eventName;
   }
 
-  public void setExecutionId(String executionId) {
+  public void setExecutionId(@Nullable String executionId) {
     this.executionId = executionId;
   }
 
@@ -1537,7 +1539,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.processInstance = processInstance;
   }
 
-  public void setProcessInstanceId(String processInstanceId) {
+  public void setProcessInstanceId(@Nullable String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 
@@ -1641,10 +1643,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   protected void registerCommandContextCloseListener() {
-    CommandContext commandContext = Context.getCommandContext();
-    if (commandContext != null) {
-      commandContext.registerCommandContextListener(this);
-    }
+    Context.findCommandContext().ifPresent(commandContext -> commandContext.registerCommandContextListener(this));
   }
 
   public Map<String, PropertyChange> getPropertyChanges() {
@@ -1657,8 +1656,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       propertyChanged(DELETE, false, true);
     }
 
-    final CommandContext commandContext = Context.getCommandContext();
-    if (commandContext != null) {
+    if (Context.hasActiveCommandContext()) {
+      final CommandContext commandContext = Context.getCommandContext();
       List<PropertyChange> values = new ArrayList<>(propertyChanges.values());
       commandContext.getOperationLogManager().logTaskOperations(operation, this, values);
       fireHistoricIdentityLinks();

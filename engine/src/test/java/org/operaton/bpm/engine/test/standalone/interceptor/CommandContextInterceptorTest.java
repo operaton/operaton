@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.interceptor;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -56,7 +57,7 @@ class CommandContextInterceptorTest {
       throw new IllegalStateException("here i come!");
     })).isInstanceOf(IllegalStateException.class);
 
-    assertThat(Context.getCommandContext()).isNull();
+    assertThat(Context.hasActiveCommandContext()).isFalse();
   }
 
   @Test
@@ -129,7 +130,7 @@ class CommandContextInterceptorTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
   }
 
-  protected class ExceptionThrowingCmd implements Command<Void> {
+  protected @NullMarked class ExceptionThrowingCmd implements Command<Void> {
 
     protected boolean executed;
 

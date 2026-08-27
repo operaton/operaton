@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
@@ -30,21 +30,19 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tijs Rademakers
  */
-public class AddIdentityLinkForProcessDefinitionCmd implements Command<Void> {
+public @NullMarked class AddIdentityLinkForProcessDefinitionCmd implements Command<Void> {
   protected String processDefinitionId;
+  protected @Nullable String userId;
+  protected @Nullable String groupId;
 
-  protected String userId;
-
-  protected String groupId;
-
-  public AddIdentityLinkForProcessDefinitionCmd(String processDefinitionId, String userId, String groupId) {
+  public AddIdentityLinkForProcessDefinitionCmd(String processDefinitionId, @Nullable String userId, @Nullable String groupId) {
     validateParams(userId, groupId, processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     this.userId = userId;
     this.groupId = groupId;
   }
 
-  protected void validateParams(String userId, String groupId, String processDefinitionId) {
+  protected void validateParams(@Nullable String userId, @Nullable String groupId, String processDefinitionId) {
     ensureNotNull("processDefinitionId", processDefinitionId);
 
     if (userId == null && groupId == null) {
@@ -54,8 +52,7 @@ public class AddIdentityLinkForProcessDefinitionCmd implements Command<Void> {
 
   @Override
   public @Nullable Void execute(CommandContext commandContext) {
-    ProcessDefinitionEntity processDefinition = Context
-      .getCommandContext()
+    ProcessDefinitionEntity processDefinition = commandContext
       .getProcessDefinitionManager()
       .findLatestProcessDefinitionById(processDefinitionId);
 

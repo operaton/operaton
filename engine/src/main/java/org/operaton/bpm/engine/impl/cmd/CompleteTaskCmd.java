@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -29,26 +31,27 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Joram Barrez
  */
-public class CompleteTaskCmd implements Command<VariableMap> {
+public @NullMarked class CompleteTaskCmd implements Command<VariableMap> {
   private static final VariableMapImpl EMPTY_VARIABLE_MAP = new VariableMapImpl();
   protected String taskId;
-  protected Map<String, Object> variables;
+  protected @Nullable Map<String, Object> variables;
 
   // only fetch variables if they are actually requested;
   // this avoids unnecessary loading of variables
   protected boolean returnVariables;
   protected boolean deserializeReturnedVariables;
 
-  public CompleteTaskCmd(String taskId, Map<String, Object> variables) {
+  public CompleteTaskCmd(String taskId, @Nullable Map<String, Object> variables) {
     this(taskId, variables, false, false);
   }
 
-  public CompleteTaskCmd(String taskId, Map<String, Object> variables,
+  public CompleteTaskCmd(String taskId, @Nullable Map<String, Object> variables,
       boolean returnVariables, boolean deserializeReturnedVariables) {
     this.taskId = taskId;
     this.variables = variables;
@@ -63,6 +66,7 @@ public class CompleteTaskCmd implements Command<VariableMap> {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
     ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkCompleteTask(task, commandContext);
 

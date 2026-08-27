@@ -18,18 +18,20 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  */
-public class FindActiveActivityIdsCmd implements Command<List<String>> {
+public @NullMarked class FindActiveActivityIdsCmd implements Command<List<String>> {
   protected String executionId;
 
   public FindActiveActivityIdsCmd(String executionId) {
@@ -44,6 +46,7 @@ public class FindActiveActivityIdsCmd implements Command<List<String>> {
     ExecutionManager executionManager = commandContext.getExecutionManager();
     ExecutionEntity execution = executionManager.findExecutionById(executionId);
     ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
+    requireNonNull(execution);
 
     checkGetActivityIds(execution, commandContext);
 

@@ -20,16 +20,20 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ActivityExecutionTreeMapping;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
+import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -67,7 +71,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     return processInstanceId;
   }
 
-  protected ActivityInstance findActivityInstance(ActivityInstance tree, String activityInstanceId) {
+  protected @Nullable ActivityInstance findActivityInstance(@NonNull ActivityInstance tree, @NonNull String activityInstanceId) {
     if (activityInstanceId.equals(tree.getId())) {
       return tree;
     } else {
@@ -82,7 +86,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     return null;
   }
 
-  protected TransitionInstance findTransitionInstance(ActivityInstance tree, String transitionInstanceId) {
+  protected @Nullable TransitionInstance findTransitionInstance(@NonNull ActivityInstance tree, @Nullable String transitionInstanceId) {
     for (TransitionInstance childTransitionInstance : tree.getChildTransitionInstances()) {
       if (matchesRequestedTransitionInstance(childTransitionInstance, transitionInstanceId)) {
         return childTransitionInstance;
@@ -99,7 +103,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     return null;
   }
 
-  protected boolean matchesRequestedTransitionInstance(TransitionInstance instance, String queryInstanceId) {
+  protected boolean matchesRequestedTransitionInstance(@NonNull TransitionInstance instance, @Nullable String queryInstanceId) {
     boolean match = instance.getId().equals(queryInstanceId);
 
     // check if the execution queried for has been replaced by the given instance
@@ -107,7 +111,8 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     // this is a fix for CAM-4090 to tolerate inconsistent transition instance ids as described in CAM-4143
     if (!match) {
       // note: execution id = transition instance id
-      ExecutionEntity cachedExecution = Context.getCommandContext()
+      CommandContext commandContext = requireNonNull(Context.getCommandContext());
+      ExecutionEntity cachedExecution = commandContext
           .getDbEntityManager()
           .getCachedEntity(ExecutionEntity.class, queryInstanceId);
 
@@ -141,8 +146,8 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     return match;
   }
 
-  protected ScopeImpl getScopeForActivityInstance(ProcessDefinitionImpl processDefinition,
-      ActivityInstance activityInstance) {
+  protected ScopeImpl getScopeForActivityInstance(@NonNull ProcessDefinitionImpl processDefinition,
+      @NonNull ActivityInstance activityInstance) {
     String scopeId = activityInstance.getActivityId();
 
     if (processDefinition.getId().equals(scopeId)) {
@@ -153,8 +158,8 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     }
   }
 
-  protected ExecutionEntity getScopeExecutionForActivityInstance(ExecutionEntity processInstance,
-      ActivityExecutionTreeMapping mapping, ActivityInstance activityInstance) {
+  protected @NonNull ExecutionEntity getScopeExecutionForActivityInstance(@NonNull ExecutionEntity processInstance,
+      @NonNull ActivityExecutionTreeMapping mapping, @NonNull ActivityInstance activityInstance) {
     ensureNotNull("activityInstance", activityInstance);
 
     ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();
@@ -164,7 +169,8 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     Set<String> activityInstanceExecutions = new HashSet<>(Arrays.asList(activityInstance.getExecutionIds()));
 
     for (String activityInstanceExecutionId : activityInstance.getExecutionIds()) {
-      ExecutionEntity execution = Context.getCommandContext()
+      CommandContext commandContext = requireNonNull(Context.getCommandContext());
+      ExecutionEntity execution = commandContext
           .getExecutionManager()
           .findExecutionById(activityInstanceExecutionId);
       if (execution.isConcurrent() && execution.hasChildren()) {

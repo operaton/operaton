@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Christopher Zell
  * @author Askar Akhmerov
  */
-public class HandleExternalTaskFailureCmd extends HandleExternalTaskCmd {
+public @NullMarked class HandleExternalTaskFailureCmd extends HandleExternalTaskCmd {
 
   protected String errorMessage;
   protected String errorDetails;
@@ -37,13 +38,6 @@ public class HandleExternalTaskFailureCmd extends HandleExternalTaskCmd {
 
   /**
    * Overloaded constructor to support short and full error messages
-   *
-   * @param externalTaskId
-   * @param workerId
-   * @param errorMessage
-   * @param errorDetails
-   * @param retries
-   * @param retryDuration
    */
   public HandleExternalTaskFailureCmd(String externalTaskId, String workerId,
                                       String errorMessage, String errorDetails,

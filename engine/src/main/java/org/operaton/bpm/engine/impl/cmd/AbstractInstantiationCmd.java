@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -32,6 +33,7 @@ import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
@@ -47,17 +49,19 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceModificationCommand {
+public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProcessInstanceModificationCommand {
 
   protected VariableMap variables;
   protected VariableMap variablesLocal;
-  protected String ancestorActivityInstanceId;
+  protected @Nullable String ancestorActivityInstanceId;
 
-  protected AbstractInstantiationCmd(String processInstanceId, String ancestorActivityInstanceId) {
+  protected AbstractInstantiationCmd(@Nullable String processInstanceId, @Nullable String ancestorActivityInstanceId) {
     super(processInstanceId);
     this.ancestorActivityInstanceId = ancestorActivityInstanceId;
     this.variables = new VariableMapImpl();
@@ -88,7 +92,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return variablesLocal;
   }
 
-  public String getAncestorActivityInstanceId() {
+  public @Nullable String getAncestorActivityInstanceId() {
     return ancestorActivityInstanceId;
   }
 
@@ -98,13 +102,15 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
 
   @Override
   public @Nullable Void execute(final CommandContext commandContext) {
-    ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
+    ExecutionManager executionManager = commandContext.getExecutionManager();
+    ExecutionEntity processInstance = requireNonNull(executionManager.findExecutionById(processInstanceId));
     final ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();
 
     CoreModelElement elementToInstantiate = getTargetElement(processDefinition);
     EnsureUtil.ensureNotNull(NotValidException.class, describeFailure(
         "Element '%s' does not exist in process '%s'".formatted(getTargetElementId(), processDefinition.getId())),
       "element", elementToInstantiate);
+    requireNonNull(elementToInstantiate);
     // rebuild the mapping because the execution tree changes with every iteration
     final ActivityExecutionTreeMapping mapping = new ActivityExecutionTreeMapping(commandContext, processInstanceId);
 
@@ -144,7 +150,9 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     // the interruption and cancellation takes place before we instantiate the
     // activity stack
     ActivityImpl topMostActivity = determineTopMostActivity(activitiesToInstantiate, elementToInstantiate);
-    ScopeImpl flowScope = determineFlowScope(activitiesToInstantiate, elementToInstantiate, topMostActivity);
+    // the element to instantiate is always either an activity or a transition, hence a flow scope exists
+    ScopeImpl flowScope = requireNonNull(
+        determineFlowScope(activitiesToInstantiate, elementToInstantiate, topMostActivity), "flowScope");
 
     throwIfNoConcurrentInstantiationPossible(flowScope);
 
@@ -183,12 +191,14 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   private ExecutionEntity determineScopeExecutionWithAncestorActivity(final CommandContext commandContext,
       ExecutionEntity processInstance, final ProcessDefinitionImpl processDefinition,
       CoreModelElement elementToInstantiate, final ActivityExecutionTreeMapping mapping, FlowScopeWalker walker) {
-    ActivityInstance tree = commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId));
+    ActivityInstance tree = requireNonNull(commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId)));
 
+    requireNonNull(ancestorActivityInstanceId);
     ActivityInstance ancestorInstance = findActivityInstance(tree, ancestorActivityInstanceId);
     EnsureUtil.ensureNotNull(NotValidException.class,
         describeFailure("Ancestor activity instance '%s' does not exist".formatted(ancestorActivityInstanceId)),
         "ancestorInstance", ancestorInstance);
+    requireNonNull(ancestorInstance);
 
     // determine ancestor activity scope execution and activity
     final ExecutionEntity ancestorScopeExecution = getScopeExecutionForActivityInstance(processInstance, mapping,
@@ -209,7 +219,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return ancestorScopeExecution;
   }
 
-  private ActivityImpl determineTopMostActivity(List<PvmActivity> activitiesToInstantiate,
+  private @Nullable ActivityImpl determineTopMostActivity(List<PvmActivity> activitiesToInstantiate,
       CoreModelElement elementToInstantiate) {
     if (!activitiesToInstantiate.isEmpty()) {
       return (ActivityImpl) activitiesToInstantiate.get(0);
@@ -220,10 +230,10 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return null;
   }
 
-  private ScopeImpl determineFlowScope(List<PvmActivity> activitiesToInstantiate, CoreModelElement elementToInstantiate,
-      ActivityImpl topMostActivity) {
+  private @Nullable ScopeImpl determineFlowScope(List<PvmActivity> activitiesToInstantiate, CoreModelElement elementToInstantiate,
+      @Nullable ActivityImpl topMostActivity) {
     if (!activitiesToInstantiate.isEmpty() || ActivityImpl.class.isAssignableFrom(elementToInstantiate.getClass())) {
-      return topMostActivity.getFlowScope();
+      return topMostActivity != null ? topMostActivity.getFlowScope() : null;
     } else if (TransitionImpl.class.isAssignableFrom(elementToInstantiate.getClass())) {
       TransitionImpl transitionToInstantiate = (TransitionImpl) elementToInstantiate;
       return transitionToInstantiate.getSource().getFlowScope();
@@ -240,7 +250,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   }
 
   private ActivityStartBehavior determineStartBehavior(CoreModelElement elementToInstantiate,
-      List<PvmActivity> activitiesToInstantiate, ActivityImpl topMostActivity) {
+      List<PvmActivity> activitiesToInstantiate, @Nullable ActivityImpl topMostActivity) {
     ActivityStartBehavior startBehavior = ActivityStartBehavior.CONCURRENT_IN_FLOW_SCOPE;
     if (topMostActivity != null) {
       startBehavior = topMostActivity.getActivityStartBehavior();
@@ -267,26 +277,30 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   }
 
   private void executeInstantiation(CoreModelElement elementToInstantiate, final ActivityExecutionTreeMapping mapping,
-      ExecutionEntity scopeExecution, List<PvmActivity> activitiesToInstantiate, ActivityImpl topMostActivity,
+      ExecutionEntity scopeExecution, List<PvmActivity> activitiesToInstantiate, @Nullable ActivityImpl topMostActivity,
       ActivityStartBehavior startBehavior) {
     switch (startBehavior) {
     case CANCEL_EVENT_SCOPE: {
-      ScopeImpl scopeToCancel = topMostActivity.getEventScope();
+      // a cancelling start behavior is only determined for a non-null top most activity
+      ActivityImpl activityToCancel = requireNonNull(topMostActivity, "topMostActivity");
+      ScopeImpl scopeToCancel = activityToCancel.getEventScope();
       ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
       if (executionToCancel != null) {
-        executionToCancel.deleteCascade("Cancelling activity %s executed.".formatted(topMostActivity), skipCustomListeners,
+        executionToCancel.deleteCascade("Cancelling activity %s executed.".formatted(activityToCancel), skipCustomListeners,
             skipIoMappings);
-        instantiate(executionToCancel.getParent(), activitiesToInstantiate, elementToInstantiate);
+        instantiate(requireNonNull(executionToCancel.getParent()), activitiesToInstantiate, elementToInstantiate);
       } else {
-        ExecutionEntity flowScopeExecution = getSingleExecutionForScope(mapping, topMostActivity.getFlowScope());
-        instantiateConcurrent(flowScopeExecution, activitiesToInstantiate, elementToInstantiate);
+        ExecutionEntity flowScopeExecution = getSingleExecutionForScope(mapping, activityToCancel.getFlowScope());
+        instantiateConcurrent(requireNonNull(flowScopeExecution), activitiesToInstantiate, elementToInstantiate);
       }
       break;
     }
     case INTERRUPT_EVENT_SCOPE: {
-      ScopeImpl scopeToCancel = topMostActivity.getEventScope();
-      ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
-      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(topMostActivity), skipCustomListeners,
+      // an interrupting start behavior is only determined for a non-null top most activity
+      ActivityImpl activityToInterrupt = requireNonNull(topMostActivity, "topMostActivity");
+      ScopeImpl scopeToCancel = activityToInterrupt.getEventScope();
+      ExecutionEntity executionToCancel = requireNonNull(getSingleExecutionForScope(mapping, scopeToCancel), "execution to cancel");
+      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(activityToInterrupt), skipCustomListeners,
           skipIoMappings, false);
       executionToCancel.setActivity(null);
       executionToCancel.leaveActivityInstance();
@@ -294,9 +308,11 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
       break;
     }
     case INTERRUPT_FLOW_SCOPE: {
-      ScopeImpl scopeToCancel = topMostActivity.getFlowScope();
-      ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
-      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(topMostActivity), skipCustomListeners,
+      // an interrupting start behavior is only determined for a non-null top most activity
+      ActivityImpl activityToInterrupt = requireNonNull(topMostActivity, "topMostActivity");
+      ScopeImpl scopeToCancel = activityToInterrupt.getFlowScope();
+      ExecutionEntity executionToCancel = requireNonNull(getSingleExecutionForScope(mapping, scopeToCancel), "execution to cancel");
+      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(activityToInterrupt), skipCustomListeners,
           skipIoMappings, false);
       executionToCancel.setActivity(null);
       executionToCancel.leaveActivityInstance();
@@ -328,7 +344,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return !(behavior instanceof SequentialMultiInstanceActivityBehavior);
   }
 
-  protected ExecutionEntity getSingleExecutionForScope(ActivityExecutionTreeMapping mapping, ScopeImpl scope) {
+  protected @Nullable ExecutionEntity getSingleExecutionForScope(ActivityExecutionTreeMapping mapping, ScopeImpl scope) {
     Set<ExecutionEntity> executions = mapping.getExecutions(scope);
 
     if (!executions.isEmpty()) {
@@ -377,7 +393,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
 
   protected abstract ScopeImpl getTargetFlowScope(ProcessDefinitionImpl processDefinition);
 
-  protected abstract CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition);
+  protected abstract @Nullable CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition);
 
   protected abstract String getTargetElementId();
 

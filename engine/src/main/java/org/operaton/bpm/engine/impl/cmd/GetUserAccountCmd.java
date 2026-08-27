@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.identity.Account;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,7 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Tom Baeyens
  */
-public class GetUserAccountCmd implements Command<Account> {
+public @NullMarked class GetUserAccountCmd implements Command<Account> {
   protected String userId;
   protected String userPassword;
   protected String accountName;
@@ -35,7 +37,7 @@ public class GetUserAccountCmd implements Command<Account> {
   }
 
   @Override
-  public Account execute(CommandContext commandContext) {
+  public @Nullable Account execute(CommandContext commandContext) {
     return commandContext
       .getIdentityInfoManager()
       .findUserAccountByUserIdAndKey(userId, accountName);

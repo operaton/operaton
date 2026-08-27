@@ -16,35 +16,46 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.OptimisticLockingException;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorLogger;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageAddedNotification;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 
+import java.util.Optional;
+
 /**
  * @author Roman Smirnov
  */
-public abstract class JobRetryCmd implements Command<Object> {
+public abstract @NullMarked class JobRetryCmd implements Command<Object> {
+  protected static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected String jobId;
-  protected Throwable exception;
+  protected @Nullable Throwable exception;
 
-  protected JobRetryCmd(String jobId, Throwable exception) {
+  protected JobRetryCmd(String jobId, @Nullable Throwable exception) {
     this.jobId = jobId;
     this.exception = exception;
   }
 
-  protected JobEntity getJob() {
-    return Context
-        .getCommandContext()
-        .getJobManager()
-        .findJobById(jobId);
+  protected Optional<JobEntity> getJob() {
+    JobEntity job = Context
+            .getCommandContext()
+            .getJobManager()
+            .findJobById(jobId);
+    if (job == null) {
+      LOG.debugFailedJobNotFound(jobId);
+    }
+    return Optional.ofNullable(job);
   }
 
   protected void logException(JobEntity job) {
@@ -61,6 +72,9 @@ public abstract class JobRetryCmd implements Command<Object> {
   }
 
   protected String getExceptionStacktrace() {
+    if (exception == null) {
+      return "";
+    }
     return ExceptionUtil.getExceptionStacktrace(exception);
   }
 

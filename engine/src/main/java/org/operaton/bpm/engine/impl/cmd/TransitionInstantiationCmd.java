@@ -16,10 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
+import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Thorben Lindhauer
@@ -46,11 +50,12 @@ public class TransitionInstantiationCmd extends AbstractInstantiationCmd {
   @Override
   protected ScopeImpl getTargetFlowScope(ProcessDefinitionImpl processDefinition) {
     TransitionImpl transition = processDefinition.findTransition(transitionId);
-    return transition.getSource().getFlowScope();
+    ActivityImpl source = requireNonNull(transition.getSource());
+    return source.getFlowScope();
   }
 
   @Override
-  protected CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition) {
+  protected @Nullable CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition) {
     return processDefinition.findTransition(transitionId);
   }
 

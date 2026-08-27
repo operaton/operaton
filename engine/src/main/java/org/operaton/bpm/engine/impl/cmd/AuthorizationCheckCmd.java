@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -37,7 +39,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class AuthorizationCheckCmd implements Command<Boolean> {
+public @NullMarked class AuthorizationCheckCmd implements Command<Boolean> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -45,9 +47,9 @@ public class AuthorizationCheckCmd implements Command<Boolean> {
   protected List<String> groupIds;
   protected Permission permission;
   protected Resource resource;
-  protected String resourceId;
+  protected @Nullable String resourceId;
 
-  public AuthorizationCheckCmd(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId) {
+  public AuthorizationCheckCmd(String userId, List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId) {
     this.userId = userId;
     this.groupIds = groupIds;
     this.permission = permission;

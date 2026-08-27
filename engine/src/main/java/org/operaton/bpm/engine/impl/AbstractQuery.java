@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 import org.joda.time.DateTime;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -156,7 +157,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
 
     if (commandExecutor != null) {
       if (!maxResultsLimitEnabled) {
-        maxResultsLimitEnabled = Context.getCommandContext() == null;
+        maxResultsLimitEnabled = Context.findCommandContext().isEmpty();
       }
 
       return commandExecutor.execute(this);
@@ -189,7 +190,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   }
 
   @Override
-  public @Nullable Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(@NonNull CommandContext commandContext) {
     if (resultType==ResultType.LIST) {
       return evaluateExpressionsAndExecuteList(commandContext, null);
     } else if (resultType==ResultType.SINGLE_RESULT) {

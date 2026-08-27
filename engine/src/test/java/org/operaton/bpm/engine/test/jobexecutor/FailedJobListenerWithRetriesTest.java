@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -144,7 +146,7 @@ public class FailedJobListenerWithRetriesTest {
     }
   }
 
-  public class OLEFoxJobRetryCmd extends DefaultJobRetryCmd {
+  public @NullMarked class OLEFoxJobRetryCmd extends DefaultJobRetryCmd {
 
     private int countRuns;
 
@@ -153,8 +155,8 @@ public class FailedJobListenerWithRetriesTest {
     }
 
     @Override
-    public Object execute(CommandContext commandContext) {
-      Job job = getJob();
+    public @Nullable Object execute(CommandContext commandContext) {
+      Job job = getJob().orElseThrow();
       //on last attempt the incident will be created, we imitate OLE
       if (job.getRetries() == 1) {
         countRuns++;

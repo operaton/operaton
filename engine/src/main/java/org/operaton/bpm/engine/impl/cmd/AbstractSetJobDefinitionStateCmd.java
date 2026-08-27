@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -30,6 +32,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.*;
  * @author Daniel Meyer
  * @author roman.smirnov
  */
+@NullMarked
 public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateCmd {
 
   protected String jobDefinitionId;
@@ -190,7 +193,7 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
   }
 
   @Override
-  protected String getDeploymentId(CommandContext commandContext) {
+  protected @Nullable String getDeploymentId(CommandContext commandContext) {
     if (jobDefinitionId != null) {
       return getDeploymentIdByJobDefinition(commandContext, jobDefinitionId);
     } else if (processDefinitionId != null) {

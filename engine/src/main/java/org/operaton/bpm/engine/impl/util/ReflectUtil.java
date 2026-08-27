@@ -329,7 +329,7 @@ public final class ReflectUtil {
         if(method.getName().equals(setterName)) {
           Class<?>[] paramTypes = method.getParameterTypes();
 
-          if(paramTypes != null && paramTypes.length == 1) {
+          if(paramTypes.length == 1) {
             candidates.add(method);
             parameterTypes.add(paramTypes[0]);
           }
@@ -414,10 +414,10 @@ public final class ReflectUtil {
   }
 
   private static ClassLoader getCustomClassLoader() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    if(processEngineConfiguration != null) {
-      final ClassLoader classLoader = processEngineConfiguration.getClassLoader();
-      if(classLoader != null) {
+    Optional<ProcessEngineConfigurationImpl> processEngineConfiguration = Context.findProcessEngineConfiguration();
+    if(processEngineConfiguration.isPresent()) {
+      final ClassLoader classLoader = processEngineConfiguration.get().getClassLoader();
+      if (classLoader != null) {
         return classLoader;
       }
     }

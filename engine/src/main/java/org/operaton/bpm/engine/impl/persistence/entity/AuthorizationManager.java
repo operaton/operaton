@@ -150,7 +150,7 @@ public class AuthorizationManager extends AbstractManager {
     return new PermissionCheckBuilder();
   }
 
-  public Authorization createNewAuthorization(int type) {
+  public @NonNull Authorization createNewAuthorization(int type) {
     checkAuthorization(CREATE, AUTHORIZATION, null);
     return new AuthorizationEntity(type);
   }
@@ -550,8 +550,7 @@ public class AuthorizationManager extends AbstractManager {
   public boolean isOperatonAdmin(Authentication authentication) {
     List<String> groupIds = authentication.getGroupIds();
     if (groupIds != null) {
-      CommandContext commandContext = Context.getCommandContext();
-      List<String> adminGroups = commandContext.getProcessEngineConfiguration().getAdminGroups();
+      List<String> adminGroups = Context.getProcessEngineConfiguration().getAdminGroups();
       for (String adminGroup : adminGroups) {
         if (groupIds.contains(adminGroup)) {
           return true;
@@ -561,8 +560,7 @@ public class AuthorizationManager extends AbstractManager {
 
     String userId = authentication.getUserId();
     if (userId != null) {
-      CommandContext commandContext = Context.getCommandContext();
-      List<String> adminUsers = commandContext.getProcessEngineConfiguration().getAdminUsers();
+      List<String> adminUsers = Context.getProcessEngineConfiguration().getAdminUsers();
       return adminUsers != null && adminUsers.contains(userId);
     }
 

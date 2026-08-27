@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * Please remove any usages of the command.
  */
 @Deprecated(since = "1.0")
-public class IsTelemetryEnabledCmd implements Command<Boolean> {
+public @NullMarked class IsTelemetryEnabledCmd implements Command<Boolean> {
 
 
   @Override

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -25,6 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.*;
 /**
  * @author roman.smirnov
  */
+@NullMarked
 public abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd {
 
   protected String jobId;

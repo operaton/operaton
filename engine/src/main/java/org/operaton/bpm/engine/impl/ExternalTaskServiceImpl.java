@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
@@ -77,7 +78,7 @@ public class ExternalTaskServiceImpl extends ServiceImpl implements ExternalTask
   }
 
   @Override
-  public void complete(String externalTaskId, String workerId, Map<String, Object> variables, Map<String, Object> localVariables) {
+  public void complete(String externalTaskId, String workerId, @Nullable Map<String, Object> variables, @Nullable Map<String, Object> localVariables) {
     commandExecutor.execute(new CompleteExternalTaskCmd(externalTaskId, workerId, variables, localVariables));
   }
 

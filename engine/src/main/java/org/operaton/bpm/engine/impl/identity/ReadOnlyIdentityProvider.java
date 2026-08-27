@@ -65,7 +65,7 @@ public interface ReadOnlyIdentityProvider extends Session {
    * @return 'true' if the password matches the
    * @throws IdentityProviderException in case an error occurs
    */
-  boolean checkPassword(String userId, String password);
+  boolean checkPassword(@Nullable String userId, @Nullable String password);
 
   // groups //////////////////////////////////////
 

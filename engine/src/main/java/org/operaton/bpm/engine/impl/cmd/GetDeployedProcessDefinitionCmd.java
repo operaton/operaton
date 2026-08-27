@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessInstantiationBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -25,12 +27,12 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
-public class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitionEntity> {
+public @NullMarked class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitionEntity> {
 
   protected String processDefinitionId;
-  protected String processDefinitionKey;
+  protected @Nullable String processDefinitionKey;
 
-  protected String processDefinitionTenantId;
+  protected @Nullable String processDefinitionTenantId;
   protected boolean isTenantIdSet;
 
   protected final boolean checkReadPermission;

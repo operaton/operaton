@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -38,6 +40,7 @@ import org.operaton.bpm.engine.management.JobDefinition;
  * @author Joram Barrez
  * @author roman.smirnov
  */
+@NullMarked
 public abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetStateCmd {
 
   public static final String INCLUDE_PROCESS_INSTANCES_PROPERTY = "includeProcessInstances";
@@ -203,7 +206,7 @@ public abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetSt
   }
 
   @Override
-  protected String getDeploymentId(CommandContext commandContext) {
+  protected @Nullable String getDeploymentId(CommandContext commandContext) {
     if (processDefinitionId != null) {
       return getDeploymentIdByProcessDefinition(commandContext, processDefinitionId);
     } else if (processDefinitionKey != null) {

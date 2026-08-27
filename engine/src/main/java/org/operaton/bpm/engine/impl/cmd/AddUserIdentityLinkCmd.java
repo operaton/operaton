@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
@@ -26,8 +28,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
  * @author Daniel Meyer
  *
  */
-public class AddUserIdentityLinkCmd extends AbstractAddIdentityLinkCmd {
-  public AddUserIdentityLinkCmd(String taskId, String userId, String type) {
+public @NullMarked class AddUserIdentityLinkCmd extends AbstractAddIdentityLinkCmd {
+  public AddUserIdentityLinkCmd(String taskId, @Nullable String userId, String type) {
     super(taskId, userId, null, type);
   }
 

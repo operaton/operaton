@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.interceptor;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -23,6 +24,6 @@ import org.jspecify.annotations.Nullable;
  */
 public interface Command<T> {
 
-  @Nullable T execute(CommandContext commandContext);
+  @Nullable T execute(@NonNull CommandContext commandContext);
 
 }

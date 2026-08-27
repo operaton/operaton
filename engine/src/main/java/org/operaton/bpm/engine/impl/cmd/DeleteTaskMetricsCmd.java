@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
 import org.jspecify.annotations.Nullable;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
-public class DeleteTaskMetricsCmd implements Command<Void> {
+public @NullMarked class DeleteTaskMetricsCmd implements Command<Void> {
   protected Date timestamp;
 
   public DeleteTaskMetricsCmd(Date timestamp) {

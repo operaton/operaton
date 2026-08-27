@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
@@ -113,7 +114,7 @@ public class ExecutionManager extends AbstractManager {
     return getDbEntityManager().selectList("selectExecutionsByProcessInstanceId", processInstanceId);
   }
 
-  public ExecutionEntity findExecutionById(String executionId) {
+  public @Nullable ExecutionEntity findExecutionById(String executionId) {
     return getDbEntityManager().selectById(ExecutionEntity.class, executionId);
   }
 

@@ -127,8 +127,8 @@ public final class ProgrammaticBeanLookup {
   }
 
   private static void releaseOnContextClose(CreationalContext<?> creationalContext, Bean<?> bean) {
-    CommandContext commandContext = Context.getCommandContext();
-    if(commandContext != null) {
+    if(Context.hasActiveCommandContext()) {
+      CommandContext commandContext = Context.getCommandContext();
       commandContext.registerCommandContextListener(new CreationalContextReleaseListener(creationalContext));
 
     } else {

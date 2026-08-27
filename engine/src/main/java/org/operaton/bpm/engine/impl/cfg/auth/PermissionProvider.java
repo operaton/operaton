@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cfg.auth;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 
@@ -27,6 +29,7 @@ import org.operaton.bpm.engine.authorization.Resource;
  * @author Tobias Metzke
  *
  */
+@NullMarked
 public interface PermissionProvider {
 
   /**
@@ -43,5 +46,5 @@ public interface PermissionProvider {
   /**
    * Gets the name of the resource with the resource type
    */
-  String getNameForResource(int resourceType);
+  @Nullable String getNameForResource(int resourceType);
 }

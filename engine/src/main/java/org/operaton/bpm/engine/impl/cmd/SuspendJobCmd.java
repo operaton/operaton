@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.management.UpdateJobSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 /**
  * @author roman.smirnov
  */
-public class SuspendJobCmd extends AbstractSetJobStateCmd {
+public @NullMarked class SuspendJobCmd extends AbstractSetJobStateCmd {
 
   public SuspendJobCmd(UpdateJobSuspensionStateBuilderImpl builder) {
     super(builder);

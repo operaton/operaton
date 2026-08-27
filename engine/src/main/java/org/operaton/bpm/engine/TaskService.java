@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -1265,7 +1266,7 @@ public interface TaskService {
   void deleteAttachment(String attachmentId);
 
   /** Delete an attachment to the given task id and attachment id */
-  void deleteTaskAttachment(String taskId, String attachmentId);
+  void deleteTaskAttachment(@Nullable String taskId, String attachmentId);
 
   /** The list of subtasks for this parent task */
   List<Task> getSubTasks(String parentTaskId);

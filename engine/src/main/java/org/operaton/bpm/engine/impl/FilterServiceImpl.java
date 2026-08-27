@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.filter.Filter;
@@ -40,7 +41,7 @@ import org.operaton.bpm.engine.query.Query;
 public class FilterServiceImpl extends ServiceImpl implements FilterService {
 
   @Override
-  public Filter newTaskFilter() {
+  public @NonNull Filter newTaskFilter() {
     return commandExecutor.execute(new CreateFilterCmd(EntityTypes.TASK));
   }
 

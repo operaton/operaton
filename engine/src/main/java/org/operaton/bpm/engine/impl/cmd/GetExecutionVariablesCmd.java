@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -25,19 +27,20 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class GetExecutionVariablesCmd implements Command<VariableMap> {
+public @NullMarked class GetExecutionVariablesCmd implements Command<VariableMap> {
   protected String executionId;
-  protected Collection<String> variableNames;
+  protected @Nullable Collection<String> variableNames;
   protected boolean isLocal;
   protected boolean deserializeValues;
 
-  public GetExecutionVariablesCmd(String executionId, Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
+  public GetExecutionVariablesCmd(String executionId, @Nullable Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
     this.executionId = executionId;
     this.variableNames = variableNames;
     this.isLocal = isLocal;
@@ -53,6 +56,7 @@ public class GetExecutionVariablesCmd implements Command<VariableMap> {
       .findExecutionById(executionId);
 
     ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
+    requireNonNull(execution);
 
     checkGetExecutionVariables(execution, commandContext);
 

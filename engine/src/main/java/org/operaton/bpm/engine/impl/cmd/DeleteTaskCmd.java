@@ -18,12 +18,12 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
-import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -32,19 +32,22 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 /**
  * @author Joram Barrez
  */
+@NullMarked
 public class DeleteTaskCmd implements Command<Void> {
-  protected String taskId;
-  protected Collection<String> taskIds;
+  protected @Nullable String taskId;
+  protected @Nullable Collection<String> taskIds;
   protected boolean cascade;
-  protected String deleteReason;
+  protected @Nullable String deleteReason;
 
-  public DeleteTaskCmd(String taskId, String deleteReason, boolean cascade) {
+  public DeleteTaskCmd(@Nullable String taskId, @Nullable String deleteReason, boolean cascade) {
     this.taskId = taskId;
+    this.taskIds = null;
     this.cascade = cascade;
     this.deleteReason = deleteReason;
   }
 
-  public DeleteTaskCmd(Collection<String> taskIds, String deleteReason, boolean cascade) {
+  public DeleteTaskCmd(@Nullable Collection<String> taskIds, @Nullable String deleteReason, boolean cascade) {
+    this.taskId = null;
     this.taskIds = taskIds;
     this.cascade = cascade;
     this.deleteReason = deleteReason;
@@ -80,8 +83,7 @@ public class DeleteTaskCmd implements Command<Void> {
       String reason = deleteReason == null || deleteReason.isEmpty() ? TaskEntity.DELETE_REASON_DELETED : deleteReason;
       task.delete(reason, cascade);
     } else if (cascade) {
-      Context
-        .getCommandContext()
+      commandContext
         .getHistoricTaskInstanceManager()
         .deleteHistoricTaskInstanceById(taskId);
     }

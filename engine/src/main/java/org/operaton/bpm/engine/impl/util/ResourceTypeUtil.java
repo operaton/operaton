@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 
 import org.jspecify.annotations.Nullable;
@@ -26,6 +27,7 @@ import org.operaton.bpm.engine.authorization.*;
 
 import static org.operaton.bpm.engine.authorization.Resources.*;
 
+@NullMarked
 public final class ResourceTypeUtil {
 
   private ResourceTypeUtil() {

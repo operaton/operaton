@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -66,7 +67,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Thorben Lindhauer
  *
  */
-public class GetActivityInstanceCmd implements Command<ActivityInstance> {
+public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInstance> {
   private static final ExecutionIdComparator EXECUTION_ID_COMPARATOR = new ExecutionIdComparator();
 
   protected String processInstanceId;
@@ -207,7 +208,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   protected ActivityInstanceImpl createActivityInstance(PvmExecutionImpl scopeExecution, ScopeImpl scope,
-      String activityInstanceId, String parentActivityInstanceId,
+      String activityInstanceId, @Nullable String parentActivityInstanceId,
       Map<String, List<Incident>> incidentsByExecution) {
     ActivityInstanceImpl actInst = new ActivityInstanceImpl();
 

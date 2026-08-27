@@ -18,14 +18,16 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
 /**
  * @author Tom Baeyens
  */
-public class ResolveTaskCmd extends CompleteTaskCmd {
-  public ResolveTaskCmd(String taskId, Map<String, Object> variables) {
+public @NullMarked class ResolveTaskCmd extends CompleteTaskCmd {
+  public ResolveTaskCmd(String taskId, @Nullable Map<String, Object> variables) {
     super(taskId, variables, false, false);
   }
 

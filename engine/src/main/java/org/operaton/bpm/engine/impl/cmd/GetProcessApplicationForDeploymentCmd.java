@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  *
  */
-public class GetProcessApplicationForDeploymentCmd implements Command<String> {
+public @NullMarked class GetProcessApplicationForDeploymentCmd implements Command<String> {
 
   protected String deploymentId;
 

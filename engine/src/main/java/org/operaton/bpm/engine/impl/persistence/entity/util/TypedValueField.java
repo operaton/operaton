@@ -42,6 +42,8 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static org.operaton.bpm.engine.impl.context.Context.hasActiveCommandContext;
+
 /**
  * A field what provide a typed version of a value. It can
  * be used in an entity which implements {@link ValueFields}.
@@ -84,7 +86,7 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
   }
 
   public TypedValue getTypedValue(boolean deserializeValue, boolean asTransientValue) {
-    if (Context.getCommandContext() != null) {
+    if (hasActiveCommandContext()) {
       // in some circumstances we must invalidate the cached value instead of returning it
 
       if ((cachedValue instanceof SerializableValue serializableValue)
@@ -213,7 +215,7 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
   }
 
   public static VariableSerializers getSerializers() {
-    if (Context.getCommandContext() != null) {
+    if (hasActiveCommandContext()) {
       VariableSerializers variableSerializers = Context.getProcessEngineConfiguration().getVariableSerializers();
       VariableSerializers paSerializers = getCurrentPaSerializers();
 
@@ -229,39 +231,36 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
   }
 
   public static @Nullable TypedValueSerializer<?> getFallbackSerializer(String serializerName) {
-    if (Context.getProcessEngineConfiguration() != null) {
-      VariableSerializerFactory fallbackSerializerFactory = Context.getProcessEngineConfiguration().getFallbackSerializerFactory();
-      if (fallbackSerializerFactory != null) {
-        return fallbackSerializerFactory.getSerializer(serializerName);
+    var processEngineConfiguration = Context.findProcessEngineConfiguration()
+        .orElseThrow(LOG::serializerOutOfContextException);
+
+    VariableSerializerFactory fallbackSerializerFactory = processEngineConfiguration.getFallbackSerializerFactory();
+    if (fallbackSerializerFactory != null) {
+      return fallbackSerializerFactory.getSerializer(serializerName);
+    }
+    else {
+      return null;
+    }
+  }
+
+  protected static @Nullable VariableSerializers getCurrentPaSerializers() {
+    ProcessApplicationReference processApplicationReference = Context.getCurrentProcessApplication();
+    if (processApplicationReference == null) {
+      return null;
+    }
+
+    try {
+      ProcessApplicationInterface processApplicationInterface = processApplicationReference.getProcessApplication();
+
+      ProcessApplicationInterface rawPa = processApplicationInterface.getRawObject();
+      if (rawPa instanceof AbstractProcessApplication abstractProcessApplication) {
+        return abstractProcessApplication.getVariableSerializers();
       }
       else {
         return null;
       }
-    }
-    else {
-      throw LOG.serializerOutOfContextException();
-    }
-  }
-
-  protected static VariableSerializers getCurrentPaSerializers() {
-    if (Context.getCurrentProcessApplication() != null) {
-      ProcessApplicationReference processApplicationReference = Context.getCurrentProcessApplication();
-      try {
-        ProcessApplicationInterface processApplicationInterface = processApplicationReference.getProcessApplication();
-
-        ProcessApplicationInterface rawPa = processApplicationInterface.getRawObject();
-        if (rawPa instanceof AbstractProcessApplication abstractProcessApplication) {
-          return abstractProcessApplication.getVariableSerializers();
-        }
-        else {
-          return null;
-        }
-      } catch (ProcessApplicationUnavailableException e) {
-        throw LOG.cannotDeterminePaDataformats(e);
-      }
-    }
-    else {
-      return null;
+    } catch (ProcessApplicationUnavailableException e) {
+      throw LOG.cannotDeterminePaDataformats(e);
     }
   }
 

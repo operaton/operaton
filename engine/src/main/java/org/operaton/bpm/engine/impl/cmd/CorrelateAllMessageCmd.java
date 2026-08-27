@@ -23,8 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.SynchronousOperationLogProducer;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -36,6 +38,7 @@ import org.operaton.bpm.engine.impl.runtime.CorrelationSet;
 import org.operaton.bpm.engine.impl.runtime.MessageCorrelationResultImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 
 /**
@@ -43,7 +46,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNu
  * @author Daniel Meyer
  * @author Michael Scholz
  */
-public class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implements Command<List<MessageCorrelationResultImpl>>, SynchronousOperationLogProducer<MessageCorrelationResultImpl> {
+public @NullMarked class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implements Command<List<MessageCorrelationResultImpl>>, SynchronousOperationLogProducer<MessageCorrelationResultImpl> {
 
   /**
    * Initialize the command with a builder
@@ -60,7 +63,8 @@ public class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implemen
         "At least one of the following correlation criteria has to be present: " + "messageName, businessKey, correlationKeys, processInstanceId", messageName,
         builder.getBusinessKey(), builder.getCorrelationProcessInstanceVariables(), builder.getProcessInstanceId());
 
-    final CorrelationHandler correlationHandler = Context.getProcessEngineConfiguration().getCorrelationHandler();
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    final CorrelationHandler correlationHandler = processEngineConfiguration.getCorrelationHandler();
     final CorrelationSet correlationSet = new CorrelationSet(builder);
     List<CorrelationHandlerResult> correlationResults = commandContext.runWithoutAuthorization((Callable<List<CorrelationHandlerResult>>) () -> correlationHandler.correlateMessages(commandContext, messageName, correlationSet));
 

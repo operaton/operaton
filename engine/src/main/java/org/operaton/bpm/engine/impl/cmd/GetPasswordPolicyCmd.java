@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.identity.PasswordPolicy;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Miklas Boskamp
  */
-public class GetPasswordPolicyCmd implements Command<PasswordPolicy> {
+public @NullMarked class GetPasswordPolicyCmd implements Command<PasswordPolicy> {
   @Override
   public @Nullable PasswordPolicy execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -484,12 +483,12 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   @Override
   public void fireHistoricProcessStartEvent() {
-    ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
-    if (configuration == null) {
+    var configuration = Context.findProcessEngineConfiguration();
+    if (configuration.isEmpty()) {
       return;
     }
 
-    HistoryLevel historyLevel = configuration.getHistoryLevel();
+    HistoryLevel historyLevel = configuration.get().getHistoryLevel();
     if (historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_START, processInstance)) {
       HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
         @Override
@@ -919,7 +918,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public @NonNull ExecutionEntity getSuperExecution() {
+  public @Nullable ExecutionEntity getSuperExecution() {
     ensureSuperExecutionInitialized();
     return superExecution;
   }
@@ -1320,9 +1319,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    *          the list of all variables that are linked to executions which are
    *          part of this process instance If null, variables are not
    *          initialized and are lazy loaded on demand
-   * @param jobs
-   * @param tasks
-   * @param incidents
    */
   public void restoreProcessInstance(Collection<ExecutionEntity> executions,
       Collection<EventSubscriptionEntity> eventSubscriptions, Collection<VariableInstanceEntity> variables,

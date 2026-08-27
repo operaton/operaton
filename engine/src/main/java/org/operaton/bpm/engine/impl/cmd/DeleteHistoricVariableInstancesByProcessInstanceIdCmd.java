@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Arrays;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 
 import org.jspecify.annotations.Nullable;
@@ -30,6 +31,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEn
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -37,7 +39,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tobias Metzke
  *
  */
-public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Command<Void> {
+public @NullMarked class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Command<Void> {
   private final String processInstanceId;
 
   public DeleteHistoricVariableInstancesByProcessInstanceIdCmd(String processInstanceId) {
@@ -50,6 +52,7 @@ public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Co
 
     HistoricProcessInstanceEntity instance = commandContext.getHistoricProcessInstanceManager().findHistoricProcessInstance(processInstanceId);
     ensureNotNull(NotFoundException.class, "No historic process instance found with id: %s".formatted(processInstanceId), "instance", instance);
+    requireNonNull(instance);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteHistoricVariableInstancesByProcessInstance(instance);

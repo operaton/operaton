@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -23,12 +25,13 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Daniel Meyer
  */
-public class GetTaskVariableCmdTyped implements Command<TypedValue> {
+public @NullMarked class GetTaskVariableCmdTyped implements Command<TypedValue> {
   protected String taskId;
   protected String variableName;
   protected boolean isLocal;
@@ -42,7 +45,7 @@ public class GetTaskVariableCmdTyped implements Command<TypedValue> {
   }
 
   @Override
-  public TypedValue execute(CommandContext commandContext) {
+  public @Nullable TypedValue execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
     ensureNotNull("variableName", variableName);
 
@@ -52,6 +55,7 @@ public class GetTaskVariableCmdTyped implements Command<TypedValue> {
       .findTaskById(taskId);
 
     ensureNotNull("task %s doesn't exist".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkGetTaskVariableTyped(task, commandContext);
 

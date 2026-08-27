@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
 import org.jspecify.annotations.Nullable;
@@ -26,6 +27,7 @@ import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceManager;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -33,7 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class DeleteHistoricTaskInstanceCmd implements Command<Object> {
+public @NullMarked class DeleteHistoricTaskInstanceCmd implements Command<Object> {
   protected String taskId;
 
   public DeleteHistoricTaskInstanceCmd(String taskId) {
@@ -44,16 +46,17 @@ public class DeleteHistoricTaskInstanceCmd implements Command<Object> {
   public @Nullable Object execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
 
-    HistoricTaskInstanceEntity task = commandContext.getHistoricTaskInstanceManager().findHistoricTaskInstanceById(taskId);
+    HistoricTaskInstanceManager historicTaskInstanceManager = commandContext.getHistoricTaskInstanceManager();
+    HistoricTaskInstanceEntity task = historicTaskInstanceManager.findHistoricTaskInstanceById(taskId);
 
-    for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
-      checker.checkDeleteHistoricTaskInstance(task);
+    if (task != null) {
+      for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+        checker.checkDeleteHistoricTaskInstance(task);
+      }
+      writeUserOperationLog(commandContext, task);
     }
 
-    writeUserOperationLog(commandContext, task);
-
-    commandContext
-      .getHistoricTaskInstanceManager()
+    historicTaskInstanceManager
       .deleteHistoricTaskInstanceById(taskId);
 
     return null;

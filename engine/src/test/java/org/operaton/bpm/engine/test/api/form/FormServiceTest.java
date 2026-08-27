@@ -1519,6 +1519,15 @@ class FormServiceTest {
       .hasMessageContaining("Task id cannot be null: taskId is null");
   }
 
+  @Test
+  void testGetDeployedTaskFormWithUnknownTaskId() {
+    // must report the missing task instead of failing with a NullPointerException
+    // while running the authorization checks on the non-existing task
+    assertThatThrownBy(() -> formService.getDeployedTaskForm("unknownTaskId"))
+      .isInstanceOf(ProcessEngineException.class)
+      .isNotInstanceOf(NullPointerException.class);
+  }
+
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test

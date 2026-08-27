@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.form.TaskFormData;
@@ -26,12 +27,13 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  */
-public class GetTaskFormCmd implements Command<TaskFormData> {
+public @NullMarked class GetTaskFormCmd implements Command<TaskFormData> {
   protected String taskId;
 
   public GetTaskFormCmd(String taskId) {
@@ -43,6 +45,7 @@ public class GetTaskFormCmd implements Command<TaskFormData> {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
     ensureNotNull("No task found for taskId '%s'".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadTaskVariable(task);

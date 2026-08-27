@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.DeploymentResourceNotFoundException;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -25,14 +27,17 @@ import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.OperatonFormDefinition;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  *
  * @author Anna Pazola
  *
  */
-public abstract class AbstractGetDeployedFormCmd implements Command<InputStream> {
+public abstract @NullMarked class AbstractGetDeployedFormCmd implements Command<InputStream> {
 
   protected static final String EMBEDDED_KEY = "embedded:";
   protected static final String OPERATON_FORMS_KEY = "operaton-forms:";
@@ -44,14 +49,14 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
   protected static final String DEPLOYMENT_KEY = "deployment:";
   protected static final int DEPLOYMENT_KEY_LENGTH = DEPLOYMENT_KEY.length();
 
-  protected CommandContext commandContext;
+  private @Nullable CommandContext commandContext;
 
   @Override
-  public InputStream execute(final CommandContext commandContext) {
+  public @Nullable InputStream execute(final CommandContext commandContext) {
     this.commandContext = commandContext;
     checkAuthorization();
 
-    final FormData formData = getFormData();
+    final FormData formData = requireNonNull(getFormData());
     String formKey = formData.getFormKey();
     OperatonFormRef operatonFormRef = formData.getOperatonFormRef();
 
@@ -64,7 +69,11 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
     }
   }
 
-  protected InputStream getResourceForFormKey(FormData formData, String formKey) {
+  protected final CommandContext getCommandContext() {
+    return EnsureUtil.ensureActiveCommandContext(commandContext);
+  }
+
+  protected @Nullable InputStream getResourceForFormKey(FormData formData, String formKey) {
     String resourceName = formKey;
 
     if (resourceName.startsWith(EMBEDDED_KEY)) {
@@ -84,9 +93,9 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
     return getDeploymentResource(formData.getDeploymentId(), resourceName);
   }
 
-  protected InputStream getResourceForOperatonFormRef(OperatonFormRef operatonFormRef,
+  protected @Nullable InputStream getResourceForOperatonFormRef(OperatonFormRef operatonFormRef,
       String deploymentId) {
-    OperatonFormDefinition definition = commandContext.runWithoutAuthorization(
+    OperatonFormDefinition definition = getCommandContext().runWithoutAuthorization(
         new GetOperatonFormDefinitionCmd(operatonFormRef, deploymentId));
 
     if (definition == null) {
@@ -96,16 +105,16 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
     return getDeploymentResource(definition.getDeploymentId(), definition.getResourceName());
   }
 
-  protected InputStream getDeploymentResource(String deploymentId, String resourceName) {
+  protected @Nullable InputStream getDeploymentResource(String deploymentId, String resourceName) {
     GetDeploymentResourceCmd getDeploymentResourceCmd = new GetDeploymentResourceCmd(deploymentId, resourceName);
     try {
-      return commandContext.runWithoutAuthorization(getDeploymentResourceCmd);
+      return getCommandContext().runWithoutAuthorization(getDeploymentResourceCmd);
     } catch (DeploymentResourceNotFoundException e) {
       throw new NotFoundException("The form with the resource name '%s' cannot be found in deployment with id %s".formatted(resourceName, deploymentId), e);
     }
   }
 
-  protected abstract FormData getFormData();
+  protected abstract @Nullable FormData getFormData();
 
   protected abstract void checkAuthorization();
 

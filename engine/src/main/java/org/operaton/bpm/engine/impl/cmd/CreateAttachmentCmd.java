@@ -20,7 +20,10 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEntity;
@@ -43,20 +46,19 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-// Not Serializable
-public class CreateAttachmentCmd implements Command<Attachment> {
+public @NullMarked class CreateAttachmentCmd implements Command<Attachment> {
 
-  protected String taskId;
+  protected @Nullable String taskId;
   protected String attachmentType;
   protected String processInstanceId;
   protected String attachmentName;
   protected String attachmentDescription;
-  protected InputStream content;
-  protected String url;
-  private TaskEntity task;
-  protected ExecutionEntity processInstance;
+  protected @Nullable InputStream content;
+  protected @Nullable String url;
+  private @Nullable TaskEntity task;
+  protected @Nullable ExecutionEntity processInstance;
 
-  public CreateAttachmentCmd(String attachmentType, String taskId, String processInstanceId, String attachmentName, String attachmentDescription, InputStream content, String url) {
+  public CreateAttachmentCmd(String attachmentType, @Nullable String taskId, String processInstanceId, String attachmentName, String attachmentDescription, @Nullable InputStream content, @Nullable String url) {
     this.attachmentType = attachmentType;
     this.taskId = taskId;
     this.processInstanceId = processInstanceId;
@@ -133,12 +135,13 @@ public class CreateAttachmentCmd implements Command<Attachment> {
   }
 
   protected String getHistoryRemovalTimeStrategy() {
-    return Context.getProcessEngineConfiguration()
-      .getHistoryRemovalTimeStrategy();
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    return processEngineConfiguration.getHistoryRemovalTimeStrategy();
   }
 
-  protected HistoricProcessInstanceEventEntity getHistoricRootProcessInstance(String rootProcessInstanceId) {
-    return Context.getCommandContext().getDbEntityManager()
+  protected @Nullable HistoricProcessInstanceEventEntity getHistoricRootProcessInstance(String rootProcessInstanceId) {
+    CommandContext commandContext = Context.getCommandContext();
+    return commandContext.getDbEntityManager()
       .selectById(HistoricProcessInstanceEventEntity.class, rootProcessInstanceId);
   }
 

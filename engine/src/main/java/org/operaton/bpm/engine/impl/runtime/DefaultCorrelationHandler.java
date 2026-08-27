@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
 
 import org.jspecify.annotations.Nullable;
@@ -42,7 +43,7 @@ import org.operaton.bpm.engine.runtime.Execution;
  * @author Daniel Meyer
  * @author Michael Scholz
  */
-public class DefaultCorrelationHandler implements CorrelationHandler {
+public @NullMarked class DefaultCorrelationHandler implements CorrelationHandler {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -89,7 +90,7 @@ public class DefaultCorrelationHandler implements CorrelationHandler {
     return results;
   }
 
-  protected List<CorrelationHandlerResult> correlateMessageToExecutions(CommandContext commandContext, String messageName, CorrelationSet correlationSet) {
+  protected List<CorrelationHandlerResult> correlateMessageToExecutions(CommandContext commandContext, @Nullable String messageName, CorrelationSet correlationSet) {
 
     ExecutionQueryImpl query = new ExecutionQueryImpl();
 
@@ -137,7 +138,7 @@ public class DefaultCorrelationHandler implements CorrelationHandler {
   }
 
   @Override
-  public List<CorrelationHandlerResult> correlateStartMessages(CommandContext commandContext, String messageName, CorrelationSet correlationSet) {
+  public List<CorrelationHandlerResult> correlateStartMessages(CommandContext commandContext, @Nullable String messageName, CorrelationSet correlationSet) {
     if (messageName == null) {
       // ignore empty message name
       return Collections.emptyList();
@@ -195,7 +196,7 @@ public class DefaultCorrelationHandler implements CorrelationHandler {
     }
   }
 
-  protected CorrelationHandlerResult correlateStartMessageByProcessDefinitionId(CommandContext commandContext, String messageName, String processDefinitionId) {
+  protected @Nullable CorrelationHandlerResult correlateStartMessageByProcessDefinitionId(CommandContext commandContext, String messageName, String processDefinitionId) {
     DeploymentCache deploymentCache = commandContext.getProcessEngineConfiguration().getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
     // only an active process definition will be returned
@@ -209,7 +210,7 @@ public class DefaultCorrelationHandler implements CorrelationHandler {
     return null;
   }
 
-  protected String findStartActivityIdByMessage(ProcessDefinitionEntity processDefinition, String messageName) {
+  protected @Nullable String findStartActivityIdByMessage(ProcessDefinitionEntity processDefinition, String messageName) {
     for (EventSubscriptionDeclaration declaration : EventSubscriptionDeclaration.getDeclarationsForScope(processDefinition).values()) {
       if (isMessageStartEventWithName(declaration, messageName)) {
         return declaration.getActivityId();

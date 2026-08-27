@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class SetExternalTaskPriorityCmd extends ExternalTaskCmd {
+public @NullMarked class SetExternalTaskPriorityCmd extends ExternalTaskCmd {
 
   /**
    * The priority that should set on the external task.

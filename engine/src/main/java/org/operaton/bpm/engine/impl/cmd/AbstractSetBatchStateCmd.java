@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -30,6 +31,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
+@NullMarked
 public abstract class AbstractSetBatchStateCmd implements Command<Void> {
 
   public static final String SUSPENSION_STATE_PROPERTY = "suspensionState";
@@ -87,7 +89,7 @@ public abstract class AbstractSetBatchStateCmd implements Command<Void> {
 
   protected abstract AbstractSetJobDefinitionStateCmd createSetJobDefinitionStateCommand(UpdateJobDefinitionSuspensionStateBuilderImpl builder);
 
-  protected void logUserOperation(CommandContext commandContext, String tenantId) {
+  protected void logUserOperation(CommandContext commandContext, @Nullable String tenantId) {
     PropertyChange propertyChange = new PropertyChange(SUSPENSION_STATE_PROPERTY, null, getNewSuspensionState().getName());
     commandContext.getOperationLogManager()
       .logBatchOperation(getUserOperationType(), batchId, tenantId, propertyChange);

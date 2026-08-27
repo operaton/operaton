@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -25,7 +26,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class CreateGroupCmd extends AbstractWritableIdentityServiceCmd<Group> implements Command<Group> {
+public @NullMarked class CreateGroupCmd extends AbstractWritableIdentityServiceCmd<Group> implements Command<Group> {
   protected String groupId;
 
   public CreateGroupCmd(String groupId) {

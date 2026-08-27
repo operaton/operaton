@@ -82,6 +82,13 @@ const api = {
       state,
       state.api.plugins[PLUGIN_ID].definition_stats,
     ),
+  // Count of jobs whose last execution threw — a health signal for the tile.
+  failed_jobs: (state) =>
+    GET(
+      "/job/count?withException=true",
+      state,
+      state.api.plugins[PLUGIN_ID].failed_jobs,
+    ),
   // Completed (historic) user-task counts by task name for the "top tasks" ranking.
   top_tasks: (state) =>
     GET(
@@ -100,6 +107,7 @@ const make_signals = () => ({
   completed: signal(null),
   activity_series: signal(null),
   definition_stats: signal(null),
+  failed_jobs: signal(null),
   top_tasks: signal(null),
 });
 
@@ -320,6 +328,7 @@ const MetricsPage = () => {
     metrics.completed(state);
     metrics.activity_series(state);
     metrics.definition_stats(state);
+    metrics.failed_jobs(state);
     metrics.top_tasks(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -342,6 +351,23 @@ const MetricsPage = () => {
         <article>
           <h2>{t("plugins.metrics.flow-nodes")}</h2>
           <MetricValue signal={signals.flow_nodes} format={(d) => d.result} />
+        </article>
+        <article>
+          <h2>{t("plugins.metrics.failed-jobs")}</h2>
+          <RequestState
+            signal={signals.failed_jobs}
+            on_success={() => {
+              const count = signals.failed_jobs.value.data.count;
+              return (
+                <p
+                  class={`metric-value metric-status ${count > 0 ? "status-bad" : "status-ok"}`}
+                >
+                  <span class="status-dot" />
+                  {count}
+                </p>
+              );
+            }}
+          />
         </article>
       </section>
       <section class="metrics-bento">
@@ -413,6 +439,7 @@ const translations = {
         version: "Engine version",
         "process-starts": "Process starts (12 mo)",
         "flow-nodes": "Flow nodes executed (12 mo)",
+        "failed-jobs": "Failed jobs",
         snapshot: "Process instances: running vs. completed",
         running: "Running",
         completed: "Completed",
@@ -433,6 +460,7 @@ const translations = {
         version: "Engine-Version",
         "process-starts": "Prozessstarts (12 Mon.)",
         "flow-nodes": "Ausgeführte Flow-Knoten (12 Mon.)",
+        "failed-jobs": "Fehlgeschlagene Jobs",
         snapshot: "Prozessinstanzen: laufend vs. abgeschlossen",
         running: "Laufend",
         completed: "Abgeschlossen",

@@ -59,6 +59,9 @@ describe("Engine Metrics plugin — page", () => {
     vi.spyOn(engine_rest.plugins.metrics, "top_tasks").mockImplementation(
       () => {},
     );
+    vi.spyOn(engine_rest.plugins.metrics, "failed_jobs").mockImplementation(
+      () => {},
+    );
     signal_response(state.api.plugins.metrics.version, { version: "7.99.0" });
 
     render_with_state(<MetricsPage />, { state });
@@ -81,6 +84,7 @@ describe("Engine Metrics plugin — page", () => {
       "definition_stats",
       "activity_series",
       "top_tasks",
+      "failed_jobs",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -106,6 +110,7 @@ describe("Engine Metrics plugin — page", () => {
       "definition_stats",
       "activity_series",
       "top_tasks",
+      "failed_jobs",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -150,6 +155,7 @@ describe("Engine Metrics plugin — page", () => {
       "definition_stats",
       "activity_series",
       "top_tasks",
+      "failed_jobs",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -184,6 +190,7 @@ describe("Engine Metrics plugin — page", () => {
       "definition_stats",
       "activity_series",
       "top_tasks",
+      "failed_jobs",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -216,5 +223,36 @@ describe("Engine Metrics plugin — page", () => {
     expect(names.indexOf("Final decision · Loan Approval")).toBeLessThan(
       names.indexOf("Approve Invoice · Invoice Receipt"),
     );
+  });
+
+  it("shows the failed-jobs tile green at 0 and red above 0", () => {
+    const mount = (count) => {
+      _reset_registry();
+      for (const key of Object.keys(plugin_apis)) delete plugin_apis[key];
+      register(page_descriptor);
+      const state = create_mock_state();
+      for (const fn of [
+        "version",
+        "process_starts",
+        "flow_nodes",
+        "running",
+        "completed",
+        "definition_stats",
+        "activity_series",
+        "top_tasks",
+        "failed_jobs",
+      ]) {
+        vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
+      }
+      signal_response(state.api.plugins.metrics.failed_jobs, { count });
+      return render_with_state(<MetricsPage />, { state });
+    };
+
+    const { container: ok } = mount(0);
+    expect(ok.querySelector(".metric-status.status-ok")).toBeTruthy();
+    expect(ok.querySelector(".metric-status.status-bad")).toBeFalsy();
+
+    const { container: bad } = mount(3);
+    expect(bad.querySelector(".metric-status.status-bad")).toBeTruthy();
   });
 });

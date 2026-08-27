@@ -82,6 +82,13 @@ const api = {
       state,
       state.api.plugins[PLUGIN_ID].definition_stats,
     ),
+  // Completed (historic) user-task counts by task name for the "top tasks" ranking.
+  top_tasks: (state) =>
+    GET(
+      "/history/task/report?reportType=count&groupBy=taskName",
+      state,
+      state.api.plugins[PLUGIN_ID].top_tasks,
+    ),
 };
 
 // State branch — mounted at state.api.plugins.metrics.
@@ -93,6 +100,7 @@ const make_signals = () => ({
   completed: signal(null),
   activity_series: signal(null),
   definition_stats: signal(null),
+  top_tasks: signal(null),
 });
 
 const MetricValue = ({ signal: signl, format = (v) => v }) => (
@@ -251,10 +259,47 @@ const TopProcesses = ({ stats }) => {
               </span>
             </span>
             <span class="ranking-meta">
-              <span class="ranking-count">{r.instances}</span>
               {r.incidents > 0 && (
                 <span class="ranking-incidents">({r.incidents})</span>
               )}
+              <span class="ranking-count">{r.instances}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+};
+
+// Top completed user tasks by volume. Rows come pre-grouped per task name (per
+// definition); we just sort and take the leaders. Reuses the `.ranking` styles.
+const TopTasks = ({ rows }) => {
+  const [t] = useTranslation();
+  const top = [...rows].sort((a, b) => b.count - a.count).slice(0, 5);
+  if (top.length === 0) {
+    return <p class="fade-in">{t("plugins.metrics.no-tasks")}</p>;
+  }
+  const max = top[0].count;
+  return (
+    <ol class="ranking">
+      {top.map((r) => (
+        <li key={`${r.taskName}@${r.processDefinitionId}`}>
+          <a href={`/processes/${r.processDefinitionId}`}>
+            <span
+              class="ranking-name"
+              title={`${r.taskName} · ${r.processDefinitionName}`}
+            >
+              {r.taskName}
+              <span class="ranking-sub"> · {r.processDefinitionName}</span>
+            </span>
+            <span class="ranking-bar-track">
+              <span
+                class="ranking-bar"
+                style={{ inlineSize: `${(r.count / max) * 100}%` }}
+              />
+            </span>
+            <span class="ranking-meta">
+              <span class="ranking-count">{r.count}</span>
             </span>
           </a>
         </li>
@@ -275,6 +320,7 @@ const MetricsPage = () => {
     metrics.completed(state);
     metrics.activity_series(state);
     metrics.definition_stats(state);
+    metrics.top_tasks(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -348,6 +394,13 @@ const MetricsPage = () => {
             on_success={() => <TopProcesses stats={signals.definition_stats.value.data} />}
           />
         </article>
+        <article class="metrics-ranking">
+          <h2>{t("plugins.metrics.top-tasks")}</h2>
+          <RequestState
+            signal={signals.top_tasks}
+            on_success={() => <TopTasks rows={signals.top_tasks.value.data} />}
+          />
+        </article>
       </section>
     </main>
   );
@@ -369,6 +422,8 @@ const translations = {
         "no-activity": "No process starts in the last 30 days.",
         "top-processes": "Top processes by running instances",
         "no-running": "No running instances.",
+        "top-tasks": "Top user tasks by volume",
+        "no-tasks": "No completed user tasks.",
       },
     },
   },
@@ -387,6 +442,8 @@ const translations = {
         "no-activity": "Keine Prozessstarts in den letzten 30 Tagen.",
         "top-processes": "Top-Prozesse nach laufenden Instanzen",
         "no-running": "Keine laufenden Instanzen.",
+        "top-tasks": "Top-User-Tasks nach Aufkommen",
+        "no-tasks": "Keine abgeschlossenen User-Tasks.",
       },
     },
   },

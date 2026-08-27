@@ -56,6 +56,9 @@ describe("Engine Metrics plugin — page", () => {
       engine_rest.plugins.metrics,
       "activity_series",
     ).mockImplementation(() => {});
+    vi.spyOn(engine_rest.plugins.metrics, "top_tasks").mockImplementation(
+      () => {},
+    );
     signal_response(state.api.plugins.metrics.version, { version: "7.99.0" });
 
     render_with_state(<MetricsPage />, { state });
@@ -77,6 +80,7 @@ describe("Engine Metrics plugin — page", () => {
       "completed",
       "definition_stats",
       "activity_series",
+      "top_tasks",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -101,6 +105,7 @@ describe("Engine Metrics plugin — page", () => {
       "completed",
       "definition_stats",
       "activity_series",
+      "top_tasks",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -144,6 +149,7 @@ describe("Engine Metrics plugin — page", () => {
       "completed",
       "definition_stats",
       "activity_series",
+      "top_tasks",
     ]) {
       vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
     }
@@ -165,5 +171,50 @@ describe("Engine Metrics plugin — page", () => {
     );
     expect(tips.some((x) => x.endsWith(" 100"))).toBe(true);
     expect(tips.some((x) => x.endsWith(" 0"))).toBe(true);
+  });
+
+  it("ranks top user tasks by completed count, highest first", () => {
+    const state = create_mock_state();
+    for (const fn of [
+      "version",
+      "process_starts",
+      "flow_nodes",
+      "running",
+      "completed",
+      "definition_stats",
+      "activity_series",
+      "top_tasks",
+    ]) {
+      vi.spyOn(engine_rest.plugins.metrics, fn).mockImplementation(() => {});
+    }
+    signal_response(state.api.plugins.metrics.top_tasks, [
+      {
+        count: 4,
+        taskName: "Approve Invoice",
+        processDefinitionName: "Invoice Receipt",
+        processDefinitionId: "invoice:2",
+      },
+      {
+        count: 122,
+        taskName: "Final decision",
+        processDefinitionName: "Loan Approval",
+        processDefinitionId: "loanApproval:1",
+      },
+    ]);
+
+    render_with_state(<MetricsPage />, { state });
+
+    expect(screen.getByText("Final decision")).toBeTruthy();
+    expect(screen.getByText("122")).toBeTruthy();
+    // Row links to its process definition.
+    const link = screen.getByText("Final decision").closest("a");
+    expect(link.getAttribute("href")).toBe("/processes/loanApproval:1");
+    // Highest count renders before the lower one.
+    const names = [...document.querySelectorAll(".metrics-ranking")]
+      .flatMap((r) => [...r.querySelectorAll(".ranking-name")])
+      .map((n) => n.textContent);
+    expect(names.indexOf("Final decision · Loan Approval")).toBeLessThan(
+      names.indexOf("Approve Invoice · Invoice Receipt"),
+    );
   });
 });

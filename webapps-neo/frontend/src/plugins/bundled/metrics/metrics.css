@@ -38,16 +38,41 @@
     font-weight: 600;
   }
 
-  #content.metrics-page .metrics-timeseries {
+  /* Staggered bento on a 5-column grid: row 1 is 3/2 (chart | processes),
+     row 2 is 2/3 (snapshot | tasks). Default stretch keeps paired boxes equal
+     height per row. */
+  #content.metrics-page .metrics-bento {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--spacing-3, 1rem);
     margin-block-start: var(--spacing-3, 1rem);
   }
 
-  #content.metrics-page .metrics-timeseries article {
+  #content.metrics-page .metrics-bento > article {
+    min-inline-size: 0;
     padding: var(--spacing-3, 1rem);
     border: var(--border, 1px solid);
     border-color: var(--border-color, #ccc);
     border-radius: var(--border-radius-2, 0.5rem);
     background: var(--background-2, transparent);
+  }
+
+  #content.metrics-page .bento-2 {
+    grid-column: span 2;
+  }
+
+  #content.metrics-page .bento-3 {
+    grid-column: span 3;
+  }
+
+  @media (max-width: 760px) {
+    #content.metrics-page .metrics-bento {
+      grid-template-columns: 1fr;
+    }
+    #content.metrics-page .bento-2,
+    #content.metrics-page .bento-3 {
+      grid-column: 1 / -1;
+    }
   }
 
   #content.metrics-page .activity-chart {
@@ -106,31 +131,6 @@
     font-size: 0.85em;
     color: var(--color-text-secondary, #888);
     font-variant-numeric: tabular-nums;
-  }
-
-  #content.metrics-page .metrics-charts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-3, 1rem);
-    margin-block-start: var(--spacing-3, 1rem);
-  }
-
-  #content.metrics-page .metrics-snapshot {
-    flex: 1 1 18rem;
-    padding: var(--spacing-3, 1rem);
-    border: var(--border, 1px solid);
-    border-color: var(--border-color, #ccc);
-    border-radius: var(--border-radius-2, 0.5rem);
-    background: var(--background-2, transparent);
-  }
-
-  #content.metrics-page .metrics-ranking {
-    flex: 2 1 24rem;
-    padding: var(--spacing-3, 1rem);
-    border: var(--border, 1px solid);
-    border-color: var(--border-color, #ccc);
-    border-radius: var(--border-radius-2, 0.5rem);
-    background: var(--background-2, transparent);
   }
 
   #content.metrics-page .ranking {

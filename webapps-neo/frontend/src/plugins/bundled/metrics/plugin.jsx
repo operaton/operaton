@@ -344,8 +344,8 @@ const MetricsPage = () => {
           <MetricValue signal={signals.flow_nodes} format={(d) => d.result} />
         </article>
       </section>
-      <section class="metrics-timeseries">
-        <article>
+      <section class="metrics-bento">
+        <article class="bento-3">
           <h2>{t("plugins.metrics.activity")}</h2>
           <RequestState
             signal={signals.activity_series}
@@ -354,9 +354,14 @@ const MetricsPage = () => {
             )}
           />
         </article>
-      </section>
-      <section class="metrics-charts">
-        <article class="metrics-snapshot">
+        <article class="metrics-ranking bento-2">
+          <h2>{t("plugins.metrics.top-processes")}</h2>
+          <RequestState
+            signal={signals.definition_stats}
+            on_success={() => <TopProcesses stats={signals.definition_stats.value.data} />}
+          />
+        </article>
+        <article class="metrics-snapshot bento-2">
           <h2>{t("plugins.metrics.snapshot")}</h2>
           <RequestState
             signal={[signals.running, signals.completed]}
@@ -387,14 +392,7 @@ const MetricsPage = () => {
             }}
           />
         </article>
-        <article class="metrics-ranking">
-          <h2>{t("plugins.metrics.top-processes")}</h2>
-          <RequestState
-            signal={signals.definition_stats}
-            on_success={() => <TopProcesses stats={signals.definition_stats.value.data} />}
-          />
-        </article>
-        <article class="metrics-ranking">
+        <article class="metrics-ranking bento-3">
           <h2>{t("plugins.metrics.top-tasks")}</h2>
           <RequestState
             signal={signals.top_tasks}

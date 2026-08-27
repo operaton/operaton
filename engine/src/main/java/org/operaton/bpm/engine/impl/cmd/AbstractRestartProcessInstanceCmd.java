@@ -35,8 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
-@NullMarked
-public abstract class AbstractRestartProcessInstanceCmd<T> implements Command<T> {
+public abstract @NullMarked class AbstractRestartProcessInstanceCmd<T> implements Command<T> {
 
   protected CommandExecutor commandExecutor;
   protected RestartProcessInstanceBuilderImpl builder;

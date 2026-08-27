@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd.batch.removaltime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -42,7 +43,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tassilo Weidner
  */
-public class SetRemovalTimeToHistoricDecisionInstancesCmd implements Command<Batch> {
+public @NullMarked class SetRemovalTimeToHistoricDecisionInstancesCmd implements Command<Batch> {
 
   protected SetRemovalTimeToHistoricDecisionInstancesBuilderImpl builder;
 

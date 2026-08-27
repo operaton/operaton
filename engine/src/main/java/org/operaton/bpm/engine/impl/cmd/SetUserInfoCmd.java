@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import java.util.Collections;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 
 import org.jspecify.annotations.Nullable;
@@ -27,23 +29,24 @@ import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoEntity;
 /**
  * @author Tom Baeyens
  */
-public class SetUserInfoCmd implements Command<Object> {
+public @NullMarked class SetUserInfoCmd implements Command<Object> {
   protected String userId;
-  protected String userPassword;
+  protected @Nullable String userPassword;
   protected String type;
   protected String key;
   protected String value;
-  protected String accountPassword;
+  protected @Nullable String accountPassword;
   protected Map<String, String> accountDetails;
 
   public SetUserInfoCmd(String userId, String key, String value) {
+    this(userId, null, key, value, null, Collections.emptyMap());
     this.userId = userId;
     this.type = IdentityInfoEntity.TYPE_USERINFO;
     this.key = key;
     this.value = value;
   }
 
-  public SetUserInfoCmd(String userId, String userPassword, String accountName, String accountUsername, String accountPassword, Map<String, String> accountDetails) {
+  public SetUserInfoCmd(String userId, @Nullable String userPassword, String accountName, String accountUsername, @Nullable String accountPassword, Map<String, String> accountDetails) {
     this.userId = userId;
     this.userPassword = userPassword;
     this.type = IdentityInfoEntity.TYPE_USERACCOUNT;

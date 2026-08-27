@@ -27,8 +27,7 @@ import org.operaton.bpm.engine.authorization.*;
 
 import static org.operaton.bpm.engine.authorization.Resources.*;
 
-@NullMarked
-public final class ResourceTypeUtil {
+public final @NullMarked class ResourceTypeUtil {
 
   private ResourceTypeUtil() {
   }

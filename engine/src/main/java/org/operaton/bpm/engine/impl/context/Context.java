@@ -230,7 +230,7 @@ public final class Context {
     return stack;
   }
 
-  public static JobExecutorContext getJobExecutorContext() {
+  public static @Nullable JobExecutorContext getJobExecutorContext() {
     return jobExecutorContextThreadLocal.get();
   }
 

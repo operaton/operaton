@@ -19,11 +19,12 @@ package org.operaton.bpm.engine.impl.cmd.optimize;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-public class OptimizeRunningHistoricProcessInstanceQueryCmd implements Command<List<HistoricProcessInstance>> {
+public @NullMarked class OptimizeRunningHistoricProcessInstanceQueryCmd implements Command<List<HistoricProcessInstance>> {
 
   protected Date startedAfter;
   protected Date startedAt;

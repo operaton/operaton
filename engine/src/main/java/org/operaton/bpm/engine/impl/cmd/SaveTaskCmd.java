@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.exception.NotAllowedException;
@@ -35,7 +36,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Joram Barrez
  */
-public class SaveTaskCmd implements Command<Void> {
+public @NullMarked class SaveTaskCmd implements Command<Void> {
 	protected TaskEntity task;
 
 	public SaveTaskCmd(Task task) {
@@ -78,12 +79,12 @@ public class SaveTaskCmd implements Command<Void> {
     return null;
   }
 
-	protected void validateStandaloneTask(TaskEntity task, CommandContext commandContext) {
-	  boolean standaloneTasksEnabled = commandContext.getProcessEngineConfiguration().isStandaloneTasksEnabled();
-	  if (!standaloneTasksEnabled && task.isStandaloneTask()) {
+  protected void validateStandaloneTask(TaskEntity task, CommandContext commandContext) {
+    boolean standaloneTasksEnabled = commandContext.getProcessEngineConfiguration().isStandaloneTasksEnabled();
+    if (!standaloneTasksEnabled && task.isStandaloneTask()) {
       throw new NotAllowedException("Cannot save standalone task. They are disabled in the process engine configuration.");
-	  }
-	}
+    }
+  }
 
   protected void checkTaskAssign(TaskEntity task, CommandContext commandContext) {
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {

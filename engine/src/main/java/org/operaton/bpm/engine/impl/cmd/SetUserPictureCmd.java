@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.identity.Picture;
@@ -31,7 +32,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  * @author Tom Baeyens
  */
-public class SetUserPictureCmd implements Command<Void> {
+public @NullMarked class SetUserPictureCmd implements Command<Void> {
   protected String userId;
   protected Picture picture;
 

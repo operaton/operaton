@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 
 import org.jspecify.annotations.Nullable;
@@ -26,18 +27,19 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  */
-public class SignalCmd implements Command<Object> {
+public @NullMarked class SignalCmd implements Command<Object> {
   protected String executionId;
-  protected String signalName;
-  protected Object signalData;
-  protected final Map<String, Object> processVariables;
+  protected @Nullable String signalName;
+  protected @Nullable Object signalData;
+  protected final @Nullable Map<String, Object> processVariables;
 
-  public SignalCmd(String executionId, String signalName, Object signalData, Map<String, Object> processVariables) {
+  public SignalCmd(String executionId, @Nullable String signalName, @Nullable Object signalData, @Nullable Map<String, Object> processVariables) {
     this.executionId = executionId;
     this.signalName = signalName;
     this.signalData = signalData;
@@ -52,6 +54,7 @@ public class SignalCmd implements Command<Object> {
           .getExecutionManager()
           .findExecutionById(executionId);
     ensureNotNull(BadUserRequestException.class, "execution %s doesn't exist".formatted(executionId), "execution", execution);
+    requireNonNull(execution);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstance(execution);

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.EntityTypes;
@@ -35,17 +36,16 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Thorben Lindhauer
- *
  */
-public class SetJobDefinitionPriorityCmd implements Command<Void> {
+public @NullMarked class SetJobDefinitionPriorityCmd implements Command<Void> {
 
   public static final String JOB_DEFINITION_OVERRIDING_PRIORITY = "overridingPriority";
 
   protected String jobDefinitionId;
-  protected Long priority;
+  protected @Nullable Long priority;
   protected boolean cascade;
 
-  public SetJobDefinitionPriorityCmd(String jobDefinitionId, Long priority, boolean cascade) {
+  public SetJobDefinitionPriorityCmd(String jobDefinitionId, @Nullable Long priority, boolean cascade) {
     this.jobDefinitionId = jobDefinitionId;
     this.priority = priority;
     this.cascade = cascade;

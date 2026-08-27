@@ -45,6 +45,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Generic {@link ExecutionListener} publishing events using the CDI event
  * infrastructure.
@@ -93,7 +95,8 @@ public abstract class AbstractCdiEventListener implements TaskListener, Executio
   }
 
   protected BusinessProcessEvent createEvent(DelegateExecution execution) {
-    ProcessDefinition processDefinition = Context.getBpmnExecutionContext().getProcessDefinition();
+    BpmnExecutionContext executionContext = requireNonNull(Context.getBpmnExecutionContext());
+    ProcessDefinition processDefinition = executionContext.getProcessDefinition();
 
     // map type
     String eventName = execution.getEventName();

@@ -29,8 +29,7 @@ import org.operaton.bpm.engine.authorization.Resource;
  * @author Tobias Metzke
  *
  */
-@NullMarked
-public interface PermissionProvider {
+public @NullMarked interface PermissionProvider {
 
   /**
    * Gets the permission related to the name and resource type

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
 import org.jspecify.annotations.Nullable;
@@ -36,18 +37,18 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 /**
  * @author Askar Akhmerov
  */
-public class SetJobRetriesCmd implements Command<Void> {
+public @NullMarked class SetJobRetriesCmd implements Command<Void> {
 
   protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected static final String PROPERTY_RETRIES = "retries";
   protected static final String PROPERTY_DUE_DATE = "dueDate";
 
-  protected final String jobId;
-  protected final String jobDefinitionId;
-  protected final List<String> jobIds;
+  protected final @Nullable String jobId;
+  protected final @Nullable String jobDefinitionId;
+  protected final @Nullable List<String> jobIds;
   protected final int retries;
-  protected Date dueDate;
+  protected @Nullable Date dueDate;
   protected final boolean isDueDateSet;
 
   public SetJobRetriesCmd(String jobId, String jobDefinitionId, int retries, Date dueDate, boolean isDueDateSet) {

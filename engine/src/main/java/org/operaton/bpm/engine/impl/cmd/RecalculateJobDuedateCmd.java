@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -52,7 +53,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tobias Metzke
  */
-public class RecalculateJobDuedateCmd implements Command<Void> {
+public @NullMarked class RecalculateJobDuedateCmd implements Command<Void> {
   private final String jobId;
   private final boolean creationDateBased;
 
@@ -127,7 +128,7 @@ public class RecalculateJobDuedateCmd implements Command<Void> {
     return timerDeclaration;
   }
 
-  protected TimerDeclarationImpl findTimerDeclarationForActivity(CommandContext commandContext, JobEntity job) {
+  protected @Nullable TimerDeclarationImpl findTimerDeclarationForActivity(CommandContext commandContext, JobEntity job) {
     ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(job.getExecutionId());
     if (execution == null) {
       throw new ProcessEngineException("No execution found with id '%s' for job id '%s'".formatted(job.getExecutionId(), jobId));
@@ -145,7 +146,7 @@ public class RecalculateJobDuedateCmd implements Command<Void> {
     return null;
   }
 
-  protected TimerDeclarationImpl findTimeoutListenerDeclaration(JobEntity job, ActivityImpl activity) {
+  protected @Nullable TimerDeclarationImpl findTimeoutListenerDeclaration(JobEntity job, ActivityImpl activity) {
     Map<String, Map<String, TimerDeclarationImpl>> timeoutDeclarations = TimerDeclarationImpl.getTimeoutListenerDeclarationsForScope(activity.getEventScope());
     if (!timeoutDeclarations.isEmpty()) {
       Map<String, TimerDeclarationImpl> activityTimeouts = timeoutDeclarations.get(job.getActivityId());
@@ -159,7 +160,7 @@ public class RecalculateJobDuedateCmd implements Command<Void> {
     return null;
   }
 
-  protected TimerDeclarationImpl findTimerDeclarationForProcessStartEvent(CommandContext commandContext, JobEntity job) {
+  protected @Nullable TimerDeclarationImpl findTimerDeclarationForProcessStartEvent(CommandContext commandContext, JobEntity job) {
     ProcessDefinitionEntity processDefinition = commandContext.getProcessEngineConfiguration().getDeploymentCache().findDeployedProcessDefinitionById(job.getProcessDefinitionId());
     @SuppressWarnings("unchecked")
     List<TimerDeclarationImpl> timerDeclarations = (List<TimerDeclarationImpl>) processDefinition.getProperty(BpmnParse.PROPERTYNAME_START_TIMER);

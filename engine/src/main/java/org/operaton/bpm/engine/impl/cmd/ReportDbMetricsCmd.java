@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
  * @author Thorben Lindhauer
  *
  */
-public class ReportDbMetricsCmd implements Command<Void> {
+public @NullMarked class ReportDbMetricsCmd implements Command<Void> {
   @Override
   public @Nullable Void execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl engineConfiguration = Context.getProcessEngineConfiguration();

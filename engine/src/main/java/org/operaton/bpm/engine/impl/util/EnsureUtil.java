@@ -254,19 +254,19 @@ public final @NullMarked class EnsureUtil {
     }
   }
 
-  public static void ensureOnlyOneNotNull(String message, String... values) {
+  public static void ensureOnlyOneNotNull(@Nullable String message, @Nullable String... values) {
     ensureOnlyOneNotNull(message, (Object[]) values);
   }
 
-  public static void ensureOnlyOneNotNull(String message, Object... values) {
+  public static void ensureOnlyOneNotNull(@Nullable String message, @Nullable Object... values) {
     ensureOnlyOneNotNull(NullValueException.class, message, values);
   }
 
-  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String... values) {
+  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, @Nullable String... values) {
     ensureOnlyOneNotNull(exceptionClass, message, (Object[]) values);
   }
 
-  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, Object... values) {
+  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, @Nullable Object ... values) {
     boolean oneNotNull = false;
     for (Object value : values) {
       if (value != null) {
@@ -285,15 +285,15 @@ public final @NullMarked class EnsureUtil {
     ensureAtLeastOneNotNull(message, (Object[]) values);
   }
 
-    public static void ensureAtLeastOneNotNull(String message, Object... values) {
+    public static void ensureAtLeastOneNotNull(@Nullable String message, @Nullable Object... values) {
     ensureAtLeastOneNotNull(NullValueException.class, message, values);
   }
 
-  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, @Nullable String... values) {
+  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, @Nullable String... values) {
     ensureAtLeastOneNotNull(exceptionClass, message, (Object[]) values);
   }
 
-  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, @Nullable Object... values) {
+  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, @Nullable Object... values) {
     for (Object value : values) {
       if (value != null) {
         return;

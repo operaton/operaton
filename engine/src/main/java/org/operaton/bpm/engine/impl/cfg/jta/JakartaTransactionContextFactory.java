@@ -18,11 +18,12 @@ package org.operaton.bpm.engine.impl.cfg.jta;
 
 import jakarta.transaction.TransactionManager;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
 import org.operaton.bpm.engine.impl.cfg.TransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-public class JakartaTransactionContextFactory implements TransactionContextFactory {
+public @NullMarked class JakartaTransactionContextFactory implements TransactionContextFactory {
 
   protected final TransactionManager transactionManager;
 

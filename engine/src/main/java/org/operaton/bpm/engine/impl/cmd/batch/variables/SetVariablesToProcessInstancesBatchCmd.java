@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -44,16 +46,16 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNu
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class SetVariablesToProcessInstancesBatchCmd implements Command<Batch> {
+public @NullMarked class SetVariablesToProcessInstancesBatchCmd implements Command<Batch> {
 
-  protected List<String> processInstanceIds;
-  protected ProcessInstanceQuery processInstanceQuery;
-  protected HistoricProcessInstanceQuery historicProcessInstanceQuery;
+  protected @Nullable List<String> processInstanceIds;
+  protected @Nullable ProcessInstanceQuery processInstanceQuery;
+  protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
   protected Map<String, ?> variables;
 
-  public SetVariablesToProcessInstancesBatchCmd(List<String> processInstanceIds,
-                                                ProcessInstanceQuery processInstanceQuery,
-                                                HistoricProcessInstanceQuery historicProcessInstanceQuery,
+  public SetVariablesToProcessInstancesBatchCmd(@Nullable List<String> processInstanceIds,
+                                                @Nullable ProcessInstanceQuery processInstanceQuery,
+                                                @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery,
                                                 Map<String, ?> variables) {
     this.processInstanceIds = processInstanceIds;
     this.processInstanceQuery = processInstanceQuery;

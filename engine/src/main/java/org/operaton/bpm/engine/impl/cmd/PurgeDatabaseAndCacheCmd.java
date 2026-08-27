@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
@@ -40,7 +41,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport> {
+public @NullMarked class PurgeDatabaseAndCacheCmd implements Command<PurgeReport> {
 
   protected static final String DELETE_TABLE_DATA = "deleteTableData";
   protected static final String SELECT_TABLE_COUNT = "selectTableCount";

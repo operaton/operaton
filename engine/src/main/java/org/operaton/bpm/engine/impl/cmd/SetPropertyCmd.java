@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collections;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
 import org.jspecify.annotations.Nullable;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
  * @author Daniel Meyer
  *
  */
-public class SetPropertyCmd implements Command<Object> {
+public @NullMarked class SetPropertyCmd implements Command<Object> {
 
   protected String name;
   protected String value;

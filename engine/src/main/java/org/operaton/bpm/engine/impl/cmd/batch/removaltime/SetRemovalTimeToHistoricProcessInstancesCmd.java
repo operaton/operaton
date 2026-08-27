@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -43,7 +44,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tassilo Weidner
  */
-public class SetRemovalTimeToHistoricProcessInstancesCmd implements Command<Batch> {
+public @NullMarked class SetRemovalTimeToHistoricProcessInstancesCmd implements Command<Batch> {
 
   protected SetRemovalTimeToHistoricProcessInstancesBuilderImpl builder;
 

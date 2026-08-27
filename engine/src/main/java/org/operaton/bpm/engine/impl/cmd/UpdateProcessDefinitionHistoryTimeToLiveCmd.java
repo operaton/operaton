@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -27,17 +28,18 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureGreaterThanOrEqual;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Svetlana Dorokhova
  */
-public class UpdateProcessDefinitionHistoryTimeToLiveCmd implements Command<Void> {
+public @NullMarked class UpdateProcessDefinitionHistoryTimeToLiveCmd implements Command<Void> {
   protected String processDefinitionId;
-  protected Integer historyTimeToLive;
+  protected @Nullable Integer historyTimeToLive;
 
-  public UpdateProcessDefinitionHistoryTimeToLiveCmd(String processDefinitionId, Integer historyTimeToLive) {
+  public UpdateProcessDefinitionHistoryTimeToLiveCmd(String processDefinitionId, @Nullable Integer historyTimeToLive) {
     this.processDefinitionId = processDefinitionId;
     this.historyTimeToLive = historyTimeToLive;
   }
@@ -56,6 +58,8 @@ public class UpdateProcessDefinitionHistoryTimeToLiveCmd implements Command<Void
     parser.validate(historyTimeToLive);
 
     ProcessDefinitionEntity processDefinitionEntity = context.getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
+    requireNonNull(processDefinitionEntity);
+
     logUserOperation(context, processDefinitionEntity);
     processDefinitionEntity.setHistoryTimeToLive(historyTimeToLive);
 

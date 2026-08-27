@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -39,12 +41,12 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class SubmitStartFormCmd implements Command<ProcessInstance> {
+public @NullMarked class SubmitStartFormCmd implements Command<ProcessInstance> {
   protected final String processDefinitionId;
-  protected final String businessKey;
+  protected final @Nullable String businessKey;
   protected VariableMap variables;
 
-  public SubmitStartFormCmd(String processDefinitionId, String businessKey, Map<String, Object> properties) {
+  public SubmitStartFormCmd(String processDefinitionId, @Nullable String businessKey, Map<String, Object> properties) {
     this.processDefinitionId = processDefinitionId;
     this.businessKey = businessKey;
     this.variables = Variables.fromMap(properties);

@@ -32,6 +32,8 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * <p>{@link ExecutionListener} and {@link TaskListener} implementation delegating to
  * the {@link ExecutionListener} and {@link TaskListener} provided by a
@@ -102,9 +104,9 @@ public class ProcessApplicationEventListenerDelegate implements ExecutionListene
   }
 
   protected void notifyExecutionListener(DelegateExecution execution) throws Exception {
-    ProcessApplicationReference processApp = Context.getCurrentProcessApplication();
+    ProcessApplicationReference processApp = requireNonNull(Context.getCurrentProcessApplication());
     try {
-      ProcessApplicationInterface processApplication = processApp.getProcessApplication();
+      ProcessApplicationInterface processApplication = requireNonNull(processApp).getProcessApplication();
       ExecutionListener executionListener = processApplication.getExecutionListener();
       if(executionListener != null) {
         executionListener.notify(execution);
@@ -120,7 +122,7 @@ public class ProcessApplicationEventListenerDelegate implements ExecutionListene
   }
 
   protected void notifyTaskListener(DelegateTask task) {
-    ProcessApplicationReference processApp = Context.getCurrentProcessApplication();
+    ProcessApplicationReference processApp = requireNonNull(Context.getCurrentProcessApplication());
     try {
       ProcessApplicationInterface processApplication = processApp.getProcessApplication();
       TaskListener taskListener = processApplication.getTaskListener();

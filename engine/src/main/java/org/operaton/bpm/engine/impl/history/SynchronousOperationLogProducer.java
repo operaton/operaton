@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -65,7 +66,7 @@ public interface SynchronousOperationLogProducer<T> {
    * @param propChanges property changes to be attached to the operation log
    * @param isSummary indicates whether the implementation should produce a summary log or a detailed log
    */
-  void createOperationLogEntry(CommandContext commandContext, T result, List<PropertyChange> propChanges, boolean isSummary);
+  void createOperationLogEntry(CommandContext commandContext, @Nullable T result, List<PropertyChange> propChanges, boolean isSummary);
 
   /**
    * The implementing command can call this method to produce the operation log entries for the current operation.

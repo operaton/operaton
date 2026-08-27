@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -32,11 +33,12 @@ import org.operaton.bpm.engine.impl.batch.builder.BatchBuilder;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class ProcessInstanceModificationBatchCmd extends AbstractModificationCmd<Batch> {
+public @NullMarked class ProcessInstanceModificationBatchCmd extends AbstractModificationCmd<Batch> {
 
   public ProcessInstanceModificationBatchCmd(ModificationBuilderImpl modificationBuilderImpl) {
     super(modificationBuilderImpl);
@@ -62,13 +64,15 @@ public class ProcessInstanceModificationBatchCmd extends AbstractModificationCmd
 
     ensureNotNull(BadUserRequestException.class,
         "Process definition id cannot be null", processDefinition);
+    requireNonNull(processDefinition);
 
     String tenantId = processDefinition.getTenantId();
     String annotation = builder.getAnnotation();
+    String deploymentId = requireNonNull(processDefinition.getDeploymentId());
 
     return new BatchBuilder(commandContext)
         .type(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION)
-        .config(getConfiguration(collectedInstanceIds, processDefinition.getDeploymentId()))
+        .config(getConfiguration(collectedInstanceIds, deploymentId))
         .tenantId(tenantId)
         .permission(BatchPermissions.CREATE_BATCH_MODIFY_PROCESS_INSTANCES)
         .operationLogHandler((ctx, instanceCount) ->

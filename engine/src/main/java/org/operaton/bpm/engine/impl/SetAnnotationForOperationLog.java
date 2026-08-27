@@ -26,6 +26,8 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
+import static java.util.Objects.requireNonNull;
+
 public class SetAnnotationForOperationLog implements Command<Void> {
 
   protected String operationId;
@@ -42,6 +44,7 @@ public class SetAnnotationForOperationLog implements Command<Void> {
 
     UserOperationLogEntry operationLogEntry = commandContext.getOperationLogManager().findOperationLogByOperationId(operationId);
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "operation", operationLogEntry);
+    requireNonNull(operationLogEntry);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateUserOperationLog(operationLogEntry);

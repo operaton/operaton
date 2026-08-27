@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -42,19 +44,19 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 /**
  * @author Askar Akhmerov
  */
-public class DeleteProcessInstanceBatchCmd implements Command<Batch> {
+public @NullMarked class DeleteProcessInstanceBatchCmd implements Command<Batch> {
 
   protected final String deleteReason;
   protected List<String> processInstanceIds;
-  protected ProcessInstanceQuery processInstanceQuery;
-  protected HistoricProcessInstanceQuery historicProcessInstanceQuery;
+  protected @Nullable ProcessInstanceQuery processInstanceQuery;
+  protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
   protected boolean skipCustomListeners;
   protected boolean skipSubprocesses;
   protected boolean skipIoMappings;
 
   public DeleteProcessInstanceBatchCmd(List<String> processInstances,
-                                       ProcessInstanceQuery processInstanceQuery,
-                                       HistoricProcessInstanceQuery historicProcessInstanceQuery,
+                                       @Nullable ProcessInstanceQuery processInstanceQuery,
+                                       @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery,
                                        String deleteReason,
                                        boolean skipCustomListeners,
                                        boolean skipSubprocesses,

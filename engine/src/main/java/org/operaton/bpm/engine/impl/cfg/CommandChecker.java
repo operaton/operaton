@@ -45,8 +45,7 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
  * allowed on the entity. If it is not allowed, the checker throws a
  * {@link ProcessEngineException}.
  */
-@NullMarked
-public interface CommandChecker {
+public @NullMarked interface CommandChecker {
 
   /**
    * Checks if it is allowed to evaluate the given decision.

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -29,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Thorben Lindhauer
  */
-public class RegisterDeploymentCmd implements Command<Void> {
+public @NullMarked class RegisterDeploymentCmd implements Command<Void> {
 
   protected String deploymentId;
 

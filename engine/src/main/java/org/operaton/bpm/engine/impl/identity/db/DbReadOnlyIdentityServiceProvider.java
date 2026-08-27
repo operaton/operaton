@@ -38,7 +38,6 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TenantEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
-import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EncryptionUtil.saltPassword;
@@ -189,7 +188,6 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   @Override
   protected void configureQuery(@SuppressWarnings("rawtypes") AbstractQuery query, Resource resource) {
     CommandContext commandContext = Context.getCommandContext();
-    EnsureUtil.ensureActiveCommandContext(commandContext);
     commandContext
       .getAuthorizationManager()
       .configureQuery(query, resource);
@@ -198,7 +196,6 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   @Override
   protected void checkAuthorization(Permission permission, Resource resource, String resourceId) {
     CommandContext commandContext = Context.getCommandContext();
-    EnsureUtil.ensureActiveCommandContext(commandContext);
     commandContext
       .getAuthorizationManager()
       .checkAuthorization(permission, resource, resourceId);

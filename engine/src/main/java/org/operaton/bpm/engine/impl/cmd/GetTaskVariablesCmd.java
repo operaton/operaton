@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -56,6 +57,7 @@ public @NullMarked class GetTaskVariablesCmd implements Command<VariableMap> {
       .findTaskById(taskId);
 
     ensureNotNull("task %s doesn't exist".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkGetTaskVariables(task, commandContext);
 

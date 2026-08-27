@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -49,6 +50,7 @@ public @NullMarked class SetTaskVariablesCmd extends AbstractSetVariableCmd impl
       .findTaskById(entityId);
 
     ensureNotNull("task %s doesn't exist".formatted(entityId), "task", task);
+    requireNonNull(task);
 
     checkSetTaskVariables(task);
 

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.parser.DefaultFailedJobParseListener;
@@ -29,7 +28,6 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.el.Expression;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorLogger;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerCatchIntermediateEventJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerExecuteNestedActivityJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
@@ -53,15 +51,16 @@ public @NullMarked class DefaultJobRetryCmd extends JobRetryCmd {
       AsyncContinuationJobHandler.TYPE
   );
 
-  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
-
   public DefaultJobRetryCmd(String jobId, @Nullable Throwable exception) {
     super(jobId, exception);
   }
 
   @Override
   public @Nullable Object execute(CommandContext commandContext) {
-    JobEntity job = getJob();
+    JobEntity job = getJob().orElse(null);
+    if (job == null) {
+      return null;
+    }
 
     ActivityImpl activity = getCurrentActivity(commandContext, job);
 
@@ -83,15 +82,12 @@ public @NullMarked class DefaultJobRetryCmd extends JobRetryCmd {
   }
 
   protected void executeStandardStrategy(CommandContext commandContext) {
-    JobEntity job = getJob();
-    if (job != null) {
+    getJob().ifPresent(job -> {
       job.unlock();
       logException(job);
       decrementRetries(job);
       notifyAcquisition(commandContext);
-    } else {
-      LOG.debugFailedJobNotFound(jobId);
-    }
+    });
   }
 
   protected void executeCustomStrategy(CommandContext commandContext, JobEntity job, ActivityImpl activity) {

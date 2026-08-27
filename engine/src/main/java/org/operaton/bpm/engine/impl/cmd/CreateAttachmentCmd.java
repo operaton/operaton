@@ -35,12 +35,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.task.Attachment;
 
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -137,12 +135,12 @@ public @NullMarked class CreateAttachmentCmd implements Command<Attachment> {
   }
 
   protected String getHistoryRemovalTimeStrategy() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     return processEngineConfiguration.getHistoryRemovalTimeStrategy();
   }
 
   protected @Nullable HistoricProcessInstanceEventEntity getHistoricRootProcessInstance(String rootProcessInstanceId) {
-    CommandContext commandContext = EnsureUtil.ensureActiveCommandContext(Context.getCommandContext());
+    CommandContext commandContext = Context.getCommandContext();
     return commandContext.getDbEntityManager()
       .selectById(HistoricProcessInstanceEventEntity.class, rootProcessInstanceId);
   }

@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -45,6 +46,7 @@ public @NullMarked class RemoveTaskVariablesCmd extends AbstractRemoveVariableCm
       .findTaskById(entityId);
 
     ensureNotNull("Cannot find task with id %s".formatted(entityId), "task", task);
+    requireNonNull(task);
 
     checkRemoveTaskVariables(task);
 

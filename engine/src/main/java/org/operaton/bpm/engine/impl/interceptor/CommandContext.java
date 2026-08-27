@@ -57,7 +57,6 @@ import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.jobexecutor.FailedJobCommandFactory;
 import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.entity.*;
-import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static java.util.Collections.emptyList;
@@ -130,7 +129,7 @@ public @NullMarked class CommandContext {
     return ProcessApplicationContextUtil.getTargetProcessApplication(execution);
   }
 
-  protected boolean requiresContextSwitch(ProcessApplicationReference processApplicationReference) {
+  protected boolean requiresContextSwitch(@Nullable ProcessApplicationReference processApplicationReference) {
     return ProcessApplicationContextUtil.requiresContextSwitch(processApplicationReference);
   }
 
@@ -502,12 +501,12 @@ public @NullMarked class CommandContext {
   }
 
   public <T> @Nullable T runWithoutAuthorization(Callable<T> runnable) {
-    CommandContext commandContext = EnsureUtil.ensureActiveCommandContext(Context.getCommandContext());
+    CommandContext commandContext = Context.getCommandContext();
     return runWithoutAuthorization(runnable, commandContext);
   }
 
   public <T> @Nullable T runWithoutAuthorization(Command<T> command) {
-    CommandContext commandContext = EnsureUtil.ensureActiveCommandContext(Context.getCommandContext());
+    CommandContext commandContext = Context.getCommandContext();
     return runWithoutAuthorization(() -> command.execute(commandContext), commandContext);
   }
 

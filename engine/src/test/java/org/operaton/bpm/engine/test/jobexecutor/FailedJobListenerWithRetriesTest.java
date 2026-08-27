@@ -156,7 +156,7 @@ public class FailedJobListenerWithRetriesTest {
 
     @Override
     public @Nullable Object execute(CommandContext commandContext) {
-      Job job = getJob();
+      Job job = getJob().orElseThrow();
       //on last attempt the incident will be created, we imitate OLE
       if (job.getRetries() == 1) {
         countRuns++;

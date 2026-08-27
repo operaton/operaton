@@ -150,7 +150,9 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
     // the interruption and cancellation takes place before we instantiate the
     // activity stack
     ActivityImpl topMostActivity = determineTopMostActivity(activitiesToInstantiate, elementToInstantiate);
-    ScopeImpl flowScope = determineFlowScope(activitiesToInstantiate, elementToInstantiate, topMostActivity);
+    // the element to instantiate is always either an activity or a transition, hence a flow scope exists
+    ScopeImpl flowScope = requireNonNull(
+        determineFlowScope(activitiesToInstantiate, elementToInstantiate, topMostActivity), "flowScope");
 
     throwIfNoConcurrentInstantiationPossible(flowScope);
 
@@ -191,6 +193,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
       CoreModelElement elementToInstantiate, final ActivityExecutionTreeMapping mapping, FlowScopeWalker walker) {
     ActivityInstance tree = requireNonNull(commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId)));
 
+    requireNonNull(ancestorActivityInstanceId);
     ActivityInstance ancestorInstance = findActivityInstance(tree, ancestorActivityInstanceId);
     EnsureUtil.ensureNotNull(NotValidException.class,
         describeFailure("Ancestor activity instance '%s' does not exist".formatted(ancestorActivityInstanceId)),
@@ -278,22 +281,26 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
       ActivityStartBehavior startBehavior) {
     switch (startBehavior) {
     case CANCEL_EVENT_SCOPE: {
-      ScopeImpl scopeToCancel = topMostActivity.getEventScope();
+      // a cancelling start behavior is only determined for a non-null top most activity
+      ActivityImpl activityToCancel = requireNonNull(topMostActivity, "topMostActivity");
+      ScopeImpl scopeToCancel = activityToCancel.getEventScope();
       ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
       if (executionToCancel != null) {
-        executionToCancel.deleteCascade("Cancelling activity %s executed.".formatted(topMostActivity), skipCustomListeners,
+        executionToCancel.deleteCascade("Cancelling activity %s executed.".formatted(activityToCancel), skipCustomListeners,
             skipIoMappings);
-        instantiate(executionToCancel.getParent(), activitiesToInstantiate, elementToInstantiate);
+        instantiate(requireNonNull(executionToCancel.getParent()), activitiesToInstantiate, elementToInstantiate);
       } else {
-        ExecutionEntity flowScopeExecution = getSingleExecutionForScope(mapping, topMostActivity.getFlowScope());
-        instantiateConcurrent(flowScopeExecution, activitiesToInstantiate, elementToInstantiate);
+        ExecutionEntity flowScopeExecution = getSingleExecutionForScope(mapping, activityToCancel.getFlowScope());
+        instantiateConcurrent(requireNonNull(flowScopeExecution), activitiesToInstantiate, elementToInstantiate);
       }
       break;
     }
     case INTERRUPT_EVENT_SCOPE: {
-      ScopeImpl scopeToCancel = topMostActivity.getEventScope();
-      ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
-      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(topMostActivity), skipCustomListeners,
+      // an interrupting start behavior is only determined for a non-null top most activity
+      ActivityImpl activityToInterrupt = requireNonNull(topMostActivity, "topMostActivity");
+      ScopeImpl scopeToCancel = activityToInterrupt.getEventScope();
+      ExecutionEntity executionToCancel = requireNonNull(getSingleExecutionForScope(mapping, scopeToCancel), "execution to cancel");
+      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(activityToInterrupt), skipCustomListeners,
           skipIoMappings, false);
       executionToCancel.setActivity(null);
       executionToCancel.leaveActivityInstance();
@@ -301,9 +308,11 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
       break;
     }
     case INTERRUPT_FLOW_SCOPE: {
-      ScopeImpl scopeToCancel = topMostActivity.getFlowScope();
-      ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
-      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(topMostActivity), skipCustomListeners,
+      // an interrupting start behavior is only determined for a non-null top most activity
+      ActivityImpl activityToInterrupt = requireNonNull(topMostActivity, "topMostActivity");
+      ScopeImpl scopeToCancel = activityToInterrupt.getFlowScope();
+      ExecutionEntity executionToCancel = requireNonNull(getSingleExecutionForScope(mapping, scopeToCancel), "execution to cancel");
+      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(activityToInterrupt), skipCustomListeners,
           skipIoMappings, false);
       executionToCancel.setActivity(null);
       executionToCancel.leaveActivityInstance();

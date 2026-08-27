@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -47,6 +48,7 @@ public @NullMarked class GetTaskFormVariablesCmd extends AbstractGetFormVariable
     TaskEntity task = taskManager.findTaskById(resourceId);
 
     ensureNotNull(BadUserRequestException.class, "Cannot find task with id '%s'.".formatted(resourceId), "task", task);
+    requireNonNull(task);
 
     checkGetTaskFormVariables(task, commandContext);
 

@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -51,6 +52,7 @@ public @NullMarked class GetTaskVariableCmd implements Command<Object> {
       .findTaskById(taskId);
 
     ensureNotNull("task %s doesn't exist".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkGetTaskVariable(task, commandContext);
 

@@ -69,6 +69,7 @@ public @NullMarked class ModifyProcessInstanceAsyncCmd implements Command<Batch>
     String deploymentId = commandContext.getProcessEngineConfiguration().getDeploymentCache()
       .findDeployedProcessDefinitionById(processDefinitionId)
       .getDeploymentId();
+     requireNonNull(deploymentId, "a deployed process definition must be associated with a deployment");
 
     return new BatchBuilder(commandContext)
         .type(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION)

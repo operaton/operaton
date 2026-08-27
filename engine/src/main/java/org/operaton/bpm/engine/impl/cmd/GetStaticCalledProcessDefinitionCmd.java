@@ -38,6 +38,7 @@ import org.operaton.bpm.engine.impl.util.CallableElementUtil;
 import org.operaton.bpm.engine.repository.CalledProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ProcessEngineLogger.CMD_LOGGER;
 
 public @NullMarked class GetStaticCalledProcessDefinitionCmd implements Command<Collection<CalledProcessDefinition>> {
@@ -68,6 +69,7 @@ public @NullMarked class GetStaticCalledProcessDefinitionCmd implements Command<
   @Override
   public Collection<CalledProcessDefinition> execute(CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = new GetDeployedProcessDefinitionCmd(processDefinitionId, true).execute(commandContext);
+    requireNonNull(processDefinition);
 
     List<ActivityImpl> callActivities = findCallActivitiesInProcess(processDefinition);
 

@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+ import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -44,6 +45,7 @@ public @NullMarked class RemoveExecutionVariablesCmd extends AbstractRemoveVaria
       .findExecutionById(entityId);
 
     ensureNotNull("execution %s doesn't exist".formatted(entityId), "execution", execution);
+    requireNonNull(execution);
 
     checkRemoveExecutionVariables(execution);
 

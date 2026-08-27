@@ -43,7 +43,6 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.event.UserOperationLogEntryEventEntity;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.oplog.UserOperationLogContext;
 import org.operaton.bpm.engine.impl.oplog.UserOperationLogContextEntryBuilder;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
-import org.operaton.bpm.engine.impl.context.Context;
 
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;

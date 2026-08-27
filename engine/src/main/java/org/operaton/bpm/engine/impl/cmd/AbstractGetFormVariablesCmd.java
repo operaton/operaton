@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.form.FormField;

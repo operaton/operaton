@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
 import org.operaton.bpm.engine.cdi.impl.context.ContextAssociationManager;
-import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;

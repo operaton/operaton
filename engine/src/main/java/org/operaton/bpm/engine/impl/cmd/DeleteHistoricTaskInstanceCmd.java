@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceEntit
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceManager;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**

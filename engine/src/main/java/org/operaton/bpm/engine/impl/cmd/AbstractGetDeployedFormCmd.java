@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;

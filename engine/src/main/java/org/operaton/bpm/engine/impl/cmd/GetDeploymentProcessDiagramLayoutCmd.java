@@ -22,7 +22,6 @@ import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 
-import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.impl.bpmn.diagram.ProcessDiagramLayoutFactory;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;

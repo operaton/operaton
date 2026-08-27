@@ -60,9 +60,6 @@ public final class PropertyHelper {
 
   /**
    * Converts a value to the type of the given field.
-   * @param value
-   * @param field
-   * @return
    */
   public static Object convertToClass(String value, Class<?> clazz) {
     Object propertyValue;
@@ -145,14 +142,14 @@ public final class PropertyHelper {
    *
    * @param props contains possible replacements
    * @param original may contain Ant-style templates
-   * @return the original string with replaced properties or the unchanged original string if no placeholder found.
+   * @return original with placeholders replaced; equal to original if no placeholder found.
    */
   public static String resolveProperty(Properties props, String original) {
     Matcher matcher = PROPERTY_TEMPLATE.matcher(original);
     StringBuilder buffer = new StringBuilder();
     while(matcher.find()) {
       String propertyName = matcher.group(1).trim();
-      String replacement = props.containsKey(propertyName) ? props.getProperty(propertyName) : "";
+      String replacement = props.getProperty(propertyName, "");
       matcher.appendReplacement(buffer, Matcher.quoteReplacement(replacement));
     }
     return matcher.appendTail(buffer).toString();

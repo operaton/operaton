@@ -67,10 +67,11 @@ const api = {
       state,
       state.api.plugins[PLUGIN_ID].completed,
     ),
-  // Daily activity time series (last 30 days) for the activity chart.
+  // Daily process-start time series (last 30 days) for the chart. Uses
+  // root-process-instance-start so only top-level starts count, not call activities.
   activity_series: (state) =>
     GET(
-      `/metrics?name=activity-instance-start&startDate=${days_ago_midnight_param(29)}&interval=86400`,
+      `/metrics?name=root-process-instance-start&startDate=${days_ago_midnight_param(29)}&interval=86400`,
       state,
       state.api.plugins[PLUGIN_ID].activity_series,
     ),
@@ -364,8 +365,8 @@ const translations = {
         snapshot: "Process instances: running vs. completed",
         running: "Running",
         completed: "Completed",
-        activity: "Activity (last 30 days)",
-        "no-activity": "No activity in the last 30 days.",
+        activity: "Process starts per day (last 30 days)",
+        "no-activity": "No process starts in the last 30 days.",
         "top-processes": "Top processes by running instances",
         "no-running": "No running instances.",
       },
@@ -382,8 +383,8 @@ const translations = {
         snapshot: "Prozessinstanzen: laufend vs. abgeschlossen",
         running: "Laufend",
         completed: "Abgeschlossen",
-        activity: "Aktivitätsverlauf (letzte 30 Tage)",
-        "no-activity": "Keine Aktivität in den letzten 30 Tagen.",
+        activity: "Prozessstarts pro Tag (letzte 30 Tage)",
+        "no-activity": "Keine Prozessstarts in den letzten 30 Tagen.",
         "top-processes": "Top-Prozesse nach laufenden Instanzen",
         "no-running": "Keine laufenden Instanzen.",
       },

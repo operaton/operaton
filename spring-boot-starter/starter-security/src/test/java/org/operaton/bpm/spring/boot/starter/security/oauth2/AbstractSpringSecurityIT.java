@@ -46,7 +46,6 @@ import org.operaton.bpm.spring.boot.starter.security.SampleApplication;
 
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public abstract class AbstractSpringSecurityIT {

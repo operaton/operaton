@@ -21,6 +21,7 @@ import java.util.Date;
 import org.assertj.core.api.Assertions;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 
@@ -291,9 +292,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
       ) : null;
   }
 
-  /* TaskQuery, automatically narrowed to {@link ProcessInstance} of actual
-   * {@link Task}
-   */
+  /** TaskQuery, automatically narrowed to {@link ProcessInstance} of actual {@link Task} */
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processInstanceId(actual.getProcessInstanceId());

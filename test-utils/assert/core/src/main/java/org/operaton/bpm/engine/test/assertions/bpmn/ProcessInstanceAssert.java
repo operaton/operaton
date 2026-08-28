@@ -758,7 +758,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     }
   }
 
-  /* TaskQuery, automatically narrowed to actual {@link ProcessInstance} */
+  /** TaskQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processInstanceId(actual.getId());
@@ -769,43 +769,43 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return super.externalTaskQuery().processInstanceId(actual.getId());
   }
 
-  /* JobQuery, automatically narrowed to actual {@link ProcessInstance} */
+  /** JobQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected JobQuery jobQuery() {
     return super.jobQuery().processInstanceId(actual.getId());
   }
 
-  /* ProcessInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
+  /** ProcessInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected ProcessInstanceQuery processInstanceQuery() {
     return super.processInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* ExecutionQuery, automatically narrowed to actual {@link ProcessInstance} */
+  /** ExecutionQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected ExecutionQuery executionQuery() {
     return super.executionQuery().processInstanceId(actual.getId());
   }
 
-  /* HistoricActivityInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
+  /** HistoricActivityInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
     return super.historicActivityInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* HistoricProcessInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
+  /** HistoricProcessInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
     return super.historicProcessInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* HistoricVariableInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
+  /** HistoricVariableInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
     return super.historicVariableInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* ProcessDefinitionQuery, automatically narrowed to {@link ProcessDefinition}
+  /** ProcessDefinitionQuery, automatically narrowed to {@link ProcessDefinition}
    * of actual {@link ProcessInstance}
    */
   @Override

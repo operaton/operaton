@@ -244,7 +244,7 @@ public class DomXmlDataFormat implements DataFormat<SpinXmlElement> {
     return new DefaultJaxBContextProvider();
   }
 
-  /*
+  /**
    * Configures the DocumentBuilderFactory in a way, that it is protected against
    * XML External Entity Attacks. If the implementing parser does not support one or
    * multiple features, the failed feature is ignored. The parser might not be protected,
@@ -267,7 +267,7 @@ public class DomXmlDataFormat implements DataFormat<SpinXmlElement> {
     dbf.setExpandEntityReferences(false);
   }
 
-  /*
+  /**
    * Configures the DocumentBuilderFactory to process XML securely.
    * If the implementing parser does not support one or multiple features,
    * the failed feature is ignored. The parser might not be protected,

@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 /**
  * Assertions for a {@link Job}.
@@ -209,7 +210,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
        : null;
   }
 
-  /*
+  /**
    * JobQuery, automatically narrowed to {@link ProcessInstance} of actual {@link job}
    */
   @Override
@@ -217,8 +218,8 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     return super.jobQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* ExecutionQuery, automatically narrowed to {@link ProcessInstance} of actual
-   * {@link job}
+  /**
+   *  ExecutionQuery, automatically narrowed to {@link ProcessInstance} of actual {@link job}
    */
   @Override
   protected ExecutionQuery executionQuery() {

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:72bcbcbd-2f97-4c2f-92bd-9371dce4daf2",
+  "serialNumber": "urn:uuid:d0db13c8-03fc-42f5-87d2-6bda705ec915",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-26T14:45:56Z",
+    "timestamp": "2026-08-28T08:57:48Z",
     "tools": {
       "components": [
         {
@@ -17791,45 +17791,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
+      "bom-ref": "pkg:maven/org.freemarker/freemarker@2.3.35?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.freemarker",
       "name": "freemarker",
-      "version": "2.3.34",
+      "version": "2.3.35",
       "description": "FreeMarker is a \u0022template engine\u0022; a generic tool to generate text output based on templates.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "1704fd3c579385ca5fd0ebcdf50df73c"
+          "content": "a42bf14413328b27d23b67d7419f8acb"
         },
         {
           "alg": "SHA-1",
-          "content": "c2fa47a1c3b6dcdfca90e952e51211967a4baa54"
+          "content": "dd1d9737c3e8b8a5bf0d44981eb308df4822e241"
         },
         {
           "alg": "SHA-256",
-          "content": "9a9fb91cd64199232eb1ca9766148a5d30ef8944be5fac051018f96c70c8f6a3"
+          "content": "0fac87dddd78f1223139e8ef88e819c7f483c0a3835cdf5982ad5e4576d1d896"
         },
         {
           "alg": "SHA-512",
-          "content": "58bc6e157452f6b3a70a7d1bcfb89013e7204e716e267386014f6834fb66a56333fe4b538ef25b651913ab585bfa5c8fa010159d96ab952de42a82edb9552fca"
+          "content": "3707d3315477ff49f409dee5aeb6328c426cddb56b9cc96e88d366e292b0fe495b5c7c4893409f059c2d2d51b0ef744e8a5107a6dbd286c5f186ebebc767cc2a"
         },
         {
           "alg": "SHA-384",
-          "content": "3def74003978738e770a121746f2fd5b3f179f117050fac529ba9a6eee104ac7d20f74a1e815f97a5bf451b3f36f0ed1"
+          "content": "527ac55d0195738437d743c73a2cb2adc86d48fefe1c7697788bea9b6019ee141817135d1c07b5a4653cb8c900a0e8b5"
         },
         {
           "alg": "SHA3-384",
-          "content": "5636e107cd5406439d57e41ebcfa3cb068e32639941f1b7d780efb5acdb50ee99f7966b9174c52e9cfb27de22666fec6"
+          "content": "4f2f52278fcc401066f8c5d13e989032b4cb2f66509576490c46f1873993c2be6e724479a22a0c28fe5a8c5b1b6d7123"
         },
         {
           "alg": "SHA3-256",
-          "content": "22113afa6de5d146e0be2840ffd3103323b87849f020b06f24d9a70f3dfd3571"
+          "content": "e785659145ce79c7b7f11254719721c8eb2b23dbb919ed0bbfffd9124c5a66f3"
         },
         {
           "alg": "SHA3-512",
-          "content": "69c49e3ffb693fbeb98515f578c5a1bf1a6f81baf04efb21d8b2cdcbe93d59eff28f3e6d82a785c9c5b27222fc6f1bfa16a33bc08c92ea792a26a5d1b6068df9"
+          "content": "ca677ca352f294abfd42fa5033d5cab72fc32b9d3225110f517082c3a199cae9b0997a692942e434273af63eef03a7e5b97b3c7c77a94f00b5b02e0e8f7feb65"
         }
       ],
       "licenses": [
@@ -17839,7 +17839,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
+      "purl": "pkg:maven/org.freemarker/freemarker@2.3.35?type=jar",
       "externalReferences": [
         {
           "url": "https://freemarker.apache.org/",
@@ -19507,7 +19507,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "90043385-25b0-4656-b734-374aebd0968c",
+      "bom-ref": "b7a9152e-218a-40a2-822e-fc05692e09f9",
       "name": "package-lock.json",
       "properties": [
         {
@@ -21202,9 +21202,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.24.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.25.1",
       "name": "bpmn-js",
-      "version": "18.24.0",
+      "version": "18.25.1",
       "licenses": [
         {
           "license": {
@@ -21212,11 +21212,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.24.0",
+      "purl": "pkg:npm/bpmn-js@18.25.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.24.0"
+          "value": "bpmn-js@18.25.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22357,19 +22357,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.13",
+      "bom-ref": "pkg:npm/dompurify@3.4.14",
       "name": "dompurify",
-      "version": "3.4.13",
+      "version": "3.4.14",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.13",
+      "purl": "pkg:npm/dompurify@3.4.14",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.13"
+          "value": "dompurify@3.4.14"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24763,7 +24763,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "404ea909-e9c4-4010-b512-cc9c04546dc5",
+      "bom-ref": "f7e3c30b-d957-45a4-9218-baa9fcc5aeca",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26752,11 +26752,11 @@
     {
       "ref": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar"
+        "pkg:maven/org.freemarker/freemarker@2.3.35?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
+      "ref": "pkg:maven/org.freemarker/freemarker@2.3.35?type=jar",
       "dependsOn": []
     },
     {
@@ -26810,7 +26810,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
+        "pkg:maven/org.freemarker/freemarker@2.3.35?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/com.networknt/json-schema-validator@2.0.7?type=jar"
@@ -27197,13 +27197,7 @@
       "dependsOn": []
     },
     {
-      "ref": "404ea909-e9c4-4010-b512-cc9c04546dc5",
-      "dependsOn": [
-        "90043385-25b0-4656-b734-374aebd0968c"
-      ]
-    },
-    {
-      "ref": "90043385-25b0-4656-b734-374aebd0968c",
+      "ref": "b7a9152e-218a-40a2-822e-fc05692e09f9",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.25.0",
@@ -27223,7 +27217,7 @@
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.13.0",
-        "pkg:npm/bpmn-js@18.24.0",
+        "pkg:npm/bpmn-js@18.25.1",
         "pkg:npm/camunda-dmn-js@3.8.1",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
@@ -27237,7 +27231,7 @@
         "pkg:npm/dmn-js-shared@17.10.1",
         "pkg:npm/dmn-js@17.10.1",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.13",
+        "pkg:npm/dompurify@3.4.14",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.11.0",
         "pkg:npm/jquery-ui@1.14.2",
@@ -27250,6 +27244,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "f7e3c30b-d957-45a4-9218-baa9fcc5aeca",
+      "dependsOn": [
+        "b7a9152e-218a-40a2-822e-fc05692e09f9"
       ]
     },
     {
@@ -27398,7 +27398,7 @@
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.13",
+        "pkg:npm/dompurify@3.4.14",
         "pkg:npm/feelers@3.1.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
@@ -27729,7 +27729,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.24.0",
+      "ref": "pkg:npm/bpmn-js@18.25.1",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.0.0",
         "pkg:npm/diagram-js-direct-editing@3.5.1",
@@ -28101,7 +28101,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.13",
+      "ref": "pkg:npm/dompurify@3.4.14",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]

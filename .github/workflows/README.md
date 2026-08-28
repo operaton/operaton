@@ -36,6 +36,30 @@ serves a specific purpose in the CI/CD pipeline.
 - **Triggers**:
     - Manually triggered via `workflow_dispatch` with a Slack URL input
 
+### Update Node.js
+
+- **Filename**: `update-nodejs.yml`
+- **Description**: Updates the `version.nodejs` and `version.npm` properties in `parent/pom.xml` to the latest Node.js LTS release
+  and the npm version bundled with it, and opens a pull request per maintained branch. Dependabot cannot cover these versions,
+  because they are Maven properties rather than entries of a package manifest.
+- **Triggers**:
+    - Scheduled at 3:00 AM UTC on the 1st and the 15th of a month
+    - Manually triggered via `workflow_dispatch`
+- **Jobs**:
+    - `detect-branches`: Runs `.github/scripts/list-maintained-branches.sh`, which lists `main` plus every `release/*` branch on
+      the remote and looks up the milestone for each in `.github/dependabot.yml`. Branches without an entry there get no milestone.
+      The script is not specific to this workflow and can be reused by other maintenance automation.
+    - `update-nodejs`: Runs `.devenv/scripts/maintenance/update-nodejs-version.sh` per detected branch and opens a pull request if
+      the versions changed.
+- **Branch policy**:
+    - `main` follows the latest LTS release, including a jump to a new LTS line. On such a jump the `node-version` inputs of
+      `build.yml` and `pr-build.yml` are updated as well.
+    - `release/*` branches stay on their current Node.js major version (`--pin-major`), matching the Dependabot policy for
+      maintenance branches.
+    - New release branches are picked up automatically, so no configuration is needed when a branch is created or dropped.
+- **Note**: The pull requests are created with the `GITHUB_TOKEN`, so they do not trigger the PR build automatically. Close and
+  reopen a pull request to run the build.
+
 ### Nightly Trigger
 
 - **Filename**: `nightly-trigger.yml`

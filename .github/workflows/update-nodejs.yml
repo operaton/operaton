@@ -1,0 +1,92 @@
+name: Update Node.js
+
+# Dependabot cannot update the Node.js and npm versions, because they are maintained as
+# Maven properties in parent/pom.xml rather than in a package manifest. This workflow
+# closes that gap: it checks bi-weekly for a newer Node.js LTS release and opens a pull
+# request per maintained branch.
+
+on:
+  schedule:
+    - cron: "0 3 1,15 * *"    # Runs at 3:00 AM UTC on the 1st and the 15th of a month
+  workflow_dispatch:
+
+concurrency:
+  group: "${{ github.workflow }}"
+  cancel-in-progress: false
+
+jobs:
+  detect-branches:
+    name: Detect Maintained Branches
+    # ubuntu-latest, because the branch detection needs yq to read the Dependabot configuration
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      branches: ${{ steps.list-branches.outputs.branches }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: List Maintained Branches
+        id: list-branches
+        run: |
+          git fetch --all
+          .github/scripts/list-maintained-branches.sh
+        shell: bash
+
+  update-nodejs:
+    name: "Update Node.js (${{ matrix.branch }})"
+    needs: detect-branches
+    runs-on: ubuntu-slim
+    permissions:
+      contents: write
+      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.detect-branches.outputs.branches) }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ matrix.branch }}
+          persist-credentials: false
+
+      - name: Update Node.js Version
+        id: update
+        run: |
+          .devenv/scripts/maintenance/update-nodejs-version.sh ${PIN_MAJOR:+--pin-major}
+        env:
+          # Maintenance branches must not jump to a new LTS line
+          PIN_MAJOR: ${{ matrix.maintenance && 'true' || '' }}
+        shell: bash
+
+      - name: Create Pull Request
+        if: ${{ steps.update.outputs.changed == 'true' }}
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 #v8.1.1
+        with:
+          base: ${{ matrix.branch }}
+          branch: "chore/update-nodejs-${{ matrix.slug }}"
+          title: "chore(deps): Update Node.js to ${{ steps.update.outputs.node_version }} and npm to ${{ steps.update.outputs.npm_version }}"
+          commit-message: "chore(deps): Update Node.js to ${{ steps.update.outputs.node_version }} and npm to ${{ steps.update.outputs.npm_version }}"
+          body: |
+            ## Node.js Update
+
+            Updates `version.nodejs` and `version.npm` in [`parent/pom.xml`](https://github.com/operaton/operaton/blob/main/parent/pom.xml)
+            to the latest Node.js LTS release and the npm version bundled with it.
+
+            | | Node.js | npm |
+            |---|---|---|
+            | New | `${{ steps.update.outputs.node_version }}` | `${{ steps.update.outputs.npm_version }}` |
+
+            ${{ steps.update.outputs.major_changed == 'true' && 'The Node.js major version changed, so the `node-version` inputs of `build.yml` and `pr-build.yml` were updated as well.' || '' }}
+
+            Created by the [Update Node.js](https://github.com/operaton/operaton/blob/main/.github/workflows/update-nodejs.yml) workflow.
+          labels: |
+            dependencies:npm
+            scope:ci
+          milestone: ${{ matrix.milestone }}
+          reviewers: kthoms

@@ -212,6 +212,31 @@ Show help:
 
 If an invalid cleanup value is specified, the script prints an error and exits.
 
+## `update-nodejs-version.sh`
+
+Updates the Node.js and npm versions used by the build. The versions are maintained as the properties `version.nodejs` and
+`version.npm` in `parent/pom.xml`, from where the frontend-maven-plugin picks them up. The script sets them to the latest Node.js
+LTS release and to the npm version bundled with that release. If the Node.js major version changes, the hardcoded `node-version`
+inputs of `.github/workflows/build.yml` and `.github/workflows/pr-build.yml` are updated as well.
+
+The script is run by the [Update Node.js](../../.github/workflows/update-nodejs.yml) workflow, but can also be executed manually
+from the root of the repository:
+
+```bash
+.devenv/scripts/maintenance/update-nodejs-version.sh
+```
+
+### Options
+
+- `--pin-major`  
+  Stay on the Node.js major version that is currently configured. Used for maintenance branches, which must not jump to a new
+  LTS line.
+- `--index-url=URL`  
+  Override the Node.js release index (default: `https://nodejs.org/dist/index.json`). Only used for testing; `file://` URLs are
+  supported.
+
+When `$GITHUB_OUTPUT` is set, the script writes the outputs `changed`, `major_changed`, `node_version` and `npm_version`.
+
 ## `init-database-version.py` — Database Version Maintenance
 
 This script automates the process of initializing and updating the database version across all supported databases and related files.

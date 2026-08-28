@@ -36,6 +36,7 @@ import org.operaton.bpm.engine.impl.TenantQueryImpl;
 import org.operaton.bpm.engine.impl.UserQueryImpl;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
 import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
+import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.identity.db.DbIdentityServiceProvider;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
@@ -147,7 +148,12 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 
   @Override
   public UserQuery createUserQuery() {
-    return springSecurityAuthentication() ? new OAuth2UserQuery() : super.createUserQuery();
+    if (springSecurityAuthentication()) {
+      var query = new OAuth2UserQuery();
+      query.setCommandExecutor(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
+      return query;
+    }
+    return super.createUserQuery();
   }
 
   @Override
@@ -208,7 +214,12 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 
   @Override
   public GroupQuery createGroupQuery() {
-    return springSecurityAuthentication() ? new OAuth2GroupQuery() : super.createGroupQuery();
+    if (springSecurityAuthentication()) {
+      var query = new OAuth2GroupQuery();
+      query.setCommandExecutor(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
+      return query;
+    }
+    return super.createGroupQuery();
   }
 
   @Override
@@ -235,7 +246,12 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 
   @Override
   public TenantQuery createTenantQuery() {
-    return springSecurityAuthentication() ? new OAuth2TenantQuery() : super.createTenantQuery();
+    if (springSecurityAuthentication()) {
+      var query = new OAuth2TenantQuery();
+      query.setCommandExecutor(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
+      return query;
+    }
+    return super.createTenantQuery();
   }
 
   @Override

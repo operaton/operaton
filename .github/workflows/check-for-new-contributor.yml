@@ -57,17 +57,18 @@ jobs:
               state: 'all'
             });
 
-            const prs = allIssues.filter(issue => issue.pull_request);
-            const prCount = prs.length;
+            const currentPrNumber = context.payload.pull_request.number;
+            const priorPrs = allIssues.filter(issue => issue.pull_request && issue.number !== currentPrNumber);
+            const priorPrCount = priorPrs.length;
 
-            console.log(`Found ${prCount} PR(s) from ${author}.`);
+            console.log(`Found ${priorPrCount} prior PR(s) from ${author}.`);
 
             const alreadyConfirmed =
               /I\s+confirm/i.test(prBody) &&
               /Apache\s+License\s*2\.0/i.test(prBody) &&
               /Code\s+of\s+Conduct/i.test(prBody);
 
-            if ((prCount === 1 || prTitle.includes('[FORCE GREETING]')) && !alreadyConfirmed) {
+            if ((priorPrCount === 0 || prTitle.includes('[FORCE GREETING]')) && !alreadyConfirmed) {
               const { data } = await github.rest.repos.getContent({
                 owner,
                 repo,
@@ -122,12 +123,13 @@ jobs:
               state: 'all'
             });
 
-            const issues = allIssues.filter(issue => !issue.pull_request);
-            const issueCount = issues.length;
+            const currentIssueNumber = context.payload.issue.number;
+            const priorIssues = allIssues.filter(issue => !issue.pull_request && issue.number !== currentIssueNumber);
+            const priorIssueCount = priorIssues.length;
 
-            console.log(`Found ${issueCount} Issue(s) from ${author}.`);
+            console.log(`Found ${priorIssueCount} prior Issue(s) from ${author}.`);
 
-            if (issueCount === 1 || issueTitle.includes('[FORCE GREETING]')) {
+            if (priorIssueCount === 0 || issueTitle.includes('[FORCE GREETING]')) {
               const { data } = await github.rest.repos.getContent({
                 owner,
                 repo,
@@ -204,12 +206,13 @@ jobs:
               repo
             });
             
-            const userComments = allComments.filter(c => c.user.login === author);
-            const commentCount = userComments.length;
-            
-            console.log(`Found ${commentCount} comment(s) from ${author}.`);
-            
-            if (commentCount === 1 || commentBody.includes('[FORCE GREETING]')) {
+            const currentCommentId = context.payload.comment.id;
+            const priorComments = allComments.filter(c => c.user.login === author && c.id !== currentCommentId);
+            const priorCommentCount = priorComments.length;
+
+            console.log(`Found ${priorCommentCount} prior comment(s) from ${author}.`);
+
+            if (priorCommentCount === 0 || commentBody.includes('[FORCE GREETING]')) {
               const { data } = await github.rest.repos.getContent({
                 owner,
                 repo,

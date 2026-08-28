@@ -123,7 +123,8 @@ class NeoClientConfigResolverTest {
 
   @Test
   void shouldRejectAnUnknownAuthMode() {
-    assertThatThrownBy(() -> neo().setAuthMode("kerberos"))
+    NeoWebappProperty neo = neo();
+    assertThatThrownBy(() -> neo.setAuthMode("kerberos"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("auto");
   }

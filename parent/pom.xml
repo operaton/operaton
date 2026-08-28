@@ -57,7 +57,7 @@
     <version.selenium>4.47.0</version.selenium>
     <version.slf4j>2.0.18</version.slf4j>
     <version.logback>1.6.3</version.logback>
-    <version.freemarker>2.3.34</version.freemarker>
+    <version.freemarker>2.3.35</version.freemarker>
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
     <version.nodejs>24.14.0</version.nodejs>
     <version.npm>11.8.0</version.npm>

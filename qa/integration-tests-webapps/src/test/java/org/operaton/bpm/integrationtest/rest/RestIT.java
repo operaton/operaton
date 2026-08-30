@@ -40,6 +40,7 @@ import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class RestIT extends AbstractWebIntegrationTest {
 
@@ -198,11 +199,8 @@ class RestIT extends AbstractWebIntegrationTest {
     JSONObject logElement = response.getBody().getArray().getJSONObject(0);
 
     String timestamp = logElement.getString("timestamp");
-    try {
-      new SimpleDateFormat(JacksonConfigurator.DEFAULT_DATE_FORMAT).parse(timestamp);
-    } catch (ParseException pex) {
-      fail("Couldn't parse timestamp from schema log: " + timestamp);
-    }
+    SimpleDateFormat dateFormat = new SimpleDateFormat(JacksonConfigurator.DEFAULT_DATE_FORMAT);
+    assertDoesNotThrow(() -> dateFormat.parse(timestamp), "Couldn't parse timestamp from schema log: " + timestamp);
   }
 
   /**

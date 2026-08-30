@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.DB2;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.H2;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.MARIADB_MYSQL;
@@ -123,6 +124,7 @@ class DeadlockTest {
     }
   }
 
+  @SuppressWarnings({"java:S1612", "java:S8714"}) // refactor to lambda causes ambiguity
   public void provokeDeadlock() throws InterruptedException {
     CountDownLatch latch = new CountDownLatch(2);
 
@@ -137,25 +139,16 @@ class DeadlockTest {
           statement.executeUpdate("UPDATE deadlock_test1 SET FOO=1");
 
           latch.countDown();
-          try {
-            latch.await();
-          } catch (InterruptedException e) {
-            fail(e);
-          }
+          assertDoesNotThrow(() -> latch.await());
 
           statement.executeUpdate("UPDATE deadlock_test2 SET FOO=1");
           conn.commit();
-
         } catch (SQLException e) {
           sqlException = e;
-          try {
-            conn.rollback();
-          } catch (SQLException ex) {
-            fail(ex);
-          }
+          assertDoesNotThrow(() -> conn.rollback());
         }
       } catch (SQLException e) {
-        fail(e);
+          fail(e);
       }
     });
 
@@ -168,22 +161,14 @@ class DeadlockTest {
           statement.executeUpdate("UPDATE deadlock_test2 SET FOO=1");
 
           latch.countDown();
-          try {
-            latch.await();
-          } catch (InterruptedException e) {
-            fail(e);
-          }
+          assertDoesNotThrow(() -> latch.await());
 
           statement.executeUpdate("UPDATE deadlock_test1 SET FOO=1");
           conn.commit();
 
         } catch (SQLException e) {
           sqlException = e;
-          try {
-            conn.rollback();
-          } catch (SQLException ex) {
-            fail(ex);
-          }
+          assertDoesNotThrow(() -> conn.rollback());
         }
       } catch (SQLException e) {
         fail(e);

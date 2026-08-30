@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.mock;
 
 @SuppressWarnings("unchecked")
@@ -106,37 +107,25 @@ class AbstractProcessAssertTest {
   }
 
   private <A extends AbstractProcessAssert<?, ?>> A newInstanceFromExpectedConstructor() {
-    Constructor<?> constructor = null;
-    try {
-      constructor = anAssertClass.getDeclaredConstructor(ProcessEngine.class, anActualClass);
-    } catch (NoSuchMethodException e) {
-      fail("Cannot find expected constructor!", e);
-    }
-    assert constructor != null;
-    A assertInstance = null;
-    try {
-      assertInstance = (A) constructor.newInstance(processEngine, mock(anActualClass));
-    } catch (Exception e) {
-      fail("Cannot create instance from constructor!", e);
-    }
-    return assertInstance;
+    AtomicReference<Constructor<?>> constructor = new AtomicReference<>();
+    assertDoesNotThrow(() -> constructor.set(anAssertClass.getDeclaredConstructor(ProcessEngine.class, anActualClass)),
+            "Cannot find expected constructor!");
+
+    AtomicReference<A> assertInstance = new AtomicReference<>();
+    assertDoesNotThrow(() -> assertInstance.set((A) constructor.get().newInstance(processEngine, mock(anActualClass))),
+            "Cannot create instance from constructor!");
+    return assertInstance.get();
   }
 
   private <A extends AbstractProcessAssert<?, ?>> A newInstanceFromExpectedFactoryMethod() {
-    Method method = null;
-    try {
-      method = anAssertClass.getDeclaredMethod("assertThat", ProcessEngine.class, anActualClass);
-    } catch (NoSuchMethodException e) {
-      fail("Cannot find expected factory method!", e);
-    }
-    assert method != null;
-    A assertInstance = null;
-    try {
-      assertInstance = (A) method.invoke(anAssertClass, processEngine, anActual);
-    } catch (Exception e) {
-      fail("Cannot create instance from constructor!", e);
-    }
-    return assertInstance;
+    AtomicReference<Method> method = new AtomicReference<>();
+
+    assertDoesNotThrow(() -> method.set(anAssertClass.getDeclaredMethod("assertThat", ProcessEngine.class, anActualClass)),
+            "Cannot find expected factory method!");
+    AtomicReference<A> assertInstance = new AtomicReference<>();
+    assertDoesNotThrow(() -> assertInstance.set((A) method.get().invoke(anAssertClass, processEngine, anActual)),
+            "Cannot create instance from constructor!");
+    return assertInstance.get();
   }
 
   private void mockActual(Class<AbstractProcessAssert<?, ?>> assertClass) {

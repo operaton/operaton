@@ -45,7 +45,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  *
@@ -615,25 +614,17 @@ public class HistoricIncidentQueryTest {
   @Test
   void testQueryByNullJobDefinitionId() {
     var historicIncidentQuery = historyService.createHistoricIncidentQuery();
-    try {
-      historicIncidentQuery.jobDefinitionIdIn((String) null);
-      fail("Should fail");
-    }
-    catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("jobDefinitionIds contains null value");
-    }
+    assertThatThrownBy(() -> historicIncidentQuery.jobDefinitionIdIn((String) null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("jobDefinitionIds contains null value");
   }
 
   @Test
   void testQueryByNullJobDefinitionIds() {
     var historicIncidentQuery = historyService.createHistoricIncidentQuery();
-    try {
-      historicIncidentQuery.jobDefinitionIdIn((String[]) null);
-      fail("Should fail");
-    }
-    catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("jobDefinitionIds is null");
-    }
+    assertThatThrownBy(() -> historicIncidentQuery.jobDefinitionIdIn((String[]) null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("jobDefinitionIds is null");
   }
 
   @Test

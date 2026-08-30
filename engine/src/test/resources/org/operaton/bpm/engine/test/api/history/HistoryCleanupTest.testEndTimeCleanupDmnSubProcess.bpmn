@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+             targetNamespace="http://bpmn.io/schema/bpmn">
+  <process id="childDmnProcess" name="Child DMN Process" isExecutable="true">
+    <startEvent id="startEvent" name="Start" />
+    <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="businessRuleTask" />
+    <businessRuleTask id="businessRuleTask" name="DMN Decision" camunda:decisionRef="decisionTable" />
+    <sequenceFlow id="flow2" sourceRef="businessRuleTask" targetRef="endEvent" />
+    <endEvent id="endEvent" name="End" />
+  </process>
+</definitions>

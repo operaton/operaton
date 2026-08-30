@@ -51,23 +51,26 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected @Nullable String resourceType;
+  protected final @Nullable String resourceType;
   /**
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected @Nullable String permissionName;
+  protected final @Nullable String permissionName;
   /**
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected @Nullable String resourceId;
+  protected final @Nullable String resourceId;
 
   public AuthorizationException(String message) {
     super(message);
     this.userId = null;
+    this.resourceType = null;
+    this.permissionName = null;
+    this.resourceId = null;
     missingAuthorizations = new ArrayList<>();
   }
 
@@ -91,6 +94,9 @@ public class AuthorizationException extends ProcessEngineException {
     super(generateExceptionMessage(userId, info));
     this.userId = userId;
     this.missingAuthorizations = info;
+    this.resourceType = null;
+    this.permissionName = null;
+    this.resourceId = null;
   }
 
   /**

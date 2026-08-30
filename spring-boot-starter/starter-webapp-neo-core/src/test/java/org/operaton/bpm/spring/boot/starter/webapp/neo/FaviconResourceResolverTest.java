@@ -23,11 +23,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.Resource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,7 +44,7 @@ class FaviconResourceResolverTest {
     // given
     String resourcePath = "/operaton/favicon.ico";
     String lastSegment = "/favicon.ico";
-    Resource expectedFavicon = Mockito.mock(Resource.class);
+    Resource expectedFavicon = mock(Resource.class);
 
     when(location.getURL()).thenReturn(new URL("file:///operaton/"));
     when(location.createRelative(lastSegment)).thenReturn(expectedFavicon);
@@ -63,7 +63,7 @@ class FaviconResourceResolverTest {
     // given
     String resourcePath = "/custom-path/favicon.ico";
     String lastSegment = "/favicon.ico";
-    Resource expectedFavicon = Mockito.mock(Resource.class);
+    Resource expectedFavicon = mock(Resource.class);
 
     when(location.getURL()).thenReturn(new URL("file:///custom-path/"));
     when(location.createRelative(lastSegment)).thenReturn(expectedFavicon);

@@ -16,9 +16,9 @@ description: "Downloads, extracts, and adds mvnd to the runner's PATH."
 
 inputs:
   mvnd-version:
-    description: "The version of mvnd to install (e.g., 1.0.3)"
+    description: "The version of mvnd to install (e.g., 1.0.6)"
     required: true
-    default: "1.0.3"
+    default: "1.0.6"
   platform:
     description: "The runner platform (e.g., linux-amd64, windows-amd64)"
     type: choice
@@ -49,7 +49,12 @@ runs:
         echo "mvnd-dir=$MVND_DIR" >> "$GITHUB_OUTPUT"
         echo "mvnd-url=$MVND_URL" >> "$GITHUB_OUTPUT"
 
+    # mvnd is a build accelerator, not a hard requirement: build.sh already
+    # falls back to ./mvnw when the requested runner isn't on PATH. So a
+    # download/extract failure here (e.g. a yanked release, a mirror hiccup)
+    # must not fail the job — it should just leave mvnd off PATH.
     - name: Download and Extract mvnd
+      id: download-mvnd
       shell: bash
       env:
         MVND_VERSION: ${{ steps.set-mvnd-vars.outputs.mvnd-version }}
@@ -59,25 +64,41 @@ runs:
       run: |
         echo "Downloading ${MVND_URL}"
         # Download the ZIP archive
-        curl -sL "${MVND_URL}" -o mvnd.zip
+        if ! curl -sL --fail -o mvnd.zip "${MVND_URL}"; then
+          echo "WARNING Failed to download mvnd from ${MVND_URL}. Build will fall back to ./mvnw."
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
 
         # Create installation directory
         mkdir -p "${MVND_DIR}"
 
         # Unzip to the designated directory
-        unzip -q mvnd.zip -d "${MVND_DIR}"
+        if ! unzip -q mvnd.zip -d "${MVND_DIR}"; then
+          echo "WARNING Failed to extract mvnd archive. Build will fall back to ./mvnw."
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
 
         # The extracted folder name contains the version and platform,
         # so we rename it to a stable path for easier use.
         EXTRACTED_DIR_NAME="maven-mvnd-${MVND_VERSION}-${MVND_PLATFORM}"
         mv "${MVND_DIR}/$EXTRACTED_DIR_NAME" "${MVND_DIR}/mvnd-bin"
+        echo "available=true" >> "$GITHUB_OUTPUT"
 
     - name: Add mvnd to PATH
+      if: steps.download-mvnd.outputs.available == 'true'
       shell: bash
       env:
         MVND_DIR: ${{ steps.set-mvnd-vars.outputs.mvnd-dir }}
       run: echo "${MVND_DIR}/mvnd-bin/bin" >> "$GITHUB_PATH" # zizmor: ignore[github-env] extending PATH is this step's job; MVND_DIR is action-computed, not attacker input
 
     - name: Verify mvnd availability
+      if: steps.download-mvnd.outputs.available == 'true'
       shell: bash
       run: mvnd -v
+
+    - name: mvnd unavailable notice
+      if: steps.download-mvnd.outputs.available != 'true'
+      shell: bash
+      run: echo "WARNING mvnd setup was skipped or failed; the build will use ./mvnw instead."

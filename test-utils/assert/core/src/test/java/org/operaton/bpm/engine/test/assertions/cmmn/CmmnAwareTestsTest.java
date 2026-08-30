@@ -182,7 +182,8 @@ public class CmmnAwareTestsTest {
     final MockedStatic<CaseInstanceAssert> caseInstanceAssertMockedStatic = mockStatic(CaseInstanceAssert.class);
     CaseInstanceAssert caseInstanceAssert = mock(CaseInstanceAssert.class);
     when(caseInstanceAssert.isNotNull()).thenReturn(caseInstanceAssert);
-    when(caseInstanceAssert.descendantCaseExecution(caseExecutionQuery)).thenReturn(mock(CaseExecutionAssert.class));
+    CaseExecutionAssert caseExecutionAssert = mock(CaseExecutionAssert.class);
+    when(caseInstanceAssert.descendantCaseExecution(caseExecutionQuery)).thenReturn(caseExecutionAssert);
 
     //prepare and mock static methods
     //because we need control over the context of tested method

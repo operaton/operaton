@@ -1607,7 +1607,8 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
 
   @Test
   void testCreateIncident() {
-    when(runtimeServiceMock.createIncident(anyString(), anyString(), anyString(), anyString())).thenReturn(mock(Incident.class));
+    Incident mockIncident = mock(Incident.class);
+    when(runtimeServiceMock.createIncident(anyString(), anyString(), anyString(), anyString())).thenReturn(mockIncident);
     Map<String, Object> json = new HashMap<>();
     json.put("incidentType", "incidentType");
     json.put("configuration", "configuration");

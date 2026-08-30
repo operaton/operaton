@@ -57,7 +57,8 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
     IncidentQuery sampleQuery = mock(IncidentQuery.class);
 
     when(sampleQuery.incidentId(anyString())).thenReturn(sampleQuery);
-    when(sampleQuery.singleResult()).thenReturn(mock(Incident.class));
+    Incident mockIncident = mock(Incident.class);
+    when(sampleQuery.singleResult()).thenReturn(mockIncident);
 
     mockRuntimeService = mock(RuntimeServiceImpl.class);
     when(processEngine.getRuntimeService()).thenReturn(mockRuntimeService);

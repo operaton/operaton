@@ -25,7 +25,7 @@ public class LogEventComparator implements Comparator<ILoggingEvent> {
   @Override
   public int compare(ILoggingEvent o1, ILoggingEvent o2) {
     // cast should be safe as MAX_INT miliseconds are ~25 days
-    return (int) (o1.getTimeStamp() - o2.getTimeStamp());
+    return Long.compare(o1.getTimeStamp(), o2.getTimeStamp());
   }
 
 }

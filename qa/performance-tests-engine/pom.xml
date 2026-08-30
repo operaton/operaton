@@ -322,6 +322,78 @@
       </build>
     </profile>
     <profile>
+      <id>task-auth-benchmark</id>
+      <properties>
+        <numberOfThreads>1</numberOfThreads>
+        <numberOfRuns>1</numberOfRuns>
+        <loadGenerator.numberOfIterations>0</loadGenerator.numberOfIterations>
+        <loadGenerator.colorOutput>false</loadGenerator.colorOutput>
+        <testWatchers/>
+        <processEnginePlugins/>
+        <watchActivities/>
+        <skip.tests>true</skip.tests>
+        <benchmark.branch>unknown</benchmark.branch>
+        <benchmark.commit>unknown</benchmark.commit>
+        <benchmark.database>unknown</benchmark.database>
+        <benchmark.tasks>5000</benchmark.tasks>
+        <benchmark.groups>10</benchmark.groups>
+        <benchmark.pageSize>15</benchmark.pageSize>
+        <benchmark.warmup>30</benchmark.warmup>
+        <benchmark.iterations>200</benchmark.iterations>
+        <benchmark.outputFile>${project.build.directory}/task-authorization-exists-benchmark.csv</benchmark.outputFile>
+        <benchmark.cleanup>true</benchmark.cleanup>
+      </properties>
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>true</filtering>
+          </testResource>
+        </testResources>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>task-auth-benchmark</id>
+                <phase>process-test-classes</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <echo message="Running task authorization EXISTS benchmark"/>
+                    <java classname="org.operaton.bpm.qa.performance.engine.query.TaskAuthorizationExistsBenchmark"
+                          classpathref="maven.test.classpath"
+                          fork="true"
+                          failonerror="true">
+                      <sysproperty key="benchmark.branch" value="${benchmark.branch}"/>
+                      <sysproperty key="benchmark.commit" value="${benchmark.commit}"/>
+                      <sysproperty key="benchmark.database" value="${benchmark.database}"/>
+                      <sysproperty key="benchmark.tasks" value="${benchmark.tasks}"/>
+                      <sysproperty key="benchmark.groups" value="${benchmark.groups}"/>
+                      <sysproperty key="benchmark.pageSize" value="${benchmark.pageSize}"/>
+                      <sysproperty key="benchmark.warmup" value="${benchmark.warmup}"/>
+                      <sysproperty key="benchmark.iterations" value="${benchmark.iterations}"/>
+                      <sysproperty key="benchmark.outputFile" value="${benchmark.outputFile}"/>
+                      <sysproperty key="benchmark.cleanup" value="${benchmark.cleanup}"/>
+                    </java>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>${skip.tests}</skipTests>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>query-perf-test</id>
       <properties>
         <numberOfThreads>1</numberOfThreads>

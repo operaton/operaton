@@ -82,7 +82,9 @@
   <!-- USER SELECT -->
 
   <select id="selectUser" parameterType="string" resultMap="userResultMap">
-    select * from ${prefix}ACT_ID_USER where ID_ = #{id,jdbcType=VARCHAR}
+    (select * from ${prefix}ACT_ID_USER where ID_ = #{id,jdbcType=VARCHAR})
+    UNION ALL
+    (select * from ${prefix}ACT_ID_USER where LOWER(ID_) = LOWER(#{id,jdbcType=VARCHAR}))
   </select>
 
   <select id="selectUserByQueryCriteria" parameterType="org.operaton.bpm.engine.impl.UserQueryImpl" resultMap="userResultMap">
@@ -116,7 +118,7 @@
 
     <where>
       <if test="id != null">
-        RES.ID_ = #{id}
+        (RES.ID_ = #{id} OR LOWER(RES.ID_) = LOWER(#{id}))
       </if>
       <if test="ids != null &amp;&amp; ids.length > 0">
         and RES.ID_ in

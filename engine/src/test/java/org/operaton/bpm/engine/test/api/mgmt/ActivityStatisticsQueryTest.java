@@ -653,9 +653,10 @@ class ActivityStatisticsQueryTest {
         .processDefinitionKey("ExampleProcess")
         .singleResult();
 
-    // the query aggregates runtime data (executions, jobs, incidents), it does not
+    // The query aggregates runtime data (executions, jobs, incidents); it does not
     // derive activities from the process definition model.
-    // Without any process instance there is nothing to aggregate.
+    // If there is no runtime data for this process definition (no executions, jobs, or incidents),
+    // there is nothing to aggregate and the result is empty.
     assertThat(managementService.createActivityStatisticsQuery(definition.getId()).list()).isEmpty();
     assertThat(managementService.createActivityStatisticsQuery(definition.getId())
         .includeFailedJobs()

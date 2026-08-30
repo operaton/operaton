@@ -65,6 +65,8 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   protected static final String SINGLE_RESOURCE_DATA_URL = SINGLE_RESOURCE_URL + "/data";
   protected static final String CREATE_DEPLOYMENT_URL = RESOURCE_URL + "/create";
   protected static final String REDEPLOY_DEPLOYMENT_URL = DEPLOYMENT_URL + "/redeploy";
+  protected static final String DEPLOYMENT_DELETE_DEPLOYMENTS_URL = RESOURCE_URL + "/delete";
+  protected static final int MULTI_STATUS_CODE = 207;
 
   protected RepositoryService mockRepositoryService;
   protected Deployment mockDeployment;
@@ -1892,6 +1894,116 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .body("message", is(message))
     .when()
       .post(REDEPLOY_DEPLOYMENT_URL);
+  }
+
+  @Test
+  void testDeleteDeployments() {
+    Map<String, Object> requestBody = createDeleteDeploymentsRequest(List.of(EXAMPLE_DEPLOYMENT_ID), true, true, true);
+
+    Response response = given()
+      .body(requestBody)
+      .contentType(POST_JSON_CONTENT_TYPE)
+    .expect()
+      .statusCode(Status.OK.getStatusCode())
+      .contentType(ContentType.JSON)
+    .when()
+      .post(DEPLOYMENT_DELETE_DEPLOYMENTS_URL);
+
+    JsonPath path = response.jsonPath();
+    assertThat(path.<String>getList("deploymentId")).containsExactly(EXAMPLE_DEPLOYMENT_ID);
+    assertThat(path.<String>getList("status")).containsExactly("SUCCESS");
+    assertThat(path.getList("errorMessage")).containsExactly((Object) null);
+
+    verify(mockRepositoryService).deleteDeployment(EXAMPLE_DEPLOYMENT_ID, true, true, true);
+  }
+
+  @Test
+  void testDeleteDeploymentsAllFailures() {
+    String invalidDeploymentIdOne = "invalidDeploymentIdOne";
+    String invalidDeploymentIdTwo = "invalidDeploymentIdTwo";
+    Map<String, Object> requestBody = createDeleteDeploymentsRequest(List.of(invalidDeploymentIdOne, invalidDeploymentIdTwo), false, false, false);
+
+    when(mockDeploymentQuery.deploymentId(anyString())).thenReturn(mockDeploymentQuery);
+    when(mockDeploymentQuery.singleResult()).thenReturn(null);
+
+    Response response = given()
+      .body(requestBody)
+      .contentType(POST_JSON_CONTENT_TYPE)
+    .expect()
+      .statusCode(MULTI_STATUS_CODE)
+      .contentType(ContentType.JSON)
+    .when()
+      .post(DEPLOYMENT_DELETE_DEPLOYMENTS_URL);
+
+    JsonPath path = response.jsonPath();
+    assertThat(path.<String>getList("deploymentId")).containsExactly(invalidDeploymentIdOne, invalidDeploymentIdTwo);
+    assertThat(path.<String>getList("status")).containsExactly("FAILURE", "FAILURE");
+    assertThat(path.<String>getList("errorMessage"))
+      .containsExactly("Deployment with id '%s' does not exist".formatted(invalidDeploymentIdOne),
+        "Deployment with id '%s' does not exist".formatted(invalidDeploymentIdTwo));
+
+    verify(mockRepositoryService, never()).deleteDeployment(anyString(), anyBoolean(), anyBoolean(), anyBoolean());
+  }
+
+  @Test
+  void testDeleteDeploymentsPartialFailures() {
+    String invalidDeploymentId = "invalidDeploymentId";
+    Map<String, Object> requestBody = createDeleteDeploymentsRequest(List.of(EXAMPLE_DEPLOYMENT_ID, invalidDeploymentId), false, false, false);
+
+    when(mockDeploymentQuery.deploymentId(anyString())).thenReturn(mockDeploymentQuery);
+    when(mockDeploymentQuery.singleResult()).thenReturn(mockDeployment).thenReturn(null);
+
+    Response response = given()
+      .body(requestBody)
+      .contentType(POST_JSON_CONTENT_TYPE)
+    .expect()
+      .statusCode(MULTI_STATUS_CODE)
+      .contentType(ContentType.JSON)
+    .when()
+      .post(DEPLOYMENT_DELETE_DEPLOYMENTS_URL);
+
+    JsonPath path = response.jsonPath();
+    assertThat(path.<String>getList("deploymentId")).containsExactly(EXAMPLE_DEPLOYMENT_ID, invalidDeploymentId);
+    assertThat(path.<String>getList("status")).containsExactly("SUCCESS", "FAILURE");
+    assertThat(path.getList("errorMessage")).containsExactly(null, "Deployment with id '%s' does not exist".formatted(invalidDeploymentId));
+
+    verify(mockRepositoryService).deleteDeployment(EXAMPLE_DEPLOYMENT_ID, false, false, false);
+  }
+
+  @Test
+  void testDeleteDeploymentsAuthorizationException() {
+    String message = "missing authorization";
+    Map<String, Object> requestBody = createDeleteDeploymentsRequest(List.of(EXAMPLE_DEPLOYMENT_ID), false, false, false);
+
+    doThrow(new AuthorizationException(message))
+      .when(mockRepositoryService)
+      .deleteDeployment(EXAMPLE_DEPLOYMENT_ID, false, false, false);
+
+    Response response = given()
+      .body(requestBody)
+      .contentType(POST_JSON_CONTENT_TYPE)
+    .expect()
+      .statusCode(MULTI_STATUS_CODE)
+      .contentType(ContentType.JSON)
+    .when()
+      .post(DEPLOYMENT_DELETE_DEPLOYMENTS_URL);
+
+    JsonPath path = response.jsonPath();
+    assertThat(path.<String>getList("deploymentId")).containsExactly(EXAMPLE_DEPLOYMENT_ID);
+    assertThat(path.<String>getList("status")).containsExactly("FAILURE");
+    assertThat(path.<String>getList("errorMessage")).containsExactly(message);
+
+    verify(mockRepositoryService).deleteDeployment(EXAMPLE_DEPLOYMENT_ID, false, false, false);
+  }
+
+  private Map<String, Object> createDeleteDeploymentsRequest(List<String> deploymentIds, boolean cascade,
+      boolean skipCustomListeners, boolean skipIoMappings) {
+    Map<String, Object> requestBody = new HashMap<>();
+    requestBody.put("deploymentIds", deploymentIds);
+    requestBody.put("cascade", cascade);
+    requestBody.put("skipCustomListeners", skipCustomListeners);
+    requestBody.put("skipIoMappings", skipIoMappings);
+    return requestBody;
   }
 
   private void verifyDeployment(Deployment mockDeployment, Response response) {

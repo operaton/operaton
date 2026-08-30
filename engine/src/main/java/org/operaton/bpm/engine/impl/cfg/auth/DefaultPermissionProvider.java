@@ -30,8 +30,7 @@ import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
  * @author Tobias Metzke
  *
  */
-@NullMarked
-public class DefaultPermissionProvider implements PermissionProvider {
+public @NullMarked class DefaultPermissionProvider implements PermissionProvider {
 
   @Override
   public Permission getPermissionForName(String name, int resourceType) {

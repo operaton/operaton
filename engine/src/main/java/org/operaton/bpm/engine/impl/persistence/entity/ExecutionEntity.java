@@ -112,10 +112,10 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * the process instance. this is the root of the execution tree. the
    * processInstance of a process instance is a self reference.
    */
-  protected transient ExecutionEntity processInstance;
+  protected transient @Nullable ExecutionEntity processInstance;
 
   /** the parent execution */
-  protected transient ExecutionEntity parent;
+  protected transient @Nullable ExecutionEntity parent;
 
   /** nested executions representing scopes or concurrent paths */
   protected transient List<ExecutionEntity> executions;

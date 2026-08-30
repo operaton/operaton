@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -29,7 +30,7 @@ import static java.util.Objects.requireNonNull;
  * @author Thorben Lindhauer
  *
  */
-public class TransitionInstantiationCmd extends AbstractInstantiationCmd {
+public @NullMarked class TransitionInstantiationCmd extends AbstractInstantiationCmd {
 
   protected String transitionId;
 
@@ -37,12 +38,12 @@ public class TransitionInstantiationCmd extends AbstractInstantiationCmd {
     this(null, transitionId);
   }
 
-  public TransitionInstantiationCmd(String processInstanceId, String transitionId) {
+  public TransitionInstantiationCmd(@Nullable String processInstanceId, String transitionId) {
     this(processInstanceId, transitionId, null);
   }
 
-  public TransitionInstantiationCmd(String processInstanceId, String transitionId,
-      String ancestorActivityInstanceId) {
+  public TransitionInstantiationCmd(@Nullable String processInstanceId, String transitionId,
+      @Nullable String ancestorActivityInstanceId) {
     super(processInstanceId, ancestorActivityInstanceId);
     this.transitionId = transitionId;
   }

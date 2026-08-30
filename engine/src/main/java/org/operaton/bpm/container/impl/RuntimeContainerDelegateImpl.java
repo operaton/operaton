@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 import javax.management.MBeanServer;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.ProcessApplicationService;
@@ -42,6 +42,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -52,7 +53,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Daniel Meyer
  */
-public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, ProcessEngineService, ProcessApplicationService {
+public @NullMarked class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, ProcessEngineService, ProcessApplicationService {
 
   protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -153,13 +154,14 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
 
   @Override
   public ExecutorService getExecutorService() {
-    return serviceContainer.getServiceValue(ServiceTypes.BPM_PLATFORM, SERVICE_NAME_EXECUTOR);
+    ExecutorService executorService = serviceContainer.getServiceValue(ServiceTypes.BPM_PLATFORM, SERVICE_NAME_EXECUTOR);
+    return requireNonNull(executorService);
   }
 
   // ProcessEngineServiceDelegate //////////////////////////////////////////////
 
   @Override
-  public ProcessEngine getDefaultProcessEngine() {
+  public @Nullable ProcessEngine getDefaultProcessEngine() {
     return serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, "default");
   }
 
@@ -169,7 +171,7 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
   }
 
   @Override
-  public @NonNull List<ProcessEngine> getProcessEngines() {
+  public List<ProcessEngine> getProcessEngines() {
     return serviceContainer.getServiceValuesByType(ServiceTypes.PROCESS_ENGINE);
   }
 

@@ -40,10 +40,10 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public @NullMarked class GetRenderedStartFormCmd implements Command<Object> {
   protected String processDefinitionId;
-  protected String formEngineName;
+  protected @Nullable String formEngineName;
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  public GetRenderedStartFormCmd(String processDefinitionId, String formEngineName) {
+  public GetRenderedStartFormCmd(String processDefinitionId, @Nullable String formEngineName) {
     this.processDefinitionId = processDefinitionId;
     this.formEngineName = formEngineName;
   }

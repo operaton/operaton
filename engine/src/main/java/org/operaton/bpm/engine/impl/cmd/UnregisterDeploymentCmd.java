@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 
 import org.jspecify.annotations.Nullable;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Thorben Lindhauer
  */
-public class UnregisterDeploymentCmd implements Command<Void> {
+public @NullMarked class UnregisterDeploymentCmd implements Command<Void> {
 
   protected Set<String> deploymentIds;
 

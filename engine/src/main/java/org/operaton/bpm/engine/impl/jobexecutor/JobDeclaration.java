@@ -243,8 +243,13 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
 
   @SuppressWarnings("unused")
   public @Nullable Date resolveDueDate(S context) {
-    ProcessEngineConfiguration processEngineConfiguration = Context.getProcessEngineConfiguration();
-    if (processEngineConfiguration != null && (processEngineConfiguration.isJobExecutorAcquireByDueDate() || processEngineConfiguration.isEnsureJobDueDateNotNull())) {
+    boolean isJobExecutorAcquireByDueDate = Context.findProcessEngineConfiguration()
+        .map(ProcessEngineConfiguration::isJobExecutorAcquireByDueDate)
+        .orElse(false);
+    boolean isEnsureJobDueDateNotNull = Context.findProcessEngineConfiguration()
+        .map(ProcessEngineConfiguration::isEnsureJobDueDateNotNull)
+        .orElse(false);
+    if (isJobExecutorAcquireByDueDate || isEnsureJobDueDateNotNull) {
       return ClockUtil.getCurrentTime();
     }
     else {

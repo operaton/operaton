@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -33,12 +34,12 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
-public class SetAnnotationForIncidentCmd implements Command<Void> {
+public @NullMarked class SetAnnotationForIncidentCmd implements Command<Void> {
 
   protected String incidentId;
-  protected String annotation;
+  protected @Nullable String annotation;
 
-  public SetAnnotationForIncidentCmd(String incidentId, String annotation) {
+  public SetAnnotationForIncidentCmd(String incidentId, @Nullable String annotation) {
     this.incidentId = incidentId;
     this.annotation = annotation;
   }

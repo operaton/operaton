@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -1219,26 +1221,26 @@ class TenantIdProviderTest {
     }
   }
 
-  public static class ContextLoggingTenantIdProvider implements TenantIdProvider {
+  public static @NullMarked class ContextLoggingTenantIdProvider implements TenantIdProvider {
 
     protected List<TenantIdProviderProcessInstanceContext> parameters = new ArrayList<>();
     protected List<TenantIdProviderHistoricDecisionInstanceContext> dmnParameters = new ArrayList<>();
     protected List<TenantIdProviderCaseInstanceContext> caseParameters = new ArrayList<>();
 
     @Override
-    public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
+    public @Nullable String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       parameters.add(ctx);
       return null;
     }
 
     @Override
-    public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
+    public @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       dmnParameters.add(ctx);
       return null;
     }
 
     @Override
-    public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
+    public @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       caseParameters.add(ctx);
       return null;
     }
@@ -1246,7 +1248,7 @@ class TenantIdProviderTest {
   }
 
   //only sets tenant ids on sub process instances
-  public static class SetValueOnSubProcessInstanceTenantIdProvider implements TenantIdProvider {
+  public static @NullMarked class SetValueOnSubProcessInstanceTenantIdProvider implements TenantIdProvider {
 
     private final String tenantIdToSet;
 
@@ -1255,24 +1257,24 @@ class TenantIdProviderTest {
     }
 
     @Override
-    public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
+    public @Nullable String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return ctx.getSuperExecution() != null ? tenantIdToSet : null;
     }
 
     @Override
-    public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
+    public @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
 
     @Override
-    public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
+    public @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return null;
     }
 
   }
 
   // only sets tenant ids on root process instances
-  public static class SetValueOnRootProcessInstanceTenantIdProvider implements TenantIdProvider {
+  public static @NullMarked class SetValueOnRootProcessInstanceTenantIdProvider implements TenantIdProvider {
 
     private final String tenantIdToSet;
 
@@ -1281,23 +1283,23 @@ class TenantIdProviderTest {
     }
 
     @Override
-    public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
+    public @Nullable String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return ctx.getSuperExecution() == null ? tenantIdToSet : null;
     }
 
     @Override
-    public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
+    public @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
 
     @Override
-    public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
+    public @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return null;
     }
   }
 
   //only sets tenant ids on historic decision instances when an execution exists
-  public static class SetValueOnHistoricDecisionInstanceTenantIdProvider implements TenantIdProvider {
+  public static @NullMarked class SetValueOnHistoricDecisionInstanceTenantIdProvider implements TenantIdProvider {
 
     private final String tenantIdToSet;
 
@@ -1306,23 +1308,23 @@ class TenantIdProviderTest {
     }
 
     @Override
-    public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
+    public @Nullable String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return null;
     }
 
     @Override
-    public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
+    public @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return ctx.getExecution() != null ? tenantIdToSet : null;
     }
 
     @Override
-    public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
+    public @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return null;
     }
   }
 
   //only sets tenant ids on subcase instances
-  public static class SetValueOnSubCaseInstanceTenantIdProvider implements TenantIdProvider {
+  public static @NullMarked class SetValueOnSubCaseInstanceTenantIdProvider implements TenantIdProvider {
 
     private final String tenantIdToSet;
 
@@ -1331,23 +1333,23 @@ class TenantIdProviderTest {
     }
 
     @Override
-    public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
+    public @Nullable String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return null;
     }
 
     @Override
-    public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
+    public @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
 
     @Override
-    public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
+    public @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return ctx.getSuperCaseExecution() != null ? tenantIdToSet : null;
     }
   }
 
   // only sets tenant ids on root case instances
-  public static class SetValueOnRootCaseInstanceTenantIdProvider implements TenantIdProvider {
+  public static @NullMarked class SetValueOnRootCaseInstanceTenantIdProvider implements TenantIdProvider {
 
     private final String tenantIdToSet;
 
@@ -1356,26 +1358,26 @@ class TenantIdProviderTest {
     }
 
     @Override
-    public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
+    public @Nullable String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return null;
     }
 
     @Override
-    public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
+    public @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
 
     @Override
-    public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
+    public @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return ctx.getSuperCaseExecution() == null ? tenantIdToSet : null;
     }
   }
 
-  public static class AccessProcessInstanceVariableTenantIdProvider implements TenantIdProvider {
+  public static @NullMarked class AccessProcessInstanceVariableTenantIdProvider implements TenantIdProvider {
 
     private final String tenantIdToSet;
     private final String variableToAccess;
-    protected Object retrievedVariableValue;
+    protected @Nullable Object retrievedVariableValue;
 
     public AccessProcessInstanceVariableTenantIdProvider(String tenantIdToSet, String variableToAccess) {
       this.tenantIdToSet = tenantIdToSet;
@@ -1389,12 +1391,12 @@ class TenantIdProviderTest {
     }
 
     @Override
-    public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
+    public @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return null;
     }
 
     @Override
-    public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
+    public @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
   }

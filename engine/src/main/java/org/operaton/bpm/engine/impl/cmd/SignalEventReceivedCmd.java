@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.NotFoundException;
 
 import org.jspecify.annotations.Nullable;
@@ -47,7 +48,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  * @author Joram Barrez
  */
-public class SignalEventReceivedCmd implements Command<Void> {
+public @NullMarked class SignalEventReceivedCmd implements Command<Void> {
 
   protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 

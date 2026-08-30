@@ -21,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import org.aopalliance.intercept.MethodInterceptor;
+import org.operaton.bpm.engine.impl.context.BpmnExecutionContext;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.BeansException;
@@ -43,6 +44,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.components.aop.util.Scopifier;
 import org.operaton.commons.utils.StringUtil;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * binds variables to a currently executing Activiti business process (a {@link org.operaton.bpm.engine.runtime.ProcessInstance}).
@@ -87,7 +90,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         try {
             logger.fine(() -> "returning scoped object having beanName '%s' for conversation ID '%s'. ".formatted(name, this.getConversationId()));
 
-            ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
+            BpmnExecutionContext executionContext = requireNonNull(Context.getBpmnExecutionContext());
+            ProcessInstance processInstance = executionContext.getProcessInstance();
             executionEntity = (ExecutionEntity) processInstance;
 
             Object scopedObject = executionEntity.getVariable(name);
@@ -108,12 +112,14 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
               logger.fine(() -> "set variable '%s' on executionEntity# %s".formatted(name, executionEntityId));
             }
         }
+        // TODO According to the Spring docs, this should throw an IllegalStateException if no process is currently executing.
+        // But I don't want to do that because it would break existing code. So for now, just return null.
         return null;
     }
 
   @Override
   public void registerDestructionCallback(String name, Runnable callback) {
-        logger.fine(() -> "no support for registering descruction callbacks implemented currently. registerDestructionCallback('%s',callback) will do nothing.".formatted(name));
+        logger.fine(() -> "no support for registering destruction callbacks implemented currently. registerDestructionCallback('%s',callback) will do nothing.".formatted(name));
     }
 
     private String getExecutionId() {
@@ -129,18 +135,18 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
   @Override
   public Object resolveContextualObject(String key) {
+        BpmnExecutionContext executionContext = requireNonNull(Context.getBpmnExecutionContext());
+        if ("executionId".equalsIgnoreCase(key)) {
+          return executionContext.getExecution().getId();
+        }
 
-    if ("executionId".equalsIgnoreCase(key)) {
-      return Context.getBpmnExecutionContext().getExecution().getId();
-    }
+        if ("processInstance".equalsIgnoreCase(key)) {
+          return executionContext.getProcessInstance();
+        }
 
-    if ("processInstance".equalsIgnoreCase(key)) {
-      return Context.getBpmnExecutionContext().getProcessInstance();
-    }
-
-    if ("processInstanceId".equalsIgnoreCase(key)) {
-      return Context.getBpmnExecutionContext().getProcessInstance().getId();
-    }
+        if ("processInstanceId".equalsIgnoreCase(key)) {
+          return executionContext.getProcessInstance().getId();
+        }
 
         return null;
     }
@@ -237,7 +243,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
     }
 
     private void persistVariable(String variableName, Object scopedObject) {
-        ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
+        BpmnExecutionContext executionContext = requireNonNull(Context.getBpmnExecutionContext());
+        ProcessInstance processInstance = executionContext.getProcessInstance();
         ExecutionEntity executionEntity = (ExecutionEntity) processInstance;
         Assert.isTrue(scopedObject instanceof Serializable, "the scopedObject is not %s!".formatted(Serializable.class.getName()));
         executionEntity.setVariable(variableName, scopedObject);

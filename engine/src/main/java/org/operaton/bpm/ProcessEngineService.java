@@ -38,7 +38,7 @@ public interface ProcessEngineService {
    *
    * @return the default process engine.
    */
-  ProcessEngine getDefaultProcessEngine();
+  @Nullable ProcessEngine getDefaultProcessEngine();
 
   /**
    * @return all {@link ProcessEngine ProcessEngines} managed by the Operaton.

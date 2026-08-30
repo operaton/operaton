@@ -20,6 +20,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -40,6 +42,7 @@ import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.operaton.bpm.engine.variable.VariableMap;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -47,7 +50,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Thorben Lindhauer
  *
  */
-public class StartProcessInstanceAtActivitiesCmd implements Command<ProcessInstanceWithVariables> {
+public @NullMarked class StartProcessInstanceAtActivitiesCmd implements Command<ProcessInstanceWithVariables> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -61,6 +64,7 @@ public class StartProcessInstanceAtActivitiesCmd implements Command<ProcessInsta
   public ProcessInstanceWithVariables execute(CommandContext commandContext) {
 
     ProcessDefinitionEntity processDefinition = new GetDeployedProcessDefinitionCmd(instantiationBuilder, false).execute(commandContext);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkCreateProcessInstance(processDefinition);
@@ -134,7 +138,7 @@ public class StartProcessInstanceAtActivitiesCmd implements Command<ProcessInsta
    * get the activity that is started by the first instruction, if exists;
    * return null if the first instruction is a start-transition instruction
    */
-  protected ActivityImpl determineFirstActivity(ProcessDefinitionImpl processDefinition,
+  protected @Nullable ActivityImpl determineFirstActivity(ProcessDefinitionImpl processDefinition,
       ProcessInstanceModificationBuilderImpl modificationBuilder) {
     AbstractProcessInstanceModificationCommand firstInstruction = modificationBuilder.getModificationOperations().get(0);
 

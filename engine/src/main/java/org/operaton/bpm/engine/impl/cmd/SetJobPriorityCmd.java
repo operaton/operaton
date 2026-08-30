@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Thorben Lindhauer
  *
  */
-public class SetJobPriorityCmd implements Command<Void> {
+public @NullMarked class SetJobPriorityCmd implements Command<Void> {
 
   public static final String JOB_PRIORITY_PROPERTY = "priority";
 

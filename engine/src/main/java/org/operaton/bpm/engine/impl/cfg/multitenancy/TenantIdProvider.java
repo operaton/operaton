@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg.multitenancy;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
  *
  * @author Daniel Meyer
  */
-public interface TenantIdProvider {
+public @NullMarked interface TenantIdProvider {
 
   /**
    * Invoked when a process instance is started and the Process Definition does not have a tenant id.

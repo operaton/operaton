@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 
 import org.jspecify.annotations.Nullable;
@@ -53,7 +54,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Anna Pazola
  *
  */
-public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd<Void> {
+public @NullMarked class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd<Void> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -131,7 +132,7 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
             processDefinition.getKey());
   }
 
-  protected HistoricProcessInstance getHistoricProcessInstance(CommandContext commandContext,
+  protected @Nullable HistoricProcessInstance getHistoricProcessInstance(CommandContext commandContext,
                                                                String processInstanceId) {
     HistoryService historyService = commandContext.getProcessEngineConfiguration()
         .getHistoryService();
@@ -204,15 +205,13 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
     if (historicDetails.isEmpty()) {
       HistoricActivityInstance startActivityInstance = resolveStartActivityInstance(processInstance);
 
-      if (startActivityInstance != null) {
-        HistoricDetailQueryImpl queryWithStartActivities = (HistoricDetailQueryImpl) historyService.createHistoricDetailQuery()
-                .variableUpdates()
-                .activityInstanceId(startActivityInstance.getId())
-                .executionId(processInstance.getId());
-        historicDetails = queryWithStartActivities
-               .sequenceCounter(1)
-               .list();
-      }
+      HistoricDetailQueryImpl queryWithStartActivities = (HistoricDetailQueryImpl) historyService.createHistoricDetailQuery()
+              .variableUpdates()
+              .activityInstanceId(startActivityInstance.getId())
+              .executionId(processInstance.getId());
+      historicDetails = queryWithStartActivities
+             .sequenceCounter(1)
+             .list();
     }
 
     VariableMap variables = new VariableMapImpl();

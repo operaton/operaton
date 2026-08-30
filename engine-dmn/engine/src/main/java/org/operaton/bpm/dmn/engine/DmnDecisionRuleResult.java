@@ -19,6 +19,8 @@ package org.operaton.bpm.dmn.engine;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * {@code name} attribute to the output value. If no {@code name}
  * was given the key is {@code null}.
  */
-public interface DmnDecisionRuleResult extends Map<String, Object>, Serializable {
+public @NullMarked interface DmnDecisionRuleResult extends Map<String, Object>, Serializable {
 
   /**
    * Returns the value of the first rule result entry.
@@ -38,7 +40,7 @@ public interface DmnDecisionRuleResult extends Map<String, Object>, Serializable
    *
    * @see #getFirstEntryTyped()
    */
-  <T> T getFirstEntry();
+  <T> @Nullable T getFirstEntry();
 
   /**
    * Returns the typed value of the first rule result entry.
@@ -49,7 +51,7 @@ public interface DmnDecisionRuleResult extends Map<String, Object>, Serializable
    *
    * @see #getFirstEntry()
    */
-  <T extends TypedValue> T getFirstEntryTyped();
+  <T extends TypedValue> @Nullable T getFirstEntryTyped();
 
   /**
    * Returns the value of the single entry of the decision rule result.
@@ -64,7 +66,7 @@ public interface DmnDecisionRuleResult extends Map<String, Object>, Serializable
    *
    * @see #getSingleEntryTyped()
    */
-  <T> T getSingleEntry();
+  <T> @Nullable T getSingleEntry();
 
   /**
    * Returns the typed value of the single entry of the decision rule result.
@@ -79,7 +81,7 @@ public interface DmnDecisionRuleResult extends Map<String, Object>, Serializable
    *
    * @see #getSingleEntry()
    */
-  <T extends TypedValue> T getSingleEntryTyped();
+  <T extends TypedValue> @Nullable T getSingleEntryTyped();
 
   /**
    * Returns the value of the rule result entry for a given output name.
@@ -93,7 +95,7 @@ public interface DmnDecisionRuleResult extends Map<String, Object>, Serializable
    *
    * @see #getEntryTyped(String)
    */
-  <T> T getEntry(String name);
+  <T> @Nullable T getEntry(String name);
 
   /**
    * Returns the typed value of the rule result entry for a given output name.
@@ -107,7 +109,7 @@ public interface DmnDecisionRuleResult extends Map<String, Object>, Serializable
    *
    * @see #getEntry(String)
    */
-  <T extends TypedValue> T getEntryTyped(String name);
+  <T extends TypedValue> @Nullable T getEntryTyped(String name);
 
   /**
    * Returns a map of the rule result entry values by output name.
@@ -125,6 +127,6 @@ public interface DmnDecisionRuleResult extends Map<String, Object>, Serializable
    *
    * @see #getEntryMap()
    */
-  Map<String, TypedValue> getEntryMapTyped();
+  Map<String, @Nullable TypedValue> getEntryMapTyped();
 
 }

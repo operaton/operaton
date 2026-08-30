@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Yana Vasileva
  *
  */
-public class UnlockUserCmd implements Command<Object> {
+public @NullMarked class UnlockUserCmd implements Command<Object> {
   String userId;
 
   public UnlockUserCmd(String userId) {

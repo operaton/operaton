@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.QueryPropertyImpl;
@@ -99,7 +100,7 @@ public class CommentManager extends AbstractHistoricManager {
     return getDbEntityManager().selectList("selectCommentsByProcessInstanceId", processInstanceId);
   }
 
-  public CommentEntity findCommentByTaskIdAndCommentId(String taskId, String commentId) {
+  public @Nullable CommentEntity findCommentByTaskIdAndCommentId(String taskId, String commentId) {
     checkHistoryEnabled();
 
     Map<String, String> parameters = new HashMap<>();
@@ -109,7 +110,7 @@ public class CommentManager extends AbstractHistoricManager {
     return (CommentEntity) getDbEntityManager().selectOne("selectCommentByTaskIdAndCommentId", parameters);
   }
 
-  public CommentEntity findCommentByProcessInstanceIdAndCommentId(String processInstanceId, String commentId) {
+  public @Nullable CommentEntity findCommentByProcessInstanceIdAndCommentId(String processInstanceId, String commentId) {
     checkHistoryEnabled();
 
     Map<String, String> parameters = new HashMap<>();

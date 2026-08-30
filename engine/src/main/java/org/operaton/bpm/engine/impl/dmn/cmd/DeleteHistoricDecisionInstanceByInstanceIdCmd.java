@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -53,6 +54,7 @@ public class DeleteHistoricDecisionInstanceByInstanceIdCmd implements Command<Ob
         .findHistoricDecisionInstance(historicDecisionInstanceId);
     ensureNotNull("No historic decision instance found with id: %s".formatted(historicDecisionInstanceId),
         "historicDecisionInstance", historicDecisionInstance);
+    requireNonNull(historicDecisionInstance);
     writeUserOperationLog(commandContext, historicDecisionInstance);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {

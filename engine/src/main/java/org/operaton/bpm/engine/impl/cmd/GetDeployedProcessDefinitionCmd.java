@@ -29,7 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 public @NullMarked class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitionEntity> {
 
-  protected String processDefinitionId;
+  protected @Nullable String processDefinitionId;
   protected @Nullable String processDefinitionKey;
 
   protected @Nullable String processDefinitionTenantId;

@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
@@ -514,7 +515,7 @@ public interface RepositoryService {
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.
    * @throws NotAllowedException in case feature flag {@code enforceHistoryTimeToLive} is set to {@code true} and the given historyTimeToLive value is {@code null}.
    */
-  void updateProcessDefinitionHistoryTimeToLive(String processDefinitionId, Integer historyTimeToLive);
+  void updateProcessDefinitionHistoryTimeToLive(String processDefinitionId, @Nullable Integer historyTimeToLive);
 
   /**
    * Updates time to live of decision definition. The field is used within history cleanup process.
@@ -524,7 +525,7 @@ public interface RepositoryService {
    * @throws AuthorizationException If the user has no {@link Permissions#UPDATE} permission on {@link Resources#DECISION_DEFINITION}.
    * @throws NotAllowedException    in case feature flag {@code enforceHistoryTimeToLive} is set to {@code true} and the given historyTimeToLive value is {@code null}.
    */
-  void updateDecisionDefinitionHistoryTimeToLive(String decisionDefinitionId, Integer historyTimeToLive);
+  void updateDecisionDefinitionHistoryTimeToLive(String decisionDefinitionId, @Nullable Integer historyTimeToLive);
 
   /**
    * Updates time to live of case definition. The field is used within history cleanup process.
@@ -533,7 +534,7 @@ public interface RepositoryService {
    * @param historyTimeToLive the value of history time to live to update
    * @throws NotAllowedException in case feature flag {@code enforceHistoryTimeToLive} is set to true and the given historyTimeToLive value is {@code null}.
    */
-  void updateCaseDefinitionHistoryTimeToLive(String caseDefinitionId, Integer historyTimeToLive);
+  void updateCaseDefinitionHistoryTimeToLive(String caseDefinitionId, @Nullable Integer historyTimeToLive);
 
   /**
    * Gives access to a deployed process model, e.g., a BPMN 2.0 XML file,

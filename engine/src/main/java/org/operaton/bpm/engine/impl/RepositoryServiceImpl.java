@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.exception.DeploymentResourceNotFoundException;
@@ -275,17 +276,17 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   @Override
-  public void updateProcessDefinitionHistoryTimeToLive(String processDefinitionId, Integer historyTimeToLive) {
+  public void updateProcessDefinitionHistoryTimeToLive(String processDefinitionId, @Nullable Integer historyTimeToLive) {
     commandExecutor.execute(new UpdateProcessDefinitionHistoryTimeToLiveCmd(processDefinitionId, historyTimeToLive));
   }
 
   @Override
-  public void updateDecisionDefinitionHistoryTimeToLive(String decisionDefinitionId, Integer historyTimeToLive) {
+  public void updateDecisionDefinitionHistoryTimeToLive(String decisionDefinitionId, @Nullable Integer historyTimeToLive) {
     commandExecutor.execute(new UpdateDecisionDefinitionHistoryTimeToLiveCmd(decisionDefinitionId, historyTimeToLive));
   }
 
   @Override
-  public void updateCaseDefinitionHistoryTimeToLive(String caseDefinitionId, Integer historyTimeToLive) {
+  public void updateCaseDefinitionHistoryTimeToLive(String caseDefinitionId, @Nullable Integer historyTimeToLive) {
     commandExecutor.execute(new UpdateCaseDefinitionHistoryTimeToLiveCmd(caseDefinitionId, historyTimeToLive));
   }
 

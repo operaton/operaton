@@ -26,6 +26,8 @@ import commonj.work.WorkRejectedException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.threading.ra.JcaConfigException;
 import org.operaton.bpm.container.impl.threading.ra.JcaExecutorServiceConnector;
@@ -38,11 +40,11 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
  * @author Christian Lipphardt
  *
  */
-public class CommonJWorkManagerExecutorService implements ExecutorService {
+public @NullMarked class CommonJWorkManagerExecutorService implements ExecutorService {
 
   private static final Logger logger = Logger.getLogger(CommonJWorkManagerExecutorService.class.getName());
 
-  protected WorkManager workManager;
+  protected @Nullable WorkManager workManager;
 
   protected JcaExecutorServiceConnector ra;
 
@@ -75,7 +77,7 @@ public class CommonJWorkManagerExecutorService implements ExecutorService {
 
   protected boolean executeShortRunning(Runnable runnable) {
     try {
-      workManager.schedule(new CommonjWorkRunnableAdapter(runnable));
+      getWorkManager().schedule(new CommonjWorkRunnableAdapter(runnable));
       return true;
 
     } catch (WorkRejectedException e) {
@@ -114,6 +116,9 @@ public class CommonJWorkManagerExecutorService implements ExecutorService {
   // getters / setters ////////////////////////////////////
 
   public WorkManager getWorkManager() {
+    if(workManager == null) {
+      workManager = lookupWorkMananger();
+    }
     return workManager;
   }
 

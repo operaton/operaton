@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg.auth;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
@@ -39,7 +40,7 @@ import org.operaton.bpm.engine.task.Task;
  *
  * @author Daniel Meyer
  */
-public interface ResourceAuthorizationProvider {
+public @NullMarked interface ResourceAuthorizationProvider {
 
   // Users /////////////////////////////////////////////
 

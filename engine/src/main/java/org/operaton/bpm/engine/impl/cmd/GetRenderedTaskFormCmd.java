@@ -37,9 +37,9 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public @NullMarked class GetRenderedTaskFormCmd implements Command<Object> {
   protected String taskId;
-  protected String formEngineName;
+  protected @Nullable String formEngineName;
 
-  public GetRenderedTaskFormCmd(String taskId, String formEngineName) {
+  public GetRenderedTaskFormCmd(String taskId, @Nullable String formEngineName) {
     this.taskId = taskId;
     this.formEngineName = formEngineName;
   }

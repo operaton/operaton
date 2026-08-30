@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collections;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessInstantiationBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -30,11 +31,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessInstanceWithVariab
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class StartProcessInstanceCmd implements Command<ProcessInstanceWithVariables> {
+public @NullMarked class StartProcessInstanceCmd implements Command<ProcessInstanceWithVariables> {
   protected final ProcessInstantiationBuilderImpl instantiationBuilder;
 
   public StartProcessInstanceCmd(ProcessInstantiationBuilderImpl instantiationBuilder) {
@@ -45,6 +48,7 @@ public class StartProcessInstanceCmd implements Command<ProcessInstanceWithVaria
   public ProcessInstanceWithVariables execute(CommandContext commandContext) {
 
     ProcessDefinitionEntity processDefinition = new GetDeployedProcessDefinitionCmd(instantiationBuilder, false).execute(commandContext);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkCreateProcessInstance(processDefinition);

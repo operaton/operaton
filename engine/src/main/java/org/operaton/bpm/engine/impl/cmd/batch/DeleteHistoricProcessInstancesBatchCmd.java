@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -39,11 +41,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 /**
  * @author Askar Akhmerov
  */
-public class DeleteHistoricProcessInstancesBatchCmd implements Command<Batch> {
+public @NullMarked class DeleteHistoricProcessInstancesBatchCmd implements Command<Batch> {
 
   protected final String deleteReason;
   protected List<String> historicProcessInstanceIds;
-  protected HistoricProcessInstanceQuery historicProcessInstanceQuery;
+  protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
 
   public DeleteHistoricProcessInstancesBatchCmd(List<String> historicProcessInstanceIds, HistoricProcessInstanceQuery historicProcessInstanceQuery,
       String deleteReason) {

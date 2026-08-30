@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.externaltask.UpdateExternalTaskRetriesBuilder;
@@ -31,16 +33,16 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
  * @author smirnov
  *
  */
-public class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskRetriesBuilder {
+public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskRetriesBuilder {
 
-  protected CommandExecutor commandExecutor;
+  protected @Nullable CommandExecutor commandExecutor;
 
-  protected List<String> externalTaskIds;
-  protected List<String> processInstanceIds;
+  protected @Nullable List<String> externalTaskIds;
+  protected @Nullable List<String> processInstanceIds;
 
-  protected ExternalTaskQuery externalTaskQuery;
-  protected ProcessInstanceQuery processInstanceQuery;
-  protected HistoricProcessInstanceQuery historicProcessInstanceQuery;
+  protected @Nullable ExternalTaskQuery externalTaskQuery;
+  protected @Nullable ProcessInstanceQuery processInstanceQuery;
+  protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
 
   protected int retries;
 
@@ -60,7 +62,7 @@ public class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskR
   }
 
   @Override
-  public UpdateExternalTaskRetriesBuilder externalTaskIds(String... externalTaskIds) {
+  public UpdateExternalTaskRetriesBuilder externalTaskIds(String @Nullable... externalTaskIds) {
     if (externalTaskIds == null) {
       this.externalTaskIds = Collections.emptyList();
     }
@@ -77,7 +79,7 @@ public class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskR
   }
 
   @Override
-  public UpdateExternalTaskRetriesBuilder processInstanceIds(String... processInstanceIds) {
+  public UpdateExternalTaskRetriesBuilder processInstanceIds(String @Nullable... processInstanceIds) {
     if (processInstanceIds == null) {
       this.processInstanceIds = Collections.emptyList();
     }
@@ -121,23 +123,23 @@ public class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskR
     return retries;
   }
 
-  public List<String> getExternalTaskIds() {
+  public @Nullable List<String> getExternalTaskIds() {
     return externalTaskIds;
   }
 
-  public List<String> getProcessInstanceIds() {
+  public @Nullable List<String> getProcessInstanceIds() {
     return processInstanceIds;
   }
 
-  public ExternalTaskQuery getExternalTaskQuery() {
+  public @Nullable ExternalTaskQuery getExternalTaskQuery() {
     return externalTaskQuery;
   }
 
-  public ProcessInstanceQuery getProcessInstanceQuery() {
+  public @Nullable ProcessInstanceQuery getProcessInstanceQuery() {
     return processInstanceQuery;
   }
 
-  public HistoricProcessInstanceQuery getHistoricProcessInstanceQuery() {
+  public @Nullable HistoricProcessInstanceQuery getHistoricProcessInstanceQuery() {
     return historicProcessInstanceQuery;
   }
 

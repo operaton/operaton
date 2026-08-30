@@ -49,6 +49,11 @@ public class OperatonScriptEngineManager extends ScriptEngineManager {
     applyConfigOnEnginesAfterClasspathDiscovery();
   }
 
+  public OperatonScriptEngineManager(ClassLoader loader) {
+    super(loader);
+    applyConfigOnEnginesAfterClasspathDiscovery();
+  }
+
   protected void applyConfigOnEnginesAfterClasspathDiscovery() {
     var engineNames = getEngineNamesFoundInClasspath();
 

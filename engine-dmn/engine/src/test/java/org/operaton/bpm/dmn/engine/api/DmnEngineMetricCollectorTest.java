@@ -41,6 +41,7 @@ class DmnEngineMetricCollectorTest extends DmnEngineTest {
   protected DmnEngineMetricCollector metricCollector;
 
   @BeforeEach
+  @Override
   protected void setUp() {
     super.setUp();
     metricCollector = dmnEngine.getConfiguration().getEngineMetricCollector();

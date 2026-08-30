@@ -29,4 +29,8 @@ public interface OperatonOutputParameter extends BpmnModelElementInstance, Opera
 
   void setOperatonName(String operatonName);
 
+  boolean isOperatonTransient();
+
+  void setOperatonTransient(boolean isTransient);
+
 }

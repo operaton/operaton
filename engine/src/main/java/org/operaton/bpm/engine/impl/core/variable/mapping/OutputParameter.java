@@ -42,6 +42,10 @@ public class OutputParameter extends IoParameter {
     super(name, valueProvider);
   }
 
+  public OutputParameter(String name, ParameterValueProvider valueProvider, boolean isTransient) {
+    super(name, valueProvider, isTransient);
+  }
+
   @Override
   protected void execute(AbstractVariableScope innerScope, AbstractVariableScope outerScope) {
 
@@ -51,7 +55,7 @@ public class OutputParameter extends IoParameter {
     LOG.debugMappingValueFromInnerScopeToOuterScope(value, innerScope, name, outerScope);
 
     // set variable in outer scope
-    outerScope.setVariable(name, value);
+    outerScope.setVariable(name, getVariableValue(value));
   }
 
 }

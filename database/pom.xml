@@ -115,7 +115,7 @@
         <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>db2-ds.xml</jboss.datasource.filename>
         <database.tc.url>operatondb2:12.1.2.0</database.tc.url>
-        <database.tc.params>/${database.name}</database.tc.params>
+        <database.tc.params>/${database.name}?TC_DAEMON=true</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
       <dependencies>

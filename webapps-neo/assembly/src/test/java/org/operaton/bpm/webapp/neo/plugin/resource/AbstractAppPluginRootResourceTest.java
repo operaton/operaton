@@ -37,14 +37,14 @@ import org.operaton.bpm.webapp.neo.AppRuntimeDelegate;
 import org.operaton.bpm.webapp.neo.plugin.AppPluginRegistry;
 import org.operaton.bpm.webapp.neo.plugin.spi.AppPlugin;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.operaton.bpm.webapp.neo.plugin.resource.AbstractAppPluginRootResource.MIME_TYPE_TEXT_CSS;
 import static org.operaton.bpm.webapp.neo.plugin.resource.AbstractAppPluginRootResource.MIME_TYPE_TEXT_JAVASCRIPT;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 @Parameterized
 public class AbstractAppPluginRootResourceTest {
@@ -109,45 +109,29 @@ public class AbstractAppPluginRootResourceTest {
     // given
     String resourceName = "/" + ASSET_DIR + "/" + assetName;
     ByteArrayInputStream inputStream = new ByteArrayInputStream(ASSET_CONTENT.getBytes());
-    doReturn(inputStream).when(mockServletContext).getResourceAsStream(resourceName);
+    when(mockServletContext.getResourceAsStream(resourceName)).thenReturn(inputStream);
 
-    try {
+    if (!assetAllowed) {
+      assertThatThrownBy(() -> pluginRootResource.getAsset(resourceName))
+              .isInstanceOf(RestException.class);
+    } else {
       // when
       final Response actual = pluginRootResource.getAsset(assetName);
 
+      ByteArrayOutputStream output = new ByteArrayOutputStream();
+      ((StreamingOutput) actual.getEntity()).write(output);
+
       // then
-      if (assetAllowed) {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        ((StreamingOutput) actual.getEntity()).write(output);
+      assertThat(output).hasToString(ASSET_CONTENT);
+      assertThat(actual.getHeaders()).containsKey(HttpHeaders.CONTENT_TYPE).hasSize(1);
+      assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).hasSize(1);
+      // In IDE it's String, with maven it's MediaType class
+      assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE).get(0)).hasToString(assetMediaType);
 
-        assertThat(output).hasToString(ASSET_CONTENT);
-        assertThat(actual.getHeaders()).containsKey(HttpHeaders.CONTENT_TYPE).hasSize(1);
-        assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).hasSize(1);
-        // In IDE it's String, with maven it's MediaType class
-        assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE).get(0)).hasToString(assetMediaType);
-
-        verify(runtimeDelegate).getAppPluginRegistry();
-        verify(pluginRegistry).getPlugin(PLUGIN_NAME);
-        verify(mockServletContext).getResourceAsStream(resourceName);
-      } else {
-        fail("should throw RestException for '%s'", assetName);
-      }
-
-    } catch (RestException e) {
-      // then
-      if (assetAllowed) {
-        e.printStackTrace();
-        fail("should not throw RestException for '%s'", assetName);
-      } else {
-        assertThat(e)
-                .isInstanceOf(RestException.class)
-                .hasMessage("Not allowed to load the following file '" + assetName + "'.");
-
-        verify(runtimeDelegate, never()).getAppPluginRegistry();
-        verify(pluginRegistry, never()).getPlugin(PLUGIN_NAME);
-        verify(mockServletContext, never()).getResourceAsStream(assetName);
-      }
+      verify(runtimeDelegate).getAppPluginRegistry();
+      verify(pluginRegistry).getPlugin(PLUGIN_NAME);
     }
+
   }
 
 }

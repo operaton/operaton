@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="processEngineConfiguration" class="org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+
+    <property name="jdbcUrl" value="jdbc:h2:mem:operaton-connect-a2a;DB_CLOSE_DELAY=1000" />
+    <property name="jdbcDriver" value="org.h2.Driver" />
+    <property name="jdbcUsername" value="sa" />
+    <property name="jdbcPassword" value="" />
+
+    <property name="databaseSchemaUpdate" value="true" />
+    <property name="enforceHistoryTimeToLive" value="false" />
+
+    <!-- Jobs are executed by the tests themselves, so that timers fire when the test says so. -->
+    <property name="jobExecutorActivate" value="false" />
+
+    <property name="processEnginePlugins">
+      <list>
+        <bean class="org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin" />
+      </list>
+    </property>
+
+  </bean>
+
+</beans>

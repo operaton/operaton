@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:d8bb0955-1d87-4b61-a901-0a3153d413bb",
+  "serialNumber": "urn:uuid:56e5a9a1-948d-4617-8e1c-2a56dd5a0f95",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-28T10:01:43Z",
+    "timestamp": "2026-08-31T04:49:06Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.74.0-SNAPSHOT-dc3c56eed"
+          "version": "0.74.0-SNAPSHOT-5ae0bb106"
         }
       ]
     },
@@ -29884,45 +29884,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.0.Final?type=jar",
+      "bom-ref": "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.1.Final?type=jar",
       "publisher": "WildFly",
       "group": "org.wildfly.core",
       "name": "wildfly-controller-client",
-      "version": "33.0.0.Final",
+      "version": "33.0.1.Final",
       "description": "WildFly: Core Parent Aggregator",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ae416b49bafe86a7ceab2584697cc66b"
+          "content": "bfefe74885e48974f40de66d60e65532"
         },
         {
           "alg": "SHA-1",
-          "content": "037887a646f851e9e6c20c96f0fcf2aff4861a91"
+          "content": "e2848f62f9e2f0d01f41124eb5e81a7f8333b0bd"
         },
         {
           "alg": "SHA-256",
-          "content": "c1cfc34b9178fa65eea570ddf5d77ae082eda695da87c9323d5982a2f83dcfb1"
+          "content": "14a27cb21872c2c4659e729979351a0697806265781c46d311e0232fd8ae019c"
         },
         {
           "alg": "SHA-512",
-          "content": "718f41f7869dbfa767191493c2a1301b2908deec0925542bfa36973c125972678aa1bbfc4088f8221aed88c62c9589fd723f2d630c6a716599d90ba06a2eb7cc"
+          "content": "82772f73a23f8507e1b2a302bcbd46bb8a8f0d7b183b066063f35c7685642768cf3c85436e04f01a92d5fc8c0fd920c077e6c990adb07e2a54fcadc699f0b6c6"
         },
         {
           "alg": "SHA-384",
-          "content": "97cc34caa0d4fffef0f0fc16de8be844a61af53dddb0043b7451298c53dcb34468ee61db6f1e2c0ad6242b6321a458a8"
+          "content": "e861a333bcb5f2f3b36425b155f8b9707ab8dce3c553b911dd1d69806eb638e77b0df6f7ab9d0d131125abca508ffe5d"
         },
         {
           "alg": "SHA3-384",
-          "content": "00260c6abd963902558696d20d6abe0fb734657f56e356e1dcb6d73fa94817d8d1966f6385c97a13791d9072c2d517af"
+          "content": "48ebf0ddd0d1c5a99da459eb4ebb70ebdbaa5178ed6c22e25dbf72f0f2aff40505db71ea88ec10d25d01c70c5d0e06d1"
         },
         {
           "alg": "SHA3-256",
-          "content": "659f9b90f71d0ae4e1795ee8595f922c927313c0feca494880786c5dfaa0d3dd"
+          "content": "234bd1a4b1e0bb4aaf6a4343f0b711c52431bf2b5b68992306fe89472d43a616"
         },
         {
           "alg": "SHA3-512",
-          "content": "5acc8845a9649d5fed0daec8a862a0dc031202e9ed48fde43c0332d723b1405330920631294a3fa82ff738129edcdb3ddfa641badff9c914b2a491a2abf9c52e"
+          "content": "9a03b4246490fe2cd5f0990e2760f88b029e516c1ba45191d5ea0acee416c58f6a5b0b7dac0488898aa3d435d432672fa8c56654a85bef8c69aa22714b64a95b"
         }
       ],
       "licenses": [
@@ -29933,7 +29933,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.0.Final?type=jar",
+      "purl": "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.1.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/wildfly/wildfly-core",
@@ -29955,45 +29955,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.wildfly.core/wildfly-version@33.0.0.Final?type=jar",
+      "bom-ref": "pkg:maven/org.wildfly.core/wildfly-version@33.0.1.Final?type=jar",
       "publisher": "WildFly",
       "group": "org.wildfly.core",
       "name": "wildfly-version",
-      "version": "33.0.0.Final",
+      "version": "33.0.1.Final",
       "description": "WildFly: Core Parent Aggregator",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "0e65e8be2c398aedf02562054492602e"
+          "content": "1fcbb4e2430053c06558c031b8019b68"
         },
         {
           "alg": "SHA-1",
-          "content": "bbfdd363eb71412d18f4248675e8c3f882d4313f"
+          "content": "654818d1857b37501826bb4f513f40ca3106f296"
         },
         {
           "alg": "SHA-256",
-          "content": "0a771ee3512f8db0994738269f993dea0c0bfac754a1b82ede0553d1af11bedf"
+          "content": "7b4f45f00f24b9c939b4af7c6c51047e89b6e0583860941ec70f3b58cfc7ad79"
         },
         {
           "alg": "SHA-512",
-          "content": "a9f92eb2757fab4b13caa019b730a3311f60628b5feea49e3027fea75d1a02d8c2e16bdbe2e5daa634ea5750f7b55abcf3f6b517c1fc9a8df9c939256a534f9e"
+          "content": "83bff1f501cd9e7668b443d65d84305d1201240b4f51b0788105b82499630ab95770592b05b149546cf69d71f3e4ca37d43d0f87794cb60ef3bf51371837bde6"
         },
         {
           "alg": "SHA-384",
-          "content": "5e83445cb53999793879ae0120fd6ec3cf7db77b7c75a3a221f31f988ef9510b8b66b48400f08934e96a51a5e043bb37"
+          "content": "d2bd939b72512df448471f53bb5634b79670bc8bdc43ca0503e7c15ec46d80f9d3edd182199f8fdaf3305a14dd1807af"
         },
         {
           "alg": "SHA3-384",
-          "content": "15e0c257e4188a5e6cd6d954418fb9b1302ab80e58c7e48a43cf1a1b45f6b0b4630fa0a106de939f802355b3a012db34"
+          "content": "5bf5fce6c1c66f5f0de4500ddb539b74aba48bca843bf70a5698ad9b9aa5ab9bbb1d183c143b73c61f5da4c0faca1633"
         },
         {
           "alg": "SHA3-256",
-          "content": "752dbe6a4a7c5a1ddd00440a9de6ee50dfec6756fcd128ffa1e362414b9e0008"
+          "content": "c1636fcc58c4abf088e0e4e92ed0ec84e3d65efbc7605956764464909440741f"
         },
         {
           "alg": "SHA3-512",
-          "content": "fe6434a1225ed4b8509e7d2a930ebdc85c9ea32c815ada636236f45ccb9e9e4ebe08d2d14a67fe9141b767f1f943071fb7246122cd6c0b4fca29bfa37d2ad005"
+          "content": "2fd6edaaee0053ae93e1e551c39688ce8c6a10403e52ca48871fc64c4aff7b4c1cfaa0f7c66899bad9ac0e01dc8a069b5b2a617edd7f01634c31b302af042b94"
         }
       ],
       "licenses": [
@@ -30004,7 +30004,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.wildfly.core/wildfly-version@33.0.0.Final?type=jar",
+      "purl": "pkg:maven/org.wildfly.core/wildfly-version@33.0.1.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/wildfly/wildfly-core",
@@ -30026,45 +30026,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.wildfly.core/wildfly-deployment-repository@33.0.0.Final?type=jar",
+      "bom-ref": "pkg:maven/org.wildfly.core/wildfly-deployment-repository@33.0.1.Final?type=jar",
       "publisher": "WildFly",
       "group": "org.wildfly.core",
       "name": "wildfly-deployment-repository",
-      "version": "33.0.0.Final",
+      "version": "33.0.1.Final",
       "description": "WildFly: Core Parent Aggregator",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "1ac5d3deb809a0b5a983abe3ef87e1aa"
+          "content": "c0d43872473b687d1d5cad88a3500ca1"
         },
         {
           "alg": "SHA-1",
-          "content": "7ba3461f19572b3a40842f8dc8921ffdb6d3626a"
+          "content": "763f4c2ba192ef40cdd0a24a34b4b4ba7cd90577"
         },
         {
           "alg": "SHA-256",
-          "content": "6319812e550fb22499b7f622faf604928828d630b737e2122edf6d93e8b0864e"
+          "content": "6994eb02133b0d8489fd70d0175f411c99e8ad1824a5c066dd43354a09e9e959"
         },
         {
           "alg": "SHA-512",
-          "content": "b6a7698c53c43336e270f1153ab21b220606a60aaec92f44dcf735c8c625329eebe412c1484e8212f416205b9625d7310e73a3717a0fa263cb980b88e0c4acd5"
+          "content": "f90a534374cb2163f1dac8928795b4d2caec1875d9523955ae46b82ce1be0af51d32955dc3e1fcb8022e67914a29ab662705e797a6ab49bb07067b1b2322eb99"
         },
         {
           "alg": "SHA-384",
-          "content": "1477f53e15fc659db0afd8984144682cd6b9e8e2809ebf126e76b7e1383b3f4d3e24c4e4bd7927071e05793da71a58ac"
+          "content": "e5988a1d15478c8a31aeeadb561334884f46fc83a4a017acc4a291ccda94537ce98d31fd326f605e8140705e241d7d37"
         },
         {
           "alg": "SHA3-384",
-          "content": "10362907a1a86e39a481cda806053a22a719dc9ad731ac3f17451edf04555d84521fe753d077bcd44a289e7b57cdb383"
+          "content": "ad911d89d7b6dc13cce3c4fc9dfeb257ecce7219b908781c8041ae1f684ae10265c73a514cff15c548ae616451d7f7eb"
         },
         {
           "alg": "SHA3-256",
-          "content": "bfb7df566cf52319f933db65121f2eeafb1291f973e4ada3b712f0e244cce887"
+          "content": "0dfefeca57d2782d0b6eecbcd9091e494d903ae7ec98535a86f0766762adf98b"
         },
         {
           "alg": "SHA3-512",
-          "content": "be0b120f266799540cf0b3eb9d20b001d3032ec3f192a9d2577a5de784f8993b048876d2414d930a6c79e63b685a82eaf5e5bf05b35872cc9d8ec995b8c28266"
+          "content": "0698992c90b5e01fa640184fa526fe6df7a83cc056f91e9426bc242a9c1d27d3b3b4e880ac740dfcf874b643e65d14c603bbc22470b126e99a7e5e8372da2780"
         }
       ],
       "licenses": [
@@ -30075,7 +30075,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.wildfly.core/wildfly-deployment-repository@33.0.0.Final?type=jar",
+      "purl": "pkg:maven/org.wildfly.core/wildfly-deployment-repository@33.0.1.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/wildfly/wildfly-core",
@@ -31094,7 +31094,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e6a6c624-48c4-4cad-b66c-294afacb508c",
+      "bom-ref": "f84ccb2c-9881-4e84-866e-4af3f33147a5",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36350,7 +36350,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "565973ec-6d02-49ea-b8c6-6229b095ec5e",
+      "bom-ref": "d9bcae63-40b0-4885-86cb-904c254be72d",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -38795,7 +38795,7 @@
       "ref": "pkg:maven/org.wildfly.core/wildfly-controller@33.0.1.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss/jboss-dmr@1.7.0.Final?type=jar",
-        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.0.Final?type=jar",
+        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-core-security@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-embedded@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.security/wildfly-elytron-auth@2.9.2.Final?type=jar",
@@ -38808,7 +38808,7 @@
         "pkg:maven/org.wildfly.security/wildfly-elytron-util@2.9.2.Final?type=jar",
         "pkg:maven/org.wildfly.security/wildfly-elytron-x500-cert-acme@2.9.2.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-service@33.0.1.Final?type=jar",
-        "pkg:maven/org.wildfly.core/wildfly-version@33.0.0.Final?type=jar",
+        "pkg:maven/org.wildfly.core/wildfly-version@33.0.1.Final?type=jar",
         "pkg:maven/org.jboss.modules/jboss-modules@2.1.6.Final?type=jar",
         "pkg:maven/org.jboss.msc/jboss-msc@1.5.6.Final?type=jar",
         "pkg:maven/org.jboss.logmanager/jboss-logmanager@2.1.19.Final?type=jar",
@@ -38826,7 +38826,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.0.Final?type=jar",
+      "ref": "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.1.Final?type=jar",
       "dependsOn": []
     },
     {
@@ -38885,7 +38885,7 @@
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/org.jboss.modules/jboss-modules@2.1.6.Final?type=jar",
-        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.0.Final?type=jar",
+        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.1.Final?type=jar",
         "pkg:maven/org.jboss/jboss-dmr@1.7.0.Final?type=jar"
       ]
     },
@@ -39112,7 +39112,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.wildfly.core/wildfly-version@33.0.0.Final?type=jar",
+      "ref": "pkg:maven/org.wildfly.core/wildfly-version@33.0.1.Final?type=jar",
       "dependsOn": []
     },
     {
@@ -39161,7 +39161,7 @@
         "pkg:maven/org.wildfly.core/wildfly-controller@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-core-management-client@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-domain-http-interface@33.0.1.Final?type=jar",
-        "pkg:maven/org.wildfly.core/wildfly-deployment-repository@33.0.0.Final?type=jar",
+        "pkg:maven/org.wildfly.core/wildfly-deployment-repository@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-platform-mbean@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-process-controller@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-remoting@33.0.1.Final?type=jar",
@@ -39171,7 +39171,7 @@
         "pkg:maven/org.wildfly.security/wildfly-elytron-credential@2.9.2.Final?type=jar",
         "pkg:maven/org.wildfly.security/wildfly-elytron-security-manager@2.9.2.Final?type=jar",
         "pkg:maven/org.wildfly.security/wildfly-elytron-security-manager-action@2.9.2.Final?type=jar",
-        "pkg:maven/org.wildfly.core/wildfly-version@33.0.0.Final?type=jar",
+        "pkg:maven/org.wildfly.core/wildfly-version@33.0.1.Final?type=jar",
         "pkg:maven/io.smallrye/jandex@3.6.0?type=jar",
         "pkg:maven/org.jboss/jboss-dmr@1.7.0.Final?type=jar",
         "pkg:maven/org.jboss.classfilewriter/jboss-classfilewriter@1.3.1.Final?type=jar",
@@ -39195,7 +39195,7 @@
     {
       "ref": "pkg:maven/org.wildfly.core/wildfly-core-management-client@33.0.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.0.Final?type=jar"
+        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.1.Final?type=jar"
       ]
     },
     {
@@ -39203,7 +39203,7 @@
       "dependsOn": [
         "pkg:maven/io.undertow/undertow-core@2.4.3.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-controller@33.0.1.Final?type=jar",
-        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.0.Final?type=jar",
+        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-domain-management@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.common/wildfly-common@2.0.1?type=jar",
         "pkg:maven/org.wildfly.security/wildfly-elytron-auth@2.9.2.Final?type=jar",
@@ -39273,7 +39273,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.wildfly.core/wildfly-deployment-repository@33.0.0.Final?type=jar",
+      "ref": "pkg:maven/org.wildfly.core/wildfly-deployment-repository@33.0.1.Final?type=jar",
       "dependsOn": []
     },
     {
@@ -39281,7 +39281,7 @@
       "dependsOn": [
         "pkg:maven/org.jboss.msc/jboss-msc@1.5.6.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-controller@33.0.1.Final?type=jar",
-        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.0.Final?type=jar",
+        "pkg:maven/org.wildfly.core/wildfly-controller-client@33.0.1.Final?type=jar",
         "pkg:maven/org.wildfly.security/wildfly-elytron-security-manager@2.9.2.Final?type=jar",
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar"
       ]
@@ -39291,7 +39291,7 @@
       "dependsOn": [
         "pkg:maven/org.wildfly.security/wildfly-elytron-security-manager@2.9.2.Final?type=jar",
         "pkg:maven/org.wildfly.common/wildfly-common@2.0.1?type=jar",
-        "pkg:maven/org.wildfly.core/wildfly-version@33.0.0.Final?type=jar",
+        "pkg:maven/org.wildfly.core/wildfly-version@33.0.1.Final?type=jar",
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/org.jboss.logmanager/jboss-logmanager@2.1.19.Final?type=jar",
         "pkg:maven/org.jboss.threads/jboss-threads@3.9.2?type=jar"
@@ -40076,13 +40076,13 @@
       "dependsOn": []
     },
     {
-      "ref": "565973ec-6d02-49ea-b8c6-6229b095ec5e",
+      "ref": "d9bcae63-40b0-4885-86cb-904c254be72d",
       "dependsOn": [
-        "e6a6c624-48c4-4cad-b66c-294afacb508c"
+        "f84ccb2c-9881-4e84-866e-4af3f33147a5"
       ]
     },
     {
-      "ref": "e6a6c624-48c4-4cad-b66c-294afacb508c",
+      "ref": "f84ccb2c-9881-4e84-866e-4af3f33147a5",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.25.0",

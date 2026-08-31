@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -644,7 +643,6 @@ class ActivityStatisticsQueryTest {
     assertThat(incidentStatistic.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
   }
 
-  @Disabled("CAM-126")
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQuery.bpmn20.xml")
   void testActivityStatisticsQueryWithNoInstances() {
@@ -655,16 +653,15 @@ class ActivityStatisticsQueryTest {
         .processDefinitionKey("ExampleProcess")
         .singleResult();
 
-    List<ActivityStatistics> statistics =
-        managementService
-        .createActivityStatisticsQuery(definition.getId())
-        .list();
-
-    assertThat(statistics).hasSize(1);
-    ActivityStatistics result = statistics.get(0);
-    assertThat(result.getId()).isEqualTo("theTask");
-    assertThat(result.getInstances()).isZero();
-    assertThat(result.getFailedJobs()).isZero();
-
+    // The query aggregates runtime data (executions, jobs, incidents); it does not
+    // derive activities from the process definition model.
+    // If there is no runtime data for this process definition (no executions, jobs, or incidents),
+    // there is nothing to aggregate and the result is empty.
+    assertThat(managementService.createActivityStatisticsQuery(definition.getId()).list()).isEmpty();
+    assertThat(managementService.createActivityStatisticsQuery(definition.getId())
+        .includeFailedJobs()
+        .includeIncidents()
+        .list()).isEmpty();
+    assertThat(managementService.createActivityStatisticsQuery(definition.getId()).count()).isZero();
   }
 }

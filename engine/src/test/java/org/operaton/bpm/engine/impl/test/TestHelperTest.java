@@ -164,4 +164,16 @@ class TestHelperTest {
         .isEqualTo("org/operaton/bpm/engine/impl/test/TestHelperTest$SomeTestClass.bpmn20.xml");
   }
 
+  @Test
+  void shouldReturnTheSameResolvedResourceForARealClasspathResource() {
+    // a resource genuinely exists on the test classpath for this (type, name) pair, so this
+    // exercises the "found on classpath" branch, unlike the fallback-only tests above
+    String first = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "realResource");
+    String second = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "realResource");
+
+    assertThat(first)
+        .isEqualTo("org/operaton/bpm/engine/impl/test/TestHelperTest$SomeTestClass.realResource.bpmn20.xml");
+    assertThat(second).isEqualTo(first);
+  }
+
 }

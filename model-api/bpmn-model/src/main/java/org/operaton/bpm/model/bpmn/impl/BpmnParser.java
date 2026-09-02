@@ -42,6 +42,10 @@ public class BpmnParser extends AbstractModelParser {
 
   public BpmnParser() {
     this.schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA);
+    // Unlike engine's Parser (which reads accessExternalSchema fresh per schema-resource cache
+    // miss), this schema is compiled once for the static Bpmn.INSTANCE singleton. A
+    // javax.xml.accessExternalSchema restriction only takes effect if set before this class
+    // first loads.
     addSchema(BPMN20_NS, createSchema(BPMN_20_SCHEMA_LOCATION, BpmnParser.class.getClassLoader()));
   }
 

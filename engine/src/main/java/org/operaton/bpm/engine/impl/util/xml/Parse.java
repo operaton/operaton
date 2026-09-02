@@ -46,13 +46,7 @@ public abstract class Parse extends DefaultHandler {
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  protected static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
-  protected static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-  protected static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
-
   protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA = "http://javax.xml.XMLConstants/property/accessExternalSchema";
-  protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY = "javax.xml.accessExternalSchema";
-  protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_ALL = "all";
 
   protected Parser parser;
   protected String name;

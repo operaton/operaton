@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.util.xml;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,6 +24,7 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -133,7 +133,7 @@ public abstract class Parser {
     }
 
     try {
-      return schemaFactory.newSchema(URI.create(schemaResource).toURL());
+      return schemaFactory.newSchema(new StreamSource(schemaResource));
     } catch (Exception e) {
       throw LOG.parsingFailureException(schemaResource, e);
     }

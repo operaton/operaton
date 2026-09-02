@@ -30,9 +30,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
 public @NullMarked class DeleteTaskMetricsCmd implements Command<Void> {
-  protected Date timestamp;
+  protected @Nullable Date timestamp;
 
-  public DeleteTaskMetricsCmd(Date timestamp) {
+  public DeleteTaskMetricsCmd(@Nullable Date timestamp) {
     this.timestamp = timestamp;
   }
 

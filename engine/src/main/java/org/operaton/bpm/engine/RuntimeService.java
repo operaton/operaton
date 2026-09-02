@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.authorization.*;
@@ -46,7 +47,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Joram Barrez
  * @author Daniel Meyer
  */
-public interface RuntimeService {
+public @NullMarked interface RuntimeService {
 
   /**
    * Starts a new process instance in the latest version of the process definition with the given key.
@@ -611,7 +612,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstance(String processInstanceId, String deleteReason);
+  void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason);
 
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
@@ -631,7 +632,7 @@ public interface RuntimeService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, String deleteReason);
+  Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, @Nullable String deleteReason);
 
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
@@ -651,7 +652,7 @@ public interface RuntimeService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, String deleteReason, boolean skipCustomListeners);
+  Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, @Nullable String deleteReason, boolean skipCustomListeners);
 
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
@@ -673,7 +674,7 @@ public interface RuntimeService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, String deleteReason, boolean skipCustomListeners, boolean skipSubprocesses);
+  Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, @Nullable String deleteReason, boolean skipCustomListeners, boolean skipSubprocesses);
 
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
@@ -726,8 +727,8 @@ public interface RuntimeService {
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
   Batch deleteProcessInstancesAsync(List<String> processInstanceIds,
-                                    ProcessInstanceQuery processInstanceQuery,
-                                    HistoricProcessInstanceQuery historicProcessInstanceQuery,
+                                    @Nullable ProcessInstanceQuery processInstanceQuery,
+                                    @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery,
                                     String deleteReason,
                                     boolean skipCustomListeners,
                                     boolean skipSubprocesses,
@@ -750,7 +751,7 @@ public interface RuntimeService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteProcessInstancesAsync(ProcessInstanceQuery processInstanceQuery, String deleteReason);
+  Batch deleteProcessInstancesAsync(ProcessInstanceQuery processInstanceQuery, @Nullable String deleteReason);
 
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
@@ -773,7 +774,7 @@ public interface RuntimeService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteProcessInstancesAsync(List<String> processInstanceIds, String deleteReason);
+  Batch deleteProcessInstancesAsync(List<String> processInstanceIds, @Nullable String deleteReason);
 
   /**
    * Delete an existing runtime process instance.
@@ -795,7 +796,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstance(String processInstanceId, String deleteReason, boolean skipCustomListeners);
+  void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners);
 
   /**
    * Delete an existing runtime process instance.
@@ -820,7 +821,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstance(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated);
+  void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated);
 
 
   /**
@@ -846,7 +847,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstances(List<String> processInstanceIds, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated);
+  void deleteProcessInstances(List<String> processInstanceIds, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated);
 
   /**
    * Delete existing runtime process instances.
@@ -872,7 +873,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstances(List<String> processInstanceIds, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated,
+  void deleteProcessInstances(List<String> processInstanceIds, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated,
                               boolean skipSubprocesses);
 
   /**
@@ -899,7 +900,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstances(List<String> processInstanceIds, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated,
+  void deleteProcessInstances(List<String> processInstanceIds, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated,
                               boolean skipSubprocesses, boolean skipIoMappings);
 
   /**
@@ -928,7 +929,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstancesIfExists(List<String> processInstanceIds, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated,
+  void deleteProcessInstancesIfExists(List<String> processInstanceIds, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated,
                                       boolean skipSubprocesses);
 
   /**
@@ -955,7 +956,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstance(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings);
+  void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings);
 
   /**
    * Delete an existing runtime process instance.
@@ -982,7 +983,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstance(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings,
+  void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings,
                              boolean skipSubprocesses);
 
   /**
@@ -1012,7 +1013,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void deleteProcessInstanceIfExists(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings,
+  void deleteProcessInstanceIfExists(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings,
                                      boolean skipSubprocesses);
 
   /**
@@ -2446,7 +2447,7 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  Incident createIncident(String incidentType, String executionId, String configuration, String message);
+  Incident createIncident(String incidentType, String executionId, String configuration, @Nullable String message);
 
   /**
    * Resolves and remove an incident

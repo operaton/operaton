@@ -44,7 +44,7 @@ import org.operaton.commons.utils.ServiceLoaderUtil;
  * </pre>
  * </p>
  *
- * <p>To create a process engine programatic, without a configuration file,
+ * <p>To create a process engine programmatic, without a configuration file,
  * the first option is {@link #createStandaloneProcessEngineConfiguration()}
  * <pre>ProcessEngine processEngine = ProcessEngineConfiguration
  *   .createStandaloneProcessEngineConfiguration()
@@ -87,6 +87,7 @@ import org.operaton.commons.utils.ServiceLoaderUtil;
  * @see ProcessEngines
  * @author Tom Baeyens
  */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public abstract class ProcessEngineConfiguration {
   private static final ProcessEngineConfigurationFactory PROCESS_ENGINE_CONFIGURATION_FACTORY;
 

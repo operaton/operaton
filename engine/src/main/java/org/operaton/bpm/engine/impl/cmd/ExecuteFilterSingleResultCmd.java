@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.query.Query;
@@ -29,12 +30,12 @@ public @NullMarked class ExecuteFilterSingleResultCmd extends AbstractExecuteFil
     super(filterId);
   }
 
-  public ExecuteFilterSingleResultCmd(String filterId, Query<?, ?> extendingQuery) {
+  public ExecuteFilterSingleResultCmd(String filterId, @Nullable Query<?, ?> extendingQuery) {
     super(filterId, extendingQuery);
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     Query<?, ?> query = getFilterQuery(commandContext);
     return query.singleResult();
   }

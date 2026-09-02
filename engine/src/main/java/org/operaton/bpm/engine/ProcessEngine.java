@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Provides access to all the services that expose the BPM and workflow operations.
  *
@@ -59,7 +61,7 @@ package org.operaton.bpm.engine;
  * @author Joram Barrez
  * @author Daniel Meyer
  */
-public interface ProcessEngine extends ProcessEngineServices {
+public @NullMarked interface ProcessEngine extends ProcessEngineServices {
 
   /** the version of the process engine library */
   String VERSION = "fox";

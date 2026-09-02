@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.CaseService;
@@ -40,7 +41,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Roman Smirnov
  *
  */
-public class CaseServiceImpl extends ServiceImpl implements CaseService {
+public @NullMarked class CaseServiceImpl extends ServiceImpl implements CaseService {
 
   @Override
   public CaseInstanceBuilder withCaseDefinitionByKey(String caseDefinitionKey) {
@@ -117,9 +118,9 @@ public class CaseServiceImpl extends ServiceImpl implements CaseService {
     return getCaseExecutionVariables(caseExecutionId, variableNames, true, deserializeValues);
   }
 
-  protected VariableMap getCaseExecutionVariables(String caseExecutionId, Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
+  protected VariableMap getCaseExecutionVariables(String caseExecutionId, @Nullable Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
     try {
-      return commandExecutor.execute(new GetCaseExecutionVariablesCmd(caseExecutionId, variableNames, isLocal, deserializeValues));
+      return getCommandExecutor().execute(new GetCaseExecutionVariablesCmd(caseExecutionId, variableNames, isLocal, deserializeValues));
     }
     catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
@@ -141,7 +142,7 @@ public class CaseServiceImpl extends ServiceImpl implements CaseService {
 
   protected @Nullable Object getCaseExecutionVariable(String caseExecutionId, String variableName, boolean isLocal) {
     try {
-      return commandExecutor.execute(new GetCaseExecutionVariableCmd(caseExecutionId, variableName, isLocal));
+      return getCommandExecutor().execute(new GetCaseExecutionVariableCmd(caseExecutionId, variableName, isLocal));
     }
     catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
@@ -174,7 +175,7 @@ public class CaseServiceImpl extends ServiceImpl implements CaseService {
   @SuppressWarnings("unchecked")
   protected <T extends TypedValue> @Nullable T getCaseExecutionVariableTyped(String caseExecutionId, String variableName, boolean isLocal, boolean deserializeValue) {
     try {
-      return (T) commandExecutor.execute(new GetCaseExecutionVariableTypedCmd(caseExecutionId, variableName, isLocal, deserializeValue));
+      return (T) getCommandExecutor().execute(new GetCaseExecutionVariableTypedCmd(caseExecutionId, variableName, isLocal, deserializeValue));
     }
     catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);

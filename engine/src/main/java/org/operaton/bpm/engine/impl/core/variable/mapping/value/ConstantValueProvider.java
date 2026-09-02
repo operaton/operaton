@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.mapping.value;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 /**
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
  * @author Daniel Meyer
  *
  */
-public class ConstantValueProvider implements ParameterValueProvider {
+public @NullMarked class ConstantValueProvider implements ParameterValueProvider {
 
   protected Object value;
 

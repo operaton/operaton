@@ -19,6 +19,7 @@ package org.operaton.bpm.engine;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.identity.Group;
@@ -398,7 +399,7 @@ public interface IdentityService {
    * @return the current {@link PasswordPolicy} or <code>null</code> if no
    *         policy is set or the configured policy is disabled.
    */
-  PasswordPolicy getPasswordPolicy();
+  @Nullable PasswordPolicy getPasswordPolicy();
 
   /**
    * Passes the authenticated user id for this thread.
@@ -438,7 +439,7 @@ public interface IdentityService {
   /**
    * @param currentAuthentication
    */
-  void setAuthentication(Authentication currentAuthentication);
+  void setAuthentication(@Nullable Authentication currentAuthentication);
 
   /**
    * @return the current authentication for this process engine.
@@ -452,13 +453,13 @@ public interface IdentityService {
 
   /** Sets the picture for a given user.
    * @throws ProcessEngineException if the user doesn't exist.
-   * @param picture can be null to delete the picture. */
+   */
   void setUserPicture(String userId, Picture picture);
 
   /** Retrieves the picture for a given user.
    * @throws ProcessEngineException if the user doesn't exist.
    * @returns null if the user doesn't have a picture. */
-  Picture getUserPicture(String userId);
+  @Nullable Picture getUserPicture(String userId);
 
   /** Deletes the picture for a given user. If the user does not have a picture or if the user doesn't exists the call is ignored.
    * @throws ProcessEngineException if the user doesn't exist. */

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -40,13 +41,14 @@ import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Collections.emptyList;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
+public @NullMarked class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public ProcessInstance startProcessInstanceByKey(String processDefinitionKey) {
@@ -139,35 +141,35 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   }
 
   @Override
-  public void deleteProcessInstance(String processInstanceId, String deleteReason) {
+  public void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason) {
     deleteProcessInstance(processInstanceId,deleteReason,false);
   }
 
   @Override
-  public Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, String deleteReason) {
+  public Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, @Nullable String deleteReason) {
     return deleteProcessInstancesAsync(processInstanceIds, processInstanceQuery, deleteReason, false);
   }
 
   @Override
-  public Batch deleteProcessInstancesAsync(List<String> processInstanceIds, String deleteReason) {
+  public Batch deleteProcessInstancesAsync(List<String> processInstanceIds, @Nullable String deleteReason) {
     return deleteProcessInstancesAsync(processInstanceIds, null, deleteReason, false);
   }
 
   @Override
-  public Batch deleteProcessInstancesAsync(ProcessInstanceQuery processInstanceQuery, String deleteReason) {
-    return deleteProcessInstancesAsync(null, processInstanceQuery, deleteReason, false);
+  public Batch deleteProcessInstancesAsync(ProcessInstanceQuery processInstanceQuery, @Nullable String deleteReason) {
+    return deleteProcessInstancesAsync(emptyList(), processInstanceQuery, deleteReason, false);
   }
 
   @Override
-  public Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, String deleteReason, boolean skipCustomListeners) {
+  public Batch deleteProcessInstancesAsync(List<String> processInstanceIds, @Nullable ProcessInstanceQuery processInstanceQuery, @Nullable String deleteReason, boolean skipCustomListeners) {
     return deleteProcessInstancesAsync(processInstanceIds, processInstanceQuery, deleteReason, skipCustomListeners, false);
   }
 
   @Override
-  public Batch deleteProcessInstancesAsync(List<String> processInstanceIds, ProcessInstanceQuery processInstanceQuery, String deleteReason,
+  public Batch deleteProcessInstancesAsync(List<String> processInstanceIds, @Nullable ProcessInstanceQuery processInstanceQuery, @Nullable String deleteReason,
                                            boolean skipCustomListeners, boolean skipSubprocesses) {
 
-    return commandExecutor.execute(new DeleteProcessInstanceBatchCmd(
+    return getCommandExecutor().execute(new DeleteProcessInstanceBatchCmd(
         processInstanceIds,
         processInstanceQuery,
         null,
@@ -191,13 +193,13 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public Batch deleteProcessInstancesAsync(List<String> processInstanceIds,
-                                           ProcessInstanceQuery processInstanceQuery,
-                                           HistoricProcessInstanceQuery historicProcessInstanceQuery,
-                                           String deleteReason,
+                                           @Nullable ProcessInstanceQuery processInstanceQuery,
+                                           @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery,
+                                           @Nullable String deleteReason,
                                            boolean skipCustomListeners,
                                            boolean skipSubprocesses,
                                            boolean skipIoMappings) {
-    return commandExecutor.execute(new DeleteProcessInstanceBatchCmd(
+    return getCommandExecutor().execute(new DeleteProcessInstanceBatchCmd(
         processInstanceIds,
         processInstanceQuery,
         historicProcessInstanceQuery,
@@ -209,38 +211,38 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   }
 
   @Override
-  public void deleteProcessInstance(String processInstanceId, String deleteReason, boolean skipCustomListeners) {
+  public void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners) {
     deleteProcessInstance(processInstanceId,deleteReason,skipCustomListeners,false);
   }
 
   @Override
-  public void deleteProcessInstance(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated) {
+  public void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated) {
     deleteProcessInstance(processInstanceId, deleteReason, skipCustomListeners, externallyTerminated, false);
   }
 
   @Override
-  public void deleteProcessInstance(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings) {
+  public void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings) {
     deleteProcessInstance(processInstanceId, deleteReason, skipCustomListeners, externallyTerminated, skipIoMappings, false);
   }
 
   @Override
-  public void deleteProcessInstance(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings, boolean skipSubprocesses) {
-    commandExecutor.execute(new DeleteProcessInstanceCmd(processInstanceId, deleteReason, skipCustomListeners, externallyTerminated, skipIoMappings, skipSubprocesses, true));
+  public void deleteProcessInstance(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings, boolean skipSubprocesses) {
+    getCommandExecutor().execute(new DeleteProcessInstanceCmd(processInstanceId, deleteReason, skipCustomListeners, externallyTerminated, skipIoMappings, skipSubprocesses, true));
   }
 
   @Override
-  public void deleteProcessInstanceIfExists(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings, boolean skipSubprocesses) {
-    commandExecutor.execute(new DeleteProcessInstanceCmd(processInstanceId, deleteReason, skipCustomListeners, externallyTerminated, skipIoMappings, skipSubprocesses, false));
+  public void deleteProcessInstanceIfExists(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipIoMappings, boolean skipSubprocesses) {
+    getCommandExecutor().execute(new DeleteProcessInstanceCmd(processInstanceId, deleteReason, skipCustomListeners, externallyTerminated, skipIoMappings, skipSubprocesses, false));
   }
 
   @Override
-  public void deleteProcessInstances(List<String> processInstanceIds, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated){
+  public void deleteProcessInstances(List<String> processInstanceIds, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated){
     deleteProcessInstances(processInstanceIds, deleteReason, skipCustomListeners, externallyTerminated, false, false);
   }
 
   @Override
   public void deleteProcessInstances(List<String> processInstanceIds,
-                                     String deleteReason,
+                                     @Nullable String deleteReason,
                                      boolean skipCustomListeners,
                                      boolean externallyTerminated,
                                      boolean skipSubprocesses) {
@@ -249,13 +251,13 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   }
 
   @Override
-  public void deleteProcessInstances(List<String> processInstanceIds, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipSubprocesses, boolean skipIoMappings){
-    commandExecutor.execute(new DeleteProcessInstancesCmd(processInstanceIds, deleteReason, skipCustomListeners, externallyTerminated, skipSubprocesses, true, skipIoMappings));
+  public void deleteProcessInstances(List<String> processInstanceIds, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipSubprocesses, boolean skipIoMappings){
+    getCommandExecutor().execute(new DeleteProcessInstancesCmd(processInstanceIds, deleteReason, skipCustomListeners, externallyTerminated, skipSubprocesses, true, skipIoMappings));
   }
 
   @Override
-  public void deleteProcessInstancesIfExists(List<String> processInstanceIds, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipSubprocesses) {
-    commandExecutor.execute(new DeleteProcessInstancesCmd(processInstanceIds, deleteReason, skipCustomListeners, externallyTerminated, skipSubprocesses, false, false));
+  public void deleteProcessInstancesIfExists(List<String> processInstanceIds, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated, boolean skipSubprocesses) {
+    getCommandExecutor().execute(new DeleteProcessInstancesCmd(processInstanceIds, deleteReason, skipCustomListeners, externallyTerminated, skipSubprocesses, false, false));
   }
 
   @Override
@@ -301,7 +303,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public VariableMap getVariablesTyped(String executionId, boolean deserializeObjectValues) {
-    return commandExecutor.execute(new GetExecutionVariablesCmd(executionId, null, false, deserializeObjectValues));
+    return getCommandExecutor().execute(new GetExecutionVariablesCmd(executionId, null, false, deserializeObjectValues));
   }
 
   @Override
@@ -316,7 +318,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public VariableMap getVariablesLocalTyped(String executionId, boolean deserializeObjectValues) {
-    return commandExecutor.execute(new GetExecutionVariablesCmd(executionId, null, true, deserializeObjectValues));
+    return getCommandExecutor().execute(new GetExecutionVariablesCmd(executionId, null, true, deserializeObjectValues));
   }
 
   @Override
@@ -326,7 +328,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public VariableMap getVariablesTyped(String executionId, Collection<String> variableNames, boolean deserializeObjectValues) {
-    return commandExecutor.execute(new GetExecutionVariablesCmd(executionId, variableNames, false, deserializeObjectValues));
+    return getCommandExecutor().execute(new GetExecutionVariablesCmd(executionId, variableNames, false, deserializeObjectValues));
   }
 
   @Override
@@ -336,12 +338,12 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public VariableMap getVariablesLocalTyped(String executionId, Collection<String> variableNames, boolean deserializeObjectValues) {
-    return commandExecutor.execute(new GetExecutionVariablesCmd(executionId, variableNames, true, deserializeObjectValues));
+    return getCommandExecutor().execute(new GetExecutionVariablesCmd(executionId, variableNames, true, deserializeObjectValues));
   }
 
   @Override
   public @Nullable Object getVariable(String executionId, String variableName) {
-    return commandExecutor.execute(new GetExecutionVariableCmd(executionId, variableName, false));
+    return getCommandExecutor().execute(new GetExecutionVariableCmd(executionId, variableName, false));
   }
 
   @Override
@@ -351,7 +353,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public <T extends TypedValue> @Nullable T getVariableTyped(String executionId, String variableName, boolean deserializeObjectValue) {
-    return commandExecutor.execute(new GetExecutionVariableTypedCmd<T>(executionId, variableName, false, deserializeObjectValue));
+    return getCommandExecutor().execute(new GetExecutionVariableTypedCmd<>(executionId, variableName, false, deserializeObjectValue));
   }
 
   @Override
@@ -361,12 +363,12 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public <T extends TypedValue> @Nullable T getVariableLocalTyped(String executionId, String variableName, boolean deserializeObjectValue) {
-    return commandExecutor.execute(new GetExecutionVariableTypedCmd<T>(executionId, variableName, true, deserializeObjectValue));
+    return getCommandExecutor().execute(new GetExecutionVariableTypedCmd<>(executionId, variableName, true, deserializeObjectValue));
   }
 
   @Override
   public @Nullable Object getVariableLocal(String executionId, String variableName) {
-    return commandExecutor.execute(new GetExecutionVariableCmd(executionId, variableName, true));
+    return getCommandExecutor().execute(new GetExecutionVariableCmd(executionId, variableName, true));
   }
 
   @Override
@@ -397,7 +399,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   protected void setVariables(String executionId, Map<String, ? extends Object> variables, boolean local) {
     try {
-      commandExecutor.execute(new SetExecutionVariablesCmd(executionId, variables, local));
+      getCommandExecutor().execute(new SetExecutionVariablesCmd(executionId, variables, local));
     } catch (ProcessEngineException ex) {
       if (ExceptionUtil.checkValueTooLongException(ex)) {
         throw new BadUserRequestException("Variable value is too long", ex);
@@ -411,7 +413,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
                                  ProcessInstanceQuery processInstanceQuery,
                                  HistoricProcessInstanceQuery historicProcessInstanceQuery,
                                  Map<String, ?> variables) {
-    return commandExecutor.execute(new SetVariablesToProcessInstancesBatchCmd(
+    return getCommandExecutor().execute(new SetVariablesToProcessInstancesBatchCmd(
         processInstanceIds,
         processInstanceQuery,
         historicProcessInstanceQuery,
@@ -422,7 +424,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   @Override
   public Batch setVariablesAsync(List<String> processInstanceIds,
                                  Map<String, ?> variables) {
-    return commandExecutor.execute(new SetVariablesToProcessInstancesBatchCmd(
+    return getCommandExecutor().execute(new SetVariablesToProcessInstancesBatchCmd(
         processInstanceIds,
         null,
         null,
@@ -433,7 +435,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   @Override
   public Batch setVariablesAsync(ProcessInstanceQuery processInstanceQuery,
                                  Map<String, ?> variables) {
-    return commandExecutor.execute(new SetVariablesToProcessInstancesBatchCmd(
+    return getCommandExecutor().execute(new SetVariablesToProcessInstancesBatchCmd(
         null,
         processInstanceQuery,
         null,
@@ -444,7 +446,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   @Override
   public Batch setVariablesAsync(HistoricProcessInstanceQuery historicProcessInstanceQuery,
                                  Map<String, ?> variables) {
-    return commandExecutor.execute(new SetVariablesToProcessInstancesBatchCmd(
+    return getCommandExecutor().execute(new SetVariablesToProcessInstancesBatchCmd(
         null,
         null,
         historicProcessInstanceQuery,
@@ -456,25 +458,25 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   public void removeVariable(String executionId, String variableName) {
     Collection<String> variableNames = new ArrayList<>();
     variableNames.add(variableName);
-    commandExecutor.execute(new RemoveExecutionVariablesCmd(executionId, variableNames, false));
+    getCommandExecutor().execute(new RemoveExecutionVariablesCmd(executionId, variableNames, false));
   }
 
   @Override
   public void removeVariableLocal(String executionId, String variableName) {
     Collection<String> variableNames = new ArrayList<>();
     variableNames.add(variableName);
-    commandExecutor.execute(new RemoveExecutionVariablesCmd(executionId, variableNames, true));
+    getCommandExecutor().execute(new RemoveExecutionVariablesCmd(executionId, variableNames, true));
 
   }
 
   @Override
   public void removeVariables(String executionId, Collection<String> variableNames) {
-    commandExecutor.execute(new RemoveExecutionVariablesCmd(executionId, variableNames, false));
+    getCommandExecutor().execute(new RemoveExecutionVariablesCmd(executionId, variableNames, false));
   }
 
   @Override
   public void removeVariablesLocal(String executionId, Collection<String> variableNames) {
-    commandExecutor.execute(new RemoveExecutionVariablesCmd(executionId, variableNames, true));
+    getCommandExecutor().execute(new RemoveExecutionVariablesCmd(executionId, variableNames, true));
   }
 
   public void updateVariables(String executionId, Map<String, ? extends Object> modifications, Collection<String> deletions) {
@@ -487,7 +489,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   protected void updateVariables(String executionId, Map<String, ? extends Object> modifications, Collection<String> deletions, boolean local) {
     try {
-      commandExecutor.execute(new PatchExecutionVariablesCmd(executionId, modifications, deletions, local));
+      getCommandExecutor().execute(new PatchExecutionVariablesCmd(executionId, modifications, deletions, local));
     } catch (ProcessEngineException ex) {
       if (ExceptionUtil.checkValueTooLongException(ex)) {
         throw new BadUserRequestException("Variable value is too long", ex);
@@ -500,17 +502,17 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public void signal(String executionId) {
-    commandExecutor.execute(new SignalCmd(executionId, null, null, null));
+    getCommandExecutor().execute(new SignalCmd(executionId, null, null, null));
   }
 
   @Override
   public void signal(String executionId, String signalName, Object signalData, Map<String, Object> processVariables) {
-    commandExecutor.execute(new SignalCmd(executionId, signalName, signalData, processVariables));
+    getCommandExecutor().execute(new SignalCmd(executionId, signalName, signalData, processVariables));
   }
 
   @Override
   public void signal(String executionId, Map<String, Object> processVariables) {
-    commandExecutor.execute(new SignalCmd(executionId, null, null, processVariables));
+    getCommandExecutor().execute(new SignalCmd(executionId, null, null, processVariables));
   }
 
   @Override
@@ -520,16 +522,18 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public List<String> getActiveActivityIds(String executionId) {
-    return commandExecutor.execute(new FindActiveActivityIdsCmd(executionId));
+    return getCommandExecutor().execute(new FindActiveActivityIdsCmd(executionId));
   }
 
   @Override
   public @Nullable ActivityInstance getActivityInstance(String processInstanceId) {
-    return commandExecutor.execute(new GetActivityInstanceCmd(processInstanceId));
+    return getCommandExecutor().execute(new GetActivityInstanceCmd(processInstanceId));
   }
 
+  /** @deprecated Unused and not available on the service interface */
+  @Deprecated(forRemoval = true, since = "2.2")
   public FormData getFormInstanceById(String processDefinitionId) {
-    return commandExecutor.execute(new GetStartFormCmd(processDefinitionId));
+    return getCommandExecutor().execute(new GetStartFormCmd(processDefinitionId));
   }
 
   @Override
@@ -666,13 +670,13 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   @Override
   public void messageEventReceived(String messageName, String executionId) {
     ensureNotNull("messageName", messageName);
-    commandExecutor.execute(new MessageEventReceivedCmd(messageName, executionId, null));
+    getCommandExecutor().execute(new MessageEventReceivedCmd(messageName, executionId, null));
   }
 
   @Override
   public void messageEventReceived(String messageName, String executionId, Map<String, Object> processVariables) {
     ensureNotNull("messageName", messageName);
-    commandExecutor.execute(new MessageEventReceivedCmd(messageName, executionId, processVariables));
+    getCommandExecutor().execute(new MessageEventReceivedCmd(messageName, executionId, processVariables));
   }
 
   @Override
@@ -772,23 +776,23 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   }
 
   @Override
-  public Incident createIncident(String incidentType, String executionId, String configuration, String message) {
-    return commandExecutor.execute(new CreateIncidentCmd(incidentType, executionId, configuration, message));
+  public Incident createIncident(String incidentType, String executionId, String configuration, @Nullable String message) {
+    return getCommandExecutor().execute(new CreateIncidentCmd(incidentType, executionId, configuration, message));
   }
 
   @Override
   public void resolveIncident(String incidentId) {
-    commandExecutor.execute(new ResolveIncidentCmd(incidentId));
+    getCommandExecutor().execute(new ResolveIncidentCmd(incidentId));
   }
 
   @Override
   public void setAnnotationForIncidentById(String incidentId, String annotation) {
-    commandExecutor.execute(new SetAnnotationForIncidentCmd(incidentId, annotation));
+    getCommandExecutor().execute(new SetAnnotationForIncidentCmd(incidentId, annotation));
   }
 
   @Override
   public void clearAnnotationForIncidentById(String incidentId) {
-    commandExecutor.execute(new SetAnnotationForIncidentCmd(incidentId, null));
+    getCommandExecutor().execute(new SetAnnotationForIncidentCmd(incidentId, null));
   }
 
   @Override

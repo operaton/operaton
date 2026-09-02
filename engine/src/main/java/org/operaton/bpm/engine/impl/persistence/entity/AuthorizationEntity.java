@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -40,21 +42,21 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevision, HasDbReferences {
+public @NullMarked class AuthorizationEntity implements Authorization, DbEntity, HasDbRevision, HasDbReferences {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  protected String id;
+  protected @Nullable String id;
   protected int revision;
 
   protected int authorizationType;
   protected int permissions;
-  protected String userId;
-  protected String groupId;
-  protected Integer resourceType;
-  protected String resourceId;
-  protected Date removalTime;
-  protected String rootProcessInstanceId;
+  protected @Nullable String userId;
+  protected @Nullable String groupId;
+  protected @Nullable Integer resourceType;
+  protected @Nullable String resourceId;
+  protected @Nullable Date removalTime;
+  protected @Nullable String rootProcessInstanceId;
 
   private Set<Permission> cachedPermissions = new HashSet<>();
 
@@ -185,12 +187,12 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
   }
 
   @Override
-  public String getGroupId() {
+  public @Nullable String getGroupId() {
     return groupId;
   }
 
   @Override
-  public void setGroupId(String groupId) {
+  public void setGroupId(@Nullable String groupId) {
     if(groupId != null && authorizationType == AUTH_TYPE_GLOBAL) {
       throw LOG.notUsableGroupIdForGlobalAuthorizationException();
     }
@@ -198,12 +200,12 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
   }
 
   @Override
-  public String getUserId() {
+  public @Nullable String getUserId() {
     return userId;
   }
 
   @Override
-  public void setUserId(String userId) {
+  public void setUserId(@Nullable String userId) {
     if(userId != null && authorizationType == AUTH_TYPE_GLOBAL && !ANY.equals(userId)) {
       throw LOG.illegalValueForUserIdException(userId, ANY);
     }
@@ -230,17 +232,17 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
   }
 
   @Override
-  public String getResourceId() {
+  public @Nullable String getResourceId() {
     return resourceId;
   }
 
   @Override
-  public void setResourceId(String resourceId) {
+  public void setResourceId(@Nullable String resourceId) {
     this.resourceId = resourceId;
   }
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -280,32 +282,44 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
   public Object getPersistentState() {
 
     HashMap<String, Object> state = new HashMap<>();
-    state.put("userId", userId);
-    state.put("groupId", groupId);
-    state.put("resourceType", resourceType);
-    state.put("resourceId", resourceId);
+    if (userId != null) {
+      state.put("userId", userId);
+    }
+    if (groupId != null) {
+      state.put("groupId", groupId);
+    }
+    if (resourceType != null) {
+      state.put("resourceType", resourceType);
+    }
+    if (resourceId != null) {
+      state.put("resourceId", resourceId);
+    }
     state.put("permissions", permissions);
-    state.put("removalTime", removalTime);
-    state.put("rootProcessInstanceId", rootProcessInstanceId);
+    if (removalTime != null) {
+      state.put("removalTime", removalTime);
+    }
+    if (rootProcessInstanceId != null) {
+      state.put("rootProcessInstanceId", rootProcessInstanceId);
+    }
 
     return state;
   }
 
   @Override
-  public Date getRemovalTime() {
+  public @Nullable Date getRemovalTime() {
     return removalTime;
   }
 
-  public void setRemovalTime(Date removalTime) {
+  public void setRemovalTime(@Nullable Date removalTime) {
     this.removalTime = removalTime;
   }
 
   @Override
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 

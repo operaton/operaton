@@ -19,6 +19,8 @@ package org.operaton.bpm.engine;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
 import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
@@ -78,13 +80,15 @@ import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricProcessInstancesB
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.repository.CaseDefinition;
+import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 
 /**
  * Service exposing information about ongoing and past process instances.  This is different
  * from the runtime information in the sense that this runtime information only contains
- * the actual runtime state at any given moment and it is optimized for runtime
+ * the actual runtime state at any given moment, and it is optimized for runtime
  * process execution performance.  The history information is optimized for easy
  * querying and remains permanent in the persistent storage.
  *
@@ -92,7 +96,7 @@ import org.operaton.bpm.engine.runtime.Job;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public interface HistoryService {
+public @NullMarked interface HistoryService {
 
   /**
    * Creates a new programmatic query to search for {@link HistoricProcessInstance}s.
@@ -328,7 +332,7 @@ public interface HistoryService {
 
   /**
    * Deletes historic process instances and all related historic data in bulk manner. DELETE SQL statement will be created for each entity type. They will have list
-   * of given process instance ids in IN clause. Therefore, DB limitation for number of values in IN clause must be taken into account.
+   * of given process instance ids in an IN clause. Therefore, DB limitation for number of values in an IN clause must be taken into account.
    *
    * @param processInstanceIds list of process instance ids for removal
    *
@@ -372,7 +376,7 @@ public interface HistoryService {
    * @return history cleanup job entity
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  Job findHistoryCleanupJob();
+  @Nullable Job findHistoryCleanupJob();
 
   /**
    * Finds history cleanup jobs if present.
@@ -390,7 +394,7 @@ public interface HistoryService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, String deleteReason);
+  Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, @Nullable String deleteReason);
 
   /**
    * Deletes historic process instances asynchronously based on query. All historic activities, historic task and
@@ -402,7 +406,7 @@ public interface HistoryService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricProcessInstancesAsync(HistoricProcessInstanceQuery query, String deleteReason);
+  Batch deleteHistoricProcessInstancesAsync(HistoricProcessInstanceQuery query, @Nullable String deleteReason);
 
   /**
    * Deletes historic process instances asynchronously based on query and a list of process instances. Query result and
@@ -415,7 +419,7 @@ public interface HistoryService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, HistoricProcessInstanceQuery query, String deleteReason);
+  Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, @Nullable HistoricProcessInstanceQuery query, @Nullable String deleteReason);
 
   /**
    * Deletes a user operation log entry. Does not cascade to any related entities.
@@ -440,7 +444,7 @@ public interface HistoryService {
 
   /**
    * Deletes historic case instances and all related historic data in bulk manner. DELETE SQL statement will be created for each entity type. They will have list
-   * of given case instance ids in IN clause. Therefore, DB limitation for number of values in IN clause must be taken into account.
+   * of given case instance ids in an IN clause. Therefore, DB limitation for number of values in an IN clause must be taken into account.
    *
    * @param caseInstanceIds list of case instance ids for removal
    */
@@ -465,7 +469,7 @@ public interface HistoryService {
 
   /**
    * Deletes decision instances and all related historic data in bulk manner. DELETE SQL statement will be created for each entity type. They will have list
-   * of given decision instance ids in IN clause. Therefore, DB limitation for number of values in IN clause must be taken into account.
+   * of given decision instance ids in an IN clause. Therefore, DB limitation for number of values in an IN clause must be taken into account.
    *
    * @param decisionInstanceIds list of decision instance ids for removal.
    *
@@ -507,7 +511,7 @@ public interface HistoryService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_DECISION_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, String deleteReason);
+  Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, @Nullable String deleteReason);
 
   /**
    * Deletes historic decision instances asynchronously based on query of decision instances.
@@ -518,7 +522,7 @@ public interface HistoryService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_DECISION_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricDecisionInstancesAsync(HistoricDecisionInstanceQuery query, String deleteReason);
+  Batch deleteHistoricDecisionInstancesAsync(HistoricDecisionInstanceQuery query, @Nullable String deleteReason);
 
   /**
    * Deletes historic decision instances asynchronously based on query and a list of decision instances, whereby query result and
@@ -530,7 +534,7 @@ public interface HistoryService {
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_DECISION_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, HistoricDecisionInstanceQuery query, String deleteReason);
+  Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, @Nullable HistoricDecisionInstanceQuery query, @Nullable String deleteReason);
 
   /**
    * Deletes a historic variable instance by its id. All related historic

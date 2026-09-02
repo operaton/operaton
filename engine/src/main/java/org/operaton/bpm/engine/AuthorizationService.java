@@ -18,6 +18,7 @@ package org.operaton.bpm.engine;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -67,7 +68,7 @@ import org.operaton.bpm.engine.authorization.Resources;
  *
  * @author Daniel Meyer
  */
-public interface AuthorizationService {
+public @NullMarked interface AuthorizationService {
 
   // Authorization CRUD //////////////////////////////////////
 

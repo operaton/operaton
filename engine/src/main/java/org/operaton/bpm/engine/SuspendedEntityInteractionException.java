@@ -18,6 +18,7 @@ package org.operaton.bpm.engine;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 
 /**
@@ -27,7 +28,8 @@ import org.operaton.bpm.engine.exception.NotAllowedException;
  *
  * @author Thorben Lindhauer
  */
-public class SuspendedEntityInteractionException extends NotAllowedException {
+@SuppressWarnings("java:S110")
+public @NullMarked class SuspendedEntityInteractionException extends NotAllowedException {
 
   @Serial private static final long serialVersionUID = 1L;
 

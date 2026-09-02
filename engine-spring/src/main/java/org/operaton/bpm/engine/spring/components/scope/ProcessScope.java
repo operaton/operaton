@@ -21,6 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import org.aopalliance.intercept.MethodInterceptor;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.BpmnExecutionContext;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.scope.ScopedObject;
@@ -55,14 +57,13 @@ import static java.util.Objects.requireNonNull;
  * @author Josh Long
  * @since 5.3
  */
-public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostProcessor, DisposableBean {
+public @NullMarked class ProcessScope implements Scope, InitializingBean, BeanFactoryPostProcessor, DisposableBean {
 
     /**
      * Map of the processVariables. Supports correct, scoped access to process variables so that
-     * <code>
-     *
+     * <pre>
      * @Value("#{ processVariables['customerId'] }") long customerId;
-     * </code>
+     * </pre>
      * <p/>
      * works in any bean - scoped or not
      */
@@ -73,9 +74,9 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
-    private ProcessEngine processEngine;
+    private @Nullable ProcessEngine processEngine;
 
-    private RuntimeService runtimeService;
+    private @Nullable RuntimeService runtimeService;
 
     // set through Namespace reflection if nothing else
     @SuppressWarnings("unused")
@@ -84,6 +85,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
     }
 
   @Override
+  @SuppressWarnings("java:S2637")
   public Object get(String name, ObjectFactory<?> objectFactory) {
 
         ExecutionEntity executionEntity = null;
@@ -104,8 +106,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
                 persistVariable(name, scopedObject);
             }
             return createDirtyCheckingProxy(name, scopedObject);
-        } catch (Throwable th) {
-            logger.warning(() -> "couldn't return value from process scope! " + StringUtil.getStackTrace(th));
+        } catch (Exception e) {
+            logger.warning(() -> "couldn't return value from process scope! " + StringUtil.getStackTrace(e));
         } finally {
             if (executionEntity != null) {
               String executionEntityId = executionEntity.getId();
@@ -122,19 +124,19 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         logger.fine(() -> "no support for registering destruction callbacks implemented currently. registerDestructionCallback('%s',callback) will do nothing.".formatted(name));
     }
 
-    private String getExecutionId() {
-        return Context.getBpmnExecutionContext().getExecution().getId();
-    }
+  private String getExecutionId() {
+      BpmnExecutionContext executionContext = requireNonNull(Context.getBpmnExecutionContext());
+      return executionContext.getExecution().getId();
+  }
 
   @Override
-  public Object remove(String name) {
-
-        logger.fine(() -> "remove '%s'".formatted(name));
-        return runtimeService.getVariable(getExecutionId(), name);
-    }
+  public @Nullable Object remove(String name) {
+      logger.fine(() -> "remove '%s'".formatted(name));
+      return requireNonNull(runtimeService).getVariable(getExecutionId(), name);
+  }
 
   @Override
-  public Object resolveContextualObject(String key) {
+  public @Nullable Object resolveContextualObject(String key) {
         BpmnExecutionContext executionContext = requireNonNull(Context.getBpmnExecutionContext());
         if ("executionId".equalsIgnoreCase(key)) {
           return executionContext.getExecution().getId();
@@ -165,8 +167,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
             return "SharedProcessInstance";
           }
 
-
-          ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
+          BpmnExecutionContext executionContext = requireNonNull(Context.getBpmnExecutionContext());
+          ProcessInstance processInstance = executionContext.getProcessInstance();
           Method method = methodInvocation.getMethod();
           Object[] args = methodInvocation.getArguments();
           return method.invoke(processInstance, args);
@@ -187,10 +189,12 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
             String varName = (String) o;
 
-            ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
+            BpmnExecutionContext executionContext = requireNonNull(Context.getBpmnExecutionContext());
+            ProcessInstance processInstance = executionContext.getProcessInstance();
             ExecutionEntity executionEntity = (ExecutionEntity) processInstance;
             if (executionEntity.getVariableNames().contains(varName)) {
-                return executionEntity.getVariable(varName);
+                Object variable = executionEntity.getVariable(varName);
+                return requireNonNull(variable);
             }
             throw new ProcessEngineException("no processVariable by the name of '%s' is available!".formatted(varName));
         }
@@ -231,7 +235,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         this.runtimeService = this.processEngine.getRuntimeService();
     }
 
-    private Object createDirtyCheckingProxy(final String name, final Object scopedObject) throws Throwable {
+    private Object createDirtyCheckingProxy(final String name, final Object scopedObject) {
         ProxyFactory proxyFactoryBean = new ProxyFactory(scopedObject);
         proxyFactoryBean.setProxyTargetClass(true);
         proxyFactoryBean.addAdvice((MethodInterceptor) methodInvocation -> {

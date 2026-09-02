@@ -220,12 +220,14 @@ class IdentityServiceTest {
 
     // Fetch and update the user
     user = identityService.createUserQuery().userId("johndoe").singleResult();
+    assertThat(user).isNotNull();
     user.setEmail("updated@alfresco.com");
     user.setFirstName("Jane");
     user.setLastName("Donnel");
     identityService.saveUser(user);
 
     user = identityService.createUserQuery().userId("johndoe").singleResult();
+    assertThat(user).isNotNull();
     assertThat(user.getFirstName()).isEqualTo("Jane");
     assertThat(user.getLastName()).isEqualTo("Donnel");
     assertThat(user.getEmail()).isEqualTo("updated@alfresco.com");
@@ -245,9 +247,11 @@ class IdentityServiceTest {
     identityService.setUserPicture(userId, picture);
 
     picture = identityService.getUserPicture(userId);
+    assertThat(picture).isNotNull();
 
     // Fetch and update the user
     user = identityService.createUserQuery().userId("johndoe").singleResult();
+    assertThat(user).isNotNull();
     assertThat(Arrays.equals("niceface".getBytes(), picture.getBytes())).as("byte arrays differ").isTrue();
     assertThat(picture.getMimeType()).isEqualTo("image/string");
 
@@ -286,10 +290,12 @@ class IdentityServiceTest {
     identityService.saveGroup(group);
 
     group = identityService.createGroupQuery().groupId("sales").singleResult();
+    assertThat(group).isNotNull();
     group.setName("Updated");
     identityService.saveGroup(group);
 
     group = identityService.createGroupQuery().groupId("sales").singleResult();
+    assertThat(group).isNotNull();
     assertThat(group.getName()).isEqualTo("Updated");
 
     identityService.deleteGroup(group.getId());
@@ -550,7 +556,9 @@ class IdentityServiceTest {
     identityService.saveUser(user);
 
     User user1 = identityService.createUserQuery().singleResult();
+    assertThat(user1).isNotNull();
     User user2 = identityService.createUserQuery().singleResult();
+    assertThat(user2).isNotNull();
 
     user1.setFirstName("name one");
     identityService.saveUser(user1);
@@ -568,7 +576,9 @@ class IdentityServiceTest {
     identityService.saveGroup(group);
 
     Group group1 = identityService.createGroupQuery().singleResult();
+    assertThat(group1).isNotNull();
     Group group2 = identityService.createGroupQuery().singleResult();
+    assertThat(group2).isNotNull();
 
     group1.setName("name one");
     identityService.saveGroup(group1);
@@ -842,6 +852,7 @@ class IdentityServiceTest {
     identityService.saveUser(user);
 
     user = identityService.createUserQuery().userId("johndoe").singleResult();
+    assertThat(user).isNotNull();
     assertThat(user.getId()).isEqualTo("johndoe");
     assertThat(user.getFirstName()).isEqualTo("John");
     assertThat(user.getLastName()).isEqualTo("Doe");
@@ -857,6 +868,7 @@ class IdentityServiceTest {
     identityService.saveGroup(group);
 
     group = identityService.createGroupQuery().groupId("sales").singleResult();
+    assertThat(group).isNotNull();
     assertThat(group.getId()).isEqualTo("sales");
     assertThat(group.getName()).isEqualTo("Sales division");
 

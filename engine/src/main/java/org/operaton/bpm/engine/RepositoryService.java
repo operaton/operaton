@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -62,7 +63,7 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
  * @author Tijs Rademakers
  * @author Joram Barrez
  */
-public interface RepositoryService {
+public @NullMarked interface RepositoryService {
 
   /**
    * Starts creating a new deployment

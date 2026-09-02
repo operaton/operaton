@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
@@ -51,7 +52,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Joram Barrez
  * @author Thorben Lindhauer
  */
-public interface TaskService {
+public @NullMarked interface TaskService {
 
   /**
    * Creates a new task that is not related to any process instance.
@@ -193,7 +194,7 @@ public interface TaskService {
    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
    *          (if the task is part of a running process instance).
    */
-  void claim(String taskId, String userId);
+  void claim(String taskId, @Nullable String userId);
 
   /**
    * Marks a task as done and continues process execution.
@@ -281,7 +282,7 @@ public interface TaskService {
    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
    *          (if the task is part of a running process instance).
    */
-  void resolveTask(String taskId, Map<String, Object> variables);
+  void resolveTask(String taskId, @Nullable Map<String, Object> variables);
 
   /**
    * Marks a task as done and continues process execution.
@@ -303,7 +304,7 @@ public interface TaskService {
    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
    *          (if the task is part of a running process instance).
    */
-  void complete(String taskId, Map<String, Object> variables);
+  void complete(String taskId, @Nullable Map<String, Object> variables);
 
   /**
    * Marks a task as done and continues process execution.
@@ -330,14 +331,14 @@ public interface TaskService {
    *          or no {@link Permissions#UPDATE_TASK} permission on {@link Resources#PROCESS_DEFINITION}
    *          (if the task is part of a running process instance).
    */
-  VariableMap completeWithVariablesInReturn(String taskId, Map<String, Object> variables, boolean deserializeValues);
+  VariableMap completeWithVariablesInReturn(String taskId, @Nullable Map<String, Object> variables, boolean deserializeValues);
 
   /**
    * Changes the assignee of the given task to the given userId.
    * No check is done whether the user is known by the identity component.
    *
    * @param taskId id of the task, cannot be null.
-   * @param userId id of the user to use as assignee.
+   * @param userId id of the user to use as assignee. Set <code>null</code> to unassign the task.
    *
    * @throws NullValueException in case the given taskId is null.
    * @throws NotFoundException when the task or user doesn't exist.
@@ -345,7 +346,7 @@ public interface TaskService {
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
    *                                (if the task is part of a running process instance).
    */
-  void setAssignee(String taskId, String userId);
+  void setAssignee(String taskId, @Nullable String userId);
 
   /**
    * Transfers ownership of this task to another user.
@@ -693,7 +694,7 @@ public interface TaskService {
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
    */
-  <T extends TypedValue> T getVariableTyped(String taskId, String variableName);
+  <T extends TypedValue> @Nullable T getVariableTyped(String taskId, String variableName);
 
   /**
    * Get a variables and search in the task scope and if available also the execution scopes.
@@ -721,7 +722,7 @@ public interface TaskService {
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
    */
-  <T extends TypedValue> T getVariableTyped(String taskId, String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableTyped(String taskId, String variableName, boolean deserializeValue);
 
   /**
    * Get a variables and only search in the task scope.
@@ -767,7 +768,7 @@ public interface TaskService {
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
    */
-  <T extends TypedValue> T getVariableLocalTyped(String taskId, String variableName);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String taskId, String variableName);
 
   /**
    * Get a variables and only search in the task scope.
@@ -795,7 +796,7 @@ public interface TaskService {
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
    */
-  <T extends TypedValue> T getVariableLocalTyped(String taskId, String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String taskId, String variableName, boolean deserializeValue);
 
   /**
    * Get all variables and search in the task scope and if available also the execution scopes.
@@ -893,7 +894,6 @@ public interface TaskService {
    * for better performance.
    *
    * @param taskId the id of the task
-   * @param deserializeValues if false, {@link SerializableValue SerializableValues} will not be deserialized.
    *
    * @throws ProcessEngineException
    *          when the task doesn't exist.
@@ -1103,10 +1103,10 @@ public interface TaskService {
    * @deprecated Use {@link #createComment(String, String, String)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  void addComment(String taskId, String processInstanceId, String message);
+  void addComment(@Nullable String taskId, String processInstanceId, String message);
 
   /** Creates a comment to a task and/or process instance and returns the comment. */
-  Comment createComment(String taskId, String processInstanceId, String message);
+  Comment createComment(@Nullable String taskId, String processInstanceId, String message);
 
   /**
    * Deletes a comment of a given taskId and commentId
@@ -1221,7 +1221,7 @@ public interface TaskService {
    * @param content - byte array with content of attachment
    *
    */
-  Attachment createAttachment(String attachmentType, String taskId, String processInstanceId, String attachmentName, String attachmentDescription, InputStream content);
+  Attachment createAttachment(@Nullable String attachmentType, @Nullable String taskId, @Nullable String processInstanceId, @Nullable String attachmentName, @Nullable String attachmentDescription, @Nullable InputStream content);
 
   /**
    * Add a new attachment to a task and/or a process instance and use an url as the content
@@ -1239,7 +1239,7 @@ public interface TaskService {
    * @param url - url of the attachment, can be null
    *
    */
-  Attachment createAttachment(String attachmentType, String taskId, String processInstanceId, String attachmentName, String attachmentDescription, String url);
+  Attachment createAttachment(@Nullable String attachmentType, @Nullable String taskId, @Nullable String processInstanceId, @Nullable String attachmentName, @Nullable String attachmentDescription, @Nullable String url);
 
   /** Update the name and decription of an attachment */
   void saveAttachment(Attachment attachment);
@@ -1315,7 +1315,6 @@ public interface TaskService {
    *
    * @param taskId the id of an existing active task
    * @param escalationCode the escalation code of the corresponding escalation
-   * @param variables the variables to pass to the execution
    *
    * @throws NotFoundException if no task with the given id exists
    * @throws BadUserRequestException if task id or escalation code were null or empty

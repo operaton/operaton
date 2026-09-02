@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 
 /**
@@ -23,10 +25,13 @@ import java.io.Serial;
  *
  * @author Sebastian Menski
  */
-public class ScriptCompilationException extends ScriptEngineException {
+@SuppressWarnings({"java:S1133", "java:S110"})
+public @NullMarked class ScriptCompilationException extends ScriptEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 
+  /** @deprecated Unused constructor */
+  @Deprecated(forRemoval = true, since = "2.2")
   public ScriptCompilationException() {
   }
 
@@ -34,10 +39,14 @@ public class ScriptCompilationException extends ScriptEngineException {
     super(message, cause);
   }
 
+  /** @deprecated Unused constructor */
+  @Deprecated(forRemoval = true, since = "2.2")
   public ScriptCompilationException(String message) {
     super(message);
   }
 
+  /** @deprecated Unused constructor */
+  @Deprecated(forRemoval = true, since = "2.2")
   public ScriptCompilationException(Throwable cause) {
     super(cause);
   }

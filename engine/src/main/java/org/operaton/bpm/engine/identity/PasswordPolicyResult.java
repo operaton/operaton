@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.identity;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ import java.util.List;
  * @author Miklas Boskamp
  *
  */
-public interface PasswordPolicyResult {
+public @NullMarked interface PasswordPolicyResult {
 
   /**
    * Indicator of the overall result of the check.

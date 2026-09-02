@@ -24,8 +24,9 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -153,7 +154,7 @@ public final class ProcessEngines {
    */
   @Deprecated(since = "1.1", forRemoval = true)
   @SuppressWarnings("java:S1133")
-  protected static void initProcessEngineFromSpringResource(URL resource) {
+  static void initProcessEngineFromSpringResource(URL resource) {
     try {
       initProcessEngineFromSpringResource(resource.toURI());
     } catch (URISyntaxException e) {
@@ -232,7 +233,7 @@ public final class ProcessEngines {
       PROCESS_ENGINE_INFOS_BY_NAME.put(processEngineName, processEngineInfo);
     } catch (RuntimeException e) {
       LOG.exceptionWhileInitializingProcessengine(e);
-      processEngineInfo = new ProcessEngineInfoImpl(null, resourceUrlString, getExceptionString(e));
+      processEngineInfo = new ProcessEngineInfoImpl("<uninitialized>", resourceUrlString, getExceptionString(e));
     }
     PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.put(resourceUrlString, processEngineInfo);
     PROCESS_ENGINE_INFOS.add(processEngineInfo);
@@ -274,6 +275,7 @@ public final class ProcessEngines {
    * {@link ProcessEngineInfo} is available for engines which were registered
    * programmatically.
    */
+  @SuppressWarnings("unused")
   public static @Nullable ProcessEngineInfo getProcessEngineInfo(String processEngineName) {
     return PROCESS_ENGINE_INFOS_BY_NAME.get(processEngineName);
   }
@@ -326,18 +328,14 @@ public final class ProcessEngines {
    */
   public static synchronized void destroy() {
     if (isInitialized) {
-      Map<String, ProcessEngine> engines = new HashMap<>(processEngines);
+      Collection<ProcessEngine> engines = new ArrayList<>(processEngines.values());
       processEngines = new ConcurrentHashMap<>();
 
-      for (var processEngine : engines.values()) {
+      for (var processEngine : engines) {
         try {
           processEngine.close();
         } catch (Exception e) {
-          LOG.exceptionWhileClosingProcessEngine(
-              processEngine.getName() == null
-                  ? "the default process engine"
-                  : "process engine " + processEngine.getName(),
-              e);
+          LOG.exceptionWhileClosingProcessEngine("process engine " + processEngine.getName(), e);
         }
       }
 

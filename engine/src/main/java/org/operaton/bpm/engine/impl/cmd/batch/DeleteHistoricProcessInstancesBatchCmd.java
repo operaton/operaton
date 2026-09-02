@@ -43,12 +43,12 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
  */
 public @NullMarked class DeleteHistoricProcessInstancesBatchCmd implements Command<Batch> {
 
-  protected final String deleteReason;
+  protected @Nullable String deleteReason;
   protected List<String> historicProcessInstanceIds;
   protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
 
-  public DeleteHistoricProcessInstancesBatchCmd(List<String> historicProcessInstanceIds, HistoricProcessInstanceQuery historicProcessInstanceQuery,
-      String deleteReason) {
+  public DeleteHistoricProcessInstancesBatchCmd(List<String> historicProcessInstanceIds, @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery,
+          @Nullable String deleteReason) {
     super();
     this.historicProcessInstanceIds = historicProcessInstanceIds;
     this.historicProcessInstanceQuery = historicProcessInstanceQuery;

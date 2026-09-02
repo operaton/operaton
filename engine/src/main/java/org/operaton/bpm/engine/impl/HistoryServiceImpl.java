@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.HistoryService;
 
 import org.jspecify.annotations.Nullable;
@@ -78,12 +79,14 @@ import org.operaton.bpm.engine.impl.history.SetRemovalTimeToHistoricDecisionInst
 import org.operaton.bpm.engine.impl.history.SetRemovalTimeToHistoricProcessInstancesBuilderImpl;
 import org.operaton.bpm.engine.runtime.Job;
 
+import static java.util.Collections.emptyList;
+
 /**
  * @author Tom Baeyens
  * @author Bernd Ruecker (Camunda)
  * @author Christian Stettler
  */
-public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
+public @NullMarked class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public HistoricProcessInstanceQuery createHistoricProcessInstanceQuery() {
@@ -152,7 +155,7 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public void deleteHistoricTaskInstance(String taskId) {
-    commandExecutor.execute(new DeleteHistoricTaskInstanceCmd(taskId));
+    getCommandExecutor().execute(new DeleteHistoricTaskInstanceCmd(taskId));
   }
 
   @Override
@@ -167,12 +170,12 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public void deleteHistoricProcessInstances(List<String> processInstanceIds) {
-    commandExecutor.execute(new DeleteHistoricProcessInstancesCmd(processInstanceIds, true));
+    getCommandExecutor().execute(new DeleteHistoricProcessInstancesCmd(processInstanceIds, true));
   }
 
   @Override
   public void deleteHistoricProcessInstancesIfExists(List<String> processInstanceIds) {
-    commandExecutor.execute(new DeleteHistoricProcessInstancesCmd(processInstanceIds, false));
+    getCommandExecutor().execute(new DeleteHistoricProcessInstancesCmd(processInstanceIds, false));
   }
 
   @Override
@@ -187,12 +190,12 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public Job cleanUpHistoryAsync(boolean immediatelyDue) {
-    return commandExecutor.execute(new HistoryCleanupCmd(immediatelyDue));
+    return getCommandExecutor().execute(new HistoryCleanupCmd(immediatelyDue));
   }
 
   @Override
   public @Nullable Job findHistoryCleanupJob() {
-    final List<Job> jobs = commandExecutor.execute(new FindHistoryCleanupJobsCmd());
+    final List<Job> jobs = getCommandExecutor().execute(new FindHistoryCleanupJobsCmd());
     if (!jobs.isEmpty()) {
       return jobs.get(0);
     } else {
@@ -202,37 +205,37 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public List<Job> findHistoryCleanupJobs() {
-    return commandExecutor.execute(new FindHistoryCleanupJobsCmd());
+    return getCommandExecutor().execute(new FindHistoryCleanupJobsCmd());
   }
 
   @Override
-  public Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, String deleteReason) {
+  public Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, @Nullable String deleteReason) {
     return this.deleteHistoricProcessInstancesAsync(processInstanceIds,null,deleteReason);
   }
 
   @Override
-  public Batch deleteHistoricProcessInstancesAsync(HistoricProcessInstanceQuery query, String deleteReason) {
-    return this.deleteHistoricProcessInstancesAsync(null,query,deleteReason);
+  public Batch deleteHistoricProcessInstancesAsync(HistoricProcessInstanceQuery query, @Nullable String deleteReason) {
+    return this.deleteHistoricProcessInstancesAsync(emptyList(),query,deleteReason);
   }
 
   @Override
-  public Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, HistoricProcessInstanceQuery query, String deleteReason) {
-    return commandExecutor.execute(new DeleteHistoricProcessInstancesBatchCmd(processInstanceIds, query, deleteReason));
+  public Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, @Nullable HistoricProcessInstanceQuery query, @Nullable String deleteReason) {
+    return getCommandExecutor().execute(new DeleteHistoricProcessInstancesBatchCmd(processInstanceIds, query, deleteReason));
   }
 
   @Override
   public void deleteUserOperationLogEntry(String entryId) {
-    commandExecutor.execute(new DeleteUserOperationLogEntryCmd(entryId));
+    getCommandExecutor().execute(new DeleteUserOperationLogEntryCmd(entryId));
   }
 
   @Override
   public void deleteHistoricCaseInstance(String caseInstanceId) {
-    commandExecutor.execute(new DeleteHistoricCaseInstanceCmd(caseInstanceId));
+    getCommandExecutor().execute(new DeleteHistoricCaseInstanceCmd(caseInstanceId));
   }
 
   @Override
   public void deleteHistoricCaseInstancesBulk(List<String> caseInstanceIds) {
-    commandExecutor.execute(new DeleteHistoricCaseInstancesBulkCmd(caseInstanceIds));
+    getCommandExecutor().execute(new DeleteHistoricCaseInstancesBulkCmd(caseInstanceIds));
   }
 
   @Override
@@ -242,42 +245,42 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public void deleteHistoricDecisionInstancesBulk(List<String> decisionInstanceIds) {
-    commandExecutor.execute(new DeleteHistoricDecisionInstancesBulkCmd(decisionInstanceIds));
+    getCommandExecutor().execute(new DeleteHistoricDecisionInstancesBulkCmd(decisionInstanceIds));
   }
 
   @Override
   public void deleteHistoricDecisionInstanceByDefinitionId(String decisionDefinitionId) {
-    commandExecutor.execute(new DeleteHistoricDecisionInstanceByDefinitionIdCmd(decisionDefinitionId));
+    getCommandExecutor().execute(new DeleteHistoricDecisionInstanceByDefinitionIdCmd(decisionDefinitionId));
   }
 
   @Override
   public void deleteHistoricDecisionInstanceByInstanceId(String historicDecisionInstanceId) {
-    commandExecutor.execute(new DeleteHistoricDecisionInstanceByInstanceIdCmd(historicDecisionInstanceId));
+    getCommandExecutor().execute(new DeleteHistoricDecisionInstanceByInstanceIdCmd(historicDecisionInstanceId));
   }
 
   @Override
-  public Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, String deleteReason) {
+  public Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, @Nullable String deleteReason) {
     return deleteHistoricDecisionInstancesAsync(decisionInstanceIds, null, deleteReason);
   }
 
   @Override
-  public Batch deleteHistoricDecisionInstancesAsync(HistoricDecisionInstanceQuery query, String deleteReason) {
-    return deleteHistoricDecisionInstancesAsync(null, query, deleteReason);
+  public Batch deleteHistoricDecisionInstancesAsync(HistoricDecisionInstanceQuery query, @Nullable String deleteReason) {
+    return deleteHistoricDecisionInstancesAsync(emptyList(), query, deleteReason);
   }
 
   @Override
-  public Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, HistoricDecisionInstanceQuery query, String deleteReason) {
-    return commandExecutor.execute(new DeleteHistoricDecisionInstancesBatchCmd(decisionInstanceIds, query, deleteReason));
+  public Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, @Nullable HistoricDecisionInstanceQuery query, @Nullable String deleteReason) {
+    return getCommandExecutor().execute(new DeleteHistoricDecisionInstancesBatchCmd(decisionInstanceIds, query, deleteReason));
   }
 
   @Override
   public void deleteHistoricVariableInstance(String variableInstanceId) {
-    commandExecutor.execute(new DeleteHistoricVariableInstanceCmd(variableInstanceId));
+    getCommandExecutor().execute(new DeleteHistoricVariableInstanceCmd(variableInstanceId));
   }
 
   @Override
   public void deleteHistoricVariableInstancesByProcessInstanceId(String processInstanceId) {
-    commandExecutor.execute(new DeleteHistoricVariableInstancesByProcessInstanceIdCmd(processInstanceId));
+    getCommandExecutor().execute(new DeleteHistoricVariableInstancesByProcessInstanceIdCmd(processInstanceId));
   }
 
   @Override
@@ -322,7 +325,7 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public String getHistoricJobLogExceptionStacktrace(String historicJobLogId) {
-    return commandExecutor.execute(new GetHistoricJobLogExceptionStacktraceCmd(historicJobLogId));
+    return getCommandExecutor().execute(new GetHistoricJobLogExceptionStacktraceCmd(historicJobLogId));
   }
 
   @Override
@@ -362,7 +365,7 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public void deleteHistoricBatch(String batchId) {
-    commandExecutor.execute(new DeleteHistoricBatchCmd(batchId));
+    getCommandExecutor().execute(new DeleteHistoricBatchCmd(batchId));
   }
 
   @Override
@@ -377,7 +380,7 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public String getHistoricExternalTaskLogErrorDetails(String historicExternalTaskLogId) {
-    return commandExecutor.execute(new GetHistoricExternalTaskLogErrorDetailsCmd(historicExternalTaskLogId));
+    return getCommandExecutor().execute(new GetHistoricExternalTaskLogErrorDetailsCmd(historicExternalTaskLogId));
   }
 
   @Override
@@ -397,12 +400,12 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
 
   @Override
   public void setAnnotationForOperationLogById(String operationId, String annotation) {
-    commandExecutor.execute(new SetAnnotationForOperationLog(operationId, annotation));
+    getCommandExecutor().execute(new SetAnnotationForOperationLog(operationId, annotation));
   }
 
   @Override
   public void clearAnnotationForOperationLogById(String operationId) {
-    commandExecutor.execute(new SetAnnotationForOperationLog(operationId, null));
+    getCommandExecutor().execute(new SetAnnotationForOperationLog(operationId, null));
   }
 
 }

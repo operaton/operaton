@@ -24,13 +24,14 @@ import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceTarget;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * <p>Utiliy class
  * @author Daniel Meyer
  *
  */
-public final class BindingUtil {
+public final @NullMarked class BindingUtil {
 
   private BindingUtil() {
   }

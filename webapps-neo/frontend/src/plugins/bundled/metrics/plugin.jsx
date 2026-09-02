@@ -122,6 +122,14 @@ const MetricValue = ({ signal: signl, format = (v) => v }) => (
 // (r = 100 / 2π) so dash lengths are read straight as percentages. Segments are
 // laid clockwise from 12 o'clock: `completed` first (offset 25), then `running`
 // starting where it ends (offset 25 − completed%).
+// The hole is ~28 user units across (r 15.92 less half of the 4-unit ring).
+// Keep the label inside 22 of them so it never crowds the ring: at ~0.6 units
+// of advance per digit and em, that caps the size for short totals and shrinks
+// six-digit ones instead of letting them run into the stroke.
+const LABEL_WIDTH = 22;
+export const donut_font_size = (label) =>
+  Math.min(7, LABEL_WIDTH / (0.6 * String(label).length));
+
 const Donut = ({ running, completed }) => {
   const total = running + completed;
   const completed_pct = total ? (completed / total) * 100 : 0;
@@ -145,7 +153,12 @@ const Donut = ({ running, completed }) => {
         stroke-dasharray={`${running_pct} ${100 - running_pct}`}
         stroke-dashoffset={`${25 - completed_pct}`}
       />
-      <text class="donut-center" x="21" y="21">
+      <text
+        class="donut-center"
+        x="21"
+        y="21"
+        font-size={donut_font_size(total)}
+      >
         {total}
       </text>
     </svg>

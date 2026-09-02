@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { screen } from "@testing-library/preact";
-import descriptors from "./plugin.jsx";
+import descriptors, { donut_font_size } from "./plugin.jsx";
 import { register, _reset_registry } from "../../registry.js";
 import { PLUGIN_POINTS } from "../../points.js";
 import engine_rest from "../../../api/engine_rest.jsx";
@@ -254,5 +254,20 @@ describe("Engine Metrics plugin — page", () => {
 
     const { container: bad } = mount(3);
     expect(bad.querySelector(".metric-status.status-bad")).toBeTruthy();
+  });
+});
+
+describe("donut_font_size", () => {
+  it("keeps the label clear of the ring as the total grows", () => {
+    // 0.6 units of advance per digit and em must stay inside the 22-unit budget.
+    for (const total of [7, 42, 913, 7113, 25000, 148000]) {
+      const size = donut_font_size(total);
+      expect(size * 0.6 * String(total).length).toBeLessThanOrEqual(22);
+      expect(size).toBeGreaterThan(0);
+    }
+  });
+
+  it("does not blow up short totals to fill the space", () => {
+    expect(donut_font_size(7)).toBe(donut_font_size(7113));
   });
 });

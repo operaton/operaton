@@ -300,9 +300,10 @@
     stroke: var(--color-success, #16a34a);
   }
 
+  /* No font-size here: it is set per render from the digit count, and a
+     stylesheet rule would override the attribute. */
   #content.metrics-page .donut-center {
     fill: var(--color-text, currentColor);
-    font-size: 0.55rem;
     font-weight: 600;
     text-anchor: middle;
     dominant-baseline: central;

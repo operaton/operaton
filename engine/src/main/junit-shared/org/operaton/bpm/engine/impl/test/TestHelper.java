@@ -22,6 +22,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 import org.jspecify.annotations.Nullable;
@@ -79,6 +81,12 @@ public abstract class TestHelper {
     RESOURCE_SUFFIXES.addAll(Arrays.asList(CMMN_RESOURCE_SUFFIXES));
     RESOURCE_SUFFIXES.addAll(Arrays.asList(DMN_RESOURCE_SUFFIXES));
   }
+
+  /**
+   * Resolving a deployment resource probes every BPMN, CMMN and DMN suffix through the
+   * classloader. The classpath does not change within a test run, so results are memoized.
+   */
+  private static final Map<String, String> BPMN_RESOURCE_NAMES = new ConcurrentHashMap<>();
 
   /**
    * @deprecated Use {@link ProcessEngineAssert} instead.
@@ -180,6 +188,11 @@ public abstract class TestHelper {
    * The first resource matching a suffix will be returned.
    */
   public static String getBpmnProcessDefinitionResource(Class< ? > type, String name) {
+    String key = type.getName() + '#' + name;
+    return BPMN_RESOURCE_NAMES.computeIfAbsent(key, ignored -> resolveBpmnProcessDefinitionResource(type, name));
+  }
+
+  private static String resolveBpmnProcessDefinitionResource(Class< ? > type, String name) {
     for (String suffix : RESOURCE_SUFFIXES) {
       String resource = createResourceName(type, name, suffix);
       InputStream inputStream = ReflectUtil.getResourceAsStream(resource);

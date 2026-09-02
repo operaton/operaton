@@ -122,7 +122,7 @@ const EMBEDDED_APP = "embedded:app:";
 const EMBEDDED_DEPLOYMENT = "embedded:deployment:";
 
 const FORM_JS_MIGRATION_DOCS =
-  "https://docs.operaton.org/documentation/user-guide/task-forms/";
+  "https://docs.operaton.org/docs/documentation/user-guide/task-forms/";
 
 const EmbeddedHtmlTaskForm = ({ task, formKey }) => {
   const state = useContext(AppState),

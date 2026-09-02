@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:b6b50159-ea3c-438a-b9ba-f2e0508a798d",
+  "serialNumber": "urn:uuid:ac20b4f4-de94-434d-a05c-720b38864484",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-31T04:49:05Z",
+    "timestamp": "2026-09-02T09:51:14Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.74.0-SNAPSHOT-5ae0bb106"
+          "version": "0.74.0-SNAPSHOT-dcfb99218"
         }
       ]
     },
@@ -16986,45 +16986,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.3.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core",
-      "version": "7.0.3.Final",
+      "version": "7.0.4.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "0c2b1cae7ac476080f03e4ec1def1108"
+          "content": "484dfceb0b0a722518570ddc647efa0d"
         },
         {
           "alg": "SHA-1",
-          "content": "6a73f47dd05a5e993e0a0baee49acb8c73065aff"
+          "content": "e85e56528767d6531df5b16d6f48f47acd51cbe7"
         },
         {
           "alg": "SHA-256",
-          "content": "c9eca176929c964488da7c13caef46bc27cf28e73b5380f5b597324a1513ef43"
+          "content": "3d8a2ffce4ce25d7ccdf951630b7862115fda52d8d8da87c8183e638e6c5f662"
         },
         {
           "alg": "SHA-512",
-          "content": "2875bb7abb9921932a82d9b2e202b8140f456b5922ae83d5f1d344d09806c674f618c1aeb8f8ed2b7ec0150436cd20360b4d82f58414e62adace05ba9cdad06e"
+          "content": "1669e7d80f5539c41b95ca5e4a0729b5a9b1ba5c1e7bbb514e1ff4c01afa5fa0e54574f28d13b76f4c386d41a19bd9b2a23d042d798785ddb63de515091601ee"
         },
         {
           "alg": "SHA-384",
-          "content": "e7d0fa417e0b14f2af07457cd199d7ddde41100532f5bd8565b810aa49446dcd30ef33a4100393953fe875aef3859577"
+          "content": "38ece0baba00ca5c462de2648d7826abe34e5c6be2f0e4b1c8c3db3b57e79b7a3ca42abaf88fa366500e5d329be8e9aa"
         },
         {
           "alg": "SHA3-384",
-          "content": "b78ced2b278045343f346c4d89fc7e5ba2ca28023405ba414c218b101bfa365ff918f28161a1466dcc8ef771d804d1b0"
+          "content": "534884cd4662b5a568cd7d72e7ac584eb48d8b4be5641bc0782d9f8356f352b874748426f1616105a7de73a58c30f2b6"
         },
         {
           "alg": "SHA3-256",
-          "content": "e5e15045ddc9fb2f92560bb91c963704663dfd47e2893f47d87ec2f0f6255fae"
+          "content": "155bf2b93fa2dc76ff78ca795fdb842bec688a4f41e6a7f93c198ea7b6985120"
         },
         {
           "alg": "SHA3-512",
-          "content": "f8a09bd4ddd0c5556287f3813ec9f34bfdcf8f43256760ed7e6cd454177f199f890c40e8a69b37a5cb54494f75d3b89e50da0e58b750c69bb434d47cee804220"
+          "content": "c4a25365872d635b2a6d92ee7a6ec1db5d5920513c03c9b292564c81b647c1dae10f86d753140162edbfd1cad5ee90e3da2b93e19ef4c4930ee6bfc150f4dac0"
         }
       ],
       "licenses": [
@@ -17035,7 +17035,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.3.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -17126,45 +17126,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.3.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.4.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core-spi",
-      "version": "7.0.3.Final",
+      "version": "7.0.4.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ca5629a5f95576db90f745ea0b088906"
+          "content": "2a4afffb5afa9c310653674bb763cee3"
         },
         {
           "alg": "SHA-1",
-          "content": "0a99fa1b551bcc3996ddcbcb06be03400ef2c6ef"
+          "content": "66c9b7e6926ccfe83652c0227b69b658f88fac68"
         },
         {
           "alg": "SHA-256",
-          "content": "191745e75575694ecf93592022e42b262e3c654ea98128020735cd7c55b8341f"
+          "content": "93bb0909d5288b65d12cbafa9f4290ca9f4fe7a682c0b754d1c02c4259dd3dad"
         },
         {
           "alg": "SHA-512",
-          "content": "bd602e3031185a156d6b1fa910b361b234725738709aad63fc5072b6c65e3e125273cf9721dc2e1b6f6b051bbca3b5f3fc070c722f527c5613eac7cc857bd87e"
+          "content": "acd51c513fa26ad558c181d8b39f930bdbdd509a218ef677aa2618381e27b8136b594aef18221947e9c3add82f2083505748960bc0b37ef1ba6eeb99614dd7b9"
         },
         {
           "alg": "SHA-384",
-          "content": "264831c4a2520de3c06c49168d3cccbea788ecfee4a5a18ba28d634e0e777d4970267860f8f45fe32f5ae5d639e1d202"
+          "content": "ff0411428f43183303a57b4c3efa5d14b3d53f2597e120ac7862a0cb18cf04a0857453374c230f0580aa6d039a54746e"
         },
         {
           "alg": "SHA3-384",
-          "content": "1b31a5d17fce5ae808863fa33706590579f360e22677e34fa63540fd534a188c7649b4e2e2d3ca1428e662b914a888e8"
+          "content": "f0cc3a2159a7269d69e259268c09dbe31acdb08b72544943e248b54899436965f3c61e206d48650c083f15bc3e79fdff"
         },
         {
           "alg": "SHA3-256",
-          "content": "a4d023d2ec5e647e2d7a0847481bfab71353b7a099340daaec5184d6e7395e80"
+          "content": "0c9c1b9ac8548975b62fe204afe99fbd11e92960050f7486ea020298643236d0"
         },
         {
           "alg": "SHA3-512",
-          "content": "a2ef70ac4b644cca62e3ede9b28cc6d006bb8291e098f7bdbcd4d3e600a655bd5e6b99eb8dbf086f2e631720db3572f356baf52db3c2030df5ebe63c1bd625ff"
+          "content": "9b2f13d0c875b59ee18b19adf2a9a313d62023ed05930adfbb07b6cbc36f94cfbd974210f2a8ae0375e234a8e7eec4ef4bbf5bbdc1593cc24d8db47c2acaf833"
         }
       ],
       "licenses": [
@@ -17175,7 +17175,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.3.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.4.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -22810,7 +22810,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "f84ccb2c-9881-4e84-866e-4af3f33147a5",
+      "bom-ref": "96674a19-6c3b-4080-8d03-9e040a99dce7",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24601,9 +24601,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/camunda-dmn-js@3.8.1",
+      "bom-ref": "pkg:npm/camunda-dmn-js@3.8.2",
       "name": "camunda-dmn-js",
-      "version": "3.8.1",
+      "version": "3.8.2",
       "licenses": [
         {
           "license": {
@@ -24611,11 +24611,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/camunda-dmn-js@3.8.1",
+      "purl": "pkg:npm/camunda-dmn-js@3.8.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "camunda-dmn-js@3.8.1"
+          "value": "camunda-dmn-js@3.8.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25379,9 +25379,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.10.1",
+      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.10.2",
       "name": "dmn-js-boxed-expression",
-      "version": "17.10.1",
+      "version": "17.10.2",
       "licenses": [
         {
           "license": {
@@ -25389,11 +25389,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-boxed-expression@17.10.1",
+      "purl": "pkg:npm/dmn-js-boxed-expression@17.10.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-boxed-expression@17.10.1"
+          "value": "dmn-js-boxed-expression@17.10.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25403,9 +25403,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-decision-table@17.10.1",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.10.2",
       "name": "dmn-js-decision-table",
-      "version": "17.10.1",
+      "version": "17.10.2",
       "licenses": [
         {
           "license": {
@@ -25413,11 +25413,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-decision-table@17.10.1",
+      "purl": "pkg:npm/dmn-js-decision-table@17.10.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-decision-table@17.10.1"
+          "value": "dmn-js-decision-table@17.10.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25427,9 +25427,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-drd@17.10.1",
+      "bom-ref": "pkg:npm/dmn-js-drd@17.10.2",
       "name": "dmn-js-drd",
-      "version": "17.10.1",
+      "version": "17.10.2",
       "licenses": [
         {
           "license": {
@@ -25437,11 +25437,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-drd@17.10.1",
+      "purl": "pkg:npm/dmn-js-drd@17.10.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-drd@17.10.1"
+          "value": "dmn-js-drd@17.10.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25451,9 +25451,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.10.1",
+      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.10.2",
       "name": "dmn-js-literal-expression",
-      "version": "17.10.1",
+      "version": "17.10.2",
       "licenses": [
         {
           "license": {
@@ -25461,11 +25461,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-literal-expression@17.10.1",
+      "purl": "pkg:npm/dmn-js-literal-expression@17.10.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-literal-expression@17.10.1"
+          "value": "dmn-js-literal-expression@17.10.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25499,9 +25499,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-shared@17.10.1",
+      "bom-ref": "pkg:npm/dmn-js-shared@17.10.2",
       "name": "dmn-js-shared",
-      "version": "17.10.1",
+      "version": "17.10.2",
       "licenses": [
         {
           "license": {
@@ -25509,11 +25509,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-shared@17.10.1",
+      "purl": "pkg:npm/dmn-js-shared@17.10.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-shared@17.10.1"
+          "value": "dmn-js-shared@17.10.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25523,9 +25523,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js@17.10.1",
+      "bom-ref": "pkg:npm/dmn-js@17.10.2",
       "name": "dmn-js",
-      "version": "17.10.1",
+      "version": "17.10.2",
       "licenses": [
         {
           "license": {
@@ -25533,11 +25533,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js@17.10.1",
+      "purl": "pkg:npm/dmn-js@17.10.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js@17.10.1"
+          "value": "dmn-js@17.10.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28066,7 +28066,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d9bcae63-40b0-4885-86cb-904c254be72d",
+      "bom-ref": "1fb8d061-6222-4673-9e09-93e74f000e95",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -29243,7 +29243,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.3.Final?type=jar",
+        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar"
       ]
     },
@@ -29261,7 +29261,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.3.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
@@ -29269,7 +29269,7 @@
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/io.smallrye/jandex@3.4.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.3.Final?type=jar",
+        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.4.Final?type=jar",
         "pkg:maven/org.reactivestreams/reactive-streams@1.0.4?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/org.eclipse.angus/angus-activation@2.0.3?type=jar",
@@ -29285,7 +29285,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.3.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.4.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
@@ -30897,13 +30897,13 @@
       "dependsOn": []
     },
     {
-      "ref": "d9bcae63-40b0-4885-86cb-904c254be72d",
+      "ref": "1fb8d061-6222-4673-9e09-93e74f000e95",
       "dependsOn": [
-        "f84ccb2c-9881-4e84-866e-4af3f33147a5"
+        "96674a19-6c3b-4080-8d03-9e040a99dce7"
       ]
     },
     {
-      "ref": "f84ccb2c-9881-4e84-866e-4af3f33147a5",
+      "ref": "96674a19-6c3b-4080-8d03-9e040a99dce7",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.25.0",
@@ -30924,18 +30924,18 @@
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.13.0",
         "pkg:npm/bpmn-js@18.25.1",
-        "pkg:npm/camunda-dmn-js@3.8.1",
+        "pkg:npm/camunda-dmn-js@3.8.2",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
         "pkg:npm/core-js@3.50.0",
         "pkg:npm/dmn-font@0.6.2",
-        "pkg:npm/dmn-js-decision-table@17.10.1",
-        "pkg:npm/dmn-js-drd@17.10.1",
-        "pkg:npm/dmn-js-literal-expression@17.10.1",
+        "pkg:npm/dmn-js-decision-table@17.10.2",
+        "pkg:npm/dmn-js-drd@17.10.2",
+        "pkg:npm/dmn-js-literal-expression@17.10.2",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
-        "pkg:npm/dmn-js-shared@17.10.1",
-        "pkg:npm/dmn-js@17.10.1",
+        "pkg:npm/dmn-js-shared@17.10.2",
+        "pkg:npm/dmn-js@17.10.2",
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.4.14",
         "pkg:npm/events@3.3.0",
@@ -31464,17 +31464,17 @@
       ]
     },
     {
-      "ref": "pkg:npm/camunda-dmn-js@3.8.1",
+      "ref": "pkg:npm/camunda-dmn-js@3.8.2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/align-to-origin@0.7.0",
         "pkg:npm/camunda-dmn-moddle@1.3.1",
         "pkg:npm/diagram-js-grid@2.0.1",
         "pkg:npm/diagram-js-origin@1.4.0",
         "pkg:npm/diagram-js@15.24.0",
-        "pkg:npm/dmn-js-drd@17.10.1",
+        "pkg:npm/dmn-js-drd@17.10.2",
         "pkg:npm/dmn-js-properties-panel@3.11.1",
-        "pkg:npm/dmn-js-shared@17.10.1",
-        "pkg:npm/dmn-js@17.10.1",
+        "pkg:npm/dmn-js-shared@17.10.2",
+        "pkg:npm/dmn-js@17.10.2",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/zeebe-dmn-moddle@1.0.0"
@@ -31684,11 +31684,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dmn-js-boxed-expression@17.10.1",
+      "ref": "pkg:npm/dmn-js-boxed-expression@17.10.2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/diagram-js@15.24.0",
-        "pkg:npm/dmn-js-shared@17.10.1",
+        "pkg:npm/dmn-js-shared@17.10.2",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
@@ -31696,12 +31696,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-decision-table@17.10.1",
+      "ref": "pkg:npm/dmn-js-decision-table@17.10.2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
         "pkg:npm/diagram-js@15.24.0",
-        "pkg:npm/dmn-js-shared@17.10.1",
+        "pkg:npm/dmn-js-shared@17.10.2",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -31711,11 +31711,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-drd@17.10.1",
+      "ref": "pkg:npm/dmn-js-drd@17.10.2",
       "dependsOn": [
         "pkg:npm/diagram-js-direct-editing@3.5.1",
         "pkg:npm/diagram-js@15.24.0",
-        "pkg:npm/dmn-js-shared@17.10.1",
+        "pkg:npm/dmn-js-shared@17.10.2",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.1.0",
@@ -31725,11 +31725,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-literal-expression@17.10.1",
+      "ref": "pkg:npm/dmn-js-literal-expression@17.10.2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/diagram-js@15.24.0",
-        "pkg:npm/dmn-js-shared@17.10.1",
+        "pkg:npm/dmn-js-shared@17.10.2",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -31742,13 +31742,13 @@
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/diagram-js@15.24.0",
-        "pkg:npm/dmn-js@17.10.1",
+        "pkg:npm/dmn-js@17.10.2",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-shared@17.10.1",
+      "ref": "pkg:npm/dmn-js-shared@17.10.2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
         "pkg:npm/diagram-js@15.24.0",
@@ -31764,13 +31764,13 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js@17.10.1",
+      "ref": "pkg:npm/dmn-js@17.10.2",
       "dependsOn": [
-        "pkg:npm/dmn-js-boxed-expression@17.10.1",
-        "pkg:npm/dmn-js-decision-table@17.10.1",
-        "pkg:npm/dmn-js-drd@17.10.1",
-        "pkg:npm/dmn-js-literal-expression@17.10.1",
-        "pkg:npm/dmn-js-shared@17.10.1"
+        "pkg:npm/dmn-js-boxed-expression@17.10.2",
+        "pkg:npm/dmn-js-decision-table@17.10.2",
+        "pkg:npm/dmn-js-drd@17.10.2",
+        "pkg:npm/dmn-js-literal-expression@17.10.2",
+        "pkg:npm/dmn-js-shared@17.10.2"
       ]
     },
     {

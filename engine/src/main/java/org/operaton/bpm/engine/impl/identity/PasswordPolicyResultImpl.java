@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.identity;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.PasswordPolicyRule;
 
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.identity.PasswordPolicyRule;
  * @author Miklas Boskamp
  *
  */
-public class PasswordPolicyResultImpl implements PasswordPolicyResult {
+public @NullMarked class PasswordPolicyResultImpl implements PasswordPolicyResult {
 
   protected List<PasswordPolicyRule> violatedRules;
   protected List<PasswordPolicyRule> fulfilledRules;
@@ -37,7 +38,7 @@ public class PasswordPolicyResultImpl implements PasswordPolicyResult {
 
   @Override
   public boolean isValid() {
-    return violatedRules == null || violatedRules.isEmpty();
+    return violatedRules.isEmpty();
   }
 
   @Override
@@ -45,6 +46,9 @@ public class PasswordPolicyResultImpl implements PasswordPolicyResult {
     return violatedRules;
   }
 
+  /** @deprecated Unused method of internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("unused")
   public void setViolatedRules(List<PasswordPolicyRule> violatedRules) {
     this.violatedRules = violatedRules;
   }
@@ -54,6 +58,9 @@ public class PasswordPolicyResultImpl implements PasswordPolicyResult {
     return fulfilledRules;
   }
 
+  /** @deprecated Unused method of internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("unused")
   public void setFulfilledRules(List<PasswordPolicyRule> fulfilledRules) {
     this.fulfilledRules = fulfilledRules;
   }

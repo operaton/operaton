@@ -54,6 +54,7 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
 import org.operaton.bpm.engine.impl.incident.IncidentHandling;
 import org.operaton.bpm.engine.impl.interceptor.AtomicOperationInvocation;
+import org.operaton.bpm.engine.impl.interceptor.CommandInvocationContext;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerDeclarationImpl;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
@@ -79,6 +80,8 @@ import org.operaton.bpm.model.bpmn.instance.FlowElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.commons.utils.CollectionUtil;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Tom Baeyens
@@ -391,7 +394,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       String initiatorVariableName = (String) processDefinition.getProperty(BpmnParse.PROPERTYNAME_INITIATOR_VARIABLE_NAME);
       if (initiatorVariableName != null) {
         String authenticatedUserId = Context.getCommandContext().getAuthenticatedUserId();
-        setVariable(initiatorVariableName, authenticatedUserId);
+        if (authenticatedUserId != null) {
+          setVariable(initiatorVariableName, authenticatedUserId);
+        }
       }
     }
 
@@ -617,7 +622,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       ensureNotSuspended();
     }
 
-    Context.getCommandInvocationContext().performOperation(executionOperation, this, async);
+    CommandInvocationContext commandInvocationContext = Context.getCommandInvocationContext();
+    requireNonNull(commandInvocationContext);
+    commandInvocationContext.performOperation(executionOperation, this, async);
   }
 
   @SuppressWarnings("deprecation")
@@ -626,7 +633,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       ensureNotSuspended();
     }
 
-    Context.getCommandInvocationContext().performOperation(executionOperation, this);
+    CommandInvocationContext commandInvocationContext = Context.getCommandInvocationContext();
+    requireNonNull(commandInvocationContext);
+    commandInvocationContext.performOperation(executionOperation, this);
   }
 
   protected void ensureNotSuspended() {

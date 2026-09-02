@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.cmd.SaveAuthorizationCmd;
  * @author Daniel Meyer
  *
  */
-public class AuthorizationServiceImpl extends ServiceImpl implements AuthorizationService {
+public @NullMarked class AuthorizationServiceImpl extends ServiceImpl implements AuthorizationService {
 
   @Override
   public AuthorizationQuery createAuthorizationQuery() {
@@ -41,27 +42,27 @@ public class AuthorizationServiceImpl extends ServiceImpl implements Authorizati
 
   @Override
   public Authorization createNewAuthorization(int type) {
-    return commandExecutor.execute(new CreateAuthorizationCommand(type));
+    return getCommandExecutor().execute(new CreateAuthorizationCommand(type));
   }
 
   @Override
   public Authorization saveAuthorization(Authorization authorization) {
-    return commandExecutor.execute(new SaveAuthorizationCmd(authorization));
+    return getCommandExecutor().execute(new SaveAuthorizationCmd(authorization));
   }
 
   @Override
   public void deleteAuthorization(String authorizationId) {
-    commandExecutor.execute(new DeleteAuthorizationCmd(authorizationId));
+    getCommandExecutor().execute(new DeleteAuthorizationCmd(authorizationId));
   }
 
   @Override
   public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource) {
-    return commandExecutor.execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, null));
+    return getCommandExecutor().execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, null));
   }
 
   @Override
   public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId) {
-    return commandExecutor.execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, resourceId));
+    return getCommandExecutor().execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, resourceId));
   }
 
 }

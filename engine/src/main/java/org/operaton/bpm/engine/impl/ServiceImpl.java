@@ -16,19 +16,21 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
-
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Tom Baeyens
  */
-public class ServiceImpl {
+public @NullMarked class ServiceImpl {
 
-  protected CommandExecutor commandExecutor;
+  protected @Nullable CommandExecutor commandExecutor;
 
   public CommandExecutor getCommandExecutor() {
-    return commandExecutor;
+    return requireNonNull(commandExecutor);
   }
 
   public void setCommandExecutor(CommandExecutor commandExecutor) {

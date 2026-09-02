@@ -37,7 +37,7 @@ public class BaseCallableElement {
     VERSION("version"),
     VERSION_TAG("versionTag");
 
-    private String value;
+    private final String value;
 
     CallableElementBinding(String value) {
       this.value = value;
@@ -129,7 +129,9 @@ public class BaseCallableElement {
     return null;
   }
 
-
+  /** @deprecated Unused method of internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("unused")
   public ParameterValueProvider getVersionTagValueProvider() {
     return versionTagValueProvider;
   }

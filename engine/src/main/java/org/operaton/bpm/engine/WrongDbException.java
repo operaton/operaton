@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 
 
@@ -29,7 +31,8 @@ import java.io.Serial;
  *
  * @author Tom Baeyens
  */
-public class WrongDbException extends ProcessEngineException {
+@SuppressWarnings("unused")
+public @NullMarked class WrongDbException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -48,14 +51,14 @@ public class WrongDbException extends ProcessEngineException {
   }
 
   /**
-   * The version of the Activiti library used.
+   * The version of the Operaton library used.
    */
   public String getLibraryVersion() {
     return libraryVersion;
   }
 
   /**
-   * The version of the Activiti library that was used to create the database schema.
+   * The version of the Operaton library that was used to create the database schema.
    */
   public String getDbVersion() {
     return dbVersion;

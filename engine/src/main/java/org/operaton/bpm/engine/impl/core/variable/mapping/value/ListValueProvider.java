@@ -19,13 +19,13 @@ package org.operaton.bpm.engine.impl.core.variable.mapping.value;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 /**
  * @author Daniel Meyer
- *
  */
-public class ListValueProvider implements ParameterValueProvider {
+public @NullMarked class ListValueProvider implements ParameterValueProvider {
 
   protected List<ParameterValueProvider> providerList;
 
@@ -42,10 +42,16 @@ public class ListValueProvider implements ParameterValueProvider {
     return valueList;
   }
 
+  /** @deprecated Unused method of internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("unused")
   public List<ParameterValueProvider> getProviderList() {
     return providerList;
   }
 
+  /** @deprecated Unused method of internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("unused")
   public void setProviderList(List<ParameterValueProvider> providerList) {
     this.providerList = providerList;
   }

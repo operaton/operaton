@@ -19,21 +19,23 @@ package org.operaton.bpm.engine.impl;
 import java.io.Serial;
 import java.io.Serializable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineInfo;
 
 
 /**
  * @author Tom Baeyens
  */
-public class ProcessEngineInfoImpl implements Serializable, ProcessEngineInfo {
+public @NullMarked class ProcessEngineInfoImpl implements Serializable, ProcessEngineInfo {
 
   @Serial private static final long serialVersionUID = 1L;
 
   String name;
   String resourceUrl;
-  String exception;
+  @Nullable String exception;
 
-  public ProcessEngineInfoImpl(String name, String resourceUrl, String exception) {
+  public ProcessEngineInfoImpl(String name, String resourceUrl, @Nullable String exception) {
     this.name = name;
     this.resourceUrl = resourceUrl;
     this.exception = exception;
@@ -50,7 +52,7 @@ public class ProcessEngineInfoImpl implements Serializable, ProcessEngineInfo {
   }
 
   @Override
-  public String getException() {
+  public @Nullable String getException() {
     return exception;
   }
 }

@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.jboss.service;
 
 import org.jboss.as.threads.ThreadsServices;
 import org.jboss.msc.service.ServiceName;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * <p>All ServiceName references run through here.</p>
@@ -25,7 +26,7 @@ import org.jboss.msc.service.ServiceName;
  * @author Daniel Meyer
  *
  */
-public final class ServiceNames {
+public final @NullMarked class ServiceNames {
 
   private static final ServiceName BPM_PLATFORM = ServiceName.of("org", "operaton", "bpm", "platform");
   private static final ServiceName PROCESS_ENGINE = BPM_PLATFORM.append("process-engine");
@@ -42,8 +43,7 @@ public final class ServiceNames {
   /**
    * Returns the service name for a {@link MscManagedProcessEngine}.
    *
-   * @param the
-   *          name of the process engine
+   * @param processEngineName the name of the process engine
    * @return the composed service name
    */
   public static ServiceName forManagedProcessEngine(String processEngineName) {
@@ -83,7 +83,7 @@ public final class ServiceNames {
   }
 
   /**
-   * @param applicationName
+   * @param applicationName the name of the application
    * @return the name to be used for an {@link MscManagedProcessApplication} service.
    */
   public static ServiceName forManagedProcessApplication(String applicationName) {
@@ -95,7 +95,7 @@ public final class ServiceNames {
   }
 
   /**
-   * @param applicationName
+   * @param moduleName the name of the module
    * @return the name to be used for an {@link MscManagedProcessApplication} service.
    */
   public static ServiceName forProcessApplicationStartService(String moduleName) {
@@ -105,9 +105,8 @@ public final class ServiceNames {
   /**
    * <p>Returns the name for a {@link ProcessApplicationDeploymentService} given
    * the name of the deployment unit and the name of the deployment.</p>
-   *
-   * @param processApplicationName
-   * @param deploymentId
+   * @param moduleName the name of the module
+   * @param deploymentName the name of the deployment
    */
   public static ServiceName forProcessApplicationDeploymentService(String moduleName, String deploymentName) {
     return PROCESS_APPLICATION_MODULE.append(moduleName).append("DEPLOY").append(deploymentName);

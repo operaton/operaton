@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -50,7 +51,7 @@ import org.operaton.bpm.engine.telemetry.TelemetryData;
  * @author Falko Menge
  * @author Thorben Lindhauer
  */
-public interface ManagementService {
+public @NullMarked interface ManagementService {
 
   /**
    * Activate a deployment for a given ProcessApplication. The effect of this
@@ -110,7 +111,7 @@ public interface ManagementService {
    * @throws AuthorizationException
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    */
-  String getProcessApplicationForDeployment(String deploymentId);
+  @Nullable String getProcessApplicationForDeployment(String deploymentId);
 
   /**
    * Get the mapping containing {table name, row count} entries of the database schema.
@@ -136,7 +137,7 @@ public interface ManagementService {
    * @throws AuthorizationException
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    */
-  TableMetaData getTableMetaData(String tableName);
+  @Nullable TableMetaData getTableMetaData(String tableName);
 
   /**
    * Creates a {@link TablePageQuery} that can be used to fetch {@link TablePage}
@@ -357,7 +358,7 @@ public interface ManagementService {
    * @see #activateJobById(String)
    * @see #activateJobByJobDefinitionId(String)
    */
-  void activateJobDefinitionById(String jobDefinitionId, boolean activateJobs, Date activationDate);
+  void activateJobDefinitionById(String jobDefinitionId, boolean activateJobs, @Nullable Date activationDate);
 
   /**
    * <p>Activates all {@link JobDefinition}s of the provided process definition id.</p>
@@ -388,7 +389,7 @@ public interface ManagementService {
    *
    * @see #activateJobByProcessDefinitionId(String)
    */
-  void activateJobDefinitionByProcessDefinitionId(String processDefinitionId, boolean activateJobs, Date activationDate);
+  void activateJobDefinitionByProcessDefinitionId(String processDefinitionId, boolean activateJobs, @Nullable Date activationDate);
 
   /**
    * <p>Activates all {@link JobDefinition}s of the provided process definition key.</p>
@@ -419,7 +420,7 @@ public interface ManagementService {
    *
    * @see #activateJobByProcessDefinitionKey(String)
    */
-  void activateJobDefinitionByProcessDefinitionKey(String processDefinitionKey, boolean activateJobs, Date activationDate);
+  void activateJobDefinitionByProcessDefinitionKey(String processDefinitionKey, boolean activateJobs, @Nullable Date activationDate);
 
   /**
    * <p>Suspends the {@link JobDefinition} with the given id immediately.</p>
@@ -591,7 +592,7 @@ public interface ManagementService {
    * @see #suspendJobById(String)
    * @see #suspendJobByJobDefinitionId(String)
    */
-  void suspendJobDefinitionById(String jobDefinitionId, boolean suspendJobs, Date suspensionDate);
+  void suspendJobDefinitionById(String jobDefinitionId, boolean suspendJobs, @Nullable Date suspensionDate);
 
   /**
    * Suspends all {@link JobDefinition}s of the provided process definition id.
@@ -622,7 +623,7 @@ public interface ManagementService {
    *
    * @see #suspendJobByProcessDefinitionId(String)
    */
-  void suspendJobDefinitionByProcessDefinitionId(String processDefinitionId, boolean suspendJobs, Date suspensionDate);
+  void suspendJobDefinitionByProcessDefinitionId(String processDefinitionId, boolean suspendJobs, @Nullable Date suspensionDate);
 
   /**
    * Suspends all {@link JobDefinition}s of the provided process definition key.
@@ -653,7 +654,7 @@ public interface ManagementService {
    *
    * @see #suspendJobByProcessDefinitionKey(String)
    */
-  void suspendJobDefinitionByProcessDefinitionKey(String processDefinitionKey, boolean suspendJobs, Date suspensionDate);
+  void suspendJobDefinitionByProcessDefinitionKey(String processDefinitionKey, boolean suspendJobs, @Nullable Date suspensionDate);
 
   /**
    * <p>Activates the {@link Job} with the given id.</p>
@@ -1058,7 +1059,7 @@ public interface ManagementService {
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void setJobDuedate(String jobId, Date newDuedate);
+  void setJobDuedate(String jobId, @Nullable Date newDuedate);
 
   /**
    * Sets a new due date for the provided id. The offset between
@@ -1075,7 +1076,7 @@ public interface ManagementService {
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void setJobDuedate(String jobId, Date newDuedate, boolean cascade);
+  void setJobDuedate(String jobId, @Nullable Date newDuedate, boolean cascade);
   /**
    * Triggers the recalculation for the job with the provided id.
    *
@@ -1187,7 +1188,7 @@ public interface ManagementService {
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  String getJobExceptionStacktrace(String jobId);
+  @Nullable String getJobExceptionStacktrace(String jobId);
 
   /**
    * @return a map of all properties.
@@ -1329,7 +1330,7 @@ public interface ManagementService {
    * @param endTime restrict to data collected before the given date (exclusive), can be <code>null</code>
    * @return the aggregated number of unique task workers (may be restricted to a certain interval)
    */
-  long getUniqueTaskWorkerCount(Date startTime, Date endTime);
+  long getUniqueTaskWorkerCount(@Nullable Date startTime, @Nullable Date endTime);
 
   /**
    * Deletes all task metrics which are older than the specified timestamp.
@@ -1340,7 +1341,7 @@ public interface ManagementService {
    *
    * @param timestamp or <code>null</code>
    */
-  void deleteTaskMetrics(Date timestamp);
+  void deleteTaskMetrics(@Nullable Date timestamp);
 
   /**
    * Creates a query to search for {@link org.operaton.bpm.engine.batch.Batch} instances.

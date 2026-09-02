@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
 
 /**
  * <p>Base interface providing access to the process engine's
@@ -24,7 +25,7 @@ package org.operaton.bpm.engine;
  * @author Daniel Meyer
  *
  */
-public interface ProcessEngineServices {
+public @NullMarked interface ProcessEngineServices {
 
   /**
    * Returns the process engine's {@link RuntimeService}.

@@ -30,8 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-@NullMarked
-public abstract class AbstractExecuteFilterCmd {
+public abstract @NullMarked class AbstractExecuteFilterCmd {
   protected String filterId;
   protected @Nullable Query<?, ?> extendingQuery;
 

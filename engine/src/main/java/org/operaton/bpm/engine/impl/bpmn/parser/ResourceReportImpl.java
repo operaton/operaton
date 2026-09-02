@@ -19,13 +19,14 @@ package org.operaton.bpm.engine.impl.bpmn.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.Problem;
 import org.operaton.bpm.engine.ResourceReport;
 
 /**
  * Resource report created during resource parsing
  */
-public class ResourceReportImpl implements ResourceReport {
+public @NullMarked class ResourceReportImpl implements ResourceReport {
 
   protected String resourceName;
   protected List<Problem> errors = new ArrayList<>();

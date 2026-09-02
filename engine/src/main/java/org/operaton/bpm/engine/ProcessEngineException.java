@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode;
 import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
  *
  * @author Tom Baeyens
  */
-public class ProcessEngineException extends RuntimeException {
+public @NullMarked class ProcessEngineException extends RuntimeException {
 
   protected int code = BuiltinExceptionCode.FALLBACK.getCode();
 

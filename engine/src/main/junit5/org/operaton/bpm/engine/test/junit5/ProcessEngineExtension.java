@@ -24,12 +24,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.extension.AfterAllCallback;
@@ -58,6 +58,8 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * JUnit 5 Extension to create and inject a {@link ProcessEngine} into test classes.
@@ -154,36 +156,36 @@ import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
  * The extension also resets the engine’s diagnostic state to maintain a clean testing environment.
  * </p>
  */
-public class ProcessEngineExtension implements TestWatcher,
+public @NullMarked class ProcessEngineExtension implements TestWatcher,
     TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback, BeforeAllCallback,
     AfterAllCallback, ParameterResolver, ProcessEngineServices, ProcessEngineProvider {
 
   protected static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  protected ProcessEngine processEngine;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RepositoryService repositoryService;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected HistoryService historyService;
-  protected IdentityService identityService;
-  protected ManagementService managementService;
-  protected FormService formService;
-  protected FilterService filterService;
-  protected AuthorizationService authorizationService;
-  protected CaseService caseService;
-  protected ExternalTaskService externalTaskService;
-  protected DecisionService decisionService;
+  protected @Nullable ProcessEngine processEngine;
+  protected @Nullable ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected @Nullable RepositoryService repositoryService;
+  protected @Nullable RuntimeService runtimeService;
+  protected @Nullable TaskService taskService;
+  protected @Nullable HistoryService historyService;
+  protected @Nullable IdentityService identityService;
+  protected @Nullable ManagementService managementService;
+  protected @Nullable FormService formService;
+  protected @Nullable FilterService filterService;
+  protected @Nullable AuthorizationService authorizationService;
+  protected @Nullable CaseService caseService;
+  protected @Nullable ExternalTaskService externalTaskService;
+  protected @Nullable DecisionService decisionService;
 
   protected String configurationResource = "operaton.cfg.xml";
-  protected String deploymentId;
+  protected @Nullable String deploymentId;
   protected boolean ensureCleanAfterTest;
   protected List<String> additionalDeployments = new ArrayList<>();
   protected boolean randomName;
   protected boolean closeEngine;
   protected boolean closeEngineEachTest;
 
-  protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
+  protected @Nullable Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 
 
   // SETUP
@@ -217,7 +219,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   public void initializeServices() {
-    processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
+    processEngineConfiguration = ((ProcessEngineImpl) requireNonNull(processEngine, "ProcessEngine not initialized")).getProcessEngineConfiguration();
     repositoryService = processEngine.getRepositoryService();
     runtimeService = processEngine.getRuntimeService();
     taskService = processEngine.getTaskService();
@@ -264,6 +266,7 @@ public class ProcessEngineExtension implements TestWatcher,
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
     // we disable the authorization check when deploying before the test starts
+    requireNonNull(processEngineConfiguration, "ProcessEngineConfiguration not initialized");
     boolean authorizationEnabled = processEngineConfiguration.isAuthorizationEnabled();
     boolean tenantCheckEnabled = processEngineConfiguration.isTenantCheckEnabled();
     try {
@@ -283,11 +286,12 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public void afterEach(ExtensionContext context) {
-    identityService.clearAuthentication();
+    getIdentityService().clearAuthentication();
 
     final String testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set")).getName();
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
+    requireNonNull(processEngineConfiguration);
     try {
       processEngineConfiguration.setTenantCheckEnabled(false);
       TestHelper.annotationDeploymentTearDown(processEngine, deploymentId, testClass, testMethod);
@@ -297,7 +301,7 @@ public class ProcessEngineExtension implements TestWatcher,
       }
       additionalDeployments.clear();
     } finally {
-      processEngine.getProcessEngineConfiguration().setTenantCheckEnabled(true);
+      processEngineConfiguration.setTenantCheckEnabled(true);
     }
 
    TestHelper.resetIdGenerator(processEngineConfiguration);
@@ -311,7 +315,7 @@ public class ProcessEngineExtension implements TestWatcher,
      TestHelper.assertAndEnsureCleanDbAndCache(processEngine);
    }
    if (closeEngineEachTest) {
-     processEngine.close();
+     getProcessEngine().close();
    }
   }
 
@@ -401,7 +405,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   private void injectProcessEngineService(Object testInstance, Class<?> serviceType) {
-    Objects.requireNonNull(processEngine, "ProcessEngine not initialized");
+    requireNonNull(processEngine, "ProcessEngine not initialized");
     Optional<Object> serviceInstance = Arrays.stream(ProcessEngineServices.class.getDeclaredMethods())
               .filter(method -> method.getReturnType() == serviceType)
               .findFirst()
@@ -461,7 +465,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   /**
-   * When set then the created ProcessEngine will be closed after each test and recreated afterwards.
+   * When set then the created ProcessEngine will be closed after each test and recreated afterward.
    */
   public ProcessEngineExtension closeEngineAfterEachTest() {
     this.closeEngineEachTest = true;
@@ -494,7 +498,7 @@ public class ProcessEngineExtension implements TestWatcher,
    */
   @Deprecated(forRemoval = true, since = "1.0")
   protected void inject(Object instance, Field field) {
-    inject(instance, field, processEngine);
+    inject(instance, field, getProcessEngine());
   }
 
   protected void inject(Object testInstance, Field field, Object serviceInstance) {
@@ -514,7 +518,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public ProcessEngine getProcessEngine() {
-    return processEngine;
+    return requireNonNull(processEngine, "ProcessEngine not initialized");
   }
 
   public void setProcessEngine(ProcessEngine processEngine) {
@@ -527,12 +531,12 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   public ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
-    return processEngineConfiguration;
+    return requireNonNull(processEngineConfiguration, "ProcessEngineConfiguration not initialized");
   }
 
   @Override
   public RepositoryService getRepositoryService() {
-    return repositoryService;
+    return requireNonNull(repositoryService, "RepositoryService not initialized");
   }
 
   public void setRepositoryService(RepositoryService repositoryService) {
@@ -541,7 +545,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public RuntimeService getRuntimeService() {
-    return runtimeService;
+    return requireNonNull(runtimeService, "RuntimeService not initialized");
   }
 
   public void setRuntimeService(RuntimeService runtimeService) {
@@ -550,7 +554,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public TaskService getTaskService() {
-    return taskService;
+    return requireNonNull(taskService, "TaskService not initialized");
   }
 
   public void setTaskService(TaskService taskService) {
@@ -559,7 +563,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public HistoryService getHistoryService() {
-    return historyService;
+    return requireNonNull(historyService, "HistoryService not initialized");
   }
 
   public void setHistoryService(HistoryService historyService) {
@@ -568,7 +572,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public IdentityService getIdentityService() {
-    return identityService;
+    return requireNonNull(identityService, "IdentityService not initialized");
   }
 
   public void setIdentityService(IdentityService identityService) {
@@ -577,7 +581,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public ManagementService getManagementService() {
-    return managementService;
+    return requireNonNull(managementService, "ManagementService not initialized");
   }
 
   public void setManagementService(ManagementService managementService) {
@@ -586,7 +590,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public FormService getFormService() {
-    return formService;
+    return requireNonNull(formService, "FormService not initialized");
   }
 
   public void setFormService(FormService formService) {
@@ -595,7 +599,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public FilterService getFilterService() {
-    return filterService;
+    return requireNonNull(filterService, "FilterService not initialized");
   }
 
   public void setFilterService(FilterService filterService) {
@@ -604,7 +608,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public AuthorizationService getAuthorizationService() {
-    return authorizationService;
+    return requireNonNull(authorizationService, "AuthorizationService not initialized");
   }
 
   public void setAuthorizationService(AuthorizationService authorizationService) {
@@ -613,7 +617,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public CaseService getCaseService() {
-    return caseService;
+    return requireNonNull(caseService, "CaseService not initialized");
   }
 
   public void setCaseService(CaseService caseService) {
@@ -622,7 +626,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public ExternalTaskService getExternalTaskService() {
-    return externalTaskService;
+    return requireNonNull(externalTaskService, "ExternalTaskService not initialized");
   }
 
   public void setExternalTaskService(ExternalTaskService externalTaskService) {
@@ -631,7 +635,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public DecisionService getDecisionService() {
-    return decisionService;
+    return requireNonNull(decisionService, "DecisionService not initialized");
   }
 
   public void setDecisionService(DecisionService decisionService) {
@@ -647,7 +651,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   public String getDeploymentId() {
-    return deploymentId;
+    return requireNonNull(deploymentId, "DeploymentId not initialized");
   }
 
   public boolean isEnsureCleanAfterTest() {

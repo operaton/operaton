@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.authorization;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 
@@ -93,7 +95,7 @@ import org.operaton.bpm.engine.identity.User;
  * @author Daniel Meyer
  *
  */
-public interface Authorization {
+public @NullMarked interface Authorization {
 
   /**
    * A Global Authorization ranges over all users and groups (userId = {@link #ANY}) and are
@@ -130,7 +132,7 @@ public interface Authorization {
   /**
    * Allows checking whether this authorization grants a specific permission.
    *
-   * @param perm the permission to check for
+   * @param permission the permission to check for
    * @throws IllegalStateException if this {@link Authorization} is of type {@link #AUTH_TYPE_REVOKE}
    */
   boolean isPermissionGranted(Permission permission);
@@ -138,7 +140,7 @@ public interface Authorization {
   /**
    * Allows checking whether this authorization revokes a specific permission.
    *
-   * @param perm the permission to check for
+   * @param permission the permission to check for
    * @throws IllegalStateException if this {@link Authorization} is of type {@link #AUTH_TYPE_GRANT}
    */
   boolean isPermissionRevoked(Permission permission);
@@ -172,7 +174,7 @@ public interface Authorization {
    * </ul>
    * </p>
    *
-   * @param an array of permissions to check for.
+   * @param permissions an array of permissions to check for.
    * @return Returns the set of {@link Permission Permissions} provided by this {@link Authorization}.
    *  */
   Permission[] getPermissions(Permission[] permissions);
@@ -189,23 +191,23 @@ public interface Authorization {
    * </ul>
    * </p>
    *
-   *  @param a set of permissions.
+   *  @param permissions a set of permissions.
    * */
   void setPermissions(Permission[] permissions);
 
 
   /** @return the ID of the {@link Authorization} object */
-  String getId();
+  @Nullable String getId();
 
   /**
    * set the id of the resource
    */
-  void setResourceId(String resourceId);
+  void setResourceId(@Nullable String resourceId);
 
   /**
    * @return the id of the resource
    */
-  String getResourceId();
+  @Nullable String getResourceId();
 
   /**
    * sets the type of the resource
@@ -225,22 +227,22 @@ public interface Authorization {
   /**
    * set the id of the user this authorization is created for
    */
-  void setUserId(String userId);
+  void setUserId(@Nullable String userId);
 
   /**
    * @return the id of the user this authorization is created for
    */
-  String getUserId();
+  @Nullable String getUserId();
 
   /**
    * set the id of the group this authorization is created for
    */
-  void setGroupId(String groupId);
+  void setGroupId(@Nullable String groupId);
 
   /**
    * @return the id of the group this authorization is created for
    */
-  String getGroupId();
+  @Nullable String getGroupId();
 
   /**
    * The type og the authorization. Legal values:
@@ -270,7 +272,7 @@ public interface Authorization {
    *   <li>{@code null} if removal time strategy is end and the top-level instance is not finished
    *   </ul>
    */
-  Date getRemovalTime();
+  @Nullable Date getRemovalTime();
 
   /**
    * The process instance id of the top-level (root) process instance the historic instance
@@ -288,6 +290,6 @@ public interface Authorization {
    *   <li>{@code null} if not related to a historic instance resource
    *   </ul>
    */
-  String getRootProcessInstanceId();
+  @Nullable String getRootProcessInstanceId();
 
 }

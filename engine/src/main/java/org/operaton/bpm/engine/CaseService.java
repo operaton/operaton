@@ -19,6 +19,7 @@ package org.operaton.bpm.engine;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.exception.NotAllowedException;
@@ -29,6 +30,10 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+import org.operaton.bpm.model.cmmn.instance.CaseTask;
+import org.operaton.bpm.model.cmmn.instance.HumanTask;
+import org.operaton.bpm.model.cmmn.instance.ProcessTask;
+import org.operaton.bpm.model.cmmn.instance.Stage;
 
 /**
  * Service which provides access to {@link CaseInstance case instances}
@@ -38,7 +43,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  *
  *
  */
-public interface CaseService {
+public @NullMarked interface CaseService {
 
   /**
    * <p>Creates a new {@link CaseInstance} of the latest version of the case definition

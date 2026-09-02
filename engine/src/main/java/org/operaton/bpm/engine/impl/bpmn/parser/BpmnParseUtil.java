@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BpmnParseException;
 
 import org.jspecify.annotations.Nullable;
@@ -46,7 +47,7 @@ import org.operaton.bpm.engine.impl.util.xml.Namespace;
 /**
  * Helper methods to reused for common parsing tasks.
  */
-public final class BpmnParseUtil {
+public final @NullMarked class BpmnParseUtil {
 
   private BpmnParseUtil() {
   }
@@ -169,7 +170,7 @@ public final class BpmnParseUtil {
   /**
    * @throws BpmnParseException if the parameter is invalid
    */
-  protected static ParameterValueProvider parseNestedParamValueProvider(Element element) {
+  static ParameterValueProvider parseNestedParamValueProvider(Element element) {
     // parse value provider
     if(element.elements().isEmpty()) {
       return parseParamValueProvider(element);
@@ -185,7 +186,7 @@ public final class BpmnParseUtil {
   /**
    * @throws BpmnParseException if the parameter is invalid
    */
-  protected static ParameterValueProvider parseParamValueProvider(Element parameterElement) {
+  static ParameterValueProvider parseParamValueProvider(Element parameterElement) {
     // LIST
     if(isTagName(parameterElement, "list")) {
       List<ParameterValueProvider> providerList = getParameterValueProviders(parameterElement);
@@ -218,13 +219,8 @@ public final class BpmnParseUtil {
   }
 
   private static ParameterValueProvider getScriptValueProvider(Element parameterElement) {
-    ExecutableScript executableScript = parseOperatonScript(parameterElement);
-    if (executableScript != null) {
-      return new ScriptValueProvider(executableScript);
-    }
-    else {
-      return new NullValueProvider();
-    }
+    ExecutableScript script = parseOperatonScript(parameterElement);
+    return new ScriptValueProvider(script);
   }
 
   private static TreeMap<ParameterValueProvider, ParameterValueProvider> getElValueProviders(
@@ -260,7 +256,7 @@ public final class BpmnParseUtil {
    *
    * @param scriptElement the script element ot parse
    * @return the generated executable script
-   * @throws BpmnParseException if the a attribute is missing or the script cannot be processed
+   * @throws BpmnParseException if the attribute is missing or the script cannot be processed
    */
   public static ExecutableScript parseOperatonScript(Element scriptElement) {
     String scriptLanguage = scriptElement.attribute("scriptFormat");
@@ -286,14 +282,18 @@ public final class BpmnParseUtil {
       List<Element> properties = propertiesElement.elementsNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, "property");
       Map<String, String> propertiesMap = new HashMap<>();
       for (Element property : properties) {
-        propertiesMap.put(property.attribute("name"), property.attribute("value"));
+        String name = property.attribute("name");
+        String value = property.attribute("value");
+        if (name != null && value != null) {
+          propertiesMap.put(name, value);
+        }
       }
       return propertiesMap;
     }
     return Collections.emptyMap();
   }
 
-  protected static ExpressionManager getExpressionManager() {
+  static ExpressionManager getExpressionManager() {
     return Context.getProcessEngineConfiguration().getExpressionManager();
   }
 }

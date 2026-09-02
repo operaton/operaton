@@ -24,6 +24,7 @@
   </dependencyManagement>
   <modules>
     <module>identity-ldap</module>
+    <module>identity-scim</module>
     <module>connect-plugin</module>
     <module>spin-plugin</module>
   </modules>

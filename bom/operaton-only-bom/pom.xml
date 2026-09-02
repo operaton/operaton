@@ -57,6 +57,11 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.operaton.bpm.identity</groupId>
+        <artifactId>operaton-identity-scim</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-engine-plugin-spin</artifactId>
         <version>${project.version}</version>

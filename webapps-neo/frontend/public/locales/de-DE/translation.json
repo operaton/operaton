@@ -463,7 +463,7 @@
       "error-details": "Fehlerdetails"
     },
     "activity-history": {
-      "empty": "Kein Aktivitätsverlauf für diese Instanz.",
+      "empty": "Keine Aktivitätshistorie für diese Instanz.",
       "canceled": "Abgebrochen"
     },
     "audit": {

@@ -74,12 +74,17 @@ public abstract class Parser {
 
   protected SAXParser getSaxParser(@Nullable String schemaResource) throws ParserConfigurationException, SAXException {
     boolean xxeProcessing = Boolean.TRUE.equals(isEnableXxeProcessing());
-    String key = (schemaResource == null ? NO_SCHEMA_KEY : schemaResource) + '|' + xxeProcessing;
+    String accessProperty = schemaResource != null ? resolveAccessExternalSchemaProperty() : "";
+    String key = buildSaxParserFactoryKey(schemaResource, xxeProcessing, accessProperty);
 
     SAXParserFactory saxParserFactory = SAX_PARSER_FACTORIES.get()
         .computeIfAbsent(key, ignored -> createSaxParserFactory(schemaResource, xxeProcessing));
 
     return saxParserFactory.newSAXParser();
+  }
+
+  private static String buildSaxParserFactoryKey(@Nullable String schemaResource, boolean xxeProcessing, String accessProperty) {
+    return (schemaResource == null ? NO_SCHEMA_KEY : schemaResource) + '|' + xxeProcessing + '|' + accessProperty;
   }
 
   /**
@@ -109,8 +114,12 @@ public abstract class Parser {
 
   protected Schema getSchema(String schemaResource) {
     String accessProperty = resolveAccessExternalSchemaProperty();
-    String cacheKey = schemaResource + '|' + accessProperty;
+    String cacheKey = buildSchemaCacheKey(schemaResource, accessProperty);
     return SCHEMAS.computeIfAbsent(cacheKey, key -> compileSchema(schemaResource, accessProperty));
+  }
+
+  private static String buildSchemaCacheKey(String schemaResource, String accessProperty) {
+    return schemaResource + '|' + accessProperty;
   }
 
   private static Schema compileSchema(String schemaResource, String accessExternalSchemaProperty) {

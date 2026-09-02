@@ -100,6 +100,20 @@ Compose profiles as: `./mvnw clean install -P<testsuite>,<runtime>,<database>`
 
 ### Frontend Development
 
+There are two front-end applications in this repository. The `webapps-neo` folder contains the new development, the `webapps` folder contains the outdated legacy app. Further development only focuses on the neo applications. The legacy frontend may receive bug fixes, but no new features and may be decomissioned soon.
+
+#### Webapps Neo
+
+`webapps-neo/readme.md` contains build instructions for the web apps for the entire operaton application
+
+`webapps-neo/frontend/CLAUDE.md` contains instructions for the agent
+
+`webapps-neo/frontend/README.md` contains instructions for running the application as isolated vite application for development
+
+`webapps-neo/frontend/docs` contains further instructions on how to develop the application
+
+#### Webapps Legacy
+
 ```bash
 cd webapps/frontend
 

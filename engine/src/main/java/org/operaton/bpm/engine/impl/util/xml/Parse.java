@@ -127,9 +127,6 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public void setSchemaResource(String schemaResource) {
-    boolean schemaResourceSet = schemaResource != null;
-    parser.enableSchemaValidation(schemaResourceSet);
-
     this.schemaResource = schemaResource;
   }
 
@@ -137,12 +134,8 @@ public abstract class Parse extends DefaultHandler {
     try {
       InputStream inputStream = streamSource.getInputStream();
 
-      SAXParser saxParser = parser.getSaxParser();
+      SAXParser saxParser = parser.getSaxParser(schemaResource);
       trySetAccessExternalSchema(saxParser);
-      if (schemaResource != null) {
-        saxParser.setProperty(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-        saxParser.setProperty(JAXP_SCHEMA_SOURCE, schemaResource);
-      }
       saxParser.parse(inputStream, new ParseHandler(this));
     } catch (Exception e) {
       throw LOG.parsingFailureException(name, e);
@@ -160,21 +153,8 @@ public abstract class Parse extends DefaultHandler {
     }
   }
 
-  /*
-   * JAXP allows users to override the default value via system properties and
-   * a central properties file (see https://docs.oracle.com/javase/tutorial/jaxp/properties/scope.html).
-   * However, both are overridden by an explicit configuration in code, as we apply it.
-   * Since we want users to customize the value, we take the system property into account.
-   * The properties file is not supported at the moment.
-   */
   protected String resolveAccessExternalSchemaProperty() {
-    String systemProperty = System.getProperty(JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY);
-
-    if (systemProperty != null) {
-      return systemProperty;
-    } else {
-      return JAXP_ACCESS_EXTERNAL_SCHEMA_ALL;
-    }
+    return Parser.resolveAccessExternalSchemaProperty();
   }
 
   public Element getRootElement() {

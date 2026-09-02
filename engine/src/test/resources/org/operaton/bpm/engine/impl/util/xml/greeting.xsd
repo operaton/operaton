@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://operaton.org/test/greeting"
+            targetNamespace="http://operaton.org/test/greeting"
+            elementFormDefault="qualified">
+  <xsd:element name="greeting">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="hello" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

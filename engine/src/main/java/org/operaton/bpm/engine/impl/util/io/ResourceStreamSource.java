@@ -46,7 +46,7 @@ public class ResourceStreamSource implements StreamSource {
     if (classLoader == null) {
       inputStream = ReflectUtil.getResourceAsStream(resource);
     } else {
-      classLoader.getResourceAsStream(resource);
+      inputStream = classLoader.getResourceAsStream(resource);
     }
     ensureNotNull("resource '%s' doesn't exist".formatted(resource), "inputStream", inputStream);
     return inputStream;

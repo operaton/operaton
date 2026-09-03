@@ -5,9 +5,9 @@ import { login_via_form } from "./fixtures.js";
 test.describe("login", () => {
   test("shows the login screen when unauthenticated", async ({ page }) => {
     await page.goto("/");
-    await expect(
-      page.getByRole("heading", { name: /operaton web apps login/i }),
-    ).toBeVisible();
+    // login.title is "Login"; this expectation went stale when the heading text
+    // changed and the spec has been failing on main since.
+    await expect(page.getByRole("heading", { name: /^login$/i })).toBeVisible();
     await expect(page.getByRole("button", { name: /login/i })).toBeVisible();
   });
 

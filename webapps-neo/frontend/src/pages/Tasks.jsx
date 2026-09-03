@@ -1,4 +1,5 @@
 import { useSignal } from "@preact/signals";
+import { useRovingFocus } from "../helper/roving_focus.js";
 import { useLocation, useRoute } from "preact-iso";
 import { useContext, useEffect, useLayoutEffect } from "preact/hooks";
 import { useTranslation } from "react-i18next";
@@ -23,6 +24,7 @@ import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
 import { formatRelativeDate } from "../helper/date_formatter.js";
+import { DetailHeading, PageHeading } from "../components/Heading.jsx";
 
 const TASK_PAGE_SIZE = 20;
 
@@ -190,6 +192,7 @@ const load_tasks = (state, query, firstResult = 0) => {
 const TasksPage = () => {
   const state = useContext(AppState);
   const { params, query } = useRoute();
+  const [t] = useTranslation();
 
   useEffect(() => {
     if (state.api.filter.list.value === null) {
@@ -208,6 +211,9 @@ const TasksPage = () => {
   if (params?.task_id === "start") {
     return (
       <main id="content" class="start-process-page fade-in">
+        <PageHeading class="screen-hidden">
+          {t("tasks.start-process.title")}
+        </PageHeading>
         <StartProcessList />
       </main>
     );
@@ -216,6 +222,9 @@ const TasksPage = () => {
   if (params?.task_id === "filter") {
     return (
       <main id="content" class="fade-in">
+        <PageHeading class="screen-hidden">
+          {t("tasks.filter.title")}
+        </PageHeading>
         <Filter />
       </main>
     );
@@ -224,6 +233,7 @@ const TasksPage = () => {
   if (query?.filters === "manage") {
     return (
       <main id="content" class="fade-in">
+        <PageHeading class="screen-hidden">{t("tasks.title")}</PageHeading>
         <TasksManage />
       </main>
     );
@@ -231,6 +241,7 @@ const TasksPage = () => {
 
   return (
     <main id="content" class="tasks fade-in">
+      <PageHeading class="screen-hidden">{t("tasks.title")}</PageHeading>
       <TaskList />
       {params?.task_id === undefined ? <NoSelectedTask /> : <Task />}
     </main>
@@ -297,6 +308,7 @@ const TasksManage = () => {
 };
 
 const TaskList = () => {
+  const task_rows = useRovingFocus({ mode: "rows", orientation: "vertical" });
   const state = useContext(AppState),
     taskList = state.api.task.list,
     { params, query } = useRoute(),
@@ -323,7 +335,6 @@ const TaskList = () => {
 
   return (
     <div id="task-list">
-      <h2 class="screen-hidden">{t("tasks.title")}</h2>
       <ListFilter
         sort_options={SORT_OPTIONS}
         saved_filters_signal={state.api.filter.list}
@@ -337,11 +348,15 @@ const TaskList = () => {
         on_manage={open_manage}
       />
       <div id="task-table-wrapper">
-        <table>
+        <table {...task_rows}>
           <thead>
             <tr>
-              <th scope="col">{t("tasks.task-list.table-headings.task-name")}</th>
-              <th scope="col">{t("tasks.task-list.table-headings.assignee")}</th>
+              <th scope="col">
+                {t("tasks.task-list.table-headings.task-name")}
+              </th>
+              <th scope="col">
+                {t("tasks.task-list.table-headings.assignee")}
+              </th>
               <th scope="col">{t("tasks.task-list.table-headings.due-in")}</th>
             </tr>
           </thead>
@@ -454,7 +469,9 @@ const Task = () => {
       <section id="task-data">
         <header>
           <div>
-            <h2>{task.value?.data?.name}</h2>
+            <DetailHeading focus_key={task_data?.id}>
+              {task.value?.data?.name}
+            </DetailHeading>
             <a href={`/processes/${pd.value?.data?.id}`}>
               {pd.value?.data?.name} ({t("processes.version")}{" "}
               {pd.value?.data?.version})

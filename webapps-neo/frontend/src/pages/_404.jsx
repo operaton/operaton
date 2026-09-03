@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { PageHeading } from "../components/Heading.jsx";
 
 export function NotFound() {
 	const [t] = useTranslation();
 
 	return (
 		<main id="content" class="p-3">
-			<h1>{t("not-found.title")}</h1>
+			<PageHeading>{t("not-found.title")}</PageHeading>
 			<p>{t("not-found.text")}</p>
 			<p>{t("not-found.hint")}</p>
 			<p>

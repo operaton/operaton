@@ -58,7 +58,8 @@
     "release-warning": "Öffentliche Alpha-Version – Nicht getestet und nicht für den Produktivbetrieb geeignet – Teilen Sie Ihr Feedback in einem",
     "release-warning-issue": "Issue",
     "release-warning-or": "oder im",
-    "release-warning-forum": "Forum"
+    "release-warning-forum": "Forum",
+    "secondary-navigation": "Sekundäre Navigation"
   },
   "goto": {
     "title": "Gehe zu",

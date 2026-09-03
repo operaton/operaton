@@ -7,8 +7,11 @@ import { has_data } from '../api/helper.jsx'
 import { AppState } from '../state.js'
 import { Breadcrumbs } from '../components/Breadcrumbs.jsx'
 import { Dialog, ConfirmDialog } from '../components/Dialog.jsx'
+import { useRovingFocus } from '../helper/roving_focus.js'
+import { DetailHeading, PageHeading } from '../components/Heading.jsx'
 
 const AdminPage = () => {
+  const admin_nav = useRovingFocus({ orientation: 'vertical' })
   const
     { params: { page_id } } = useRoute(),
     { route } = useLocation(),
@@ -22,8 +25,9 @@ const AdminPage = () => {
   const is_current = (page) => (page_id === page) ? 'page' : undefined
 
   return <main id="content" class="admin-page">
+    <PageHeading class='screen-hidden'>{t('nav.admin')}</PageHeading>
     <nav aria-label={t("nav.admin")}>
-      <menu class="list">
+      <menu class="list" {...admin_nav}>
         <li><a href="/admin/users" aria-current={is_current('users')}>{t("admin.users")}</a></li>
         <li><a href="/admin/groups" aria-current={is_current('groups')}>{t("admin.groups")}</a></li>
         <li><a href="/admin/tenants" aria-current={is_current('tenants')}>{t("admin.tenants")}</a></li>
@@ -187,7 +191,7 @@ const TenantDetails = ({ tenant_id }) => {
       { name: t("admin.tenants"), route: '/admin/tenants' },
       { name: tenant_id }]} />
 
-    <h2>{t("admin.tenant.details")}</h2>
+    <DetailHeading focus_key={tenant_id}>{t("admin.tenant.details")}</DetailHeading>
 
     <h3>{t("admin.tenant.information")}</h3>
     <ActionResult signal={tenant.update} success={t("admin.tenant.success-updated")} />
@@ -387,7 +391,7 @@ const GroupDetails = ({ group_id }) => {
       { name: t("admin.groups"), route: '/admin/groups' },
       { name: group_id }]} />
 
-    <h2>{t("admin.group.details")}</h2>
+    <DetailHeading focus_key={group_id}>{t("admin.group.details")}</DetailHeading>
 
     <h3>{t("admin.group.information")}</h3>
     <ActionResult signal={group.update} success={t("admin.group.success-updated")} />
@@ -671,7 +675,7 @@ const UserDetails = ({ user_id }) => {
       { name: t("admin.users"), route: '/admin/users' },
       { name: user_id }]} />
 
-    <h2>{t("admin.user.details")}</h2>
+    <DetailHeading focus_key={user_id}>{t("admin.user.details")}</DetailHeading>
 
     <h3>{t("admin.group.profile")}</h3>
     <UserProfile user_id={user_id} />

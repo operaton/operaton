@@ -1,3 +1,4 @@
+import { PageHeading } from "../components/Heading.jsx";
 import { signal, useSignal } from "@preact/signals";
 import { useContext, useEffect, useMemo } from "preact/hooks";
 import { useTranslation } from "react-i18next";
@@ -206,7 +207,7 @@ const ProcessSelection = () => {
 
   return (
     <div id="migration">
-      <h1 class="screen-hidden">{t("migrations.title")}</h1>
+      <PageHeading class="screen-hidden">{t("migrations.title")}</PageHeading>
 
       <form
         class="migration-steps"

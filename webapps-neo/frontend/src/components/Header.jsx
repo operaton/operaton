@@ -10,6 +10,7 @@ import engine_rest from "../api/engine_rest.jsx";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
 import { get_config } from "../config.js";
+import { useRovingFocus } from "../helper/roving_focus.js";
 
 const swap_server = (e, state) => {
   const server = get_config().backends.find((s) => s.url === e.target.value);
@@ -63,6 +64,16 @@ export function Header() {
   const { url, route } = useLocation(),
     state = useContext(AppState),
     [t] = useTranslation(),
+    // One tab stop per menu; the arrow keys move within it. The primary nav is
+    // laid out horizontally on desktop and vertically in the mobile dialog, so
+    // both axes stay live rather than guessing from the viewport.
+    primary_nav = useRovingFocus(),
+    secondary_nav = useRovingFocus(),
+    mobile_nav = useRovingFocus({ orientation: "vertical" }),
+    mobile_links = useRovingFocus({
+      orientation: "vertical",
+      selector: 'a[href], button:not([disabled])',
+    }),
     // dialogs
     showSearch = () => document.getElementById("global-search").showModal(),
     show_mobile_menu = () => document.getElementById("mobile-menu").showModal(),
@@ -142,7 +153,7 @@ export function Header() {
         />
         <div id="nav-wrapper">
           <nav id="primary-navigation" aria-label={t("nav.main-navigation")}>
-            <menu>
+            <menu {...primary_nav}>
               <MainNavEntries url={url} />
             </menu>
           </nav>
@@ -167,8 +178,8 @@ export function Header() {
               {t("nav.go-to")} <kbd>Alt+K</kbd>
             </button>
             <div>
-              <nav id="secondary-navigation">
-                <menu>
+              <nav id="secondary-navigation" aria-label={t("nav.secondary-navigation")}>
+                <menu {...secondary_nav}>
                   <li>
                     <a
                       href="/help"
@@ -211,10 +222,10 @@ export function Header() {
           </button>
         </header>
         <nav aria-label={t("nav.mobile-navigation")}>
-          <menu>
+          <menu {...mobile_nav}>
             <MainNavEntries url={url} on_navigate={close_mobile_menu} />
           </menu>
-          <menu>
+          <menu {...mobile_links}>
             <li>
               <a href="/help">{t("nav.help")}</a>
             </li>

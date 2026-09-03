@@ -1,3 +1,5 @@
+import { DetailHeading, PageHeading } from "../components/Heading.jsx";
+import { useRovingFocus } from "../helper/roving_focus.js";
 import { useContext, useEffect } from "preact/hooks";
 import { useSignal } from "@preact/signals";
 import { useTranslation } from "react-i18next";
@@ -158,7 +160,7 @@ const DeploymentsPage = () => {
 
   return (
     <main id="content" class="deployments fade-in">
-      <h1 class="screen-hidden">{t("nav.deployments")}</h1>
+      <PageHeading class="screen-hidden">{t("nav.deployments")}</PageHeading>
       <DeploymentsList />
       <ResourcesList />
       {resource_name ? (
@@ -173,6 +175,7 @@ const DeploymentsPage = () => {
 };
 
 const DeploymentsList = () => {
+  const deployment_rows = useRovingFocus({ mode: "rows", orientation: "vertical" });
   const state = useContext(AppState),
     { params, query } = useRoute(),
     { route } = useLocation(),
@@ -206,7 +209,7 @@ const DeploymentsList = () => {
         />
         <DeploymentUpload />
       </div>
-      <table>
+      <table {...deployment_rows}>
         <thead>
           <tr>
             <th scope="col">{t("common.name")}</th>
@@ -285,7 +288,11 @@ const DeploymentUpload = () => {
   return (
     <>
       <div class="button-group">
-        <button type="button" class="primary" onClick={() => (open.value = true)}>
+        <button
+          type="button"
+          class="primary"
+          onClick={() => (open.value = true)}
+        >
           {t("deployments.upload.title")}
         </button>
       </div>
@@ -345,6 +352,7 @@ const DeploymentUpload = () => {
 };
 
 const ResourcesList = () => {
+  const resource_rows = useRovingFocus({ mode: "rows", orientation: "vertical" });
   const state = useContext(AppState),
     { params } = useRoute(),
     [t] = useTranslation();
@@ -357,7 +365,7 @@ const ResourcesList = () => {
 
   return (
     <div class="resource-list">
-      <table>
+      <table {...resource_rows}>
         <thead>
           <tr>
             <th scope="col">{t("deployments.resource")}</th>
@@ -417,10 +425,10 @@ const ResourceDetails = () => {
         on_success={() =>
           process_definition.value?.data?.length > 0 ? (
             <div>
-              <h3>
+              <DetailHeading level={2} focus_key={resource_name}>
                 {process_definition.value?.data[0].name ||
                   t("deployments.no-process-name")}
-              </h3>
+              </DetailHeading>
               <p
                 class={
                   process_definition.value?.data[0].suspended

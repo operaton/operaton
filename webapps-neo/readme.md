@@ -9,7 +9,7 @@ The web apps can be build by using Maven:
 `mvn clean install`
 
 For development you can use the build options provided by npm and vite.
-See [ui/README.md](ui/README.md) for details.
+See [frontend/README.md](frontend/README.md) for details.
 
 ### Going Fast
 
@@ -26,6 +26,18 @@ Roughly reduces build times on MacPro with M1 chip from 3 minutes to 1 minute.
 1. Clone [Example Repo](https://github.com/javahippie/operaton-spring-boot-example)
 2. Add the version to which you built the application in the `pom.xml`
 3. Run `mvn spring-boot:run` in the root of the repository
+
+## Accessibility
+
+Accessibility is tested in three layers — an automated gate, a generated report,
+and a manual walkthrough with a screen reader. See
+[frontend/docs/Accessibility.md](frontend/docs/Accessibility.md) for the
+overview,
+[frontend/docs/Manual Accessibility Testing.md](frontend/docs/Manual%20Accessibility%20Testing.md)
+for the walkthrough and how to start the harness, and
+[frontend/docs/Accessibility Tooling.md](frontend/docs/Accessibility%20Tooling.md)
+for setting up a screen reader, the Firefox accessibility tooling and keyboard
+navigation.
 
 ## Additional Information
 

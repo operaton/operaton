@@ -1,3 +1,5 @@
+import { DetailHeading, PageHeading } from "../components/Heading.jsx";
+import { useRovingFocus } from "../helper/roving_focus.js";
 import { useContext, useEffect } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
@@ -87,6 +89,7 @@ const load_decisions = (state, query) => {
 };
 
 const DecisionsPage = () => {
+  const [t] = useTranslation();
   const state = useContext(AppState),
     {
       api: {
@@ -124,6 +127,7 @@ const DecisionsPage = () => {
 
   return (
     <main id="content" class="decisions fade-in">
+      <PageHeading class="screen-hidden">{t("nav.decisions")}</PageHeading>
       <DecisionsList />
       <DecisionDetails />
     </main>
@@ -131,6 +135,7 @@ const DecisionsPage = () => {
 };
 
 const DecisionsList = () => {
+  const decision_rows = useRovingFocus({ mode: "rows", orientation: "vertical" });
   const state = useContext(AppState),
     {
       api: {
@@ -170,7 +175,7 @@ const DecisionsList = () => {
       <RequestState
         signal={definitions}
         on_success={() => (
-          <table>
+          <table {...decision_rows}>
             <thead>
               <tr>
                 <th>{t("common.name")}</th>
@@ -207,9 +212,15 @@ const DecisionsList = () => {
 
 const DecisionDetails = () => {
   const {
+      api: {
+        decision: { definition },
+      },
+    } = useContext(AppState),
+    {
       params: { decision_id, panel },
     } = useRoute(),
-    [t] = useTranslation();
+    [t] = useTranslation(),
+    detail_nav = useRovingFocus({ orientation: "horizontal" });
 
   if (!decision_id) {
     return (
@@ -221,8 +232,11 @@ const DecisionDetails = () => {
 
   return (
     <div id="decision-details">
-      <nav>
-        <menu>
+      <DetailHeading class="screen-hidden" focus_key={decision_id}>
+        {definition.value?.data?.name ?? decision_id}
+      </DetailHeading>
+      <nav aria-label={t("decisions.tabs.details")}>
+        <menu {...detail_nav}>
           <li>
             <a
               href={`/decisions/${decision_id}`}
@@ -322,6 +336,7 @@ const DecisionDefinition = () => {
 };
 
 const DecisionInstances = () => {
+  const decision_instance_rows = useRovingFocus({ mode: "rows", orientation: "vertical" });
   const state = useContext(AppState),
     {
       api: {
@@ -360,7 +375,7 @@ const DecisionInstances = () => {
             return <p class="info-box">{t("decisions.instances.empty")}</p>;
           return (
             <>
-              <table>
+              <table {...decision_instance_rows}>
                 <thead>
                   <tr>
                     <th>{t("common.id")}</th>

@@ -52,7 +52,8 @@
     "release-warning": "Publieke Alpha Release – Niet getest en niet klaar voor productie – Deel uw feedback via een",
     "release-warning-issue": "issue",
     "release-warning-or": "of in het",
-    "release-warning-forum": "forum"
+    "release-warning-forum": "forum",
+    "secondary-navigation": "Secundaire navigatie"
   },
   "goto": {
     "title": "Ga naar",

@@ -51,6 +51,20 @@ The e2e tests need the backend running (`docker compose up`, or `podman compose
 up`) and drive the dev server, which they start automatically. They log in with
 `demo`/`demo`. Use `npx playwright test --ui` to watch the flows interactively.
 
+### Accessibility
+
+- `npm run test:a11y` - The gate: axe and pa11y over every route, fails on a violation
+- `npm run test:a11y:ui` - Watch those specs run in Playwright's UI mode
+- `npm run a11y:report` - Generates the informational report under `docs/accessibility/`
+- `npm run a11y:coverage` - Regenerates the manual/automated coverage table
+
+Accessibility is tested in three layers — the gate, a generated report, and a
+manual walkthrough. See [Accessibility.md](docs/Accessibility.md) for the
+overview, [Manual Accessibility Testing.md](docs/Manual%20Accessibility%20Testing.md)
+for the walkthrough itself, and
+[Accessibility Tooling.md](docs/Accessibility%20Tooling.md) for setting up a
+screen reader and the browser tooling it needs.
+
 ## Documentation
 
 Documentation for the Operaton web apps can currently be found inside the [`/docs`](./docs/) folder.

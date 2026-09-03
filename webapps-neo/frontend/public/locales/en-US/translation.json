@@ -58,7 +58,8 @@
     "release-warning": "Public Alpha Release – Untested and not ready for production – Share your feedback with an",
     "release-warning-issue": "issue",
     "release-warning-or": "or in the",
-    "release-warning-forum": "forum"
+    "release-warning-forum": "forum",
+    "secondary-navigation": "Secondary navigation"
   },
   "goto": {
     "title": "Go To",

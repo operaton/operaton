@@ -1,3 +1,5 @@
+import { DetailHeading, PageHeading } from "../components/Heading.jsx";
+import { useRovingFocus } from "../helper/roving_focus.js";
 import { useSignal } from "@preact/signals";
 import { useContext, useEffect } from "preact/hooks";
 import { useLocation, useRoute } from "preact-iso";
@@ -414,6 +416,7 @@ const ProcessBreadcrumbs = () => {
  * then the sub-page nav (same .list pattern as the Admin page).
  */
 const ProcessSidebar = () => {
+  const definition_nav = useRovingFocus({ orientation: "vertical" });
   const state = useContext(AppState),
     [t] = useTranslation(),
     { params, query } = useRoute(),
@@ -426,9 +429,9 @@ const ProcessSidebar = () => {
     <nav aria-label={t("nav.processes")}>
       <div class="sidebar-scroll">
         <div class="definition-block">
-          <h2 class="definition-heading">
+          <DetailHeading class="definition-heading" focus_key={def_id}>
             {def?.name ?? def?.key ?? def_id}
-          </h2>
+          </DetailHeading>
           <dl class="definition-summary">
             <dt>{t("processes.definition-id")}</dt>
             <dd class="entity-id">{def?.id ?? "—"}</dd>
@@ -436,7 +439,7 @@ const ProcessSidebar = () => {
             <dd>{def?.version ?? "—"}</dd>
           </dl>
         </div>
-        <menu class="list">
+        <menu class="list" {...definition_nav}>
           {DEFINITION_NAV.map((entry) => {
             const active = params.panel === entry.panel;
             const count = entry.count ? counts[entry.count] : undefined;
@@ -472,6 +475,7 @@ const ProcessSidebar = () => {
  * the URL to the default tab when none is selected yet.
  */
 const ProcessTertiaryNav = ({ tabs, base_path, param = "sub_panel" }) => {
+  const tertiary_nav = useRovingFocus({ orientation: "horizontal" });
   const { params, query } = useRoute();
   const { route } = useLocation();
   const [t] = useTranslation();
@@ -489,7 +493,7 @@ const ProcessTertiaryNav = ({ tabs, base_path, param = "sub_panel" }) => {
 
   return (
     <nav class="tertiary" aria-label={t("processes.subnav-label")}>
-      <menu>
+      <menu {...tertiary_nav}>
         {tabs.map((tab) => (
           <li key={tab.id}>
             <a
@@ -511,7 +515,7 @@ const DefinitionTabHeading = ({ titleKey }) => {
   // the panel title.
   return (
     <header>
-      <h1>{t(titleKey)}</h1>
+      <PageHeading>{t(titleKey)}</PageHeading>
     </header>
   );
 };
@@ -638,6 +642,7 @@ const ProcessDiagram = () => {
 };
 
 const ProcessDefinitionSelection = () => {
+  const definition_rows = useRovingFocus({ mode: "rows", orientation: "vertical" });
   const state = useContext(AppState),
     {
       api: {
@@ -712,7 +717,7 @@ const ProcessDefinitionSelection = () => {
   return (
     <div class="fade-in">
       <header>
-        <h1>{t("processes.deployed-definitions")}</h1>
+        <PageHeading>{t("processes.deployed-definitions")}</PageHeading>
         <a class="button" href="/deployments">
           {t("processes.deploy")}
         </a>
@@ -774,7 +779,7 @@ const ProcessDefinitionSelection = () => {
         <DefinitionsEmpty />
       ) : (
         <div>
-          <table>
+          <table {...definition_rows}>
             <thead>
               <tr>
                 <th>
@@ -905,6 +910,7 @@ const ProcessDefinition = ({
 };
 
 const Instances = () => {
+  const instance_rows = useRovingFocus({ mode: "rows", orientation: "vertical" });
   const state = useContext(AppState),
     { params, query } = useRoute(),
     { route } = useLocation(),
@@ -993,7 +999,7 @@ const Instances = () => {
         on_manage={open_manage}
       />
       <div>
-        <table>
+        <table {...instance_rows}>
           <thead>
             <tr>
               <th>{t("common.id")}</th>
@@ -1075,9 +1081,10 @@ const InstanceDetailsDescription = () => {
     confirm_cancel = useSignal(false),
     // Live and historic instance details live in separate signals; read the one
     // matching the current mode so a stale shape can't leak across a toggle.
-    data = (history_mode
-      ? state.api.history.process_instance.one
-      : state.api.process.instance.one
+    data = (
+      history_mode
+        ? state.api.history.process_instance.one
+        : state.api.process.instance.one
     ).value?.data;
 
   const toggle_suspended = async (suspended) => {
@@ -1256,9 +1263,10 @@ const InstanceVariables = () => {
     // Live and historic variables live in separate signals, each holding a
     // single shape (live: object map; historic: array). Read the one for the
     // current mode and render once it has loaded — no cross-shape guard needed.
-    vars_data = (history_mode
-      ? state.api.history.variable_instance.by_process_instance
-      : state.api.process.instance.variables
+    vars_data = (
+      history_mode
+        ? state.api.history.variable_instance.by_process_instance
+        : state.api.process.instance.variables
     ).value?.data,
     vars_ready = vars_data != null;
 

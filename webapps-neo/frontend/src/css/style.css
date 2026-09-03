@@ -711,6 +711,24 @@
     border: 0 !important;
   }
 
+  /* A visually hidden heading that takes focus on a route change would make
+     focus vanish for a sighted keyboard user: the outline is clipped away with
+     the box. Revealing it while it holds focus is the same trick #skip-links
+     already uses. Scoped to :focus-visible, so a mouse user who clicked a link
+     never sees it — only the keyboard route, which is the one that needs the
+     indicator. */
+  .screen-hidden:focus-visible {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: var(--spacing-1) !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+    white-space: normal !important;
+  }
+
   #migration {
     padding: var(--spacing-2);
     display: flex;
@@ -1428,7 +1446,13 @@
     background: var(--border-color-3);
   }
 
-  :where(a, button, input, select):focus {
+  /* :focus-visible, not :focus — the browser decides when an indicator is
+     warranted, so a mouse click on a link or button leaves no lingering ring
+     while every keyboard route to the same element still shows one. This also
+     makes the programmatically focused page and detail headings
+     (components/Heading.jsx) behave: silent after a click, outlined after
+     keyboard navigation. Verified identical in Chromium and Firefox. */
+  :where(a, button, input, select, [tabindex]):focus-visible {
     transform: rotate(0);
     outline: var(--border-width-2) solid var(--color-primary);
     outline-offset: calc(-1 * var(--border-width-2));
@@ -1446,7 +1470,7 @@
     height: 1em;
   }
 
-  button[type="submit"]:is(:focus, :active, :hover) {
+  button[type="submit"]:is(:focus-visible, :active, :hover) {
     outline: 0.1em solid var(--color-primary);
   }
 

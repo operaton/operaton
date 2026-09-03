@@ -196,8 +196,15 @@ describe("TasksPage", () => {
 
     it("renders the filter editor for /tasks/filter", () => {
       mockParams = { task_id: "filter" };
-      const { getByText } = renderPage(state);
-      expect(getByText("tasks.filter.title")).toBeTruthy();
+      const { getByRole } = renderPage(state);
+      // The page now carries a visually hidden <h1> alongside the editor's
+      // visible <h2>, so match on the level rather than the text.
+      expect(getByRole("heading", { level: 2 }).textContent).toBe(
+        "tasks.filter.title",
+      );
+      expect(getByRole("heading", { level: 1 }).textContent).toBe(
+        "tasks.filter.title",
+      );
     });
 
     it("creates a filter from the editor and routes back to /tasks", () => {

@@ -51,6 +51,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Pure render from routes.js and a11y-states.js — no engine, no browser,
+      # a few milliseconds. Runs before anything is started because it needs
+      # nothing running.
+      - name: Refresh the accessibility coverage table
+        run: npm run a11y:coverage
+
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 

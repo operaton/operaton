@@ -3,6 +3,10 @@
 // Pure: a model in, a string out. No browser, no filesystem, no clock — the
 // timestamp and commit are passed in, so the renderers stay unit-testable
 // (a11y-markdown.test.js).
+//
+// The generic table primitives (cell/code/row/table/section) are exported
+// because a11y-coverage.js renders its own document from them. Everything
+// below them is report-specific and German, because the report is.
 
 import { compare, impact_rank, sorted, tally } from "./a11y-normalize.js";
 
@@ -18,27 +22,27 @@ export const IMPACT_LABELS = {
 export const impact_label = (impact) => IMPACT_LABELS[impact] ?? impact ?? "—";
 
 /** Table cells must not contain a raw pipe or a newline. */
-const cell = (value) =>
+export const cell = (value) =>
   String(value ?? "")
     .replace(/\r?\n/g, " ")
     .replace(/\|/g, "\\|")
     .trim();
 
-const code = (value) => `\`${cell(value)}\``;
+export const code = (value) => `\`${cell(value)}\``;
 
-const code_list = (values) =>
+export const code_list = (values) =>
   values.length ? values.map(code).join(", ") : "—";
 
-const row = (cells) => `| ${cells.join(" | ")} |`;
+export const row = (cells) => `| ${cells.join(" | ")} |`;
 
-const table = (headers, rows) =>
+export const table = (headers, rows) =>
   [
     row(headers),
     row(headers.map(() => "---")),
     ...rows.map((cells) => row(cells)),
   ].join("\n");
 
-const section = (parts) => parts.filter(Boolean).join("\n\n");
+export const section = (parts) => parts.filter(Boolean).join("\n\n");
 
 const all_findings = (pages) =>
   pages.flatMap((page) => page.states.flatMap((state) => state.findings));
@@ -80,7 +84,10 @@ const environment_table = (meta) =>
     [
       ["Erstellt", cell(meta.generated_at)],
       ["Commit", code(meta.commit)],
-      ["Regelsatz", "WCAG 2.0 / 2.1 / 2.2 Stufe A + AA, zzgl. axe Best Practice"],
+      [
+        "Regelsatz",
+        "WCAG 2.0 / 2.1 / 2.2 Stufe A + AA, zzgl. axe Best Practice",
+      ],
       ["axe-core-Tags", meta.tags.map(code).join(" ")],
       [
         "Aktive Regeln",
@@ -171,7 +178,8 @@ const summary_table = (pages) => {
 
 const by_rule_table = (pages) => {
   const findings = all_findings(pages);
-  if (!findings.length) return "Keine Verstöße durch eine der Engines gefunden.";
+  if (!findings.length)
+    return "Keine Verstöße durch eine der Engines gefunden.";
 
   const rules = new Map();
   for (const finding of findings) {
@@ -193,7 +201,8 @@ const by_rule_table = (pages) => {
   const rows = [...rules.values()]
     .sort(
       (a, b) =>
-        impact_rank(a.impact) - impact_rank(b.impact) || compare(a.rule, b.rule),
+        impact_rank(a.impact) - impact_rank(b.impact) ||
+        compare(a.rule, b.rule),
     )
     .map((entry) => [
       code(entry.rule),
@@ -303,7 +312,14 @@ Nicht geprüft: ${cell(page.reason ?? "nicht verfügbar")}.`;
 
   const state_rows = page.states.map((state) => {
     if (state.failed)
-      return [cell(state.label), "—", "—", "—", "—", `Scan fehlgeschlagen (${cell(state.failed)})`];
+      return [
+        cell(state.label),
+        "—",
+        "—",
+        "—",
+        "—",
+        `Scan fehlgeschlagen (${cell(state.failed)})`,
+      ];
     const counts = tally(state.findings);
     return [
       cell(state.label),
@@ -354,7 +370,9 @@ Nicht geprüft: ${cell(page.reason ?? "nicht verfügbar")}.`;
       ["Zustand", "Kritisch", "Schwerwiegend", "Mittel", "Gering", "Hinweis"],
       state_rows,
     ),
-    blocks.length ? blocks.join("\n\n") : "_Keine Verstöße in einem geprüften Zustand._",
+    blocks.length
+      ? blocks.join("\n\n")
+      : "_Keine Verstöße in einem geprüften Zustand._",
   ]);
 };
 

@@ -4,8 +4,11 @@ import { AppState } from '../state.js'
 import engine_rest, { RequestState } from '../api/engine_rest.jsx'
 import { useContext, useEffect } from 'preact/hooks'
 import { useComputed, useSignal } from '@preact/signals'
+import { useRovingFocus } from '../helper/roving_focus.js'
+import { PageHeading } from '../components/Heading.jsx'
 
 const AccountPage = () => {
+  const account_nav = useRovingFocus({ orientation: 'vertical' })
   const
     { params: { page_id } } = useRoute(),
     { route } = useLocation(),
@@ -21,8 +24,9 @@ const AccountPage = () => {
   const current = (page) => (page_id === page) ? 'page' : undefined
 
   return <main id="content" class="account-page">
+    <PageHeading class='screen-hidden'>{t('nav.account')}</PageHeading>
     <nav aria-label={t("nav.account")}>
-      <menu class="list">
+      <menu class="list" {...account_nav}>
         <li><a href="/account/profile" aria-current={current('profile')}>{t("account.profile")}</a></li>
         <li><a href="/account/account" aria-current={current('account')}>{t("account.password")}</a></li>
         <li><a href="/account/groups" aria-current={current('groups')}>{t("admin.groups")}</a></li>

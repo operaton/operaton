@@ -53,7 +53,7 @@ nav:has(> menu.list) {
   font-weight: 600;
 }
 
-.list li a[aria-current="page"]:focus {
+.list li a[aria-current="page"]:focus-visible {
   background-color: var(--color-primary-transparent);
 }
 
@@ -1383,7 +1383,10 @@ div.accordion {
   border-radius: 0;
 }
 
-.bpmn-controls button:hover {
+.bpmn-controls button:hover:not(:focus-visible) {
+  /* :not(:focus-visible) so hovering a keyboard-focused control no longer
+     cancels its focus ring — this rule only exists to suppress the global
+     dashed hover outline. */
   outline: none;
   background-color: var(--background-2);
 }

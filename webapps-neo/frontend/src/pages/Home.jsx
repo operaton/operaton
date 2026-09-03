@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { PageHeading } from "../components/Heading.jsx";
 
 export const Home = () => {
   const [t] = useTranslation();
 
   return (
     <main id="content" class="p-3">
-      <h1 class="screen-hidden">{t("home.welcome")}</h1>
+      <PageHeading class="screen-hidden">{t("home.welcome")}</PageHeading>
       <h2>{t("home.welcome")}</h2>
       <p>
         {t("home.info-text")} <a href="https://operaton.org">{t("home.operaton-org")}</a>.

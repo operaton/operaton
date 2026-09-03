@@ -52,7 +52,8 @@
     "release-warning": "Version Alpha publique – Non testée et non prête pour la production – Partagez vos retours via un",
     "release-warning-issue": "ticket",
     "release-warning-or": "ou dans le",
-    "release-warning-forum": "forum"
+    "release-warning-forum": "forum",
+    "secondary-navigation": "Navigation secondaire"
   },
   "goto": {
     "title": "Aller à",

@@ -1,3 +1,5 @@
+import { DetailHeading, PageHeading } from "../components/Heading.jsx";
+import { useRovingFocus } from "../helper/roving_focus.js";
 import { useContext, useEffect } from "preact/hooks";
 import { useSignal } from "@preact/signals";
 import { useTranslation } from "react-i18next";
@@ -128,6 +130,7 @@ const Progress = ({ batch }) => {
 };
 
 const BatchesList = () => {
+  const batch_rows = useRovingFocus({ mode: "rows", orientation: "vertical" });
   const state = useContext(AppState),
     { params, query } = useRoute(),
     { route } = useLocation(),
@@ -158,7 +161,7 @@ const BatchesList = () => {
   return (
     <div>
       <header>
-        <h1>{t("batches.title")}</h1>
+        <PageHeading>{t("batches.title")}</PageHeading>
         <button type="button" class="secondary" onClick={toggle_history}>
           {history_mode ? t("batches.show-running") : t("batches.show-history")}
         </button>
@@ -185,7 +188,7 @@ const BatchesList = () => {
           if (rows.length === 0)
             return <p class="info-box">{t("batches.empty")}</p>;
           return (
-            <table>
+            <table {...batch_rows}>
               <thead>
                 <tr>
                   <th scope="col">{t("batches.id")}</th>
@@ -195,7 +198,9 @@ const BatchesList = () => {
                   ) : (
                     <>
                       <th scope="col">{t("batches.progress")}</th>
-                      <th scope="col" class="num">{t("batches.failed-jobs")}</th>
+                      <th scope="col" class="num">
+                        {t("batches.failed-jobs")}
+                      </th>
                       <th scope="col">{t("batches.state")}</th>
                     </>
                   )}
@@ -291,7 +296,7 @@ const BatchDetails = () => {
           return (
             <div>
               <header>
-                <h1>{batch.id}</h1>
+                <DetailHeading focus_key={batch.id}>{batch.id}</DetailHeading>
               </header>
               <dl>
                 <dt>{t("batches.type")}</dt>
@@ -370,7 +375,7 @@ const HistoricBatchDetails = () => {
           return (
             <div>
               <header>
-                <h1>{batch.id}</h1>
+                <DetailHeading focus_key={batch.id}>{batch.id}</DetailHeading>
               </header>
               <dl>
                 <dt>{t("batches.type")}</dt>

@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'preact/hooks'
+import { useRovingFocus } from '../helper/roving_focus.js'
 import { useTranslation } from 'react-i18next'
 import { AppState } from '../state.js'
 import { useSignal } from '@preact/signals'
@@ -59,6 +60,7 @@ const StartProcessList = () => {
 }
 
 const StartableProcessesList = () => {
+  const startable_rows = useRovingFocus({ mode: 'rows', orientation: 'vertical' })
   const
     state = useContext(AppState),
     { params } = useRoute(),
@@ -79,7 +81,7 @@ const StartableProcessesList = () => {
         value={search_term.value}
         onChange={(e) => (search_term.value = e.target.value)} />
     </div>
-    <table>
+    <table {...startable_rows}>
       <thead>
       <tr>
         <th>{t("tasks.start-process.definition-name")}</th>

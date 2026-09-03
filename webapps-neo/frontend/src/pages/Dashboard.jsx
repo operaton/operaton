@@ -4,6 +4,7 @@ import engine_rest, { RequestState } from "../api/engine_rest.jsx";
 import { AppState } from "../state.js";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
+import { PageHeading } from "../components/Heading.jsx";
 
 export const DashboardPage = () => {
   const state = useContext(AppState),
@@ -28,7 +29,7 @@ export const DashboardPage = () => {
 
   return (
     <main id="content" class="dashboard fade-in">
-      <h1 class="screen-hidden">{t("dashboard.greeting")}</h1>
+      <PageHeading class="screen-hidden">{t("dashboard.greeting")}</PageHeading>
       <h2>
         {t("dashboard.greeting")}
         {username ? `, ${username}` : ""}

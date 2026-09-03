@@ -274,6 +274,13 @@ const SearchComponent = () => {
     } else if (e.key === "Enter" && items.length > 0) {
       e.preventDefault();
       navigate(items[selected.value].href);
+    } else if (e.key === "Escape") {
+      // An <input type="search"> consumes the first Escape to clear itself, so
+      // without this the dialog only closes on Escape while the field is empty
+      // — i.e. never, for someone who has actually searched. Closing here also
+      // hands focus back to the trigger, which <dialog> does on close.
+      e.preventDefault();
+      close();
     }
   };
 

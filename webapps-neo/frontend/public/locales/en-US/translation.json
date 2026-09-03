@@ -203,7 +203,8 @@
       "complete-directly": "Complete without form",
       "legacy-html-unsupported": "Legacy AngularJS forms are not supported by the new web applications. Please switch to form-js.",
       "legacy-html-migrate-link": "How to migrate",
-      "unsupported": "This start form type is not supported yet."
+      "unsupported": "This start form type is not supported yet.",
+      "completed": "Task completed. Showing the task list."
     },
     "start-process": {
       "title": "Start Task",
@@ -216,7 +217,8 @@
       "select-definition": "Select a process definition",
       "start": "Start Process",
       "no-form": "This process has no start form. You can start it directly.",
-      "business-key": "Business Key (optional)"
+      "business-key": "Business Key (optional)",
+      "started": "Process “{{name}}” started. Showing the task list."
     },
     "filter": {
       "title": "Filter Editor",
@@ -913,6 +915,7 @@
     "submit": "Login",
     "sso": "Login with SSO",
     "documentation": "Documentation",
-    "source": "Source"
+    "source": "Source",
+    "failed": "Login failed. Check your user name and password, then try again."
   }
 }

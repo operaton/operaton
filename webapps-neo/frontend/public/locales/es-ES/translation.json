@@ -184,7 +184,8 @@
       "complete-task": "Completar tarea",
       "save-form": "Guardar formulario",
       "unknown-error": "Se produjo un error desconocido.",
-      "form-title": "Formulario"
+      "form-title": "Formulario",
+      "completed": "Tarea completada. Mostrando la lista de tareas."
     },
     "start-process": {
       "title": "Iniciar tarea",
@@ -193,7 +194,8 @@
       "version": "Versión",
       "description": "Descripción",
       "select-definition": "Seleccionar una definición de proceso",
-      "start": "Iniciar proceso"
+      "start": "Iniciar proceso",
+      "started": "Proceso «{{name}}» iniciado. Mostrando la lista de tareas."
     },
     "filter": {
       "title": "Editor de filtros",
@@ -696,6 +698,7 @@
     "submit": "Iniciar sesión",
     "sso": "Iniciar sesión con SSO",
     "documentation": "Documentación",
-    "source": "Código fuente"
+    "source": "Código fuente",
+    "failed": "Error de inicio de sesión. Compruebe su nombre de usuario y contraseña e inténtelo de nuevo."
   }
 }

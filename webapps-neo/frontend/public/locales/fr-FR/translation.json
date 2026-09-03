@@ -184,7 +184,8 @@
       "complete-task": "Terminer la tâche",
       "save-form": "Enregistrer le formulaire",
       "unknown-error": "Une erreur inconnue s'est produite.",
-      "form-title": "Formulaire"
+      "form-title": "Formulaire",
+      "completed": "Tâche terminée. Affichage de la liste des tâches."
     },
     "start-process": {
       "title": "Démarrer une tâche",
@@ -193,7 +194,8 @@
       "version": "Version",
       "description": "Description",
       "select-definition": "Sélectionner une définition de processus",
-      "start": "Démarrer le processus"
+      "start": "Démarrer le processus",
+      "started": "Processus « {{name}} » démarré. Affichage de la liste des tâches."
     },
     "filter": {
       "title": "Éditeur de filtre",
@@ -696,6 +698,7 @@
     "submit": "Se connecter",
     "sso": "Se connecter avec SSO",
     "documentation": "Documentation",
-    "source": "Code source"
+    "source": "Code source",
+    "failed": "Échec de la connexion. Vérifiez votre nom d’utilisateur et votre mot de passe, puis réessayez."
   }
 }

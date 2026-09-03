@@ -6,6 +6,8 @@ import { useSignal } from '@preact/signals'
 import engine_rest, { RequestState, RESPONSE_STATE } from '../api/engine_rest.jsx'
 import { useRoute, useLocation } from 'preact-iso'
 import { CamundaForm } from '../components/CamundaForm.jsx'
+import { DetailHeading, focus_page_heading } from '../components/Heading.jsx'
+import { announce } from '../components/Announcer.jsx'
 import {
   form_data_to_vars,
   schema_variable_keys,
@@ -178,8 +180,13 @@ const StartProcessForm = () => {
   // and then the id while it is still in flight.
   const definition = state.api.process.definition.one.value?.data
 
+  // A DetailHeading, not a plain h2: picking a definition from the list swaps
+  // the whole right-hand pane, and without moving focus a screen-reader user
+  // hears nothing at all when they press Enter on a row.
   return <div>
-    <h2>{definition?.name ?? definition?.key ?? t("tasks.form.form-title")}</h2>
+    <DetailHeading focus_key={params.tab}>
+      {definition?.name ?? definition?.key ?? t("tasks.form.form-title")}
+    </DetailHeading>
     {form_mode.value === 'legacy'
       ? <p class="info-box">
           {t("tasks.form.legacy-html-unsupported")}{" "}
@@ -208,6 +215,14 @@ const BusinessKeyField = ({ value, on_change }) => {
       value={value}
       onInput={(e) => on_change(e.target.value)} />
   </label>
+}
+
+// What to call the process in the "started" announcement. The definition is
+// already in state (the page above fetched it); the id is a poor thing to read
+// aloud, so it is only the last resort.
+const definition_name = (state, definition_id) => {
+  const definition = state.api.process.definition.one.value?.data
+  return definition?.name ?? definition?.key ?? definition_id
 }
 
 // Add `businessKey` to a submit-form payload only when the user typed one —
@@ -248,11 +263,20 @@ const StartGeneratedForm = ({ definition_id }) => {
       return
     }
     setError(null)
-    const variables = form_data_to_vars(data, vars, allowed)
+    const variables = form_data_to_vars(data, vars, allowed),
+      process_name = definition_name(state, definition_id)
     engine_rest.process_definition
       .submit_form(state, definition_id, with_business_key({ variables }, business_key))
       .then((result) => {
-        if (result?.status === RESPONSE_STATE.SUCCESS) route('/tasks')
+        if (result?.status === RESPONSE_STATE.SUCCESS) {
+          // The instance is started and this pane is about to be unmounted by
+          // the route change, so the outcome has to be handed to the live
+          // region that outlives it — and focus has to be put somewhere, or it
+          // falls back to <body>.
+          announce(t("tasks.start-process.started", { name: process_name }))
+          route('/tasks')
+          focus_page_heading()
+        }
         else setError(result?.error?.message ?? t("tasks.form.unknown-error"))
       })
       .catch((e) => setError(e?.message ?? t("tasks.form.unknown-error")))
@@ -306,11 +330,20 @@ const StartCamundaForm = ({ definition_id }) => {
       return
     }
     setError(null)
-    const variables = form_data_to_vars(data, {}, schema_variable_keys(schema))
+    const variables = form_data_to_vars(data, {}, schema_variable_keys(schema)),
+      process_name = definition_name(state, definition_id)
     engine_rest.process_definition
       .submit_form(state, definition_id, with_business_key({ variables }, business_key))
       .then((result) => {
-        if (result?.status === RESPONSE_STATE.SUCCESS) route('/tasks')
+        if (result?.status === RESPONSE_STATE.SUCCESS) {
+          // The instance is started and this pane is about to be unmounted by
+          // the route change, so the outcome has to be handed to the live
+          // region that outlives it — and focus has to be put somewhere, or it
+          // falls back to <body>.
+          announce(t("tasks.start-process.started", { name: process_name }))
+          route('/tasks')
+          focus_page_heading()
+        }
         else setError(result?.error?.message ?? t("tasks.form.unknown-error"))
       })
       .catch((e) => setError(e?.message ?? t("tasks.form.unknown-error")))

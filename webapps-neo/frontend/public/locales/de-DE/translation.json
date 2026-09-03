@@ -203,7 +203,8 @@
       "complete-directly": "Ohne Formular abschließen",
       "legacy-html-unsupported": "Ältere AngularJS-Formulare werden von den neuen Web-Anwendungen nicht unterstützt. Bitte wechseln Sie zu form-js.",
       "legacy-html-migrate-link": "Anleitung zur Migration",
-      "unsupported": "Dieser Startformular-Typ wird noch nicht unterstützt."
+      "unsupported": "Dieser Startformular-Typ wird noch nicht unterstützt.",
+      "completed": "Aufgabe abgeschlossen. Die Aufgabenliste wird angezeigt."
     },
     "start-process": {
       "title": "Aufgabe starten",
@@ -216,7 +217,8 @@
       "select-definition": "Wählen Sie eine Prozessdefinition aus",
       "start": "Prozess starten",
       "no-form": "Dieser Prozess hat kein Startformular. Sie können ihn direkt starten.",
-      "business-key": "Geschäftsschlüssel (optional)"
+      "business-key": "Geschäftsschlüssel (optional)",
+      "started": "Prozess „{{name}}“ gestartet. Die Aufgabenliste wird angezeigt."
     },
     "filter": {
       "title": "Filter-Editor",
@@ -913,6 +915,7 @@
     "submit": "Anmelden",
     "sso": "Mit SSO anmelden",
     "documentation": "Dokumentation",
-    "source": "Quellcode"
+    "source": "Quellcode",
+    "failed": "Anmeldung fehlgeschlagen. Prüfen Sie Benutzername und Passwort und versuchen Sie es erneut."
   }
 }

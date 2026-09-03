@@ -184,7 +184,8 @@
       "complete-task": "Taak voltooien",
       "save-form": "Formulier opslaan",
       "unknown-error": "Er is een onbekende fout opgetreden.",
-      "form-title": "Formulier"
+      "form-title": "Formulier",
+      "completed": "Taak voltooid. De takenlijst wordt getoond."
     },
     "start-process": {
       "title": "Taak starten",
@@ -193,7 +194,8 @@
       "version": "Versie",
       "description": "Beschrijving",
       "select-definition": "Selecteer een procesdefinitie",
-      "start": "Proces starten"
+      "start": "Proces starten",
+      "started": "Proces “{{name}}” gestart. De takenlijst wordt getoond."
     },
     "filter": {
       "title": "Filter-editor",
@@ -696,6 +698,7 @@
     "submit": "Inloggen",
     "sso": "Inloggen met SSO",
     "documentation": "Documentatie",
-    "source": "Broncode"
+    "source": "Broncode",
+    "failed": "Aanmelden mislukt. Controleer uw gebruikersnaam en wachtwoord en probeer het opnieuw."
   }
 }

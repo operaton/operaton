@@ -1,5 +1,12 @@
 import { useLayoutEffect, useRef } from "preact/hooks";
 
+/** Prefix every branch of a selector list, not just the first. */
+const scoped = (prefix, selector) =>
+  selector
+    .split(",")
+    .map((part) => `${prefix} ${part.trim()}`)
+    .join(", ");
+
 // Roving tabindex: make a menu or a list one stop in the tab order, and move
 // between its entries with the arrow keys.
 //
@@ -62,10 +69,16 @@ const row_items = (container) =>
     .map((row) => row.querySelector(FOCUSABLE))
     .filter(Boolean);
 
-/** Everything the roving tabindex has to take out of the tab order. */
+/**
+ * Everything the roving tabindex has to take out of the tab order.
+ *
+ * `FOCUSABLE` is a selector LIST, so it has to be prefixed branch by branch —
+ * interpolating it whole would scope only `a[href]` to the row and leave
+ * `button`/`input` matching anywhere in the container, including the header.
+ */
 const controlled = (container, mode, selector) =>
   mode === "rows"
-    ? [...container.querySelectorAll(`tbody tr ${FOCUSABLE}`)]
+    ? [...container.querySelectorAll(scoped("tbody tr", FOCUSABLE))]
     : list_items(container, selector);
 
 /**
@@ -102,11 +115,7 @@ export const useRovingFocus = ({
 } = {}) => {
   const container = useRef(null);
 
-  // No dependency array on purpose: entries arrive with an async fetch and
-  // change with every filter or route change, so the tab stop has to be
-  // recomputed after each render rather than on a dependency we would have to
-  // remember to declare.
-  useLayoutEffect(() => {
+  const apply = () => {
     const node = container.current;
     if (!node) return;
 
@@ -125,7 +134,29 @@ export const useRovingFocus = ({
       if (keeps_tab_stop) element.removeAttribute("tabindex");
       else element.setAttribute("tabindex", "-1");
     }
-  });
+  };
+
+  // No dependency array on purpose: entries change with every filter or route
+  // change, so the tab stop has to be recomputed after each render rather than
+  // on a dependency we would have to remember to declare.
+  useLayoutEffect(apply);
+
+  // A render of THIS component is not the only way entries arrive. Where the
+  // list is filled by a `<RequestState>` child subscribed to its own signal,
+  // the rows appear without the container re-rendering, so the effect above
+  // never runs again and every row keeps its natural tab stop — the whole list
+  // becomes N tab stops instead of one. Watching the subtree covers that case
+  // as well, and cannot loop: only `childList` is observed, while `apply` only
+  // writes attributes.
+  useLayoutEffect(() => {
+    const node = container.current;
+    if (!node || typeof MutationObserver === "undefined") return;
+
+    const observer = new MutationObserver(apply);
+    observer.observe(node, { childList: true, subtree: true });
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const on_keydown = (event) => {
     const node = container.current;

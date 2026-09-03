@@ -54,6 +54,24 @@ export const reset_focus_tracking = () => {
 };
 
 /**
+ * Move focus to the heading of the view we just landed on.
+ *
+ * For flows that finish with a route change WITHIN the same page — starting a
+ * process or completing a task both end at /tasks, having begun at /tasks/start
+ * or /tasks/:id — where `PageHeading` deliberately stays put because the first
+ * path segment did not change. The control that was focused is unmounted by
+ * that route change, so without this focus falls back to `<body>` and the next
+ * Tab press starts again from the top of the document.
+ *
+ * A frame is given to the router to render the view before it is looked for.
+ */
+export const focus_page_heading = () => {
+  requestAnimationFrame(() =>
+    document.querySelector("main#content h1")?.focus(),
+  );
+};
+
+/**
  * The page's `<h1>`. Takes focus when the page changes, never on first load.
  *
  * `tabIndex={-1}` makes it focusable programmatically without adding a stop to

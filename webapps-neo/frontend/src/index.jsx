@@ -6,6 +6,7 @@ import "./helper/i18n";
 
 import { Header } from "./components/Header.jsx";
 import { GoTo } from "./components/GoTo.jsx";
+import { Announcer } from "./components/Announcer.jsx";
 
 import { Home } from "./pages/Home.jsx";
 import { DashboardPage } from "./pages/Dashboard.jsx";
@@ -119,11 +120,23 @@ const Routing = () => {
           <Route default component={NotFound} />
         </Router>
         <GoTo />
+        {/* Outside the Router on purpose: a flow that ends in a route change
+            (start a process, complete a task) has to announce its outcome from
+            something the route change does not unmount. */}
+        <Announcer />
       </LocationProvider>
     );
   } else if (logged_in.value.data === "unknown") {
     void engine_rest.auth.is_authenticated(state);
-  } else if (logged_in.value.data === "unauthenticated") {
+  } else if (
+    logged_in.value.data === "unauthenticated" ||
+    logged_in.value.data === "wrong_login"
+  ) {
+    // "wrong_login" used to fall through every branch, so the whole app
+    // rendered as nothing: a rejected password replaced the login screen with a
+    // blank document and said nothing. It is the same screen as
+    // "unauthenticated", plus the error.
+    const login_failed = logged_in.value.data === "wrong_login";
     return (
       <section class="login-page">
         <img class="login-logo" src="/operaton-logo.svg" alt="Operaton" />
@@ -193,6 +206,12 @@ const Routing = () => {
                   }
                   required
                 />
+
+                {login_failed && (
+                  <p class="error" role="alert">
+                    {t("login.failed")}
+                  </p>
+                )}
 
                 <button type="submit">{t("login.submit")}</button>
               </form>

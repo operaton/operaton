@@ -4,6 +4,8 @@ import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { useRoute, useLocation } from "preact-iso";
 import { CamundaForm } from "./CamundaForm.jsx";
+import { focus_page_heading } from "./Heading.jsx";
+import { announce } from "./Announcer.jsx";
 import {
   vars_to_form_data,
   form_data_to_vars,
@@ -91,7 +93,12 @@ const CamundaTaskForm = ({ task, taskId }) => {
       .post_task_form(state, taskId, payload)
       .then(() => {
         localStorage.removeItem(`task_form_${taskId}`);
+        // This pane is unmounted by the route change, so the outcome has to go
+        // to the live region that outlives it, and focus has to be placed or it
+        // falls back to <body>.
+        announce(t("tasks.form.completed", { name: task.name ?? "" }));
         route("/tasks");
+        focus_page_heading();
       })
       .catch((e) => setError(e?.message ?? "Submit failed"));
   };
@@ -204,7 +211,12 @@ const GeneratedTaskForm = ({ task, taskId }) => {
       .post_task_form(state, taskId, payload)
       .then(() => {
         localStorage.removeItem(`task_form_${taskId}`);
+        // This pane is unmounted by the route change, so the outcome has to go
+        // to the live region that outlives it, and focus has to be placed or it
+        // falls back to <body>.
+        announce(t("tasks.form.completed", { name: task.name ?? "" }));
         route("/tasks");
+        focus_page_heading();
       })
       .catch((e) => setError(e?.message ?? "Submit failed"));
   };
@@ -232,7 +244,15 @@ const GeneratedTaskForm = ({ task, taskId }) => {
         ) : (
           <button
             type="button"
-            onClick={() => complete_directly(state, setError, taskId, route)}
+            onClick={() =>
+              complete_directly(
+                state,
+                setError,
+                taskId,
+                route,
+                t("tasks.form.completed", { name: task.name ?? "" }),
+              )
+            }
           >
             {t("tasks.form.complete-directly")}
           </button>
@@ -244,13 +264,15 @@ const GeneratedTaskForm = ({ task, taskId }) => {
 
 // Complete a task without submitting a form, via the dedicated /complete
 // endpoint (used when the task has no form fields).
-const complete_directly = (state, setError, taskId, route) => {
+const complete_directly = (state, setError, taskId, route, announcement) => {
   setError(null);
   engine_rest.task
     .complete_task(state, taskId)
     .then(() => {
       localStorage.removeItem(`task_form_${taskId}`);
+      announce(announcement);
       route("/tasks");
+      focus_page_heading();
     })
     .catch((error) => setError(error?.message || "Complete failed"));
 };

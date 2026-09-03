@@ -10,6 +10,7 @@ import engine_rest from "../api/engine_rest.jsx";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
 import { get_config } from "../config.js";
+import { app_name, logo_url, logo_alt } from "../branding.js";
 
 const swap_server = (e, state) => {
   const server = get_config().backends.find((s) => s.url === e.target.value);
@@ -132,15 +133,15 @@ export function Header() {
         </menu>
 
         <a href="/" id="mobile-logo">
-          OPERATON
+          {app_name()}
         </a>
         <a
           href="/"
           id="logo"
-          aria-label="Operaton"
+          aria-label={app_name()}
           aria-current={url === "/" ? "page" : undefined}
         >
-          <img src="/operaton-logo.svg" alt="Operaton" />
+          <img src={logo_url()} alt={logo_alt()} />
         </a>
         <button
           type="button"

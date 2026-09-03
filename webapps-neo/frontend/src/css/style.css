@@ -138,6 +138,7 @@
     #mobile-logo {
       display: block !important;
       font-weight: bold;
+      text-transform: uppercase;
       color: var(--text);
       text-decoration: none;
     }

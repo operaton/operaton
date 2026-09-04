@@ -59,6 +59,10 @@ updates:
       jaxb:
         patterns:
           - "org.glassfish.jaxb:*"
+      maven-test-plugins:
+        patterns:
+          - "org.apache.maven.plugins:maven-surefire-plugin"
+          - "org.apache.maven.plugins:maven-failsafe-plugin"
   - package-ecosystem: "maven"
     directory: "/spring-boot-starter/starter"
     schedule:

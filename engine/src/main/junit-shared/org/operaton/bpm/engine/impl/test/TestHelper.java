@@ -188,7 +188,7 @@ public abstract class TestHelper {
    * The first resource matching a suffix will be returned.
    */
   public static String getBpmnProcessDefinitionResource(Class< ? > type, String name) {
-    String key = type.getName() + '#' + name;
+    String key = type.getName() + '#' + (name == null ? -1 : name.length()) + ':' + name;
     return BPMN_RESOURCE_NAMES.computeIfAbsent(key, ignored -> resolveBpmnProcessDefinitionResource(type, name));
   }
 

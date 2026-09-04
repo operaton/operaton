@@ -18,7 +18,8 @@ package org.operaton.bpm.webapp.impl.db;
 
 import java.util.List;
 
-import org.operaton.bpm.engine.ProcessEngineException;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.AuthorizationCheck;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
@@ -29,7 +30,7 @@ import org.operaton.bpm.webapp.db.CommandExecutor;
 import org.operaton.bpm.webapp.db.QueryParameters;
 import org.operaton.bpm.webapp.db.QueryService;
 
-public class QueryServiceImpl implements QueryService {
+public @NullMarked class QueryServiceImpl implements QueryService {
 
   private final CommandExecutor commandExecutor;
 
@@ -39,9 +40,12 @@ public class QueryServiceImpl implements QueryService {
 
   @Override
   public <T> List<T> executeQuery(final String statement, final QueryParameters parameter) {
-    return commandExecutor.executeCommand(new ExecuteListQueryCmd<T>(statement, parameter));
+    return commandExecutor.executeCommand(new ExecuteListQueryCmd<>(statement, parameter));
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public <T> T executeQuery(String statement, Object parameter, Class<T> clazz) {
     return commandExecutor.executeCommand(new ExecuteSingleQueryCmd<>(statement, parameter, clazz));
   }
@@ -57,13 +61,7 @@ public class QueryServiceImpl implements QueryService {
       (QuerySessionFactory) commandContext.getProcessEngineConfiguration();
 
     ProcessEngineConfigurationImpl processEngineConfiguration = null;
-    if (querySessionFactory != null) {
-      processEngineConfiguration = querySessionFactory.getWrappedConfiguration();
-    }
-
-    if (processEngineConfiguration == null) {
-      throw new ProcessEngineException("Process Engine Configuration missing!");
-    }
+    processEngineConfiguration = querySessionFactory.getWrappedConfiguration();
 
     return processEngineConfiguration;
   }
@@ -91,7 +89,7 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public Long execute(CommandContext commandContext) {
+    public @Nullable Long execute(CommandContext commandContext) {
       ProcessEngineConfigurationImpl engineConfig = getProcessEngineConfiguration(commandContext);
 
       configureAuthCheck(parameter, engineConfig, commandContext);
@@ -124,20 +122,20 @@ public class QueryServiceImpl implements QueryService {
     }
   }
 
-  protected class ExecuteSingleQueryCmd<T> implements Command<T> {
+  protected static @NullMarked class ExecuteSingleQueryCmd<T> implements Command<T> {
 
     protected String statement;
-    protected Object parameter;
+    protected @Nullable Object parameter;
     protected Class<T> clazz;
 
-    public ExecuteSingleQueryCmd(String statement, Object parameter, Class<T> clazz) {
+    public ExecuteSingleQueryCmd(String statement, @Nullable Object parameter, Class<T> clazz) {
       this.statement = statement;
       this.parameter = parameter;
       this.clazz = clazz;
     }
 
     @Override
-    public T execute(CommandContext commandContext) {
+    public @Nullable T execute(CommandContext commandContext) {
       return (T) commandContext.getDbSqlSession().selectOne(statement, parameter);
     }
   }

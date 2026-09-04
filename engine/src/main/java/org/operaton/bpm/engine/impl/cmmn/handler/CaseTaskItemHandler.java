@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.handler;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CaseTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
@@ -26,7 +28,7 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  * @author Roman Smirnov
  *
  */
-public class CaseTaskItemHandler extends ProcessOrCaseTaskItemHandler {
+public @NullMarked class CaseTaskItemHandler extends ProcessOrCaseTaskItemHandler {
 
   @Override
   protected CmmnActivityBehavior getActivityBehavior() {
@@ -34,7 +36,7 @@ public class CaseTaskItemHandler extends ProcessOrCaseTaskItemHandler {
   }
 
   @Override
-  protected CaseTask getDefinition(CmmnElement element) {
+  protected @Nullable CaseTask getDefinition(CmmnElement element) {
     return (CaseTask) super.getDefinition(element);
   }
 

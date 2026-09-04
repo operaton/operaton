@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 import java.io.InputStream;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessDefinitionQueryImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -30,7 +31,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 /**
  * @author: Johannes Heinemann
  */
-public class BpmnModelInstanceCache extends ModelInstanceCache<BpmnModelInstance, ProcessDefinitionEntity> {
+public @NullMarked class BpmnModelInstanceCache extends ModelInstanceCache<BpmnModelInstance, ProcessDefinitionEntity> {
 
   public BpmnModelInstanceCache(CacheFactory factory, int cacheCapacity, ResourceDefinitionCache<ProcessDefinitionEntity> definitionCache) {
     super(factory, cacheCapacity, definitionCache);

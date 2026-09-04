@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.pvm.delegate;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 
 
 /**
  * @author Tom Baeyens
  */
-public interface ActivityBehavior extends CoreActivityBehavior<ActivityExecution> {
+public @NullMarked interface ActivityBehavior extends CoreActivityBehavior<ActivityExecution> {
 
   @Override
   void execute(ActivityExecution execution) throws Exception;

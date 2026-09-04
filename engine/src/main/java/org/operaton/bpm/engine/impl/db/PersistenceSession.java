@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.db;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation.State;
 import org.operaton.bpm.engine.impl.interceptor.Session;
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.Session;
  * @author Daniel Meyer
  *
  */
-public interface PersistenceSession extends Session {
+public @NullMarked interface PersistenceSession extends Session {
 
   // Entity Operations /////////////////////////////////
 
@@ -60,7 +62,7 @@ public interface PersistenceSession extends Session {
 
   void flushOperations();
 
-  List<?> selectList(String statement, Object parameter);
+  List<?> selectList(String statement, @Nullable Object parameter);
 
   /**
    * Like {@link #selectList(String, Object)}, but stops fetching from the cursor
@@ -69,17 +71,17 @@ public interface PersistenceSession extends Session {
    * lock-skipping (Oracle, DB2), which would under-fill the result with rows that
    * are then discarded as locked.
    */
-  default List<?> selectList(String statement, Object parameter, int maxRows) {
+  default List<?> selectList(String statement, @Nullable Object parameter, int maxRows) {
     return selectList(statement, parameter);
   }
 
-  <T extends DbEntity> T selectById(Class<T> type, String id);
+  <T extends DbEntity> @Nullable T selectById(Class<T> type, String id);
 
-  Object selectOne(String statement, Object parameter);
+  @Nullable Object selectOne(String statement, @Nullable Object parameter);
 
-  void lock(String statement, Object parameter);
+  void lock(String statement, @Nullable Object parameter);
 
-  int executeNonEmptyUpdateStmt(String updateStmt, Object parameter);
+  int executeNonEmptyUpdateStmt(String updateStmt, @Nullable Object parameter);
 
   void commit();
 

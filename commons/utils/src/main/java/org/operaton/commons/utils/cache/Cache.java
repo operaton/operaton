@@ -16,6 +16,9 @@
  */
 package org.operaton.commons.utils.cache;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Set;
 
 /**
@@ -25,7 +28,7 @@ import java.util.Set;
  * @param <K> the type of keys
  * @param <V> the type of mapped values
  */
-public interface Cache<K, V> {
+public @NullMarked interface Cache<K, V> {
 
   /**
    * Gets an entry from the cache.
@@ -33,7 +36,7 @@ public interface Cache<K, V> {
    * @param key the key whose associated value is to be returned
    * @return the element, or <code>null</code>, if it does not exist.
    */
-  V get(K key);
+  @Nullable V get(K key);
 
   /**
    * Associates the specified value with the specified key in the cache.

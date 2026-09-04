@@ -357,7 +357,7 @@ public @NullMarked interface RepositoryService {
    *
    * @see RuntimeService#suspendProcessInstanceById(String)
    */
-  void suspendProcessDefinitionById(String processDefinitionId, boolean suspendProcessInstances, Date suspensionDate);
+  void suspendProcessDefinitionById(String processDefinitionId, boolean suspendProcessInstances, @Nullable Date suspensionDate);
 
   /**
    * Suspends the <strong>all</strong> process definitions with the given key (= id in the bpmn20.xml file).
@@ -413,7 +413,7 @@ public @NullMarked interface RepositoryService {
    *
    * @see RuntimeService#suspendProcessInstanceById(String)
    */
-  void suspendProcessDefinitionByKey(String processDefinitionKey, boolean suspendProcessInstances, Date suspensionDate);
+  void suspendProcessDefinitionByKey(String processDefinitionKey, boolean suspendProcessInstances, @Nullable Date suspensionDate);
 
   /**
    * Activates the process definition with the given id.
@@ -454,7 +454,7 @@ public @NullMarked interface RepositoryService {
    *
    * @see RuntimeService#activateProcessInstanceById(String)
    */
-  void activateProcessDefinitionById(String processDefinitionId, boolean activateProcessInstances, Date activationDate);
+  void activateProcessDefinitionById(String processDefinitionId, boolean activateProcessInstances, @Nullable Date activationDate);
 
   /**
    * Activates the process definition with the given key (=id in the bpmn20.xml file).
@@ -495,7 +495,7 @@ public @NullMarked interface RepositoryService {
    *
    * @see RuntimeService#activateProcessInstanceById(String)
    */
-  void activateProcessDefinitionByKey(String processDefinitionKey, boolean activateProcessInstances,  Date activationDate);
+  void activateProcessDefinitionByKey(String processDefinitionKey, boolean activateProcessInstances, @Nullable Date activationDate);
 
   /**
    * Activate or suspend process definitions using a fluent builder. Specify the
@@ -549,7 +549,7 @@ public @NullMarked interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  InputStream getProcessModel(String processDefinitionId);
+  @Nullable InputStream getProcessModel(String processDefinitionId);
 
   /**
    * Gives access to a deployed process diagram, e.g., a PNG image, through a
@@ -564,7 +564,7 @@ public @NullMarked interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  InputStream getProcessDiagram(String processDefinitionId);
+  @Nullable InputStream getProcessDiagram(String processDefinitionId);
 
   /**
    * Returns the {@link ProcessDefinition} including all BPMN information like additional
@@ -593,7 +593,7 @@ public @NullMarked interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  DiagramLayout getProcessDiagramLayout(String processDefinitionId);
+  @Nullable DiagramLayout getProcessDiagramLayout(String processDefinitionId);
 
   /**
    * Returns the {@link BpmnModelInstance} for the given processDefinitionId.
@@ -728,7 +728,7 @@ public @NullMarked interface RepositoryService {
    * @throws NotFoundException when no case definition or deployment resource is found for the given case definition id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  InputStream getCaseModel(String caseDefinitionId);
+  @Nullable InputStream getCaseModel(String caseDefinitionId);
 
   /**
    * Gives access to a deployed case diagram, e.g., a PNG image, through a
@@ -738,7 +738,7 @@ public @NullMarked interface RepositoryService {
    * @return null when the diagram resource name of a {@link CaseDefinition} is null.
    * @throws ProcessEngineException when the process diagram doesn't exist.
    */
-  InputStream getCaseDiagram(String caseDefinitionId);
+  @Nullable InputStream getCaseDiagram(String caseDefinitionId);
 
   /**
    * Returns the {@link DecisionDefinition}.
@@ -802,7 +802,7 @@ public @NullMarked interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#DECISION_DEFINITION}.
    */
-  InputStream getDecisionDiagram(String decisionDefinitionId);
+  @Nullable InputStream getDecisionDiagram(String decisionDefinitionId);
 
   /**
    * Gives access to a deployed decision requirements diagram, e.g., a PNG image, through a
@@ -814,7 +814,7 @@ public @NullMarked interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#DECISION_REQUIREMENTS_DEFINITION}.
    */
-  InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId);
+  @Nullable InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId);
 
   /**
    * For the given process, returns a list of {@link CalledProcessDefinition}.

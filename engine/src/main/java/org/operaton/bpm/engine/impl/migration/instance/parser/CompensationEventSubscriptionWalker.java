@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.migration.instance.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
@@ -26,6 +25,9 @@ import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
+
+import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Ensures that event subscriptions are visited in a top-down fashion, i.e.
@@ -54,13 +56,9 @@ public class CompensationEventSubscriptionWalker extends ReferenceWalker<EventSu
   @Override
   protected Collection<EventSubscriptionEntity> nextElements() {
     EventSubscriptionEntity eventSubscriptionEntity = getCurrentElement();
+    requireNonNull(eventSubscriptionEntity);
     ExecutionEntity compensatingExecution = CompensationUtil.getCompensatingExecution(eventSubscriptionEntity);
-    if (compensatingExecution != null) {
-      return compensatingExecution.getCompensateEventSubscriptions();
-    }
-    else {
-      return Collections.emptyList();
-    }
+    return (compensatingExecution != null) ? compensatingExecution.getCompensateEventSubscriptions() : emptyList();
   }
 
 }

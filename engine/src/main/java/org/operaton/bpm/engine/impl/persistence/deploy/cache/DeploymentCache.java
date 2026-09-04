@@ -284,7 +284,7 @@ public class DeploymentCache {
   }
 
   public void discardDecisionRequirementsDefinitionCache() {
-    decisionDefinitionCache.clear();
+    decisionRequirementsDefinitionCache.clear();
   }
 
   public void removeDecisionRequirementsDefinition(String decisionRequirementsDefinitionId) {

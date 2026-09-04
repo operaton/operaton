@@ -109,11 +109,12 @@ auto-merge-rules:
       # Dependency groups
       - 'all group'
       - 'arquillian group'
+      - 'github-actions group'
+      - 'jaxb group'
       - 'jboss-weld group'
+      - 'maven-test-plugins group'
       - 'openrewrite group'
       - 'spring-boot group'
-      - 'jaxb group'
-      - 'github-actions group'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.handler;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.Expression;
 
 import org.jspecify.annotations.Nullable;
@@ -49,7 +50,7 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonTaskListener;
  * @author Roman Smirnov
  *
  */
-public class HumanTaskItemHandler extends TaskItemHandler {
+public @NullMarked class HumanTaskItemHandler extends TaskItemHandler {
 
   @Override
   public @Nullable CmmnActivity handleElement(CmmnElement element, CmmnHandlerContext context) {
@@ -268,7 +269,7 @@ public class HumanTaskItemHandler extends TaskItemHandler {
     }
   }
 
-  protected TaskListener initializeTaskListener(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonTaskListener listener) {
+  protected @Nullable TaskListener initializeTaskListener(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonTaskListener listener) {
     Collection<OperatonField> fields = listener.getOperatonFields();
     List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(context, fields);
 

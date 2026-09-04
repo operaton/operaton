@@ -351,9 +351,9 @@ public @NullMarked interface HistoryService {
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}
-   * @return history cleanup job. NB! As of v. 7.9.0, method does not guarantee to return a job. Use {@link #findHistoryCleanupJobs()} instead.
+   * @return history cleanup job. NB! Method does not guarantee to return a job. Use {@link #findHistoryCleanupJobs()} instead.
    */
-  Job cleanUpHistoryAsync();
+  @Nullable Job cleanUpHistoryAsync();
 
   /**
    * Schedules history cleanup job at batch window start time. The job will delete historic data for
@@ -367,7 +367,7 @@ public @NullMarked interface HistoryService {
    * @return history cleanup job. Job id can be used to check job logs, incident etc.
    *
    */
-  Job cleanUpHistoryAsync(boolean immediatelyDue);
+  @Nullable Job cleanUpHistoryAsync(boolean immediatelyDue);
 
   /**
    * Finds history cleanup job, if present.

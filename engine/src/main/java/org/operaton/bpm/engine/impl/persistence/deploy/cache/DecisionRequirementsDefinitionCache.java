@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionRequirementsDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
@@ -25,7 +27,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author: Johannes Heinemann
  */
-public class DecisionRequirementsDefinitionCache extends ResourceDefinitionCache<DecisionRequirementsDefinitionEntity> {
+public @NullMarked class DecisionRequirementsDefinitionCache extends ResourceDefinitionCache<DecisionRequirementsDefinitionEntity> {
 
   public DecisionRequirementsDefinitionCache(CacheFactory factory, int cacheCapacity, CacheDeployer cacheDeployer) {
     super(factory, cacheCapacity, cacheDeployer);
@@ -42,38 +44,38 @@ public class DecisionRequirementsDefinitionCache extends ResourceDefinitionCache
   }
 
   @Override
-  protected void checkDefinitionFound(String definitionId, DecisionRequirementsDefinitionEntity definition) {
+  protected void checkDefinitionFound(String definitionId, @Nullable DecisionRequirementsDefinitionEntity definition) {
     ensureNotNull("no deployed decision requirements definition found with id '%s'".formatted(definitionId),
         "decisionRequirementsDefinition", definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKey(String definitionKey, DecisionRequirementsDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKey(String definitionKey, @Nullable DecisionRequirementsDefinitionEntity definition) {
     // not needed
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, DecisionRequirementsDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId, @Nullable DecisionRequirementsDefinitionEntity definition) {
     // not needed
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, DecisionRequirementsDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId, @Nullable DecisionRequirementsDefinitionEntity definition) {
     // not needed
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId, DecisionRequirementsDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId, @Nullable DecisionRequirementsDefinitionEntity definition) {
     // not needed
   }
 
   @Override
-  protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, DecisionRequirementsDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, @Nullable DecisionRequirementsDefinitionEntity definition) {
     // not needed
   }
 
   @Override
-  protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, DecisionRequirementsDefinitionEntity definition) {
+  protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, @Nullable DecisionRequirementsDefinitionEntity definition) {
     ensureNotNull("deployment '%s' didn't put decision requirements definition '%s' in the cache".formatted(deploymentId, definitionId), "cachedDecisionRequirementsDefinition", definition);
   }
 }

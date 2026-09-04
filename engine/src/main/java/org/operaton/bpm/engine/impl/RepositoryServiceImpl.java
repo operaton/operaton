@@ -215,7 +215,7 @@ public @NullMarked class RepositoryServiceImpl extends ServiceImpl implements Re
   }
 
   @Override
-  public void suspendProcessDefinitionById(String processDefinitionId, boolean suspendProcessInstances, Date suspensionDate) {
+  public void suspendProcessDefinitionById(String processDefinitionId, boolean suspendProcessInstances, @Nullable Date suspensionDate) {
     updateProcessDefinitionSuspensionState()
       .byProcessDefinitionId(processDefinitionId)
       .includeProcessInstances(suspendProcessInstances)
@@ -231,7 +231,7 @@ public @NullMarked class RepositoryServiceImpl extends ServiceImpl implements Re
   }
 
   @Override
-  public void suspendProcessDefinitionByKey(String processDefinitionKey, boolean suspendProcessInstances, Date suspensionDate) {
+  public void suspendProcessDefinitionByKey(String processDefinitionKey, boolean suspendProcessInstances, @Nullable Date suspensionDate) {
     updateProcessDefinitionSuspensionState()
       .byProcessDefinitionKey(processDefinitionKey)
       .includeProcessInstances(suspendProcessInstances)
@@ -247,7 +247,7 @@ public @NullMarked class RepositoryServiceImpl extends ServiceImpl implements Re
   }
 
   @Override
-  public void activateProcessDefinitionById(String processDefinitionId, boolean activateProcessInstances, Date activationDate) {
+  public void activateProcessDefinitionById(String processDefinitionId, boolean activateProcessInstances, @Nullable Date activationDate) {
     updateProcessDefinitionSuspensionState()
       .byProcessDefinitionId(processDefinitionId)
       .includeProcessInstances(activateProcessInstances)
@@ -263,7 +263,7 @@ public @NullMarked class RepositoryServiceImpl extends ServiceImpl implements Re
   }
 
   @Override
-  public void activateProcessDefinitionByKey(String processDefinitionKey, boolean activateProcessInstances, Date activationDate) {
+  public void activateProcessDefinitionByKey(String processDefinitionKey, boolean activateProcessInstances, @Nullable Date activationDate) {
     updateProcessDefinitionSuspensionState()
       .byProcessDefinitionKey(processDefinitionKey)
       .includeProcessInstances(activateProcessInstances)
@@ -292,22 +292,22 @@ public @NullMarked class RepositoryServiceImpl extends ServiceImpl implements Re
   }
 
   @Override
-  public InputStream getProcessModel(String processDefinitionId) {
+  public @Nullable InputStream getProcessModel(String processDefinitionId) {
     return getCommandExecutor().execute(new GetDeploymentProcessModelCmd(processDefinitionId));
   }
 
   @Override
-  public InputStream getProcessDiagram(String processDefinitionId) {
+  public @Nullable InputStream getProcessDiagram(String processDefinitionId) {
     return getCommandExecutor().execute(new GetDeploymentProcessDiagramCmd(processDefinitionId));
   }
 
   @Override
-  public InputStream getCaseDiagram(String caseDefinitionId) {
+  public @Nullable InputStream getCaseDiagram(String caseDefinitionId) {
     return getCommandExecutor().execute(new GetDeploymentCaseDiagramCmd(caseDefinitionId));
   }
 
   @Override
-  public DiagramLayout getProcessDiagramLayout(String processDefinitionId) {
+  public @Nullable DiagramLayout getProcessDiagramLayout(String processDefinitionId) {
     return getCommandExecutor().execute(new GetDeploymentProcessDiagramLayoutCmd(processDefinitionId));
   }
 
@@ -367,18 +367,15 @@ public @NullMarked class RepositoryServiceImpl extends ServiceImpl implements Re
   public CaseDefinition getCaseDefinition(String caseDefinitionId) {
     try {
       return getCommandExecutor().execute(new GetDeploymentCaseDefinitionCmd(caseDefinitionId));
-
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
-
     } catch (CaseDefinitionNotFoundException e) {
       throw new NotFoundException(e.getMessage(), e);
-
     }
   }
 
   @Override
-  public InputStream getCaseModel(String caseDefinitionId) {
+  public @Nullable InputStream getCaseModel(String caseDefinitionId) {
     try {
       return getCommandExecutor().execute(new GetDeploymentCaseModelCmd(caseDefinitionId));
     } catch (NullValueException e) {
@@ -433,12 +430,12 @@ public @NullMarked class RepositoryServiceImpl extends ServiceImpl implements Re
   }
 
   @Override
-  public InputStream getDecisionDiagram(String decisionDefinitionId) {
+  @Nullable public InputStream getDecisionDiagram(String decisionDefinitionId) {
     return getCommandExecutor().execute(new GetDeploymentDecisionDiagramCmd(decisionDefinitionId));
   }
 
   @Override
-  public InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId) {
+  public @Nullable InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId) {
     return getCommandExecutor().execute(new GetDeploymentDecisionRequirementsDiagramCmd(decisionRequirementsDefinitionId));
   }
 

@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
-import java.util.concurrent.Callable;
-
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,11 +26,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.commons.utils.cache.Cache;
 
-
 /**
  * @author: Johannes Heinemann
  */
-public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity> {
+public abstract @NullMarked class ResourceDefinitionCache<T extends ResourceDefinitionEntity> {
 
   protected Cache<String, T> cache;
   protected CacheDeployer cacheDeployer;
@@ -40,11 +39,11 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
     this.cacheDeployer = cacheDeployer;
   }
 
-  public T findDefinitionFromCache(String definitionId) {
+  public @Nullable T findDefinitionFromCache(String definitionId) {
     return cache.get(definitionId);
   }
 
-  public T findDeployedDefinitionById(String definitionId) {
+  public @Nullable T findDeployedDefinitionById(String definitionId) {
     checkInvalidDefinitionId(definitionId);
     T definition = getManager().getCachedResourceDefinitionEntity(definitionId);
     if (definition == null) {
@@ -60,41 +59,42 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
    * @return the latest version of the definition with the given key (from any tenant)
    * @throws ProcessEngineException if more than one tenant has a definition with the given key
    */
-  public T findDeployedLatestDefinitionByKey(String definitionKey) {
+  public @Nullable T findDeployedLatestDefinitionByKey(String definitionKey) {
     T definition = getManager()
         .findLatestDefinitionByKey(definitionKey);
     checkInvalidDefinitionByKey(definitionKey, definition);
     return resolveDefinition(definition);
   }
 
-  public T findDeployedLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  public @Nullable T findDeployedLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     T definition = getManager()
         .findLatestDefinitionByKeyAndTenantId(definitionKey, tenantId);
     checkInvalidDefinitionByKeyAndTenantId(definitionKey, tenantId, definition);
     return resolveDefinition(definition);
   }
 
-  public T findDeployedDefinitionByKeyVersionAndTenantId(final String definitionKey, final Integer definitionVersion, final String tenantId) {
+  public @Nullable T findDeployedDefinitionByKeyVersionAndTenantId(final String definitionKey, final Integer definitionVersion, @Nullable String tenantId) {
     final CommandContext commandContext = Context.getCommandContext();
-    T definition = commandContext.runWithoutAuthorization((Callable<T>) () -> getManager().findDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId));
+    T definition = commandContext.runWithoutAuthorization(() -> getManager().findDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId));
     checkInvalidDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId, definition);
     return resolveDefinition(definition);
   }
 
-  public T findDeployedDefinitionByKeyVersionTagAndTenantId(final String definitionKey, final String definitionVersionTag, final String tenantId) {
+  public @Nullable T findDeployedDefinitionByKeyVersionTagAndTenantId(final String definitionKey, final String definitionVersionTag, @Nullable String tenantId) {
     final CommandContext commandContext = Context.getCommandContext();
-    T definition = commandContext.runWithoutAuthorization((Callable<T>) () -> getManager().findDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId));
+    T definition = commandContext.runWithoutAuthorization(
+            () -> getManager().findDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId));
     checkInvalidDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId, definition);
     return resolveDefinition(definition);
   }
 
-  public T findDeployedDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  public @Nullable T findDeployedDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     T definition = getManager().findDefinitionByDeploymentAndKey(deploymentId, definitionKey);
     checkInvalidDefinitionByDeploymentAndKey(deploymentId, definitionKey, definition);
     return resolveDefinition(definition);
   }
 
-  public T resolveDefinition(T definition) {
+  public @Nullable T resolveDefinition(T definition) {
     String definitionId = definition.getId();
     String deploymentId = definition.getDeploymentId();
     T cachedDefinition = cache.get(definitionId);
@@ -123,7 +123,7 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
     cache.put(definition.getId(), definition);
   }
 
-  public T getDefinition(String id) {
+  public @Nullable T getDefinition(String id) {
     return cache.get(id);
   }
 
@@ -143,18 +143,18 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
 
   protected abstract void checkInvalidDefinitionId(String definitionId);
 
-  protected abstract void checkDefinitionFound(String definitionId, T definition);
+  protected abstract void checkDefinitionFound(String definitionId, @Nullable T definition);
 
-  protected abstract void checkInvalidDefinitionByKey(String definitionKey, T definition);
+  protected abstract void checkInvalidDefinitionByKey(String definitionKey, @Nullable T definition);
 
-  protected abstract void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, T definition);
+  protected abstract void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId, @Nullable T definition);
 
-  protected abstract void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, T definition);
+  protected abstract void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId, @Nullable T definition);
 
-  protected abstract void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId, T definition);
+  protected abstract void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId, @Nullable T definition);
 
-  protected abstract void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, T definition);
+  protected abstract void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, @Nullable T definition);
 
-  protected abstract void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, T definition);
+  protected abstract void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, @Nullable T definition);
 
 }

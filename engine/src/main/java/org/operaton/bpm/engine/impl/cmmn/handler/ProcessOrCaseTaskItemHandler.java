@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.handler;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.ProcessOrCaseTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
@@ -33,7 +34,7 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonOut;
  * @author Roman Smirnov
  *
  */
-public abstract class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandler {
+public abstract @NullMarked class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandler {
 
   @Override
   protected CallableElement createCallableElement() {

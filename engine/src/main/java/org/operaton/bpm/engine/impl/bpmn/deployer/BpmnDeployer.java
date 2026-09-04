@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.AbstractDefinitionDeployer;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -149,7 +150,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   }
 
   @Override
-  protected void persistedDefinitionLoaded(DeploymentEntity deployment, ProcessDefinitionEntity definition, ProcessDefinitionEntity persistedDefinition) {
+  protected void persistedDefinitionLoaded(@Nullable DeploymentEntity deployment, ProcessDefinitionEntity definition, ProcessDefinitionEntity persistedDefinition) {
     definition.setSuspensionState(persistedDefinition.getSuspensionState());
   }
 

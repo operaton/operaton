@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.handler;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.StageActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
@@ -29,7 +30,7 @@ import org.operaton.bpm.model.cmmn.instance.Stage;
  * @author Roman Smirnov
  *
  */
-public class StageItemHandler extends ItemHandler {
+public @NullMarked class StageItemHandler extends ItemHandler {
 
   @Override
   protected void initializeAutoComplete(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {

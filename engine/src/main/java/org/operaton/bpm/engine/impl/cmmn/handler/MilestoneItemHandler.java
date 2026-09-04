@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.handler;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.MilestoneActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
@@ -27,7 +28,7 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  * @author Roman Smirnov
  *
  */
-public class MilestoneItemHandler extends ItemHandler {
+public @NullMarked class MilestoneItemHandler extends ItemHandler {
 
   @Override
   protected List<String> getStandardEvents(CmmnElement element) {

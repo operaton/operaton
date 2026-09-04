@@ -184,12 +184,12 @@ public @NullMarked class HistoryServiceImpl extends ServiceImpl implements Histo
   }
 
   @Override
-  public Job cleanUpHistoryAsync() {
+  public @Nullable Job cleanUpHistoryAsync() {
     return cleanUpHistoryAsync(false);
   }
 
   @Override
-  public Job cleanUpHistoryAsync(boolean immediatelyDue) {
+  public @Nullable Job cleanUpHistoryAsync(boolean immediatelyDue) {
     return getCommandExecutor().execute(new HistoryCleanupCmd(immediatelyDue));
   }
 

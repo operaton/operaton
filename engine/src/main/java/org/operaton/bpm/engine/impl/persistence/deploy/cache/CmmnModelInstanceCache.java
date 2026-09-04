@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 import java.io.InputStream;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionQueryImpl;
 import org.operaton.bpm.engine.repository.CaseDefinition;
@@ -28,7 +29,7 @@ import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 /**
  * @author: Johannes Heinemann
  */
-public class CmmnModelInstanceCache extends ModelInstanceCache<CmmnModelInstance, CaseDefinitionEntity> {
+public @NullMarked class CmmnModelInstanceCache extends ModelInstanceCache<CmmnModelInstance, CaseDefinitionEntity> {
 
   public CmmnModelInstanceCache(CacheFactory factory, int cacheCapacity, ResourceDefinitionCache<CaseDefinitionEntity> definitionCache) {
     super(factory, cacheCapacity, definitionCache);

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 import java.io.InputStream;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -29,10 +31,12 @@ import org.operaton.bpm.engine.repository.ResourceDefinition;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.commons.utils.cache.Cache;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author: Johannes Heinemann
  */
-public abstract class ModelInstanceCache<INSTANCE_TYPE extends ModelInstance, DEFINITION_TYPE extends ResourceDefinitionEntity> {
+public abstract @NullMarked class ModelInstanceCache<INSTANCE_TYPE extends ModelInstance, DEFINITION_TYPE extends ResourceDefinitionEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -44,7 +48,7 @@ public abstract class ModelInstanceCache<INSTANCE_TYPE extends ModelInstance, DE
     this.definitionCache = definitionCache;
   }
 
-  public INSTANCE_TYPE findBpmnModelInstanceForDefinition(DEFINITION_TYPE definitionEntity) {
+  public @Nullable INSTANCE_TYPE findBpmnModelInstanceForDefinition(DEFINITION_TYPE definitionEntity) {
     INSTANCE_TYPE bpmnModelInstance = instanceCache.get(definitionEntity.getId());
     if (bpmnModelInstance == null) {
       bpmnModelInstance = loadAndCacheBpmnModelInstance(definitionEntity);
@@ -52,21 +56,23 @@ public abstract class ModelInstanceCache<INSTANCE_TYPE extends ModelInstance, DE
     return bpmnModelInstance;
   }
 
-  public INSTANCE_TYPE findBpmnModelInstanceForDefinition(String definitionId) {
+  public @Nullable INSTANCE_TYPE findBpmnModelInstanceForDefinition(String definitionId) {
     INSTANCE_TYPE bpmnModelInstance = instanceCache.get(definitionId);
     if (bpmnModelInstance == null) {
       DEFINITION_TYPE definition = definitionCache.findDeployedDefinitionById(definitionId);
-      bpmnModelInstance = loadAndCacheBpmnModelInstance(definition);
+      if (definition != null) {
+        bpmnModelInstance = loadAndCacheBpmnModelInstance(definition);
+      }
     }
     return bpmnModelInstance;
   }
 
-  protected INSTANCE_TYPE loadAndCacheBpmnModelInstance(final DEFINITION_TYPE definitionEntity) {
+  protected @Nullable INSTANCE_TYPE loadAndCacheBpmnModelInstance(final DEFINITION_TYPE definitionEntity) {
     final CommandContext commandContext = Context.getCommandContext();
     InputStream bpmnResourceInputStream = commandContext.runWithoutAuthorization(
         new GetDeploymentResourceCmd(definitionEntity.getDeploymentId(), definitionEntity.getResourceName()));
-
     try {
+      requireNonNull(bpmnResourceInputStream);
       INSTANCE_TYPE bpmnModelInstance = readModelFromStream(bpmnResourceInputStream);
       instanceCache.put(definitionEntity.getId(), bpmnModelInstance);
       return bpmnModelInstance;

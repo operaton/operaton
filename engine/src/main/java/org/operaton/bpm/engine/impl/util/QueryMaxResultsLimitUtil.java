@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.util;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.identity.Authentication;
@@ -49,22 +48,18 @@ public final class QueryMaxResultsLimitUtil {
   }
 
   public static void checkMaxResultsLimit(int resultsCount) {
-    ProcessEngineConfigurationImpl processEngineConfiguration =
-        Context.getProcessEngineConfiguration();
-    if (processEngineConfiguration == null) {
-      throw new ProcessEngineException("Command context unset.");
-    }
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
 
     checkMaxResultsLimit(resultsCount, getMaxResultsLimit(processEngineConfiguration),
         isUserAuthenticated(processEngineConfiguration));
   }
 
-  protected static boolean isUserAuthenticated(ProcessEngineConfigurationImpl processEngineConfig) {
+  static boolean isUserAuthenticated(ProcessEngineConfigurationImpl processEngineConfig) {
     String userId = getAuthenticatedUserId(processEngineConfig);
     return userId != null && !userId.isEmpty();
   }
 
-  protected static String getAuthenticatedUserId(
+  static String getAuthenticatedUserId(
       ProcessEngineConfigurationImpl processEngineConfig) {
     IdentityService identityService = processEngineConfig.getIdentityService();
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
@@ -75,7 +70,7 @@ public final class QueryMaxResultsLimitUtil {
     }
   }
 
-  protected static int getMaxResultsLimit(ProcessEngineConfigurationImpl processEngineConfig) {
+  static int getMaxResultsLimit(ProcessEngineConfigurationImpl processEngineConfig) {
     return processEngineConfig.getQueryMaxResultsLimit();
   }
 }

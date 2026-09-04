@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.handler;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
 import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
@@ -30,7 +31,7 @@ import org.operaton.bpm.model.cmmn.instance.Sentry;
  * @author Roman Smirnov
  *
  */
-public class CasePlanModelHandler extends StageItemHandler {
+public @NullMarked class CasePlanModelHandler extends StageItemHandler {
 
   @Override
   protected PlanItemDefinition getDefinition(CmmnElement element) {

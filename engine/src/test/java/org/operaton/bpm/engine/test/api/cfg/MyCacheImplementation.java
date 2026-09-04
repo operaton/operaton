@@ -21,7 +21,7 @@ import org.operaton.commons.utils.cache.ConcurrentLruCache;
 /**
  * Represents a custom cache implementation
  *
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class MyCacheImplementation<K, V> extends ConcurrentLruCache<K, V> {
 

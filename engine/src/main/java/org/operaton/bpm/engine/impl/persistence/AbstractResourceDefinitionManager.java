@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public interface AbstractResourceDefinitionManager<T> {
 

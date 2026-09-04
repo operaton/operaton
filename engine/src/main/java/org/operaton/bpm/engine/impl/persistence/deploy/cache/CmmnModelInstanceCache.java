@@ -26,7 +26,7 @@ import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class CmmnModelInstanceCache extends ModelInstanceCache<CmmnModelInstance, CaseDefinitionEntity> {
 

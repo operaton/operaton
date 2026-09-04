@@ -28,7 +28,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class BpmnModelInstanceCache extends ModelInstanceCache<BpmnModelInstance, ProcessDefinitionEntity> {
 

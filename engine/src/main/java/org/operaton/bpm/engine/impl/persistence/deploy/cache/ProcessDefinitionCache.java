@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class ProcessDefinitionCache extends ResourceDefinitionCache<ProcessDefinitionEntity> {
 

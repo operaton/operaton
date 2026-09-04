@@ -28,7 +28,7 @@ import org.operaton.commons.utils.cache.Cache;
 
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity> {
 

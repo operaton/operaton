@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class CacheDeployer {
 

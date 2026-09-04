@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class DecisionRequirementsDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<DecisionRequirementsDefinitionEntity> {
 

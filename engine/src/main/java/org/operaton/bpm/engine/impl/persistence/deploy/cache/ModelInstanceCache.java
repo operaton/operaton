@@ -30,7 +30,7 @@ import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.commons.utils.cache.Cache;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public abstract class ModelInstanceCache<INSTANCE_TYPE extends ModelInstance, DEFINITION_TYPE extends ResourceDefinitionEntity> {
 

@@ -26,7 +26,7 @@ import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class DmnModelInstanceCache extends ModelInstanceCache<DmnModelInstance, DecisionDefinitionEntity> {
 

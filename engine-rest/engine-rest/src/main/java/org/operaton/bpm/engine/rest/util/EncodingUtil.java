@@ -20,7 +20,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public final class EncodingUtil {
 

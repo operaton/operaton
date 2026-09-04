@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManage
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class DecisionRequirementsDefinitionCache extends ResourceDefinitionCache<DecisionRequirementsDefinitionEntity> {
 

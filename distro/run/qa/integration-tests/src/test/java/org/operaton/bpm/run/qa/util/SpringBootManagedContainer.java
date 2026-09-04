@@ -27,7 +27,6 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -72,7 +71,7 @@ public class SpringBootManagedContainer {
     this.commands.add(getScriptPath());
     this.commands.add("start");
     if (commands != null && commands.length > 0) {
-      this.commands.addAll(Arrays.asList(commands));
+      this.commands.addAll(List.of(commands));
     }
     InputStream defaultYml = SpringBootManagedContainer.class.getClassLoader().getResourceAsStream(BASE_TEST_APPLICATION_YML);
     createConfigurationYml(APPLICATION_YML_PATH, defaultYml);

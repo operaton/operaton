@@ -1100,7 +1100,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testWithoutTenantIdParameter() {
-    mockedQuery = setUpMockCaseInstanceQuery(Arrays.asList(MockProvider.createMockCaseInstance(null)));
+    mockedQuery = setUpMockCaseInstanceQuery(List.of(MockProvider.createMockCaseInstance(null)));
 
     Response response = given()
       .queryParam("withoutTenantId", true)
@@ -1151,7 +1151,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testWithoutTenantIdPostParameter() {
-    mockedQuery = setUpMockCaseInstanceQuery(Arrays.asList(MockProvider.createMockCaseInstance(null)));
+    mockedQuery = setUpMockCaseInstanceQuery(List.of(MockProvider.createMockCaseInstance(null)));
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
@@ -1176,7 +1176,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<CaseInstance> createMockCaseInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockCaseInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockCaseInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

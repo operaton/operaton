@@ -16,8 +16,6 @@
 package org.operaton.bpm.engine.spring.components.aop;
 
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.aopalliance.aop.Advice;
@@ -48,7 +46,7 @@ public class ProcessStartingPointcutAdvisor implements PointcutAdvisor {
     /**
      * annotations that shall be scanned
      */
-    private final Set<Class<? extends Annotation>> annotations = new HashSet<>(Arrays.asList(StartProcess.class));
+    private final Set<Class<? extends Annotation>> annotations = Set.of(StartProcess.class);
 
     /**
      * the {@link org.aopalliance.intercept.MethodInterceptor} that handles launching the business process.

@@ -1007,7 +1007,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   @Override
   public void leaveActivityViaTransition(PvmTransition outgoingTransition) {
-    leaveActivityViaTransitions(Arrays.asList(outgoingTransition), Collections.emptyList());
+    leaveActivityViaTransitions(List.of(outgoingTransition), Collections.emptyList());
   }
 
   @Override

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.jspecify.annotations.NullMarked;
@@ -178,7 +178,7 @@ public abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetSt
         getLogEntryOperation(),
         processDefinitionId,
         processDefinitionKey,
-        Arrays.asList(suspensionStateChanged, includeProcessInstances)
+        List.of(suspensionStateChanged, includeProcessInstances)
       );
   }
 

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance.parser;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +37,7 @@ import org.operaton.bpm.engine.migration.MigrationInstruction;
  */
 public class EventSubscriptionInstanceHandler implements MigratingDependentInstanceParseHandler<MigratingActivityInstance, List<EventSubscriptionEntity>> {
 
-  private static final Set<String> SUPPORTED_EVENT_TYPES = new HashSet<>(Arrays.asList(EventType.MESSAGE.name(), EventType.SIGNAL.name(), EventType.CONDITONAL.name()));
+  private static final Set<String> SUPPORTED_EVENT_TYPES = Set.of(EventType.MESSAGE.name(), EventType.SIGNAL.name(), EventType.CONDITONAL.name());
 
   @Override
   public void handle(MigratingInstanceParseContext parseContext, MigratingActivityInstance owningInstance, List<EventSubscriptionEntity> elements) {

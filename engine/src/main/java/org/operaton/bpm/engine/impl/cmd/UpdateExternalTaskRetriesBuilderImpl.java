@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -67,7 +66,7 @@ public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateE
       this.externalTaskIds = Collections.emptyList();
     }
     else {
-      this.externalTaskIds = Arrays.asList(externalTaskIds);
+      this.externalTaskIds = List.of(externalTaskIds);
     }
     return this;
   }
@@ -84,7 +83,7 @@ public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateE
       this.processInstanceIds = Collections.emptyList();
     }
     else {
-      this.processInstanceIds = Arrays.asList(processInstanceIds);
+      this.processInstanceIds = List.of(processInstanceIds);
     }
     return this;
   }

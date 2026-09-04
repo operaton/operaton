@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.delegate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -47,7 +46,7 @@ public class AssertingJavaDelegate implements JavaDelegate {
   }
 
   public static void addAsserts(DelegateExecutionAsserter... as) {
-    asserts.addAll(Arrays.asList(as));
+    asserts.addAll(List.of(as));
   }
 
 }

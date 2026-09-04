@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
@@ -67,7 +66,7 @@ public class MigratingProcessInstanceValidationReportAssert {
 
     Assertions.assertThat(actualReport).as("No validation report found for source scope: " + sourceScopeId).isNotNull();
 
-    assertFailures(sourceScopeId, Arrays.asList(expectedFailures), actualReport.getFailures());
+    assertFailures(sourceScopeId, List.of(expectedFailures), actualReport.getFailures());
 
     return this;
   }
@@ -85,7 +84,7 @@ public class MigratingProcessInstanceValidationReportAssert {
 
     Assertions.assertThat(actualReport).as("No validation report found for source scope: " + sourceScopeId).isNotNull();
 
-    assertFailures(sourceScopeId, Arrays.asList(expectedFailures), actualReport.getFailures());
+    assertFailures(sourceScopeId, List.of(expectedFailures), actualReport.getFailures());
 
     return this;
   }

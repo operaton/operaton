@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,7 +61,7 @@ public class ScriptBindings implements Bindings {
    * </p>
    */
   protected static final Set<String> UNSTORED_KEYS =
-    new HashSet<>(Arrays.asList(
+    Set.of(
       "out",
       "out:print",
       "lang:import",
@@ -78,7 +76,7 @@ public class ScriptBindings implements Bindings {
       "execution",
       "__doc__", // do not export python doc string
       "__builtins__" // python built-in functions
-      ));
+      );
 
   protected List<Resolver> scriptResolvers;
   protected VariableScope variableScope;

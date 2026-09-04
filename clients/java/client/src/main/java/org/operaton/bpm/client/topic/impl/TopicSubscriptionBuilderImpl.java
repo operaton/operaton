@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.client.topic.impl;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +72,7 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   @Override
   public TopicSubscriptionBuilder variables(String... variableNames) {
     ensureNotNull(variableNames, "variableNames");
-    this.variableNames = Arrays.asList(variableNames);
+    this.variableNames = List.of(variableNames);
     return this;
   }
 
@@ -98,7 +97,7 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   @Override
   public TopicSubscriptionBuilder processDefinitionIdIn(String... processDefinitionIds) {
     ensureNotNull(processDefinitionIds, "processDefinitionIds");
-    this.processDefinitionIds = Arrays.asList(processDefinitionIds);
+    this.processDefinitionIds = List.of(processDefinitionIds);
     return this;
   }
 
@@ -111,7 +110,7 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   @Override
   public TopicSubscriptionBuilder processDefinitionKeyIn(String... processDefinitionKeys) {
     ensureNotNull(processDefinitionKeys, "processDefinitionKeys");
-    this.processDefinitionKeys = Arrays.asList(processDefinitionKeys);
+    this.processDefinitionKeys = List.of(processDefinitionKeys);
     return this;
   }
 
@@ -154,7 +153,7 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   @Override
   public TopicSubscriptionBuilder tenantIdIn(String... tenantIds) {
     ensureNotNull(tenantIds, "tenantIds");
-    this.tenantIds = Arrays.asList(tenantIds);
+    this.tenantIds = List.of(tenantIds);
     return this;
   }
 

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.task;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -205,7 +204,7 @@ public class TaskDecorator {
   protected List<String> extractCandidates(String str) {
     String[] parts = str.split(",\\s*+", -1);
     if (parts.length == 1) {
-      return Arrays.asList(parts);
+      return List.of(parts);
     }
     List<String> result = new ArrayList<>(parts.length);
     for (int i = 0; i < parts.length - 1; i++) {

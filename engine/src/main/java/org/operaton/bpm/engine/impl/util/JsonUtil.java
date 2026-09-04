@@ -69,7 +69,7 @@ public final class JsonUtil {
 
   public static void addArrayField(@Nullable JsonObject jsonObject, @Nullable String name, String @Nullable[] array) {
     if (jsonObject != null && name != null && array != null) {
-      addListField(jsonObject, name, Arrays.asList(array));
+      addListField(jsonObject, name, List.of(array));
     }
   }
 

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,7 +50,7 @@ public class VariableStore<T extends CoreVariableInstance> {
   public VariableStore(VariablesProvider<T> provider, VariableStoreObserver<T>... observers) {
     this.variablesProvider = provider;
     this.observers = new ArrayList<>();
-    this.observers.addAll(Arrays.asList(observers));
+    this.observers.addAll(List.of(observers));
   }
 
   /**

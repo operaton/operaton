@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -324,7 +323,7 @@ public class AuthorizationManager extends AbstractManager {
 
   protected CompositePermissionCheck createCompositePermissionCheck(PermissionCheck permissionCheck) {
     CompositePermissionCheck compositePermissionCheck = new CompositePermissionCheck();
-    compositePermissionCheck.setAtomicChecks(Arrays.asList(permissionCheck));
+    compositePermissionCheck.setAtomicChecks(List.of(permissionCheck));
     return compositePermissionCheck;
   }
 

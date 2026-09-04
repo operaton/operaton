@@ -18,7 +18,6 @@
 package org.operaton.bpm.pa.rest;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +68,7 @@ public class TestServlet extends HttpServlet {
 
   public static final Logger log = Logger.getLogger(TestServlet.class.getName());
 
-  private static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = Arrays.asList(
+  private static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = List.of(
       "ACT_GE_PROPERTY"
     );
 

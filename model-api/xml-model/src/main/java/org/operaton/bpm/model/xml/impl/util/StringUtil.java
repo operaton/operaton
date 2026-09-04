@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -69,7 +68,7 @@ public final class StringUtil {
     if (text != null) {
       result = text.split(separator);
     }
-    return new ArrayList<>(Arrays.asList(result));
+    return new ArrayList<>(List.of(result));
   }
 
   public static @Nullable String joinList(@Nullable List<String> list, String separator) {

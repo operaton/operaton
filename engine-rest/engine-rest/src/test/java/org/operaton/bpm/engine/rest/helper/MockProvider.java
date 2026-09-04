@@ -918,7 +918,7 @@ public abstract class MockProvider {
   public static final int EXAMPLE_PROBLEM_COLUMN_2 = 88;
   public static final String EXAMPLE_PROBLEM_ELEMENT_ID_2 = "element_89";
   public static final String EXAMPLE_RESOURCE_NAME = "abc";
-  public static final List<String> EXAMPLE_ELEMENT_IDS = Arrays.asList(EXAMPLE_PROBLEM_ELEMENT_ID, EXAMPLE_PROBLEM_ELEMENT_ID_2);
+  public static final List<String> EXAMPLE_ELEMENT_IDS = List.of(EXAMPLE_PROBLEM_ELEMENT_ID, EXAMPLE_PROBLEM_ELEMENT_ID_2);
 
   // Telemetry
   public static final String EXAMPLE_TELEMETRY_INSTALLATION_ID = "8343cc7a-8ad1-42d4-97d2-43452c0bdfa3";
@@ -1877,19 +1877,19 @@ public abstract class MockProvider {
   }
 
   public static List<Authorization> createMockAuthorizations() {
-    return Arrays.asList(createMockGlobalAuthorization(), createMockGrantAuthorization(), createMockRevokeAuthorization());
+    return List.of(createMockGlobalAuthorization(), createMockGrantAuthorization(), createMockRevokeAuthorization());
   }
 
   public static List<Authorization> createMockGrantAuthorizations() {
-    return Arrays.asList(createMockGrantAuthorization());
+    return List.of(createMockGrantAuthorization());
   }
 
   public static List<Authorization> createMockRevokeAuthorizations() {
-    return Arrays.asList(createMockRevokeAuthorization());
+    return List.of(createMockRevokeAuthorization());
   }
 
   public static List<Authorization> createMockGlobalAuthorizations() {
-    return Arrays.asList(createMockGlobalAuthorization());
+    return List.of(createMockGlobalAuthorization());
   }
 
   public static Date createMockDuedate() {
@@ -2278,7 +2278,7 @@ public abstract class MockProvider {
   }
 
   public static Set<String> createMockSetFromList(String list){
-    return new HashSet<>(Arrays.asList(list.split(",")));
+    return Set.of(list.split(","));
   }
 
   public static IdentityLink createMockUserAssigneeIdentityLink() {

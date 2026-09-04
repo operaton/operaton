@@ -373,7 +373,7 @@ public final class ReflectUtil {
   public static Object instantiate(String className, Object[] args) {
     Class<?> clazz = loadClass(className);
     Constructor<?> constructor = findMatchingConstructor(clazz, args);
-    ensureNotNull("couldn't find constructor for '%s' with args %s".formatted(className, Arrays.asList(args)), "constructor", constructor);
+    ensureNotNull("couldn't find constructor for '%s' with args %s".formatted(className, List.of(args)), "constructor", constructor);
     try {
       return constructor.newInstance(args);
     } catch (Exception e) {

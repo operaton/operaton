@@ -6,12 +6,12 @@
 
   <bean id="processEngineConfiguration" class="org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
   
-    <property name="processEngineName" value="audit-history-engine" />
-  
+    <property name="processEngineName" value="audit-history-engine-junit5" />
+
     <!-- Database configurations -->
     <property name="history" value="audit" />
     <property name="databaseSchemaUpdate" value="true" />
-    <property name="jdbcUrl" value="jdbc:h2:mem:audit-history-engine" />
+    <property name="jdbcUrl" value="jdbc:h2:mem:audit-history-engine-junit5" />
     
     <!-- job executor configurations -->
     <property name="jobExecutorActivate" value="false" />

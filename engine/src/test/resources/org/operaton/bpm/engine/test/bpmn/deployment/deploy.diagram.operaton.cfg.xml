@@ -8,7 +8,7 @@
   
     <property name="processEngineName" value="BPMNParseListenerTest-engine" />
   
-    <property name="jdbcUrl" value="jdbc:h2:mem:BPMNParseListenerTest;DB_CLOSE_DELAY=1000" />
+    <property name="jdbcUrl" value="jdbc:h2:mem:deployDiagramTest;DB_CLOSE_DELAY=1000" />
     <property name="jdbcDriver" value="org.h2.Driver" />
     <property name="jdbcUsername" value="sa" />
     <property name="jdbcPassword" value="" />

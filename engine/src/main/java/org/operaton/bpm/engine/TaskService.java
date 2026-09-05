@@ -272,9 +272,6 @@ public @NullMarked interface TaskService {
    * is set to {@link DelegationState#RESOLVED} and the task can be
    * {@link TaskService#complete(String) completed}.
    *
-   * @param taskId
-   * @param variables
-   *
    * @throws ProcessEngineException
    *          when no task exists with the given id.
    * @throws AuthorizationException
@@ -1186,7 +1183,7 @@ public @NullMarked interface TaskService {
   List<Comment> getTaskComments(String taskId);
 
   /** Retrieve a particular task comment */
-  Comment getTaskComment(String taskId, String commentId);
+  @Nullable Comment getTaskComment(String taskId, String commentId);
 
   /**
    * <p>The all events related to the given task.</p>

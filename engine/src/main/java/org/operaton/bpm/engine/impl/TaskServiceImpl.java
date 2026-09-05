@@ -433,7 +433,7 @@ public @NullMarked class TaskServiceImpl extends ServiceImpl implements TaskServ
   }
 
   @Override
-  public Comment getTaskComment(String taskId, String commentId) {
+  public @Nullable Comment getTaskComment(String taskId, String commentId) {
     return getCommandExecutor().execute(new GetTaskCommentCmd(taskId, commentId));
   }
 

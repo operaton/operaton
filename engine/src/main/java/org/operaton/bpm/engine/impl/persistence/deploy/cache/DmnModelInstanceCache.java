@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 import java.io.InputStream;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEntity;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionQueryImpl;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -28,7 +29,7 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
 /**
  * @author Johannes Heinemann
  */
-public class DmnModelInstanceCache extends ModelInstanceCache<DmnModelInstance, DecisionDefinitionEntity> {
+public @NullMarked class DmnModelInstanceCache extends ModelInstanceCache<DmnModelInstance, DecisionDefinitionEntity> {
 
   public DmnModelInstanceCache(CacheFactory factory, int cacheCapacity, ResourceDefinitionCache<DecisionDefinitionEntity> definitionCache) {
     super(factory, cacheCapacity, definitionCache);

@@ -39,7 +39,7 @@ public class CmmnActivity extends CoreActivity {
   @Serial private static final long serialVersionUID = 1L;
 
   protected List<CmmnActivity> activities = new ArrayList<>();
-  private Map<String, CmmnActivity> namedActivities = new HashMap<>();
+  private final Map<String, CmmnActivity> namedActivities = new HashMap<>();
 
   private CmmnElement cmmnElement;
 
@@ -49,11 +49,11 @@ public class CmmnActivity extends CoreActivity {
 
   private CmmnActivity parent;
 
-  private List<CmmnSentryDeclaration> sentries = new ArrayList<>();
-  private Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
+  private final List<CmmnSentryDeclaration> sentries = new ArrayList<>();
+  private final Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
 
-  private List<CmmnSentryDeclaration> entryCriteria = new ArrayList<>();
-  private List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
+  private final List<CmmnSentryDeclaration> entryCriteria = new ArrayList<>();
+  private final List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
 
   // eventName => activity id => variable listeners
   private Map<String, Map<String, List<VariableListener<?>>>> resolvedVariableListeners;
@@ -103,7 +103,7 @@ public class CmmnActivity extends CoreActivity {
     return activityBehavior;
   }
 
-  public void setActivityBehavior(CmmnActivityBehavior behavior) {
+  public void setActivityBehavior(@Nullable CmmnActivityBehavior behavior) {
     this.activityBehavior = behavior;
   }
 

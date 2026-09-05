@@ -193,7 +193,7 @@ public final class CompensationUtil {
 
     new FlowScopeWalker(activity).addPostVisitor(eventSubscriptionCollector).walkUntil(element -> {
       Boolean consumesCompensationProperty = (Boolean) element.getProperty(BpmnParse.PROPERTYNAME_CONSUMES_COMPENSATION);
-      return consumesCompensationProperty == null || consumesCompensationProperty == Boolean.TRUE;
+      return consumesCompensationProperty == null || consumesCompensationProperty;
     });
 
     return new ArrayList<>(subscriptions);

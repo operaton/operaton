@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.delegate;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 
 /**
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
  * @author Sebastian Menski
  *
  */
-public interface CoreActivityBehavior<T extends BaseDelegateExecution> {
+public @NullMarked interface CoreActivityBehavior<T extends BaseDelegateExecution> {
 
   void execute(T execution) throws Exception;
 

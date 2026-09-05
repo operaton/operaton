@@ -18,9 +18,10 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
@@ -31,9 +32,9 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Daniel Meyer
  * @author Falko Menge
  */
-public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior {
 
-  protected PvmActivity cancelBoundaryEvent;
+  protected @Nullable PvmActivity cancelBoundaryEvent;
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
@@ -69,7 +70,7 @@ public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
     if(!execution.hasChildren()) {
       leave(execution);
     } else {
-      ((ExecutionEntity)execution).forceUpdate();
+      execution.forceUpdate();
     }
   }
 
@@ -77,7 +78,7 @@ public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
     this.cancelBoundaryEvent = cancelBoundaryEvent;
   }
 
-  public PvmActivity getCancelBoundaryEvent() {
+  public @Nullable PvmActivity getCancelBoundaryEvent() {
     return cancelBoundaryEvent;
   }
 

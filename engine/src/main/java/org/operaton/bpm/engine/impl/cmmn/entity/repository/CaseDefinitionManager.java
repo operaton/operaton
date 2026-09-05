@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.repository.CaseDefinition;
  * @author Roman Smirnov
  *
  */
-public class CaseDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<CaseDefinitionEntity> {
+public @NullMarked class CaseDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<CaseDefinitionEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
   private static final String PARAM_CASE_DEFINITION_KEY = "caseDefinitionKey";
@@ -53,7 +54,7 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
     getDbEntityManager().delete(CaseDefinitionEntity.class, "deleteCaseDefinitionsByDeploymentId", deploymentId);
   }
 
-  public CaseDefinitionEntity findCaseDefinitionById(String caseDefinitionId) {
+  public @Nullable CaseDefinitionEntity findCaseDefinitionById(String caseDefinitionId) {
     return getDbEntityManager().selectById(CaseDefinitionEntity.class, caseDefinitionId);
   }
 
@@ -96,7 +97,7 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
     }
   }
 
-  public CaseDefinitionEntity findCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, Integer caseDefinitionVersion, String tenantId) {
+  public CaseDefinitionEntity findCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, Integer caseDefinitionVersion, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PARAM_CASE_DEFINITION_VERSION, caseDefinitionVersion);
     parameters.put(PARAM_CASE_DEFINITION_KEY, caseDefinitionKey);
@@ -111,7 +112,7 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
     return (CaseDefinitionEntity) getDbEntityManager().selectOne("selectCaseDefinitionByDeploymentAndKey", parameters);
   }
 
-  public String findPreviousCaseDefinitionId(String caseDefinitionKey, Integer version, String tenantId) {
+  public String findPreviousCaseDefinitionId(String caseDefinitionKey, Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put(PARAM_KEY, caseDefinitionKey);
     params.put(PARAM_VERSION, version);
@@ -149,27 +150,27 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
   }
 
   @Override
-  public CaseDefinitionEntity findLatestDefinitionById(String id) {
+  public @Nullable CaseDefinitionEntity findLatestDefinitionById(String id) {
     return findCaseDefinitionById(id);
   }
 
   @Override
-  public CaseDefinitionEntity getCachedResourceDefinitionEntity(String definitionId) {
+  public @Nullable CaseDefinitionEntity getCachedResourceDefinitionEntity(String definitionId) {
     return getDbEntityManager().getCachedEntity(CaseDefinitionEntity.class, definitionId);
   }
 
   @Override
-  public CaseDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  public @Nullable CaseDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return findLatestCaseDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 
   @Override
-  public CaseDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId) {
+  public @Nullable CaseDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId) {
     throw new UnsupportedOperationException("Currently finding case definition by version tag and tenant is not implemented.");
   }
 
   @Override
-  public CaseDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId) {
+  public @Nullable CaseDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId) {
     return findCaseDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId);
   }
 

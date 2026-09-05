@@ -132,4 +132,48 @@ class TestHelperTest {
         .doesNotThrowAnyException();
   }
 
+  @Test
+  void shouldResolveBpmnResourceByConvention() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "someProcess");
+
+    assertThat(resource)
+        .isEqualTo("org/operaton/bpm/engine/impl/test/TestHelperTest$SomeTestClass.someProcess.bpmn20.xml");
+  }
+
+  @Test
+  void shouldReturnTheSameResolvedResourceOnRepeatedLookups() {
+    String first = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "someProcess");
+    String second = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "someProcess");
+
+    assertThat(second).isEqualTo(first);
+  }
+
+  @Test
+  void shouldResolveDistinctResourcesForDistinctNames() {
+    String first = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "processOne");
+    String second = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "processTwo");
+
+    assertThat(first).isNotEqualTo(second);
+  }
+
+  @Test
+  void shouldResolveResourceWithoutName() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, null);
+
+    assertThat(resource)
+        .isEqualTo("org/operaton/bpm/engine/impl/test/TestHelperTest$SomeTestClass.bpmn20.xml");
+  }
+
+  @Test
+  void shouldReturnTheSameResolvedResourceForARealClasspathResource() {
+    // a resource genuinely exists on the test classpath for this (type, name) pair, so this
+    // exercises the "found on classpath" branch, unlike the fallback-only tests above
+    String first = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "realResource");
+    String second = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "realResource");
+
+    assertThat(first)
+        .isEqualTo("org/operaton/bpm/engine/impl/test/TestHelperTest$SomeTestClass.realResource.bpmn20.xml");
+    assertThat(second).isEqualTo(first);
+  }
+
 }

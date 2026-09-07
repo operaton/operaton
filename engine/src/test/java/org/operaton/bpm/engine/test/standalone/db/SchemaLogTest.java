@@ -25,6 +25,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.core.io.Resource;
@@ -43,6 +44,11 @@ import static org.assertj.core.api.Assertions.assertThatCode;
  * @author Miklas Boskamp
  *
  */
+// Tagged "sequential": with forkCount > 1, Surefire's JUnit Platform provider can
+// dispatch a @Nested class to a different JVM fork than its enclosing class,
+// running it twice (once as part of the enclosing class's own cascade, once
+// standalone) - see the surefire-plugin config in this module's pom.xml.
+@Tag("sequential")
 class SchemaLogTest {
 
   protected static final String BASE_PATH = "org/operaton/bpm/engine/db";

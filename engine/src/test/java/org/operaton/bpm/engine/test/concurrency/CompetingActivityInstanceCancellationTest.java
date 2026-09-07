@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.concurrency;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Tag;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -38,6 +39,10 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Roman Smirnov
  *
  */
+// Tagged "sequential": hand-orchestrates real background threads with blocking
+// wait()/notify() and no timeout - see ConcurrencyTestHelper's tag comment and the
+// surefire-plugin config in this module's pom.xml.
+@Tag("sequential")
 class CompetingActivityInstanceCancellationTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();

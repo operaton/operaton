@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -878,7 +879,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery executedActivityIdIn(String... ids) {
     ensureNotNull(BadUserRequestException.class, "activity ids", (Object[]) ids);
-    ensureNotContainsNull(BadUserRequestException.class, "activity ids", List.of(ids));
+    ensureNotContainsNull(BadUserRequestException.class, "activity ids", Arrays.asList(ids));
     this.executedActivityIds = ids;
     return this;
   }
@@ -886,7 +887,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery activeActivityIdIn(String... ids) {
     ensureNotNull(BadUserRequestException.class, "activity ids", (Object[]) ids);
-    ensureNotContainsNull(BadUserRequestException.class, "activity ids", List.of(ids));
+    ensureNotContainsNull(BadUserRequestException.class, "activity ids", Arrays.asList(ids));
     this.activeActivityIds = ids;
     return this;
   }
@@ -894,7 +895,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery activityIdIn(String... ids) {
     ensureNotNull(BadUserRequestException.class, "activity ids", (Object[]) ids);
-    ensureNotContainsNull(BadUserRequestException.class, "activity ids", List.of(ids));
+    ensureNotContainsNull(BadUserRequestException.class, "activity ids", Arrays.asList(ids));
     this.activityIds = ids;
     return this;
   }

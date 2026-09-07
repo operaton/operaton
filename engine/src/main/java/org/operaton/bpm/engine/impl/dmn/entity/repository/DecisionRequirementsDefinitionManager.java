@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.Page;
 
 import org.jspecify.annotations.Nullable;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 /**
  * @author Johannes Heinemann
  */
-public class DecisionRequirementsDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<DecisionRequirementsDefinitionEntity> {
+public @NullMarked class DecisionRequirementsDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<DecisionRequirementsDefinitionEntity> {
 
   public void insertDecisionRequirementsDefinition(DecisionRequirementsDefinitionEntity decisionRequirementsDefinition) {
     getDbEntityManager().insert(decisionRequirementsDefinition);
@@ -43,11 +44,11 @@ public class DecisionRequirementsDefinitionManager extends AbstractManager imple
     getDbEntityManager().delete(DecisionDefinitionEntity.class, "deleteDecisionRequirementsDefinitionsByDeploymentId", deploymentId);
   }
 
-  public DecisionRequirementsDefinitionEntity findDecisionRequirementsDefinitionById(String decisionRequirementsDefinitionId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDecisionRequirementsDefinitionById(String decisionRequirementsDefinitionId) {
     return getDbEntityManager().selectById(DecisionRequirementsDefinitionEntity.class, decisionRequirementsDefinitionId);
   }
 
-  public String findPreviousDecisionRequirementsDefinitionId(String decisionRequirementsDefinitionKey, Integer version, String tenantId) {
+  public String findPreviousDecisionRequirementsDefinitionId(String decisionRequirementsDefinitionKey, Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put("key", decisionRequirementsDefinitionKey);
     params.put("version", version);
@@ -112,22 +113,22 @@ public class DecisionRequirementsDefinitionManager extends AbstractManager imple
   }
 
   @Override
-  public DecisionRequirementsDefinitionEntity findLatestDefinitionById(String id) {
+  public @Nullable DecisionRequirementsDefinitionEntity findLatestDefinitionById(String id) {
     return getDbEntityManager().selectById(DecisionRequirementsDefinitionEntity.class, id);
   }
 
   @Override
-  public @Nullable DecisionRequirementsDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return null;
   }
 
   @Override
-  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId) {
     return null;
   }
 
   @Override
-  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId) {
     return null;
   }
 

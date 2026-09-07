@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 import org.jspecify.annotations.Nullable;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.OperatonFormDefinitionEntity;
 
-public class OperatonFormDefinitionManager extends AbstractManager
+public @NullMarked class OperatonFormDefinitionManager extends AbstractManager
     implements AbstractResourceDefinitionManager<OperatonFormDefinitionEntity> {
 
   private static final String OPERATON_FORM_DEFINITION_KEY = "operatonFormDefinitionKey";
@@ -53,12 +54,12 @@ public class OperatonFormDefinitionManager extends AbstractManager
   }
 
   @Override
-  public OperatonFormDefinitionEntity findLatestDefinitionById(String id) {
+  public @Nullable OperatonFormDefinitionEntity findLatestDefinitionById(String id) {
     return getDbEntityManager().selectById(OperatonFormDefinitionEntity.class, id);
   }
 
   @Override
-  public OperatonFormDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  public @Nullable OperatonFormDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(OPERATON_FORM_DEFINITION_KEY, definitionKey);
     parameters.put(TENANT_ID, tenantId);
@@ -73,8 +74,8 @@ public class OperatonFormDefinitionManager extends AbstractManager
   }
 
   @Override
-  public OperatonFormDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey,
-      Integer definitionVersion, String tenantId) {
+  public @Nullable OperatonFormDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey,
+      Integer definitionVersion, @Nullable String tenantId) {
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("operatonFormDefinitionVersion", definitionVersion);
@@ -90,7 +91,7 @@ public class OperatonFormDefinitionManager extends AbstractManager
   }
 
   @Override
-  public OperatonFormDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  public @Nullable OperatonFormDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
     parameters.put(OPERATON_FORM_DEFINITION_KEY, definitionKey);
@@ -104,13 +105,13 @@ public class OperatonFormDefinitionManager extends AbstractManager
   }
 
   @Override
-  public OperatonFormDefinitionEntity getCachedResourceDefinitionEntity(String definitionId) {
+  public @Nullable OperatonFormDefinitionEntity getCachedResourceDefinitionEntity(String definitionId) {
     return getDbEntityManager().getCachedEntity(OperatonFormDefinitionEntity.class, definitionId);
   }
 
   @Override
-  public OperatonFormDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey,
-      String definitionVersionTag, String tenantId) {
+  public @Nullable OperatonFormDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey,
+      String definitionVersionTag, @Nullable String tenantId) {
     throw new UnsupportedOperationException(
         "Currently finding Operaton Form definition by version tag and tenant is not implemented.");
   }

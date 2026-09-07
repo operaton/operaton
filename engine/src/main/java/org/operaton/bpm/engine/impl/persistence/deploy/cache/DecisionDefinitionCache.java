@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.dmn.DecisionDefinitionNotFoundException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEntity;
@@ -27,7 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Johannes Heinemann
  */
-public class DecisionDefinitionCache extends ResourceDefinitionCache<DecisionDefinitionEntity> {
+public @NullMarked class DecisionDefinitionCache extends ResourceDefinitionCache<DecisionDefinitionEntity> {
 
   private static final String VAR_DECISION_DEFINITION = "decisionDefinition";
   private static final String VAR_CACHED_CASE_DEFINITION = "cachedCaseDefinition";
@@ -55,48 +57,48 @@ public class DecisionDefinitionCache extends ResourceDefinitionCache<DecisionDef
   }
 
   @Override
-  protected void checkDefinitionFound(String definitionId, DecisionDefinitionEntity definition) {
+  protected void checkDefinitionFound(String definitionId, @Nullable DecisionDefinitionEntity definition) {
     ensureNotNull(DecisionDefinitionNotFoundException.class, "no deployed decision definition found with id '%s'".formatted(definitionId),
       VAR_DECISION_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKey(String definitionKey, DecisionDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKey(String definitionKey, @Nullable DecisionDefinitionEntity definition) {
     ensureNotNull(DecisionDefinitionNotFoundException.class, "no decision definition deployed with key '%s'".formatted(definitionKey),
       VAR_DECISION_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, DecisionDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId, @Nullable DecisionDefinitionEntity definition) {
     ensureNotNull(DecisionDefinitionNotFoundException.class, "no decision definition deployed with key '%s' and tenant-id '%s'".formatted(definitionKey, tenantId),
       VAR_DECISION_DEFINITION, definition);
   }
 
-  protected void checkInvalidDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion, DecisionDefinitionEntity decisionDefinition) {
+  protected void checkInvalidDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion, @Nullable DecisionDefinitionEntity decisionDefinition) {
     ensureNotNull(DecisionDefinitionNotFoundException.class, "no decision definition deployed with key = '%s' and version = '%s'".formatted(decisionDefinitionKey, decisionDefinitionVersion),
       VAR_DECISION_DEFINITION, decisionDefinition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, DecisionDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId, @Nullable DecisionDefinitionEntity definition) {
     ensureNotNull(DecisionDefinitionNotFoundException.class, "no decision definition deployed with key = '%s', version = '%s' and tenant-id = '%s'".formatted(definitionKey, definitionVersion, tenantId),
       VAR_DECISION_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId, DecisionDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId, @Nullable DecisionDefinitionEntity definition) {
     ensureNotNull(DecisionDefinitionNotFoundException.class, "no decision definition deployed with key = '%s', versionTag = '%s' and tenant-id = '%s'".formatted(definitionKey, definitionVersionTag, tenantId),
       VAR_DECISION_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, DecisionDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, @Nullable DecisionDefinitionEntity definition) {
     ensureNotNull(DecisionDefinitionNotFoundException.class, "no decision definition deployed with key = '%s' in deployment = '%s'".formatted(definitionKey, deploymentId),
       VAR_DECISION_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, DecisionDefinitionEntity definition) {
+  protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, @Nullable DecisionDefinitionEntity definition) {
     ensureNotNull("deployment '%s' didn't put decision definition '%s' in the cache".formatted(deploymentId, definitionId), VAR_CACHED_CASE_DEFINITION, definition);
   }
 }

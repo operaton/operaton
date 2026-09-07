@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.NonNull;
@@ -45,7 +46,7 @@ public class GetDeploymentCaseDiagramCmd implements Command<InputStream> {
   }
 
   @Override
-  public InputStream execute(final CommandContext commandContext) {
+  public @Nullable InputStream execute(final CommandContext commandContext) {
     CaseDefinitionEntity caseDefinition = Context
         .getProcessEngineConfiguration()
         .getDeploymentCache()
@@ -61,7 +62,6 @@ public class GetDeploymentCaseDiagramCmd implements Command<InputStream> {
     InputStream caseDiagramStream = null;
 
     if (resourceName != null) {
-
       caseDiagramStream = commandContext.runWithoutAuthorization(new GetDeploymentResourceCmd(deploymentId, resourceName));
     }
 

@@ -20,13 +20,17 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 
-public class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
+public @NullMarked class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
 
   protected static final String[] DEFAULT_MAPPING_FILES = {
     // necessary to perform authorization checks
@@ -35,9 +39,9 @@ public class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
     "org/operaton/bpm/engine/impl/mapping/entity/Tenant.xml"
   };
 
-  private List<String> mappingFiles;
+  private List<String> mappingFiles = Collections.emptyList();
 
-  protected ProcessEngineConfigurationImpl wrappedConfiguration;
+  protected @Nullable ProcessEngineConfigurationImpl wrappedConfiguration;
 
   @Override
   protected void init() {
@@ -75,12 +79,12 @@ public class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
 
   @Override
   public boolean isAuthorizationEnabled() {
-    return wrappedConfiguration.isAuthorizationEnabled();
+    return getWrappedConfiguration().isAuthorizationEnabled();
   }
 
   @Override
   public String getAuthorizationCheckRevokes() {
-    return wrappedConfiguration.getAuthorizationCheckRevokes();
+    return getWrappedConfiguration().getAuthorizationCheckRevokes();
   }
 
   @Override
@@ -118,7 +122,11 @@ public class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
   }
 
   public ProcessEngineConfigurationImpl getWrappedConfiguration() {
-    return wrappedConfiguration;
+      if (wrappedConfiguration == null) {
+          throw new ProcessEngineException("Process Engine Configuration missing!");
+      }
+
+      return wrappedConfiguration;
   }
 
 }

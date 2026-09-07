@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.management.PurgeReporting;
 
 import org.jspecify.annotations.Nullable;
@@ -28,7 +29,7 @@ import org.jspecify.annotations.Nullable;
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class CachePurgeReport implements PurgeReporting<Set<String>> {
+public @NullMarked class CachePurgeReport implements PurgeReporting<Set<String>> {
 
   public static final String PROCESS_DEF_CACHE = "PROC_DEF_CACHE";
   public static final String BPMN_MODEL_INST_CACHE = "BPMN_MODEL_INST_CACHE";

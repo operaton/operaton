@@ -166,7 +166,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return filterLoadedObjects(loadedObjects);
   }
 
-  public Object selectOne(String statement, Object parameter) {
+  public @Nullable Object selectOne(String statement, Object parameter) {
     Object result = persistenceSession.selectOne(statement, parameter);
     if (result instanceof DbEntity loadedObject) {
       result = cacheFilter(loadedObject);
@@ -177,10 +177,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   @SuppressWarnings("unchecked")
   public boolean selectBoolean(String statement, Object parameter) {
     List<Object> result = (List<Object>) persistenceSession.selectList(statement, parameter);
-    if(result != null) {
-      return result.contains(1);
-    }
-    return false;
+    return result.contains(1);
   }
 
   public <T extends DbEntity> @Nullable T selectById(Class<T> entityClass, String id) {

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -41,21 +43,21 @@ import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBe
  * @author Roman Smirnov
  *
  */
-public abstract class CallableElementActivityBehavior extends AbstractBpmnActivityBehavior implements SubProcessActivityBehavior {
+public abstract @NullMarked class CallableElementActivityBehavior extends AbstractBpmnActivityBehavior implements SubProcessActivityBehavior {
 
   protected String[] variablesFilter = { NUMBER_OF_INSTANCES, NUMBER_OF_ACTIVE_INSTANCES, NUMBER_OF_COMPLETED_INSTANCES };
 
-  protected CallableElement callableElement;
+  protected @Nullable CallableElement callableElement;
 
   /**
    * The expression which identifies the delegation for the variable mapping.
    */
-  protected Expression expression;
+  protected @Nullable Expression expression;
 
   /**
    * The class name of the delegated variable mapping, which should be used.
    */
-  protected String className;
+  protected @Nullable String className;
 
   protected CallableElementActivityBehavior() {
   }
@@ -83,7 +85,7 @@ public abstract class CallableElementActivityBehavior extends AbstractBpmnActivi
     return delegate != null ? getDelegateVariableMapping(delegate) : null;
   }
 
-  public Object resolveDelegateClass(final ActivityExecution execution) {
+  public @Nullable Object resolveDelegateClass(final ActivityExecution execution) {
     ProcessApplicationReference targetProcessApplication
             = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
     if (ProcessApplicationContextUtil.requiresContextSwitch(targetProcessApplication)) {

@@ -41,6 +41,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -70,7 +72,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 * @author Roman Smirnov
 *
 */
-public abstract class DbSqlSession extends AbstractPersistenceSession {
+public abstract @NullMarked class DbSqlSession extends AbstractPersistenceSession {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
   private static final String[] JDBC_METADATA_TABLE_TYPES = { "TABLE" };
@@ -88,8 +90,8 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   protected SqlSession sqlSession;
   protected DbSqlSessionFactory dbSqlSessionFactory;
 
-  protected String connectionMetadataDefaultCatalog;
-  protected String connectionMetadataDefaultSchema;
+  protected @Nullable String connectionMetadataDefaultCatalog;
+  protected @Nullable String connectionMetadataDefaultSchema;
 
   protected DbSqlSession(DbSqlSessionFactory dbSqlSessionFactory) {
     this.dbSqlSessionFactory = dbSqlSessionFactory;
@@ -108,7 +110,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   // select ////////////////////////////////////////////
 
   @Override
-  public List<?> selectList(String statement, Object parameter) {
+  public List<?> selectList(String statement, @Nullable Object parameter) {
     statement = dbSqlSessionFactory.mapStatement(statement);
     List<Object> resultList = executeSelectList(statement, parameter);
     for (Object object : resultList) {
@@ -118,7 +120,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   }
 
   @Override
-  public List<?> selectList(String statement, Object parameter, int maxRows) {
+  public List<?> selectList(String statement, @Nullable Object parameter, int maxRows) {
     String mappedStatement = dbSqlSessionFactory.mapStatement(statement);
     List<Object> resultList = ExceptionUtil.doWithExceptionWrapper(
         () -> sqlSession.selectList(mappedStatement, parameter, new RowBounds(0, maxRows)));
@@ -128,13 +130,13 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     return resultList;
   }
 
-  public List<Object> executeSelectList(String statement, Object parameter) {
+  public List<Object> executeSelectList(String statement, @Nullable Object parameter) {
     return ExceptionUtil.doWithExceptionWrapper(() -> sqlSession.selectList(statement, parameter));
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends DbEntity> T selectById(Class<T> type, String id) {
+  public <T extends DbEntity> @Nullable T selectById(Class<T> type, String id) {
     String selectStatement = dbSqlSessionFactory.getSelectStatement(type);
     String mappedSelectStatement = dbSqlSessionFactory.mapStatement(selectStatement);
     ensureNotNull("no select statement for %s in the ibatis mapping files".formatted(type), "selectStatement", selectStatement);
@@ -145,7 +147,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   }
 
   @Override
-  public Object selectOne(String statement, Object parameter) {
+  public @Nullable Object selectOne(String statement, @Nullable Object parameter) {
     String mappedStatement = dbSqlSessionFactory.mapStatement(statement);
     Object result = ExceptionUtil.doWithExceptionWrapper(() -> sqlSession.selectOne(mappedStatement, parameter));
     fireEntityLoaded(result);
@@ -155,7 +157,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   // lock ////////////////////////////////////////////
 
   @Override
-  public void lock(String statement, Object parameter) {
+  public void lock(String statement, @Nullable Object parameter) {
     // do not perform locking if H2 database is used. H2 uses table level locks
     // by default which may cause deadlocks if the deploy command needs to get a new
     // Id using the DbIdGenerator while performing a deployment.
@@ -167,11 +169,11 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     }
   }
 
-  protected abstract void executeSelectForUpdate(String statement, Object parameter);
+  protected abstract void executeSelectForUpdate(String statement, @Nullable Object parameter);
 
   protected void entityUpdatePerformed(DbEntityOperation operation,
                                        int rowsAffected,
-                                       PersistenceException failure) {
+                                       @Nullable PersistenceException failure) {
     if (failure != null) {
       configureFailedDbEntityOperation(operation, failure);
     } else {
@@ -194,21 +196,21 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected void bulkUpdatePerformed(DbBulkOperation operation,
                                      int rowsAffected,
-                                     PersistenceException failure) {
+                                     @Nullable PersistenceException failure) {
 
     bulkOperationPerformed(operation, rowsAffected, failure);
   }
 
   protected void bulkDeletePerformed(DbBulkOperation operation,
                                      int rowsAffected,
-                                     PersistenceException failure) {
+                                     @Nullable PersistenceException failure) {
 
     bulkOperationPerformed(operation, rowsAffected, failure);
   }
 
   protected void bulkOperationPerformed(DbBulkOperation operation,
                                         int rowsAffected,
-                                        PersistenceException failure) {
+                                        @Nullable PersistenceException failure) {
 
     if (failure != null) {
       operation.setFailure(failure);
@@ -223,7 +225,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected void entityDeletePerformed(DbEntityOperation operation,
                                        int rowsAffected,
-                                       PersistenceException failure) {
+                                       @Nullable PersistenceException failure) {
 
     if (failure != null) {
       configureFailedDbEntityOperation(operation, failure);
@@ -319,7 +321,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     executeInsertEntity(insertStatement, dbEntity);
   }
 
-  protected void executeInsertEntity(String insertStatement, Object parameter) {
+  protected void executeInsertEntity(String insertStatement, @Nullable Object parameter) {
     LOG.executeDatabaseOperation("INSERT", parameter);
     sqlSession.insert(insertStatement, parameter);
   }
@@ -327,7 +329,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   @SuppressWarnings("unused")
   protected void entityInsertPerformed(DbEntityOperation operation,
                                        int rowsAffected,
-                                       PersistenceException failure) {
+                                       @Nullable PersistenceException failure) {
     DbEntity entity = operation.getEntity();
 
     if (failure != null) {
@@ -344,7 +346,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   // delete ///////////////////////////////////////////
 
-  protected int executeDelete(String deleteStatement, Object parameter) {
+  protected int executeDelete(String deleteStatement, @Nullable Object parameter) {
     // map the statement
     String mappedDeleteStatement = dbSqlSessionFactory.mapStatement(deleteStatement);
     return sqlSession.delete(mappedDeleteStatement, parameter);
@@ -352,17 +354,17 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   // update ////////////////////////////////////////
 
-  public int executeUpdate(String updateStatement, Object parameter) {
+  public int executeUpdate(String updateStatement, @Nullable Object parameter) {
     String mappedUpdateStatement = dbSqlSessionFactory.mapStatement(updateStatement);
     return sqlSession.update(mappedUpdateStatement, parameter);
   }
 
-  public int update(String updateStatement, Object parameter) {
+  public int update(String updateStatement, @Nullable Object parameter) {
     return ExceptionUtil.doWithExceptionWrapper(() -> sqlSession.update(updateStatement, parameter));
   }
 
   @Override
-  public int executeNonEmptyUpdateStmt(String updateStmt, Object parameter) {
+  public int executeNonEmptyUpdateStmt(String updateStmt, @Nullable Object parameter) {
     String mappedUpdateStmt = dbSqlSessionFactory.mapStatement(updateStmt);
 
     //if mapped statement is empty, which can happens for some databases, we have no need to execute it
@@ -382,10 +384,6 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   }
 
   // flush ////////////////////////////////////////////////////////////////////
-
-  @Override
-  public void flush() {
-  }
 
   @Override
   public void flushOperations() {
@@ -785,14 +783,14 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     }
   }
 
-  protected String addSqlStatementPiece(String sqlStatement, String line) {
+  protected String addSqlStatementPiece(@Nullable String sqlStatement, String line) {
     if (sqlStatement==null) {
       return line;
     }
     return sqlStatement + " \n" + line;
   }
 
-  protected String readNextTrimmedLine(BufferedReader reader) throws IOException {
+  protected @Nullable String readNextTrimmedLine(BufferedReader reader) throws IOException {
     String line = reader.readLine();
     if (line!=null) {
       line = line.trim();
@@ -804,7 +802,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     Throwable cause = e.getCause();
     if (cause != null) {
       String exceptionMessage = cause.getMessage();
-      if(cause.getMessage() != null) {
+      if(exceptionMessage != null) {
         // Matches message returned from H2
         if ((exceptionMessage.contains("Table")) && (exceptionMessage.contains("not found"))) {
           return true;

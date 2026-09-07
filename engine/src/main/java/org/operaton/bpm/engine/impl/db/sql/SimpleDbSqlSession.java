@@ -23,6 +23,8 @@ import java.util.List;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.ExecutorType;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.FlushResult;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbBulkOperation;
@@ -34,7 +36,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * For mybatis {@link ExecutorType#SIMPLE}
  */
-public class SimpleDbSqlSession extends DbSqlSession {
+public @NullMarked class SimpleDbSqlSession extends DbSqlSession {
 
   public SimpleDbSqlSession(DbSqlSessionFactory dbSqlSessionFactory) {
     super(dbSqlSessionFactory);
@@ -47,15 +49,13 @@ public class SimpleDbSqlSession extends DbSqlSession {
   // lock ////////////////////////////////////////////
 
   @Override
-  protected void executeSelectForUpdate(String statement, Object parameter) {
+  protected void executeSelectForUpdate(String statement, @Nullable Object parameter) {
     update(statement, parameter);
   }
 
   @Override
   public FlushResult executeDbOperations(List<DbOperation> operations) {
-
     for (int i = 0; i < operations.size(); i++) {
-
       DbOperation operation = operations.get(i);
 
       executeDbOperation(operation);

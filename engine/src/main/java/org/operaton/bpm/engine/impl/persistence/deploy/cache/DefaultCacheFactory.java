@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.commons.utils.cache.Cache;
 import org.operaton.commons.utils.cache.ConcurrentLruCache;
 
@@ -25,7 +26,7 @@ import org.operaton.commons.utils.cache.ConcurrentLruCache;
  *
  * @author Johannes Heinemann
  */
-public class DefaultCacheFactory implements CacheFactory {
+public @NullMarked class DefaultCacheFactory implements CacheFactory {
 
   @Override
   public <T> Cache<String, T> createCache(int maxNumberOfElementsInCache) {

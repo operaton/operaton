@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -26,13 +27,13 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
-public class DeleteDeploymentFailListener implements TransactionListener {
+public @NullMarked class DeleteDeploymentFailListener implements TransactionListener {
 
   protected String deploymentId;
-  protected ProcessApplicationReference processApplicationReference;
+  protected @Nullable ProcessApplicationReference processApplicationReference;
   protected CommandExecutor commandExecutor;
 
-  public DeleteDeploymentFailListener(String deploymentId, ProcessApplicationReference processApplicationReference, CommandExecutor commandExecutor) {
+  public DeleteDeploymentFailListener(String deploymentId, @Nullable ProcessApplicationReference processApplicationReference, CommandExecutor commandExecutor) {
     this.deploymentId = deploymentId;
     this.processApplicationReference = processApplicationReference;
     this.commandExecutor = commandExecutor;

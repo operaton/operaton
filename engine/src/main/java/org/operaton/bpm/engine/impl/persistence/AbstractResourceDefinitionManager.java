@@ -16,23 +16,26 @@
  */
 package org.operaton.bpm.engine.impl.persistence;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Johannes Heinemann
  */
-public interface AbstractResourceDefinitionManager<T> {
+public @NullMarked interface AbstractResourceDefinitionManager<T> {
 
-  T findLatestDefinitionByKey(String key);
+  @Nullable T findLatestDefinitionByKey(String key);
 
-  T findLatestDefinitionById(String id);
+  @Nullable T findLatestDefinitionById(String id);
 
-  T findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId);
+  @Nullable T findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId);
 
-  T findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId);
+  @Nullable T findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId);
 
-  T findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey);
+  @Nullable T findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey);
 
-  T getCachedResourceDefinitionEntity(String definitionId);
+  @Nullable T getCachedResourceDefinitionEntity(String definitionId);
 
-  T findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId);
+  @Nullable T findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId);
 
 }

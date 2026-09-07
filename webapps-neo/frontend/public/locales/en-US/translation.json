@@ -847,6 +847,11 @@
     "goto-hint-prefix": "Using the \"Go To\" function in the top right or pressing",
     "goto-hint-suffix": "you can quickly navigate to a resource if you know its ID."
   },
+  "no-access": {
+    "title": "No access to this area",
+    "text": "Your account is not authorized for the {{app}} application.",
+    "hint": "An administrator has to grant your group access to it."
+  },
   "bpmn": {
     "zoom-in": "Zoom in",
     "zoom-out": "Zoom out",

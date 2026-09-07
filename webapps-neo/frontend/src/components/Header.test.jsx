@@ -75,6 +75,27 @@ describe("Header", () => {
     ]);
   });
 
+  it("shows only the pages the signed-in user is authorized for", () => {
+    state.auth.authorized_apps.value = ["neo", "welcome", "tasklist"];
+    const { container } = renderHeader(state);
+    const hrefs = Array.from(
+      container.querySelectorAll("#primary-navigation li > a"),
+    ).map((a) => a.getAttribute("href"));
+    expect(hrefs).toEqual(["/tasks"]);
+  });
+
+  it("shows the cockpit pages when the user has cockpit", () => {
+    state.auth.authorized_apps.value = ["neo", "welcome", "cockpit"];
+    const { container } = renderHeader(state);
+    const hrefs = Array.from(
+      container.querySelectorAll("#primary-navigation li > a"),
+    ).map((a) => a.getAttribute("href"));
+    expect(hrefs).not.toContain("/tasks");
+    expect(hrefs).not.toContain("/admin");
+    expect(hrefs).toContain("/processes");
+    expect(hrefs).toContain("/migrations");
+  });
+
   it("marks the link for the current route as the current page", () => {
     mockUrl = "/processes/p1";
     const { container } = renderHeader(state);

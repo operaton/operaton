@@ -9,6 +9,7 @@ import {
   PUT,
   DELETE,
   set_request_headers,
+  resolve_user,
 } from "../helper.jsx";
 import engine_rest from "../engine_rest.jsx";
 
@@ -67,15 +68,10 @@ const get_task_form_variables = (state, task_id) =>
 
 // The profile signal holds the login placeholder ({ id }) until a page fetches
 // the profile, after which it holds a response envelope ({ data: { id } }).
-const current_user_id = (state) => {
-  const profile = state.api.user.profile.value;
-  return profile?.data?.id ?? profile?.id;
-};
-
 const claim_task = (state, task_id) =>
   POST(
     `/task/${task_id}/claim`,
-    { userId: current_user_id(state) },
+    { userId: resolve_user(state) },
     state,
     state.api.task.claim_result,
   );
@@ -83,7 +79,7 @@ const claim_task = (state, task_id) =>
 const unclaim_task = (state, task_id) =>
   POST(
     `/task/${task_id}/unclaim`,
-    { userId: current_user_id(state) },
+    { userId: resolve_user(state) },
     state,
     state.api.task.unclaim_result,
   );

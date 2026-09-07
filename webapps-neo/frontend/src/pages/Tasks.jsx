@@ -878,18 +878,50 @@ const CommentButton = () => {
 const ClaimButton = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
+    assignee_input = useSignal(""),
     task = state.api.task.one.value?.data,
     user = state.api.user.profile.value?.data,
-    claim_result = state.api.task.claim_result.value?.data,
-    assign_result = state.api.task.assign_result.value?.data,
-    unclaim_result = state.api.task.unclaim_result.value?.data,
     close = () => document.getElementById("set_assignee").close(),
     show = () => document.getElementById("set_assignee").showModal(),
     user_is_assignee = task?.assignee,
     assignee_is_different = task?.assignee && user?.id !== task?.assignee,
-    claimed = claim_result?.status === RESPONSE_STATE.SUCCESS,
-    assigned = assign_result?.status === RESPONSE_STATE.SUCCESS,
-    unclaimed = unclaim_result?.status === RESPONSE_STATE.SUCCESS;
+    unknown_user = useSignal(false),
+    assign_failed =
+      state.api.task.assign_result.value?.status === RESPONSE_STATE.ERROR,
+    // Every action here changes who holds the task, and the answer carries no
+    // body. Re-read the task so the card and the dialog show the new state,
+    // and close — otherwise the dialog sits there unchanged and the click
+    // looks as though it did nothing.
+    then_refresh = (request) =>
+      void Promise.resolve(request).then((result) => {
+        if (result?.status !== RESPONSE_STATE.SUCCESS) return;
+        void engine_rest.task.get_task(state, task.id);
+        close();
+      }),
+    assign_to_user = async (event) => {
+      event.preventDefault();
+      const user_id = assignee_input.value.trim();
+      if (!user_id) return;
+      unknown_user.value = false;
+
+      // Check the id before handing the task over. Assigning to an id that does
+      // not exist succeeds in the engine and leaves the task held by nobody: it
+      // drops out of every list and only "reset assignee" brings it back.
+      const found = await engine_rest.user.find(state, user_id);
+      if (
+        found?.status !== RESPONSE_STATE.SUCCESS ||
+        !(found.data?.length > 0)
+      ) {
+        unknown_user.value = true;
+        return;
+      }
+
+      then_refresh(
+        engine_rest.task
+          .assign_task(state, user_id, task.id)
+          .then((result) => ((assignee_input.value = ""), result)),
+      );
+    };
 
   return (
     <RequestState
@@ -906,32 +938,77 @@ const ClaimButton = () => {
             <button type="button" onClick={close}>
               {t("common.close")}
             </button>
-            {assignee_is_different && !assigned ? (
-              <button
-                type="button"
-                onClick={() =>
-                  engine_rest.task.assign_task(state, null, task.id)
-                }
-                class="secondary"
-              >
-                <Icons.user_minus /> {t("tasks.reset-assignee")}
-              </button>
-            ) : (user_is_assignee || claimed) && !unclaimed ? (
-              <button
-                type="button"
-                onClick={() => engine_rest.task.unclaim_task(state, task.id)}
-                class="secondary"
-              >
-                <Icons.user_minus /> {t("tasks.unclaim")}
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => engine_rest.task.claim_task(state, task.id)}
-                class="secondary"
-              >
-                <Icons.user_plus /> {t("tasks.claim")}
-              </button>
+            {/* The action on the task as it stands. Right-aligned like the
+                submit below, so the two blocks read as one dialog rather than
+                as a button loose beside the close button. */}
+            <div class="button-group">
+              {assignee_is_different ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    then_refresh(
+                      engine_rest.task.assign_task(state, null, task.id),
+                    )
+                  }
+                  class="secondary"
+                >
+                  <Icons.user_minus /> {t("tasks.reset-assignee")}
+                </button>
+              ) : user_is_assignee ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    then_refresh(engine_rest.task.unclaim_task(state, task.id))
+                  }
+                  class="secondary"
+                >
+                  <Icons.user_minus /> {t("tasks.unclaim")}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() =>
+                    then_refresh(engine_rest.task.claim_task(state, task.id))
+                  }
+                  class="secondary"
+                >
+                  <Icons.user_plus /> {t("tasks.claim")}
+                </button>
+              )}
+            </div>
+
+            {/* Heading outside the form on purpose: the global `form` rule is a
+                two-column label/input grid, and anything else placed in it
+                becomes a grid item — the heading would sit beside the field. */}
+            <h2>{t("tasks.assign-to")}</h2>
+            <form onSubmit={assign_to_user}>
+              <label for="assignee-input">{t("tasks.assign-to-label")}</label>
+              <input
+                id="assignee-input"
+                type="text"
+                autocomplete="off"
+                aria-describedby={unknown_user.value ? "assignee-error" : undefined}
+                value={assignee_input.value}
+                onInput={(e) => {
+                  assignee_input.value = e.target.value;
+                  unknown_user.value = false;
+                }}
+              />
+              <div class="button-group">
+                <button type="submit" disabled={!assignee_input.value.trim()}>
+                  <Icons.user_plus /> {t("tasks.assign")}
+                </button>
+              </div>
+            </form>
+            {unknown_user.value && (
+              <p id="assignee-error" role="alert" class="error">
+                {t("tasks.assign-unknown-user")}
+              </p>
+            )}
+            {assign_failed && (
+              <p role="alert" class="error">
+                {t("tasks.assign-failed")}
+              </p>
             )}
           </dialog>
         </>

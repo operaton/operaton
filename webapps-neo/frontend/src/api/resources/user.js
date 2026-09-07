@@ -9,6 +9,14 @@ import { GET, POST, DELETE, PUT, resolve_user } from '../helper.jsx'
 const get_users = (state) =>
   GET('/user', state, state.api.user.list)
 
+/**
+ * Look a user up by exact id. Answers an empty list when there is no such user —
+ * and also when the caller may not read them, because identity queries are
+ * filtered by READ on User.
+ */
+const find_user = (state, user_name) =>
+  GET(`/user?id=${encodeURIComponent(user_name)}&maxResults=1`, state, state.api.user.lookup)
+
 const create_user = (state, user) =>
   POST('/user/create', user, state, state.api.user.create)
 
@@ -33,6 +41,7 @@ const unlock_user = (state, user_name) =>
 const user =
   {
     all: get_users,
+    find: find_user,
     create: create_user,
     delete: delete_user,
     count: get_user_count,

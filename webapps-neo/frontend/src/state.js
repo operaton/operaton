@@ -51,6 +51,8 @@ const createAppState = () => {
       create: signal(null),
       // todo: remove demo user when login is implemented
       profile: signal({ id: "demo" }),
+      // Answer of the by-id lookup used to check an assignee before assigning.
+      lookup: signal(null),
       update: signal(null),
       delete: signal(null),
       group: {

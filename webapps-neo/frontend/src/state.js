@@ -53,6 +53,8 @@ const createAppState = () => {
       list: signal(null),
       create: signal(null),
       profile: signal(null),
+      // Answer of the by-id lookup used to check an assignee before assigning.
+      lookup: signal(null),
       update: signal(null),
       delete: signal(null),
       group: {

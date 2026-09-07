@@ -79,6 +79,7 @@ class HistoricVariableInstanceScopeTest {
 
     // the variable is in the process instance scope
     assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
+    assertThat(variable.getTaskId()).isNull();
 
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
     testRule.assertProcessEnded(pi.getId());
@@ -106,6 +107,7 @@ class HistoricVariableInstanceScopeTest {
 
     // the variable is in the task scope
     assertThat(variable.getActivityInstanceId()).isEqualTo(taskExecution.getActivityInstanceId());
+    assertThat(variable.getTaskId()).isEqualTo(task.getId());
 
     taskService.complete(task.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -136,12 +138,14 @@ class HistoricVariableInstanceScopeTest {
     assertThat(firstVar.getValue()).isEqualTo("testValue");
     // the variable is in the process instance scope
     assertThat(firstVar.getActivityInstanceId()).isEqualTo(pi.getId());
+    assertThat(firstVar.getTaskId()).isNull();
 
     HistoricVariableInstance secondVar = result.get(1);
     assertThat(secondVar.getVariableName()).isEqualTo("testVar");
     assertThat(secondVar.getValue()).isEqualTo("anotherTestValue");
     // the variable is in the task scope
     assertThat(secondVar.getActivityInstanceId()).isEqualTo(taskExecution.getActivityInstanceId());
+    assertThat(secondVar.getTaskId()).isEqualTo(task.getId());
 
     taskService.complete(task.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -163,6 +167,7 @@ class HistoricVariableInstanceScopeTest {
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the process instance scope
     assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
+    assertThat(variable.getTaskId()).isEqualTo(task.getId());
 
     taskService.complete(task.getId());
     testRule.assertProcessEnded(pi.getId());
@@ -179,6 +184,7 @@ class HistoricVariableInstanceScopeTest {
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the process instance scope
     assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
+    assertThat(variable.getTaskId()).isNull();
 
     testRule.assertProcessEnded(pi.getId());
   }
@@ -223,6 +229,7 @@ class HistoricVariableInstanceScopeTest {
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the user task scope
     assertThat(variable.getActivityInstanceId()).isEqualTo(taskExecution.getActivityInstanceId());
+    assertThat(variable.getTaskId()).isEqualTo(task.getId());
 
     taskService.complete(task.getId());
 
@@ -245,6 +252,7 @@ class HistoricVariableInstanceScopeTest {
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the process instance scope
     assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
+    assertThat(variable.getTaskId()).isEqualTo(task.getId());
 
     taskService.complete(task.getId());
 
@@ -262,6 +270,7 @@ class HistoricVariableInstanceScopeTest {
     HistoricVariableInstance variable = query.singleResult();
     // the variable is in the process instance scope
     assertThat(variable.getActivityInstanceId()).isEqualTo(pi.getId());
+    assertThat(variable.getTaskId()).isNull();
 
     testRule.assertProcessEnded(pi.getId());
   }
@@ -333,6 +342,8 @@ class HistoricVariableInstanceScopeTest {
     String theService1Id = activityInstanceQuery.activityId("theService1").singleResult().getId();
     String theService2Id = activityInstanceQuery.activityId("theService2").singleResult().getId();
     String theTaskId = activityInstanceQuery.activityId("theTask").singleResult().getId();
+    Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+    assertThat(task).isNotNull();
 
     // when (1)
     HistoricVariableInstance firstVariable = historyService
@@ -342,6 +353,7 @@ class HistoricVariableInstanceScopeTest {
 
     // then (1)
     assertThat(firstVariable.getActivityInstanceId()).isEqualTo(theService1Id);
+    assertThat(firstVariable.getTaskId()).isNull();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail firstVariableDetail = historyService
@@ -360,6 +372,7 @@ class HistoricVariableInstanceScopeTest {
 
     // then (2)
     assertThat(secondVariable.getActivityInstanceId()).isEqualTo(theService2Id);
+    assertThat(secondVariable.getTaskId()).isNull();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail secondVariableDetail = historyService
@@ -378,6 +391,7 @@ class HistoricVariableInstanceScopeTest {
 
     // then (3)
     assertThat(thirdVariable.getActivityInstanceId()).isEqualTo(theTaskId);
+    assertThat(thirdVariable.getTaskId()).isEqualTo(task.getId());
 
     if(processEngineConfiguration.getHistoryLevel().getId() > ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       HistoricDetail thirdVariableDetail = historyService

@@ -106,26 +106,29 @@ export function Header() {
 
   return (
     <>
-      <header id="top">
-        {/* Reads the runtime flag, not a build-time env var, so a distro operator can
-            turn the notice off without rebuilding the bundle. */}
-        {get_config().hide_release_warning ? null : (
-          <div id="release-warning">
-            {t("nav.release-warning")}{" "}
-            <a href="https://github.com/operaton/operaton/issues">
-              {t("nav.release-warning-issue")}
-            </a>{" "}
-            {t("nav.release-warning-forum") !== t("nav.release-warning-issue") && (
-              <>
-                {t("nav.release-warning-or")}{" "}
-                <a href="https://forum.operaton.org/">
-                  {t("nav.release-warning-forum")}
-                </a>
-              </>
-            )}
-          </div>
-        )}
+      {/* Above the header, not inside it: #top is a flex row, so a notice placed
+          among its children competes with the logo and the navigation for the
+          same line instead of spanning its own.
 
+          Reads the runtime flag, not a build-time env var, so a distro operator
+          can turn the notice off without rebuilding the bundle. */}
+      {get_config().hide_release_warning ? null : (
+        <div id="release-warning">
+          {t("nav.release-warning")}{" "}
+          <a href="https://github.com/operaton/operaton/issues">
+            {t("nav.release-warning-issue")}
+          </a>{" "}
+          {t("nav.release-warning-forum") !== t("nav.release-warning-issue") && (
+            <>
+              {t("nav.release-warning-or")}{" "}
+              <a href="https://forum.operaton.org/">
+                {t("nav.release-warning-forum")}
+              </a>
+            </>
+          )}
+        </div>
+      )}
+      <header id="top">
         <menu id="skip-links">
           <li>
             <a href="#content">{t("nav.skip-to-content")}</a>

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.bpmn.multiinstance;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -37,6 +36,6 @@ public class DelegateBean implements Serializable {
   public List<String> resolveCollection(DelegateExecution delegateExecution) {
 
     DelegateEvent.recordEventFor(delegateExecution);
-    return Arrays.asList("1");
+    return List.of("1");
   }
 }

@@ -15,7 +15,6 @@
  */
 package org.operaton.bpm.engine.impl.task;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,7 +42,7 @@ class TaskDecoratorExtractCandidatesTest {
       "'  ,  '|,"
   })
   void shouldMirrorPreviousSplitBehavior(String input, String expectedCsv) {
-    List<String> expected = Arrays.asList(expectedCsv.split(","));
+    List<String> expected = List.of(expectedCsv.split(","));
 
     List<String> actual = taskDecorator.extractCandidates(input);
 

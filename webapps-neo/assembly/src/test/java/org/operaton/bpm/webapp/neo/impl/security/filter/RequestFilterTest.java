@@ -17,8 +17,8 @@
  */
 package org.operaton.bpm.webapp.neo.impl.security.filter;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,7 +42,7 @@ public class RequestFilterTest {
   protected String applicationPath;
 
   public static Collection<String> data() {
-    return Arrays.asList(EMPTY_PATH, CUSTOM_APP_PATH);
+    return List.of(EMPTY_PATH, CUSTOM_APP_PATH);
   }
 
   public void initRequestFilterTest(String applicationPath) {

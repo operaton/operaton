@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.jspecify.annotations.NonNull;
@@ -166,7 +166,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     ScopeImpl scope = getScopeForActivityInstance(processDefinition, activityInstance);
 
     Set<ExecutionEntity> executions = mapping.getExecutions(scope);
-    Set<String> activityInstanceExecutions = new HashSet<>(Arrays.asList(activityInstance.getExecutionIds()));
+    Set<String> activityInstanceExecutions = new HashSet<>(List.of(activityInstance.getExecutionIds()));
 
     for (String activityInstanceExecutionId : activityInstance.getExecutionIds()) {
       CommandContext commandContext = requireNonNull(Context.getCommandContext());

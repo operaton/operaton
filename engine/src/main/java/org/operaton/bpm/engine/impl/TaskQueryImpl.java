@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -292,7 +291,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     ensureNotNull("Assignees", assignees);
 
     Set<String> assigneeInIds = new HashSet<>(assignees.length);
-    assigneeInIds.addAll(Arrays.asList(assignees));
+    assigneeInIds.addAll(List.of(assignees));
 
     this.assigneeIn = assigneeInIds;
     expressions.remove("taskAssigneeIn");
@@ -305,7 +304,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     ensureNotNull("Assignees", assignees);
 
     Set<String> assigneeNotInIds = new HashSet<>(assignees.length);
-    assigneeNotInIds.addAll(Arrays.asList(assignees));
+    assigneeNotInIds.addAll(List.of(assignees));
 
     this.assigneeNotIn = assigneeNotInIds;
     expressions.remove("taskAssigneeNotIn");

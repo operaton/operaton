@@ -86,7 +86,7 @@ public final class ActivityInstanceAssert {
           return false;
         } else {
 
-          List<ActivityInstance> unmatchedInstances = new ArrayList<>(Arrays.asList(expectedInstance.getChildActivityInstances()));
+          List<ActivityInstance> unmatchedInstances = new ArrayList<>(List.of(expectedInstance.getChildActivityInstances()));
           for (ActivityInstance actualChild : actualInstance.getChildActivityInstances()) {
             boolean matchFound = false;
             for (ActivityInstance expectedChild : new ArrayList<ActivityInstance>(unmatchedInstances)) {
@@ -106,7 +106,7 @@ public final class ActivityInstanceAssert {
           }
 
           List<TransitionInstance> unmatchedTransitionInstances =
-              new ArrayList<>(Arrays.asList(expectedInstance.getChildTransitionInstances()));
+              new ArrayList<>(List.of(expectedInstance.getChildTransitionInstances()));
           for (TransitionInstance child : actualInstance.getChildTransitionInstances()) {
             Iterator<TransitionInstance> expectedTransitionInstanceIt = unmatchedTransitionInstances.iterator();
 
@@ -157,7 +157,7 @@ public final class ActivityInstanceAssert {
       newInstance.setId(activityInstanceId);
 
       ActivityInstanceImpl parentInstance = activityInstanceStack.peek();
-      List<ActivityInstance> childInstances = new ArrayList<>(Arrays.asList(parentInstance.getChildActivityInstances()));
+      List<ActivityInstance> childInstances = new ArrayList<>(List.of(parentInstance.getChildActivityInstances()));
       childInstances.add(newInstance);
       parentInstance.setChildActivityInstances(childInstances.toArray(new ActivityInstance[childInstances.size()]));
 
@@ -195,7 +195,7 @@ public final class ActivityInstanceAssert {
       ActivityInstanceImpl parentInstance = activityInstanceStack.peek();
 
       List<TransitionInstance> childInstances = new ArrayList<>(
-          Arrays.asList(parentInstance.getChildTransitionInstances()));
+          List.of(parentInstance.getChildTransitionInstances()));
       childInstances.add(newInstance);
       parentInstance.setChildTransitionInstances(childInstances.toArray(new TransitionInstance[childInstances.size()]));
 

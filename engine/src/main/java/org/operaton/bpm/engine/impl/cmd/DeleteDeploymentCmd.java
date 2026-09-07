@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,7 +70,7 @@ public class DeleteDeploymentCmd implements Command<Void> {
     }
 
     UserOperationLogManager logManager = commandContext.getOperationLogManager();
-    List<PropertyChange> propertyChanges = Arrays.asList(new PropertyChange("cascade", null, cascade));
+    List<PropertyChange> propertyChanges = List.of(new PropertyChange("cascade", null, cascade));
     DeploymentEntity deployment = commandContext.getDeploymentManager().findDeploymentById(deploymentId);
     String tenantId = deployment != null ? deployment.getTenantId() : null;
     logManager.logDeploymentOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE, deploymentId, tenantId, propertyChanges);

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.authorization.Resources;
@@ -112,7 +111,7 @@ public class DeploymentManager extends AbstractManager {
       // in a transaction! We have to set the instances flag to false.
       final CommandContext commandContext = Context.getCommandContext();
       commandContext.runWithoutAuthorization(new DeleteProcessDefinitionsByIdsCmd(
-              Arrays.asList(processDefinitionId),
+              List.of(processDefinitionId),
               cascade,
               false,
               skipCustomListeners,

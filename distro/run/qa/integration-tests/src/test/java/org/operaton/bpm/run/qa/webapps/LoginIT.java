@@ -20,6 +20,7 @@ import java.net.URI;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +52,7 @@ class LoginIT extends AbstractWebappUiIT {
   String[] commands;
 
   static Collection<Object[]> commands() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { new String[0] },
       { new String[]{"--rest", "--webapps"} },
       { new String[]{"--webapps"} }

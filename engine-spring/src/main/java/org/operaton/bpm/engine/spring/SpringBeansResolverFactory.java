@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.spring;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -52,7 +52,7 @@ public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
     this.applicationContext = applicationContext;
 
     String[] beannames = applicationContext.getBeanDefinitionNames();
-    this.keySet = new HashSet<>(Arrays.asList(beannames));
+    this.keySet = new HashSet<>(List.of(beannames));
   }
 
   @Override

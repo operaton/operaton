@@ -966,7 +966,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   void testWithoutTenantIdParameter() {
-    mockedQuery = setUpMockInstanceQuery(Arrays.asList(MockProvider.createMockInstance(null)));
+    mockedQuery = setUpMockInstanceQuery(List.of(MockProvider.createMockInstance(null)));
 
     Response response = given()
       .queryParam("withoutTenantId", true)
@@ -1017,7 +1017,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   void testWithoutTenantIdPostParameter() {
-    mockedQuery = setUpMockInstanceQuery(Arrays.asList(MockProvider.createMockInstance(null)));
+    mockedQuery = setUpMockInstanceQuery(List.of(MockProvider.createMockInstance(null)));
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
@@ -1042,7 +1042,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   }
 
   private List<ProcessInstance> createMockProcessInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

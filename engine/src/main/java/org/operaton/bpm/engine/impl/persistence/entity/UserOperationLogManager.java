@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -259,7 +258,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
       UserOperationLogContextEntryBuilder entryBuilder =
           UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.IDENTITY_LINK)
             .category(UserOperationLogEntry.CATEGORY_TASK_WORKER)
-            .inContextOf(task, Arrays.asList(propertyChange));
+            .inContextOf(task, List.of(propertyChange));
 
       context.addEntry(entryBuilder.create());
       fireUserOperationLog(context);
@@ -488,7 +487,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
       UserOperationLogContextEntryBuilder entryBuilder =
           UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.ATTACHMENT)
             .category(UserOperationLogEntry.CATEGORY_TASK_WORKER)
-            .inContextOf(task, Arrays.asList(propertyChange));
+            .inContextOf(task, List.of(propertyChange));
       context.addEntry(entryBuilder.create());
 
       fireUserOperationLog(context);
@@ -502,7 +501,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
       UserOperationLogContextEntryBuilder entryBuilder =
           UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.ATTACHMENT)
             .category(UserOperationLogEntry.CATEGORY_TASK_WORKER)
-            .inContextOf(processInstance, Arrays.asList(propertyChange));
+            .inContextOf(processInstance, List.of(propertyChange));
       context.addEntry(entryBuilder.create());
 
       fireUserOperationLog(context);
@@ -553,7 +552,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
       }
       else if (taskId != null) {
         TaskEntity task = getTaskManager().findTaskById(taskId);
-        entryBuilder.inContextOf(task, Arrays.asList(propertyChange))
+        entryBuilder.inContextOf(task, List.of(propertyChange))
           .category(UserOperationLogEntry.CATEGORY_TASK_WORKER);
       }
 
@@ -571,7 +570,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
           UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.VARIABLE)
             .category(UserOperationLogEntry.CATEGORY_OPERATOR)
             .propertyChanges(propertyChange)
-            .inContextOf(historicProcessInstance, definition, Arrays.asList(propertyChange));
+            .inContextOf(historicProcessInstance, definition, List.of(propertyChange));
 
       context.addEntry(entryBuilder.create());
       fireUserOperationLog(context);
@@ -587,7 +586,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
           UserOperationLogContextEntryBuilder.entry(operation, EntityTypes.VARIABLE)
             .category(UserOperationLogEntry.CATEGORY_OPERATOR)
             .propertyChanges(propertyChange)
-            .inContextOf(historicVariableInstance, definition, Arrays.asList(propertyChange));
+            .inContextOf(historicVariableInstance, definition, List.of(propertyChange));
 
       context.addEntry(entryBuilder.create());
       fireUserOperationLog(context);
@@ -809,7 +808,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     if (namesForPermissions.length == 0) {
       return Permissions.NONE.getName();
     }
-    return StringUtil.trimToMaximumLengthAllowed(StringUtil.join(Arrays.asList(namesForPermissions).iterator()));
+    return StringUtil.trimToMaximumLengthAllowed(StringUtil.join(List.of(namesForPermissions).iterator()));
   }
 
   protected String getResourceName(int resourceType) {

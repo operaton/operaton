@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -67,7 +66,7 @@ public abstract class TestHelper {
 
   public static final String EMPTY_LINE = "                                                                                           ";
 
-  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = Arrays.asList(
+  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = List.of(
     "ACT_GE_PROPERTY",
     "ACT_GE_SCHEMA_LOG"
   );
@@ -75,9 +74,9 @@ public abstract class TestHelper {
   public static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
 
   static {
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(BPMN_RESOURCE_SUFFIXES));
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(CMMN_RESOURCE_SUFFIXES));
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(DMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(List.of(BPMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(List.of(CMMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(List.of(DMN_RESOURCE_SUFFIXES));
   }
 
   /**

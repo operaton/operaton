@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.incident;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -58,7 +57,7 @@ public class CompositeIncidentHandler implements IncidentHandler {
    */
   public CompositeIncidentHandler(IncidentHandler mainIncidentHandler, final IncidentHandler... incidentHandlers) {
     EnsureUtil.ensureNotNull("Incident handlers", (Object[]) incidentHandlers);
-    initializeIncidentsHandlers(mainIncidentHandler, Arrays.asList(incidentHandlers));
+    initializeIncidentsHandlers(mainIncidentHandler, List.of(incidentHandlers));
   }
 
   /**

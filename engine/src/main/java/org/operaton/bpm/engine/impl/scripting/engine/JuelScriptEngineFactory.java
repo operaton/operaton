@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.scripting.engine;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,15 +32,9 @@ import org.jspecify.annotations.Nullable;
  */
 public class JuelScriptEngineFactory implements ScriptEngineFactory {
 
-  private static final List<String> names;
-  private static final List<String> extensions;
-  private static final List<String> mimeTypes;
-
-  static {
-    names = Collections.unmodifiableList(Arrays.asList("juel"));
-    extensions = names;
-    mimeTypes = Collections.unmodifiableList(new ArrayList<String>(0));
-  }
+  private static final List<String> names = List.of("juel");
+  private static final List<String> extensions = names;
+  private static final List<String> mimeTypes = List.of();
 
   @Override
   public String getEngineName() {

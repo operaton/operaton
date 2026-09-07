@@ -19,6 +19,7 @@ package org.operaton.bpm.spring.boot.starter.property;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
 
@@ -45,9 +46,9 @@ public class OperatonBpmProperties {
 
   static String[] initDeploymentResourcePattern() {
     final Set<String> suffixes = new HashSet<>();
-    suffixes.addAll(Arrays.asList(DEFAULT_DMN_RESOURCE_SUFFIXES));
-    suffixes.addAll(Arrays.asList(DEFAULT_BPMN_RESOURCE_SUFFIXES));
-    suffixes.addAll(Arrays.asList(DEFAULT_CMMN_RESOURCE_SUFFIXES));
+    suffixes.addAll(List.of(DEFAULT_DMN_RESOURCE_SUFFIXES));
+    suffixes.addAll(List.of(DEFAULT_BPMN_RESOURCE_SUFFIXES));
+    suffixes.addAll(List.of(DEFAULT_CMMN_RESOURCE_SUFFIXES));
 
     final Set<String> patterns = new HashSet<>();
     for (String suffix : suffixes) {

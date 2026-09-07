@@ -721,7 +721,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   protected List<VariableInstanceLifecycleListener<CoreVariableInstance>> getVariableInstanceLifecycleListeners() {
-    return Arrays.asList((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
+    return List.of((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
         (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER,
         (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_HISTORY_LISTENER,
         (VariableInstanceLifecycleListener) CMMN_VARIABLE_INVOCATION_LISTENER,
@@ -771,7 +771,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
     for (VariableInstanceEntity variableInstance : variableStore.getVariables()) {
       invokeVariableLifecycleListenersDelete(variableInstance, this,
-          Arrays.asList((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER));
+          List.of((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER));
       variableStore.removeVariable(variableInstance.getName());
     }
 

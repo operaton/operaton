@@ -325,7 +325,7 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback {
 
     HttpGet httpGet = new HttpGet(uri);
     VariableInstanceDto[] variables = executeRequest(httpGet, VariableInstanceDto[].class);
-    return Arrays.asList(variables);
+    return List.of(variables);
   }
 
   public TaskDto getTaskByProcessInstanceId(String processInstanceId) {
@@ -353,7 +353,7 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback {
   public List<ExternalTaskImpl> getExternalTasksByProcessInstanceId(String processInstanceId) {
     String uri = String.format(URI_GET_EXTERNAL_TASKS, getEngineUrl()) + "?processInstanceId=" + processInstanceId;
     HttpGet httpGet = new HttpGet(uri);
-    return Arrays.asList(executeRequest(httpGet, ExternalTaskImpl[].class));
+    return List.of(executeRequest(httpGet, ExternalTaskImpl[].class));
   }
 
   public HistoricProcessInstanceDto getHistoricProcessInstanceById(String processInstanceId) {

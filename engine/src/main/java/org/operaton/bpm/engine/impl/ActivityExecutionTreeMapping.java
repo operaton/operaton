@@ -73,7 +73,7 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected ExecutionEntity intersect(Set<ExecutionEntity> executions, String[] executionIds) {
-    Set<String> executionIdSet = new HashSet<>(Arrays.asList(executionIds));
+    Set<String> executionIdSet = new HashSet<>(List.of(executionIds));
 
     return executions.stream()
       .filter(execution -> executionIdSet.contains(execution.getId()))

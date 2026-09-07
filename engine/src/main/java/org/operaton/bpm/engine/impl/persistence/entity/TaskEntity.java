@@ -94,7 +94,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   private static final VariableInstanceFactory VARIABLE_INSTANCE_FACTORY = new VariableInstanceEntityFactory();
 
   protected static final List<VariableInstanceLifecycleListener<CoreVariableInstance>> DEFAULT_VARIABLE_LIFECYCLE_LISTENERS =
-      Arrays.asList(
+      List.of(
           (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
           (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER,
           (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_HISTORY_LISTENER

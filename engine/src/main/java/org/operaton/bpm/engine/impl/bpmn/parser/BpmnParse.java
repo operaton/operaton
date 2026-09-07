@@ -241,7 +241,7 @@ public class BpmnParse extends Parse {
   public static final String CONDITION_EXPRESSION = "conditionExpression";
   public static final String CONDITION = "condition";
 
-  private static final List<String> VARIABLE_EVENTS = Arrays.asList(
+  private static final List<String> VARIABLE_EVENTS = List.of(
       VariableListener.CREATE,
       VariableListener.DELETE,
       VariableListener.UPDATE
@@ -998,7 +998,7 @@ public class BpmnParse extends Parse {
         parseExecutionListenersOnScope(startEventElement, startEventActivity);
       }
     } else {
-      if (Arrays.asList(PROCESS_TAG, SUB_PROCESS_TAG).contains(parentElement.getTagName())) {
+      if (List.of(PROCESS_TAG, SUB_PROCESS_TAG).contains(parentElement.getTagName())) {
         addError(parentElement.getTagName() + " must define a startEvent element", parentElement);
       }
     }
@@ -1019,7 +1019,7 @@ public class BpmnParse extends Parse {
   protected void selectInitial(List<ActivityImpl> startEventActivities, ProcessDefinitionEntity processDefinition, Element parentElement) {
     ActivityImpl initial = null;
     // validate that there is s single none start event / timer start event:
-    List<String> exclusiveStartEventTypes = Arrays.asList("startEvent", "startTimerEvent");
+    List<String> exclusiveStartEventTypes = List.of("startEvent", "startTimerEvent");
 
     for (ActivityImpl activityImpl : startEventActivities) {
       if (exclusiveStartEventTypes.contains(activityImpl.getProperty(BpmnProperties.TYPE.name()))) {

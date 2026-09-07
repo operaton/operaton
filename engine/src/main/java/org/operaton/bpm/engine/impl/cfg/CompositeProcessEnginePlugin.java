@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cfg;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -129,7 +128,7 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
     final List<ProcessEnginePlugin> plugins = new ArrayList<>();
     plugins.add(plugin);
     if (additionalPlugins != null && additionalPlugins.length > 0) {
-      plugins.addAll(Arrays.asList(additionalPlugins));
+      plugins.addAll(List.of(additionalPlugins));
     }
     return plugins;
   }

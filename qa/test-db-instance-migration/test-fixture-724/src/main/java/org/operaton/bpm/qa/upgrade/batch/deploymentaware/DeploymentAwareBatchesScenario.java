@@ -26,7 +26,6 @@ import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class DeploymentAwareBatchesScenario {
@@ -118,7 +117,7 @@ public final class DeploymentAwareBatchesScenario {
           .build();
 
       Batch batch = engine.getRuntimeService().newMigration(migrationPlan)
-          .processInstanceIds(Arrays.asList(instance.getId()))
+          .processInstanceIds(List.of(instance.getId()))
           .executeAsync();
       engine.getManagementService().setProperty(getPropertyName("migrate.batchId"), batch.getId());
     };

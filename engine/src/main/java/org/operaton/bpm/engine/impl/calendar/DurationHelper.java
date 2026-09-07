@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.calendar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -74,7 +73,7 @@ public class DurationHelper {
   private List<String> initExpressions(String inputExpressions) {
     List<String> expressions = new ArrayList<>();
     if(inputExpressions != null) {
-      expressions = Arrays.asList(inputExpressions.split("/"));
+      expressions = List.of(inputExpressions.split("/"));
     }
     return expressions;
   }

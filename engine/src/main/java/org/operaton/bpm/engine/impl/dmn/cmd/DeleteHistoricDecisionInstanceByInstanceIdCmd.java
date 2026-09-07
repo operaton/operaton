@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.dmn.cmd;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
@@ -63,7 +62,7 @@ public class DeleteHistoricDecisionInstanceByInstanceIdCmd implements Command<Ob
 
     commandContext
         .getHistoricDecisionInstanceManager()
-        .deleteHistoricDecisionInstanceByIds(Arrays.asList(historicDecisionInstanceId));
+        .deleteHistoricDecisionInstanceByIds(List.of(historicDecisionInstanceId));
 
     return null;
   }

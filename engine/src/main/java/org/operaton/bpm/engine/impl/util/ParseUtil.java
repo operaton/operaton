@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,7 +103,7 @@ public final class ParseUtil {
           return null;
         }
       }
-      return new FailedJobRetryConfiguration(retries, Arrays.asList(intervals));
+      return new FailedJobRetryConfiguration(retries, List.of(intervals));
     } else {
       return null;
     }

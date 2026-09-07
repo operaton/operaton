@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -214,7 +213,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     // if we skip the custom listeners,
-    runtimeService.deleteProcessInstances(Arrays.asList(processInstance.getId(),processInstance2.getId()), null, false, false);
+    runtimeService.deleteProcessInstances(List.of(processInstance.getId(),processInstance2.getId()), null, false, false);
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
@@ -485,7 +484,7 @@ public class RuntimeServiceTest {
   @Test
   void testDeleteProcessInstancesWithFake() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    var processInstanceIds = Arrays.asList(instance.getId(), "aFake");
+    var processInstanceIds = List.of(instance.getId(), "aFake");
 
     assertThatThrownBy(() -> runtimeService.deleteProcessInstances(processInstanceIds, "test", false, false, false, false))
       .isInstanceOf(NotFoundException.class)
@@ -499,7 +498,7 @@ public class RuntimeServiceTest {
   void testDeleteProcessInstancesIfExistsWithFake() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
-    runtimeService.deleteProcessInstancesIfExists(Arrays.asList(instance.getId(), "aFake"), "test", false, false, false);
+    runtimeService.deleteProcessInstancesIfExists(List.of(instance.getId(), "aFake"), "test", false, false, false);
     //dont't expect exception, existing instances are deleted
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
   }
@@ -3142,7 +3141,7 @@ public class RuntimeServiceTest {
     subprocessList.addAll(runtimeService.createProcessInstanceQuery().superProcessInstanceId(processInstance2.getId()).list());
 
     // when
-    runtimeService.deleteProcessInstances(Arrays.asList(processInstance.getId(), processInstance2.getId()), null, false, false, true, false);
+    runtimeService.deleteProcessInstances(List.of(processInstance.getId(), processInstance2.getId()), null, false, false, true, false);
 
     // then
     testRule.assertProcessEnded(processInstance.getId());
@@ -3168,7 +3167,7 @@ public class RuntimeServiceTest {
     subprocessList.addAll(runtimeService.createProcessInstanceQuery().superProcessInstanceId(processInstance2.getId()).list());
 
     // when
-    runtimeService.deleteProcessInstances(Arrays.asList(processInstance.getId(), processInstance2.getId()), null, false, false, false, false);
+    runtimeService.deleteProcessInstances(List.of(processInstance.getId(), processInstance2.getId()), null, false, false, false, false);
 
     // then
     testRule.assertProcessEnded(processInstance.getId());

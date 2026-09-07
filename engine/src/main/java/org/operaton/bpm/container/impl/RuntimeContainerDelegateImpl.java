@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.container.impl;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -122,7 +121,7 @@ public @NullMarked class RuntimeContainerDelegateImpl implements RuntimeContaine
 
 
   protected List<DeploymentOperationStep> getDeploymentSteps() {
-    return Arrays.asList(
+    return List.of(
       new ParseProcessesXmlStep(),
       new ProcessesXmlStartProcessEnginesStep(),
       new DeployProcessArchivesStep(),
@@ -131,7 +130,7 @@ public @NullMarked class RuntimeContainerDelegateImpl implements RuntimeContaine
   }
 
   protected List<DeploymentOperationStep> getUndeploymentSteps() {
-    return Arrays.asList(
+    return List.of(
       new PreUndeployInvocationStep(),
       new UndeployProcessArchivesStep(),
       new ProcessesXmlStopProcessEnginesStep(),

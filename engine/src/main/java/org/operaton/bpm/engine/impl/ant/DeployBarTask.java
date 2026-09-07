@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.ant;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
@@ -72,7 +71,7 @@ public class DeployBarTask extends Task {
       File baseDir = directoryScanner.getBasedir();
       String[] includedFiles = directoryScanner.getIncludedFiles();
       String[] excludedFiles = directoryScanner.getExcludedFiles();
-      List<String> excludedFilesList = Arrays.asList(excludedFiles);
+      List<String> excludedFilesList = List.of(excludedFiles);
 
       for (String includedFile : includedFiles) {
         if (!excludedFilesList.contains(includedFile)) {

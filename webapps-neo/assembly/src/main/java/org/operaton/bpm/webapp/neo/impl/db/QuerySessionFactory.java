@@ -20,7 +20,6 @@ package org.operaton.bpm.webapp.neo.impl.db;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -93,7 +92,7 @@ public class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
   protected String buildMappings(List<String> mappingFiles) {
 
     List<String> mappings = new ArrayList<>(mappingFiles);
-    mappings.addAll(Arrays.asList(DEFAULT_MAPPING_FILES));
+    mappings.addAll(List.of(DEFAULT_MAPPING_FILES));
 
     StringBuilder builder = new StringBuilder();
     for (String mappingFile: mappings) {

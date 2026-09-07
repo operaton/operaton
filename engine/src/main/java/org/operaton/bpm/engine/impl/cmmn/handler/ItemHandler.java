@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.cmmn.handler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -92,11 +91,11 @@ public abstract @NullMarked class ItemHandler extends CmmnElementHandler<CmmnEle
 
   protected static final String PARENT_COMPLETE = "parentComplete";
 
-  public static final List<String> TASK_OR_STAGE_CREATE_EVENTS = Arrays.asList(
+  public static final List<String> TASK_OR_STAGE_CREATE_EVENTS = List.of(
       CaseExecutionListener.CREATE
     );
 
-  public static final List<String> TASK_OR_STAGE_UPDATE_EVENTS = Arrays.asList(
+  public static final List<String> TASK_OR_STAGE_UPDATE_EVENTS = List.of(
       CaseExecutionListener.ENABLE,
       CaseExecutionListener.DISABLE,
       CaseExecutionListener.RE_ENABLE,
@@ -108,7 +107,7 @@ public abstract @NullMarked class ItemHandler extends CmmnElementHandler<CmmnEle
       CaseExecutionListener.PARENT_RESUME
     );
 
-  public static final List<String> TASK_OR_STAGE_END_EVENTS = Arrays.asList(
+  public static final List<String> TASK_OR_STAGE_END_EVENTS = List.of(
       CaseExecutionListener.TERMINATE,
       CaseExecutionListener.EXIT,
       CaseExecutionListener.COMPLETE,
@@ -117,16 +116,16 @@ public abstract @NullMarked class ItemHandler extends CmmnElementHandler<CmmnEle
 
   public static final List<String> TASK_OR_STAGE_EVENTS = new ArrayList<>();
 
-  public static final List<String> EVENT_LISTENER_OR_MILESTONE_CREATE_EVENTS = Arrays.asList(
+  public static final List<String> EVENT_LISTENER_OR_MILESTONE_CREATE_EVENTS = List.of(
       CaseExecutionListener.CREATE
     );
 
-  public static final List<String> EVENT_LISTENER_OR_MILESTONE_UPDATE_EVENTS = Arrays.asList(
+  public static final List<String> EVENT_LISTENER_OR_MILESTONE_UPDATE_EVENTS = List.of(
       CaseExecutionListener.SUSPEND,
       CaseExecutionListener.RESUME
     );
 
-  public static final List<String> EVENT_LISTENER_OR_MILESTONE_END_EVENTS = Arrays.asList(
+  public static final List<String> EVENT_LISTENER_OR_MILESTONE_END_EVENTS = List.of(
       CaseExecutionListener.TERMINATE,
       CaseExecutionListener.PARENT_TERMINATE,
       CaseExecutionListener.OCCUR,
@@ -135,24 +134,24 @@ public abstract @NullMarked class ItemHandler extends CmmnElementHandler<CmmnEle
 
   public static final List<String> EVENT_LISTENER_OR_MILESTONE_EVENTS = new ArrayList<>();
 
-  public static final List<String> CASE_PLAN_MODEL_CREATE_EVENTS = Arrays.asList(
+  public static final List<String> CASE_PLAN_MODEL_CREATE_EVENTS = List.of(
       CaseExecutionListener.CREATE
     );
 
-  public static final List<String> CASE_PLAN_MODEL_UPDATE_EVENTS = Arrays.asList(
+  public static final List<String> CASE_PLAN_MODEL_UPDATE_EVENTS = List.of(
       CaseExecutionListener.TERMINATE,
       CaseExecutionListener.SUSPEND,
       CaseExecutionListener.COMPLETE,
       CaseExecutionListener.RE_ACTIVATE
     );
 
-  public static final List<String> CASE_PLAN_MODEL_CLOSE_EVENTS = Arrays.asList(
+  public static final List<String> CASE_PLAN_MODEL_CLOSE_EVENTS = List.of(
       CaseExecutionListener.CLOSE
     );
 
   public static final List<String> CASE_PLAN_MODEL_EVENTS = new ArrayList<>();
 
-  public static final List<String> DEFAULT_VARIABLE_EVENTS = Arrays.asList(
+  public static final List<String> DEFAULT_VARIABLE_EVENTS = List.of(
       VariableListener.CREATE,
       VariableListener.DELETE,
       VariableListener.UPDATE
@@ -340,10 +339,10 @@ public abstract @NullMarked class ItemHandler extends CmmnElementHandler<CmmnEle
       CaseControlRule caseRule = initializeCaseControlRule(condition, context);
       activity.setProperty(PROPERTY_REPETITION_RULE, caseRule);
 
-      List<String> events = Arrays.asList(TERMINATE, COMPLETE);
+      List<String> events = List.of(TERMINATE, COMPLETE);
       String repeatOnStandardEvent = repetitionRule.getOperatonRepeatOnStandardEvent();
       if (repeatOnStandardEvent != null && !repeatOnStandardEvent.isEmpty()) {
-        events = Arrays.asList(repeatOnStandardEvent);
+        events = List.of(repeatOnStandardEvent);
       }
       activity.getProperties().set(CmmnProperties.REPEAT_ON_STANDARD_EVENTS, events);
     }

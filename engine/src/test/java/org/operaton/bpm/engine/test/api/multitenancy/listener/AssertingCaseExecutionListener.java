@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.multitenancy.listener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
@@ -43,7 +42,7 @@ public class AssertingCaseExecutionListener implements CaseExecutionListener {
   }
 
   public static void addAsserts(DelegateCaseExecutionAsserter... asserters) {
-    asserts.addAll(Arrays.asList(asserters));
+    asserts.addAll(List.of(asserters));
   }
 
 }

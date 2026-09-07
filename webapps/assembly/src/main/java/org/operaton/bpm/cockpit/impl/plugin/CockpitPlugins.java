@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.cockpit.impl.plugin;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +40,7 @@ public class CockpitPlugins extends AbstractCockpitPlugin {
 
   @Override
   public List<String> getMappingFiles() {
-    return Arrays.asList(MAPPING_FILES);
+    return List.of(MAPPING_FILES);
   }
 
   @Override

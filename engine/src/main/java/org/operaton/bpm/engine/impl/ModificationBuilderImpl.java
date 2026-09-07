@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -100,7 +101,7 @@ public class ModificationBuilderImpl implements ModificationBuilder {
   }
 
   @Override
-  public ModificationBuilder processInstanceIds(String... processInstanceIds) {
+  public ModificationBuilder processInstanceIds(@Nullable String... processInstanceIds) {
     if (processInstanceIds == null) {
       this.processInstanceIds = Collections.emptyList();
     }

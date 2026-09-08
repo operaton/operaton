@@ -28,6 +28,8 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Johannes Heinemann
  */
@@ -55,8 +57,9 @@ public @NullMarked class BpmnModelInstanceCache extends ModelInstanceCache<BpmnM
   @Override
   protected List<ProcessDefinition> getAllDefinitionsForDeployment(final String deploymentId) {
     final CommandContext commandContext = Context.getCommandContext();
-    return commandContext.runWithoutAuthorization(() -> new ProcessDefinitionQueryImpl()
-        .deploymentId(deploymentId)
-        .list());
+    List<ProcessDefinition> processDefinitions = commandContext.runWithoutAuthorization(() -> new ProcessDefinitionQueryImpl()
+            .deploymentId(deploymentId)
+            .list());
+    return requireNonNull(processDefinitions);
   }
 }

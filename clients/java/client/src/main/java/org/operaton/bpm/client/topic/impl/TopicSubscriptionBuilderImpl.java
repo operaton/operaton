@@ -19,33 +19,39 @@ package org.operaton.bpm.client.topic.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 import org.operaton.bpm.client.topic.TopicSubscription;
 import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tassilo Weidner
  */
-public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
+public @NullMarked class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
 
   protected static final ExternalTaskClientLogger LOG = ExternalTaskClientLogger.CLIENT_LOGGER;
 
   protected String topicName;
-  protected Long lockDuration;
-  protected List<String> variableNames;
+  protected @Nullable Long lockDuration;
+  protected @Nullable List<String> variableNames;
   protected boolean localVariables;
-  protected String businessKey;
-  protected String processDefinitionId;
-  protected List<String> processDefinitionIds;
-  protected String processDefinitionKey;
-  protected List<String> processDefinitionKeys;
-  protected String processDefinitionVersionTag;
-  protected Map<String, Object> processVariables;
+  protected @Nullable String businessKey;
+  protected @Nullable String processDefinitionId;
+  protected @Nullable List<String> processDefinitionIds;
+  protected @Nullable String processDefinitionKey;
+  protected @Nullable List<String> processDefinitionKeys;
+  protected @Nullable String processDefinitionVersionTag;
+  protected @Nullable Map<String, Object> processVariables;
   protected boolean withoutTenantId;
-  protected List<String> tenantIds;
-  protected ExternalTaskHandler externalTaskHandler;
+  protected @Nullable List<String> tenantIds;
+  protected @Nullable ExternalTaskHandler externalTaskHandler;
   protected TopicSubscriptionManager topicSubscriptionManager;
   protected boolean includeExtensionProperties;
 
@@ -70,9 +76,9 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   }
 
   @Override
-  public TopicSubscriptionBuilder variables(String... variableNames) {
+  public TopicSubscriptionBuilder variables(@Nullable String @Nullable... variableNames) {
     ensureNotNull(variableNames, "variableNames");
-    this.variableNames = List.of(variableNames);
+    this.variableNames = Stream.of(requireNonNull(variableNames)).filter(Objects::nonNull).toList();
     return this;
   }
 
@@ -95,9 +101,9 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   }
 
   @Override
-  public TopicSubscriptionBuilder processDefinitionIdIn(String... processDefinitionIds) {
+  public TopicSubscriptionBuilder processDefinitionIdIn(@Nullable String @Nullable... processDefinitionIds) {
     ensureNotNull(processDefinitionIds, "processDefinitionIds");
-    this.processDefinitionIds = List.of(processDefinitionIds);
+    this.processDefinitionIds = Stream.of(requireNonNull(processDefinitionIds)).filter(Objects::nonNull).toList();
     return this;
   }
 
@@ -108,9 +114,9 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   }
 
   @Override
-  public TopicSubscriptionBuilder processDefinitionKeyIn(String... processDefinitionKeys) {
+  public TopicSubscriptionBuilder processDefinitionKeyIn(@Nullable String @Nullable... processDefinitionKeys) {
     ensureNotNull(processDefinitionKeys, "processDefinitionKeys");
-    this.processDefinitionKeys = List.of(processDefinitionKeys);
+    this.processDefinitionKeys = Stream.of(requireNonNull(processDefinitionKeys)).filter(Objects::nonNull).toList();
     return this;
   }
 
@@ -122,8 +128,9 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   }
 
   @Override
-  public TopicSubscriptionBuilder processVariablesEqualsIn(Map<String, Object> processVariables) {
+  public TopicSubscriptionBuilder processVariablesEqualsIn(@Nullable Map<String, Object> processVariables) {
     ensureNotNull(processVariables, "processVariables");
+    requireNonNull(processVariables);
     if (this.processVariables == null) {
       this.processVariables = new HashMap<>();
     }
@@ -151,9 +158,9 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
   }
 
   @Override
-  public TopicSubscriptionBuilder tenantIdIn(String... tenantIds) {
+  public TopicSubscriptionBuilder tenantIdIn(@Nullable String @Nullable... tenantIds) {
     ensureNotNull(tenantIds, "tenantIds");
-    this.tenantIds = List.of(tenantIds);
+    this.tenantIds = Stream.of(requireNonNull(tenantIds)).filter(Objects::nonNull).toList();
     return this;
   }
 
@@ -165,10 +172,6 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
 
   @Override
   public TopicSubscription open() {
-    if (topicName == null) {
-      throw LOG.topicNameNullException();
-    }
-
     if (lockDuration != null && lockDuration <= 0L) {
       throw LOG.lockDurationIsNotGreaterThanZeroException(lockDuration);
     }
@@ -213,7 +216,7 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
     return subscription;
   }
 
-  protected void ensureNotNull(Object tenantIds, String parameterName) {
+  protected void ensureNotNull(@Nullable Object tenantIds, String parameterName) {
     if (tenantIds == null) {
       throw LOG.passNullValueParameter(parameterName);
     }

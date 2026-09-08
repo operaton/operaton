@@ -459,12 +459,12 @@ public @NullMarked class TaskServiceImpl extends ServiceImpl implements TaskServ
   }
 
   @Override
-  public InputStream getAttachmentContent(String attachmentId) {
+  public @Nullable InputStream getAttachmentContent(String attachmentId) {
     return getCommandExecutor().execute(new GetAttachmentContentCmd(attachmentId));
   }
 
   @Override
-  public InputStream getTaskAttachmentContent(String taskId, String attachmentId) {
+  public @Nullable InputStream getTaskAttachmentContent(String taskId, String attachmentId) {
     return getCommandExecutor().execute(new GetTaskAttachmentContentCmd(taskId, attachmentId));
   }
 
@@ -479,12 +479,12 @@ public @NullMarked class TaskServiceImpl extends ServiceImpl implements TaskServ
   }
 
   @Override
-  public Attachment getAttachment(String attachmentId) {
+  public @Nullable Attachment getAttachment(String attachmentId) {
     return getCommandExecutor().execute(new GetAttachmentCmd(attachmentId));
   }
 
   @Override
-  public Attachment getTaskAttachment(String taskId, String attachmentId) {
+  public @Nullable Attachment getTaskAttachment(String taskId, String attachmentId) {
     return getCommandExecutor().execute(new GetTaskAttachmentCmd(taskId, attachmentId));
   }
 

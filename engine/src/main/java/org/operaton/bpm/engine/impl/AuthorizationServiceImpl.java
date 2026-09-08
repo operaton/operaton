@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
@@ -56,12 +57,12 @@ public @NullMarked class AuthorizationServiceImpl extends ServiceImpl implements
   }
 
   @Override
-  public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource) {
+  public boolean isUserAuthorized(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource) {
     return getCommandExecutor().execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, null));
   }
 
   @Override
-  public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId) {
+  public boolean isUserAuthorized(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId) {
     return getCommandExecutor().execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, resourceId));
   }
 

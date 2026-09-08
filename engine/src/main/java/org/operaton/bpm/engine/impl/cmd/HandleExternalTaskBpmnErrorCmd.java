@@ -23,6 +23,8 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
+import static java.util.Collections.emptyMap;
+
 /**
  * Command to handle an external task BPMN error.
  *
@@ -34,14 +36,16 @@ public @NullMarked class HandleExternalTaskBpmnErrorCmd extends HandleExternalTa
    */
   protected String errorCode;
   protected @Nullable String errorMessage;
-  protected @Nullable Map<String, Object> variables;
+  protected Map<String, Object> variables;
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public HandleExternalTaskBpmnErrorCmd(String externalTaskId, String workerId, String errorCode) {
-    super(externalTaskId, workerId);
-    this.errorCode = errorCode;
+    this(externalTaskId, workerId, errorCode, null, emptyMap());
   }
 
-  public HandleExternalTaskBpmnErrorCmd(String externalTaskId, String workerId, String errorCode, String errorMessage, Map<String, Object> variables) {
+  public HandleExternalTaskBpmnErrorCmd(String externalTaskId, String workerId, String errorCode, @Nullable String errorMessage, Map<String, Object> variables) {
     super(externalTaskId, workerId);
     this.errorCode = errorCode;
     this.errorMessage = errorMessage;

@@ -30,6 +30,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManage
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Johannes Heinemann
  */
@@ -48,7 +50,7 @@ public @NullMarked class DecisionRequirementsDefinitionManager extends AbstractM
     return getDbEntityManager().selectById(DecisionRequirementsDefinitionEntity.class, decisionRequirementsDefinitionId);
   }
 
-  public String findPreviousDecisionRequirementsDefinitionId(String decisionRequirementsDefinitionKey, Integer version, @Nullable String tenantId) {
+  public @Nullable String findPreviousDecisionRequirementsDefinitionId(String decisionRequirementsDefinitionKey, Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put("key", decisionRequirementsDefinitionKey);
     params.put("version", version);
@@ -61,7 +63,7 @@ public @NullMarked class DecisionRequirementsDefinitionManager extends AbstractM
     return getDbEntityManager().selectList("selectDecisionRequirementsDefinitionByDeploymentId", deploymentId);
   }
 
-  public DecisionRequirementsDefinitionEntity findDecisionRequirementsDefinitionByDeploymentAndKey(String deploymentId, String decisionRequirementsDefinitionKey) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDecisionRequirementsDefinitionByDeploymentAndKey(String deploymentId, String decisionRequirementsDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
     parameters.put("decisionRequirementsDefinitionKey", decisionRequirementsDefinitionKey);
@@ -71,7 +73,7 @@ public @NullMarked class DecisionRequirementsDefinitionManager extends AbstractM
   /**
    * @return the latest version of the decision requirements definition with the given key and tenant id
    */
-  public DecisionRequirementsDefinitionEntity findLatestDecisionRequirementsDefinitionByKeyAndTenantId(String decisionRequirementsDefinitionKey, @Nullable String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findLatestDecisionRequirementsDefinitionByKeyAndTenantId(String decisionRequirementsDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put("decisionRequirementsDefinitionKey", decisionRequirementsDefinitionKey);
     parameters.put("tenantId", tenantId);
@@ -91,7 +93,9 @@ public @NullMarked class DecisionRequirementsDefinitionManager extends AbstractM
 
   public long findDecisionRequirementsDefinitionCountByQueryCriteria(DecisionRequirementsDefinitionQueryImpl query) {
     configureDecisionRequirementsDefinitionQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectDecisionRequirementsDefinitionCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne(
+            "selectDecisionRequirementsDefinitionCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   protected void createDefaultAuthorizations(DecisionRequirementsDefinition decisionRequirementsDefinition) {

@@ -26,8 +26,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -51,60 +54,60 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Falko Menge
  * @author Bernd Ruecker
  */
-public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<HistoricProcessInstanceQuery, HistoricProcessInstance> implements HistoricProcessInstanceQuery {
+public @NullMarked class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<HistoricProcessInstanceQuery, HistoricProcessInstance> implements HistoricProcessInstanceQuery {
 
   @Serial private static final long serialVersionUID = 1L;
   private static final String MSG_ALREADY_QUERYING = "Already querying for historic process instance with another state";
-  protected String processInstanceId;
-  protected String rootProcessInstanceId;
-  protected String processDefinitionId;
-  protected String processDefinitionName;
-  protected String processDefinitionNameLike;
-  protected String businessKey;
-  protected String[] businessKeyIn;
-  protected String businessKeyLike;
+  protected @Nullable String processInstanceId;
+  protected @Nullable String rootProcessInstanceId;
+  protected @Nullable String processDefinitionId;
+  protected @Nullable String processDefinitionName;
+  protected @Nullable String processDefinitionNameLike;
+  protected @Nullable String businessKey;
+  protected String@Nullable[] businessKeyIn;
+  protected @Nullable String businessKeyLike;
   protected boolean finished;
   protected boolean unfinished;
   protected boolean withJobsRetrying;
   protected boolean withIncidents;
   protected boolean withRootIncidents;
-  protected String incidentType;
-  protected String incidentStatus;
-  protected String incidentMessage;
-  protected String incidentMessageLike;
-  protected String startedBy;
+  protected @Nullable String incidentType;
+  protected @Nullable String incidentStatus;
+  protected @Nullable String incidentMessage;
+  protected @Nullable String incidentMessageLike;
+  protected @Nullable String startedBy;
   protected boolean isRootProcessInstances;
-  protected String superProcessInstanceId;
-  protected String subProcessInstanceId;
-  protected String superCaseInstanceId;
-  protected String subCaseInstanceId;
-  private List<String> processKeyNotIn;
-  protected Date startedBefore;
-  protected Date startedAfter;
-  protected Date finishedBefore;
-  protected Date finishedAfter;
-  protected Date executedActivityAfter;
-  protected Date executedActivityBefore;
-  protected Date executedJobAfter;
-  protected Date executedJobBefore;
-  protected String processDefinitionKey;
-  protected String[] processDefinitionKeys;
-  private Set<String> processInstanceIds;
-  protected String[] processInstanceIdNotIn;
-  protected String[] tenantIds;
+  protected @Nullable String superProcessInstanceId;
+  protected @Nullable String subProcessInstanceId;
+  protected @Nullable String superCaseInstanceId;
+  protected @Nullable String subCaseInstanceId;
+  private @Nullable List<String> processKeyNotIn;
+  protected @Nullable Date startedBefore;
+  protected @Nullable Date startedAfter;
+  protected @Nullable Date finishedBefore;
+  protected @Nullable Date finishedAfter;
+  protected @Nullable Date executedActivityAfter;
+  protected @Nullable Date executedActivityBefore;
+  protected @Nullable Date executedJobAfter;
+  protected @Nullable Date executedJobBefore;
+  protected @Nullable String processDefinitionKey;
+  protected String@Nullable[] processDefinitionKeys;
+  private @Nullable Set<String> processInstanceIds;
+  protected String@Nullable[] processInstanceIdNotIn;
+  protected String@Nullable[] tenantIds;
   protected boolean isTenantIdSet;
-  protected String[] executedActivityIds;
-  protected String[] activeActivityIds;
-  protected String[] activityIds;
-  protected String[] incidentIds;
-  private Set<String> state = new HashSet<>();
+  protected String@Nullable[] executedActivityIds;
+  protected String@Nullable[] activeActivityIds;
+  protected String@Nullable[] activityIds;
+  protected String@Nullable[] incidentIds;
+  private final Set<String> state = new HashSet<>();
 
-  protected String caseInstanceId;
+  protected @Nullable String caseInstanceId;
 
   private List<HistoricProcessInstanceQueryImpl> queries = new ArrayList<>(Collections.singletonList(this));
   protected boolean isOrQueryActive;
 
-  private Map<String, Set<QueryVariableValue>> queryVariableNameToValuesMap = new HashMap<>();
+  private final Map<String, Set<QueryVariableValue>> queryVariableNameToValuesMap = new HashMap<>();
 
   public HistoricProcessInstanceQueryImpl() {
   }
@@ -547,47 +550,47 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return isOrQueryActive;
   }
 
-  public String[] getActiveActivityIds() {
+  public String@Nullable[] getActiveActivityIds() {
     return activeActivityIds;
   }
 
-  public String[] getActivityIds() {
+  public String@Nullable[] getActivityIds() {
     return activityIds;
   }
 
-  public String getBusinessKey() {
+  public @Nullable String getBusinessKey() {
     return businessKey;
   }
 
-  public String[] getBusinessKeyIn() {
+  public String@Nullable[] getBusinessKeyIn() {
     return businessKeyIn;
   }
 
-  public String getBusinessKeyLike() {
+  public @Nullable String getBusinessKeyLike() {
     return businessKeyLike;
   }
 
-  public String[] getExecutedActivityIds() {
+  public String@Nullable[] getExecutedActivityIds() {
     return executedActivityIds;
   }
 
-  public Date getExecutedActivityAfter() {
+  public @Nullable Date getExecutedActivityAfter() {
     return executedActivityAfter;
   }
 
-  public Date getExecutedActivityBefore() {
+  public @Nullable Date getExecutedActivityBefore() {
     return executedActivityBefore;
   }
 
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
-  public Date getExecutedJobAfter() {
+  public @Nullable Date getExecutedJobAfter() {
     return executedJobAfter;
   }
 
-  public Date getExecutedJobBefore() {
+  public @Nullable Date getExecutedJobBefore() {
     return executedJobBefore;
   }
 
@@ -603,47 +606,47 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return finished;
   }
 
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
-  public String getProcessDefinitionKey() {
+  public @Nullable String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
 
-  public String[] getProcessDefinitionKeys() {
+  public String@Nullable[] getProcessDefinitionKeys() {
     return processDefinitionKeys;
   }
 
-  public String getProcessDefinitionIdLike() {
+  public @Nullable String getProcessDefinitionIdLike() {
     return processDefinitionKey + ":%:%";
   }
 
-  public String getProcessDefinitionName() {
+  public @Nullable String getProcessDefinitionName() {
     return processDefinitionName;
   }
 
-  public String getProcessDefinitionNameLike() {
+  public @Nullable String getProcessDefinitionNameLike() {
     return processDefinitionNameLike;
   }
 
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 
-  public Set<String> getProcessInstanceIds() {
+  public @Nullable Set<String> getProcessInstanceIds() {
     return processInstanceIds;
   }
 
-  public String[] getProcessInstanceIdNotIn() {
+  public String@Nullable[] getProcessInstanceIdNotIn() {
     return processInstanceIdNotIn;
   }
 
-  public String getStartedBy() {
+  public @Nullable String getStartedBy() {
     return startedBy;
   }
 
-  public String getSuperProcessInstanceId() {
+  public @Nullable String getSuperProcessInstanceId() {
     return superProcessInstanceId;
   }
 
@@ -655,39 +658,39 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return processKeyNotIn;
   }
 
-  public Date getStartedAfter() {
+  public @Nullable Date getStartedAfter() {
     return startedAfter;
   }
 
-  public Date getStartedBefore() {
+  public @Nullable Date getStartedBefore() {
     return startedBefore;
   }
 
-  public Date getFinishedAfter() {
+  public @Nullable Date getFinishedAfter() {
     return finishedAfter;
   }
 
-  public Date getFinishedBefore() {
+  public @Nullable Date getFinishedBefore() {
     return finishedBefore;
   }
 
-  public String getCaseInstanceId() {
+  public @Nullable String getCaseInstanceId() {
     return caseInstanceId;
   }
 
-  public String getIncidentType() {
+  public @Nullable String getIncidentType() {
     return incidentType;
   }
 
-  public String getIncidentMessage() {
+  public @Nullable String getIncidentMessage() {
     return this.incidentMessage;
   }
 
-  public String getIncidentMessageLike() {
+  public @Nullable String getIncidentMessageLike() {
     return this.incidentMessageLike;
   }
 
-  public String getIncidentStatus() {
+  public @Nullable String getIncidentStatus() {
     return incidentStatus;
   }
 
@@ -695,35 +698,35 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return state;
   }
 
-  public Date getFinishDateBy() {
+  public @Nullable Date getFinishDateBy() {
     return finishDateBy;
   }
 
-  public Date getStartDateBy() {
+  public @Nullable Date getStartDateBy() {
     return startDateBy;
   }
 
-  public Date getStartDateOn() {
+  public @Nullable Date getStartDateOn() {
     return startDateOn;
   }
 
-  public Date getStartDateOnBegin() {
+  public @Nullable Date getStartDateOnBegin() {
     return startDateOnBegin;
   }
 
-  public Date getStartDateOnEnd() {
+  public @Nullable Date getStartDateOnEnd() {
     return startDateOnEnd;
   }
 
-  public Date getFinishDateOn() {
+  public @Nullable Date getFinishDateOn() {
     return finishDateOn;
   }
 
-  public Date getFinishDateOnBegin() {
+  public @Nullable Date getFinishDateOnBegin() {
     return finishDateOnBegin;
   }
 
-  public Date getFinishDateOnEnd() {
+  public @Nullable Date getFinishDateOnEnd() {
     return finishDateOnEnd;
   }
 
@@ -749,14 +752,14 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
 
   // below is deprecated and to be removed in 5.12
 
-  protected Date startDateBy;
-  protected Date startDateOn;
-  protected Date finishDateBy;
-  protected Date finishDateOn;
-  protected Date startDateOnBegin;
-  protected Date startDateOnEnd;
-  protected Date finishDateOnBegin;
-  protected Date finishDateOnEnd;
+  @Nullable protected Date startDateBy;
+  @Nullable protected Date startDateOn;
+  @Nullable protected Date finishDateBy;
+  @Nullable protected Date finishDateOn;
+  @Nullable protected Date startDateOnBegin;
+  @Nullable protected Date startDateOnEnd;
+  @Nullable protected Date finishDateOnBegin;
+  @Nullable protected Date finishDateOnEnd;
 
   /**
    * @deprecated since 1.0, use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
@@ -832,24 +835,24 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return isRootProcessInstances;
   }
 
-  public String getSubProcessInstanceId() {
+  public @Nullable String getSubProcessInstanceId() {
     return subProcessInstanceId;
   }
 
-  public String getSuperCaseInstanceId() {
+  public @Nullable String getSuperCaseInstanceId() {
     return superCaseInstanceId;
   }
 
-  public String getSubCaseInstanceId() {
+  public @Nullable String getSubCaseInstanceId() {
     return subCaseInstanceId;
   }
 
   public String[] getTenantIds() {
-    return tenantIds;
+    return Objects.requireNonNullElse(tenantIds, new String[0]);
   }
 
   public String[] getIncidentIds() {
-    return incidentIds;
+    return Objects.requireNonNullElse(incidentIds, new String[0]);
   }
 
   @Override
@@ -877,7 +880,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   }
 
   @Override
-  public HistoricProcessInstanceQuery executedActivityIdIn(String... ids) {
+  public HistoricProcessInstanceQuery executedActivityIdIn(String @Nullable... ids) {
     ensureNotNull(BadUserRequestException.class, "activity ids", (Object[]) ids);
     ensureNotContainsNull(BadUserRequestException.class, "activity ids", Arrays.asList(ids));
     this.executedActivityIds = ids;
@@ -885,7 +888,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   }
 
   @Override
-  public HistoricProcessInstanceQuery activeActivityIdIn(String... ids) {
+  public HistoricProcessInstanceQuery activeActivityIdIn(String @Nullable... ids) {
     ensureNotNull(BadUserRequestException.class, "activity ids", (Object[]) ids);
     ensureNotContainsNull(BadUserRequestException.class, "activity ids", Arrays.asList(ids));
     this.activeActivityIds = ids;
@@ -893,7 +896,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   }
 
   @Override
-  public HistoricProcessInstanceQuery activityIdIn(String... ids) {
+  public HistoricProcessInstanceQuery activityIdIn(String @Nullable... ids) {
     ensureNotNull(BadUserRequestException.class, "activity ids", (Object[]) ids);
     ensureNotContainsNull(BadUserRequestException.class, "activity ids", Arrays.asList(ids));
     this.activityIds = ids;

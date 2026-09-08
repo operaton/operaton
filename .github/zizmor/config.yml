@@ -3,7 +3,7 @@ rules:
     ignore:
       # Spring Boot/Framework patches wanted immediately; intentional zero cooldown.
       - dependabot.yml:18
-      - dependabot.yml:70
+      - dependabot.yml:74
   cache-poisoning:
     ignore:
       # Both need restore+save for incremental caching (SonarCloud analysis,

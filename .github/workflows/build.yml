@@ -135,7 +135,7 @@ jobs:
           # This ensures the cache is unique based on ANY lock file change
           cache-dependency-path: '**/package-lock.json'
       - name: Setup mvnd
-        uses: ./.github/actions/mvnd-setup
+        uses: $/.github/actions/mvnd-setup
       - name: Maven Build
         id: maven-build
         shell: bash

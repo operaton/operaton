@@ -243,7 +243,6 @@
               <includes>
                 <include>**/*IT.java</include>
               </includes>
-              <parallel>false</parallel>
               <failIfNoTests>true</failIfNoTests>
               <systemPropertyVariables>
                 <arquillian.launch>tomcat</arquillian.launch>
@@ -345,7 +344,6 @@
                 <includes>
                   <include>**/*IT.java</include>
                 </includes>
-                <parallel>false</parallel>
                 <failIfNoTests>true</failIfNoTests>
                 <systemPropertyVariables>
                   <arquillian.launch>wildfly</arquillian.launch>

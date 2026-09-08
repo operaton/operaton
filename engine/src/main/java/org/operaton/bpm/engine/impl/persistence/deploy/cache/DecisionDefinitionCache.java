@@ -38,7 +38,7 @@ public @NullMarked class DecisionDefinitionCache extends ResourceDefinitionCache
     super(factory, cacheCapacity, cacheDeployer);
   }
 
-  public DecisionDefinitionEntity findDeployedDefinitionByKeyAndVersion(String definitionKey, Integer definitionVersion) {
+  public @Nullable DecisionDefinitionEntity findDeployedDefinitionByKeyAndVersion(String definitionKey, Integer definitionVersion) {
     DecisionDefinitionEntity definition = ((DecisionDefinitionManager) getManager())
         .findDecisionDefinitionByKeyAndVersion(definitionKey, definitionVersion);
 

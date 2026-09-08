@@ -32,6 +32,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
@@ -85,7 +87,7 @@ public @NullMarked class CaseDefinitionManager extends AbstractManager implement
    *
    * @see #findLatestCaseDefinitionByKeyAndTenantId(String, String)
    */
-  public CaseDefinitionEntity findLatestCaseDefinitionByKeyAndTenantId(String caseDefinitionKey, @Nullable String tenantId) {
+  public @Nullable CaseDefinitionEntity findLatestCaseDefinitionByKeyAndTenantId(String caseDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(PARAM_CASE_DEFINITION_KEY, caseDefinitionKey);
     parameters.put(PARAM_TENANT_ID, tenantId);
@@ -97,7 +99,7 @@ public @NullMarked class CaseDefinitionManager extends AbstractManager implement
     }
   }
 
-  public CaseDefinitionEntity findCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, Integer caseDefinitionVersion, @Nullable String tenantId) {
+  public @Nullable CaseDefinitionEntity findCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, Integer caseDefinitionVersion, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PARAM_CASE_DEFINITION_VERSION, caseDefinitionVersion);
     parameters.put(PARAM_CASE_DEFINITION_KEY, caseDefinitionKey);
@@ -105,14 +107,14 @@ public @NullMarked class CaseDefinitionManager extends AbstractManager implement
     return (CaseDefinitionEntity) getDbEntityManager().selectOne("selectCaseDefinitionByKeyVersionAndTenantId", parameters);
   }
 
-  public CaseDefinitionEntity findCaseDefinitionByDeploymentAndKey(String deploymentId, String caseDefinitionKey) {
+  public @Nullable CaseDefinitionEntity findCaseDefinitionByDeploymentAndKey(String deploymentId, String caseDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PARAM_DEPLOYMENT_ID, deploymentId);
     parameters.put(PARAM_CASE_DEFINITION_KEY, caseDefinitionKey);
     return (CaseDefinitionEntity) getDbEntityManager().selectOne("selectCaseDefinitionByDeploymentAndKey", parameters);
   }
 
-  public String findPreviousCaseDefinitionId(String caseDefinitionKey, Integer version, @Nullable String tenantId) {
+  public @Nullable String findPreviousCaseDefinitionId(String caseDefinitionKey, Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put(PARAM_KEY, caseDefinitionKey);
     params.put(PARAM_VERSION, version);
@@ -128,7 +130,9 @@ public @NullMarked class CaseDefinitionManager extends AbstractManager implement
 
   public long findCaseDefinitionCountByQueryCriteria(CaseDefinitionQueryImpl caseDefinitionQuery) {
     configureCaseDefinitionQuery(caseDefinitionQuery);
-    return (Long) getDbEntityManager().selectOne("selectCaseDefinitionCountByQueryCriteria", caseDefinitionQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectCaseDefinitionCountByQueryCriteria", caseDefinitionQuery);
+    requireNonNull(count);
+    return count;
   }
 
   @SuppressWarnings("unchecked")
@@ -175,7 +179,7 @@ public @NullMarked class CaseDefinitionManager extends AbstractManager implement
   }
 
   @Override
-  public CaseDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  public @Nullable CaseDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     return findCaseDefinitionByDeploymentAndKey(deploymentId, definitionKey);
   }
 }

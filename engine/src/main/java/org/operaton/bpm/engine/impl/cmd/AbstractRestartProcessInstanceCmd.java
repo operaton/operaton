@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
@@ -81,7 +82,7 @@ public abstract @NullMarked class AbstractRestartProcessInstanceCmd<T> implement
           propertyChanges);
   }
 
-  protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
+  protected @Nullable ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
     return commandContext
         .getProcessEngineConfiguration()
         .getDeploymentCache()

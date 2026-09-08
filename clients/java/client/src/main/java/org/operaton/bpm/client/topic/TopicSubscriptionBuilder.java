@@ -18,6 +18,8 @@ package org.operaton.bpm.client.topic;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 
@@ -26,7 +28,7 @@ import org.operaton.bpm.client.task.ExternalTaskHandler;
  *
  * @author Tassilo Weidner
  */
-public interface TopicSubscriptionBuilder {
+public @NullMarked interface TopicSubscriptionBuilder {
 
   /**
    * @param lockDuration <ul>
@@ -49,7 +51,7 @@ public interface TopicSubscriptionBuilder {
    * @param variableNames of variables which are supposed to be retrieved
    * @return the builder
    */
-  TopicSubscriptionBuilder variables(String... variableNames);
+  TopicSubscriptionBuilder variables(@Nullable String @Nullable... variableNames);
 
   /**
    * @param localVariables
@@ -78,7 +80,7 @@ public interface TopicSubscriptionBuilder {
    * @param processDefinitionIds to filter for external tasks that are supposed to be fetched and locked
    * @return the builder
    */
-  TopicSubscriptionBuilder processDefinitionIdIn(String... processDefinitionIds);
+  TopicSubscriptionBuilder processDefinitionIdIn(@Nullable String @Nullable... processDefinitionIds);
 
   /**
    * @param processDefinitionKey to filter for external tasks that are supposed to be fetched and locked
@@ -90,10 +92,10 @@ public interface TopicSubscriptionBuilder {
    * @param processDefinitionKeys to filter for external tasks that are supposed to be fetched and locked
    * @return the builder
    */
-  TopicSubscriptionBuilder processDefinitionKeyIn(String... processDefinitionKeys);
+  TopicSubscriptionBuilder processDefinitionKeyIn(@Nullable String @Nullable... processDefinitionKeys);
 
   /**
-   * @param processDefinitionKeys to filter for external tasks that are supposed to be fetched and locked
+   * @param processDefinitionVersionTag to filter for external tasks that are supposed to be fetched and locked
    * @return the builder
    */
   TopicSubscriptionBuilder processDefinitionVersionTag(String processDefinitionVersionTag);
@@ -103,7 +105,7 @@ public interface TopicSubscriptionBuilder {
    *
    * @return the builder
    */
-  TopicSubscriptionBuilder processVariablesEqualsIn(Map<String, Object> processVariables);
+  TopicSubscriptionBuilder processVariablesEqualsIn(@Nullable Map<String, Object> processVariables);
 
   /**
    * @param processVariables of which the external tasks to be retrieved are related to
@@ -123,7 +125,7 @@ public interface TopicSubscriptionBuilder {
    * @param tenantIds to filter for external tasks that are supposed to be fetched and locked
    * @return the builder
    */
-  TopicSubscriptionBuilder tenantIdIn(String... tenantIds);
+  TopicSubscriptionBuilder tenantIdIn(@Nullable String @Nullable... tenantIds);
 
   /**
    * @param includeExtensionProperties

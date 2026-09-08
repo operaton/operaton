@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -42,6 +43,7 @@ public class GetDeploymentCaseDefinitionCmd implements Command<CaseDefinition> {
 
     CaseDefinitionEntity caseDefinition = Context.getProcessEngineConfiguration().getDeploymentCache()
         .findDeployedCaseDefinitionById(caseDefinitionId);
+    requireNonNull(caseDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadCaseDefinition(caseDefinition);

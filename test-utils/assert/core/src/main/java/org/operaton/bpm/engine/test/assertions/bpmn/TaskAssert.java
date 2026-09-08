@@ -20,6 +20,8 @@ import java.util.Date;
 
 import org.assertj.core.api.Assertions;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -28,7 +30,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
 /**
  * Assertions for a {@link Task}.
  */
-public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
+public @NullMarked class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
   protected TaskAssert(final ProcessEngine engine, final Task actual) {
     super(engine, actual, TaskAssert.class);
@@ -39,7 +41,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   @Override
-  protected Task getCurrent() {
+  protected @Nullable Task getCurrent() {
     return taskQuery().taskId(actual.getId()).singleResult();
   }
 
@@ -277,7 +279,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   @Override
-  protected String toString(Task task) {
+  protected String toString(@Nullable Task task) {
     return task != null ?
       ("%s {" +
         "id='%s', " +
@@ -289,7 +291,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
         task.getProcessInstanceId(),
         task.getTaskDefinitionKey(),
         task.getName()
-      ) : null;
+      ) : "<null>";
   }
 
   /** TaskQuery, automatically narrowed to {@link ProcessInstance} of actual {@link Task} */

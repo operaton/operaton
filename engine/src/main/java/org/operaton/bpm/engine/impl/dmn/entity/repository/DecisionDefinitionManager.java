@@ -34,6 +34,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManage
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 public @NullMarked class DecisionDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<DecisionDefinitionEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -79,7 +81,7 @@ public @NullMarked class DecisionDefinitionManager extends AbstractManager imple
    *
    * @see #findLatestDecisionDefinitionByKey(String)
    */
-  public DecisionDefinitionEntity findLatestDecisionDefinitionByKeyAndTenantId(String decisionDefinitionKey, @Nullable String tenantId) {
+  public @Nullable DecisionDefinitionEntity findLatestDecisionDefinitionByKeyAndTenantId(String decisionDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
     parameters.put(TENANT_ID, tenantId);
@@ -91,14 +93,14 @@ public @NullMarked class DecisionDefinitionManager extends AbstractManager imple
     }
   }
 
-  public DecisionDefinitionEntity findDecisionDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
     return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByKeyAndVersion", configureParameterizedQuery(parameters));
   }
 
-  public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, @Nullable String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -131,7 +133,7 @@ public @NullMarked class DecisionDefinitionManager extends AbstractManager imple
     }
   }
 
-  public DecisionDefinitionEntity findDecisionDefinitionByDeploymentAndKey(String deploymentId, String decisionDefinitionKey) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByDeploymentAndKey(String deploymentId, String decisionDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -146,10 +148,12 @@ public @NullMarked class DecisionDefinitionManager extends AbstractManager imple
 
   public long findDecisionDefinitionCountByQueryCriteria(DecisionDefinitionQueryImpl decisionDefinitionQuery) {
     configureDecisionDefinitionQuery(decisionDefinitionQuery);
-    return (Long) getDbEntityManager().selectOne("selectDecisionDefinitionCountByQueryCriteria", decisionDefinitionQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectDecisionDefinitionCountByQueryCriteria", decisionDefinitionQuery);
+    requireNonNull(count);
+    return count;
   }
 
-  public String findPreviousDecisionDefinitionId(String decisionDefinitionKey, Integer version, @Nullable String tenantId) {
+  public @Nullable String findPreviousDecisionDefinitionId(String decisionDefinitionKey, Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put("key", decisionDefinitionKey);
     params.put("version", version);
@@ -161,8 +165,6 @@ public @NullMarked class DecisionDefinitionManager extends AbstractManager imple
   public List<DecisionDefinition> findDecisionDefinitionByDeploymentId(String deploymentId) {
     return getDbEntityManager().selectList("selectDecisionDefinitionByDeploymentId", deploymentId);
   }
-
-
 
   protected void createDefaultAuthorizations(DecisionDefinition decisionDefinition) {
     if(isAuthorizationEnabled()) {

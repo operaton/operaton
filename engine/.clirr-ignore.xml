@@ -118,6 +118,18 @@
     <className>org/operaton/bpm/engine/ProcessEngines</className>
     <method>**</method>
   </difference>
+  <!-- HistoricProcessInstancePermissions changes for 2.2 -->
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>org/operaton/bpm/engine/authorization/HistoricProcessInstancePermissions</className>
+    <field>**</field>
+  </difference>
+  <difference>
+    <differenceType>6010</differenceType>
+    <className>org/operaton/bpm/engine/authorization/HistoricProcessInstancePermissions</className>
+    <field>**</field>
+  </difference>
+
   <!-- Moved Mock classes -->
   <difference>
     <differenceType>8001</differenceType>

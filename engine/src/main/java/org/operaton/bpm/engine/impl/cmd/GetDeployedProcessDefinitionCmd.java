@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 public @NullMarked class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitionEntity> {
@@ -56,6 +57,7 @@ public @NullMarked class GetDeployedProcessDefinitionCmd implements Command<Proc
     ensureOnlyOneNotNull("either process definition id or key must be set", processDefinitionId, processDefinitionKey);
 
     ProcessDefinitionEntity processDefinition = find(commandContext);
+    requireNonNull(processDefinition);
 
     if (checkReadPermission) {
       for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
@@ -66,25 +68,24 @@ public @NullMarked class GetDeployedProcessDefinitionCmd implements Command<Proc
     return processDefinition;
   }
 
-  protected ProcessDefinitionEntity find(CommandContext commandContext) {
+  protected @Nullable ProcessDefinitionEntity find(CommandContext commandContext) {
     DeploymentCache deploymentCache = commandContext.getProcessEngineConfiguration().getDeploymentCache();
 
     if (processDefinitionId != null) {
       return findById(deploymentCache, processDefinitionId);
-
     } else {
+      requireNonNull(processDefinitionKey);
       return findByKey(deploymentCache, processDefinitionKey);
     }
   }
 
-  protected ProcessDefinitionEntity findById(DeploymentCache deploymentCache, String processDefinitionId) {
+  protected @Nullable ProcessDefinitionEntity findById(DeploymentCache deploymentCache, String processDefinitionId) {
     return deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
   }
 
-  protected ProcessDefinitionEntity findByKey(DeploymentCache deploymentCache, String processDefinitionKey) {
+  protected @Nullable ProcessDefinitionEntity findByKey(DeploymentCache deploymentCache, String processDefinitionKey) {
     if (isTenantIdSet) {
       return deploymentCache.findDeployedLatestProcessDefinitionByKeyAndTenantId(processDefinitionKey, processDefinitionTenantId);
-
     } else {
       return deploymentCache.findDeployedLatestProcessDefinitionByKey(processDefinitionKey);
     }

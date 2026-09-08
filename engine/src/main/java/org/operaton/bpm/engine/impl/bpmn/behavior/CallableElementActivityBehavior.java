@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.util.ClassDelegateUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_ACTIVE_INSTANCES;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_COMPLETED_INSTANCES;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior.NUMBER_OF_INSTANCES;
@@ -80,7 +81,7 @@ public abstract @NullMarked class CallableElementActivityBehavior extends Abstra
     }
   }
 
-  protected DelegateVariableMapping resolveDelegation(ActivityExecution execution) {
+  protected @Nullable DelegateVariableMapping resolveDelegation(ActivityExecution execution) {
     Object delegate = resolveDelegateClass(execution);
     return delegate != null ? getDelegateVariableMapping(delegate) : null;
   }
@@ -89,13 +90,14 @@ public abstract @NullMarked class CallableElementActivityBehavior extends Abstra
     ProcessApplicationReference targetProcessApplication
             = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
     if (ProcessApplicationContextUtil.requiresContextSwitch(targetProcessApplication)) {
+      requireNonNull(targetProcessApplication);
       return Context.executeWithinProcessApplication(() -> resolveDelegateClass(execution), targetProcessApplication, new InvocationContext(execution));
     } else {
       return instantiateDelegateClass(execution);
     }
   }
 
-  protected Object instantiateDelegateClass(ActivityExecution execution) {
+  protected @Nullable Object instantiateDelegateClass(ActivityExecution execution) {
     Object delegate = null;
     if (expression != null) {
       delegate = expression.getValue(execution);
@@ -152,10 +154,8 @@ public abstract @NullMarked class CallableElementActivityBehavior extends Abstra
   }
 
   protected VariableMap filterVariables(VariableMap variables) {
-    if (variables != null) {
-      for (String key : variablesFilter) {
-        variables.remove(key);
-      }
+    for (String key : variablesFilter) {
+      variables.remove(key);
     }
     return variables;
   }
@@ -167,14 +167,14 @@ public abstract @NullMarked class CallableElementActivityBehavior extends Abstra
   }
 
   public CallableElement getCallableElement() {
-    return callableElement;
+    return requireNonNull(callableElement);
   }
 
   public void setCallableElement(CallableElement callableElement) {
     this.callableElement = callableElement;
   }
 
-  protected String getBusinessKey(ActivityExecution execution) {
+  protected @Nullable String getBusinessKey(ActivityExecution execution) {
     return getCallableElement().getBusinessKey(execution);
   }
 
@@ -190,12 +190,12 @@ public abstract @NullMarked class CallableElementActivityBehavior extends Abstra
     return getCallableElement().getOutputVariablesLocal(calledElementScope);
   }
 
-  protected Integer getVersion(ActivityExecution execution) {
+  protected @Nullable Integer getVersion(ActivityExecution execution) {
     return getCallableElement().getVersion(execution);
   }
 
   @SuppressWarnings("unused")
-  protected String getDeploymentId(ActivityExecution execution) {
+  protected @Nullable String getDeploymentId(ActivityExecution execution) {
     return getCallableElement().getDeploymentId();
   }
 
@@ -215,6 +215,6 @@ public abstract @NullMarked class CallableElementActivityBehavior extends Abstra
     return getCallableElement().isVersionBinding();
   }
 
-  protected abstract void startInstance(ActivityExecution execution, VariableMap variables, String businessKey);
+  protected abstract void startInstance(ActivityExecution execution, VariableMap variables, @Nullable String businessKey);
 
 }

@@ -43,13 +43,13 @@ public @NullMarked class AuthorizationCheckCmd implements Command<Boolean> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  protected String userId;
-  protected List<String> groupIds;
+  protected @Nullable String userId;
+  protected @Nullable List<String> groupIds;
   protected Permission permission;
   protected Resource resource;
   protected @Nullable String resourceId;
 
-  public AuthorizationCheckCmd(String userId, List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId) {
+  public AuthorizationCheckCmd(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId) {
     this.userId = userId;
     this.groupIds = groupIds;
     this.permission = permission;
@@ -72,7 +72,7 @@ public @NullMarked class AuthorizationCheckCmd implements Command<Boolean> {
     return authorizationManager.isAuthorized(userId, groupIds, permission, resource, resourceId);
   }
 
-  protected void validate(String userId, List<String> groupIds, Permission permission, Resource resource) {
+  protected void validate(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource) {
     ensureAtLeastOneNotNull("Authorization must have a 'userId' or/and a 'groupId'.", userId, groupIds);
     ensureNotNull("Invalid permission for an authorization", "authorization.getResource()", permission);
     ensureNotNull("Invalid resource for an authorization", "authorization.getResource()", resource);

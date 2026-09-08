@@ -40,6 +40,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  * @author Falko Menge
@@ -125,10 +127,12 @@ public @NullMarked class ProcessDefinitionManager extends AbstractManager implem
 
   public long findProcessDefinitionCountByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery) {
     configureProcessDefinitionQuery(processDefinitionQuery);
-    return (Long) getDbEntityManager().selectOne("selectProcessDefinitionCountByQueryCriteria", processDefinitionQuery);
+    Long count = (Long) getDbEntityManager().selectOne(
+            "selectProcessDefinitionCountByQueryCriteria", processDefinitionQuery);
+    return requireNonNull(count);
   }
 
-  public ProcessDefinitionEntity findProcessDefinitionByDeploymentAndKey(String deploymentId, String processDefinitionKey) {
+  public @Nullable ProcessDefinitionEntity findProcessDefinitionByDeploymentAndKey(String deploymentId, String processDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(DEPLOYMENT_ID, deploymentId);
     parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
@@ -168,16 +172,22 @@ public @NullMarked class ProcessDefinitionManager extends AbstractManager implem
     return null;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public List<ProcessDefinition> findProcessDefinitionsByKey(String processDefinitionKey) {
     ProcessDefinitionQueryImpl processDefinitionQuery = (ProcessDefinitionQueryImpl) new ProcessDefinitionQueryImpl().processDefinitionKeyIn(processDefinitionKey);
     return findProcessDefinitionsByQueryCriteria(processDefinitionQuery, null);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public List<ProcessDefinition> findProcessDefinitionsStartableByUser(String user) {
     return new ProcessDefinitionQueryImpl().startableByUser(user).list();
   }
 
-  public String findPreviousProcessDefinitionId(String processDefinitionKey, Integer version, @Nullable String tenantId) {
+  public @Nullable String findPreviousProcessDefinitionId(String processDefinitionKey, Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put("key", processDefinitionKey);
     params.put("version", version);
@@ -295,11 +305,10 @@ public @NullMarked class ProcessDefinitionManager extends AbstractManager implem
    * @param processDefinitionId the id of the process definition
    */
   public void deleteSubscriptionsForProcessDefinition(String processDefinitionId) {
-    List<EventSubscriptionEntity> eventSubscriptionsToRemove = new ArrayList<>();
     // remove message event subscriptions:
     List<EventSubscriptionEntity> messageEventSubscriptions = getEventSubscriptionManager()
       .findEventSubscriptionsByConfiguration(EventType.MESSAGE.name(), processDefinitionId);
-    eventSubscriptionsToRemove.addAll(messageEventSubscriptions);
+    List<EventSubscriptionEntity> eventSubscriptionsToRemove = new ArrayList<>(messageEventSubscriptions);
 
     // remove signal event subscriptions:
     List<EventSubscriptionEntity> signalEventSubscriptions = getEventSubscriptionManager().findEventSubscriptionsByConfiguration(EventType.SIGNAL.name(), processDefinitionId);

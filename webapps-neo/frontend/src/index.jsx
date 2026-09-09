@@ -16,6 +16,7 @@ import { AdminPage } from "./pages/Admin.jsx";
 import { DeploymentsPage } from "./pages/Deployments.jsx";
 import { BatchesPage } from "./pages/Batches.jsx";
 import { NotFound } from "./pages/_404.jsx";
+import { require_app } from "./components/RequireApp.jsx";
 import { SetupPage } from "./pages/Setup.jsx";
 import { AccountPage } from "./pages/Account.jsx";
 
@@ -36,6 +37,16 @@ import { plugins_for } from "./plugins/registry.js";
 import { PLUGIN_POINTS } from "./plugins/points.js";
 
 ("use strict");
+
+// Wrapped once at module scope: a component created during render would be a
+// new type on every pass and remount the page underneath it.
+const TasksGuarded = require_app(TasksPage, "tasklist");
+const ProcessesGuarded = require_app(ProcessesPage, "cockpit");
+const DecisionsGuarded = require_app(DecisionsPage, "cockpit");
+const DeploymentsGuarded = require_app(DeploymentsPage, "cockpit");
+const BatchesGuarded = require_app(BatchesPage, "cockpit");
+const MigrationsGuarded = require_app(MigrationsPage, "cockpit");
+const AdminGuarded = require_app(AdminPage, "admin");
 
 export const App = () => {
   return (
@@ -104,23 +115,23 @@ const Routing = () => {
           <Route path="/" component={DashboardPage} />
           <Route
             path="/decisions/:decision_id?/:panel?"
-            component={DecisionsPage}
+            component={DecisionsGuarded}
           />
           {/*<Route path="/tasks/start/:id" component={TasksPage} />*/}
-          <Route path="/tasks/:task_id?/:tab?" component={TasksPage} />
+          <Route path="/tasks/:task_id?/:tab?" component={TasksGuarded} />
           <Route
             path="/processes/:definition_id?/:panel?/:selection_id?/:sub_panel?"
-            component={ProcessesPage}
+            component={ProcessesGuarded}
           />
-          <Route path="/migrations" component={MigrationsPage} />
+          <Route path="/migrations" component={MigrationsGuarded} />
           <Route
             path="/deployments/:deployment_id?/:resource_name?"
-            component={DeploymentsPage}
+            component={DeploymentsGuarded}
           />
-          <Route path="/batches/:batch_id?" component={BatchesPage} />
+          <Route path="/batches/:batch_id?" component={BatchesGuarded} />
           <Route
             path="/admin/:page_id?/:selection_id?/:sub_selection_id?"
-            component={AdminPage}
+            component={AdminGuarded}
           />
           <Route
             path="/account/:page_id?/:selection_id?"

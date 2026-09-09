@@ -50,6 +50,7 @@ const start_session = (state, username, password) => {
       // Once the session exists the password has no further use here, so make
       // sure nothing is left holding one.
       state.auth.credentials.value = { username: null, password: null };
+      state.auth.authorized_apps.value = result.authorizedApps ?? null;
       return result.userId ?? username;
     });
 };
@@ -61,7 +62,13 @@ const session_user = (state) => {
 
   return fetch(_url_auth(), { headers, credentials: "include" })
     .then((response) => (response.ok ? response.json() : null))
-    .then((result) => result?.userId ?? null)
+    .then((result) => {
+      // A reload restores the session from the cookie, so the applications have
+      // to be restored with it — otherwise the navigation would open up again
+      // after every refresh.
+      state.auth.authorized_apps.value = result?.authorizedApps ?? null;
+      return result?.userId ?? null;
+    })
     .catch(() => null);
 };
 
@@ -135,6 +142,7 @@ const login = (
 const clear_local_session = (state) => {
   state.auth.credentials.value = { username: null, password: null };
   state.auth.user.id.value = null;
+  state.auth.authorized_apps.value = null;
   state.auth.logged_in.value = {
     status: RESPONSE_STATE.ERROR,
     data: "unauthenticated",

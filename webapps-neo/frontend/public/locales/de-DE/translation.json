@@ -847,6 +847,11 @@
     "goto-hint-prefix": "Mit der \"Gehe zu\"-Funktion oben rechts oder durch Drücken von",
     "goto-hint-suffix": "können Sie schnell zu einer Ressource navigieren, wenn Sie deren ID kennen."
   },
+  "no-access": {
+    "title": "Kein Zugriff auf diesen Bereich",
+    "text": "Ihr Konto ist für die Anwendung {{app}} nicht freigeschaltet.",
+    "hint": "Ein Administrator muss Ihrer Gruppe den Zugriff darauf gewähren."
+  },
   "bpmn": {
     "zoom-in": "Vergrößern",
     "zoom-out": "Verkleinern",

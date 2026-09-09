@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
 import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 public @NullMarked class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitionEntity> {
@@ -57,6 +58,7 @@ public @NullMarked class GetDeployedProcessDefinitionCmd implements Command<Proc
     ensureOnlyOneNotNull("either process definition id or key must be set", processDefinitionId, processDefinitionKey);
 
     ProcessDefinitionEntity processDefinition = find(commandContext);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
     requireNonNull(processDefinition);
 
     if (checkReadPermission) {

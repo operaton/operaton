@@ -30,6 +30,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.repository.DiagramLayout;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * Provides positions and dimensions of elements in a process diagram as
  * provided by {@link GetDeploymentProcessDiagramCmd}.
@@ -54,6 +57,8 @@ public @NullMarked class GetDeploymentProcessDiagramLayoutCmd implements Command
         .getProcessEngineConfiguration()
         .getDeploymentCache()
         .findDeployedProcessDefinitionById(processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);

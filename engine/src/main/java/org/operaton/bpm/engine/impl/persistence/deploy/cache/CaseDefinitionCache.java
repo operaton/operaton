@@ -75,13 +75,13 @@ public @NullMarked class CaseDefinitionCache extends ResourceDefinitionCache<Cas
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId, @Nullable CaseDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, @Nullable Integer definitionVersion, @Nullable String tenantId, @Nullable CaseDefinitionEntity definition) {
     ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '%s', version = '%s'".formatted(definitionKey, definitionVersion)
         + " and tenant-id = '%s'".formatted(tenantId), VAR_CASE_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId, @Nullable CaseDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, @Nullable String definitionVersionTag, @Nullable String tenantId, @Nullable CaseDefinitionEntity definition) {
     throw new UnsupportedOperationException("Version tag is not implemented in case definition.");  }
 
   @Override

@@ -127,12 +127,12 @@ public @NullMarked class DecisionRequirementsDefinitionManager extends AbstractM
   }
 
   @Override
-  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, @Nullable Integer definitionVersion, @Nullable String tenantId) {
     return null;
   }
 
   @Override
-  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId) {
+  public @Nullable DecisionRequirementsDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, @Nullable String definitionVersionTag, @Nullable String tenantId) {
     return null;
   }
 

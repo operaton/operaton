@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -440,19 +441,25 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return suspensionState == SuspensionState.SUSPENDED.getStateCode();
   }
 
-  public Set<Expression> getCandidateStarterUserIdExpressions() {
-    return candidateStarterUserIdExpressions;
+  public @NonNull Set<Expression> getCandidateStarterUserIdExpressions() {
+    return Objects.requireNonNullElse(candidateStarterUserIdExpressions, Collections.emptySet());
   }
 
   public void addCandidateStarterUserIdExpression(Expression userId) {
+    if (candidateStarterUserIdExpressions == null) {
+      candidateStarterUserIdExpressions = new HashSet<>();
+    }
     candidateStarterUserIdExpressions.add(userId);
   }
 
-  public Set<Expression> getCandidateStarterGroupIdExpressions() {
-    return candidateStarterGroupIdExpressions;
+  public @NonNull Set<Expression> getCandidateStarterGroupIdExpressions() {
+    return Objects.requireNonNullElse(candidateStarterGroupIdExpressions, Collections.emptySet());
   }
 
   public void addCandidateStarterGroupIdExpression(Expression groupId) {
+    if (candidateStarterGroupIdExpressions == null) {
+      candidateStarterGroupIdExpressions = new HashSet<>();
+    }
     candidateStarterGroupIdExpressions.add(groupId);
   }
 

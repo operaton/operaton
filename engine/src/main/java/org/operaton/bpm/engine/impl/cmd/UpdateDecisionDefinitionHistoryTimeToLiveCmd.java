@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureGreaterThanOrEqual;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -59,6 +60,9 @@ public @NullMarked class UpdateDecisionDefinitionHistoryTimeToLiveCmd implements
     validate(historyTimeToLive, context);
 
     DecisionDefinitionEntity decisionDefinitionEntity = context.getDecisionDefinitionManager().findDecisionDefinitionById(decisionDefinitionId);
+    ensureNotNull("Decision Definition '%s' not found".formatted(decisionDefinitionId), "decisionDefinition", decisionDefinitionEntity);
+    requireNonNull(decisionDefinitionEntity);
+
     logUserOperation(context, decisionDefinitionEntity);
     decisionDefinitionEntity.setHistoryTimeToLive(historyTimeToLive);
 

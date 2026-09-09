@@ -46,6 +46,9 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonField;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonScript;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonTaskListener;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * @author Roman Smirnov
  *
@@ -161,7 +164,7 @@ public @NullMarked class HumanTaskItemHandler extends TaskItemHandler {
     HumanTask definition = getDefinition(element);
     Role performer = definition.getPerformer();
 
-    String assignee = null;
+    String assignee;
     if (performer != null) {
       assignee = performer.getName();
     } else {
@@ -305,7 +308,10 @@ public @NullMarked class HumanTaskItemHandler extends TaskItemHandler {
 
   @Override
   protected HumanTask getDefinition(CmmnElement element) {
-    return (HumanTask) super.getDefinition(element);
+    HumanTask definition = (HumanTask) super.getDefinition(element);
+    ensureNotNull("Human Task '%s' not found".formatted(element.getId()), "humanTask", definition);
+    requireNonNull(definition);
+    return definition;
   }
 
   @Override

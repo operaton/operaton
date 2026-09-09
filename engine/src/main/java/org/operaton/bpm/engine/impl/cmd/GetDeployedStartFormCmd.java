@@ -26,6 +26,9 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  *
  * @author Anna Pazola
@@ -50,6 +53,9 @@ public @NullMarked class GetDeployedStartFormCmd extends AbstractGetDeployedForm
     ProcessEngineConfigurationImpl processEngineConfiguration = getCommandContext().getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
+
     for (CommandChecker checker : getCommandContext().getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);
     }

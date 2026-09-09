@@ -100,7 +100,7 @@ public @NullMarked class DecisionDefinitionManager extends AbstractManager imple
     return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByKeyAndVersion", configureParameterizedQuery(parameters));
   }
 
-  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, @Nullable String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, @Nullable Integer decisionDefinitionVersion, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -113,7 +113,7 @@ public @NullMarked class DecisionDefinitionManager extends AbstractManager imple
   }
 
   @SuppressWarnings("unchecked")
-  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, String decisionDefinitionVersionTag, @Nullable String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, @Nullable String decisionDefinitionVersionTag, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersionTag", decisionDefinitionVersionTag);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -204,12 +204,12 @@ public @NullMarked class DecisionDefinitionManager extends AbstractManager imple
   }
 
   @Override
-  public @Nullable DecisionDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, @Nullable Integer definitionVersion, @Nullable String tenantId) {
     return findDecisionDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId);
   }
 
   @Override
-  public @Nullable DecisionDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, @Nullable String definitionVersionTag, @Nullable String tenantId) {
     return findDecisionDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId);
   }
 

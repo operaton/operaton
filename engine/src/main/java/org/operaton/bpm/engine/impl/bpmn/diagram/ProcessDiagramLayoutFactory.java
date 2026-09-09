@@ -84,7 +84,7 @@ public class ProcessDiagramLayoutFactory {
    *          by {@link ImageIO} may also work)
    * @return Layout of the process diagram. Will return {@code null} when parameter imageStream is {@code null}.
    */
-  public @Nullable DiagramLayout getProcessDiagramLayout(InputStream bpmnXmlStream, InputStream imageStream) {
+  public @Nullable DiagramLayout getProcessDiagramLayout(InputStream bpmnXmlStream, @Nullable InputStream imageStream) {
     Document bpmnModel = parseXml(bpmnXmlStream);
     return getBpmnProcessDiagramLayout(bpmnModel, imageStream);
   }

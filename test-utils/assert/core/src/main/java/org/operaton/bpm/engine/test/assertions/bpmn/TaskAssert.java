@@ -32,11 +32,11 @@ import org.operaton.bpm.engine.task.TaskQuery;
  */
 public @NullMarked class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
-  protected TaskAssert(final ProcessEngine engine, final Task actual) {
+  protected TaskAssert(ProcessEngine engine, @Nullable Task actual) {
     super(engine, actual, TaskAssert.class);
   }
 
-  protected static TaskAssert assertThat(final ProcessEngine engine, final Task actual) {
+  protected static TaskAssert assertThat(ProcessEngine engine, @Nullable Task actual) {
     return new TaskAssert(engine, actual);
   }
 

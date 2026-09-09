@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.DIAGRAM_RESOURCE_SUFFIXES;
 
 /**
@@ -50,8 +51,8 @@ public abstract @NullMarked class AbstractDefinitionDeployer<DEFINITION_ENTITY e
 
   protected @Nullable IdGenerator idGenerator;
 
-  public @Nullable IdGenerator getIdGenerator() {
-    return idGenerator;
+  public IdGenerator getIdGenerator() {
+    return requireNonNull(idGenerator);
   }
 
   public void setIdGenerator(IdGenerator idGenerator) {
@@ -345,8 +346,8 @@ public abstract @NullMarked class AbstractDefinitionDeployer<DEFINITION_ENTITY e
    * You might want to hook in your own implementation here.
    */
   @SuppressWarnings("unused")
-  protected String generateDefinitionId(DeploymentEntity deployment, DEFINITION_ENTITY newDefinition, DEFINITION_ENTITY latestDefinition) {
-    String nextId = idGenerator.getNextId();
+  protected String generateDefinitionId(DeploymentEntity deployment, DEFINITION_ENTITY newDefinition, @Nullable DEFINITION_ENTITY latestDefinition) {
+    String nextId = getIdGenerator().getNextId();
 
     String definitionKey = newDefinition.getKey();
     int definitionVersion = newDefinition.getVersion();

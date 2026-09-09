@@ -58,7 +58,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
   private static final ThreadLocal<Map<Class<?>, AbstractProcessAssert<?, ?>>>
     lastAsserts = new ThreadLocal<>();
 
-  protected AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {
+  protected AbstractProcessAssert(ProcessEngine engine, @Nullable A actual, Class<?> selfType) {
     super(actual, selfType);
     this.engine = engine;
     setLastAssert(selfType, this);
@@ -67,7 +67,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
   /*
    * Delivers the the actual object under test.
    */
-  public A getActual() {
+  public @Nullable A getActual() {
     return actual;
   }
 

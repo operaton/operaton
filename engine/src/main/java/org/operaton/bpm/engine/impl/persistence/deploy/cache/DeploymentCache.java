@@ -99,11 +99,11 @@ public @NullMarked class DeploymentCache {
     return processDefinitionEntityCache.findDeployedLatestDefinitionByKeyAndTenantId(processDefinitionKey, tenantId);
   }
 
-  public @Nullable ProcessDefinitionEntity findDeployedProcessDefinitionByKeyVersionAndTenantId(final String processDefinitionKey, final Integer processDefinitionVersion, final @Nullable String tenantId) {
+  public @Nullable ProcessDefinitionEntity findDeployedProcessDefinitionByKeyVersionAndTenantId(final String processDefinitionKey, final @Nullable Integer processDefinitionVersion, final @Nullable String tenantId) {
     return processDefinitionEntityCache.findDeployedDefinitionByKeyVersionAndTenantId(processDefinitionKey, processDefinitionVersion, tenantId);
   }
 
-  public @Nullable ProcessDefinitionEntity findDeployedProcessDefinitionByKeyVersionTagAndTenantId(String processDefinitionKey, String processDefinitionVersionTag, @Nullable String tenantId) {
+  public @Nullable ProcessDefinitionEntity findDeployedProcessDefinitionByKeyVersionTagAndTenantId(String processDefinitionKey, @Nullable String processDefinitionVersionTag, @Nullable String tenantId) {
     return processDefinitionEntityCache.findDeployedDefinitionByKeyVersionTagAndTenantId(processDefinitionKey, processDefinitionVersionTag, tenantId);
   }
 
@@ -180,7 +180,7 @@ public @NullMarked class DeploymentCache {
     return caseDefinitionCache.findDeployedLatestDefinitionByKeyAndTenantId(caseDefinitionKey, tenantId);
   }
 
-  public @Nullable CaseDefinitionEntity findDeployedCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, Integer caseDefinitionVersion, String tenantId) {
+  public @Nullable CaseDefinitionEntity findDeployedCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, @Nullable Integer caseDefinitionVersion, String tenantId) {
     return caseDefinitionCache.findDeployedDefinitionByKeyVersionAndTenantId(caseDefinitionKey, caseDefinitionVersion, tenantId);
   }
 
@@ -236,15 +236,15 @@ public @NullMarked class DeploymentCache {
     return decisionDefinitionCache.findDeployedDefinitionByDeploymentAndKey(deploymentId, decisionDefinitionKey);
   }
 
-  public @Nullable DecisionDefinition findDeployedDecisionDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion) {
+  public @Nullable DecisionDefinition findDeployedDecisionDefinitionByKeyAndVersion(String decisionDefinitionKey, @Nullable Integer decisionDefinitionVersion) {
     return decisionDefinitionCache.findDeployedDefinitionByKeyAndVersion(decisionDefinitionKey, decisionDefinitionVersion);
   }
 
-  public @Nullable DecisionDefinition findDeployedDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, String tenantId) {
+  public @Nullable DecisionDefinition findDeployedDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, @Nullable Integer decisionDefinitionVersion, String tenantId) {
     return decisionDefinitionCache.findDeployedDefinitionByKeyVersionAndTenantId(decisionDefinitionKey, decisionDefinitionVersion, tenantId);
   }
 
-  public @Nullable DecisionDefinition findDeployedDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, String decisionDefinitionVersionTag, String tenantId) {
+  public @Nullable DecisionDefinition findDeployedDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, @Nullable String decisionDefinitionVersionTag, String tenantId) {
     return decisionDefinitionCache.findDeployedDefinitionByKeyVersionTagAndTenantId(decisionDefinitionKey, decisionDefinitionVersionTag, tenantId);
   }
 

@@ -310,6 +310,54 @@ describe("TasksPage", () => {
       fireEvent.click(opener);
     };
 
+    const open_groups_dialog = (container) => {
+      const detail = container.querySelector("#task-details");
+      const opener = [...detail.querySelectorAll("button.task-card")].find((b) =>
+        b.textContent.includes("tasks.groups.set"),
+      );
+      fireEvent.click(opener);
+    };
+
+    it("re-reads the candidate groups after one was added", async () => {
+      engine_rest.task.add_group.mockImplementation((state) => {
+        state.api.task.add_group.value = { status: RESPONSE_STATE.SUCCESS };
+        return Promise.resolve(state.api.task.add_group.value);
+      });
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.task.identity_links, []);
+      const { getByText, container } = renderDetail();
+      open_groups_dialog(container);
+      engine_rest.task.get_identity_links.mockClear();
+
+      fireEvent.input(container.querySelector("#group_id"), {
+        target: { value: "reviewers" },
+      });
+      fireEvent.click(getByText("tasks.groups.add-group"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_identity_links).toHaveBeenCalled(),
+      );
+    });
+
+    it("re-reads the candidate groups after one was removed", async () => {
+      engine_rest.task.delete_group.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.task.identity_links, [
+        { groupId: "reviewers", type: "candidate" },
+      ]);
+      const { getByText, container } = renderDetail();
+      open_groups_dialog(container);
+      engine_rest.task.get_identity_links.mockClear();
+
+      fireEvent.click(getByText("common.delete"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_identity_links).toHaveBeenCalled(),
+      );
+    });
+
     it("claims the task via claim_task", () => {
       signal_response(state.api.task.one, sample_task({ assignee: null }));
       const { getByText, container } = renderDetail();

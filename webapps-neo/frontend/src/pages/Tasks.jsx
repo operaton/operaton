@@ -739,6 +739,15 @@ const SetGroupsButton = () => {
     close = () => document.getElementById("add_groups").close(),
     show = () => document.getElementById("add_groups").showModal(),
     group_state = useSignal(null),
+    // Both the card above and the table below read identity_links, and nothing
+    // re-read them after a change: an added or removed group only appeared
+    // after leaving the task and coming back. The dialog deliberately stays
+    // open — managing groups is usually several steps in a row.
+    refresh_groups = () =>
+      engine_rest.task.get_identity_links(
+        state,
+        state.api.task.one.value.data.id,
+      ),
     submit = (event) => {
       event.preventDefault();
       engine_rest.task
@@ -748,15 +757,21 @@ const SetGroupsButton = () => {
             state.api.task.add_group.value.status === RESPONSE_STATE.SUCCESS
           ) {
             group_state.value = "";
+            void refresh_groups();
           }
         });
     },
     delete_group = (group_id) =>
-      engine_rest.task.delete_group(
-        state,
-        state.api.task.one.value.data.id,
-        group_id,
-      );
+      void Promise.resolve(
+        engine_rest.task.delete_group(
+          state,
+          state.api.task.one.value.data.id,
+          group_id,
+        ),
+      ).then((result) => {
+        if (result?.status !== RESPONSE_STATE.SUCCESS) return;
+        void refresh_groups();
+      });
 
   return (
     <>

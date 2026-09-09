@@ -44,5 +44,6 @@ out/jreleaser
 *.zip
 sloc.txt
 /docs/superpowers
+/.worktrees
 .devenv/scripts/smoketest/screenshots/
 .skip-deploy

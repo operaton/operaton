@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,6 +29,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXException;
 
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -36,6 +38,8 @@ import org.operaton.bpm.model.xml.impl.util.DomUtil;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.DomElement;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
@@ -47,17 +51,50 @@ public abstract class AbstractModelParser {
   protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY = "javax.xml.accessExternalSchema";
   protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_ALL = "all";
 
-  private final DocumentBuilderFactory documentBuilderFactory;
+  private volatile DocumentBuilderFactory documentBuilderFactory;
   protected SchemaFactory schemaFactory;
   protected Map<String, Schema> schemas = new HashMap<>();
-  
+
   // Lock object for thread-safe validation
   private final Object validationLock = new Object();
 
+  // Lock object guarding lazy factory creation
+  private final Object factoryLock = new Object();
+
   protected AbstractModelParser() {
-    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-    configureFactory(dbf);
-    this.documentBuilderFactory = dbf;
+    // The DocumentBuilderFactory is created lazily on first use: configureFactory() and
+    // getDocumentBuilderSchema() need state that subclasses only assign in their own
+    // constructor body, which runs after this one.
+  }
+
+  private DocumentBuilderFactory getDocumentBuilderFactory() {
+    DocumentBuilderFactory dbf = documentBuilderFactory;
+    if (dbf == null) {
+      synchronized (factoryLock) {
+        dbf = documentBuilderFactory;
+        if (dbf == null) {
+          dbf = DocumentBuilderFactory.newInstance();
+          configureFactory(dbf);
+          Schema schema = getDocumentBuilderSchema();
+          if (schema != null) {
+            // Hand the DocumentBuilder a pre-compiled schema instead of a schemaSource URL,
+            // which Xerces would recompile on every parse.
+            dbf.setValidating(false);
+            dbf.setSchema(schema);
+          }
+          documentBuilderFactory = dbf;
+        }
+      }
+    }
+    return dbf;
+  }
+
+  /**
+   * Schema to apply to the {@link DocumentBuilderFactory}, or {@code null} to keep the
+   * factory's own validation configuration as set by {@link #configureFactory}.
+   */
+  protected @Nullable Schema getDocumentBuilderSchema() {
+    return null;
   }
 
   /**
@@ -124,18 +161,15 @@ public abstract class AbstractModelParser {
   protected String resolveAccessExternalSchemaProperty() {
     String systemProperty = System.getProperty(JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY);
 
-    if (systemProperty != null) {
-      return systemProperty;
-    } else {
-      return JAXP_ACCESS_EXTERNAL_SCHEMA_ALL;
-    }
+      return Objects.requireNonNullElse(systemProperty, JAXP_ACCESS_EXTERNAL_SCHEMA_ALL);
   }
 
   public ModelInstance parseModelFromStream(InputStream inputStream) {
-    DomDocument document = null;
+    DomDocument document;
 
-    synchronized(documentBuilderFactory) {
-      document = DomUtil.parseInputStream(documentBuilderFactory, inputStream);
+    DocumentBuilderFactory dbf = getDocumentBuilderFactory();
+    synchronized (dbf) {
+      document = DomUtil.parseInputStream(dbf, inputStream);
     }
 
     validateModel(document);
@@ -144,10 +178,11 @@ public abstract class AbstractModelParser {
   }
 
   public ModelInstance getEmptyModel() {
-    DomDocument document = null;
+    DomDocument document;
 
-    synchronized(documentBuilderFactory) {
-      document = DomUtil.getEmptyDocument(documentBuilderFactory);
+    DocumentBuilderFactory dbf = getDocumentBuilderFactory();
+    synchronized (dbf) {
+      document = DomUtil.getEmptyDocument(dbf);
     }
 
     return createModelInstance(document);
@@ -180,6 +215,7 @@ public abstract class AbstractModelParser {
 
   protected Schema getSchema(DomDocument document) {
     DomElement rootElement = document.getRootElement();
+    requireNonNull(rootElement);
     String namespaceURI = rootElement.getNamespaceURI();
     return schemas.get(namespaceURI);
   }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Minimal test fixture resource used by TestHelperTest#shouldReturnTheSameResolvedResourceForARealClasspathResource
+  to exercise the "resource found on classpath" branch of TestHelper.getBpmnProcessDefinitionResource.
+  Content is irrelevant; this file only needs to exist for the classloader lookup to succeed.
+-->
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             targetNamespace="http://operaton.org/examples">
+  <process id="realResourceProcess" />
+</definitions>

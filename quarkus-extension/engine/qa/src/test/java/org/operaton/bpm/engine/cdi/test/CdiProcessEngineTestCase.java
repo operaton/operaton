@@ -205,7 +205,7 @@ public abstract class CdiProcessEngineTestCase {
 
   protected String deploy(Class<?> testClass, String methodName, String[] resources) {
     if (resources != null) {
-      return TestHelper.annotationDeploymentSetUp(processEngine, resources, testClass, methodName);
+      return TestHelper.annotationDeploymentSetUp(processEngine, resources, testClass, true, methodName);
     }
     return null;
   }

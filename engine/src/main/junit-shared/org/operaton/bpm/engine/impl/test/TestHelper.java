@@ -21,6 +21,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 import org.jspecify.annotations.Nullable;
@@ -64,20 +66,24 @@ public abstract class TestHelper {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  public static final String EMPTY_LINE = "                                                                                           ";
-
   public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = List.of(
     "ACT_GE_PROPERTY",
     "ACT_GE_SCHEMA_LOG"
   );
 
-  public static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
+  private static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
 
   static {
     RESOURCE_SUFFIXES.addAll(List.of(BPMN_RESOURCE_SUFFIXES));
     RESOURCE_SUFFIXES.addAll(List.of(CMMN_RESOURCE_SUFFIXES));
     RESOURCE_SUFFIXES.addAll(List.of(DMN_RESOURCE_SUFFIXES));
   }
+
+  /**
+   * Resolving a deployment resource probes every BPMN, CMMN and DMN suffix through the
+   * classloader. The classpath does not change within a test run, so results are memoized.
+   */
+  private static final Map<String, String> BPMN_RESOURCE_NAMES = new ConcurrentHashMap<>();
 
   /**
    * @deprecated Use {@link ProcessEngineAssert} instead.
@@ -129,12 +135,8 @@ public abstract class TestHelper {
     }
   }
 
-  public static @Nullable String annotationDeploymentSetUp(ProcessEngine processEngine, String[] resources, Class<?> testClass, String methodName) {
-    return annotationDeploymentSetUp(processEngine, resources, testClass, true, methodName);
-  }
-
   public static @Nullable String annotationDeploymentSetUp(ProcessEngine processEngine, String @Nullable[] resources, Class<?> testClass,
-      boolean onMethod, @Nullable String methodName) {
+      Boolean onMethod, @Nullable String methodName) {
     if (resources != null) {
       if (resources.length == 0 && methodName != null) {
         String name = onMethod ? methodName : null;
@@ -179,6 +181,11 @@ public abstract class TestHelper {
    * The first resource matching a suffix will be returned.
    */
   public static String getBpmnProcessDefinitionResource(Class< ? > type, String name) {
+    String key = type.getName() + '#' + (name == null ? -1 : name.length()) + ':' + name;
+    return BPMN_RESOURCE_NAMES.computeIfAbsent(key, ignored -> resolveBpmnProcessDefinitionResource(type, name));
+  }
+
+  private static String resolveBpmnProcessDefinitionResource(Class<?> type, String name) {
     for (String suffix : RESOURCE_SUFFIXES) {
       String resource = createResourceName(type, name, suffix);
       InputStream inputStream = ReflectUtil.getResourceAsStream(resource);
@@ -378,7 +385,7 @@ public abstract class TestHelper {
       message.append(paRegistrationMessage);
     }
 
-    if (fail && message.length() > 0) {
+    if (fail && !message.isEmpty()) {
       fail(message.toString());
     }
 
@@ -397,17 +404,6 @@ public abstract class TestHelper {
    * will be cleared.
    *
    * @param processEngine the {@link ProcessEngine} to test
-   * @throws AssertionError if the deployment cache was not clean
-   */
-  public static void assertAndEnsureCleanDeploymentCache(ProcessEngine processEngine) {
-    assertAndEnsureCleanDeploymentCache(processEngine, true);
-  }
-
-  /**
-   * Ensures that the deployment cache is empty after a test. If not the cache
-   * will be cleared.
-   *
-   * @param processEngine the {@link ProcessEngine} to test
    * @param fail if true the method will throw an {@link AssertionError} if the deployment cache is not clean
    * @return the deployment cache summary if fail is set to false or null if deployment cache was clean
    * @throws AssertionError if the deployment cache was not clean and fail is set to true
@@ -418,7 +414,7 @@ public abstract class TestHelper {
     CachePurgeReport cachePurgeReport = processEngineConfiguration.getDeploymentCache().purgeCache();
 
     outputMessage.append(cachePurgeReport.getPurgeReportAsString());
-    if (outputMessage.length() > 0) {
+    if (!outputMessage.isEmpty()) {
       outputMessage.insert(0, "Deployment cache not clean:\n");
       LOG.error(outputMessage.toString());
 

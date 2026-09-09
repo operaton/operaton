@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
+
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -46,13 +48,7 @@ public abstract class Parse extends DefaultHandler {
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  protected static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
-  protected static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-  protected static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
-
   protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA = "http://javax.xml.XMLConstants/property/accessExternalSchema";
-  protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY = "javax.xml.accessExternalSchema";
-  protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_ALL = "all";
 
   protected Parser parser;
   protected String name;
@@ -126,10 +122,7 @@ public abstract class Parse extends DefaultHandler {
     this.streamSource = streamSource;
   }
 
-  public void setSchemaResource(String schemaResource) {
-    boolean schemaResourceSet = schemaResource != null;
-    parser.enableSchemaValidation(schemaResourceSet);
-
+  public void setSchemaResource(@Nullable String schemaResource) {
     this.schemaResource = schemaResource;
   }
 
@@ -137,12 +130,8 @@ public abstract class Parse extends DefaultHandler {
     try {
       InputStream inputStream = streamSource.getInputStream();
 
-      SAXParser saxParser = parser.getSaxParser();
+      SAXParser saxParser = parser.getSaxParser(schemaResource);
       trySetAccessExternalSchema(saxParser);
-      if (schemaResource != null) {
-        saxParser.setProperty(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-        saxParser.setProperty(JAXP_SCHEMA_SOURCE, schemaResource);
-      }
       saxParser.parse(inputStream, new ParseHandler(this));
     } catch (Exception e) {
       throw LOG.parsingFailureException(name, e);
@@ -160,21 +149,8 @@ public abstract class Parse extends DefaultHandler {
     }
   }
 
-  /*
-   * JAXP allows users to override the default value via system properties and
-   * a central properties file (see https://docs.oracle.com/javase/tutorial/jaxp/properties/scope.html).
-   * However, both are overridden by an explicit configuration in code, as we apply it.
-   * Since we want users to customize the value, we take the system property into account.
-   * The properties file is not supported at the moment.
-   */
   protected String resolveAccessExternalSchemaProperty() {
-    String systemProperty = System.getProperty(JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY);
-
-    if (systemProperty != null) {
-      return systemProperty;
-    } else {
-      return JAXP_ACCESS_EXTERNAL_SCHEMA_ALL;
-    }
+    return Parser.resolveAccessExternalSchemaProperty();
   }
 
   public Element getRootElement() {

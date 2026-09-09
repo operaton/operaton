@@ -31,10 +31,6 @@ public class ResourceStreamSource implements StreamSource {
   String resource;
   ClassLoader classLoader;
 
-  public ResourceStreamSource(String resource) {
-    this.resource = resource;
-  }
-
   public ResourceStreamSource(String resource, ClassLoader classLoader) {
     this.resource = resource;
     this.classLoader = classLoader;
@@ -42,11 +38,11 @@ public class ResourceStreamSource implements StreamSource {
 
   @Override
   public InputStream getInputStream() {
-    InputStream inputStream = null;
+    InputStream inputStream;
     if (classLoader == null) {
       inputStream = ReflectUtil.getResourceAsStream(resource);
     } else {
-      classLoader.getResourceAsStream(resource);
+      inputStream = classLoader.getResourceAsStream(resource);
     }
     ensureNotNull("resource '%s' doesn't exist".formatted(resource), "inputStream", inputStream);
     return inputStream;

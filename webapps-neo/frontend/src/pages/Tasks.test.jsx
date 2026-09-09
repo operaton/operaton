@@ -187,6 +187,57 @@ describe("TasksPage", () => {
     });
   });
 
+  describe("returning to the list", () => {
+    const rerenderPage = (r, state) =>
+      r.rerender(h(AppState.Provider, { value: state }, h(TasksPage, {})));
+
+    it("reloads the list when a task is left, so a completed one disappears", () => {
+      mockParams = { task_id: "t1" };
+      const r = renderPage(state);
+      signal_response(state.api.task.list, [
+        sample_task({ id: "t1" }),
+        sample_task({ id: "t2" }),
+      ]);
+      engine_rest.task.get_tasks.mockClear();
+
+      mockParams = {};
+      rerenderPage(r, state);
+
+      expect(engine_rest.task.get_tasks).toHaveBeenCalled();
+      const [, , , firstResult] = engine_rest.task.get_tasks.mock.lastCall;
+      expect(firstResult).toBe(0);
+    });
+
+    it("keeps however many entries were loaded, so 'load more' is not undone", () => {
+      mockParams = { task_id: "t1" };
+      const r = renderPage(state);
+      signal_response(
+        state.api.task.list,
+        Array.from({ length: 25 }, (_, i) => sample_task({ id: `t${i}` })),
+      );
+      engine_rest.task.get_tasks.mockClear();
+
+      mockParams = {};
+      rerenderPage(r, state);
+
+      const [, , , firstResult, maxResults] =
+        engine_rest.task.get_tasks.mock.lastCall;
+      expect(firstResult).toBe(0);
+      expect(maxResults).toBe(25);
+    });
+
+    it("does not reload when a task is opened", () => {
+      mockParams = {};
+      const r = renderPage(state);
+      engine_rest.task.get_tasks.mockClear();
+
+      mockParams = { task_id: "t1" };
+      rerenderPage(r, state);
+
+      expect(engine_rest.task.get_tasks).not.toHaveBeenCalled();
+    });
+  });
+
   describe("special task_id routes", () => {
     it("renders the StartProcessList for /tasks/start", () => {
       mockParams = { task_id: "start" };

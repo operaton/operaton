@@ -122,6 +122,9 @@
 }
 
 @layer custom {
+  /* Its own full-width strip above #top, never a child of it: #top is a flex
+     row, and a notice among its children shares the line with the logo and the
+     navigation, squeezing them and growing the header instead. */
   #release-warning {
     text-align: center;
     font-style: italic;
@@ -130,6 +133,18 @@
     padding: 0.2em;
     background-color: #fff4f2;
     color: #bb2511;
+  }
+
+  /* Half again as large where there is room for it, so the notice reads as a
+     warning rather than as fine print. The padding is in em, so the height
+     follows the font and needs no second value kept in step. The larger size
+     stops at the breakpoint on purpose: carried down to a phone the sentence
+     wraps over several lines and takes a large share of the screen, which is
+     the very thing this strip was moved out of the header to stop doing. */
+  @media (width > 70em) {
+    #release-warning {
+      font-size: calc(var(--small-font-size) * 1.5);
+    }
   }
 }
 

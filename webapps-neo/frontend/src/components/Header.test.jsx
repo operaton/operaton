@@ -56,6 +56,15 @@ describe("Header", () => {
   });
   afterEach(cleanup);
 
+  it("keeps the release warning out of the header row", () => {
+    // #top is a flex row: a notice among its children shares the line with the
+    // logo and the navigation and grows the header instead of spanning its own.
+    const { container } = renderHeader(state);
+    const warning = container.querySelector("#release-warning");
+    expect(warning).not.toBeNull();
+    expect(warning.closest("#top")).toBeNull();
+  });
+
   it("renders the main navigation links with the right hrefs", () => {
     const { container } = renderHeader(state);
     const nav = container.querySelector("#primary-navigation");

@@ -108,6 +108,7 @@ public final class ReflectUtil {
     return Class.forName(className, true, classLoader);
   }
 
+  @SuppressWarnings("unchecked")
   public static <T> Class<? extends T> loadClass(String className, @Nullable ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {
     if(customClassloader != null) {
       return (Class<? extends T>) customClassloader.loadClass(className);
@@ -206,7 +207,7 @@ public final class ReflectUtil {
 
   public static Object invoke(Object target, String methodName, Object[] args) {
     try {
-      Class<? extends Object> clazz = target.getClass();
+      Class<?> clazz = target.getClass();
       Method method = findMethod(clazz, methodName, Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new));
       method.setAccessible(true);
       return method.invoke(target, args);
@@ -352,10 +353,10 @@ public final class ReflectUtil {
 
   private static String buildSetterName(String fieldName) {
     return "set" + Character.toTitleCase(fieldName.charAt(0)) +
-        fieldName.substring(1, fieldName.length());
+        fieldName.substring(1);
   }
 
-  private static Method findMethod(Class< ? extends Object> clazz, String methodName, Class< ? >[] args) {
+  private static Method findMethod(Class<? extends Object> clazz, String methodName, Class< ? >[] args) {
     for (Method method : clazz.getDeclaredMethods()) {
       if ( method.getName().equals(methodName)
            && matches(method.getParameterTypes(), args)
@@ -373,7 +374,7 @@ public final class ReflectUtil {
   public static Object instantiate(String className, Object[] args) {
     Class<?> clazz = loadClass(className);
     Constructor<?> constructor = findMatchingConstructor(clazz, args);
-    ensureNotNull("couldn't find constructor for '%s' with args %s".formatted(className, List.of(args)), "constructor", constructor);
+    ensureNotNull("couldn't find constructor for '%s' with args %s".formatted(className, Arrays.asList(args)), "constructor", constructor);
     try {
       return constructor.newInstance(args);
     } catch (Exception e) {

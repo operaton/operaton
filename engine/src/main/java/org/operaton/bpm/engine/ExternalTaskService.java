@@ -19,6 +19,7 @@ package org.operaton.bpm.engine;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -40,7 +41,7 @@ import org.operaton.bpm.engine.externaltask.UpdateExternalTaskRetriesSelectBuild
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-public interface ExternalTaskService {
+public @NullMarked interface ExternalTaskService {
 
   /**
    * Calls method fetchAndLock(maxTasks, workerId, usePriority), where usePriority is false.
@@ -156,7 +157,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void complete(String externalTaskId, String workerId, Map<String, Object> variables);
+  void complete(String externalTaskId, String workerId, @Nullable Map<String, Object> variables);
 
   /**
    * <p>Completes an external task on behalf of a worker and submits variables
@@ -224,7 +225,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleFailure(String externalTaskId, String workerId, String errorMessage, int retries, long retryTimeout);
+  void handleFailure(String externalTaskId, String workerId, @Nullable String errorMessage, int retries, long retryTimeout);
 
   /**
    * <p>Signals that an external task could not be successfully executed.
@@ -256,7 +257,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleFailure(String externalTaskId, String workerId, String errorMessage, String errorDetails, int retries, long retryTimeout);
+  void handleFailure(String externalTaskId, String workerId, @Nullable String errorMessage, @Nullable String errorDetails, int retries, long retryTimeout);
 
   /**
    * <p>Signals that an external task could not be successfully executed.
@@ -294,7 +295,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleFailure(String externalTaskId, String workerId, String errorMessage, String errorDetails, int retries, long retryDuration, Map<String, Object> variables, Map<String, Object> localVariables);
+  void handleFailure(String externalTaskId, String workerId, @Nullable String errorMessage, @Nullable String errorDetails, int retries, long retryDuration, @Nullable Map<String, Object> variables, @Nullable Map<String, Object> localVariables);
 
   /**
    * <p>Signals that an business error appears, which should be handled by the process engine.
@@ -335,7 +336,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleBpmnError(String externalTaskId, String workerId, String errorCode, String errorMessage);
+  void handleBpmnError(String externalTaskId, String workerId, String errorCode, @Nullable String errorMessage);
 
 
   /**
@@ -358,7 +359,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleBpmnError(String externalTaskId, String workerId, String errorCode, String errorMessage, Map<String, Object> variables);
+  void handleBpmnError(String externalTaskId, String workerId, String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables);
 
   /**
    * Unlocks an external task instance.

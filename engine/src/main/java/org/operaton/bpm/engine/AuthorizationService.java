@@ -19,6 +19,7 @@ package org.operaton.bpm.engine;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -130,7 +131,7 @@ public @NullMarked interface AuthorizationService {
    * {@link Resources#HISTORIC_TASK Historic Task} or {@link Resources#HISTORIC_PROCESS_INSTANCE
    * Historic Process Instance} and historic instance permissions are disabled.
    */
-  boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource);
+  boolean isUserAuthorized(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource);
 
   /**
    * <p>Allows performing an authorization check.</p>
@@ -146,6 +147,6 @@ public @NullMarked interface AuthorizationService {
    * {@link Resources#HISTORIC_TASK Historic Task} or {@link Resources#HISTORIC_PROCESS_INSTANCE
    * Historic Process Instance} and historic instance permissions are disabled.
    */
-  boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId);
+  boolean isUserAuthorized(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId);
 
 }

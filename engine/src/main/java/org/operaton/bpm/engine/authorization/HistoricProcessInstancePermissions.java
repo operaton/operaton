@@ -44,10 +44,10 @@ public enum HistoricProcessInstancePermissions implements Permission {
   /** Indicates that READ interactions are permitted. */
   READ("READ", 2);
 
-  protected static final Resource[] RESOURCES = { Resources.HISTORIC_PROCESS_INSTANCE };
+  static final Resource[] RESOURCES = { Resources.HISTORIC_PROCESS_INSTANCE };
 
-  protected String name;
-  protected int id;
+  final String name;
+  final int id;
 
   HistoricProcessInstancePermissions(String name, int id) {
     this.name = name;

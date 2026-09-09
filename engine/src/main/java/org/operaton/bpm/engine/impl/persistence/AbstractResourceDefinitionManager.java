@@ -30,12 +30,12 @@ public @NullMarked interface AbstractResourceDefinitionManager<T> {
 
   @Nullable T findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId);
 
-  @Nullable T findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId);
+  @Nullable T findDefinitionByKeyVersionAndTenantId(String definitionKey, @Nullable Integer definitionVersion, @Nullable String tenantId);
 
   @Nullable T findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey);
 
   @Nullable T getCachedResourceDefinitionEntity(String definitionId);
 
-  @Nullable T findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId);
+  @Nullable T findDefinitionByKeyVersionTagAndTenantId(String definitionKey, @Nullable String definitionVersionTag, @Nullable String tenantId);
 
 }

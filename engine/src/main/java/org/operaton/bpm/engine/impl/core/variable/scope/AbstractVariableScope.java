@@ -315,13 +315,13 @@ public abstract @NullMarked class AbstractVariableScope implements Serializable,
     }
   }
 
-  public void setVariable(String variableName, Object value, boolean skipJavaSerializationFormatCheck) {
+  public void setVariable(String variableName, @Nullable Object value, boolean skipJavaSerializationFormatCheck) {
     TypedValue typedValue = Variables.untypedValue(value);
     setVariable(variableName, typedValue, getSourceActivityVariableScope(), skipJavaSerializationFormatCheck);
   }
 
   @Override
-  public void setVariable(String variableName, Object value) {
+  public void setVariable(String variableName, @Nullable Object value) {
     setVariable(variableName, value, false);
   }
 
@@ -435,13 +435,13 @@ public abstract @NullMarked class AbstractVariableScope implements Serializable,
     }
   }
 
-  public void setVariableLocal(String variableName, Object value, boolean skipJavaSerializationFormatCheck) {
+  public void setVariableLocal(String variableName, @Nullable Object value, boolean skipJavaSerializationFormatCheck) {
     TypedValue typedValue = Variables.untypedValue(value);
     setVariableLocal(variableName, typedValue, getSourceActivityVariableScope(), skipJavaSerializationFormatCheck);
   }
 
   @Override
-  public void setVariableLocal(String variableName, Object value) {
+  public void setVariableLocal(String variableName, @Nullable Object value) {
     setVariableLocal(variableName, value, false);
   }
 

@@ -75,7 +75,7 @@ public @NullMarked class OperatonFormDefinitionManager extends AbstractManager
 
   @Override
   public @Nullable OperatonFormDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey,
-      Integer definitionVersion, @Nullable String tenantId) {
+      @Nullable Integer definitionVersion, @Nullable String tenantId) {
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("operatonFormDefinitionVersion", definitionVersion);
@@ -111,7 +111,7 @@ public @NullMarked class OperatonFormDefinitionManager extends AbstractManager
 
   @Override
   public @Nullable OperatonFormDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey,
-      String definitionVersionTag, @Nullable String tenantId) {
+      @Nullable String definitionVersionTag, @Nullable String tenantId) {
     throw new UnsupportedOperationException(
         "Currently finding Operaton Form definition by version tag and tenant is not implemented.");
   }

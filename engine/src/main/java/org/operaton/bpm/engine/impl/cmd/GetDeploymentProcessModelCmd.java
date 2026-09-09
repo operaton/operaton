@@ -27,6 +27,9 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * Gives access to a deployed process model, e.g., a BPMN 2.0 XML file, through
  * a stream of bytes.
@@ -49,6 +52,8 @@ public @NullMarked class GetDeploymentProcessModelCmd implements Command<InputSt
             .getProcessEngineConfiguration()
             .getDeploymentCache()
             .findDeployedProcessDefinitionById(processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);

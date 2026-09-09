@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -31,10 +32,12 @@ import org.operaton.bpm.engine.impl.tree.ActivityExecutionHierarchyWalker;
 import org.operaton.bpm.engine.impl.tree.ActivityExecutionMappingCollector;
 import org.operaton.bpm.engine.impl.tree.OutputVariablesPropagator;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Helper class handling the propagation of BPMN Errors.
  */
-public final class BpmnExceptionHandler {
+public final @NullMarked class BpmnExceptionHandler {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -57,7 +60,7 @@ public final class BpmnExceptionHandler {
   }
 
 
-  protected static void propagateExceptionAsError(Exception exception, ActivityExecution execution) throws Exception {
+  private static void propagateExceptionAsError(Exception exception, ActivityExecution execution) throws Exception {
     if (isProcessEngineExceptionWithoutCause(exception) || isTransactionNotActive()) {
       throw exception;
     }
@@ -66,11 +69,11 @@ public final class BpmnExceptionHandler {
     }
   }
 
-  protected static boolean isTransactionNotActive() {
+  private static boolean isTransactionNotActive() {
     return !Context.getCommandContext().getTransactionContext().isTransactionActive();
   }
 
-  protected static boolean isProcessEngineExceptionWithoutCause(Exception exception) {
+  private static boolean isProcessEngineExceptionWithoutCause(Exception exception) {
     return exception instanceof ProcessEngineException && exception.getCause() == null;
   }
 
@@ -83,7 +86,7 @@ public final class BpmnExceptionHandler {
    * @return the BpmnError that was the cause of this exception or null if no
    *         BpmnError was found
    */
-  protected static @Nullable BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
+  private static @Nullable BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
     if (e instanceof BpmnError bpmnError) {
       return bpmnError;
     } else if (e.getCause() == null) {
@@ -97,7 +100,7 @@ public final class BpmnExceptionHandler {
     propagateError(error.getErrorCode(), error.getMessage(), null, execution);
   }
 
-  public static void propagateError(String errorCode, String errorMessage, @Nullable Exception origException, ActivityExecution execution) throws Exception {
+  public static void propagateError(@Nullable String errorCode, String errorMessage, @Nullable Exception origException, ActivityExecution execution) throws Exception {
 
     ActivityExecutionHierarchyWalker walker = new ActivityExecutionHierarchyWalker(execution);
 
@@ -138,9 +141,10 @@ public final class BpmnExceptionHandler {
       }
     }
     else {
-
       ErrorEventDefinition errorDefinition = errorDeclarationFinder.getErrorEventDefinition();
+      requireNonNull(errorDefinition);
       PvmExecutionImpl errorHandlingExecution = activityExecutionMappingCollector.getExecutionForScope(errorHandlingActivity.getEventScope());
+      requireNonNull(errorHandlingExecution);
 
       if(errorDefinition.getErrorCodeVariable() != null) {
         errorHandlingExecution.setVariable(errorDefinition.getErrorCodeVariable(), errorCode);

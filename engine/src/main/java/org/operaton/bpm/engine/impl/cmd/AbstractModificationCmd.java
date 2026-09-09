@@ -64,7 +64,7 @@ public abstract class AbstractModificationCmd <T> implements Command<T> {
       ProcessDefinition processDefinition,
       int numInstances,
       boolean async,
-      String annotation) {
+      @Nullable String annotation) {
 
     List<PropertyChange> propertyChanges = new ArrayList<>();
     propertyChanges.add(new PropertyChange("nrOfInstances",

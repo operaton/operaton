@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.delegate.ScriptInvocation;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -63,7 +64,7 @@ public class ScriptCondition implements Condition {
     Object result = invocation.getInvocationResult();
 
     ensureNotNull("condition script returns null", "result", result);
-    ensureInstanceOf("condition script returns non-Boolean", "result", result, Boolean.class);
+    ensureInstanceOf("condition script returns non-Boolean", "result", requireNonNull(result), Boolean.class);
 
     return (Boolean) result;
   }

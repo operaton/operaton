@@ -21,8 +21,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.AbstractDefinitionDeployer;
@@ -71,7 +73,7 @@ import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIX
  * @author Joram Barrez
  * @author Bernd Ruecker
  */
-public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEntity> {
+public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEntity> {
 
   public static final BpmnParseLogger LOG = ProcessEngineLogger.BPMN_PARSE_LOGGER;
 
@@ -106,7 +108,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
     bpmnParse.execute();
 
     if (!properties.contains(JOB_DECLARATIONS_PROPERTY)) {
-      properties.set(JOB_DECLARATIONS_PROPERTY, new HashMap<String, List<JobDeclaration<?, ?>>>());
+      properties.set(JOB_DECLARATIONS_PROPERTY, new HashMap<>());
     }
     properties.get(JOB_DECLARATIONS_PROPERTY).putAll(bpmnParse.getJobDeclarations());
 
@@ -114,12 +116,12 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   }
 
   @Override
-  protected ProcessDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  protected @Nullable ProcessDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     return getProcessDefinitionManager().findProcessDefinitionByDeploymentAndKey(deploymentId, definitionKey);
   }
 
   @Override
-  protected ProcessDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  protected @Nullable ProcessDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
     return getProcessDefinitionManager().findLatestProcessDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 
@@ -136,6 +138,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   @Override
   protected void definitionAddedToDeploymentCache(DeploymentEntity deployment, ProcessDefinitionEntity definition, Properties properties) {
     List<JobDeclaration<?, ?>> declarations = properties.get(JOB_DECLARATIONS_PROPERTY).get(definition.getKey());
+    declarations = declarations != null ? declarations : List.of();
 
     updateJobDeclarations(declarations, definition, deployment.isNew());
 
@@ -155,7 +158,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   }
 
   @Override
-  protected void handlePersistedDefinition(ProcessDefinitionEntity definition, ProcessDefinitionEntity persistedDefinition, DeploymentEntity deployment, Properties properties) {
+  protected void handlePersistedDefinition(ProcessDefinitionEntity definition, @Nullable ProcessDefinitionEntity persistedDefinition, DeploymentEntity deployment, Properties properties) {
     //check if persisted definition is not null, since the process definition can be deleted by the user
     //in such cases we don't want to handle them
     //we can't do this in the parent method, since other siblings want to handle them like {@link DecisionDefinitionDeployer}
@@ -165,7 +168,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   }
 
   protected void updateJobDeclarations(List<JobDeclaration<?, ?>> jobDeclarations, ProcessDefinitionEntity processDefinition, boolean isNewDeployment) {
-    if(jobDeclarations == null || jobDeclarations.isEmpty()) {
+    if(jobDeclarations.isEmpty()) {
       return;
     }
 
@@ -187,11 +190,11 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
       for (JobDefinition jobDefinitionEntity : existingDefinitions) {
 
         // activity id needs to match
-        boolean activityIdMatches = jobDeclaration.getActivityId().equals(jobDefinitionEntity.getActivityId());
+        boolean activityIdMatches = Objects.equals(jobDeclaration.getActivityId(), jobDefinitionEntity.getActivityId());
         // handler type (e.g. 'async-continuation' needs to match
-        boolean handlerTypeMatches = jobDeclaration.getJobHandlerType().equals(jobDefinitionEntity.getJobType());
+        boolean handlerTypeMatches = Objects.equals(jobDeclaration.getJobHandlerType(), jobDefinitionEntity.getJobType());
         // configuration (e.g. 'async-before', 'async-after' needs to match
-        boolean configurationMatches = jobDeclaration.getJobConfiguration().equals(jobDefinitionEntity.getJobConfiguration());
+        boolean configurationMatches = Objects.equals(jobDeclaration.getJobConfiguration(), jobDefinitionEntity.getJobConfiguration());
 
         if(activityIdMatches && handlerTypeMatches && configurationMatches) {
           jobDeclaration.setJobDefinitionId(jobDefinitionEntity.getId());
@@ -223,7 +226,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
    * (timer start event, message start event). The default behavior is to remove the old
    * subscriptions and add new ones for the new deployed process definitions.
    */
-  protected void adjustStartEventSubscriptions(ProcessDefinitionEntity newLatestProcessDefinition, ProcessDefinitionEntity oldLatestProcessDefinition) {
+  protected void adjustStartEventSubscriptions(ProcessDefinitionEntity newLatestProcessDefinition, @Nullable ProcessDefinitionEntity oldLatestProcessDefinition) {
     removeObsoleteTimers(newLatestProcessDefinition);
     removeObsoleteEventSubscriptions(newLatestProcessDefinition, oldLatestProcessDefinition);
 
@@ -251,7 +254,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
     }
   }
 
-  protected void removeObsoleteEventSubscriptions(ProcessDefinitionEntity newLatestProcessDefinition, ProcessDefinitionEntity latestProcessDefinition) {
+  protected void removeObsoleteEventSubscriptions(ProcessDefinitionEntity newLatestProcessDefinition, @Nullable ProcessDefinitionEntity latestProcessDefinition) {
     List<EventSubscriptionEntity> orphanSubscriptions = getOrphanSubscriptionEvents(newLatestProcessDefinition);
     if(!orphanSubscriptions.isEmpty()) { // remove orphan subscriptions if any
       for (EventSubscriptionEntity eventSubscriptionEntity : orphanSubscriptions) {
@@ -270,11 +273,10 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   protected List<EventSubscriptionEntity> getPreviousSubscriptionEvents(ProcessDefinitionEntity latestProcessDefinition) {
     EventSubscriptionManager eventSubscriptionManager = getEventSubscriptionManager();
 
-    List<EventSubscriptionEntity> subscriptionsToDelete = new ArrayList<>();
 
     List<EventSubscriptionEntity> messageEventSubscriptions = eventSubscriptionManager
         .findEventSubscriptionsByConfiguration(EventType.MESSAGE.name(), latestProcessDefinition.getId());
-    subscriptionsToDelete.addAll(messageEventSubscriptions);
+    List<EventSubscriptionEntity> subscriptionsToDelete = new ArrayList<>(messageEventSubscriptions);
 
     List<EventSubscriptionEntity> signalEventSubscriptions = eventSubscriptionManager
         .findEventSubscriptionsByConfiguration(EventType.SIGNAL.name(), latestProcessDefinition.getId());
@@ -356,7 +358,7 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
     return subscriptionForSameMessageName != null && !getDbEntityManager().isDeleted(subscriptionForSameMessageName);
   }
 
-  protected boolean hasTenantId(EventSubscriptionEntity cachedSubscription, String tenantId) {
+  protected boolean hasTenantId(EventSubscriptionEntity cachedSubscription, @Nullable String tenantId) {
     if(tenantId == null) {
       return cachedSubscription.getTenantId() == null;
     } else {
@@ -397,19 +399,17 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   }
 
   protected void addAuthorizationsFromIterator(Set<Expression> exprSet, ProcessDefinitionEntity processDefinition, ExprType exprType) {
-    if (exprSet != null) {
-      for (Expression expr : exprSet) {
-        IdentityLinkEntity identityLink = new IdentityLinkEntity();
-        identityLink.setProcessDef(processDefinition);
-        if (exprType.equals(ExprType.USER)) {
-          identityLink.setUserId(expr.toString());
-        } else if (exprType.equals(ExprType.GROUP)) {
-          identityLink.setGroupId(expr.toString());
-        }
-        identityLink.setType(IdentityLinkType.CANDIDATE);
-        identityLink.setTenantId(processDefinition.getTenantId());
-        identityLink.insert();
+    for (Expression expr : exprSet) {
+      IdentityLinkEntity identityLink = new IdentityLinkEntity();
+      identityLink.setProcessDef(processDefinition);
+      if (exprType.equals(ExprType.USER)) {
+        identityLink.setUserId(expr.toString());
+      } else if (exprType.equals(ExprType.GROUP)) {
+        identityLink.setGroupId(expr.toString());
       }
+      identityLink.setType(IdentityLinkType.CANDIDATE);
+      identityLink.setTenantId(processDefinition.getTenantId());
+      identityLink.insert();
     }
   }
 

@@ -22,7 +22,8 @@ jobs:
     runs-on: ubuntu-slim
     permissions:
       contents: read
-      issues: write
+      issues: read           # listForRepo only; the greeting goes on a PR
+      pull-requests: write   # commenting on a PR needs this, issues: write is not enough
     # This job intentionally uses pull_request_target only for metadata reads and comments.
     # Do not check out or execute PR code here.
     # Only run for PRs from forks (different repository) and not from operaton/operaton
@@ -153,6 +154,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+      pull-requests: write   # this job also comments on PRs (issue_comment fires for both)
     if: |
       github.event_name == 'issue_comment' && 
       github.event.action == 'created'

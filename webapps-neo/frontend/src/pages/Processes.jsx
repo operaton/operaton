@@ -1234,6 +1234,7 @@ const InstanceVariables = () => {
     edit_value = useSignal(""),
     edit_value_info = useSignal(null),
     delete_name = useSignal(null),
+    edit_scope = useSignal(""),
     // Live and historic variables live in separate signals, each holding a
     // single shape (live: object map; historic: array). Read the one for the
     // current mode and render once it has loaded — no cross-shape guard needed.
@@ -1265,6 +1266,7 @@ const InstanceVariables = () => {
     edit_type.value = "String";
     edit_value.value = "";
     edit_value_info.value = null;
+    edit_scope.value = "";
     edit_open.value = true;
   };
 
@@ -1274,24 +1276,47 @@ const InstanceVariables = () => {
     edit_type.value = type ?? "String";
     edit_value.value = variable_edit_value(type, value);
     edit_value_info.value = value_info ?? null;
+    edit_scope.value = "";
     edit_open.value = true;
   };
 
+  // Every running activity instance is a scope a variable can belong to.
+  const scopes = flatten_activity_instances(
+    state.api.process.instance.activity_instances.value?.data,
+  )
+    .filter((node) => node.executionIds?.length)
+    .map((node) => ({
+      execution_id: node.executionIds[0],
+      label: node.activityName || node.activityId,
+    }));
+
   const save_variable = async () => {
-    await engine_rest.process_instance.set_variable(
-      state,
-      params.selection_id,
-      edit_name.value,
-      {
-        value: coerce_variable_value(edit_type.value, edit_value.value),
-        type: edit_type.value,
-        // An Object variable must go back with the serialization it came with,
-        // or the engine cannot read it again.
-        ...(edit_type.value === "Object" && edit_value_info.value
-          ? { valueInfo: edit_value_info.value }
-          : {}),
-      },
-    );
+    const body = {
+      value: coerce_variable_value(edit_type.value, edit_value.value),
+      type: edit_type.value,
+      // An Object variable must go back with the serialization it came with,
+      // or the engine cannot read it again.
+      ...(edit_type.value === "Object" && edit_value_info.value
+        ? { valueInfo: edit_value_info.value }
+        : {}),
+    };
+    // An empty scope means the process instance itself, which is where a
+    // variable belongs unless a parallel branch needs its own.
+    if (edit_scope.value) {
+      await engine_rest.execution.set_local_variable(
+        state,
+        edit_scope.value,
+        edit_name.value,
+        body,
+      );
+    } else {
+      await engine_rest.process_instance.set_variable(
+        state,
+        params.selection_id,
+        edit_name.value,
+        body,
+      );
+    }
     edit_open.value = false;
     load();
   };
@@ -1399,6 +1424,24 @@ const InstanceVariables = () => {
               ))}
             </select>
           </label>
+          {edit_new.value && scopes.length > 0 && (
+            <label>
+              {t("processes.variables.scope")}
+              <select
+                value={edit_scope.value}
+                onChange={(e) => (edit_scope.value = e.target.value)}
+              >
+                <option value="">
+                  {t("processes.variables.scope-instance")}
+                </option>
+                {scopes.map((scope) => (
+                  <option key={scope.execution_id} value={scope.execution_id}>
+                    {scope.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           {variable_input_type(edit_type.value) === "none" ? null : (
             <label>
               {t("common.value")}

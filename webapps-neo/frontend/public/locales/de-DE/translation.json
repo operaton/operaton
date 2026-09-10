@@ -288,6 +288,8 @@
       "add": "Anhang hinzufügen",
       "description": "Beschreibung",
       "file": "Datei",
+      "choose": "Auswählen…",
+      "none-chosen": "Keine Datei ausgewählt",
       "upload": "Hochladen"
     }
   },

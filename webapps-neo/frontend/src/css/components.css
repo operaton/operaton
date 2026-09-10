@@ -1697,3 +1697,23 @@ nav:has(> .breadcrumbs) {
 }
 
 /* migrations page */
+
+/* Attachments: the native file input is replaced by a label styled as a button,
+   with the chosen file name beside it. The input itself stays in the DOM, hidden,
+   so the file dialog and assistive technology keep working. */
+.task-attachments .file-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.task-attachments .file-picker .button {
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.task-attachments .file-name {
+  color: var(--text-2);
+  font-size: var(--small-font-size);
+  overflow-wrap: anywhere;
+}

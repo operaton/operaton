@@ -297,7 +297,9 @@
       "createdBefore": "createdBefore",
       "createdAfter": "createdAfter",
       "active": "active",
-      "suspended": "suspended"
+      "suspended": "suspended",
+      "processVariables": "Process variable",
+      "taskVariables": "Task variable"
     },
     "attachments": {
       "empty": "No attachments.",
@@ -937,7 +939,19 @@
     "duplicate": "Duplicate",
     "duplicate_suffix": "(copy)",
     "share_link_copied": "Link copied",
-    "empty": "No saved filters yet."
+    "empty": "No saved filters yet.",
+    "variable_name": "Variable name",
+    "variable_operator": "Comparison",
+    "variable_operators": {
+      "eq": "is",
+      "neq": "is not",
+      "gt": "greater than",
+      "gteq": "greater than or equal",
+      "lt": "less than",
+      "lteq": "less than or equal",
+      "like": "contains",
+      "notLike": "does not contain"
+    }
   },
   "login": {
     "title": "Login",

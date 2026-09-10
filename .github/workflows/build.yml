@@ -212,11 +212,11 @@ jobs:
           path: ${{ github.workspace }}/**/target/surefire-reports/**
           retention-days: 30
       - name: Stage build output for Sonar analysis
-        if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
         shell: bash
         run: find . -type d -name target -not -path '*/node_modules/*' -print0 | tar -czf /tmp/sonar-workspace.tar.gz --null -T -
       - name: Upload Sonar workspace artifact
-        if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sonar-workspace
@@ -253,7 +253,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
     steps:
       - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

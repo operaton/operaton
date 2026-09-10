@@ -47,6 +47,10 @@
       <artifactId>operaton-identity-ldap</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.operaton.bpm.identity</groupId>
+      <artifactId>operaton-identity-scim</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.bpm.springboot</groupId>
       <artifactId>operaton-bpm-spring-boot-starter-rest</artifactId>
     </dependency>

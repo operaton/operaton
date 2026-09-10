@@ -29,9 +29,11 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin;
 import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
+import org.operaton.bpm.identity.impl.scim.plugin.ScimIdentityProviderPlugin;
 import org.operaton.bpm.run.property.OperatonBpmRunAdministratorAuthorizationProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
+import org.operaton.bpm.run.property.OperatonBpmRunScimProperties;
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
@@ -44,6 +46,12 @@ public class OperatonBpmRunConfiguration {
   @ConditionalOnProperty(name = "enabled", havingValue = "true", prefix = OperatonBpmRunLdapProperties.PREFIX)
   public LdapIdentityProviderPlugin ldapIdentityProviderPlugin(OperatonBpmRunProperties properties) {
     return properties.getLdap();
+  }
+
+  @Bean
+  @ConditionalOnProperty(name = "enabled", havingValue = "true", prefix = OperatonBpmRunScimProperties.PREFIX)
+  public ScimIdentityProviderPlugin scimIdentityProviderPlugin(OperatonBpmRunProperties properties) {
+    return properties.getScim();
   }
 
   @Bean

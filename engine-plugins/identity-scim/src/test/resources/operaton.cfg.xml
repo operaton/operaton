@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="processEngineConfiguration" class="org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+  
+    <property name="processEngineName" value="ScimIdentityServiceTest-engine" />
+  
+    <property name="jdbcUrl" value="jdbc:h2:mem:ScimIdentityServiceTest;DB_CLOSE_DELAY=1000" />
+    <property name="jdbcDriver" value="org.h2.Driver" />
+    <property name="jdbcUsername" value="sa" />
+    <property name="jdbcPassword" value="" />
+  
+    <!-- Database configurations -->
+    <property name="history" value="audit" />
+    <property name="databaseSchemaUpdate" value="create-drop" />
+    
+    <!-- job executor configurations -->
+    <property name="jobExecutorActivate" value="false" />
+    
+    <property name="createDiagramOnDeploy" value="true" />
+    <property name="enforceHistoryTimeToLive" value="false" />
+    
+    <property name="processEnginePlugins">
+      <list>
+        <ref bean="scimIdentityProviderPlugin" />
+      </list>
+    </property>
+    
+  </bean>
+  
+  <bean id="scimIdentityProviderPlugin" class="org.operaton.bpm.identity.impl.scim.plugin.ScimIdentityProviderPlugin">
+  
+    <property name="serverUrl" value="http://localhost:8443" />
+    
+  </bean>
+
+</beans>

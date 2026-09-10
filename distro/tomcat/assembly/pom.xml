@@ -94,6 +94,10 @@
       <artifactId>operaton-identity-ldap</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.operaton.bpm.identity</groupId>
+      <artifactId>operaton-identity-scim</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
     </dependency>

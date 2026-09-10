@@ -1,0 +1,176 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-engine-plugins</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.operaton.bpm.identity</groupId>
+  <artifactId>operaton-identity-scim</artifactId>
+  <packaging>jar</packaging>
+  <name>Operaton - Engine Plugins - Identity - SCIM</name>
+  <description>${project.name}</description>
+
+  <properties>
+    <version.scimple>1.0.0-M1</version.scimple>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-logging</artifactId>
+    </dependency>
+
+    <!-- Apache HttpClient 5 for HTTP requests -->
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5</artifactId>
+    </dependency>
+   
+    <!-- Jackson for JSON processing -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+    </dependency>
+
+  <!-- Apache SCIMple: real lightweight SCIM server: 
+       can be used as an alternative to the wiremock for testing -->
+  <!--<dependency>
+      <groupId>org.apache.directory.scimple</groupId>
+      <artifactId>scim-server</artifactId>
+      <version>${version.scimple}</version>
+      <scope>test</scope>
+    </dependency> -->
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Test dependencies for mockito -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- WireMock for mocking SCIM server -->
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock-standalone</artifactId>
+      <scope>test</scope>
+    </dependency> 
+  </dependencies> 
+  
+
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <failIfNoTests>false</failIfNoTests>
+          <trimStackTrace>false</trimStackTrace>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <argLine>-Xshare:off</argLine>    
+        </configuration>
+      </plugin>
+  
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+            <!-- Use artifactSet to control dependencies -->
+              <artifactSet>
+                <includes>
+                  <include>org.apache.httpcomponents.client5:httpclient5</include>
+                  <include>org.apache.httpcomponents.core5:httpcore5-h2</include>
+                  <include>org.apache.httpcomponents.core5:httpcore5</include>
+                  <include>com.fasterxml.jackson.core:jackson-databind</include>
+                  <include>com.fasterxml.jackson.core:jackson-core</include>
+                  <include>com.fasterxml.jackson.core:jackson-annotations</include>
+                </includes>
+              </artifactSet>
+              <relocations>
+                <!-- shade http client and jackson -->
+                <relocation>
+                  <pattern>org.apache.hc</pattern>
+                  <shadedPattern>scimplugin.org.apache.httpcomponents</shadedPattern>
+                  <excludes>
+                    <exclude>org.apache.logging:*</exclude>
+                    <exclude>org.slf4j:*</exclude>
+                  </excludes>
+                </relocation>
+
+                <relocation>
+                  <pattern>com.fasterxml.jackson.core</pattern>
+                  <shadedPattern>scimplugin.com.fasterxml.jackson.core</shadedPattern>
+                </relocation>
+
+                <relocation>
+                  <pattern>com.fasterxml.jackson.databind</pattern>
+                  <shadedPattern>scimplugin.com.fasterxml.jackson.databind</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.fasterxml.jackson.annotation</pattern>
+                  <shadedPattern>scimplugin.com.fasterxml.jackson.annotation</shadedPattern>
+                </relocation>
+              </relocations>
+
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>META-INF/*.SF</resource>
+                  <resource>META-INF/*.DSA</resource>
+                  <resource>META-INF/*.RSA</resource>
+                </transformer>
+              </transformers>
+
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <!-- Exclude not needed to suppress warnings -->
+                  <excludes>
+                    <exclude>META-INF/INDEX.LIST</exclude>
+                    <exclude>META-INF/DEPENDENCIES</exclude>
+                    <exclude>META-INF/NOTICE*</exclude>
+                    <exclude>META-INF/LICENSE*</exclude>
+                    <exclude>META-INF/*.MF</exclude>
+                    <exclude>module-info.class</exclude>
+                    <exclude>META-INF/versions/**/module-info.class</exclude>
+                  </excludes>
+                </filter>
+              </filters>  
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

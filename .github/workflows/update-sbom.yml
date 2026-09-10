@@ -10,6 +10,8 @@ on:
       - main
       - release/**
       - ci-dev/**
+    paths:
+      - '**/pom.xml'
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -19,8 +21,7 @@ jobs:
   update_sbom:
     name: Update SBOMs
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name != 'push' || contains(join(github.event.commits.*.message, ' '), 'deps')
+    if: contains(join(github.event.commits.*.message, ' '), 'deps')
     steps:
       - name: Install Homebrew (Ubuntu/Linux)
         if: runner.os == 'Linux'

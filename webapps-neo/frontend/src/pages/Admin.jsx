@@ -7,6 +7,24 @@ import { has_data, encode_id } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import { Breadcrumbs } from "../components/Breadcrumbs.jsx";
 import { Dialog, ConfirmDialog } from "../components/Dialog.jsx";
+import { IdentitySearch } from "../components/IdentitySearch.jsx";
+
+const USER_SEARCH = [
+  { key: "id", nameKey: "admin.search-id" },
+  { key: "firstNameLike", nameKey: "admin.search-first-name" },
+  { key: "lastNameLike", nameKey: "admin.search-last-name" },
+  { key: "emailLike", nameKey: "admin.search-email" },
+];
+
+const GROUP_SEARCH = [
+  { key: "id", nameKey: "admin.search-id" },
+  { key: "nameLike", nameKey: "admin.search-name" },
+];
+
+const TENANT_SEARCH = [
+  { key: "id", nameKey: "admin.search-id" },
+  { key: "nameLike", nameKey: "admin.search-name" },
+];
 
 const AdminPage = () => {
   const {
@@ -128,6 +146,19 @@ const TenantList = () => {
           {t("admin.tenant.create")}
         </a>
       </div>
+
+      <IdentitySearch
+        criteria={TENANT_SEARCH}
+        loaded={tenants.value?.data?.length ?? 0}
+        on_search={(query) => void engine_rest.tenant.all(state, query)}
+        on_more={(query, loaded) =>
+          void engine_rest.tenant.all(
+            state,
+            { ...query, firstResult: loaded },
+            true,
+          )
+        }
+      />
 
       <RequestState
         signal={tenants}
@@ -406,6 +437,19 @@ const GroupsList = () => {
           {t("admin.group.create")}
         </a>
       </div>
+
+      <IdentitySearch
+        criteria={GROUP_SEARCH}
+        loaded={groups.value?.data?.length ?? 0}
+        on_search={(query) => void engine_rest.group.all(state, query)}
+        on_more={(query, loaded) =>
+          void engine_rest.group.all(
+            state,
+            { ...query, firstResult: loaded },
+            true,
+          )
+        }
+      />
       <ActionResult
         signal={group_delete}
         success={t("admin.group.success-deleted")}
@@ -805,14 +849,55 @@ const SystemPage = () => {
       <h2>{t("admin.system")}</h2>
       <RequestState
         signal={telemetry}
-        on_success={() => (
-          <pre class="fade-in">
-            {telemetry.value !== undefined
-              ? JSON.stringify(telemetry.value?.data, null, 2)
-              : ""}{" "}
-          </pre>
-        )}
+        on_success={() => <SystemDetails data={telemetry.value?.data} />}
       />
+    </div>
+  );
+};
+
+const SystemDetails = ({ data }) => {
+  const [t] = useTranslation(),
+    { product = {}, installation } = data ?? {},
+    { database, applicationServer, jdk, operatonIntegration, webapps } =
+      product.internals ?? {};
+
+  const named = (component) =>
+    component
+      ? [component.vendor, component.version].filter(Boolean).join(" ")
+      : null;
+
+  const rows = [
+    [t("admin.system-info.product"), product.name],
+    [t("admin.system-info.version"), product.version],
+    [t("admin.system-info.edition"), product.edition],
+    [t("admin.system-info.installation"), installation],
+    [t("admin.system-info.database"), named(database)],
+    [t("admin.system-info.application-server"), named(applicationServer)],
+    [t("admin.system-info.jdk"), named(jdk)],
+    [
+      t("admin.system-info.integration"),
+      [...(operatonIntegration ?? [])].join(", "),
+    ],
+    [t("admin.system-info.webapps"), [...(webapps ?? [])].join(", ")],
+  ];
+
+  return (
+    <div class="fade-in">
+      <table>
+        <tbody>
+          {rows.map(([label, value]) => (
+            <tr key={label}>
+              <th scope="row">{label}</th>
+              <td>{value ? value : "—"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <details>
+        <summary>{t("admin.system-info.raw")}</summary>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </details>
     </div>
   );
 };
@@ -861,6 +946,19 @@ const UserList = () => {
           {t("admin.user.create")}
         </a>
       </div>
+
+      <IdentitySearch
+        criteria={USER_SEARCH}
+        loaded={users.value?.data?.length ?? 0}
+        on_search={(query) => void engine_rest.user.all(state, query)}
+        on_more={(query, loaded) =>
+          void engine_rest.user.all(
+            state,
+            { ...query, firstResult: loaded },
+            true,
+          )
+        }
+      />
 
       <table class="fade-in">
         <thead>

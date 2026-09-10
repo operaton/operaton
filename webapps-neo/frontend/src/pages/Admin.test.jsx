@@ -216,6 +216,49 @@ describe("AdminPage", () => {
     });
   });
 
+  describe("searching and paging the lists", () => {
+    it("runs the typed search against the engine", () => {
+      mockParams = { page_id: "users" };
+      const { container, getByText } = renderPage(state);
+      const inputs = container.querySelectorAll(".identity-search input");
+      fireEvent.input(inputs[1], { target: { value: "Al" } });
+      fireEvent.click(getByText("common.search"));
+      expect(engine_rest.user.all.mock.lastCall[1]).toEqual({
+        firstNameLike: "Al",
+      });
+    });
+
+    it("leaves an empty field out of the query", () => {
+      mockParams = { page_id: "users" };
+      const { container, getByText } = renderPage(state);
+      const inputs = container.querySelectorAll(".identity-search input");
+      fireEvent.input(inputs[0], { target: { value: "x" } });
+      fireEvent.input(inputs[0], { target: { value: "" } });
+      fireEvent.click(getByText("common.search"));
+      expect(engine_rest.user.all.mock.lastCall[1]).toEqual({});
+    });
+
+    it("offers the next page once a full page is on screen", () => {
+      mockParams = { page_id: "users" };
+      signal_response(
+        state.api.user.list,
+        Array.from({ length: 50 }, (_, i) => ({ id: `u${i}` })),
+      );
+      const { getByText } = renderPage(state);
+      fireEvent.click(getByText("common.load-more"));
+      const [, query, append] = engine_rest.user.all.mock.lastCall;
+      expect(query.firstResult).toBe(50);
+      expect(append).toBe(true);
+    });
+
+    it("does not offer the next page on a partial page", () => {
+      mockParams = { page_id: "users" };
+      signal_response(state.api.user.list, [{ id: "alice" }]);
+      const { queryByText } = renderPage(state);
+      expect(queryByText("common.load-more")).toBeNull();
+    });
+  });
+
   describe("Groups", () => {
     it("fetches the group list on mount", () => {
       mockParams = { page_id: "groups" };
@@ -581,17 +624,44 @@ describe("AdminPage", () => {
       expect(engine_rest.engine.telemetry.mock.lastCall[0]).toBe(state);
     });
 
-    it("renders the telemetry data from the signal", () => {
+    it("names the product, the database and the JDK", () => {
       mockParams = { page_id: "system" };
       signal_response(state.api.engine.telemetry, {
         installation: "abc-123",
+        product: {
+          name: "Operaton",
+          version: "2.2.0",
+          edition: "community",
+          internals: {
+            database: { vendor: "PostgreSQL", version: "16.2" },
+            jdk: { vendor: "Eclipse Adoptium", version: "21.0.2" },
+            webapps: ["cockpit", "admin"],
+          },
+        },
+      });
+      const { getByText, container } = renderPage(state);
+      expect(getByText("Operaton")).toBeTruthy();
+      expect(getByText("PostgreSQL 16.2")).toBeTruthy();
+      expect(getByText("Eclipse Adoptium 21.0.2")).toBeTruthy();
+      expect(getByText("cockpit, admin")).toBeTruthy();
+      expect(container.textContent).toContain("abc-123");
+    });
+
+    it("shows a dash where the engine reported nothing", () => {
+      mockParams = { page_id: "system" };
+      signal_response(state.api.engine.telemetry, {
         product: { name: "Operaton" },
       });
       const { container } = renderPage(state);
-      const pre = container.querySelector("pre");
-      expect(pre).toBeTruthy();
-      expect(pre.textContent).toContain("abc-123");
-      expect(pre.textContent).toContain("Operaton");
+      expect(container.querySelectorAll("td")[1].textContent).toBe("—");
+    });
+
+    it("keeps the raw data reachable", () => {
+      mockParams = { page_id: "system" };
+      signal_response(state.api.engine.telemetry, { installation: "abc-123" });
+      const { container } = renderPage(state);
+      const raw = container.querySelector("details pre");
+      expect(raw.textContent).toContain("abc-123");
     });
   });
 });

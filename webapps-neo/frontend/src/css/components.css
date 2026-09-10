@@ -1743,3 +1743,17 @@ nav:has(> .breadcrumbs) {
 .variable-criterion input {
   min-width: 0;
 }
+
+.identity-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: end;
+  margin-block-end: 1rem;
+}
+
+.identity-search label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}

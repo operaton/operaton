@@ -2,13 +2,15 @@ import { describe, it, vi, beforeEach } from "vitest";
 
 vi.mock("../helper.jsx", () => ({
   encode_id: (id) => encodeURIComponent(id ?? ""),
+  GET_LIST: vi.fn(),
+  PAGE_SIZE: 50,
   GET: vi.fn(),
   POST: vi.fn(),
   PUT: vi.fn(),
   DELETE: vi.fn(),
 }));
 
-import { GET, POST, PUT, DELETE } from "../helper.jsx";
+import { GET, POST, PUT, DELETE, GET_LIST } from "../helper.jsx";
 import { create_mock_state, expect_api_call } from "../../test/helpers.js";
 import group from "./group.js";
 
@@ -18,14 +20,19 @@ describe("api/resources/group", () => {
     state = create_mock_state();
   });
 
-  it("all() POSTs the paged query to /group", () => {
+  it("all() asks for the first page, sorted by id", () => {
     group.all(state);
-    expect_api_call(POST, {
-      url: "/group",
-      body: { firstResult: 0, maxResults: 50, sortBy: "id", sortOrder: "asc" },
-      state,
-      signal: state.api.group.list,
-    });
+    expect(GET_LIST).toHaveBeenCalled();
+    const [url, , signal] = GET_LIST.mock.lastCall;
+    expect(url).toBe(
+      "/group?firstResult=0&maxResults=50&sortBy=id&sortOrder=asc",
+    );
+    expect(signal).toBe(state.api.group.list);
+  });
+
+  it("all() puts a search query into the request", () => {
+    group.all(state, { nameLike: "admin%" });
+    expect(GET_LIST.mock.lastCall[0]).toContain("nameLike=admin%25");
   });
 
   it("create() POSTs the group to /group/create", () => {

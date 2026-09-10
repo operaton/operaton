@@ -2,6 +2,8 @@ import { describe, it, vi, beforeEach } from "vitest";
 
 vi.mock("../helper.jsx", () => ({
   encode_id: (id) => encodeURIComponent(id ?? ""),
+  GET_LIST: vi.fn(),
+  PAGE_SIZE: 50,
   GET: vi.fn(),
   POST: vi.fn(),
   PUT: vi.fn(),
@@ -9,7 +11,7 @@ vi.mock("../helper.jsx", () => ({
   resolve_user: (state, user_name) => user_name ?? state.auth.user.id.value,
 }));
 
-import { GET, POST, PUT, DELETE } from "../helper.jsx";
+import { GET, POST, PUT, DELETE, GET_LIST } from "../helper.jsx";
 import { create_mock_state, expect_api_call } from "../../test/helpers.js";
 import user from "./user.js";
 
@@ -19,13 +21,27 @@ describe("api/resources/user", () => {
     state = create_mock_state();
   });
 
-  it("all() GETs /user into the list signal", () => {
+  it("all() asks for the first page, sorted by id", () => {
     user.all(state);
-    expect_api_call(GET, {
-      url: "/user",
-      state,
-      signal: state.api.user.list,
-    });
+    expect(GET_LIST).toHaveBeenCalled();
+    const [url, , signal, append] = GET_LIST.mock.lastCall;
+    expect(url).toBe(
+      "/user?maxResults=50&firstResult=0&sortBy=userId&sortOrder=asc",
+    );
+    expect(signal).toBe(state.api.user.list);
+    expect(append).toBe(false);
+  });
+
+  it("all() puts a search query into the request", () => {
+    user.all(state, { firstNameLike: "Al%" });
+    expect(GET_LIST.mock.lastCall[0]).toContain("firstNameLike=Al%25");
+  });
+
+  it("all() appends the next page when asked to", () => {
+    user.all(state, {}, true);
+    const [url, , , append] = GET_LIST.mock.lastCall;
+    expect(url).toContain("firstResult=0");
+    expect(append).toBe(true);
   });
 
   it("create() POSTs the user to /user/create", () => {

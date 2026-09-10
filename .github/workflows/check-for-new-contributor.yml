@@ -1,7 +1,7 @@
 # HEADS-UP: pull_request_target runs in the context of the base repository and target branch and has access to secrets.
 name: First-time Contributor Check
 
-on:
+on:  # zizmor: ignore[dangerous-triggers] pull_request_target: metadata reads and issue/PR comments only, never checks out or executes PR head content
   pull_request_target:
     types: [opened]
   issues:

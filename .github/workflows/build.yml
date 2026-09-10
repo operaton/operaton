@@ -121,7 +121,7 @@ jobs:
           key: "${{ runner.os }}-build-cache-${{ github.sha }}"
           restore-keys: ${{ runner.os }}-build-cache-
       - name: Setup Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0  # zizmor: ignore[cache-poisoning]
         with:
           node-version: 24
           cache: 'npm'
@@ -211,14 +211,6 @@ jobs:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
           retention-days: 30
-      # Handed off to the static-analysis job as a run-scoped artifact rather than
-      # via actions/cache, same reasoning as the it-stage artifact in pr-build.yml:
-      # a run-id-keyed cache entry would just churn the shared 10 GB LRU pool.
-      # Full target dirs (not just classes) so the reactor in the static-analysis
-      # job resolves inter-module dependencies the same way this job's own
-      # standalone `sonar:sonar` invocation does today - from on-disk build
-      # output, not from ~/.m2 (org/operaton artifacts are purged before the m2
-      # cache is saved, see below).
       - name: Stage build output for Sonar analysis
         if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
         shell: bash
@@ -276,10 +268,9 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       # Restore+save needed for incremental SonarCloud analysis; this job only
       # runs on push to main/release or a maintainer-triggered workflow_dispatch
-      # of build.yml, both of which already require repo write access - see
-      # cache-poisoning ignore entries in .github/zizmor/config.yml.
+      # of build.yml, both of which already require repo write access.
       - name: Cache SonarCloud packages
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0  # zizmor: ignore[cache-poisoning]
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar

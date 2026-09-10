@@ -219,16 +219,7 @@ jobs:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
           retention-days: 30
-      # Handed off to the static-analysis job as a run-scoped artifact, same
-      # reasoning as the it-stage artifact below. Full target dirs (not just
-      # classes/jars) so the reactor in that job resolves inter-module
-      # dependencies from on-disk build output, the same way this job's own
-      # standalone `sonar:sonar` invocation used to do in-place.
       - name: Stage build output for Sonar analysis
-        # SONAR_TOKEN is a repo secret, unavailable to PRs from forks — the
-        # static-analysis job's own scan step gates on that secret directly,
-        # so gate staging on the fork check instead of duplicating the secret
-        # reference here at broader (job/step-condition) scope.
         if: github.event.pull_request.head.repo.fork == false
         shell: bash
         run: find . -type d -name target -not -path '*/node_modules/*' -print0 | tar -czf /tmp/sonar-workspace.tar.gz --null -T -

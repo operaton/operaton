@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .btn-control,
 .btn-control-link,
 .btn.btn-control {
@@ -31,7 +33,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border: 1px solid darken($gray-lighter, 15%);
+    border: 1px solid color.adjust($gray-lighter, $lightness: -15%);
     border-radius: $border-radius-base;
 
     a {

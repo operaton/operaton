@@ -6,13 +6,15 @@ rules:
       - dependabot.yml:74
   cache-poisoning:
     ignore:
-      # Both need restore+save for incremental caching (SonarCloud analysis,
-      # npm via setup-node); this job only runs on push to main/release or a
+      # npm via setup-node in the build job; needs restore+save for incremental
+      # caching. This job only runs on push to main/release or a
       # maintainer-triggered workflow_dispatch, both of which already require
-      # repo write access, so poisoning these caches buys an attacker nothing
-      # they don't already have. No restore-only fix exists for either.
+      # repo write access, so poisoning this cache buys an attacker nothing
+      # they don't already have. No restore-only fix exists.
       - build.yml:124
-      - build.yml:130
+      # SonarCloud analysis cache in the static-analysis job; same
+      # restore+save need and same access-already-required reasoning as above.
+      - build.yml:282
   dangerous-triggers:
     ignore:
       # pull_request_target used only for metadata reads and issue/PR comments;

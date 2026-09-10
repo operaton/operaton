@@ -1,9 +1,12 @@
 import { GET, DELETE, PUT, POST, resolve_user, encode_id } from "../helper.jsx";
 
 // Tenants the given user is a member of (used on the user details page).
-const get_user_tenants = (state, user_name) =>
+// `including_groups` also counts membership inherited from a group, which is how
+// most directories express it — off by default so the user page keeps showing
+// direct memberships only.
+const get_user_tenants = (state, user_name, including_groups = false) =>
   GET(
-    `/tenant?userMember=${encode_id(resolve_user(state, user_name))}&maxResults=50&firstResult=0`,
+    `/tenant?userMember=${encode_id(resolve_user(state, user_name))}${including_groups ? "&includingGroupsOfUser=true" : ""}&maxResults=50&firstResult=0`,
     state,
     state.api.tenant.by_member,
   );

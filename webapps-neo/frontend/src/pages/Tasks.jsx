@@ -327,6 +327,108 @@ const TasksManage = () => {
   );
 };
 
+// A task that belongs to no process — a follow-up, a reminder, something the
+// model does not cover. The engine answers 204 without a body, so the id is
+// chosen here; otherwise the new task could not be opened afterwards.
+const CreateTaskButton = () => {
+  const state = useContext(AppState),
+    { route } = useLocation(),
+    [t] = useTranslation(),
+    name = useSignal(""),
+    assignee = useSignal(""),
+    description = useSignal(""),
+    tenant = useSignal(""),
+    close = () => document.getElementById("create_task").close(),
+    show = () => {
+      void engine_rest.tenant.by_member(state, null, true);
+      document.getElementById("create_task").showModal();
+    },
+    tenants = state.api.tenant.by_member.value?.data ?? [],
+    submit = async (event) => {
+      event.preventDefault();
+      const id = crypto.randomUUID();
+      const result = await engine_rest.task.create_task(state, {
+        id,
+        name: name.value.trim(),
+        assignee: assignee.value.trim() || null,
+        description: description.value.trim() || null,
+        tenantId: tenant.value || null,
+      });
+      if (result?.status !== RESPONSE_STATE.SUCCESS) return;
+      name.value = "";
+      assignee.value = "";
+      description.value = "";
+      tenant.value = "";
+      close();
+      route(`/tasks/${id}/form`);
+    };
+
+  return (
+    <>
+      <button type="button" class="button create-task" onClick={show}>
+        {t("tasks.create.open")}
+      </button>
+
+      <dialog id="create_task" aria-labelledby="create-task-title">
+        <button type="button" onClick={close}>
+          {t("common.close")}
+        </button>
+        <h2 id="create-task-title">{t("tasks.create.title")}</h2>
+        <form onSubmit={submit}>
+          <label for="new-task-name">{t("common.name")}</label>
+          <input
+            id="new-task-name"
+            type="text"
+            required
+            value={name.value}
+            onInput={(e) => (name.value = e.currentTarget.value)}
+          />
+          <label for="new-task-assignee">
+            {t("tasks.task-list.table-headings.assignee")}
+          </label>
+          <input
+            id="new-task-assignee"
+            type="text"
+            value={assignee.value}
+            onInput={(e) => (assignee.value = e.currentTarget.value)}
+          />
+          <label for="new-task-description">
+            {t("tasks.attachments.description")}
+          </label>
+          <input
+            id="new-task-description"
+            type="text"
+            value={description.value}
+            onInput={(e) => (description.value = e.currentTarget.value)}
+          />
+          {tenants.length > 1 && (
+            <>
+              <label for="new-task-tenant">{t("tasks.tenant")}</label>
+              <select
+                id="new-task-tenant"
+                value={tenant.value}
+                onChange={(e) => (tenant.value = e.currentTarget.value)}
+              >
+                <option value="">—</option>
+                {tenants.map((x) => (
+                  <option key={x.id} value={x.id}>
+                    {x.name ?? x.id}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
+          <div class="button-group">
+            <button type="submit" disabled={!name.value.trim()}>
+              {t("tasks.create.save")}
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </>
+  );
+};
+
 const TaskList = () => {
   const state = useContext(AppState),
     taskList = state.api.task.list,
@@ -403,9 +505,12 @@ const TaskList = () => {
           <small class="load-more-end">{t("tasks.no-more-items")}</small>
         ) : null}
       </div>
-      <a href="/tasks/start" class="button start-process">
-        {t("tasks.start-process-label")}
-      </a>
+      <div class="list-actions">
+        <a href="/tasks/start" class="button start-process">
+          {t("tasks.start-process-label")}
+        </a>
+        <CreateTaskButton />
+      </div>
     </div>
   );
 };

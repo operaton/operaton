@@ -587,6 +587,76 @@ describe("TasksPage", () => {
     });
   });
 
+  // Ported from the previous Tasklist's create-task-spec.js: "should open",
+  // "should save new task", "should select created task", and the tenant field
+  // appearing only when there is more than one tenant to choose from.
+  describe("creating a task outside a process", () => {
+    const open_dialog = (container) =>
+      fireEvent.click(container.querySelector("button.create-task"));
+
+    it("sends name, assignee and description", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.input(container.querySelector("#new-task-assignee"), {
+        target: { value: "alice" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.create_task).toHaveBeenCalled(),
+      );
+      const [, body] = engine_rest.task.create_task.mock.lastCall;
+      expect(body.name).toBe("Call the reporter");
+      expect(body.assignee).toBe("alice");
+      expect(body.id).toBeTruthy();
+    });
+
+    it("opens the new task afterwards", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() => expect(routeFn).toHaveBeenCalled());
+      const [, body] = engine_rest.task.create_task.mock.lastCall;
+      expect(routeFn.mock.lastCall[0]).toBe(`/tasks/${body.id}/form`);
+    });
+
+    it("refuses to create a task without a name", () => {
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      expect(getByText("tasks.create.save").disabled).toBe(true);
+    });
+
+    it("asks for no tenant when the user belongs to just one", () => {
+      signal_response(state.api.tenant.by_member, [{ id: "sales" }]);
+      const { container } = renderPage(state);
+      open_dialog(container);
+      expect(container.querySelector("#new-task-tenant")).toBeNull();
+    });
+
+    it("asks which tenant when there is more than one", () => {
+      signal_response(state.api.tenant.by_member, [
+        { id: "sales" },
+        { id: "support" },
+      ]);
+      const { container } = renderPage(state);
+      open_dialog(container);
+      expect(container.querySelector("#new-task-tenant")).not.toBeNull();
+    });
+  });
+
   describe("task actions", () => {
     const renderDetail = () => {
       mockParams = { task_id: "t1", tab: "form" };

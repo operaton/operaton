@@ -134,6 +134,11 @@
       "now": "Jetzt",
       "reset": "Zurücksetzen"
     },
+    "create": {
+      "open": "Neue Aufgabe",
+      "title": "Aufgabe anlegen",
+      "save": "Anlegen"
+    },
     "task-not-found-hint": "Diese Aufgabe existiert nicht mehr. Sie wurde möglicherweise abgeschlossen oder abgebrochen.",
     "task-load-failed": "Aufgabe konnte nicht geladen werden",
     "back-to-list": "Zurück zur Aufgabenliste",

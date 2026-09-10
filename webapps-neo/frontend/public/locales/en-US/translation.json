@@ -134,6 +134,11 @@
       "now": "Now",
       "reset": "Clear"
     },
+    "create": {
+      "open": "New task",
+      "title": "Create a task",
+      "save": "Create"
+    },
     "task-not-found-hint": "This task no longer exists. It may have been completed or cancelled.",
     "task-load-failed": "Could not load task",
     "back-to-list": "Back to task list",

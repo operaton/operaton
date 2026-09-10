@@ -23,7 +23,11 @@ import { resolve_user } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
-import { formatRelativeDate } from "../helper/date_formatter.js";
+import {
+  formatRelativeDate,
+  fromLocalParts,
+  toLocalParts,
+} from "../helper/date_formatter.js";
 
 const TASK_PAGE_SIZE = 20;
 
@@ -576,23 +580,14 @@ const SetDueDateButton = () => {
     due_date = task.value?.data?.due
       ? new Date(Date.parse(task.value?.data?.due))
       : null,
-    date_state = useSignal({
-      date:
-        due_date !== null
-          ? due_date?.toISOString().split("T")[0]
-          : new Date().toISOString().split("T")[0],
-      time:
-        due_date !== null
-          ? due_date?.toISOString().split("T")[1].substring(0, 5)
-          : new Date().toISOString().split("T")[1].substring(0, 5),
-    }),
+    date_state = useSignal(toLocalParts(due_date ?? new Date())),
     submit = (event) => {
       event.preventDefault();
       engine_rest.task
         .update_task(
           state,
           {
-            due: `${date_state.value.date}T${date_state.value.time}:00.000+0000`,
+            due: fromLocalParts(date_state.value.date, date_state.value.time),
           },
           params.task_id,
         )
@@ -618,9 +613,7 @@ const SetDueDateButton = () => {
           <input
             type="date"
             id="due-date"
-            value={
-              due_date !== null ? due_date?.toISOString().split("T")[0] : null
-            }
+            value={date_state.value.date}
             onInput={(e) =>
               (date_state.value = {
                 ...date_state.peek(),
@@ -632,11 +625,7 @@ const SetDueDateButton = () => {
           <input
             type="time"
             id="due-time"
-            value={
-              due_date !== null
-                ? due_date?.toISOString().split("T")[1].substring(0, 5)
-                : null
-            }
+            value={date_state.value.time}
             onInput={(e) =>
               (date_state.value = {
                 ...date_state.peek(),
@@ -673,16 +662,7 @@ const SetFollowUpDateButton = () => {
     followUpDate = task.value?.data?.followUp
       ? new Date(Date.parse(task.value?.data?.followUp))
       : null,
-    date_state = useSignal({
-      date:
-        followUpDate !== null
-          ? followUpDate?.toISOString().split("T")[0]
-          : new Date().toISOString().split("T")[0],
-      time:
-        followUpDate !== null
-          ? followUpDate?.toISOString().split("T")[1].substring(0, 5)
-          : new Date().toISOString().split("T")[1].substring(0, 5),
-    }),
+    date_state = useSignal(toLocalParts(followUpDate ?? new Date())),
     // due:	"2025-06-18T13:58:44.000+0000"
     submit = (event) => {
       event.preventDefault();
@@ -690,7 +670,10 @@ const SetFollowUpDateButton = () => {
         .update_task(
           state,
           {
-            followUp: `${date_state.value.date}T${date_state.value.time}:00.000+0000`,
+            followUp: fromLocalParts(
+              date_state.value.date,
+              date_state.value.time,
+            ),
           },
           params.task_id,
         )
@@ -721,11 +704,7 @@ const SetFollowUpDateButton = () => {
           <input
             type="date"
             id="follow-up-date"
-            value={
-              followUpDate !== null
-                ? followUpDate?.toISOString().split("T")[0]
-                : null
-            }
+            value={date_state.value.date}
             onInput={(e) =>
               (date_state.value = {
                 ...date_state.peek(),
@@ -737,11 +716,7 @@ const SetFollowUpDateButton = () => {
           <input
             type="time"
             id="follow-up-time"
-            value={
-              followUpDate !== null
-                ? followUpDate?.toISOString().split("T")[1].substring(0, 5)
-                : null
-            }
+            value={date_state.value.time}
             onInput={(e) =>
               (date_state.value = {
                 ...date_state.peek(),

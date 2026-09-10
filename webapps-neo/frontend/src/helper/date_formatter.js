@@ -53,7 +53,28 @@ const formatDuration = (ms) => {
     return parts.slice(0, 2).join(" ");
 };
 
+const pad = (n) => String(n).padStart(2, "0");
+
+// The engine wants `yyyy-MM-dd'T'HH:mm:ss.SSSZ`, where Z is an offset like +0200.
+const localOffset = (date) => {
+    const minutes = -date.getTimezoneOffset(),
+        sign = minutes < 0 ? "-" : "+";
+    return sign + pad(Math.floor(Math.abs(minutes) / 60)) + pad(Math.abs(minutes) % 60);
+}
+
+// A <input type="date"> and <input type="time"> hold local wall-clock time, so
+// that is what goes in and comes out — not UTC.
+const toLocalParts = (date) => ({
+    date: `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`,
+    time: `${pad(date.getHours())}:${pad(date.getMinutes())}`,
+})
+
+const fromLocalParts = (date, time) =>
+    `${date}T${time}:00.000${localOffset(new Date(`${date}T${time}`))}`
+
 export {
+    toLocalParts,
+    fromLocalParts,
     formatRelativeDate,
     formatRelativeDateTime,
     formatDuration

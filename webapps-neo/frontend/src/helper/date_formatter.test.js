@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { formatRelativeDate, formatRelativeDateTime } from './date_formatter.js';
+import {
+  formatRelativeDate,
+  formatRelativeDateTime,
+  fromLocalParts,
+  toLocalParts,
+} from './date_formatter.js';
 
 describe('date_formatter', () => {
   let originalNavigator;
@@ -137,5 +142,36 @@ describe('date_formatter', () => {
       // English fallback should return "yesterday"
       expect(result).toBe('yesterday');
     });
+  });
+});
+
+describe('local wall-clock conversion', () => {
+  it('reads a date as the local clock shows it, not as UTC', () => {
+    const at = new Date(2026, 6, 15, 10, 30);
+    expect(toLocalParts(at)).toEqual({ date: '2026-07-15', time: '10:30' });
+  });
+
+  it('keeps single digits padded', () => {
+    expect(toLocalParts(new Date(2026, 0, 5, 9, 7))).toEqual({
+      date: '2026-01-05',
+      time: '09:07',
+    });
+  });
+
+  it('sends the entered time with the offset that applies on that day', () => {
+    const sent = fromLocalParts('2026-07-15', '08:30');
+    expect(sent).toMatch(/^2026-07-15T08:30:00\.000[+-]\d{4}$/);
+    expect(new Date(Date.parse(sent)).getHours()).toBe(8);
+    expect(new Date(Date.parse(sent)).getMinutes()).toBe(30);
+  });
+
+  it('survives the round trip across a daylight-saving boundary', () => {
+    for (const [date, time] of [
+      ['2026-07-15', '08:30'],
+      ['2026-11-20', '08:30'],
+    ]) {
+      const back = toLocalParts(new Date(Date.parse(fromLocalParts(date, time))));
+      expect(back).toEqual({ date, time });
+    }
   });
 });

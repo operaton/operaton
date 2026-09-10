@@ -3,7 +3,7 @@ import { useRoute, useLocation } from 'preact-iso'
 import { useTranslation } from 'react-i18next'
 import { useSignal, useSignalEffect } from '@preact/signals'
 import engine_rest, { RequestState } from '../api/engine_rest.jsx'
-import { has_data } from '../api/helper.jsx'
+import { has_data, encode_id } from '../api/helper.jsx'
 import { AppState } from '../state.js'
 import { Breadcrumbs } from '../components/Breadcrumbs.jsx'
 import { Dialog, ConfirmDialog } from '../components/Dialog.jsx'
@@ -96,7 +96,7 @@ const TenantList = () => {
           <tbody>
           {tenants.value.data.map((tenant) => (
             <tr key={tenant.id}>
-              <td><a href={`/admin/tenants/${tenant.id}`}>{tenant.id}</a></td>
+              <td><a href={`/admin/tenants/${encode_id(tenant.id)}`}>{tenant.id}</a></td>
               <td>{tenant.name}</td>
             </tr>
           ))}
@@ -290,7 +290,7 @@ const GroupsList = () => {
           <tbody>
           {groups.value.data.map((group) => (
             <tr key={group.id}>
-              <td><a href={`/admin/groups/${group.id}`}>{group.id}</a></td>
+              <td><a href={`/admin/groups/${encode_id(group.id)}`}>{group.id}</a></td>
               <td>{group.name}</td>
               <td>{group.type}</td>
               <td><button class="danger" onClick={() => confirm_delete(group.id)}>{t("common.delete")}</button></td>
@@ -569,7 +569,7 @@ const UserList = () => {
         signal={users}
         on_success={() => users.value?.data.map(({ id, firstName, lastName, email }) => (
           <tr key={id}>
-            <td><a href={`/admin/users/${id}`}>{id}</a></td>
+            <td><a href={`/admin/users/${encode_id(id)}`}>{id}</a></td>
             <td>{firstName}</td>
             <td>{lastName}</td>
             <td>{email}</td>

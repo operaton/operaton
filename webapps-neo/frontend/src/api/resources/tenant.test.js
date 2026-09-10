@@ -1,6 +1,7 @@
 import { describe, it, vi, beforeEach } from "vitest";
 
 vi.mock("../helper.jsx", () => ({
+  encode_id: (id) => encodeURIComponent(id ?? ""),
   GET: vi.fn(),
   POST: vi.fn(),
   PUT: vi.fn(),
@@ -133,6 +134,16 @@ describe("api/resources/tenant", () => {
       body: { id: "acme", groupId: "admins" },
       state,
       signal: state.api.tenant.remove_group,
+    });
+  });
+
+  it("escapes a slash in the tenant id", () => {
+    tenant.delete(state, "de/bw");
+    expect_api_call(DELETE, {
+      url: "/tenant/de%2Fbw",
+      body: {},
+      state,
+      signal: state.api.tenant.delete,
     });
   });
 });

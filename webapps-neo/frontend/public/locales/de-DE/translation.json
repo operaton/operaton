@@ -129,6 +129,11 @@
     "no-description": "Keine Beschreibung vorhanden.",
     "select-task": "Wählen Sie eine Aufgabe aus der Liste oben, um deren Details anzuzeigen.",
     "task-not-found": "Aufgabe nicht gefunden",
+    "tenant": "Mandant",
+    "dates": {
+      "now": "Jetzt",
+      "reset": "Zurücksetzen"
+    },
     "task-not-found-hint": "Diese Aufgabe existiert nicht mehr. Sie wurde möglicherweise abgeschlossen oder abgebrochen.",
     "task-load-failed": "Aufgabe konnte nicht geladen werden",
     "back-to-list": "Zurück zur Aufgabenliste",

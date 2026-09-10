@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
+  formatAbsolute,
   formatRelativeDate,
   formatRelativeDateTime,
   formatTimestamp,
@@ -188,5 +189,20 @@ describe("formatTimestamp", () => {
 
   it("says nothing about a date it cannot read", () => {
     expect(formatTimestamp("not a date")).toBe("");
+  });
+});
+
+// Ported from the previous Tasklist's task-dates-spec.js:
+// "should display the absolute date in the tooltip in the task detail view".
+describe('absolute date for the tooltip', () => {
+  it('spells out the moment instead of how long ago it was', () => {
+    const at = new Date(2026, 6, 15, 10, 30);
+    const text = formatAbsolute(at);
+    expect(text).toContain('2026');
+    expect(text).not.toMatch(/ago|in \d/);
+  });
+
+  it('accepts the string the engine sends', () => {
+    expect(formatAbsolute('2026-07-15T10:30:00.000+0200')).toContain('2026');
   });
 });

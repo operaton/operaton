@@ -518,6 +518,75 @@ describe("TasksPage", () => {
     });
   });
 
+  // Ported from the previous Tasklist's task-detail-view-spec.js:
+  // "should display the tenant id" / "should not display the tenant id if not exist".
+  describe("tenant", () => {
+    it("names the tenant a task belongs to", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(state.api.task.one, sample_task({ tenantId: "sales" }));
+      const { getByText } = renderPage(state);
+      expect(getByText(/sales/)).toBeTruthy();
+    });
+
+    it("says nothing when the task has no tenant", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(state.api.task.one, sample_task({ tenantId: null }));
+      const { queryByText } = renderPage(state);
+      expect(queryByText(/tasks\.tenant/)).toBeNull();
+    });
+  });
+
+  // Ported from the previous Tasklist's task-dates-spec.js:
+  // "should set follow up date to now" and the reset actions on both dates.
+  describe("due and follow-up dates", () => {
+    const click_in_dialog = (container, dialog_id, text) => {
+      const dialog = container.querySelector(`#${dialog_id}`);
+      const button = [...dialog.querySelectorAll("button")].find(
+        (b) => b.textContent.trim() === text,
+      );
+      fireEvent.click(button);
+    };
+
+    it("clears a due date", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(
+        state.api.task.one,
+        sample_task({ due: "2026-07-15T10:30:00.000+0200" }),
+      );
+      const { container } = renderPage(state);
+      click_in_dialog(container, "set_due_date", "tasks.dates.reset");
+
+      expect(engine_rest.task.update_task).toHaveBeenCalled();
+      const [, changeset] = engine_rest.task.update_task.mock.lastCall;
+      expect(changeset).toEqual({ due: null });
+    });
+
+    it("clears a follow-up date", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(
+        state.api.task.one,
+        sample_task({ followUp: "2026-07-15T10:30:00.000+0200" }),
+      );
+      const { container } = renderPage(state);
+      click_in_dialog(container, "set_follow_up_date", "tasks.dates.reset");
+
+      const [, changeset] = engine_rest.task.update_task.mock.lastCall;
+      expect(changeset).toEqual({ followUp: null });
+    });
+
+    it("sets a follow-up date to now", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(state.api.task.one, sample_task());
+      const { container } = renderPage(state);
+      click_in_dialog(container, "set_follow_up_date", "tasks.dates.now");
+
+      const [, changeset] = engine_rest.task.update_task.mock.lastCall;
+      expect(changeset.followUp).toMatch(
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00\.000[+-]\d{4}$/,
+      );
+    });
+  });
+
   describe("task actions", () => {
     const renderDetail = () => {
       mockParams = { task_id: "t1", tab: "form" };

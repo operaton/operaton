@@ -129,6 +129,11 @@
     "no-description": "No description provided.",
     "select-task": "Select a task from the task list above to show its details.",
     "task-not-found": "Task not found",
+    "tenant": "Tenant",
+    "dates": {
+      "now": "Now",
+      "reset": "Clear"
+    },
     "task-not-found-hint": "This task no longer exists. It may have been completed or cancelled.",
     "task-load-failed": "Could not load task",
     "back-to-list": "Back to task list",

@@ -1,8 +1,9 @@
-@import "sass-compat";
-
 // 1. Import Bootstrap 4 functions and variables first
 // so that variables like $gray-600 and $body-bg are available.
 @import "~bootstrap/scss/functions";
+
+// Compatibility wrappers for Sass module functions (for legacy @import-based stylesheets).
+@import "sass-compat";
 $main-color:                      #e66e2e;
 $brand-primary:                   $main-color;
 $primary:                         $brand-primary;

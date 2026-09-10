@@ -59,9 +59,9 @@
       <excludes>
         <!-- IDE/tooling state and frontend build side effects must not
              feed the module checksum, or identical rebuilds miss the cache -->
-        <exclude>.claude</exclude>
-        <exclude>node_modules</exclude>
-        <exclude>node</exclude>
+        <exclude glob=".claude" entryType="DIRECTORY"></exclude>
+        <exclude glob="node_modules" entryType="DIRECTORY"></exclude>
+        <exclude glob="node" entryType="DIRECTORY"></exclude>
       </excludes>
     </global>
   </input>

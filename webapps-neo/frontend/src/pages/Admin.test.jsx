@@ -397,6 +397,35 @@ describe("AdminPage", () => {
       expect(call[1].resourceType).toBe(1);
     });
 
+    it("forgets an abandoned edit when the row is cancelled", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.all, [
+        {
+          id: "a1",
+          type: 1,
+          userId: "alice",
+          permissions: ["READ"],
+          resourceType: 1,
+          resourceId: "*",
+        },
+      ]);
+      const { container, getByText, getByLabelText } = renderPage(state);
+
+      fireEvent.click(getByText("common.edit"));
+      fireEvent.input(getByLabelText("admin.authorization.resource-id"), {
+        target: { value: "changed" },
+      });
+      fireEvent.click(getByText("common.cancel"));
+      fireEvent.click(getByText("common.edit"));
+
+      expect(getByLabelText("admin.authorization.resource-id").value).toBe("*");
+      expect(container.textContent).not.toContain("changed");
+    });
+
     it("deletes an authorization row via the confirm dialog", () => {
       mockParams = {
         page_id: "authorizations",

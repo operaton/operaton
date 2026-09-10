@@ -64,6 +64,9 @@ const createAppState = () => {
       credentials: signal(null),
       unlock: signal(null),
     },
+    execution: {
+      set_variable: signal(null),
+    },
     group: {
       list: signal(null),
       create: signal(null),
@@ -147,6 +150,9 @@ const createAppState = () => {
       error_details: signal(null),
     },
     task: {
+      summary: signal(null),
+      by_group: signal(null),
+      scratch: signal(null),
       list: signal(null),
       one: signal(null),
       create: signal(null),

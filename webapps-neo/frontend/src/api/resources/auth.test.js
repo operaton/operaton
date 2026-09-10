@@ -204,7 +204,10 @@ describe("api/resources/auth (own backend, session)", () => {
   afterEach(() => vi.unstubAllGlobals());
 
   it("logs in against the webapp's own auth resource and stores no password", async () => {
-    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ userId: "bob" }) });
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({ userId: "bob" }),
+    });
 
     await auth.login(state, "bob", "secret");
 
@@ -228,11 +231,16 @@ describe("api/resources/auth (own backend, session)", () => {
   });
 
   it("restores a session from the server rather than from stored credentials", async () => {
-    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ userId: "carol" }) });
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({ userId: "carol" }),
+    });
 
     await auth.is_authenticated(state);
 
-    expect(fetchMock.mock.calls[0][0]).toContain("/api/admin/auth/user/default");
+    expect(fetchMock.mock.calls[0][0]).toContain(
+      "/api/admin/auth/user/default",
+    );
     expect(state.auth.user.id.value).toBe("carol");
     expect(state.auth.logged_in.value.data).toBe("authenticated");
   });

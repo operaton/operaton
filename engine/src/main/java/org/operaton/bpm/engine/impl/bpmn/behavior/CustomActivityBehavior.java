@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.delegate.ActivityBehaviorInvocation;
 import org.operaton.bpm.engine.impl.bpmn.delegate.ActivityBehaviorSignalInvocation;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
  * @author Roman Smirnov
  *
  */
-public class CustomActivityBehavior implements ActivityBehavior, SignallableActivityBehavior {
+public @NullMarked class CustomActivityBehavior implements ActivityBehavior, SignallableActivityBehavior {
 
   protected ActivityBehavior delegateActivityBehavior;
 

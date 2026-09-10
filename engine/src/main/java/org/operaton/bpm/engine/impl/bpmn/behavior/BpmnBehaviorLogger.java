@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 public class BpmnBehaviorLogger extends ProcessEngineLogger {
 
 
-  public void missingBoundaryCatchEvent(String executionId, String errorCode, String errorMessage) {
+  public void missingBoundaryCatchEvent(String executionId, String errorCode, @Nullable String errorMessage) {
     logInfo(
       "001",
       "Execution with id '{}' throws an error event with errorCode '{}' and errorMessage '{}', but no catching boundary event was defined. " +

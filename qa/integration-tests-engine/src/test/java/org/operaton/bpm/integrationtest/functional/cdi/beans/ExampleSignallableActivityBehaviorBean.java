@@ -18,6 +18,8 @@ package org.operaton.bpm.integrationtest.functional.cdi.beans;
 
 import jakarta.inject.Named;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
  *
  */
 @Named
-public class ExampleSignallableActivityBehaviorBean extends AbstractBpmnActivityBehavior implements SignallableActivityBehavior {
+public @NullMarked class ExampleSignallableActivityBehaviorBean extends AbstractBpmnActivityBehavior implements SignallableActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
@@ -35,7 +37,7 @@ public class ExampleSignallableActivityBehaviorBean extends AbstractBpmnActivity
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalEvent, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalEvent, @Nullable Object signalData) throws Exception {
     leave(execution);
   }
 

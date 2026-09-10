@@ -21,6 +21,8 @@ import org.apache.commons.mail2.jakarta.Email;
 import org.apache.commons.mail2.jakarta.HtmlEmail;
 import org.apache.commons.mail2.jakarta.SimpleEmail;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -34,18 +36,18 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Joram Barrez
  * @author Frederik Heremans
  */
-public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class MailActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
-  protected Expression to;
-  protected Expression from;
-  protected Expression cc;
-  protected Expression bcc;
-  protected Expression subject;
-  protected Expression text;
-  protected Expression html;
-  protected Expression charset;
+  protected @Nullable Expression to;
+  protected @Nullable Expression from;
+  protected @Nullable Expression cc;
+  protected @Nullable Expression bcc;
+  protected @Nullable Expression subject;
+  protected @Nullable Expression text;
+  protected @Nullable Expression html;
+  protected @Nullable Expression charset;
 
   @Override
   public void execute(ActivityExecution execution) {
@@ -76,7 +78,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     leave(execution);
   }
 
-  protected Email createEmail(String text, String html) {
+  protected Email createEmail(@Nullable String text, @Nullable String html) {
     if (html != null) {
       return createHtmlEmail(text, html);
     } else if (text != null) {
@@ -86,7 +88,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected HtmlEmail createHtmlEmail(String text, String html) {
+  protected HtmlEmail createHtmlEmail(@Nullable String text, @Nullable String html) {
     HtmlEmail email = new HtmlEmail();
     try {
       email.setHtmlMsg(html);
@@ -109,7 +111,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected void addTo(Email email, String to) {
+  protected void addTo(Email email, @Nullable String to) {
     String[] tos = splitAndTrim(to);
     if (tos.length > 0) {
       for (String t : tos) {
@@ -124,7 +126,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected void setFrom(Email email, String from) {
+  protected void setFrom(Email email, @Nullable String from) {
     String fromAddress;
 
     if (from != null) {
@@ -140,7 +142,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected void addCc(Email email, String cc) {
+  protected void addCc(Email email, @Nullable String cc) {
     String[] ccs = splitAndTrim(cc);
     for (String c : ccs) {
       try {
@@ -151,7 +153,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected void addBcc(Email email, String bcc) {
+  protected void addBcc(Email email, @Nullable String bcc) {
     String[] bccs = splitAndTrim(bcc);
     for (String b : bccs) {
       try {
@@ -162,7 +164,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected void setSubject(Email email, String subject) {
+  protected void setSubject(Email email, @Nullable String subject) {
     email.setSubject(subject != null ? subject : "");
   }
 
@@ -185,13 +187,13 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected void setCharset(Email email, String charSetStr) {
+  protected void setCharset(Email email, @Nullable String charSetStr) {
     if (charset != null) {
       email.setCharset(charSetStr);
     }
   }
 
-  private String[] splitAndTrim(String str) {
+  private String[] splitAndTrim(@Nullable String str) {
     if (str != null) {
       String[] splittedStrings = str.split(",");
       for (int i = 0; i < splittedStrings.length; i++) {
@@ -202,7 +204,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     return new String[0];
   }
 
-  private String getStringFromField(Expression expression, DelegateExecution execution) {
+  private @Nullable String getStringFromField(@Nullable Expression expression, DelegateExecution execution) {
     if(expression != null) {
       Object value = expression.getValue(execution);
       if(value != null) {

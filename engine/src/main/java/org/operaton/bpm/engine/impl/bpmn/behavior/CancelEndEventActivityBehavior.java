@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
@@ -57,14 +58,14 @@ public @NullMarked class CancelEndEventActivityBehavior extends AbstractBpmnActi
   @Override
   public void doLeave(ActivityExecution execution) {
     // continue via the appropriate cancel boundary event
-    ScopeImpl eventScope = (ScopeImpl) cancelBoundaryEvent.getEventScope();
+    ScopeImpl eventScope = (ScopeImpl) getCancelBoundaryEvent().getEventScope();
 
     ActivityExecution boundaryEventScopeExecution = execution.findExecutionForFlowScope(eventScope);
-    boundaryEventScopeExecution.executeActivity(cancelBoundaryEvent);
+    boundaryEventScopeExecution.executeActivity(getCancelBoundaryEvent());
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
 
     // join compensating executions
     if(!execution.hasChildren()) {
@@ -78,7 +79,9 @@ public @NullMarked class CancelEndEventActivityBehavior extends AbstractBpmnActi
     this.cancelBoundaryEvent = cancelBoundaryEvent;
   }
 
-  public @Nullable PvmActivity getCancelBoundaryEvent() {
+  public PvmActivity getCancelBoundaryEvent() {
+    EnsureUtil.ensureNotNull("cancelBoundaryEvent", cancelBoundaryEvent);
+    requireNonNull(cancelBoundaryEvent);
     return cancelBoundaryEvent;
   }
 

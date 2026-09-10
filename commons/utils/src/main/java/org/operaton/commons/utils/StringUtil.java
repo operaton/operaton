@@ -105,7 +105,7 @@ public final class StringUtil {
    * @param text  the String to check, may be null
    * @return the passed in String, or the empty String if it  was <code>null</code>
    */
-  public static String defaultString(String text) {
+  public static String defaultString(@Nullable String text) {
       return text == null ? "" : text;
   }
 

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.delegate.Expression;
@@ -34,6 +36,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.applyFieldDeclaration;
 
 
@@ -46,7 +49,7 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.applyFieldDecl
  * @author Slawomir Wojtasiak (Patch for ACT-1159)
  * @author Falko Menge
  */
-public class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityBehavior {
+public @NullMarked class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -59,8 +62,9 @@ public class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityB
   }
 
   @Override
-  public void signal(final ActivityExecution execution, final String signalName, final Object signalData) throws Exception {
+  public void signal(final ActivityExecution execution, final @Nullable String signalName, final @Nullable Object signalData) throws Exception {
     ProcessApplicationReference targetProcessApplication = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
+    requireNonNull(targetProcessApplication);
     if(ProcessApplicationContextUtil.requiresContextSwitch(targetProcessApplication)) {
       Context.executeWithinProcessApplication(() -> {
         signal(execution, signalName, signalData);
@@ -72,7 +76,7 @@ public class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityB
     }
   }
 
-  public void doSignal(final ActivityExecution execution, final String signalName, final Object signalData) throws Exception {
+  public void doSignal(final ActivityExecution execution, final @Nullable String signalName, final @Nullable Object signalData) throws Exception {
     Object delegate = expression.getValue(execution);
     applyFieldDeclaration(fieldDeclarations, delegate);
     final ActivityBehavior activityBehaviorInstance = getActivityBehaviorInstance(execution, delegate);
@@ -91,7 +95,7 @@ public class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityB
     });
   }
 
-	@Override
+  @Override
   public void performExecution(final ActivityExecution execution) throws Exception {
 	  Callable<Void> callable = () -> {
       // Note: we can't cache the result of the expression, because the

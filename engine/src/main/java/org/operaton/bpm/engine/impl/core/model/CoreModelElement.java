@@ -20,9 +20,13 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.delegate.VariableListener;
+
+import static java.util.Collections.emptyList;
 
 /**
  * @author Daniel Meyer
@@ -31,12 +35,12 @@ import org.operaton.bpm.engine.delegate.VariableListener;
  *
  */
 @SuppressWarnings("java:S1948")
-public abstract class CoreModelElement implements Serializable {
+public abstract @NullMarked class CoreModelElement implements Serializable {
 
   @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
-  protected String name;
+  protected @Nullable String name;
   protected Properties properties = new Properties();
 
   /** contains built-in listeners */
@@ -59,7 +63,7 @@ public abstract class CoreModelElement implements Serializable {
     return id;
   }
 
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
@@ -67,14 +71,14 @@ public abstract class CoreModelElement implements Serializable {
    * @see Properties#set(PropertyKey, Object)
    */
   public void setProperty(String name, Object value) {
-    properties.set(new PropertyKey<Object>(name), value);
+    properties.set(new PropertyKey<>(name), value);
   }
 
   /**
    * @see Properties#get(PropertyKey)
    */
-  public Object getProperty(String name) {
-    return properties.get(new PropertyKey<Object>(name));
+  public @Nullable Object getProperty(String name) {
+    return properties.get(new PropertyKey<>(name));
   }
 
   /**
@@ -102,34 +106,22 @@ public abstract class CoreModelElement implements Serializable {
 
   public List<DelegateListener<? extends BaseDelegateExecution>> getListeners(String eventName) {
     List<DelegateListener<? extends BaseDelegateExecution>> listenerList = getListeners().get(eventName);
-    if (listenerList != null) {
-      return listenerList;
-    }
-    return Collections.emptyList();
+    return listenerList != null ? listenerList : emptyList();
   }
 
   public List<DelegateListener<? extends BaseDelegateExecution>> getBuiltInListeners(String eventName) {
     List<DelegateListener<? extends BaseDelegateExecution>> listenerList = getBuiltInListeners().get(eventName);
-    if (listenerList != null) {
-      return listenerList;
-    }
-    return Collections.emptyList();
+    return listenerList != null ? listenerList : emptyList();
   }
 
   public List<VariableListener<?>> getVariableListenersLocal(String eventName) {
     List<VariableListener<?>> listenerList = getVariableListeners().get(eventName);
-    if (listenerList != null) {
-      return listenerList;
-    }
-    return Collections.emptyList();
+    return listenerList != null ? listenerList : emptyList();
   }
 
   public List<VariableListener<?>> getBuiltInVariableListenersLocal(String eventName) {
     List<VariableListener<?>> listenerList = getBuiltInVariableListeners().get(eventName);
-    if (listenerList != null) {
-      return listenerList;
-    }
-    return Collections.emptyList();
+    return listenerList != null ? listenerList : emptyList();
   }
 
   public void addListener(String eventName, DelegateListener<? extends BaseDelegateExecution> listener) {

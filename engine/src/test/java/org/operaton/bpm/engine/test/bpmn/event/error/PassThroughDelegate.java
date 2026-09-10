@@ -18,10 +18,12 @@ package org.operaton.bpm.engine.test.bpmn.event.error;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
-public class PassThroughDelegate extends AbstractBpmnActivityBehavior implements Serializable {
+public @NullMarked class PassThroughDelegate extends AbstractBpmnActivityBehavior implements Serializable {
 
   public static final long serialVersionUID = 1L;
 
@@ -31,9 +33,8 @@ public class PassThroughDelegate extends AbstractBpmnActivityBehavior implements
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     super.leave(execution);
   }
-
 
 }

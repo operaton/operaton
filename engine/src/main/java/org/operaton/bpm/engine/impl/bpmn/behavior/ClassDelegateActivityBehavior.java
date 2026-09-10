@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -44,7 +45,7 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDel
  * @author Falko Menge
  * @author Roman Smirnov
  */
-public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 

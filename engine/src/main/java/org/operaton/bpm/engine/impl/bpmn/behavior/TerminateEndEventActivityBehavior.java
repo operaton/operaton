@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
 
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
  * @author Daniel Meyer
  * @author Roman Smirnov
  */
-public class TerminateEndEventActivityBehavior extends FlowNodeActivityBehavior {
+public @NullMarked class TerminateEndEventActivityBehavior extends FlowNodeActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {

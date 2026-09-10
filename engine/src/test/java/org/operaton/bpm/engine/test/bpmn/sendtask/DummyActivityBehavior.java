@@ -16,18 +16,20 @@
  */
 package org.operaton.bpm.engine.test.bpmn.sendtask;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.behavior.TaskActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
-public class DummyActivityBehavior extends TaskActivityBehavior {
+public @NullMarked class DummyActivityBehavior extends TaskActivityBehavior {
 
   public static boolean wasExecuted;
 
-  public static String currentActivityId;
-  public static String currentActivityName;
+  public static @Nullable String currentActivityId;
+  public static @Nullable String currentActivityName;
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     currentActivityName = execution.getCurrentActivityName();
     currentActivityId = execution.getCurrentActivityId();
     leave(execution);

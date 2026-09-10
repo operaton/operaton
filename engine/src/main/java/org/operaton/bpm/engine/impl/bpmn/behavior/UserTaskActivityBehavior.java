@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingUserTaskInstance;
@@ -37,7 +39,7 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
  * @author Joram Barrez
  * @author Roman Smirnov
  */
-public class UserTaskActivityBehavior extends TaskActivityBehavior implements MigrationObserverBehavior {
+public @NullMarked class UserTaskActivityBehavior extends TaskActivityBehavior implements MigrationObserverBehavior {
 
   protected TaskDecorator taskDecorator;
 
@@ -67,7 +69,7 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior implements Mi
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     leave(execution);
   }
 

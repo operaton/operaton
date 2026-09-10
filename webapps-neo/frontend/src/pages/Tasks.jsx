@@ -25,6 +25,8 @@ import { AppState } from "../state.js";
 import {
   VARIABLE_TYPES,
   coerce_variable_value,
+  variable_input_type,
+  variable_edit_value,
   format_variable_value,
 } from "../helper/variables.js";
 import { StartProcessList } from "./StartProcessList.jsx";
@@ -1820,7 +1822,7 @@ const VariablesTab = () => {
                 <td>
                   {editing.value === name ? (
                     <input
-                      type="text"
+                      type={variable_input_type(v.type)}
                       value={draft.value.value}
                       onInput={(e) =>
                         (draft.value = {
@@ -1850,7 +1852,7 @@ const VariablesTab = () => {
                           draft.value = {
                             name,
                             type: v.type,
-                            value: format_variable_value(v.value),
+                            value: variable_edit_value(v.type, v.value),
                           };
                         }}
                         aria-label={t("common.edit")}

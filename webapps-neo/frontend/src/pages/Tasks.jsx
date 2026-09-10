@@ -273,6 +273,34 @@ const TasksPage = () => {
   );
 };
 
+// A saved filter is private until someone is authorized to read it. The engine
+// expresses that as authorizations on the Filter resource: a global grant for
+// everyone (userId "*", type 0) or a grant per user or group (type 1).
+const FILTER_RESOURCE_TYPE = 5;
+
+const grant_access = async (state, filter_id, { readable_by_all, grants }) => {
+  if (readable_by_all) {
+    await engine_rest.authorization.create(state, {
+      type: 0,
+      permissions: ["READ"],
+      userId: "*",
+      resourceType: FILTER_RESOURCE_TYPE,
+      resourceId: filter_id,
+    });
+  }
+  for (const grant of grants) {
+    const id = grant.id.trim();
+    if (!id) continue;
+    await engine_rest.authorization.create(state, {
+      type: 1,
+      permissions: ["READ"],
+      [grant.type === "group" ? "groupId" : "userId"]: id,
+      resourceType: FILTER_RESOURCE_TYPE,
+      resourceId: filter_id,
+    });
+  }
+};
+
 const TasksManage = () => {
   const state = useContext(AppState),
     { route } = useLocation(),
@@ -1303,6 +1331,8 @@ const Filter = () => {
       refresh: false,
       criteria: [],
       variables: [],
+      readable_by_all: false,
+      grants: [],
     }),
     update = (key, value) => (form.value = { ...form.peek(), [key]: value }),
     add_criteria = () =>
@@ -1321,6 +1351,20 @@ const Filter = () => {
         form
           .peek()
           .criteria.map((c, i) => (i === index ? { ...c, [field]: value } : c)),
+      ),
+    add_grant = () =>
+      update("grants", [...form.peek().grants, { type: "user", id: "" }]),
+    remove_grant = (index) =>
+      update(
+        "grants",
+        form.peek().grants.filter((_, i) => i !== index),
+      ),
+    update_grant = (index, field, value) =>
+      update(
+        "grants",
+        form
+          .peek()
+          .grants.map((g, i) => (i === index ? { ...g, [field]: value } : g)),
       ),
     add_variable = () =>
       update("variables", [...form.peek().variables, { name: "", label: "" }]),
@@ -1369,9 +1413,13 @@ const Filter = () => {
           variables,
         },
       };
-      engine_rest.filter.create_filter(state, body).then(() => {
-        route("/tasks");
-      });
+      void engine_rest.filter
+        .create_filter(state, body)
+        .then(async (result) => {
+          const id = result?.data?.id;
+          if (id) await grant_access(state, id, form.value);
+          route("/tasks");
+        });
     };
 
   return (
@@ -1537,7 +1585,73 @@ const Filter = () => {
           <button type="submit">{t("common.save")}</button>
           <a href={`/tasks${keep_list_query(query)}`}>{t("common.cancel")}</a>
         </div>
-      </form>
+      
+        <fieldset>
+          <legend>{t("tasks.filter.permissions")}</legend>
+          <p>{t("tasks.filter.permissions-hint")}</p>
+          <label class="checkbox">
+            <input
+              type="checkbox"
+              checked={form.value.readable_by_all}
+              onChange={(e) =>
+                update("readable_by_all", e.currentTarget.checked)
+              }
+            />
+            {t("tasks.filter.readable-by-all")}
+          </label>
+
+          {form.value.grants.length > 0 && (
+            <table>
+              <thead>
+                <tr>
+                  <th>{t("common.type")}</th>
+                  <th>{t("common.name")}</th>
+                  <th>{t("common.action")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {form.value.grants.map((grant, i) => (
+                  <tr key={i}>
+                    <td>
+                      <select
+                        value={grant.type}
+                        onChange={(e) =>
+                          update_grant(i, "type", e.currentTarget.value)
+                        }
+                      >
+                        <option value="user">{t("tasks.filter.user")}</option>
+                        <option value="group">{t("tasks.filter.group")}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        value={grant.id}
+                        onInput={(e) =>
+                          update_grant(i, "id", e.currentTarget.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="danger"
+                        onClick={() => remove_grant(i)}
+                        aria-label={t("common.delete")}
+                        title={t("common.delete")}
+                      >
+                        <Icons.trash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <button type="button" onClick={add_grant}>
+            {t("tasks.filter.add-permission")}
+          </button>
+        </fieldset>
+</form>
     </div>
   );
 };

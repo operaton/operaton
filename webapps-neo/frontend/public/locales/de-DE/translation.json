@@ -239,9 +239,9 @@
       "auto-refresh": "Automatische Aktualisierung",
       "criteria": "Kriterien",
       "add-criteria": "Kriterium hinzufügen",
-      "permissions": "Berechtigungen",
+      "permissions": "Wer diesen Filter verwenden darf",
       "accessible-by-all": "Für alle Benutzer zugänglich",
-      "add-permission": "Berechtigung hinzufügen",
+      "add-permission": "Person oder Gruppe hinzufügen",
       "group-user": "Gruppe / Benutzer",
       "identifier": "Bezeichner",
       "variables": "Variablen",
@@ -249,7 +249,11 @@
       "show-undefined": "Undefinierte Variablen anzeigen",
       "add-variable": "Variable hinzufügen",
       "label": "Bezeichnung",
-      "manage_title": "Aufgaben-Filter verwalten"
+      "manage_title": "Aufgaben-Filter verwalten",
+      "permissions-hint": "Ein gespeicherter Filter ist privat, bis jemand ihn lesen darf.",
+      "readable-by-all": "Alle dürfen ihn verwenden",
+      "user": "Benutzer",
+      "group": "Gruppe"
     },
     "sort": {
       "label": "Sortieren nach",

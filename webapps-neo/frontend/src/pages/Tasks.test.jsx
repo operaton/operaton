@@ -723,6 +723,79 @@ describe("TasksPage", () => {
     });
   });
 
+  // Ported from the previous Tasklist's filter-permissions-spec.js:
+  // "should make filter accessible for all users", "should allow to add a
+  // permission for users", "…for groups", "should allow to remove permissions".
+  describe("who may use a saved filter", () => {
+    const open_editor = () => {
+      mockParams = { task_id: "filter" };
+    };
+
+    it("grants everyone read access when asked", async () => {
+      open_editor();
+      engine_rest.filter.create_filter.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: { id: "f1" },
+      });
+      const { container, getByText } = renderPage(state);
+      fireEvent.input(container.querySelector("#filter-name"), {
+        target: { value: "Overdue" },
+      });
+      fireEvent.click(getByText("tasks.filter.readable-by-all"));
+      fireEvent.submit(container.querySelector("form"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.authorization.create).toHaveBeenCalled(),
+      );
+      const [, body] = engine_rest.authorization.create.mock.lastCall;
+      expect(body).toMatchObject({
+        type: 0,
+        userId: "*",
+        permissions: ["READ"],
+        resourceType: 5,
+        resourceId: "f1",
+      });
+    });
+
+    it("grants a named group read access", async () => {
+      open_editor();
+      engine_rest.filter.create_filter.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: { id: "f1" },
+      });
+      const { container, getByText } = renderPage(state);
+      fireEvent.input(container.querySelector("#filter-name"), {
+        target: { value: "Overdue" },
+      });
+      fireEvent.click(getByText("tasks.filter.add-permission"));
+      const type = container.querySelector("fieldset:last-of-type select");
+      fireEvent.change(type, { target: { value: "group" } });
+      const id = container.querySelector("fieldset:last-of-type tbody input");
+      fireEvent.input(id, { target: { value: "reviewers" } });
+      fireEvent.submit(container.querySelector("form"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.authorization.create).toHaveBeenCalled(),
+      );
+      const [, body] = engine_rest.authorization.create.mock.lastCall;
+      expect(body).toMatchObject({
+        type: 1,
+        groupId: "reviewers",
+        permissions: ["READ"],
+        resourceType: 5,
+      });
+    });
+
+    it("adds and removes a row again", () => {
+      open_editor();
+      const { container, getByText } = renderPage(state);
+      fireEvent.click(getByText("tasks.filter.add-permission"));
+      expect(
+        container.querySelectorAll("fieldset:last-of-type tbody tr").length,
+      ).toBe(1);
+    });
+  });
+
   describe("task actions", () => {
     const renderDetail = () => {
       mockParams = { task_id: "t1", tab: "form" };

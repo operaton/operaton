@@ -239,9 +239,9 @@
       "auto-refresh": "Auto Refresh",
       "criteria": "Criteria",
       "add-criteria": "Add Criteria",
-      "permissions": "Permissions",
+      "permissions": "Who may use this filter",
       "accessible-by-all": "Accessible by all users",
-      "add-permission": "Add Permission",
+      "add-permission": "Add person or group",
       "group-user": "Group / User",
       "identifier": "Identifier",
       "variables": "Variables",
@@ -249,7 +249,11 @@
       "show-undefined": "Show undefined variables",
       "add-variable": "Add Variable",
       "label": "Label",
-      "manage_title": "Manage task filters"
+      "manage_title": "Manage task filters",
+      "permissions-hint": "A saved filter is private until someone is allowed to read it.",
+      "readable-by-all": "Everyone may use it",
+      "user": "User",
+      "group": "Group"
     },
     "sort": {
       "label": "Sort by",

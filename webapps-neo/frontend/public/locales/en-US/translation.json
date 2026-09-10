@@ -196,6 +196,7 @@
       "required-field": "(*) required field",
       "no-form": "No form available for this task.",
       "complete-task": "Complete Task",
+      "claim-first": "Claim the task to work on it.",
       "save-form": "Save Form",
       "unknown-error": "An unknown error occurred.",
       "form-title": "Form",

@@ -196,6 +196,7 @@
       "required-field": "(*) Pflichtfeld",
       "no-form": "Kein Formular für diese Aufgabe verfügbar.",
       "complete-task": "Aufgabe abschließen",
+      "claim-first": "Übernehmen Sie die Aufgabe, um sie zu bearbeiten.",
       "save-form": "Formular speichern",
       "unknown-error": "Ein unbekannter Fehler ist aufgetreten.",
       "form-title": "Formular",

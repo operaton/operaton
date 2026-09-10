@@ -602,10 +602,46 @@ describe("TasksPage", () => {
       expect(engine_rest.task.update_task.mock.lastCall[2]).toBe("t1");
     });
 
+    it("leaves the form read-only until the task is held by the signed-in user", () => {
+      state.auth.user.id.value = "alice";
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      signal_response(
+        state.api.task.rendered_form,
+        '<form><label>Amount</label><input cam-variable-name="amount" cam-variable-type="String" value="42"/></form>',
+      );
+      signal_response(state.api.task.form_variables, {
+        amount: { value: "42", type: "String" },
+      });
+      const { getByText, container } = renderDetail();
+
+      expect(getByText("tasks.form.claim-first")).toBeTruthy();
+      expect(getByText("tasks.form.complete-task").disabled).toBe(true);
+      expect(
+        [...container.querySelectorAll(".task-form input")].every(
+          (i) => i.disabled,
+        ),
+      ).toBe(true);
+    });
+
+    it("keeps the form read-only when someone else holds the task", () => {
+      state.auth.user.id.value = "alice";
+      signal_response(state.api.task.one, sample_task({ assignee: "bob" }));
+      signal_response(
+        state.api.task.rendered_form,
+        '<form><label>Amount</label><input cam-variable-name="amount" cam-variable-type="String" value="42"/></form>',
+      );
+      signal_response(state.api.task.form_variables, {
+        amount: { value: "42", type: "String" },
+      });
+      const { getByText } = renderDetail();
+      expect(getByText("tasks.form.complete-task").disabled).toBe(true);
+    });
+
     it("submits the generated task form via post_task_form", () => {
       // No formKey => real TaskForm renders GeneratedTaskForm: it parses the
       // engine's rendered form into a schema and submits via post_task_form.
-      signal_response(state.api.task.one, sample_task());
+      state.auth.user.id.value = "alice";
+      signal_response(state.api.task.one, sample_task({ assignee: "alice" }));
       signal_response(
         state.api.task.rendered_form,
         '<form><label>Amount</label><input cam-variable-name="amount" cam-variable-type="String" value="42"/></form>',

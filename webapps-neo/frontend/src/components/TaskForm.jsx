@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect, useRef } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
+import { resolve_user } from "../api/helper.jsx";
 import engine_rest from "../api/engine_rest.jsx";
 import { useRoute, useLocation } from "preact-iso";
 import { CamundaForm } from "./CamundaForm.jsx";
@@ -39,6 +40,11 @@ const TaskForm = () => {
   // renderer so it looks like a form-js form.
   return <GeneratedTaskForm task={selectedTask} taskId={params.task_id} />;
 };
+
+// A task is workable only by the person it is assigned to — unassigned or held
+// by someone else means read-only, as in the previous Tasklist.
+const worked_by_me = (state, task) =>
+  !!task?.assignee && task.assignee === resolve_user(state);
 
 // ---- Camunda Forms (form-js) ------------------------------------------------
 
@@ -96,19 +102,27 @@ const CamundaTaskForm = ({ task, taskId }) => {
       .catch((e) => setError(e?.message ?? "Submit failed"));
   };
 
+  const mine = worked_by_me(state, task);
+
   return (
     <div class="task-form camunda-task-form">
       <CamundaForm
         schema={schema}
         data={initial_data}
+        disabled={!mine}
         on_submit={on_submit}
         on_ready={(c) => {
           submit_ref.current = c.submit;
         }}
       />
       {error && <p class="error" role="alert">{error}</p>}
+      {!mine && <p class="info-box">{t("tasks.form.claim-first")}</p>}
       <div class="form-buttons">
-        <button type="button" onClick={() => submit_ref.current?.()}>
+        <button
+          type="button"
+          disabled={!mine}
+          onClick={() => submit_ref.current?.()}
+        >
           {t("tasks.form.complete-task")}
         </button>
       </div>
@@ -209,11 +223,14 @@ const GeneratedTaskForm = ({ task, taskId }) => {
       .catch((e) => setError(e?.message ?? "Submit failed"));
   };
 
+  const mine = worked_by_me(state, task);
+
   return (
     <div class="task-form camunda-task-form">
       <CamundaForm
         schema={schema}
         data={initial_data}
+        disabled={!mine}
         on_submit={on_submit}
         on_ready={(c) => {
           submit_ref.current = c.submit;
@@ -224,14 +241,20 @@ const GeneratedTaskForm = ({ task, taskId }) => {
           {error}
         </p>
       )}
+      {!mine && <p class="info-box">{t("tasks.form.claim-first")}</p>}
       <div class="form-buttons">
         {has_fields ? (
-          <button type="button" onClick={() => submit_ref.current?.()}>
+          <button
+            type="button"
+            disabled={!mine}
+            onClick={() => submit_ref.current?.()}
+          >
             {t("tasks.form.complete-task")}
           </button>
         ) : (
           <button
             type="button"
+            disabled={!mine}
             onClick={() => complete_directly(state, setError, taskId, route)}
           >
             {t("tasks.form.complete-directly")}

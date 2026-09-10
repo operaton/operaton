@@ -1,3 +1,5 @@
+@import "sass-compat";
+
 // 1. Import Bootstrap 4 functions and variables first
 // so that variables like $gray-600 and $body-bg are available.
 @import "~bootstrap/scss/functions";
@@ -9,14 +11,14 @@ $brand-info:                      #5bc0de;
 $brand-warning:                   #f0ad4e;
 $brand-danger:                    #d9534f;
 $danger-bg:                       #f2dede;
-$danger-border:                   darken(adjust-hue($danger-bg, -10deg), 5%);
+$danger-border:                   op-color-adjust($danger-bg, $hue: -10deg, $lightness: -5%);
 $danger-text:                     #a94442;
 $info-bg:                         #d9edf7;
-$info-border:                     darken(adjust-hue($info-bg, -10), 7%);
+$info-border:                     op-color-adjust($info-bg, $hue: -10deg, $lightness: -7%);
 $info-text:                       #31708f;
 $success-text:                    #3c763d;
 $success-bg:                      #dff0d8;
-$success-border:                  darken(adjust-hue($success-bg, -10), 5%);
+$success-border:                  op-color-adjust($success-bg, $hue: -10deg, $lightness: -5%);
 $state-circle-size:               20px;
 $body-color:                         #495057;
 @import "~bootstrap/scss/variables";
@@ -48,28 +50,28 @@ $gray-lighter: $gray-200 !default; // Used for borders/backgrounds
 
 $text-color:                      $gray-600; // BS3 @gray -> BS4 $gray-600
 $font-size-base:                  0.875rem;
-$main-darker:                     darken($main-color, 25%);
+$main-darker:                     op-color-adjust($main-color, $lightness: -25%);
 
 $important-color:                 #b94a48;
-$important-darker:                darken($important-color, 45%);
+$important-darker:                op-color-adjust($important-color, $lightness: -45%);
 
 $warning-color:                   #f89406;
-$warning-darker:                  darken($warning-color, 45%);
+$warning-darker:                  op-color-adjust($warning-color, $lightness: -45%);
 
 $warning-text:                    #8a6d3b;
 $warning-bg:                      #fcf8e3;
-$warning-border:                  darken(adjust-hue($warning-bg, -10), 5%);
+$warning-border:                  op-color-adjust($warning-bg, $hue: -10deg, $lightness: -5%);
 
 
 // Process state colors
-$running-color:                   desaturate(lighten(#08c, 25%), 40%);
-$running-darker:                  darken($running-color, 45%);
+$running-color:                   op-color-adjust(#08c, $lightness: 25%, $saturation: -40%);
+$running-darker:                  op-color-adjust($running-color, $lightness: -45%);
 
 $completed-color:                 #bbb;
-$completed-darker:                darken($completed-color, 45%);
+$completed-darker:                op-color-adjust($completed-color, $lightness: -45%);
 
-$canceled-color:                  desaturate(lighten($warning-color, 20%), 25%);
-$canceled-darker:                 darken($canceled-color, 45%);
+$canceled-color:                  op-color-adjust($warning-color, $lightness: 20%, $saturation: -25%);
+$canceled-darker:                 op-color-adjust($canceled-color, $lightness: -45%);
 
 $line-style:                      dotted;
 $line-color:                      $gray-500; // BS3 @gray-light -> BS4 $gray-500
@@ -81,7 +83,7 @@ $link-hover-decoration:           none;
 $highlight-bg:                    #FFFDAB;
 
 $bpmn-highlight-border-color:     $link-color;
-$bpmn-highlight-bg:               desaturate(lighten($bpmn-highlight-border-color, 45%), 25%);
+$bpmn-highlight-bg:               op-color-adjust($bpmn-highlight-border-color, $lightness: 45%, $saturation: -25%);
 
 $border-radius-base:              0;
 $border-radius-large:             0;
@@ -93,20 +95,20 @@ $btn-border-radius-small:         2px;
 
 // Grid
 // BS3 @screen-sm-min was 768px but corresponds to BS4 @md. We use BS4 @md for consistency. Same for @lg and @xl.
-$grid-float-breakpoint:          map-get($grid-breakpoints, md);
+$grid-float-breakpoint:          op-map-get($grid-breakpoints, md);
 $grid-float-breakpoint-max:      ($grid-float-breakpoint - 1);
-$screen-xs-min:                  map-get($grid-breakpoints, sm);
-$screen-xs-max:                  map-get($grid-breakpoints, md)-1;
-$screen-sm-min:                  map-get($grid-breakpoints, md);
-$screen-sm-max:                  map-get($grid-breakpoints, lg) - 1;
-$screen-md-min:                  map-get($grid-breakpoints, lg);
-$screen-md-max:                  map-get($grid-breakpoints, xl) - 1;
-$screen-lg-min:                  map-get($grid-breakpoints, xl);
+$screen-xs-min:                  op-map-get($grid-breakpoints, sm);
+$screen-xs-max:                  op-map-get($grid-breakpoints, md)-1;
+$screen-sm-min:                  op-map-get($grid-breakpoints, md);
+$screen-sm-max:                  op-map-get($grid-breakpoints, lg) - 1;
+$screen-md-min:                  op-map-get($grid-breakpoints, lg);
+$screen-md-max:                  op-map-get($grid-breakpoints, xl) - 1;
+$screen-lg-min:                  op-map-get($grid-breakpoints, xl);
 
 // Forms
 $input-bg:                       $body-bg;
 $input-color:                    $text-color;
-$input-border:                   lighten($input-color, 33%); // Note: Added % for Sass
+$input-border:                   op-color-adjust($input-color, $lightness: 33%); // Note: Added % for Sass
 $input-border-focus:             $link-hover-color;
 $input-color-placeholder:        $input-border;
 
@@ -149,7 +151,7 @@ $navbar-default-link-disabled-bg:          transparent;
 
 // Navbar brand label
 $navbar-default-brand-color:               $navbar-default-link-color;
-$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%);
+$navbar-default-brand-hover-color:         op-color-adjust($navbar-default-brand-color, $lightness: -10%);
 $navbar-default-brand-hover-bg:            transparent;
 
 // Navbar toggle
@@ -163,7 +165,7 @@ $header-computed-height:          $header-height - $header-border-bottom-width;
 $header-border-bottom-color:      $brand-primary;
 $primary:                         $brand-primary;
 
-$header-site-name-size:           ($header-computed-height - 6) / 2;
+$header-site-name-size:           op-div($header-computed-height - 6, 2);
 
 $breadcrumb-height:               35px;
 
@@ -179,14 +181,14 @@ $box-shadow-low:    0 2px 8px -4px $shadow-color;
 $box-shadow-lower:  0 2px 6px -4px $shadow-color;
 
 $color-shift:                       12%;
-$column-left-bg:                    darken($body-bg, $color-shift * 6.18);
-$column-center-bg:                  darken($body-bg, $color-shift * (6.18 * 0.618));
-$column-right-bg:                   darken($body-bg, $color-shift * 0);
+$column-left-bg:                    op-color-adjust($body-bg, $lightness: -($color-shift * 6.18));
+$column-center-bg:                  op-color-adjust($body-bg, $lightness: -($color-shift * (6.18 * 0.618)));
+$column-right-bg:                   op-color-adjust($body-bg, $lightness: -($color-shift * 0));
 $column-top-height:                 22px;
 $border-thick-width:                5px;
 $border-thin-width:                 1px;
 
-$hover-color-bg:                    mix($column-center-bg, $column-right-bg, 50%);
+$hover-color-bg:                    op-color-mix($column-center-bg, $column-right-bg, 50%);
 
 $layout-transition-timing: ease-in-out;
 $layout-transition-duration: 0.536s;
@@ -211,6 +213,6 @@ $nav-tabs-active-link-hover-border-color: $navbar-default-link-active-bg;
 $nav-tabs-active-link-border-color:       $navbar-default-link-active-bg;
 
 $well-bg: $body-bg;
-$well-border: mix($gray-500, $gray-200);
+$well-border: op-color-mix($gray-500, $gray-200);
 
-$table-bg-hover: lighten(desaturate($link-color, 30%), 55%);
+$table-bg-hover: op-color-adjust($link-color, $saturation: -30%, $lightness: 55%);

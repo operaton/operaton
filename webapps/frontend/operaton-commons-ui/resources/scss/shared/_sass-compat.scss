@@ -1,0 +1,27 @@
+// Wraps modern Sass module functions as plain (non-namespaced) functions so
+// files that must keep @import as their first rule (see Sonar css:S8778)
+// can still use them without adding their own @use rule.
+@use "sass:color";
+@use "sass:map";
+@use "sass:math";
+
+@function op-color-adjust($color, $hue: 0, $saturation: 0, $lightness: 0) {
+  @return color.adjust(
+    $color,
+    $hue: $hue,
+    $saturation: $saturation,
+    $lightness: $lightness
+  );
+}
+
+@function op-color-mix($color1, $color2, $weight: 50%) {
+  @return color.mix($color1, $color2, $weight);
+}
+
+@function op-map-get($map, $key) {
+  @return map.get($map, $key);
+}
+
+@function op-div($dividend, $divisor) {
+  @return math.div($dividend, $divisor);
+}

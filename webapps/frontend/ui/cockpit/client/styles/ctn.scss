@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Variables
 $ctn-sidebar-width: 280px;
 $ctn-toolbar-width: 56px;
@@ -95,7 +97,7 @@ $ctn-resize-handle-width: 5px;
       content: ':';
       font-size: 20px;
       line-height: 20px;
-      color: darken($gray-light, 10%);
+      color: color.adjust($gray-light, $lightness: -10%);
       text-shadow: 0 1px 0 $body-bg;
     }
   }

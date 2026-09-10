@@ -116,7 +116,14 @@
     "process-definitions": "Process Definitions",
     "see-all-processes": "See all processes",
     "no-process-definitions": "No process definitions.",
-    "instances": "Instances"
+    "instances": "Instances",
+    "tasks-assigned": "Assigned",
+    "tasks-unassigned": "Unassigned",
+    "tasks-unattended": "Nobody responsible",
+    "tasks-by-group": "Open tasks by group",
+    "group": "Group",
+    "no-group": "No group",
+    "multiple-groups-hint": "A task can belong to more than one group, so the counts can add up to more than the total."
   },
   "tasks": {
     "title": "Task List",
@@ -484,7 +491,9 @@
     "variables": {
       "add": "Add variable",
       "edit": "Edit variable",
-      "confirm-delete": "Delete variable \"{{name}}\"?"
+      "confirm-delete": "Delete variable \"{{name}}\"?",
+      "scope": "Scope",
+      "scope-instance": "Process instance"
     },
     "external-tasks": {
       "topic": "Topic",

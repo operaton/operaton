@@ -116,7 +116,14 @@
     "process-definitions": "Prozessdefinitionen",
     "see-all-processes": "Alle Prozesse anzeigen",
     "no-process-definitions": "Keine Prozessdefinitionen.",
-    "instances": "Instanzen"
+    "instances": "Instanzen",
+    "tasks-assigned": "Zugewiesen",
+    "tasks-unassigned": "Nicht zugewiesen",
+    "tasks-unattended": "Ohne Zuständigkeit",
+    "tasks-by-group": "Offene Aufgaben nach Gruppe",
+    "group": "Gruppe",
+    "no-group": "Ohne Gruppe",
+    "multiple-groups-hint": "Eine Aufgabe kann zu mehreren Gruppen gehören; die Summe kann deshalb über der Gesamtzahl liegen."
   },
   "tasks": {
     "title": "Aufgabenliste",
@@ -484,7 +491,9 @@
     "variables": {
       "add": "Variable hinzufügen",
       "edit": "Variable bearbeiten",
-      "confirm-delete": "Variable \"{{name}}\" löschen?"
+      "confirm-delete": "Variable \"{{name}}\" löschen?",
+      "scope": "Gültigkeitsbereich",
+      "scope-instance": "Prozessinstanz"
     },
     "external-tasks": {
       "topic": "Thema",

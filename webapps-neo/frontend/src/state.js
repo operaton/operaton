@@ -41,6 +41,7 @@ const createAppState = () => {
       create: signal(null),
       update: signal(null),
       delete: signal(null),
+      sections: signal(null),
     },
     engine: {
       telemetry: signal(null),

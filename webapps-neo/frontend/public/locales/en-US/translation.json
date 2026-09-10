@@ -732,7 +732,10 @@
       "add-to-group": "Add to group",
       "no-tenants": "User is currently not a member of any tenant.",
       "delete": "Delete User",
-      "confirm-delete": "Do you really want to delete this user?"
+      "confirm-delete": "Do you really want to delete this user?",
+      "unlock": "Unlock user",
+      "unlock-success": "The user was unlocked.",
+      "unlock-hint": "The engine locks an account after too many failed sign-ins. Unlocking lets the user sign in again."
     },
     "group": {
       "title": "Groups",

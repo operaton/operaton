@@ -108,7 +108,17 @@ const formatTimestamp = (date) => {
         ` - ${pad(at.getHours())}:${pad(at.getMinutes())}:${pad(at.getSeconds())}`;
 };
 
+// The absolute moment, spelled out for the reader's locale. Relative wording
+// answers "how long", never "when" — both belong on a date.
+const formatAbsolute = (date) => {
+    const at = date instanceof Date ? date : new Date(Date.parse(date));
+    return Number.isNaN(at.getTime())
+        ? ''
+        : at.toLocaleString(navigator.language || 'en');
+}
+
 export {
+  formatAbsolute,
   formatTimestamp,
   toLocalParts,
   fromLocalParts,

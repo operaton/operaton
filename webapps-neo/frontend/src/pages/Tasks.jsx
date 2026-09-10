@@ -26,6 +26,7 @@ import { StartProcessList } from "./StartProcessList.jsx";
 import { ConfirmDialog } from "../components/Dialog.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
 import {
+  formatAbsolute,
   formatRelativeDate,
   formatTimestamp,
   fromLocalParts,
@@ -431,7 +432,13 @@ const TaskRowEntry = ({ task, selected }) => {
       </th>
       <td>{assignee ? assignee : "—"}</td>
       <td>
-        {due ? <time datetime={due}>{formatRelativeDate(due)}</time> : "—"}
+        {due ? (
+          <time datetime={due} title={formatAbsolute(due)}>
+            {formatRelativeDate(due)}
+          </time>
+        ) : (
+          "—"
+        )}
       </td>
     </tr>
   );
@@ -505,6 +512,11 @@ const Task = () => {
               {pd.value?.data?.name} ({t("processes.version")}{" "}
               {pd.value?.data?.version})
             </a>
+            {task.value?.data?.tenantId && (
+              <p class="tenant">
+                {t("tasks.tenant")}: {task.value.data.tenantId}
+              </p>
+            )}
             {state.api.task.one.value?.data !== undefined ? (
               <p>{state.api.task.one.value?.data.description}</p>
             ) : (
@@ -606,20 +618,24 @@ const SetDueDateButton = () => {
       ? new Date(Date.parse(task.value?.data?.due))
       : null,
     date_state = useSignal(toLocalParts(due_date ?? new Date())),
+    // Close only once the engine has taken it; a rejected change must stay on
+    // screen, with what was typed still in the fields.
+    save = (value) =>
+      Promise.resolve(
+        engine_rest.task.update_task(state, { due: value }, params.task_id),
+      ).then((result) => {
+        if (result?.status === RESPONSE_STATE.SUCCESS) close();
+      }),
     submit = (event) => {
       event.preventDefault();
-      engine_rest.task
-        .update_task(
-          state,
-          {
-            due: fromLocalParts(date_state.value.date, date_state.value.time),
-          },
-          params.task_id,
-        )
-        .then((result) => {
-          if (result?.status === RESPONSE_STATE.SUCCESS) close();
-        });
-    };
+      save(fromLocalParts(date_state.value.date, date_state.value.time));
+    },
+    set_now = () => {
+      const now = toLocalParts(new Date());
+      date_state.value = now;
+      save(fromLocalParts(now.date, now.time));
+    },
+    reset = () => save(null);
 
   return (
     <>
@@ -659,6 +675,12 @@ const SetDueDateButton = () => {
             }
           />
           <div class="button-group">
+            <button type="button" class="secondary" onClick={set_now}>
+              {t("tasks.dates.now")}
+            </button>
+            <button type="button" class="secondary" onClick={reset}>
+              {t("tasks.dates.reset")}
+            </button>
             <button type="submit">{t("common.submit")}</button>
           </div>
         </form>
@@ -688,24 +710,28 @@ const SetFollowUpDateButton = () => {
       ? new Date(Date.parse(task.value?.data?.followUp))
       : null,
     date_state = useSignal(toLocalParts(followUpDate ?? new Date())),
-    // due:	"2025-06-18T13:58:44.000+0000"
+    // Close only once the engine has taken it; a rejected change must stay on
+    // screen, with what was typed still in the fields.
+    save = (value) =>
+      Promise.resolve(
+        engine_rest.task.update_task(
+          state,
+          { followUp: value },
+          params.task_id,
+        ),
+      ).then((result) => {
+        if (result?.status === RESPONSE_STATE.SUCCESS) close();
+      }),
     submit = (event) => {
       event.preventDefault();
-      engine_rest.task
-        .update_task(
-          state,
-          {
-            followUp: fromLocalParts(
-              date_state.value.date,
-              date_state.value.time,
-            ),
-          },
-          params.task_id,
-        )
-        .then((result) => {
-          if (result?.status === RESPONSE_STATE.SUCCESS) close();
-        });
-    };
+      save(fromLocalParts(date_state.value.date, date_state.value.time));
+    },
+    set_now = () => {
+      const now = toLocalParts(new Date());
+      date_state.value = now;
+      save(fromLocalParts(now.date, now.time));
+    },
+    reset = () => save(null);
 
   return (
     <>
@@ -750,6 +776,12 @@ const SetFollowUpDateButton = () => {
             }
           />
           <div class="button-group">
+            <button type="button" class="secondary" onClick={set_now}>
+              {t("tasks.dates.now")}
+            </button>
+            <button type="button" class="secondary" onClick={reset}>
+              {t("tasks.dates.reset")}
+            </button>
             <button type="submit">{t("common.submit")}</button>
           </div>
         </form>

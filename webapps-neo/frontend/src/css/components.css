@@ -1717,3 +1717,9 @@ nav:has(> .breadcrumbs) {
   font-size: var(--small-font-size);
   overflow-wrap: anywhere;
 }
+
+#task-data header .tenant {
+  color: var(--text-2);
+  font-size: var(--small-font-size);
+  margin: 0;
+}

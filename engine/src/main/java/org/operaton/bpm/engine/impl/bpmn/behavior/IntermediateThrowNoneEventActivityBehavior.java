@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-public class IntermediateThrowNoneEventActivityBehavior extends FlowNodeActivityBehavior{
+import org.jspecify.annotations.NullMarked;
+
+public @NullMarked class IntermediateThrowNoneEventActivityBehavior extends FlowNodeActivityBehavior{
 
 }

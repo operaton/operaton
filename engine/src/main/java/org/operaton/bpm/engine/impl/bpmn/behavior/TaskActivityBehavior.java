@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 
@@ -29,12 +31,12 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  *
  * @author Joram Barrez
  */
-public class TaskActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class TaskActivityBehavior extends AbstractBpmnActivityBehavior {
 
   /**
    * Activity instance id before execution.
    */
-  protected String activityInstanceId;
+  protected @Nullable String activityInstanceId;
 
   /**
    * The method which will be called before the execution is performed.
@@ -49,7 +51,6 @@ public class TaskActivityBehavior extends AbstractBpmnActivityBehavior {
    * The method which should be overridden by the sub classes to perform an execution.
    *
    * @param execution the execution which is used during performing the execution
-   * @throws Exception
    */
   protected void performExecution(ActivityExecution execution) throws Exception {
     leave(execution);

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 import java.util.concurrent.Callable;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnExceptionHandler;
 import org.operaton.bpm.engine.impl.bpmn.helper.ErrorPropagationException;
@@ -106,7 +107,7 @@ public @NullMarked class AbstractBpmnActivityBehavior extends FlowNodeActivityBe
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     if(SIGNAL_COMPENSATION_DONE.equals(signalName)) {
       signalCompensationDone(execution);
     } else {

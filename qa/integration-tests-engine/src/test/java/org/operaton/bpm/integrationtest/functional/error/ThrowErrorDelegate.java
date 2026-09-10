@@ -18,12 +18,14 @@ package org.operaton.bpm.integrationtest.functional.error;
 
 import jakarta.inject.Named;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 @Named
-public class ThrowErrorDelegate extends AbstractBpmnActivityBehavior {
+public @NullMarked class ThrowErrorDelegate extends AbstractBpmnActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
@@ -31,7 +33,7 @@ public class ThrowErrorDelegate extends AbstractBpmnActivityBehavior {
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     handle(execution, "signaled");
   }
 

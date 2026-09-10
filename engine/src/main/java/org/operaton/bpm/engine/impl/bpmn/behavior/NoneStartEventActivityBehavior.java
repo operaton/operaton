@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-
-
+import org.jspecify.annotations.NullMarked;
 
 /**
  * implementation of the 'none start event': a start event that has no
@@ -26,7 +25,7 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
  *
  * @author Joram Barrez
  */
-public class NoneStartEventActivityBehavior extends FlowNodeActivityBehavior {
+public @NullMarked class NoneStartEventActivityBehavior extends FlowNodeActivityBehavior {
 
   // Nothing to see here.
   // The default behaviour of the BpmnActivity is exactly what

@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.bpmn.parser;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
@@ -30,16 +32,16 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class ConditionalEventDefinition extends EventSubscriptionDeclaration {
+public @NullMarked class ConditionalEventDefinition extends EventSubscriptionDeclaration {
 
-  private String conditionAsString;
-  private final Condition condition;
+  private @Nullable String conditionAsString;
+  private final @Nullable Condition condition;
   private boolean interrupting;
-  private String variableName;
-  private Set<String> variableEvents;
+  private @Nullable String variableName;
+  private @Nullable Set<String> variableEvents;
   private ActivityImpl conditionalActivity;
 
-  public ConditionalEventDefinition(Condition condition, ActivityImpl conditionalActivity) {
+  public ConditionalEventDefinition(@Nullable Condition condition, ActivityImpl conditionalActivity) {
     super(null, EventType.CONDITONAL);
     this.activityId = conditionalActivity.getActivityId();
     this.conditionalActivity = conditionalActivity;
@@ -62,7 +64,7 @@ public class ConditionalEventDefinition extends EventSubscriptionDeclaration {
     this.interrupting = interrupting;
   }
 
-  public String getVariableName() {
+  public @Nullable String getVariableName() {
     return variableName;
   }
 
@@ -71,14 +73,14 @@ public class ConditionalEventDefinition extends EventSubscriptionDeclaration {
   }
 
   public Set<String> getVariableEvents() {
-    return variableEvents;
+    return variableEvents != null ? variableEvents : Set.of();
   }
 
   public void setVariableEvents(Set<String> variableEvents) {
     this.variableEvents = variableEvents;
   }
 
-  public String getConditionAsString() {
+  public @Nullable String getConditionAsString() {
     return conditionAsString;
   }
 
@@ -107,7 +109,7 @@ public class ConditionalEventDefinition extends EventSubscriptionDeclaration {
     throw new IllegalStateException("Conditional event must have a condition!");
   }
 
-  public boolean tryEvaluate(VariableEvent variableEvent, DelegateExecution execution) {
+  public boolean tryEvaluate(@Nullable VariableEvent variableEvent, DelegateExecution execution) {
     return (variableEvent == null || shouldEvaluateForVariableEvent(variableEvent)) && tryEvaluate(execution);
   }
 }

@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEnti
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionManager;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
 
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -42,8 +41,6 @@ public @NullMarked class DecisionDefinitionCache extends ResourceDefinitionCache
   public @Nullable DecisionDefinitionEntity findDeployedDefinitionByKeyAndVersion(String definitionKey, Integer definitionVersion) {
     DecisionDefinitionEntity definition = ((DecisionDefinitionManager) getManager())
         .findDecisionDefinitionByKeyAndVersion(definitionKey, definitionVersion);
-    ensureNotNull("Decision Definition '%s' not found".formatted(definitionKey), "decisionDefinition", definition);
-    requireNonNull(definition);
 
     checkInvalidDefinitionByKeyAndVersion(definitionKey, definitionVersion, definition);
     return resolveDefinition(definition);

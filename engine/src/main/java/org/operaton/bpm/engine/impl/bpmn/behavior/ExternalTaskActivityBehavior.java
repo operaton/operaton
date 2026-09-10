@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.PriorityProvider;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
@@ -34,7 +36,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.MigrationObserverBehavior;
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-public class ExternalTaskActivityBehavior extends AbstractBpmnActivityBehavior implements MigrationObserverBehavior {
+public @NullMarked class ExternalTaskActivityBehavior extends AbstractBpmnActivityBehavior implements MigrationObserverBehavior {
 
   protected ParameterValueProvider topicNameValueProvider;
   protected ParameterValueProvider priorityValueProvider;
@@ -57,7 +59,7 @@ public class ExternalTaskActivityBehavior extends AbstractBpmnActivityBehavior i
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     leave(execution);
   }
 

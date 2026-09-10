@@ -18,27 +18,31 @@ package org.operaton.bpm.engine.impl.pvm;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.model.Properties;
 
 
 /**
  * @author Tom Baeyens
  */
-public interface PvmProcessElement extends Serializable {
+public @NullMarked interface PvmProcessElement extends Serializable {
 
   /**
-   * The id of the element
-   * @return the id
+   * @return The id of the element
    */
   String getId();
 
   /**
-   * The process definition scope, root of the scope hierarchy.
-   * @return
+   * @return The process definition scope, root of the scope hierarchy.
    */
   PvmProcessDefinition getProcessDefinition();
 
-  Object getProperty(String name);
+  /**
+   * @param name the name of the property
+   * @return the property value or null if not found
+   */
+  @Nullable Object getProperty(String name);
 
   /**
    * Returns the properties of the element.

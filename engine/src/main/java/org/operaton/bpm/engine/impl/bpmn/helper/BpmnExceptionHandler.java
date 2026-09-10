@@ -100,7 +100,8 @@ public final @NullMarked class BpmnExceptionHandler {
     propagateError(error.getErrorCode(), error.getMessage(), null, execution);
   }
 
-  public static void propagateError(@Nullable String errorCode, String errorMessage, @Nullable Exception origException, ActivityExecution execution) throws Exception {
+  @SuppressWarnings("java:S112") // can't declare a more specific exception type
+  public static void propagateError(@Nullable String errorCode, @Nullable String errorMessage, @Nullable Exception origException, ActivityExecution execution) throws Exception {
 
     ActivityExecutionHierarchyWalker walker = new ActivityExecutionHierarchyWalker(execution);
 

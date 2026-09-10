@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
@@ -65,7 +66,7 @@ public abstract @NullMarked class FlowNodeActivityBehavior implements Signallabl
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     // concrete activity behaviors that do accept signals should override this method;
 
     throw LOG.unsupportedSignalException(execution.getActivity().getId());

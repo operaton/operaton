@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.EventSubscriptionDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -25,14 +27,17 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Defines activity behavior for signal end event and intermediate throw signal event.
  *
  * @author Daniel Meyer
  */
-public class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -49,6 +54,8 @@ public class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavi
     VariableMap variableMap = signalDefinition.getEventPayload().getInputVariables(execution);
 
     String eventName = signalDefinition.resolveExpressionOfEventName(execution);
+    EnsureUtil.ensureNotNull("Could not resolve event name", "eventName", eventName);
+    requireNonNull(eventName);
     // trigger all event subscriptions for the signal (start and intermediate)
     List<EventSubscriptionEntity> signalEventSubscriptions =
         findSignalEventSubscriptions(eventName, execution.getTenantId());
@@ -61,7 +68,7 @@ public class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavi
     leave(execution);
   }
 
-  protected List<EventSubscriptionEntity> findSignalEventSubscriptions(String signalName, String tenantId) {
+  protected List<EventSubscriptionEntity> findSignalEventSubscriptions(String signalName, @Nullable String tenantId) {
     EventSubscriptionManager eventSubscriptionManager = Context.getCommandContext().getEventSubscriptionManager();
 
     if (tenantId != null) {

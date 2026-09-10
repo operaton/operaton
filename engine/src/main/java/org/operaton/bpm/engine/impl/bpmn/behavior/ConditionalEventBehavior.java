@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.parser.ConditionalEventDefinition;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public interface ConditionalEventBehavior {
+public @NullMarked interface ConditionalEventBehavior {
 
   /**
    * Returns the current conditional event definition.
@@ -42,5 +44,5 @@ public interface ConditionalEventBehavior {
    * @param eventSubscription the event subscription which contains all necessary informations
    * @param variableEvent the variableEvent to evaluate the condition
    */
-  void leaveOnSatisfiedCondition(final EventSubscriptionEntity eventSubscription, final VariableEvent variableEvent);
+  void leaveOnSatisfiedCondition(final EventSubscriptionEntity eventSubscription, final @Nullable VariableEvent variableEvent);
 }

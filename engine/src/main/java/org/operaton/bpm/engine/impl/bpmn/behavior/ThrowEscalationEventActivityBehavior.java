@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.helper.EscalationHandler;
 import org.operaton.bpm.engine.impl.bpmn.parser.Escalation;
 import org.operaton.bpm.engine.impl.bpmn.parser.EscalationEventDefinition;
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Philipp Ossler
  *
  */
-public class ThrowEscalationEventActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class ThrowEscalationEventActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected final Escalation escalation;
 
@@ -49,7 +51,7 @@ public class ThrowEscalationEventActivityBehavior extends AbstractBpmnActivityBe
   }
 
   @SuppressWarnings("unused")
-  protected void leaveExecution(ActivityExecution execution, final PvmActivity currentActivity, EscalationEventDefinition escalationEventDefinition) {
+  protected void leaveExecution(ActivityExecution execution, final @Nullable PvmActivity currentActivity, @Nullable EscalationEventDefinition escalationEventDefinition) {
 
     // execution tree could have been expanded by triggering a non-interrupting event
     ExecutionEntity replacingExecution = ((ExecutionEntity) execution).getReplacedBy();

@@ -288,6 +288,8 @@
       "add": "Add attachment",
       "description": "Description",
       "file": "File",
+      "choose": "Choose…",
+      "none-chosen": "No file chosen",
       "upload": "Upload"
     }
   },

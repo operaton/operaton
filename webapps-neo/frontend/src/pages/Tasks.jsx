@@ -1452,7 +1452,8 @@ const AttachmentsTab = () => {
     [t] = useTranslation(),
     name = useSignal(""),
     description = useSignal(""),
-    file = useSignal(null);
+    file = useSignal(null),
+    form_ref = useRef(null);
 
   const load = () =>
     void engine_rest.task.get_attachments(state, params.task_id);
@@ -1473,10 +1474,18 @@ const AttachmentsTab = () => {
     fd.append("attachment-description", description.value);
     fd.append("attachment-type", file.value.type || "application/octet-stream");
     fd.append("content", file.value);
-    await engine_rest.task.create_attachment(state, params.task_id, fd);
+    const result = await engine_rest.task.create_attachment(
+      state,
+      params.task_id,
+      fd,
+    );
+    if (result?.status !== RESPONSE_STATE.SUCCESS) return;
     name.value = "";
     description.value = "";
     file.value = null;
+    // The file input is uncontrolled, so clearing the signal leaves the chosen
+    // file name standing. Only a reset puts it back to "no file selected".
+    form_ref.current?.reset();
     load();
   };
 
@@ -1512,10 +1521,11 @@ const AttachmentsTab = () => {
                           params.task_id,
                           a.id,
                         )}
+                        download={a.name ?? undefined}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        {a.name ?? a.id}
+                        <Icons.link_out /> {a.name ?? a.id}
                       </a>
                     </td>
                     <td>{a.description}</td>
@@ -1524,8 +1534,10 @@ const AttachmentsTab = () => {
                         type="button"
                         class="danger"
                         onClick={() => remove(a.id)}
+                        aria-label={t("common.delete")}
+                        title={t("common.delete")}
                       >
-                        {t("common.delete")}
+                        <Icons.trash />
                       </button>
                     </td>
                   </tr>
@@ -1535,32 +1547,42 @@ const AttachmentsTab = () => {
           );
         }}
       />
-      <form onSubmit={submit}>
-        <h3>{t("tasks.attachments.add")}</h3>
-        <div class="dialog-fields">
-          <label>
-            {t("common.name")}
-            <input
-              type="text"
-              value={name.value}
-              onInput={(e) => (name.value = e.currentTarget.value)}
-            />
+      <h3>{t("tasks.attachments.add")}</h3>
+      <form onSubmit={submit} ref={form_ref}>
+        <label for="attachment-name">{t("common.name")}</label>
+        <input
+          id="attachment-name"
+          type="text"
+          value={name.value}
+          onInput={(e) => (name.value = e.currentTarget.value)}
+        />
+        <label for="attachment-description">
+          {t("tasks.attachments.description")}
+        </label>
+        <input
+          id="attachment-description"
+          type="text"
+          value={description.value}
+          onInput={(e) => (description.value = e.currentTarget.value)}
+        />
+        <label for="attachment-file">{t("tasks.attachments.file")}</label>
+        <div class="file-picker">
+          {/* The native control is kept for the file dialog and for assistive
+              technology, but hidden: its default rendering is the browser's
+              own and looks nothing like the rest of the page. The label opens
+              it just as the control itself would. */}
+          <label for="attachment-file" class="button">
+            {t("tasks.attachments.choose")}
           </label>
-          <label>
-            {t("tasks.attachments.description")}
-            <input
-              type="text"
-              value={description.value}
-              onInput={(e) => (description.value = e.currentTarget.value)}
-            />
-          </label>
-          <label>
-            {t("tasks.attachments.file")}
-            <input
-              type="file"
-              onChange={(e) => (file.value = e.currentTarget.files[0])}
-            />
-          </label>
+          <span class="file-name">
+            {file.value?.name ?? t("tasks.attachments.none-chosen")}
+          </span>
+          <input
+            id="attachment-file"
+            class="screen-hidden"
+            type="file"
+            onChange={(e) => (file.value = e.currentTarget.files[0])}
+          />
         </div>
         <div class="button-group">
           <button type="submit" disabled={!file.value}>

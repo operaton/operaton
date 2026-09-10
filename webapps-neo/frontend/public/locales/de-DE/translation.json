@@ -732,7 +732,10 @@
       "add-to-group": "Zur Gruppe hinzufügen",
       "no-tenants": "Der Benutzer ist derzeit kein Mitglied eines Mandanten.",
       "delete": "Benutzer löschen",
-      "confirm-delete": "Möchten Sie diesen Benutzer wirklich löschen?"
+      "confirm-delete": "Möchten Sie diesen Benutzer wirklich löschen?",
+      "unlock": "Benutzer entsperren",
+      "unlock-success": "Der Benutzer wurde entsperrt.",
+      "unlock-hint": "Die Engine sperrt ein Konto nach zu vielen fehlgeschlagenen Anmeldungen. Nach dem Entsperren ist die Anmeldung wieder möglich."
     },
     "group": {
       "title": "Gruppen",

@@ -79,6 +79,37 @@ describe("AdminPage", () => {
     });
   });
 
+  describe("navigation follows the permissions", () => {
+    it("asks the engine which sections the user may reach", () => {
+      mockParams = { page_id: "users" };
+      renderPage(state);
+      expect(engine_rest.authorization.sections).toHaveBeenCalled();
+      expect(engine_rest.authorization.sections.mock.lastCall[0]).toBe(state);
+    });
+
+    it("hides a section the user has no permission for", () => {
+      mockParams = { page_id: "users" };
+      state.api.authorization.sections.value = {
+        users: true,
+        groups: true,
+        tenants: true,
+        authorizations: false,
+        system: false,
+      };
+      const { queryByText, getAllByText } = renderPage(state);
+      expect(queryByText("admin.authorizations")).toBeNull();
+      expect(queryByText("admin.system")).toBeNull();
+      expect(getAllByText("admin.users").length).toBeGreaterThan(0);
+    });
+
+    it("shows every section until the answers arrive", () => {
+      mockParams = { page_id: "users" };
+      const { getByText } = renderPage(state);
+      expect(getByText("admin.system")).toBeTruthy();
+      expect(getByText("admin.authorizations")).toBeTruthy();
+    });
+  });
+
   describe("Users", () => {
     it("fetches the user list on mount", () => {
       mockParams = { page_id: "users" };
@@ -174,6 +205,15 @@ describe("AdminPage", () => {
       expect(engine_rest.user.delete.mock.lastCall[0]).toBe(state);
       expect(engine_rest.user.delete.mock.lastCall[1]).toBe("jdoe");
     });
+
+    it("unlocks a user that the engine locked out", () => {
+      mockParams = { page_id: "users", selection_id: "alice" };
+      const { getAllByText } = renderPage(state);
+      // [0] is the section heading, [1] the button
+      fireEvent.click(getAllByText("admin.user.unlock")[1]);
+      expect(engine_rest.user.unlock).toHaveBeenCalled();
+      expect(engine_rest.user.unlock.mock.lastCall[1]).toBe("alice");
+    });
   });
 
   describe("Groups", () => {
@@ -255,6 +295,30 @@ describe("AdminPage", () => {
       const call = engine_rest.group.add_user.mock.lastCall;
       expect(call[1]).toBe("g1");
       expect(call[2]).toBe("alice");
+    });
+  });
+
+  describe("suggestions when adding a member", () => {
+    it("offers the users that are not members of the group yet", () => {
+      mockParams = { page_id: "groups", selection_id: "admins" };
+      signal_response(state.api.group.members, [
+        { id: "alice", name: "Alice" },
+      ]);
+      signal_response(state.api.user.list, [
+        { id: "alice", firstName: "Alice" },
+        { id: "bob", firstName: "Bob" },
+      ]);
+      const { container } = renderPage(state);
+      const suggested = [
+        ...container.querySelectorAll("#member-candidates option"),
+      ].map((option) => option.value);
+      expect(suggested).toEqual(["bob"]);
+    });
+
+    it("fetches the users it suggests", () => {
+      mockParams = { page_id: "groups", selection_id: "admins" };
+      renderPage(state);
+      expect(engine_rest.user.all).toHaveBeenCalled();
     });
   });
 

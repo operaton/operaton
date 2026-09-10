@@ -15,45 +15,50 @@ const AdminPage = () => {
     { route } = useLocation(),
     [t] = useTranslation();
 
+  const state = useContext(AppState),
+    {
+      api: {
+        authorization: { sections },
+      },
+    } = state;
+
+  useEffect(() => {
+    void engine_rest.authorization.sections(state);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (page_id === undefined) route("/admin/users");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page_id]);
 
-  const is_current = (page) => (page_id === page ? "page" : undefined);
+  const is_current = (page) => (page_id === page ? "page" : undefined),
+    // Until the checks come back nothing is hidden, so the navigation does not
+    // flicker for the administrator, who is the common case.
+    may_see = (section) => sections.value?.[section] !== false;
 
   return (
     <main id="content" class="admin-page">
       <nav aria-label={t("nav.admin")}>
         <menu class="list">
-          <li>
-            <a href="/admin/users" aria-current={is_current("users")}>
-              {t("admin.users")}
-            </a>
-          </li>
-          <li>
-            <a href="/admin/groups" aria-current={is_current("groups")}>
-              {t("admin.groups")}
-            </a>
-          </li>
-          <li>
-            <a href="/admin/tenants" aria-current={is_current("tenants")}>
-              {t("admin.tenants")}
-            </a>
-          </li>
-          <li>
-            <a
-              href="/admin/authorizations"
-              aria-current={is_current("authorizations")}
-            >
-              {t("admin.authorizations")}
-            </a>
-          </li>
-          <li>
-            <a href="/admin/system" aria-current={is_current("system")}>
-              {t("admin.system")}
-            </a>
-          </li>
+          {[
+            { section: "users", label: "admin.users" },
+            { section: "groups", label: "admin.groups" },
+            { section: "tenants", label: "admin.tenants" },
+            { section: "authorizations", label: "admin.authorizations" },
+            { section: "system", label: "admin.system" },
+          ]
+            .filter(({ section }) => may_see(section))
+            .map(({ section, label }) => (
+              <li key={section}>
+                <a
+                  href={`/admin/${section}`}
+                  aria-current={is_current(section)}
+                >
+                  {t(label)}
+                </a>
+              </li>
+            ))}
         </menu>
       </nav>
 
@@ -237,6 +242,8 @@ const TenantDetails = ({ tenant_id }) => {
     void engine_rest.tenant.all(state);
     void engine_rest.tenant.user_members(state, tenant_id);
     void engine_rest.tenant.group_members(state, tenant_id);
+    void engine_rest.user.all(state);
+    void engine_rest.group.all(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tenant_id]);
 
@@ -300,6 +307,7 @@ const TenantDetails = ({ tenant_id }) => {
       <MemberSection
         title={t("admin.tenant.users")}
         list_signal={tenant.user_members}
+        candidates_signal={state.api.user.list}
         empty={t("admin.tenant.no-users")}
         add_label={t("admin.tenant.add-user")}
         id_label={t("admin.user.user-id")}
@@ -315,6 +323,7 @@ const TenantDetails = ({ tenant_id }) => {
       <MemberSection
         title={t("admin.tenant.groups")}
         list_signal={tenant.group_members}
+        candidates_signal={state.api.group.list}
         empty={t("admin.tenant.no-groups")}
         add_label={t("admin.tenant.add-group")}
         id_label={t("admin.group.group-id")}
@@ -538,6 +547,7 @@ const GroupDetails = ({ group_id }) => {
     form.value = null;
     void engine_rest.group.all(state);
     void engine_rest.group.members(state, group_id);
+    void engine_rest.user.all(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [group_id]);
 
@@ -609,6 +619,7 @@ const GroupDetails = ({ group_id }) => {
       <MemberSection
         title={t("admin.group.members")}
         list_signal={group.members}
+        candidates_signal={state.api.user.list}
         empty={t("admin.group.no-members")}
         add_label={t("admin.group.add-member")}
         id_label={t("admin.user.user-id")}
@@ -643,6 +654,7 @@ const GroupDetails = ({ group_id }) => {
 const MemberSection = ({
   title,
   list_signal,
+  candidates_signal,
   empty,
   add_label,
   id_label,
@@ -655,6 +667,15 @@ const MemberSection = ({
     remove_open = useSignal(false),
     pending_remove = useSignal(null),
     new_id = useSignal("");
+
+  // Suggest the ids that exist but are not members yet, so nobody has to know
+  // an id by heart or find out about a typo from a failed request.
+  const member_ids = new Set(
+      (list_signal.value?.data ?? []).map((member) => member.id),
+    ),
+    candidates = (candidates_signal?.value?.data ?? []).filter(
+      (candidate) => !member_ids.has(candidate.id),
+    );
 
   const confirm_remove = (member_id) => {
       pending_remove.value = member_id;
@@ -719,10 +740,21 @@ const MemberSection = ({
           <input
             id="member-id"
             type="text"
+            list="member-candidates"
             value={new_id.value}
             onInput={(e) => (new_id.value = e.currentTarget.value)}
             required
           />
+          <datalist id="member-candidates">
+            {candidates.map((candidate) => (
+              <option key={candidate.id} value={candidate.id}>
+                {candidate.name ??
+                  [candidate.firstName, candidate.lastName]
+                    .filter(Boolean)
+                    .join(" ")}
+              </option>
+            ))}
+          </datalist>
           <div class="button-group">
             <button type="submit">{t("common.save")}</button>
             <button
@@ -989,6 +1021,7 @@ const UserDetails = ({ user_id }) => {
     void engine_rest.user.profile.get(state, user_id);
     void engine_rest.group.by_member(state, user_id);
     void engine_rest.tenant.by_member(state, user_id);
+    void engine_rest.group.all(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
 
@@ -1012,6 +1045,7 @@ const UserDetails = ({ user_id }) => {
       <h3>{t("admin.group.profile")}</h3>
       <UserProfile user_id={user_id} />
       <UserPassword user_id={user_id} />
+      <UserUnlock user_id={user_id} />
       <UserGroups user_id={user_id} />
       <UserTenants />
 
@@ -1159,6 +1193,32 @@ const UserPassword = ({ user_id }) => {
   );
 };
 
+const UserUnlock = ({ user_id }) => {
+  const state = useContext(AppState),
+    {
+      api: {
+        user: { unlock },
+      },
+    } = state,
+    [t] = useTranslation();
+
+  return (
+    <>
+      <h3>{t("admin.user.unlock")}</h3>
+      <ActionResult signal={unlock} success={t("admin.user.unlock-success")} />
+      <p>{t("admin.user.unlock-hint")}</p>
+      <div class="button-group">
+        <button
+          type="button"
+          onClick={() => void engine_rest.user.unlock(state, user_id)}
+        >
+          {t("admin.user.unlock")}
+        </button>
+      </div>
+    </>
+  );
+};
+
 const UserGroups = ({ user_id }) => {
   const state = useContext(AppState),
     {
@@ -1173,6 +1233,11 @@ const UserGroups = ({ user_id }) => {
     remove_open = useSignal(false),
     pending_remove = useSignal(null),
     new_group = useSignal("");
+
+  const joined = new Set((user_groups.value?.data ?? []).map((g) => g.id)),
+    group_candidates = (state.api.group.list.value?.data ?? []).filter(
+      (group) => !joined.has(group.id),
+    );
 
   const refetch = () => engine_rest.group.by_member(state, user_id),
     confirm_remove = (group_id) => {
@@ -1249,10 +1314,18 @@ const UserGroups = ({ user_id }) => {
           <input
             id="add-group-id"
             type="text"
+            list="add-group-candidates"
             value={new_group.value}
             onInput={(e) => (new_group.value = e.currentTarget.value)}
             required
           />
+          <datalist id="add-group-candidates">
+            {group_candidates.map((group) => (
+              <option key={group.id} value={group.id}>
+                {group.name}
+              </option>
+            ))}
+          </datalist>
           <div class="button-group">
             <button type="submit">{t("common.save")}</button>
             <button

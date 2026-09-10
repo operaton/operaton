@@ -125,7 +125,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
   }
 
   protected void setFrom(Email email, String from) {
-    String fromAddress = null;
+    String fromAddress;
 
     if (from != null) {
       fromAddress = from;
@@ -136,7 +136,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
     try {
       email.setFrom(fromAddress);
     } catch (EmailException e) {
-      throw LOG.addSenderException(from, e);
+      throw LOG.addSenderException(fromAddress, e);
     }
   }
 

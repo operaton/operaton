@@ -1,4 +1,13 @@
-import { GET, DELETE, PUT, POST, resolve_user, encode_id } from "../helper.jsx";
+import {
+  GET,
+  DELETE,
+  PUT,
+  POST,
+  resolve_user,
+  encode_id,
+  GET_LIST,
+  PAGE_SIZE,
+} from "../helper.jsx";
 
 // Tenants the given user is a member of (used on the user details page).
 // `including_groups` also counts membership inherited from a group, which is how
@@ -11,11 +20,12 @@ const get_user_tenants = (state, user_name, including_groups = false) =>
     state.api.tenant.by_member,
   );
 
-const get_tenants = (state) =>
-  GET(
-    `/tenant?firstResult=0&maxResults=50&sortBy=id&sortOrder=asc`,
+const get_tenants = (state, query = {}, append = false) =>
+  GET_LIST(
+    `/tenant?${new URLSearchParams({ firstResult: 0, maxResults: PAGE_SIZE, sortBy: "id", sortOrder: "asc", ...query })}`,
     state,
     state.api.tenant.list,
+    append,
   );
 
 const create_tenant = (state, body) =>

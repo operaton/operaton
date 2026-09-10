@@ -34,7 +34,8 @@
     "activate": "Aktivieren",
     "load-more": "Mehr laden",
     "breadcrumb": "Navigationspfad",
-    "confirmation": "Bestätigung"
+    "confirmation": "Bestätigung",
+    "search": "Suchen"
   },
   "nav": {
     "tasks": "Aufgaben",
@@ -822,6 +823,23 @@
       "dashboard": "Dashboard",
       "user-operation-log": "Benutzeroperations-Protokollkategorie",
       "system": "System"
+    },
+    "search-id": "Kennung",
+    "search-name": "Name",
+    "search-first-name": "Vorname",
+    "search-last-name": "Nachname",
+    "search-email": "E-Mail",
+    "system-info": {
+      "product": "Produkt",
+      "version": "Version",
+      "edition": "Ausgabe",
+      "installation": "Installation",
+      "database": "Datenbank",
+      "application-server": "Anwendungsserver",
+      "jdk": "JDK",
+      "integration": "Einbindung",
+      "webapps": "Web-Anwendungen",
+      "raw": "Rohe Telemetriedaten"
     }
   },
   "account": {

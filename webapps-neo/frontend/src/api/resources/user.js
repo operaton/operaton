@@ -1,4 +1,13 @@
-import { GET, POST, DELETE, PUT, resolve_user, encode_id } from "../helper.jsx";
+import {
+  GET,
+  GET_LIST,
+  PAGE_SIZE,
+  POST,
+  DELETE,
+  PUT,
+  resolve_user,
+  encode_id,
+} from "../helper.jsx";
 
 /**
  * Get all users
@@ -6,7 +15,17 @@ import { GET, POST, DELETE, PUT, resolve_user, encode_id } from "../helper.jsx";
  * @param state
  * @returns {Promise<{status: string, data: *} | {status: string, error: *}>}
  */
-const get_users = (state) => GET("/user", state, state.api.user.list);
+/**
+ * @param query {object} engine query parameters, e.g. { firstNameLike: "Al" }
+ * @param append {boolean} keep the rows already loaded and add the next page
+ */
+const get_users = (state, query = {}, append = false) =>
+  GET_LIST(
+    `/user?${new URLSearchParams({ maxResults: PAGE_SIZE, firstResult: 0, sortBy: "userId", sortOrder: "asc", ...query })}`,
+    state,
+    state.api.user.list,
+    append,
+  );
 
 /**
  * Look a user up by exact id. Answers an empty list when there is no such user —

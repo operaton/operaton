@@ -1,18 +1,21 @@
-import { GET, POST, DELETE, PUT, encode_id } from "../helper.jsx";
+import {
+  GET,
+  GET_LIST,
+  PAGE_SIZE,
+  POST,
+  DELETE,
+  PUT,
+  encode_id,
+} from "../helper.jsx";
 
 /* groups */
 
-const get_groups = (state) =>
-  POST(
-    "/group",
-    {
-      firstResult: 0,
-      maxResults: 50,
-      sortBy: "id",
-      sortOrder: "asc",
-    },
+const get_groups = (state, query = {}, append = false) =>
+  GET_LIST(
+    `/group?${new URLSearchParams({ firstResult: 0, maxResults: PAGE_SIZE, sortBy: "id", sortOrder: "asc", ...query })}`,
     state,
     state.api.group.list,
+    append,
   );
 
 const create_group = (state, group) =>

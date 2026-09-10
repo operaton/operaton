@@ -34,7 +34,8 @@
     "activate": "Activate",
     "load-more": "Load more",
     "breadcrumb": "Breadcrumb",
-    "confirmation": "Confirmation"
+    "confirmation": "Confirmation",
+    "search": "Search"
   },
   "nav": {
     "tasks": "Tasks",
@@ -822,6 +823,23 @@
       "dashboard": "Dashboard",
       "user-operation-log": "User Operation Log Category",
       "system": "System"
+    },
+    "search-id": "Id",
+    "search-name": "Name",
+    "search-first-name": "First name",
+    "search-last-name": "Last name",
+    "search-email": "E-mail",
+    "system-info": {
+      "product": "Product",
+      "version": "Version",
+      "edition": "Edition",
+      "installation": "Installation",
+      "database": "Database",
+      "application-server": "Application server",
+      "jdk": "JDK",
+      "integration": "Integration",
+      "webapps": "Web apps",
+      "raw": "Raw telemetry data"
     }
   },
   "account": {

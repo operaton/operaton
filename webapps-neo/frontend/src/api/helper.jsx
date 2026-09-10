@@ -314,6 +314,21 @@ export const GET = async (url, state, signl) => {
   }
 };
 
+/** How many identity rows one page of the admin lists holds. */
+export const PAGE_SIZE = 50;
+
+/**
+ * Like GET, but able to append the next page to the rows already loaded, so
+ * "load more" grows the list instead of replacing it.
+ */
+export const GET_LIST = async (url, state, signl, append = false) => {
+  const previous = append ? (signl.peek?.()?.data ?? []) : null;
+  const result = await GET(url, state, signl);
+  if (previous && result?.status === RESPONSE_STATE.SUCCESS)
+    signl.value = { ...result, data: [...previous, ...result.data] };
+  return signl.peek();
+};
+
 export const GET_SERVER_URL = (url, state, signl) => {
   signl.value = { status: RESPONSE_STATE.LOADING };
 

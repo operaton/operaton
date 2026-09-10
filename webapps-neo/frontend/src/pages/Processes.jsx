@@ -21,6 +21,11 @@ import {
   write_list_query,
 } from "../helper/list_query.js";
 import {
+  VARIABLE_TYPES,
+  coerce_variable_value,
+  format_variable_value,
+} from "../helper/variables.js";
+import {
   create_saved_filter,
   delete_saved_filter,
   hydrate_signal,
@@ -1203,42 +1208,6 @@ const ProcessInstance = ({ id, startTime, state, businessKey }) => {
       <td>{businessKey}</td>
     </tr>
   );
-};
-
-// Operaton stores typed variables; coerce the raw text input to the JS type the
-// REST API expects for the chosen variable type.
-const VARIABLE_TYPES = [
-  "String",
-  "Boolean",
-  "Integer",
-  "Long",
-  "Double",
-  "Short",
-  "Json",
-];
-
-const coerce_variable_value = (type, raw) => {
-  switch (type) {
-    case "Boolean":
-      return raw === "true" || raw === true;
-    case "Integer":
-    case "Long":
-    case "Short":
-      return raw === "" ? null : parseInt(raw, 10);
-    case "Double":
-    case "Float":
-      return raw === "" ? null : parseFloat(raw);
-    default:
-      return raw;
-  }
-};
-
-// Render any variable value as text: JSX skips boolean children, and Object/Json
-// values arrive deserialized (real objects), so format them explicitly (#91).
-const format_variable_value = (value) => {
-  if (value === null || value === undefined) return "—";
-  if (typeof value === "object") return JSON.stringify(value);
-  return String(value);
 };
 
 const InstanceVariables = () => {

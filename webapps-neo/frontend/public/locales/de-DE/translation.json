@@ -193,7 +193,8 @@
       "form": "Formular",
       "history": "Verlauf",
       "diagram": "Diagramm",
-      "attachments": "Anhänge"
+      "attachments": "Anhänge",
+      "variables": "Variablen"
     },
     "history": {
       "title": "Verlauf",
@@ -304,6 +305,12 @@
       "upload": "Hochladen",
       "delete-confirm": "Den Anhang „{{name}}“ löschen?",
       "confirm-delete": "Anhang löschen"
+    },
+    "variables": {
+      "title": "Variablen der Aufgabe",
+      "empty": "Keine Variablen an dieser Aufgabe.",
+      "add": "Variable hinzufügen",
+      "save": "Hinzufügen"
     }
   },
   "processes": {

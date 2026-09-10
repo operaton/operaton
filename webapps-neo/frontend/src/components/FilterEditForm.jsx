@@ -97,6 +97,7 @@ export const FilterEditForm = ({
                       {meta?.type === "variable" ? (
                         <VariableCriterionInput
                           criterion={criterion}
+                          operators={meta.operators}
                           on_change={(field, v) =>
                             update_criterion(i, field, v)
                           }
@@ -174,7 +175,7 @@ export const VARIABLE_OPERATORS = [
   "notLike",
 ];
 
-const VariableCriterionInput = ({ criterion, on_change }) => {
+const VariableCriterionInput = ({ criterion, operators, on_change }) => {
   const [t] = useTranslation();
   return (
     <span class="variable-criterion">
@@ -189,7 +190,7 @@ const VariableCriterionInput = ({ criterion, on_change }) => {
         value={criterion.operator ?? "eq"}
         onChange={(e) => on_change("operator", e.currentTarget.value)}
       >
-        {VARIABLE_OPERATORS.map((operator) => (
+        {(operators ?? VARIABLE_OPERATORS).map((operator) => (
           <option key={operator} value={operator}>
             {t(`list_filter.variable_operators.${operator}`)}
           </option>

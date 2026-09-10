@@ -4,6 +4,7 @@ import engine_rest, { RequestState } from "../api/engine_rest.jsx";
 import { AppState } from "../state.js";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
+import { app_path } from "../config.js";
 
 export const DashboardPage = () => {
   const state = useContext(AppState),
@@ -36,7 +37,7 @@ export const DashboardPage = () => {
       <div>
         <DashboardCard
           title={t("nav.tasks")}
-          href="/tasks"
+          href={app_path("/tasks")}
           signal={state.api.task.list}
           render={(data) => {
             const tasks = data ?? [];
@@ -50,7 +51,7 @@ export const DashboardPage = () => {
         />
         <DashboardCard
           title={t("nav.processes")}
-          href="/processes"
+          href={app_path("/processes")}
           signal={state.api.process.definition.list}
           render={(data) => {
             const definitions = data ?? [];
@@ -76,7 +77,7 @@ export const DashboardPage = () => {
         />
         <DashboardCard
           title={t("nav.decisions")}
-          href="/decisions"
+          href={app_path("/decisions")}
           signal={state.api.decision.definitions}
           render={(data) => {
             const decisions = data ?? [];
@@ -90,7 +91,7 @@ export const DashboardPage = () => {
         />
         <DashboardCard
           title={t("nav.deployments")}
-          href="/deployments"
+          href={app_path("/deployments")}
           signal={state.api.deployment.all}
           render={(data) => {
             const deployments = data ?? [];
@@ -133,7 +134,7 @@ export const DashboardPage = () => {
                     <tr key={idx}>
                       <td>{i.incidentType ?? "–"}</td>
                       <td>
-                        <a href={`/processes/${i.processDefinitionId ?? ""}`}>
+                        <a href={app_path(`/processes/${i.processDefinitionId ?? ""}`)}>
                           {i.processName ?? "–"}
                         </a>
                       </td>
@@ -150,7 +151,7 @@ export const DashboardPage = () => {
       <section>
         <header>
           <h3>{t("dashboard.recent-tasks")}</h3>
-          <a href="/tasks">{t("dashboard.see-all-tasks")}</a>
+          <a href={app_path("/tasks")}>{t("dashboard.see-all-tasks")}</a>
         </header>
         <RequestState
           signal={state.api.task.list}
@@ -171,7 +172,7 @@ export const DashboardPage = () => {
                   {tasks.slice(0, 10).map((task) => (
                     <tr key={task.id}>
                       <td>
-                        <a href={`/tasks/${task.id}`}>
+                        <a href={app_path(`/tasks/${task.id}`)}>
                           {task.name ?? t("dashboard.unnamed")}
                         </a>
                       </td>
@@ -197,7 +198,7 @@ export const DashboardPage = () => {
       <section>
         <header>
           <h3>{t("dashboard.process-definitions")}</h3>
-          <a href="/processes">{t("dashboard.see-all-processes")}</a>
+          <a href={app_path("/processes")}>{t("dashboard.see-all-processes")}</a>
         </header>
         <RequestState
           signal={state.api.process.definition.list}
@@ -220,7 +221,7 @@ export const DashboardPage = () => {
                   {definitions.slice(0, 10).map((d) => (
                     <tr key={d.id}>
                       <td>
-                        <a href={`/processes/${d.id}`}>
+                        <a href={app_path(`/processes/${d.id}`)}>
                           {d.definition?.name ?? d.definition?.key ?? "–"}
                         </a>
                       </td>

@@ -19,10 +19,31 @@
 const AUTH_MODE_BASIC = "basic",
   AUTH_MODE_OAUTH2 = "oauth2"
 
+/**
+ * The application root, as the server declared it in `<base href>`.
+ *
+ * Nothing in the bundle can know its own prefix at build time — it is the sum of
+ * the servlet context path and `operaton.bpm.webapp.neo.application-path`, both
+ * only knowable at request time. The server states it in the shell (see
+ * SpaIndexTransformer, and env.sh for the standalone image) and this is where the
+ * app reads it back.
+ */
+export const app_root = () => document.baseURI
+
+/**
+ * Prefix an app-internal path with the application root. Give it a root-absolute
+ * path (`"/tasks"`); it returns the path the browser must actually use.
+ *
+ * At the server root the prefix is `""`, so `app_path("/tasks") === "/tasks"` and a
+ * root deployment behaves exactly as before.
+ */
+export const app_path = (path) =>
+  new URL(app_root()).pathname.replace(/\/+$/, "") + path
+
 // Where config.json lives, relative to the document. Honours a sub-path
 // deployment (`operaton.bpm.webapp.neo.application-path`) because index.html is
 // served from that path too.
-const config_url = () => new URL("config.json", document.baseURI).href
+const config_url = () => new URL("config.json", app_root()).href
 
 // A DOCKER_RUN_PLACEHOLDER_* name that was never substituted must be treated as
 // unset, otherwise it is taken for a real value. See env.sh.

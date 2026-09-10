@@ -8,6 +8,7 @@ import { RESPONSE_STATE } from "../api/engine_rest.jsx";
 import { _url_engine_rest, set_auth_header } from "../api/helper.jsx";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
+import { app_path } from "../config.js";
 
 const close = () => document.getElementById("global-search").close();
 const show = () => {
@@ -45,7 +46,8 @@ const PAGES = [
 const match = (text, query) =>
   text?.toLowerCase().includes(query.toLowerCase());
 
-// Built-in pages plus every PAGE plugin's entry.
+// Built-in pages plus every PAGE plugin's entry. Every href in this file is
+// root-relative; `app_path` is applied where one is rendered or routed to.
 const all_pages = () => [
   ...PAGES,
   ...plugins_for(PLUGIN_POINTS.PAGE)
@@ -260,7 +262,7 @@ const SearchComponent = () => {
     query.value = "";
     results.value = [];
     lookup_signal.value = null;
-    route(href);
+    route(app_path(href));
   };
 
   const on_keydown = (e) => {
@@ -327,7 +329,7 @@ const SearchComponent = () => {
                   <a
                     key={item.href}
                     id={`goto-option-${idx}`}
-                    href={item.href}
+                    href={app_path(item.href)}
                     class={`goto-item ${idx === selected.value ? "goto-selected" : ""}`}
                     role="option"
                     aria-selected={idx === selected.value}
@@ -354,7 +356,7 @@ const SearchComponent = () => {
                 <a
                   key={item.href}
                   id={`goto-option-${idx}`}
-                  href={item.href}
+                  href={app_path(item.href)}
                   class={`goto-item ${idx === selected.value ? "goto-selected" : ""}`}
                   role="option"
                   aria-selected={idx === selected.value}

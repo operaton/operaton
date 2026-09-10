@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { app_path } from "../config.js";
 
 export const Home = () => {
   const [t] = useTranslation();
@@ -15,7 +16,7 @@ export const Home = () => {
       <p>{t("home.help-text")}</p>
       <ul>
         <li>
-          <a href="/help">{t("home.help-page")}</a>
+          <a href={app_path("/help")}>{t("home.help-page")}</a>
         </li>
         <li>
           <a href="http://operaton.org/getting-started">{t("home.getting-started")}</a>

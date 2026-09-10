@@ -12,7 +12,7 @@
  * a slow/broken manifest server can never brick the app (see `with_timeout`).
  */
 import { register } from "./registry.js";
-import { get_config } from "../config.js";
+import { app_path, get_config } from "../config.js";
 
 const VERSION = import.meta.env.VITE_APP_VERSION || "dev";
 
@@ -41,7 +41,8 @@ const register_bundled = () => {
  * injection) wins; otherwise fetch the static manifest. A missing manifest is
  * not an error — it just means no remote plugins.
  */
-const manifest_url = () => get_config().plugins_url ?? "/plugins/plugins.json";
+const manifest_url = () =>
+  get_config().plugins_url ?? app_path("/plugins/plugins.json");
 
 const discover_packages = async () => {
   if (Array.isArray(window.PLUGIN_PACKAGES)) return window.PLUGIN_PACKAGES;

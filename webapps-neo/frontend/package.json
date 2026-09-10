@@ -12,6 +12,7 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "test:e2e": "playwright test",
+    "test:e2e:sub-path": "E2E_SUB_PATH=1 playwright test --project=sub-path",
     "test:a11y:axe": "playwright test a11y",
     "test:a11y:pa11y": "node e2e/a11y-pa11y.mjs",
     "test:a11y": "npm run test:a11y:axe && npm run test:a11y:pa11y",

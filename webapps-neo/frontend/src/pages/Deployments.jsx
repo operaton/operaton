@@ -14,6 +14,7 @@ import { DmnViewer } from "../components/DMNViewer.jsx";
 import { formatRelativeDate } from "../helper/date_formatter.js";
 import { ListFilter } from "../components/ListFilter.jsx";
 import { ManageFilters } from "../components/ManageFilters.jsx";
+import { app_path } from "../config.js";
 import {
   filter_share_link,
   parse_list_query,
@@ -102,7 +103,7 @@ const DeploymentsPage = () => {
   useEffect(() => {
     const list = state.api.deployment.all.value?.data;
     if (!deployment_id && list?.length) {
-      route(`/deployments/${list[0].id}`, true);
+      route(app_path(`/deployments/${list[0].id}`), true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deployment_id, state.api.deployment.all.value]);
@@ -223,7 +224,7 @@ const DeploymentsList = () => {
                   aria-selected={params.deployment_id === deployment.id}
                 >
                   <th scope="row">
-                    <a href={`/deployments/${deployment.id}`}>
+                    <a href={app_path(`/deployments/${deployment.id}`)}>
                       {deployment?.name || deployment?.id}
                     </a>
                   </th>
@@ -279,7 +280,7 @@ const DeploymentUpload = () => {
     dedup.value = false;
     changed_only.value = false;
     void engine_rest.deployment.all(state);
-    if (result?.data?.id) route(`/deployments/${result.data.id}`);
+    if (result?.data?.id) route(app_path(`/deployments/${result.data.id}`));
   };
 
   return (
@@ -374,7 +375,7 @@ const ResourcesList = () => {
                 >
                   <th scope="row">
                     <a
-                      href={`/deployments/${params.deployment_id}/${resource.name}`}
+                      href={app_path(`/deployments/${params.deployment_id}/${resource.name}`)}
                     >
                       {resource.name.includes("/")
                         ? resource.name.split("/").pop().trim()

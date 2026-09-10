@@ -7,6 +7,7 @@ import engine_rest, { RequestState } from "../api/engine_rest.jsx";
 import { ConfirmDialog } from "../components/Dialog.jsx";
 import { ListFilter } from "../components/ListFilter.jsx";
 import { ManageFilters } from "../components/ManageFilters.jsx";
+import { app_path } from "../config.js";
 import {
   filter_share_link,
   parse_list_query,
@@ -147,7 +148,7 @@ const BatchesList = () => {
   };
   const open_manage = () => route(with_manage(), false);
   const toggle_history = () =>
-    route(history_mode ? "/batches" : "/batches?history=true");
+    route(app_path(history_mode ? "/batches" : "/batches?history=true"));
 
   const list_signal = history_mode
     ? state.api.history.batch.list
@@ -209,7 +210,7 @@ const BatchesList = () => {
                   >
                     <th scope="row">
                       <a
-                        href={`/batches/${batch.id}${keep_history_query(query)}`}
+                        href={app_path(`/batches/${batch.id}${keep_history_query(query)}`)}
                       >
                         {batch.id.substring(0, 8)}
                       </a>

@@ -25,6 +25,7 @@ import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
@@ -76,6 +77,16 @@ class EmptyAppPathIT {
     assertThat(xsrfTokenHeader).matches("[A-Z0-9]{32}");
 
     assertThat(xsrfCookieValue).contains(xsrfTokenHeader);
+  }
+
+  @Test
+  void shouldDeclareTheServerRootAsBaseHref() {
+    // when
+    ResponseEntity<String> response = restClient.getForEntity("/", String.class);
+
+    // then
+    // a root deployment is byte-identical to the build output
+    assertThat(response.getBody()).contains("<base href=\"/\">");
   }
 
 }

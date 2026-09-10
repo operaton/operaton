@@ -65,3 +65,24 @@ export const expect_api_call = (fn, { url, body, state, signal } = {}) => {
   if (state !== undefined) expect(call[i++]).toBe(state);
   if (signal !== undefined) expect(call[i++]).toBe(signal);
 };
+
+/**
+ * Run `fn` with `document.baseURI` reporting `href`.
+ *
+ * The app reads its deployment prefix from the `<base href>` the server writes
+ * into the shell, so this is how a sub-path deployment is simulated. happy-dom
+ * reports the document URL, which is always the root — hence the stub.
+ */
+export const with_base_uri = async (href, fn) => {
+  Object.defineProperty(document, "baseURI", {
+    value: href,
+    configurable: true,
+  });
+  try {
+    return await fn();
+  } finally {
+    // The real accessor lives on Document.prototype; deleting the own property
+    // hands `baseURI` back to it.
+    delete document.baseURI;
+  }
+};

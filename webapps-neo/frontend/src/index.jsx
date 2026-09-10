@@ -27,7 +27,7 @@ import { useContext, useEffect } from "preact/hooks";
 import engine_rest from "./api/engine_rest.jsx";
 import { useSignal } from "@preact/signals";
 import { is_oauth } from "./api/oauth.js";
-import { get_config, load_config } from "./config.js";
+import { app_path, get_config, load_config } from "./config.js";
 import { useTranslation } from "react-i18next";
 import { load_plugins } from "./plugins/loader.js";
 import { install_plugin_host } from "./plugins/host.js";
@@ -100,36 +100,36 @@ const Routing = () => {
       <LocationProvider>
         <Header />
         <Router>
-          <Route path="/" component={DashboardPage} />
+          <Route path={app_path("/")} component={DashboardPage} />
           <Route
-            path="/decisions/:decision_id?/:panel?"
+            path={app_path("/decisions/:decision_id?/:panel?")}
             component={DecisionsPage}
           />
-          {/*<Route path="/tasks/start/:id" component={TasksPage} />*/}
-          <Route path="/tasks/:task_id?/:tab?" component={TasksPage} />
+          {/*<Route path={app_path("/tasks/start/:id")} component={TasksPage} />*/}
+          <Route path={app_path("/tasks/:task_id?/:tab?")} component={TasksPage} />
           <Route
-            path="/processes/:definition_id?/:panel?/:selection_id?/:sub_panel?"
+            path={app_path("/processes/:definition_id?/:panel?/:selection_id?/:sub_panel?")}
             component={ProcessesPage}
           />
-          <Route path="/migrations" component={MigrationsPage} />
+          <Route path={app_path("/migrations")} component={MigrationsPage} />
           <Route
-            path="/deployments/:deployment_id?/:resource_name?"
+            path={app_path("/deployments/:deployment_id?/:resource_name?")}
             component={DeploymentsPage}
           />
-          <Route path="/batches/:batch_id?" component={BatchesPage} />
+          <Route path={app_path("/batches/:batch_id?")} component={BatchesPage} />
           <Route
-            path="/admin/:page_id?/:selection_id?/:sub_selection_id?"
+            path={app_path("/admin/:page_id?/:selection_id?/:sub_selection_id?")}
             component={AdminPage}
           />
           <Route
-            path="/account/:page_id?/:selection_id?"
+            path={app_path("/account/:page_id?/:selection_id?")}
             component={AccountPage}
           />
-          <Route path="/help" component={Home} />
+          <Route path={app_path("/help")} component={Home} />
           {plugins_for(PLUGIN_POINTS.PAGE).map((plugin) => (
             <Route
               key={plugin.id}
-              path={plugin.properties.path}
+              path={app_path(plugin.properties.path)}
               component={plugin.Component}
             />
           ))}
@@ -168,7 +168,7 @@ const Routing = () => {
 
     return (
       <section class="login-page">
-        <img class="login-logo" src="/operaton-logo.svg" alt="Operaton" />
+        <img class="login-logo" src={app_path("/operaton-logo.svg")} alt="Operaton" />
 
         <div class="login-content">
           <h1>{t("login.title")}</h1>

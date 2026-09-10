@@ -7,6 +7,7 @@ import { has_data } from '../api/helper.jsx'
 import { AppState } from '../state.js'
 import { Breadcrumbs } from '../components/Breadcrumbs.jsx'
 import { Dialog, ConfirmDialog } from '../components/Dialog.jsx'
+import { app_path } from '../config.js'
 
 const AdminPage = () => {
   const
@@ -15,7 +16,7 @@ const AdminPage = () => {
     [t] = useTranslation()
 
   useEffect(() => {
-    if (page_id === undefined) route('/admin/users')
+    if (page_id === undefined) route(app_path('/admin/users'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page_id])
 
@@ -24,11 +25,11 @@ const AdminPage = () => {
   return <main id="content" class="admin-page">
     <nav aria-label={t("nav.admin")}>
       <menu class="list">
-        <li><a href="/admin/users" aria-current={is_current('users')}>{t("admin.users")}</a></li>
-        <li><a href="/admin/groups" aria-current={is_current('groups')}>{t("admin.groups")}</a></li>
-        <li><a href="/admin/tenants" aria-current={is_current('tenants')}>{t("admin.tenants")}</a></li>
-        <li><a href="/admin/authorizations" aria-current={is_current('authorizations')}>{t("admin.authorizations")}</a></li>
-        <li><a href="/admin/system" aria-current={is_current('system')}>{t("admin.system")}</a></li>
+        <li><a href={app_path("/admin/users")} aria-current={is_current('users')}>{t("admin.users")}</a></li>
+        <li><a href={app_path("/admin/groups")} aria-current={is_current('groups')}>{t("admin.groups")}</a></li>
+        <li><a href={app_path("/admin/tenants")} aria-current={is_current('tenants')}>{t("admin.tenants")}</a></li>
+        <li><a href={app_path("/admin/authorizations")} aria-current={is_current('authorizations')}>{t("admin.authorizations")}</a></li>
+        <li><a href={app_path("/admin/system")} aria-current={is_current('system')}>{t("admin.system")}</a></li>
       </menu>
     </nav>
 
@@ -80,7 +81,7 @@ const TenantList = () => {
       { name: t("admin.tenants") }]} />
     <div class="page-heading">
       <h2>{t("admin.tenants")}</h2>
-      <a class="button" href="/admin/tenants/create">{t("admin.tenant.create")}</a>
+      <a class="button" href={app_path("/admin/tenants/create")}>{t("admin.tenant.create")}</a>
     </div>
 
     <RequestState
@@ -96,7 +97,7 @@ const TenantList = () => {
           <tbody>
           {tenants.value.data.map((tenant) => (
             <tr key={tenant.id}>
-              <td><a href={`/admin/tenants/${tenant.id}`}>{tenant.id}</a></td>
+              <td><a href={app_path(`/admin/tenants/${tenant.id}`)}>{tenant.id}</a></td>
               <td>{tenant.name}</td>
             </tr>
           ))}
@@ -121,7 +122,7 @@ const TenantCreate = () => {
       void engine_rest.tenant.create(state, form.value).then(() => {
         if (has_data(tenant_create)) {
           engine_rest.tenant.all(state)
-          route('/admin/tenants')
+          route(app_path('/admin/tenants'))
         }
       })
     }
@@ -142,7 +143,7 @@ const TenantCreate = () => {
 
       <div class="button-group">
         <button type="submit">{t("admin.tenant.create")}</button>
-        <a class="button secondary" href="/admin/tenants">{t("common.cancel")}</a>
+        <a class="button secondary" href={app_path("/admin/tenants")}>{t("common.cancel")}</a>
       </div>
     </form>
   </div>
@@ -179,7 +180,7 @@ const TenantDetails = ({ tenant_id }) => {
       void engine_rest.tenant.update(state, tenant_id, form.value)
     },
     on_delete = () =>
-      void engine_rest.tenant.delete(state, tenant_id).then(() => route('/admin/tenants'))
+      void engine_rest.tenant.delete(state, tenant_id).then(() => route(app_path('/admin/tenants')))
 
   return <div class="content fade-in">
     <Breadcrumbs paths={[
@@ -271,7 +272,7 @@ const GroupsList = () => {
       { name: t("admin.groups") }]} />
     <div class="page-heading">
       <h2>{t("admin.groups")}</h2>
-      <a class="button" href="/admin/groups/create">{t("admin.group.create")}</a>
+      <a class="button" href={app_path("/admin/groups/create")}>{t("admin.group.create")}</a>
     </div>
     <ActionResult signal={group_delete} success={t("admin.group.success-deleted")} />
 
@@ -290,7 +291,7 @@ const GroupsList = () => {
           <tbody>
           {groups.value.data.map((group) => (
             <tr key={group.id}>
-              <td><a href={`/admin/groups/${group.id}`}>{group.id}</a></td>
+              <td><a href={app_path(`/admin/groups/${group.id}`)}>{group.id}</a></td>
               <td>{group.name}</td>
               <td>{group.type}</td>
               <td><button class="danger" onClick={() => confirm_delete(group.id)}>{t("common.delete")}</button></td>
@@ -319,7 +320,7 @@ const GroupCreate = () => {
       void engine_rest.group.create(state, form.value).then(() => {
         if (has_data(group_create)) {
           engine_rest.group.all(state)
-          route('/admin/groups')
+          route(app_path('/admin/groups'))
         }
       })
     }
@@ -343,7 +344,7 @@ const GroupCreate = () => {
 
       <div class="button-group">
         <button type="submit">{t("admin.group.create")}</button>
-        <a class="button secondary" href="/admin/groups">{t("common.cancel")}</a>
+        <a class="button secondary" href={app_path("/admin/groups")}>{t("common.cancel")}</a>
       </div>
     </form>
   </div>
@@ -379,7 +380,7 @@ const GroupDetails = ({ group_id }) => {
       void engine_rest.group.update(state, group_id, form.value)
     },
     on_delete = () =>
-      void engine_rest.group.delete(state, group_id).then(() => route('/admin/groups'))
+      void engine_rest.group.delete(state, group_id).then(() => route(app_path('/admin/groups')))
 
   return <div class="content fade-in">
     <Breadcrumbs paths={[
@@ -552,7 +553,7 @@ const UserList = () => {
       { name: t("admin.users") }]} />
     <div class="page-heading">
       <h2>{t("admin.users")}</h2>
-      <a class="button" href="/admin/users/create">{t("admin.user.create")}</a>
+      <a class="button" href={app_path("/admin/users/create")}>{t("admin.user.create")}</a>
     </div>
 
     <table class="fade-in">
@@ -569,7 +570,7 @@ const UserList = () => {
         signal={users}
         on_success={() => users.value?.data.map(({ id, firstName, lastName, email }) => (
           <tr key={id}>
-            <td><a href={`/admin/users/${id}`}>{id}</a></td>
+            <td><a href={app_path(`/admin/users/${id}`)}>{id}</a></td>
             <td>{firstName}</td>
             <td>{lastName}</td>
             <td>{email}</td>
@@ -606,7 +607,7 @@ const UserCreate = () => {
       void engine_rest.user.create(state, form.value).then(() => {
         if (has_data(user_create)) {
           engine_rest.user.all(state)
-          route('/admin/users')
+          route(app_path('/admin/users'))
         }
       })
     }
@@ -642,7 +643,7 @@ const UserCreate = () => {
 
       <div class="button-group">
         <button type="submit">{t("admin.user.create")}</button>
-        <a class="button secondary" href="/admin/users">{t("common.cancel")}</a>
+        <a class="button secondary" href={app_path("/admin/users")}>{t("common.cancel")}</a>
       </div>
     </form>
   </div>
@@ -663,7 +664,7 @@ const UserDetails = ({ user_id }) => {
   }, [user_id])
 
   const on_delete = () =>
-    void engine_rest.user.delete(state, user_id).then(() => route('/admin/users'))
+    void engine_rest.user.delete(state, user_id).then(() => route(app_path('/admin/users')))
 
   return <div class="content fade-in">
     <Breadcrumbs paths={[
@@ -910,7 +911,7 @@ const AuthorizationsPage = () => {
         <ul class="link-list">
           {authorization_resources.map(({ nameKey, resource_type }) =>
             <li key={resource_type}>
-              <a href={`/admin/authorizations/resource-type/${resource_type}`}>{t(nameKey)}</a>
+              <a href={app_path(`/admin/authorizations/resource-type/${resource_type}`)}>{t(nameKey)}</a>
             </li>)}
         </ul>
       </>

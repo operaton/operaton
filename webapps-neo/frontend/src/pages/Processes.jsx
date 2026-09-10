@@ -27,6 +27,7 @@ import {
   update_saved_filter,
 } from "../helper/saved_filters.js";
 import { formatDuration } from "../helper/date_formatter.js";
+import { app_path } from "../config.js";
 
 const RESOURCE_TYPE = "process_definition";
 const INSTANCE_RESOURCE_TYPE = "process_instance";
@@ -445,7 +446,7 @@ const ProcessSidebar = () => {
             return (
               <li key={entry.nameKey}>
                 <a
-                  href={`/processes/${def_id}/${entry.panel}${hq}`}
+                  href={app_path(`/processes/${def_id}/${entry.panel}${hq}`)}
                   aria-current={active ? "page" : undefined}
                 >
                   {t(entry.nameKey)}
@@ -713,7 +714,7 @@ const ProcessDefinitionSelection = () => {
     <div class="fade-in">
       <header>
         <h1>{t("processes.deployed-definitions")}</h1>
-        <a class="button" href="/deployments">
+        <a class="button" href={app_path("/deployments")}>
           {t("processes.deploy")}
         </a>
       </header>
@@ -824,7 +825,7 @@ const DefinitionsEmpty = () => {
   return (
     <div class="empty-state">
       <p>{t("processes.empty.heading")}</p>
-      <a href="/deployments">{t("processes.empty.upload")}</a>
+      <a href={app_path("/deployments")}>{t("processes.empty.upload")}</a>
       <a
         href="https://docs.operaton.org/docs/documentation/user-guide/process-engine/deployments"
         target="_blank"
@@ -848,7 +849,9 @@ const ProcessDefinitionDetails = () => {
   useEffect(() => {
     if (!params.panel) {
       route(
-        `/processes/${params.definition_id}/instances${keep_history_query(query)}`,
+        app_path(
+          `/processes/${params.definition_id}/instances${keep_history_query(query)}`,
+        ),
         true,
       );
     }
@@ -890,7 +893,7 @@ const ProcessDefinition = ({
         />
       </td>
       <td>
-        <a href={`/processes/${id}/instances${keep_history_query(query)}`}>
+        <a href={app_path(`/processes/${id}/instances${keep_history_query(query)}`)}>
           {name ?? key}
         </a>
       </td>
@@ -1059,7 +1062,7 @@ const InstanceDetails = () => {
     <>
       <ProcessTertiaryNav
         tabs={visible_tabs}
-        base_path={`/processes/${definition_id}/${panel}/${selection_id}`}
+        base_path={app_path(`/processes/${definition_id}/${panel}/${selection_id}`)}
       />
       <div>{active_tab ? <active_tab.Component /> : null}</div>
     </>
@@ -1091,7 +1094,7 @@ const InstanceDetailsDescription = () => {
 
   const cancel_instance = async () => {
     await engine_rest.process_instance.delete(state, params.selection_id);
-    route(`/processes/${params.definition_id}/instances`);
+    route(app_path(`/processes/${params.definition_id}/instances`));
   };
 
   return (
@@ -1189,7 +1192,7 @@ const ProcessInstance = ({ id, startTime, state, businessKey }) => {
     <tr>
       <td class="font-mono">
         <a
-          href={`/processes/${params.definition_id}/instances/${id}/vars${keep_history_query(query)}`}
+          href={app_path(`/processes/${params.definition_id}/instances/${id}/vars${keep_history_query(query)}`)}
         >
           {id.substring(0, 8)}
         </a>
@@ -1745,7 +1748,7 @@ const CalledProcessInstances = () => {
                 <td>{state_label}</td>
                 <td>
                   <a
-                    href={`/processes/${instance.id}${keep_history_query(query)}`}
+                    href={app_path(`/processes/${instance.id}${keep_history_query(query)}`)}
                   >
                     {instance.id}
                   </a>
@@ -1922,7 +1925,7 @@ const CalledProcessDefinitions = () => {
               <tr key={definition.id}>
                 <td>
                   <a
-                    href={`/processes/${definition.id}${keep_history_query(query)}`}
+                    href={app_path(`/processes/${definition.id}${keep_history_query(query)}`)}
                   >
                     {definition.name}
                   </a>
@@ -2216,8 +2219,9 @@ const process_definition_tabs = [
   },
 ];
 
+// An empty `path` means "stay on this page", so it must not be prefixed.
 const UUIDLink = ({ uuid = "?", path }) => (
-  <a href={`${path}${keep_history_query(useRoute().query)}`}>
+  <a href={`${path ? app_path(path) : ""}${keep_history_query(useRoute().query)}`}>
     {uuid.substring(0, 8)}
   </a>
 );

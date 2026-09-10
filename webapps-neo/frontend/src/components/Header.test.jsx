@@ -39,7 +39,7 @@ vi.mock("../assets/icons.jsx", () => ({
 import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { Header } from "./Header.jsx";
-import { create_mock_state } from "../test/helpers.js";
+import { create_mock_state, with_base_uri } from "../test/helpers.js";
 import { register, _reset_registry } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
 
@@ -73,6 +73,36 @@ describe("Header", () => {
       "/migrations",
       "/admin",
     ]);
+  });
+
+  it("prefixes every navigation link under a sub-path deployment", async () => {
+    await with_base_uri("http://localhost:3000/app-neo/", () => {
+      mockUrl = "/app-neo/processes";
+      const { container } = renderHeader(state);
+      const nav = container.querySelector("#primary-navigation");
+      const hrefs = Array.from(nav.querySelectorAll("li > a")).map((a) =>
+        a.getAttribute("href"),
+      );
+
+      expect(hrefs).toEqual([
+        "/app-neo/tasks",
+        "/app-neo/processes",
+        "/app-neo/decisions",
+        "/app-neo/deployments",
+        "/app-neo/batches",
+        "/app-neo/migrations",
+        "/app-neo/admin",
+      ]);
+      // The active check compares the prefixed href against the prefixed URL.
+      expect(
+        nav
+          .querySelector('a[href="/app-neo/processes"]')
+          .getAttribute("aria-current"),
+      ).toBe("page");
+      expect(container.querySelector("#logo").getAttribute("href")).toBe(
+        "/app-neo/",
+      );
+    });
   });
 
   it("marks the link for the current route as the current page", () => {

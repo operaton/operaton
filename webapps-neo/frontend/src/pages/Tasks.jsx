@@ -23,6 +23,7 @@ import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
 import { formatRelativeDate } from "../helper/date_formatter.js";
+import { app_path } from "../config.js";
 
 const TASK_PAGE_SIZE = 20;
 
@@ -291,7 +292,7 @@ const TasksManage = () => {
       on_delete={on_delete}
       on_close={() => route(without_manage(), true)}
       build_share_link={(f) => filter_share_link(window.location.href, f)}
-      advanced_editor_href="/tasks/filter"
+      advanced_editor_href={app_path("/tasks/filter")}
     />
   );
 };
@@ -368,7 +369,7 @@ const TaskList = () => {
           <small class="load-more-end">{t("tasks.no-more-items")}</small>
         ) : null}
       </div>
-      <a href="/tasks/start" class="button start-process">
+      <a href={app_path("/tasks/start")} class="button start-process">
         {t("tasks.start-process-label")}
       </a>
     </div>
@@ -389,7 +390,7 @@ const TaskRowEntry = ({ task, selected }) => {
   return (
     <tr id={id} key={id} aria-selected={selected}>
       <th scope="row">
-        <a href={`/tasks/${id}/${task_tabs[0].id}`}>{name}</a>
+        <a href={app_path(`/tasks/${id}/${task_tabs[0].id}`)}>{name}</a>
       </th>
       <td>{assignee ? assignee : "—"}</td>
       <td>
@@ -441,7 +442,7 @@ const Task = () => {
               ? t("tasks.task-not-found-hint")
               : (task_value.error?.message ?? t("tasks.form.unknown-error"))}
           </p>
-          <a href="/tasks" class="button">
+          <a href={app_path("/tasks")} class="button">
             {t("tasks.back-to-list")}
           </a>
         </div>
@@ -455,7 +456,7 @@ const Task = () => {
         <header>
           <div>
             <h2>{task.value?.data?.name}</h2>
-            <a href={`/processes/${pd.value?.data?.id}`}>
+            <a href={app_path(`/processes/${pd.value?.data?.id}`)}>
               {pd.value?.data?.name} ({t("processes.version")}{" "}
               {pd.value?.data?.version})
             </a>
@@ -522,7 +523,7 @@ const TaskTabs = () => {
       {state.api.task.one.value?.data != null ? (
         <Tabs
           tabs={task_tabs}
-          base_url={`/tasks/${state.api.task.one.value.data.id}`}
+          base_url={app_path(`/tasks/${state.api.task.one.value.data.id}`)}
           className="fade-in"
           label={t("tasks.tabs.label")}
         />
@@ -1084,7 +1085,7 @@ const Filter = () => {
         },
       };
       engine_rest.filter.create_filter(state, body).then(() => {
-        route("/tasks");
+        route(app_path("/tasks"));
       });
     };
 
@@ -1092,7 +1093,7 @@ const Filter = () => {
     <div class="filter-editor">
       <header>
         <h2>{t("tasks.filter.title")}</h2>
-        <a href="/tasks" class="button">
+        <a href={app_path("/tasks")} class="button">
           {t("common.back")}
         </a>
       </header>
@@ -1249,7 +1250,7 @@ const Filter = () => {
 
         <div class="filter-actions">
           <button type="submit">{t("common.save")}</button>
-          <a href="/tasks">{t("common.cancel")}</a>
+          <a href={app_path("/tasks")}>{t("common.cancel")}</a>
         </div>
       </form>
     </div>

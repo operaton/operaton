@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
-import { load_config, get_config, set_config } from "./config.js";
+import { app_path, app_root, load_config, get_config, set_config } from "./config.js";
+import { with_base_uri } from "./test/helpers.js";
 
 describe("config", () => {
   beforeEach(() => set_config(null));
@@ -99,4 +100,43 @@ describe("config", () => {
   it("get_config falls back to the environment when read before loading", () => {
     expect(get_config().auth_mode).toBe("basic");
   });
+
+  describe("the application root", () => {
+    it("is the document base, and prefixes nothing at the server root", () => {
+      expect(new URL(app_root()).pathname).toBe("/");
+      expect(app_path("/")).toBe("/");
+      expect(app_path("/tasks")).toBe("/tasks");
+      expect(app_path("/admin/users")).toBe("/admin/users");
+    });
+
+    it("prefixes every app path with a sub-path deployment's base", async () => {
+      await with_base_uri("http://localhost:3000/app-neo/", () => {
+        expect(app_path("/")).toBe("/app-neo/");
+        expect(app_path("/tasks")).toBe("/app-neo/tasks");
+        expect(app_path("/admin/users")).toBe("/app-neo/admin/users");
+      });
+    });
+
+    it("reads the base from the shell, not from the current route", async () => {
+      // A deep link: the document URL is /app-neo/tasks/1, the base is still the
+      // application root.
+      await with_base_uri("http://localhost:3000/my/application/path/", () => {
+        expect(app_path("/tasks")).toBe("/my/application/path/tasks");
+      });
+    });
+
+    it("fetches config.json from the application root", async () => {
+      const fetch_spy = vi
+        .fn()
+        .mockResolvedValue({ ok: true, json: async () => ({}) });
+      vi.stubGlobal("fetch", fetch_spy);
+
+      await with_base_uri("http://localhost:3000/app-neo/", () => load_config());
+
+      expect(fetch_spy.mock.calls[0][0]).toBe(
+        "http://localhost:3000/app-neo/config.json",
+      );
+    });
+  });
+
 });

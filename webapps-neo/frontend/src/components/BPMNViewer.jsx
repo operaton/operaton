@@ -13,6 +13,7 @@ import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import * as Icons from '../assets/icons.jsx'
+import { app_path } from '../config.js'
 import {
   build_single_modification,
   build_batch_instructions,
@@ -118,13 +119,13 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
 
       if (action === 'instances') {
         void engine_rest.process_instance.by_activity_ids(state, definition_id, [activity_id])
-        route(`/processes/${definition_id}/instances${history_suffix}`)
+        route(app_path(`/processes/${definition_id}/instances${history_suffix}`))
       } else if (action === 'incidents') {
         void engine_rest.history.incident.by_process_definition(state, definition_id)
-        route(`/processes/${definition_id}/incidents${history_suffix}`)
+        route(app_path(`/processes/${definition_id}/incidents${history_suffix}`))
       } else if (action === 'called') {
         void engine_rest.process_definition.called(state, definition_id)
-        route(`/processes/${definition_id}/called_definitions${history_suffix}`)
+        route(app_path(`/processes/${definition_id}/called_definitions${history_suffix}`))
       }
     }
 
@@ -492,7 +493,7 @@ const ModifyInstanceDialog = ({ request, mode, instance_id, definition_id }) => 
   const view_batch = () => {
     const id = created_batch.value?.id
     close_dialog()
-    route(id ? `/batches/${id}` : '/batches')
+    route(app_path(id ? `/batches/${id}` : '/batches'))
   }
 
   const copy_payload = () => {

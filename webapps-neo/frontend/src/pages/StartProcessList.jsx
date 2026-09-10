@@ -5,6 +5,7 @@ import { useSignal } from '@preact/signals'
 import engine_rest, { RequestState, RESPONSE_STATE } from '../api/engine_rest.jsx'
 import { useRoute, useLocation } from 'preact-iso'
 import { CamundaForm } from '../components/CamundaForm.jsx'
+import { app_path } from '../config.js'
 import {
   form_data_to_vars,
   schema_variable_keys,
@@ -110,7 +111,7 @@ const StartableProcessesList = () => {
               .map((process) => (
                 <tr key={process.id}
                     aria-selected={process.id === params.tab}>
-                  <td><a href={`/tasks/start/${process.id}`}>{process.name}</a></td>
+                  <td><a href={app_path(`/tasks/start/${process.id}`)}>{process.name}</a></td>
                   <td>{process.version}</td>
                   <td>{process.description}</td>
                   <td>{process.key}</td>
@@ -250,7 +251,7 @@ const StartGeneratedForm = ({ definition_id }) => {
     engine_rest.process_definition
       .submit_form(state, definition_id, with_business_key({ variables }, business_key))
       .then((result) => {
-        if (result?.status === RESPONSE_STATE.SUCCESS) route('/tasks')
+        if (result?.status === RESPONSE_STATE.SUCCESS) route(app_path('/tasks'))
         else setError(result?.error?.message ?? t("tasks.form.unknown-error"))
       })
       .catch((e) => setError(e?.message ?? t("tasks.form.unknown-error")))
@@ -308,7 +309,7 @@ const StartCamundaForm = ({ definition_id }) => {
     engine_rest.process_definition
       .submit_form(state, definition_id, with_business_key({ variables }, business_key))
       .then((result) => {
-        if (result?.status === RESPONSE_STATE.SUCCESS) route('/tasks')
+        if (result?.status === RESPONSE_STATE.SUCCESS) route(app_path('/tasks'))
         else setError(result?.error?.message ?? t("tasks.form.unknown-error"))
       })
       .catch((e) => setError(e?.message ?? t("tasks.form.unknown-error")))

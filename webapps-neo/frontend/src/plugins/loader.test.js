@@ -4,6 +4,7 @@ import { plugins_for, _reset_registry } from "./registry.js";
 import { PLUGIN_POINTS } from "./points.js";
 import { plugin_apis } from "../api/plugins.js";
 import { set_config } from "../config.js";
+import { with_base_uri } from "../test/helpers.js";
 
 const remote_good = {
   default: {
@@ -171,4 +172,29 @@ describe("plugins/loader is_allowed_location", () => {
       false,
     );
   });
+
+  it("looks for the manifest at the application root", async () => {
+    enable_remote();
+    const fetch_spy = manifest([]);
+    vi.stubGlobal("fetch", fetch_spy);
+
+    await with_base_uri("http://localhost:3000/app-neo/", () =>
+      load_plugins({ importer: vi.fn() }),
+    );
+
+    expect(fetch_spy).toHaveBeenCalledWith("/app-neo/plugins/plugins.json");
+  });
+
+  it("leaves a configured plugins URL alone", async () => {
+    set_config({ remotePluginsEnabled: true, pluginsUrl: "/elsewhere.json" });
+    const fetch_spy = manifest([]);
+    vi.stubGlobal("fetch", fetch_spy);
+
+    await with_base_uri("http://localhost:3000/app-neo/", () =>
+      load_plugins({ importer: vi.fn() }),
+    );
+
+    expect(fetch_spy).toHaveBeenCalledWith("/elsewhere.json");
+  });
+
 });

@@ -44,6 +44,21 @@ required.
 `user` is present only when the caller already has a session, letting the app
 skip the login screen on reload.
 
+## Serving the app from a sub-path
+
+The bundle emits only relative URLs and learns its own prefix from the
+`<base href>` in `index.html`, which the deployment writes on the way out. It is
+therefore never baked into the build:
+
+| Deployment | Configured with |
+| --- | --- |
+| Embedded in Operaton (Run) | `operaton.bpm.webapp.neo.application-path`, rewritten per request by `SpaIndexTransformer` (the servlet context path is added automatically) |
+| Standalone Docker image | `DOCKER_RUN_PLACEHOLDER_APPLICATION_PATH`, substituted into `index.html` and `nginx.conf` by `env.sh` |
+| `npm run dev` | Not supported; the dev server always serves the root |
+
+Empty (the default) is the server root, and leaves both files byte-identical to
+the build output. `app-neo`, `/app-neo` and `/app-neo/` all mean the same thing.
+
 ## Overview on our Env Vars
 
 ### VITE_BACKEND

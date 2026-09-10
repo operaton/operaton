@@ -4,6 +4,7 @@ import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { useRoute, useLocation } from "preact-iso";
 import { CamundaForm } from "./CamundaForm.jsx";
+import { app_path } from "../config.js";
 import {
   vars_to_form_data,
   form_data_to_vars,
@@ -91,7 +92,7 @@ const CamundaTaskForm = ({ task, taskId }) => {
       .post_task_form(state, taskId, payload)
       .then(() => {
         localStorage.removeItem(`task_form_${taskId}`);
-        route("/tasks");
+        route(app_path("/tasks"));
       })
       .catch((e) => setError(e?.message ?? "Submit failed"));
   };
@@ -204,7 +205,7 @@ const GeneratedTaskForm = ({ task, taskId }) => {
       .post_task_form(state, taskId, payload)
       .then(() => {
         localStorage.removeItem(`task_form_${taskId}`);
-        route("/tasks");
+        route(app_path("/tasks"));
       })
       .catch((e) => setError(e?.message ?? "Submit failed"));
   };
@@ -250,7 +251,7 @@ const complete_directly = (state, setError, taskId, route) => {
     .complete_task(state, taskId)
     .then(() => {
       localStorage.removeItem(`task_form_${taskId}`);
-      route("/tasks");
+      route(app_path("/tasks"));
     })
     .catch((error) => setError(error?.message || "Complete failed"));
 };

@@ -22,6 +22,11 @@ import {
 } from "../helper/list_query.js";
 import { resolve_user } from "../api/helper.jsx";
 import { AppState } from "../state.js";
+import {
+  VARIABLE_TYPES,
+  coerce_variable_value,
+  format_variable_value,
+} from "../helper/variables.js";
 import { StartProcessList } from "./StartProcessList.jsx";
 import { ConfirmDialog } from "../components/Dialog.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
@@ -1627,6 +1632,181 @@ const HistoryTab = () => {
   );
 };
 
+// Variables carried by the task, outside whatever the form happens to expose.
+// The previous Tasklist showed them beside the form and let the assignee change
+// them; without that, anything the form does not mention is invisible.
+const VariablesTab = () => {
+  const state = useContext(AppState),
+    { params } = useRoute(),
+    [t] = useTranslation(),
+    task = state.api.task.one.value?.data,
+    editing = useSignal(null),
+    draft = useSignal({ name: "", type: "String", value: "" });
+
+  const load = () =>
+    void engine_rest.task.get_task_variables(state, params.task_id);
+
+  useEffect(() => {
+    load();
+    return () => {
+      state.api.task.variables.value = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.task_id]);
+
+  const mine = !!task?.assignee && task.assignee === resolve_user(state);
+
+  const save = async (name, type, raw) => {
+    await engine_rest.task.set_task_variable(state, params.task_id, name, {
+      value: coerce_variable_value(type, raw),
+      type,
+    });
+    editing.value = null;
+    draft.value = { name: "", type: "String", value: "" };
+    load();
+  };
+
+  const remove = async (name) => {
+    await engine_rest.task.delete_task_variable(state, params.task_id, name);
+    load();
+  };
+
+  const rows = Object.entries(state.api.task.variables.value?.data ?? {});
+
+  return (
+    <div class="task-variables">
+      <h2 class="screen-hidden">{t("tasks.variables.title")}</h2>
+      {rows.length === 0 ? (
+        <p class="info-box">{t("tasks.variables.empty")}</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>{t("common.name")}</th>
+              <th>{t("common.type")}</th>
+              <th>{t("common.value")}</th>
+              {mine && <th>{t("common.action")}</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(([name, v]) => (
+              <tr key={name}>
+                <td>{name}</td>
+                <td>{v.type}</td>
+                <td>
+                  {editing.value === name ? (
+                    <input
+                      type="text"
+                      value={draft.value.value}
+                      onInput={(e) =>
+                        (draft.value = {
+                          ...draft.peek(),
+                          value: e.currentTarget.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    format_variable_value(v.value)
+                  )}
+                </td>
+                {mine && (
+                  <td>
+                    {editing.value === name ? (
+                      <button
+                        type="button"
+                        onClick={() => save(name, v.type, draft.value.value)}
+                      >
+                        {t("common.submit")}
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          editing.value = name;
+                          draft.value = {
+                            name,
+                            type: v.type,
+                            value: format_variable_value(v.value),
+                          };
+                        }}
+                        aria-label={t("common.edit")}
+                        title={t("common.edit")}
+                      >
+                        <Icons.pencil />
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      class="danger"
+                      onClick={() => remove(name)}
+                      aria-label={t("common.delete")}
+                      title={t("common.delete")}
+                    >
+                      <Icons.trash />
+                    </button>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      {mine ? (
+        <>
+          <h3>{t("tasks.variables.add")}</h3>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              save(draft.value.name.trim(), draft.value.type, draft.value.value);
+            }}
+          >
+            <label for="new-variable-name">{t("common.name")}</label>
+            <input
+              id="new-variable-name"
+              type="text"
+              value={editing.value === null ? draft.value.name : ""}
+              onInput={(e) =>
+                (draft.value = { ...draft.peek(), name: e.currentTarget.value })
+              }
+            />
+            <label for="new-variable-type">{t("common.type")}</label>
+            <select
+              id="new-variable-type"
+              value={draft.value.type}
+              onChange={(e) =>
+                (draft.value = { ...draft.peek(), type: e.currentTarget.value })
+              }
+            >
+              {VARIABLE_TYPES.map((x) => (
+                <option key={x} value={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+            <label for="new-variable-value">{t("common.value")}</label>
+            <input
+              id="new-variable-value"
+              type="text"
+              value={editing.value === null ? draft.value.value : ""}
+              onInput={(e) =>
+                (draft.value = { ...draft.peek(), value: e.currentTarget.value })
+              }
+            />
+            <div class="button-group">
+              <button type="submit" disabled={!draft.value.name.trim()}>
+                {t("tasks.variables.save")}
+              </button>
+            </div>
+          </form>
+        </>
+      ) : (
+        <p class="info-box">{t("tasks.form.claim-first")}</p>
+      )}
+    </div>
+  );
+};
+
 const AttachmentsTab = () => {
   const state = useContext(AppState),
     { params } = useRoute(),
@@ -1812,15 +1992,21 @@ const task_tabs = [
     Component: HistoryTab,
   },
   {
+    nameKey: "tasks.tabs.variables",
+    id: "variables",
+    pos: 2,
+    Component: VariablesTab,
+  },
+  {
     nameKey: "tasks.tabs.attachments",
     id: "attachments",
-    pos: 2,
+    pos: 3,
     Component: AttachmentsTab,
   },
   {
     nameKey: "tasks.tabs.diagram",
     id: "diagram",
-    pos: 3,
+    pos: 4,
     Component: Diagram,
   },
 ];

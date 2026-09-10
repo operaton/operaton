@@ -76,6 +76,29 @@ const get_task_deployed_form = (state, task_id) =>
 const get_task_deployed_form_html = (state, task_id) =>
   GET_TEXT(`/task/${task_id}/deployed-form`, state, state.api.task.form);
 
+const get_task_variables = (state, task_id) =>
+  GET(
+    `/task/${task_id}/variables?deserializeValues=false`,
+    state,
+    state.api.task.variables,
+  );
+
+const set_task_variable = (state, task_id, name, body) =>
+  PUT(
+    `/task/${task_id}/variables/${name}`,
+    body,
+    state,
+    state.api.task.variables_update,
+  );
+
+const delete_task_variable = (state, task_id, name) =>
+  DELETE(
+    `/task/${task_id}/variables/${name}`,
+    {},
+    state,
+    state.api.task.variables_update,
+  );
+
 const get_task_form_variables = (state, task_id) =>
   GET(`/task/${task_id}/form-variables`, state, state.api.task.form_variables);
 
@@ -255,6 +278,9 @@ const task = {
   get_task_deployed_form,
   get_task_deployed_form_html,
   get_task_form_variables,
+  get_task_variables,
+  set_task_variable,
+  delete_task_variable,
   create_task,
   claim_task,
   unclaim_task,

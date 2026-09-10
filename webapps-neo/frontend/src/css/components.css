@@ -1723,3 +1723,11 @@ nav:has(> .breadcrumbs) {
   font-size: var(--small-font-size);
   margin: 0;
 }
+
+#task-list .list-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-1);
+  margin: var(--spacing-1) 0;
+}

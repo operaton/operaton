@@ -53,6 +53,11 @@ const update_task = (state, task, task_id) => {
   });
 };
 
+/** Create a task that belongs to no process. The engine answers 204, so the id
+ *  has to be chosen by the caller if the new task is to be opened afterwards. */
+const create_task = (state, task) =>
+  POST(`/task/create`, task, state, state.api.task.create)
+
 const get_task_form = (state, form_id) =>
   GET_SERVER_URL(`/${form_id}`, state, state.api.task.form);
 
@@ -250,6 +255,7 @@ const task = {
   get_task_deployed_form,
   get_task_deployed_form_html,
   get_task_form_variables,
+  create_task,
   claim_task,
   unclaim_task,
   assign_task,

@@ -297,7 +297,9 @@
       "createdBefore": "createdBefore",
       "createdAfter": "createdAfter",
       "active": "active",
-      "suspended": "suspended"
+      "suspended": "suspended",
+      "processVariables": "Prozessvariable",
+      "taskVariables": "Aufgabenvariable"
     },
     "attachments": {
       "empty": "Keine Anhänge.",
@@ -937,7 +939,19 @@
     "duplicate": "Duplizieren",
     "duplicate_suffix": "(Kopie)",
     "share_link_copied": "Link kopiert",
-    "empty": "Noch keine gespeicherten Filter."
+    "empty": "Noch keine gespeicherten Filter.",
+    "variable_name": "Variablenname",
+    "variable_operator": "Vergleich",
+    "variable_operators": {
+      "eq": "ist",
+      "neq": "ist nicht",
+      "gt": "größer als",
+      "gteq": "größer oder gleich",
+      "lt": "kleiner als",
+      "lteq": "kleiner oder gleich",
+      "like": "enthält",
+      "notLike": "enthält nicht"
+    }
   },
   "login": {
     "title": "Anmelden",

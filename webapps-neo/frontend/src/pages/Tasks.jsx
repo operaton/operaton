@@ -151,6 +151,16 @@ const FILTER_KEYS = [
     nameKey: "tasks.filter_keys.createdAfter",
     type: "date",
   },
+  {
+    key: "processVariables",
+    nameKey: "tasks.filter_keys.processVariables",
+    type: "variable",
+  },
+  {
+    key: "taskVariables",
+    nameKey: "tasks.filter_keys.taskVariables",
+    type: "variable",
+  },
   { key: "active", nameKey: "tasks.filter_keys.active", type: "boolean" },
   { key: "suspended", nameKey: "tasks.filter_keys.suspended", type: "boolean" },
 ];
@@ -1585,7 +1595,7 @@ const Filter = () => {
           <button type="submit">{t("common.save")}</button>
           <a href={`/tasks${keep_list_query(query)}`}>{t("common.cancel")}</a>
         </div>
-      
+
         <fieldset>
           <legend>{t("tasks.filter.permissions")}</legend>
           <p>{t("tasks.filter.permissions-hint")}</p>
@@ -1651,7 +1661,7 @@ const Filter = () => {
             {t("tasks.filter.add-permission")}
           </button>
         </fieldset>
-</form>
+      </form>
     </div>
   );
 };
@@ -1872,7 +1882,11 @@ const VariablesTab = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              save(draft.value.name.trim(), draft.value.type, draft.value.value);
+              save(
+                draft.value.name.trim(),
+                draft.value.type,
+                draft.value.value,
+              );
             }}
           >
             <label for="new-variable-name">{t("common.name")}</label>
@@ -1904,7 +1918,10 @@ const VariablesTab = () => {
               type="text"
               value={editing.value === null ? draft.value.value : ""}
               onInput={(e) =>
-                (draft.value = { ...draft.peek(), value: e.currentTarget.value })
+                (draft.value = {
+                  ...draft.peek(),
+                  value: e.currentTarget.value,
+                })
               }
             />
             <div class="button-group">

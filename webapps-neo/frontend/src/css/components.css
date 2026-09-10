@@ -1684,8 +1684,10 @@ nav:has(> .breadcrumbs) {
      so it sits above the form and mirrors the global form label/input grid. */
   .business-key {
     display: grid;
-    grid-template-columns: 12em min(calc(100% - 2 * var(--spacing-1) - 12em),
-        30em);
+    grid-template-columns: 12em min(
+        calc(100% - 2 * var(--spacing-1) - 12em),
+        30em
+      );
     align-items: center;
     gap: var(--spacing-1);
     padding: var(--spacing-1);
@@ -1730,4 +1732,14 @@ nav:has(> .breadcrumbs) {
   justify-content: center;
   gap: var(--spacing-1);
   margin: var(--spacing-1) 0;
+}
+
+.variable-criterion {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.variable-criterion input {
+  min-width: 0;
 }

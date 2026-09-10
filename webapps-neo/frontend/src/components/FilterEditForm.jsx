@@ -47,9 +47,9 @@ export const FilterEditForm = ({
   const update_criterion = (index, field, value) =>
     update(
       "criteria",
-      form.peek().criteria.map((c, i) =>
-        i === index ? { ...c, [field]: value } : c,
-      ),
+      form
+        .peek()
+        .criteria.map((c, i) => (i === index ? { ...c, [field]: value } : c)),
     );
 
   return (
@@ -94,18 +94,24 @@ export const FilterEditForm = ({
                       </select>
                     </td>
                     <td>
-                      <CriterionValueInput
-                        meta={meta}
-                        value={criterion.value}
-                        on_change={(v) => update_criterion(i, "value", v)}
-                        label={t("common.value")}
-                      />
+                      {meta?.type === "variable" ? (
+                        <VariableCriterionInput
+                          criterion={criterion}
+                          on_change={(field, v) =>
+                            update_criterion(i, field, v)
+                          }
+                        />
+                      ) : (
+                        <CriterionValueInput
+                          meta={meta}
+                          value={criterion.value}
+                          on_change={(v) => update_criterion(i, "value", v)}
+                          label={t("common.value")}
+                        />
+                      )}
                     </td>
                     <td>
-                      <button
-                        type="button"
-                        onClick={() => remove_criterion(i)}
-                      >
+                      <button type="button" onClick={() => remove_criterion(i)}>
                         {t("common.remove")}
                       </button>
                     </td>
@@ -154,6 +160,47 @@ export const FilterEditForm = ({
         </button>
       </div>
     </form>
+  );
+};
+
+export const VARIABLE_OPERATORS = [
+  "eq",
+  "neq",
+  "gt",
+  "gteq",
+  "lt",
+  "lteq",
+  "like",
+  "notLike",
+];
+
+const VariableCriterionInput = ({ criterion, on_change }) => {
+  const [t] = useTranslation();
+  return (
+    <span class="variable-criterion">
+      <input
+        aria-label={t("list_filter.variable_name")}
+        placeholder={t("list_filter.variable_name")}
+        value={criterion.variable_name ?? ""}
+        onInput={(e) => on_change("variable_name", e.currentTarget.value)}
+      />
+      <select
+        aria-label={t("list_filter.variable_operator")}
+        value={criterion.operator ?? "eq"}
+        onChange={(e) => on_change("operator", e.currentTarget.value)}
+      >
+        {VARIABLE_OPERATORS.map((operator) => (
+          <option key={operator} value={operator}>
+            {t(`list_filter.variable_operators.${operator}`)}
+          </option>
+        ))}
+      </select>
+      <input
+        aria-label={t("common.value")}
+        value={criterion.value}
+        onInput={(e) => on_change("value", e.currentTarget.value)}
+      />
+    </span>
   );
 };
 
@@ -224,18 +271,37 @@ export const filter_form_from_saved = (filter) => ({
   name: filter.name ?? "",
   sortBy: filter.sort?.sortBy ?? "",
   sortOrder: filter.sort?.sortOrder ?? "asc",
-  criteria: Object.entries(filter.query ?? {}).map(([key, value]) => ({
-    key,
-    value: String(value),
-  })),
+  criteria: Object.entries(filter.query ?? {}).flatMap(([key, value]) =>
+    is_variable_query(value)
+      ? value.map((comparison) => ({
+          key,
+          variable_name: comparison.name ?? "",
+          operator: comparison.operator ?? "eq",
+          value: String(comparison.value ?? ""),
+        }))
+      : [{ key, value: String(value) }],
+  ),
 });
 
 export const filter_from_form = (f, filter_keys) => {
   const query = {};
-  for (const { key, value } of f.criteria) {
+  for (const criterion of f.criteria) {
+    const { key, value } = criterion;
     const meta = filter_keys.find((k) => k.key === key);
     if (!meta || value === "" || value === undefined || value === null)
       continue;
+    if (meta.type === "variable") {
+      if (!criterion.variable_name) continue;
+      query[key] = [
+        ...(query[key] ?? []),
+        {
+          name: criterion.variable_name,
+          operator: criterion.operator ?? "eq",
+          value: variable_value(value),
+        },
+      ];
+      continue;
+    }
     query[key] = coerce_value(meta.type, value);
   }
   return {
@@ -243,6 +309,18 @@ export const filter_from_form = (f, filter_keys) => {
     query,
     ...(f.sortBy ? { sort: { sortBy: f.sortBy, sortOrder: f.sortOrder } } : {}),
   };
+};
+
+const is_variable_query = (value) =>
+  Array.isArray(value) &&
+  value.every((entry) => entry && typeof entry === "object");
+
+// A typed value keeps gt/lt comparable; the engine compares strings lexically.
+const variable_value = (value) => {
+  if (value === "true" || value === "false") return value === "true";
+  return value.trim() !== "" && !Number.isNaN(Number(value))
+    ? Number(value)
+    : value;
 };
 
 const coerce_value = (type, value) => {

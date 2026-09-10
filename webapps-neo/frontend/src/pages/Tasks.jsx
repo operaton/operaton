@@ -19,6 +19,7 @@ import {
   without_manage,
   write_list_query,
 } from "../helper/list_query.js";
+import { resolve_user } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
@@ -173,9 +174,7 @@ const load_tasks = (state, query, firstResult = 0) => {
     );
   } else {
     const filter =
-      filterValue === "my"
-        ? { assignee: state.api.user.profile.value?.id }
-        : {};
+      filterValue === "my" ? { assignee: resolve_user(state) } : {};
     void engine_rest.task.get_tasks(
       state,
       sortBy,
@@ -254,7 +253,7 @@ const TasksManage = () => {
     const body = {
       resourceType: "Task",
       name: filter.name,
-      owner: state.api.user.profile.value?.id,
+      owner: resolve_user(state),
       query: filter.query,
       properties: {},
     };
@@ -266,7 +265,7 @@ const TasksManage = () => {
     const body = {
       resourceType: "Task",
       name: filter.name,
-      owner: state.api.user.profile.value?.id,
+      owner: resolve_user(state),
       query: filter.query,
       properties: {},
     };
@@ -879,14 +878,14 @@ const ClaimButton = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
     task = state.api.task.one.value?.data,
-    user = state.api.user.profile.value?.data,
+    user_id = resolve_user(state),
     claim_result = state.api.task.claim_result.value?.data,
     assign_result = state.api.task.assign_result.value?.data,
     unclaim_result = state.api.task.unclaim_result.value?.data,
     close = () => document.getElementById("set_assignee").close(),
     show = () => document.getElementById("set_assignee").showModal(),
     user_is_assignee = task?.assignee,
-    assignee_is_different = task?.assignee && user?.id !== task?.assignee,
+    assignee_is_different = task?.assignee && user_id !== task?.assignee,
     claimed = claim_result?.status === RESPONSE_STATE.SUCCESS,
     assigned = assign_result?.status === RESPONSE_STATE.SUCCESS,
     unclaimed = unclaim_result?.status === RESPONSE_STATE.SUCCESS;
@@ -1073,7 +1072,7 @@ const Filter = () => {
       const body = {
         resourceType: "Task",
         name,
-        owner: state.api.user.profile.value?.id,
+        owner: resolve_user(state),
         query,
         properties: {
           description,

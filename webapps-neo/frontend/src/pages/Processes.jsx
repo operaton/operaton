@@ -23,6 +23,9 @@ import {
 import {
   VARIABLE_TYPES,
   coerce_variable_value,
+  variable_input_type,
+  variable_edit_value,
+  object_type_label,
   format_variable_value,
 } from "../helper/variables.js";
 import {
@@ -45,6 +48,13 @@ const INSTANCE_SORT_OPTIONS = [
 ];
 
 const INSTANCE_FILTER_KEYS = [
+  {
+    key: "variables",
+    nameKey: "processes.instance.filter_keys.variables",
+    type: "variable",
+    // The historic instance query has no notLike.
+    operators: ["eq", "neq", "gt", "gteq", "lt", "lteq", "like"],
+  },
   {
     key: "businessKey",
     nameKey: "processes.instance.filter_keys.businessKey",
@@ -431,14 +441,14 @@ const ProcessSidebar = () => {
     <nav aria-label={t("nav.processes")}>
       <div class="sidebar-scroll">
         <div class="definition-block">
-          <h2 class="definition-heading">
-            {def?.name ?? def?.key ?? def_id}
-          </h2>
+          <h2 class="definition-heading">{def?.name ?? def?.key ?? def_id}</h2>
           <dl class="definition-summary">
             <dt>{t("processes.definition-id")}</dt>
             <dd class="entity-id">{def?.id ?? "—"}</dd>
             <dt>{t("processes.version")}</dt>
             <dd>{def?.version ?? "—"}</dd>
+            <dt>{t("processes.version-tag")}</dt>
+            <dd>{def?.versionTag ?? "—"}</dd>
           </dl>
         </div>
         <menu class="list">
@@ -1080,9 +1090,10 @@ const InstanceDetailsDescription = () => {
     confirm_cancel = useSignal(false),
     // Live and historic instance details live in separate signals; read the one
     // matching the current mode so a stale shape can't leak across a toggle.
-    data = (history_mode
-      ? state.api.history.process_instance.one
-      : state.api.process.instance.one
+    data = (
+      history_mode
+        ? state.api.history.process_instance.one
+        : state.api.process.instance.one
     ).value?.data;
 
   const toggle_suspended = async (suspended) => {
@@ -1221,13 +1232,15 @@ const InstanceVariables = () => {
     edit_name = useSignal(""),
     edit_type = useSignal("String"),
     edit_value = useSignal(""),
+    edit_value_info = useSignal(null),
     delete_name = useSignal(null),
     // Live and historic variables live in separate signals, each holding a
     // single shape (live: object map; historic: array). Read the one for the
     // current mode and render once it has loaded — no cross-shape guard needed.
-    vars_data = (history_mode
-      ? state.api.history.variable_instance.by_process_instance
-      : state.api.process.instance.variables
+    vars_data = (
+      history_mode
+        ? state.api.history.variable_instance.by_process_instance
+        : state.api.process.instance.variables
     ).value?.data,
     vars_ready = vars_data != null;
 
@@ -1251,14 +1264,16 @@ const InstanceVariables = () => {
     edit_name.value = "";
     edit_type.value = "String";
     edit_value.value = "";
+    edit_value_info.value = null;
     edit_open.value = true;
   };
 
-  const open_edit = (name, type, value) => {
+  const open_edit = (name, type, value, value_info) => {
     edit_new.value = false;
     edit_name.value = name;
     edit_type.value = type ?? "String";
-    edit_value.value = value ?? "";
+    edit_value.value = variable_edit_value(type, value);
+    edit_value_info.value = value_info ?? null;
     edit_open.value = true;
   };
 
@@ -1270,6 +1285,11 @@ const InstanceVariables = () => {
       {
         value: coerce_variable_value(edit_type.value, edit_value.value),
         type: edit_type.value,
+        // An Object variable must go back with the serialization it came with,
+        // or the engine cannot read it again.
+        ...(edit_type.value === "Object" && edit_value_info.value
+          ? { valueInfo: edit_value_info.value }
+          : {}),
       },
     );
     edit_open.value = false;
@@ -1299,33 +1319,37 @@ const InstanceVariables = () => {
         <tbody>
           {vars_ready
             ? !history_mode
-              ? Object.entries(vars_data).map(([name, { type, value }]) => (
-                  <tr key={name}>
-                    <td>{name}</td>
-                    <td>{type}</td>
-                    <td>{format_variable_value(value)}</td>
-                    <td>
-                      <div class="button-group">
-                        <button
-                          type="button"
-                          onClick={() => open_edit(name, type, value)}
-                        >
-                          {t("common.edit")}
-                        </button>
-                        <button
-                          type="button"
-                          class="danger"
-                          onClick={() => {
-                            delete_name.value = name;
-                            delete_open.value = true;
-                          }}
-                        >
-                          {t("common.delete")}
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+              ? Object.entries(vars_data).map(
+                  ([name, { type, value, valueInfo }]) => (
+                    <tr key={name}>
+                      <td>{name}</td>
+                      <td>{type}</td>
+                      <td>{format_variable_value(value)}</td>
+                      <td>
+                        <div class="button-group">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              open_edit(name, type, value, valueInfo)
+                            }
+                          >
+                            {t("common.edit")}
+                          </button>
+                          <button
+                            type="button"
+                            class="danger"
+                            onClick={() => {
+                              delete_name.value = name;
+                              delete_open.value = true;
+                            }}
+                          >
+                            {t("common.delete")}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ),
+                )
               : vars_data.map(({ id, name, type, value }) => (
                   <tr key={id ?? name}>
                     <td>{name}</td>
@@ -1375,14 +1399,29 @@ const InstanceVariables = () => {
               ))}
             </select>
           </label>
-          <label>
-            {t("common.value")}
-            <input
-              type="text"
-              value={edit_value.value}
-              onInput={(e) => (edit_value.value = e.target.value)}
-            />
-          </label>
+          {variable_input_type(edit_type.value) === "none" ? null : (
+            <label>
+              {t("common.value")}
+              {variable_input_type(edit_type.value) === "select" ? (
+                <select
+                  value={edit_value.value}
+                  onChange={(e) => (edit_value.value = e.target.value)}
+                >
+                  <option value="true">true</option>
+                  <option value="false">false</option>
+                </select>
+              ) : (
+                <input
+                  type={variable_input_type(edit_type.value)}
+                  value={edit_value.value}
+                  onInput={(e) => (edit_value.value = e.target.value)}
+                />
+              )}
+            </label>
+          )}
+          {edit_type.value === "Object" && edit_value_info.value ? (
+            <p class="hint">{object_type_label(edit_value_info.value)}</p>
+          ) : null}
         </div>
         <div class="button-group">
           <button

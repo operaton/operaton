@@ -467,7 +467,8 @@
         "withoutIncidents": "withoutIncidents",
         "startedBefore": "startedBefore",
         "startedAfter": "startedAfter",
-        "finished": "finished"
+        "finished": "finished",
+        "variables": "Variable"
       },
       "manage_title": "Manage process-instance filters",
       "suspend": "Suspend",
@@ -511,7 +512,8 @@
       "clear-annotation": "Clear",
       "annotation-placeholder": "Add a note for this operation…",
       "confirm-clear": "Clear the annotation for this operation?"
-    }
+    },
+    "version-tag": "Version tag"
   },
   "decisions": {
     "title": "Decisions",
@@ -592,7 +594,14 @@
       "duplicate-filtering": "Enable duplicate filtering",
       "deploy-changed-only": "Deploy changed resources only",
       "submit": "Deploy"
-    }
+    },
+    "delete": {
+      "title": "Delete deployment",
+      "message": "The deployment and everything it deployed will be removed.",
+      "cascade": "Also remove running process instances and their history",
+      "failed": "The engine refused to delete this deployment. Running instances need the option above."
+    },
+    "download": "Download"
   },
   "batches": {
     "title": "Batches",

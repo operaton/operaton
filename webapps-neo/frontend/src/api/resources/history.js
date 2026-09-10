@@ -7,12 +7,22 @@ const instance_url = (
   params = {},
   { unfinished = false } = {},
 ) => {
+  const { variables, ...rest } = params;
   const merged = {
     sortBy: "startTime",
     sortOrder: "asc",
     ...(unfinished ? { unfinished: true } : {}),
     processDefinitionId: definition_id,
-    ...params,
+    ...rest,
+    // The engine reads variable comparisons as name_operator_value, comma
+    // separated — not as the objects a saved filter stores them in.
+    ...(variables?.length
+      ? {
+          variables: variables
+            .map(({ name, operator, value }) => `${name}_${operator}_${value}`)
+            .join(","),
+        }
+      : {}),
   };
   return new URLSearchParams(merged).toString();
 };

@@ -467,7 +467,8 @@
         "withoutIncidents": "withoutIncidents",
         "startedBefore": "startedBefore",
         "startedAfter": "startedAfter",
-        "finished": "finished"
+        "finished": "finished",
+        "variables": "Variable"
       },
       "manage_title": "Prozessinstanz-Filter verwalten",
       "suspend": "Anhalten",
@@ -511,7 +512,8 @@
       "clear-annotation": "Löschen",
       "annotation-placeholder": "Notiz zu dieser Operation hinzufügen…",
       "confirm-clear": "Anmerkung für diese Operation löschen?"
-    }
+    },
+    "version-tag": "Versionsmerkmal"
   },
   "decisions": {
     "title": "Entscheidungen",
@@ -592,7 +594,14 @@
       "duplicate-filtering": "Duplikatfilterung aktivieren",
       "deploy-changed-only": "Nur geänderte Ressourcen bereitstellen",
       "submit": "Bereitstellen"
-    }
+    },
+    "delete": {
+      "title": "Bereitstellung löschen",
+      "message": "Die Bereitstellung und alles daraus Bereitgestellte wird entfernt.",
+      "cascade": "Laufende Prozessinstanzen und deren Historie mit entfernen",
+      "failed": "Die Engine hat das Löschen abgelehnt. Bei laufenden Instanzen wird die Option oben benötigt."
+    },
+    "download": "Herunterladen"
   },
   "batches": {
     "title": "Batches",

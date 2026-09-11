@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:8b3aad6e-f5f4-4e0d-871a-dacc9229864d",
+  "serialNumber": "urn:uuid:c0eeefd0-8160-4d79-9c79-b6baed297b13",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-10T09:46:34Z",
+    "timestamp": "2026-09-11T07:57:27Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.74.0-SNAPSHOT-e4c5d81f3"
+          "version": "0.74.0-SNAPSHOT-6bc78c229"
         }
       ]
     },
@@ -19574,7 +19574,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e6cfa1a3-5199-4fc1-8c9a-325702bb7756",
+      "bom-ref": "48d10943-1df1-41c5-9a1d-4578200c465c",
       "name": "package-lock.json",
       "properties": [
         {
@@ -21269,9 +21269,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.27.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.27.1",
       "name": "bpmn-js",
-      "version": "18.27.0",
+      "version": "18.27.1",
       "licenses": [
         {
           "license": {
@@ -21279,11 +21279,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.27.0",
+      "purl": "pkg:npm/bpmn-js@18.27.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.27.0"
+          "value": "bpmn-js@18.27.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24830,7 +24830,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "9d244884-8bd2-4939-b9c2-bad7c2ae6081",
+      "bom-ref": "a31a8202-066f-4447-b6f5-49c814c18302",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27268,13 +27268,7 @@
       "dependsOn": []
     },
     {
-      "ref": "9d244884-8bd2-4939-b9c2-bad7c2ae6081",
-      "dependsOn": [
-        "e6cfa1a3-5199-4fc1-8c9a-325702bb7756"
-      ]
-    },
-    {
-      "ref": "e6cfa1a3-5199-4fc1-8c9a-325702bb7756",
+      "ref": "48d10943-1df1-41c5-9a1d-4578200c465c",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.25.0",
@@ -27294,7 +27288,7 @@
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.13.0",
-        "pkg:npm/bpmn-js@18.27.0",
+        "pkg:npm/bpmn-js@18.27.1",
         "pkg:npm/camunda-dmn-js@3.8.3",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
@@ -27321,6 +27315,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "a31a8202-066f-4447-b6f5-49c814c18302",
+      "dependsOn": [
+        "48d10943-1df1-41c5-9a1d-4578200c465c"
       ]
     },
     {
@@ -27800,7 +27800,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.27.0",
+      "ref": "pkg:npm/bpmn-js@18.27.1",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.2.0",
         "pkg:npm/diagram-js-direct-editing@3.5.1",

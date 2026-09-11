@@ -27,7 +27,7 @@ import java.util.List;
 public @NullMarked interface Problem {
 
   /** The message of this problem */
-  String getMessage();
+  @Nullable String getMessage();
 
   /** The line where the problem occurs */
   int getLine();

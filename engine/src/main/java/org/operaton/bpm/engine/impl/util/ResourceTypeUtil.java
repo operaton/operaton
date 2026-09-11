@@ -37,7 +37,7 @@ public final @NullMarked class ResourceTypeUtil {
    * the respective {@link Permission} Enum class for this resource.<p>
    * NOTE: In case of new {@link Permission} Enum class, please adjust the map accordingly
    */
-  protected static final Map<Integer, Class<? extends Enum<? extends Permission>>> PERMISSION_ENUMS;
+  private static final Map<Integer, Class<? extends Enum<? extends Permission>>> PERMISSION_ENUMS;
 
   static {
     PERMISSION_ENUMS = new HashMap<>(Map.of(

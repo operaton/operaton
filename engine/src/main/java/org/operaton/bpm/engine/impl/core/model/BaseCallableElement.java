@@ -152,7 +152,7 @@ public class BaseCallableElement {
     this.deploymentId = deploymentId;
   }
 
-  public String getDefinitionTenantId(VariableScope variableScope, String defaultTenantId) {
+  public @Nullable String getDefinitionTenantId(VariableScope variableScope, @Nullable String defaultTenantId) {
     if (tenantIdProvider != null) {
       return (String) tenantIdProvider.getValue(variableScope);
     } else {

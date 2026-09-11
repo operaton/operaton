@@ -26,6 +26,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.QueryOperator;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
  * @author Sebastian Menski
  */
 @SuppressWarnings({"java:S1133", "java:S5738"}) // ORDER_BY will be removed
-public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
+public @NullMarked class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
   private static final JsonLegacyQueryOrderingPropertyConverter LEGACY_QUERY_ORDERING_PROPERTY_CONVERTER =
       new JsonLegacyQueryOrderingPropertyConverter();
 

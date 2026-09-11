@@ -26,6 +26,8 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tassilo Weidner
  */
@@ -82,23 +84,18 @@ public final class JsonUtil {
   public static <T> void addElement(@Nullable JsonArray jsonObject, @Nullable JsonObjectConverter<T> converter, @Nullable T value) {
     if (jsonObject != null && converter != null && value != null) {
       JsonObject jsonElement = converter.toJsonObject(value);
-
-      if (jsonElement != null) {
-        jsonObject.add(jsonElement);
-      }
+      jsonObject.add(jsonElement);
     }
   }
 
-  public static <T> void addListField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable JsonObjectConverter<T> converter, @Nullable List<T> list) {
+  public static <T> void addListField(@Nullable JsonObject jsonObject, @Nullable String name, @Nullable JsonObjectConverter<T> converter, @Nullable List<@Nullable T> list) {
     if (jsonObject != null && name != null && converter != null && list != null) {
       JsonArray arrayNode = createArray();
 
       for (T item : list) {
         if (item != null) {
           JsonObject jsonElement = converter.toJsonObject(item);
-          if (jsonElement != null) {
-            arrayNode.add(jsonElement);
-          }
+          arrayNode.add(jsonElement);
         }
       }
 
@@ -241,7 +238,6 @@ public final class JsonUtil {
       return Objects.requireNonNullElseGet(jsonObject, JsonUtil::createObject);
     } else {
       return createObject();
-
     }
   }
 
@@ -301,9 +297,7 @@ public final class JsonUtil {
       if (jsonObject != null) {
 
         T rawObject = converter.toObject(jsonObject);
-        if (rawObject != null) {
-          list.add(rawObject);
-        }
+        list.add(rawObject);
       }
     }
 
@@ -512,7 +506,7 @@ public final class JsonUtil {
     return rawObject;
   }
 
-  private static Number parseNumber(String numberString) {
+  private static @Nullable Number parseNumber(@Nullable String numberString) {
     if (numberString == null) {
       return null;
     }
@@ -555,14 +549,13 @@ public final class JsonUtil {
     }
   }
 
-  public static String getString(JsonObject json, String memberName) {
+  public static @Nullable String getString(JsonObject json, String memberName) {
     return getString(json, memberName, "");
   }
 
-  public static String getString(@Nullable JsonObject json, @Nullable String memberName, String defaultString) {
+  public static @Nullable String getString(@Nullable JsonObject json, @Nullable String memberName, @Nullable String defaultString) {
     if (json != null && memberName != null && json.has(memberName)) {
       return getString(json.get(memberName));
-
     } else {
       return defaultString;
 

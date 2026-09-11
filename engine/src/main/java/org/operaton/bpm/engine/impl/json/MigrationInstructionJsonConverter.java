@@ -18,11 +18,12 @@ package org.operaton.bpm.engine.impl.json;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.migration.MigrationInstructionImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 
-public class MigrationInstructionJsonConverter implements JsonObjectConverter<MigrationInstruction> {
+public @NullMarked class MigrationInstructionJsonConverter implements JsonObjectConverter<MigrationInstruction> {
 
   public static final String SOURCE_ACTIVITY_IDS = "sourceActivityIds";
   public static final String TARGET_ACTIVITY_IDS = "targetActivityIds";

@@ -96,7 +96,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
     return ancestorActivityInstanceId;
   }
 
-  public void setAncestorActivityInstanceId(String ancestorActivityInstanceId) {
+  public void setAncestorActivityInstanceId(@Nullable String ancestorActivityInstanceId) {
     this.ancestorActivityInstanceId = ancestorActivityInstanceId;
   }
 

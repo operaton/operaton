@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.variable.serializer;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class ByteArrayValueSerializer extends PrimitiveValueSerializer<BytesValue> {
+public @NullMarked class ByteArrayValueSerializer extends PrimitiveValueSerializer<BytesValue> {
 
   public ByteArrayValueSerializer() {
     super(ValueType.BYTES);

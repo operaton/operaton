@@ -24,6 +24,8 @@ import jakarta.enterprise.context.spi.CreationalContext;
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
@@ -34,11 +36,11 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
  * @author Daniel Meyer
  */
 @SuppressWarnings("unchecked")
-public class BusinessProcessContext implements Context {
+public @NullMarked class BusinessProcessContext implements Context {
 
   static final Logger logger = Logger.getLogger(BusinessProcessContext.class.getName());
 
-  protected BeanManager beanManager;
+  protected @Nullable BeanManager beanManager;
 
   public BusinessProcessContext() {
   }
@@ -57,14 +59,14 @@ public class BusinessProcessContext implements Context {
   }
 
   @Override
-  public <T> T get(Contextual<T> contextual) {
+  public <T> @Nullable T get(Contextual<T> contextual) {
     Bean<T> bean = (Bean<T>) contextual;
     String variableName = bean.getName();
 
     return get(variableName);
   }
 
-  protected <T> T get(String variableName) {
+  protected <T> @Nullable T get(String variableName) {
     BusinessProcess businessProcess = getBusinessProcess();
     Object variable = businessProcess.getVariable(variableName);
     if (variable != null) {
@@ -123,7 +125,7 @@ public class BusinessProcessContext implements Context {
     return true;
   }
 
-  protected BeanManager getBeanManager() {
+  protected @Nullable BeanManager getBeanManager() {
     return beanManager;
   }
 

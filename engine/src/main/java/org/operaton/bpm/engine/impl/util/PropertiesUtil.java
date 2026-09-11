@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 public final class PropertiesUtil {
 
-  protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
+  private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   private PropertiesUtil() {
   }

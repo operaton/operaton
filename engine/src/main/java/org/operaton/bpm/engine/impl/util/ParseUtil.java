@@ -36,7 +36,7 @@ public final class ParseUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  protected static final Pattern REGEX_TTL_ISO = Pattern.compile("^P(\\d+)D$");
+  private static final Pattern REGEX_TTL_ISO = Pattern.compile("^P(\\d+)D$");
 
   private ParseUtil() {
   }
@@ -53,7 +53,14 @@ public final class ParseUtil {
       if (matISO.find()) {
         historyTimeToLive = matISO.group(1);
       }
-      timeToLive = parseIntegerAttribute("historyTimeToLive", historyTimeToLive);
+      if (historyTimeToLive != null && !historyTimeToLive.isEmpty()) {
+        try {
+          timeToLive = Integer.parseInt(historyTimeToLive);
+        }
+        catch (NumberFormatException e) {
+          throw new ProcessEngineException("Cannot parse historyTimeToLive: %s".formatted(e.getMessage()));
+        }
+      }
     }
 
     if (timeToLive != null && timeToLive < 0) {
@@ -61,21 +68,6 @@ public final class ParseUtil {
     }
 
     return timeToLive;
-  }
-
-  protected static Integer parseIntegerAttribute(String attributeName, String text) {
-    Integer result = null;
-
-    if (text != null && !text.isEmpty()) {
-      try {
-        result = Integer.parseInt(text);
-      }
-      catch (NumberFormatException e) {
-        throw new ProcessEngineException("Cannot parse %s: %s".formatted(attributeName, e.getMessage()));
-      }
-    }
-
-    return result;
   }
 
   public static @Nullable FailedJobRetryConfiguration parseRetryIntervals(@Nullable String retryIntervals) {
@@ -109,11 +101,21 @@ public final class ParseUtil {
     }
   }
 
+  /**
+   * @deprecated There is no enterprise edition anymore. References to this class will be removed.
+   */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings({"java:S1133","java:S5738"})
   public static ProcessEngineDetails parseProcessEngineVersion(boolean trimSuffixEE) {
     String version = ProductPropertiesUtil.getProductVersion();
     return parseProcessEngineVersion(version, trimSuffixEE);
   }
 
+  /**
+   * @deprecated There is no enterprise edition anymore. References to this class will be removed.
+   */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings({"java:S1133","java:S5738"})
   public static ProcessEngineDetails parseProcessEngineVersion(String version, boolean trimSuffixEE) {
     String edition = ProcessEngineDetails.EDITION_COMMUNITY;
 

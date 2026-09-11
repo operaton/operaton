@@ -37,6 +37,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
@@ -77,6 +79,7 @@ public final class DecisionEvaluationUtil {
       @Nullable DecisionResultMapper decisionResultMapper) throws Exception {
 
     DecisionDefinition decisionDefinition = resolveDecisionDefinition(callableElement, execution, defaultTenantId);
+    EnsureUtil.ensureNotNull("No decision definition found for " + callableElement, "decisionDefinition", decisionDefinition);
     DecisionInvocation invocation = createInvocation(decisionDefinition, execution);
 
     invoke(invocation);
@@ -93,7 +96,7 @@ public final class DecisionEvaluationUtil {
     }
   }
 
-  public static DmnDecisionResult evaluateDecision(DecisionDefinition decisionDefinition, VariableMap variables) throws Exception {
+  public static @Nullable DmnDecisionResult evaluateDecision(DecisionDefinition decisionDefinition, VariableMap variables) throws Exception {
     DecisionInvocation invocation = createInvocation(decisionDefinition, variables);
     invoke(invocation);
     return invocation.getInvocationResult();
@@ -102,28 +105,30 @@ public final class DecisionEvaluationUtil {
   public static DmnDecisionTableResult evaluateDecisionTable(DecisionDefinition decisionDefinition, VariableMap variables) throws Exception {
     // doesn't throw an exception if the decision definition is not implemented as decision table
     DmnDecisionResult decisionResult = evaluateDecision(decisionDefinition, variables);
+    EnsureUtil.ensureNotNull(DECISION_RESULT_VARIABLE, decisionResult);
+    requireNonNull(decisionResult);
     return DmnDecisionTableResultImpl.wrap(decisionResult);
   }
 
-  protected static void invoke(DecisionInvocation invocation) throws Exception {
+  private static void invoke(DecisionInvocation invocation) throws Exception {
     Context.getProcessEngineConfiguration()
       .getDelegateInterceptor()
       .handleInvocation(invocation);
   }
 
-  protected static DecisionInvocation createInvocation(DecisionDefinition decisionDefinition, VariableMap variables) {
+  private static DecisionInvocation createInvocation(DecisionDefinition decisionDefinition, VariableMap variables) {
     return createInvocation(decisionDefinition, variables.asVariableContext());
   }
 
-  protected static DecisionInvocation createInvocation(DecisionDefinition decisionDefinition, AbstractVariableScope variableScope) {
+  private static DecisionInvocation createInvocation(DecisionDefinition decisionDefinition, AbstractVariableScope variableScope) {
     return createInvocation(decisionDefinition, VariableScopeContext.wrap(variableScope));
   }
 
-  protected static DecisionInvocation createInvocation(DecisionDefinition decisionDefinition, VariableContext variableContext) {
+  private static DecisionInvocation createInvocation(DecisionDefinition decisionDefinition, VariableContext variableContext) {
     return new DecisionInvocation(decisionDefinition, variableContext);
   }
 
-  protected static DecisionDefinition resolveDecisionDefinition(BaseCallableElement callableElement, AbstractVariableScope execution, String defaultTenantId) {
+  private static @Nullable DecisionDefinition resolveDecisionDefinition(BaseCallableElement callableElement, AbstractVariableScope execution, String defaultTenantId) {
     return CallableElementUtil.getDecisionDefinitionToCall(execution, defaultTenantId, callableElement);
   }
 }

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -37,22 +39,23 @@ import java.util.Objects;
  * @param <R>
  *          the type of the right element
  */
+// TODO Convert to record
 public class ImmutablePair<L, R> implements Entry<L, R>, Comparable<ImmutablePair<L, R>> {
 
-  protected L left;
-  protected R right;
+  private final @Nullable L left;
+  private final @Nullable R right;
 
   /**
    * @return the left element
    */
-  public L getLeft() {
+  public @Nullable L getLeft() {
     return left;
   }
 
   /**
    * @return the right element
    */
-  public R getRight() {
+  public @Nullable R getRight() {
     return right;
   }
 
@@ -64,18 +67,18 @@ public class ImmutablePair<L, R> implements Entry<L, R>, Comparable<ImmutablePai
    * @param right
    *          the right element
    */
-  public ImmutablePair(L left, R right) {
+  public ImmutablePair(@Nullable L left, @Nullable R right) {
     this.left = left;
     this.right = right;
   }
 
   @Override
-  public final L getKey() {
+  public final @Nullable L getKey() {
     return this.getLeft();
   }
 
   @Override
-  public R getValue() {
+  public @Nullable R getValue() {
     return this.getRight();
   }
 
@@ -86,7 +89,7 @@ public class ImmutablePair<L, R> implements Entry<L, R>, Comparable<ImmutablePai
    * @throws UnsupportedOperationException
    */
   @Override
-  public R setValue(R value) {
+  public @Nullable R setValue(@Nullable R value) {
     throw new UnsupportedOperationException("setValue not allowed for an ImmutablePair");
   }
 
@@ -94,13 +97,13 @@ public class ImmutablePair<L, R> implements Entry<L, R>, Comparable<ImmutablePai
    * Compares the pair based on the left element followed by the right element.
    * The types must be {@code Comparable}.
    *
-   * @param other
+   * @param o
    *          the other pair, not null
    * @return negative if this is less, zero if equal, positive if greater
    */
   @Override
   @SuppressWarnings("unchecked")
-  public int compareTo(ImmutablePair<L, R> o) {
+  public int compareTo(@Nullable ImmutablePair<L, R> o) {
     if (o == null) {
       throw new IllegalArgumentException("Pair to compare to must not be null");
     }
@@ -113,7 +116,7 @@ public class ImmutablePair<L, R> implements Entry<L, R>, Comparable<ImmutablePai
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  protected int compare(Comparable original, Comparable other) {
+  protected int compare(@Nullable Comparable original, @Nullable Comparable other) {
     if (original == other) {
       return 0;
     }

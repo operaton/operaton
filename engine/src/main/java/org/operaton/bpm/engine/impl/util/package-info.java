@@ -1,4 +1,6 @@
 /**
  * General-purpose utility classes for engine implementation.
  */
-package org.operaton.bpm.engine.impl.util;
+@NullMarked package org.operaton.bpm.engine.impl.util;
+
+import org.jspecify.annotations.NullMarked;

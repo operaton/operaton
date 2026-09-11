@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -59,7 +60,7 @@ public final class QueryMaxResultsLimitUtil {
     return userId != null && !userId.isEmpty();
   }
 
-  static String getAuthenticatedUserId(
+  static @Nullable String getAuthenticatedUserId(
       ProcessEngineConfigurationImpl processEngineConfig) {
     IdentityService identityService = processEngineConfig.getIdentityService();
     Authentication currentAuthentication = identityService.getCurrentAuthentication();

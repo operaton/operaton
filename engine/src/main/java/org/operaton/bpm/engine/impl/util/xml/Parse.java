@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.parsers.SAXParser;
 
@@ -41,6 +42,8 @@ import org.operaton.bpm.engine.impl.util.io.StringStreamSource;
 import org.operaton.bpm.engine.impl.util.io.UriStreamSource;
 import org.operaton.bpm.engine.impl.xml.ProblemImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  */
@@ -51,12 +54,12 @@ public abstract class Parse extends DefaultHandler {
   protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA = "http://javax.xml.XMLConstants/property/accessExternalSchema";
 
   protected Parser parser;
-  protected String name;
-  protected StreamSource streamSource;
-  protected Element rootElement;
+  protected @Nullable String name;
+  protected @Nullable StreamSource streamSource;
+  protected @Nullable Element rootElement;
   protected List<Problem> errors = new ArrayList<>();
   protected List<Problem> warnings = new ArrayList<>();
-  protected String schemaResource;
+  protected @Nullable String schemaResource;
 
   protected Parse(Parser parser) {
     this.parser = parser;
@@ -99,7 +102,7 @@ public abstract class Parse extends DefaultHandler {
     }
   }
 
-  public Parse sourceResource(String resource, ClassLoader classLoader) {
+  public Parse sourceResource(String resource, @Nullable ClassLoader classLoader) {
     if (name == null) {
       name(resource);
     }
@@ -128,13 +131,13 @@ public abstract class Parse extends DefaultHandler {
 
   public Parse execute() {
     try {
-      InputStream inputStream = streamSource.getInputStream();
+      InputStream inputStream = requireNonNull(streamSource).getInputStream();
 
       SAXParser saxParser = parser.getSaxParser(schemaResource);
       trySetAccessExternalSchema(saxParser);
       saxParser.parse(inputStream, new ParseHandler(this));
     } catch (Exception e) {
-      throw LOG.parsingFailureException(name, e);
+      throw LOG.parsingFailureException(name != null ? name : "unnamed", e);
     }
 
     return this;
@@ -153,7 +156,7 @@ public abstract class Parse extends DefaultHandler {
     return Parser.resolveAccessExternalSchemaProperty();
   }
 
-  public Element getRootElement() {
+  public @Nullable Element getRootElement() {
     return rootElement;
   }
 
@@ -165,11 +168,11 @@ public abstract class Parse extends DefaultHandler {
     errors.add(new ProblemImpl(e));
   }
 
-  public void addError(String errorMessage, Element element) {
+  public void addError(String errorMessage, @Nullable Element element) {
     errors.add(new ProblemImpl(errorMessage, element));
   }
 
-  public void addError(String errorMessage, Element element, String... elementIds) {
+  public void addError(String errorMessage, @Nullable Element element, String... elementIds) {
     errors.add(new ProblemImpl(errorMessage, element, elementIds));
   }
 
@@ -182,23 +185,23 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public boolean hasErrors() {
-    return errors != null && !errors.isEmpty();
+    return !errors.isEmpty();
   }
 
   public void addWarning(SAXParseException e) {
     warnings.add(new ProblemImpl(e));
   }
 
-  public void addWarning(String errorMessage, Element element) {
+  public void addWarning(String errorMessage, @Nullable Element element) {
     warnings.add(new ProblemImpl(errorMessage, element));
   }
 
-  public void addWarning(String errorMessage, Element element, String... elementIds) {
+  public void addWarning(String errorMessage, @Nullable Element element, String... elementIds) {
     warnings.add(new ProblemImpl(errorMessage, element, elementIds));
   }
 
   public boolean hasWarnings() {
-    return warnings != null && !warnings.isEmpty();
+    return !warnings.isEmpty();
   }
 
   public void logWarnings() {
@@ -220,6 +223,6 @@ public abstract class Parse extends DefaultHandler {
       strb.append(" | resource ").append(name);
       strb.append(error);
     }
-    throw LOG.exceptionDuringParsing(strb.toString(), name, errors, warnings);
+    throw LOG.exceptionDuringParsing(strb.toString(), name != null ? name : "unnamed", errors, warnings);
   }
 }

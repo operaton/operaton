@@ -163,7 +163,7 @@ public final class StringUtil {
    * @param string the input that might be trimmed if maximum length is exceeded
    * @return the input, eventually trimmed to {@link #DB_MAX_STRING_LENGTH}
    */
-  public static String trimToMaximumLengthAllowed(@Nullable String string) {
+  public static @Nullable String trimToMaximumLengthAllowed(@Nullable String string) {
     if (string != null && string.length() > DB_MAX_STRING_LENGTH) {
       return string.substring(0, DB_MAX_STRING_LENGTH);
     }
@@ -183,7 +183,7 @@ public final class StringUtil {
    * @param string the String to check.
    * @return a boolean <code>TRUE</code> if the String is not null and not empty. <code>FALSE</code> otherwise.
    */
-  public static boolean hasText(String string) {
+  public static boolean hasText(@Nullable String string) {
     return string != null && !string.isEmpty();
   }
 

@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -95,12 +96,12 @@ public final class ReflectUtil {
     }
 
     if (clazz == null) {
-      throw LOG.classLoadingException(className, throwable);
+      throw LOG.classLoadingException(className, requireNonNull(throwable));
     }
     return clazz;
   }
 
-  private static Class<?> loadClassFromClassLoader(String className, ClassLoader classLoader, String description) throws ClassNotFoundException {
+  private static @Nullable Class<?> loadClassFromClassLoader(String className, @Nullable ClassLoader classLoader, String description) throws ClassNotFoundException {
     if (classLoader == null) {
       return null;
     }
@@ -117,7 +118,7 @@ public final class ReflectUtil {
     }
   }
 
-  public static InputStream getResourceAsStream(String name) {
+  public static @Nullable InputStream getResourceAsStream(String name) {
     InputStream resourceStream = null;
     ClassLoader classLoader = getCustomClassLoader();
     if(classLoader != null) {
@@ -137,7 +138,7 @@ public final class ReflectUtil {
     return resourceStream;
    }
 
-  public static URL getResource(String name) {
+  public static @Nullable URL getResource(String name) {
     URL url = null;
     ClassLoader classLoader = getCustomClassLoader();
     if(classLoader != null) {
@@ -157,8 +158,12 @@ public final class ReflectUtil {
     return url;
    }
 
-  public static String getResourceUrlAsString(String name) {
-    String url = getResource(name).toString();
+  public static @Nullable String getResourceUrlAsString(String name) {
+    URL resource = getResource(name);
+    if (resource == null) {
+      return null;
+    }
+    String url = resource.toString();
     for (Map.Entry<String, String> mapping : charEncodings.entrySet()) {
       url = url.replaceAll(mapping.getKey(), mapping.getValue());
     }
@@ -209,6 +214,7 @@ public final class ReflectUtil {
     try {
       Class<?> clazz = target.getClass();
       Method method = findMethod(clazz, methodName, Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new));
+      requireNonNull(method, "couldn't find method '%s' on class '%s' with args %s".formatted(methodName, clazz.getName(), Arrays.asList(args)));
       method.setAccessible(true);
       return method.invoke(target, args);
     }
@@ -233,7 +239,7 @@ public final class ReflectUtil {
       field = clazz.getDeclaredField(fieldName);
     }
     catch (SecurityException e) {
-      throw LOG.unableToAccessField(field, clazz.getName());
+      throw LOG.unableToAccessField(fieldName, clazz.getName());
     }
     catch (NoSuchFieldException e) {
       // for some reason getDeclaredFields doesn't search superclasses
@@ -356,7 +362,7 @@ public final class ReflectUtil {
         fieldName.substring(1);
   }
 
-  private static Method findMethod(Class<? extends Object> clazz, String methodName, Class< ? >[] args) {
+  private static @Nullable Method findMethod(Class<? extends Object> clazz, String methodName, Class< ? >[] args) {
     for (Method method : clazz.getDeclaredMethods()) {
       if ( method.getName().equals(methodName)
            && matches(method.getParameterTypes(), args)
@@ -383,7 +389,7 @@ public final class ReflectUtil {
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  private static <T> Constructor<T> findMatchingConstructor(Class<T> clazz, Object[] args) {
+  private static <T> @Nullable Constructor<T> findMatchingConstructor(Class<T> clazz, Object[] args) {
     for (Constructor constructor: clazz.getDeclaredConstructors()) { // cannot use <?> or <T> due to JDK 5/6 incompatibility
       if (matches(constructor.getParameterTypes(), Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new))){
         return constructor;
@@ -392,29 +398,23 @@ public final class ReflectUtil {
     return null;
   }
 
-  private static boolean matches(Class< ? >[] parameterTypes, Class< ? >[] args) {
-    if ( parameterTypes==null
-         || parameterTypes.length==0
-       ) {
-      return args==null
-               || args.length==0;
+  @SuppressWarnings("java:S2589")
+  private static boolean matches(@Nullable Class<?>[] parameterTypes, @Nullable Class<?>[] args) {
+    if (parameterTypes==null || parameterTypes.length==0) {
+      return args==null || args.length==0;
     }
-    if ( args==null
-         || parameterTypes.length!=args.length
-       ) {
+    if (args==null || parameterTypes.length!=args.length) {
       return false;
     }
     for (int i=0; i<parameterTypes.length; i++) {
-      if ( args[i]!=null
-           && ! parameterTypes[i].isAssignableFrom(args[i])
-         ) {
+      if (args[i]!=null && ! parameterTypes[i].isAssignableFrom(args[i])) {
         return false;
       }
     }
     return true;
   }
 
-  private static ClassLoader getCustomClassLoader() {
+  private static @Nullable ClassLoader getCustomClassLoader() {
     Optional<ProcessEngineConfigurationImpl> processEngineConfiguration = Context.findProcessEngineConfiguration();
     if(processEngineConfiguration.isPresent()) {
       final ClassLoader classLoader = processEngineConfiguration.get().getClassLoader();
@@ -432,7 +432,7 @@ public final class ReflectUtil {
    * @param methodName the name of the method to look for
    * @param parameterTypes the types of the parameters
    */
-  public static Method getMethod(Class<?> declaringType, String methodName, Class<?>... parameterTypes) {
+  public static @Nullable Method getMethod(Class<?> declaringType, String methodName, Class<?>... parameterTypes) {
     return findMethod(declaringType, methodName, parameterTypes);
   }
 }

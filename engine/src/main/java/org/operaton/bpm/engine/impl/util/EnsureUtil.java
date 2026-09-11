@@ -33,8 +33,6 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * @author Sebastian Menski
  * @author Roman Smirnov
@@ -64,7 +62,6 @@ public final @NullMarked class EnsureUtil {
     if (value == null) {
       throw generateException(exceptionClass, message, variableName, "is null");
     }
-    requireNonNull(value); // to help static null analysis
   }
 
   public static void ensureNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, @Nullable Object value) {
@@ -308,6 +305,9 @@ public final @NullMarked class EnsureUtil {
     throw generateException(exceptionClass, null, null, message);
   }
 
+  /** @deprecated unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public static void ensureAtLeastOneNotEmpty(String message, @Nullable String @Nullable... values) {
     ensureAtLeastOneNotEmpty(ProcessEngineException.class, message, values);
   }

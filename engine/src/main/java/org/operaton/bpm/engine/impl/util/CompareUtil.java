@@ -23,6 +23,8 @@ import java.util.List;
 
 import org.jspecify.annotations.Nullable;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Util class for comparisons.
  *
@@ -46,7 +48,7 @@ public final class CompareUtil {
    * @param <T> the type of the comparable
    * @return {@code false} if the not null values are in an ascending order or all the values are null, {@code true} otherwise
    */
-  public static <T extends Comparable<T>> boolean areNotInAscendingOrder(@Nullable T... values) {
+  public static <T extends Comparable<T>> boolean areNotInAscendingOrder(@Nullable T @Nullable... values) {
     boolean excluding = false;
     if (values != null) {
       excluding = areNotInAscendingOrder(Arrays.asList(values));
@@ -67,14 +69,14 @@ public final class CompareUtil {
    * @param <T> the type of the comparable
    * @return {@code false} if the not null values are in an ascending order or all the values are null, {@code true} otherwise
    */
-  public static <T extends Comparable<T>> boolean areNotInAscendingOrder(List<T> values) {
+  public static <T extends Comparable<T>> boolean areNotInAscendingOrder(List<@Nullable T> values) {
 
     int lastNotNull = -1;
     for (int i = 0; i < values.size(); i++) {
       T value = values.get(i);
 
       if (value != null) {
-        if (lastNotNull != -1 && values.get(lastNotNull).compareTo(value) > 0) {
+        if (lastNotNull != -1 && values.get(lastNotNull) != null && requireNonNull(values.get(lastNotNull)).compareTo(value) > 0) {
           return true;
         }
 
@@ -110,7 +112,7 @@ public final class CompareUtil {
    * @param <T> the type of the element
    * @return {@code true} if the element and values are not {@code null} and the values does not contain the element, {@code false} otherwise
    */
-  public static <T> boolean elementIsNotContainedInArray(@Nullable T element, @Nullable T... values) {
+  public static <T> boolean elementIsNotContainedInArray(@Nullable T element, @Nullable T @Nullable... values) {
     if (element != null && values != null) {
       return elementIsNotContainedInList(element, Arrays.asList(values));
     }
@@ -146,7 +148,7 @@ public final class CompareUtil {
    * @return {@code true} if the element and values are not {@code null} and the values contain the element,
    *   {@code false} otherwise
    */
-  public static <T> boolean elementIsContainedInArray(@Nullable T element, @Nullable T... values) {
+  public static <T> boolean elementIsContainedInArray(@Nullable T element, @Nullable T @Nullable... values) {
     if (element != null && values != null) {
       return elementIsContainedInList(element, Arrays.asList(values));
     }

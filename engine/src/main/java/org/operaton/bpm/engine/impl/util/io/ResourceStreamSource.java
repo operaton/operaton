@@ -18,8 +18,10 @@ package org.operaton.bpm.engine.impl.util.io;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
@@ -29,9 +31,9 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 public class ResourceStreamSource implements StreamSource {
 
   String resource;
-  ClassLoader classLoader;
+  @Nullable ClassLoader classLoader;
 
-  public ResourceStreamSource(String resource, ClassLoader classLoader) {
+  public ResourceStreamSource(String resource, @Nullable ClassLoader classLoader) {
     this.resource = resource;
     this.classLoader = classLoader;
   }
@@ -45,6 +47,7 @@ public class ResourceStreamSource implements StreamSource {
       inputStream = classLoader.getResourceAsStream(resource);
     }
     ensureNotNull("resource '%s' doesn't exist".formatted(resource), "inputStream", inputStream);
+    requireNonNull(inputStream);
     return inputStream;
   }
 

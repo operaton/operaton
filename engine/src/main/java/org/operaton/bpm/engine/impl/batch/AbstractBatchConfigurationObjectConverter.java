@@ -18,10 +18,11 @@ package org.operaton.bpm.engine.impl.batch;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public abstract class AbstractBatchConfigurationObjectConverter<T extends BatchConfiguration> implements JsonObjectConverter<T> {
+public abstract @NullMarked class AbstractBatchConfigurationObjectConverter<T extends BatchConfiguration> implements JsonObjectConverter<T> {
 
   protected static final String BATCH_ID = "batchId";
 

@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  * @author Philipp Ossler
  *
  */
-public class Properties {
+public @NullMarked class Properties {
 
   protected final Map<String, Object> properties;
 
@@ -52,7 +54,7 @@ public class Properties {
    *         <code>null</code> if this properties contains no mapping for the property key
    */
   @SuppressWarnings("unchecked")
-  public <T> T get(PropertyKey<T> property) {
+  public <T> @Nullable T get(PropertyKey<T> property) {
     return (T) properties.get(property.name());
   }
 

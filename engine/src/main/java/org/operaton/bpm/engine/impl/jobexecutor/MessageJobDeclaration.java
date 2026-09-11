@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.AtomicOperationInvocation;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.AtomicOperation;
  * @author Daniel Meyer
  *
  */
-public class MessageJobDeclaration extends JobDeclaration<AtomicOperationInvocation, MessageEntity> {
+public @NullMarked class MessageJobDeclaration extends JobDeclaration<AtomicOperationInvocation, MessageEntity> {
 
   public static final String ASYNC_BEFORE = "async-before";
   public static final String ASYNC_AFTER = "async-after";

@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.tree;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * A visitor for {@link SingleReferenceWalker}.
  *
  * @author Thorben Lindhauer
  *
  */
-public interface TreeVisitor<T> {
+public @NullMarked interface TreeVisitor<T> {
 
   /**
    * Invoked for a node in tree.

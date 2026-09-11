@@ -80,8 +80,8 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
   protected static final PropertyMapKey<String, List<JobDeclaration<?, ?>>> JOB_DECLARATIONS_PROPERTY =
       new PropertyMapKey<>("JOB_DECLARATIONS_PROPERTY");
 
-  protected ExpressionManager expressionManager;
-  protected BpmnParser bpmnParser;
+  protected @Nullable ExpressionManager expressionManager;
+  protected @Nullable BpmnParser bpmnParser;
 
   /** <!> DON'T KEEP DEPLOYMENT-SPECIFIC STATE <!> **/
 
@@ -395,7 +395,6 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
 
   enum ExprType {
 	  USER, GROUP
-
   }
 
   protected void addAuthorizationsFromIterator(Set<Expression> exprSet, ProcessDefinitionEntity processDefinition, ExprType exprType) {
@@ -442,7 +441,7 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
 
   // getters/setters ///////////////////////////////////////////////////////////////////////////////////
 
-  public ExpressionManager getExpressionManager() {
+  public @Nullable ExpressionManager getExpressionManager() {
     return expressionManager;
   }
 
@@ -450,7 +449,7 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
     this.expressionManager = expressionManager;
   }
 
-  public BpmnParser getBpmnParser() {
+  public @Nullable BpmnParser getBpmnParser() {
     return bpmnParser;
   }
 

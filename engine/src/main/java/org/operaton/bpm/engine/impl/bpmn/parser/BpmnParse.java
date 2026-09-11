@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ActivityTypes;
 
 import org.jspecify.annotations.Nullable;
@@ -190,7 +191,7 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDel
  * @author Ingo Richtsmeier
  */
 @SuppressWarnings({"java:S3776", "java:S6541"}) // this class is complex by its nature
-public class BpmnParse extends Parse {
+public @NullMarked class BpmnParse extends Parse {
 
   public static final String MULTI_INSTANCE_BODY_ID_SUFFIX = "#multiInstanceBody";
 

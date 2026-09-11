@@ -19,26 +19,31 @@ package org.operaton.bpm.engine.impl.migration.instance;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.migration.MigrationLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigratingTransitionInstance extends MigratingProcessElementInstance implements MigratingInstance {
+public @NullMarked class MigratingTransitionInstance extends MigratingProcessElementInstance implements MigratingInstance {
 
   public static final MigrationLogger MIGRATION_LOGGER = ProcessEngineLogger.MIGRATION_LOGGER;
 
   protected ExecutionEntity representativeExecution;
 
   protected TransitionInstance transitionInstance;
-  protected MigratingAsyncJobInstance jobInstance;
+  protected @Nullable MigratingAsyncJobInstance jobInstance;
   protected List<MigratingInstance> migratingDependentInstances = new ArrayList<>();
   protected boolean activeState;
 
@@ -60,11 +65,11 @@ public class MigratingTransitionInstance extends MigratingProcessElementInstance
 
   @Override
   public boolean isDetached() {
-    return jobInstance.isDetached();
+    return getJobInstance().isDetached();
   }
 
   @Override
-  public MigratingActivityInstance getParent() {
+  public @Nullable MigratingActivityInstance getParent() {
     return (MigratingActivityInstance) super.getParent();
   }
 
@@ -116,7 +121,6 @@ public class MigratingTransitionInstance extends MigratingProcessElementInstance
 
   @Override
   public void attachState(MigratingTransitionInstance targetTransitionInstance) {
-
     throw MIGRATION_LOGGER.cannotAttachToTransitionInstance(this);
   }
 
@@ -143,8 +147,8 @@ public class MigratingTransitionInstance extends MigratingProcessElementInstance
 
   @Override
   public void migrateDependentEntities() {
-    jobInstance.migrateState();
-    jobInstance.migrateDependentEntities();
+    getJobInstance().migrateState();
+    getJobInstance().migrateDependentEntities();
 
     for (MigratingInstance dependentInstance : migratingDependentInstances) {
       dependentInstance.migrateState();
@@ -160,19 +164,21 @@ public class MigratingTransitionInstance extends MigratingProcessElementInstance
    * Else asyncBefore
    */
   public boolean isAsyncAfter() {
-    return jobInstance.isAsyncAfter();
+    return ((MigratingAsyncJobInstance) getJobInstance()).isAsyncAfter();
   }
 
   public boolean isAsyncBefore() {
-    return jobInstance.isAsyncBefore();
+    return ((MigratingAsyncJobInstance) getJobInstance()).isAsyncBefore();
   }
 
   public MigratingJobInstance getJobInstance() {
+    EnsureUtil.ensureNotNull("jobInstance", jobInstance);
+    requireNonNull(jobInstance);
     return jobInstance;
   }
 
   @Override
-  public void setParent(MigratingScopeInstance parentInstance) {
+  public void setParent(@Nullable MigratingScopeInstance parentInstance) {
     if (parentInstance != null && !(parentInstance instanceof MigratingActivityInstance)) {
       throw MIGRATION_LOGGER.cannotHandleChild(parentInstance, this);
     }

@@ -20,13 +20,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class ExecutionTopDownWalker extends ReferenceWalker<ExecutionEntity> {
+public @NullMarked class ExecutionTopDownWalker extends ReferenceWalker<ExecutionEntity> {
 
   public ExecutionTopDownWalker(ExecutionEntity initialElement) {
     super(initialElement);
@@ -38,7 +39,8 @@ public class ExecutionTopDownWalker extends ReferenceWalker<ExecutionEntity> {
 
   @Override
   protected Collection<ExecutionEntity> nextElements() {
-    List<ExecutionEntity> executions = getCurrentElement().getExecutions();
+    ExecutionEntity currentElement = getCurrentElement();
+    List<ExecutionEntity> executions = currentElement != null ? currentElement.getExecutions() : null;
     if (executions == null) {
       executions = new ArrayList<>();
     }

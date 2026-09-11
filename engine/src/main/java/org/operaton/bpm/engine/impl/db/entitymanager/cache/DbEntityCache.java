@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -43,7 +44,7 @@ import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.
  * @author Daniel Meyer
  *
  */
-public class DbEntityCache {
+public @NullMarked class DbEntityCache {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -278,7 +279,7 @@ public class DbEntityCache {
   /**
    * Remove an entity from the cache
    * @param e the entity to remove
-   * @return
+   * @return true if the entity was present in the cache and removed, false otherwise
    */
   public boolean remove(DbEntity e) {
     Class<?> cacheKey = cacheKeyMapping.getEntityCacheKey(e.getClass());
@@ -291,7 +292,7 @@ public class DbEntityCache {
   }
 
   /**
-   * @param cachedDbEntity
+   * @param cachedDbEntity the cached entity to remove
    */
   public void remove(CachedDbEntity cachedDbEntity) {
     remove(cachedDbEntity.getEntity());
@@ -398,6 +399,9 @@ public class DbEntityCache {
 
   public void undoDelete(DbEntity dbEntity) {
     CachedDbEntity cachedEntity = getCachedEntity(dbEntity);
+    if (cachedEntity == null) {
+      return;
+    }
     if (cachedEntity.getEntityState() == DbEntityState.DELETED_TRANSIENT) {
       cachedEntity.setEntityState(DbEntityState.TRANSIENT);
     }

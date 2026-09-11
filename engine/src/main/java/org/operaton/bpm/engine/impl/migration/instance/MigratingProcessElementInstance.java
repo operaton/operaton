@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
@@ -24,34 +26,34 @@ import org.operaton.bpm.engine.migration.MigrationInstruction;
  * @author Thorben Lindhauer
  *
  */
-public abstract class MigratingProcessElementInstance implements MigratingInstance {
+public @NullMarked abstract class MigratingProcessElementInstance implements MigratingInstance {
 
-  protected MigrationInstruction migrationInstruction;
+  protected @Nullable MigrationInstruction migrationInstruction;
 
-  protected ScopeImpl sourceScope;
-  protected ScopeImpl targetScope;
+  protected @Nullable ScopeImpl sourceScope;
+  protected @Nullable ScopeImpl targetScope;
   // changes from source to target scope during migration
-  protected ScopeImpl currentScope;
+  protected @Nullable ScopeImpl currentScope;
 
-  protected MigratingScopeInstance parentInstance;
+  protected @Nullable MigratingScopeInstance parentInstance;
 
-  public ScopeImpl getSourceScope() {
+  public @Nullable ScopeImpl getSourceScope() {
     return sourceScope;
   }
 
-  public ScopeImpl getTargetScope() {
+  public @Nullable ScopeImpl getTargetScope() {
     return targetScope;
   }
 
-  public ScopeImpl getCurrentScope() {
+  public @Nullable ScopeImpl getCurrentScope() {
     return currentScope;
   }
 
-  public MigrationInstruction getMigrationInstruction() {
+  public @Nullable MigrationInstruction getMigrationInstruction() {
     return migrationInstruction;
   }
 
-  public MigratingScopeInstance getParent() {
+  public @Nullable MigratingScopeInstance getParent() {
     return parentInstance;
   }
 
@@ -59,16 +61,16 @@ public abstract class MigratingProcessElementInstance implements MigratingInstan
     return other == targetScope;
   }
 
-  public abstract void setParent(MigratingScopeInstance parentInstance);
+  public abstract void setParent(@Nullable MigratingScopeInstance parentInstance);
 
   public abstract void addMigratingDependentInstance(MigratingInstance migratingInstance);
 
   public abstract ExecutionEntity resolveRepresentativeExecution();
 
-  public MigratingActivityInstance getClosestAncestorActivityInstance() {
+  public @Nullable MigratingActivityInstance getClosestAncestorActivityInstance() {
     MigratingScopeInstance ancestorInstance = parentInstance;
 
-    while (!(ancestorInstance instanceof MigratingActivityInstance)) {
+    while (ancestorInstance != null && !(ancestorInstance instanceof MigratingActivityInstance)) {
       ancestorInstance = ancestorInstance.getParent();
     }
 

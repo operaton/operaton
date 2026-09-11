@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.xml.Model;
 
 import org.jspecify.annotations.Nullable;
@@ -39,13 +40,15 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.Reference;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Base class for implementing Model Elements.
  *
  * @author Daniel Meyer
  *
  */
-public class ModelElementInstanceImpl implements ModelElementInstance {
+public @NullMarked class ModelElementInstanceImpl implements ModelElementInstance {
 
   /** the containing model instance */
   protected final ModelInstanceImpl modelInstance;
@@ -94,12 +97,12 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public String getAttributeValue(String attributeName) {
+  public @Nullable String getAttributeValue(String attributeName) {
     return domElement.getAttribute(attributeName);
   }
 
   @Override
-  public String getAttributeValueNs(String namespaceUri, String attributeName) {
+  public @Nullable String getAttributeValueNs(String namespaceUri, String attributeName) {
     return domElement.getAttribute(namespaceUri, attributeName);
   }
 
@@ -335,7 +338,9 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> Collection<T> getChildElementsByType(Class<T> childElementClass) {
-    return (Collection<T>) getChildElementsByType(getModelInstance().getModel().getType(childElementClass));
+    ModelElementType type = getModelInstance().getModel().getType(childElementClass);
+    requireNonNull(type);
+    return (Collection<T>) getChildElementsByType(type);
   }
 
   /**
@@ -344,7 +349,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
    * @param elementToInsert  the new element to insert
    * @return the element to insert after or null
    */
-  private ModelElementInstance findElementToInsertAfter(ModelElementInstance elementToInsert) {
+  private @Nullable ModelElementInstance findElementToInsertAfter(ModelElementInstance elementToInsert) {
     List<ModelElementType> childElementTypes = elementType.getAllChildElementTypes();
     List<DomElement> childDomElements = domElement.getChildElements();
     Collection<ModelElementInstance> childElements = ModelUtil.getModelElementCollection(childDomElements, modelInstance);
@@ -364,7 +369,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   @Override
-  public void insertElementAfter(ModelElementInstance elementToInsert, ModelElementInstance insertAfterElement) {
+  public void insertElementAfter(ModelElementInstance elementToInsert, @Nullable ModelElementInstance insertAfterElement) {
     if (insertAfterElement == null || insertAfterElement.getDomElement() == null) {
       domElement.insertChildElementAfter(elementToInsert.getDomElement(), null);
     }
@@ -404,7 +409,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
-  protected <T> Set<T> asSet(T element, Set<T> elements){
+  protected <T> Set<T> asSet(T element, @Nullable Set<T> elements){
     Set<T> result = new HashSet<>();
     result.add(element);
 

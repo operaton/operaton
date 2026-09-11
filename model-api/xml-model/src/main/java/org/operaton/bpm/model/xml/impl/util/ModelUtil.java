@@ -18,6 +18,7 @@ package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -35,7 +36,7 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
  * @author Daniel Meyer
  *
  */
-public final class ModelUtil {
+public final @NullMarked class ModelUtil {
 
   private static final String ID_ATTRIBUTE_NAME = "id";
 
@@ -78,7 +79,7 @@ public final class ModelUtil {
     return modelElement;
   }
 
-  protected static ModelElementTypeImpl getModelElement(DomElement domElement, ModelInstanceImpl modelInstance, String namespaceUri) {
+  private static ModelElementTypeImpl getModelElement(DomElement domElement, ModelInstanceImpl modelInstance, String namespaceUri) {
     String localName = domElement.getLocalName();
     ModelElementTypeImpl modelType = (ModelElementTypeImpl) modelInstance.getModel().getTypeForName(namespaceUri, localName);
 
@@ -216,7 +217,9 @@ public final class ModelUtil {
     Set<ModelElementType> allExtendingTypes = new HashSet<>();
     for (ModelElementType baseType : baseTypes) {
       ModelElementTypeImpl modelElementTypeImpl = (ModelElementTypeImpl) model.getType(baseType.getInstanceType());
-      modelElementTypeImpl.resolveExtendingTypes(allExtendingTypes);
+      if (modelElementTypeImpl != null) {
+        modelElementTypeImpl.resolveExtendingTypes(allExtendingTypes);
+      }
     }
     return allExtendingTypes;
   }

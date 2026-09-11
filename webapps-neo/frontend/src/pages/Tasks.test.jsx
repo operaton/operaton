@@ -311,6 +311,9 @@ describe("TasksPage", () => {
     };
 
     it("claims the task via claim_task", () => {
+      engine_rest.task.claim_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
       signal_response(state.api.task.one, sample_task({ assignee: null }));
       const { getByText, container } = renderDetail();
       open_assignee_dialog(container);
@@ -320,7 +323,113 @@ describe("TasksPage", () => {
       expect(engine_rest.task.claim_task.mock.lastCall[1]).toBe("t1");
     });
 
+    it("assigns the task to the user typed into the dialog", async () => {
+      engine_rest.user.find.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: [{ id: "bob" }],
+      });
+      engine_rest.task.assign_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+
+      const input = container.querySelector("#assignee-input");
+      fireEvent.input(input, { target: { value: " bob " } });
+      fireEvent.click(getByText("tasks.assign"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.assign_task).toHaveBeenCalled(),
+      );
+      const [call_state, assignee, task_id] =
+        engine_rest.task.assign_task.mock.lastCall;
+      expect(call_state).toBe(state);
+      expect(assignee).toBe("bob");
+      expect(task_id).toBe("t1");
+    });
+
+    it("refuses an id the engine does not know and says so", async () => {
+      // The lookup answers empty both when the user does not exist and when the
+      // caller may not read them; either way the task must not be handed over.
+      engine_rest.user.find.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: [],
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+
+      fireEvent.input(container.querySelector("#assignee-input"), {
+        target: { value: "no-such-user" },
+      });
+      fireEvent.click(getByText("tasks.assign"));
+
+      await vi.waitFor(() =>
+        expect(getByText("tasks.assign-unknown-user")).toBeTruthy(),
+      );
+      expect(engine_rest.task.assign_task).not.toHaveBeenCalled();
+    });
+
+    it("clears the unknown-id message once the field is edited again", async () => {
+      engine_rest.user.find.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: [],
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, queryByText, container } = renderDetail();
+      open_assignee_dialog(container);
+      const input = container.querySelector("#assignee-input");
+
+      fireEvent.input(input, { target: { value: "no-such-user" } });
+      fireEvent.click(getByText("tasks.assign"));
+      await vi.waitFor(() =>
+        expect(getByText("tasks.assign-unknown-user")).toBeTruthy(),
+      );
+
+      fireEvent.input(input, { target: { value: "gibtsnich" } });
+      expect(queryByText("tasks.assign-unknown-user")).toBeNull();
+    });
+
+    it("does not assign when no user was typed", () => {
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+      expect(getByText("tasks.assign").disabled).toBe(true);
+    });
+
+    it("re-reads the task after claiming, so the dialog stops showing the old state", async () => {
+      engine_rest.task.claim_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+      engine_rest.task.get_task.mockClear();
+
+      fireEvent.click(getByText("tasks.claim"));
+      await vi.waitFor(() => expect(engine_rest.task.get_task).toHaveBeenCalled());
+      expect(engine_rest.task.get_task.mock.lastCall[1]).toBe("t1");
+    });
+
+    it("leaves the dialog alone when the action failed", async () => {
+      engine_rest.task.claim_task.mockResolvedValue({
+        status: RESPONSE_STATE.ERROR,
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+      engine_rest.task.get_task.mockClear();
+
+      fireEvent.click(getByText("tasks.claim"));
+      await new Promise((r) => setTimeout(r, 0));
+      expect(engine_rest.task.get_task).not.toHaveBeenCalled();
+    });
+
     it("resets a foreign assignee via assign_task", () => {
+      engine_rest.task.assign_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
       signal_response(state.api.task.one, sample_task({ assignee: "someone" }));
       const { getByText, container } = renderDetail();
       open_assignee_dialog(container);

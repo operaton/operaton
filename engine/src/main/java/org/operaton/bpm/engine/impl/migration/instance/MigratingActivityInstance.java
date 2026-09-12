@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.migration.instance;
 
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -35,18 +37,21 @@ import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.MigrationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ModificationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigratingActivityInstance extends MigratingScopeInstance implements MigratingInstance {
+public @NullMarked class MigratingActivityInstance extends MigratingScopeInstance implements MigratingInstance {
 
   public static final MigrationLogger MIGRATION_LOGGER = ProcessEngineLogger.MIGRATION_LOGGER;
 
-  protected ActivityInstance activityInstance;
+  protected @Nullable ActivityInstance activityInstance;
   // scope execution for actual scopes,
   // concurrent execution in case of non-scope activity with expanded tree
   protected ExecutionEntity representativeExecution;
@@ -398,7 +403,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
   }
 
   @Override
-  public void setParent(MigratingScopeInstance parentInstance) {
+  public void setParent(@Nullable MigratingScopeInstance parentInstance) {
     if (this.parentInstance != null) {
       this.parentInstance.removeChild(this);
     }
@@ -454,13 +459,15 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
       representativeExecution = getParent().createAttachableExecution();
 
       representativeExecution.setActivity((PvmActivity) sourceScope);
-      representativeExecution.setActivityInstanceId(activityInstance.getId());
+      representativeExecution.setActivityInstanceId(requireNonNull(activityInstance).getId());
       representativeExecution.setActive(activeState);
 
     }
 
     @Override
     public void migrateState() {
+      EnsureUtil.ensureNotNull("targetScope", targetScope);
+      requireNonNull(targetScope);
       ExecutionEntity currentExecution = resolveRepresentativeExecution();
       currentExecution.setProcessDefinition(targetScope.getProcessDefinition());
       currentExecution.setActivity((PvmActivity) targetScope);
@@ -483,6 +490,8 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
 
       currentExecution = currentExecution.createExecution();
       ExecutionEntity parent = currentExecution.getParent();
+      EnsureUtil.ensureNotNull("parent", parent);
+      requireNonNull(parent);
       parent.setActivity(null);
 
       if (!parent.isConcurrent()) {
@@ -518,7 +527,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     }
 
     @Override
-    public void destroyAttachableExecution(ExecutionEntity execution) {
+    public void destroyAttachableExecution(@Nullable ExecutionEntity execution) {
       throw MIGRATION_LOGGER.cannotDestroySubordinateInNonScope(MigratingActivityInstance.this);
     }
   }
@@ -538,6 +547,8 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
 
       ExecutionEntity parentExecution = currentScopeExecution.getParent();
       currentScopeExecution.setParent(null);
+      EnsureUtil.ensureNotNull("parentExecution", parentExecution);
+      requireNonNull(parentExecution);
 
       if (sourceScope.getActivityBehavior() instanceof CompositeActivityBehavior) {
         parentExecution.leaveActivityInstance();

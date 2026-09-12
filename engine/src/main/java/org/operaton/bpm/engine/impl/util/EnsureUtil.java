@@ -33,6 +33,8 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Sebastian Menski
  * @author Roman Smirnov
@@ -123,6 +125,7 @@ public final @NullMarked class EnsureUtil {
 
   public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable String value) {
     ensureNotNull(exceptionClass, message, variableName, value);
+    requireNonNull(value);
     if (value.trim().isEmpty()) {
       throw generateException(exceptionClass, message, variableName, "is empty");
     }
@@ -146,6 +149,7 @@ public final @NullMarked class EnsureUtil {
   @SuppressWarnings("rawtypes")
   public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Collection collection) {
     ensureNotNull(exceptionClass, message, variableName, collection);
+    requireNonNull(collection);
     if (collection.isEmpty()) {
       throw generateException(exceptionClass, message, variableName, "is empty");
     }
@@ -177,6 +181,7 @@ public final @NullMarked class EnsureUtil {
   @SuppressWarnings("rawtypes")
   public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Map map) {
     ensureNotNull(exceptionClass, message, variableName, map);
+    requireNonNull(map);
     if (map.isEmpty()) {
       throw generateException(exceptionClass, message, variableName, "is empty");
     }
@@ -338,6 +343,7 @@ public final @NullMarked class EnsureUtil {
 
   public static void ensureNotContainsEmptyString(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Collection<String> values) {
     ensureNotNull(exceptionClass, message, variableName, values);
+    requireNonNull(values);
     for (String value : values) {
       if (value.isEmpty()) {
         throw generateException(exceptionClass, message, variableName, "contains empty string");

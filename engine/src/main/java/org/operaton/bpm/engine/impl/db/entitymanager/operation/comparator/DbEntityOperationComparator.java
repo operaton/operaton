@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.db.entitymanager.operation.comparator;
 
 import java.util.Comparator;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbEntityOperation;
 
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbEntityOperation
  * @author Daniel Meyer
  *
  */
-public class DbEntityOperationComparator implements Comparator<DbEntityOperation> {
+public @NullMarked class DbEntityOperationComparator implements Comparator<DbEntityOperation> {
 
   @Override
   public int compare(DbEntityOperation firstOperation, DbEntityOperation secondOperation) {

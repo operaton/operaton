@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.tree;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
@@ -26,12 +28,12 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
  * @author Thorben Lindhauer
  *
  */
-public class ActivityStackCollector implements TreeVisitor<ScopeImpl> {
+public @NullMarked class ActivityStackCollector implements TreeVisitor<ScopeImpl> {
 
   protected List<PvmActivity> activityStack = new ArrayList<>();
 
   @Override
-  public void visit(ScopeImpl scope) {
+  public void visit(@Nullable ScopeImpl scope) {
     if (scope != null && PvmActivity.class.isAssignableFrom(scope.getClass())) {
       activityStack.add((PvmActivity) scope);
     }

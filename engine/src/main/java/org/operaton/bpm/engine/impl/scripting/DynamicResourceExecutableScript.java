@@ -16,11 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.scripting;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableScope;
+import org.operaton.bpm.engine.impl.context.BpmnExecutionContext;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.util.ResourceUtil;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * A script which resource path is dynamically determined during the execution.
@@ -28,7 +32,7 @@ import org.operaton.bpm.engine.impl.util.ResourceUtil;
  *
  * @author Sebastian Menski
  */
-public class DynamicResourceExecutableScript extends DynamicExecutableScript {
+public @NullMarked class DynamicResourceExecutableScript extends DynamicExecutableScript {
 
   public DynamicResourceExecutableScript(String language, Expression scriptResourceExpression) {
     super(scriptResourceExpression, language);
@@ -41,7 +45,9 @@ public class DynamicResourceExecutableScript extends DynamicExecutableScript {
   }
 
   protected DeploymentEntity getDeployment() {
-    return Context.getBpmnExecutionContext().getDeployment();
+    BpmnExecutionContext executionContext = Context.getBpmnExecutionContext();
+    requireNonNull(executionContext);
+    return executionContext.getDeployment();
   }
 
 }

@@ -20,13 +20,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class DeleteUnmappedInstanceVisitor implements TreeVisitor<MigratingScopeInstance> {
+public @NullMarked class DeleteUnmappedInstanceVisitor implements TreeVisitor<MigratingScopeInstance> {
 
   protected Set<MigratingScopeInstance> visitedInstances = new HashSet<>();
 

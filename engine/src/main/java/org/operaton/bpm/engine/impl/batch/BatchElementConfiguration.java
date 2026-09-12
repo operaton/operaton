@@ -26,18 +26,20 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 
 /**
  * Configuration information on the elements of a batch
  */
-public class BatchElementConfiguration {
+public @NullMarked class BatchElementConfiguration {
   protected static final Comparator<String> NULLS_LAST_STRING_COMPARATOR = Comparator.nullsLast(String::compareToIgnoreCase);
 
   protected SortedMap<String, Set<String>> collectedMappings = new TreeMap<>(NULLS_LAST_STRING_COMPARATOR);
 
-  protected List<String> ids;
-  protected DeploymentMappings mappings;
+  protected @Nullable List<String> ids;
+  protected @Nullable DeploymentMappings mappings;
 
   /**
    * Add mappings of deployment ids to resource ids to the overall element
@@ -62,7 +64,7 @@ public class BatchElementConfiguration {
    *          the list of ids to check for missing elements concerning the
    *          mappings to add
    */
-  public void addDeploymentMappings(List<ImmutablePair<String, String>> mappingsList, Collection<String> idList) {
+  public void addDeploymentMappings(List<ImmutablePair<String, String>> mappingsList, @Nullable Collection<String> idList) {
     if (ids != null) {
       ids = null;
       mappings = null;

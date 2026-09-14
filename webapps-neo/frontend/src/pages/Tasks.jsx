@@ -32,9 +32,8 @@ import {
 import { StartProcessList } from "./StartProcessList.jsx";
 import { ConfirmDialog } from "../components/Dialog.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
+import { RelativeTime } from "../components/RelativeTime.jsx";
 import {
-  formatAbsolute,
-  formatRelativeDate,
   formatTimestamp,
   fromLocalParts,
   toLocalParts,
@@ -581,15 +580,7 @@ const TaskRowEntry = ({ task, selected }) => {
         <a href={`/tasks/${id}/${task_tabs[0].id}${list_query}`}>{name}</a>
       </th>
       <td>{assignee ? assignee : "—"}</td>
-      <td>
-        {due ? (
-          <time datetime={due} title={formatAbsolute(due)}>
-            {formatRelativeDate(due)}
-          </time>
-        ) : (
-          "—"
-        )}
-      </td>
+      <td>{due ? <RelativeTime datetime={due} /> : "—"}</td>
     </tr>
   );
 };

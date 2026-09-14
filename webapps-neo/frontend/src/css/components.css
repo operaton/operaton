@@ -1781,3 +1781,41 @@ nav:has(> .breadcrumbs) {
 .task-breakdown dd {
   margin: 0;
 }
+
+.relative-time {
+  cursor: default;
+}
+
+/* Fixed to the viewport so a scrolling table cannot cut it off. */
+.time-tooltip {
+  position: fixed;
+  z-index: 100;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--border-radius);
+  background: var(--text);
+  color: var(--text-inverted);
+  font-size: var(--smaller-font-size);
+  white-space: nowrap;
+  pointer-events: none;
+  /* Short delay, short fade: there on arrival, without snapping into place. */
+  animation: time-tooltip-in 120ms ease 60ms both;
+}
+
+@keyframes time-tooltip-in {
+  from {
+    opacity: 0;
+    translate: -50% calc(-100% - 0.1rem);
+  }
+  to {
+    opacity: 1;
+    translate: -50% calc(-100% - 0.4rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .time-tooltip {
+    animation: none;
+    opacity: 1;
+    translate: -50% calc(-100% - 0.4rem);
+  }
+}

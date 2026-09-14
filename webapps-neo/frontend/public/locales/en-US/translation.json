@@ -138,6 +138,7 @@
     "back-to-list": "Back to task list",
     "claim": "Claim",
     "unclaim": "Unclaim",
+    "update-failed": "The change could not be saved.",
     "you": "You",
     "reset-assignee": "Reset Assignee",
     "assignee-menu": "Assignee actions",

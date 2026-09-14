@@ -563,12 +563,12 @@ const SetDueDateButton = () => {
         .update_task(
           state,
           {
-            due: `${date_state.value.date}T${date_state.value.time}:0.000+0000`,
+            due: `${date_state.value.date}T${date_state.value.time}:00.000+0000`,
           },
           params.task_id,
         )
-        .then(() => {
-          close();
+        .then((result) => {
+          if (result?.status === RESPONSE_STATE.SUCCESS) close();
         });
     };
 
@@ -619,6 +619,11 @@ const SetDueDateButton = () => {
             <button type="submit">{t("common.submit")}</button>
           </div>
         </form>
+        {state.api.task.update_result.value?.status === RESPONSE_STATE.ERROR && (
+          <p role="alert" class="error">
+            {t("tasks.update-failed")}
+          </p>
+        )}
       </dialog>
     </>
   );
@@ -655,12 +660,12 @@ const SetFollowUpDateButton = () => {
         .update_task(
           state,
           {
-            followUp: `${date_state.value.date}T${date_state.value.time}:0.000+0000`,
+            followUp: `${date_state.value.date}T${date_state.value.time}:00.000+0000`,
           },
           params.task_id,
         )
-        .then(() => {
-          close();
+        .then((result) => {
+          if (result?.status === RESPONSE_STATE.SUCCESS) close();
         });
     };
 
@@ -718,6 +723,11 @@ const SetFollowUpDateButton = () => {
             <button type="submit">{t("common.submit")}</button>
           </div>
         </form>
+        {state.api.task.update_result.value?.status === RESPONSE_STATE.ERROR && (
+          <p role="alert" class="error">
+            {t("tasks.update-failed")}
+          </p>
+        )}
       </dialog>
     </>
   );

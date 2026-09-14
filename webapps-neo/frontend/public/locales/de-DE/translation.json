@@ -138,6 +138,7 @@
     "back-to-list": "Zurück zur Aufgabenliste",
     "claim": "Beanspruchen",
     "unclaim": "Freigeben",
+    "update-failed": "Die Änderung konnte nicht gespeichert werden.",
     "you": "Sie",
     "reset-assignee": "Verantwortlichen zurücksetzen",
     "assignee-menu": "Zuständigkeits-Aktionen",

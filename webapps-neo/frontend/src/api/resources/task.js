@@ -32,16 +32,24 @@ const get_task = (state, task_id) =>
  * @returns {Promise<{status: RESPONSE_STATE, data: *} | *>}
  */
 const update_task = (state, task, task_id) => {
-  return state.api.task.one.value?.data !== undefined
-    ? PUT(
-        `/task/${state.api.task.one.value.data.id}`,
-        { ...state.api.task.one.value.data, ...task },
-        state,
-        state.api.task.one,
-      ).then(() => engine_rest.task.get_task(state, task_id))
-    : () => {
-        throw new Error("Task in state undefined or null, can not merge");
-      };
+  const loaded = state.api.task.one.value?.data;
+  if (loaded === undefined) {
+    return Promise.resolve({
+      status: RESPONSE_STATE.ERROR,
+      error: new Error("Task in state undefined or null, can not merge"),
+    });
+  }
+  return PUT(
+    `/task/${loaded.id}`,
+    { ...loaded, ...task },
+    state,
+    state.api.task.update_result,
+  ).then((result) => {
+    if (result?.status === RESPONSE_STATE.SUCCESS) {
+      void engine_rest.task.get_task(state, task_id);
+    }
+    return result;
+  });
 };
 
 const get_task_form = (state, form_id) =>

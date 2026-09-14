@@ -39,6 +39,9 @@ public class OperatonBpmRunProperties {
   protected OperatonBpmRunLdapProperties ldap = new OperatonBpmRunLdapProperties();
 
   @NestedConfigurationProperty
+  protected OperatonBpmRunScimProperties scim = new OperatonBpmRunScimProperties();
+
+  @NestedConfigurationProperty
   protected List<OperatonBpmRunProcessEnginePluginProperty> processEnginePlugins = new ArrayList<>();
 
   @NestedConfigurationProperty
@@ -72,6 +75,14 @@ public class OperatonBpmRunProperties {
 
   public void setLdap(OperatonBpmRunLdapProperties ldap) {
     this.ldap = ldap;
+  }
+
+  public OperatonBpmRunScimProperties getScim() {
+    return scim;
+  }
+
+  public void setScim(OperatonBpmRunScimProperties scim) {
+    this.scim = scim;
   }
 
   public OperatonBpmRunAdministratorAuthorizationProperties getAdminAuth() {
@@ -113,6 +124,7 @@ public class OperatonBpmRunProperties {
         "auth=" + auth +
         ", cors=" + cors +
         ", ldap=" + ldap +
+        ", scim=" + scim +
         ", adminAuth=" + adminAuth +
         ", plugins=" + processEnginePlugins +
         ", rest=" + rest +

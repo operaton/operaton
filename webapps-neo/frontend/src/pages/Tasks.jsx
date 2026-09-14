@@ -525,9 +525,13 @@ const load_task_chain = async (state, task_id) => {
     // don't feed `undefined` into downstream URLs.
     return;
   }
-  await engine_rest.process_definition.one(state, task.processDefinitionId);
+  // A task created by hand belongs to no process definition; asking for one
+  // only answers 404 and leaves an error in the shared signal.
+  if (task.processDefinitionId) {
+    await engine_rest.process_definition.one(state, task.processDefinitionId);
+  }
   await engine_rest.task.get_identity_links(state, task.id);
-  await engine_rest.history.get_user_operation(state, task.executionId);
+  await engine_rest.history.get_user_operation_by_task(state, task.id);
   await engine_rest.task.get_comments(state, task.id);
 };
 

@@ -344,6 +344,46 @@ describe("TasksPage", () => {
     });
   });
 
+  // The history tab reads signals that the detail's loading chain fills.
+  describe("loading what the history tab shows", () => {
+    // get_task is a shared spy; a stubbed implementation would otherwise leak
+    // into the tests that follow.
+    afterEach(() => engine_rest.task.get_task.mockReset());
+
+    const load_task = (over) =>
+      engine_rest.task.get_task.mockImplementation(() => {
+        signal_response(state.api.task.one, sample_task({ id: "t1", ...over }));
+        return Promise.resolve();
+      });
+
+    it("asks the operation log about the task, not about an execution", async () => {
+      mockParams = { task_id: "t1", tab: "history" };
+      load_task({ executionId: "exec-9", processDefinitionId: "p:1:abc" });
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(
+          engine_rest.history.get_user_operation_by_task,
+        ).toHaveBeenCalled(),
+      );
+      expect(
+        engine_rest.history.get_user_operation_by_task.mock.lastCall[1],
+      ).toBe("t1");
+      expect(engine_rest.history.get_user_operation).not.toHaveBeenCalled();
+    });
+
+    it("does not ask for a process definition a standalone task has not got", async () => {
+      mockParams = { task_id: "t1", tab: "history" };
+      load_task({ executionId: null, processDefinitionId: null });
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_comments).toHaveBeenCalled(),
+      );
+      expect(engine_rest.process_definition.one).not.toHaveBeenCalled();
+    });
+  });
+
   describe("task actions", () => {
     const renderDetail = () => {
       mockParams = { task_id: "t1", tab: "form" };

@@ -158,4 +158,20 @@ describe("api/resources/history", () => {
       signal: state.api.history.batch.one,
     });
   });
+
+  it("get_user_operation asks about a whole process instance", () => {
+    history.get_user_operation(state, "pi-1");
+    expect(GET.mock.lastCall[0]).toBe(
+      "/history/user-operation?processInstanceId=pi-1&sortBy=timestamp&sortOrder=desc",
+    );
+  });
+
+  it("get_user_operation_by_task asks about the task, not its instance", () => {
+    // The task carries an executionId that is not the process instance id, so
+    // asking by instance with it answers nothing at all.
+    history.get_user_operation_by_task(state, "task-1");
+    expect(GET.mock.lastCall[0]).toBe(
+      "/history/user-operation?taskId=task-1&sortBy=timestamp&sortOrder=desc",
+    );
+  });
 });

@@ -11,12 +11,10 @@ import { BPMNViewer } from "../components/BPMNViewer.jsx";
 import { CamundaForm } from "../components/CamundaForm.jsx";
 import { Dialog } from "../components/Dialog.jsx";
 import { DmnViewer } from "../components/DMNViewer.jsx";
-import {
-  formatAbsolute,
-  formatRelativeDate,
-} from "../helper/date_formatter.js";
+import {} from "../helper/date_formatter.js";
 import { ListFilter } from "../components/ListFilter.jsx";
 import { ManageFilters } from "../components/ManageFilters.jsx";
+import { RelativeTime } from "../components/RelativeTime.jsx";
 import {
   filter_share_link,
   parse_list_query,
@@ -231,12 +229,7 @@ const DeploymentsList = () => {
                     </a>
                   </th>
                   <td>
-                    <time
-                      datetime={deployment.deploymentTime}
-                      title={formatAbsolute(deployment.deploymentTime)}
-                    >
-                      {formatRelativeDate(deployment.deploymentTime)}
-                    </time>
+                    <RelativeTime datetime={deployment.deploymentTime} />
                   </td>
                 </tr>
               ))

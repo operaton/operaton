@@ -31,6 +31,7 @@ public class IncidentContext {
   protected String jobDefinitionId;
   protected String historyConfiguration;
   protected String failedActivityId;
+  private transient Throwable throwable;
 
   public IncidentContext() {}
 
@@ -105,6 +106,14 @@ public class IncidentContext {
 
   public void setFailedActivityId(String failedActivityId) {
     this.failedActivityId = failedActivityId;
+  }
+
+  public Throwable getThrowable() {
+    return throwable;
+  }
+
+  public void setThrowable(Throwable throwable) {
+    this.throwable = throwable;
   }
 
 }

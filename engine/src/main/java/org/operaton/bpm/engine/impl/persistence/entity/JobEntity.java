@@ -107,6 +107,8 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   protected String batchId;
 
+  private transient Throwable exception;
+
   public void execute(CommandContext commandContext) {
     if (executionId != null) {
       ensureNotNull("Cannot find execution with id '%s' referenced from job '%s'".formatted(executionId, this), "execution", getExecution());
@@ -345,6 +347,7 @@ public abstract class JobEntity extends AcquirableJobEntity
       incidentContext.setActivityId(getActivityId());
       incidentContext.setHistoryConfiguration(getLastFailureLogId());
       incidentContext.setFailedActivityId(getFailedActivityId());
+      incidentContext.setThrowable(getException());
 
       IncidentHandling.createIncident(FAILED_JOB_HANDLER_TYPE, incidentContext, exceptionMessage);
     }
@@ -476,6 +479,14 @@ public abstract class JobEntity extends AcquirableJobEntity
     return exceptionMessage;
   }
 
+  public Throwable getException() {
+    return exception;
+  }
+
+  public void setException(Throwable exception) {
+    this.exception = exception;
+  }
+
   @Override
   public String getJobDefinitionId() {
     return jobDefinitionId;
@@ -545,6 +556,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
     this.exceptionByteArrayId = null;
     this.exceptionMessage = null;
+    this.exception = null;
   }
 
   @Override

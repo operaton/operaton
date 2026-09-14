@@ -224,7 +224,9 @@
       "complete-directly": "Complete without form",
       "legacy-html-unsupported": "Legacy AngularJS forms are not supported by the new web applications. Please switch to form-js.",
       "legacy-html-migrate-link": "How to migrate",
-      "unsupported": "This start form type is not supported yet."
+      "unsupported": "This start form type is not supported yet.",
+      "add-variable": "Add a variable",
+      "duplicate-variable": "Each variable can be named only once."
     },
     "start-process": {
       "title": "Start Task",

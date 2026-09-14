@@ -201,8 +201,7 @@
       "form": "Form",
       "history": "History",
       "diagram": "Diagram",
-      "attachments": "Attachments",
-      "variables": "Variables"
+      "attachments": "Attachments"
     },
     "history": {
       "title": "History",
@@ -321,12 +320,6 @@
       "upload": "Upload",
       "delete-confirm": "Delete the attachment “{{name}}”?",
       "confirm-delete": "Delete attachment"
-    },
-    "variables": {
-      "title": "Task variables",
-      "empty": "No variables on this task.",
-      "add": "Add variable",
-      "save": "Add"
     }
   },
   "processes": {

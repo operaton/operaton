@@ -224,7 +224,9 @@
       "complete-directly": "Ohne Formular abschließen",
       "legacy-html-unsupported": "Ältere AngularJS-Formulare werden von den neuen Web-Anwendungen nicht unterstützt. Bitte wechseln Sie zu form-js.",
       "legacy-html-migrate-link": "Anleitung zur Migration",
-      "unsupported": "Dieser Startformular-Typ wird noch nicht unterstützt."
+      "unsupported": "Dieser Startformular-Typ wird noch nicht unterstützt.",
+      "add-variable": "Variable hinzufügen",
+      "duplicate-variable": "Jeder Variablenname darf nur einmal vorkommen."
     },
     "start-process": {
       "title": "Aufgabe starten",

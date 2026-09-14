@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect, useRef } from "preact/hooks";
+import { useSignal } from "@preact/signals";
 import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
 import { resolve_user } from "../api/helper.jsx";
@@ -12,6 +13,12 @@ import {
   rendered_form_to_schema,
   form_ref_of,
 } from "./TaskForm_helpers.js";
+import {
+  VARIABLE_TYPES,
+  coerce_variable_value,
+  variable_edit_value,
+  variable_input_type,
+} from "../helper/variables.js";
 
 const TaskForm = () => {
   const state = useContext(AppState),
@@ -35,9 +42,18 @@ const TaskForm = () => {
     return <EmbeddedHtmlTaskForm task={selectedTask} formKey={formKey} />;
   }
 
-  // No form key — the task either has a generated form (camunda:formData) or no
-  // form at all. Render the engine's generated form through the same CamundaForm
-  // renderer so it looks like a form-js form.
+  // A task created by hand belongs to no process, so it has no task definition
+  // and therefore no form of any kind. Asking the engine to render one answers
+  // 500, which used to be all this tab showed — and with it went the complete
+  // button, leaving the task impossible to finish. The previous Tasklist showed
+  // a plain variable editor here instead.
+  if (!selectedTask.taskDefinitionKey) {
+    return <GenericTaskForm task={selectedTask} taskId={params.task_id} />;
+  }
+
+  // No form key — the task has a generated form (camunda:formData). Render the
+  // engine's generated form through the same CamundaForm renderer so it looks
+  // like a form-js form.
   return <GeneratedTaskForm task={selectedTask} taskId={params.task_id} />;
 };
 
@@ -115,7 +131,11 @@ const CamundaTaskForm = ({ task, taskId }) => {
           submit_ref.current = c.submit;
         }}
       />
-      {error && <p class="error" role="alert">{error}</p>}
+      {error && (
+        <p class="error" role="alert">
+          {error}
+        </p>
+      )}
       {!mine && <p class="info-box">{t("tasks.form.claim-first")}</p>}
       <div class="form-buttons">
         <button
@@ -260,6 +280,169 @@ const GeneratedTaskForm = ({ task, taskId }) => {
             {t("tasks.form.complete-directly")}
           </button>
         )}
+      </div>
+    </div>
+  );
+};
+
+/**
+ * The form for a task that has none: a plain list of variables to carry along
+ * when the task is completed. Matches what the previous Tasklist did for a task
+ * without a form key and without a form reference.
+ */
+const GenericTaskForm = ({ task, taskId }) => {
+  const state = useContext(AppState),
+    { route } = useLocation(),
+    [t] = useTranslation(),
+    [error, setError] = useState(null),
+    rows = useSignal([]);
+
+  useEffect(() => {
+    // Empty for a standalone task, but it is what the engine considers the
+    // form's variables, so start from it rather than from nothing.
+    void engine_rest.task.get_task_form_variables(state, task.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task.id]);
+
+  const form_variables = state.api.task.form_variables.value;
+
+  useEffect(() => {
+    const declared = form_variables?.data;
+    if (!declared) return;
+    rows.value = Object.entries(declared).map(([name, v]) => ({
+      name,
+      type: v?.type ?? "String",
+      value: variable_edit_value(v?.type, v?.value),
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form_variables]);
+
+  if (!form_variables)
+    return <p class="fade-in-delayed">{t("common.loading")}</p>;
+
+  const update = (index, field, value) =>
+      (rows.value = rows
+        .peek()
+        .map((row, i) => (i === index ? { ...row, [field]: value } : row))),
+    add = () =>
+      (rows.value = [...rows.peek(), { name: "", type: "String", value: "" }]),
+    remove = (index) =>
+      (rows.value = rows.peek().filter((_, i) => i !== index));
+
+  const named = rows.value.filter((row) => row.name.trim() !== ""),
+    duplicate = named.length !== new Set(named.map((r) => r.name.trim())).size;
+
+  const complete = () => {
+    if (duplicate) {
+      setError(t("tasks.form.duplicate-variable"));
+      return;
+    }
+    setError(null);
+    const payload = Object.fromEntries(
+      named.map(({ name, type, value }) => [
+        name.trim(),
+        { value: coerce_variable_value(type, value), type },
+      ]),
+    );
+    engine_rest.task
+      .post_task_form(state, taskId, payload)
+      .then(() => {
+        localStorage.removeItem(`task_form_${taskId}`);
+        route("/tasks");
+      })
+      .catch((e) => setError(e?.message ?? "Submit failed"));
+  };
+
+  const mine = worked_by_me(state, task);
+
+  return (
+    <div class="task-form generic-task-form">
+      {rows.value.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">{t("common.name")}</th>
+              <th scope="col">{t("common.type")}</th>
+              <th scope="col">{t("common.value")}</th>
+              <th scope="col">{t("common.action")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.value.map((row, i) => (
+              <tr key={i}>
+                <td>
+                  <input
+                    aria-label={t("common.name")}
+                    value={row.name}
+                    disabled={!mine}
+                    onInput={(e) => update(i, "name", e.currentTarget.value)}
+                  />
+                </td>
+                <td>
+                  <select
+                    aria-label={t("common.type")}
+                    value={row.type}
+                    disabled={!mine}
+                    onChange={(e) => update(i, "type", e.currentTarget.value)}
+                  >
+                    {VARIABLE_TYPES.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  {variable_input_type(row.type) === "none" ? null : (
+                    <input
+                      type={variable_input_type(row.type)}
+                      aria-label={t("common.value")}
+                      value={row.value}
+                      disabled={!mine}
+                      onInput={(e) => update(i, "value", e.currentTarget.value)}
+                    />
+                  )}
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="danger"
+                    disabled={!mine}
+                    onClick={() => remove(i)}
+                  >
+                    {t("common.remove")}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      <div class="button-group">
+        <button type="button" disabled={!mine} onClick={add}>
+          {t("tasks.form.add-variable")}
+        </button>
+      </div>
+
+      {!mine && <p class="info-box">{t("tasks.form.claim-first")}</p>}
+      {duplicate && (
+        <p class="error" role="alert">
+          {t("tasks.form.duplicate-variable")}
+        </p>
+      )}
+      {error && (
+        <p class="error" role="alert">
+          {error}
+        </p>
+      )}
+
+      <div class="button-group">
+        <button type="button" disabled={!mine || duplicate} onClick={complete}>
+          {rows.value.length > 0
+            ? t("tasks.form.complete-task")
+            : t("tasks.form.complete-directly")}
+        </button>
       </div>
     </div>
   );

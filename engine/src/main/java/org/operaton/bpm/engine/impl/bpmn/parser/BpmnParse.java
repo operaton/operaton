@@ -731,10 +731,8 @@ public @NullMarked class BpmnParse extends Parse {
 
       // Parse ID's of flow-nodes that live inside this lane
       List<Element> flowNodeElements = laneElement.elements("flowNodeRef");
-      if (flowNodeElements != null && !flowNodeElements.isEmpty()) {
-        for (Element flowNodeElement : flowNodeElements) {
-          lane.getFlowNodeIds().add(flowNodeElement.getText());
-        }
+      for (Element flowNodeElement : flowNodeElements) {
+        lane.getFlowNodeIds().add(flowNodeElement.getText());
       }
 
       laneSet.addLane(lane);
@@ -812,9 +810,7 @@ public @NullMarked class BpmnParse extends Parse {
         // check whether activity is already parsed
         ActivityImpl activity = parseIntermediateCatchEvent(intermediateCatchEventElement, parentScope, null);
 
-        if (activity != null) {
-          parseActivityInputOutput(intermediateCatchEventElement, activity);
-        }
+        parseActivityInputOutput(intermediateCatchEventElement, activity);
       }
     }
     intermediateCatchEventElements.clear();
@@ -953,7 +949,6 @@ public @NullMarked class BpmnParse extends Parse {
             sourceActivity.getId()
             );
       } else {
-
         compensatedActivity.setProperty(PROPERTYNAME_COMPENSATION_HANDLER_ID, targetActivity.getId());
       }
     }
@@ -1291,7 +1286,7 @@ public @NullMarked class BpmnParse extends Parse {
     }
   }
 
-  protected EventSubscriptionDeclaration parseMessageEventDefinition(Element messageEventDefinition, String messageElementId) {
+  protected EventSubscriptionDeclaration parseMessageEventDefinition(Element messageEventDefinition, @Nullable String messageElementId) {
     String messageRef = messageEventDefinition.attribute("messageRef");
     if (messageRef == null) {
       addError("attribute 'messageRef' is required", messageEventDefinition, messageElementId);
@@ -1836,10 +1831,10 @@ public @NullMarked class BpmnParse extends Parse {
     miBodyScope.setProperty(BpmnProperties.TYPE.name(), ActivityTypes.MULTI_INSTANCE_BODY);
     miBodyScope.setScope(true);
 
-    boolean isSequential = parseBooleanAttribute(miLoopCharacteristics.attribute("isSequential"), false);
+    Boolean isSequential = parseBooleanAttribute(miLoopCharacteristics.attribute("isSequential"), false);
 
     MultiInstanceActivityBehavior behavior = null;
-    if (isSequential) {
+    if (isSequential == Boolean.TRUE) {
       behavior = new SequentialMultiInstanceActivityBehavior();
     } else {
       behavior = new ParallelMultiInstanceActivityBehavior();
@@ -3084,9 +3079,7 @@ public @NullMarked class BpmnParse extends Parse {
     } else if (scriptElement != null) {
       try {
         ExecutableScript executableScript = parseOperatonScript(scriptElement);
-        if (executableScript != null) {
-          taskListener = new ScriptTaskListener(executableScript);
-        }
+        taskListener = new ScriptTaskListener(executableScript);
       } catch (BpmnParseException e) {
         addError(e, taskElementId);
       }

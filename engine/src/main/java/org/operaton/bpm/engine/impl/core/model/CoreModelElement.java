@@ -39,7 +39,7 @@ public abstract @NullMarked class CoreModelElement implements Serializable {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected String id;
+  protected @Nullable String id;
   protected @Nullable String name;
   protected Properties properties = new Properties();
 
@@ -49,17 +49,15 @@ public abstract @NullMarked class CoreModelElement implements Serializable {
   /** contains all listeners (built-in + user-provided) */
   protected Map<String, List<DelegateListener<? extends BaseDelegateExecution>>> listeners = new HashMap<>();
 
-  protected Map<String, List<VariableListener<?>>> builtInVariableListeners =
-      new HashMap<>();
+  protected Map<String, List<VariableListener<?>>> builtInVariableListeners = new HashMap<>();
 
-  protected Map<String, List<VariableListener<?>>> variableListeners =
-      new HashMap<>();
+  protected Map<String, List<VariableListener<?>>> variableListeners = new HashMap<>();
 
   protected CoreModelElement(String id) {
     this.id = id;
   }
 
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -98,7 +96,7 @@ public abstract @NullMarked class CoreModelElement implements Serializable {
     this.id = id;
   }
 
-  public void setName(String name) {
+  public void setName(@Nullable String name) {
     this.name = name;
   }
 

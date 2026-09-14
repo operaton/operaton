@@ -181,11 +181,12 @@ export function Header() {
                   <li>
                     <a
                       href="/account"
+                      title={t("nav.account")}
                       aria-current={
                         url.startsWith("/account") ? "page" : undefined
                       }
                     >
-                      {t("nav.account")}
+                      {state.auth.user.id.value || t("nav.account")}
                     </a>
                   </li>
                 </menu>
@@ -218,7 +219,9 @@ export function Header() {
               <a href="/help">{t("nav.help")}</a>
             </li>
             <li>
-              <a href="/account">{t("nav.account")}</a>
+              <a href="/account" title={t("nav.account")}>
+                {state.auth.user.id.value || t("nav.account")}
+              </a>
             </li>
             <li>
               <button

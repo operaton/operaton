@@ -160,6 +160,23 @@ describe("Header", () => {
     expect(route).not.toHaveBeenCalledWith("/");
   });
 
+  it("names the signed-in user where the account link sits", () => {
+    state.auth.user.id.value = "alice";
+    // Two: the desktop navigation and the mobile menu.
+    const { getAllByTitle } = renderHeader(state);
+    const links = getAllByTitle("nav.account");
+    expect(links).toHaveLength(2);
+    links.forEach((a) => expect(a.textContent.trim()).toBe("alice"));
+  });
+
+  it("falls back to the account label when nobody is signed in", () => {
+    state.auth.user.id.value = null;
+    const { getAllByTitle } = renderHeader(state);
+    expect(getAllByTitle("nav.account")[0].textContent.trim()).toBe(
+      "nav.account",
+    );
+  });
+
   it("calls engine_rest.auth.logout when the logout button is clicked", () => {
     const { container } = renderHeader(state);
     fireEvent.click(container.querySelector("#logout"));

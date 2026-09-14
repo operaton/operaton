@@ -531,8 +531,10 @@ describe("TasksPage", () => {
     it("says nothing when the task has no tenant", () => {
       mockParams = { task_id: "t1", tab: "form" };
       signal_response(state.api.task.one, sample_task({ tenantId: null }));
-      const { queryByText } = renderPage(state);
-      expect(queryByText(/tasks\.tenant/)).toBeNull();
+      const { container } = renderPage(state);
+      // Scoped to the detail: the create dialog has a tenant field of its own,
+      // under the same label.
+      expect(container.querySelector("p.tenant")).toBeNull();
     });
   });
 
@@ -588,8 +590,9 @@ describe("TasksPage", () => {
   });
 
   // Ported from the previous Tasklist's create-task-spec.js: "should open",
-  // "should save new task", "should select created task", and the tenant field
-  // appearing only when there is more than one tenant to choose from.
+  // "should save new task", "should select created task". The old dialog asked
+  // for the tenant as free text and always showed the field; this one does the
+  // same, with the tenants the user can see offered as suggestions.
   describe("creating a task outside a process", () => {
     const open_dialog = (container) =>
       fireEvent.click(container.querySelector("button.create-task"));
@@ -639,21 +642,72 @@ describe("TasksPage", () => {
       expect(getByText("tasks.create.save").disabled).toBe(true);
     });
 
-    it("asks for no tenant when the user belongs to just one", () => {
-      signal_response(state.api.tenant.by_member, [{ id: "sales" }]);
-      const { container } = renderPage(state);
-      open_dialog(container);
-      expect(container.querySelector("#new-task-tenant")).toBeNull();
-    });
-
-    it("asks which tenant when there is more than one", () => {
-      signal_response(state.api.tenant.by_member, [
+    it("suggests the tenants the user may read, not the ones they belong to", () => {
+      // An administrator is a member of no tenant and must still be able to
+      // place a task in one.
+      signal_response(state.api.tenant.by_member, []);
+      signal_response(state.api.tenant.list, [
         { id: "sales" },
         { id: "support" },
       ]);
       const { container } = renderPage(state);
       open_dialog(container);
+      const suggested = [
+        ...container.querySelectorAll("#new-task-tenants option"),
+      ].map((o) => o.value);
+      expect(suggested).toEqual(["sales", "support"]);
+    });
+
+    it("asks for the tenant even when none is visible", () => {
+      // The old dialog always asked, and an id may be typed that the user
+      // cannot read.
+      signal_response(state.api.tenant.list, []);
+      const { container } = renderPage(state);
+      open_dialog(container);
       expect(container.querySelector("#new-task-tenant")).not.toBeNull();
+    });
+
+    it("takes a tenant that is not in the list", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.tenant.list, [{ id: "sales" }]);
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.input(container.querySelector("#new-task-tenant"), {
+        target: { value: "elsewhere" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.create_task).toHaveBeenCalled(),
+      );
+      expect(engine_rest.task.create_task.mock.lastCall[1].tenantId).toBe(
+        "elsewhere",
+      );
+    });
+
+    it("sends no tenant when the field was left blank", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.input(container.querySelector("#new-task-tenant"), {
+        target: { value: "   " },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.create_task).toHaveBeenCalled(),
+      );
+      expect(engine_rest.task.create_task.mock.lastCall[1].tenantId).toBeNull();
     });
   });
 
@@ -716,8 +770,7 @@ describe("TasksPage", () => {
       await vi.waitFor(() =>
         expect(engine_rest.task.set_task_variable).toHaveBeenCalled(),
       );
-      const [, , name, body] =
-        engine_rest.task.set_task_variable.mock.lastCall;
+      const [, , name, body] = engine_rest.task.set_task_variable.mock.lastCall;
       expect(name).toBe("amount");
       expect(body).toEqual({ value: 42, type: "Integer" });
     });

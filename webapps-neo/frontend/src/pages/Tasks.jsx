@@ -384,10 +384,13 @@ const CreateTaskButton = () => {
     tenant = useSignal(""),
     close = () => document.getElementById("create_task").close(),
     show = () => {
-      void engine_rest.tenant.by_member(state, null, true);
+      // The tenants the signed-in user may read, not the ones they belong to:
+      // an administrator is typically a member of none and still has to be able
+      // to place a task in one. Authorization already narrows this per user.
+      void engine_rest.tenant.all(state);
       document.getElementById("create_task").showModal();
     },
-    tenants = state.api.tenant.by_member.value?.data ?? [],
+    tenants = state.api.tenant.list.value?.data ?? [],
     submit = async (event) => {
       event.preventDefault();
       const id = crypto.randomUUID();
@@ -396,7 +399,7 @@ const CreateTaskButton = () => {
         name: name.value.trim(),
         assignee: assignee.value.trim() || null,
         description: description.value.trim() || null,
-        tenantId: tenant.value || null,
+        tenantId: tenant.value.trim() || null,
       });
       if (result?.status !== RESPONSE_STATE.SUCCESS) return;
       name.value = "";
@@ -445,23 +448,21 @@ const CreateTaskButton = () => {
             value={description.value}
             onInput={(e) => (description.value = e.currentTarget.value)}
           />
-          {tenants.length > 1 && (
-            <>
-              <label for="new-task-tenant">{t("tasks.tenant")}</label>
-              <select
-                id="new-task-tenant"
-                value={tenant.value}
-                onChange={(e) => (tenant.value = e.currentTarget.value)}
-              >
-                <option value="">—</option>
-                {tenants.map((x) => (
-                  <option key={x.id} value={x.id}>
-                    {x.name ?? x.id}
-                  </option>
-                ))}
-              </select>
-            </>
-          )}
+          <label for="new-task-tenant">{t("tasks.tenant")}</label>
+          <input
+            id="new-task-tenant"
+            type="text"
+            list="new-task-tenants"
+            value={tenant.value}
+            onInput={(e) => (tenant.value = e.currentTarget.value)}
+          />
+          <datalist id="new-task-tenants">
+            {tenants.map((x) => (
+              <option key={x.id} value={x.id}>
+                {x.name ?? x.id}
+              </option>
+            ))}
+          </datalist>
           <div class="button-group">
             <button type="submit" disabled={!name.value.trim()}>
               {t("tasks.create.save")}

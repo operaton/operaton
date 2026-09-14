@@ -156,8 +156,6 @@ const createAppState = () => {
       list: signal(null),
       one: signal(null),
       create: signal(null),
-      variables: signal(null),
-      variables_update: signal(null),
       by_process_instance: signal(null),
       form: signal(null),
       rendered_form: signal(null),

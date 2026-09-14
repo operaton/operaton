@@ -40,7 +40,7 @@ public @NullMarked class MigratingCompensationEventSubscriptionInstance extends 
   public MigratingCompensationEventSubscriptionInstance(
       @Nullable MigrationInstruction migrationInstruction,
       @Nullable ScopeImpl sourceScope,
-      ScopeImpl targetScope,
+      @Nullable ScopeImpl targetScope,
       EventSubscriptionEntity eventSubscription) {
     this.migrationInstruction = migrationInstruction;
     this.eventSubscription = eventSubscription;

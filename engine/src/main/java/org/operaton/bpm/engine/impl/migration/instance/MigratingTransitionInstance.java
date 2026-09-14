@@ -75,15 +75,17 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
 
   @Override
   public void detachState() {
-
-    jobInstance.detachState();
+    getJobInstance().detachState();
     for (MigratingInstance dependentInstance : migratingDependentInstances) {
       dependentInstance.detachState();
     }
 
     ExecutionEntity execution = resolveRepresentativeExecution();
     execution.setActive(false);
-    getParent().destroyAttachableExecution(execution);
+    MigratingActivityInstance parent = getParent();
+    if (parent != null) {
+      parent.destroyAttachableExecution(execution);
+    }
 
     setParent(null);
   }
@@ -102,7 +104,7 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
     representativeExecution.setActivityInstanceId(null);
     representativeExecution.setActive(activeState);
 
-    jobInstance.attachState(this);
+    getJobInstance().attachState(this);
 
     for (MigratingInstance dependentInstance : migratingDependentInstances) {
       dependentInstance.attachState(this);
@@ -141,6 +143,7 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
   public void migrateState() {
     ExecutionEntity representativeExec = resolveRepresentativeExecution();
 
+    requireNonNull(targetScope);
     representativeExec.setProcessDefinition(targetScope.getProcessDefinition());
     representativeExec.setActivity((PvmActivity) targetScope);
   }

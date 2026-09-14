@@ -62,6 +62,7 @@ import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
 
 /**
@@ -94,6 +95,7 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
   protected List<ProcessDefinitionEntity> transformDefinitions(DeploymentEntity deployment, ResourceEntity resource, Properties properties) {
     byte[] bytes = resource.getBytes();
     ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+    requireNonNull(bpmnParser);
 
     BpmnParse bpmnParse = bpmnParser
         .createParse()
@@ -121,7 +123,7 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
   }
 
   @Override
-  protected @Nullable ProcessDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  protected @Nullable ProcessDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return getProcessDefinitionManager().findLatestProcessDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 

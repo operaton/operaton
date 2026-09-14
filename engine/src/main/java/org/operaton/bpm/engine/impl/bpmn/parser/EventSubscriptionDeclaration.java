@@ -102,7 +102,7 @@ public class EventSubscriptionDeclaration {
     return activityId;
   }
 
-  public void setActivityId(String activityId) {
+  public void setActivityId(@Nullable String activityId) {
     this.activityId = activityId;
   }
 

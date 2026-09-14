@@ -156,8 +156,8 @@ public abstract class Parse extends DefaultHandler {
     return Parser.resolveAccessExternalSchemaProperty();
   }
 
-  public @Nullable Element getRootElement() {
-    return rootElement;
+  public Element getRootElement() {
+    return requireNonNull(rootElement);
   }
 
   public List<Problem> getProblems() {
@@ -172,7 +172,7 @@ public abstract class Parse extends DefaultHandler {
     errors.add(new ProblemImpl(errorMessage, element));
   }
 
-  public void addError(String errorMessage, @Nullable Element element, String... elementIds) {
+  public void addError(String errorMessage, @Nullable Element element, @Nullable String... elementIds) {
     errors.add(new ProblemImpl(errorMessage, element, elementIds));
   }
 

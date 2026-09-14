@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.dmn.result.DecisionResultMapper;
@@ -42,10 +43,10 @@ import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateD
 public @NullMarked class DmnBusinessRuleTaskActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected final BaseCallableElement callableElement;
-  protected final String resultVariable;
-  protected final DecisionResultMapper decisionResultMapper;
+  protected final @Nullable String resultVariable;
+  protected final @Nullable DecisionResultMapper decisionResultMapper;
 
-  public DmnBusinessRuleTaskActivityBehavior(BaseCallableElement callableElement, String resultVariableName, DecisionResultMapper decisionResultMapper) {
+  public DmnBusinessRuleTaskActivityBehavior(BaseCallableElement callableElement, @Nullable String resultVariableName, @Nullable DecisionResultMapper decisionResultMapper) {
     this.callableElement = callableElement;
     this.resultVariable = resultVariableName;
     this.decisionResultMapper = decisionResultMapper;

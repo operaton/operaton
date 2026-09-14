@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.tree;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
@@ -23,14 +24,14 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Daniel Meyer
  *
  */
-public @Nullable class ExecutionWalker extends SingleReferenceWalker<PvmExecutionImpl> {
+public @NullMarked class ExecutionWalker extends SingleReferenceWalker<PvmExecutionImpl> {
 
   public ExecutionWalker(PvmExecutionImpl initialElement) {
     super(initialElement);
   }
 
   @Override
-  protected PvmExecutionImpl nextElement() {
+  protected @Nullable PvmExecutionImpl nextElement() {
     return getRequiredCurrentElement().getParent();
   }
 

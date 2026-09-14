@@ -65,7 +65,7 @@ public @NullMarked abstract class MigratingProcessElementInstance implements Mig
 
   public abstract void addMigratingDependentInstance(MigratingInstance migratingInstance);
 
-  public abstract ExecutionEntity resolveRepresentativeExecution();
+  public abstract @Nullable ExecutionEntity resolveRepresentativeExecution();
 
   public @Nullable MigratingActivityInstance getClosestAncestorActivityInstance() {
     MigratingScopeInstance ancestorInstance = parentInstance;

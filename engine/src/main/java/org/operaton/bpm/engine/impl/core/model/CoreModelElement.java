@@ -70,7 +70,7 @@ public abstract @NullMarked class CoreModelElement implements Serializable {
   /**
    * @see Properties#set(PropertyKey, Object)
    */
-  public void setProperty(String name, Object value) {
+  public void setProperty(String name, @Nullable Object value) {
     properties.set(new PropertyKey<>(name), value);
   }
 

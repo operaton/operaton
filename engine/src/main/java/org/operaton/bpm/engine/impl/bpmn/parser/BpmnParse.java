@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -159,6 +158,7 @@ import org.operaton.bpm.engine.impl.util.xml.Parse;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.findOperatonExtensionElement;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseInputOutput;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseOperatonExtensionProperties;
@@ -311,7 +311,7 @@ public @NullMarked class BpmnParse extends Parse {
   protected Map<String, List<JobDeclaration<?, ?>>> jobDeclarations = new HashMap<>();
 
   /** A map for storing sequence flow based on their id during parsing. */
-  protected Map<String, TransitionImpl> sequenceFlows;
+  protected Map<String, TransitionImpl> sequenceFlows = new HashMap<>();
 
   /**
    * A list of all element IDs. This allows us to parse only what we actually
@@ -340,7 +340,7 @@ public @NullMarked class BpmnParse extends Parse {
   protected List<BpmnParseListener> parseListeners;
   protected Map<String, XMLImporter> importers = new HashMap<>();
   protected Map<String, String> prefixs = new HashMap<>();
-  protected String targetNamespace;
+  protected @Nullable String targetNamespace;
 
   private final Map<String, String> eventLinkTargets = new HashMap<>();
   private final Map<String, String> eventLinkSources = new HashMap<>();
@@ -414,22 +414,22 @@ public @NullMarked class BpmnParse extends Parse {
   }
 
   protected void collectElementIds() {
-    rootElement.collectIds(elementIds);
+    getRootElement().collectIds(elementIds);
   }
 
   protected void parseDefinitionsAttributes() {
-    this.targetNamespace = rootElement.attribute("targetNamespace");
+    this.targetNamespace = getRootElement().attribute("targetNamespace");
 
-    for (String attribute : rootElement.attributes()) {
+    for (String attribute : getRootElement().attributes()) {
       if (attribute.startsWith("xmlns:")) {
-        String prefixValue = rootElement.attribute(attribute);
+        String prefixValue = getRootElement().attribute(attribute);
         String prefixName = attribute.substring(6);
         this.prefixs.put(prefixName, prefixValue);
       }
     }
   }
 
-  protected String resolveName(String name) {
+  protected @Nullable String resolveName(@Nullable String name) {
     if (name == null) {
       return null;
     }
@@ -447,7 +447,7 @@ public @NullMarked class BpmnParse extends Parse {
    * Parses the rootElement importing structures
    */
   protected void parseImports() {
-    List<Element> imports = rootElement.elements("import");
+    List<Element> imports = requireNonNull(rootElement).elements("import");
     for (Element theImport : imports) {
       String importType = theImport.attribute("importType");
       XMLImporter importer = this.getImporter(importType, theImport);
@@ -459,7 +459,10 @@ public @NullMarked class BpmnParse extends Parse {
     }
   }
 
-  protected XMLImporter getImporter(String importType, Element theImport) {
+  protected @Nullable XMLImporter getImporter(@Nullable String importType, Element theImport) {
+    if (importType == null) {
+      return null;
+    }
     if (this.importers.containsKey(importType)) {
       return this.importers.get(importType);
     } else {
@@ -484,7 +487,7 @@ public @NullMarked class BpmnParse extends Parse {
    * process elements.
    */
   public void parseMessages() {
-    for (Element messageElement : rootElement.elements("message")) {
+    for (Element messageElement : getRootElement().elements("message")) {
       String id = messageElement.attribute("id");
       String messageName = messageElement.attribute("name");
 
@@ -504,7 +507,7 @@ public @NullMarked class BpmnParse extends Parse {
    * elements.
    */
   protected void parseSignals() {
-    for (Element signalElement : rootElement.elements("signal")) {
+    for (Element signalElement : getRootElement().elements("signal")) {
       String id = signalElement.attribute("id");
       String signalName = signalElement.attribute("name");
 
@@ -530,7 +533,7 @@ public @NullMarked class BpmnParse extends Parse {
   }
 
   public void parseErrors() {
-    for (Element errorElement : rootElement.elements("error")) {
+    for (Element errorElement : getRootElement().elements("error")) {
       Error error = new Error();
 
       String id = errorElement.attribute("id");
@@ -554,7 +557,7 @@ public @NullMarked class BpmnParse extends Parse {
   }
 
   protected void parseEscalations() {
-    for (Element element : rootElement.elements("escalation")) {
+    for (Element element : getRootElement().elements("escalation")) {
 
       String id = element.attribute("id");
       if (id == null) {
@@ -588,7 +591,7 @@ public @NullMarked class BpmnParse extends Parse {
    * element.
    */
   public void parseProcessDefinitions() {
-    for (Element processElement : rootElement.elements(PROCESS_TAG)) {
+    for (Element processElement : getRootElement().elements(PROCESS_TAG)) {
       boolean isExecutable = !deployment.isNew();
       String isExecutableStr = processElement.attribute("isExecutable");
       if (isExecutableStr != null) {
@@ -613,7 +616,7 @@ public @NullMarked class BpmnParse extends Parse {
    * DI parsing.
    */
   public void parseCollaboration() {
-    Element collaboration = rootElement.element("collaboration");
+    Element collaboration = getRootElement().element("collaboration");
     if (collaboration != null) {
       for (Element participant : collaboration.elements("participant")) {
         String processRef = participant.attribute("processRef");
@@ -655,7 +658,7 @@ public @NullMarked class BpmnParse extends Parse {
      */
     processDefinition.setKey(processElement.attribute("id"));
     processDefinition.setName(processElement.attribute("name"));
-    processDefinition.setCategory(rootElement.attribute("targetNamespace"));
+    processDefinition.setCategory(getRootElement().attribute("targetNamespace"));
     processDefinition.setProperty(PROPERTYNAME_DOCUMENTATION, parseDocumentation(processElement));
     processDefinition.setTaskDefinitions(new HashMap<>());
     processDefinition.setDeploymentId(deployment.getId());
@@ -706,39 +709,35 @@ public @NullMarked class BpmnParse extends Parse {
   protected void parseLaneSets(Element parentElement, ProcessDefinitionEntity processDefinition) {
     List<Element> laneSets = parentElement.elements("laneSet");
 
-    if (laneSets != null && !laneSets.isEmpty()) {
-      for (Element laneSetElement : laneSets) {
-        LaneSet newLaneSet = new LaneSet();
+    for (Element laneSetElement : laneSets) {
+      LaneSet newLaneSet = new LaneSet();
 
-        newLaneSet.setId(laneSetElement.attribute("id"));
-        newLaneSet.setName(laneSetElement.attribute("name"));
-        parseLanes(laneSetElement, newLaneSet);
+      newLaneSet.setId(laneSetElement.attribute("id"));
+      newLaneSet.setName(laneSetElement.attribute("name"));
+      parseLanes(laneSetElement, newLaneSet);
 
-        // Finally, add the set
-        processDefinition.addLaneSet(newLaneSet);
-      }
+      // Finally, add the set
+      processDefinition.addLaneSet(newLaneSet);
     }
   }
 
   protected void parseLanes(Element laneSetElement, LaneSet laneSet) {
     List<Element> lanes = laneSetElement.elements("lane");
-    if (lanes != null && !lanes.isEmpty()) {
-      for (Element laneElement : lanes) {
-        // Parse basic attributes
-        Lane lane = new Lane();
-        lane.setId(laneElement.attribute("id"));
-        lane.setName(laneElement.attribute("name"));
+    for (Element laneElement : lanes) {
+      // Parse basic attributes
+      Lane lane = new Lane();
+      lane.setId(laneElement.attribute("id"));
+      lane.setName(laneElement.attribute("name"));
 
-        // Parse ID's of flow-nodes that live inside this lane
-        List<Element> flowNodeElements = laneElement.elements("flowNodeRef");
-        if (flowNodeElements != null && !flowNodeElements.isEmpty()) {
-          for (Element flowNodeElement : flowNodeElements) {
-            lane.getFlowNodeIds().add(flowNodeElement.getText());
-          }
+      // Parse ID's of flow-nodes that live inside this lane
+      List<Element> flowNodeElements = laneElement.elements("flowNodeRef");
+      if (flowNodeElements != null && !flowNodeElements.isEmpty()) {
+        for (Element flowNodeElement : flowNodeElements) {
+          lane.getFlowNodeIds().add(flowNodeElement.getText());
         }
-
-        laneSet.addLane(lane);
       }
+
+      laneSet.addLane(lane);
     }
   }
 
@@ -1401,13 +1400,13 @@ public @NullMarked class BpmnParse extends Parse {
    * @param scopeElement
    *          The {@link ScopeImpl} to which the activities must be added.
    */
-  public void parseActivities(List<Element> activityElements, Element parentElement, ScopeImpl scopeElement) {
+  public void parseActivities(List<Element> activityElements, @Nullable Element parentElement, ScopeImpl scopeElement) {
     for (Element activityElement : activityElements) {
       parseActivity(activityElement, parentElement, scopeElement);
     }
   }
 
-  protected ActivityImpl parseActivity(Element activityElement, Element parentElement, ScopeImpl scopeElement) {
+  protected @Nullable ActivityImpl parseActivity(Element activityElement, @Nullable Element parentElement, ScopeImpl scopeElement) {
     ActivityImpl activity = null;
 
     boolean isMultiInstance = false;
@@ -1541,13 +1540,10 @@ public @NullMarked class BpmnParse extends Parse {
   }
 
   private boolean isDefaultFlow (PvmTransition flow, ActivityImpl activity) {
-    if (flow.getId() == null) {
-      return false;
-    }
     return Objects.equals(flow.getId(), activity.getProperty(PROPERTYNAME_DEFAULT));
   }
 
-  public ActivityImpl parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scopeElement, ActivityImpl eventBasedGateway) {
+  public ActivityImpl parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scopeElement, @Nullable ActivityImpl eventBasedGateway) {
     ActivityImpl nestedActivity = createActivityOnScope(intermediateEventElement, scopeElement);
 
     Element timerEventDefinition = intermediateEventElement.element(TIMER_EVENT_DEFINITION);
@@ -1644,7 +1640,7 @@ public @NullMarked class BpmnParse extends Parse {
     Element linkEventDefinitionElement = intermediateEventElement.element(LINK_EVENT_DEFINITION);
     Element messageEventDefinitionElement = intermediateEventElement.element(MESSAGE_EVENT_DEFINITION);
     Element escalationEventDefinition = intermediateEventElement.element(ESCALATION_EVENT_DEFINITION);
-    String elementId = intermediateEventElement.attribute("id");
+    String elementId = requireNonNull(intermediateEventElement.attribute("id"));
 
     // the link event gets a special treatment as a throwing link event (event
     // source)
@@ -1652,7 +1648,7 @@ public @NullMarked class BpmnParse extends Parse {
     // the catching link
     // event (event target)
     if (linkEventDefinitionElement != null) {
-      String linkName = linkEventDefinitionElement.attribute("name");
+      String linkName = requireNonNull(linkEventDefinitionElement.attribute("name"));
 
       // now we remember the link in order to replace the sequence flow later on
       eventLinkSources.put(elementId, linkName);
@@ -1854,7 +1850,7 @@ public @NullMarked class BpmnParse extends Parse {
     Element loopCardinality = miLoopCharacteristics.element("loopCardinality");
     if (loopCardinality != null) {
       String loopCardinalityText = loopCardinality.getText();
-      if (loopCardinalityText == null || "".equals(loopCardinalityText)) {
+      if (loopCardinalityText.isEmpty()) {
         addError("loopCardinality must be defined for a multiInstanceLoopCharacteristics definition ", miLoopCharacteristics, id);
       }
       behavior.setLoopCardinalityExpression(expressionManager.createExpression(loopCardinalityText));
@@ -1881,7 +1877,7 @@ public @NullMarked class BpmnParse extends Parse {
     Element loopDataInputRef = miLoopCharacteristics.element("loopDataInputRef");
     if (loopDataInputRef != null) {
       String loopDataInputRefText = loopDataInputRef.getText();
-      if (loopDataInputRefText != null) {
+      if (!loopDataInputRefText.isEmpty()) {
         if (loopDataInputRefText.contains("{")) {
           behavior.setCollectionExpression(expressionManager.createExpression(loopDataInputRefText));
         } else {
@@ -1900,7 +1896,11 @@ public @NullMarked class BpmnParse extends Parse {
     Element inputDataItem = miLoopCharacteristics.element("inputDataItem");
     if (inputDataItem != null) {
       String inputDataItemName = inputDataItem.attribute("name");
-      behavior.setCollectionElementVariable(inputDataItemName);
+      if (inputDataItemName != null && !inputDataItemName.isEmpty()) {
+        behavior.setCollectionElementVariable(inputDataItemName);
+      } else {
+        addError("inputDataItem must have a name attribute", miLoopCharacteristics, id);
+      }
     }
 
     // Validation
@@ -2025,29 +2025,18 @@ public @NullMarked class BpmnParse extends Parse {
    * @param jobConfiguration  the job configuration of the declaration
    */
   protected void removeMessageJobDeclarationWithJobConfiguration(ActivityImpl activity, String jobConfiguration) {
+    @SuppressWarnings("unchecked")
     List<MessageJobDeclaration> messageJobDeclarations = (List<MessageJobDeclaration>) activity.getProperty(PROPERTYNAME_MESSAGE_JOB_DECLARATION);
     if (messageJobDeclarations != null) {
-      Iterator<MessageJobDeclaration> iter = messageJobDeclarations.iterator();
-      while (iter.hasNext()) {
-        MessageJobDeclaration msgDecl = iter.next();
-        if (msgDecl.getJobConfiguration().equalsIgnoreCase(jobConfiguration)
-          && msgDecl.getActivityId().equalsIgnoreCase(activity.getActivityId())) {
-          iter.remove();
-        }
-      }
+        messageJobDeclarations.removeIf(msgDecl -> msgDecl.getJobConfiguration().equalsIgnoreCase(jobConfiguration)
+                && requireNonNull(msgDecl.getActivityId()).equalsIgnoreCase(activity.getActivityId()));
     }
 
     ProcessDefinition procDef = (ProcessDefinition) activity.getProcessDefinition();
     List<JobDeclaration<?, ?>> declarations = jobDeclarations.get(procDef.getKey());
     if (declarations != null) {
-      Iterator<JobDeclaration<?, ?>> iter = declarations.iterator();
-      while (iter.hasNext()) {
-        JobDeclaration<?, ?> jobDcl = iter.next();
-        if (jobDcl.getJobConfiguration().equalsIgnoreCase(jobConfiguration)
-            && jobDcl.getActivityId().equalsIgnoreCase(activity.getActivityId())) {
-          iter.remove();
-        }
-      }
+        declarations.removeIf(jobDcl -> jobDcl.getJobConfiguration().equalsIgnoreCase(jobConfiguration)
+                && requireNonNull(jobDcl.getActivityId()).equalsIgnoreCase(activity.getActivityId()));
     }
   }
 
@@ -2117,7 +2106,7 @@ public @NullMarked class BpmnParse extends Parse {
     return activity;
   }
 
-  public ActivityImpl parseEventBasedGateway(Element eventBasedGwElement, Element parentElement, ScopeImpl scope) {
+  public ActivityImpl parseEventBasedGateway(Element eventBasedGwElement, @Nullable Element parentElement, ScopeImpl scope) {
     ActivityImpl activity = createActivityOnScope(eventBasedGwElement, scope);
     activity.setActivityBehavior(new EventBasedGatewayActivityBehavior());
     activity.setScope(true);
@@ -2135,13 +2124,14 @@ public @NullMarked class BpmnParse extends Parse {
     }
 
     // find all outgoing sequence flows:
-    List<Element> seqFlows = parentElement.elements("sequenceFlow");
+    List<Element> seqFlows = parentElement != null ? parentElement.elements("sequenceFlow") : Collections.emptyList();
 
     // collect all siblings in a map
     Map<String, Element> siblingsMap = new HashMap<>();
-    List<Element> siblings = parentElement.elements();
+    List<Element> siblings = parentElement != null ? parentElement.elements() : Collections.emptyList();
     for (Element sibling : siblings) {
-      siblingsMap.put(sibling.attribute("id"), sibling);
+      String siblingId = requireNonNull(sibling.attribute("id"));
+      siblingsMap.put(siblingId, sibling);
     }
 
     for (Element sequenceFlow : seqFlows) {
@@ -2154,11 +2144,7 @@ public @NullMarked class BpmnParse extends Parse {
         if (sibling != null) {
           if (ActivityTypes.INTERMEDIATE_EVENT_CATCH.equals(sibling.getTagName())) {
             ActivityImpl catchEventActivity = parseIntermediateCatchEvent(sibling, scope, activity);
-
-            if (catchEventActivity != null) {
-              parseActivityInputOutput(sibling, catchEventActivity);
-            }
-
+            parseActivityInputOutput(sibling, catchEventActivity);
           } else {
             addError("Event based gateway can only be connected to elements of type intermediateCatchEvent", eventBasedGwElement);
           }
@@ -2217,7 +2203,7 @@ public @NullMarked class BpmnParse extends Parse {
    *          the script task element
    * @return the corresponding {@link ScriptTaskActivityBehavior}
    */
-  protected ScriptTaskActivityBehavior parseScriptTaskElement(Element scriptTaskElement) {
+  protected @Nullable ScriptTaskActivityBehavior parseScriptTaskElement(Element scriptTaskElement) {
     // determine script language
     String language = scriptTaskElement.attribute("scriptFormat");
     if (language == null) {
@@ -2242,7 +2228,7 @@ public @NullMarked class BpmnParse extends Parse {
     }
   }
 
-  protected String parseResultVariable(Element element) {
+  protected @Nullable String parseResultVariable(Element element) {
     // determine if result variable exists
     String resultVariableName = element.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, "resultVariable");
     if (resultVariableName == null) {
@@ -2409,7 +2395,7 @@ public @NullMarked class BpmnParse extends Parse {
     return activity;
   }
 
-  protected DecisionResultMapper parseDecisionResultMapper(Element businessRuleTaskElement) {
+  protected @Nullable DecisionResultMapper parseDecisionResultMapper(Element businessRuleTaskElement) {
     // default mapper is 'resultList'
     String decisionResultMapper = businessRuleTaskElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, "mapDecisionResult");
     DecisionResultMapper mapper = DecisionEvaluationUtil.getDecisionResultMapperForName(decisionResultMapper);
@@ -2462,7 +2448,7 @@ public @NullMarked class BpmnParse extends Parse {
     activity.setAsyncAfter(isAsyncAfter, exclusive);
   }
 
-  protected ParameterValueProvider parsePriority(Element element, String priorityAttribute) {
+  protected @Nullable ParameterValueProvider parsePriority(Element element, String priorityAttribute) {
     String priorityAttributeValue = element.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, priorityAttribute);
 
     if (priorityAttributeValue == null) {
@@ -2484,7 +2470,7 @@ public @NullMarked class BpmnParse extends Parse {
     }
   }
 
-  protected ParameterValueProvider parseTopic(Element element, String topicAttribute) {
+  protected @Nullable ParameterValueProvider parseTopic(Element element, String topicAttribute) {
     String topicAttributeValue = element.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, topicAttribute);
 
     if (topicAttributeValue == null) {
@@ -2571,6 +2557,10 @@ public @NullMarked class BpmnParse extends Parse {
     activity.setScope(true);
 
     ParameterValueProvider topicNameProvider = parseTopic(serviceTaskElement, PROPERTYNAME_EXTERNAL_TASK_TOPIC);
+    if (topicNameProvider == null) {
+      addError("External tasks must specify a 'topic' attribute in the operaton namespace", serviceTaskElement);
+    }
+    requireNonNull(topicNameProvider);
     ParameterValueProvider priorityProvider = parsePriority(serviceTaskElement, PROPERTYNAME_TASK_PRIORITY);
     Map<String, String> properties = parseOperatonExtensionProperties(operatonPropertiesElement);
     activity.getProperties().set(BpmnProperties.EXTENSION_PROPERTIES, properties);
@@ -2634,21 +2624,19 @@ public @NullMarked class BpmnParse extends Parse {
       elementWithFieldInjections = element;
     }
     List<Element> fieldDeclarationElements = elementWithFieldInjections.elementsNS(OPERATON_BPMN_EXTENSIONS_NS, "field");
-    if (fieldDeclarationElements != null && !fieldDeclarationElements.isEmpty()) {
-
-      for (Element fieldDeclarationElement : fieldDeclarationElements) {
-        FieldDeclaration fieldDeclaration = parseFieldDeclaration(element, fieldDeclarationElement);
-        if (fieldDeclaration != null) {
-          fieldDeclarations.add(fieldDeclaration);
-        }
+    for (Element fieldDeclarationElement : fieldDeclarationElements) {
+      FieldDeclaration fieldDeclaration = parseFieldDeclaration(element, fieldDeclarationElement);
+      if (fieldDeclaration != null) {
+        fieldDeclarations.add(fieldDeclaration);
       }
     }
 
     return fieldDeclarations;
   }
 
-  protected FieldDeclaration parseFieldDeclaration(Element serviceTaskElement, Element fieldDeclarationElement) {
+  protected @Nullable FieldDeclaration parseFieldDeclaration(Element serviceTaskElement, Element fieldDeclarationElement) {
     String fieldName = fieldDeclarationElement.attribute("name");
+    requireNonNull(fieldName, "Field name is required on field declaration");
 
     FieldDeclaration fieldDeclaration = parseStringFieldDeclaration(fieldDeclarationElement, serviceTaskElement, fieldName);
     if (fieldDeclaration == null) {
@@ -2662,9 +2650,10 @@ public @NullMarked class BpmnParse extends Parse {
     return fieldDeclaration;
   }
 
-  protected FieldDeclaration parseStringFieldDeclaration(Element fieldDeclarationElement, Element serviceTaskElement, String fieldName) {
+  protected @Nullable FieldDeclaration parseStringFieldDeclaration(Element fieldDeclarationElement, Element serviceTaskElement, String fieldName) {
     try {
-      String fieldValue = getStringValueFromAttributeOrElement("stringValue", "string", fieldDeclarationElement, serviceTaskElement.attribute("id"));
+      String serviceTaskId = serviceTaskElement.attribute("id");
+      String fieldValue = getStringValueFromAttributeOrElement("stringValue", "string", fieldDeclarationElement, serviceTaskId);
       if (fieldValue != null) {
         return new FieldDeclaration(fieldName, Expression.class.getName(), new FixedValue(fieldValue));
       }
@@ -2678,7 +2667,7 @@ public @NullMarked class BpmnParse extends Parse {
     return null;
   }
 
-  protected FieldDeclaration parseExpressionFieldDeclaration(Element fieldDeclarationElement, Element serviceTaskElement, String fieldName) {
+  protected @Nullable FieldDeclaration parseExpressionFieldDeclaration(Element fieldDeclarationElement, Element serviceTaskElement, String fieldName) {
     try {
       String expression = getStringValueFromAttributeOrElement(PROPERTYNAME_EXPRESSION, PROPERTYNAME_EXPRESSION, fieldDeclarationElement, serviceTaskElement.attribute("id"));
       if (expression != null && !expression.trim().isEmpty()) {
@@ -2694,7 +2683,7 @@ public @NullMarked class BpmnParse extends Parse {
     return null;
   }
 
-  protected String getStringValueFromAttributeOrElement(String attributeName, String elementName, Element element, String ancestorElementId) {
+  protected @Nullable String getStringValueFromAttributeOrElement(String attributeName, String elementName, Element element, @Nullable String ancestorElementId) {
     String value = null;
 
     String attributeValue = element.attribute(attributeName);
@@ -2705,7 +2694,7 @@ public @NullMarked class BpmnParse extends Parse {
       addError("Can't use attribute '%s' and element '%s' together, only use one".formatted(attributeName, elementName), element, ancestorElementId);
     } else if (childElement != null) {
       stringElementText = childElement.getText();
-      if (stringElementText == null || stringElementText.isEmpty()) {
+      if (stringElementText.isEmpty()) {
         addError("No valid value found in attribute '%s' nor element '%s'".formatted(attributeName, elementName), element, ancestorElementId);
       } else {
         // Use text of element
@@ -3018,9 +3007,9 @@ public @NullMarked class BpmnParse extends Parse {
    *
    * @return the entries of the comma separated list, trimmed.
    */
-  protected List<String> parseCommaSeparatedList(String s) {
+  protected List<String> parseCommaSeparatedList(@Nullable String s) {
     List<String> result = new ArrayList<>();
-    if (s != null && !"".equals(s)) {
+    if (s != null && !s.isEmpty()) {
 
       StringCharacterIterator iterator = new StringCharacterIterator(s);
       char character = iterator.first();
@@ -3078,7 +3067,7 @@ public @NullMarked class BpmnParse extends Parse {
     }
   }
 
-  protected TaskListener parseTaskListener(Element taskListenerElement, String taskElementId) {
+  protected @Nullable TaskListener parseTaskListener(Element taskListenerElement, String taskElementId) {
     TaskListener taskListener = null;
 
     String className = taskListenerElement.attribute(PROPERTYNAME_CLASS);
@@ -3303,6 +3292,7 @@ public @NullMarked class BpmnParse extends Parse {
 
       // determine the correct event scope (the scope in which the boundary event catches events)
       if (compensateEventDefinition == null) {
+        requireNonNull(attachedActivity);
         ActivityImpl multiInstanceScope = getMultiInstanceScope(attachedActivity);
         if (multiInstanceScope != null) {
           // if the boundary event is attached to a multi instance activity,
@@ -3404,7 +3394,7 @@ public @NullMarked class BpmnParse extends Parse {
     return errorEventDefinitions;
   }
 
-  protected ActivityImpl getMultiInstanceScope(ActivityImpl activity) {
+  protected @Nullable ActivityImpl getMultiInstanceScope(ActivityImpl activity) {
     if (activity.isMultiInstance()) {
       return activity.getParentFlowScopeActivity();
     } else {
@@ -3450,11 +3440,12 @@ public @NullMarked class BpmnParse extends Parse {
   public void parseBoundarySignalEventDefinition(Element element, boolean interrupting, ActivityImpl signalActivity) {
     signalActivity.getProperties().set(BpmnProperties.TYPE, ActivityTypes.BOUNDARY_SIGNAL);
 
-    EventSubscriptionDeclaration signalDefinition = parseSignalEventDefinition(element, false, signalActivity.getId());
-    if (signalActivity.getId() == null) {
+    String signalActivityId = signalActivity.getId();
+    EventSubscriptionDeclaration signalDefinition = parseSignalEventDefinition(element, false, signalActivityId);
+    if (signalActivityId == null) {
       addError("boundary event has no id", element);
     }
-    signalDefinition.setActivityId(signalActivity.getId());
+    signalDefinition.setActivityId(signalActivityId);
     addEventSubscriptionDeclaration(signalDefinition, signalActivity.getEventScope(), element);
 
     for (BpmnParseListener parseListener : parseListeners) {
@@ -3533,8 +3524,10 @@ public @NullMarked class BpmnParse extends Parse {
   }
 
   protected void parseSignalCatchEventDefinition(Element element, ActivityImpl signalActivity, boolean isStartEvent) {
-    EventSubscriptionDeclaration signalDefinition = parseSignalEventDefinition(element, false, signalActivity.getId());
-    signalDefinition.setActivityId(signalActivity.getId());
+    String signalActivityId = signalActivity.getId();
+    EventSubscriptionDeclaration signalDefinition = parseSignalEventDefinition(element, false, signalActivityId);
+    requireNonNull(signalDefinition);
+    signalDefinition.setActivityId(signalActivityId);
     signalDefinition.setStartEvent(isStartEvent);
     addEventSubscriptionDeclaration(signalDefinition, signalActivity.getEventScope(), element);
 
@@ -3550,9 +3543,9 @@ public @NullMarked class BpmnParse extends Parse {
    *
    * @param signalEventDefinitionElement the Signal Event Definition element
    * @param isThrowing true if a Throwing signal event is being parsed
-   * @return
+   * @return the parsed EventSubscriptionDeclaration, or null if parsing failed
    */
-  protected EventSubscriptionDeclaration parseSignalEventDefinition(Element signalEventDefinitionElement, boolean isThrowing, String signalElementId) {
+  protected @Nullable EventSubscriptionDeclaration parseSignalEventDefinition(Element signalEventDefinitionElement, boolean isThrowing, String signalElementId) {
     String signalRef = signalEventDefinitionElement.attribute("signalRef");
     if (signalRef == null) {
       addError("signalEventDefinition does not have required property 'signalRef'", signalEventDefinitionElement, signalElementId);
@@ -3598,7 +3591,7 @@ public @NullMarked class BpmnParse extends Parse {
     }
   }
 
-  protected TimerDeclarationImpl parseTimer(Element timerEventDefinition, ActivityImpl timerActivity, String jobHandlerType) {
+  protected TimerDeclarationImpl parseTimer(@Nullable Element timerEventDefinition, ActivityImpl timerActivity, String jobHandlerType) {
     // TimeDate
     TimerDeclarationType type = TimerDeclarationType.DATE;
     Expression expression = parseExpression(timerEventDefinition, "timeDate");
@@ -3625,7 +3618,7 @@ public @NullMarked class BpmnParse extends Parse {
       addError("Attribute \"id\" is required!", timerEventDefinition);
     }
     timerDeclaration.setActivity(timerActivity);
-    timerDeclaration.setJobConfiguration(type.toString() + ": " + expression.getExpressionText());
+    timerDeclaration.setJobConfiguration(type + ": " + (expression != null ? expression.getExpressionText() : null));
     addJobDeclarationToProcessDefinition(timerDeclaration, (ProcessDefinition) timerActivity.getProcessDefinition());
 
     timerDeclaration.setJobPriorityProvider((ParameterValueProvider) timerActivity.getProperty(PROPERTYNAME_JOB_PRIORITY));
@@ -3633,7 +3626,10 @@ public @NullMarked class BpmnParse extends Parse {
     return timerDeclaration;
   }
 
-  protected Expression parseExpression(Element parent, String name) {
+  protected @Nullable Expression parseExpression(@Nullable Element parent, String name) {
+    if (parent == null) {
+      return null;
+    }
     Element value = parent.element(name);
     if (value != null) {
       String expressionText = value.getText().trim();
@@ -3687,7 +3683,7 @@ public @NullMarked class BpmnParse extends Parse {
    *
    * @return referenced escalation or <code>null</code>, if referenced escalation not found
    */
-  protected Escalation findEscalationForEscalationEventDefinition(Element escalationEventDefinition, String escalationElementId) {
+  protected @Nullable Escalation findEscalationForEscalationEventDefinition(Element escalationEventDefinition, String escalationElementId) {
     String escalationRef = escalationEventDefinition.attribute("escalationRef");
     if (escalationRef == null) {
       addError("escalationEventDefinition does not have required attribute 'escalationRef'", escalationEventDefinition, escalationElementId);
@@ -3699,7 +3695,7 @@ public @NullMarked class BpmnParse extends Parse {
     return null;
   }
 
-  protected EscalationEventDefinition createEscalationEventDefinitionForEscalationHandler(Element escalationEventDefinitionElement, ActivityImpl escalationHandler, boolean cancelActivity, String parentElementId) {
+  protected @Nullable EscalationEventDefinition createEscalationEventDefinitionForEscalationHandler(Element escalationEventDefinitionElement, ActivityImpl escalationHandler, boolean cancelActivity, String parentElementId) {
     EscalationEventDefinition escalationEventDefinition = new EscalationEventDefinition(escalationHandler, cancelActivity);
 
     String escalationRef = escalationEventDefinitionElement.attribute("escalationRef");
@@ -4263,7 +4259,7 @@ public @NullMarked class BpmnParse extends Parse {
    * @param propertyType
    *          The type of the property.
    */
-  public void parsePropertyCustomExtensions(ActivityImpl activity, Element propertyElement, String propertyName, @Nullable String propertyType) {
+  public void parsePropertyCustomExtensions(ActivityImpl activity, Element propertyElement, @Nullable String propertyName, @Nullable String propertyType) {
 
     if (propertyType == null) {
       String type = propertyElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, TYPE);
@@ -4323,7 +4319,7 @@ public @NullMarked class BpmnParse extends Parse {
    */
   public void parseSequenceFlow(Element processElement, ScopeImpl scope, Map<String, Element> compensationHandlers) {
     for (Element sequenceFlowElement : processElement.elements("sequenceFlow")) {
-
+      requireNonNull(sequenceFlowElement);
       String id = sequenceFlowElement.attribute("id");
       String sourceRef = sequenceFlowElement.attribute(SOURCE_REF_ATTRIBUTE);
       String destinationRef = sequenceFlowElement.attribute(TARGET_REF_ATTRIBUTE);
@@ -4392,11 +4388,11 @@ public @NullMarked class BpmnParse extends Parse {
           destinationActivity = getMultiInstanceScope(destinationActivity);
         }
 
-        TransitionImpl transition = sourceActivity.createOutgoingTransition(id);
+        TransitionImpl transition = requireNonNull(sourceActivity).createOutgoingTransition(id);
         sequenceFlows.put(id, transition);
         transition.setProperty("name", sequenceFlowElement.attribute("name"));
         transition.setProperty(PROPERTYNAME_DOCUMENTATION, parseDocumentation(sequenceFlowElement));
-        transition.setDestination(destinationActivity);
+        transition.setDestination(requireNonNull(destinationActivity));
         parseSequenceFlowConditionExpression(sequenceFlowElement, transition);
         parseExecutionListenersOnTransition(sequenceFlowElement, transition);
 
@@ -4425,7 +4421,7 @@ public @NullMarked class BpmnParse extends Parse {
     }
   }
 
-  protected Condition parseConditionExpression(Element conditionExprElement, String ancestorElementId) {
+  protected @Nullable Condition parseConditionExpression(Element conditionExprElement, String ancestorElementId) {
     String expression = conditionExprElement.getText().trim();
     String type = conditionExprElement.attributeNS(XSI_NS, TYPE);
     String language = conditionExprElement.attribute(PROPERTYNAME_LANGUAGE);
@@ -4468,7 +4464,7 @@ public @NullMarked class BpmnParse extends Parse {
         if (isValidEventNameForScope(eventName, listenerElement, scopeElementId)) {
           ExecutionListener listener = parseExecutionListener(listenerElement, scopeElementId);
           if (listener != null) {
-            scope.addListener(eventName, listener);
+            scope.addListener(requireNonNull(eventName), listener);
           }
         }
       }
@@ -4479,7 +4475,7 @@ public @NullMarked class BpmnParse extends Parse {
    * Check if the given event name is valid. If not, an appropriate error is
    * added.
    */
-  protected boolean isValidEventNameForScope(String eventName, Element listenerElement, String ancestorElementId) {
+  protected boolean isValidEventNameForScope(@Nullable String eventName, Element listenerElement, @Nullable String ancestorElementId) {
     if (eventName != null && !eventName.trim().isEmpty()) {
       if ("start".equals(eventName) || "end".equals(eventName)) {
         return true;
@@ -4514,7 +4510,7 @@ public @NullMarked class BpmnParse extends Parse {
    * @param executionListenerElement
    *          the XML element containing the executionListener definition.
    */
-  public ExecutionListener parseExecutionListener(Element executionListenerElement, String ancestorElementId) {
+  public @Nullable ExecutionListener parseExecutionListener(Element executionListenerElement, @Nullable String ancestorElementId) {
     ExecutionListener executionListener = null;
 
     String className = executionListenerElement.attribute(PROPERTYNAME_CLASS);
@@ -4539,9 +4535,7 @@ public @NullMarked class BpmnParse extends Parse {
     } else if (scriptElement != null) {
       try {
         ExecutableScript executableScript = parseOperatonScript(scriptElement);
-        if (executableScript != null) {
-          executionListener = new ScriptExecutionListener(executableScript);
-        }
+        executionListener = new ScriptExecutionListener(executableScript);
       } catch (BpmnParseException e) {
         addError(e, ancestorElementId);
       }
@@ -4556,7 +4550,7 @@ public @NullMarked class BpmnParse extends Parse {
 
   public void parseDiagramInterchangeElements() {
     // Multiple BPMNDiagram possible
-    List<Element> diagrams = rootElement.elementsNS(BPMN_DI_NS, "BPMNDiagram");
+    List<Element> diagrams = getRootElement().elementsNS(BPMN_DI_NS, "BPMNDiagram");
     if (!diagrams.isEmpty()) {
       for (Element diagramElement : diagrams) {
         parseBPMNDiagram(diagramElement);
@@ -4574,10 +4568,11 @@ public @NullMarked class BpmnParse extends Parse {
 
   public void parseBPMNPlane(Element bpmnPlaneElement) {
     String bpmnElement = bpmnPlaneElement.attribute(BPMN_ELEMENT_ATTRIBUTE);
-    if (bpmnElement != null && !"".equals(bpmnElement)) {
+    if (bpmnElement != null && !bpmnElement.isEmpty()) {
       // there seems to be only on process without collaboration
-      if (getProcessDefinition(bpmnElement) != null) {
-        getProcessDefinition(bpmnElement).setGraphicalNotationDefined(true);
+      ProcessDefinitionEntity processDefinition = getProcessDefinition(bpmnElement);
+      if (processDefinition != null) {
+        processDefinition.setGraphicalNotationDefined(true);
       }
 
       List<Element> shapes = bpmnPlaneElement.elementsNS(BPMN_DI_NS, "BPMNShape");
@@ -4598,11 +4593,12 @@ public @NullMarked class BpmnParse extends Parse {
   public void parseBPMNShape(Element bpmnShapeElement) {
     String bpmnElement = bpmnShapeElement.attribute(BPMN_ELEMENT_ATTRIBUTE);
 
-    if (bpmnElement != null && !"".equals(bpmnElement)) {
+    if (bpmnElement != null && !bpmnElement.isEmpty()) {
       // For collaborations, their are also shape definitions for the
       // participants / processes
       if (participantProcesses.get(bpmnElement) != null) {
         ProcessDefinitionEntity procDef = getProcessDefinition(participantProcesses.get(bpmnElement));
+        requireNonNull(procDef);
         procDef.setGraphicalNotationDefined(true);
 
         // The participation that references this process, has a bounds to be
@@ -4655,8 +4651,8 @@ public @NullMarked class BpmnParse extends Parse {
 
   public void parseBPMNEdge(Element bpmnEdgeElement) {
     String sequenceFlowId = bpmnEdgeElement.attribute(BPMN_ELEMENT_ATTRIBUTE);
-    if (sequenceFlowId != null && !"".equals(sequenceFlowId)) {
-      if (sequenceFlows != null && sequenceFlows.containsKey(sequenceFlowId)) {
+    if (sequenceFlowId != null && !sequenceFlowId.isEmpty()) {
+      if (sequenceFlows.containsKey(sequenceFlowId)) {
 
         TransitionImpl sequenceFlow = sequenceFlows.get(sequenceFlowId);
         List<Element> waypointElements = bpmnEdgeElement.elementsNS(OMG_DI_NS, "waypoint");
@@ -4711,7 +4707,7 @@ public @NullMarked class BpmnParse extends Parse {
   }
 
   @Override
-  public BpmnParse sourceResource(String resource, ClassLoader classLoader) {
+  public BpmnParse sourceResource(String resource, @Nullable ClassLoader classLoader) {
     super.sourceResource(resource, classLoader);
     return this;
   }
@@ -4759,7 +4755,7 @@ public @NullMarked class BpmnParse extends Parse {
     return null;
   }
 
-  public Double parseDoubleAttribute(Element element, String attributeName, String doubleText, boolean required) {
+  public Double parseDoubleAttribute(Element element, String attributeName, @Nullable String doubleText, boolean required) {
     if (required && (doubleText == null || "".equals(doubleText))) {
       addError(attributeName + " is required", element);
     } else {
@@ -4789,7 +4785,7 @@ public @NullMarked class BpmnParse extends Parse {
     return TRUE.equals(element.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, "asyncAfter"));
   }
 
-  protected boolean isServiceTaskLike(Element element) {
+  protected boolean isServiceTaskLike(@Nullable Element element) {
 
     return element != null && (
           element.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, PROPERTYNAME_CLASS) != null
@@ -4896,7 +4892,7 @@ public @NullMarked class BpmnParse extends Parse {
     }
   }
 
-  protected ParameterValueProvider createParameterValueProvider(Object value, ExpressionManager expressionManager) {
+  protected ParameterValueProvider createParameterValueProvider(@Nullable Object value, ExpressionManager expressionManager) {
     if (value == null) {
       return new NullValueProvider();
 

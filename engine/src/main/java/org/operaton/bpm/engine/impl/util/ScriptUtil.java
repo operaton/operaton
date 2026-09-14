@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.delegate.Expression;
@@ -34,7 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-public final class ScriptUtil {
+public final @NullMarked class ScriptUtil {
 
   private ScriptUtil() {
   }
@@ -51,7 +52,7 @@ public final class ScriptUtil {
    * @return the newly created script
    * @throws NotValidException if language is null or empty or both of source and resource are null or empty
    */
-  public static ExecutableScript getScript(String language, String source, String resource, ExpressionManager expressionManager) {
+  public static ExecutableScript getScript(String language, String source, @Nullable String resource, ExpressionManager expressionManager) {
     return getScript(language, source, resource, expressionManager, getScriptFactory());
   }
 
@@ -165,7 +166,7 @@ public final class ScriptUtil {
    * @return the newly created script
    * @throws NotValidException if language or resource are null or empty
    */
-  public static ExecutableScript getScriptFromResource(String language, String resource, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScriptFromResource(String language, @Nullable String resource, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureNotEmpty(NotValidException.class, "Script resource", resource);
     return scriptFactory.createScriptFromResource(language, resource);
@@ -181,7 +182,7 @@ public final class ScriptUtil {
    * @return the newly created script
    * @throws NotValidException if language is null or empty or resourceExpression is null
    */
-  public static ExecutableScript getScriptFromResourceExpression(String language, Expression resourceExpression, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScriptFromResourceExpression(String language, @Nullable Expression resourceExpression, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureNotNull(NotValidException.class, "Script resource expression", resourceExpression);
     return scriptFactory.createScriptFromResource(language, resourceExpression);

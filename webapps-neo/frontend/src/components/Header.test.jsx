@@ -135,6 +135,31 @@ describe("Header", () => {
     });
   });
 
+  it("goes back to the start once the session has ended", async () => {
+    mockUrl = "/tasks/t1/form";
+    state.auth.user.id.value = "alice";
+    engine_rest.auth.logout.mockImplementation(async () => {
+      state.auth.user.id.value = null;
+    });
+    const { container } = renderHeader(state);
+
+    fireEvent.click(container.querySelector("#logout"));
+    await vi.waitFor(() => expect(route).toHaveBeenCalledWith("/"));
+  });
+
+  it("stays put when the server refuses the sign-out", async () => {
+    mockUrl = "/tasks/t1/form";
+    state.auth.user.id.value = "alice";
+    // A refused logout leaves the session alone; moving the user would say
+    // otherwise.
+    engine_rest.auth.logout.mockResolvedValue(undefined);
+    const { container } = renderHeader(state);
+
+    fireEvent.click(container.querySelector("#logout"));
+    await vi.waitFor(() => expect(engine_rest.auth.logout).toHaveBeenCalled());
+    expect(route).not.toHaveBeenCalledWith("/");
+  });
+
   it("calls engine_rest.auth.logout when the logout button is clicked", () => {
     const { container } = renderHeader(state);
     fireEvent.click(container.querySelector("#logout"));

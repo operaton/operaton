@@ -70,7 +70,14 @@ export function Header() {
     showSearch = () => document.getElementById("global-search").showModal(),
     show_mobile_menu = () => document.getElementById("mobile-menu").showModal(),
     close_mobile_menu = () => document.getElementById("mobile-menu").close(),
-    logout = () => engine_rest.auth.logout(state);
+    // Leave the page behind: after signing out the address would otherwise
+    // still name a task or an instance the next person may not open at all.
+    // Only once the session really ended — a logout the server refuses leaves
+    // the user signed in, and moving them then would say otherwise.
+    logout = async () => {
+      await engine_rest.auth.logout(state);
+      if (!state.auth.user.id.peek()) route("/");
+    };
 
   useHotkeys("alt+shift+0", () => route("/"));
   useHotkeys("alt+shift+1", () => route("/tasks"));

@@ -1,6 +1,6 @@
 import { useSignal } from "@preact/signals";
 import { useLocation, useRoute } from "preact-iso";
-import { useContext, useEffect, useLayoutEffect } from "preact/hooks";
+import { useContext, useEffect, useLayoutEffect, useRef } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 
 import engine_rest, {
@@ -158,7 +158,7 @@ const derive_query = (current_query, patch) => {
   return out;
 };
 
-const load_tasks = (state, query, firstResult = 0) => {
+const load_tasks = (state, query, firstResult = 0, pageSize = TASK_PAGE_SIZE) => {
   const filterValue = query?.filter,
     sortBy = query?.sortBy ?? "name",
     sortOrder = query?.sortOrder ?? "asc",
@@ -168,7 +168,7 @@ const load_tasks = (state, query, firstResult = 0) => {
       state,
       filterValue,
       firstResult,
-      TASK_PAGE_SIZE,
+      pageSize,
       sorting,
     );
   } else {
@@ -181,15 +181,24 @@ const load_tasks = (state, query, firstResult = 0) => {
       sortBy,
       sortOrder,
       firstResult,
-      TASK_PAGE_SIZE,
+      pageSize,
       filter,
     );
   }
 };
 
+// Reload the list from the top, keeping however many entries are already shown.
+// A plain reload starts at firstResult 0, which replaces the list and would undo
+// "load more"; asking for as many as are on screen refreshes all of them at once.
+const reload_tasks = (state, query) => {
+  const shown = state.api.task.list.value?.data?.length ?? 0;
+  load_tasks(state, query, 0, Math.max(shown, TASK_PAGE_SIZE));
+};
+
 const TasksPage = () => {
   const state = useContext(AppState);
   const { params, query } = useRoute();
+  const open_task_id = useRef(undefined);
 
   useEffect(() => {
     if (state.api.filter.list.value === null) {
@@ -204,6 +213,18 @@ const TasksPage = () => {
     // sortBy, sortOrder. JSON-stringify is the simplest stable dep here.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.filter, query.sortBy, query.sortOrder]);
+
+  useEffect(() => {
+    // Completing a task routes back to /tasks, and so does navigating back by
+    // hand. Either way the list still holds what it fetched before, including
+    // the task that is now gone. Reload it on the way back — never on the way
+    // in, so opening a task costs no extra request.
+    const returned_to_list =
+      open_task_id.current !== undefined && params.task_id === undefined;
+    open_task_id.current = params.task_id;
+    if (returned_to_list) reload_tasks(state, query);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.task_id]);
 
   if (params?.task_id === "start") {
     return (

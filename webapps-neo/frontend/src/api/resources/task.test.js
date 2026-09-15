@@ -93,21 +93,37 @@ describe("api/resources/task", () => {
     });
   });
 
-  it("claim_task POSTs the current user id", () => {
+  it("claim_task POSTs the signed-in user id", () => {
+    state.auth.user.id.value = "alice";
     task.claim_task(state, "t1");
     expect_api_call(POST, {
       url: "/task/t1/claim",
-      body: { userId: "demo" },
+      body: { userId: "alice" },
       state,
       signal: state.api.task.claim_result,
     });
   });
 
-  it("unclaim_task POSTs the current user id", () => {
+  it("claim_task ignores whichever profile the admin page last loaded", () => {
+    // The Admin page loads the profile of the user being edited into the same
+    // signal, so it must not be the source of "me".
+    state.auth.user.id.value = "alice";
+    state.api.user.profile.value = { data: { id: "bob" } };
+    task.claim_task(state, "t1");
+    expect_api_call(POST, {
+      url: "/task/t1/claim",
+      body: { userId: "alice" },
+      state,
+      signal: state.api.task.claim_result,
+    });
+  });
+
+  it("unclaim_task POSTs the signed-in user id", () => {
+    state.auth.user.id.value = "alice";
     task.unclaim_task(state, "t1");
     expect_api_call(POST, {
       url: "/task/t1/unclaim",
-      body: { userId: "demo" },
+      body: { userId: "alice" },
       state,
       signal: state.api.task.unclaim_result,
     });

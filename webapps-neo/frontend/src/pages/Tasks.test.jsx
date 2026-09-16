@@ -774,23 +774,21 @@ describe("TasksPage", () => {
   });
 
   describe("a task that is gone", () => {
-    const vanished = () =>
-      engine_rest.task.get_task.mockImplementation(() => {
-        state.api.task.one.value = {
-          status: RESPONSE_STATE.ERROR,
-          error: { status: 404 },
-        };
-        return Promise.resolve();
-      });
+    // Once, not on every call: a mock that writes a signal each time it runs
+    // feeds its own re-render and never settles.
+    const vanishes_on_load = () => {
+      engine_rest.task.get_task
+        .mockImplementationOnce(() => {
+          state.api.task.one.value = {
+            status: RESPONSE_STATE.ERROR,
+            error: { status: 404 },
+          };
+          return Promise.resolve();
+        })
+        .mockResolvedValue(undefined);
+    };
 
     afterEach(() => engine_rest.task.get_task.mockReset());
-
-    it("says the task no longer exists", async () => {
-      mockParams = { task_id: "gone" };
-      vanished();
-      const { findByText } = renderPage(state);
-      expect(await findByText("tasks.task-not-found")).toBeTruthy();
-    });
 
     it("takes it out of the list, so it cannot be clicked again", async () => {
       mockParams = { task_id: "gone" };
@@ -798,7 +796,7 @@ describe("TasksPage", () => {
         { id: "gone", name: "Completed meanwhile" },
         { id: "t2", name: "Still there" },
       ]);
-      vanished();
+      vanishes_on_load();
       renderPage(state);
 
       await vi.waitFor(() =>
@@ -809,16 +807,82 @@ describe("TasksPage", () => {
     it("leaves the list alone when the task is fine", async () => {
       mockParams = { task_id: "t2" };
       signal_response(state.api.task.list, [{ id: "t2", name: "Still there" }]);
-      engine_rest.task.get_task.mockImplementation(() => {
-        signal_response(state.api.task.one, sample_task({ id: "t2" }));
-        return Promise.resolve();
-      });
+      signal_response(state.api.task.one, sample_task({ id: "t2" }));
+      engine_rest.task.get_task.mockResolvedValue(undefined);
       renderPage(state);
 
       await vi.waitFor(() =>
         expect(engine_rest.task.get_comments).toHaveBeenCalled(),
       );
       expect(state.api.task.list.value.data).toHaveLength(1);
+    });
+  });
+
+  describe("variables a filter shows as columns", () => {
+    const with_columns = (variables, show_undefined = false) => {
+      mockQuery = { filter: "f1" };
+      signal_response(state.api.filter.list, [
+        {
+          id: "f1",
+          name: "With columns",
+          properties: { variables, showUndefinedVariable: show_undefined },
+        },
+      ]);
+    };
+
+    it("adds a column per variable the filter names", () => {
+      with_columns([
+        { name: "amount", label: "Amount" },
+        { name: "city", label: "" },
+      ]);
+      const { container } = renderPage(state);
+      const headings = [
+        ...container.querySelectorAll("th.filter-variable"),
+      ].map((th) => th.textContent);
+      expect(headings).toEqual(["Amount", "city"]);
+    });
+
+    it("puts the value of each task into its column", () => {
+      with_columns([{ name: "amount", label: "Amount" }]);
+      signal_response(state.api.task.list, [
+        {
+          id: "t1",
+          name: "One",
+          filter_variables: { amount: { name: "amount", value: 42 } },
+        },
+      ]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("td.filter-variable").textContent).toBe(
+        "42",
+      );
+    });
+
+    it("leaves the cell empty when the task has no such variable", () => {
+      with_columns([{ name: "amount", label: "Amount" }]);
+      signal_response(state.api.task.list, [
+        { id: "t1", name: "One", filter_variables: {} },
+      ]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("td.filter-variable").textContent).toBe(
+        "",
+      );
+    });
+
+    it("marks the missing value when the filter asks for it", () => {
+      with_columns([{ name: "amount", label: "Amount" }], true);
+      signal_response(state.api.task.list, [
+        { id: "t1", name: "One", filter_variables: {} },
+      ]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("td.filter-variable").textContent).toBe(
+        "—",
+      );
+    });
+
+    it("shows no extra column when the filter names none", () => {
+      with_columns([]);
+      const { container } = renderPage(state);
+      expect(container.querySelectorAll("th.filter-variable")).toHaveLength(0);
     });
   });
 

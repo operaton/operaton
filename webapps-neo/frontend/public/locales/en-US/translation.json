@@ -991,7 +991,12 @@
       "like": "contains",
       "notLike": "does not contain"
     },
-    "duplicate_criterion": "Each criterion may be used once. Used twice: {{keys}}"
+    "duplicate_criterion": "Each criterion may be used once. Used twice: {{keys}}",
+    "columns": "Columns",
+    "add_column": "Add a column",
+    "column_label": "Heading",
+    "show_undefined": "Show tasks that do not carry the variable",
+    "columns_hint": "Variables named here appear as extra columns of the task list."
   },
   "login": {
     "title": "Login",

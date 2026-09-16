@@ -21,6 +21,7 @@ import {
   keep_list_query,
 } from "../helper/list_query.js";
 import { resolve_user } from "../api/helper.jsx";
+import { format_variable_value } from "../helper/variables.js";
 import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
 import { ConfirmDialog } from "../components/Dialog.jsx";
@@ -513,6 +514,14 @@ const TaskList = () => {
     criteria: parse_list_query(query).criteria,
   };
 
+  // Columns a saved filter asks for, with the values HAL brought along.
+  const active_filter = (state.api.filter.list.value?.data ?? []).find(
+    (f) => f.id === query?.filter,
+  );
+  const filter_variables = active_filter?.properties?.variables ?? [];
+  const show_undefined =
+    active_filter?.properties?.showUndefinedVariable === true;
+
   return (
     <div id="task-list">
       <h2 class="screen-hidden">{t("tasks.title")}</h2>
@@ -539,6 +548,16 @@ const TaskList = () => {
                 {t("tasks.task-list.table-headings.assignee")}
               </th>
               <th scope="col">{t("tasks.task-list.table-headings.due-in")}</th>
+              {filter_variables.map((v) => (
+                <th
+                  scope="col"
+                  class="filter-variable"
+                  key={v.name}
+                  title={v.name}
+                >
+                  {v.label || v.name}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -549,6 +568,8 @@ const TaskList = () => {
                   <TaskRowEntry
                     key={task.id}
                     task={task}
+                    columns={filter_variables}
+                    show_undefined={show_undefined}
                     selected={task.id === selectedTaskId}
                   />
                 ))
@@ -574,7 +595,7 @@ const TaskList = () => {
   );
 };
 
-const TaskRowEntry = ({ task, selected }) => {
+const TaskRowEntry = ({ task, columns = [], show_undefined, selected }) => {
   const { id, name, due, assignee } = task,
     { query } = useRoute(),
     // Opening a task must not drop the chosen filter and sorting: they live in
@@ -596,6 +617,18 @@ const TaskRowEntry = ({ task, selected }) => {
       </th>
       <td>{assignee ? assignee : "—"}</td>
       <td>{due ? <RelativeTime datetime={due} /> : "—"}</td>
+      {columns.map((column) => {
+        const held = task.filter_variables?.[column.name];
+        return (
+          <td class="filter-variable" key={column.name}>
+            {held
+              ? format_variable_value(held.value)
+              : show_undefined
+                ? "—"
+                : ""}
+          </td>
+        );
+      })}
     </tr>
   );
 };

@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { screen } from "@testing-library/preact";
+import { screen, fireEvent } from "@testing-library/preact";
 import { signal } from "@preact/signals";
-import { fireEvent } from "@testing-library/preact";
 import { render_with_state } from "../test/render.jsx";
 import {
   FilterEditForm,
@@ -48,7 +47,7 @@ describe("criteria of a saved filter", () => {
         { key: "priority", value: "50" },
       ]),
     );
-    const { getAllByText, container } = render_with_state(
+    const { getAllByText } = render_with_state(
       <FilterEditForm
         filter_keys={FILTER_KEYS}
         sort_options={[]}
@@ -435,6 +434,48 @@ describe("variable criteria", () => {
         "PENDING",
         "RESOLVED",
       ]);
+    });
+  });
+
+  describe("the variables a filter shows as columns", () => {
+    it("stores what was entered in the filter's properties", () => {
+      const body = filter_from_form(
+        {
+          ...form_with([]),
+          columns: [
+            { name: "amount", label: "Amount" },
+            { name: "city", label: "" },
+          ],
+          show_undefined: true,
+        },
+        FILTER_KEYS,
+      );
+      expect(body.properties.variables).toEqual([
+        { name: "amount", label: "Amount" },
+        { name: "city", label: "city" },
+      ]);
+      expect(body.properties.showUndefinedVariable).toBe(true);
+    });
+
+    it("leaves out a column that was never given a name", () => {
+      const body = filter_from_form(
+        { ...form_with([]), columns: [{ name: "  ", label: "Nothing" }] },
+        FILTER_KEYS,
+      );
+      expect(body.properties.variables).toEqual([]);
+    });
+
+    it("reads the columns back out of a saved filter", () => {
+      const form = filter_form_from_saved({
+        name: "With columns",
+        query: {},
+        properties: {
+          variables: [{ name: "amount", label: "Amount" }],
+          showUndefinedVariable: true,
+        },
+      });
+      expect(form.columns).toEqual([{ name: "amount", label: "Amount" }]);
+      expect(form.show_undefined).toBe(true);
     });
   });
 });

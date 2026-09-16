@@ -6,6 +6,7 @@ import { resolve_user } from "../api/helper.jsx";
 import engine_rest from "../api/engine_rest.jsx";
 import { useRoute, useLocation } from "preact-iso";
 import { CamundaForm } from "./CamundaForm.jsx";
+import { VariableRows, repeated_names } from "./VariableRows.jsx";
 import {
   vars_to_form_data,
   form_data_to_vars,
@@ -14,10 +15,8 @@ import {
   form_ref_of,
 } from "./TaskForm_helpers.js";
 import {
-  VARIABLE_TYPES,
   coerce_variable_value,
   variable_edit_value,
-  variable_input_type,
 } from "../helper/variables.js";
 
 const TaskForm = () => {
@@ -320,17 +319,8 @@ const GenericTaskForm = ({ task, taskId }) => {
   if (!form_variables)
     return <p class="fade-in-delayed">{t("common.loading")}</p>;
 
-  const update = (index, field, value) =>
-      (rows.value = rows
-        .peek()
-        .map((row, i) => (i === index ? { ...row, [field]: value } : row))),
-    add = () =>
-      (rows.value = [...rows.peek(), { name: "", type: "String", value: "" }]),
-    remove = (index) =>
-      (rows.value = rows.peek().filter((_, i) => i !== index));
-
   const named = rows.value.filter((row) => row.name.trim() !== ""),
-    duplicate = named.length !== new Set(named.map((r) => r.name.trim())).size;
+    duplicate = repeated_names(rows.value);
 
   const complete = () => {
     if (duplicate) {
@@ -357,80 +347,13 @@ const GenericTaskForm = ({ task, taskId }) => {
 
   return (
     <div class="task-form generic-task-form">
-      {rows.value.length > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">{t("common.name")}</th>
-              <th scope="col">{t("common.type")}</th>
-              <th scope="col">{t("common.value")}</th>
-              <th scope="col">{t("common.action")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.value.map((row, i) => (
-              <tr key={i}>
-                <td>
-                  <input
-                    aria-label={t("common.name")}
-                    value={row.name}
-                    disabled={!mine}
-                    onInput={(e) => update(i, "name", e.currentTarget.value)}
-                  />
-                </td>
-                <td>
-                  <select
-                    aria-label={t("common.type")}
-                    value={row.type}
-                    disabled={!mine}
-                    onChange={(e) => update(i, "type", e.currentTarget.value)}
-                  >
-                    {VARIABLE_TYPES.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  {variable_input_type(row.type) === "none" ? null : (
-                    <input
-                      type={variable_input_type(row.type)}
-                      aria-label={t("common.value")}
-                      value={row.value}
-                      disabled={!mine}
-                      onInput={(e) => update(i, "value", e.currentTarget.value)}
-                    />
-                  )}
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    class="danger"
-                    disabled={!mine}
-                    onClick={() => remove(i)}
-                  >
-                    {t("common.remove")}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      <div class="button-group">
-        <button type="button" disabled={!mine} onClick={add}>
-          {t("tasks.form.add-variable")}
-        </button>
-      </div>
+      <VariableRows
+        rows={rows.value}
+        disabled={!mine}
+        on_change={(next) => (rows.value = next)}
+      />
 
       {!mine && <p class="info-box">{t("tasks.form.claim-first")}</p>}
-      {duplicate && (
-        <p class="error" role="alert">
-          {t("tasks.form.duplicate-variable")}
-        </p>
-      )}
       {error && (
         <p class="error" role="alert">
           {error}

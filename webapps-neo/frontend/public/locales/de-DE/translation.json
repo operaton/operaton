@@ -991,7 +991,12 @@
       "like": "enthält",
       "notLike": "enthält nicht"
     },
-    "duplicate_criterion": "Jedes Kriterium darf einmal vorkommen. Doppelt: {{keys}}"
+    "duplicate_criterion": "Jedes Kriterium darf einmal vorkommen. Doppelt: {{keys}}",
+    "columns": "Spalten",
+    "add_column": "Spalte hinzufügen",
+    "column_label": "Überschrift",
+    "show_undefined": "Aufgaben ohne die Variable ebenfalls zeigen",
+    "columns_hint": "Hier benannte Variablen erscheinen als zusätzliche Spalten der Aufgabenliste."
   },
   "login": {
     "title": "Anmelden",

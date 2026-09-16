@@ -48,6 +48,24 @@ export const FilterEditForm = ({
 
   const update = (key, value) =>
     (form.value = { ...form.peek(), [key]: value });
+  const add_column = () =>
+      update("columns", [
+        ...(form.peek().columns ?? []),
+        { name: "", label: "" },
+      ]),
+    remove_column = (index) =>
+      update(
+        "columns",
+        (form.peek().columns ?? []).filter((_, i) => i !== index),
+      ),
+    update_column = (index, field, value) =>
+      update(
+        "columns",
+        (form.peek().columns ?? []).map((c, i) =>
+          i === index ? { ...c, [field]: value } : c,
+        ),
+      );
+
   const add_criterion = () =>
     update("criteria", [
       ...form.peek().criteria,
@@ -149,6 +167,62 @@ export const FilterEditForm = ({
             })}
           </p>
         )}
+      </fieldset>
+
+      <fieldset>
+        <legend>{t("list_filter.columns")}</legend>
+        <p class="hint">{t("list_filter.columns_hint")}</p>
+        {form.value.columns?.length > 0 && (
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">{t("list_filter.variable_name")}</th>
+                <th scope="col">{t("list_filter.column_label")}</th>
+                <th scope="col">{t("common.action")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {form.value.columns.map((column, i) => (
+                <tr key={i}>
+                  <td>
+                    <input
+                      aria-label={t("list_filter.variable_name")}
+                      value={column.name}
+                      onInput={(e) =>
+                        update_column(i, "name", e.currentTarget.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      aria-label={t("list_filter.column_label")}
+                      value={column.label}
+                      onInput={(e) =>
+                        update_column(i, "label", e.currentTarget.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <button type="button" onClick={() => remove_column(i)}>
+                      {t("common.remove")}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <button type="button" onClick={add_column}>
+          {t("list_filter.add_column")}
+        </button>
+        <label>
+          <input
+            type="checkbox"
+            checked={form.value.show_undefined === true}
+            onInput={(e) => update("show_undefined", e.currentTarget.checked)}
+          />
+          {t("list_filter.show_undefined")}
+        </label>
       </fieldset>
 
       <fieldset>
@@ -300,11 +374,18 @@ export const empty_filter_form = () => ({
   sortBy: "",
   sortOrder: "asc",
   criteria: [],
+  columns: [],
+  show_undefined: false,
 });
 
 export const filter_form_from_saved = (filter) => ({
   id: filter.id ?? null,
   name: filter.name ?? "",
+  columns: (filter.properties?.variables ?? []).map((v) => ({
+    name: v.name ?? "",
+    label: v.label ?? "",
+  })),
+  show_undefined: filter.properties?.showUndefinedVariable === true,
   sortBy: filter.sort?.sortBy ?? "",
   sortOrder: filter.sort?.sortOrder ?? "asc",
   criteria: Object.entries(filter.query ?? {}).flatMap(([key, value]) =>
@@ -348,6 +429,16 @@ export const filter_from_form = (f, filter_keys) => {
   return {
     name: f.name.trim(),
     query,
+    // Variables the list shows as columns, in the shape the engine stores.
+    properties: {
+      variables: (f.columns ?? [])
+        .filter((c) => c.name.trim() !== "")
+        .map((c) => ({
+          name: c.name.trim(),
+          label: c.label.trim() || c.name.trim(),
+        })),
+      showUndefinedVariable: f.show_undefined === true,
+    },
     ...(f.sortBy ? { sort: { sortBy: f.sortBy, sortOrder: f.sortOrder } } : {}),
   };
 };

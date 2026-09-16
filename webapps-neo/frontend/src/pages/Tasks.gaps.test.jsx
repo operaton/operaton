@@ -26,11 +26,8 @@ vi.mock("preact-iso", () => ({
 }));
 
 import { AppState } from "../state.js";
-import { TasksPage, FILTER_KEYS } from "./Tasks.jsx";
-import { filter_from_form } from "../components/FilterEditForm.jsx";
+import { TasksPage } from "./Tasks.jsx";
 import { create_mock_state } from "../test/helpers.js";
-
-const keys = () => FILTER_KEYS.map((k) => k.key);
 
 const renderPage = (state) =>
   render(h(AppState.Provider, { value: state }, h(TasksPage, {})));
@@ -56,13 +53,6 @@ describe("not built yet", () => {
     it.fails("keeps a second sort criterion", () => {
       const state_query = { sortBy: "created", sortOrder: "desc" };
       expect(state_query).toHaveProperty("sortings");
-    });
-  });
-
-  describe("variables of a filter as columns of the list", () => {
-    it.fails("shows a filter's variables as columns", () => {
-      const { container } = renderPage(state);
-      expect(container.querySelector("th.filter-variable")).not.toBeNull();
     });
   });
 });

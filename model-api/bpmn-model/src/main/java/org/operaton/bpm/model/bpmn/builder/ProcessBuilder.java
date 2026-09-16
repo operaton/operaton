@@ -18,6 +18,8 @@ package org.operaton.bpm.model.bpmn.builder;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.instance.StartEvent;
@@ -25,10 +27,12 @@ import org.operaton.bpm.model.bpmn.instance.SubProcess;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Sebastian Menski
  */
-public class ProcessBuilder extends AbstractProcessBuilder<ProcessBuilder> {
+public @NullMarked class ProcessBuilder extends AbstractProcessBuilder<ProcessBuilder> {
 
   public ProcessBuilder(BpmnModelInstance modelInstance, Process process) {
     super(modelInstance, process, ProcessBuilder.class);
@@ -38,9 +42,10 @@ public class ProcessBuilder extends AbstractProcessBuilder<ProcessBuilder> {
     return startEvent(null);
   }
 
-  public StartEventBuilder startEvent(String id) {
+  public StartEventBuilder startEvent(@Nullable String id) {
     StartEvent start = createChild(StartEvent.class, id);
     BpmnShape bpmnShape = createBpmnShape(start);
+    requireNonNull(bpmnShape);
     setCoordinates(bpmnShape);
     return start.builder();
   }
@@ -49,13 +54,14 @@ public class ProcessBuilder extends AbstractProcessBuilder<ProcessBuilder> {
     return eventSubProcess(null);
   }
 
-  public EventSubProcessBuilder eventSubProcess(String id) {
+  public EventSubProcessBuilder eventSubProcess(@Nullable String id) {
     // Create a subprocess, triggered by an event, and add it to modelInstance
     SubProcess subProcess = createChild(SubProcess.class, id);
     subProcess.setTriggeredByEvent(true);
 
     // Create Bpmn shape so subprocess will be drawn
     BpmnShape targetBpmnShape = createBpmnShape(subProcess);
+    requireNonNull(targetBpmnShape);
     //find the lowest shape in the process
     // place event sub process underneath
     setEventSubProcessCoordinates(targetBpmnShape);
@@ -88,8 +94,8 @@ public class ProcessBuilder extends AbstractProcessBuilder<ProcessBuilder> {
       }
     }
 
-    Double ycoord = lowestheight + 50.0;
-    Double xcoord = 100.0;
+    double ycoord = lowestheight + 50.0;
+    double xcoord = 100.0;
 
     // move target
     targetBounds.setY(ycoord);

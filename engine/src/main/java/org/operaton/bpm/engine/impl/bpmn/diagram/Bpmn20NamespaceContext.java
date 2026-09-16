@@ -26,6 +26,7 @@ import java.util.Set;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.xpath.XPath;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 
@@ -38,7 +39,7 @@ import org.jspecify.annotations.Nullable;
  *
  * @author Falko Menge
  */
-public class Bpmn20NamespaceContext implements NamespaceContext {
+public @NullMarked class Bpmn20NamespaceContext implements NamespaceContext {
 
   public static final String BPMN = "bpmn";
   public static final String BPMNDI = "bpmndi";
@@ -63,7 +64,7 @@ public class Bpmn20NamespaceContext implements NamespaceContext {
   }
 
   @Override
-  public String getPrefix(String namespaceURI) {
+  public @Nullable String getPrefix(String namespaceURI) {
     return getKeyByValue(namespaceUris, namespaceURI);
   }
 
@@ -82,7 +83,7 @@ public class Bpmn20NamespaceContext implements NamespaceContext {
     return keys;
   }
 
-  private static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+  private static <T, E> @Nullable T getKeyByValue(Map<T, E> map, E value) {
     for (Entry<T, E> entry : map.entrySet()) {
       if (value.equals(entry.getValue())) {
         return entry.getKey();

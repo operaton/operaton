@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -72,7 +73,7 @@ public @NullMarked class ClassDelegateActivityBehavior extends AbstractBpmnActiv
 
   // Signallable activity behavior
   @Override
-  public void signal(final ActivityExecution execution, final String signalName, final Object signalData) throws Exception {
+  public void signal(final ActivityExecution execution, final @Nullable String signalName, final @Nullable Object signalData) throws Exception {
     ProcessApplicationReference targetProcessApplication = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
     if(ProcessApplicationContextUtil.requiresContextSwitch(targetProcessApplication)) {
       Context.executeWithinProcessApplication(() -> {
@@ -85,7 +86,7 @@ public @NullMarked class ClassDelegateActivityBehavior extends AbstractBpmnActiv
     }
   }
 
-  protected void doSignal(final ActivityExecution execution, final String signalName, final Object signalData) throws Exception {
+  protected void doSignal(final ActivityExecution execution, final @Nullable String signalName, final @Nullable Object signalData) throws Exception {
     final ActivityBehavior activityBehaviorInstance = getActivityBehaviorInstance(execution);
 
     if (activityBehaviorInstance instanceof CustomActivityBehavior behavior) {

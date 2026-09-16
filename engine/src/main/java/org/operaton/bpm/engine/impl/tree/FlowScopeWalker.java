@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.tree;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
@@ -24,14 +26,14 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
  *
  * @author Thorben Lindhauer
  */
-public class FlowScopeWalker extends SingleReferenceWalker<ScopeImpl> {
+public @NullMarked class FlowScopeWalker extends SingleReferenceWalker<ScopeImpl> {
 
   public FlowScopeWalker(ScopeImpl startActivity) {
     super(startActivity);
   }
 
   @Override
-  protected ScopeImpl nextElement() {
+  protected @Nullable ScopeImpl nextElement() {
     ScopeImpl currentElement = getCurrentElement();
     if (currentElement != null && ActivityImpl.class.isAssignableFrom(currentElement.getClass())) {
       return currentElement.getFlowScope();

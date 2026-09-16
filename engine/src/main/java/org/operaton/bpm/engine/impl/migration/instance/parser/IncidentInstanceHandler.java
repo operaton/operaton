@@ -20,9 +20,12 @@ import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance
 import org.operaton.bpm.engine.impl.migration.instance.MigratingExternalTaskInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingIncident;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingJobInstance;
+import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.runtime.Incident.EXTERNAL_TASK_HANDLER_TYPE;
 import static org.operaton.bpm.engine.runtime.Incident.FAILED_JOB_HANDLER_TYPE;
 
@@ -46,7 +49,10 @@ public class IncidentInstanceHandler implements MigratingInstanceParseHandler<In
   }
 
   protected void handleIncident(MigratingInstanceParseContext parseContext, IncidentEntity incident) {
-    MigratingActivityInstance owningInstance = parseContext.getMigratingActivityInstanceById(incident.getExecution().getActivityInstanceId());
+    ExecutionEntity execution = incident.getExecution();
+    ensureNotNull("Cannot handle incident " + incident + ": it is not attached to an execution", "execution", execution);
+    requireNonNull(execution);
+    MigratingActivityInstance owningInstance = parseContext.getMigratingActivityInstanceById(execution.getActivityInstanceId());
     if (owningInstance != null) {
       parseContext.consume(incident);
       MigratingIncident migratingIncident = new MigratingIncident(incident, owningInstance.getTargetScope());

@@ -137,7 +137,7 @@ public class Element {
     return defaultValue;
   }
 
-  public String attributeNS(Namespace namespace, String name, String defaultValue) {
+  public @Nullable String attributeNS(Namespace namespace, String name, @Nullable String defaultValue) {
     String attribute = attribute(composeMapKey(namespace.getNamespaceUri(), name));
     if (attribute == null && namespace.hasAlternativeUri()) {
       attribute = attribute(composeMapKey(namespace.getAlternativeUri(), name));

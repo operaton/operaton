@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.repository;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Date;
 
 /**
@@ -40,7 +43,7 @@ import java.util.Date;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public interface Deployment {
+public @NullMarked interface Deployment {
 
   String getId();
 
@@ -54,6 +57,6 @@ public interface Deployment {
    * Returns the id of the tenant this deployment belongs to. Can be <code>null</code>
    * if the deployment belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
 }

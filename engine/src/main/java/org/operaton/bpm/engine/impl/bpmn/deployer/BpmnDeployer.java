@@ -62,6 +62,7 @@ import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
 
 /**
@@ -80,8 +81,8 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
   protected static final PropertyMapKey<String, List<JobDeclaration<?, ?>>> JOB_DECLARATIONS_PROPERTY =
       new PropertyMapKey<>("JOB_DECLARATIONS_PROPERTY");
 
-  protected ExpressionManager expressionManager;
-  protected BpmnParser bpmnParser;
+  protected @Nullable ExpressionManager expressionManager;
+  protected @Nullable BpmnParser bpmnParser;
 
   /** <!> DON'T KEEP DEPLOYMENT-SPECIFIC STATE <!> **/
 
@@ -94,6 +95,7 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
   protected List<ProcessDefinitionEntity> transformDefinitions(DeploymentEntity deployment, ResourceEntity resource, Properties properties) {
     byte[] bytes = resource.getBytes();
     ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+    requireNonNull(bpmnParser);
 
     BpmnParse bpmnParse = bpmnParser
         .createParse()
@@ -121,7 +123,7 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
   }
 
   @Override
-  protected @Nullable ProcessDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  protected @Nullable ProcessDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return getProcessDefinitionManager().findLatestProcessDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 
@@ -395,7 +397,6 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
 
   enum ExprType {
 	  USER, GROUP
-
   }
 
   protected void addAuthorizationsFromIterator(Set<Expression> exprSet, ProcessDefinitionEntity processDefinition, ExprType exprType) {
@@ -442,7 +443,7 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
 
   // getters/setters ///////////////////////////////////////////////////////////////////////////////////
 
-  public ExpressionManager getExpressionManager() {
+  public @Nullable ExpressionManager getExpressionManager() {
     return expressionManager;
   }
 
@@ -450,7 +451,7 @@ public @NullMarked class BpmnDeployer extends AbstractDefinitionDeployer<Process
     this.expressionManager = expressionManager;
   }
 
-  public BpmnParser getBpmnParser() {
+  public @Nullable BpmnParser getBpmnParser() {
     return bpmnParser;
   }
 

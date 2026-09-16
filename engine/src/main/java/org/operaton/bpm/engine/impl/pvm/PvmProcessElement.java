@@ -31,7 +31,7 @@ public @NullMarked interface PvmProcessElement extends Serializable {
   /**
    * @return The id of the element
    */
-  String getId();
+  @Nullable String getId();
 
   /**
    * @return The process definition scope, root of the scope hierarchy.

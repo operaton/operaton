@@ -39,9 +39,9 @@ import org.operaton.bpm.engine.impl.pvm.delegate.MigrationObserverBehavior;
 public @NullMarked class ExternalTaskActivityBehavior extends AbstractBpmnActivityBehavior implements MigrationObserverBehavior {
 
   protected ParameterValueProvider topicNameValueProvider;
-  protected ParameterValueProvider priorityValueProvider;
+  protected @Nullable ParameterValueProvider priorityValueProvider;
 
-  public ExternalTaskActivityBehavior(ParameterValueProvider topicName, ParameterValueProvider paramValueProvider) {
+  public ExternalTaskActivityBehavior(ParameterValueProvider topicName, @Nullable ParameterValueProvider paramValueProvider) {
     this.topicNameValueProvider = topicName;
     this.priorityValueProvider = paramValueProvider;
   }
@@ -63,7 +63,7 @@ public @NullMarked class ExternalTaskActivityBehavior extends AbstractBpmnActivi
     leave(execution);
   }
 
-  public ParameterValueProvider getPriorityValueProvider() {
+  public @Nullable ParameterValueProvider getPriorityValueProvider() {
     return priorityValueProvider;
   }
 

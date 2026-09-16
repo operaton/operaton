@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.jspecify.annotations.NullMarked;
@@ -848,11 +847,11 @@ public @NullMarked class HistoricProcessInstanceQueryImpl extends AbstractVariab
   }
 
   public String[] getTenantIds() {
-    return Objects.requireNonNullElse(tenantIds, new String[0]);
+    return tenantIds != null ? tenantIds : new String[0];
   }
 
   public String[] getIncidentIds() {
-    return Objects.requireNonNullElse(incidentIds, new String[0]);
+    return incidentIds != null ? incidentIds : new String[0];
   }
 
   @Override

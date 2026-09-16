@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -74,7 +75,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   public EventSubscriptionEntity(ExecutionEntity executionEntity, EventType eventType) {
     this(eventType);
     setExecution(executionEntity);
-    setActivity(execution.getActivity());
+    setActivity(requireNonNull(execution).getActivity());
     this.processInstanceId = executionEntity.getProcessInstanceId();
     this.tenantId = executionEntity.getTenantId();
   }

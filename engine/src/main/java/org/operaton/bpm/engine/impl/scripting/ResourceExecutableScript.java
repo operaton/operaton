@@ -19,17 +19,22 @@ package org.operaton.bpm.engine.impl.scripting;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.context.CoreExecutionContext;
+import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.util.ResourceUtil;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * A script which is provided by an external resource.
  *
  * @author Sebastian Menski
  */
-public class ResourceExecutableScript extends SourceExecutableScript {
+public @NullMarked class ResourceExecutableScript extends SourceExecutableScript {
 
   protected String scriptResource;
 
@@ -48,7 +53,9 @@ public class ResourceExecutableScript extends SourceExecutableScript {
 
   protected synchronized void loadScriptSource() {
     if (getScriptSource() == null) {
-      DeploymentEntity deployment = Context.getCoreExecutionContext().getDeployment();
+      var executionContext = Context.getCoreExecutionContext();
+      requireNonNull(executionContext);
+      DeploymentEntity deployment = executionContext.getDeployment();
       String source = ResourceUtil.loadResourceContent(scriptResource, deployment);
       setScriptSource(source);
     }

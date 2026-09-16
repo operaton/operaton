@@ -55,8 +55,7 @@ public class CompensationEventSubscriptionWalker extends ReferenceWalker<EventSu
 
   @Override
   protected Collection<EventSubscriptionEntity> nextElements() {
-    EventSubscriptionEntity eventSubscriptionEntity = getCurrentElement();
-    requireNonNull(eventSubscriptionEntity);
+    EventSubscriptionEntity eventSubscriptionEntity = getRequiredCurrentElement();
     ExecutionEntity compensatingExecution = CompensationUtil.getCompensatingExecution(eventSubscriptionEntity);
     return (compensatingExecution != null) ? compensatingExecution.getCompensateEventSubscriptions() : emptyList();
   }

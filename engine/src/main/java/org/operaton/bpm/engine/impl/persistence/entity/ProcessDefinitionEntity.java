@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.*;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -374,7 +375,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public void setCategory(String category) {
+  public void setCategory(@Nullable String category) {
     this.category = category;
   }
 
@@ -469,7 +470,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
@@ -478,7 +479,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return versionTag;
   }
 
-  public void setVersionTag(String versionTag) {
+  public void setVersionTag(@Nullable String versionTag) {
     this.versionTag = versionTag;
   }
 

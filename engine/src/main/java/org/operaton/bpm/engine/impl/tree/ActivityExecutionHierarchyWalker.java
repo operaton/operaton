@@ -18,10 +18,15 @@ package org.operaton.bpm.engine.impl.tree;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Combination of flow scope and execution walker. Walks the flow scope
@@ -30,7 +35,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Philipp Ossler
  *
  */
-public class ActivityExecutionHierarchyWalker extends SingleReferenceWalker<ActivityExecutionTuple> {
+public @NullMarked class ActivityExecutionHierarchyWalker extends SingleReferenceWalker<ActivityExecutionTuple> {
 
   private Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping;
 
@@ -41,8 +46,10 @@ public class ActivityExecutionHierarchyWalker extends SingleReferenceWalker<Acti
   }
 
   @Override
-  protected ActivityExecutionTuple nextElement() {
+  protected @Nullable ActivityExecutionTuple nextElement() {
     ActivityExecutionTuple currentElement = getCurrentElement();
+    ensureNotNull("currentElement", currentElement);
+    requireNonNull(currentElement);
 
     PvmScope currentScope = currentElement.getScope();
     PvmExecutionImpl currentExecution = (PvmExecutionImpl) currentElement.getExecution();
@@ -50,15 +57,20 @@ public class ActivityExecutionHierarchyWalker extends SingleReferenceWalker<Acti
     PvmScope flowScope = currentScope.getFlowScope();
 
     if (!currentExecution.isScope()) {
+      requireNonNull(currentScope);
       currentExecution = activityExecutionMapping.get(currentScope);
+      requireNonNull(currentExecution);
       return new ActivityExecutionTuple(currentScope, currentExecution);
     } else if (flowScope != null) {
       // walk to parent scope
       PvmExecutionImpl execution = activityExecutionMapping.get(flowScope);
+      requireNonNull(execution);
       return new ActivityExecutionTuple(flowScope, execution);
     } else {
       // this is the process instance, look for parent
+      requireNonNull(currentScope);
       currentExecution = activityExecutionMapping.get(currentScope);
+      requireNonNull(currentExecution);
       PvmExecutionImpl superExecution = currentExecution.getSuperExecution();
 
       if (superExecution != null) {
@@ -110,7 +122,7 @@ public class ActivityExecutionHierarchyWalker extends SingleReferenceWalker<Acti
     return addPostVisitor(new ExecutionVisitorWrapper(visitor));
   }
 
-  private class ExecutionVisitorWrapper implements TreeVisitor<ActivityExecutionTuple> {
+  private static class ExecutionVisitorWrapper implements TreeVisitor<ActivityExecutionTuple> {
 
     private final TreeVisitor<ActivityExecution> collector;
 
@@ -124,7 +136,7 @@ public class ActivityExecutionHierarchyWalker extends SingleReferenceWalker<Acti
     }
   }
 
-  private class ScopeVisitorWrapper implements TreeVisitor<ActivityExecutionTuple> {
+  private static class ScopeVisitorWrapper implements TreeVisitor<ActivityExecutionTuple> {
 
     private final TreeVisitor<PvmScope> collector;
 

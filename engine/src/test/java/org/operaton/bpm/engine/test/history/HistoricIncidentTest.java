@@ -257,6 +257,10 @@ class HistoricIncidentTest {
         .singleResult();
     assertThat(pi2).isNotNull();
 
+    Incident rootCauseIncident = runtimeService.createIncidentQuery()
+        .processInstanceId(pi2.getId())
+        .singleResult();
+
     HistoricIncidentQuery query = historyService.createHistoricIncidentQuery();
 
     HistoricIncident rootCauseHistoricIncident = query.processInstanceId(pi2.getId()).singleResult();
@@ -265,6 +269,7 @@ class HistoricIncidentTest {
     // cause and root cause id is equal to the id of the root incident
     assertThat(rootCauseHistoricIncident.getCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
     assertThat(rootCauseHistoricIncident.getRootCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
+    assertThat(rootCauseHistoricIncident.getRootCauseIncidentMessage()).isEqualTo(rootCauseIncident.getIncidentMessage());
 
     HistoricIncident historicIncident = query.processInstanceId(pi1.getId()).singleResult();
     assertThat(historicIncident).isNotNull();
@@ -272,6 +277,8 @@ class HistoricIncidentTest {
     // cause and root cause id is equal to the id of the root incident
     assertThat(historicIncident.getCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
     assertThat(historicIncident.getRootCauseIncidentId()).isEqualTo(rootCauseHistoricIncident.getId());
+    assertThat(historicIncident.getRootCauseIncidentMessage()).isEqualTo(rootCauseIncident.getIncidentMessage());
+    assertThat(historyService.createHistoricIncidentQuery().processInstanceId(pi1.getId()).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricIncidentQueryTest.testQueryByCauseIncidentId.bpmn20.xml",

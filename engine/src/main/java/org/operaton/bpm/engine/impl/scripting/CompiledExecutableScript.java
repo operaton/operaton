@@ -30,7 +30,7 @@ public class CompiledExecutableScript extends ExecutableScript {
 
   private static final ScriptLogger LOG = ProcessEngineLogger.SCRIPT_LOGGER;
 
-  protected CompiledScript compiledScript;
+  protected volatile CompiledScript compiledScript;
 
   protected CompiledExecutableScript(String language) {
     this(language, null);
@@ -51,9 +51,13 @@ public class CompiledExecutableScript extends ExecutableScript {
 
   @Override
   public Object evaluate(ScriptEngine scriptEngine, VariableScope variableScope, Bindings bindings) {
+    return evaluateCompiledScript(getCompiledScript(), variableScope, bindings);
+  }
+
+  protected Object evaluateCompiledScript(CompiledScript compiledScript, VariableScope variableScope, Bindings bindings) {
     try {
       LOG.debugEvaluatingCompiledScript(language);
-      return getCompiledScript().eval(bindings);
+      return compiledScript.eval(bindings);
     } catch (ScriptException e) {
       Throwable cause = e.getCause();
       if (cause instanceof BpmnError bpmnError) {

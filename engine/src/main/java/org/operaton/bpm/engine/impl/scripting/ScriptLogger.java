@@ -44,4 +44,21 @@ public class ScriptLogger extends ProcessEngineLogger {
         "003", "Failed to close script engine: {}", e.getMessage());
   }
 
+  public void warnScriptPreprocessorRequestNull(String preprocessorName) {
+    logWarn(
+        "004",
+        "ScriptPreprocessorRequest is null in preprocessor {}; returning null (no preprocessing will be done).",
+        preprocessorName);
+  }
+
+  public void warnScriptPreprocessingFailed(String language, String preprocessorName, Throwable throwable) {
+    logWarn(
+        "005",
+        "Script preprocessing failed for language {} using preprocessor {}. Error: {}. Falling back to the original script.",
+        language,
+        preprocessorName,
+        throwable.getMessage(),
+        throwable);
+  }
+
 }

@@ -95,6 +95,7 @@ auto-merge-rules:
       - 'version.slf4j'
       - 'version.spring-boot'
       - 'version.testcontainers'
+      - 'version.tomcat'
       - 'version.undertow'
       # Dependency groups
       - 'all group'

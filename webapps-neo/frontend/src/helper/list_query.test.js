@@ -51,12 +51,12 @@ describe("write_list_query", () => {
   });
 
   it("sets sortBy / sortOrder and clears when empty", () => {
-    expect(
-      write_list_query(base, { sortBy: "name", sortOrder: "asc" }),
-    ).toBe("/list?other=keep&sortBy=name&sortOrder=asc");
-    expect(
-      write_list_query(`${base}&sortBy=name`, { sortBy: null }),
-    ).toBe("/list?other=keep");
+    expect(write_list_query(base, { sortBy: "name", sortOrder: "asc" })).toBe(
+      "/list?other=keep&sortBy=name&sortOrder=asc",
+    );
+    expect(write_list_query(`${base}&sortBy=name`, { sortBy: null })).toBe(
+      "/list?other=keep",
+    );
   });
 
   it("replaces criteria wholesale, leaving other params alone", () => {
@@ -74,7 +74,9 @@ describe("write_list_query", () => {
       sortOrder: "desc",
       criteria: { nameLike: "x", active: "true" },
     });
-    const parsed = parse_list_query(Object.fromEntries(new URL(out, "http://_").searchParams));
+    const parsed = parse_list_query(
+      Object.fromEntries(new URL(out, "http://_").searchParams),
+    );
     expect(parsed).toEqual({
       saved_filter_id: "f1",
       sortBy: "key",

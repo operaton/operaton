@@ -194,15 +194,19 @@ describe("formatTimestamp", () => {
 
 // Ported from the previous Tasklist's task-dates-spec.js:
 // "should display the absolute date in the tooltip in the task detail view".
-describe('absolute date for the tooltip', () => {
-  it('spells out the moment instead of how long ago it was', () => {
+describe("absolute date for the tooltip", () => {
+  it("spells out the moment instead of how long ago it was", () => {
     const at = new Date(2026, 6, 15, 10, 30);
     const text = formatAbsolute(at);
-    expect(text).toContain('2026');
+    expect(text).toContain("2026");
     expect(text).not.toMatch(/ago|in \d/);
   });
 
-  it('accepts the string the engine sends', () => {
-    expect(formatAbsolute('2026-07-15T10:30:00.000+0200')).toContain('2026');
+  it("accepts the string the engine sends", () => {
+    expect(formatAbsolute("2026-07-15T10:30:00.000+0200")).toContain("2026");
+  });
+
+  it("stays empty for something that is not a date", () => {
+    expect(formatAbsolute("not a date")).toBe("");
   });
 });

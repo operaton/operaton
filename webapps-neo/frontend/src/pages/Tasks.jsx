@@ -20,6 +20,7 @@ import {
   write_list_query,
   keep_list_query,
 } from "../helper/list_query.js";
+import { resolve_user } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
 import { ConfirmDialog } from "../components/Dialog.jsx";
@@ -47,7 +48,7 @@ const SORT_OPTIONS = [
   { key: "assignee", nameKey: "tasks.sort.assignee" },
 ];
 
-const FILTER_KEYS = [
+export const FILTER_KEYS = [
   { key: "assignee", nameKey: "tasks.filter_keys.assignee", type: "string" },
   {
     key: "assigneeLike",
@@ -1742,9 +1743,6 @@ const HistoryTab = () => {
   );
 };
 
-// Variables carried by the task, outside whatever the form happens to expose.
-// The previous Tasklist showed them beside the form and let the assignee change
-// them; without that, anything the form does not mention is invisible.
 const AttachmentsTab = () => {
   const state = useContext(AppState),
     { params } = useRoute(),

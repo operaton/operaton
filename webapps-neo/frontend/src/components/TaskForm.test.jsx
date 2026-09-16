@@ -83,9 +83,7 @@ describe("TaskForm helpers", () => {
           <input type="text" cam-variable-name="dob" cam-variable-type="Date" uib-datepicker-popup />
         </form>`,
       );
-      expect(
-        schema.components.map((c) => [c.key, c.type, c.subtype]),
-      ).toEqual([
+      expect(schema.components.map((c) => [c.key, c.type, c.subtype])).toEqual([
         ["age", "number", undefined],
         ["agree", "checkbox", undefined],
         ["dob", "datetime", "date"],

@@ -153,7 +153,9 @@ describe("plugins/loader is_allowed_location", () => {
   it("rejects other origins unless listed", () => {
     expect(is_allowed_location("https://evil.example/p")).toBe(false);
     expect(
-      is_allowed_location("https://evil.example/p", ["https://trusted.example"]),
+      is_allowed_location("https://evil.example/p", [
+        "https://trusted.example",
+      ]),
     ).toBe(false);
     expect(
       is_allowed_location("https://trusted.example/p", [
@@ -164,9 +166,9 @@ describe("plugins/loader is_allowed_location", () => {
 
   it("rejects a location it cannot parse, and ignores unparseable allow entries", () => {
     expect(is_allowed_location(undefined)).toBe(false);
-    expect(is_allowed_location("http://[bad", ["https://trusted.example"])).toBe(
-      false,
-    );
+    expect(
+      is_allowed_location("http://[bad", ["https://trusted.example"]),
+    ).toBe(false);
     expect(is_allowed_location("https://evil.example/p", ["not a url"])).toBe(
       false,
     );

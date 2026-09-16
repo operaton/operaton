@@ -3,9 +3,7 @@ import { render, cleanup, fireEvent } from "@testing-library/preact";
 import { signal } from "@preact/signals";
 import { ManageFilters } from "./ManageFilters.jsx";
 
-const SORT_OPTIONS = [
-  { key: "name", nameKey: "list_filter.sort.name" },
-];
+const SORT_OPTIONS = [{ key: "name", nameKey: "list_filter.sort.name" }];
 const FILTER_KEYS = [
   { key: "nameLike", nameKey: "list_filter.keys.nameLike", type: "string" },
 ];

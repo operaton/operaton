@@ -518,8 +518,6 @@ describe("TasksPage", () => {
     });
   });
 
-  // Ported from the previous Tasklist's task-detail-view-spec.js:
-  // "should display the tenant id" / "should not display the tenant id if not exist".
   describe("tenant", () => {
     it("names the tenant a task belongs to", () => {
       mockParams = { task_id: "t1", tab: "form" };
@@ -538,8 +536,6 @@ describe("TasksPage", () => {
     });
   });
 
-  // Ported from the previous Tasklist's task-dates-spec.js:
-  // "should set follow up date to now" and the reset actions on both dates.
   describe("due and follow-up dates", () => {
     const click_in_dialog = (container, dialog_id, text) => {
       const dialog = container.querySelector(`#${dialog_id}`);
@@ -589,10 +585,6 @@ describe("TasksPage", () => {
     });
   });
 
-  // Ported from the previous Tasklist's create-task-spec.js: "should open",
-  // "should save new task", "should select created task". The old dialog asked
-  // for the tenant as free text and always showed the field; this one does the
-  // same, with the tenants the user can see offered as suggestions.
   describe("creating a task outside a process", () => {
     const open_dialog = (container) =>
       fireEvent.click(container.querySelector("button.create-task"));
@@ -711,9 +703,6 @@ describe("TasksPage", () => {
     });
   });
 
-  // Ported from the previous Tasklist's filter-permissions-spec.js:
-  // "should make filter accessible for all users", "should allow to add a
-  // permission for users", "…for groups", "should allow to remove permissions".
   describe("who may use a saved filter", () => {
     const open_editor = () => {
       mockParams = { task_id: "filter" };
@@ -781,6 +770,30 @@ describe("TasksPage", () => {
       expect(
         container.querySelectorAll("fieldset:last-of-type tbody tr").length,
       ).toBe(1);
+    });
+  });
+
+  describe("saved filters", () => {
+    it("keeps the chosen filter across a reload, because it lives in the route", () => {
+      mockQuery = { filter: "f1" };
+      signal_response(state.api.filter.list, [{ id: "f1", name: "Mine" }]);
+      renderPage(state);
+      expect(engine_rest.filter.execute_filter).toHaveBeenCalled();
+      expect(engine_rest.filter.execute_filter.mock.lastCall[1]).toBe("f1");
+    });
+
+    it("asks the engine for the task list when no filter is chosen", () => {
+      renderPage(state);
+      expect(engine_rest.task.get_tasks).toHaveBeenCalled();
+      expect(engine_rest.filter.execute_filter).not.toHaveBeenCalled();
+    });
+
+    it("narrows the list to the signed-in user for 'my tasks'", () => {
+      mockQuery = { filter: "my" };
+      state.auth.user.id.value = "alice";
+      renderPage(state);
+      const [, , , , , filter] = engine_rest.task.get_tasks.mock.lastCall;
+      expect(filter).toEqual({ assignee: "alice" });
     });
   });
 

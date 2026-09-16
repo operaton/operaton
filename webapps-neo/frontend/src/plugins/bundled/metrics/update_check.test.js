@@ -19,7 +19,10 @@ const serve = ({ flag = true, release = { tag_name: "v2.1.5" }, ok = true }) =>
             json: async () =>
               typeof release === "function" ? release() : release,
           })
-        : Promise.resolve({ ok: true, json: async () => ({ updateCheck: flag }) }),
+        : Promise.resolve({
+            ok: true,
+            json: async () => ({ updateCheck: flag }),
+          }),
     ),
   );
 
@@ -79,7 +82,9 @@ describe("flag_from_document", () => {
 
   it("treats an unsubstituted placeholder and a missing key as unset", () => {
     expect(
-      flag_from_document({ updateCheck: "DOCKER_RUN_PLACEHOLDER_UPDATE_CHECK" }),
+      flag_from_document({
+        updateCheck: "DOCKER_RUN_PLACEHOLDER_UPDATE_CHECK",
+      }),
     ).toBeUndefined();
     expect(flag_from_document({})).toBeUndefined();
     expect(flag_from_document(null)).toBeUndefined();

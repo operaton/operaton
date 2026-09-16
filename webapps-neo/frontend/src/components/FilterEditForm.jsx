@@ -267,6 +267,15 @@ const CriterionValueInput = ({ meta, value, on_change, label }) => {
         ))}
       </select>
     );
+  if (meta.type === "list")
+    return (
+      <input
+        aria-label={label}
+        value={value}
+        placeholder={meta.placeholderKey ? undefined : "a, b, c"}
+        onInput={(e) => on_change(e.currentTarget.value)}
+      />
+    );
   if (meta.type === "date")
     return (
       <input
@@ -306,7 +315,12 @@ export const filter_form_from_saved = (filter) => ({
           operator: comparison.operator ?? "eq",
           value: String(comparison.value ?? ""),
         }))
-      : [{ key, value: String(value) }],
+      : [
+          {
+            key,
+            value: Array.isArray(value) ? value.join(", ") : String(value),
+          },
+        ],
   ),
 });
 
@@ -353,5 +367,12 @@ const variable_value = (value) => {
 const coerce_value = (type, value) => {
   if (type === "boolean") return value === true || value === "true";
   if (type === "number") return Number(value);
+  // A list criterion is typed as "a, b, c" and sent as the array the engine
+  // expects.
+  if (type === "list")
+    return String(value)
+      .split(",")
+      .map((part) => part.trim())
+      .filter(Boolean);
   return value;
 };

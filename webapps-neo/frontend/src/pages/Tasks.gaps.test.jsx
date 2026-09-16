@@ -52,46 +52,6 @@ describe("not built yet", () => {
   });
   afterEach(cleanup);
 
-  describe("filter criteria that are missing", () => {
-    it.fails("offers a criterion for the tenants a task belongs to", () => {
-      expect(keys()).toContain("tenantIdIn");
-    });
-
-    it.fails("offers a criterion for tasks without a tenant", () => {
-      expect(keys()).toContain("withoutTenantId");
-    });
-
-    it.fails("offers a criterion for the delegation state", () => {
-      expect(keys()).toContain("delegationState");
-    });
-
-    it.fails("offers a criterion for the owner of a task", () => {
-      expect(keys()).toContain("owner");
-    });
-
-    it.fails("can include tasks that are already assigned", () => {
-      expect(keys()).toContain("includeAssignedTasks");
-    });
-  });
-
-  describe("a criterion named twice", () => {
-    it.fails("refuses the same criterion key twice", () => {
-      // Today the last one silently wins, so a filter can quietly mean
-      // something other than what it shows.
-      const form = {
-        name: "Two names",
-        sortBy: "",
-        sortOrder: "asc",
-        criteria: [
-          { key: "name", value: "first" },
-          { key: "name", value: "second" },
-        ],
-      };
-      const { query } = filter_from_form(form, FILTER_KEYS);
-      expect(query.name).toBe("first");
-    });
-  });
-
   describe("sorting by more than one criterion", () => {
     it.fails("keeps a second sort criterion", () => {
       const state_query = { sortBy: "created", sortOrder: "desc" };

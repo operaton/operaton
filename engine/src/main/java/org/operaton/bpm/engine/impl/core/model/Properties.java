@@ -25,6 +25,8 @@ import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Properties that maps property keys to values. The properties cannot contain
  * duplicate property names; each property name can map to at most one value.
@@ -94,7 +96,8 @@ public @NullMarked class Properties {
   @SuppressWarnings("unchecked")
   public <K, V> Map<K, V> get(PropertyMapKey<K, V> property) {
     if (contains(property)) {
-      return (Map<K, V>) properties.get(property.name());
+      Map<K, V> mapValue = (Map<K, V>) properties.get(property.name());
+      return mapValue != null ? mapValue : new HashMap<>();
     } else {
       return new HashMap<>();
     }
@@ -111,7 +114,8 @@ public @NullMarked class Properties {
    * @param value
    *          the value to be associated with the specified property key
    */
-  public <T> void set(PropertyKey<T> property, T value) {
+  @SuppressWarnings("ConstantConditions")
+  public <T> void set(PropertyKey<T> property, @Nullable T value) {
     properties.put(property.name(), value);
   }
 
@@ -126,7 +130,8 @@ public @NullMarked class Properties {
    * @param value
    *          the list to be associated with the specified property key
    */
-  public <T> void set(PropertyListKey<T> property, List<T> value) {
+  @SuppressWarnings("ConstantConditions")
+  public <T> void set(PropertyListKey<T> property, @Nullable List<T> value) {
     properties.put(property.name(), value);
   }
 
@@ -183,7 +188,7 @@ public @NullMarked class Properties {
    *          the value to be appended to list
    */
   public <K, V> void putMapEntry(PropertyMapKey<K, V> property, K key, V value) {
-    Map<K, V> map = get(property);
+    Map<K, V> map = requireNonNull(get(property));
 
     if (!property.allowsOverwrite() && map.containsKey(key)) {
       throw new ProcessEngineException("Cannot overwrite property key %s. Key already exists.".formatted(key));

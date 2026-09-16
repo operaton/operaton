@@ -22,10 +22,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 import javax.xml.parsers.SAXParser;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -47,7 +46,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * @author Tom Baeyens
  */
-public abstract class Parse extends DefaultHandler {
+public abstract @NullMarked class Parse extends DefaultHandler {
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
@@ -180,7 +179,7 @@ public abstract class Parse extends DefaultHandler {
     errors.add(new ProblemImpl(e));
   }
 
-  public void addError(BpmnParseException e, String elementId) {
+  public void addError(BpmnParseException e, @Nullable String elementId) {
     errors.add(new ProblemImpl(e, elementId));
   }
 
@@ -196,7 +195,7 @@ public abstract class Parse extends DefaultHandler {
     warnings.add(new ProblemImpl(errorMessage, element));
   }
 
-  public void addWarning(String errorMessage, @Nullable Element element, String... elementIds) {
+  public void addWarning(String errorMessage, @Nullable Element element, @Nullable String... elementIds) {
     warnings.add(new ProblemImpl(errorMessage, element, elementIds));
   }
 

@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.engine.JuelScriptEngineFactory;
 
+ import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -52,7 +53,7 @@ public final @NullMarked class ScriptUtil {
    * @return the newly created script
    * @throws NotValidException if language is null or empty or both of source and resource are null or empty
    */
-  public static ExecutableScript getScript(String language, String source, @Nullable String resource, ExpressionManager expressionManager) {
+  public static ExecutableScript getScript(String language, @Nullable String source, @Nullable String resource, ExpressionManager expressionManager) {
     return getScript(language, source, resource, expressionManager, getScriptFactory());
   }
 
@@ -69,7 +70,7 @@ public final @NullMarked class ScriptUtil {
    * @return the newly created script
    * @throws NotValidException if language is null or empty or both of source and resource are invalid
    */
-  public static ExecutableScript getScript(String language, String source, @Nullable String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScript(String language, @Nullable String source, @Nullable String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureAtLeastOneNotNull(NotValidException.class, "No script source or resource was given", source, resource);
     if (resource != null && !resource.isEmpty()) {
@@ -91,9 +92,10 @@ public final @NullMarked class ScriptUtil {
    * @return the newly created script
    * @throws NotValidException if language is null or empty or source is null
    */
-  public static ExecutableScript getScriptFormSource(String language, String source, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScriptFormSource(String language, @Nullable String source, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureNotNull(NotValidException.class, "Script source", source);
+    requireNonNull(source);
     if (isDynamicScriptExpression(language, source)) {
       Expression sourceExpression = expressionManager.createExpression(source);
       return getScriptFromSourceExpression(language, sourceExpression, scriptFactory);

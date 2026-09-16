@@ -68,7 +68,7 @@ public @NullMarked class ConditionalEventDefinition extends EventSubscriptionDec
     return variableName;
   }
 
-  public void setVariableName(String variableName) {
+  public void setVariableName(@Nullable String variableName) {
     this.variableName = variableName;
   }
 

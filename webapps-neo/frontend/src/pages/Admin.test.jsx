@@ -386,15 +386,73 @@ describe("AdminPage", () => {
 
       fireEvent.click(getByText("admin.authorization.create"));
       fireEvent.input(container.querySelector("#auth-user"), {
-        target: { value: "carol" },
+        target: { value: "reviewers" },
       });
       fireEvent.submit(container.querySelector("form.authorization-create"));
 
       expect(engine_rest.authorization.create).toHaveBeenCalled();
       const call = engine_rest.authorization.create.mock.lastCall;
       expect(call[0]).toBe(state);
-      expect(call[1].userId).toBe("carol");
+      // A group by default: the engine accepts a group id in userId without
+      // complaint, and the permission then matches nobody.
+      expect(call[1].groupId).toBe("reviewers");
+      expect(call[1].userId).toBeUndefined();
       expect(call[1].resourceType).toBe(1);
+    });
+
+    it("grants to a user when the holder is switched to one", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.create, { id: "a3" });
+      const { container, getByText } = renderPage(state);
+
+      fireEvent.click(getByText("admin.authorization.create"));
+      fireEvent.input(container.querySelector("#auth-identity-type"), {
+        target: { value: "user" },
+      });
+      fireEvent.input(container.querySelector("#auth-user"), {
+        target: { value: "carol" },
+      });
+      fireEvent.submit(container.querySelector("form.authorization-create"));
+
+      const call = engine_rest.authorization.create.mock.lastCall;
+      expect(call[1].userId).toBe("carol");
+      expect(call[1].groupId).toBeUndefined();
+    });
+
+    // Ported from the previous admin's authorizations-spec.js:
+    // "can change user and group".
+    it("turns a user grant into a group grant", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.all, [
+        {
+          id: "a1",
+          type: 1,
+          userId: "alice",
+          groupId: null,
+          permissions: ["READ"],
+          resourceType: 1,
+          resourceId: "*",
+        },
+      ]);
+      const { getByText, getByLabelText } = renderPage(state);
+
+      fireEvent.click(getByText("common.edit"));
+      fireEvent.input(getByLabelText("admin.authorization.identity-type"), {
+        target: { value: "group" },
+      });
+      fireEvent.click(getByText("common.save"));
+
+      const call = engine_rest.authorization.update.mock.lastCall;
+      expect(call[2].groupId).toBe("alice");
+      expect(call[2].userId).toBeNull();
     });
 
     it("forgets an abandoned edit when the row is cancelled", () => {

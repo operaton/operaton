@@ -765,7 +765,12 @@
       "available-permissions": "Verfügbare Berechtigungen",
       "confirm-delete": "Möchten Sie diese Autorisierung wirklich löschen?",
       "success-created": "Neue Autorisierung erfolgreich erstellt.",
-      "select-resource": "Wählen Sie eine Autorisierungsressource aus"
+      "select-resource": "Wählen Sie eine Autorisierungsressource aus",
+      "identity-type": "Inhaber",
+      "group": "Gruppe",
+      "user": "Benutzer",
+      "group-id": "Gruppenkennung",
+      "user-id": "Benutzerkennung"
     },
     "authorization-resources": {
       "application": "Anwendung",

@@ -1443,7 +1443,16 @@ const AuthorizationCreate = ({ resource, resource_type, on_done }) => {
       },
     } = state,
     [t] = useTranslation(),
-    form = useSignal({ type: 1, userId: "", permissions: [], resourceId: "*" });
+    // Group by default, as in the previous admin: permissions are normally
+    // held by a group, and a group id typed into the user field is accepted by
+    // the engine and then never matches anybody.
+    form = useSignal({
+      type: 1,
+      identity_type: "group",
+      identity_id: "",
+      permissions: [],
+      resourceId: "*",
+    });
 
   const set_value = (k, e) =>
       (form.value = { ...form.peek(), [k]: e.currentTarget.value }),
@@ -1458,12 +1467,16 @@ const AuthorizationCreate = ({ resource, resource_type, on_done }) => {
     },
     on_submit = (e) => {
       e.preventDefault();
-      const { type, userId, permissions, resourceId } = form.value;
+      const { type, identity_type, identity_id, permissions, resourceId } =
+        form.value;
+      const identity = identity_id || "*";
       void engine_rest.authorization
         .create(state, {
           type: Number(type),
           permissions,
-          userId: userId || "*",
+          ...(identity_type === "group"
+            ? { groupId: identity }
+            : { userId: identity }),
           resourceType: Number(resource_type),
           resourceId,
         })
@@ -1491,12 +1504,28 @@ const AuthorizationCreate = ({ resource, resource_type, on_done }) => {
         <option value="2">{t("admin.authorization.deny")}</option>
       </select>
 
-      <label for="auth-user">{t("admin.authorization.user-group")}</label>
+      <label for="auth-identity-type">
+        {t("admin.authorization.identity-type")}
+      </label>
+      <select
+        id="auth-identity-type"
+        value={form.value.identity_type}
+        onInput={(e) => set_value("identity_type", e)}
+      >
+        <option value="group">{t("admin.authorization.group")}</option>
+        <option value="user">{t("admin.authorization.user")}</option>
+      </select>
+
+      <label for="auth-user">
+        {form.value.identity_type === "group"
+          ? t("admin.authorization.group-id")
+          : t("admin.authorization.user-id")}
+      </label>
       <input
         id="auth-user"
         type="text"
-        value={form.value.userId}
-        onInput={(e) => set_value("userId", e)}
+        value={form.value.identity_id}
+        onInput={(e) => set_value("identity_id", e)}
         placeholder="*"
       />
 
@@ -1610,10 +1639,26 @@ const AuthorizationResourceRow = ({ authorization }) => {
           <td>{type_label}</td>
           <td>
             <form id={form_id} onSubmit={on_submit}>
-              {groupId ? (
+              {/* Which of the two the row holds is editable, not fixed by what
+                  it happened to be created as. */}
+              <select
+                aria-label={t("admin.authorization.identity-type")}
+                value={form.value.groupId != null ? "group" : "user"}
+                onInput={(e) => {
+                  const held = form.peek().groupId ?? form.peek().userId ?? "";
+                  form.value =
+                    e.currentTarget.value === "group"
+                      ? { ...form.peek(), groupId: held, userId: null }
+                      : { ...form.peek(), userId: held, groupId: null };
+                }}
+              >
+                <option value="group">{t("admin.authorization.group")}</option>
+                <option value="user">{t("admin.authorization.user")}</option>
+              </select>
+              {form.value.groupId != null ? (
                 <input
                   name="groupId"
-                  aria-label={t("admin.authorization.user-group")}
+                  aria-label={t("admin.authorization.group-id")}
                   value={form.value.groupId}
                   onInput={(e) => {
                     set_value("groupId", e);
@@ -1623,8 +1668,8 @@ const AuthorizationResourceRow = ({ authorization }) => {
               ) : (
                 <input
                   name="userId"
-                  aria-label={t("admin.authorization.user-group")}
-                  value={form.value.userId}
+                  aria-label={t("admin.authorization.user-id")}
+                  value={form.value.userId ?? ""}
                   onInput={(e) => {
                     set_value("userId", e);
                     set_null("groupId");

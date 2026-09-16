@@ -985,7 +985,8 @@
       "lteq": "kleiner oder gleich",
       "like": "enthält",
       "notLike": "enthält nicht"
-    }
+    },
+    "duplicate_criterion": "Jedes Kriterium darf einmal vorkommen. Doppelt: {{keys}}"
   },
   "login": {
     "title": "Anmelden",

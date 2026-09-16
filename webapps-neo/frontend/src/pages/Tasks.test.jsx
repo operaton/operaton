@@ -773,6 +773,55 @@ describe("TasksPage", () => {
     });
   });
 
+  describe("a task that is gone", () => {
+    const vanished = () =>
+      engine_rest.task.get_task.mockImplementation(() => {
+        state.api.task.one.value = {
+          status: RESPONSE_STATE.ERROR,
+          error: { status: 404 },
+        };
+        return Promise.resolve();
+      });
+
+    afterEach(() => engine_rest.task.get_task.mockReset());
+
+    it("says the task no longer exists", async () => {
+      mockParams = { task_id: "gone" };
+      vanished();
+      const { findByText } = renderPage(state);
+      expect(await findByText("tasks.task-not-found")).toBeTruthy();
+    });
+
+    it("takes it out of the list, so it cannot be clicked again", async () => {
+      mockParams = { task_id: "gone" };
+      signal_response(state.api.task.list, [
+        { id: "gone", name: "Completed meanwhile" },
+        { id: "t2", name: "Still there" },
+      ]);
+      vanished();
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(state.api.task.list.value.data.map((t) => t.id)).toEqual(["t2"]),
+      );
+    });
+
+    it("leaves the list alone when the task is fine", async () => {
+      mockParams = { task_id: "t2" };
+      signal_response(state.api.task.list, [{ id: "t2", name: "Still there" }]);
+      engine_rest.task.get_task.mockImplementation(() => {
+        signal_response(state.api.task.one, sample_task({ id: "t2" }));
+        return Promise.resolve();
+      });
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_comments).toHaveBeenCalled(),
+      );
+      expect(state.api.task.list.value.data).toHaveLength(1);
+    });
+  });
+
   describe("saved filters", () => {
     it("keeps the chosen filter across a reload, because it lives in the route", () => {
       mockQuery = { filter: "f1" };

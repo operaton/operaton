@@ -985,7 +985,8 @@
       "lteq": "less than or equal",
       "like": "contains",
       "notLike": "does not contain"
-    }
+    },
+    "duplicate_criterion": "Each criterion may be used once. Used twice: {{keys}}"
   },
   "login": {
     "title": "Login",

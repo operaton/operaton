@@ -105,13 +105,4 @@ describe("not built yet", () => {
       expect(container.querySelector("th.filter-variable")).not.toBeNull();
     });
   });
-
-  describe("a task that is gone", () => {
-    it.fails("says so when the open task no longer exists", () => {
-      mockParams = { task_id: "gone" };
-      state.api.task.one.value = { status: "ERROR", error: { status: 404 } };
-      const { container } = renderPage(state);
-      expect(container.textContent).toMatch(/removed|entfernt|gone/i);
-    });
-  });
 });

@@ -139,15 +139,73 @@ describe("criteria of a saved filter", () => {
   });
 
   // refused a duplicate key; this one silently keeps the last of them.
-  it.fails("refuses the same criterion key twice", () => {
-    const { query } = filter_from_form(
+  it("will not save while a criterion key is used twice", () => {
+    const form = signal(
       form_with([
         { key: "name", value: "first" },
         { key: "name", value: "second" },
       ]),
-      FILTER_KEYS,
     );
-    expect(query.name).toBe("first");
+    const { getByText } = render_with_state(
+      <FilterEditForm
+        filter_keys={FILTER_KEYS}
+        sort_options={[]}
+        form={form}
+        on_submit={() => {}}
+        on_cancel={() => {}}
+      />,
+    );
+    expect(getByText("common.save").disabled).toBe(true);
+    expect(getByText(/list_filter.duplicate_criterion/)).toBeTruthy();
+  });
+
+  it("saves again once the repeated key is changed", () => {
+    const form = signal(
+      form_with([
+        { key: "name", value: "first" },
+        { key: "nameLike", value: "second" },
+      ]),
+    );
+    const { getByText, queryByText } = render_with_state(
+      <FilterEditForm
+        filter_keys={FILTER_KEYS}
+        sort_options={[]}
+        form={form}
+        on_submit={() => {}}
+        on_cancel={() => {}}
+      />,
+    );
+    expect(getByText("common.save").disabled).toBe(false);
+    expect(queryByText(/list_filter.duplicate_criterion/)).toBeNull();
+  });
+
+  it("lets a variable criterion repeat, which is how a range is expressed", () => {
+    const form = signal(
+      form_with([
+        {
+          key: "processVariables",
+          variable_name: "amount",
+          operator: "gt",
+          value: "10",
+        },
+        {
+          key: "processVariables",
+          variable_name: "amount",
+          operator: "lt",
+          value: "20",
+        },
+      ]),
+    );
+    const { getByText } = render_with_state(
+      <FilterEditForm
+        filter_keys={FILTER_KEYS}
+        sort_options={[]}
+        form={form}
+        on_submit={() => {}}
+        on_cancel={() => {}}
+      />,
+    );
+    expect(getByText("common.save").disabled).toBe(false);
   });
 });
 

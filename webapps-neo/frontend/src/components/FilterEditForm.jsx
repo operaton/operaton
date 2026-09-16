@@ -32,6 +32,20 @@ export const FilterEditForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter_keys]);
 
+  // A key may appear once. Variable criteria are the exception: several
+  // comparisons on the same key are how a range is expressed.
+  const repeated_keys = (() => {
+    const seen = new Set(),
+      twice = new Set();
+    for (const { key } of form.value.criteria) {
+      const meta = filter_keys.find((k) => k.key === key);
+      if (!key || meta?.type === "variable") continue;
+      if (seen.has(key)) twice.add(key);
+      seen.add(key);
+    }
+    return twice;
+  })();
+
   const update = (key, value) =>
     (form.value = { ...form.peek(), [key]: value });
   const add_criterion = () =>
@@ -81,6 +95,9 @@ export const FilterEditForm = ({
                     <td>
                       <select
                         aria-label={t("common.key")}
+                        aria-invalid={
+                          repeated_keys.has(criterion.key) || undefined
+                        }
                         value={criterion.key}
                         onChange={(e) =>
                           update_criterion(i, "key", e.currentTarget.value)
@@ -125,6 +142,13 @@ export const FilterEditForm = ({
         <button type="button" onClick={add_criterion}>
           {t("list_filter.add_criterion")}
         </button>
+        {repeated_keys.size > 0 && (
+          <p class="error" role="alert">
+            {t("list_filter.duplicate_criterion", {
+              keys: [...repeated_keys].join(", "),
+            })}
+          </p>
+        )}
       </fieldset>
 
       <fieldset>
@@ -155,7 +179,9 @@ export const FilterEditForm = ({
       </fieldset>
 
       <div class="button-group">
-        <button type="submit">{t("common.save")}</button>
+        <button type="submit" disabled={repeated_keys.size > 0}>
+          {t("common.save")}
+        </button>
         <button type="button" onClick={on_cancel}>
           {t("common.cancel")}
         </button>

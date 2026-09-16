@@ -677,6 +677,17 @@ const Task = () => {
   );
 };
 
+/** Take one task out of the loaded list without refetching it. */
+const drop_from_list = (state, task_id) => {
+  const loaded = state.api.task.list.value;
+  const rows = loaded?.data;
+  if (!Array.isArray(rows) || !rows.some((t) => t.id === task_id)) return;
+  state.api.task.list.value = {
+    ...loaded,
+    data: rows.filter((t) => t.id !== task_id),
+  };
+};
+
 const load_task_chain = async (state, task_id) => {
   await engine_rest.task.get_task(state, task_id);
   // Note which task the answer was about, so a failure cannot be mistaken for
@@ -686,8 +697,10 @@ const load_task_chain = async (state, task_id) => {
     state.api.task.one.value = { ...answer, requested_id: task_id };
   const task = state.api.task.one.value?.data;
   if (!task?.id) {
-    // Task no longer exists (completed, deleted, or wrong id) — stop here so we
-    // don't feed `undefined` into downstream URLs.
+    // The task is gone — completed, deleted, or never there. Take it out of the
+    // list as well: the detail says so, but the entry would otherwise sit in
+    // the sidebar inviting another click that leads nowhere.
+    drop_from_list(state, task_id);
     return;
   }
   // A task created by hand belongs to no process definition; asking for one

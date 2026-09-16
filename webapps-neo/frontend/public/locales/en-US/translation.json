@@ -765,7 +765,12 @@
       "available-permissions": "Available Permissions",
       "confirm-delete": "Do you really want to delete this authorization?",
       "success-created": "Successfully created new authorization.",
-      "select-resource": "Select a authorization resource"
+      "select-resource": "Select a authorization resource",
+      "identity-type": "Holder",
+      "group": "Group",
+      "user": "User",
+      "group-id": "Group id",
+      "user-id": "User id"
     },
     "authorization-resources": {
       "application": "Application",

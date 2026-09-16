@@ -308,7 +308,12 @@
       "active": "active",
       "suspended": "suspended",
       "processVariables": "Process variable",
-      "taskVariables": "Task variable"
+      "taskVariables": "Task variable",
+      "owner": "Owner",
+      "delegationState": "Delegation state",
+      "includeAssignedTasks": "Include assigned tasks",
+      "tenantIdIn": "Tenant",
+      "withoutTenantId": "Without tenant"
     },
     "attachments": {
       "empty": "No attachments.",

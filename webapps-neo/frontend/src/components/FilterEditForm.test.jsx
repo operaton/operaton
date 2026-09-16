@@ -375,4 +375,66 @@ describe("variable criteria", () => {
     );
     expect(screen.getByLabelText("common.value").value).toBe("100");
   });
+
+  describe("criteria that take a list or a fixed choice", () => {
+    const KEYS = [
+      ...FILTER_KEYS,
+      { key: "tenantIdIn", nameKey: "tenantIdIn", type: "list" },
+      {
+        key: "delegationState",
+        nameKey: "delegationState",
+        type: "enum",
+        options: [
+          { value: "PENDING", label: "PENDING" },
+          { value: "RESOLVED", label: "RESOLVED" },
+        ],
+      },
+    ];
+
+    it("sends a comma separated list as the array the engine expects", () => {
+      const { query } = filter_from_form(
+        form_with([{ key: "tenantIdIn", value: "alpha, beta ,gamma" }]),
+        KEYS,
+      );
+      expect(query.tenantIdIn).toEqual(["alpha", "beta", "gamma"]);
+    });
+
+    it("drops the empty parts of a list", () => {
+      const { query } = filter_from_form(
+        form_with([{ key: "tenantIdIn", value: "alpha,,  ,beta" }]),
+        KEYS,
+      );
+      expect(query.tenantIdIn).toEqual(["alpha", "beta"]);
+    });
+
+    it("reads a stored list back as something typable", () => {
+      const form = filter_form_from_saved({
+        name: "Two tenants",
+        query: { tenantIdIn: ["alpha", "beta"] },
+      });
+      expect(form.criteria[0].value).toBe("alpha, beta");
+    });
+
+    it("offers the delegation states rather than a free text field", () => {
+      const form = signal(
+        form_with([{ key: "delegationState", value: "PENDING" }]),
+      );
+      const { getByLabelText } = render_with_state(
+        <FilterEditForm
+          filter_keys={KEYS}
+          sort_options={[]}
+          form={form}
+          on_submit={() => {}}
+          on_cancel={() => {}}
+        />,
+      );
+      const select = getByLabelText("common.value");
+      expect(select.tagName).toBe("SELECT");
+      expect([...select.options].map((o) => o.value)).toEqual([
+        "",
+        "PENDING",
+        "RESOLVED",
+      ]);
+    });
+  });
 });

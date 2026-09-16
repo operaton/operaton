@@ -155,6 +155,27 @@ export const FILTER_KEYS = [
     nameKey: "tasks.filter_keys.taskVariables",
     type: "variable",
   },
+  { key: "owner", nameKey: "tasks.filter_keys.owner", type: "string" },
+  {
+    key: "delegationState",
+    nameKey: "tasks.filter_keys.delegationState",
+    type: "enum",
+    options: [
+      { value: "PENDING", label: "PENDING" },
+      { value: "RESOLVED", label: "RESOLVED" },
+    ],
+  },
+  {
+    key: "includeAssignedTasks",
+    nameKey: "tasks.filter_keys.includeAssignedTasks",
+    type: "boolean",
+  },
+  { key: "tenantIdIn", nameKey: "tasks.filter_keys.tenantIdIn", type: "list" },
+  {
+    key: "withoutTenantId",
+    nameKey: "tasks.filter_keys.withoutTenantId",
+    type: "boolean",
+  },
   { key: "active", nameKey: "tasks.filter_keys.active", type: "boolean" },
   { key: "suspended", nameKey: "tasks.filter_keys.suspended", type: "boolean" },
 ];

@@ -54,11 +54,7 @@
     "skip-to-content": "Zum Inhalt springen",
     "go-to": "Gehe zu",
     "server": "Server",
-    "choose-server": "Server auswählen",
-    "release-warning": "Öffentliche Alpha-Version – Nicht getestet und nicht für den Produktivbetrieb geeignet – Teilen Sie Ihr Feedback in einem",
-    "release-warning-issue": "Issue",
-    "release-warning-or": "oder im",
-    "release-warning-forum": "Forum"
+    "choose-server": "Server auswählen"
   },
   "goto": {
     "title": "Gehe zu",

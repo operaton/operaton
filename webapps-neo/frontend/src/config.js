@@ -92,7 +92,6 @@ const from_env = () => {
     // is opt-in. See `remote_plugins_allow_origins` for cross-origin sources.
     remote_plugins_enabled: clean(import.meta.env.VITE_REMOTE_PLUGINS_ENABLED) === "true",
     remote_plugins_allow_origins: split_origins(clean(import.meta.env.VITE_REMOTE_PLUGINS_ALLOW_ORIGINS)),
-    hide_release_warning: clean(import.meta.env.VITE_HIDE_RELEASE_WARNING) === "true",
     branding: parse_branding(import.meta.env.VITE_BRANDING),
     user: undefined,
   }
@@ -138,8 +137,6 @@ const from_document = (json) => {
     remote_plugins_allow_origins: Array.isArray(json.remotePluginsAllowOrigins)
       ? json.remotePluginsAllowOrigins.map(clean).filter(Boolean)
       : split_origins(clean(json.remotePluginsAllowOrigins)),
-    hide_release_warning:
-      json.hideReleaseWarning === true || clean(json.hideReleaseWarning) === "true",
     branding: as_branding(json.branding),
     user: json.user?.id ? { id: json.user.id } : undefined,
   }

@@ -48,11 +48,7 @@
     "skip-to-content": "Ga naar inhoud",
     "skip-to-navigation": "Ga naar hoofdnavigatie",
     "go-to": "Ga naar",
-    "choose-server": "Kies een server",
-    "release-warning": "Publieke Alpha Release – Niet getest en niet klaar voor productie – Deel uw feedback via een",
-    "release-warning-issue": "issue",
-    "release-warning-or": "of in het",
-    "release-warning-forum": "forum"
+    "choose-server": "Kies een server"
   },
   "goto": {
     "title": "Ga naar",

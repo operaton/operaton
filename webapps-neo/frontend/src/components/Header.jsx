@@ -11,6 +11,7 @@ import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
 import { get_config } from "../config.js";
 import { app_name, logo_url, logo_alt } from "../branding.js";
+import { page_allowed } from "../helper/authorized_apps.js";
 
 const swap_server = (e, state) => {
   const server = get_config().backends.find((s) => s.url === e.target.value);
@@ -32,8 +33,8 @@ const builtin_nav = [
 
 // Built-ins plus every PAGE plugin's nav entry — the single source of truth for
 // both the desktop menu and the mobile dialog.
-const nav_entries = () => [
-  ...builtin_nav,
+const nav_entries = (authorized_apps) => [
+  ...builtin_nav.filter((entry) => page_allowed(authorized_apps, entry.href)),
   ...plugins_for(PLUGIN_POINTS.PAGE)
     .filter((plugin) => plugin.properties?.href && plugin.properties?.nameKey)
     .map((plugin) => ({
@@ -46,8 +47,9 @@ const nav_entries = () => [
 // Rendered in both the desktop <menu> and the mobile <dialog> so nav entries
 // (built-in and plugin) are declared exactly once.
 const MainNavEntries = ({ url, on_navigate }) => {
-  const [t] = useTranslation();
-  return nav_entries().map((entry) => (
+  const [t] = useTranslation(),
+    state = useContext(AppState);
+  return nav_entries(state.auth.authorized_apps.value).map((entry) => (
     <li key={entry.href}>
       <a
         href={entry.href}

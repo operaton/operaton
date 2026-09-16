@@ -28,6 +28,9 @@ const createAppState = () => {
     credentials: signal({ username: null, password: null }),
     token: signal(null),
     user: { id: signal() },
+    // Which applications the server said this user may use, from the sign-in
+    // response. null until we know — see helper/authorized_apps.js.
+    authorized_apps: signal(null),
     login_response: signal(null),
     logout_response: signal(null),
   };

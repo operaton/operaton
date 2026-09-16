@@ -59,10 +59,16 @@ updates:
       jaxb:
         patterns:
           - "org.glassfish.jaxb:*"
-      maven-test-plugins:
+      maven-plugins:
         patterns:
-          - "org.apache.maven.plugins:maven-surefire-plugin"
-          - "org.apache.maven.plugins:maven-failsafe-plugin"
+          - "org.apache.maven.plugins:*"
+          - "org.apache.maven.extensions:maven-build-cache-extension"
+          - "org.apache.felix:maven-bundle-plugin"
+          - "org.codehaus.cargo:cargo-maven3-plugin"
+          - "org.codehaus.mojo:*"
+          - "org.jacoco:jacoco-maven-plugin"
+          - "org.openapitools:openapi-generator-maven-plugin"
+          - "org.sonatype.central:central-publishing-maven-plugin"
   - package-ecosystem: "maven"
     directory: "/spring-boot-starter/starter"
     schedule:

@@ -77,6 +77,10 @@ describe("TasksPage", () => {
     mockParams = {};
     mockQuery = {};
     routeFn.mockClear();
+    engine_rest.authorization.may.mockResolvedValue(true);
+    engine_rest.authorization.create.mockResolvedValue({
+      status: RESPONSE_STATE.SUCCESS,
+    });
   });
   afterEach(cleanup);
 
@@ -761,6 +765,42 @@ describe("TasksPage", () => {
         permissions: ["READ"],
         resourceType: 5,
       });
+    });
+
+    it("leaves the sharing section inert without permission to grant it", async () => {
+      open_editor();
+      engine_rest.authorization.may.mockResolvedValue(false);
+      const { container, getByText } = renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(getByText("tasks.filter.permissions-denied")).toBeTruthy(),
+      );
+      expect(container.querySelector("fieldset:last-of-type").disabled).toBe(
+        true,
+      );
+    });
+
+    it("reports a refused grant instead of navigating away", async () => {
+      open_editor();
+      engine_rest.filter.create_filter.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: { id: "f1" },
+      });
+      engine_rest.authorization.create.mockResolvedValue({
+        status: RESPONSE_STATE.ERROR,
+        error: { message: "forbidden" },
+      });
+      const { container, getByText } = renderPage(state);
+      fireEvent.input(container.querySelector("#filter-name"), {
+        target: { value: "Overdue" },
+      });
+      fireEvent.click(getByText("tasks.filter.readable-by-all"));
+      fireEvent.submit(container.querySelector("form"));
+
+      await vi.waitFor(() =>
+        expect(getByText("tasks.filter.share-failed")).toBeTruthy(),
+      );
+      expect(routeFn).not.toHaveBeenCalled();
     });
 
     it("adds and removes a row again", () => {

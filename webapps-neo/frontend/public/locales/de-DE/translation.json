@@ -262,7 +262,10 @@
       "permissions-hint": "Ein gespeicherter Filter ist privat, bis jemand ihn lesen darf.",
       "readable-by-all": "Alle dürfen ihn verwenden",
       "user": "Benutzer",
-      "group": "Gruppe"
+      "group": "Gruppe",
+      "permissions-denied": "Zum Freigeben eines Filters wird die Berechtigung benötigt, Berechtigungen anzulegen. Dieser Filter bleibt vorerst nur für dich sichtbar.",
+      "save-failed": "Der Filter konnte nicht gespeichert werden. {{reason}}",
+      "share-failed": "Der Filter wurde gespeichert, aber die Freigabe für {{identities}} ist fehlgeschlagen. Er ist vorerst nur für dich sichtbar."
     },
     "sort": {
       "label": "Sortieren nach",

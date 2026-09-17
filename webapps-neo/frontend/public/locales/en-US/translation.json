@@ -821,7 +821,8 @@
       "group": "Group",
       "user": "User",
       "group-id": "Group id",
-      "user-id": "User id"
+      "user-id": "User id",
+      "already-exists": "An authorization for this combination of type, user or group and resource already exists, holding {{permissions}}. The engine allows only one — add to the existing row in the table below via “Edit”."
     },
     "authorization-resources": {
       "application": "Application",

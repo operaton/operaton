@@ -507,6 +507,63 @@ describe("AdminPage", () => {
       expect(call[1].resourceType).toBe(1);
     });
 
+    it("points at the row in the way instead of letting the engine refuse", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.all, [
+        {
+          id: "a1",
+          type: 1,
+          groupId: "reviewers",
+          permissions: ["READ", "UPDATE"],
+          resourceType: 1,
+          resourceId: "*",
+        },
+      ]);
+      const { container, getByText } = renderPage(state);
+
+      fireEvent.click(getByText("admin.authorization.create"));
+      fireEvent.input(container.querySelector("#auth-user"), {
+        target: { value: "reviewers" },
+      });
+      fireEvent.submit(container.querySelector("form.authorization-create"));
+
+      expect(getByText("admin.authorization.already-exists")).toBeTruthy();
+      expect(engine_rest.authorization.create).not.toHaveBeenCalled();
+    });
+
+    it("keeps the permissions it already had when one is added", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.all, [
+        {
+          id: "a1",
+          type: 1,
+          groupId: "reviewers",
+          permissions: ["READ", "UPDATE"],
+          resourceType: 1,
+          resourceId: "*",
+        },
+      ]);
+      const { container, getByText } = renderPage(state);
+
+      fireEvent.click(getByText("common.edit"));
+      const create_box = Array.from(
+        container.querySelectorAll('input[type="checkbox"]'),
+      ).find((box) => box.value === "CREATE");
+      fireEvent.input(create_box, { target: { checked: true } });
+      fireEvent.submit(container.querySelector("form"));
+
+      const call = engine_rest.authorization.update.mock.lastCall;
+      expect(call[2].permissions).toEqual(["READ", "UPDATE", "CREATE"]);
+    });
+
     it("grants to a user when the holder is switched to one", () => {
       mockParams = {
         page_id: "authorizations",

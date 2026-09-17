@@ -399,7 +399,8 @@
       "suspend": "Suspend",
       "select-all": "Select all",
       "count": "{{count}} selected",
-      "confirm-remove": "Delete {{count}} process definition(s) and all their data? This cannot be undone."
+      "confirm-remove": "Delete {{count}} process definition(s) and all their data? This cannot be undone.",
+      "failed": "The action was refused for {{count}} definition(s): {{reason}}"
     },
     "incidents": {
       "message": "Message",

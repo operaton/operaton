@@ -399,7 +399,8 @@
       "suspend": "Anhalten",
       "select-all": "Alle auswählen",
       "count": "{{count}} ausgewählt",
-      "confirm-remove": "{{count}} Prozessdefinition(en) und alle zugehörigen Daten löschen? Dies kann nicht rückgängig gemacht werden."
+      "confirm-remove": "{{count}} Prozessdefinition(en) und alle zugehörigen Daten löschen? Dies kann nicht rückgängig gemacht werden.",
+      "failed": "Die Aktion wurde für {{count}} Definition(en) abgelehnt: {{reason}}"
     },
     "incidents": {
       "message": "Nachricht",

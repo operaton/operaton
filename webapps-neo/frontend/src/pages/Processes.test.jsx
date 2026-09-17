@@ -37,6 +37,7 @@ vi.mock("preact-iso", () => ({
   useLocation: () => ({ route: routeFn, path: "/processes" }),
 }));
 
+import { RESPONSE_STATE } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { ProcessesPage } from "./Processes.jsx";
@@ -174,6 +175,21 @@ describe("ProcessesPage — bulk actions", () => {
       include_instances: true,
       execution_date: undefined,
     });
+  });
+
+  it("says so when the engine refuses the action", async () => {
+    engine_rest.process_definition.suspend.mockResolvedValue({
+      status: RESPONSE_STATE.ERROR,
+      error: { message: "Forbidden" },
+    });
+    const { container, getByText } = renderPage(state);
+    select_first(container);
+    fireEvent.click(getByText("processes.bulk.suspend"));
+    fireEvent.click(getByText("common.ok"));
+
+    await vi.waitFor(() =>
+      expect(getByText("processes.bulk.failed")).toBeTruthy(),
+    );
   });
 
   it("suspend passes on that the instances should stay untouched", async () => {

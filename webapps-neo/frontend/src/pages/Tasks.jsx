@@ -26,6 +26,7 @@ import { StartProcessList } from "./StartProcessList.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
 import {
   formatRelativeDate,
+  formatTimestamp,
   fromLocalParts,
   toLocalParts,
 } from "../helper/date_formatter.js";
@@ -547,8 +548,6 @@ const load_task_chain = async (state, task_id) => {
     await engine_rest.process_definition.one(state, task.processDefinitionId);
   }
   await engine_rest.task.get_identity_links(state, task.id);
-  await engine_rest.history.get_user_operation_by_task(state, task.id);
-  await engine_rest.task.get_comments(state, task.id);
 };
 
 const TaskTabs = () => {
@@ -791,8 +790,12 @@ const SetGroupsButton = () => {
       ),
     submit = (event) => {
       event.preventDefault();
+      // The engine takes an empty group id without complaint and the task then
+      // carries a candidate nobody can name, so it is refused here.
+      const group_id = (group_state.value ?? "").trim();
+      if (!group_id) return;
       engine_rest.task
-        .add_group(state, state.api.task.one.value.data.id, group_state.value)
+        .add_group(state, state.api.task.one.value.data.id, group_id)
         .then(() => {
           if (
             state.api.task.add_group.value.status === RESPONSE_STATE.SUCCESS
@@ -844,6 +847,7 @@ const SetGroupsButton = () => {
             id="group_id"
             key="group_id"
             required
+            value={group_state.value ?? ""}
             onInput={(e) => (group_state.value = e.currentTarget.value)}
           />
           <div class="button-group">
@@ -1418,6 +1422,7 @@ const history_from_comments = (signal) =>
 
 const HistoryTab = () => {
   const state = useContext(AppState),
+    { params } = useRoute(),
     [t] = useTranslation(),
     {
       api: {
@@ -1425,6 +1430,15 @@ const HistoryTab = () => {
         task: { comment },
       },
     } = state;
+
+  // Every other tab fetches what it shows when it is opened. These two were
+  // loaded once with the task instead, so the tab never caught up with a
+  // comment or an action taken since.
+  useEffect(() => {
+    void engine_rest.history.get_user_operation_by_task(state, params.task_id);
+    void engine_rest.task.get_comments(state, params.task_id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.task_id]);
 
   const ready =
     user_operation.value?.status === RESPONSE_STATE.SUCCESS &&
@@ -1456,7 +1470,7 @@ const HistoryTab = () => {
               <tr key={i}>
                 <td>
                   <time datetime={entry.timestamp}>
-                    {formatRelativeDate(entry.timestamp)}
+                    {formatTimestamp(entry.timestamp)}
                   </time>
                 </td>
                 <td>{entry.user}</td>

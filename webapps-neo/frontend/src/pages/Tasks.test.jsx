@@ -269,6 +269,20 @@ describe("TasksPage", () => {
     });
   });
 
+  describe("what the list can be sorted by", () => {
+    it("offers no sorting the request cannot carry", () => {
+      // Sorting by a variable needs its name and type alongside the key. Until
+      // the request can carry those, the choice would only ever answer
+      // "variableName is null" — or, over GET, refuse the key outright.
+      const { container } = renderPage(state);
+      const offered = [
+        ...container.querySelectorAll("#list-filter select option"),
+      ].map((o) => o.value);
+      expect(offered).not.toContain("processVariable");
+      expect(offered).not.toContain("taskVariable");
+    });
+  });
+
   describe("a task that no longer exists", () => {
     afterEach(() => engine_rest.task.get_task.mockReset());
 

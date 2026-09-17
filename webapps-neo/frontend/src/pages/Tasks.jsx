@@ -31,20 +31,18 @@ import {
 
 const TASK_PAGE_SIZE = 20;
 
+// Sorting by a variable is deliberately absent. The engine needs the variable's
+// name and type alongside the key, which neither the query string nor this
+// interface carries: GET refuses the key outright, and a request without those
+// two answers "variableName is null". Offering the choice only meant an error
+// whichever way it was taken. The five keys come back with the data path that
+// can express them.
 const SORT_OPTIONS = [
   { key: "priority", nameKey: "tasks.sort.priority" },
   { key: "dueDate", nameKey: "tasks.sort.due-date" },
   { key: "followUpDate", nameKey: "tasks.sort.follow-up-date" },
   { key: "name", nameKey: "tasks.sort.task-name" },
   { key: "assignee", nameKey: "tasks.sort.assignee" },
-  { key: "processVariable", nameKey: "tasks.sort.process-variable" },
-  { key: "executionVariable", nameKey: "tasks.sort.execution-variable" },
-  { key: "taskVariable", nameKey: "tasks.sort.task-variable" },
-  {
-    key: "caseExecutionVariable",
-    nameKey: "tasks.sort.case-execution-variable",
-  },
-  { key: "caseInstanceVariable", nameKey: "tasks.sort.case-instance-variable" },
 ];
 
 const FILTER_KEYS = [

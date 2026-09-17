@@ -63,6 +63,10 @@ const createAppState = () => {
       },
       credentials: signal(null),
       unlock: signal(null),
+      // The engine's password policy, and the answer when a password is
+      // checked against it. Absent (404) when no policy is configured.
+      password_policy: signal(null),
+      password_check: signal(null),
     },
     execution: {
       set_variable: signal(null),

@@ -866,6 +866,15 @@
       "integration": "Einbindung",
       "webapps": "Web-Anwendungen",
       "raw": "Rohe Telemetriedaten"
+    },
+    "password-policy": {
+      "title": "Das Kennwort muss diese Bedingungen erfüllen:",
+      "PASSWORD_POLICY_LENGTH": "mindestens {{minLength}} Zeichen",
+      "PASSWORD_POLICY_LOWERCASE": "mindestens {{minLowerCase}} Kleinbuchstaben",
+      "PASSWORD_POLICY_UPPERCASE": "mindestens {{minUpperCase}} Großbuchstaben",
+      "PASSWORD_POLICY_DIGIT": "mindestens {{minDigit}} Ziffern",
+      "PASSWORD_POLICY_SPECIAL": "mindestens {{minSpecial}} Sonderzeichen",
+      "PASSWORD_POLICY_USER_DATA": "keine Angaben aus dem Benutzerkonto"
     }
   },
   "account": {

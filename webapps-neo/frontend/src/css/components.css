@@ -1819,3 +1819,25 @@ nav:has(> .breadcrumbs) {
     translate: -50% calc(-100% - 0.4rem);
   }
 }
+
+/* The engine's password rules, listed beside the password fields. A rule the
+   typed password breaks is marked rather than removed, so the list stays
+   stable while typing. */
+.password-policy {
+  grid-column: 2;
+  margin: 0;
+}
+
+.password-policy p {
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.password-policy ul {
+  margin: 0;
+  padding-left: var(--spacing-4);
+}
+
+.password-policy .broken {
+  color: var(--color-danger);
+  font-weight: 600;
+}

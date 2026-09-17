@@ -33,7 +33,11 @@ const get_users = (state, query = {}, append = false) =>
  * filtered by READ on User.
  */
 const find_user = (state, user_name) =>
-  GET(`/user?id=${encodeURIComponent(user_name)}&maxResults=1`, state, state.api.user.lookup)
+  GET(
+    `/user?id=${encodeURIComponent(user_name)}&maxResults=1`,
+    state,
+    state.api.user.lookup,
+  );
 
 const create_user = (state, user) =>
   POST("/user/create", user, state, state.api.user.create);
@@ -66,6 +70,23 @@ const update_credentials = (state, user_name, credentials_body) =>
     state.api.user.credentials,
   );
 
+/**
+ * The rules a password has to satisfy. The engine answers 404 when no policy
+ * is configured, which is not an error — it means there are no rules.
+ * @see https://docs.operaton.org/reference/latest/rest-api/#tag/Identity
+ */
+const get_password_policy = (state) =>
+  GET("/identity/password-policy", state, state.api.user.password_policy);
+
+/** Ask the engine whether a password satisfies the policy. */
+const check_password = (state, password, user_id) =>
+  POST(
+    "/identity/password-policy",
+    { password, ...(user_id ? { profile: { id: user_id } } : {}) },
+    state,
+    state.api.user.password_check,
+  );
+
 const unlock_user = (state, user_name) =>
   POST(
     `/user/${encode_id(resolve_user(state, user_name))}/unlock`,
@@ -74,19 +95,20 @@ const unlock_user = (state, user_name) =>
     state.api.user.unlock,
   );
 
-const user =
-  {
-    all: get_users,
-    find: find_user,
-    create: create_user,
-    delete: delete_user,
-    count: get_user_count,
-    profile: {
-      get: get_user_profile,
-      update: update_user_profile,
-    },
-    credentials_update: update_credentials,
-    unlock: unlock_user,
-  }
+const user = {
+  all: get_users,
+  find: find_user,
+  create: create_user,
+  delete: delete_user,
+  count: get_user_count,
+  profile: {
+    get: get_user_profile,
+    update: update_user_profile,
+  },
+  credentials_update: update_credentials,
+  unlock: unlock_user,
+  password_policy: get_password_policy,
+  check_password: check_password,
+};
 
 export default user;

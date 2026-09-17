@@ -866,6 +866,15 @@
       "integration": "Integration",
       "webapps": "Web apps",
       "raw": "Raw telemetry data"
+    },
+    "password-policy": {
+      "title": "The password has to satisfy these rules:",
+      "PASSWORD_POLICY_LENGTH": "at least {{minLength}} characters",
+      "PASSWORD_POLICY_LOWERCASE": "at least {{minLowerCase}} lowercase characters",
+      "PASSWORD_POLICY_UPPERCASE": "at least {{minUpperCase}} uppercase characters",
+      "PASSWORD_POLICY_DIGIT": "at least {{minDigit}} digits",
+      "PASSWORD_POLICY_SPECIAL": "at least {{minSpecial}} special characters",
+      "PASSWORD_POLICY_USER_DATA": "nothing taken from the user's own data"
     }
   },
   "account": {

@@ -3,6 +3,7 @@ import {
   _is_own_backend,
   _url_auth,
   _url_engine_rest,
+  basic_auth_header,
   set_request_headers,
   RESPONSE_STATE,
 } from "../helper.jsx";
@@ -78,9 +79,14 @@ const session_user = (state) => {
  * Deliberately not a plain request to some endpoint with an Authorization
  * header: the REST API may be configured without authentication, in which case
  * every request succeeds and any password would be accepted. This endpoint
- * verifies the credentials whether or not the API itself demands them, and
- * answers with the resolved user, which the web apps need in order to load
- * anything user-specific.
+ * verifies the credentials in the body whether or not the API itself demands
+ * them, and answers with the resolved user, which the web apps need in order to
+ * load anything user-specific.
+ *
+ * The same credentials go into a Basic header as well: an API that does demand
+ * authentication rejects the request before the endpoint ever sees the body.
+ * (A browser that has cached the credentials for that origin would attach them
+ * itself, which is why the missing header went unnoticed for a while.)
  *
  * @param {Object} state - Application state
  * @returns {Promise<string>} the authenticated user id
@@ -88,7 +94,10 @@ const session_user = (state) => {
 const verify_credentials = (state, username, password) =>
   fetch(`${_url_engine_rest(state)}/identity/verify`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: basic_auth_header(username, password),
+    },
     credentials: "include",
     body: JSON.stringify({ username, password }),
   })

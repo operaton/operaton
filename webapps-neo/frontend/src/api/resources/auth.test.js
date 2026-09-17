@@ -67,6 +67,23 @@ describe("api/resources/auth (basic mode)", () => {
         username: "bob",
         password: "secret",
       });
+      // The body is what verifies the password; the header gets the request
+      // past the REST API's own authentication, when it has any.
+      expect(options.headers.Authorization).toBe("Basic Ym9iOnNlY3JldA==");
+    });
+
+    it("is a wrong login when the REST API's authentication rejects the credentials", async () => {
+      state.auth.credentials.value = { username: null, password: null };
+      fetchMock.mockResolvedValue({ ok: false, status: 401 });
+      auth.login(state, "bob", "wrong");
+
+      await vi.waitFor(() =>
+        expect(state.auth.logged_in.value.data).toBe("wrong_login"),
+      );
+      expect(state.auth.credentials.value).toEqual({
+        username: null,
+        password: null,
+      });
     });
 
     it("records the user the identity service resolved", async () => {

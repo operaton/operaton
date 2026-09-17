@@ -429,8 +429,10 @@ const CreateTaskButton = () => {
     assignee = useSignal(""),
     description = useSignal(""),
     tenant = useSignal(""),
+    error = useSignal(null),
     close = () => document.getElementById("create_task").close(),
     show = () => {
+      error.value = null;
       // The tenants the signed-in user may read, not the ones they belong to:
       // an administrator is typically a member of none and still has to be able
       // to place a task in one. Authorization already narrows this per user.
@@ -448,7 +450,14 @@ const CreateTaskButton = () => {
         description: description.value.trim() || null,
         tenantId: tenant.value.trim() || null,
       });
-      if (result?.status !== RESPONSE_STATE.SUCCESS) return;
+      // A refusal used to leave the dialog standing with nothing said, which
+      // reads as a button that does not work. The engine's own words are the
+      // useful part here: which tenant, and why it was not accepted.
+      if (result?.status !== RESPONSE_STATE.SUCCESS) {
+        error.value = result?.error?.message ?? t("tasks.create.failed");
+        return;
+      }
+      error.value = null;
       name.value = "";
       assignee.value = "";
       description.value = "";
@@ -510,6 +519,11 @@ const CreateTaskButton = () => {
               </option>
             ))}
           </datalist>
+          {error.value && (
+            <p class="error" role="alert">
+              {error.value}
+            </p>
+          )}
           <div class="button-group">
             <button type="submit" disabled={!name.value.trim()}>
               {t("tasks.create.save")}

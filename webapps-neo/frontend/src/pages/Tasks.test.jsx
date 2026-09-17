@@ -732,6 +732,25 @@ describe("TasksPage", () => {
       );
     });
 
+    it("says why the engine refused, instead of looking like a dead button", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.ERROR,
+        error: { message: "ENGINE-13034 ... no authenticated tenant." },
+      });
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.input(container.querySelector("#new-task-tenant"), {
+        target: { value: "nowhere" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() => expect(getByText(/ENGINE-13034/)).toBeTruthy());
+      expect(routeFn).not.toHaveBeenCalled();
+    });
+
     it("sends no tenant when the field was left blank", async () => {
       engine_rest.task.create_task.mockResolvedValue({
         status: RESPONSE_STATE.SUCCESS,

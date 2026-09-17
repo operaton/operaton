@@ -145,7 +145,8 @@
     "create": {
       "open": "New task",
       "title": "Create a task",
-      "save": "Create"
+      "save": "Create",
+      "failed": "The task could not be created."
     },
     "task-not-found-hint": "This task no longer exists. It may have been completed or cancelled.",
     "task-load-failed": "Could not load task",

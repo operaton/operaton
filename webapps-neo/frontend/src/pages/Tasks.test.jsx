@@ -303,6 +303,35 @@ describe("TasksPage", () => {
     });
   });
 
+  describe("the chosen filter stays chosen", () => {
+    it("carries the filter and sorting into the link on a task", () => {
+      mockQuery = { filter: "f1", sortBy: "created", sortOrder: "desc" };
+      signal_response(state.api.task.list, [{ id: "t1", name: "One" }]);
+      const { container } = renderPage(state);
+      const href = container.querySelector("tbody a").getAttribute("href");
+      expect(href).toContain("filter=f1");
+      expect(href).toContain("sortBy=created");
+      expect(href).toContain("sortOrder=desc");
+    });
+
+    it("carries an ad-hoc criterion along too", () => {
+      mockQuery = { filter: "f1", "q.nameLike": "Review" };
+      signal_response(state.api.task.list, [{ id: "t1", name: "One" }]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("tbody a").getAttribute("href")).toContain(
+        "q.nameLike=Review",
+      );
+    });
+
+    it("adds nothing when no filter is chosen", () => {
+      signal_response(state.api.task.list, [{ id: "t1", name: "One" }]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("tbody a").getAttribute("href")).toBe(
+        "/tasks/t1/form",
+      );
+    });
+  });
+
   describe("what the list can be sorted by", () => {
     it("offers no sorting the request cannot carry", () => {
       // Sorting by a variable needs its name and type alongside the key. Until

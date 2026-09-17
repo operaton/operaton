@@ -432,6 +432,40 @@ describe("TasksPage", () => {
       expect(getByText("hello")).toBeTruthy();
     });
 
+    it("re-reads the history when the tab is opened", () => {
+      mockParams = { task_id: "t1", tab: "history" };
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.history.user_operation, []);
+      signal_response(state.api.task.comment.list, []);
+      renderPage(state);
+      expect(
+        engine_rest.history.get_user_operation_by_task.mock.lastCall,
+      ).toEqual([state, "t1"]);
+      expect(engine_rest.task.get_comments.mock.lastCall).toEqual([
+        state,
+        "t1",
+      ]);
+    });
+
+    it("asks before an attachment is deleted", () => {
+      mockParams = { task_id: "t1", tab: "attachments" };
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.task.attachment.list, [
+        { id: "a1", name: "Rechnung.pdf", description: "" },
+      ]);
+      const { getByText, getByLabelText } = renderPage(state);
+
+      fireEvent.click(getByLabelText("common.delete"));
+      expect(engine_rest.task.delete_attachment).not.toHaveBeenCalled();
+
+      fireEvent.click(getByText("tasks.attachments.confirm-delete"));
+      expect(engine_rest.task.delete_attachment.mock.lastCall).toEqual([
+        state,
+        "t1",
+        "a1",
+      ]);
+    });
+
     it("fetches + renders the BPMN diagram on the diagram tab", () => {
       mockParams = { task_id: "t1", tab: "diagram" };
       signal_response(state.api.task.one, sample_task());

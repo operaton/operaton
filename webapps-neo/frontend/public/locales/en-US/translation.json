@@ -291,7 +291,9 @@
       "file": "File",
       "choose": "Choose…",
       "none-chosen": "No file chosen",
-      "upload": "Upload"
+      "upload": "Upload",
+      "delete-confirm": "Delete the attachment “{{name}}”?",
+      "confirm-delete": "Delete attachment"
     }
   },
   "processes": {

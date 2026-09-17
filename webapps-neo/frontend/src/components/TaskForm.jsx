@@ -3,6 +3,7 @@ import { useSignal } from "@preact/signals";
 import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
 import { resolve_user, RESPONSE_STATE } from "../api/helper.jsx";
+import { keep_list_query } from "../helper/list_query.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { useRoute, useLocation } from "preact-iso";
 import { CamundaForm } from "./CamundaForm.jsx";
@@ -61,7 +62,10 @@ const TaskForm = () => {
 // with an error state instead of rejecting, so the answer has to be read:
 // leaving for the list regardless tells the user the task is done when it is
 // not.
-const then_leave = (request, { set_error, task_id, route, failed }) =>
+const then_leave = (
+  request,
+  { set_error, task_id, route, failed, list_query = "" },
+) =>
   void Promise.resolve(request)
     .then((result) => {
       if (result?.status !== RESPONSE_STATE.SUCCESS) {
@@ -69,7 +73,7 @@ const then_leave = (request, { set_error, task_id, route, failed }) =>
         return;
       }
       localStorage.removeItem(`task_form_${task_id}`);
-      route("/tasks");
+      route(`/tasks${list_query}`);
     })
     .catch((error) => set_error(error?.message ?? failed));
 
@@ -83,6 +87,9 @@ const worked_by_me = (state, task) =>
 const CamundaTaskForm = ({ task, taskId }) => {
   const state = useContext(AppState),
     { route } = useLocation(),
+    // Finishing a task returns to the list; without this it returns to an
+    // unfiltered one, throwing away what the user was working through.
+    list_query = keep_list_query(useRoute().query),
     [t] = useTranslation(),
     [error, setError] = useState(null),
     submit_ref = useRef(null);
@@ -130,6 +137,7 @@ const CamundaTaskForm = ({ task, taskId }) => {
       task_id: taskId,
       route,
       failed: t("tasks.form.submit-failed"),
+      list_query,
     });
   };
 
@@ -212,6 +220,9 @@ const EmbeddedHtmlTaskForm = ({ task, formKey }) => {
 const GeneratedTaskForm = ({ task, taskId }) => {
   const state = useContext(AppState),
     { route } = useLocation(),
+    // Finishing a task returns to the list; without this it returns to an
+    // unfiltered one, throwing away what the user was working through.
+    list_query = keep_list_query(useRoute().query),
     [t] = useTranslation(),
     [error, setError] = useState(null),
     submit_ref = useRef(null);
@@ -254,6 +265,7 @@ const GeneratedTaskForm = ({ task, taskId }) => {
       task_id: taskId,
       route,
       failed: t("tasks.form.submit-failed"),
+      list_query,
     });
   };
 
@@ -296,6 +308,7 @@ const GeneratedTaskForm = ({ task, taskId }) => {
                 taskId,
                 route,
                 t("tasks.form.submit-failed"),
+                list_query,
               )
             }
           >
@@ -315,6 +328,9 @@ const GeneratedTaskForm = ({ task, taskId }) => {
 const GenericTaskForm = ({ task, taskId }) => {
   const state = useContext(AppState),
     { route } = useLocation(),
+    // Finishing a task returns to the list; without this it returns to an
+    // unfiltered one, throwing away what the user was working through.
+    list_query = keep_list_query(useRoute().query),
     [t] = useTranslation(),
     [error, setError] = useState(null),
     rows = useSignal([]);
@@ -362,6 +378,7 @@ const GenericTaskForm = ({ task, taskId }) => {
       task_id: taskId,
       route,
       failed: t("tasks.form.submit-failed"),
+      list_query,
     });
   };
 
@@ -395,13 +412,21 @@ const GenericTaskForm = ({ task, taskId }) => {
 
 // Complete a task without submitting a form, via the dedicated /complete
 // endpoint (used when the task has no form fields).
-const complete_directly = (state, setError, taskId, route, failed) => {
+const complete_directly = (
+  state,
+  setError,
+  taskId,
+  route,
+  failed,
+  list_query,
+) => {
   setError(null);
   then_leave(engine_rest.task.complete_task(state, taskId), {
     set_error: setError,
     task_id: taskId,
     route,
     failed,
+    list_query,
   });
 };
 

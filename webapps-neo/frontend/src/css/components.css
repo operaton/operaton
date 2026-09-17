@@ -1824,7 +1824,6 @@ nav:has(> .breadcrumbs) {
    typed password breaks is marked rather than removed, so the list stays
    stable while typing. */
 .password-policy {
-  grid-column: 2;
   margin: 0;
 }
 

@@ -424,6 +424,7 @@ const TasksManage = () => {
 const CreateTaskButton = () => {
   const state = useContext(AppState),
     { route } = useLocation(),
+    { query } = useRoute(),
     [t] = useTranslation(),
     name = useSignal(""),
     assignee = useSignal(""),
@@ -463,7 +464,7 @@ const CreateTaskButton = () => {
       description.value = "";
       tenant.value = "";
       close();
-      route(`/tasks/${id}/form`);
+      route(`/tasks/${id}/form${keep_list_query(query)}`);
     };
 
   return (
@@ -1246,6 +1247,9 @@ const ClaimButton = () => {
         if (result?.status !== RESPONSE_STATE.SUCCESS) return;
         void engine_rest.task.get_task(state, task.id);
         reload_tasks(state, query);
+        // The engine logs the change, so the history tab is stale the moment
+        // it is open while this happens.
+        void engine_rest.history.get_user_operation_by_task(state, task.id);
         close();
       }),
     assign_to_user = async (event) => {
@@ -1549,7 +1553,7 @@ const Filter = () => {
             });
             return;
           }
-          route("/tasks");
+          route(`/tasks${keep_list_query(query)}`);
         });
     };
 

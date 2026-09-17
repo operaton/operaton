@@ -1300,6 +1300,14 @@
       break-inside: avoid-column;
     }
 
+    /* A message about the form as a whole belongs across both columns; in the
+       label column it is squeezed into a few characters per line. */
+    > .error,
+    > .info-box,
+    > .password-policy {
+      grid-column: 1 / -1;
+    }
+
     .form-horizontal {
       display: flex;
       flex-direction: column;

@@ -897,8 +897,9 @@ describe("TasksPage", () => {
       engine_rest.task.get_task.mockResolvedValue(undefined);
       renderPage(state);
 
+      // The last step of the chain: once it ran, the task was not dropped.
       await vi.waitFor(() =>
-        expect(engine_rest.task.get_comments).toHaveBeenCalled(),
+        expect(engine_rest.task.get_identity_links).toHaveBeenCalled(),
       );
       expect(state.api.task.list.value.data).toHaveLength(1);
     });

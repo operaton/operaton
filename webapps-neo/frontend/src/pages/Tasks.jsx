@@ -18,6 +18,7 @@ import {
   with_manage,
   without_manage,
   write_list_query,
+  keep_list_query,
 } from "../helper/list_query.js";
 import { resolve_user } from "../api/helper.jsx";
 import { AppState } from "../state.js";
@@ -407,7 +408,11 @@ const TaskList = () => {
 };
 
 const TaskRowEntry = ({ task, selected }) => {
-  const { id, name, due, assignee } = task;
+  const { id, name, due, assignee } = task,
+    { query } = useRoute(),
+    // Opening a task must not drop the chosen filter and sorting: they live in
+    // the address, so a link without them returns to an unfiltered list.
+    list_query = keep_list_query(query);
 
   useLayoutEffect(() => {
     if (selected) {
@@ -420,7 +425,7 @@ const TaskRowEntry = ({ task, selected }) => {
   return (
     <tr id={id} key={id} aria-selected={selected}>
       <th scope="row">
-        <a href={`/tasks/${id}/${task_tabs[0].id}`}>{name}</a>
+        <a href={`/tasks/${id}/${task_tabs[0].id}${list_query}`}>{name}</a>
       </th>
       <td>{assignee ? assignee : "—"}</td>
       <td>
@@ -443,7 +448,7 @@ const NoSelectedTask = () => {
 const Task = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
-    { params } = useRoute(),
+    { params, query } = useRoute(),
     {
       api: {
         task: { one: task },
@@ -480,7 +485,7 @@ const Task = () => {
               ? t("tasks.task-not-found-hint")
               : (task_value.error?.message ?? t("tasks.form.unknown-error"))}
           </p>
-          <a href="/tasks" class="button">
+          <a href={`/tasks${keep_list_query(query)}`} class="button">
             {t("tasks.back-to-list")}
           </a>
         </div>
@@ -1138,6 +1143,7 @@ const CRITERIA_KEYS = [
 const Filter = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
+    { query } = useRoute(),
     { route } = useLocation(),
     form = useSignal({
       name: "",
@@ -1222,7 +1228,7 @@ const Filter = () => {
     <div class="filter-editor">
       <header>
         <h2>{t("tasks.filter.title")}</h2>
-        <a href="/tasks" class="button">
+        <a href={`/tasks${keep_list_query(query)}`} class="button">
           {t("common.back")}
         </a>
       </header>
@@ -1379,7 +1385,7 @@ const Filter = () => {
 
         <div class="filter-actions">
           <button type="submit">{t("common.save")}</button>
-          <a href="/tasks">{t("common.cancel")}</a>
+          <a href={`/tasks${keep_list_query(query)}`}>{t("common.cancel")}</a>
         </div>
       </form>
     </div>

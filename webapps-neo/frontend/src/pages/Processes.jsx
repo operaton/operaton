@@ -35,7 +35,7 @@ import {
   hydrate_signal,
   update_saved_filter,
 } from "../helper/saved_filters.js";
-import { formatDuration } from "../helper/date_formatter.js";
+import { formatDuration, formatTimestamp } from "../helper/date_formatter.js";
 
 const RESOURCE_TYPE = "process_definition";
 const INSTANCE_RESOURCE_TYPE = "process_instance";
@@ -1188,6 +1188,38 @@ const InstanceDetailsDescription = () => {
           <>
             <dt>{t("processes.delete-reason")}</dt>
             <dd>{data.deleteReason}</dd>
+          </>
+        )}
+        {/* Where this instance came from. Only the historic payload carries it,
+            and only a called instance has a caller — from a child the way back
+            up was otherwise a manual search. */}
+        {data?.superProcessInstanceId && (
+          <>
+            <dt>{t("processes.super-instance")}</dt>
+            <dd class="entity-id">
+              <a
+                href={`/processes/${data.superProcessDefinitionId ?? ""}/instances/${data.superProcessInstanceId}${keep_history_query(query)}`}
+              >
+                {data.superProcessInstanceId}
+              </a>
+            </dd>
+          </>
+        )}
+        {data?.rootProcessInstanceId &&
+          data.rootProcessInstanceId !== data.id && (
+            <>
+              <dt>{t("processes.root-instance")}</dt>
+              <dd class="entity-id">{data.rootProcessInstanceId}</dd>
+            </>
+          )}
+        {data?.removalTime && (
+          <>
+            <dt>{t("processes.removal-time")}</dt>
+            <dd>
+              <time datetime={data.removalTime}>
+                {formatTimestamp(data.removalTime)}
+              </time>
+            </dd>
           </>
         )}
       </dl>

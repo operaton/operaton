@@ -541,7 +541,10 @@
       "when": "When",
       "immediately": "Immediately",
       "delayed": "At a set time"
-    }
+    },
+    "super-instance": "Calling instance",
+    "root-instance": "Root instance",
+    "removal-time": "Removal time"
   },
   "decisions": {
     "title": "Decisions",

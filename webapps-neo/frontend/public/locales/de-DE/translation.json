@@ -541,7 +541,10 @@
       "when": "Zeitpunkt",
       "immediately": "Sofort",
       "delayed": "Zu einem Zeitpunkt"
-    }
+    },
+    "super-instance": "Übergeordnete Instanz",
+    "root-instance": "Wurzelinstanz",
+    "removal-time": "Entfernungszeitpunkt"
   },
   "decisions": {
     "title": "Entscheidungen",

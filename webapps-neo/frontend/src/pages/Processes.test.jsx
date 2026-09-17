@@ -398,6 +398,34 @@ describe("ProcessesPage — instance details", () => {
   });
   afterEach(cleanup);
 
+  it("says where a called instance came from, and when it goes", () => {
+    mockQuery = { history: "true" };
+    mockParams = {
+      definition_id: "proc:1",
+      panel: "instances",
+      selection_id: "child-1",
+      sub_panel: "vars",
+    };
+    // In history mode the header reads the historic signal, not the live one.
+    signal_response(state.api.history.process_instance.one, {
+      id: "child-1",
+      state: "COMPLETED",
+      superProcessInstanceId: "parent-1",
+      superProcessDefinitionId: "caller:1",
+      rootProcessInstanceId: "parent-1",
+      removalTime: "2027-09-16T03:00:35.714+0200",
+    });
+    const { container } = renderPage(state);
+
+    // The caller is a link; the root instance is named but not linked.
+    const link = container.querySelector('a[href*="/instances/parent-1"]');
+    expect(link.getAttribute("href")).toContain(
+      "/processes/caller:1/instances/parent-1",
+    );
+    expect(container.textContent).toContain("processes.root-instance");
+    expect(container.textContent).toContain("processes.removal-time");
+  });
+
   it("renders the instance description from instance.one", () => {
     mockParams = {
       definition_id: "proc:1",

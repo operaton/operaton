@@ -56,6 +56,10 @@ export const resolve_user = (state, user_name) =>
 export const get_credentials = (state) =>
   `${state.auth.credentials.value.username}:${state.auth.credentials.value.password}`;
 
+/** The value of an `Authorization` header for HTTP Basic auth. */
+export const basic_auth_header = (username, password) =>
+  `Basic ${window.btoa(unescape(encodeURIComponent(`${username}:${password}`)))}`;
+
 /**
  * The Authorization header value, or `undefined` when the request authenticates
  * some other way. Neither an OAuth2 session nor a webapp session has a token to
@@ -68,7 +72,8 @@ export const get_auth_header = (state) => {
     return state.auth.token.value ? `Bearer ${state.auth.token.value}` : undefined;
   }
   if (_is_own_backend(state)) return undefined;
-  return `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`;
+  const { username, password } = state.auth.credentials.value;
+  return basic_auth_header(username, password);
 };
 
 /** The CSRF token the server handed us, as a cookie, on an earlier request. */

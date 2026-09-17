@@ -159,7 +159,7 @@
     "assign-to-label": "User ID",
     "assign": "Assign",
     "assign-failed": "Could not assign the task.",
-    "assign-unknown-user": "Unknown user id — no such user exists, or you may not see them.",
+    "assign-unknown-user": "Unknown user id, or you do not have the permissions required for this action",
     "assignee-menu": "Assignee actions",
     "comment": "Comment",
     "comment-add": "Add Comment",
@@ -225,7 +225,8 @@
       "legacy-html-migrate-link": "How to migrate",
       "unsupported": "This start form type is not supported yet.",
       "add-variable": "Add a variable",
-      "duplicate-variable": "Each variable can be named only once."
+      "duplicate-variable": "Each variable can be named only once.",
+      "submit-failed": "The task could not be completed."
     },
     "start-process": {
       "title": "Start Task",

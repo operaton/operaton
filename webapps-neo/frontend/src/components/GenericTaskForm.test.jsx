@@ -25,6 +25,7 @@ vi.mock("preact-iso", () => ({
   useLocation: () => ({ route: routeFn, path: "/tasks" }),
 }));
 
+import { RESPONSE_STATE } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { TaskForm } from "./TaskForm.jsx";
@@ -74,6 +75,19 @@ describe("a task that belongs to no process", () => {
     fireEvent.click(getByText("tasks.form.complete-directly"));
     expect(engine_rest.task.post_task_form).toHaveBeenCalled();
     expect(engine_rest.task.post_task_form.mock.lastCall[2]).toEqual({});
+  });
+
+  it("stays put and says so when the engine refuses the completion", async () => {
+    signal_response(state.api.task.form_variables, {});
+    engine_rest.task.post_task_form.mockResolvedValue({
+      status: RESPONSE_STATE.ERROR,
+      error: { message: "task is null" },
+    });
+    const { getByText } = renderForm(state);
+    fireEvent.click(getByText("tasks.form.complete-directly"));
+
+    await vi.waitFor(() => expect(getByText("task is null")).toBeTruthy());
+    expect(routeFn).not.toHaveBeenCalled();
   });
 
   it("carries the typed variables along when it is completed", () => {

@@ -7,6 +7,11 @@ import { has_data, encode_id } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import { Breadcrumbs } from "../components/Breadcrumbs.jsx";
 import { Dialog, ConfirmDialog } from "../components/Dialog.jsx";
+import {
+  PasswordPolicyRules,
+  broken_rules,
+  usePasswordPolicy,
+} from "../components/PasswordPolicy.jsx";
 import { IdentitySearch } from "../components/IdentitySearch.jsx";
 
 const USER_SEARCH = [
@@ -1028,7 +1033,9 @@ const UserCreate = () => {
     { route } = useLocation(),
     form = useSignal({ profile: {}, credentials: {} }),
     password_repeat = useSignal(""),
-    mismatch = useSignal(false);
+    mismatch = useSignal(false),
+    policy = usePasswordPolicy(),
+    broken = useSignal([]);
 
   const set_value = (k1, k2, e) =>
       (form.value = {
@@ -1037,13 +1044,19 @@ const UserCreate = () => {
       }),
     set_p = (k, e) => set_value("profile", k, e),
     set_c = (k, e) => set_value("credentials", k, e),
-    on_submit = (e) => {
+    on_submit = async (e) => {
       e.preventDefault();
       if (form.value.credentials.password !== password_repeat.value) {
         mismatch.value = true;
         return;
       }
       mismatch.value = false;
+      broken.value = await broken_rules(
+        state,
+        form.value.credentials.password,
+        form.value.profile.id,
+      );
+      if (broken.value.length > 0) return;
       void engine_rest.user.create(state, form.value).then(() => {
         if (has_data(user_create)) {
           engine_rest.user.all(state);
@@ -1095,6 +1108,8 @@ const UserCreate = () => {
           onInput={(e) => (password_repeat.value = e.currentTarget.value)}
           required
         />
+
+        <PasswordPolicyRules rules={policy.value} broken={broken.value} />
 
         <label for="first-name">{t("admin.user.first-name")}</label>
         <input
@@ -1259,15 +1274,21 @@ const UserPassword = ({ user_id }) => {
     password = useSignal(""),
     password_repeat = useSignal(""),
     own_password = useSignal(""),
-    mismatch = useSignal(false);
+    mismatch = useSignal(false),
+    policy = usePasswordPolicy(),
+    broken = useSignal([]);
 
-  const on_submit = (e) => {
+  const on_submit = async (e) => {
     e.preventDefault();
     if (password.value !== password_repeat.value) {
       mismatch.value = true;
       return;
     }
     mismatch.value = false;
+    // Where the engine enforces a policy, it refuses a password that breaks it
+    // with a message that names no rule. Asking first says which one.
+    broken.value = await broken_rules(state, password.value, user_id);
+    if (broken.value.length > 0) return;
     // The engine checks the password of whoever is signed in before it lets
     // any password be set — their own or somebody else's. Without it the
     // request is refused outright, so the field is not optional.
@@ -1313,6 +1334,8 @@ const UserPassword = ({ user_id }) => {
           onInput={(e) => (password_repeat.value = e.currentTarget.value)}
           required
         />
+
+        <PasswordPolicyRules rules={policy.value} broken={broken.value} />
 
         <label for="own-password">{t("admin.user.own-password")}</label>
         <input

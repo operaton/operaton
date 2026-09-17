@@ -137,7 +137,7 @@ describe("AdminPage", () => {
       expect(getByText("jane@example.com")).toBeTruthy();
     });
 
-    it("submits the create-user form via engine_rest.user.create", () => {
+    it("submits the create-user form via engine_rest.user.create", async () => {
       mockParams = { page_id: "users", selection_id: "create" };
       // create signal must report SUCCESS for the post-submit has_data branch.
       signal_response(state.api.user.create, { id: "newbie" });
@@ -154,7 +154,11 @@ describe("AdminPage", () => {
 
       fireEvent.submit(container.querySelector("form"));
 
-      expect(engine_rest.user.create).toHaveBeenCalled();
+      // The password is checked against the engine's policy first, so the
+      // request goes out a tick later.
+      await vi.waitFor(() =>
+        expect(engine_rest.user.create).toHaveBeenCalled(),
+      );
       const call = engine_rest.user.create.mock.lastCall;
       expect(call[0]).toBe(state);
       expect(call[1].profile.id).toBe("newbie");
@@ -177,7 +181,7 @@ describe("AdminPage", () => {
       expect(getByText("admin.user.password-mismatch")).toBeTruthy();
     });
 
-    it("confirms a password change with the signed-in user's own password", () => {
+    it("confirms a password change with the signed-in user's own password", async () => {
       mockParams = { page_id: "users", selection_id: "jdoe" };
       engine_rest.user.credentials_update.mockResolvedValue({
         status: RESPONSE_STATE.SUCCESS,
@@ -192,11 +196,50 @@ describe("AdminPage", () => {
       fireEvent.submit(container.querySelector("#new-password").form);
 
       // The engine refuses the request outright without it.
+      await vi.waitFor(() =>
+        expect(engine_rest.user.credentials_update).toHaveBeenCalled(),
+      );
       const call = engine_rest.user.credentials_update.mock.lastCall;
       expect(call[2]).toEqual({
         password: "fresh",
         authenticatedUserPassword: "mine",
       });
+    });
+
+    it("refuses a password the engine's policy rejects, naming the rule", async () => {
+      mockParams = { page_id: "users", selection_id: "jdoe" };
+      signal_response(state.api.user.password_policy, {
+        rules: [{ placeholder: "PASSWORD_POLICY_LENGTH", parameter: {} }],
+      });
+      engine_rest.user.password_policy.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: { rules: [{ placeholder: "PASSWORD_POLICY_LENGTH" }] },
+      });
+      engine_rest.user.check_password.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: {
+          valid: false,
+          rules: [{ placeholder: "PASSWORD_POLICY_LENGTH", valid: false }],
+        },
+      });
+      const { container } = renderPage(state);
+
+      const set = (sel, value) =>
+        fireEvent.input(container.querySelector(sel), { target: { value } });
+      set("#new-password", "kurz");
+      set("#new-password-repeat", "kurz");
+      set("#own-password", "mine");
+      fireEvent.submit(container.querySelector("#new-password").form);
+
+      await vi.waitFor(() =>
+        expect(engine_rest.user.check_password).toHaveBeenCalled(),
+      );
+      expect(engine_rest.user.credentials_update).not.toHaveBeenCalled();
+      await vi.waitFor(() =>
+        expect(
+          container.querySelector(".password-policy .broken"),
+        ).toBeTruthy(),
+      );
     });
 
     it("hides the create link from someone who may not create users", async () => {

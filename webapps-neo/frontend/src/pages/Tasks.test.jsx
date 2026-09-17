@@ -452,6 +452,16 @@ describe("TasksPage", () => {
       expect(getByText("tasks.task-not-found")).toBeTruthy();
     });
 
+    it("shows no process link for a task that belongs to none", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(
+        state.api.task.one,
+        sample_task({ processDefinitionId: null }),
+      );
+      const { container } = renderPage(state);
+      expect(container.querySelector('a[href^="/processes/"]')).toBeNull();
+    });
+
     it("renders the tab list once the task is loaded", () => {
       mockParams = { task_id: "t1", tab: "form" };
       signal_response(state.api.task.one, sample_task());

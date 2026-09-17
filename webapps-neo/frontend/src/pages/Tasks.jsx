@@ -241,9 +241,10 @@ const TasksPage = () => {
   const { params, query } = useRoute();
   const { route } = useLocation();
   const open_task_id = useRef(undefined);
-  // Read only to re-run the effect below when the list changes; what it opens
-  // is read again there, see the comment.
-  const first_task_id = state.api.task.list.value?.data?.[0]?.id;
+  // Read only to re-run the effect below whenever the list is written — the
+  // answer object is a new one each time, where the first id often is not.
+  // What gets opened is read again inside the effect, see the comment there.
+  const list_answer = state.api.task.list.value;
 
   useEffect(() => {
     if (state.api.filter.list.value === null) {
@@ -293,7 +294,7 @@ const TasksPage = () => {
         true,
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.task_id, first_task_id]);
+  }, [params.task_id, list_answer]);
 
   if (params?.task_id === "start") {
     return (

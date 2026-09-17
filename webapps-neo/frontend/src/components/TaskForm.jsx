@@ -2,7 +2,7 @@ import { useState, useContext, useEffect, useRef } from "preact/hooks";
 import { useSignal } from "@preact/signals";
 import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
-import { resolve_user } from "../api/helper.jsx";
+import { resolve_user, RESPONSE_STATE } from "../api/helper.jsx";
 import engine_rest from "../api/engine_rest.jsx";
 import { useRoute, useLocation } from "preact-iso";
 import { CamundaForm } from "./CamundaForm.jsx";
@@ -56,6 +56,23 @@ const TaskForm = () => {
   return <GeneratedTaskForm task={selectedTask} taskId={params.task_id} />;
 };
 
+// Finishing a task is one request, and it can be refused — the assignee
+// changed, the task is gone, a variable is rejected. The POST wrappers answer
+// with an error state instead of rejecting, so the answer has to be read:
+// leaving for the list regardless tells the user the task is done when it is
+// not.
+const then_leave = (request, { set_error, task_id, route, failed }) =>
+  void Promise.resolve(request)
+    .then((result) => {
+      if (result?.status !== RESPONSE_STATE.SUCCESS) {
+        set_error(result?.error?.message ?? failed);
+        return;
+      }
+      localStorage.removeItem(`task_form_${task_id}`);
+      route("/tasks");
+    })
+    .catch((error) => set_error(error?.message ?? failed));
+
 // A task is workable only by the person it is assigned to — unassigned or held
 // by someone else means read-only, as in the previous Tasklist.
 const worked_by_me = (state, task) =>
@@ -108,13 +125,12 @@ const CamundaTaskForm = ({ task, taskId }) => {
     }
     setError(null);
     const payload = form_data_to_vars(data, vars, allowed);
-    engine_rest.task
-      .post_task_form(state, taskId, payload)
-      .then(() => {
-        localStorage.removeItem(`task_form_${taskId}`);
-        route("/tasks");
-      })
-      .catch((e) => setError(e?.message ?? "Submit failed"));
+    then_leave(engine_rest.task.post_task_form(state, taskId, payload), {
+      set_error: setError,
+      task_id: taskId,
+      route,
+      failed: t("tasks.form.submit-failed"),
+    });
   };
 
   const mine = worked_by_me(state, task);
@@ -233,13 +249,12 @@ const GeneratedTaskForm = ({ task, taskId }) => {
     }
     setError(null);
     const payload = form_data_to_vars(data, vars, allowed);
-    engine_rest.task
-      .post_task_form(state, taskId, payload)
-      .then(() => {
-        localStorage.removeItem(`task_form_${taskId}`);
-        route("/tasks");
-      })
-      .catch((e) => setError(e?.message ?? "Submit failed"));
+    then_leave(engine_rest.task.post_task_form(state, taskId, payload), {
+      set_error: setError,
+      task_id: taskId,
+      route,
+      failed: t("tasks.form.submit-failed"),
+    });
   };
 
   const mine = worked_by_me(state, task);
@@ -274,7 +289,15 @@ const GeneratedTaskForm = ({ task, taskId }) => {
           <button
             type="button"
             disabled={!mine}
-            onClick={() => complete_directly(state, setError, taskId, route)}
+            onClick={() =>
+              complete_directly(
+                state,
+                setError,
+                taskId,
+                route,
+                t("tasks.form.submit-failed"),
+              )
+            }
           >
             {t("tasks.form.complete-directly")}
           </button>
@@ -334,13 +357,12 @@ const GenericTaskForm = ({ task, taskId }) => {
         { value: coerce_variable_value(type, value), type },
       ]),
     );
-    engine_rest.task
-      .post_task_form(state, taskId, payload)
-      .then(() => {
-        localStorage.removeItem(`task_form_${taskId}`);
-        route("/tasks");
-      })
-      .catch((e) => setError(e?.message ?? "Submit failed"));
+    then_leave(engine_rest.task.post_task_form(state, taskId, payload), {
+      set_error: setError,
+      task_id: taskId,
+      route,
+      failed: t("tasks.form.submit-failed"),
+    });
   };
 
   const mine = worked_by_me(state, task);
@@ -373,15 +395,14 @@ const GenericTaskForm = ({ task, taskId }) => {
 
 // Complete a task without submitting a form, via the dedicated /complete
 // endpoint (used when the task has no form fields).
-const complete_directly = (state, setError, taskId, route) => {
+const complete_directly = (state, setError, taskId, route, failed) => {
   setError(null);
-  engine_rest.task
-    .complete_task(state, taskId)
-    .then(() => {
-      localStorage.removeItem(`task_form_${taskId}`);
-      route("/tasks");
-    })
-    .catch((error) => setError(error?.message || "Complete failed"));
+  then_leave(engine_rest.task.complete_task(state, taskId), {
+    set_error: setError,
+    task_id: taskId,
+    route,
+    failed,
+  });
 };
 
 export { TaskForm };

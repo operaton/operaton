@@ -159,7 +159,7 @@
     "assign-to-label": "Benutzerkennung",
     "assign": "Zuweisen",
     "assign-failed": "Die Aufgabe konnte nicht zugewiesen werden.",
-    "assign-unknown-user": "Unbekannte Benutzerkennung — es gibt keinen solchen Benutzer, oder Sie dürfen ihn nicht sehen.",
+    "assign-unknown-user": "Unbekannte Benutzerkennung oder Sie verfügen nicht über die notwendigen Berechtigungen, um diese Aktion durchzuführen",
     "assignee-menu": "Bearbeiter-Aktionen",
     "comment": "Kommentar",
     "comment-add": "Kommentar hinzufügen",
@@ -225,7 +225,8 @@
       "legacy-html-migrate-link": "Anleitung zur Migration",
       "unsupported": "Dieser Startformular-Typ wird noch nicht unterstützt.",
       "add-variable": "Variable hinzufügen",
-      "duplicate-variable": "Jeder Variablenname darf nur einmal vorkommen."
+      "duplicate-variable": "Jeder Variablenname darf nur einmal vorkommen.",
+      "submit-failed": "Die Aufgabe konnte nicht abgeschlossen werden."
     },
     "start-process": {
       "title": "Aufgabe starten",

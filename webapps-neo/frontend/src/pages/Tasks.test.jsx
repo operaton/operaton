@@ -653,6 +653,21 @@ describe("TasksPage", () => {
       expect(engine_rest.task.get_task.mock.lastCall[1]).toBe("t1");
     });
 
+    it("re-reads the list too, so the assignee column catches up", async () => {
+      engine_rest.task.claim_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+      engine_rest.task.get_tasks.mockClear();
+
+      fireEvent.click(getByText("tasks.claim"));
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_tasks).toHaveBeenCalled(),
+      );
+    });
+
     it("leaves the dialog alone when the action failed", async () => {
       engine_rest.task.claim_task.mockResolvedValue({
         status: RESPONSE_STATE.ERROR,

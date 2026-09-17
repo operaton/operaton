@@ -934,6 +934,7 @@ const CommentButton = () => {
 const ClaimButton = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
+    { query } = useRoute(),
     assignee_input = useSignal(""),
     task = state.api.task.one.value?.data,
     signed_in_user = resolve_user(state),
@@ -947,11 +948,13 @@ const ClaimButton = () => {
     // Every action here changes who holds the task, and the answer carries no
     // body. Re-read the task so the card and the dialog show the new state,
     // and close — otherwise the dialog sits there unchanged and the click
-    // looks as though it did nothing.
+    // looks as though it did nothing. The list carries the holder in a column
+    // of its own and may well be filtered by it, so it is re-read too.
     then_refresh = (request) =>
       void Promise.resolve(request).then((result) => {
         if (result?.status !== RESPONSE_STATE.SUCCESS) return;
         void engine_rest.task.get_task(state, task.id);
+        reload_tasks(state, query);
         close();
       }),
     assign_to_user = async (event) => {

@@ -152,6 +152,52 @@ describe("TasksPage", () => {
       expect(engine_rest.task.get_tasks.mock.lastCall[1]).toBe("priority");
     });
 
+    it("opens the first task when nothing is selected yet", async () => {
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [sample_task({ id: "t1" }), sample_task({ id: "t2" })],
+      };
+      renderPage(state);
+
+      await vi.waitFor(() => expect(routeFn).toHaveBeenCalled());
+      const [target, replace] = routeFn.mock.lastCall;
+      expect(target).toContain("/tasks/t1/");
+      expect(replace).toBe(true);
+    });
+
+    it("does not reopen a task the list has not caught up with", async () => {
+      // What returning from a completed task looks like: the entries from
+      // before are still there while the reload is in flight.
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [sample_task({ id: "gone" })],
+      };
+      engine_rest.task.get_tasks.mockImplementationOnce((s) => {
+        s.api.task.list.value = { status: RESPONSE_STATE.LOADING };
+      });
+      renderPage(state);
+
+      await new Promise((r) => setTimeout(r, 0));
+      expect(routeFn).not.toHaveBeenCalled();
+    });
+
+    it("keeps the hint while the list is still loading", () => {
+      state.api.task.list.value = { status: RESPONSE_STATE.LOADING };
+      const { getByText } = renderPage(state);
+      expect(getByText("tasks.select-task")).toBeTruthy();
+      expect(routeFn).not.toHaveBeenCalled();
+    });
+
+    it("keeps the hint when the list is empty", () => {
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [],
+      };
+      const { getByText } = renderPage(state);
+      expect(getByText("tasks.select-task")).toBeTruthy();
+      expect(routeFn).not.toHaveBeenCalled();
+    });
+
     it("shows a 'load more' button and pages when more results exist", () => {
       state.api.task.list.value = {
         status: RESPONSE_STATE.SUCCESS,

@@ -239,7 +239,11 @@ const reload_tasks = (state, query) => {
 const TasksPage = () => {
   const state = useContext(AppState);
   const { params, query } = useRoute();
+  const { route } = useLocation();
   const open_task_id = useRef(undefined);
+  // Read only to re-run the effect below when the list changes; what it opens
+  // is read again there, see the comment.
+  const first_task_id = state.api.task.list.value?.data?.[0]?.id;
 
   useEffect(() => {
     if (state.api.filter.list.value === null) {
@@ -266,6 +270,30 @@ const TasksPage = () => {
     if (returned_to_list) reload_tasks(state, query);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.task_id]);
+
+  useEffect(() => {
+    // An empty detail pane is a wasted click: open the first task of the list
+    // as soon as there is one, as the old web apps do. Replacing the address
+    // rather than adding to it keeps the back button out of a redirect loop.
+    //
+    // The list is read here and not during render: coming back from a task
+    // that was just completed, the reload above has already been started by
+    // the time this runs, and the entries from before still name the finished
+    // task. Opening that one greets the user with "task is null".
+    const current = state.api.task.list.peek();
+    const first =
+      current?.status === RESPONSE_STATE.SUCCESS
+        ? current.data?.[0]?.id
+        : undefined;
+    const on_the_list =
+      params.task_id === undefined && query.filters !== "manage";
+    if (on_the_list && first)
+      route(
+        `/tasks/${first}/${task_tabs[0].id}${keep_list_query(query)}`,
+        true,
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.task_id, first_task_id]);
 
   if (params?.task_id === "start") {
     return (

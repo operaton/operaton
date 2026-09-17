@@ -443,6 +443,7 @@ const NoSelectedTask = () => {
 const Task = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
+    { params } = useRoute(),
     {
       api: {
         task: { one: task },
@@ -454,8 +455,15 @@ const Task = () => {
 
   const task_value = task.value;
   const task_data = task_value?.data;
+  // An error belongs to the task it was raised for. Without that, the error of
+  // a task that no longer exists would stand in front of every task opened
+  // afterwards: it renders in place of the tabs, and the tabs are what load a
+  // task, so nothing would ever be asked for again.
   const is_error =
-    task_value?.status === RESPONSE_STATE.ERROR && task_data === undefined;
+    task_value?.status === RESPONSE_STATE.ERROR &&
+    task_data === undefined &&
+    (task_value.requested_id === undefined ||
+      task_value.requested_id === params.task_id);
 
   if (is_error) {
     const status = task_value.error?.status;
@@ -517,6 +525,11 @@ const Task = () => {
 
 const load_task_chain = async (state, task_id) => {
   await engine_rest.task.get_task(state, task_id);
+  // Note which task the answer was about, so a failure cannot be mistaken for
+  // the state of the next task opened.
+  const answer = state.api.task.one.value;
+  if (answer?.status === RESPONSE_STATE.ERROR)
+    state.api.task.one.value = { ...answer, requested_id: task_id };
   const task = state.api.task.one.value?.data;
   if (!task?.id) {
     // Task no longer exists (completed, deleted, or wrong id) — stop here so we

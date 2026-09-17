@@ -269,6 +269,40 @@ describe("TasksPage", () => {
     });
   });
 
+  describe("after a task turned out to be gone", () => {
+    afterEach(() => engine_rest.task.get_task.mockReset());
+
+    it("loads the next task that is opened", async () => {
+      // Reported: after "task not found", going back to the list and opening
+      // any other task reported it missing too.
+      mockParams = { task_id: "gone" };
+      engine_rest.task.get_task.mockImplementation(() => {
+        state.api.task.one.value = {
+          status: RESPONSE_STATE.ERROR,
+          error: { status: 404 },
+        };
+        return Promise.resolve();
+      });
+      const { rerender } = renderPage(state);
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_task).toHaveBeenCalled(),
+      );
+
+      // Now open a different task, which the engine still knows.
+      engine_rest.task.get_task.mockImplementation(() => {
+        signal_response(state.api.task.one, sample_task({ id: "alive" }));
+        return Promise.resolve();
+      });
+      mockParams = { task_id: "alive" };
+      rerender(h(AppState.Provider, { value: state }, h(TasksPage, {})));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_task.mock.lastCall?.[1]).toBe("alive"),
+      );
+      expect(state.api.task.one.value?.data?.id).toBe("alive");
+    });
+  });
+
   describe("what the list can be sorted by", () => {
     it("offers no sorting the request cannot carry", () => {
       // Sorting by a variable needs its name and type alongside the key. Until

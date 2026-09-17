@@ -152,6 +152,22 @@ describe("TasksPage", () => {
       expect(engine_rest.task.get_tasks.mock.lastCall[1]).toBe("priority");
     });
 
+    it("keeps the list the user was working through when a task is created", async () => {
+      mockQuery = { filter: "my", sortBy: "dueDate" };
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container, getByText } = renderPage(state);
+      fireEvent.click(getByText("tasks.create.open"));
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Rückruf" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() => expect(routeFn).toHaveBeenCalled());
+      expect(routeFn.mock.lastCall[0]).toContain("filter=my");
+    });
+
     it("opens the first task when nothing is selected yet", async () => {
       state.api.task.list.value = {
         status: RESPONSE_STATE.SUCCESS,
@@ -1193,6 +1209,23 @@ describe("TasksPage", () => {
         expect(engine_rest.task.get_task).toHaveBeenCalled(),
       );
       expect(engine_rest.task.get_task.mock.lastCall[1]).toBe("t1");
+    });
+
+    it("re-reads the operation log, which the open history tab shows", async () => {
+      engine_rest.task.claim_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+      engine_rest.history.get_user_operation_by_task.mockClear();
+
+      fireEvent.click(getByText("tasks.claim"));
+      await vi.waitFor(() =>
+        expect(
+          engine_rest.history.get_user_operation_by_task,
+        ).toHaveBeenCalled(),
+      );
     });
 
     it("re-reads the list too, so the assignee column catches up", async () => {

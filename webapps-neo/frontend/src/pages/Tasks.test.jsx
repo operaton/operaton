@@ -269,6 +269,29 @@ describe("TasksPage", () => {
     });
   });
 
+  describe("a task that no longer exists", () => {
+    afterEach(() => engine_rest.task.get_task.mockReset());
+
+    it("stops after one attempt instead of loading for ever", async () => {
+      mockParams = { task_id: "gone" };
+      engine_rest.task.get_task.mockImplementation(() => {
+        state.api.task.one.value = {
+          status: RESPONSE_STATE.ERROR,
+          error: { status: 404 },
+        };
+        return Promise.resolve();
+      });
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_task).toHaveBeenCalled(),
+      );
+      const after_first = engine_rest.task.get_task.mock.calls.length;
+      await new Promise((r) => setTimeout(r, 120));
+      expect(engine_rest.task.get_task.mock.calls.length).toBe(after_first);
+    });
+  });
+
   describe("task detail", () => {
     it("loads the task chain when a task_id is in the route", () => {
       mockParams = { task_id: "t1", tab: "form" };
@@ -403,8 +426,8 @@ describe("TasksPage", () => {
 
     const open_groups_dialog = (container) => {
       const detail = container.querySelector("#task-details");
-      const opener = [...detail.querySelectorAll("button.task-card")].find((b) =>
-        b.textContent.includes("tasks.groups.set"),
+      const opener = [...detail.querySelectorAll("button.task-card")].find(
+        (b) => b.textContent.includes("tasks.groups.set"),
       );
       fireEvent.click(opener);
     };
@@ -547,7 +570,9 @@ describe("TasksPage", () => {
       engine_rest.task.get_task.mockClear();
 
       fireEvent.click(getByText("tasks.claim"));
-      await vi.waitFor(() => expect(engine_rest.task.get_task).toHaveBeenCalled());
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_task).toHaveBeenCalled(),
+      );
       expect(engine_rest.task.get_task.mock.lastCall[1]).toBe("t1");
     });
 

@@ -540,13 +540,18 @@ const TaskTabs = () => {
   const { params } = useRoute();
   const [t] = useTranslation();
 
-  // Load the task whenever the active task changes. Clean stale per-task data
-  // on unmount so the next task's panes don't render against the previous
-  // task's signals.
+  // Load the task whenever the active task changes, and clear the panes that
+  // belong to the previous one.
+  //
+  // task.one is deliberately not among them. A task that no longer exists puts
+  // the detail into its error state, and that state renders in place of these
+  // tabs — unmounting them, so clearing task.one here would wipe the very error
+  // that caused the unmount. The tabs would mount again, load again and fail
+  // again, without end. The request keeps the previous task visible until the
+  // next one arrives anyway, so nothing is gained by blanking it.
   useEffect(() => {
     void load_task_chain(state, params.task_id);
     return () => {
-      state.api.task.one.value = null;
       state.api.task.comment.list.value = null;
       state.api.task.identity_links.value = null;
       state.api.history.user_operation.value = null;

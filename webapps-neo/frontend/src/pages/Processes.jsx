@@ -10,6 +10,7 @@ import * as Icons from "../assets/icons.jsx";
 import { AppState } from "../state.js";
 import { BPMNViewer } from "../components/BPMNViewer.jsx";
 import { Dialog, ConfirmDialog } from "../components/Dialog.jsx";
+import { SuspensionDialog } from "../components/SuspensionDialog.jsx";
 import { ListFilter } from "../components/ListFilter.jsx";
 import { ManageFilters } from "../components/ManageFilters.jsx";
 import { Breadcrumbs } from "../components/Breadcrumbs.jsx";
@@ -702,14 +703,19 @@ const ProcessDefinitionSelection = () => {
   };
   const all_selected = rows.length > 0 && selected.value.size === rows.length;
 
-  const run_bulk = async (op) => {
+  // Suspending is not one decision but three: what, whether the instances go
+  // with it, and when. The dialog asks before anything is sent.
+  const suspension_open = useSignal(false),
+    suspend_next = useSignal(true);
+
+  const run_bulk = async (op, options) => {
     if (selected.value.size === 0 || bulk_running.value) return;
     bulk_running.value = true;
     try {
       const ids = [...selected.value];
       for (const id of ids) {
         try {
-          await engine_rest.process_definition[op](state, id);
+          await engine_rest.process_definition[op](state, id, options);
         } catch (e) {
           console.error(`bulk ${op} failed for ${id}`, e);
         }
@@ -757,7 +763,10 @@ const ProcessDefinitionSelection = () => {
             type="button"
             class="secondary"
             disabled={!has_selection || bulk_running.value}
-            onClick={() => run_bulk("activate")}
+            onClick={() => {
+              suspend_next.value = false;
+              suspension_open.value = true;
+            }}
           >
             {t("processes.bulk.activate")}
           </button>
@@ -765,10 +774,24 @@ const ProcessDefinitionSelection = () => {
             type="button"
             class="secondary"
             disabled={!has_selection || bulk_running.value}
-            onClick={() => run_bulk("suspend")}
+            onClick={() => {
+              suspend_next.value = true;
+              suspension_open.value = true;
+            }}
           >
             {t("processes.bulk.suspend")}
           </button>
+          <SuspensionDialog
+            open={suspension_open}
+            suspend={suspend_next.value}
+            scope="definition"
+            on_confirm={({ include, execution_date }) =>
+              void run_bulk(suspend_next.value ? "suspend" : "activate", {
+                include_instances: include,
+                execution_date,
+              })
+            }
+          />
           {has_selection && (
             <small>
               {t("processes.bulk.count", { count: selected.value.size })}
@@ -2014,10 +2037,24 @@ const JobDefinitions = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [definition_id]);
 
-  const toggle_suspended = async (id, suspended) => {
-    await engine_rest.job_definition.set_suspended(state, id, suspended);
-    load();
-  };
+  // Same three questions as for a process definition: what, whether the jobs
+  // go with it, and when.
+  const suspension_open = useSignal(false),
+    suspend_next = useSignal(true),
+    ask_suspension = (id, suspended) => {
+      target_id.value = id;
+      suspend_next.value = suspended;
+      suspension_open.value = true;
+    },
+    toggle_suspended = async ({ include, execution_date }) => {
+      await engine_rest.job_definition.set_suspended(
+        state,
+        target_id.value,
+        suspend_next.value,
+        { include_jobs: include, execution_date },
+      );
+      load();
+    };
 
   const save_priority = async () => {
     await engine_rest.job_definition.set_priority(
@@ -2078,14 +2115,14 @@ const JobDefinitions = () => {
                       {definition.suspended ? (
                         <button
                           type="button"
-                          onClick={() => toggle_suspended(definition.id, false)}
+                          onClick={() => ask_suspension(definition.id, false)}
                         >
                           {t("common.activate")}
                         </button>
                       ) : (
                         <button
                           type="button"
-                          onClick={() => toggle_suspended(definition.id, true)}
+                          onClick={() => ask_suspension(definition.id, true)}
                         >
                           {t("processes.jobs.suspend")}
                         </button>
@@ -2120,6 +2157,12 @@ const JobDefinitions = () => {
           )}
         </tbody>
       </table>
+      <SuspensionDialog
+        open={suspension_open}
+        suspend={suspend_next.value}
+        scope="jobs"
+        on_confirm={(options) => void toggle_suspended(options)}
+      />
       <Dialog open={priority_open} title={t("processes.jobs.change-priority")}>
         <div class="dialog-fields">
           <label>

@@ -1841,3 +1841,9 @@ nav:has(> .breadcrumbs) {
   color: var(--color-danger);
   font-weight: 600;
 }
+
+/* The date and time of a scheduled suspension sit side by side. */
+.date-time {
+  display: flex;
+  gap: var(--spacing-2);
+}

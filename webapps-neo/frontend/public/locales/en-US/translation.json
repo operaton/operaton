@@ -35,7 +35,10 @@
     "load-more": "Load more",
     "breadcrumb": "Breadcrumb",
     "confirmation": "Confirmation",
-    "search": "Search"
+    "search": "Search",
+    "ok": "OK",
+    "date": "Date",
+    "time": "Time"
   },
   "nav": {
     "tasks": "Tasks",
@@ -527,7 +530,18 @@
       "annotation-placeholder": "Add a note for this operation…",
       "confirm-clear": "Clear the annotation for this operation?"
     },
-    "version-tag": "Version tag"
+    "version-tag": "Version tag",
+    "suspension": {
+      "suspend": "Suspend process definition",
+      "activate": "Activate process definition",
+      "instances-hint": "Including the instances changes the state of every existing instance of this definition as well.",
+      "jobs-hint": "Including the jobs changes the state of every existing job of this job definition as well.",
+      "include-instances": "Include running instances",
+      "include-jobs": "Include existing jobs",
+      "when": "When",
+      "immediately": "Immediately",
+      "delayed": "At a set time"
+    }
   },
   "decisions": {
     "title": "Decisions",

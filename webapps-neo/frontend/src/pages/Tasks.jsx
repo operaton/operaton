@@ -743,10 +743,15 @@ const Task = () => {
         <header>
           <div>
             <h2>{task.value?.data?.name}</h2>
-            <a href={`/processes/${pd.value?.data?.id}`}>
-              {pd.value?.data?.name} ({t("processes.version")}{" "}
-              {pd.value?.data?.version})
-            </a>
+            {/* A task created by hand belongs to no process, and the link
+                then pointed at /processes/undefined under the label
+                "(Version )". */}
+            {pd.value?.data?.id && (
+              <a href={`/processes/${pd.value.data.id}`}>
+                {pd.value.data.name ?? pd.value.data.key} (
+                {t("processes.version")} {pd.value.data.version})
+              </a>
+            )}
             {task.value?.data?.tenantId && (
               <p class="tenant">
                 {t("tasks.tenant")}: {task.value.data.tenantId}
@@ -813,7 +818,7 @@ const load_task_chain = async (state, task_id) => {
 
 const TaskTabs = () => {
   const state = useContext(AppState);
-  const { params } = useRoute();
+  const { params, query } = useRoute();
   const [t] = useTranslation();
 
   // Load the task whenever the active task changes, and clear the panes that
@@ -843,6 +848,7 @@ const TaskTabs = () => {
           base_url={`/tasks/${state.api.task.one.value.data.id}`}
           className="fade-in"
           label={t("tasks.tabs.label")}
+          query={keep_list_query(query)}
         />
       ) : (
         t("common.loading")

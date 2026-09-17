@@ -35,7 +35,10 @@
     "load-more": "Mehr laden",
     "breadcrumb": "Navigationspfad",
     "confirmation": "Bestätigung",
-    "search": "Suchen"
+    "search": "Suchen",
+    "ok": "OK",
+    "date": "Datum",
+    "time": "Uhrzeit"
   },
   "nav": {
     "tasks": "Aufgaben",
@@ -527,7 +530,18 @@
       "annotation-placeholder": "Notiz zu dieser Operation hinzufügen…",
       "confirm-clear": "Anmerkung für diese Operation löschen?"
     },
-    "version-tag": "Versionsmerkmal"
+    "version-tag": "Versionsmerkmal",
+    "suspension": {
+      "suspend": "Prozessdefinition aussetzen",
+      "activate": "Prozessdefinition aktivieren",
+      "instances-hint": "Werden die Instanzen einbezogen, wechseln auch alle vorhandenen Instanzen dieser Definition den Zustand.",
+      "jobs-hint": "Werden die Aufträge einbezogen, wechseln auch alle vorhandenen Aufträge dieser Auftragsdefinition den Zustand.",
+      "include-instances": "Laufende Instanzen einbeziehen",
+      "include-jobs": "Vorhandene Aufträge einbeziehen",
+      "when": "Zeitpunkt",
+      "immediately": "Sofort",
+      "delayed": "Zu einem Zeitpunkt"
+    }
   },
   "decisions": {
     "title": "Entscheidungen",

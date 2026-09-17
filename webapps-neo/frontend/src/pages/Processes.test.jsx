@@ -131,10 +131,14 @@ describe("ProcessesPage — bulk actions", () => {
   });
   afterEach(cleanup);
 
+  // Scoped to the table: the toolbar carries a dialog with checkboxes of its
+  // own, so counting from the top of the document picks the wrong one.
+  const row_boxes = (container) =>
+    container.querySelectorAll('table input[type="checkbox"]');
+
   const select_first = (container) => {
     // The first checkbox is "select all"; the second toggles the first row.
-    const boxes = container.querySelectorAll('input[type="checkbox"]');
-    fireEvent.click(boxes[1]);
+    fireEvent.click(row_boxes(container)[1]);
   };
 
   it("disables bulk buttons when nothing is selected", () => {
@@ -150,30 +154,46 @@ describe("ProcessesPage — bulk actions", () => {
     expect(getByText("processes.bulk.activate").disabled).toBe(false);
   });
 
-  it("activate calls engine_rest.process_definition.activate with the selected id", async () => {
+  it("activate asks about the options first, then calls activate", async () => {
     engine_rest.process_definition.activate.mockResolvedValue(undefined);
     const { container, getByText } = renderPage(state);
     select_first(container);
     fireEvent.click(getByText("processes.bulk.activate"));
-    await Promise.resolve();
-    await Promise.resolve();
-    expect(engine_rest.process_definition.activate).toHaveBeenCalled();
+
+    // Nothing is sent until the dialog is confirmed.
+    expect(engine_rest.process_definition.activate).not.toHaveBeenCalled();
+    fireEvent.click(getByText("common.ok"));
+
+    await vi.waitFor(() =>
+      expect(engine_rest.process_definition.activate).toHaveBeenCalled(),
+    );
     const call = engine_rest.process_definition.activate.mock.lastCall;
     expect(call[0]).toBe(state);
     expect(call[1]).toBe("proc:1");
+    expect(call[2]).toEqual({
+      include_instances: true,
+      execution_date: undefined,
+    });
   });
 
-  it("suspend calls engine_rest.process_definition.suspend with the selected id", async () => {
+  it("suspend passes on that the instances should stay untouched", async () => {
     engine_rest.process_definition.suspend.mockResolvedValue(undefined);
     const { container, getByText } = renderPage(state);
     select_first(container);
     fireEvent.click(getByText("processes.bulk.suspend"));
-    await Promise.resolve();
-    await Promise.resolve();
-    expect(engine_rest.process_definition.suspend).toHaveBeenCalled();
+
+    fireEvent.click(getByText("processes.suspension.include-instances"));
+    fireEvent.click(getByText("common.ok"));
+
+    await vi.waitFor(() =>
+      expect(engine_rest.process_definition.suspend).toHaveBeenCalled(),
+    );
     expect(engine_rest.process_definition.suspend.mock.lastCall[1]).toBe(
       "proc:1",
     );
+    expect(
+      engine_rest.process_definition.suspend.mock.lastCall[2].include_instances,
+    ).toBe(false);
   });
 
   it("remove calls engine_rest.process_definition.remove after confirmation", async () => {
@@ -204,8 +224,7 @@ describe("ProcessesPage — bulk actions", () => {
 
   it("select-all checkbox selects every row", () => {
     const { container, getByText } = renderPage(state);
-    const boxes = container.querySelectorAll('input[type="checkbox"]');
-    fireEvent.click(boxes[0]);
+    fireEvent.click(row_boxes(container)[0]);
     // bulk count message should appear with all rows selected
     expect(getByText("processes.bulk.count")).toBeTruthy();
   });

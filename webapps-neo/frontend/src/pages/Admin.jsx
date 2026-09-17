@@ -92,6 +92,19 @@ const AdminPage = () => {
 };
 
 /** Shows the success/error result of an action signal once it has fired. */
+// Whether the signed-in user may create this kind of identity. The previous
+// admin hid the link rather than offering it and then refusing the request.
+const useMayCreate = (resource_name, resource_type) => {
+  const state = useContext(AppState),
+    allowed = useSignal(true);
+  useEffect(() => {
+    void engine_rest.authorization
+      .may(state, "CREATE", resource_name, resource_type)
+      .then((ok) => (allowed.value = ok));
+  }, [state, allowed, resource_name, resource_type]);
+  return allowed;
+};
+
 const ActionResult = ({ signal, success }) => (
   <div aria-live="polite">
     <RequestState
@@ -119,7 +132,8 @@ const TenantsPage = () => {
 };
 
 const TenantList = () => {
-  const state = useContext(AppState),
+  const may_create = useMayCreate("tenant", 11),
+    state = useContext(AppState),
     {
       api: {
         tenant: { list: tenants },
@@ -142,9 +156,11 @@ const TenantList = () => {
       />
       <div class="page-heading">
         <h2>{t("admin.tenants")}</h2>
-        <a class="button" href="/admin/tenants/create">
-          {t("admin.tenant.create")}
-        </a>
+        {may_create.value && (
+          <a class="button" href="/admin/tenants/create">
+            {t("admin.tenant.create")}
+          </a>
+        )}
       </div>
 
       <IdentitySearch
@@ -399,7 +415,8 @@ const GroupsPage = () => {
 };
 
 const GroupsList = () => {
-  const state = useContext(AppState),
+  const may_create = useMayCreate("group", 2),
+    state = useContext(AppState),
     {
       api: {
         group: { list: groups, delete: group_delete },
@@ -433,9 +450,11 @@ const GroupsList = () => {
       />
       <div class="page-heading">
         <h2>{t("admin.groups")}</h2>
-        <a class="button" href="/admin/groups/create">
-          {t("admin.group.create")}
-        </a>
+        {may_create.value && (
+          <a class="button" href="/admin/groups/create">
+            {t("admin.group.create")}
+          </a>
+        )}
       </div>
 
       <IdentitySearch
@@ -919,7 +938,8 @@ const UserPage = () => {
 };
 
 const UserList = () => {
-  const state = useContext(AppState),
+  const may_create = useMayCreate("user", 1),
+    state = useContext(AppState),
     {
       api: {
         user: { list: users },
@@ -942,9 +962,11 @@ const UserList = () => {
       />
       <div class="page-heading">
         <h2>{t("admin.users")}</h2>
-        <a class="button" href="/admin/users/create">
-          {t("admin.user.create")}
-        </a>
+        {may_create.value && (
+          <a class="button" href="/admin/users/create">
+            {t("admin.user.create")}
+          </a>
+        )}
       </div>
 
       <IdentitySearch
@@ -1236,6 +1258,7 @@ const UserPassword = ({ user_id }) => {
     [t] = useTranslation(),
     password = useSignal(""),
     password_repeat = useSignal(""),
+    own_password = useSignal(""),
     mismatch = useSignal(false);
 
   const on_submit = (e) => {
@@ -1245,9 +1268,17 @@ const UserPassword = ({ user_id }) => {
       return;
     }
     mismatch.value = false;
-    void engine_rest.user.credentials_update(state, user_id, {
-      password: password.value,
-    });
+    // The engine checks the password of whoever is signed in before it lets
+    // any password be set — their own or somebody else's. Without it the
+    // request is refused outright, so the field is not optional.
+    void engine_rest.user
+      .credentials_update(state, user_id, {
+        password: password.value,
+        authenticatedUserPassword: own_password.value,
+      })
+      .then(() => {
+        own_password.value = "";
+      });
   };
 
   return (
@@ -1282,6 +1313,17 @@ const UserPassword = ({ user_id }) => {
           onInput={(e) => (password_repeat.value = e.currentTarget.value)}
           required
         />
+
+        <label for="own-password">{t("admin.user.own-password")}</label>
+        <input
+          id="own-password"
+          type="password"
+          autocomplete="current-password"
+          value={own_password.value}
+          onInput={(e) => (own_password.value = e.currentTarget.value)}
+          required
+        />
+        <p class="hint">{t("admin.user.own-password-hint")}</p>
 
         <div class="button-group">
           <button type="submit">{t("admin.user.change-password")}</button>
@@ -1978,7 +2020,7 @@ const authorization_resources = [
       "CREATE_BATCH_UPDATE_PROCESS_INSTANCES_SUSPEND",
       "CREATE_BATCH_SET_REMOVAL_TIME",
       "CREATE_BATCH_SET_VARIABLES",
-      "CREATE_BATCH_CORRELATE_MESSAGES",
+      "CREATE_BATCH_CORRELATE_MESSAGE",
     ],
   },
   {
@@ -2053,9 +2095,13 @@ const authorization_resources = [
       "TASK_WORK",
       "TASK_ASSIGN",
       "UPDATE_TASK_VARIABLE",
+      "READ_INSTANCE_VARIABLE",
+      "READ_TASK_VARIABLE",
       "READ_HISTORY",
+      "READ_HISTORY_VARIABLE",
       "DELETE_HISTORY",
       "UPDATE_HISTORY",
+      "DELETE",
     ],
   },
   {
@@ -2089,6 +2135,7 @@ const authorization_resources = [
       "TASK_ASSIGN",
       "READ_VARIABLE",
       "UPDATE_VARIABLE",
+      "READ_HISTORY",
     ],
   },
   {
@@ -2153,7 +2200,7 @@ const authorization_resources = [
     resource_type: 21,
     resource_id:
       "* resources do not support individual resource ids. You have to use them with a wildcard id (*).",
-    permissions: ["ALL", "READ"],
+    permissions: ["ALL", "READ", "SET", "DELETE"],
   },
 ];
 

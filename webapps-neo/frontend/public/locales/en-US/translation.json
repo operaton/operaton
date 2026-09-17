@@ -759,7 +759,9 @@
       "confirm-delete": "Do you really want to delete this user?",
       "unlock": "Unlock user",
       "unlock-success": "The user was unlocked.",
-      "unlock-hint": "The engine locks an account after too many failed sign-ins. Unlocking lets the user sign in again."
+      "unlock-hint": "The engine locks an account after too many failed sign-ins. Unlocking lets the user sign in again.",
+      "own-password": "Your own password",
+      "own-password-hint": "The engine asks for the signed-in user's password as confirmation — also when changing somebody else's."
     },
     "group": {
       "title": "Groups",

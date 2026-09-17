@@ -26,6 +26,7 @@ vi.mock("preact-iso", () => ({
   useLocation: () => ({ route: routeFn, path: "/admin" }),
 }));
 
+import { RESPONSE_STATE } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { AdminPage } from "./Admin.jsx";
@@ -53,6 +54,8 @@ describe("AdminPage", () => {
     mockParams = {};
     routeFn.mockClear();
     resolve_all();
+    // The permission probes answer "allowed" unless a test says otherwise.
+    engine_rest.authorization.may.mockResolvedValue(true);
   });
   afterEach(cleanup);
 
@@ -172,6 +175,38 @@ describe("AdminPage", () => {
 
       expect(engine_rest.user.create).not.toHaveBeenCalled();
       expect(getByText("admin.user.password-mismatch")).toBeTruthy();
+    });
+
+    it("confirms a password change with the signed-in user's own password", () => {
+      mockParams = { page_id: "users", selection_id: "jdoe" };
+      engine_rest.user.credentials_update.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container } = renderPage(state);
+
+      const set = (sel, value) =>
+        fireEvent.input(container.querySelector(sel), { target: { value } });
+      set("#new-password", "fresh");
+      set("#new-password-repeat", "fresh");
+      set("#own-password", "mine");
+      fireEvent.submit(container.querySelector("#new-password").form);
+
+      // The engine refuses the request outright without it.
+      const call = engine_rest.user.credentials_update.mock.lastCall;
+      expect(call[2]).toEqual({
+        password: "fresh",
+        authenticatedUserPassword: "mine",
+      });
+    });
+
+    it("hides the create link from someone who may not create users", async () => {
+      mockParams = { page_id: "users" };
+      engine_rest.authorization.may.mockResolvedValue(false);
+      const { queryByText } = renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(queryByText("admin.user.create")).toBeNull(),
+      );
     });
 
     it("fetches profile, groups and tenants on the user details page", () => {

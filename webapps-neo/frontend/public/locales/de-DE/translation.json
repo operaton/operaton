@@ -759,7 +759,9 @@
       "confirm-delete": "Möchten Sie diesen Benutzer wirklich löschen?",
       "unlock": "Benutzer entsperren",
       "unlock-success": "Der Benutzer wurde entsperrt.",
-      "unlock-hint": "Die Engine sperrt ein Konto nach zu vielen fehlgeschlagenen Anmeldungen. Nach dem Entsperren ist die Anmeldung wieder möglich."
+      "unlock-hint": "Die Engine sperrt ein Konto nach zu vielen fehlgeschlagenen Anmeldungen. Nach dem Entsperren ist die Anmeldung wieder möglich.",
+      "own-password": "Ihr eigenes Kennwort",
+      "own-password-hint": "Die Engine verlangt zur Bestätigung das Kennwort des angemeldeten Benutzers — auch beim Ändern eines fremden Kennworts."
     },
     "group": {
       "title": "Gruppen",

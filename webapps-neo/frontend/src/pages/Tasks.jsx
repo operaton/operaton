@@ -23,6 +23,7 @@ import {
 import { resolve_user } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
+import { ConfirmDialog } from "../components/Dialog.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
 import {
   formatRelativeDate,
@@ -1537,6 +1538,13 @@ const AttachmentsTab = () => {
     load();
   };
 
+  const delete_open = useSignal(false),
+    pending_delete = useSignal(null),
+    ask_remove = (attachment) => {
+      pending_delete.value = attachment;
+      delete_open.value = true;
+    };
+
   return (
     <div class="task-attachments">
       <RequestState
@@ -1576,7 +1584,7 @@ const AttachmentsTab = () => {
                       <button
                         type="button"
                         class="danger"
-                        onClick={() => remove(a.id)}
+                        onClick={() => ask_remove(a)}
                         aria-label={t("common.delete")}
                         title={t("common.delete")}
                       >
@@ -1590,6 +1598,15 @@ const AttachmentsTab = () => {
           );
         }}
       />
+      <ConfirmDialog
+        open={delete_open}
+        message={t("tasks.attachments.delete-confirm", {
+          name: pending_delete.value?.name ?? "",
+        })}
+        confirm_label={t("tasks.attachments.confirm-delete")}
+        on_confirm={() => remove(pending_delete.value?.id)}
+      />
+
       <h3>{t("tasks.attachments.add")}</h3>
       <form onSubmit={submit} ref={form_ref}>
         <label for="attachment-name">{t("common.name")}</label>
@@ -1624,7 +1641,14 @@ const AttachmentsTab = () => {
             id="attachment-file"
             class="screen-hidden"
             type="file"
-            onChange={(e) => (file.value = e.currentTarget.files[0])}
+            onChange={(e) => {
+              const chosen = e.currentTarget.files[0];
+              file.value = chosen;
+              // The name is what the download is saved as, and the engine
+              // stores nothing else about the file. Starting from the file's
+              // own name keeps its extension; it stays editable.
+              if (chosen && !name.value.trim()) name.value = chosen.name;
+            }}
           />
         </div>
         <div class="button-group">

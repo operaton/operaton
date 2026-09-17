@@ -291,7 +291,9 @@
       "file": "Datei",
       "choose": "Auswählen…",
       "none-chosen": "Keine Datei ausgewählt",
-      "upload": "Hochladen"
+      "upload": "Hochladen",
+      "delete-confirm": "Den Anhang „{{name}}“ löschen?",
+      "confirm-delete": "Anhang löschen"
     }
   },
   "processes": {

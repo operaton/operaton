@@ -262,7 +262,10 @@
       "permissions-hint": "A saved filter is private until someone is allowed to read it.",
       "readable-by-all": "Everyone may use it",
       "user": "User",
-      "group": "Group"
+      "group": "Group",
+      "permissions-denied": "Sharing a filter requires permission to create authorizations. This filter stays visible to you alone for now.",
+      "save-failed": "The filter could not be saved. {{reason}}",
+      "share-failed": "The filter was saved, but sharing it with {{identities}} failed. It stays visible to you alone for now."
     },
     "sort": {
       "label": "Sort by",

@@ -1,36 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { h } from "preact";
-import { render, cleanup } from "@testing-library/preact";
-
-vi.mock("../api/engine_rest.jsx", async (importOriginal) => {
-  const actual = await importOriginal();
-  const spyify = (o) =>
-    Object.fromEntries(
-      Object.entries(o).map(([k, v]) => [
-        k,
-        typeof v === "function"
-          ? vi.fn()
-          : v && typeof v === "object"
-            ? spyify(v)
-            : v,
-      ]),
-    );
-  return { ...actual, default: spyify(actual.default) };
-});
-
-let mockParams = {};
-let mockQuery = {};
-vi.mock("preact-iso", () => ({
-  useRoute: () => ({ params: mockParams, query: mockQuery }),
-  useLocation: () => ({ route: vi.fn(), path: "/tasks", query: mockQuery }),
-}));
-
-import { AppState } from "../state.js";
-import { TasksPage } from "./Tasks.jsx";
-import { create_mock_state } from "../test/helpers.js";
-
-const renderPage = (state) =>
-  render(h(AppState.Provider, { value: state }, h(TasksPage, {})));
+import { describe, it, expect } from "vitest";
 
 /**
  * What the task list cannot do yet.
@@ -41,14 +9,6 @@ const renderPage = (state) =>
  * is already written and only has to lose its `.fails`.
  */
 describe("not built yet", () => {
-  let state;
-  beforeEach(() => {
-    state = create_mock_state();
-    mockParams = {};
-    mockQuery = {};
-  });
-  afterEach(cleanup);
-
   describe("sorting by more than one criterion", () => {
     it.fails("keeps a second sort criterion", () => {
       const state_query = { sortBy: "created", sortOrder: "desc" };

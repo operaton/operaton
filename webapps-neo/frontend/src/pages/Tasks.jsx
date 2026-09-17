@@ -304,27 +304,31 @@ const TasksPage = () => {
 // everyone (userId "*", type 0) or a grant per user or group (type 1).
 const FILTER_RESOURCE_TYPE = 5;
 
+// Returns the identities the engine refused to grant — creating an
+// authorization is itself a permission, and not every user holds it.
 const grant_access = async (state, filter_id, { readable_by_all, grants }) => {
-  if (readable_by_all) {
-    await engine_rest.authorization.create(state, {
-      type: 0,
+  const wanted = [
+    ...(readable_by_all ? [{ type: 0, userId: "*" }] : []),
+    ...grants
+      .map(({ type, id }) => ({ type, id: id.trim() }))
+      .filter(({ id }) => id)
+      .map(({ type, id }) => ({
+        type: 1,
+        [type === "group" ? "groupId" : "userId"]: id,
+      })),
+  ];
+  const refused = [];
+  for (const identity of wanted) {
+    const result = await engine_rest.authorization.create(state, {
       permissions: ["READ"],
-      userId: "*",
       resourceType: FILTER_RESOURCE_TYPE,
       resourceId: filter_id,
+      ...identity,
     });
+    if (result?.status !== RESPONSE_STATE.SUCCESS)
+      refused.push(identity.groupId ?? identity.userId);
   }
-  for (const grant of grants) {
-    const id = grant.id.trim();
-    if (!id) continue;
-    await engine_rest.authorization.create(state, {
-      type: 1,
-      permissions: ["READ"],
-      [grant.type === "group" ? "groupId" : "userId"]: id,
-      resourceType: FILTER_RESOURCE_TYPE,
-      resourceId: filter_id,
-    });
-  }
+  return refused;
 };
 
 const TasksManage = () => {
@@ -1398,6 +1402,8 @@ const Filter = () => {
       readable_by_all: false,
       grants: [],
     }),
+    may_share = useSignal(true),
+    save_error = useSignal(null),
     update = (key, value) => (form.value = { ...form.peek(), [key]: value }),
     add_criteria = () =>
       update("criteria", [
@@ -1477,14 +1483,35 @@ const Filter = () => {
           variables,
         },
       };
+      save_error.value = null;
       void engine_rest.filter
         .create_filter(state, body)
         .then(async (result) => {
           const id = result?.data?.id;
-          if (id) await grant_access(state, id, form.value);
+          if (!id) {
+            save_error.value = t("tasks.filter.save-failed", {
+              reason: result?.error?.message ?? "",
+            });
+            return;
+          }
+          const refused = await grant_access(state, id, form.value);
+          if (refused.length > 0) {
+            save_error.value = t("tasks.filter.share-failed", {
+              identities: refused.join(", "),
+            });
+            return;
+          }
           route("/tasks");
         });
     };
+
+  // Sharing a filter means creating an authorization, which is a permission of
+  // its own. Without it the section stays inert rather than failing on save.
+  useEffect(() => {
+    void engine_rest.authorization
+      .may(state, "CREATE", "authorization", 4)
+      .then((allowed) => (may_share.value = allowed));
+  }, [state, may_share]);
 
   return (
     <div class="filter-editor">
@@ -1649,10 +1676,19 @@ const Filter = () => {
           <button type="submit">{t("common.save")}</button>
           <a href={`/tasks${keep_list_query(query)}`}>{t("common.cancel")}</a>
         </div>
+        {save_error.value && (
+          <p class="error" role="alert">
+            {save_error.value}
+          </p>
+        )}
 
-        <fieldset>
+        <fieldset disabled={!may_share.value}>
           <legend>{t("tasks.filter.permissions")}</legend>
-          <p>{t("tasks.filter.permissions-hint")}</p>
+          <p>
+            {may_share.value
+              ? t("tasks.filter.permissions-hint")
+              : t("tasks.filter.permissions-denied")}
+          </p>
           <label class="checkbox">
             <input
               type="checkbox"

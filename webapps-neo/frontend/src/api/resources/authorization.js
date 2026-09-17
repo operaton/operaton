@@ -28,6 +28,14 @@ const update_authorization = (state, id, body) =>
 // The five entries of the admin navigation, each with the permission that
 // governs it. The system data has no resource of its own; reading
 // authorizations is the closest thing the engine offers to "is an administrator".
+/** Whether the signed-in user holds one permission. */
+const may = (state, permission, resource_name, resource_type) =>
+  check_one(state, {
+    permission,
+    resource_name,
+    resource_type,
+  });
+
 const ADMIN_SECTIONS = [
   {
     section: "users",
@@ -103,6 +111,7 @@ const authorization = {
   update: update_authorization,
   delete: delete_authorization,
   sections: get_admin_sections,
+  may,
 };
 
 export default authorization;

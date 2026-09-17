@@ -821,7 +821,8 @@
       "group": "Gruppe",
       "user": "Benutzer",
       "group-id": "Gruppenkennung",
-      "user-id": "Benutzerkennung"
+      "user-id": "Benutzerkennung",
+      "already-exists": "Für diese Kombination aus Typ, Benutzer bzw. Gruppe und Ressource gibt es bereits eine Autorisierung mit den Berechtigungen {{permissions}}. Die Engine lässt nur eine zu — ergänzen Sie die vorhandene Zeile in der Tabelle über „Bearbeiten“."
     },
     "authorization-resources": {
       "application": "Anwendung",

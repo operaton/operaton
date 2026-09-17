@@ -1623,7 +1623,8 @@ const AuthorizationCreate = ({ resource, resource_type, on_done }) => {
       identity_id: "",
       permissions: [],
       resourceId: "*",
-    });
+    }),
+    duplicate = useSignal(null);
 
   const set_value = (k, e) =>
       (form.value = { ...form.peek(), [k]: e.currentTarget.value }),
@@ -1641,6 +1642,21 @@ const AuthorizationCreate = ({ resource, resource_type, on_done }) => {
       const { type, identity_type, identity_id, permissions, resourceId } =
         form.value;
       const identity = identity_id || "*";
+      // The engine holds one row per (type, identity, resource type, resource
+      // id) — the permissions are a bitmask inside it. A second row is refused
+      // with a persistence error that names neither the row nor the reason, so
+      // the row that is in the way is pointed at here instead.
+      const held = (state.api.authorization.all.value?.data ?? []).find(
+        (a) =>
+          a.type === Number(type) &&
+          a.resourceId === resourceId &&
+          (identity_type === "group" ? a.groupId : a.userId) === identity,
+      );
+      if (held) {
+        duplicate.value = held;
+        return;
+      }
+      duplicate.value = null;
       void engine_rest.authorization
         .create(state, {
           type: Number(type),
@@ -1665,6 +1681,15 @@ const AuthorizationCreate = ({ resource, resource_type, on_done }) => {
         signal={create}
         success={t("admin.authorization.success-created")}
       />
+      {duplicate.value && (
+        <p class="error" role="alert">
+          {t("admin.authorization.already-exists", {
+            permissions: (duplicate.value.permissions ?? [])
+              .map(humanize_permission)
+              .join(", "),
+          })}
+        </p>
+      )}
 
       <label for="auth-type">{t("common.type")}</label>
       <select id="auth-type" onInput={(e) => set_value("type", e)}>
@@ -1764,6 +1789,15 @@ const AuthorizationResourceRow = ({ authorization }) => {
     set_value = (k, e) =>
       (form.value = { ...form.peek(), [k]: e.currentTarget.value }),
     set_null = (k) => (form.value = { ...form.peek(), [k]: null }),
+    toggle_permission = (name, checked) => {
+      const current = form.peek().permissions ?? [];
+      form.value = {
+        ...form.peek(),
+        permissions: checked
+          ? [...current, name]
+          : current.filter((p) => p !== name),
+      };
+    },
     on_submit = (e) => {
       e.preventDefault();
       void engine_rest.authorization.update(state, id, form.value).then(() => {
@@ -1850,29 +1884,25 @@ const AuthorizationResourceRow = ({ authorization }) => {
             </form>
           </td>
           <td>
-            <select
-              multiple
-              form={form_id}
+            <fieldset
+              class="permission-choice"
               aria-label={t("admin.authorization.permissions")}
-              onChange={(e) =>
-                (form.value = {
-                  ...form.peek(),
-                  permissions: Array.from(e.currentTarget.selectedOptions).map(
-                    (o) => o.value,
-                  ),
-                })
-              }
             >
               {available_permissions.map((name) => (
-                <option
-                  key={name}
-                  value={name}
-                  selected={form.value.permissions?.includes(name)}
-                >
+                <label key={name}>
+                  <input
+                    type="checkbox"
+                    form={form_id}
+                    value={name}
+                    checked={form.value.permissions?.includes(name) ?? false}
+                    onInput={(e) =>
+                      toggle_permission(name, e.currentTarget.checked)
+                    }
+                  />
                   {humanize_permission(name)}
-                </option>
+                </label>
               ))}
-            </select>
+            </fieldset>
           </td>
           <td>
             <input

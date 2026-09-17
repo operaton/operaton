@@ -706,20 +706,37 @@ const ProcessDefinitionSelection = () => {
   // Suspending is not one decision but three: what, whether the instances go
   // with it, and when. The dialog asks before anything is sent.
   const suspension_open = useSignal(false),
-    suspend_next = useSignal(true);
+    suspend_next = useSignal(true),
+    bulk_error = useSignal(null);
 
   const run_bulk = async (op, options) => {
     if (selected.value.size === 0 || bulk_running.value) return;
     bulk_running.value = true;
+    bulk_error.value = null;
     try {
       const ids = [...selected.value];
+      // What the engine refused. Without this the action simply did nothing
+      // visible — a definition the user may not suspend looked like a dead
+      // button, the 403 only in the network tab.
+      const refused = [];
       for (const id of ids) {
         try {
-          await engine_rest.process_definition[op](state, id, options);
+          const result = await engine_rest.process_definition[op](
+            state,
+            id,
+            options,
+          );
+          if (result?.status === RESPONSE_STATE.ERROR)
+            refused.push(result.error?.message ?? id);
         } catch (e) {
-          console.error(`bulk ${op} failed for ${id}`, e);
+          refused.push(e?.message ?? id);
         }
       }
+      if (refused.length > 0)
+        bulk_error.value = t("processes.bulk.failed", {
+          count: refused.length,
+          reason: refused[0],
+        });
       selected.value = new Set();
       // Refetch to reflect new state.
       load_definitions(state, query);
@@ -798,6 +815,11 @@ const ProcessDefinitionSelection = () => {
             </small>
           )}
         </div>
+        {bulk_error.value && (
+          <p class="error" role="alert">
+            {bulk_error.value}
+          </p>
+        )}
       </div>
       <ListFilter
         sort_options={SORT_OPTIONS}

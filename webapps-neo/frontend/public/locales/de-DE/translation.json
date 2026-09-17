@@ -145,7 +145,8 @@
     "create": {
       "open": "Neue Aufgabe",
       "title": "Aufgabe anlegen",
-      "save": "Anlegen"
+      "save": "Anlegen",
+      "failed": "Die Aufgabe konnte nicht angelegt werden."
     },
     "task-not-found-hint": "Diese Aufgabe existiert nicht mehr. Sie wurde möglicherweise abgeschlossen oder abgebrochen.",
     "task-load-failed": "Aufgabe konnte nicht geladen werden",

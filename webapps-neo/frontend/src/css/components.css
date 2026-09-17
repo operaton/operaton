@@ -1640,6 +1640,10 @@ nav:has(> .breadcrumbs) {
   display: flex;
   flex: 1;
   min-height: 0;
+  /* As a flex item its default min-width is `auto`, so the widest cell of the
+     definitions table pushed the whole pane past the window and cut the start
+     form off at the right edge. */
+  min-width: 0;
 
   header {
     padding: var(--spacing-2);

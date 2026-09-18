@@ -812,7 +812,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void setProcessInstance(PvmExecutionImpl processInstance) {
+  public void setProcessInstance(@Nullable PvmExecutionImpl processInstance) {
     this.processInstance = (ExecutionEntity) processInstance;
     if (processInstance != null) {
       this.processInstanceId = this.processInstance.getId();

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.qa.performance.engine.steps;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
@@ -31,7 +32,7 @@ import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.TAS
  * @author Daniel Meyer
  *
  */
-public class TaskIdRecorder implements TaskListener {
+public @NullMarked class TaskIdRecorder implements TaskListener {
 
   @Override
   public void notify(DelegateTask delegateTask) {

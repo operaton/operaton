@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.dmn;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.exception.NotValidException;
  * @author Kristin Polenz
  *
  */
-public interface DecisionEvaluationBuilder {
+public @NullMarked interface DecisionEvaluationBuilder {
 
   /**
    * Specify the id of the tenant the decision definition belongs to. Can only be

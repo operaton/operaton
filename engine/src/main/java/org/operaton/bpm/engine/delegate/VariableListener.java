@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * @author Thorben Lindhauer
  */
-public interface VariableListener<T extends DelegateVariableInstance<?>> {
+public @NullMarked interface VariableListener<T extends DelegateVariableInstance<?>> {
 
   String CREATE = "create";
   String UPDATE = "update";

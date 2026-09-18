@@ -261,7 +261,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
 
   /** for setting the process instance, this setter must be used as subclasses can override */
   @Override
-  public void setProcessInstance(PvmExecutionImpl processInstance) {
+  public void setProcessInstance(@Nullable PvmExecutionImpl processInstance) {
     this.processInstance = (ExecutionImpl) processInstance;
   }
 

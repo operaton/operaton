@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.variable.listener;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -30,6 +31,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Thorben Lindhauer
  *
  */
+@NullUnmarked
 public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableInstance {
 
   protected String eventName;
@@ -142,7 +144,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
 
   @Override
   public @Nullable String getTypeName() {
-    if(value != null) {
+    if(value != null && value.getType() != null) {
       return value.getType().getName();
     }
     else {

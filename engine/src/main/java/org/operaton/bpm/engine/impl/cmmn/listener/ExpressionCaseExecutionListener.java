@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.listener;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.delegate.Expression;
@@ -33,7 +34,7 @@ public class ExpressionCaseExecutionListener implements CaseExecutionListener {
   }
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     // Return value of expression is ignored
     expression.getValue(caseExecution);
   }

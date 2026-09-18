@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.CmmnModelExecutionContext;
@@ -40,11 +42,13 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public class CaseExecutionImpl extends CmmnExecution implements Serializable {
+public @NullMarked class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
   private static final VariableInstanceFactory<CoreVariableInstance> VARIABLE_INSTANCE_FACTORY = (VariableInstanceFactory) new SimpleVariableInstanceFactory();
@@ -53,21 +57,21 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // current position /////////////////////////////////////////////////////////
 
-  private List<CaseExecutionImpl> caseExecutions;
+  private @Nullable List<CaseExecutionImpl> caseExecutions;
 
-  private List<CaseSentryPartImpl> caseSentryParts;
+  private @Nullable List<CaseSentryPartImpl> caseSentryParts;
 
-  protected CaseExecutionImpl caseInstance;
+  protected @Nullable CaseExecutionImpl caseInstance;
 
-  protected CaseExecutionImpl parent;
+  protected @Nullable CaseExecutionImpl parent;
 
-  protected ExecutionImpl subProcessInstance;
+  protected @Nullable ExecutionImpl subProcessInstance;
 
-  protected ExecutionImpl superExecution;
+  protected @Nullable ExecutionImpl superExecution;
 
-  protected CaseExecutionImpl subCaseInstance;
+  protected @Nullable CaseExecutionImpl subCaseInstance;
 
-  protected CaseExecutionImpl superCaseExecution;
+  protected @Nullable CaseExecutionImpl superCaseExecution;
 
   // variables ////////////////////////////////////////////////////////////////
 
@@ -83,7 +87,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   // parent ////////////////////////////////////////////////////////////////////
 
   @Override
-  public CaseExecutionImpl getParent() {
+  public @Nullable CaseExecutionImpl getParent() {
     return parent;
   }
 
@@ -93,20 +97,20 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   }
 
   @Override
-  public String getParentId() {
-    return getParent().getId();
+  public @Nullable String getParentId() {
+    return getParent() != null ? getParent().getId() : null;
   }
 
   // activity //////////////////////////////////////////////////////////////////
 
   @Override
-  public String getActivityId() {
-    return getActivity().getId();
+  public @Nullable String getActivityId() {
+    return getActivity() != null ? getActivity().getId() : null;
   }
 
   @Override
-  public String getActivityName() {
-    return getActivity().getName();
+  public @Nullable String getActivityName() {
+    return getActivity() != null ? getActivity().getName() : null;
   }
 
   // case executions ////////////////////////////////////////////////////////////////
@@ -127,36 +131,36 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   // case instance /////////////////////////////////////////////////////////////
 
   @Override
-  public CaseExecutionImpl getCaseInstance() {
+  public @Nullable CaseExecutionImpl getCaseInstance() {
     return caseInstance;
   }
 
   @Override
-  public void setCaseInstance(CmmnExecution caseInstance) {
+  public void setCaseInstance(@Nullable CmmnExecution caseInstance) {
     this.caseInstance = (CaseExecutionImpl) caseInstance;
   }
 
   // super execution /////////////////////////////////////////////////////////////
 
   @Override
-  public ExecutionImpl getSuperExecution() {
+  public @Nullable ExecutionImpl getSuperExecution() {
     return superExecution;
   }
 
   @Override
-  public void setSuperExecution(PvmExecutionImpl superExecution) {
+  public void setSuperExecution(@Nullable PvmExecutionImpl superExecution) {
     this.superExecution = (ExecutionImpl) superExecution;
   }
 
   // sub process instance ////////////////////////////////////////////////////////
 
   @Override
-  public ExecutionImpl getSubProcessInstance() {
+  public @Nullable ExecutionImpl getSubProcessInstance() {
     return subProcessInstance;
   }
 
   @Override
-  public void setSubProcessInstance(PvmExecutionImpl subProcessInstance) {
+  public void setSubProcessInstance(@Nullable PvmExecutionImpl subProcessInstance) {
     this.subProcessInstance = (ExecutionImpl) subProcessInstance;
   }
 
@@ -166,12 +170,12 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   }
 
   @Override
-  public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey) {
+  public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, @Nullable String businessKey) {
     return createSubProcessInstance(processDefinition, businessKey, getCaseInstanceId());
   }
 
   @Override
-  public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey, String caseInstanceId) {
+  public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, @Nullable String businessKey, @Nullable String caseInstanceId) {
     ExecutionImpl subProcess = (ExecutionImpl) processDefinition.createProcessInstance(businessKey, caseInstanceId);
 
     // manage bidirectional super-subprocess relation
@@ -184,7 +188,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   // sub-/super- case instance ////////////////////////////////////////////////////
 
   @Override
-  public CaseExecutionImpl getSubCaseInstance() {
+  public @Nullable CaseExecutionImpl getSubCaseInstance() {
     return subCaseInstance;
   }
 
@@ -199,18 +203,18 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   }
 
   @Override
-  public CaseExecutionImpl createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey) {
+  public CaseExecutionImpl createSubCaseInstance(CmmnCaseDefinition caseDefinition, @Nullable String businessKey) {
     CaseExecutionImpl result = (CaseExecutionImpl) caseDefinition.createCaseInstance(businessKey);
 
     // manage bidirectional super-sub-case-instances relation
-    subCaseInstance.setSuperCaseExecution(this);
+    requireNonNull(subCaseInstance).setSuperCaseExecution(this);
     setSubCaseInstance(subCaseInstance);
 
     return result;
   }
 
   @Override
-  public CaseExecutionImpl getSuperCaseExecution() {
+  public @Nullable CaseExecutionImpl getSuperCaseExecution() {
     return superCaseExecution;
   }
 
@@ -295,6 +299,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // variables //////////////////////////////////////////////////////////////
 
+  @SuppressWarnings({"unchecked","rawtypes"})
   protected VariableStore<CoreVariableInstance> getVariableStore() {
     return (VariableStore) variableStore;
   }

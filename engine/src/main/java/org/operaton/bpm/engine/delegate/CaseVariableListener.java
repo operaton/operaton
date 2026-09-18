@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * <p>A variable listener can be defined on a scope in a case model.
  * Depending on its configuration, it is invoked when a variable is create/updated/deleted
@@ -29,7 +31,7 @@ package org.operaton.bpm.engine.delegate;
  *
  * @author Thorben Lindhauer
  */
-public interface CaseVariableListener extends VariableListener<DelegateCaseVariableInstance> {
+public @NullMarked interface CaseVariableListener extends VariableListener<DelegateCaseVariableInstance> {
 
   String CREATE = VariableListener.CREATE;
   String UPDATE = VariableListener.UPDATE;

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.cmmn.operation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
@@ -38,7 +39,7 @@ public class CaseExecutionStateTransitionCollector implements CaseExecutionListe
   public List<String> stateTransitions = new ArrayList<>();
 
   @Override
-  public void notify(DelegateCaseExecution planItem) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution planItem) throws Exception {
     CmmnExecution execution = (CmmnExecution) planItem;
 
     String activityId = execution.getEventSource().getId();

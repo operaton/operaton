@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.util;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 public class TimeoutTaskListener implements TaskListener {
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     RuntimeService runtimeService = delegateTask.getProcessEngine().getRuntimeService();
     int triggerCount = 1;
     Integer triggerCountVariable = (Integer) runtimeService.getVariable(delegateTask.getExecutionId(), "triggerCount");

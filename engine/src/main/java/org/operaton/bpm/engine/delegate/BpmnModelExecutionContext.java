@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
 import org.operaton.bpm.model.bpmn.instance.FlowNode;
@@ -29,7 +30,7 @@ import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
  * @author Sebastian Menski
  *
  */
-public interface BpmnModelExecutionContext {
+public @NullMarked interface BpmnModelExecutionContext {
 
   /**
    * Returns the {@link BpmnModelInstance} for the currently executed Bpmn Model

@@ -19,23 +19,26 @@ package org.operaton.bpm.engine.test.cmmn.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.impl.context.CaseExecutionContext;
 import org.operaton.bpm.engine.impl.context.Context;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public class LogExecutionContextListener implements CaseVariableListener {
+public @NullMarked class LogExecutionContextListener implements CaseVariableListener {
 
   protected static List<CaseExecutionContext> executionContexts = new ArrayList<>();
 
 
   @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
-    executionContexts.add(Context.getCaseExecutionContext());
+    executionContexts.add(requireNonNull(Context.getCaseExecutionContext()));
   }
 
   public static List<CaseExecutionContext> getCaseExecutionContexts() {

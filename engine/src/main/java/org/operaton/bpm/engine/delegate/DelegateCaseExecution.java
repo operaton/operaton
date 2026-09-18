@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * @author Roman Smirnov
  *
  */
-public interface DelegateCaseExecution extends BaseDelegateExecution, ProcessEngineServicesAware, CmmnModelExecutionContext {
+public @NullMarked interface DelegateCaseExecution extends BaseDelegateExecution, ProcessEngineServicesAware, CmmnModelExecutionContext {
 
   @Override
   String getId();

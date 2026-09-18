@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.pvm.runtime;
 import java.io.Serial;
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ActivityTypes;
 
 import org.jspecify.annotations.Nullable;
@@ -55,6 +56,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.variable.VariableMap;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
 import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.ENDING;
 
@@ -63,16 +65,16 @@ import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.END
  * @author Roman Smirnov
  * @author Sebastian Menski
  */
-public abstract class PvmExecutionImpl extends CoreExecution implements
+public abstract @NullMarked class PvmExecutionImpl extends CoreExecution implements
   ActivityExecution, PvmProcessInstance {
 
   @Serial private static final long serialVersionUID = 1L;
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
-  protected transient ProcessDefinitionImpl processDefinition;
+  protected transient @Nullable ProcessDefinitionImpl processDefinition;
 
-  protected transient ScopeInstantiationContext scopeInstantiationContext;
+  protected transient @Nullable ScopeInstantiationContext scopeInstantiationContext;
 
   protected transient boolean ignoreAsync;
 
@@ -88,40 +90,40 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   /**
    * current activity
    */
-  protected transient ActivityImpl activity;
+  protected transient @Nullable ActivityImpl activity;
 
   /**
    * the activity which is to be started next
    */
-  protected transient PvmActivity nextActivity;
+  protected transient @Nullable PvmActivity nextActivity;
 
   /**
    * the transition that is currently being taken
    */
-  protected transient TransitionImpl transition;
+  protected transient @Nullable TransitionImpl transition;
 
   /**
    * A list of outgoing transitions from the current activity
    * that are going to be taken
    */
-  protected transient List<PvmTransition> transitionsToTake;
+  protected transient @Nullable List<PvmTransition> transitionsToTake;
 
   /**
    * the unique id of the current activity instance
    */
-  protected String activityInstanceId;
+  protected @Nullable String activityInstanceId;
 
   /**
    * the id of a case associated with this execution
    */
-  protected String caseInstanceId;
+  protected @Nullable String caseInstanceId;
 
-  protected PvmExecutionImpl replacedBy;
+  protected @Nullable PvmExecutionImpl replacedBy;
 
   // cascade deletion ////////////////////////////////////////////////////////
 
   protected boolean deleteRoot;
-  protected String deleteReason;
+  protected @Nullable String deleteReason;
   protected boolean externallyTerminated;
 
   //state/type of execution //////////////////////////////////////////////////
@@ -155,7 +157,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   protected boolean activityInstanceEndListenersFailed;
 
-  protected transient Map<String, Object> payloadForTriggeredScope;
+  protected transient @Nullable Map<String, Object> payloadForTriggeredScope;
 
   // sequence counter ////////////////////////////////////////////////////////
   protected long sequenceCounter;
@@ -179,7 +181,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   @Override
-  public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey) {
+  public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, @Nullable String businessKey) {
     PvmExecutionImpl processInstance = getProcessInstance();
 
     String caseId = null;
@@ -191,7 +193,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   @Override
-  public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey, String caseInstanceId) {
+  public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, @Nullable String businessKey, @Nullable String caseInstanceId) {
     PvmExecutionImpl subProcessInstance = newExecution();
 
     // manage bidirectional super-subprocess relation
@@ -1229,13 +1231,13 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * ensures initialization and returns the process instance.
    */
   @Override
-  public abstract PvmExecutionImpl getProcessInstance();
+  public abstract @Nullable PvmExecutionImpl getProcessInstance();
 
   public abstract void setProcessInstance(PvmExecutionImpl pvmExecutionImpl);
 
   // case instance id /////////////////////////////////////////////////////////
 
-  public String getCaseInstanceId() {
+  public @Nullable String getCaseInstanceId() {
     return caseInstanceId;
   }
 
@@ -1249,7 +1251,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * ensures initialization and returns the activity
    */
   @Override
-  public ActivityImpl getActivity() {
+  public @Nullable ActivityImpl getActivity() {
     return activity;
   }
 
@@ -1278,13 +1280,13 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   @Override
-  public void setActivity(PvmActivity activity) {
+  public void setActivity(@Nullable PvmActivity activity) {
     this.activity = (ActivityImpl) activity;
   }
 
   @Override
   public void enterActivityInstance() {
-    ActivityImpl act = getActivity();
+    ActivityImpl act = requireNonNull(getActivity());
     activityInstanceId = generateActivityInstanceId(act.getId());
 
     LOG.debugEnterActivityInstance(this, getParentActivityInstanceId());

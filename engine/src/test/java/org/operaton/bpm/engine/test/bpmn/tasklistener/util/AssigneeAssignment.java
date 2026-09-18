@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 /**
  * @author Joram Barrez
  */
-public class AssigneeAssignment implements TaskListener {
+public @NullMarked class AssigneeAssignment implements TaskListener {
 
   @Override
   public void notify(DelegateTask delegateTask) {

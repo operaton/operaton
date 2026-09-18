@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.util;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 public class CreateLocalVariableEventListener implements TaskListener {
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     delegateTask.setVariableLocal("var", "foo");
   }
 

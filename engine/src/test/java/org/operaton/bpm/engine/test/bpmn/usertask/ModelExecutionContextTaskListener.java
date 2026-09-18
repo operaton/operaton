@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
@@ -31,7 +32,7 @@ public class ModelExecutionContextTaskListener implements TaskListener {
   public static UserTask userTask;
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     modelInstance = delegateTask.getBpmnModelInstance();
     userTask = delegateTask.getBpmnModelElementInstance();
   }

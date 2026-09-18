@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.listener;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -46,7 +47,7 @@ public class ClassDelegateCaseExecutionListener extends ClassDelegate implements
   }
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     CaseExecutionListener listenerInstance = getListenerInstance();
 
     Context

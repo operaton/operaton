@@ -18,6 +18,7 @@ package org.operaton.bpm.integrationtest.functional.spin.dataformat;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -41,7 +42,7 @@ public class ImplicitObjectValueUpdateHandler implements JavaDelegate, TaskListe
   }
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     JsonSerializable variable = (JsonSerializable) delegateTask.getVariable(VARIABLE_NAME);
 
     addADay(variable);  // implicit update, i.e. no setVariable call

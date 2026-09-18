@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.model.cmmn.instance.Stage;
@@ -59,7 +60,7 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  * @author Roman Smirnov
  *
  */
-public interface CaseExecutionListener extends DelegateListener<DelegateCaseExecution> {
+public @NullMarked interface CaseExecutionListener extends DelegateListener<DelegateCaseExecution> {
 
   String CREATE = "create";
   String ENABLE = "enable";

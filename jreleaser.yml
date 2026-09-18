@@ -49,17 +49,7 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
       comment: '🎉 This issue has been resolved in `{{tagName}}` ([Release Notes]({{releaseNotesUrl}}))'
       applyMilestone: ALWAYS
     changelog:
-      # Temporarily NEVER instead of ALWAYS: JReleaser's formatted changelog
-      # extracts a "#<digits>" issue reference from every commit body,
-      # unconditionally (independent of the issues.enabled flag above), and
-      # crashes with NumberFormatException on commit e2645b1df7's "run
-      # #32805123073" (a GitHub Actions run ID, not an issue reference) --
-      # see https://github.com/jreleaser/jreleaser/issues/2172. This is the
-      # first tag ever cut from main, so the commit range for this one
-      # release reaches back to e2645b1df7; every later main-based release
-      # bounds its range to "since last tag" and will never see it again.
-      # Revert to ALWAYS right after 2.2.0-RC1 ships.
-      formatted: NEVER
+      formatted: ALWAYS
       preset: conventional-commits
       enabled: true
       sort: ASC

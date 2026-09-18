@@ -16,31 +16,33 @@
  */
 package org.operaton.bpm.engine.impl.history.parser;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  *
  */
-public class ActivityInstanceUpdateListener extends HistoryTaskListener {
+public @NullMarked class ActivityInstanceUpdateListener extends HistoryTaskListener {
 
   public ActivityInstanceUpdateListener(HistoryEventProducer historyEventProducer) {
     super(historyEventProducer);
   }
 
   @Override
-  protected HistoryEvent createHistoryEvent(DelegateTask task, ExecutionEntity execution) {
+  protected @Nullable HistoryEvent createHistoryEvent(DelegateTask task, ExecutionEntity execution) {
     ensureHistoryLevelInitialized();
-    if(historyLevel.isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_UPDATE, execution)) {
+    if(requireNonNull(historyLevel).isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_UPDATE, execution)) {
       return eventProducer.createActivityInstanceUpdateEvt(execution, task);
     } else {
       return null;
     }
   }
-
-
 }

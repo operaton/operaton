@@ -237,6 +237,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Wait for upstream caches to become available
+        # actions/cache writes can lag slightly before they are visible to a
+        # dependent job that starts immediately afterwards (observed as a
+        # spurious "Failed to restore cache entry" on the very next job even
+        # though the save step reported success). A short wait avoids racing
+        # the cache backend's indexing.
+        run: sleep 30
+
       - name: Restore build artifacts cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -247,8 +255,6 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
-            target/sbom/**
-            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
 

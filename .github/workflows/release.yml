@@ -173,6 +173,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
+            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
 
   documentation:
@@ -255,6 +256,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
+            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
 

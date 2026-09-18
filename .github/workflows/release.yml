@@ -134,38 +134,7 @@ jobs:
         shell: bash
         env:
           GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER: ${{github.event.inputs.preliminary_release_qualifier}}
-        run: |
-          BASE_RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
-          QUALIFIER="${GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER}"
-          if [ -n "$QUALIFIER" ]; then
-            if [[ ! "$QUALIFIER" =~ ^(M[0-9]|RC[0-9])$ ]]; then
-              echo "::error::Preliminary Release Qualifier '$QUALIFIER' must match M[0-9] or RC[0-9]."
-              exit 1
-            fi
-            if [[ ! "$BASE_RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.0$ ]]; then
-              echo "::error::Preliminary Release Qualifier can only be used for .0 versions. Current version is '$BASE_RELEASE_VERSION'."
-              exit 1
-            fi
-            RELEASE_VERSION="${BASE_RELEASE_VERSION}-${QUALIFIER}"
-            echo "⚙ Releasing version '$RELEASE_VERSION' (Preliminary Release)"
-            echo "is_prerelease=true" >> $GITHUB_OUTPUT
-          else
-            RELEASE_VERSION="$BASE_RELEASE_VERSION"
-            echo "⚙ Releasing version '$RELEASE_VERSION'"
-            echo "is_prerelease=false" >> $GITHUB_OUTPUT
-          fi
-          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
-          echo "base_version=$BASE_RELEASE_VERSION" >> $GITHUB_OUTPUT
-          DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
-          echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
-          echo "database_version=$DATABASE_VERSION"
-          .github/scripts/set-project-version.sh $RELEASE_VERSION
-          if [ -z "$QUALIFIER" ]; then
-            .github/scripts/finalize-qa-db-fixture.sh $DATABASE_VERSION $RELEASE_VERSION
-          else
-            # prevent deployment of non-final sql scripts - a db schemaa can only deployed once
-            touch distro/sql-script/.skip-deploy
-          fi
+        run: .github/scripts/prepare-release-version.sh
 
       - name: Maven Build
         run: |
@@ -189,14 +158,6 @@ jobs:
           .github/scripts/prepare-deploy.sh
           ./mvnw -Dmaven.build.cache.enabled=false -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
-      - name: Documentation
-        if: always()
-        run: |
-          .devenv/scripts/build/javadoc.sh
-          .devenv/scripts/build/check-api-compatibility.sh
-          .devenv/scripts/build/rest-api-doc.sh
-          .devenv/scripts/build/build-sbom.sh
-          pip install --only-binary :all: pystache==0.6.8
       - name: Commit changes
         uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         if: ${{github.event.inputs.dry_run == 'false' }}
@@ -212,14 +173,60 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
-            target/sbom/**
-            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
+
+  documentation:
+    name: Documentation
+    needs:
+      - prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up JDK
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Version
+        shell: bash
+        env:
+          GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER: ${{github.event.inputs.preliminary_release_qualifier}}
+        run: .github/scripts/prepare-release-version.sh
+
+      - name: Documentation
+        run: |
+          .devenv/scripts/build/javadoc.sh
+          .devenv/scripts/build/check-api-compatibility.sh
+          .devenv/scripts/build/rest-api-doc.sh
+          .devenv/scripts/build/build-sbom.sh
+          pip install --only-binary :all: pystache==0.6.8
+
+      - name: Cache documentation artifacts
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            target/javadoc.zip
+            target/javadoc/**
+            target/clirr-reports.zip
+            target/rest-api.zip
+            target/rest-api/**
+            target/sbom/**
+            **/target/reports/**
+          key: ${{ github.run_id }}-documentation-artifacts
 
   release:
     name: Release
     needs:
       - release_build
+      - documentation
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -243,6 +250,20 @@ jobs:
             target/sbom/**
             target/*.zip
           key: ${{ github.run_id }}-build-artifacts
+          fail-on-cache-miss: true
+
+      - name: Restore documentation cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            target/javadoc.zip
+            target/javadoc/**
+            target/clirr-reports.zip
+            target/rest-api.zip
+            target/rest-api/**
+            target/sbom/**
+            **/target/reports/**
+          key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 
       - name: Modify jreleaser.yml for release

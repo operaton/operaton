@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.service;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  * @author Roman Smirnov
  *
  */
-public class AssignTaskListener implements TaskListener {
+public @NullMarked class AssignTaskListener implements TaskListener {
 
   @Override
   public void notify(DelegateTask delegateTask) {

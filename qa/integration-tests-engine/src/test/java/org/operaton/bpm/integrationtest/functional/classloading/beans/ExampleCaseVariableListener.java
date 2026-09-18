@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.beans;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
  * @author Thorben Lindhauer
  *
  */
-public class ExampleCaseVariableListener implements CaseVariableListener {
+public @NullMarked class ExampleCaseVariableListener implements CaseVariableListener {
 
   @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.usertask;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.test.bpmn.common.AbstractProcessEngineServicesAccessTest;
@@ -56,28 +57,28 @@ public class TaskListenerProcessEngineServicesAccessTest extends AbstractProcess
     return task;
   }
 
-  public static class AccessServicesListener implements TaskListener {
+  public static @NullMarked class AccessServicesListener implements TaskListener {
     @Override
     public void notify(DelegateTask execution) {
       assertCanAccessServices(execution.getProcessEngineServices());
     }
   }
 
-  public static class PerformQueryListener implements TaskListener {
+  public static @NullMarked class PerformQueryListener implements TaskListener {
     @Override
     public void notify(DelegateTask execution) {
       assertCanPerformQuery(execution.getProcessEngineServices());
     }
   }
 
-  public static class StartProcessListener implements TaskListener {
+  public static @NullMarked class StartProcessListener implements TaskListener {
     @Override
     public void notify(DelegateTask execution) {
       assertCanStartProcessInstance(execution.getProcessEngineServices());
     }
   }
 
-  public static class ProcessEngineStartProcessListener implements TaskListener {
+  public static @NullMarked class ProcessEngineStartProcessListener implements TaskListener {
     @Override
     public void notify(DelegateTask execution) {
       assertCanStartProcessInstance(execution.getProcessEngine());

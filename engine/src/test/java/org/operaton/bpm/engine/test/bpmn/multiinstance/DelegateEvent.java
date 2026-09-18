@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -35,6 +36,7 @@ import org.operaton.bpm.model.bpmn.instance.FlowElement;
  * @author Thorben Lindhauer
  *
  */
+@NullUnmarked
 public class DelegateEvent implements DelegateExecution {
 
   protected static final List<DelegateEvent> RECORDED_EVENTS = new ArrayList<>();

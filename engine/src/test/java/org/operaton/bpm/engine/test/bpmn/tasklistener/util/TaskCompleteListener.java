@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.util;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -30,7 +31,7 @@ public class TaskCompleteListener implements TaskListener {
   private Expression shortName;
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     delegateTask.getExecution().setVariable("greeting", "Hello from " + greeter.getValue(delegateTask.getExecution()));
     delegateTask.getExecution().setVariable("shortName", shortName.getValue(delegateTask.getExecution()));
 

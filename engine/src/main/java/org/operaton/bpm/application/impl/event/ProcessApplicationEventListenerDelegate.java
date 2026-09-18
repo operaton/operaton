@@ -18,6 +18,7 @@ package org.operaton.bpm.application.impl.event;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -67,7 +68,7 @@ public class ProcessApplicationEventListenerDelegate implements ExecutionListene
   }
 
   @Override
-  public void notify(final DelegateTask delegateTask) {
+  public void notify(final @NonNull DelegateTask delegateTask) {
     if(delegateTask.getExecution() == null) {
       LOG.taskNotRelatedToExecution(delegateTask);
     } else {

@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
 
-public class AccessModelInstanceTaskListener implements TaskListener {
+public @NullMarked class AccessModelInstanceTaskListener implements TaskListener {
 
   public static final String VARIABLE_NAME = "userTaskId";
 

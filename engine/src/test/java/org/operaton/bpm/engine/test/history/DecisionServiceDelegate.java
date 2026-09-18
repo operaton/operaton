@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.history;
 import java.io.Serial;
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.engine.DecisionService;
@@ -39,7 +40,7 @@ public class DecisionServiceDelegate implements JavaDelegate, CaseExecutionListe
   }
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     DecisionService decisionService = caseExecution.getProcessEngineServices().getDecisionService();
     evaluateDecision(decisionService, caseExecution);
   }

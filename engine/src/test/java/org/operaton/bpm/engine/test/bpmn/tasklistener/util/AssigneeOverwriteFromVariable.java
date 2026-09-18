@@ -18,15 +18,17 @@ package org.operaton.bpm.engine.test.bpmn.tasklistener.util;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Falko Menge <falko.menge@camunda.com>
  */
-public class AssigneeOverwriteFromVariable implements TaskListener {
+public @NullMarked class AssigneeOverwriteFromVariable implements TaskListener {
 
   @Override
   @SuppressWarnings("unchecked")
@@ -34,6 +36,7 @@ public class AssigneeOverwriteFromVariable implements TaskListener {
     // get mapping table from variable
     DelegateExecution execution = delegateTask.getExecution();
     Map<String, String> assigneeMappingTable = (Map<String, String>) execution.getVariable("assigneeMappingTable");
+    requireNonNull(assigneeMappingTable);
 
     // get assignee from process
     String assigneeFromProcessDefinition = delegateTask.getAssignee();

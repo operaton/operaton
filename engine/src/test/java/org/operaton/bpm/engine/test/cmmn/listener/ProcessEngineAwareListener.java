@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.listener;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
  * @author Thorben Lindhauer
  *
  */
-public class ProcessEngineAwareListener implements CaseVariableListener {
+public @NullMarked class ProcessEngineAwareListener implements CaseVariableListener {
 
   protected static boolean foundValidRuntimeService;
 

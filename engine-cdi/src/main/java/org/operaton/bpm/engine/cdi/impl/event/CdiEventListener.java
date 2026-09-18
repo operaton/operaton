@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.lang.annotation.Annotation;
 import jakarta.enterprise.inject.spi.BeanManager;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  *
  * @author Daniel Meyer
  */
-public class CdiEventListener extends AbstractCdiEventListener {
+public @NullMarked class CdiEventListener extends AbstractCdiEventListener {
 
   @Serial private static final long serialVersionUID = 1L;
 

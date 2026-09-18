@@ -444,7 +444,7 @@ public interface IdentityService {
   /**
    * @return the current authentication for this process engine.
    */
-  Authentication getCurrentAuthentication();
+  @Nullable Authentication getCurrentAuthentication();
 
   /** Allows clearing the current authentication. Does not throw exception if
    * no authentication exists.

@@ -272,7 +272,7 @@ public @NullMarked class IdentityServiceImpl extends ServiceImpl implements Iden
   }
 
   @Override
-  public Authentication getCurrentAuthentication() {
+  public @Nullable Authentication getCurrentAuthentication() {
     return currentAuthentication.get();
   }
 

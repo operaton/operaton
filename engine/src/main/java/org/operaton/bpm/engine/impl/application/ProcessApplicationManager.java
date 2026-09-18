@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationReference;
 
 import org.jspecify.annotations.Nullable;
@@ -44,7 +45,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationManager {
+public @NullMarked class ProcessApplicationManager {
 
   public static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 

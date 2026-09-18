@@ -39,6 +39,8 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
+import static java.util.Objects.requireNonNull;
+
 public class HistoricExternalTaskLogManager extends AbstractManager {
 
   // select /////////////////////////////////////////////////////////////////
@@ -55,7 +57,8 @@ public class HistoricExternalTaskLogManager extends AbstractManager {
 
   public long findHistoricExternalTaskLogsCountByQueryCriteria(HistoricExternalTaskLogQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectHistoricExternalTaskLogCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricExternalTaskLogCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   // update ///////////////////////////////////////////////////////////////////

@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.runtime.Incident;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author roman.smirnov
  */
@@ -42,7 +44,8 @@ public class IncidentManager extends AbstractManager {
 
   public long findIncidentCountByQueryCriteria(IncidentQueryImpl incidentQuery) {
     configureQuery(incidentQuery);
-    return (Long) getDbEntityManager().selectOne("selectIncidentCountByQueryCriteria", incidentQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectIncidentCountByQueryCriteria", incidentQuery);
+    return requireNonNull(count);
   }
 
   public Incident findIncidentById(String id) {

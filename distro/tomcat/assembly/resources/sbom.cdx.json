@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:9675fb77-be46-40c1-8b3b-1fab49418f87",
+  "serialNumber": "urn:uuid:906fff7e-c10b-4f93-9da6-e5786ac2cdeb",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-18T07:33:29Z",
+    "timestamp": "2026-09-18T14:08:41Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.74.0-SNAPSHOT-7d0a89293"
+          "version": "0.74.0-SNAPSHOT-b830ddf93"
         }
       ]
     },
@@ -15534,45 +15534,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.5.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core",
-      "version": "7.0.4.Final",
+      "version": "7.0.5.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "484dfceb0b0a722518570ddc647efa0d"
+          "content": "4a957c195042729be99746324a43d99f"
         },
         {
           "alg": "SHA-1",
-          "content": "e85e56528767d6531df5b16d6f48f47acd51cbe7"
+          "content": "17e2baff7108d5f7c4b68c4da36005b0313c107a"
         },
         {
           "alg": "SHA-256",
-          "content": "3d8a2ffce4ce25d7ccdf951630b7862115fda52d8d8da87c8183e638e6c5f662"
+          "content": "c7b64ff647bdb6f9069d77851d1993776869cc159a01c95f26fcef4f73354417"
         },
         {
           "alg": "SHA-512",
-          "content": "1669e7d80f5539c41b95ca5e4a0729b5a9b1ba5c1e7bbb514e1ff4c01afa5fa0e54574f28d13b76f4c386d41a19bd9b2a23d042d798785ddb63de515091601ee"
+          "content": "2742f3608827ebe2bc05c08790aadd9ff6b50ed7cba9ee98e55ca873e07062c6df1928827b01d7eff6360097e541943662e86811262db43b26c4e34f206ff87f"
         },
         {
           "alg": "SHA-384",
-          "content": "38ece0baba00ca5c462de2648d7826abe34e5c6be2f0e4b1c8c3db3b57e79b7a3ca42abaf88fa366500e5d329be8e9aa"
+          "content": "92052f93b7f916e06b09b99cb60a7dcd8a924614f74b298fd0c2c77cceb9bb4721ba3dbab2fda55b1f360ae04c81fbc2"
         },
         {
           "alg": "SHA3-384",
-          "content": "534884cd4662b5a568cd7d72e7ac584eb48d8b4be5641bc0782d9f8356f352b874748426f1616105a7de73a58c30f2b6"
+          "content": "e32cb9a56fdf246a37e9b9674eff29aee32d513aa6e8e16ae67de0ffb72089658523b237cf51ffa73ed5f109c11f8468"
         },
         {
           "alg": "SHA3-256",
-          "content": "155bf2b93fa2dc76ff78ca795fdb842bec688a4f41e6a7f93c198ea7b6985120"
+          "content": "242e7402fd4bcc965595cbd5439f1fc6440c2808c8633621c622f8c1810607fe"
         },
         {
           "alg": "SHA3-512",
-          "content": "c4a25365872d635b2a6d92ee7a6ec1db5d5920513c03c9b292564c81b647c1dae10f86d753140162edbfd1cad5ee90e3da2b93e19ef4c4930ee6bfc150f4dac0"
+          "content": "d2461f21b8d0c635824dde5c4166fda7e1410ab5547dd7650b680b08d8100b5d4167adc9e4a0c44447b0a0f18083e98f60d671f0e9a573ec5bb35fd820db276c"
         }
       ],
       "licenses": [
@@ -15583,7 +15583,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.5.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -15674,45 +15674,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.4.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.5.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core-spi",
-      "version": "7.0.4.Final",
+      "version": "7.0.5.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2a4afffb5afa9c310653674bb763cee3"
+          "content": "34de6338aab925d964f59151fa150c9d"
         },
         {
           "alg": "SHA-1",
-          "content": "66c9b7e6926ccfe83652c0227b69b658f88fac68"
+          "content": "8e0b97a156f04816a9c1f1e662844b7523555021"
         },
         {
           "alg": "SHA-256",
-          "content": "93bb0909d5288b65d12cbafa9f4290ca9f4fe7a682c0b754d1c02c4259dd3dad"
+          "content": "01709d67ee5390b3c122fd45f41c0958324e3c9fd86ec8cee36e105f81daf386"
         },
         {
           "alg": "SHA-512",
-          "content": "acd51c513fa26ad558c181d8b39f930bdbdd509a218ef677aa2618381e27b8136b594aef18221947e9c3add82f2083505748960bc0b37ef1ba6eeb99614dd7b9"
+          "content": "26bb550c54196ae7157090d6e715c4b0ff2524e17d2587d0ef2e00ab14242d4fd1e448e581fb8cfa002693dffeeff93ccc1100d7336864bfe2ba1c039dc885be"
         },
         {
           "alg": "SHA-384",
-          "content": "ff0411428f43183303a57b4c3efa5d14b3d53f2597e120ac7862a0cb18cf04a0857453374c230f0580aa6d039a54746e"
+          "content": "17000cb0e60893fd3000d3ec32445bd7f79281a53601e02e70c1729120a04e84a86bbfb70656c9548f19c605efac479d"
         },
         {
           "alg": "SHA3-384",
-          "content": "f0cc3a2159a7269d69e259268c09dbe31acdb08b72544943e248b54899436965f3c61e206d48650c083f15bc3e79fdff"
+          "content": "8a320ece1b7787a159d8e08e30d7110b0aad179d8dc2a5a834ca2a6f59bd8f37345e007473d4754a17a5e63d835f5f29"
         },
         {
           "alg": "SHA3-256",
-          "content": "0c9c1b9ac8548975b62fe204afe99fbd11e92960050f7486ea020298643236d0"
+          "content": "b12aec562ebb3ba110a2911ca99e42344e35b553775a42525b54247805866c89"
         },
         {
           "alg": "SHA3-512",
-          "content": "9b2f13d0c875b59ee18b19adf2a9a313d62023ed05930adfbb07b6cbc36f94cfbd974210f2a8ae0375e234a8e7eec4ef4bbf5bbdc1593cc24d8db47c2acaf833"
+          "content": "b4f91eebad25def63fae7f1c1cb8346e483f196319a02b5884c381d11101a833f82ba5283969ea478b5a13ef30c09669f34701775b9d2ac851ee5f9842b29e87"
         }
       ],
       "licenses": [
@@ -15723,7 +15723,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.4.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.5.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -19574,7 +19574,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "8854287d-0d6d-4c63-bfa5-288aff4e3b5c",
+      "bom-ref": "8739af70-d20a-430a-a875-c60e18a97845",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24830,7 +24830,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ce85684a-20ac-4757-af53-045f000b5e4b",
+      "bom-ref": "ea157a2e-b812-4416-ad0f-f521d6cec5e7",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26011,7 +26011,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar",
+        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.5.Final?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar"
       ]
     },
@@ -26029,7 +26029,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.5.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
@@ -26037,7 +26037,7 @@
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/io.smallrye/jandex@3.4.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.4.Final?type=jar",
+        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.5.Final?type=jar",
         "pkg:maven/org.reactivestreams/reactive-streams@1.0.4?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/org.eclipse.angus/angus-activation@2.0.3?type=jar",
@@ -26053,7 +26053,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.4.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.5.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
@@ -27221,7 +27221,7 @@
       "ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.2.0-SNAPSHOT?type=war",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.2.0-SNAPSHOT?type=war",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.4.Final?type=jar"
+        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.5.Final?type=jar"
       ]
     },
     {
@@ -27268,7 +27268,7 @@
       "dependsOn": []
     },
     {
-      "ref": "8854287d-0d6d-4c63-bfa5-288aff4e3b5c",
+      "ref": "8739af70-d20a-430a-a875-c60e18a97845",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.0",
@@ -27318,9 +27318,9 @@
       ]
     },
     {
-      "ref": "ce85684a-20ac-4757-af53-045f000b5e4b",
+      "ref": "ea157a2e-b812-4416-ad0f-f521d6cec5e7",
       "dependsOn": [
-        "8854287d-0d6d-4c63-bfa5-288aff4e3b5c"
+        "8739af70-d20a-430a-a875-c60e18a97845"
       ]
     },
     {

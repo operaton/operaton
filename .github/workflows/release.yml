@@ -238,14 +238,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Wait for upstream caches to become available
-        # actions/cache writes can lag slightly before they are visible to a
-        # dependent job that starts immediately afterwards (observed as a
-        # spurious "Failed to restore cache entry" on the very next job even
-        # though the save step reported success). A short wait avoids racing
-        # the cache backend's indexing.
-        run: sleep 30
-
       - name: Restore build artifacts cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -338,11 +330,13 @@ jobs:
           DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
           NEEDS_RELEASE_BUILD_OUTPUTS_VERSION: ${{ needs.release_build.outputs.version}}
         run: |
+          PAYLOAD=$(jq -n --arg version "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION" \
+            '{ref: "main", inputs: {version: $version, snapshot: "false"}}')
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"ref":"main","inputs":{"version": "${NEEDS_RELEASE_BUILD_OUTPUTS_VERSION}","snapshot": "false"}}' \
+            -d "$PAYLOAD" \
             https://api.github.com/repos/operaton/operaton-docker/actions/workflows/build-test-and-publish.yml/dispatches)
           if [ "$response" -ne 204 ]; then
             echo "Failed to notify Docker repository. HTTP response code: $response"

@@ -50,6 +50,7 @@ import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.commons.utils.CollectionUtil;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.JOB_HANDLER_CONFIG_PROPERTY_DELIMITER;
 import static org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.JOB_HANDLER_CONFIG_PROPERTY_FOLLOW_UP_JOB_CREATED;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -386,7 +387,8 @@ public class JobManager extends AbstractManager {
 
   public long findJobCountByQueryCriteria(JobQueryImpl jobQuery) {
     configureQuery(jobQuery);
-    return (Long) getDbEntityManager().selectOne("selectJobCountByQueryCriteria", jobQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectJobCountByQueryCriteria", jobQuery);
+    return requireNonNull(count);
   }
 
   public void updateJobSuspensionStateById(String jobId, SuspensionState suspensionState) {

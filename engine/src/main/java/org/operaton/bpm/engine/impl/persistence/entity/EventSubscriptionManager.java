@@ -35,6 +35,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.commons.utils.EnsureUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  */
@@ -81,7 +83,8 @@ public class EventSubscriptionManager extends AbstractManager {
 
   public long findEventSubscriptionCountByQueryCriteria(EventSubscriptionQueryImpl eventSubscriptionQueryImpl) {
     configureQuery(eventSubscriptionQueryImpl);
-    return (Long) getDbEntityManager().selectOne("selectEventSubscriptionCountByQueryCriteria", eventSubscriptionQueryImpl);
+    Long count = (Long) getDbEntityManager().selectOne("selectEventSubscriptionCountByQueryCriteria", eventSubscriptionQueryImpl);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

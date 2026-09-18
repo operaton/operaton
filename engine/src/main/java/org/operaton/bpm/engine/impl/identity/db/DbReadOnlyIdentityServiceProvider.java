@@ -75,7 +75,8 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   public long findUserCountByQueryCriteria(DbUserQueryImpl query) {
     configureQuery(query, Resources.USER);
-    return (Long) getDbEntityManager().selectOne("selectUserCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectUserCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   public List<User> findUserByQueryCriteria(DbUserQueryImpl query) {
@@ -88,7 +89,8 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   }
 
   public long findUserCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectUserCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectUserCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   @Override
@@ -126,7 +128,8 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   public long findGroupCountByQueryCriteria(DbGroupQueryImpl query) {
     configureQuery(query, Resources.GROUP);
-    return (Long) getDbEntityManager().selectOne("selectGroupCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectGroupCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   public List<Group> findGroupByQueryCriteria(DbGroupQueryImpl query) {
@@ -155,7 +158,8 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   public long findTenantCountByQueryCriteria(DbTenantQueryImpl query) {
     configureQuery(query, Resources.TENANT);
-    return (Long) getDbEntityManager().selectOne("selectTenantCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectTenantCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   public List<Tenant> findTenantByQueryCriteria(DbTenantQueryImpl query) {

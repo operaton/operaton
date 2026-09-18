@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.authorization.Resources;
 
 import org.jspecify.annotations.Nullable;
@@ -41,13 +42,15 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 
+import static java.util.Objects.requireNonNull;
+
 
 /**
  * @author Tom Baeyens
  * @author Deivarayan Azhagappan
  * @author Christopher Zell
  */
-public class DeploymentManager extends AbstractManager {
+public @NullMarked class DeploymentManager extends AbstractManager {
 
   public void insertDeployment(DeploymentEntity deployment) {
     getDbEntityManager().insert(deployment);
@@ -239,7 +242,7 @@ public class DeploymentManager extends AbstractManager {
     return null;
   }
 
-  public DeploymentEntity findDeploymentById(String deploymentId) {
+  public @Nullable DeploymentEntity findDeploymentById(String deploymentId) {
     return getDbEntityManager().selectById(DeploymentEntity.class, deploymentId);
   }
 
@@ -250,7 +253,8 @@ public class DeploymentManager extends AbstractManager {
 
   public long findDeploymentCountByQueryCriteria(DeploymentQueryImpl deploymentQuery) {
     configureQuery(deploymentQuery);
-    return (Long) getDbEntityManager().selectOne("selectDeploymentCountByQueryCriteria", deploymentQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectDeploymentCountByQueryCriteria", deploymentQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

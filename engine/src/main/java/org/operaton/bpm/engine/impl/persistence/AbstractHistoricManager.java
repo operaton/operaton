@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -31,7 +33,7 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 /**
  * @author Tom Baeyens
  */
-public class AbstractHistoricManager extends AbstractManager {
+public @NullMarked class AbstractHistoricManager extends AbstractManager {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -54,11 +56,11 @@ public class AbstractHistoricManager extends AbstractManager {
     return isHistoryLevelFullEnabled;
   }
 
-  protected static boolean isPerformUpdate(Set<String> entities, Class<?> entityClass) {
+  protected static boolean isPerformUpdate(@Nullable Set<String> entities, Class<?> entityClass) {
     return entities == null || entities.isEmpty() || entities.contains(entityClass.getName());
   }
 
-  protected static boolean isPerformUpdateOnly(Set<String> entities, Class<?> entityClass) {
+  protected static boolean isPerformUpdateOnly(@Nullable Set<String> entities, Class<?> entityClass) {
     return entities != null && entities.size() == 1 && entities.contains(entityClass.getName());
   }
 

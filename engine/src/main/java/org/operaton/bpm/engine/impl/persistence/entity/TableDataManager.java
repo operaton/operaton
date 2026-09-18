@@ -67,6 +67,8 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 
+import static java.util.Objects.requireNonNull;
+
 
 /**
  * @author Tom Baeyens
@@ -201,8 +203,9 @@ public class TableDataManager extends AbstractManager {
 
   protected long getTableCount(String tableName) {
     LOG.selectTableCountForTable(tableName);
-    return (Long) getDbEntityManager().selectOne("selectTableCount",
+    Long count = (Long) getDbEntityManager().selectOne("selectTableCount",
             Collections.singletonMap("tableName", tableName));
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

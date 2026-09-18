@@ -77,7 +77,6 @@ public class NeoClientConfigResolver {
       authMode,
       NeoWebappProperty.AUTH_MODE_OAUTH2.equals(authMode) ? resolveOAuth(contextPath) : null,
       neo.getPluginsUrl().isEmpty() ? null : neo.getPluginsUrl(),
-      neo.isHideReleaseWarning(),
       resolveUser(principal));
   }
 

@@ -87,12 +87,12 @@ describe("config", () => {
       serve({
         authMode: "oauth",
         oauth: { flow: "pkce", authority: "https://idp.example.com" },
-        hideReleaseWarning: "true",
+        remotePluginsEnabled: "true",
       });
       const config = await load_config();
 
       expect(config.auth_mode).toBe("oauth2");
-      expect(config.hide_release_warning).toBe(true);
+      expect(config.remote_plugins_enabled).toBe(true);
     });
   });
 

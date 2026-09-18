@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.jobexecutor.beans;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
 public class SampleTaskListenerBean implements TaskListener {
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     delegateTask.setVariable("called", true);
   }
 

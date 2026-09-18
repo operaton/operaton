@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.variable.listener;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.impl.delegate.DelegateInvocation;
  * @author Thorben Lindhauer
  *
  */
-public class CaseVariableListenerInvocation extends DelegateInvocation {
+public @NullMarked class CaseVariableListenerInvocation extends DelegateInvocation {
 
   protected CaseVariableListener variableListenerInstance;
   protected DelegateCaseVariableInstance variableInstance;
@@ -35,7 +37,7 @@ public class CaseVariableListenerInvocation extends DelegateInvocation {
   }
 
   public CaseVariableListenerInvocation(CaseVariableListener variableListenerInstance, DelegateCaseVariableInstance variableInstance,
-      BaseDelegateExecution contextExecution) {
+      @Nullable BaseDelegateExecution contextExecution) {
     super(contextExecution, null);
     this.variableListenerInstance = variableListenerInstance;
     this.variableInstance = variableInstance;

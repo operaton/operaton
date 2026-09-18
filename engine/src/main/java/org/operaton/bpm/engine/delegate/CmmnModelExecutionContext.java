@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  * @author Roman Smirnov
  *
  */
-public interface CmmnModelExecutionContext {
+public @NullMarked interface CmmnModelExecutionContext {
 
   /**
    * Returns the {@link CmmnModelInstance} for the currently executed Cmmn Model

@@ -35,6 +35,8 @@ import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  */
@@ -119,7 +121,8 @@ public class ExecutionManager extends AbstractManager {
 
   public long findExecutionCountByQueryCriteria(ExecutionQueryImpl executionQuery) {
     configureQuery(executionQuery);
-    return (Long) getDbEntityManager().selectOne("selectExecutionCountByQueryCriteria", executionQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectExecutionCountByQueryCriteria", executionQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -130,7 +133,8 @@ public class ExecutionManager extends AbstractManager {
 
   public long findProcessInstanceCountByQueryCriteria(ProcessInstanceQueryImpl processInstanceQuery) {
     configureQuery(processInstanceQuery);
-    return (Long) getDbEntityManager().selectOne("selectProcessInstanceCountByQueryCriteria", processInstanceQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectProcessInstanceCountByQueryCriteria", processInstanceQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -170,7 +174,8 @@ public class ExecutionManager extends AbstractManager {
   }
 
   public long findExecutionCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectExecutionCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectExecutionCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   public void updateExecutionSuspensionStateByProcessDefinitionId(String processDefinitionId, SuspensionState suspensionState) {

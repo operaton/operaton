@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.listener;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
  * @author Thorben Lindhauer
  *
  */
-public class VariableUpdateListener implements CaseVariableListener {
+public @NullMarked class VariableUpdateListener implements CaseVariableListener {
 
   @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {

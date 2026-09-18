@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.task.Event;
 /**
  * @author Tom Baeyens
  */
-public class CommentManager extends AbstractHistoricManager {
+public @NullMarked class CommentManager extends AbstractHistoricManager {
 
 
   @Override

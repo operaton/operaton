@@ -18,6 +18,7 @@ package org.operaton.bpm.integrationtest.functional.classloading.beans;
 
 import jakarta.inject.Named;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 public class ExampleCaseExecutionListener implements CaseExecutionListener {
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     caseExecution.setVariable("listener", "listener-notified");
   }
 

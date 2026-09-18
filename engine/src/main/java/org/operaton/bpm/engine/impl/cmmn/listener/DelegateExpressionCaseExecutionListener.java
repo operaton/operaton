@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.listener;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
@@ -43,7 +44,7 @@ public class DelegateExpressionCaseExecutionListener implements CaseExecutionLis
   }
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     // Note: we can't cache the result of the expression, because the
     // caseExecution can change: eg. delegateExpression='${mySpringBeanFactory.randomSpringBean()}'
     Object delegate = expression.getValue(caseExecution);

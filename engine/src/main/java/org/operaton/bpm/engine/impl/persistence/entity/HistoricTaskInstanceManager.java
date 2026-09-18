@@ -41,6 +41,7 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
@@ -101,7 +102,8 @@ public class HistoricTaskInstanceManager extends AbstractHistoricManager {
   public long findHistoricTaskInstanceCountByQueryCriteria(final HistoricTaskInstanceQueryImpl historicTaskInstanceQuery) {
     if (isHistoryEnabled()) {
       configureQuery(historicTaskInstanceQuery);
-      return (Long) getDbEntityManager().selectOne("selectHistoricTaskInstanceCountByQueryCriteria",historicTaskInstanceQuery);
+      Long count = (Long) getDbEntityManager().selectOne("selectHistoricTaskInstanceCountByQueryCriteria",historicTaskInstanceQuery);
+      return requireNonNull(count);
     }
 
     return 0;
@@ -168,7 +170,8 @@ public class HistoricTaskInstanceManager extends AbstractHistoricManager {
   }
 
   public long findHistoricTaskInstanceCountByNativeQuery(final Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectHistoricTaskInstanceCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricTaskInstanceCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   public void updateHistoricTaskInstance(final TaskEntity taskEntity) {

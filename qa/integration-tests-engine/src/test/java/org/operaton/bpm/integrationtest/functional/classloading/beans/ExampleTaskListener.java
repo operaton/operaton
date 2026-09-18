@@ -18,6 +18,7 @@ package org.operaton.bpm.integrationtest.functional.classloading.beans;
 
 import jakarta.inject.Named;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 public class ExampleTaskListener implements TaskListener {
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     delegateTask.setVariable("listener", "listener-notified");
   }
 

@@ -47,6 +47,7 @@ import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.persistence.entity.util.TypedValueField.getSerializers;
 
 /**
@@ -634,7 +635,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
       Context.executeWithinProcessApplication(() -> {
         getVariableScope().setVariableLocal(name, updatedValue);
         return null;
-      }, targetProcessApplication, new InvocationContext(getExecution()));
+      }, requireNonNull(targetProcessApplication), new InvocationContext(getExecution()));
 
     }
     else {

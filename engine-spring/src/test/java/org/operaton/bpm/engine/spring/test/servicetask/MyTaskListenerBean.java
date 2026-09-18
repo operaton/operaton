@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.test.servicetask;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.el.FixedValue;
@@ -31,7 +32,7 @@ public class MyTaskListenerBean implements TaskListener {
   private FixedValue someField;
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     delegateTask.getExecution().setVariable("taskListenerVar", "working");
     if (someField!=null) {
       delegateTask.getExecution().setVariable("taskListenerField", someField.getValue(delegateTask));

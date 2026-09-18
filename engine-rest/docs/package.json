@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "redoc": "2.5.4",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   },
   "overrides": {
     "fast-xml-parser": "^5.3.4"

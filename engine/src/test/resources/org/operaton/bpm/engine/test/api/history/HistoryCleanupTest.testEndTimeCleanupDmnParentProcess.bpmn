@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             targetNamespace="http://bpmn.io/schema/bpmn">
+  <process id="parentDMNProcess" name="Parent Process" isExecutable="true">
+    <startEvent id="startEvent" name="Start" />
+    <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="callActivity" />
+    <callActivity id="callActivity" name="Call Subprocess" calledElement="childDmnProcess" />
+    <sequenceFlow id="flow2" sourceRef="callActivity" targetRef="userTask" />
+    <userTask id="userTask" name="User Task" />
+    <sequenceFlow id="flow3" sourceRef="userTask" targetRef="endEvent" />
+    <endEvent id="endEvent" name="End" />
+  </process>
+</definitions>

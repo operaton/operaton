@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:modeler="http://camunda.org/schema/modeler/1.0"
+                  id="Definitions_10mpax3"
+                  targetNamespace="http://bpmn.io/schema/bpmn"
+                  exporter="Operaton Modeler"
+                  exporterVersion="5.28.0"
+                  modeler:executionPlatform="Operaton Platform"
+                  modeler:executionPlatformVersion="2.2.0">
+  <bpmn:process id="subProcess" isExecutable="true">
+    <bpmn:startEvent id="subStartEvent" />
+    <bpmn:userTask id="userTask" name="Approve Task" />
+    <bpmn:userTask id="additionalUserTask" name="Additional Task" />
+    <bpmn:endEvent id="subEndEvent" />
+    <bpmn:sequenceFlow id="flow1" sourceRef="subStartEvent" targetRef="userTask" />
+    <bpmn:sequenceFlow id="flow2" sourceRef="userTask" targetRef="additionalUserTask" />
+    <bpmn:sequenceFlow id="flow3" sourceRef="additionalUserTask" targetRef="subEndEvent" />
+  </bpmn:process>
+</bpmn:definitions>

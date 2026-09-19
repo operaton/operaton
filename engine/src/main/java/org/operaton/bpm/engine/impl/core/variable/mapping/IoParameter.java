@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.core.variable.mapping;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
+import org.operaton.bpm.engine.variable.Variables;
 
 /**
  * An {@link IoParameter} creates a variable
@@ -34,14 +35,21 @@ public abstract class IoParameter {
    */
   protected String name;
 
+  protected boolean isTransient;
+
   /**
    * The provider of the parameter value.
    */
   protected ParameterValueProvider valueProvider;
 
   protected IoParameter(String name, ParameterValueProvider valueProvider) {
+    this(name, valueProvider, false);
+  }
+
+  protected IoParameter(String name, ParameterValueProvider valueProvider, boolean isTransient) {
     this.name = name;
     this.valueProvider = valueProvider;
+    this.isTransient = isTransient;
   }
 
   /**
@@ -56,6 +64,10 @@ public abstract class IoParameter {
    * @param outerScope
    */
   protected abstract void execute(AbstractVariableScope innerScope, AbstractVariableScope outerScope);
+
+  protected Object getVariableValue(Object value) {
+    return isTransient ? Variables.untypedValue(value, true) : value;
+  }
 
   // getters / setters ///////////////////////////
 
@@ -73,6 +85,14 @@ public abstract class IoParameter {
 
   public void setValueProvider(ParameterValueProvider valueProvider) {
     this.valueProvider = valueProvider;
+  }
+
+  public boolean isTransient() {
+    return isTransient;
+  }
+
+  public void setTransient(boolean isTransient) {
+    this.isTransient = isTransient;
   }
 
 }

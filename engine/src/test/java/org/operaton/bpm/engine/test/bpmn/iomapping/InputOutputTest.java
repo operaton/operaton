@@ -36,6 +36,8 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.BpmnError;
+import org.operaton.bpm.engine.delegate.DelegateExecution;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
@@ -45,6 +47,8 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.variable.type.ValueType;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
@@ -276,6 +280,14 @@ class InputOutputTest {
     assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo(2);
     assertThat(variable.getExecutionId()).isEqualTo(execution.getId());
+  }
+
+  @Deployment
+  @Test
+  void testTransientInputParameter() {
+    runtimeService.startProcessInstanceByKey("testProcess");
+
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("var1").count()).isZero();
   }
 
   @Deployment
@@ -836,6 +848,14 @@ class InputOutputTest {
             .containsEntry("b", "tomato");
   }
 
+  @Deployment
+  @Test
+  void testTransientOutputParameter() {
+    runtimeService.startProcessInstanceByKey("testProcess");
+
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("var1").count()).isZero();
+  }
+
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testOutputMapElKey.bpmn")
   @Test
   void testOutputMapElUndefinedKey() {
@@ -1320,5 +1340,25 @@ class InputOutputTest {
     assertThat(variable).isNotNull();
     assertThat(variable.getValue()).isEqualTo("baroque");
     assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
+  }
+
+  public static class SetOutputParameterSourceDelegate implements JavaDelegate {
+
+    @Override
+    public void execute(DelegateExecution execution) {
+      execution.setVariableLocal("sourceVar", "stringValue");
+    }
+  }
+
+  public static class AssertTransientVariableDelegate implements JavaDelegate {
+
+    @Override
+    public void execute(DelegateExecution execution) {
+      TypedValue typedValue = execution.getVariableTyped("var1");
+      assertThat(typedValue).isNotNull();
+      assertThat(typedValue.getType()).isEqualTo(ValueType.STRING);
+      assertThat(typedValue.isTransient()).isTrue();
+      assertThat(typedValue.getValue()).isEqualTo("stringValue");
+    }
   }
 }

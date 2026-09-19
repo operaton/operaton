@@ -74,6 +74,22 @@ public class ProcessEngineConfigurationTest {
   }
 
   @Test
+  void shouldUseSpring53CronTypeByDefault() {
+    // when
+    ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+    // then
+    assertThat(engineCfg.getCronType()).isEqualTo("SPRING53");
+  }
+
+  @Test
+  void shouldEnableLegacyQuartzSyntaxByDefault() {
+    // when
+    ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+    // then
+    assertThat(engineCfg.isSupportLegacyQuartzSyntax()).isTrue();
+  }
+
+  @Test
   void validIsolationLevel() {
     // given
     ((PooledDataSource) engineConfiguration.getDataSource()).setDefaultTransactionIsolationLevel(Connection.TRANSACTION_READ_COMMITTED);

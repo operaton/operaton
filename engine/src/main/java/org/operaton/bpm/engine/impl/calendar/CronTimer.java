@@ -28,10 +28,15 @@ import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.model.time.ExecutionTime;
 import com.cronutils.parser.CronParser;
 
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
+
 /**
  * A cron timer implementation that uses cronutils library for parsing and evaluation.
  */
 public class CronTimer {
+
+  private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   protected final Cron cron;
 
@@ -50,13 +55,60 @@ public class CronTimer {
   }
 
   public static CronTimer parse(final String text) throws ParseException {
+    return parse(text, CronType.SPRING53, true);
+  }
+
+  public static CronTimer parse(
+      final String text,
+      final CronType cronType,
+      final boolean supportLegacyQuartzSyntax) throws ParseException {
     try {
+      String expression = text;
+      if (cronType == CronType.QUARTZ && supportLegacyQuartzSyntax) {
+        String patchedExpression = patchLegacyCronExpression(expression);
+        if (!expression.equals(patchedExpression)) {
+          LOG.warnLegacyCronExpressionPatched(expression, patchedExpression);
+        }
+        expression = patchedExpression;
+      }
+
       final var cron =
-        new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.SPRING53))
-          .parse(text);
+        new CronParser(CronDefinitionBuilder.instanceDefinitionFor(cronType))
+          .parse(expression);
       return new CronTimer(cron);
     } catch (final IllegalArgumentException | NullPointerException ex) {
       throw new ParseException(ex.getMessage(), 0);
     }
+  }
+
+  private static String patchLegacyCronExpression(final String expression) {
+    final String[] parts = expression.split("\\s+");
+    if (parts.length < 6) {
+      return expression;
+    }
+
+    final String dayOfMonth = parts[3];
+    final String dayOfWeek = parts[5];
+
+    boolean dayOfMonthSet = !"?".equals(dayOfMonth) && !"*".equals(dayOfMonth);
+    boolean dayOfWeekSet = !"?".equals(dayOfWeek) && !"*".equals(dayOfWeek);
+
+    if (dayOfMonthSet && dayOfWeekSet) {
+      if (dayOfMonth.contains("W")) {
+        parts[5] = "?";
+      } else {
+        parts[3] = "?";
+      }
+    } else if ("*".equals(dayOfMonth) && dayOfWeekSet) {
+      parts[3] = "?";
+    } else if ("*".equals(dayOfWeek) && dayOfMonthSet) {
+      parts[5] = "?";
+    } else if ("*".equals(dayOfMonth) && "*".equals(dayOfWeek)) {
+      parts[5] = "?";
+    } else if ("?".equals(dayOfMonth) && "?".equals(dayOfWeek)) {
+      parts[3] = "*";
+    }
+
+    return String.join(" ", parts);
   }
 }

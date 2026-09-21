@@ -23,7 +23,6 @@ operaton.bpm:
       # URL of the runtime plugin manifest. Empty means /plugins/plugins.json on
       # the application's own origin.
       plugins-url: ${OPERATON_BPM_RUN_WEBAPPS_NEO_PLUGINS_URL:}
-      hide-release-warning: ${OPERATON_BPM_RUN_WEBAPPS_NEO_HIDE_RELEASE_WARNING:false}
     csrf:
       # The CSRF filter always validates a synchroniser token. It can additionally check
       # that the Origin/Referer of a modifying request matches this deployment, but only

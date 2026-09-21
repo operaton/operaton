@@ -37,7 +37,6 @@ public record NeoClientConfig(
     String authMode,
     OAuth oauth,
     String pluginsUrl,
-    boolean hideReleaseWarning,
     User user) {
 
   /**

@@ -54,11 +54,7 @@
     "skip-to-content": "Skip to content",
     "go-to": "Go To",
     "server": "Server",
-    "choose-server": "Choose a server",
-    "release-warning": "Public Alpha Release – Untested and not ready for production – Share your feedback with an",
-    "release-warning-issue": "issue",
-    "release-warning-or": "or in the",
-    "release-warning-forum": "forum"
+    "choose-server": "Choose a server"
   },
   "goto": {
     "title": "Go To",

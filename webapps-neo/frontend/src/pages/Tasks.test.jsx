@@ -1384,6 +1384,24 @@ describe("TasksPage", () => {
       expect(engine_rest.task.update_task.mock.lastCall[2]).toBe("t1");
     });
 
+    it("re-reads the list after a due date change, so its column catches up", async () => {
+      signal_response(state.api.task.one, sample_task());
+      engine_rest.task.update_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { getByText } = renderDetail();
+      fireEvent.click(getByText("tasks.due-date.label").closest("button"));
+      engine_rest.task.get_tasks.mockClear();
+      fireEvent.submit(
+        getByText("tasks.due-date.title")
+          .closest("dialog")
+          .querySelector("form"),
+      );
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_tasks).toHaveBeenCalled(),
+      );
+    });
+
     it("leaves the form read-only until the task is held by the signed-in user", () => {
       state.auth.user.id.value = "alice";
       signal_response(state.api.task.one, sample_task({ assignee: null }));

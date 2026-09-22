@@ -542,6 +542,56 @@ describe("TasksPage", () => {
       ]);
     });
 
+    it("downloads an attachment under its own name, without a new tab", () => {
+      mockParams = { task_id: "t1", tab: "attachments" };
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.task.attachment.list, [
+        { id: "a1", name: "Rechnung.pdf", description: "" },
+      ]);
+      const { getByText } = renderPage(state);
+
+      const link = getByText("Rechnung.pdf").closest("a");
+      // The download attribute carries the name so the extension survives; a
+      // target would send it to a new tab and lose the extension.
+      expect(link.getAttribute("download")).toBe("Rechnung.pdf");
+      expect(link.getAttribute("target")).toBeNull();
+    });
+
+    it("saves the download under the attachment name, keeping the extension", async () => {
+      mockParams = { task_id: "t1", tab: "attachments" };
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.task.attachment.list, [
+        { id: "a1", name: "Rechnung.pdf", description: "" },
+      ]);
+
+      // Clicking fetches the bytes and downloads them from a blob, so the name
+      // is ours to set — immune to the server's headers. The programmatic
+      // blob link is the only one whose .click() method is invoked.
+      engine_rest.task.attachment_url.mockReturnValue(
+        "/api/engine/engine/default/task/t1/attachment/a1/data",
+      );
+      const fetch_spy = vi
+        .spyOn(globalThis, "fetch")
+        .mockResolvedValue({ ok: true, blob: async () => new Blob(["x"]) });
+      vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:x");
+      vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
+      let saved_as;
+      vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(
+        function () {
+          saved_as = this.download;
+        },
+      );
+
+      const { getByText } = renderPage(state);
+      fireEvent.click(getByText("Rechnung.pdf").closest("a"));
+
+      await vi.waitFor(() => expect(saved_as).toBe("Rechnung.pdf"));
+      expect(fetch_spy.mock.lastCall[0]).toContain(
+        "/task/t1/attachment/a1/data",
+      );
+      vi.restoreAllMocks();
+    });
+
     it("fetches + renders the BPMN diagram on the diagram tab", () => {
       mockParams = { task_id: "t1", tab: "diagram" };
       signal_response(state.api.task.one, sample_task());

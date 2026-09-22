@@ -861,7 +861,7 @@ const TaskTabs = () => {
 
 const SetDueDateButton = () => {
   const state = useContext(AppState),
-    { params } = useRoute(),
+    { params, query } = useRoute(),
     [t] = useTranslation(),
     {
       api: {
@@ -875,12 +875,17 @@ const SetDueDateButton = () => {
       : null,
     date_state = useSignal(toLocalParts(due_date ?? new Date())),
     // Close only once the engine has taken it; a rejected change must stay on
-    // screen, with what was typed still in the fields.
+    // screen, with what was typed still in the fields. The list shows the due
+    // date in its own column, so re-read it too — otherwise it lags until the
+    // next reload.
     save = (value) =>
       Promise.resolve(
         engine_rest.task.update_task(state, { due: value }, params.task_id),
       ).then((result) => {
-        if (result?.status === RESPONSE_STATE.SUCCESS) close();
+        if (result?.status === RESPONSE_STATE.SUCCESS) {
+          reload_tasks(state, query);
+          close();
+        }
       }),
     submit = (event) => {
       event.preventDefault();
@@ -953,7 +958,7 @@ const SetDueDateButton = () => {
 
 const SetFollowUpDateButton = () => {
   const state = useContext(AppState),
-    { params } = useRoute(),
+    { params, query } = useRoute(),
     [t] = useTranslation(),
     {
       api: {
@@ -967,7 +972,8 @@ const SetFollowUpDateButton = () => {
       : null,
     date_state = useSignal(toLocalParts(followUpDate ?? new Date())),
     // Close only once the engine has taken it; a rejected change must stay on
-    // screen, with what was typed still in the fields.
+    // screen, with what was typed still in the fields. The list has its own
+    // follow-up column, so re-read it too — otherwise it lags until reload.
     save = (value) =>
       Promise.resolve(
         engine_rest.task.update_task(
@@ -976,7 +982,10 @@ const SetFollowUpDateButton = () => {
           params.task_id,
         ),
       ).then((result) => {
-        if (result?.status === RESPONSE_STATE.SUCCESS) close();
+        if (result?.status === RESPONSE_STATE.SUCCESS) {
+          reload_tasks(state, query);
+          close();
+        }
       }),
     submit = (event) => {
       event.preventDefault();

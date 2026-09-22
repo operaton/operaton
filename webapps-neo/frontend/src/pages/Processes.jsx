@@ -664,7 +664,13 @@ const ProcessDefinitionSelection = () => {
     { query } = useRoute(),
     { route } = useLocation(),
     selected = useSignal(new Set()),
-    bulk_running = useSignal(false);
+    bulk_running = useSignal(false),
+    // Suspending is not one decision but three: what, whether the instances go
+    // with it, and when. The dialog asks before anything is sent. Declared with
+    // the other hooks, before any early return, so the hook order is stable.
+    suspension_open = useSignal(false),
+    suspend_next = useSignal(true),
+    bulk_error = useSignal(null);
 
   const parsed = parse_list_query(query);
   const has_criteria = Object.keys(parsed.criteria).length > 0;
@@ -702,12 +708,6 @@ const ProcessDefinitionSelection = () => {
     }
   };
   const all_selected = rows.length > 0 && selected.value.size === rows.length;
-
-  // Suspending is not one decision but three: what, whether the instances go
-  // with it, and when. The dialog asks before anything is sent.
-  const suspension_open = useSignal(false),
-    suspend_next = useSignal(true),
-    bulk_error = useSignal(null);
 
   const run_bulk = async (op, options) => {
     if (selected.value.size === 0 || bulk_running.value) return;

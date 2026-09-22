@@ -20,7 +20,7 @@ import {
   write_list_query,
   keep_list_query,
 } from "../helper/list_query.js";
-import { resolve_user } from "../api/helper.jsx";
+import { resolve_user, set_request_headers } from "../api/helper.jsx";
 import { format_variable_value } from "../helper/variables.js";
 import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
@@ -1947,6 +1947,27 @@ const AttachmentsTab = () => {
     load();
   };
 
+  // The engine serves the file as application/octet-stream with no
+  // Content-Disposition, and the webapp layer may add one of its own, so a
+  // plain <a download> is not enough to guarantee the extension. Fetch the
+  // bytes and download them from a blob URL, where the download name is
+  // authoritative — the file keeps its name and extension.
+  const download = async (a) => {
+    const headers = new Headers();
+    set_request_headers(headers, state);
+    const response = await fetch(
+      engine_rest.task.attachment_url(state, params.task_id, a.id),
+      { headers, credentials: "include" },
+    );
+    if (!response.ok) return;
+    const url = URL.createObjectURL(await response.blob()),
+      link = document.createElement("a");
+    link.href = url;
+    link.download = a.name ?? a.id;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   const delete_open = useSignal(false),
     pending_delete = useSignal(null),
     ask_remove = (attachment) => {
@@ -1975,6 +1996,11 @@ const AttachmentsTab = () => {
                 {rows.map((a) => (
                   <tr key={a.id}>
                     <td>
+                      {/* The href is a real link (right-click, middle-click,
+                          and a fallback if the click handler fails), but the
+                          click downloads via a blob so the filename — and its
+                          extension — is guaranteed regardless of the server's
+                          headers. */}
                       <a
                         href={engine_rest.task.attachment_url(
                           state,
@@ -1982,8 +2008,10 @@ const AttachmentsTab = () => {
                           a.id,
                         )}
                         download={a.name ?? undefined}
-                        target="_blank"
-                        rel="noreferrer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          void download(a);
+                        }}
                       >
                         <Icons.link_out /> {a.name ?? a.id}
                       </a>

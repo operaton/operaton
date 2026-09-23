@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:b6fe18de-121a-44c9-a38c-13d89282f658",
+  "serialNumber": "urn:uuid:bcd756b8-0a20-4764-a689-41514c5f7019",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-23T13:40:41Z",
+    "timestamp": "2026-09-23T13:47:07Z",
     "tools": {
       "components": [
         {
@@ -249,45 +249,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar",
+      "bom-ref": "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
       "publisher": "QOS.ch",
       "group": "org.slf4j",
       "name": "slf4j-api",
-      "version": "2.0.19",
+      "version": "2.0.20",
       "description": "The slf4j API",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "1ca3a2acac3d5947b37d9b5536c55829"
+          "content": "a7a6798aa78b29152479f89565f57446"
         },
         {
           "alg": "SHA-1",
-          "content": "efad9817997b3a6ce9e058f92e612917a744c290"
+          "content": "7fea9d92ba67e9b3c8f03515fb202b86a1fe44f6"
         },
         {
           "alg": "SHA-256",
-          "content": "e91ff6d720609e7a194ffe758c3ed5c84e798617ae07b0a0f6a4fe229741b4bb"
+          "content": "7e1446499b359675d8aabe6af2de86b85e72ae8a2a932c0b40d0e5ba57097439"
         },
         {
           "alg": "SHA-512",
-          "content": "627253cf27192750fd5ff84622526ac04f6848829adccd807d485a971bb74e83e47539214a054b8c129f3608cbc6450f2076000ab075b44a1b2dc7b74f592857"
+          "content": "6abf6218c2558a0059f35cecc24db3ef1552dbccdfb8f32d6c9d1d8b11fd545405e04e79673219d19e17b99ca6a2a3da7d92006bcaedaa15646bf07737115d17"
         },
         {
           "alg": "SHA-384",
-          "content": "ae23be04ee2e1c1315184c533190d44acb5f01d9a812dda81c928667401ad8e166e780f451d027a89b2d2dce94c61d02"
+          "content": "26e4fcbbda8d1037d722e04af82efacf58e28ab93b002921eadb426387c61031d80c9574f45f6a42b423b550424b9323"
         },
         {
           "alg": "SHA3-384",
-          "content": "03745b6475e8b9d85e0074ce0e0e6f94f3fead8eeaae857278a91f236b349dbfa5a0c1df3a6cdeea63d0d16a947ac5df"
+          "content": "2fbe14046e3b0ffc759d8fd91cccd6913174de77085e294a10375fc453427c040b4a0b4c3d003cc1cee8263013513f31"
         },
         {
           "alg": "SHA3-256",
-          "content": "dfb417ec7e1febf8cdc4ac8b3eb495fe709caf163a98db0af9385b3ece464688"
+          "content": "3514a97b9dbec95fe329f277628bc4b2c542c5ec33727aa781d590d5dcfad3d9"
         },
         {
           "alg": "SHA3-512",
-          "content": "2225edddf8aac803c27b39872250dadc394da3facd2520fe50b50db86a3f0a571987291fd3d646ccb9a178890dbfdd385f1139e47e62ce0052f6834b448c2194"
+          "content": "0dcb60d4abbe2b2474585b0512d3c83c993e79872dfb49ae1880468cb875898e1eeb71d05e7537ad057f8ca666007aa85c0f51d4e272432cd30e320c0710908e"
         }
       ],
       "licenses": [
@@ -298,7 +298,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar",
+      "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
       "externalReferences": [
         {
           "url": "http://www.slf4j.org",
@@ -7648,45 +7648,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.19?type=jar",
+      "bom-ref": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.20?type=jar",
       "publisher": "QOS.ch",
       "group": "org.slf4j",
       "name": "jcl-over-slf4j",
-      "version": "2.0.19",
+      "version": "2.0.20",
       "description": "JCL 1.2 implemented over SLF4J",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "652eb51745f135efc59dc1e2962e4d0b"
+          "content": "4a2f67a3feba29618916f8ccbd3dab18"
         },
         {
           "alg": "SHA-1",
-          "content": "8143d2f5d5e1896b1eca3af7e4febefded52b89c"
+          "content": "7cb2437e20d244474b1c5a50747e4b376e9a2daf"
         },
         {
           "alg": "SHA-256",
-          "content": "efc3848f79638d9fa74ccbae3fd18c8735dcc0127b393ae53dce638827f8a2f3"
+          "content": "32f95628a4baa60ea8a5b052c8cb6e51d07b0fee3e6092414070874f69daf710"
         },
         {
           "alg": "SHA-512",
-          "content": "4df47adc635233f0e0a6d2df6350140c181b65de9c820197da15c92306f685e37cacb37baea77df72c814e6dde17072f1faf0b0cd0e8d6080abdea40098f2813"
+          "content": "db6cc4c11967e80d7392173f13cb1cc10874cc493f3357e7a01867cb927510e1ee7b11f5621e2874fc0e38c3afb0af21dd75a0fdb57ac7c660bdd4107e5ae296"
         },
         {
           "alg": "SHA-384",
-          "content": "ab9e170c008786d45316ca83053231e1c423943d4255f7d7a6c45faf1ddf85d5f350979d03106126709f04b56ebf2717"
+          "content": "a7498a4a9561300327ef159f237ceb31698b5396d35829e454455718d84f72c9fd1b9c6cfcdc6d5573727d6d83219cd6"
         },
         {
           "alg": "SHA3-384",
-          "content": "63b3f0ac51cb3e8be5afad11ab393b8e3b81871fcb679a7452477cf37b6ff456efb672829c4b8c4c3cf0c83578ede521"
+          "content": "ccbfcdfd999e04a0bcf9830e427e9f8ad5a26bdef078044bc4ed15ceebbf51caaa218c4e4a1ed60200bcebb227a6e988"
         },
         {
           "alg": "SHA3-256",
-          "content": "19b99a93cb711fc9f00640568c9dd77549842980f8c82b556f37d0bfacdb8052"
+          "content": "7866d4950ad2d335c7804390ade70c2143befbcb67e21c29d60c0fdefe5a8685"
         },
         {
           "alg": "SHA3-512",
-          "content": "75db8d6be4de2560c74e7b336ce31b66d767a47afa7b0ff54a731b546b4df139f6e08ce39ddc3f23f99ff3ef53bd4b1d9e2f7773967253a8c800f8dbbb549157"
+          "content": "961c4df212cae468bd02cd134dfdf1fb8a7e5a2efac6fef45a535a753988e08f547cdd34ec13da1913118994f354a73005810ae602d58f033d191ee3921835f6"
         }
       ],
       "licenses": [
@@ -7697,7 +7697,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.19?type=jar",
+      "purl": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.20?type=jar",
       "externalReferences": [
         {
           "url": "http://www.slf4j.org",
@@ -31161,7 +31161,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "66ca9730-8e3f-453e-9263-ba31f8b9f17f",
+      "bom-ref": "f211ad50-8a71-4cc7-a44d-c8503b7c4fea",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36417,7 +36417,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "6468bbb3-8a16-44eb-acda-af203d40b471",
+      "bom-ref": "93c3a795-2823-4ac1-b32a-25c944ba734f",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36469,7 +36469,7 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -36477,7 +36477,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar",
+      "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
       "dependsOn": []
     },
     {
@@ -36663,7 +36663,7 @@
       "dependsOn": [
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar",
         "pkg:maven/com.lihaoyi/fastparse_2.13@3.1.1?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.module/jackson-module-scala_2.13@2.21.6?type=jar"
       ]
@@ -36695,7 +36695,7 @@
     {
       "ref": "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -36765,7 +36765,7 @@
     {
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.6.3?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
@@ -36774,7 +36774,7 @@
       "ref": "pkg:maven/ch.qos.logback/logback-classic@1.6.3?type=jar",
       "dependsOn": [
         "pkg:maven/ch.qos.logback/logback-core@1.6.3?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -36816,7 +36816,7 @@
     {
       "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
         "pkg:maven/org.rnorth.duct-tape/duct-tape@1.0.8?type=jar",
         "pkg:maven/com.github.docker-java/docker-java-api@3.7.1?type=jar",
@@ -36857,14 +36857,14 @@
       "ref": "pkg:maven/com.github.docker-java/docker-java-api@3.7.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.7.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.github.docker-java/docker-java-transport@3.7.1?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37151,7 +37151,7 @@
     {
       "ref": "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37366,7 +37366,7 @@
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37432,7 +37432,7 @@
       "ref": "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
       "dependsOn": [
         "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37828,13 +37828,13 @@
         "pkg:maven/org.apache.maven.resolver/maven-resolver-api@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-spi@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-util@1.9.27?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.apache.maven.resolver/maven-resolver-named-locks@1.9.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37844,7 +37844,7 @@
         "pkg:maven/org.apache.maven.resolver/maven-resolver-spi@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-named-locks@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-util@1.9.27?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37852,7 +37852,7 @@
       "dependsOn": [
         "pkg:maven/org.apache.maven.resolver/maven-resolver-api@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-spi@1.9.27?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37865,8 +37865,8 @@
         "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
         "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
-        "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.19?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.20?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37882,9 +37882,9 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.19?type=jar",
+      "ref": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.20?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -37899,7 +37899,7 @@
         "pkg:maven/org.apache.maven.resolver/maven-resolver-transport-http@1.9.27?type=jar",
         "pkg:maven/org.apache.maven/maven-resolver-provider@3.9.16?type=jar",
         "pkg:maven/org.apache.maven/maven-model-builder@3.9.16?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -38054,14 +38054,14 @@
       "ref": "pkg:maven/org.codehaus.plexus/plexus-compiler-javac@2.16.2?type=jar",
       "dependsOn": [
         "pkg:maven/javax.inject/javax.inject@1?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
         "pkg:maven/org.codehaus.plexus/plexus-compiler-api@2.16.2?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.codehaus.plexus/plexus-compiler-api@2.16.2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -38083,7 +38083,7 @@
     {
       "ref": "pkg:maven/org.apache.maven.shared/maven-shared-utils@3.4.2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar"
       ]
     },
@@ -38482,7 +38482,7 @@
         "pkg:maven/com.ethlo.time/itu@1.14.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.6?type=jar",
         "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.6?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -39456,7 +39456,7 @@
     {
       "ref": "pkg:maven/org.apache.sshd/sshd-common@2.19.0?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -39586,7 +39586,7 @@
       "ref": "pkg:maven/org.apache.sshd/sshd-core@2.19.0?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.sshd/sshd-common@2.19.0?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.19?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
@@ -40147,13 +40147,13 @@
       "dependsOn": []
     },
     {
-      "ref": "6468bbb3-8a16-44eb-acda-af203d40b471",
+      "ref": "93c3a795-2823-4ac1-b32a-25c944ba734f",
       "dependsOn": [
-        "66ca9730-8e3f-453e-9263-ba31f8b9f17f"
+        "f211ad50-8a71-4cc7-a44d-c8503b7c4fea"
       ]
     },
     {
-      "ref": "66ca9730-8e3f-453e-9263-ba31f8b9f17f",
+      "ref": "f211ad50-8a71-4cc7-a44d-c8503b7c4fea",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.0",

@@ -89,7 +89,7 @@
     "lightningcss": "^1.33.0",
     "mini-css-extract-plugin": "2.10.2",
     "postcss-loader": "8.2.1",
-    "prettier": "3.9.6",
+    "prettier": "3.9.8",
     "raw-loader": "4.0.2",
     "sass": "1.104.1",
     "sass-loader": "16.0.8",

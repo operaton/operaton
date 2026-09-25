@@ -52,6 +52,11 @@
       "externalDocs": {"description": "Find out more", "url": "${docsUrl}/reference/rest/condition/"}
     },
     {
+      "name": "Configuration",
+      "description": "Exposes selected process engine configuration values such as the engine name, history level, authorization mode, and password policy flag.",
+      "externalDocs": {"description": "Find out more", "url": "${docsUrl}/reference/rest/configuration/"}
+    },
+    {
       "name": "Decision Definition",
       "description": "Represents a deployed DMN decision table or decision literal expression. Endpoints support listing, retrieving, evaluating, and querying the XML source of decision definitions. Decision definitions are created by deploying DMN resources.",
       "externalDocs": {"description": "Find out more", "url": "${docsUrl}/reference/rest/decision-definition/"}

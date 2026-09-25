@@ -183,6 +183,11 @@ public class DefaultProcessEngineRestServiceImpl extends AbstractProcessEngineRe
     return super.getVersionRestService(null);
   }
 
+  @Path(ConfigurationRestService.PATH)
+  public ConfigurationRestService getConfigurationRestService() {
+    return super.getConfigurationRestService(null);
+  }
+
   @Path(SchemaLogRestService.PATH)
   public SchemaLogRestService getSchemaLogRestService() {
     return super.getSchemaLogRestService(null);

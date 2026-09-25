@@ -14,6 +14,7 @@ on:
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
       - '.github/auto-merge.config.yml'
+      - '.claude/**'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'

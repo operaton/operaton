@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.CachedDbEntity;
@@ -30,6 +31,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -62,5 +65,43 @@ class VariableInTransactionTest {
       return null;
     });
 
+  }
+
+  @Test
+  void shouldCreateVariableWithNonExistingTaskIdByDefault() {
+    String nonExistingTaskId = "non-existing-task-id";
+
+    assertThatCode(() -> processEngineConfiguration.getCommandExecutorTxRequired()
+      .execute((Command<Void>) commandContext -> {
+        VariableInstanceEntity variable = VariableInstanceEntity.create("myVar",
+            Variables.stringValue("myValue"), false);
+        variable.setTaskId(nonExistingTaskId);
+        VariableInstanceEntity.insert(variable);
+        variable.delete();
+
+        return null;
+      })).doesNotThrowAnyException();
+  }
+
+  @Test
+  void shouldRejectVariableWithNonExistingTaskIdWhenCheckEnabled() {
+    String nonExistingTaskId = "non-existing-task-id";
+    processEngineConfiguration.setCheckVariableTaskId(true);
+
+    try {
+      assertThatThrownBy(() -> processEngineConfiguration.getCommandExecutorTxRequired()
+        .execute((Command<Void>) commandContext -> {
+          VariableInstanceEntity variable = VariableInstanceEntity.create("myVar",
+              Variables.stringValue("myValue"), false);
+          variable.setTaskId(nonExistingTaskId);
+          VariableInstanceEntity.insert(variable);
+
+          return null;
+        }))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Task with id 'non-existing-task-id' doesn't exist or it is already completed");
+    } finally {
+      processEngineConfiguration.setCheckVariableTaskId(false);
+    }
   }
 }

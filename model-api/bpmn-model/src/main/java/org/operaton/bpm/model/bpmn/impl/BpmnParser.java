@@ -19,7 +19,6 @@ package org.operaton.bpm.model.bpmn.impl;
 import java.io.InputStream;
 
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
@@ -37,10 +36,8 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_20_SCHEMA
  */
 public class BpmnParser extends AbstractModelParser {
 
-  private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
-
   public BpmnParser() {
-    this.schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA);
+    this.schemaFactory = createSchemaFactory();
     addSchema(BPMN20_NS, createSchema(BPMN_20_SCHEMA_LOCATION, BpmnParser.class.getClassLoader()));
   }
 

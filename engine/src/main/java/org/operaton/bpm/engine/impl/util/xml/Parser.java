@@ -93,6 +93,7 @@ public abstract class Parser {
    * given the factory is neither validating nor namespace aware, which reproduces the behaviour
    * of {@code enableSchemaValidation(false)}.
    */
+  @SuppressWarnings("java:S2755") // XXE hardening is applied by setXxeProcessing(); enabling it is an explicit, admin-only engine setting
   protected SAXParserFactory createSaxParserFactory(@Nullable String schemaResource, boolean xxeProcessing) {
     SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
     saxParserFactory.setNamespaceAware(schemaResource != null);
@@ -123,6 +124,7 @@ public abstract class Parser {
     return schemaResource + '|' + accessProperty;
   }
 
+  @SuppressWarnings("java:S2755") // accessExternalSchema must stay open for the XSDs' relative imports; sources are engine-shipped resources, never user input
   private static Schema compileSchema(String schemaResource, String accessExternalSchemaProperty) {
     SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
@@ -130,6 +132,13 @@ public abstract class Parser {
       schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, accessExternalSchemaProperty);
     } catch (SAXException e) {
       // ignore unavailable option, same as the per-parse code path did
+      LOG.logAccessExternalSchemaNotSupported(e);
+    }
+
+    try {
+      // XSDs never reference a DTD, so external DTD access can be denied unconditionally
+      schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+    } catch (SAXException e) {
       LOG.logAccessExternalSchemaNotSupported(e);
     }
 

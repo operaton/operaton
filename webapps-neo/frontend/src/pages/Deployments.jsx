@@ -11,9 +11,10 @@ import { BPMNViewer } from "../components/BPMNViewer.jsx";
 import { CamundaForm } from "../components/CamundaForm.jsx";
 import { Dialog } from "../components/Dialog.jsx";
 import { DmnViewer } from "../components/DMNViewer.jsx";
-import { formatRelativeDate } from "../helper/date_formatter.js";
+import {} from "../helper/date_formatter.js";
 import { ListFilter } from "../components/ListFilter.jsx";
 import { ManageFilters } from "../components/ManageFilters.jsx";
+import { RelativeTime } from "../components/RelativeTime.jsx";
 import {
   filter_share_link,
   parse_list_query,
@@ -228,9 +229,7 @@ const DeploymentsList = () => {
                     </a>
                   </th>
                   <td>
-                    <time datetime={deployment.deploymentTime}>
-                      {formatRelativeDate(deployment.deploymentTime)}
-                    </time>
+                    <RelativeTime datetime={deployment.deploymentTime} />
                   </td>
                 </tr>
               ))
@@ -285,7 +284,11 @@ const DeploymentUpload = () => {
   return (
     <>
       <div class="button-group">
-        <button type="button" class="primary" onClick={() => (open.value = true)}>
+        <button
+          type="button"
+          class="primary"
+          onClick={() => (open.value = true)}
+        >
           {t("deployments.upload.title")}
         </button>
       </div>
@@ -357,6 +360,7 @@ const ResourcesList = () => {
 
   return (
     <div class="resource-list">
+      <DeploymentDelete deployment_id={params.deployment_id} />
       <table>
         <thead>
           <tr>
@@ -387,6 +391,85 @@ const ResourcesList = () => {
           />
         </tbody>
       </table>
+    </div>
+  );
+};
+
+const DeploymentDelete = ({ deployment_id }) => {
+  const state = useContext(AppState),
+    { route } = useLocation(),
+    [t] = useTranslation(),
+    open = useSignal(false),
+    cascade = useSignal(false),
+    error = useSignal(null);
+
+  const remove = async () => {
+    // A deployment with running instances is refused unless cascade is set, so
+    // the engine's own answer decides — the UI does not guess.
+    const result = await engine_rest.deployment.delete(state, deployment_id, {
+      cascade: cascade.value,
+      skipCustomListeners: true,
+    });
+    if (result?.status === RESPONSE_STATE.ERROR) {
+      error.value = t("deployments.delete.failed");
+      return;
+    }
+    open.value = false;
+    error.value = null;
+    void engine_rest.deployment.all(state);
+    route("/deployments");
+  };
+
+  return (
+    <>
+      <div class="button-group">
+        <button
+          type="button"
+          class="danger"
+          onClick={() => (open.value = true)}
+        >
+          {t("deployments.delete.title")}
+        </button>
+      </div>
+      <Dialog open={open} title={t("deployments.delete.title")}>
+        <p>{t("deployments.delete.message")}</p>
+        <label>
+          <input
+            type="checkbox"
+            checked={cascade.value}
+            onChange={(e) => (cascade.value = e.target.checked)}
+          />
+          {t("deployments.delete.cascade")}
+        </label>
+        {error.value && <p class="error">{error.value}</p>}
+        <div class="button-group">
+          <button type="button" class="danger" onClick={remove}>
+            {t("common.delete")}
+          </button>
+          <button type="button" onClick={() => (open.value = false)}>
+            {t("common.cancel")}
+          </button>
+        </div>
+      </Dialog>
+    </>
+  );
+};
+
+/** Hand the deployed file back, so what is running can be compared to the source. */
+const ResourceDownload = ({ name, content }) => {
+  const [t] = useTranslation();
+  if (typeof content !== "string") return null;
+
+  const file_name = name?.split("/").pop() || "resource",
+    href = URL.createObjectURL(
+      new Blob([content], { type: "application/octet-stream" }),
+    );
+
+  return (
+    <div class="button-group">
+      <a class="button" href={href} download={file_name}>
+        {t("deployments.download")}
+      </a>
     </div>
   );
 };
@@ -449,6 +532,7 @@ const ResourceDetails = () => {
           ) : null
         }
       />
+      <ResourceDownload name={resource_name} content={resource.value?.data} />
       {(resource_file_type === "bpmn" || resource_file_type === "dmn") && (
         <div id="diagram-container" />
       )}

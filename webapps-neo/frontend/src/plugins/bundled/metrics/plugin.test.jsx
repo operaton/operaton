@@ -52,10 +52,9 @@ describe("Engine Metrics plugin — page", () => {
       engine_rest.plugins.metrics,
       "definition_stats",
     ).mockImplementation(() => {});
-    vi.spyOn(
-      engine_rest.plugins.metrics,
-      "activity_series",
-    ).mockImplementation(() => {});
+    vi.spyOn(engine_rest.plugins.metrics, "activity_series").mockImplementation(
+      () => {},
+    );
     vi.spyOn(engine_rest.plugins.metrics, "top_tasks").mockImplementation(
       () => {},
     );
@@ -119,17 +118,32 @@ describe("Engine Metrics plugin — page", () => {
       {
         instances: 4,
         incidents: [],
-        definition: { id: "of:1", key: "orderFulfillment", name: "Order Fulfillment", version: 1 },
+        definition: {
+          id: "of:1",
+          key: "orderFulfillment",
+          name: "Order Fulfillment",
+          version: 1,
+        },
       },
       {
         instances: 6,
         incidents: [{ incidentType: "failedJob", incidentCount: 2 }],
-        definition: { id: "of:2", key: "orderFulfillment", name: "Order Fulfillment", version: 2 },
+        definition: {
+          id: "of:2",
+          key: "orderFulfillment",
+          name: "Order Fulfillment",
+          version: 2,
+        },
       },
       {
         instances: 2,
         incidents: [],
-        definition: { id: "inv:1", key: "invoice", name: "Invoice", version: 1 },
+        definition: {
+          id: "inv:1",
+          key: "invoice",
+          name: "Invoice",
+          version: 1,
+        },
       },
     ]);
 

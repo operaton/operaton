@@ -187,7 +187,7 @@ export const ManageFilters = ({
         message={t("list_filter.delete_confirm", {
           name: pending_delete.value?.name ?? "",
         })}
-        confirm_label="list_filter.confirm_delete"
+        confirm_label={t("list_filter.confirm_delete")}
         on_confirm={confirm_delete}
       />
     </div>

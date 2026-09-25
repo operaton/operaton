@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { h } from "preact";
-import { render, cleanup } from "@testing-library/preact";
+import { render, cleanup, fireEvent } from "@testing-library/preact";
 
 // Spy all engine_rest API functions but keep RequestState/RESPONSE_STATE real.
 vi.mock("../api/engine_rest.jsx", async (importOriginal) => {
@@ -150,5 +150,52 @@ describe("DeploymentsPage", () => {
     mockParams = { deployment_id: "dep1" };
     const { getByText } = renderPage(state);
     expect(getByText("deployments.select-deployment-resource")).toBeTruthy();
+  });
+
+  describe("deleting a deployment", () => {
+    it("asks before it deletes, and passes the cascade choice on", async () => {
+      mockParams = { deployment_id: "dep1" };
+      engine_rest.deployment.delete.mockResolvedValue({ status: "SUCCESS" });
+      const { getAllByText, getByText, getByLabelText } = renderPage(state);
+
+      // [0] is the button, [1] the dialog title
+      fireEvent.click(getAllByText("deployments.delete.title")[0]);
+      fireEvent.click(getByLabelText("deployments.delete.cascade"));
+      fireEvent.click(getByText("common.delete"));
+      await Promise.resolve();
+
+      expect(engine_rest.deployment.delete).toHaveBeenCalled();
+      const [, id, params] = engine_rest.deployment.delete.mock.lastCall;
+      expect(id).toBe("dep1");
+      expect(params.cascade).toBe(true);
+    });
+
+    it("says so when the engine refuses", async () => {
+      mockParams = { deployment_id: "dep1" };
+      engine_rest.deployment.delete.mockResolvedValue({ status: "ERROR" });
+      const { getAllByText, getByText, findByText } = renderPage(state);
+
+      fireEvent.click(getAllByText("deployments.delete.title")[0]);
+      fireEvent.click(getByText("common.delete"));
+
+      expect(await findByText("deployments.delete.failed")).toBeTruthy();
+      expect(routeFn).not.toHaveBeenCalledWith("/deployments");
+    });
+  });
+
+  describe("downloading a resource", () => {
+    it("offers the deployed file under its own name", () => {
+      mockParams = { deployment_id: "dep1", resource_name: "a/process.bpmn" };
+      signal_response(state.api.deployment.resource, "<definitions />");
+      const { getByText } = renderPage(state);
+      const link = getByText("deployments.download");
+      expect(link.getAttribute("download")).toBe("process.bpmn");
+    });
+
+    it("offers nothing while the content is not loaded", () => {
+      mockParams = { deployment_id: "dep1", resource_name: "process.bpmn" };
+      const { queryByText } = renderPage(state);
+      expect(queryByText("deployments.download")).toBeNull();
+    });
   });
 });

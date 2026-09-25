@@ -1,5 +1,5 @@
 ---
-name: managing-adrs
+name: operaton:adr
 description: Use when working with an Architectural Decision Record in the Operaton repository - drafting or proposing an ADR, opening an ADR discussion pad or issue, promoting an agreed draft into docs/decisions/, or reviewing an existing ADR or ADR pull request.
 ---
 

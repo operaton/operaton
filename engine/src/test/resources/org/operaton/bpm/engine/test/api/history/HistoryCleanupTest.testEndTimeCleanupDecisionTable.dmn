@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
+             xmlns:camunda="http://camunda.org/schema/1.0/dmn"
+             id="definitions"
+             name="definitions"
+             namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="decisionTable" name="Decision Table">
+    <decisionTable id="decisionTable_1">
+      <input id="input1" label="Input">
+        <inputExpression id="inputExpression1" typeRef="string">
+          <text>inputVariable</text>
+        </inputExpression>
+      </input>
+      <output id="output1" label="Output" name="result" typeRef="string" />
+      <rule id="rule1">
+        <inputEntry id="inputEntry1">
+          <text>"A"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry1">
+          <text>"Result A"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule2">
+        <inputEntry id="inputEntry2">
+          <text>"B"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry2">
+          <text>"Result B"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

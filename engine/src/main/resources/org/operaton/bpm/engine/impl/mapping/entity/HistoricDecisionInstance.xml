@@ -534,25 +534,30 @@
   <!-- Select ids for async history cleanup -->
   <sql id="selectHistoricDecisionInstanceIdsForCleanupSql">
     <bind name="days" value="'dd.HISTORY_TTL_'"/>
-    <bind name="date" value="'di.EVAL_TIME_'"/>
+    <bind name="preferredDate" value="'his_root_di.EVAL_TIME_'"/>
+    <bind name="date" value="'his_di.EVAL_TIME_'"/>
     <bind name="currentTimestamp" value="parameter.currentTimestamp"/>
     <bind name="reportPeriodUnitName" value="'MINUTE'"/>
-    FROM ${prefix}ACT_HI_DECINST di, ${prefix}ACT_RE_DECISION_DEF dd
-    where
-        di.DEC_DEF_ID_ = dd.ID_
-        AND not dd.HISTORY_TTL_ is NULL
-        AND ${dayComparator}
+    FROM ${prefix}ACT_HI_DECINST his_di
+    JOIN ${prefix}ACT_RE_DECISION_DEF dd ON his_di.DEC_DEF_ID_ = dd.ID_
+    LEFT JOIN ${prefix}ACT_RU_EXECUTION rpe ON rpe.ID_ = his_di.ROOT_PROC_INST_ID_
+    LEFT JOIN ${prefix}ACT_HI_DECINST his_root_di ON his_di.ROOT_PROC_INST_ID_ = his_root_di.ID_
+    WHERE
+      NOT his_di.EVAL_TIME_ IS NULL
+      AND NOT dd.HISTORY_TTL_ IS NULL
+      AND (his_root_di.EVAL_TIME_ IS NOT NULL OR rpe.ID_ IS NULL)
+      AND ${coalesceForEndDate}
   </sql>
 
   <select id="selectHistoricDecisionInstanceIdsForCleanup" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultType="string">
-    SELECT ${limitBeforeWithoutOffset} di.ID_, di.EVAL_TIME_
+    SELECT ${limitBeforeWithoutOffset} his_di.ID_, his_di.EVAL_TIME_
     <include refid="selectHistoricDecisionInstanceIdsForCleanupSql"/>
     <include refid="andWhereMinuteInDateBetweenSql"/>
     ${limitAfterWithoutOffset}
   </select>
 
   <select id="selectHistoricDecisionInstanceIdsForCleanup_oracle" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultType="string">
-    SELECT /*+ FIRST_ROWS(${maxResults}) NO_PARALLEL(di) NO_PARALLEL(dd) */ di.ID_, di.EVAL_TIME_
+    SELECT /*+ FIRST_ROWS(${maxResults}) NO_PARALLEL(di) NO_PARALLEL(dd) */ his_di.ID_, his_di.EVAL_TIME_
     <include refid="selectHistoricDecisionInstanceIdsForCleanupSql"/>
     <include refid="andWhereMinuteInDateBetweenSql_oracle"/>
     ${limitAfterWithoutOffset}

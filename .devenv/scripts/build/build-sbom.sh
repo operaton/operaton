@@ -23,7 +23,7 @@ CYCLONEDX_VERSION="v0.33.1"
 if command -v cyclonedx >/dev/null 2>&1; then
   echo "CycloneDX CLI already available."
 else
-  if [ "${CI:-}" != "" ]; then
+  if [[ "${CI:-}" != "" ]]; then
     # Download the pinned binary directly from GitHub releases. Homebrew now
     # refuses the untrusted cyclonedx/cyclonedx tap in CI, so we bypass it.
     case "$(uname -m)" in
@@ -52,7 +52,7 @@ fi
 CYCLONEDX="cyclonedx"
 if command -v cyclonedx >/dev/null 2>&1; then
   echo "CycloneDX CLI installation verified."
-elif [ -f /home/linuxbrew/.linuxbrew/bin/cyclonedx ]; then
+elif [[ -f /home/linuxbrew/.linuxbrew/bin/cyclonedx ]]; then
   CYCLONEDX="/home/linuxbrew/.linuxbrew/bin/cyclonedx"
   echo "CycloneDX CLI installation verified."
 else
@@ -74,7 +74,7 @@ for DISTRO in "${DISTROS[@]}"; do
       -DprojectType=application \
       -DskipAttach=true \
       -DskipNotDeployed=true
-    if [ ! -f target/sbom/operaton-modules-"$DISTRO".json ]; then
+    if [[ ! -f target/sbom/operaton-modules-"$DISTRO".json ]]; then
         echo "❌ SBOM file target/sbom/operaton-modules-$DISTRO.json not found. Maven plugin may have failed."
         exit 1
     fi

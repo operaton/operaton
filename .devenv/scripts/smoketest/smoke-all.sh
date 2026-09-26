@@ -38,10 +38,10 @@ run_test tomcat
 echo "╔══════════════════════════════════════════════════════╗"
 echo "  Smoke test summary (tag: ${TAG})"
 echo "╠══════════════════════════════════════════════════════╣"
-for img in "${PASS[@]:-}"; do [ -n "$img" ] && echo "  ✅ ${img}"; done
-for img in "${FAIL[@]:-}"; do [ -n "$img" ] && echo "  ❌ ${img}"; done
+for img in "${PASS[@]:-}"; do [[ -n "$img" ]] && echo "  ✅ ${img}"; done
+for img in "${FAIL[@]:-}"; do [[ -n "$img" ]] && echo "  ❌ ${img}"; done
 echo "╚══════════════════════════════════════════════════════╝"
 
-if [ ${#FAIL[@]} -gt 0 ]; then
+if [[ ${#FAIL[@]} -gt 0 ]]; then
   exit 1
 fi

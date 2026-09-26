@@ -27,7 +27,7 @@ check_valid_values() {
 
 ##########################################################################
 parse_args() {
-  while [ "$#" -gt 0 ]; do
+  while [[ "$#" -gt 0 ]]; do
     case "$1" in
       --profile=*)
         BUILD_PROFILE="${1#*=}"
@@ -79,7 +79,7 @@ PROJECT_ROOT=$(pwd)
 
 MVN_ARGS+=(clean install)
 
-if [ "$REPORT_PLUGINS" = "true" ]; then
+if [[ "$REPORT_PLUGINS" = "true" ]]; then
   MVN_ARGS+=(versions:dependency-updates-aggregate-report)
   MVN_ARGS+=(versions:plugin-updates-aggregate-report)
   # MVN_ARGS+=(dependency:analyze-report) TODO Disabled due to issue #1095
@@ -87,7 +87,7 @@ if [ "$REPORT_PLUGINS" = "true" ]; then
   MVN_ARGS+=(-Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list)
 fi
 
-if ([ "$SKIP_TESTS" = "true" ]); then
+if [[ "$SKIP_TESTS" = "true" ]]; then
   MVN_ARGS+=(-DskipTests)
 fi
 
@@ -108,7 +108,7 @@ case "$BUILD_PROFILE" in
     ;;
 esac
 
-if [ -n "$EXTRA_PROFILES" ]; then
+if [[ -n "$EXTRA_PROFILES" ]]; then
   IFS=',' read -ra EXTRA <<< "$EXTRA_PROFILES"
   PROFILES+=("${EXTRA[@]}")
 fi

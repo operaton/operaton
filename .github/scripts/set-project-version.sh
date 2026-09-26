@@ -14,12 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ ! -f "mvnw" ]; then
+if [[ ! -f "mvnw" ]]; then
   echo "⚠️ Maven Wrapper not found. You must execute this script from the project root directory. Exiting..."
   exit 1
 fi
 
-if [ -z "$1" ]; then
+if [[ -z "$1" ]]; then
   echo "⚠️ You must provide the new version as an argument. Exiting..."
   exit 1
 fi
@@ -102,7 +102,7 @@ if [[ $NEW_VERSION_WITHOUT_SNAPSHOT =~ ^([0-9]+)\.([0-9]+)\. ]]; then
 fi
 
 MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json  .)
-if [ -n "$MISSED_FILES" ]; then
+if [[ -n "$MISSED_FILES" ]]; then
   echo "⚠️ The following files still contain the old version:"
   echo "$MISSED_FILES"
 fi

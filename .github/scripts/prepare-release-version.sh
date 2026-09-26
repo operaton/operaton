@@ -30,7 +30,7 @@ QUALIFIER="${1:-${GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER}}"
 
 BASE_RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
 
-if [ -n "$QUALIFIER" ]; then
+if [[ -n "$QUALIFIER" ]]; then
   if [[ ! "$QUALIFIER" =~ ^(M[0-9]|RC[0-9])$ ]]; then
     echo "::error::Preliminary Release Qualifier '$QUALIFIER' must match M[0-9] or RC[0-9]."
     exit 1
@@ -51,7 +51,7 @@ fi
 DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
 echo "database_version=$DATABASE_VERSION"
 
-if [ -n "$GITHUB_OUTPUT" ]; then
+if [[ -n "$GITHUB_OUTPUT" ]]; then
   echo "version=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
   echo "base_version=$BASE_RELEASE_VERSION" >> "$GITHUB_OUTPUT"
   echo "database_version=$DATABASE_VERSION" >> "$GITHUB_OUTPUT"
@@ -60,7 +60,7 @@ fi
 
 .github/scripts/set-project-version.sh "$RELEASE_VERSION"
 
-if [ -z "$QUALIFIER" ]; then
+if [[ -z "$QUALIFIER" ]]; then
   .github/scripts/finalize-qa-db-fixture.sh "$DATABASE_VERSION" "$RELEASE_VERSION"
 else
   # prevent deployment of non-final sql scripts - a db schemaa can only deployed once

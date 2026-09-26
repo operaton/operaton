@@ -41,7 +41,7 @@ check_valid_values() {
 
 ##########################################################################
 parse_args() {
-  while [ "$#" -gt 0 ]; do
+  while [[ "$#" -gt 0 ]]; do
     case "$1" in
       --testsuite=*)
         TEST_SUITE="${1#*=}"

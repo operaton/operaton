@@ -61,7 +61,7 @@ sed_inplace() {
 }
 
 emit_output() {
-  if [ -n "${GITHUB_OUTPUT:-}" ]; then
+  if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
     echo "$1=$2" >> "$GITHUB_OUTPUT"
   fi
 }
@@ -80,7 +80,7 @@ extract_property() {
 CURRENT_NODE=$(extract_property "version.nodejs")
 CURRENT_NPM=$(extract_property "version.npm")
 
-if [ -z "$CURRENT_NODE" ] || [ -z "$CURRENT_NPM" ]; then
+if [[ -z "$CURRENT_NODE" || -z "$CURRENT_NPM" ]]; then
   echo "⚠️ Could not read <version.nodejs>/<version.npm> from $POM. Exiting..." >&2
   exit 1
 fi
@@ -96,7 +96,7 @@ else
 fi
 
 # The index is ordered newest first, so the first LTS entry is the latest LTS release.
-if [ "$PIN_MAJOR" = true ]; then
+if [[ "$PIN_MAJOR" = true ]]; then
   echo "ℹ️ Restricting the search to the Node.js $CURRENT_MAJOR.x line"
   RELEASE=$(jq -r --arg major "v${CURRENT_MAJOR}." \
     'map(select(.lts != false and (.version | startswith($major)))) | .[0] // empty' <<< "$INDEX")
@@ -104,7 +104,7 @@ else
   RELEASE=$(jq -r 'map(select(.lts != false)) | .[0] // empty' <<< "$INDEX")
 fi
 
-if [ -z "$RELEASE" ]; then
+if [[ -z "$RELEASE" ]]; then
   echo "⚠️ No matching Node.js LTS release found. Exiting..." >&2
   exit 1
 fi
@@ -112,14 +112,14 @@ fi
 LATEST_NODE=$(jq -r '.version | ltrimstr("v")' <<< "$RELEASE")
 LATEST_NPM=$(jq -r '.npm // empty' <<< "$RELEASE")
 
-if [ -z "$LATEST_NPM" ]; then
+if [[ -z "$LATEST_NPM" ]]; then
   echo "⚠️ Node.js $LATEST_NODE does not declare a bundled npm version. Exiting..." >&2
   exit 1
 fi
 
 echo "ℹ️ Latest LTS release: Node.js $LATEST_NODE, bundled npm $LATEST_NPM"
 
-if [ "$LATEST_NODE" = "$CURRENT_NODE" ] && [ "$LATEST_NPM" = "$CURRENT_NPM" ]; then
+if [[ "$LATEST_NODE" = "$CURRENT_NODE" && "$LATEST_NPM" = "$CURRENT_NPM" ]]; then
   echo "✅ Already up to date. Nothing to do."
   emit_output "changed" "false"
   emit_output "major_changed" "false"
@@ -135,7 +135,7 @@ sed_inplace "s|<version.npm>[^<]+</version.npm>|<version.npm>${LATEST_NPM}</vers
 LATEST_MAJOR="${LATEST_NODE%%.*}"
 MAJOR_CHANGED=false
 
-if [ "$LATEST_MAJOR" != "$CURRENT_MAJOR" ]; then
+if [[ "$LATEST_MAJOR" != "$CURRENT_MAJOR" ]]; then
   MAJOR_CHANGED=true
   for WORKFLOW in "${WORKFLOWS[@]}"; do
     echo "🔄 Updating node-version in $WORKFLOW"

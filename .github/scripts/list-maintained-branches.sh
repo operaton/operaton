@@ -48,31 +48,31 @@ done
 
 cd "$(git rev-parse --show-toplevel)" || exit 1
 
-if [ ! -f "$DEPENDABOT_FILE" ]; then
+if [[ ! -f "$DEPENDABOT_FILE" ]]; then
   echo "⚠️ $DEPENDABOT_FILE not found. Exiting..." >&2
   exit 1
 fi
 
 BRANCHES=("main")
 while IFS= read -r BRANCH; do
-  [ -n "$BRANCH" ] && BRANCHES+=("$BRANCH")
+  [[ -n "$BRANCH" ]] && BRANCHES+=("$BRANCH")
 done < <(git for-each-ref --format='%(refname:short)' refs/remotes/origin/release/ | sed 's|^origin/||' | sort -u)
 
 RESULT="[]"
 
 for BRANCH in "${BRANCHES[@]}"; do
   MILESTONE=$(yq "[.updates[] | select(.\"target-branch\" == \"$BRANCH\" and has(\"milestone\")) | .milestone] | .[0] // \"\"" "$DEPENDABOT_FILE")
-  if [ "$MILESTONE" = "null" ]; then
+  if [[ "$MILESTONE" = "null" ]]; then
     MILESTONE=""
   fi
 
-  if [ "$BRANCH" = "main" ]; then
+  if [[ "$BRANCH" = "main" ]]; then
     MAINTENANCE=false
   else
     MAINTENANCE=true
   fi
 
-  if [ -n "$MILESTONE" ]; then
+  if [[ -n "$MILESTONE" ]]; then
     echo "🌿 $BRANCH (maintenance: $MAINTENANCE, milestone: $MILESTONE)"
   else
     echo "🌿 $BRANCH (maintenance: $MAINTENANCE, no milestone found in $DEPENDABOT_FILE)"
@@ -89,6 +89,6 @@ done
 
 echo "$RESULT"
 
-if [ -n "${GITHUB_OUTPUT:-}" ]; then
+if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
   echo "branches=$RESULT" >> "$GITHUB_OUTPUT"
 fi

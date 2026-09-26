@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.json;
 
 import com.google.gson.JsonObject;
 
-import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.QueryOperator;
 import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
@@ -26,7 +25,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 /**
  * @author Sebastian Menski
  */
-public @NullMarked class JsonTaskQueryVariableValueConverter implements JsonObjectConverter<TaskQueryVariableValue> {
+public class JsonTaskQueryVariableValueConverter implements JsonObjectConverter<TaskQueryVariableValue> {
 
   @Override
   public JsonObject toJsonObject(TaskQueryVariableValue variable) {

@@ -259,7 +259,7 @@ public abstract @NullMarked class AbstractManager implements Session {
     return Context.getProcessEngineConfiguration().isAuthorizationEnabled();
   }
 
-  protected Authentication getCurrentAuthentication() {
+  protected @Nullable Authentication getCurrentAuthentication() {
     return Context.getCommandContext().getAuthentication();
   }
 
@@ -291,7 +291,6 @@ public abstract @NullMarked class AbstractManager implements Session {
           } else {
             authorizationManager.update(authorization);
           }
-
         }
         return null;
       });

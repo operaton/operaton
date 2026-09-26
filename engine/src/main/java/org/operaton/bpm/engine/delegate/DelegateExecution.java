@@ -61,26 +61,26 @@ public @NullMarked interface DelegateExecution extends BaseDelegateExecution, Bp
   /**
    * Gets the id of the current activity.
    */
-  String getCurrentActivityId();
+  @Nullable String getCurrentActivityId();
 
   /**
    * Gets the name of the current activity.
    */
-  String getCurrentActivityName();
+  @Nullable String getCurrentActivityName();
 
   /**
    * return the Id of the activity instance currently executed by this execution
    */
-  String getActivityInstanceId();
+  @Nullable String getActivityInstanceId();
 
   /**
    * return the Id of the parent activity instance currently executed by this
    * execution
    */
-  String getParentActivityInstanceId();
+  @Nullable String getParentActivityInstanceId();
 
   /** return the Id of the current transition */
-  String getCurrentTransitionId();
+  @Nullable String getCurrentTransitionId();
 
   /**
    * Return the process instance execution for this execution. In case this

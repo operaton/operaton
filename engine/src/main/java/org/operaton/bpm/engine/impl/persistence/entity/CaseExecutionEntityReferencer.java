@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore.VariableStoreObserver;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore.VariableSt
  * @author Thorben Lindhauer
  *
  */
-public class CaseExecutionEntityReferencer implements VariableStoreObserver<VariableInstanceEntity> {
+public @NullMarked class CaseExecutionEntityReferencer implements VariableStoreObserver<VariableInstanceEntity> {
 
   protected CaseExecutionEntity caseExecution;
 

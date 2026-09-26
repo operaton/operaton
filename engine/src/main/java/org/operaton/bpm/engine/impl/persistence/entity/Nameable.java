@@ -16,8 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-public interface Nameable {
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
-  String getName();
+public @NullMarked interface Nameable {
+
+  @Nullable String getName();
 
 }

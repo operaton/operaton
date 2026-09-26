@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -293,7 +294,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   // /////////////////////////////////////////////////////////////
 
   @Override
-  public ExecutionEntity createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey, String caseInstanceId) {
+  public ExecutionEntity createSubProcessInstance(PvmProcessDefinition processDefinition, @Nullable String businessKey, @Nullable String caseInstanceId) {
     shouldQueryForSubprocessInstance = true;
 
     ExecutionEntity subProcess = (ExecutionEntity) super.createSubProcessInstance(processDefinition, businessKey,
@@ -792,18 +793,16 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   public ExecutionEntity getProcessInstance() {
     ensureProcessInstanceInitialized();
-    return processInstance;
+    return requireNonNull(processInstance);
   }
 
   protected void ensureProcessInstanceInitialized() {
     if ((processInstance == null) && (processInstanceId != null)) {
-
       if (id.equals(processInstanceId)) {
         processInstance = this;
       } else {
         if (isExecutionTreePrefetchEnabled()) {
           ensureExecutionTreeInitialized();
-
         } else {
           processInstance = Context.getCommandContext().getExecutionManager().findExecutionById(processInstanceId);
         }
@@ -871,7 +870,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * generates an activity instance id
    */
   @Override
-  protected String generateActivityInstanceId(String activityId) {
+  protected String generateActivityInstanceId(@NonNull String activityId) {
 
     if (activityId.equals(processDefinitionId)) {
       return processInstanceId;
@@ -962,7 +961,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void setSubProcessInstance(PvmExecutionImpl subProcessInstance) {
+  public void setSubProcessInstance(@Nullable PvmExecutionImpl subProcessInstance) {
     shouldQueryForSubprocessInstance = subProcessInstance != null;
     this.subProcessInstance = (ExecutionEntity) subProcessInstance;
   }
@@ -1132,7 +1131,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public ExecutionEntity getReplacedBy() {
+  public @Nullable ExecutionEntity getReplacedBy() {
     return (ExecutionEntity) replacedBy;
   }
 
@@ -1178,13 +1177,13 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void onConcurrentExpand(PvmExecutionImpl scopeExecution) {
+  public void onConcurrentExpand(@NonNull PvmExecutionImpl scopeExecution) {
     ExecutionEntity scopeExecutionEntity = (ExecutionEntity) scopeExecution;
     scopeExecutionEntity.moveConcurrentLocalVariablesTo(this);
     super.onConcurrentExpand(scopeExecutionEntity);
   }
 
-  protected void moveTasksTo(ExecutionEntity other) {
+  protected void moveTasksTo(@NonNull ExecutionEntity other) {
     // update the related tasks
     for (TaskEntity task : getTasksInternal()) {
       task.setExecution(other);
@@ -1201,7 +1200,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     getTasksInternal().clear();
   }
 
-  protected void moveExternalTasksTo(ExecutionEntity other) {
+  protected void moveExternalTasksTo(@NonNull ExecutionEntity other) {
     for (ExternalTaskEntity externalTask : getExternalTasksInternal()) {
       externalTask.setExecutionId(other.getId());
       externalTask.setExecution(other);
@@ -1212,7 +1211,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     getExternalTasksInternal().clear();
   }
 
-  protected void moveActivityLocalJobsTo(ExecutionEntity other) {
+  protected void moveActivityLocalJobsTo(@NonNull ExecutionEntity other) {
     if (activityId != null) {
       for (JobEntity job : getJobs()) {
 
@@ -1224,7 +1223,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  protected void moveVariablesTo(ExecutionEntity other) {
+  protected void moveVariablesTo(@NonNull ExecutionEntity other) {
     List<VariableInstanceEntity> variables = variableStore.getVariables();
     variableStore.removeVariables();
 
@@ -1233,7 +1232,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  protected void moveVariableTo(VariableInstanceEntity variable, ExecutionEntity other) {
+  protected void moveVariableTo(VariableInstanceEntity variable, @NonNull ExecutionEntity other) {
     if (other.variableStore.containsKey(variable.getName())) {
       CoreVariableInstance existingInstance = other.variableStore.getVariable(variable.getName());
       existingInstance.setValue(variable.getTypedValue(false));
@@ -1244,7 +1243,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  protected void moveConcurrentLocalVariablesTo(ExecutionEntity other) {
+  protected void moveConcurrentLocalVariablesTo(@NonNull ExecutionEntity other) {
     List<VariableInstanceEntity> variables = variableStore.getVariables();
 
     for (VariableInstanceEntity variable : variables) {
@@ -1256,11 +1255,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   // variables ////////////////////////////////////////////////////////////////
 
-  public void addVariableListener(VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
+  public void addVariableListener(@NonNull VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
     registeredVariableListeners.add(listener);
   }
 
-  public void removeVariableListener(VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
+  public void removeVariableListener(@NonNull VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
     registeredVariableListeners.remove(listener);
   }
 
@@ -1990,7 +1989,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
     } else {
       return null;
-
     }
   }
 

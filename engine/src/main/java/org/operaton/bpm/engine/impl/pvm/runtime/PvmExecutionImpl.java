@@ -250,7 +250,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
 
 
   @Override
-  public void start(Map<String, Object> variables) {
+  public void start(@Nullable Map<String, Object> variables) {
     start(variables, null);
   }
 
@@ -258,7 +258,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     start(null, formProperties);
   }
 
-  protected void start(Map<String, Object> variables, VariableMap formProperties) {
+  protected void start(@Nullable Map<String, Object> variables, @Nullable VariableMap formProperties) {
 
     initialize();
 
@@ -282,7 +282,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    *
    * @param variables the variables which are used for the start
    */
-  public void startWithoutExecuting(Map<String, Object> variables) {
+  public void startWithoutExecuting(@Nullable Map<String, Object> variables) {
     initialize();
 
     fireHistoricProcessStartEvent();
@@ -636,13 +636,13 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * <p>Returns an execution that has replaced this execution for executing activities in their shared scope.</p>
    * <p>Invariant: this execution and getReplacedBy() execute in the same scope.</p>
    */
-  public abstract PvmExecutionImpl getReplacedBy();
+  public abstract @Nullable PvmExecutionImpl getReplacedBy();
 
   /**
    * Instead of {@link #getReplacedBy()}, which returns the execution that this execution was directly replaced with,
    * this resolves the chain of replacements (i.e. in the case the replacedBy execution itself was replaced again)
    */
-  public PvmExecutionImpl resolveReplacedBy() {
+  public @Nullable PvmExecutionImpl resolveReplacedBy() {
     // follow the links of execution replacement;
     // note: this can be at most two hops:
     // case 1:
@@ -1013,7 +1013,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public void leaveActivityViaTransitions(List<PvmTransition> transitions, List<? extends ActivityExecution> recyclableExecutions) {
+  public void leaveActivityViaTransitions(List<PvmTransition> transitions, @Nullable List<? extends ActivityExecution> recyclableExecutions) {
     if (recyclableExecutions != null) {
       recyclableExecutions = new ArrayList<>(recyclableExecutions);
     } else {
@@ -1189,7 +1189,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public void setProcessBusinessKey(String businessKey) {
+  public void setProcessBusinessKey(@Nullable String businessKey) {
     final PvmExecutionImpl processInstance = getProcessInstance();
     processInstance.setBusinessKey(businessKey);
 
@@ -1207,7 +1207,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public String getBusinessKey() {
+  public @Nullable String getBusinessKey() {
     if (this.isProcessInstanceExecution()) {
       return businessKey;
     } else {
@@ -1222,7 +1222,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   public ProcessDefinitionImpl getProcessDefinition() {
-    return processDefinition;
+    return requireNonNull(processDefinition);
   }
 
   // process instance /////////////////////////////////////////////////////////
@@ -1287,7 +1287,8 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   @Override
   public void enterActivityInstance() {
     ActivityImpl act = requireNonNull(getActivity());
-    activityInstanceId = generateActivityInstanceId(act.getId());
+    String actId = requireNonNull(act.getId());
+    activityInstanceId = generateActivityInstanceId(actId);
 
     LOG.debugEnterActivityInstance(this, getParentActivityInstanceId());
 
@@ -1336,12 +1337,12 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public String getParentActivityInstanceId() {
+  public @Nullable String getParentActivityInstanceId() {
     if (isProcessInstanceExecution()) {
       return getId();
-
     } else {
-      return getParent().getActivityInstanceId();
+      var parent = getParent();
+      return parent != null ? parent.getActivityInstanceId() : null;
     }
   }
 
@@ -1351,7 +1352,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public String getActivityInstanceId() {
+  public @Nullable String getActivityInstanceId() {
     return activityInstanceId;
   }
 
@@ -1361,7 +1362,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * ensures initialization and returns the parent
    */
   @Override
-  public abstract PvmExecutionImpl getParent();
+  public abstract @Nullable PvmExecutionImpl getParent();
 
   @Override
   public @Nullable String getParentId() {
@@ -1400,18 +1401,18 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   /**
    * Use #setParent to also update the child execution sets
    */
-  public abstract void setParentExecution(PvmExecutionImpl parent);
+  public abstract void setParentExecution(@Nullable PvmExecutionImpl parent);
 
   // super- and subprocess executions /////////////////////////////////////////
 
   @Override
-  public abstract PvmExecutionImpl getSuperExecution();
+  public abstract @Nullable PvmExecutionImpl getSuperExecution();
 
-  public abstract void setSuperExecution(PvmExecutionImpl superExecution);
+  public abstract void setSuperExecution(@Nullable PvmExecutionImpl superExecution);
 
-  public abstract PvmExecutionImpl getSubProcessInstance();
+  public abstract @Nullable PvmExecutionImpl getSubProcessInstance();
 
-  public abstract void setSubProcessInstance(PvmExecutionImpl subProcessInstance);
+  public abstract void setSubProcessInstance(@Nullable PvmExecutionImpl subProcessInstance);
 
   // super case execution /////////////////////////////////////////////////////
 
@@ -1427,7 +1428,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
 
   // scopes ///////////////////////////////////////////////////////////////////
 
-  protected ScopeImpl getScopeActivity() {
+  protected @Nullable ScopeImpl getScopeActivity() {
     ScopeImpl scope = null;
     // this if condition is important during process instance startup
     // where the activity of the process instance execution may not be aligned
@@ -1461,9 +1462,10 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * @return the scope execution for the provided targetFlowScope
    */
   @Override
-  public PvmExecutionImpl findExecutionForFlowScope(PvmScope targetFlowScope) {
+  public @Nullable PvmExecutionImpl findExecutionForFlowScope(PvmScope targetFlowScope) {
     // if this execution is not a scope execution, use the parent
     final PvmExecutionImpl scopeExecution = isScope() ? this : getParent();
+    requireNonNull(scopeExecution);
 
     ScopeImpl currentActivity = getActivity();
     EnsureUtil.ensureNotNull("activity of current execution", currentActivity);
@@ -1475,7 +1477,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
 
-  public PvmExecutionImpl findExecutionForScope(ScopeImpl currentScope, ScopeImpl targetScope) {
+  public @Nullable PvmExecutionImpl findExecutionForScope(ScopeImpl currentScope, ScopeImpl targetScope) {
 
     if (!targetScope.isScope()) {
       throw new ProcessEngineException("Target scope must be a scope.");
@@ -1688,14 +1690,15 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * @param targetScopeId - destination scope to be found in current execution tree
    * @return execution with activity id corresponding to targetScopeId
    */
-  protected PvmExecutionImpl findExecutionForFlowScope(final String targetScopeId) {
+  protected @Nullable PvmExecutionImpl findExecutionForFlowScope(final String targetScopeId) {
     EnsureUtil.ensureNotNull("target scope id", targetScopeId);
 
     ScopeImpl currentActivity = getActivity();
     EnsureUtil.ensureNotNull("activity of current execution", currentActivity);
+    requireNonNull(currentActivity);
 
     FlowScopeWalker walker = new FlowScopeWalker(currentActivity);
-    ScopeImpl targetFlowScope = walker.walkUntil(scope -> scope == null || scope.getId().equals(targetScopeId));
+    ScopeImpl targetFlowScope = walker.walkUntil(scope -> scope == null || Objects.equals(scope.getId(), targetScopeId));
 
     if (targetFlowScope == null) {
       throw LOG.scopeNotFoundException(targetScopeId, this.getId());
@@ -1747,7 +1750,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public TransitionImpl getTransition() {
+  public @Nullable TransitionImpl getTransition() {
     return transition;
   }
 
@@ -1769,7 +1772,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     }
   }
 
-  public void setTransition(PvmTransition transition) {
+  public void setTransition(@Nullable PvmTransition transition) {
     this.transition = (TransitionImpl) transition;
   }
 
@@ -1868,7 +1871,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public PvmActivity getNextActivity() {
+  public @Nullable PvmActivity getNextActivity() {
     return nextActivity;
   }
 
@@ -1877,7 +1880,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     return getParent() == null;
   }
 
-  public void setStartContext(ScopeInstantiationContext startContext) {
+  public void setStartContext(@Nullable ScopeInstantiationContext startContext) {
     this.scopeInstantiationContext = startContext;
   }
 
@@ -1910,11 +1913,11 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     this.nextActivity = nextActivity;
   }
 
-  public Map<String, Object> getPayloadForTriggeredScope() {
+  public @Nullable Map<String, Object> getPayloadForTriggeredScope() {
     return payloadForTriggeredScope;
   }
 
-  public void setPayloadForTriggeredScope(Map<String, Object> payloadForTriggeredScope) {
+  public void setPayloadForTriggeredScope(@Nullable Map<String, Object> payloadForTriggeredScope) {
     this.payloadForTriggeredScope = payloadForTriggeredScope;
   }
 
@@ -1931,7 +1934,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
         return null;
       }
     } else {
-      PvmExecutionImpl parent = getParent();
+      PvmExecutionImpl parent = requireNonNull(getParent());
       if (parent.isScope()) {
         return parent;
       } else {
@@ -2056,6 +2059,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     dispatching.callback(execution);
 
     execution = execution.getReplacedBy() != null ? execution.getReplacedBy() : execution;
+    requireNonNull(execution);
     String currentActivityInstanceId = getActivityInstanceId(execution);
     String currentActivityId = execution.getActivityId();
 
@@ -2066,7 +2070,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     }
   }
 
-  protected void continueExecutionIfNotCanceled(Callback<PvmExecutionImpl, Void> continuation, PvmExecutionImpl execution) {
+  protected void continueExecutionIfNotCanceled(@Nullable Callback<PvmExecutionImpl, Void> continuation, PvmExecutionImpl execution) {
     if (continuation != null && !execution.isCanceled()) {
       continuation.callback(execution);
     }
@@ -2079,6 +2083,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    */
   protected void dispatchScopeEvents(PvmExecutionImpl execution) {
     PvmExecutionImpl scopeExecution = execution.isScope() ? execution : execution.getParent();
+    requireNonNull(scopeExecution);
 
     List<DelayedVariableEvent> delayedVariableEvents = new ArrayList<>(scopeExecution.getDelayedEvents());
     scopeExecution.clearDelayedEvents();
@@ -2191,11 +2196,11 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * @param currentActivityId         the current activity id
    * @return true if the execution is on the same activity, otherwise false
    */
-  private boolean isOnSameActivity(String lastActivityInstanceId, String lastActivityId,
-                                   String currentActivityInstanceId, String currentActivityId) {
+  private boolean isOnSameActivity(@Nullable String lastActivityInstanceId, @Nullable String lastActivityId,
+                                   @Nullable String currentActivityInstanceId, @Nullable String currentActivityId) {
     return
       //activityInstanceId's can be null on transitions, so the activityId must be equal
-      (lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
+      (lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && Objects.equals(lastActivityId, currentActivityId))
         //if activityInstanceId's are not null they must be equal -> otherwise execution changed
         || (lastActivityInstanceId != null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId)
         && (lastActivityId == null || lastActivityId.equals(currentActivityId)));
@@ -2208,7 +2213,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * @param targetScope the execution for which the activity instance id should be returned
    * @return the activity instance id
    */
-  private String getActivityInstanceId(PvmExecutionImpl targetScope) {
+  private @Nullable String getActivityInstanceId(PvmExecutionImpl targetScope) {
     if (targetScope.isConcurrent()) {
       return targetScope.getActivityInstanceId();
     } else {

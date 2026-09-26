@@ -73,7 +73,7 @@ public @NullMarked class AuthorizationException extends ProcessEngineException {
     missingAuthorizations = new ArrayList<>();
   }
 
-  public AuthorizationException(String userId, String permissionName, String resourceType, String resourceId) {
+  public AuthorizationException(String userId, String permissionName, String resourceType, @Nullable String resourceId) {
     this(userId, new MissingAuthorization(permissionName, resourceType, resourceId));
   }
 

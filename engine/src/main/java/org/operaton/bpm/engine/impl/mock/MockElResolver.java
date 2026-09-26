@@ -33,7 +33,7 @@ public class MockElResolver extends ELResolver {
   }
 
   @Override
-  public Object getValue(ELContext context, Object base, Object property) {
+  public @Nullable Object getValue(ELContext context, Object base, Object property) {
     Object bean = Mocks.get(property);
     if (bean != null) {
       context.setPropertyResolved(true);

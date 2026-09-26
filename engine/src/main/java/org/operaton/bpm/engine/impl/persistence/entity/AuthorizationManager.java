@@ -173,15 +173,15 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
     return requireNonNull(count);
   }
 
-  public AuthorizationEntity findAuthorizationByUserIdAndResourceId(int type, String userId, Resource resource, String resourceId) {
+  public @Nullable AuthorizationEntity findAuthorizationByUserIdAndResourceId(int type, String userId, Resource resource, String resourceId) {
     return findAuthorization(type, userId, null, resource, resourceId);
   }
 
-  public AuthorizationEntity findAuthorizationByGroupIdAndResourceId(int type, String groupId, Resource resource, String resourceId) {
+  public @Nullable AuthorizationEntity findAuthorizationByGroupIdAndResourceId(int type, String groupId, Resource resource, String resourceId) {
     return findAuthorization(type, null, groupId, resource, resourceId);
   }
 
-  public AuthorizationEntity findAuthorization(int type, String userId, String groupId, @Nullable Resource resource, String resourceId) {
+  public @Nullable AuthorizationEntity findAuthorization(int type, @Nullable String userId, @Nullable String groupId, @Nullable Resource resource, String resourceId) {
     Map<String, Object> params = new HashMap<>();
 
     params.put(TYPE, type);
@@ -241,6 +241,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
   public void checkAuthorization(Permission permission, Resource resource, @Nullable String resourceId) {
     if(isAuthCheckExecuted()) {
       Authentication currentAuthentication = getCurrentAuthentication();
+      requireNonNull(currentAuthentication);
       boolean isAuthorized = isAuthorized(currentAuthentication.getUserId(), currentAuthentication.getGroupIds(), permission, resource, resourceId);
       if (!isAuthorized) {
         throw new AuthorizationException(
@@ -268,7 +269,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
     }
   }
 
-  public boolean isAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId) {
+  public boolean isAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId) {
     if (!isPermissionDisabled(permission)) {
       PermissionCheck permCheck = new PermissionCheck();
       permCheck.setPermission(permission);

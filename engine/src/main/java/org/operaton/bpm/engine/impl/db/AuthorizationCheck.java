@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permissions;
 
 /**
@@ -48,7 +49,7 @@ public class AuthorizationCheck {
   protected boolean isRevokeAuthorizationCheckEnabled;
 
   /** the id of the user to check permissions for */
-  protected String authUserId;
+  protected @Nullable String authUserId;
 
   /** the ids of the groups to check permissions for */
   protected List<String> authGroupIds = new ArrayList<>();
@@ -104,11 +105,11 @@ public class AuthorizationCheck {
     return permissionChecks.getAtomicChecks().isEmpty() && permissionChecks.getCompositeChecks().isEmpty();
   }
 
-  public String getAuthUserId() {
+  public @Nullable String getAuthUserId() {
     return authUserId;
   }
 
-  public void setAuthUserId(String authUserId) {
+  public void setAuthUserId(@Nullable String authUserId) {
     this.authUserId = authUserId;
   }
 

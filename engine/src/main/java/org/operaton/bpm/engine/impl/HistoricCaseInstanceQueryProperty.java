@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
@@ -23,7 +25,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author Sebastian Menski
  */
-final class HistoricCaseInstanceQueryProperty {
+final @NullMarked class HistoricCaseInstanceQueryProperty {
 
   public static final QueryProperty PROCESS_INSTANCE_ID_ = new QueryPropertyImpl("CASE_INST_ID_");
   public static final QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("CASE_DEF_ID_");

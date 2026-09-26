@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.runtime.JobQuery;
 
@@ -24,7 +26,7 @@ import org.operaton.bpm.engine.runtime.JobQuery;
  *
  * @author Joram Barrez
  */
-public final class JobQueryProperty {
+public final @NullMarked class JobQueryProperty {
 
   public static final QueryProperty JOB_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROCESS_INSTANCE_ID_");

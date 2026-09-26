@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
-
-
 
 /**
  * Contains the possible properties that can be used by the {@link GroupQuery}.
  *
  * @author Joram Barrez
  */
-public final class GroupQueryProperty {
+public final @NullMarked class GroupQueryProperty {
 
   public static final QueryProperty GROUP_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty NAME = new QueryPropertyImpl("NAME_");

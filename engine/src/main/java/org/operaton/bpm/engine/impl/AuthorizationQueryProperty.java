@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
 
@@ -24,7 +26,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author Daniel Meyer
  */
-final class AuthorizationQueryProperty {
+final @NullMarked class AuthorizationQueryProperty {
 
   public static final QueryProperty RESOURCE_TYPE = new QueryPropertyImpl("RESOURCE_TYPE_");
   public static final QueryProperty RESOURCE_ID = new QueryPropertyImpl("RESOURCE_ID_");

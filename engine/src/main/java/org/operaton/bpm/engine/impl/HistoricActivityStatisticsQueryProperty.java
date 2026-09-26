@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
@@ -23,7 +25,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Roman Smirnov
  *
  */
-final class HistoricActivityStatisticsQueryProperty {
+final @NullMarked class HistoricActivityStatisticsQueryProperty {
 
   public static final QueryProperty ACTIVITY_ID_ = new QueryPropertyImpl("ID_");
 

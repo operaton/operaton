@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import org.operaton.bpm.engine.query.QueryProperty;
+import org.jspecify.annotations.NullMarked;
 
-final class HistoricExternalTaskLogQueryProperty {
+import org.operaton.bpm.engine.query.QueryProperty;
+final @NullMarked class HistoricExternalTaskLogQueryProperty {
 
   public static final QueryProperty EXTERNAL_TASK_ID = new QueryPropertyImpl("EXT_TASK_ID_");
   public static final QueryProperty TIMESTAMP = new QueryPropertyImpl("TIMESTAMP_");

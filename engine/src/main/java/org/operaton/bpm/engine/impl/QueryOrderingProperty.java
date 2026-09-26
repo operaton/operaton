@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -51,7 +53,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
  *
  * @author Thorben Lindhauer
  */
-public class QueryOrderingProperty implements Serializable {
+public @NullMarked class QueryOrderingProperty implements Serializable {
 
   public static final String RELATION_VARIABLE = "variable";
   public static final String RELATION_PROCESS_DEFINITION = "process-definition";

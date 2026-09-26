@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl;
 import java.io.Serial;
 import java.util.ArrayList;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
  * @author Thorben Lindhauer
  *
  */
-public class VariableOrderProperty extends QueryOrderingProperty {
+public @NullMarked class VariableOrderProperty extends QueryOrderingProperty {
 
   @Serial private static final long serialVersionUID = 1L;
 

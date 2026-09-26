@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import org.operaton.bpm.engine.query.QueryProperty;
+import org.jspecify.annotations.NullMarked;
 
+import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
  * Contains sortable properties which can be used in a {@link org.operaton.bpm.engine.history.UserOperationLogQuery}.
  *
  * @author Danny Gräf
  */
-public final class OperationLogQueryProperty {
+public final @NullMarked class OperationLogQueryProperty {
 
   public static final QueryProperty TIMESTAMP = new QueryPropertyImpl("TIMESTAMP_");
 

@@ -43,7 +43,7 @@ for arg in "$@"; do
 done
 
 # Default port per image
-if [ -z "$PORT" ]; then
+if [[ -z "$PORT" ]]; then
   case "$IMAGE_NAME" in
     operaton) PORT=18080 ;;
     wildfly)  PORT=18081 ;;
@@ -64,7 +64,7 @@ echo "╚═══════════════════════�
 BROWSER_SCRIPT="${SCRIPT_DIR}/browser-flows.mjs"
 PLAYWRIGHT_DIR="/tmp/operaton-smoketest"
 mkdir -p "$PLAYWRIGHT_DIR"
-if [ ! -d "${PLAYWRIGHT_DIR}/node_modules/playwright" ]; then
+if [[ ! -d "${PLAYWRIGHT_DIR}/node_modules/playwright" ]]; then
   echo "Installing playwright..."
   cd "$PLAYWRIGHT_DIR" && npm install playwright --save-quiet 2>/dev/null || true
 fi
@@ -73,7 +73,7 @@ cd "$PLAYWRIGHT_DIR" && npx playwright install chromium --quiet 2>/dev/null || t
 
 # ── Teardown on exit ─────────────────────────────────────────────────────────
 cleanup() {
-  if [ "$KEEP" = false ]; then
+  if [[ "$KEEP" = false ]]; then
     echo "Stopping container ${CONTAINER_NAME}..."
     docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
   else
@@ -102,7 +102,7 @@ for i in $(seq 1 60); do
   sleep 3
 done
 
-if [ "$READY" = false ]; then
+if [[ "$READY" = false ]]; then
   echo "ERROR: Container did not become ready within 180s"
   docker logs "$CONTAINER_NAME" 2>&1 | tail -20
   exit 1
@@ -118,7 +118,7 @@ cp "$BROWSER_SCRIPT" "${PLAYWRIGHT_DIR}/browser-flows.mjs"
 node "${PLAYWRIGHT_DIR}/browser-flows.mjs" "$BASE_URL" "$SCREENSHOT_DIR"
 EXIT_CODE=$?
 
-if [ $EXIT_CODE -eq 0 ]; then
+if [[ $EXIT_CODE -eq 0 ]]; then
   echo ""
   echo "✅ Smoke test PASSED: ${FULL_IMAGE}"
 else

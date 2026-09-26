@@ -67,6 +67,7 @@ public abstract class AbstractModelParser {
     // constructor body, which runs after this one.
   }
 
+  @SuppressWarnings("java:S2755") // XXE hardening is applied by configureFactory() -> protectAgainstXxeAttacks()
   private DocumentBuilderFactory getDocumentBuilderFactory() {
     DocumentBuilderFactory dbf = documentBuilderFactory;
     if (dbf == null) {
@@ -164,6 +165,37 @@ public abstract class AbstractModelParser {
       return Objects.requireNonNullElse(systemProperty, JAXP_ACCESS_EXTERNAL_SCHEMA_ALL);
   }
 
+  /**
+   * Creates the {@link SchemaFactory} subclasses compile their XSDs with. {@code accessExternalSchema}
+   * stays at the (user-overridable) default because the shipped XSDs resolve their imports relatively;
+   * external DTD access is denied unconditionally since an XSD never references a DTD.
+   */
+  @SuppressWarnings("java:S2755") // accessExternalSchema must stay open for the XSDs' relative imports; sources are library-shipped resources, never user input
+  protected SchemaFactory createSchemaFactory() {
+    SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
+    trySetProperty(factory::setProperty, XMLConstants.ACCESS_EXTERNAL_SCHEMA, resolveAccessExternalSchemaProperty());
+    trySetProperty(factory::setProperty, XMLConstants.ACCESS_EXTERNAL_DTD, "");
+
+    return factory;
+  }
+
+  /**
+   * Applies a JAXP property, ignoring it when the underlying implementation does not know it.
+   */
+  private static void trySetProperty(PropertySetter setter, String name, String value) {
+    try {
+      setter.set(name, value);
+    } catch (SAXException | IllegalArgumentException ignored) {
+      // property not supported by this implementation, nothing we can do about it
+    }
+  }
+
+  @FunctionalInterface
+  private interface PropertySetter {
+    void set(String name, String value) throws SAXException;
+  }
+
   public ModelInstance parseModelFromStream(InputStream inputStream) {
     DomDocument document;
 
@@ -193,6 +225,7 @@ public abstract class AbstractModelParser {
    *
    * @param document the DOM document to validate
    */
+  @SuppressWarnings("java:S2755") // accessExternalSchema stays at the user-overridable default, consistent with the DocumentBuilderFactory; the document itself was already parsed with DOCTYPEs disallowed
   public void validateModel(DomDocument document) {
 
     Schema schema = getSchema(document);
@@ -202,6 +235,9 @@ public abstract class AbstractModelParser {
     }
 
     Validator validator = schema.newValidator();
+    trySetProperty(validator::setProperty, XMLConstants.ACCESS_EXTERNAL_SCHEMA, resolveAccessExternalSchemaProperty());
+    trySetProperty(validator::setProperty, XMLConstants.ACCESS_EXTERNAL_DTD, "");
+
     try {
       synchronized(validationLock) {
         validator.validate(document.getDomSource());

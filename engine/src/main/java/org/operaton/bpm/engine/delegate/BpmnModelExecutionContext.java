@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
 import org.operaton.bpm.model.bpmn.instance.FlowNode;
@@ -29,14 +31,14 @@ import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
  * @author Sebastian Menski
  *
  */
-public interface BpmnModelExecutionContext {
+public @NullMarked interface BpmnModelExecutionContext {
 
   /**
    * Returns the {@link BpmnModelInstance} for the currently executed Bpmn Model
    *
    * @return the current {@link BpmnModelInstance}
    */
-  BpmnModelInstance getBpmnModelInstance();
+  @Nullable BpmnModelInstance getBpmnModelInstance();
 
   /**
    * <p>Returns the currently executed Element in the BPMN Model. This method returns a {@link FlowElement} which may be casted
@@ -48,6 +50,6 @@ public interface BpmnModelExecutionContext {
    *
    * @return the {@link FlowElement} corresponding to the current Bpmn Model Element
    */
-  FlowElement getBpmnModelElementInstance();
+  @Nullable FlowElement getBpmnModelElementInstance();
 
 }

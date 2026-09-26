@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
 import org.operaton.bpm.engine.cdi.BusinessProcessEventType;
@@ -53,7 +54,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @author Daniel Meyer
  */
-public abstract class AbstractCdiEventListener implements TaskListener, ExecutionListener, Serializable {
+public abstract @NullMarked class AbstractCdiEventListener implements TaskListener, ExecutionListener, Serializable {
 
   @Serial private static final long serialVersionUID = 1L;
   private static final Logger LOGGER = Logger.getLogger(AbstractCdiEventListener.class.getName());

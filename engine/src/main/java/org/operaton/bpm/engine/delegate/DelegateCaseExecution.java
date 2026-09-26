@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Roman Smirnov
  *
  */
-public interface DelegateCaseExecution extends BaseDelegateExecution, ProcessEngineServicesAware, CmmnModelExecutionContext {
+public @NullMarked interface DelegateCaseExecution extends BaseDelegateExecution, ProcessEngineServicesAware, CmmnModelExecutionContext {
 
   @Override
   String getId();
@@ -30,17 +33,17 @@ public interface DelegateCaseExecution extends BaseDelegateExecution, ProcessEng
   @Override
   String getEventName();
 
-  String getCaseBusinessKey();
+  @Nullable String getCaseBusinessKey();
 
-  String getCaseDefinitionId();
+  @Nullable String getCaseDefinitionId();
 
-  String getParentId();
+  @Nullable String getParentId();
 
-  String getActivityId();
+  @Nullable String getActivityId();
 
-  String getActivityName();
+  @Nullable String getActivityName();
 
-  String getTenantId();
+  @Nullable String getTenantId();
 
   boolean isAvailable();
 

@@ -50,6 +50,8 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.commons.utils.CollectionUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  */
@@ -107,7 +109,8 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
   public long findHistoricProcessInstanceCountByQueryCriteria(HistoricProcessInstanceQueryImpl historicProcessInstanceQuery) {
     if (isHistoryEnabled()) {
       configureQuery(historicProcessInstanceQuery);
-      return (Long) getDbEntityManager().selectOne("selectHistoricProcessInstanceCountByQueryCriteria", historicProcessInstanceQuery);
+      Long count = (Long) getDbEntityManager().selectOne("selectHistoricProcessInstanceCountByQueryCriteria", historicProcessInstanceQuery);
+      return requireNonNull(count);
     }
     return 0;
   }
@@ -127,7 +130,8 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
   }
 
   public long findHistoricProcessInstanceCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectHistoricProcessInstanceCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricProcessInstanceCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -168,7 +172,8 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
 
     getAuthorizationManager().configureQueryHistoricFinishedInstanceReport(query, Resources.PROCESS_DEFINITION);
     getTenantManager().configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectFinishedProcessInstancesReportEntitiesCount", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectFinishedProcessInstancesReportEntitiesCount", query);
+    return requireNonNull(count);
   }
 
   public void addRemovalTimeToProcessInstancesByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime) {

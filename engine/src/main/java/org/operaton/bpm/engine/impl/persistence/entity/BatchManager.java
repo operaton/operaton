@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
@@ -27,20 +29,23 @@ import org.operaton.bpm.engine.impl.batch.BatchQueryImpl;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
-public class BatchManager extends AbstractManager {
+import static java.util.Objects.requireNonNull;
+
+public @NullMarked class BatchManager extends AbstractManager {
 
   public void insertBatch(BatchEntity batch) {
     batch.setCreateUserId(getCommandContext().getAuthenticatedUserId());
     getDbEntityManager().insert(batch);
   }
 
-  public BatchEntity findBatchById(String id) {
+  public @Nullable BatchEntity findBatchById(String id) {
     return getDbEntityManager().selectById(BatchEntity.class, id);
   }
 
   public long findBatchCountByQueryCriteria(BatchQueryImpl batchQuery) {
     configureQuery(batchQuery);
-    return (Long) getDbEntityManager().selectOne("selectBatchCountByQueryCriteria", batchQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectBatchCountByQueryCriteria", batchQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

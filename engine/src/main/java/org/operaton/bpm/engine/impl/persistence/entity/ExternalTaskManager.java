@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
 import static org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory.POSTGRES;
 import static org.operaton.bpm.engine.impl.util.DatabaseUtil.checkDatabaseType;
@@ -113,7 +114,8 @@ public class ExternalTaskManager extends AbstractManager {
 
   public long findExternalTaskCountByQueryCriteria(ExternalTaskQueryImpl externalTaskQuery) {
     configureQuery(externalTaskQuery);
-    return (Long) getDbEntityManager().selectOne("selectExternalTaskCountByQueryCriteria", externalTaskQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectExternalTaskCountByQueryCriteria", externalTaskQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

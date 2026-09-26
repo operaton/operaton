@@ -3,4 +3,6 @@
  * Provides mock expression managers, EL resolvers, and utilities for testing
  * engine behavior in isolation.
  */
-package org.operaton.bpm.engine.impl.mock;
+@NullMarked package org.operaton.bpm.engine.impl.mock;
+
+import org.jspecify.annotations.NullMarked;

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.task;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.task.IdentityLink;
@@ -30,7 +31,7 @@ public class DelegateTaskTestTaskListener implements TaskListener {
   public static final String VARNAME_CANDIDATE_GROUPS = "candidateGroups";
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     Set<IdentityLink> candidates = delegateTask.getCandidates();
     Set<String> candidateUsers = new HashSet<>();
     Set<String> candidateGroups = new HashSet<>();

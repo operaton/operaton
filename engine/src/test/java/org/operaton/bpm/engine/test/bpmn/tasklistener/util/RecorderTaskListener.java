@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -72,7 +73,7 @@ public class RecorderTaskListener implements TaskListener, Serializable {
   }
 
   @Override
-  public void notify(DelegateTask task) {
+  public void notify(@NonNull DelegateTask task) {
     DelegateExecution execution = task.getExecution();
     String eventName = task.getEventName();
 

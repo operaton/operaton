@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 public class SetAssigneeListener implements TaskListener {
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     String assignee = (String) delegateTask.getVariable("assignee");
     delegateTask.setAssignee(assignee);
   }

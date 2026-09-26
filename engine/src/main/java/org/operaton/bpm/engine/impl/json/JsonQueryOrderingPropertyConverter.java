@@ -21,7 +21,6 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryEntityRelationCondition;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
@@ -35,7 +34,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Thorben Lindhauer
  *
  */
-public @NullMarked class JsonQueryOrderingPropertyConverter implements JsonObjectConverter<QueryOrderingProperty> {
+public class JsonQueryOrderingPropertyConverter implements JsonObjectConverter<QueryOrderingProperty> {
   protected static final JsonArrayConverter<List<QueryOrderingProperty>> ARRAY_CONVERTER =
       new JsonArrayOfObjectsConverter<>(new JsonQueryOrderingPropertyConverter());
 
@@ -79,7 +78,7 @@ public @NullMarked class JsonQueryOrderingPropertyConverter implements JsonObjec
       relation = JsonUtil.getString(jsonObject, RELATION);
     }
 
-    QueryOrderingProperty property = null;
+    QueryOrderingProperty property;
     if (QueryOrderingProperty.RELATION_VARIABLE.equals(relation)) {
       property = new VariableOrderProperty();
     }

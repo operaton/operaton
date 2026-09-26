@@ -21,6 +21,8 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
@@ -41,7 +43,8 @@ public class CaseSentryPartManager extends AbstractManager {
   }
 
   public long findCaseSentryPartCountByQueryCriteria(CaseSentryPartQueryImpl caseSentryPartQuery) {
-    return (Long) getDbEntityManager().selectOne("selectCaseSentryPartsCountByQueryCriteria", caseSentryPartQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectCaseSentryPartsCountByQueryCriteria", caseSentryPartQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

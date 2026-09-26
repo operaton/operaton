@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.entity.runtime;
 import java.io.Serial;
 import java.util.*;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.ProcessEngine;
 
 import org.jspecify.annotations.Nullable;
@@ -69,6 +70,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACT
  * @author Roman Smirnov
  *
  */
+@NullUnmarked
 public class CaseExecutionEntity extends CmmnExecution implements CaseExecution, CaseInstance, DbEntity, HasDbRevision, HasDbReferences, VariablesProvider<VariableInstanceEntity> {
   @Serial
   private static final long serialVersionUID = 1L;
@@ -107,7 +109,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   // associated entities /////////////////////////////////////////////////////
 
   @SuppressWarnings({ "unchecked" })
-  private transient VariableStore<VariableInstanceEntity> variableStore = new VariableStore<>(
+  private final transient VariableStore<VariableInstanceEntity> variableStore = new VariableStore<>(
       this, new CaseExecutionEntityReferencer(this));
 
   // Persistence //////////////////////////////////////////////////////////////
@@ -405,7 +407,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
       VariableMap variableMap = Variables.fromMap(variables);
       CaseDefinition caseDefinition = (CaseDefinition) getCaseDefinition();
 
-      TenantIdProviderCaseInstanceContext ctx = null;
+      TenantIdProviderCaseInstanceContext ctx;
 
       if (superExecutionId != null) {
         ctx = new TenantIdProviderCaseInstanceContext(caseDefinition, variableMap, getSuperExecution());

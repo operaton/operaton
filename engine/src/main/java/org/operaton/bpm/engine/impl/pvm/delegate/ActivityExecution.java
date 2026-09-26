@@ -54,11 +54,11 @@ public interface ActivityExecution extends DelegateExecution {
 
   /** return the Id of the activity instance currently executed by this execution */
   @Override
-  String getActivityInstanceId();
+  @Nullable String getActivityInstanceId();
 
   /** return the Id of the parent activity instance currently executed by this execution */
   @Override
-  String getParentActivityInstanceId();
+  @Nullable String getParentActivityInstanceId();
 
   /* Execution management */
 
@@ -211,7 +211,7 @@ public interface ActivityExecution extends DelegateExecution {
    * Takes the given outgoing transitions, and potentially reusing
    * the given list of executions that were previously joined.
    */
-  void leaveActivityViaTransitions(List<PvmTransition> outgoingTransitions, List<? extends ActivityExecution> joinedExecutions);
+  void leaveActivityViaTransitions(List<PvmTransition> outgoingTransitions, @Nullable List<? extends ActivityExecution> joinedExecutions);
 
   void leaveActivityViaTransition(PvmTransition outgoingTransition);
 
@@ -227,7 +227,7 @@ public interface ActivityExecution extends DelegateExecution {
   void interrupt(String reason);
 
   /** An activity which is to be started next. */
-  PvmActivity getNextActivity();
+  @Nullable PvmActivity getNextActivity();
 
 
   void remove();
@@ -254,7 +254,7 @@ public interface ActivityExecution extends DelegateExecution {
    *   must be an ancestor of the execution's current activity
    * @return
    */
-  ActivityExecution findExecutionForFlowScope(PvmScope targetScope);
+  @Nullable ActivityExecution findExecutionForFlowScope(PvmScope targetScope);
 
   /**
    * Returns a mapping from scope activities to scope executions for all scopes that

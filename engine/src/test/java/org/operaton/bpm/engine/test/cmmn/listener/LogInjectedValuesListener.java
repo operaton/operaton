@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.cmmn.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.delegate.Expression;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.delegate.Expression;
  * @author Thorben Lindhauer
  *
  */
-public class LogInjectedValuesListener implements CaseVariableListener {
+public @NullMarked class LogInjectedValuesListener implements CaseVariableListener {
 
   protected Expression stringValueExpression;
   protected Expression juelExpression;

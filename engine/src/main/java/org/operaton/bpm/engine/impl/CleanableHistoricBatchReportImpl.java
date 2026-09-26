@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReport;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReportResult;
 import org.operaton.bpm.engine.impl.batch.BatchJobHandler;
@@ -32,11 +34,11 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
 
-public class CleanableHistoricBatchReportImpl extends AbstractQuery<CleanableHistoricBatchReport, CleanableHistoricBatchReportResult> implements CleanableHistoricBatchReport {
+public @NullMarked class CleanableHistoricBatchReportImpl extends AbstractQuery<CleanableHistoricBatchReport, CleanableHistoricBatchReportResult> implements CleanableHistoricBatchReport {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected Date currentTimestamp;
+  protected @Nullable Date currentTimestamp;
 
   protected boolean isHistoryCleanupStrategyRemovalTimeBased;
 
@@ -94,12 +96,11 @@ public class CleanableHistoricBatchReportImpl extends AbstractQuery<CleanableHis
       for (String batchOperation : batchOperationKeys) {
         Integer ttl = batchOperations.get(batchOperation);
         batchOperations.put(batchOperation, ttl);
-
       }
     }
   }
 
-  public Date getCurrentTimestamp() {
+  public @Nullable Date getCurrentTimestamp() {
     return currentTimestamp;
   }
 

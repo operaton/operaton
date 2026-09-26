@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.listener;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -37,7 +38,7 @@ public class ScriptCaseExecutionListener implements CaseExecutionListener {
   }
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     ScriptInvocation invocation = new ScriptInvocation(script, caseExecution);
     Context
       .getProcessEngineConfiguration()

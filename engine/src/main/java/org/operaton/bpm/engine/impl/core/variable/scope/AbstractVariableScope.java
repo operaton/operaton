@@ -260,23 +260,23 @@ public abstract @NullMarked class AbstractVariableScope implements Serializable,
     return getVariableStore().getKeys();
   }
 
-  public void setVariables(Map<String, ?> variables, boolean skipJavaSerializationFormatCheck) {
+  public void setVariables(@Nullable Map<String, ?> variables, boolean skipJavaSerializationFormatCheck) {
     VariableUtil.setVariables(variables,
         (name, value) -> setVariable(name, value, skipJavaSerializationFormatCheck));
   }
 
   @Override
-  public void setVariables(Map<String, ?> variables) {
+  public void setVariables(@Nullable Map<String, ?> variables) {
     setVariables(variables, false);
   }
 
-  public void setVariablesLocal(Map<String, ?> variables, boolean skipJavaSerializationFormatCheck) {
+  public void setVariablesLocal(@Nullable Map<String, ?> variables, boolean skipJavaSerializationFormatCheck) {
     VariableUtil.setVariables(variables,
         (name, value) -> setVariableLocal(name, value, skipJavaSerializationFormatCheck));
   }
 
   @Override
-  public void setVariablesLocal(Map<String, ?> variables) {
+  public void setVariablesLocal(@Nullable Map<String, ?> variables) {
     setVariablesLocal(variables, false);
   }
 

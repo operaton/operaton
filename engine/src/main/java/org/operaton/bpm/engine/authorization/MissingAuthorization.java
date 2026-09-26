@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.authorization;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Objects;
 
 /**
@@ -24,13 +27,13 @@ import java.util.Objects;
  *
  * @author Filip Hrisafov
  */
-public class MissingAuthorization {
+public @NullMarked class MissingAuthorization {
 
   private final String permissionName;
   private final String resourceType;
-  protected String resourceId;
+  protected @Nullable String resourceId;
 
-  public MissingAuthorization(String permissionName, String resourceType, String resourceId) {
+  public MissingAuthorization(String permissionName, String resourceType, @Nullable String resourceId) {
     this.permissionName = permissionName;
     this.resourceType = resourceType;
     this.resourceId = resourceId;
@@ -44,7 +47,7 @@ public class MissingAuthorization {
     return resourceType;
   }
 
-  public String getResourceId() {
+  public @Nullable String getResourceId() {
     return resourceId;
   }
 

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.mock;
 
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.scripting.engine.Resolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ResolverFactory;
@@ -38,7 +39,7 @@ public class MocksResolverFactory implements ResolverFactory, Resolver {
   }
 
   @Override
-  public Object get(Object key) {
+  public @Nullable Object get(Object key) {
     return Mocks.get(key);
   }
 

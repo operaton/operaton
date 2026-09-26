@@ -51,6 +51,7 @@ import static java.util.Objects.requireNonNull;
 public @NullMarked class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
+  @SuppressWarnings({"rawtypes", "unchecked"})
   private static final VariableInstanceFactory<CoreVariableInstance> VARIABLE_INSTANCE_FACTORY = (VariableInstanceFactory) new SimpleVariableInstanceFactory();
 
   @Serial private static final long serialVersionUID = 1L;
@@ -80,7 +81,7 @@ public @NullMarked class CaseExecutionImpl extends CmmnExecution implements Seri
   // case definition id ///////////////////////////////////////////////////////
 
   @Override
-  public String getCaseDefinitionId() {
+  public @Nullable String getCaseDefinitionId() {
     return getCaseDefinition().getId();
   }
 

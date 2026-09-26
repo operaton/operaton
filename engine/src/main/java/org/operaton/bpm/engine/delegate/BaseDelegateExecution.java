@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.delegate;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  *
@@ -35,6 +36,6 @@ public @NullMarked interface BaseDelegateExecution extends VariableScope {
 
   /** The business key for the root execution (e.g. process instance).
    */
-  String getBusinessKey();
+  @Nullable String getBusinessKey();
 
 }

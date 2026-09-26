@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.history;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.query.Query;
 
 /**
  * Defines a report query for cleanable batches.
  *
  */
-public interface CleanableHistoricBatchReport extends Query<CleanableHistoricBatchReport, CleanableHistoricBatchReportResult> {
+public @NullMarked interface CleanableHistoricBatchReport extends Query<CleanableHistoricBatchReport, CleanableHistoricBatchReportResult> {
 
   /**
    * Order by finished batch operations amount (needs to be followed by {@link #asc()} or {@link #desc()}).

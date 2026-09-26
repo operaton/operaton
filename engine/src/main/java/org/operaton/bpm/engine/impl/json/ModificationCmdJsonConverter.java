@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.json;
 
 import com.google.gson.JsonObject;
 
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmd.AbstractProcessInstanceModificationCommand;
 import org.operaton.bpm.engine.impl.cmd.ActivityAfterInstantiationCmd;
@@ -31,7 +30,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 import static java.util.Objects.requireNonNull;
 
-public @NullMarked class ModificationCmdJsonConverter implements JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
+public class ModificationCmdJsonConverter implements JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
 
   public static final String START_BEFORE = "startBeforeActivity";
   public static final String START_AFTER = "startAfterActivity";

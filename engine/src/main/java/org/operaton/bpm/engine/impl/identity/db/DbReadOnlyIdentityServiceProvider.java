@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.authorization.Permission;
@@ -49,12 +50,12 @@ import static org.operaton.bpm.engine.impl.util.EncryptionUtil.saltPassword;
  * @author nico.rehwaldt
  */
 @SuppressWarnings("unchecked")
-public class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadOnlyIdentityProvider {
+public @NullMarked class DbReadOnlyIdentityServiceProvider extends AbstractManager implements ReadOnlyIdentityProvider {
 
   // users /////////////////////////////////////////
 
   @Override
-  public UserEntity findUserById(String userId) {
+  public @Nullable UserEntity findUserById(@Nullable String userId) {
     checkAuthorization(Permissions.READ, Resources.USER, userId);
     return getDbEntityManager().selectById(UserEntity.class, userId);
   }
@@ -94,7 +95,7 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   }
 
   @Override
-  public boolean checkPassword(String userId, String password) {
+  public boolean checkPassword(@Nullable String userId, @Nullable String password) {
     UserEntity user = findUserById(userId);
     return (user != null) && (password != null) && matchPassword(password, user);
   }
@@ -172,10 +173,11 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
     Map<String, String> key = new HashMap<>();
     key.put("userId", userId);
     key.put("groupId", groupId);
-    return ((Long) getDbEntityManager().selectOne("selectMembershipCount", key)) > 0;
+    Long count = (Long) getDbEntityManager().selectOne("selectMembershipCount", key);
+    return requireNonNull(count) > 0;
   }
 
-  protected boolean existsTenantMembership(String tenantId, String userId, String groupId) {
+  protected boolean existsTenantMembership(String tenantId, @Nullable String userId, @Nullable String groupId) {
     Map<String, String> key = new HashMap<>();
     key.put("tenantId", tenantId);
     if (userId != null) {
@@ -184,7 +186,8 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
     if (groupId != null) {
       key.put("groupId", groupId);
     }
-    return ((Long) getDbEntityManager().selectOne("selectTenantMembershipCount", key)) > 0;
+    Long count = (Long) getDbEntityManager().selectOne("selectTenantMembershipCount", key);
+    return requireNonNull(count) > 0;
   }
 
   //authorizations ////////////////////////////////////////////////////
@@ -198,7 +201,7 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   }
 
   @Override
-  protected void checkAuthorization(Permission permission, Resource resource, String resourceId) {
+  protected void checkAuthorization(Permission permission, Resource resource, @Nullable String resourceId) {
     CommandContext commandContext = Context.getCommandContext();
     commandContext
       .getAuthorizationManager()

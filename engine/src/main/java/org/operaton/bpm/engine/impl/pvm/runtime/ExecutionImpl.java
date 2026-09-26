@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -48,7 +50,7 @@ import org.operaton.bpm.model.bpmn.instance.FlowElement;
  * @author Daniel Meyer
  * @author Falko Menge
  */
-public class ExecutionImpl extends PvmExecutionImpl implements Serializable, ActivityExecution, PvmProcessInstance {
+public @NullMarked class ExecutionImpl extends PvmExecutionImpl implements Serializable, ActivityExecution, PvmProcessInstance {
 
   @Serial
   private static final long serialVersionUID = 1L;
@@ -61,25 +63,25 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
 
   /** the process instance.  this is the root of the execution tree.
    * the processInstance of a process instance is a self reference. */
-  private ExecutionImpl processInstance;
+  private @Nullable ExecutionImpl processInstance;
 
   /** the parent execution */
   private @Nullable ExecutionImpl parent;
 
   /** nested executions representing scopes or concurrent paths */
-  private List<ExecutionImpl> executions;
+  private @Nullable List<ExecutionImpl> executions;
 
   /** super execution, not-null if this execution is part of a subprocess */
-  private ExecutionImpl superExecution;
+  private @Nullable ExecutionImpl superExecution;
 
   /** reference to a subprocessinstance, not-null if currently subprocess is started from this execution */
-  private ExecutionImpl subProcessInstance;
+  private @Nullable ExecutionImpl subProcessInstance;
 
   /** super case execution, not-null if this execution is part of a case execution */
-  private CaseExecutionImpl superCaseExecution;
+  private @Nullable CaseExecutionImpl superCaseExecution;
 
   /** reference to a subcaseinstance, not-null if currently subcase is started from this execution */
-  private CaseExecutionImpl subCaseInstance;
+  private @Nullable CaseExecutionImpl subCaseInstance;
 
   // variables/////////////////////////////////////////////////////////////////
 
@@ -141,7 +143,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   }
 
   @Override
-  public void setParentExecution(PvmExecutionImpl parent) {
+  public void setParentExecution(@Nullable PvmExecutionImpl parent) {
     this.parent = (ExecutionImpl) parent;
   }
 
@@ -162,12 +164,12 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   }
 
   @Override
-  public ExecutionImpl getSuperExecution() {
+  public @Nullable ExecutionImpl getSuperExecution() {
     return superExecution;
   }
 
   @Override
-  public void setSuperExecution(PvmExecutionImpl superExecution) {
+  public void setSuperExecution(@Nullable PvmExecutionImpl superExecution) {
     this.superExecution = (ExecutionImpl) superExecution;
     if (superExecution != null) {
       superExecution.setSubProcessInstance(null);
@@ -175,19 +177,19 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   }
 
   @Override
-  public ExecutionImpl getSubProcessInstance() {
+  public @Nullable ExecutionImpl getSubProcessInstance() {
     return subProcessInstance;
   }
 
   @Override
-  public void setSubProcessInstance(PvmExecutionImpl subProcessInstance) {
+  public void setSubProcessInstance(@Nullable PvmExecutionImpl subProcessInstance) {
     this.subProcessInstance = (ExecutionImpl) subProcessInstance;
   }
 
   // super case execution /////////////////////////////////////////////////////
 
   @Override
-  public CaseExecutionImpl getSuperCaseExecution() {
+  public @Nullable CaseExecutionImpl getSuperCaseExecution() {
     return superCaseExecution;
   }
 
@@ -199,12 +201,12 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   // sub case execution ////////////////////////////////////////////////////////
 
   @Override
-  public CaseExecutionImpl getSubCaseInstance() {
+  public @Nullable CaseExecutionImpl getSubCaseInstance() {
     return subCaseInstance;
   }
 
   @Override
-  public void setSubCaseInstance(CmmnExecution subCaseInstance) {
+  public void setSubCaseInstance(@Nullable CmmnExecution subCaseInstance) {
     this.subCaseInstance = (CaseExecutionImpl) subCaseInstance;
   }
 
@@ -235,7 +237,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
 
   /** ensures initialization and returns the process instance. */
   @Override
-  public ExecutionImpl getProcessInstance() {
+  public @Nullable ExecutionImpl getProcessInstance() {
     return processInstance;
   }
 
@@ -245,7 +247,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   }
 
   @Override
-  public String getBusinessKey() {
+  public @Nullable String getBusinessKey() {
     return getProcessInstance().getBusinessKey();
   }
 
@@ -255,7 +257,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   }
 
   @Override
-  public String getProcessBusinessKey() {
+  public @Nullable String getProcessBusinessKey() {
     return getProcessInstance().getBusinessKey();
   }
 
@@ -271,7 +273,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
    * generates an activity instance id
    */
   @Override
-  protected String generateActivityInstanceId(String activityId) {
+  protected String generateActivityInstanceId(@NonNull String activityId) {
     int nextId = idGenerator.incrementAndGet();
     String compositeId = activityId + ":" + nextId;
     if (compositeId.length() > 64) {
@@ -321,7 +323,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   }
 
   @Override
-  public ExecutionImpl getReplacedBy() {
+  public @Nullable ExecutionImpl getReplacedBy() {
     return (ExecutionImpl) replacedBy;
   }
 
@@ -330,7 +332,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
   }
 
   @Override
-  public String getCurrentActivityName() {
+  public @Nullable String getCurrentActivityName() {
     String currentActivityName = null;
     if (this.activity != null) {
       currentActivityName = (String) activity.getProperty("name");

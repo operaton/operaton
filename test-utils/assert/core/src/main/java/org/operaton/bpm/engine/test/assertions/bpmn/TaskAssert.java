@@ -86,7 +86,6 @@ public @NullMarked class TaskAssert extends AbstractProcessAssert<TaskAssert, Ta
    *
    * @param   candidateGroupId id of a candidate group the task is waiting to be assigned to
    * @return  this {@link TaskAssert}
-   * @since   Operaton.0
    */
   public TaskAssert hasCandidateGroup(final String candidateGroupId) {
     return hasCandidateGroup(candidateGroupId, true);
@@ -99,7 +98,6 @@ public @NullMarked class TaskAssert extends AbstractProcessAssert<TaskAssert, Ta
    *
    * @param   candidateGroupId id of a candidate group the task is associated to
    * @return  this {@link TaskAssert}
-   * @since   Operaton.3
    */
   public TaskAssert hasCandidateGroupAssociated(final String candidateGroupId) {
     return hasCandidateGroup(candidateGroupId, false);
@@ -129,7 +127,6 @@ public @NullMarked class TaskAssert extends AbstractProcessAssert<TaskAssert, Ta
    *
    * @param   candidateUserId id of a candidate user the task is waiting to be assigned to
    * @return  this {@link TaskAssert}
-   * @since   Operaton.0
    */
   public TaskAssert hasCandidateUser(final String candidateUserId) {
     return hasCandidateUser(candidateUserId, true);
@@ -142,7 +139,6 @@ public @NullMarked class TaskAssert extends AbstractProcessAssert<TaskAssert, Ta
    *
    * @param   candidateUserId id of a candidate user the task is associated to
    * @return  this {@link TaskAssert}
-   * @since   Operaton.3
    */
   public TaskAssert hasCandidateUserAssociated(final String candidateUserId) {
     return hasCandidateUser(candidateUserId, false);

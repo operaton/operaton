@@ -39,7 +39,6 @@ import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
  * {@link org.operaton.bpm.engine.test.spring.components.registry.ActivitiStateHandlerRegistry} if none exists.
  *
  * @author Josh Long
- * @since 5.3
  */
 public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
 

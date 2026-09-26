@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.spring.components.config.xml.StateHandlerAnnotati
  * simple place to stash the constants used throughout the code
  *
  * @author Josh Long
- * @since 5.3
   */
 public final class ActivitiContextUtils {
 

@@ -47,7 +47,6 @@ import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRe
  * that have the {@link org.operaton.bpm.engine.annotations.State} annotation.
  *
  * @author Josh Long
- * @since 5.3
  */
 @SuppressWarnings("unused") // registered through XML
 public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcessor, BeanClassLoaderAware, BeanFactoryAware, InitializingBean, Ordered {

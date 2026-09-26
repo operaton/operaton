@@ -22,7 +22,6 @@ import java.lang.annotation.*;
  * inject the current process' process variables as a {@link java.util.Map<String,Object>}.
  *
  * @author Josh Long
- * @since 1.0
  */
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

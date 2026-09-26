@@ -38,7 +38,6 @@ import org.operaton.bpm.engine.spring.components.aop.util.MetaAnnotationMatching
  * return null. The real return ProcessInstance value will be given by the aspect.
  *
  * @author Josh Long
- * @since 5.3
  */
 public class ProcessStartingPointcutAdvisor implements PointcutAdvisor {
 

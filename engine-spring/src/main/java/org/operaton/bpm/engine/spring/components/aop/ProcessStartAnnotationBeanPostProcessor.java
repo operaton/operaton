@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.spring.annotations.StartProcess;
  * are passed to the business process.
  *
  * @author Josh Long
- * @since 5.3
  */
 public class ProcessStartAnnotationBeanPostProcessor extends ProxyConfig implements BeanPostProcessor, InitializingBean {
 

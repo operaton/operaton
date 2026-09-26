@@ -55,7 +55,6 @@ import static java.util.Objects.requireNonNull;
  * Parts of this code are lifted wholesale from Dave Syer's work on the Spring 3.1 RefreshScope.
  *
  * @author Josh Long
- * @since 5.3
  */
 public @NullMarked class ProcessScope implements Scope, InitializingBean, BeanFactoryPostProcessor, DisposableBean {
 

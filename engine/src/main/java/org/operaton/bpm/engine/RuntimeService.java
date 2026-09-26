@@ -401,8 +401,6 @@ public @NullMarked interface RuntimeService {
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
-   *
-   * @since 5.9
    */
   ProcessInstance startProcessInstanceByMessage(String messageName);
 
@@ -424,8 +422,6 @@ public @NullMarked interface RuntimeService {
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
-   *
-   * @since 5.10
    */
   ProcessInstance startProcessInstanceByMessage(String messageName, String businessKey);
 
@@ -450,8 +446,6 @@ public @NullMarked interface RuntimeService {
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
-   *
-   * @since 5.9
    */
   ProcessInstance startProcessInstanceByMessage(String messageName, Map<String, Object> processVariables);
 
@@ -478,8 +472,6 @@ public @NullMarked interface RuntimeService {
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
-   *
-   * @since 5.9
    */
   ProcessInstance startProcessInstanceByMessage(String messageName, String businessKey, Map<String, Object> processVariables);
 

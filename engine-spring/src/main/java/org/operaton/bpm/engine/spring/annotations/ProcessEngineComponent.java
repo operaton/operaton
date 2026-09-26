@@ -44,7 +44,6 @@ import java.lang.annotation.*;
  * <code>@State( "confirm-receipt") public void confirmReceipt (..)</code>,
  *
  * @author Josh Long
- * @since 1.0
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * It now fetches this document from {@code {applicationPath}/config.json}, so the
  * same bundle serves every configuration.</p>
  *
- * @since 2.2.0
+ * @since 2.2
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record NeoClientConfig(

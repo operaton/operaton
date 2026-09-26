@@ -3773,8 +3773,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * {@link ProcessEngineConfiguration#DB_SCHEMA_UPDATE_CREATE_DROP}
    * or {@link ProcessEngineConfiguration#DB_SCHEMA_UPDATE_TRUE}, activiti will create the database tables
    * using the default names, regardless of the prefix configured here.</strong>
-   *
-   * @since 5.9
    */
   public ProcessEngineConfiguration setDatabaseTablePrefix(String databaseTablePrefix) {
     this.databaseTablePrefix = databaseTablePrefix;

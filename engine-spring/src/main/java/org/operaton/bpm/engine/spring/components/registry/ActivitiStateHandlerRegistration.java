@@ -28,7 +28,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * Describes the metadata extracted from the bean at configuration time
  *
  * @author Josh Long
- * @since 1.0
  */
 public class ActivitiStateHandlerRegistration {
 	private Map<Integer, String> processVariablesExpected = new ConcurrentHashMap<>();

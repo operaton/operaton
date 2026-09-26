@@ -41,7 +41,6 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * those methods expect from a given invocation (ie: which process, which process variables).
  *
  * @author Josh Long
- * @since 1.0
  */
 public @NullMarked class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior implements BeanFactoryAware, BeanNameAware, ActivityBehavior, InitializingBean {
 

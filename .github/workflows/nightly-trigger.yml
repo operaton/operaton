@@ -107,18 +107,18 @@ jobs:
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{
-              "ref": "${MATRIX_BRANCH}",
-              "inputs": {
-                "java_version": "[\"17\", \"21\", \"25\"]",
-                "skip_build": "false",
-                "skip_tests": "false",
-                "integration_tests": "true",
-                "testsuite": "[\"engine\", \"webapps\"]",
-                "distro": "[\"operaton\", \"tomcat\", \"wildfly\"]",
-                "database": "[\"h2\", \"postgresql\"]"
+            -d "$(jq -n --arg ref "$MATRIX_BRANCH" '{
+              ref: $ref,
+              inputs: {
+                java_version: "[\"17\", \"21\", \"25\"]",
+                skip_build: "false",
+                skip_tests: "false",
+                integration_tests: "true",
+                testsuite: "[\"engine\", \"webapps\"]",
+                distro: "[\"operaton\", \"tomcat\", \"wildfly\"]",
+                database: "[\"h2\", \"postgresql\"]"
               }
-            }' \
+            }')" \
             https://api.github.com/repos/${{ github.repository }}/actions/workflows/integration-build.yml/dispatches)
 
           if [ "$response" -ne 204 ]; then
@@ -156,14 +156,14 @@ jobs:
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{
-              "ref": "${MATRIX_BRANCH}",
-              "inputs": {
-                "profile": "max",
-                "reports": "true",
-                "skip_tests": "false"
+            -d "$(jq -n --arg ref "$MATRIX_BRANCH" '{
+              ref: $ref,
+              inputs: {
+                profile: "max",
+                reports: "true",
+                skip_tests: "false"
               }
-            }' \
+            }')" \
             https://api.github.com/repos/${{ github.repository }}/actions/workflows/build.yml/dispatches)
 
           if [ "$response" -ne 204 ]; then

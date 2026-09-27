@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 
@@ -25,7 +27,7 @@ import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.*;
  * @author Daniel Meyer
  *
  */
-public class HistoryLevelActivity extends AbstractHistoryLevel {
+public @NullMarked class HistoryLevelActivity extends AbstractHistoryLevel {
 
   @Override
   public int getId() {
@@ -38,7 +40,7 @@ public class HistoryLevelActivity extends AbstractHistoryLevel {
   }
 
   @Override
-  public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
+  public boolean isHistoryEventProduced(HistoryEventType eventType, @Nullable Object entity) {
     return PROCESS_INSTANCE_START == eventType
         || PROCESS_INSTANCE_UPDATE == eventType
         || PROCESS_INSTANCE_MIGRATE == eventType

@@ -16,19 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.delegate.DelegateInvocation;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class FormFieldValidatorInvocation extends DelegateInvocation {
+public @NullMarked class FormFieldValidatorInvocation extends DelegateInvocation {
 
   protected FormFieldValidator formFieldValidator;
-  protected Object submittedValue;
+  protected @Nullable Object submittedValue;
   protected FormFieldValidatorContext validatorContext;
 
-  public FormFieldValidatorInvocation(FormFieldValidator formFieldValidator, Object submittedValue, FormFieldValidatorContext validatorContext) {
+  public FormFieldValidatorInvocation(FormFieldValidator formFieldValidator, @Nullable Object submittedValue, FormFieldValidatorContext validatorContext) {
     super(null, null);
     this.formFieldValidator = formFieldValidator;
     this.submittedValue = submittedValue;
@@ -40,7 +42,7 @@ public class FormFieldValidatorInvocation extends DelegateInvocation {
   }
 
   @Override
-  public Boolean getInvocationResult() {
+  public @Nullable Boolean getInvocationResult() {
     return (Boolean) super.getInvocationResult();
   }
 

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.form;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.task.Task;
 
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.task.Task;
  *
  * @author Tom Baeyens
  */
-public interface TaskFormData extends FormData {
+public @NullMarked interface TaskFormData extends FormData {
 
   /** The task for which this form is used to complete it. */
   Task getTask();

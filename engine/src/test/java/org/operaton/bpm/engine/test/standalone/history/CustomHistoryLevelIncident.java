@@ -18,13 +18,15 @@ package org.operaton.bpm.engine.test.standalone.history;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 
-public class CustomHistoryLevelIncident implements HistoryLevel {
+public @NullMarked class CustomHistoryLevelIncident implements HistoryLevel {
 
-  private List<HistoryEventTypes> eventTypes;
+  private @Nullable List<HistoryEventTypes> eventTypes;
 
   public CustomHistoryLevelIncident() {
   }
@@ -43,16 +45,16 @@ public class CustomHistoryLevelIncident implements HistoryLevel {
     return "aCustomHistoryLevelIncident";
   }
 
-  public List<HistoryEventTypes> getEventTypes() {
+  public @Nullable List<HistoryEventTypes> getEventTypes() {
     return eventTypes;
   }
 
-  public void setEventTypes(List<HistoryEventTypes> eventTypes) {
+  public void setEventTypes(@Nullable List<HistoryEventTypes> eventTypes) {
     this.eventTypes = eventTypes;
   }
 
   @Override
-  public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
+  public boolean isHistoryEventProduced(HistoryEventType eventType, @Nullable Object entity) {
     if (eventTypes != null) {
       for (HistoryEventTypes eventTypeConfig : eventTypes) {
         if (eventType.equals(eventTypeConfig)) {

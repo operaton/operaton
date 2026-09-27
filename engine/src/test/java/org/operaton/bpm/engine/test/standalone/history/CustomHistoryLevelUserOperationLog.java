@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.test.standalone.history;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 
-public class CustomHistoryLevelUserOperationLog implements HistoryLevel {
+public @NullMarked class CustomHistoryLevelUserOperationLog implements HistoryLevel {
 
   @Override
   public int getId() {
@@ -33,7 +35,7 @@ public class CustomHistoryLevelUserOperationLog implements HistoryLevel {
   }
 
   @Override
-  public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
+  public boolean isHistoryEventProduced(HistoryEventType eventType, @Nullable Object entity) {
     return eventType.equals(HistoryEventTypes.USER_OPERATION_LOG);
   }
 }

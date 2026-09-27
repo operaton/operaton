@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.history;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serializable;
 
 /**
  * @author Roman Smirnov
  *
  */
-public interface JobState extends Serializable {
+public @NullMarked interface JobState extends Serializable {
 
   JobState CREATED = new JobStateImpl(0, "created");
   JobState FAILED = new JobStateImpl(1, "failed");
@@ -33,7 +35,7 @@ public interface JobState extends Serializable {
 
   // /////////////////////////////////////////////////// default implementation
 
-  class JobStateImpl implements JobState {
+  @NullMarked class JobStateImpl implements JobState {
 
     public final int stateCode;
     protected final String name;

@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.form;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Used to indicate the type on a {@link FormProperty}.
  * @author Tom Baeyens
  */
-public interface FormType {
+public @NullMarked interface FormType {
 
   /** Name for the form type. */
   String getName();
@@ -31,6 +33,6 @@ public interface FormType {
    * for date types. Look in the userguide for
    * which extra information keys each type provides
    * and what return type they give. */
-  Object getInformation(String key);
+  @Nullable Object getInformation(String key);
 
 }

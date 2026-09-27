@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.db.HasDbRevision;
 /**
  * @author Tom Baeyens
  */
-public class GroupEntity implements Group, DbEntity, HasDbRevision {
+public @NullUnmarked class GroupEntity implements Group, DbEntity, HasDbRevision {
 
   protected String id;
   protected int revision;

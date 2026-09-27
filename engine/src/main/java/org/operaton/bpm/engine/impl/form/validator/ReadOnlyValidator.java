@@ -16,14 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Daniel Meyer
  *
  */
-public class ReadOnlyValidator implements FormFieldValidator {
+public @NullMarked class ReadOnlyValidator implements FormFieldValidator {
 
   @Override
-  public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
+  public boolean validate(@Nullable Object submittedValue, FormFieldValidatorContext validatorContext) {
     // no value was submitted
     return submittedValue == null;
   }

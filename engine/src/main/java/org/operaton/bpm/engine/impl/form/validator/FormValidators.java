@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 
 import org.jspecify.annotations.Nullable;
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
  * @author Daniel Meyer
  *
  */
-public class FormValidators {
+public @NullMarked class FormValidators {
 
   /** the registry of configured validators. Populated through {@link ProcessEngineConfiguration}. */
   protected Map<String, Class<? extends FormFieldValidator>> validators = new HashMap<>();
@@ -49,8 +50,8 @@ public class FormValidators {
    */
   public @Nullable FormFieldValidator createValidator(Element constraint, BpmnParse bpmnParse, ExpressionManager expressionManager) {
 
-    String name = constraint.attribute("name");
-    String config = constraint.attribute("config");
+    @Nullable String name = constraint.attribute("name");
+    @Nullable String config = constraint.attribute("config");
 
     if("validator".equals(name)) {
 

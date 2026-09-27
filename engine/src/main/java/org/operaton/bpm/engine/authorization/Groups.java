@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.authorization;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Holds the set of built-in user identities for Operaton.
  *
  * @author Nico Rehwaldt
  */
-public final class Groups {
+public final @NullMarked class Groups {
 
   public static final String OPERATON_ADMIN = "operaton-admin";
   public static final String GROUP_TYPE_SYSTEM = "SYSTEM";

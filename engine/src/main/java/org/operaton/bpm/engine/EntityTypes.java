@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * @author Sebastian Menski
  */
-public final class EntityTypes {
+public final @NullMarked class EntityTypes {
   private EntityTypes() {
   }
 

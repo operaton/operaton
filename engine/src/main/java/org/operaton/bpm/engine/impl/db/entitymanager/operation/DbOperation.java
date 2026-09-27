@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.db.entitymanager.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.Recyclable;
 
@@ -96,7 +97,7 @@ public abstract class DbOperation implements Recyclable {
     this.failure = failure;
   }
 
-  public enum State
+  public @NullMarked enum State
   {
     NOT_APPLIED,
     APPLIED,

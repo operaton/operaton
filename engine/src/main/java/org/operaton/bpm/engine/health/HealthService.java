@@ -15,6 +15,8 @@
  */
 package org.operaton.bpm.engine.health;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * SPI for obtaining Operaton health information independent of the runtime.
  *
@@ -32,7 +34,7 @@ package org.operaton.bpm.engine.health;
  * @author <a href="mailto:tomnm77@gmail.com">Tomasz Korcz</a>
  * @since 2.1
  */
-public interface HealthService {
+public @NullMarked interface HealthService {
 
   /**
    * Perform a health check and return a {@link HealthResult}.

@@ -16,16 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class RequiredValidator implements FormFieldValidator {
+public @NullMarked class RequiredValidator implements FormFieldValidator {
 
   @Override
-  public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
+  public boolean validate(@Nullable Object submittedValue, FormFieldValidatorContext validatorContext) {
     if(submittedValue == null) {
       var variableName = validatorContext.getFormFieldHandler().getId();
       TypedValue value = validatorContext.getVariableScope().getVariableTyped(variableName);

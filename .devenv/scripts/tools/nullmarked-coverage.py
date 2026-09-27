@@ -76,6 +76,10 @@ TOP_LEVEL_TYPE_RE = re.compile(
     r'^\s*(?:public\s+|final\s+|abstract\s+|sealed\s+|non-sealed\s+|strictfp\s+)*'
     r'(?:class|interface|enum|record|@interface)\s+\w'
 )
+TOP_LEVEL_ENUM_RE = re.compile(
+    r'^\s*(?:public\s+|final\s+|abstract\s+|sealed\s+|non-sealed\s+|strictfp\s+)*'
+    r'enum\s+\w'
+)
 LINE_COMMENT_RE = re.compile(r'//.*')
 BLOCK_COMMENT_RE = re.compile(r'/\*.*?\*/', re.DOTALL)
 
@@ -157,6 +161,16 @@ def is_top_level_type_marked(text):
     return marked, unmarked
 
 
+def is_top_level_enum(text):
+    """True if the first top-level type in the file is an enum."""
+    for line in text.splitlines():
+        if TOP_LEVEL_ENUM_RE.match(line):
+            return True
+        if TOP_LEVEL_TYPE_RE.match(line):
+            return False
+    return False
+
+
 def analyze_module(module_dir, include_tests):
     source_roots = [module_dir / 'src' / 'main' / 'java']
     if include_tests:
@@ -189,6 +203,9 @@ def analyze_module(module_dir, include_tests):
                 continue
 
             text = strip_comments(java_file.read_text(encoding='utf-8', errors='replace'))
+            if is_top_level_enum(text):
+                continue
+
             class_marked, class_unmarked = is_top_level_type_marked(text)
             package_marked = is_package_marked(java_file.parent)
 

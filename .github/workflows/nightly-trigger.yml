@@ -32,8 +32,8 @@ jobs:
           # Fetch all remote branches
           git fetch --all
 
-          # Get all branches with release/ prefix using git for-each-ref for robustness
-          BRANCHES=$(git for-each-ref --format='%(refname:short)' refs/remotes/origin/release/ | sed 's|origin/||' | sort -u)
+          # Get all branches with release/ or staging/ prefix using git for-each-ref for robustness
+          BRANCHES=$( { git for-each-ref --format='%(refname:short)' refs/remotes/origin/release/; git for-each-ref --format='%(refname:short)' refs/remotes/origin/staging/; } | sed 's|origin/||' | sort -u)
 
           if [ -z "$BRANCHES" ]; then
             echo "No release branches found"

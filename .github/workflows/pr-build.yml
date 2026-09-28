@@ -10,6 +10,7 @@ on:
     branches:
       - main
       - release/**
+      - staging/**
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/pr-build.yml'

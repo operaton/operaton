@@ -64,10 +64,10 @@
     "superagent": "10.3.0"
   },
   "devDependencies": {
-    "@babel/core": "8.0.5",
-    "@babel/eslint-parser": "8.0.5",
+    "@babel/core": "8.0.6",
+    "@babel/eslint-parser": "8.0.6",
     "@babel/plugin-transform-object-rest-spread": "8.0.1",
-    "@babel/preset-env": "8.0.5",
+    "@babel/preset-env": "8.0.6",
     "angular-mocks": "1.8.3",
     "babel-loader": "10.1.1",
     "babel-plugin-polyfill-corejs3": "1.0.0",
@@ -96,7 +96,7 @@
     "svg-inline-loader": "0.8.2",
     "terser-webpack-plugin": "5.6.1",
     "ui-bootstrap4": "^3.0.7",
-    "webpack": "5.111.0",
+    "webpack": "5.111.1",
     "webpack-bundle-analyzer": "5.4.0",
     "webpack-cli": "7.2.3",
     "webpack-dev-server": "5.2.6",

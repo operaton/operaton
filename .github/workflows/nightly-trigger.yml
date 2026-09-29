@@ -103,7 +103,7 @@ jobs:
         run: |
           echo "Triggering integration build for branch: ${MATRIX_BRANCH}"
 
-          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+          response=$(curl -s -o /tmp/integration-build-dispatch-response.json -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -123,6 +123,7 @@ jobs:
 
           if [ "$response" -ne 204 ]; then
             echo "❌ Failed to trigger integration build for ${MATRIX_BRANCH}. HTTP response code: $response"
+            cat /tmp/integration-build-dispatch-response.json
             exit 1
           else
             echo "✅ Successfully triggered integration build for ${MATRIX_BRANCH}"
@@ -152,7 +153,7 @@ jobs:
         run: |
           echo "Triggering build for branch: ${MATRIX_BRANCH}"
 
-          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+          response=$(curl -s -o /tmp/build-dispatch-response.json -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -168,6 +169,7 @@ jobs:
 
           if [ "$response" -ne 204 ]; then
             echo "❌ Failed to trigger build for ${MATRIX_BRANCH}. HTTP response code: $response"
+            cat /tmp/build-dispatch-response.json
             exit 1
           else
             echo "✅ Successfully triggered build for ${MATRIX_BRANCH}"

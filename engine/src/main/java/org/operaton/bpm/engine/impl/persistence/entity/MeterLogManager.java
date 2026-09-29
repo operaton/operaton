@@ -162,7 +162,8 @@ public class MeterLogManager extends AbstractManager {
       parameters.put(END_TIME, endTime);
     }
 
-    return (Long) getDbEntityManager().selectOne(SELECT_UNIQUE_TASK_WORKER, parameters);
+    Long count = (Long) getDbEntityManager().selectOne(SELECT_UNIQUE_TASK_WORKER, parameters);
+    return requireNonNull(count);
   }
 
   public void deleteTaskMetricsByTimestamp(Date timestamp) {

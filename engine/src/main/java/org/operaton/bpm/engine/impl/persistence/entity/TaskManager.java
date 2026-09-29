@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.task.Task;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
@@ -145,7 +146,8 @@ public class TaskManager extends AbstractManager {
 
   public long findTaskCountByQueryCriteria(TaskQueryImpl taskQuery) {
     configureQuery(taskQuery);
-    return (Long) getDbEntityManager().selectOne("selectTaskCountByQueryCriteria", taskQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectTaskCountByQueryCriteria", taskQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -154,7 +156,8 @@ public class TaskManager extends AbstractManager {
   }
 
   public long findTaskCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectTaskCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectTaskCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

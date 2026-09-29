@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.runtime.Incident;
  *
  * @author Tom Baeyens
  */
-public interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecutionContext, ProcessEngineServicesAware {
+public @NullMarked interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecutionContext, ProcessEngineServicesAware {
 
   /** Reference to the overall process instance */
   String getProcessInstanceId();
@@ -35,7 +36,7 @@ public interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecu
    * The business key for the process instance this execution is associated
    * with.
    */
-  String getProcessBusinessKey();
+  @Nullable String getProcessBusinessKey();
 
   /**
    * Configure a business key on the process instance this execution is associated
@@ -43,7 +44,7 @@ public interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecu
    *
    * @param businessKey the new business key
    */
-  void setProcessBusinessKey(String businessKey);
+  void setProcessBusinessKey(@Nullable String businessKey);
 
   /**
    * The process definition key for the process instance this execution is
@@ -55,31 +56,31 @@ public interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecu
    * Gets the id of the parent of this execution. If null, the execution
    * represents a process-instance.
    */
-  String getParentId();
+  @Nullable String getParentId();
 
   /**
    * Gets the id of the current activity.
    */
-  String getCurrentActivityId();
+  @Nullable String getCurrentActivityId();
 
   /**
    * Gets the name of the current activity.
    */
-  String getCurrentActivityName();
+  @Nullable String getCurrentActivityName();
 
   /**
    * return the Id of the activity instance currently executed by this execution
    */
-  String getActivityInstanceId();
+  @Nullable String getActivityInstanceId();
 
   /**
    * return the Id of the parent activity instance currently executed by this
    * execution
    */
-  String getParentActivityInstanceId();
+  @Nullable String getParentActivityInstanceId();
 
   /** return the Id of the current transition */
-  String getCurrentTransitionId();
+  @Nullable String getCurrentTransitionId();
 
   /**
    * Return the process instance execution for this execution. In case this
@@ -105,7 +106,7 @@ public interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecu
    * Return the id of the tenant this execution belongs to. Can be <code>null</code>
    * if the execution belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * Method to store variable in a specific scope identified by activity ID.

@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.impl.HistoricCaseActivityInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Sebastian Menski
  */
@@ -52,7 +54,8 @@ public class HistoricCaseActivityInstanceManager extends AbstractHistoricManager
 
   public long findHistoricCaseActivityInstanceCountByQueryCriteria(HistoricCaseActivityInstanceQueryImpl historicCaseActivityInstanceQuery) {
     configureHistoricCaseActivityInstanceQuery(historicCaseActivityInstanceQuery);
-    return (Long) getDbEntityManager().selectOne("selectHistoricCaseActivityInstanceCountByQueryCriteria", historicCaseActivityInstanceQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricCaseActivityInstanceCountByQueryCriteria", historicCaseActivityInstanceQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -67,7 +70,8 @@ public class HistoricCaseActivityInstanceManager extends AbstractHistoricManager
   }
 
   public long findHistoricCaseActivityInstanceCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectHistoricCaseActivityInstanceCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricCaseActivityInstanceCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   protected void configureHistoricCaseActivityInstanceQuery(HistoricCaseActivityInstanceQueryImpl query) {

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.cmmn.listener;
 import java.io.Serial;
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.delegate.Expression;
@@ -37,7 +38,7 @@ public class FieldInjectionCaseExecutionListener implements CaseExecutionListene
   protected Expression suffix;
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) {
     caseExecution.setVariable("greeting", "Hello from " + greeter.getValue(caseExecution));
     caseExecution.setVariable("helloWorld", helloWorld.getValue(caseExecution));
     caseExecution.setVariable("prefix", prefix.getValue(caseExecution));

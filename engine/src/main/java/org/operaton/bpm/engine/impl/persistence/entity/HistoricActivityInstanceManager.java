@@ -29,6 +29,8 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.history.event.HistoricActivityInstanceEventEntity;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  */
@@ -52,7 +54,8 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
 
   public long findHistoricActivityInstanceCountByQueryCriteria(HistoricActivityInstanceQueryImpl historicActivityInstanceQuery) {
     configureQuery(historicActivityInstanceQuery);
-    return (Long) getDbEntityManager().selectOne("selectHistoricActivityInstanceCountByQueryCriteria", historicActivityInstanceQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricActivityInstanceCountByQueryCriteria", historicActivityInstanceQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -67,7 +70,8 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
   }
 
   public long findHistoricActivityInstanceCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectHistoricActivityInstanceCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricActivityInstanceCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   protected void configureQuery(HistoricActivityInstanceQueryImpl query) {

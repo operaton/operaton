@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.task.listener;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
  *
  * @author Sebastian Menski
  */
-public class ScriptTaskListener implements TaskListener {
+public @NullMarked class ScriptTaskListener implements TaskListener {
 
   protected final ExecutableScript script;
 
@@ -49,7 +50,7 @@ public class ScriptTaskListener implements TaskListener {
     } catch (Exception e) {
       throw new ProcessEngineException(e);
     }
-	}
+  }
 
   public ExecutableScript getScript() {
     return script;

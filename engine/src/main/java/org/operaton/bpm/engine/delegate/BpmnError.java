@@ -18,9 +18,12 @@ package org.operaton.bpm.engine.delegate;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.bpmn.parser.Error;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
 
@@ -41,36 +44,36 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
  *
  * @author Falko Menge
  */
-public class BpmnError extends ProcessEngineException {
+public @NullMarked class BpmnError extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  private String errorCode;
-  private String errorMessage;
+  private @Nullable String errorCode;
+  private @Nullable String errorMessage;
 
-  public BpmnError(String errorCode) {
+  public BpmnError(@Nullable String errorCode) {
     super(exceptionMessage(errorCode, null));
     setErrorCode(errorCode);
   }
 
-  public BpmnError(String errorCode, String message) {
+  public BpmnError(@Nullable String errorCode, @Nullable String message) {
     super(exceptionMessage(errorCode, message));
     setErrorCode(errorCode);
     setMessage(message);
   }
 
-  public BpmnError(String errorCode, String message, Throwable cause) {
+  public BpmnError(@Nullable String errorCode, @Nullable String message, @Nullable Throwable cause) {
     super(exceptionMessage(errorCode, message), cause);
     setErrorCode(errorCode);
     setMessage(message);
   }
 
-  public BpmnError(String errorCode, Throwable cause) {
+  public BpmnError(@Nullable String errorCode, @Nullable Throwable cause) {
     super(exceptionMessage(errorCode, null), cause);
     setErrorCode(errorCode);
   }
 
-  private static String exceptionMessage(String errorCode, String message) {
+  private static String exceptionMessage(@Nullable String errorCode, @Nullable String message) {
     if (message == null) {
       return "";
     } else {
@@ -78,13 +81,13 @@ public class BpmnError extends ProcessEngineException {
     }
   }
 
-  protected void setErrorCode(String errorCode) {
+  protected void setErrorCode(@Nullable String errorCode) {
     ensureNotEmpty("Error Code", errorCode);
     this.errorCode = errorCode;
   }
 
   public String getErrorCode() {
-    return errorCode;
+    return requireNonNull(errorCode);
   }
 
   @Override
@@ -92,13 +95,13 @@ public class BpmnError extends ProcessEngineException {
     return "%s (errorCode='%s')".formatted(super.toString(), errorCode);
   }
 
-  protected void setMessage(String errorMessage) {
+  protected void setMessage(@Nullable String errorMessage) {
     ensureNotEmpty("Error Message", errorMessage);
     this.errorMessage = errorMessage;
   }
 
   @Override
-  public String getMessage() {
+  public @Nullable String getMessage() {
     return errorMessage;
   }
 }

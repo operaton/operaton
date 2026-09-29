@@ -19,6 +19,7 @@ package org.operaton.bpm.pa.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  * @author Daniel Meyer
  *
  */
-public class AddMapVariableListener implements TaskListener {
+public @NullMarked class AddMapVariableListener implements TaskListener {
 
   public void notify(DelegateTask task) {
     Map<String, Object> map = new HashMap<>();

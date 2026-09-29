@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.persistence;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.authorization.Permission;
@@ -42,7 +43,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.*;
 /**
  * @author Tom Baeyens
  */
-public abstract class AbstractManager implements Session {
+public abstract @NullMarked class AbstractManager implements Session {
   protected static final String ACTIVITY_ID = "activityId";
   protected static final String BATCH_ID = "batchId";
   protected static final String BATCH_SIZE = "batchSize";
@@ -258,7 +259,7 @@ public abstract class AbstractManager implements Session {
     return Context.getProcessEngineConfiguration().isAuthorizationEnabled();
   }
 
-  protected Authentication getCurrentAuthentication() {
+  protected @Nullable Authentication getCurrentAuthentication() {
     return Context.getCommandContext().getAuthentication();
   }
 
@@ -290,7 +291,6 @@ public abstract class AbstractManager implements Session {
           } else {
             authorizationManager.update(authorization);
           }
-
         }
         return null;
       });

@@ -131,8 +131,7 @@ public @NullMarked class CaseDefinitionManager extends AbstractManager implement
   public long findCaseDefinitionCountByQueryCriteria(CaseDefinitionQueryImpl caseDefinitionQuery) {
     configureCaseDefinitionQuery(caseDefinitionQuery);
     Long count = (Long) getDbEntityManager().selectOne("selectCaseDefinitionCountByQueryCriteria", caseDefinitionQuery);
-    requireNonNull(count);
-    return count;
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

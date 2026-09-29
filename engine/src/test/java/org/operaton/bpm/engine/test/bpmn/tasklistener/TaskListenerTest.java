@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.joda.time.LocalDateTime;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -945,7 +946,7 @@ class TaskListenerTest extends AbstractTaskListenerTest {
     protected static VariableMap collectedVariables;
 
     @Override
-    public void notify(DelegateTask delegateTask) {
+    public void notify(@NonNull DelegateTask delegateTask) {
       collectedVariables = delegateTask.getVariablesTyped();
     }
 

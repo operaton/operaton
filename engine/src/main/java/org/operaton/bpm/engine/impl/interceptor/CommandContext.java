@@ -58,6 +58,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.FailedJobCommandFactory;
 import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.entity.*;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static java.util.Collections.emptyList;
 
@@ -107,7 +108,7 @@ public @NullMarked class CommandContext {
       Context.executeWithinProcessApplication(() -> {
         performOperation(executionOperation, execution);
         return null;
-      }, targetProcessApplication, new InvocationContext(execution));
+      }, requireNonNull(targetProcessApplication), new InvocationContext(execution));
 
     } else {
       try {
@@ -495,7 +496,7 @@ public @NullMarked class CommandContext {
     return failedJobCommandFactory;
   }
 
-  public Authentication getAuthentication() {
+  public @Nullable Authentication getAuthentication() {
     IdentityService identityService = processEngineConfiguration.getIdentityService();
     return identityService.getCurrentAuthentication();
   }

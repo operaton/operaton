@@ -27,6 +27,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
@@ -99,7 +101,8 @@ public class CaseExecutionManager extends AbstractManager {
 
   public long findCaseExecutionCountByQueryCriteria(CaseExecutionQueryImpl caseExecutionQuery) {
     configureTenantCheck(caseExecutionQuery);
-    return (Long) getDbEntityManager().selectOne("selectCaseExecutionCountByQueryCriteria", caseExecutionQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectCaseExecutionCountByQueryCriteria", caseExecutionQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -110,7 +113,8 @@ public class CaseExecutionManager extends AbstractManager {
 
   public long findCaseInstanceCountByQueryCriteria(CaseInstanceQueryImpl caseInstanceQuery) {
     configureTenantCheck(caseInstanceQuery);
-    return (Long) getDbEntityManager().selectOne("selectCaseInstanceCountByQueryCriteria", caseInstanceQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectCaseInstanceCountByQueryCriteria", caseInstanceQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

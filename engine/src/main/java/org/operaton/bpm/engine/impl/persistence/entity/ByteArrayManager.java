@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 /**
  * @author Joram Barrez
  */
-public class ByteArrayManager extends AbstractManager {
+public @NullMarked class ByteArrayManager extends AbstractManager {
 
   /**
    * Deletes the {@link ByteArrayEntity} with the given id from the database.

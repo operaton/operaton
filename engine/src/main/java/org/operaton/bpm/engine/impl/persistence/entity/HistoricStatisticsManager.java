@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 
@@ -49,7 +50,8 @@ public class HistoricStatisticsManager extends AbstractManager {
 
   public long getHistoricStatisticsCountGroupedByActivity(HistoricActivityStatisticsQueryImpl query) {
     if (ensureHistoryReadOnProcessDefinition(query)) {
-      return (Long) getDbEntityManager().selectOne("selectHistoricActivityStatisticsCount", query);
+      Long count = (Long) getDbEntityManager().selectOne("selectHistoricActivityStatisticsCount", query);
+      return requireNonNull(count);
     }
     else {
       return 0;
@@ -62,7 +64,8 @@ public class HistoricStatisticsManager extends AbstractManager {
   }
 
   public long getHistoricStatisticsCountGroupedByCaseActivity(HistoricCaseActivityStatisticsQueryImpl query) {
-    return (Long) getDbEntityManager().selectOne("selectHistoricCaseActivityStatisticsCount", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricCaseActivityStatisticsCount", query);
+    return requireNonNull(count);
   }
 
   protected boolean ensureHistoryReadOnProcessDefinition(HistoricActivityStatisticsQueryImpl query) {

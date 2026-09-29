@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
 /**
@@ -23,7 +25,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  * @author Christopher Zell <christopher.zell@camunda.com>
  * @param <T> the type of the extra param to determine the priority
  */
-public interface PriorityProvider<T> {
+public @NullMarked interface PriorityProvider<T> {
 
   /**
    * @param execution may be null when the job is not created in the context of a
@@ -32,6 +34,6 @@ public interface PriorityProvider<T> {
    * @param jobDefinitionId the job definition id if related to a job
    * @return the determined priority
    */
-  long determinePriority(ExecutionEntity execution, T param, String jobDefinitionId);
+  long determinePriority(@Nullable ExecutionEntity execution, @Nullable T param, @Nullable String jobDefinitionId);
 
 }

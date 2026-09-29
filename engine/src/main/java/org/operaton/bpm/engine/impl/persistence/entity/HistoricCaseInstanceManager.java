@@ -33,6 +33,8 @@ import org.operaton.bpm.engine.impl.history.event.HistoricCaseInstanceEventEntit
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Sebastian Menski
  */
@@ -81,7 +83,8 @@ public class HistoricCaseInstanceManager extends AbstractHistoricManager {
   public long findHistoricCaseInstanceCountByQueryCriteria(HistoricCaseInstanceQueryImpl historicCaseInstanceQuery) {
     if (isHistoryEnabled()) {
       configureHistoricCaseInstanceQuery(historicCaseInstanceQuery);
-      return (Long) getDbEntityManager().selectOne("selectHistoricCaseInstanceCountByQueryCriteria", historicCaseInstanceQuery);
+      Long count = (Long) getDbEntityManager().selectOne("selectHistoricCaseInstanceCountByQueryCriteria", historicCaseInstanceQuery);
+      return requireNonNull(count);
     }
     return 0;
   }
@@ -101,7 +104,8 @@ public class HistoricCaseInstanceManager extends AbstractHistoricManager {
   }
 
   public long findHistoricCaseInstanceCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectHistoricCaseInstanceCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricCaseInstanceCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   protected void configureHistoricCaseInstanceQuery(HistoricCaseInstanceQueryImpl query) {
@@ -130,7 +134,8 @@ public class HistoricCaseInstanceManager extends AbstractHistoricManager {
   public long findCleanableHistoricCaseInstancesReportCountByCriteria(CleanableHistoricCaseInstanceReportImpl query) {
     query.setCurrentTimestamp(ClockUtil.getCurrentTime());
     getTenantManager().configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectFinishedCaseInstancesReportEntitiesCount", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectFinishedCaseInstancesReportEntitiesCount", query);
+    return requireNonNull(count);
   }
 
 }

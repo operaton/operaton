@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
@@ -29,7 +30,7 @@ public class DecisionResultTestListener implements CaseExecutionListener {
   public static DmnDecisionResult decisionResult;
 
   @Override
-  public void notify(DelegateCaseExecution execution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution execution) throws Exception {
     decisionResult = (DmnDecisionResult) execution.getVariable(DecisionEvaluationUtil.DECISION_RESULT_VARIABLE);
   }
 

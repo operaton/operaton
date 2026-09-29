@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.task.listener;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 /**
  * @author Joram Barrez
  */
-public class ExpressionTaskListener implements TaskListener {
+public @NullMarked class ExpressionTaskListener implements TaskListener {
 
   protected Expression expression;
 

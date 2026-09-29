@@ -44,12 +44,15 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import static java.util.Objects.requireNonNull;
+
 public class HistoricBatchManager extends AbstractManager {
   private static final String MAP = "map";
 
   public long findBatchCountByQueryCriteria(HistoricBatchQueryImpl historicBatchQuery) {
     configureQuery(historicBatchQuery);
-    return (Long) getDbEntityManager().selectOne("selectHistoricBatchCountByQueryCriteria", historicBatchQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricBatchCountByQueryCriteria", historicBatchQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -161,9 +164,11 @@ public class HistoricBatchManager extends AbstractManager {
     query.setCurrentTimestamp(ClockUtil.getCurrentTime());
     query.setParameter(batchOperationsForHistoryCleanup);
     if (batchOperationsForHistoryCleanup.isEmpty()) {
-      return (Long) getDbEntityManager().selectOne("selectOnlyFinishedBatchesReportEntitiesCount", query);
+      Long count = (Long) getDbEntityManager().selectOne("selectOnlyFinishedBatchesReportEntitiesCount", query);
+      return requireNonNull(count);
     } else {
-      return (Long) getDbEntityManager().selectOne("selectFinishedBatchesReportEntitiesCount", query);
+      Long count = (Long) getDbEntityManager().selectOne("selectFinishedBatchesReportEntitiesCount", query);
+      return requireNonNull(count);
     }
   }
 

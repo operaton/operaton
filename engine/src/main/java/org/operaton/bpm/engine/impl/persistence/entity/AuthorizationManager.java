@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.AuthorizationException;
 
 import org.jspecify.annotations.NonNull;
@@ -88,6 +89,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.util.AuthManagerUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.util.AuthManagerUtil.VariablePermissions;
 import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Permissions.*;
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.READ_INSTANCE_VARIABLE;
 import static org.operaton.bpm.engine.authorization.Resources.*;
@@ -98,7 +100,7 @@ import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABL
  *
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class AuthorizationManager extends AbstractManager {
+public @NullMarked class AuthorizationManager extends AbstractManager {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -141,9 +143,9 @@ public class AuthorizationManager extends AbstractManager {
    * It is used to only check authorizations for groups for which authorizations exist. In other words,
    * if for a given group no authorization exists in the DB, then auth checks are not performed for this group.
    */
-  protected Set<String> availableAuthorizedGroupIds;
+  protected @Nullable Set<String> availableAuthorizedGroupIds;
 
-  protected Boolean isRevokeAuthCheckUsed;
+  protected @Nullable Boolean isRevokeAuthCheckUsed;
 
   public PermissionCheckBuilder newPermissionCheckBuilder() {
     return new PermissionCheckBuilder();
@@ -167,18 +169,19 @@ public class AuthorizationManager extends AbstractManager {
 
   public Long selectAuthorizationCountByQueryCriteria(AuthorizationQueryImpl authorizationQuery) {
     configureQuery(authorizationQuery, AUTHORIZATION);
-    return (Long) getDbEntityManager().selectOne("selectAuthorizationCountByQueryCriteria", authorizationQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectAuthorizationCountByQueryCriteria", authorizationQuery);
+    return requireNonNull(count);
   }
 
-  public AuthorizationEntity findAuthorizationByUserIdAndResourceId(int type, String userId, Resource resource, String resourceId) {
+  public @Nullable AuthorizationEntity findAuthorizationByUserIdAndResourceId(int type, String userId, Resource resource, String resourceId) {
     return findAuthorization(type, userId, null, resource, resourceId);
   }
 
-  public AuthorizationEntity findAuthorizationByGroupIdAndResourceId(int type, String groupId, Resource resource, String resourceId) {
+  public @Nullable AuthorizationEntity findAuthorizationByGroupIdAndResourceId(int type, String groupId, Resource resource, String resourceId) {
     return findAuthorization(type, null, groupId, resource, resourceId);
   }
 
-  public AuthorizationEntity findAuthorization(int type, String userId, String groupId, @Nullable Resource resource, String resourceId) {
+  public @Nullable AuthorizationEntity findAuthorization(int type, @Nullable String userId, @Nullable String groupId, @Nullable Resource resource, String resourceId) {
     Map<String, Object> params = new HashMap<>();
 
     params.put(TYPE, type);
@@ -235,9 +238,10 @@ public class AuthorizationManager extends AbstractManager {
   }
 
   @Override
-  public void checkAuthorization(Permission permission, Resource resource, String resourceId) {
+  public void checkAuthorization(Permission permission, Resource resource, @Nullable String resourceId) {
     if(isAuthCheckExecuted()) {
       Authentication currentAuthentication = getCurrentAuthentication();
+      requireNonNull(currentAuthentication);
       boolean isAuthorized = isAuthorized(currentAuthentication.getUserId(), currentAuthentication.getGroupIds(), permission, resource, resourceId);
       if (!isAuthorized) {
         throw new AuthorizationException(
@@ -250,7 +254,7 @@ public class AuthorizationManager extends AbstractManager {
 
   }
 
-  public boolean isAuthorized(Permission permission, Resource resource, String resourceId) {
+  public boolean isAuthorized(Permission permission, Resource resource, @Nullable String resourceId) {
     // this will be called by LdapIdentityProviderSession#isAuthorized() for executing LdapQueries.
     // to be backward compatible a check whether authorization has been enabled inside the given
     // command context will not be done.
@@ -265,7 +269,7 @@ public class AuthorizationManager extends AbstractManager {
     }
   }
 
-  public boolean isAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId) {
+  public boolean isAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId) {
     if (!isPermissionDisabled(permission)) {
       PermissionCheck permCheck = new PermissionCheck();
       permCheck.setPermission(permission);

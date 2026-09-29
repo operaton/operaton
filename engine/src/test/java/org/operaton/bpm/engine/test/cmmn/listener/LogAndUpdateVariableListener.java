@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.cmmn.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
  * @author Thorben Lindhauer
  *
  */
-public class LogAndUpdateVariableListener implements CaseVariableListener {
+public @NullMarked class LogAndUpdateVariableListener implements CaseVariableListener {
 
   protected static List<DelegateCaseVariableInstance> invocations = new ArrayList<>();
 

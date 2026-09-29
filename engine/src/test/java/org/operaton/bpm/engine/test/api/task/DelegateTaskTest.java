@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -160,7 +161,7 @@ class DelegateTaskTest {
   public static class GetFollowUpDateListener implements TaskListener {
 
     @Override
-    public void notify(DelegateTask delegateTask) {
+    public void notify(@NonNull DelegateTask delegateTask) {
       Date followUpDate = delegateTask.getFollowUpDate();
       assertThat(followUpDate).isNotNull();
 
@@ -172,7 +173,7 @@ class DelegateTaskTest {
   public static class SetFollowUpDateListener implements TaskListener {
 
     @Override
-    public void notify(DelegateTask delegateTask) {
+    public void notify(@NonNull DelegateTask delegateTask) {
       delegateTask.setFollowUpDate(FOLLOW_UP_DATE);
     }
 
@@ -181,7 +182,7 @@ class DelegateTaskTest {
   public static class LastUpdateListener implements TaskListener {
 
     @Override
-    public void notify(DelegateTask delegateTask) {
+    public void notify(@NonNull DelegateTask delegateTask) {
       Date lastUpdated = delegateTask.getLastUpdated();
 
       delegateTask.setVariable("lastUpdated", lastUpdated);

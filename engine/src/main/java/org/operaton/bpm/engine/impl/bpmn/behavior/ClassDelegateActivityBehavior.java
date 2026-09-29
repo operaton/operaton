@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDelegate;
 
 
@@ -79,7 +80,7 @@ public @NullMarked class ClassDelegateActivityBehavior extends AbstractBpmnActiv
       Context.executeWithinProcessApplication(() -> {
         signal(execution, signalName, signalData);
         return null;
-      }, targetProcessApplication, new InvocationContext(execution));
+      }, requireNonNull(targetProcessApplication), new InvocationContext(execution));
     }
     else {
       doSignal(execution, signalName, signalData);

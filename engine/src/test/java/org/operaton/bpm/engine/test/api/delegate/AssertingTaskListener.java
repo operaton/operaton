@@ -19,10 +19,11 @@ package org.operaton.bpm.engine.test.api.delegate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
-public class AssertingTaskListener implements TaskListener {
+public @NullMarked class AssertingTaskListener implements TaskListener {
 
   public static List<DelegateTaskAsserter> asserts = new ArrayList<>();
 

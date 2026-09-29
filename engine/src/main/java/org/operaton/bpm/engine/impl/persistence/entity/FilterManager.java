@@ -18,12 +18,15 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.QueryValidators.StoredQueryValidator;
 import org.operaton.bpm.engine.impl.filter.FilterQueryImpl;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
@@ -35,7 +38,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-public class FilterManager extends AbstractManager {
+public @NullMarked class FilterManager extends AbstractManager {
 
   public Filter createNewFilter(String resourceType) {
     checkAuthorization(CREATE, FILTER, ANY);
@@ -72,13 +75,13 @@ public class FilterManager extends AbstractManager {
     getDbEntityManager().delete(filter);
   }
 
-  public FilterEntity findFilterById(String filterId) {
+  public @Nullable FilterEntity findFilterById(String filterId) {
     ensureNotNull("Invalid filter id", "filterId", filterId);
     checkAuthorization(READ, FILTER, filterId);
     return findFilterByIdInternal(filterId);
   }
 
-  protected FilterEntity findFilterByIdInternal(String filterId) {
+  protected @Nullable FilterEntity findFilterByIdInternal(String filterId) {
     return getDbEntityManager().selectById(FilterEntity.class, filterId);
   }
 
@@ -90,7 +93,8 @@ public class FilterManager extends AbstractManager {
 
   public long findFilterCountByQueryCriteria(FilterQueryImpl filterQuery) {
     configureQuery(filterQuery, FILTER);
-    return (Long) getDbEntityManager().selectOne("selectFilterCountByQueryCriteria", filterQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectFilterCountByQueryCriteria", filterQuery);
+    return requireNonNull(count);
   }
 
   // authorization utils /////////////////////////////////

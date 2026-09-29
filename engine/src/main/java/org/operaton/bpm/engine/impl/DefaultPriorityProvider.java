@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
  * @author Christopher Zell <christopher.zell@camunda.com>
  * @param <T> the type of the param to determine the priority
  */
-public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> {
+public abstract @NullMarked class DefaultPriorityProvider<T> implements PriorityProvider<T> {
 
   /**
    * The default priority.
@@ -102,7 +104,7 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
   }
 
   @Override
-  public long determinePriority(ExecutionEntity execution, T param, String jobDefinitionId) {
+  public long determinePriority(@Nullable ExecutionEntity execution, @Nullable T param, @Nullable String jobDefinitionId) {
     if (param != null || execution != null) {
       Long specificPriority = getSpecificPriority(execution, param, jobDefinitionId);
       if (specificPriority != null) {
@@ -127,7 +129,7 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
    * @param jobDefinitionId the job definition id if related to a job
    * @return the specific priority
    */
-  protected abstract Long getSpecificPriority(ExecutionEntity execution, T param, String jobDefinitionId);
+  protected abstract @Nullable Long getSpecificPriority(@Nullable ExecutionEntity execution, @Nullable T param, @Nullable String jobDefinitionId);
 
   /**
    * Returns the priority defined in the process definition. Can also be null
@@ -137,7 +139,7 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
    * @param param the generic param
    * @return the priority defined in the process definition
    */
-  protected abstract Long getProcessDefinitionPriority(ExecutionEntity execution, T param);
+  protected abstract Long getProcessDefinitionPriority(@Nullable ExecutionEntity execution, @Nullable T param);
 
   /**
    * Returns the priority which is defined in the given process definition.
@@ -150,7 +152,7 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
    * @param errorMsgHead the error message header which is used if the evaluation fails
    * @return the priority defined in the given process
    */
-  protected Long getProcessDefinedPriority(ProcessDefinitionImpl processDefinition, String propertyKey, ExecutionEntity execution, String errorMsgHead) {
+  protected @Nullable Long getProcessDefinedPriority(@Nullable ProcessDefinitionImpl processDefinition, String propertyKey, @Nullable ExecutionEntity execution, String errorMsgHead) {
     if (processDefinition != null) {
       ParameterValueProvider priorityProvider = (ParameterValueProvider) processDefinition.getProperty(propertyKey);
       if (priorityProvider != null) {

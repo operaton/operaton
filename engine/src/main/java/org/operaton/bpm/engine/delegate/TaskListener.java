@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Listener interface implemented by user code which wants to be notified when a property of a task changes.
  *
@@ -33,7 +35,7 @@ package org.operaton.bpm.engine.delegate;
  *
  * @author Tom Baeyens
  */
-public interface TaskListener {
+public @NullMarked interface TaskListener {
 
   String EVENTNAME_CREATE = "create";
   String EVENTNAME_ASSIGNMENT = "assignment";

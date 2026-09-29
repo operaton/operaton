@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.listener;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 
 public class SetVariableListener implements CaseExecutionListener {
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     caseExecution.setVariable("var", "test");
   }
 

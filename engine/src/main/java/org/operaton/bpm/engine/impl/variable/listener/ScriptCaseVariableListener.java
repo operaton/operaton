@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.variable.listener;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
  * @author Thorben Lindhauer
  *
  */
-public class ScriptCaseVariableListener implements CaseVariableListener {
+public @NullMarked class ScriptCaseVariableListener implements CaseVariableListener {
 
   protected final ExecutableScript script;
 

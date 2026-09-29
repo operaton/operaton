@@ -20,6 +20,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.stream.LongStream;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -335,7 +336,7 @@ class TaskMetricsTest {
     assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
-  public static class AssignmentTaskListener implements TaskListener {
+  public static @NullMarked class AssignmentTaskListener implements TaskListener {
     @Override
     public void notify(DelegateTask delegateTask) {
       delegateTask.setAssignee("gonzo");

@@ -38,6 +38,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Job;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
@@ -63,7 +65,8 @@ public class HistoricJobLogManager extends AbstractHistoricManager {
 
   public long findHistoricJobLogsCountByQueryCriteria(HistoricJobLogQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectHistoricJobLogCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricJobLogCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   // update ///////////////////////////////////////////////////////////////////

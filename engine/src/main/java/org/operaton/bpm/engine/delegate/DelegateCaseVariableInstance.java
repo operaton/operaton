@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public interface DelegateCaseVariableInstance extends DelegateVariableInstance<DelegateCaseExecution> {
+public @NullMarked interface DelegateCaseVariableInstance extends DelegateVariableInstance<DelegateCaseExecution> {
 
   /** The event name, which caused the listener to be notified.
    * Valid values are the constants defined in {@link CaseVariableListener}.*/

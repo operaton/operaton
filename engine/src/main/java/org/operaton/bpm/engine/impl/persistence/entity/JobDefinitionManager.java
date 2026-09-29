@@ -26,6 +26,8 @@ import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.management.JobDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * <p>Manager implementation for {@link JobDefinitionEntity}</p>
  *
@@ -56,7 +58,8 @@ public class JobDefinitionManager extends AbstractManager {
 
   public long findJobDefinitionCountByQueryCriteria(JobDefinitionQueryImpl jobDefinitionQuery) {
     configureQuery(jobDefinitionQuery);
-    return (Long) getDbEntityManager().selectOne("selectJobDefinitionCountByQueryCriteria", jobDefinitionQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectJobDefinitionCountByQueryCriteria", jobDefinitionQuery);
+    return requireNonNull(count);
   }
 
   public void updateJobDefinitionSuspensionStateById(String jobDefinitionId, SuspensionState suspensionState) {

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.bpmn.tasklistener.util;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.task.IdentityLink;
 public class GetIdentityLinksTaskListener implements TaskListener {
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     TaskService taskService = delegateTask.getProcessEngine().getTaskService();
     List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(delegateTask.getId());
 

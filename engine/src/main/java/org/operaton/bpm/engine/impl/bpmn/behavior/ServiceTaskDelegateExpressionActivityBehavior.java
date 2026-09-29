@@ -69,7 +69,7 @@ public @NullMarked class ServiceTaskDelegateExpressionActivityBehavior extends T
       Context.executeWithinProcessApplication(() -> {
         signal(execution, signalName, signalData);
         return null;
-      }, targetProcessApplication, new InvocationContext(execution));
+      }, requireNonNull(targetProcessApplication), new InvocationContext(execution));
     }
     else {
       doSignal(execution, signalName, signalData);

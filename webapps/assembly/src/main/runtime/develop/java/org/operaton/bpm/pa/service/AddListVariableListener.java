@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  * @author Daniel Meyer
  *
  */
-public class AddListVariableListener implements TaskListener {
+public @NullMarked class AddListVariableListener implements TaskListener {
 
   public void notify(DelegateTask task) {
     List<String> list = new ArrayList<>();

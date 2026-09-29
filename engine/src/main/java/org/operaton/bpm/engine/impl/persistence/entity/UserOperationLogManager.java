@@ -79,7 +79,8 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   public long findOperationLogEntryCountByQueryCriteria(UserOperationLogQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectUserOperationLogEntryCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectUserOperationLogEntryCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

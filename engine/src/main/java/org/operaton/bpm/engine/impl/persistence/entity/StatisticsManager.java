@@ -33,6 +33,7 @@ import org.operaton.bpm.engine.management.DeploymentStatistics;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatistics;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.DECISION_REQUIREMENTS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
@@ -48,7 +49,8 @@ public class StatisticsManager extends AbstractManager {
 
   public long getStatisticsCountGroupedByProcessDefinitionVersion(ProcessDefinitionStatisticsQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectProcessDefinitionStatisticsCount", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectProcessDefinitionStatisticsCount", query);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -59,7 +61,8 @@ public class StatisticsManager extends AbstractManager {
 
   public long getStatisticsCountGroupedByActivity(ActivityStatisticsQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectActivityStatisticsCount", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectActivityStatisticsCount", query);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -70,7 +73,8 @@ public class StatisticsManager extends AbstractManager {
 
   public long getStatisticsCountGroupedByDeployment(DeploymentStatisticsQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectDeploymentStatisticsCount", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectDeploymentStatisticsCount", query);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -81,7 +85,8 @@ public class StatisticsManager extends AbstractManager {
 
   public long getStatisticsCountGroupedByBatch(BatchStatisticsQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectBatchStatisticsCount", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectBatchStatisticsCount", query);
+    return requireNonNull(count);
   }
 
   protected void configureQuery(DeploymentStatisticsQueryImpl query) {
@@ -117,7 +122,8 @@ public class StatisticsManager extends AbstractManager {
 
   public long getStatisticsCountGroupedByDecisionRequirementsDefinition(HistoricDecisionInstanceStatisticsQueryImpl decisionRequirementsDefinitionStatisticsQuery) {
     configureQuery(decisionRequirementsDefinitionStatisticsQuery);
-    return (Long) getDbEntityManager().selectOne("selectDecisionDefinitionStatisticsCount", decisionRequirementsDefinitionStatisticsQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectDecisionDefinitionStatisticsCount", decisionRequirementsDefinitionStatisticsQuery);
+    return requireNonNull(count);
   }
 
   protected void configureQuery(HistoricDecisionInstanceStatisticsQueryImpl decisionRequirementsDefinitionStatisticsQuery) {

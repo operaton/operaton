@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.transformer;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -36,7 +37,7 @@ public abstract class HistoryCaseExecutionListener implements CaseExecutionListe
   }
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     HistoryEvent historyEvent = createHistoryEvent(caseExecution);
 
     if (historyEvent != null) {

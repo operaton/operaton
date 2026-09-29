@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.assertions.helpers;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformListener;
@@ -30,11 +32,11 @@ import org.operaton.bpm.model.cmmn.instance.Task;
 /**
  * Created by Malte on 08.09.2015.
  */
-public class LoggerCmmnTransformListener implements CmmnTransformListener {
+public @NullMarked class LoggerCmmnTransformListener implements CmmnTransformListener {
   public static CaseExecutionListener listener = var1 ->
     System.out.printf("Execution Event: %s %s%n", var1.getEventName(), var1.getActivityId());
 
-  protected void addListeners(CmmnActivity activity) {
+  protected void addListeners(@Nullable CmmnActivity activity) {
     if (activity != null) {
       activity.addBuiltInListener(CaseExecutionListener.CREATE, listener);
       activity.addBuiltInListener(CaseExecutionListener.ENABLE, listener);

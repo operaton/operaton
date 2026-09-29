@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.delegate;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.ProcessEngineServices;
  * @author Daniel Meyer
  *
  */
-public interface ProcessEngineServicesAware {
+public @NullMarked interface ProcessEngineServicesAware {
 
   /**
    * Returns the {@link ProcessEngineServices} providing access to the

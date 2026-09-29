@@ -27,6 +27,8 @@ import org.operaton.bpm.engine.impl.VariableInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 
+import static java.util.Objects.requireNonNull;
+
 
 /**
  * @author Tom Baeyens
@@ -87,7 +89,8 @@ public class VariableInstanceManager extends AbstractManager {
 
   public long findVariableInstanceCountByQueryCriteria(VariableInstanceQueryImpl variableInstanceQuery) {
     configureQuery(variableInstanceQuery);
-    return (Long) getDbEntityManager().selectOne("selectVariableInstanceCountByQueryCriteria", variableInstanceQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectVariableInstanceCountByQueryCriteria", variableInstanceQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

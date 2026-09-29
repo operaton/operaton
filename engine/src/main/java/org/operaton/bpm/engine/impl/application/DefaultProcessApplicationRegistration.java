@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.application;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 
@@ -25,15 +26,12 @@ import org.operaton.bpm.application.ProcessApplicationRegistration;
  * @author Daniel Meyer
  *
  */
-public class DefaultProcessApplicationRegistration implements ProcessApplicationRegistration {
+public @NullMarked class DefaultProcessApplicationRegistration implements ProcessApplicationRegistration {
 
   protected Set<String> deploymentIds;
   protected String processEngineName;
   protected ProcessApplicationReference reference;
 
-  /**
-   * @param reference
-   */
   public DefaultProcessApplicationRegistration(ProcessApplicationReference reference, Set<String> deploymentIds, String processEnginenName) {
     this.reference = reference;
     this.deploymentIds = deploymentIds;

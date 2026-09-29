@@ -32,6 +32,8 @@ import org.operaton.bpm.engine.impl.history.event.HistoricIncidentEventEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
@@ -40,7 +42,8 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
 
   public long findHistoricIncidentCountByQueryCriteria(HistoricIncidentQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectHistoricIncidentCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricIncidentCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   public HistoricIncidentEntity findHistoricIncidentById(String id) {

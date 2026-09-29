@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.cmmn.listener;
 import java.io.Serial;
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 
@@ -35,7 +36,7 @@ public class CloseCaseExecutionListener implements CaseExecutionListener, Serial
   protected static String onCaseExecutionId;
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     event = caseExecution.getEventName();
     counter = counter + 1;
     onCaseExecutionId = caseExecution.getId();

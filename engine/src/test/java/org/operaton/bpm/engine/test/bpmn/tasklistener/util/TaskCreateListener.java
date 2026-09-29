@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.util;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 public class TaskCreateListener implements TaskListener {
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     delegateTask.setDescription("TaskCreateListener is listening!");
   }
 

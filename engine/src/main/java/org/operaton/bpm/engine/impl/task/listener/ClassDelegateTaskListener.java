@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.task.listener;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -32,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDel
  * @author Roman Smirnov
  *
  */
-public class ClassDelegateTaskListener extends ClassDelegate implements TaskListener {
+public @NullMarked class ClassDelegateTaskListener extends ClassDelegate implements TaskListener {
 
   public ClassDelegateTaskListener(String className, List<FieldDeclaration> fieldDeclarations) {
     super(className, fieldDeclarations);

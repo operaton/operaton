@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.variables.scope;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -196,7 +197,7 @@ class TargetVariableScopeTest {
   public static class TaskListener implements org.operaton.bpm.engine.delegate.TaskListener {
 
     @Override
-    public void notify(DelegateTask delegateTask) {
+    public void notify(@NonNull DelegateTask delegateTask) {
       DelegateExecution execution = delegateTask.getExecution();
       execution.setVariable("varName", "varValue", "activityId");
       assertThat(execution.getVariableLocal("varName")).isNotNull();

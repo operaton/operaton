@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.dmn;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.engine.dmn.DecisionsEvaluationBuilder;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -30,19 +32,19 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
-public class DecisionEvaluationBuilderImpl implements DecisionsEvaluationBuilder {
+public @NullMarked class DecisionEvaluationBuilderImpl implements DecisionsEvaluationBuilder {
 
   private static final DecisionLogger LOG = ProcessEngineLogger.DECISION_LOGGER;
 
   protected CommandExecutor commandExecutor;
 
-  protected String decisionDefinitionKey;
-  protected String decisionDefinitionId;
+  protected @Nullable String decisionDefinitionKey;
+  protected @Nullable String decisionDefinitionId;
 
-  protected Integer version;
-  protected Map<String, Object> variables;
+  protected @Nullable Integer version;
+  protected @Nullable Map<String, Object> variables;
 
-  protected String decisionDefinitionTenantId;
+  protected @Nullable String decisionDefinitionTenantId;
   protected boolean isTenantIdSet;
 
 
@@ -109,23 +111,23 @@ public class DecisionEvaluationBuilderImpl implements DecisionsEvaluationBuilder
 
   // getters ////////////////////////////////////
 
-  public String getDecisionDefinitionKey() {
+  public @Nullable String getDecisionDefinitionKey() {
     return decisionDefinitionKey;
   }
 
-  public String getDecisionDefinitionId() {
+  public @Nullable String getDecisionDefinitionId() {
     return decisionDefinitionId;
   }
 
-  public Integer getVersion() {
+  public @Nullable Integer getVersion() {
     return version;
   }
 
-  public Map<String, Object> getVariables() {
+  public @Nullable Map<String, Object> getVariables() {
     return variables;
   }
 
-  public String getDecisionDefinitionTenantId() {
+  public @Nullable String getDecisionDefinitionTenantId() {
     return decisionDefinitionTenantId;
   }
 

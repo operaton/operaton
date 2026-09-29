@@ -29,6 +29,8 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.history.event.HistoricDetailEventEntity;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  */
@@ -74,7 +76,8 @@ public class HistoricDetailManager extends AbstractHistoricManager {
 
   public long findHistoricDetailCountByQueryCriteria(HistoricDetailQueryImpl historicVariableUpdateQuery) {
     configureQuery(historicVariableUpdateQuery);
-    return (Long) getDbEntityManager().selectOne("selectHistoricDetailCountByQueryCriteria", historicVariableUpdateQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricDetailCountByQueryCriteria", historicVariableUpdateQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.variable.listener;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
 import org.operaton.bpm.engine.delegate.Expression;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.delegate.Expression;
  * @author Thorben Lindhauer
  *
  */
-public class ExpressionCaseVariableListener implements CaseVariableListener {
+public @NullMarked class ExpressionCaseVariableListener implements CaseVariableListener {
 
   protected Expression expression;
 

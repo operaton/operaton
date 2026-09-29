@@ -18,10 +18,11 @@ package org.operaton.bpm.engine.impl.batch;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public class DeploymentMappingJsonConverter implements JsonObjectConverter<DeploymentMapping> {
+public @NullMarked class DeploymentMappingJsonConverter implements JsonObjectConverter<DeploymentMapping> {
 
   public static final DeploymentMappingJsonConverter INSTANCE = new DeploymentMappingJsonConverter();
 

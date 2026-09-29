@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.task.Attachment;
 /**
  * @author Tom Baeyens
  */
-public class AttachmentManager extends AbstractHistoricManager {
+public @NullMarked class AttachmentManager extends AbstractHistoricManager {
 
     @SuppressWarnings("unchecked")
     public List<Attachment> findAttachmentsByProcessInstanceId(String processInstanceId) {

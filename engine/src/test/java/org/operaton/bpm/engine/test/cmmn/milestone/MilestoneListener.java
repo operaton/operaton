@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.milestone;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 public class MilestoneListener implements CaseExecutionListener {
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     String eventName = caseExecution.getEventName();
     caseExecution.setVariable(eventName, true);
   }

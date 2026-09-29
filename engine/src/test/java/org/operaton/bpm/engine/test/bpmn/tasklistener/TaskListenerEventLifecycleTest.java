@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -639,7 +640,7 @@ class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest {
 
   public static class ModifyingTaskListener implements TaskListener {
     @Override
-    public void notify(DelegateTask delegateTask) {
+    public void notify(@NonNull DelegateTask delegateTask) {
       delegateTask.setAssignee("demo");
       delegateTask.setOwner("john");
       delegateTask.setDueDate(new Date());
@@ -648,14 +649,14 @@ class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest {
 
   public static class TaskDeleteTaskListener implements TaskListener {
     @Override
-    public void notify(DelegateTask delegateTask) {
+    public void notify(@NonNull DelegateTask delegateTask) {
       delegateTask.getProcessEngineServices().getTaskService().deleteTask(delegateTask.getId());
     }
   }
 
   public static class ProcessInstanceDeleteTaskListener implements TaskListener {
     @Override
-    public void notify(DelegateTask delegateTask) {
+    public void notify(@NonNull DelegateTask delegateTask) {
       delegateTask.getProcessEngineServices().getRuntimeService()
                   .deleteProcessInstance(delegateTask.getProcessInstanceId(), "Trigger a Task Delete event.");
     }

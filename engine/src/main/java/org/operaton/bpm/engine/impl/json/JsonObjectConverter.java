@@ -17,13 +17,12 @@
 package org.operaton.bpm.engine.impl.json;
 
 import com.google.gson.JsonObject;
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /**
  * @author Tom Baeyens
  */
-public @NullMarked interface JsonObjectConverter <T> {
+public interface JsonObjectConverter <T> {
 
   default String toJson(T object) {
     return toJsonObject(object).toString();

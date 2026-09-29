@@ -27,6 +27,8 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.management.SchemaLogQuery;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Miklas Boskamp
  *
@@ -35,7 +37,8 @@ public class SchemaLogManager extends AbstractManager {
 
   public Long findSchemaLogEntryCountByQueryCriteria(SchemaLogQuery schemaLogQuery) {
     if (isAuthorized()) {
-      return (Long) getDbEntityManager().selectOne("selectSchemaLogEntryCountByQueryCriteria", schemaLogQuery);
+      Long count = (Long) getDbEntityManager().selectOne("selectSchemaLogEntryCountByQueryCriteria", schemaLogQuery);
+      return requireNonNull(count);
     } else {
       return 0L;
     }

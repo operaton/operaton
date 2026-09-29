@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 public class ExecuteRuntimeServiceOperationTaskListener implements TaskListener {
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     ProcessEngineServices services = delegateTask.getProcessEngineServices();
     RuntimeService runtimeService = services.getRuntimeService();
     runtimeService.setVariable(delegateTask.getExecutionId(), "taskListenerCalled", true);

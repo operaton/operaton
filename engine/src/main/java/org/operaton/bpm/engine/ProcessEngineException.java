@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode;
 import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
@@ -34,7 +35,7 @@ public @NullMarked class ProcessEngineException extends RuntimeException {
     super();
   }
 
-  public ProcessEngineException(String message, Throwable cause) {
+  public ProcessEngineException(String message, @Nullable Throwable cause) {
     super(message, cause);
   }
 
@@ -47,7 +48,7 @@ public @NullMarked class ProcessEngineException extends RuntimeException {
     this.code = code;
   }
 
-  public ProcessEngineException(Throwable cause) {
+  public ProcessEngineException(@Nullable Throwable cause) {
     super(cause);
   }
 

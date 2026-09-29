@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.variable.listener;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
@@ -31,7 +32,7 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDel
  * @author Thorben Lindhauer
  *
  */
-public class ClassDelegateCaseVariableListener extends ClassDelegate implements CaseVariableListener {
+public @NullMarked class ClassDelegateCaseVariableListener extends ClassDelegate implements CaseVariableListener {
 
   public ClassDelegateCaseVariableListener(String className, List<FieldDeclaration> fieldDeclarations) {
     super(className, fieldDeclarations);

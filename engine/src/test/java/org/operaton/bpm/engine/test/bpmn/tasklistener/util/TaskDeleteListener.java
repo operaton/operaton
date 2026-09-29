@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.util;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -29,7 +30,7 @@ public class TaskDeleteListener implements TaskListener {
   public static String lastDeleteReason;
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     TaskDeleteListener.eventCounter++;
     TaskDeleteListener.lastTaskDefinitionKey = delegateTask.getTaskDefinitionKey();
     TaskDeleteListener.lastDeleteReason = delegateTask.getDeleteReason();

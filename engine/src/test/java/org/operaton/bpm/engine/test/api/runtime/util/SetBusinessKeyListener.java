@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.util;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -25,7 +26,7 @@ public class SetBusinessKeyListener implements TaskListener {
   public static final String BUSINESS_KEY_VARIABLE = "businessKeyVar";
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     DelegateExecution execution = delegateTask.getExecution();
     String newKeyValue = (String) execution.getVariable(BUSINESS_KEY_VARIABLE);
     execution.setProcessBusinessKey(newKeyValue);

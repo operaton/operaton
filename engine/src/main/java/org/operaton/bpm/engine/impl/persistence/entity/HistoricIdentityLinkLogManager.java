@@ -32,6 +32,8 @@ import org.operaton.bpm.engine.impl.history.event.HistoricIdentityLinkLogEventEn
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Deivarayan Azhagappan
  *
@@ -40,7 +42,8 @@ public class HistoricIdentityLinkLogManager extends AbstractHistoricManager {
 
   public long findHistoricIdentityLinkLogCountByQueryCriteria(HistoricIdentityLinkLogQueryImpl query) {
     configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectHistoricIdentityLinkCountByQueryCriteria", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricIdentityLinkCountByQueryCriteria", query);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")

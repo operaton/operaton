@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.history;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * This interface defines the result of Cleanable historic batch report.
  *
  */
-public interface CleanableHistoricBatchReportResult {
+public @NullMarked interface CleanableHistoricBatchReportResult {
 
   /**
    * Returns the batch type.

@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
-import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.QueryEntityRelationCondition;
 import org.operaton.bpm.engine.impl.QueryPropertyImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
@@ -30,7 +29,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Thorben Lindhauer
  *
  */
-public @NullMarked class JsonQueryFilteringPropertyConverter implements JsonObjectConverter<QueryEntityRelationCondition> {
+public class JsonQueryFilteringPropertyConverter implements JsonObjectConverter<QueryEntityRelationCondition> {
 
   protected static final JsonArrayConverter<List<QueryEntityRelationCondition>> ARRAY_CONVERTER =
     new JsonArrayOfObjectsConverter<>(new JsonQueryFilteringPropertyConverter());

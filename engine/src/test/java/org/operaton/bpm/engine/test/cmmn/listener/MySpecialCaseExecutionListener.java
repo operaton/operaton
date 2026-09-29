@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.cmmn.listener;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 
@@ -30,7 +31,7 @@ public class MySpecialCaseExecutionListener extends MyCaseExecutionListener impl
   @Serial private static final long serialVersionUID = 1L;
 
   @Override
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
     notify(caseExecution, caseExecution.getEventName());
   }
 

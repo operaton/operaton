@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 
@@ -116,7 +117,8 @@ public class HistoricVariableInstanceManager extends AbstractHistoricManager {
 
   public long findHistoricVariableInstanceCountByQueryCriteria(HistoricVariableInstanceQueryImpl historicProcessVariableQuery) {
     configureQuery(historicProcessVariableQuery);
-    return (Long) getDbEntityManager().selectOne("selectHistoricVariableInstanceCountByQueryCriteria", historicProcessVariableQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricVariableInstanceCountByQueryCriteria", historicProcessVariableQuery);
+    return requireNonNull(count);
   }
 
   @SuppressWarnings("unchecked")
@@ -166,7 +168,8 @@ public class HistoricVariableInstanceManager extends AbstractHistoricManager {
   }
 
   public long findHistoricVariableInstanceCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectHistoricVariableInstanceCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricVariableInstanceCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   protected void configureQuery(HistoricVariableInstanceQueryImpl query) {

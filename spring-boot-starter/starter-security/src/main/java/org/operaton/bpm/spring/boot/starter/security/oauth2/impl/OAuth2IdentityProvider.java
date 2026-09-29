@@ -23,9 +23,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
@@ -51,7 +53,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
  * this class is also writeable but with OAuth2 authentication it works effectively as a read-only provider.
  * </p>
  */
-public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
+public @NullMarked class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 
   private static final Logger logger = LoggerFactory.getLogger(OAuth2IdentityProvider.class);
 
@@ -68,7 +70,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
    * @param value      the actual user attribute value
    * @return true if either values are {@code null} or if {@code value} contains {@code searchLike} (case-insensitive)
    */
-  protected static boolean nullOrContainsIgnoreCase(String searchLike, String value) {
+  protected static boolean nullOrContainsIgnoreCase(@Nullable String searchLike, @Nullable String value) {
     return searchLike == null || value == null || value.toLowerCase()
         .contains(searchLike.replace("%", "").toLowerCase());
   }
@@ -83,7 +85,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
     return springSecurityAuthenticated;
   }
 
-  protected static UserEntity transformUser() {
+  protected static @Nullable UserEntity transformUser() {
     var authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication == null) {
       return null;
@@ -102,7 +104,11 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
   }
 
   protected static List<Group> transformGroups() {
-    return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(a -> {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication == null) {
+      return Collections.emptyList();
+    }
+    return authentication.getAuthorities().stream().map(a -> {
       var group = new GroupEntity();
       group.setId(a.getAuthority());
       group.setName(a.getAuthority());
@@ -185,7 +191,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
     }
 
     @Override
-    public List<Group> executeList(CommandContext commandContext, Page page) {
+    public List<Group> executeList(CommandContext commandContext, @Nullable Page page) {
       if (this.type != null || this.tenantId != null) {
         unsupportedFilterForOAuth2();
       }

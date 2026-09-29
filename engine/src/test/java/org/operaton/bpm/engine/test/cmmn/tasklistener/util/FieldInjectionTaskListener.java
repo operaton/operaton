@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.cmmn.tasklistener.util;
 import java.io.Serial;
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -37,7 +38,7 @@ public class FieldInjectionTaskListener implements TaskListener, Serializable {
   protected Expression suffix;
 
   @Override
-  public void notify(DelegateTask delegateTask) {
+  public void notify(@NonNull DelegateTask delegateTask) {
     delegateTask.setVariable("greeting", "Hello from " + greeter.getValue(delegateTask));
     delegateTask.setVariable("helloWorld", helloWorld.getValue(delegateTask));
     delegateTask.setVariable("prefix", prefix.getValue(delegateTask));

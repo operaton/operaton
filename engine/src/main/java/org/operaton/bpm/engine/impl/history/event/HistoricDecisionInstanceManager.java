@@ -44,6 +44,8 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.impl.variable.serializer.AbstractTypedValueSerializer;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Data base operations for {@link HistoricDecisionInstanceEntity}.
  *
@@ -266,7 +268,8 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
   public long findHistoricDecisionInstanceCountByQueryCriteria(HistoricDecisionInstanceQueryImpl query) {
     if (isHistoryEnabled()) {
       configureQuery(query);
-      return (Long) getDbEntityManager().selectOne("selectHistoricDecisionInstanceCountByQueryCriteria", query);
+      Long count = (Long) getDbEntityManager().selectOne("selectHistoricDecisionInstanceCountByQueryCriteria", query);
+      return requireNonNull(count);
     } else {
       return 0;
     }
@@ -278,7 +281,8 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
   }
 
   public long findHistoricDecisionInstanceCountByNativeQuery(Map<String, Object> parameterMap) {
-    return (Long) getDbEntityManager().selectOne("selectHistoricDecisionInstanceCountByNativeQuery", parameterMap);
+    Long count = (Long) getDbEntityManager().selectOne("selectHistoricDecisionInstanceCountByNativeQuery", parameterMap);
+    return requireNonNull(count);
   }
 
   protected void configureQuery(HistoricDecisionInstanceQueryImpl query) {
@@ -302,7 +306,8 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
     query.setCurrentTimestamp(ClockUtil.getCurrentTime());
     getAuthorizationManager().configureQueryHistoricFinishedInstanceReport(query, Resources.DECISION_DEFINITION);
     getTenantManager().configureQuery(query);
-    return (Long) getDbEntityManager().selectOne("selectFinishedDecisionInstancesReportEntitiesCount", query);
+    Long count = (Long) getDbEntityManager().selectOne("selectFinishedDecisionInstancesReportEntitiesCount", query);
+    return requireNonNull(count);
   }
 
   public void addRemovalTimeToDecisionsByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime) {

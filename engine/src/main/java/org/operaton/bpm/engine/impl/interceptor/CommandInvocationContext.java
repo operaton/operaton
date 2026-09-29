@@ -30,6 +30,8 @@ import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.runtime.AtomicOperation;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * In contrast to {@link CommandContext}, this context holds resources that are only valid
  * during execution of a single command (i.e. the current command or an exception that was thrown
@@ -108,11 +110,10 @@ public class CommandInvocationContext {
 
     ProcessApplicationReference targetProcessApplication = getTargetProcessApplication(nextInvocation.execution);
     if(requiresContextSwitch(targetProcessApplication)) {
-
       Context.executeWithinProcessApplication(() -> {
         performNext();
         return null;
-      }, targetProcessApplication, new InvocationContext(nextInvocation.execution));
+      }, requireNonNull(targetProcessApplication), new InvocationContext(nextInvocation.execution));
     }
     else {
       if(!nextInvocation.operation.isAsyncCapable()) {

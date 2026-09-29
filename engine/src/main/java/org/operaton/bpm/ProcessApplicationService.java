@@ -18,6 +18,7 @@ package org.operaton.bpm;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.ProcessApplicationInfo;
@@ -28,7 +29,7 @@ import org.operaton.bpm.application.ProcessApplicationInfo;
  * @author Daniel Meyer
  *
  */
-public interface ProcessApplicationService {
+public @NullMarked interface ProcessApplicationService {
 
   /**
    * @returns the names of all deployed process applications

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
@@ -23,14 +25,14 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 /**
  * @author Tom Baeyens
  */
-public class StartFormDataImpl extends FormDataImpl implements StartFormData {
+public @NullMarked class StartFormDataImpl extends FormDataImpl implements StartFormData {
 
-  protected ProcessDefinition processDefinition;
+  protected @Nullable ProcessDefinition processDefinition;
 
   // getters and setters //////////////////////////////////////////////////////
 
   @Override
-  public ProcessDefinition getProcessDefinition() {
+  public @Nullable ProcessDefinition getProcessDefinition() {
     return processDefinition;
   }
 

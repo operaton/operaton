@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
+import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
@@ -52,7 +55,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
  *
  * @author Daniel Meyer
  */
-public interface HistoryLevel {
+public @NullMarked interface HistoryLevel {
 
   HistoryLevel HISTORY_LEVEL_NONE = new HistoryLevelNone();
   HistoryLevel HISTORY_LEVEL_ACTIVITY = new HistoryLevelActivity();
@@ -77,6 +80,6 @@ public interface HistoryLevel {
    * {@link TaskEntity}, {@link VariableInstanceEntity}, ... If a 'null' value is provided, the implementation
    * should return true if events of this type should be produced "in general".
    */
-  boolean isHistoryEventProduced(HistoryEventType eventType, Object entity);
+  boolean isHistoryEventProduced(HistoryEventType eventType, @Nullable Object entity);
 
 }

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.authorization;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * <p>A permission represents an authorization to interact with a given
  * resource in a specific way. See {@link Permissions} for a set of built-in
@@ -65,7 +67,7 @@ package org.operaton.bpm.engine.authorization;
  *
  * @author Daniel Meyer
  */
-public interface Permission {
+public @NullMarked interface Permission {
 
   /** returns the name of the permission, ie. 'UPDATE' */
   String getName();

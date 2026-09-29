@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.identity;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -23,7 +25,7 @@ import java.io.InputStream;
 /**
  * @author Tom Baeyens
  */
-public class Picture {
+public @NullMarked class Picture {
 
   protected byte[] bytes;
   protected String mimeType;

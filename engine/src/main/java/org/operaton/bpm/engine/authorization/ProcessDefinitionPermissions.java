@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.authorization;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * The set of built-in {@link Permission Permissions} for {@link Resources#PROCESS_DEFINITION Process definition} in Operaton.
  *
  * @author Yana Vasileva
  *
  */
-public enum ProcessDefinitionPermissions implements Permission {
+public @NullMarked enum ProcessDefinitionPermissions implements Permission {
 
   /** The none permission means 'no action', 'doing nothing'.
    * It does not mean that no permissions are granted. */

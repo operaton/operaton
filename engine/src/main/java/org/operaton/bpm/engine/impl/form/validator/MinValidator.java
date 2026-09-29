@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * @author Daniel Meyer
  *
  */
-public class MinValidator extends AbstractNumericValidator {
+public @NullMarked class MinValidator extends AbstractNumericValidator {
 
   @Override
   protected boolean validate(Integer submittedValue, Integer configuration) {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 
@@ -36,7 +37,7 @@ public class HistoryLevelFull extends AbstractHistoryLevel {
   }
 
   @Override
-  public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
+  public boolean isHistoryEventProduced(HistoryEventType eventType, @Nullable Object entity) {
     return true;
   }
 

@@ -15,6 +15,9 @@
  */
 package org.operaton.bpm.engine.health;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.time.Instant;
 import java.util.Map;
 
@@ -28,7 +31,7 @@ import static java.util.Objects.requireNonNull;
  * @author <a href="mailto:tomnm77@gmail.com">Tomasz Korcz</a>
  * @since 2.1
  */
-public record HealthResult(String status, String timestamp, String version, Map<String, Object> details) {
+public @NullMarked record HealthResult(String status, String timestamp, @Nullable String version, Map<String, Object> details) {
 
   public HealthResult {
     requireNonNull(status, "status must not be null");

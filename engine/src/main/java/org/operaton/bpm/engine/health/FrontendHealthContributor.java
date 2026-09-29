@@ -15,6 +15,8 @@
  */
 package org.operaton.bpm.engine.health;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.util.Map;
 
 /**
@@ -23,7 +25,7 @@ import java.util.Map;
  * @author <a href="mailto:tomnm77@gmail.com">Tomasz Korcz</a>
  * @since 2.1
  */
-public interface FrontendHealthContributor {
+public @NullMarked interface FrontendHealthContributor {
 
   /**
    * Provide frontend-related health details. Implementations should at minimum

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.history;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.query.PeriodUnit;
 
 /**
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.query.PeriodUnit;
  * @author Roman Smirnov
  *
  */
-public interface ReportResult {
+public @NullMarked interface ReportResult {
 
   /**
    * <p>Returns a period which specifies a time span within a year.</p>

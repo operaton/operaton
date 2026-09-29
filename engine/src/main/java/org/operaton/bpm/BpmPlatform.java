@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
 
@@ -26,7 +28,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * @author Daniel Meyer
  *
  */
-public final class BpmPlatform {
+public final @NullMarked class BpmPlatform {
 
   public static final String JNDI_NAME_PREFIX = "java:global";
   public static final String APP_JNDI_NAME = "operaton-bpm-platform";
@@ -49,7 +51,7 @@ public final class BpmPlatform {
     return RuntimeContainerDelegate.INSTANCE.get().getProcessApplicationService();
   }
 
-  public static ProcessEngine getDefaultProcessEngine() {
+  public static @Nullable ProcessEngine getDefaultProcessEngine() {
     return getProcessEngineService().getDefaultProcessEngine();
   }
 }

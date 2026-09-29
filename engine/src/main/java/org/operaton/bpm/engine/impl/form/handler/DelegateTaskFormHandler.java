@@ -16,16 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public class DelegateTaskFormHandler extends DelegateFormHandler implements TaskFormHandler {
+public @NullMarked class DelegateTaskFormHandler extends DelegateFormHandler implements TaskFormHandler {
 
   public DelegateTaskFormHandler(TaskFormHandler formHandler, DeploymentEntity deployment) {
     super(formHandler, deployment.getId());
@@ -33,13 +36,13 @@ public class DelegateTaskFormHandler extends DelegateFormHandler implements Task
 
   @Override
   public TaskFormData createTaskForm(final TaskEntity task) {
-    return performContextSwitch(() -> {
+    return requireNonNull(performContextSwitch(() -> {
       CreateTaskFormInvocation invocation = new CreateTaskFormInvocation((TaskFormHandler) formHandler, task);
       Context.getProcessEngineConfiguration()
           .getDelegateInterceptor()
           .handleInvocation(invocation);
-      return (TaskFormData) invocation.getInvocationResult();
-    });
+      return (TaskFormData) requireNonNull(invocation.getInvocationResult());
+    }));
   }
 
   @Override

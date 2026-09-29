@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 /**
  * @author Tom Baeyens
  */
-public interface StartFormHandler extends FormHandler {
+public @NullMarked interface StartFormHandler extends FormHandler {
 
   StartFormData createStartFormData(ProcessDefinitionEntity processDefinition);
 }

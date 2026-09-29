@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.delegate.DelegateInvocation;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * @author Roman Smirnov
  *
  */
-public class SubmitFormVariablesInvocation extends DelegateInvocation {
+public @NullMarked class SubmitFormVariablesInvocation extends DelegateInvocation {
 
   protected FormHandler formHandler;
   protected VariableMap properties;

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.type;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Daniel Meyer
  *
  */
-public abstract class SimpleFormFieldType extends AbstractFormFieldType {
+public abstract @NullMarked class SimpleFormFieldType extends AbstractFormFieldType {
 
   @Override
   public TypedValue convertToFormValue(TypedValue propertyValue) {

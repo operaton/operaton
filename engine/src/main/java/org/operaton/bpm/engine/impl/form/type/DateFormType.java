@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 /**
  * @author Tom Baeyens
  */
-public class DateFormType extends AbstractFormFieldType {
+public @NullMarked class DateFormType extends AbstractFormFieldType {
 
   public static final String TYPE_NAME = "date";
 
@@ -50,7 +51,7 @@ public class DateFormType extends AbstractFormFieldType {
   }
 
   @Override
-  public @Nullable Object getInformation(String key) {
+  public @Nullable Object getInformation(@Nullable String key) {
     if ("datePattern".equals(key)) {
       return datePattern;
     }
@@ -97,7 +98,7 @@ public class DateFormType extends AbstractFormFieldType {
   // deprecated //////////////////////////////////////////////////////////
 
   @Override
-  public @Nullable Object convertFormValueToModelValue(Object propertyValue) {
+  public @Nullable Object convertFormValueToModelValue(@Nullable Object propertyValue) {
     if (propertyValue==null || "".equals(propertyValue)) {
       return null;
     }
@@ -112,7 +113,7 @@ public class DateFormType extends AbstractFormFieldType {
   }
 
   @Override
-  public @Nullable String convertModelValueToFormValue(Object modelValue) {
+  public @Nullable String convertModelValueToFormValue(@Nullable Object modelValue) {
     if (modelValue==null) {
       return null;
     }

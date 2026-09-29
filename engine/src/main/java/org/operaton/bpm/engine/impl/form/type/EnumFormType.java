@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.form.type;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 /**
  * @author Tom Baeyens
  */
-public class EnumFormType extends SimpleFormFieldType {
+public @NullMarked class EnumFormType extends SimpleFormFieldType {
 
   public static final String TYPE_NAME = "enum";
 
@@ -63,8 +64,8 @@ public class EnumFormType extends SimpleFormFieldType {
     }
   }
 
-  protected void validateValue(Object value) {
-    if(value != null && values != null && !values.containsKey(value)) {
+  protected void validateValue(@Nullable Object value) {
+    if(value != null && !values.containsKey(value)) {
       throw new ProcessEngineException("Invalid value for enum form property: %s".formatted(value));
     }
   }
@@ -76,13 +77,13 @@ public class EnumFormType extends SimpleFormFieldType {
   // ////////////////// deprecated ////////////////////////////////////////
 
   @Override
-  public Object convertFormValueToModelValue(Object propertyValue) {
+  public @Nullable Object convertFormValueToModelValue(@Nullable Object propertyValue) {
     validateValue(propertyValue);
     return propertyValue;
   }
 
   @Override
-  public String convertModelValueToFormValue(Object modelValue) {
+  public @Nullable String convertModelValueToFormValue(@Nullable Object modelValue) {
     if(modelValue != null) {
       if(!(modelValue instanceof String)) {
         throw new ProcessEngineException("Model value should be a String");

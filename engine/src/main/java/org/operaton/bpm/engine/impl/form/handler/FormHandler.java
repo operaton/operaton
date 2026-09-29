@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 /**
  * @author Tom Baeyens
  */
-public interface FormHandler {
+public @NullMarked interface FormHandler {
 
   void parseConfiguration(Element activityElement, DeploymentEntity deployment, ProcessDefinitionEntity processDefinition, BpmnParse bpmnParse);
 

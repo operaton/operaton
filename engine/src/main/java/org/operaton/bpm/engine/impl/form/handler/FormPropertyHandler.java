@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableScope;
@@ -27,22 +29,25 @@ import org.operaton.bpm.engine.impl.form.type.AbstractFormFieldType;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Tom Baeyens
  */
-public class FormPropertyHandler {
+public @NullMarked class FormPropertyHandler {
   private static final StartProcessVariableScope START_PROCESS_VARIABLE_SCOPE = new StartProcessVariableScope();
 
-  protected String id;
-  protected String name;
-  protected AbstractFormFieldType type;
+  protected @Nullable String id;
+  protected @Nullable String name;
+  protected @Nullable AbstractFormFieldType type;
   protected boolean isReadable;
   protected boolean isWritable;
   protected boolean isRequired;
-  protected String variableName;
-  protected Expression variableExpression;
-  protected Expression defaultExpression;
+  protected @Nullable String variableName;
+  protected @Nullable Expression variableExpression;
+  protected @Nullable Expression defaultExpression;
 
   public FormProperty createFormProperty(ExecutionEntity execution) {
     FormPropertyImpl formProperty = new FormPropertyImpl(this);
@@ -62,7 +67,7 @@ public class FormPropertyHandler {
     return formProperty;
   }
 
-  private Object getModelValue(ExecutionEntity execution, Object modelValue) {
+  private @Nullable Object getModelValue(@Nullable ExecutionEntity execution, @Nullable Object modelValue) {
     if (execution != null) {
       if (variableName != null || variableExpression == null) {
         final String varName = variableName != null ? variableName : id;
@@ -102,10 +107,11 @@ public class FormPropertyHandler {
     }
   }
 
-  private Object getSubmittedValue(VariableScope variableScope, VariableMap variables) {
+  private @Nullable Object getSubmittedValue(VariableScope variableScope, VariableMap variables) {
     if (variables.containsKey(id)) {
       if (type != null) {
-        Object result = type.convertToModelValue(variables.getValueTyped(id));
+        TypedValue idValue = requireNonNull(variables.getValueTyped(id));
+        Object result = type.convertToModelValue(idValue);
         variables.remove(id);
         return result;
       } else {
@@ -139,7 +145,7 @@ public class FormPropertyHandler {
   // getters and setters //////////////////////////////////////////////////////
 
   public String getId() {
-    return id;
+    return requireNonNull(id);
   }
 
   public void setId(String id) {
@@ -147,7 +153,7 @@ public class FormPropertyHandler {
   }
 
   public String getName() {
-    return name;
+    return requireNonNull(name);
   }
 
   public void setName(String name) {
@@ -155,7 +161,7 @@ public class FormPropertyHandler {
   }
 
   public FormType getType() {
-    return type;
+    return requireNonNull(type);
   }
 
   public void setType(AbstractFormFieldType type) {
@@ -178,7 +184,7 @@ public class FormPropertyHandler {
     this.isRequired = isRequired;
   }
 
-  public String getVariableName() {
+  public @Nullable String getVariableName() {
     return variableName;
   }
 
@@ -186,7 +192,7 @@ public class FormPropertyHandler {
     this.variableName = variableName;
   }
 
-  public Expression getVariableExpression() {
+  public @Nullable Expression getVariableExpression() {
     return variableExpression;
   }
 
@@ -194,7 +200,7 @@ public class FormPropertyHandler {
     this.variableExpression = variableExpression;
   }
 
-  public Expression getDefaultExpression() {
+  public @Nullable Expression getDefaultExpression() {
     return defaultExpression;
   }
 

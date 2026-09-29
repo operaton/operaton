@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
 import org.operaton.bpm.engine.impl.form.FormFieldValidationConstraintImpl;
@@ -26,17 +28,19 @@ import org.operaton.bpm.engine.impl.form.validator.FormFieldValidatorException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.variable.VariableMap;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * <p>Wrapper for a validation constraint</p>
  *
  * @author Daniel Meyer
  *
  */
-public class FormFieldValidationConstraintHandler {
+public @NullMarked class FormFieldValidationConstraintHandler {
 
-  protected String name;
-  protected String config;
-  protected FormFieldValidator validator;
+  protected @Nullable String name;
+  protected @Nullable String config;
+  protected @Nullable FormFieldValidator validator;
 
   @SuppressWarnings("unused")
   public FormFieldValidationConstraint createValidationConstraint(ExecutionEntity execution) {
@@ -47,7 +51,8 @@ public class FormFieldValidationConstraintHandler {
 
   public void validate(Object submittedValue, VariableMap submittedValues, FormFieldHandler formFieldHandler, VariableScope variableScope) {
     try {
-
+      requireNonNull(validator);
+      requireNonNull(config);
       FormFieldValidatorContext context = new DefaultFormFieldValidatorContext(variableScope, config, submittedValues, formFieldHandler);
       if(!validator.validate(submittedValue, context)) {
         throw new FormFieldValidatorException(formFieldHandler.getId(), name, config, submittedValue, "Invalid value submitted for form field '%s': validation of %s failed.".formatted(formFieldHandler.getId(), this));
@@ -59,27 +64,27 @@ public class FormFieldValidationConstraintHandler {
 
   // getter / setter ////////////////////////
 
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@Nullable String name) {
     this.name = name;
   }
 
-  public void setConfig(String config) {
+  public void setConfig(@Nullable String config) {
     this.config = config;
   }
 
-  public String getConfig() {
+  public @Nullable String getConfig() {
     return config;
   }
 
-  public void setValidator(FormFieldValidator validator) {
+  public void setValidator(@Nullable FormFieldValidator validator) {
     this.validator = validator;
   }
 
-  public FormFieldValidator getValidator() {
+  public @Nullable FormFieldValidator getValidator() {
     return validator;
   }
 

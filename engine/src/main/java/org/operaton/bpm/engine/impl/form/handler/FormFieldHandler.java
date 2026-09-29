@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.form.FormField;
@@ -35,22 +37,24 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  *
  */
-public class FormFieldHandler {
+public @NullMarked class FormFieldHandler {
   private static final StartProcessVariableScope START_PROCESS_VARIABLE_SCOPE = new StartProcessVariableScope();
 
-  protected String id;
-  protected Expression label;
-  protected AbstractFormFieldType type;
-  protected Expression defaultValueExpression;
+  protected @Nullable String id;
+  protected @Nullable Expression label;
+  protected @Nullable AbstractFormFieldType type;
+  protected @Nullable Expression defaultValueExpression;
   protected Map<String, String> properties = new HashMap<>();
   protected List<FormFieldValidationConstraintHandler> validationHandlers = new ArrayList<>();
   protected boolean businessKey;
 
-  public FormField createFormField(ExecutionEntity executionEntity) {
+  public FormField createFormField(@Nullable ExecutionEntity executionEntity) {
     FormFieldImpl formField = new FormFieldImpl();
 
     // set id
@@ -68,7 +72,7 @@ public class FormFieldHandler {
     formField.setBusinessKey(businessKey);
 
     // set type
-    formField.setType(type);
+    formField.setType(requireNonNull(type));
 
     // set default value (evaluate expression)
     Object defaultValue = null;
@@ -143,7 +147,7 @@ public class FormFieldHandler {
         // first, need to convert to model value since the default value may be a String Constant specified in the model xml.
         modelValue = type.convertToModelValue(Variables.untypedValue(expressionValue));
       } else if (expressionValue != null) {
-        modelValue = Variables.stringValue(expressionValue.getValue().toString());
+        modelValue = Variables.stringValue(requireNonNull(expressionValue.getValue()).toString());
       }
     }
 
@@ -154,7 +158,7 @@ public class FormFieldHandler {
 
   // getters / setters //////////////////////////////////
 
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -162,15 +166,15 @@ public class FormFieldHandler {
     this.id = id;
   }
 
-  public Expression getLabel() {
+  public @Nullable Expression getLabel() {
     return label;
   }
 
-  public void setLabel(Expression name) {
+  public void setLabel(@Nullable Expression name) {
     this.label = name;
   }
 
-  public void setType(AbstractFormFieldType formType) {
+  public void setType(@Nullable AbstractFormFieldType formType) {
     this.type = formType;
   }
 
@@ -182,15 +186,15 @@ public class FormFieldHandler {
     return properties;
   }
 
-  public FormType getType() {
+  public @Nullable FormType getType() {
     return type;
   }
 
-  public Expression getDefaultValueExpression() {
+  public @Nullable Expression getDefaultValueExpression() {
     return defaultValueExpression;
   }
 
-  public void setDefaultValueExpression(Expression defaultValue) {
+  public void setDefaultValueExpression(@Nullable Expression defaultValue) {
     this.defaultValueExpression = defaultValue;
   }
 

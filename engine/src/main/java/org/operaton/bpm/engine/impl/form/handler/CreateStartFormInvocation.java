@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.delegate.DelegateInvocation;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  * @author Roman Smirnov
  *
  */
-public class CreateStartFormInvocation extends DelegateInvocation {
+public @NullMarked class CreateStartFormInvocation extends DelegateInvocation {
 
   protected StartFormHandler startFormHandler;
   protected ProcessDefinitionEntity definition;

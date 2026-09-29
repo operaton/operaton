@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.form.FormField;
@@ -51,12 +53,13 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class DefaultFormHandler implements FormHandler {
+public @NullMarked class DefaultFormHandler implements FormHandler {
 
   public static final String FORM_FIELD_ELEMENT = "formField";
   public static final String FORM_PROPERTY_ELEMENT = "formProperty";
@@ -67,8 +70,8 @@ public class DefaultFormHandler implements FormHandler {
   public static final String FORM_REF_BINDING_VERSION = "version";
   public static final List<String> ALLOWED_FORM_REF_BINDINGS = List.of(FORM_REF_BINDING_DEPLOYMENT, FORM_REF_BINDING_LATEST, FORM_REF_BINDING_VERSION);
 
-  protected String deploymentId;
-  protected String businessKeyFieldId;
+  protected @Nullable String deploymentId;
+  protected @Nullable String businessKeyFieldId;
 
   protected List<FormPropertyHandler> formPropertyHandlers = new ArrayList<>();
 
@@ -121,7 +124,7 @@ public class DefaultFormHandler implements FormHandler {
       formFieldHandler.setId(id);
     }
 
-    if (id.equals(businessKeyFieldId)) {
+    if (requireNonNull(id).equals(businessKeyFieldId)) {
       formFieldHandler.setBusinessKey(true);
     }
 
@@ -165,7 +168,7 @@ public class DefaultFormHandler implements FormHandler {
       // use linked hash map to preserve item ordering as provided in XML
       Map<String, String> propertyMap = new LinkedHashMap<>();
       for (Element property : propertyElements) {
-        String id = property.attribute("id");
+        String id = requireNonNull(property.attribute("id"));
         String value = property.attribute("value");
         propertyMap.put(id, value);
       }
@@ -250,7 +253,7 @@ public class DefaultFormHandler implements FormHandler {
     }
   }
 
-  protected void initializeFormProperties(FormDataImpl formData, ExecutionEntity execution) {
+  protected void initializeFormProperties(FormDataImpl formData, @Nullable ExecutionEntity execution) {
     List<FormProperty> formProperties = new ArrayList<>();
     for (FormPropertyHandler formPropertyHandler: formPropertyHandlers) {
       if (formPropertyHandler.isReadable()) {
@@ -275,7 +278,7 @@ public class DefaultFormHandler implements FormHandler {
     }
   }
 
-  protected void initializeFormFields(FormDataImpl taskFormData, ExecutionEntity execution) {
+  protected void initializeFormFields(FormDataImpl taskFormData, @Nullable ExecutionEntity execution) {
     // add form fields
     final List<FormField> formFields = taskFormData.getFormFields();
     for (FormFieldHandler formFieldHandler : formFieldHandlers) {
@@ -337,7 +340,7 @@ public class DefaultFormHandler implements FormHandler {
 
       if (executionEntity != null) {
         for (final String variableName : properties.keySet()) {
-          final TypedValue value = properties.getValueTyped(variableName);
+          final TypedValue value = requireNonNull(properties.getValueTyped(variableName));
 
           // NOTE: SerializableValues are never stored as form properties
           if (!(value instanceof SerializableValue) && value.getValue() instanceof String) {
@@ -358,11 +361,11 @@ public class DefaultFormHandler implements FormHandler {
 
   // getters and setters //////////////////////////////////////////////////////
 
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return deploymentId;
   }
 
-  public void setDeploymentId(String deploymentId) {
+  public void setDeploymentId(@Nullable String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
@@ -374,11 +377,11 @@ public class DefaultFormHandler implements FormHandler {
     this.formPropertyHandlers = formPropertyHandlers;
   }
 
-  public String getBusinessKeyFieldId() {
+  public @Nullable String getBusinessKeyFieldId() {
     return businessKeyFieldId;
   }
 
-  public void setBusinessKeyFieldId(String businessKeyFieldId) {
+  public void setBusinessKeyFieldId(@Nullable String businessKeyFieldId) {
     this.businessKeyFieldId = businessKeyFieldId;
   }
 

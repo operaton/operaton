@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.form.FormDefinition;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 /**
  * @author Tom Baeyens
  */
-public class DefaultTaskFormHandler extends DefaultFormHandler implements TaskFormHandler {
+public @NullMarked class DefaultTaskFormHandler extends DefaultFormHandler implements TaskFormHandler {
 
   @Override
   public TaskFormData createTaskForm(TaskEntity task) {

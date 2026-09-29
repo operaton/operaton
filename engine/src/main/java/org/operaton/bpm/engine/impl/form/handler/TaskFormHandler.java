@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 /**
  * @author Tom Baeyens
  */
-public interface TaskFormHandler extends FormHandler {
+public @NullMarked interface TaskFormHandler extends FormHandler {
 
   TaskFormData createTaskForm(TaskEntity task);
 }

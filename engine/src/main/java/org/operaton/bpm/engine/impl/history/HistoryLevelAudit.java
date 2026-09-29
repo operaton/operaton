@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
@@ -30,7 +31,7 @@ import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.VARIA
  * @author Daniel Meyer
  *
  */
-public class HistoryLevelAudit extends HistoryLevelActivity {
+public @NullMarked class HistoryLevelAudit extends HistoryLevelActivity {
 
   @Override
   public int getId() {

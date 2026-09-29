@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.form.handler;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 
 import org.jspecify.annotations.Nullable;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * @author Daniel Meyer
  *
  */
-public class DefaultFormFieldValidatorContext implements FormFieldValidatorContext {
+public @NullMarked class DefaultFormFieldValidatorContext implements FormFieldValidatorContext {
 
   protected VariableScope variableScope;
   protected String configuration;

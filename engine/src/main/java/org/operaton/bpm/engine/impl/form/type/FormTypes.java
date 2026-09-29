@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 
 import org.jspecify.annotations.Nullable;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
 /**
  * @author Tom Baeyens
  */
-public class FormTypes {
+public @NullMarked class FormTypes {
 
   protected Map<String, AbstractFormFieldType> formTypes = new HashMap<>();
 
@@ -38,7 +39,7 @@ public class FormTypes {
     formTypes.put(formType.getName(), formType);
   }
 
-  public AbstractFormFieldType parseFormPropertyType(Element formFieldElement, BpmnParse bpmnParse) {
+  public @Nullable AbstractFormFieldType parseFormPropertyType(Element formFieldElement, BpmnParse bpmnParse) {
     AbstractFormFieldType formType = null;
 
     String typeText = formFieldElement.attribute("type");

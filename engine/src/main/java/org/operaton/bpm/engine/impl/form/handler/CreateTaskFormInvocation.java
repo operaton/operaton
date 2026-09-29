@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.delegate.DelegateInvocation;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
  * @author Roman Smirnov
  *
  */
-public class CreateTaskFormInvocation extends DelegateInvocation {
+public @NullMarked class CreateTaskFormInvocation extends DelegateInvocation {
 
   protected TaskFormHandler taskFormHandler;
   protected TaskEntity task;

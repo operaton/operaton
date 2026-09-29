@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.form.handler;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
@@ -33,7 +35,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * @author Roman Smirnov
  *
  */
-public abstract class DelegateFormHandler {
+public abstract @NullMarked class DelegateFormHandler {
 
   protected String deploymentId;
   protected FormHandler formHandler;
@@ -47,20 +49,18 @@ public abstract class DelegateFormHandler {
     // should not be called!
   }
 
-  protected <T> T performContextSwitch(final Callable<T> callable) {
+  protected <T> @Nullable T performContextSwitch(final Callable<T> callable) {
 
     ProcessApplicationReference targetProcessApplication = ProcessApplicationContextUtil.getTargetProcessApplication(deploymentId);
 
     if(targetProcessApplication != null) {
-
-      return Context.executeWithinProcessApplication((Callable<T>) () -> doCall(callable), targetProcessApplication);
-
+      return Context.executeWithinProcessApplication(() -> doCall(callable), targetProcessApplication);
     } else {
       return doCall(callable);
     }
   }
 
-  protected <T> T doCall(Callable<T> callable) {
+  protected <T> @Nullable T doCall(Callable<T> callable) {
     try {
       return callable.call();
     } catch (RuntimeException e) {

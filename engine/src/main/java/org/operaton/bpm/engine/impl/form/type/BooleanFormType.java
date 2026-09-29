@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.type;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 /**
  * @author Frederik Heremans
  */
-public class BooleanFormType extends SimpleFormFieldType {
+public @NullMarked class BooleanFormType extends SimpleFormFieldType {
 
   public static final String TYPE_NAME = "boolean";
 
@@ -57,7 +58,7 @@ public class BooleanFormType extends SimpleFormFieldType {
   // deprecated /////////////////////////////////////////////////
 
   @Override
-  public @Nullable Object convertFormValueToModelValue(Object propertyValue) {
+  public @Nullable Object convertFormValueToModelValue(@Nullable Object propertyValue) {
     if (propertyValue==null || "".equals(propertyValue)) {
       return null;
     }
@@ -65,7 +66,7 @@ public class BooleanFormType extends SimpleFormFieldType {
   }
 
   @Override
-  public @Nullable String convertModelValueToFormValue(Object modelValue) {
+  public @Nullable String convertModelValueToFormValue(@Nullable Object modelValue) {
 
     if (modelValue==null) {
       return null;

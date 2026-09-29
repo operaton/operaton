@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.type;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 /**
  * @author Tom Baeyens
  */
-public class StringFormType extends SimpleFormFieldType {
+public @NullMarked class StringFormType extends SimpleFormFieldType {
 
   public static final String TYPE_NAME = "string";
 
@@ -53,12 +55,12 @@ public class StringFormType extends SimpleFormFieldType {
   // deprecated ////////////////////////////////////////////////////////////
 
   @Override
-  public Object convertFormValueToModelValue(Object propertyValue) {
-    return propertyValue.toString();
+  public @Nullable Object convertFormValueToModelValue(@Nullable Object propertyValue) {
+    return propertyValue == null ? null : propertyValue.toString();
   }
 
   @Override
-  public String convertModelValueToFormValue(Object modelValue) {
+  public @Nullable String convertModelValueToFormValue(@Nullable Object modelValue) {
     return (String) modelValue;
   }
 }

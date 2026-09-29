@@ -16,16 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public class DelegateStartFormHandler extends DelegateFormHandler implements StartFormHandler {
+public @NullMarked class DelegateStartFormHandler extends DelegateFormHandler implements StartFormHandler {
 
   public DelegateStartFormHandler(StartFormHandler formHandler, DeploymentEntity deployment) {
     super(formHandler, deployment.getId());
@@ -33,13 +36,13 @@ public class DelegateStartFormHandler extends DelegateFormHandler implements Sta
 
   @Override
   public StartFormData createStartFormData(final ProcessDefinitionEntity processDefinition) {
-    return performContextSwitch(() -> {
+    return requireNonNull(performContextSwitch(() -> {
       CreateStartFormInvocation invocation = new CreateStartFormInvocation((StartFormHandler) formHandler, processDefinition);
       Context.getProcessEngineConfiguration()
           .getDelegateInterceptor()
           .handleInvocation(invocation);
-      return (StartFormData) invocation.getInvocationResult();
-    });
+      return (StartFormData) requireNonNull(invocation.getInvocationResult());
+    }));
   }
 
   @Override

@@ -1192,7 +1192,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   public @Nullable ProcessDefinitionImpl getProcessDefinition() {
-    return processDefinition;
+    return requireNonNull(processDefinition);
   }
 
   // process instance /////////////////////////////////////////////////////////

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.history;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -23,7 +25,7 @@ import java.io.Serializable;
  * @author Roman Smirnov
  *
  */
-public interface IncidentState extends Serializable {
+public @NullMarked interface IncidentState extends Serializable {
 
   IncidentState DEFAULT = new IncidentStateImpl(0, "open");
   IncidentState RESOLVED = new IncidentStateImpl(1, "resolved");
@@ -33,7 +35,7 @@ public interface IncidentState extends Serializable {
 
   // /////////////////////////////////////////////////// default implementation
 
-  class IncidentStateImpl implements IncidentState {
+  @NullMarked class IncidentStateImpl implements IncidentState {
     @Serial private static final long serialVersionUID = 1L;
 
     public final int stateCode;

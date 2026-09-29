@@ -16,13 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * <p>Interface for implenting form field validators.</p>
  *
  * @author Daniel Meyer
  *
  */
-public interface FormFieldValidator {
+public @NullMarked interface FormFieldValidator {
 
   /**
    * return true if the submitted value is valid for the given form field.
@@ -34,6 +37,6 @@ public interface FormFieldValidator {
    *          validating the form
    * @return true if the value is valid, false otherwise.
    */
-  boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext);
+  boolean validate(@Nullable Object submittedValue, FormFieldValidatorContext validatorContext);
 
 }

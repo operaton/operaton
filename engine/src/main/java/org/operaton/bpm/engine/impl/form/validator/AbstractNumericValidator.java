@@ -16,14 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Daniel Meyer
  *
  */
-public abstract class AbstractNumericValidator implements FormFieldValidator {
+public abstract @NullMarked class AbstractNumericValidator implements FormFieldValidator {
 
   @Override
-  public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
+  public boolean validate(final @Nullable Object submittedValue, final FormFieldValidatorContext validatorContext) {
 
     if (submittedValue == null) {
       return isNullValid();

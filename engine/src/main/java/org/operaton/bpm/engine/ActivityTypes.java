@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Class contains constants that identifies the activity types, which are used by Operaton.
  * Events, gateways and activities are summed together as activities.
@@ -24,7 +26,7 @@ package org.operaton.bpm.engine;
  * @author Thorben Lindhauer
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public final class ActivityTypes {
+public final @NullMarked class ActivityTypes {
 
   public static final String MULTI_INSTANCE_BODY = "multiInstanceBody";
 

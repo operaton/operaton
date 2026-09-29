@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.form;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 
@@ -23,9 +25,9 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
  *
  * @author Tom Baeyens
  */
-public interface StartFormData extends FormData {
+public @NullMarked interface StartFormData extends FormData {
 
   /** The process definition for which this form is starting a new process instance */
-  ProcessDefinition getProcessDefinition();
+  @Nullable ProcessDefinition getProcessDefinition();
 
 }

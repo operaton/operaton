@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricFormField;
 import org.operaton.bpm.engine.history.HistoricFormProperty;
 import org.operaton.bpm.engine.impl.history.event.HistoricFormPropertyEventEntity;
@@ -23,10 +25,10 @@ import org.operaton.bpm.engine.impl.history.event.HistoricFormPropertyEventEntit
 /**
  * @author Tom Baeyens
  */
-public class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity implements HistoricFormProperty, HistoricFormField {
+public @NullMarked class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity implements HistoricFormProperty, HistoricFormField {
 
   @Override
-  public String getPropertyValue() {
+  public @Nullable String getPropertyValue() {
     return propertyValue;
   }
 
@@ -36,7 +38,7 @@ public class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity 
   }
 
   @Override
-  public Object getFieldValue() {
+  public @Nullable Object getFieldValue() {
     return propertyValue;
   }
 

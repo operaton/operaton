@@ -16,17 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.ReportResult;
 import org.operaton.bpm.engine.query.PeriodUnit;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Roman Smirnov
  *
  */
-public abstract class ReportResultEntity implements ReportResult {
+public abstract @NullMarked class ReportResultEntity implements ReportResult {
 
   protected int period;
-  protected PeriodUnit periodUnit;
+  protected @Nullable PeriodUnit periodUnit;
 
   @Override
   public int getPeriod() {
@@ -39,7 +43,7 @@ public abstract class ReportResultEntity implements ReportResult {
 
   @Override
   public PeriodUnit getPeriodUnit() {
-    return periodUnit;
+    return requireNonNull(periodUnit, "periodUnit must be set before it is read");
   }
 
   public void setPeriodUnit(String periodUnit) {

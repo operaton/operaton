@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -26,6 +28,8 @@ import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * {@link FormFieldValidator} delegating to a custom, user-provided validator implementation.
  * The implementation is resolved either using a fully qualified classname of a Java Class
@@ -33,10 +37,10 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  *
  * @author Daniel Meyer
  */
-public class DelegateFormFieldValidator implements FormFieldValidator {
+public @NullMarked class DelegateFormFieldValidator implements FormFieldValidator {
 
-  protected String clazz;
-  protected Expression delegateExpression;
+  protected @Nullable String clazz;
+  protected @Nullable Expression delegateExpression;
 
   public DelegateFormFieldValidator(Expression expression) {
     delegateExpression = expression;
@@ -46,27 +50,26 @@ public class DelegateFormFieldValidator implements FormFieldValidator {
     this.clazz = clazz;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public DelegateFormFieldValidator() {
   }
 
   @Override
-  public boolean validate(final Object submittedValue, final FormFieldValidatorContext validatorContext) {
-
+  public boolean validate(final @Nullable Object submittedValue, final FormFieldValidatorContext validatorContext) {
     final DelegateExecution execution = validatorContext.getExecution();
 
     if(shouldPerformPaContextSwitch(validatorContext.getExecution())) {
-      ProcessApplicationReference processApplicationReference = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
-
-      return Context.executeWithinProcessApplication(() -> doValidate(submittedValue, validatorContext), processApplicationReference, new InvocationContext(execution));
-
+      ProcessApplicationReference processApplicationReference = requireNonNull(ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution));
+      Boolean result = Context.executeWithinProcessApplication(() -> doValidate(submittedValue, validatorContext), processApplicationReference, new InvocationContext(execution));
+      return result != null && result;
     } else {
       return doValidate(submittedValue, validatorContext);
-
     }
-
   }
 
-  protected boolean shouldPerformPaContextSwitch(DelegateExecution execution) {
+  protected boolean shouldPerformPaContextSwitch(@Nullable DelegateExecution execution) {
     if(execution == null) {
       return false;
     } else {
@@ -75,7 +78,7 @@ public class DelegateFormFieldValidator implements FormFieldValidator {
     }
   }
 
-  protected boolean doValidate(Object submittedValue, FormFieldValidatorContext validatorContext) {
+  protected boolean doValidate(@Nullable Object submittedValue, FormFieldValidatorContext validatorContext) {
     FormFieldValidator validator;
 
     if(clazz != null) {
@@ -87,7 +90,7 @@ public class DelegateFormFieldValidator implements FormFieldValidator {
         throw new ProcessEngineException("Validator class '%s' is not an instance of %s"
             .formatted(clazz, FormFieldValidator.class.getName()));
       }
-    } else {
+    } else if (delegateExpression != null) {
       //resolve validator using expression
       Object validatorObject = delegateExpression.getValue(validatorContext.getExecution());
       if (validatorObject instanceof FormFieldValidator formFieldValidator) {
@@ -96,6 +99,8 @@ public class DelegateFormFieldValidator implements FormFieldValidator {
         throw new ProcessEngineException("Validator expression '%s' does not resolve to instance of %s"
             .formatted(delegateExpression, FormFieldValidator.class.getName()));
       }
+    } else {
+      throw new ProcessEngineException("Cannot resolve form field validator: neither a class nor a delegate expression is configured");
     }
 
     FormFieldValidatorInvocation invocation = new FormFieldValidatorInvocation(validator, submittedValue, validatorContext);
@@ -110,7 +115,11 @@ public class DelegateFormFieldValidator implements FormFieldValidator {
       throw new ProcessEngineException(e);
     }
 
-    return invocation.getInvocationResult();
+    Boolean result = invocation.getInvocationResult();
+    if (result == null) {
+      throw new ProcessEngineException("Delegate interceptor did not produce a validation result for invocation " + invocation);
+    }
+    return result;
   }
 
 }

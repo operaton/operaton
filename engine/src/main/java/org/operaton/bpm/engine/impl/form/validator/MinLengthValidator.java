@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.form.validator;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  *
  * @author Daniel Meyer
  *
  */
-public class MinLengthValidator extends AbstractTextValueValidator {
+public @NullMarked class MinLengthValidator extends AbstractTextValueValidator {
 
   @Override
   protected boolean validate(String submittedValue, String configuration) {

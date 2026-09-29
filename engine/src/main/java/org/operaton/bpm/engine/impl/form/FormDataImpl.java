@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormProperty;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.form.OperatonFormRef;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public abstract class FormDataImpl implements FormData {
+public abstract @NullUnmarked class FormDataImpl implements FormData {
 
   protected String formKey;
   protected OperatonFormRef operatonFormRef;

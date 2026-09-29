@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.authorization;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * <p>Resources are entities for which a user or a group is authorized. Examples of
  * resources are applications, process-definitions, process-instances, tasks ...</p>
@@ -32,7 +34,7 @@ package org.operaton.bpm.engine.authorization;
  * @see Resources
  *
  */
-public interface Resource {
+public @NullMarked interface Resource {
 
   /** returns the name of the resource */
   String resourceName();

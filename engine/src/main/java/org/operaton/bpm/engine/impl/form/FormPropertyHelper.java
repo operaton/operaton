@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.form.handler.StartFormHandler;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * @author Daniel Meyer
  *
  */
-public final class FormPropertyHelper {
+public final @NullMarked class FormPropertyHelper {
 
   private FormPropertyHelper() {
   }

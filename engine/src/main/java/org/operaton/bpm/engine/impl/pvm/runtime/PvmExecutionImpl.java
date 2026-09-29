@@ -1231,7 +1231,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * ensures initialization and returns the process instance.
    */
   @Override
-  public abstract @Nullable PvmExecutionImpl getProcessInstance();
+  public abstract PvmExecutionImpl getProcessInstance();
 
   public abstract void setProcessInstance(@Nullable PvmExecutionImpl pvmExecutionImpl);
 

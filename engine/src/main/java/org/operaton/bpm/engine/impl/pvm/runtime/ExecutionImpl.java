@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -237,8 +239,8 @@ public @NullMarked class ExecutionImpl extends PvmExecutionImpl implements Seria
 
   /** ensures initialization and returns the process instance. */
   @Override
-  public @Nullable ExecutionImpl getProcessInstance() {
-    return processInstance;
+  public ExecutionImpl getProcessInstance() {
+    return requireNonNull(processInstance);
   }
 
   @Override

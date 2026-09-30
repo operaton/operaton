@@ -15,16 +15,19 @@
  */
 package org.operaton.bpm.engine.impl.health;
 
-import org.operaton.bpm.engine.health.FrontendHealthContributor;
-import org.operaton.bpm.engine.health.HealthResult;
-import org.operaton.bpm.engine.health.HealthService;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.time.OffsetDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.sql.DataSource;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.health.FrontendHealthContributor;
+import org.operaton.bpm.engine.health.HealthResult;
+import org.operaton.bpm.engine.health.HealthService;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 
 /**
  * Default, runtime-agnostic implementation that inspects JobExecutor and database connectivity.
@@ -32,22 +35,22 @@ import java.util.Map;
  * @author <a href="mailto:tomnm77@gmail.com">Tomasz Korcz</a>
  * @since 2.1
  */
-public class DefaultHealthService implements HealthService {
+public @NullMarked class DefaultHealthService implements HealthService {
 
   private static final int DATASOURCE_CONNECTION_TIMEOUT_SECONDS = 2;
 
-  private final DataSource dataSource;
-  private final JobExecutor jobExecutor;
-  private final String version;
-  private final FrontendHealthContributor frontendHealthContributor;
+  private final @Nullable DataSource dataSource;
+  private final @Nullable JobExecutor jobExecutor;
+  private final @Nullable String version;
+  private final @Nullable FrontendHealthContributor frontendHealthContributor;
 
-  public DefaultHealthService(DataSource dataSource, JobExecutor jobExecutor) {
+  public DefaultHealthService(@Nullable DataSource dataSource, @Nullable JobExecutor jobExecutor) {
     this(dataSource, jobExecutor, null);
   }
 
-  public DefaultHealthService(DataSource dataSource,
-                              JobExecutor jobExecutor,
-                              FrontendHealthContributor frontendHealthContributor) {
+  public DefaultHealthService(@Nullable DataSource dataSource,
+                              @Nullable JobExecutor jobExecutor,
+                              @Nullable FrontendHealthContributor frontendHealthContributor) {
     this.dataSource = dataSource;
     this.jobExecutor = jobExecutor;
     this.frontendHealthContributor = frontendHealthContributor;

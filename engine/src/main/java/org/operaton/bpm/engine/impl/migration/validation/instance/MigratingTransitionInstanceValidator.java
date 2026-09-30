@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instance;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingTransitionInstance;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.migration.instance.MigratingTransitionInstan
  * @author Thorben Lindhauer
  *
  */
-public interface MigratingTransitionInstanceValidator {
+public @NullMarked interface MigratingTransitionInstanceValidator {
 
   void validate(MigratingTransitionInstance migratingInstance, MigratingProcessInstance migratingProcessInstance, MigratingTransitionInstanceValidationReportImpl instanceReport);
 

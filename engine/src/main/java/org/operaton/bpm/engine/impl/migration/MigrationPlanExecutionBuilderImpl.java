@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -28,12 +29,12 @@ import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanExecutionBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 
-public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecutionBuilder {
+public @NullMarked class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecutionBuilder {
 
   protected CommandExecutor commandExecutor;
   protected MigrationPlan migrationPlan;
-  protected List<String> processInstanceIds;
-  protected ProcessInstanceQuery processInstanceQuery;
+  protected @Nullable List<String> processInstanceIds;
+  protected @Nullable ProcessInstanceQuery processInstanceQuery;
   protected boolean skipCustomListeners;
   protected boolean skipIoMappings;
 
@@ -63,7 +64,7 @@ public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecution
     return this;
   }
 
-  public List<String> getProcessInstanceIds() {
+  public @Nullable List<String> getProcessInstanceIds() {
     return processInstanceIds;
   }
 
@@ -73,7 +74,7 @@ public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecution
     return this;
   }
 
-  public ProcessInstanceQuery getProcessInstanceQuery() {
+  public @Nullable ProcessInstanceQuery getProcessInstanceQuery() {
     return processInstanceQuery;
   }
 

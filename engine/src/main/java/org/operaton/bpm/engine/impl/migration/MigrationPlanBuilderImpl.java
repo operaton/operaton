@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cmd.CreateMigrationPlanCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.migration.MigrationInstructionBuilder;
@@ -34,7 +37,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  * @author Thorben Lindhauer
  *
  */
-public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, MigrationInstructionsBuilder {
+public @NullMarked class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, MigrationInstructionsBuilder {
 
   protected CommandExecutor commandExecutor;
 
@@ -44,7 +47,7 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
 
   protected boolean mapEqualActivities;
   protected boolean updateEventTriggersForGeneratedInstructions;
-  protected VariableMap variables;
+  protected @Nullable VariableMap variables;
 
   public MigrationPlanBuilderImpl(CommandExecutor commandExecutor, String sourceProcessDefinitionId,
       String targetProcessDefinitionId) {
@@ -104,7 +107,7 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
     return mapEqualActivities;
   }
 
-  public VariableMap getVariables() {
+  public @Nullable VariableMap getVariables() {
     return variables;
   }
 

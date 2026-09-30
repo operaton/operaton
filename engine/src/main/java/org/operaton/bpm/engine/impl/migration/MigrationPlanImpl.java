@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.impl.migration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -27,14 +30,14 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * @author Thorben Lindhauer
  *
  */
-public class MigrationPlanImpl implements MigrationPlan {
+public @NullMarked class MigrationPlanImpl implements MigrationPlan {
 
   protected String sourceProcessDefinitionId;
   protected String targetProcessDefinitionId;
 
   protected List<MigrationInstruction> instructions;
 
-  protected VariableMap variables;
+  protected @Nullable VariableMap variables;
 
   public MigrationPlanImpl(String sourceProcessDefinitionId, String targetProcessDefinitionId) {
     this.sourceProcessDefinitionId = sourceProcessDefinitionId;
@@ -57,7 +60,7 @@ public class MigrationPlanImpl implements MigrationPlan {
   }
 
   @Override
-  public VariableMap getVariables() {
+  public @Nullable VariableMap getVariables() {
     return variables;
   }
 

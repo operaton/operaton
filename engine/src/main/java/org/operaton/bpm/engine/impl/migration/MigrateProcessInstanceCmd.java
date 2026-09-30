@@ -25,9 +25,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import org.operaton.bpm.engine.BadUserRequestException;
-
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -75,7 +76,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * </ol>
  * @author Thorben Lindhauer
  */
-public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements Command<Void> {
+public @NullMarked class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements Command<Void> {
 
   protected static final MigrationLogger LOGGER = ProcessEngineLogger.MIGRATION_LOGGER;
 

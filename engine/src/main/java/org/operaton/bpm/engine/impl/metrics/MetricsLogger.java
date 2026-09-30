@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.metrics;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class MetricsLogger extends ProcessEngineLogger {
+public @NullMarked class MetricsLogger extends ProcessEngineLogger {
 
   /**
    * @param e - the thrown exception

@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.metrics.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.management.Metrics;
 
-public final class MetricsUtil {
+public final @NullMarked class MetricsUtil {
 
   private MetricsUtil() {
   }

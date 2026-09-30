@@ -19,13 +19,14 @@ package org.operaton.bpm.engine.impl.metrics;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class MetricsRegistry {
+public @NullMarked class MetricsRegistry {
 
   protected Map<String, Meter> dbMeters = new HashMap<>();
   protected Map<String, Meter> diagnosticsMeters = new HashMap<>();

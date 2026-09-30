@@ -18,12 +18,15 @@ package org.operaton.bpm.engine.impl.migration;
 
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
-public class DefaultMigrationActivityMatcher implements MigrationActivityMatcher {
+public @NullMarked class DefaultMigrationActivityMatcher implements MigrationActivityMatcher {
 
   @Override
-  public boolean matchActivities(ActivityImpl source, ActivityImpl target) {
+  public boolean matchActivities(@Nullable ActivityImpl source, @Nullable ActivityImpl target) {
     return source != null && target != null && equalId(source, target);
   }
 

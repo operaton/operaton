@@ -18,13 +18,15 @@ package org.operaton.bpm.engine.impl.metrics;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * A Meter implementation based on AtomicLong
  *
  * @author Daniel Meyer
  *
  */
-public class Meter {
+public @NullMarked class Meter {
 
   protected AtomicLong counter = new AtomicLong(0);
 

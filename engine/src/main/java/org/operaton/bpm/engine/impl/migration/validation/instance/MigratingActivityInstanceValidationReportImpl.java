@@ -19,11 +19,13 @@ package org.operaton.bpm.engine.impl.migration.validation.instance;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.migration.MigratingActivityInstanceValidationReport;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 
-public class MigratingActivityInstanceValidationReportImpl implements MigratingActivityInstanceValidationReport {
+public @NullMarked class MigratingActivityInstanceValidationReportImpl implements MigratingActivityInstanceValidationReport {
 
   protected String activityInstanceId;
   protected String sourceScopeId;

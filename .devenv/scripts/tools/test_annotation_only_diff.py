@@ -61,6 +61,20 @@ WIDENING_DIFF = '''diff --git a/A.java b/A.java
 +  public void setJobId(@Nullable String jobId) {
 '''
 
+# Adds @Nullable to one line while also deleting a real behavioral line
+# (the null-check) with no corresponding added line. The deletion must be
+# flagged even though the only *added* line is annotation-only.
+UNPAIRED_DELETION_DIFF = '''diff --git a/A.java b/A.java
+--- a/A.java
++++ b/A.java
+@@ -1,5 +1,3 @@
+-  protected String lockOwner;
++  protected @Nullable String lockOwner;
+-    if (lockOwner == null) {
+-      throw new IllegalStateException();
+-    }
+'''
+
 
 class AnnotationOnlyTest(unittest.TestCase):
 
@@ -78,6 +92,11 @@ class AnnotationOnlyTest(unittest.TestCase):
 
     def test_signature_change_that_only_adds_nullable_passes(self):
         self.assertEqual(guard.check_diff(WIDENING_DIFF), [])
+
+    def test_unpaired_deletion_of_real_code_is_rejected(self):
+        offenders = guard.check_diff(UNPAIRED_DELETION_DIFF)
+        self.assertTrue(offenders)
+        self.assertTrue(any('IllegalStateException' in line for _, line in offenders))
 
 
 class SubclassWideningTest(unittest.TestCase):

@@ -22,6 +22,7 @@ annotation-only. Added imports of jspecify types are allowed outright.
 """
 
 import argparse
+import difflib
 import re
 import subprocess
 import sys
@@ -50,29 +51,87 @@ def widens_parameter(parent_signature, child_signature):
             and '@Nullable' not in parent_signature)
 
 
+def is_annotation_only_removal(line):
+    """True when a removed line with no matching added line is harmless to drop.
+
+    This covers blank lines and lines that consist solely of annotation
+    tokens (e.g. a lone `@Nullable` on its own line, or a jspecify import
+    being deleted as cleanup). Anything else is real code being deleted
+    unaccompanied by a corresponding addition, which is never annotation-only.
+    """
+    if not line.strip():
+        return True
+    if JSPECIFY_IMPORT_RE.match(line):
+        return True
+    return strip_annotations(line) == ''
+
+
 def check_diff(diff_text):
-    """Return [(path, line)] for every added line that is not annotation-only."""
+    """Return [(path, line)] for every changed line that is not annotation-only.
+
+    Offenders from added lines are reported as `(path, added_line)`.
+    Offenders from removed lines that have no corresponding added line
+    (a pure deletion of real code, e.g. a dropped null-check) are reported
+    as `(path, '-' + removed_line)` -- the leading '-' marks them as
+    deletions so callers/tests can distinguish the two kinds of offender.
+
+    Lines are grouped into "chunks": a chunk is a maximal run of removed
+    lines immediately followed by a maximal run of added lines. Within a
+    chunk, `difflib.SequenceMatcher` aligns removed/added lines so that
+    unrelated add/remove counts don't get misattributed by naive positional
+    pairing. Any removed line left unmatched at the end of a chunk is
+    checked on its own via `is_annotation_only_removal` -- this is what
+    catches deletions with no corresponding addition, which previously were
+    silently dropped.
+    """
     offenders = []
     path = '?'
     removed = []
+    added = []
+
+    def flush():
+        if not removed and not added:
+            return
+        matcher = difflib.SequenceMatcher(None, removed, added, autojunk=False)
+        for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+            if tag == 'equal':
+                continue
+            rem_block = removed[i1:i2]
+            add_block = added[j1:j2]
+            n = min(len(rem_block), len(add_block))
+            for k in range(n):
+                if not is_annotation_only_line(add_block[k], rem_block[k]):
+                    offenders.append((path, add_block[k].strip()))
+            for extra_add in add_block[n:]:
+                if not is_annotation_only_line(extra_add, ''):
+                    offenders.append((path, extra_add.strip()))
+            for extra_rem in rem_block[n:]:
+                if not is_annotation_only_removal(extra_rem):
+                    offenders.append((path, '-' + extra_rem.strip()))
+        removed.clear()
+        added.clear()
+
     for raw in diff_text.split('\n'):
         if raw.startswith('+++ b/'):
+            flush()
             path = raw[6:]
-            removed = []
             continue
         if raw.startswith('---') or raw.startswith('diff ') or raw.startswith('@@'):
-            removed = []
+            flush()
             continue
         if raw.startswith('-') and not raw.startswith('---'):
+            if added:
+                # A new removal after we've already seen additions starts a
+                # new chunk; flush the previous one first so it isn't lost.
+                flush()
             removed.append(raw[1:])
             continue
-        if raw.startswith('+'):
-            added = raw[1:]
-            if not added.strip():
-                continue
-            candidate = removed.pop(0) if removed else ''
-            if not is_annotation_only_line(added, candidate):
-                offenders.append((path, added.strip()))
+        if raw.startswith('+') and not raw.startswith('+++'):
+            added.append(raw[1:])
+            continue
+        # Context line or anything else: end of the current chunk.
+        flush()
+    flush()
     return offenders
 
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.history.event.HistoricJobLogEvent;
 
@@ -23,6 +25,7 @@ import org.operaton.bpm.engine.impl.history.event.HistoricJobLogEvent;
  * @author Roman Smirnov
  *
  */
+@NullMarked
 public class HistoricJobLogEventEntity extends HistoricJobLogEvent implements HistoricJobLog {
 
 }

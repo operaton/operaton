@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
@@ -26,7 +27,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  * @author Thorben Lindhauer
  *
  */
-public class UnregisterBpmPlatformPluginsStep extends DeploymentOperationStep {
+public @NullMarked class UnregisterBpmPlatformPluginsStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {

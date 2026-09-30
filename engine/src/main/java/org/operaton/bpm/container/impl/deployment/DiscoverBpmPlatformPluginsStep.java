@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedBpmPlatformPlugins;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  * @author Thorben Lindhauer
  *
  */
-public class DiscoverBpmPlatformPluginsStep extends DeploymentOperationStep {
+public @NullMarked class DiscoverBpmPlatformPluginsStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {

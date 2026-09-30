@@ -18,15 +18,17 @@ package org.operaton.bpm.engine.impl.util;
 
 import jakarta.servlet.ServletContextEvent;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class ClassLoaderUtil {
+public @NullMarked class ClassLoaderUtil {
 
-  public static ClassLoader getContextClassloader() {
+  public static @Nullable ClassLoader getContextClassloader() {
     return Thread.currentThread().getContextClassLoader();
   }
 
@@ -34,7 +36,7 @@ public class ClassLoaderUtil {
     return clazz.getClassLoader();
   }
 
-  public static void setContextClassloader(final ClassLoader classLoader) {
+  public static void setContextClassloader(final @Nullable ClassLoader classLoader) {
     Thread.currentThread().setContextClassLoader(classLoader);
   }
 
@@ -48,7 +50,7 @@ public class ClassLoaderUtil {
    *
    * @return the current Thread ClassLoader
    */
-  public static ClassLoader switchToProcessEngineClassloader() {
+  public static @Nullable ClassLoader switchToProcessEngineClassloader() {
     ClassLoader currentClassloader = Thread.currentThread().getContextClassLoader();
     Thread.currentThread().setContextClassLoader(ProcessEngine.class.getClassLoader());
     return currentClassloader;

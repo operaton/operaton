@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class StopProcessApplicationsStep extends DeploymentOperationStep {
+public @NullMarked class StopProcessApplicationsStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -56,9 +57,7 @@ public class StopProcessApplicationsStep extends DeploymentOperationStep {
   }
 
   /**
-   * <p> Stops a process application. Exceptions are logged but not re-thrown).
-   *
-   * @param processApplicationReference
+   * Stops a process application. Exceptions are logged but not re-thrown.
    */
   protected void stopProcessApplication(ProcessApplicationReference processApplicationReference) {
 

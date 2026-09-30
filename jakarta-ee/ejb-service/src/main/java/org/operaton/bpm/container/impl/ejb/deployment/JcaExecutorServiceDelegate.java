@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.ejb.deployment;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
@@ -25,7 +26,7 @@ import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
  *
  * @author Daniel Meyer
  */
-public class JcaExecutorServiceDelegate implements PlatformService<ExecutorService>, JcaExecutorServiceDelegateMBean {
+public @NullMarked class JcaExecutorServiceDelegate implements PlatformService<ExecutorService>, JcaExecutorServiceDelegateMBean {
 
   private final ExecutorService executorService;
 

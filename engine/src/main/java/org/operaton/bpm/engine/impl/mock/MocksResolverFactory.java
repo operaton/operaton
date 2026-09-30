@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.mock;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.scripting.engine.Resolver;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.scripting.engine.ResolverFactory;
 /**
  * @author Tassilo Weidner
  */
-public class MocksResolverFactory implements ResolverFactory, Resolver {
+public @NullMarked class MocksResolverFactory implements ResolverFactory, Resolver {
 
   @Override
   public Resolver createResolver(VariableScope variableScope) {

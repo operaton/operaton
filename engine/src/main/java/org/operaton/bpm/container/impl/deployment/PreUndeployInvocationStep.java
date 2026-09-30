@@ -19,6 +19,7 @@ package org.operaton.bpm.container.impl.deployment;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.PreUndeploy;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class PreUndeployInvocationStep extends DeploymentOperationStep {
+public @NullMarked class PreUndeployInvocationStep extends DeploymentOperationStep {
 
   private static final String CALLBACK_NAME = "@PreUndeploy";
 

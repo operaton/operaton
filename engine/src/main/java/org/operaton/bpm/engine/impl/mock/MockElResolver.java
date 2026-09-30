@@ -18,9 +18,10 @@ package org.operaton.bpm.engine.impl.mock;
 
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
-public class MockElResolver extends ELResolver {
+public @NullMarked class MockElResolver extends ELResolver {
 
   @Override
   public Class< ? > getCommonPropertyType(ELContext context, Object base) {

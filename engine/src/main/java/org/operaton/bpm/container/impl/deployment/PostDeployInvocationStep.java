@@ -20,6 +20,7 @@ package org.operaton.bpm.container.impl.deployment;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class PostDeployInvocationStep extends DeploymentOperationStep {
+public @NullMarked class PostDeployInvocationStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 

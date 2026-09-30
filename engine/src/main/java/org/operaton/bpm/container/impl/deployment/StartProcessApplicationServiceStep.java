@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
 import org.operaton.bpm.application.impl.ProcessApplicationDeploymentInfoImpl;
@@ -47,7 +49,7 @@ import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_ARC
  * @author Daniel Meyer
  *
  */
-public class StartProcessApplicationServiceStep extends DeploymentOperationStep {
+public @NullMarked class StartProcessApplicationServiceStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
@@ -59,7 +61,7 @@ public class StartProcessApplicationServiceStep extends DeploymentOperationStep 
 
     final AbstractProcessApplication processApplication = operationContext.getAttachment(PROCESS_APPLICATION);
     final Map<URI, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);
-    final Map<String, DeployedProcessArchive> processArchiveDeploymentMap = operationContext.getAttachment(PROCESS_ARCHIVE_DEPLOYMENT_MAP);
+    final Map<String, DeployedProcessArchive> processArchiveDeploymentMap = Objects.requireNonNullElse(operationContext.getAttachment(PROCESS_ARCHIVE_DEPLOYMENT_MAP), Map.of());
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
 
     ProcessApplicationInfoImpl processApplicationInfo = createProcessApplicationInfo(processApplication, processArchiveDeploymentMap);

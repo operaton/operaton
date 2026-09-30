@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.impl.ProcessApplicationInfoImpl;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
@@ -32,13 +33,13 @@ import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
  * @author Daniel Meyer
  *
  */
-public class JmxManagedProcessApplication implements PlatformService<JmxManagedProcessApplication>, JmxManagedProcessApplicationMBean {
+public @NullMarked class JmxManagedProcessApplication implements PlatformService<JmxManagedProcessApplication>, JmxManagedProcessApplicationMBean {
 
   protected final ProcessApplicationInfoImpl processApplicationInfo;
   protected final ProcessApplicationReference processApplicationReference;
 
-  protected List<ProcessesXml> processesXmls;
-  protected Map<String, DeployedProcessArchive> deploymentMap;
+  protected List<ProcessesXml> processesXmls = List.of();
+  protected Map<String, DeployedProcessArchive> deploymentMap = Map.of();
 
   public JmxManagedProcessApplication(ProcessApplicationInfoImpl processApplicationInfo, ProcessApplicationReference processApplicationReference) {
     this.processApplicationInfo = processApplicationInfo;

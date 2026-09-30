@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.plugin;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.authorization.Resource;
@@ -42,14 +43,14 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
    * If this name is set to a non-null and non-empty value,
    * the plugin will create group-level Administrator authorizations
    * on all built-in resources. */
-  protected String administratorGroupName;
+  protected @Nullable String administratorGroupName;
 
   /** The name of the administrator user.
    *
    * If this name is set to a non-null and non-empty value,
    * the plugin will create group-level Administrator authorizations
    * on all built-in resources. */
-  protected String administratorUserName;
+  protected @Nullable String administratorUserName;
 
   protected boolean authorizationEnabled;
 
@@ -109,7 +110,7 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
 
   // getter / setters ////////////////////////////////////
 
-  public String getAdministratorGroupName() {
+  public @Nullable String getAdministratorGroupName() {
     return administratorGroupName;
   }
 
@@ -117,7 +118,7 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
     this.administratorGroupName = administratorGroupName;
   }
 
-  public String getAdministratorUserName() {
+  public @Nullable String getAdministratorUserName() {
     return administratorUserName;
   }
 

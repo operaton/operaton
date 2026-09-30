@@ -84,7 +84,7 @@ public @NullMarked class MetricsCollectionTask extends TimerTask {
     return reporterId;
   }
 
-  public void setReporter(String reporterId) {
+  public void setReporter(@Nullable String reporterId) {
     this.reporterId = reporterId;
   }
 

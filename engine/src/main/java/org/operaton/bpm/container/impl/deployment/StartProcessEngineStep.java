@@ -18,6 +18,8 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessEngine;
@@ -37,6 +39,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APPLICATION;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -47,7 +50,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class StartProcessEngineStep extends DeploymentOperationStep {
+public @NullMarked class StartProcessEngineStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -73,6 +76,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
 
     if(processApplication != null) {
       classLoader = processApplication.getProcessApplicationClassloader();
+      requireNonNull(classLoader);
     }
 
     String configurationClassName = processEngineXml.getConfigurationClass();
@@ -134,7 +138,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
   /**
    * <p>Instantiates and applies all {@link ProcessEnginePlugin}s defined in the processEngineXml
    */
-  protected void configurePlugins(ProcessEngineConfigurationImpl configuration, ProcessEngineXml processEngineXml, ClassLoader classLoader) {
+  protected void configurePlugins(ProcessEngineConfigurationImpl configuration, ProcessEngineXml processEngineXml, @Nullable ClassLoader classLoader) {
 
     for (ProcessEnginePluginXml pluginXml : processEngineXml.getPlugins()) {
       // create plugin instance
@@ -152,14 +156,14 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
   }
 
 
-  protected JobExecutor getJobExecutorService(final PlatformServiceContainer serviceContainer) {
+  protected @Nullable JobExecutor getJobExecutorService(final PlatformServiceContainer serviceContainer) {
     // lookup container managed job executor
     String jobAcquisitionName = processEngineXml.getJobAcquisitionName();
     return serviceContainer.getServiceValue(ServiceTypes.JOB_EXECUTOR, jobAcquisitionName);
   }
 
   @SuppressWarnings("unchecked")
-  protected <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader, Class<T> clazz) {
+  protected <T> Class<? extends T> loadClass(String className, @Nullable ClassLoader customClassloader, Class<T> clazz) {
     try {
       return ReflectUtil.loadClass(className, customClassloader);
     }

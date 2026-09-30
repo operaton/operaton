@@ -20,6 +20,8 @@ A class counts as covered if:
     @NullMarked, and
   - it does not itself carry @NullUnmarked (which opts a class back out).
 
+Enums and annotation interfaces are not counted.
+
 Writes one detailed report per module to <module>/target/nullmarked-report.txt,
 listing every uncovered file, and prints an overall summary to stdout.
 """
@@ -76,9 +78,9 @@ TOP_LEVEL_TYPE_RE = re.compile(
     r'^\s*(?:public\s+|final\s+|abstract\s+|sealed\s+|non-sealed\s+|strictfp\s+)*'
     r'(?:class|interface|enum|record|@interface)\s+\w'
 )
-TOP_LEVEL_ENUM_RE = re.compile(
+TOP_LEVEL_SKIPPED_TYPE_RE = re.compile(
     r'^\s*(?:public\s+|final\s+|abstract\s+|sealed\s+|non-sealed\s+|strictfp\s+)*'
-    r'enum\s+\w'
+    r'(?:enum|@interface)\s+\w'
 )
 LINE_COMMENT_RE = re.compile(r'//.*')
 BLOCK_COMMENT_RE = re.compile(r'/\*.*?\*/', re.DOTALL)
@@ -161,10 +163,10 @@ def is_top_level_type_marked(text):
     return marked, unmarked
 
 
-def is_top_level_enum(text):
-    """True if the first top-level type in the file is an enum."""
+def is_top_level_skipped_type(text):
+    """True if the first top-level type in the file is an enum or an annotation interface."""
     for line in text.splitlines():
-        if TOP_LEVEL_ENUM_RE.match(line):
+        if TOP_LEVEL_SKIPPED_TYPE_RE.match(line):
             return True
         if TOP_LEVEL_TYPE_RE.match(line):
             return False
@@ -203,7 +205,7 @@ def analyze_module(module_dir, include_tests):
                 continue
 
             text = strip_comments(java_file.read_text(encoding='utf-8', errors='replace'))
-            if is_top_level_enum(text):
+            if is_top_level_skipped_type(text):
                 continue
 
             class_marked, class_unmarked = is_top_level_type_marked(text)

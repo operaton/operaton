@@ -108,7 +108,7 @@ public @NullMarked class DbMetricsReporter {
     this.metricsCollectionTask = metricsCollectionTask;
   }
 
-  public void setReporterId(String reporterId) {
+  public void setReporterId(@Nullable String reporterId) {
     this.reporterId = reporterId;
     if (metricsCollectionTask != null) {
       metricsCollectionTask.setReporter(reporterId);

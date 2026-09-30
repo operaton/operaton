@@ -20,7 +20,11 @@ import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * {@link IdGenerator} implementation based on the current time and the ethernet
@@ -28,10 +32,10 @@ import org.operaton.bpm.engine.impl.cfg.IdGenerator;
  *
  * @author Daniel Meyer
  */
-public class StrongUuidGenerator implements IdGenerator {
+public @NullMarked class StrongUuidGenerator implements IdGenerator {
 
   // different ProcessEngines on the same classloader share one generator.
-  protected static TimeBasedGenerator timeBasedGenerator;
+  protected static @Nullable TimeBasedGenerator timeBasedGenerator;
 
   public StrongUuidGenerator() {
     ensureGeneratorInitialized();
@@ -45,7 +49,7 @@ public class StrongUuidGenerator implements IdGenerator {
 
   @Override
   public String getNextId() {
-    return timeBasedGenerator.generate().toString();
+    return requireNonNull(timeBasedGenerator).generate().toString();
   }
 
 }

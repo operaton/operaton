@@ -135,6 +135,20 @@ def check_diff(diff_text):
     return offenders
 
 
+def diff_command(range_arg):
+    """Build the `git diff -U0 ...` argv for a revision or a range.
+
+    A real range (containing `..`, e.g. `HEAD~4..HEAD` or
+    `origin/staging/2.3..HEAD`) is passed through to `git diff` unchanged,
+    since git already understands `A..B` diff syntax. A single revision
+    (e.g. `HEAD` or a commit SHA) is diffed against its immediate parent,
+    as before.
+    """
+    if '..' in range_arg:
+        return ['git', 'diff', '-U0', range_arg]
+    return ['git', 'diff', '-U0', range_arg + '^', range_arg]
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('range', nargs='?', default='HEAD',
@@ -142,7 +156,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     diff = subprocess.run(
-        ['git', 'diff', '-U0', args.range + '^', args.range],
+        diff_command(args.range),
         capture_output=True, text=True, check=True).stdout
     offenders = check_diff(diff)
     for path, line in offenders:

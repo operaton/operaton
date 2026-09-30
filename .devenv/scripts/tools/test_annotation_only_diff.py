@@ -99,6 +99,25 @@ class AnnotationOnlyTest(unittest.TestCase):
         self.assertTrue(any('IllegalStateException' in line for _, line in offenders))
 
 
+class DiffCommandTest(unittest.TestCase):
+    """The `..` in the range argument decides whether `^` gets appended."""
+
+    def test_single_revision_diffs_against_parent(self):
+        self.assertEqual(
+            guard.diff_command('HEAD'),
+            ['git', 'diff', '-U0', 'HEAD^', 'HEAD'])
+
+    def test_range_argument_is_passed_through_unchanged(self):
+        self.assertEqual(
+            guard.diff_command('HEAD~4..HEAD'),
+            ['git', 'diff', '-U0', 'HEAD~4..HEAD'])
+
+    def test_remote_range_argument_is_passed_through_unchanged(self):
+        self.assertEqual(
+            guard.diff_command('origin/staging/2.3..HEAD'),
+            ['git', 'diff', '-U0', 'origin/staging/2.3..HEAD'])
+
+
 class SubclassWideningTest(unittest.TestCase):
     """Review Focus 3: a subclass must not widen a parent's non-null setter."""
 

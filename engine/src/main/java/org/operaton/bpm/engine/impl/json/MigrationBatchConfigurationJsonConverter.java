@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.json;
 import java.util.List;
 
 import com.google.gson.JsonObject;
+import org.jspecify.annotations.NullMarked;
 
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.migration.batch.MigrationBatchConfiguration;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public class MigrationBatchConfigurationJsonConverter
+public @NullMarked class MigrationBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<MigrationBatchConfiguration> {
   private static final MigrationPlanJsonConverter MIGRATION_PLAN_CONVERTER = new MigrationPlanJsonConverter();
 

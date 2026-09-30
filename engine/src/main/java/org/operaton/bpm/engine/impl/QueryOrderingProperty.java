@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -62,25 +63,25 @@ public @NullMarked class QueryOrderingProperty implements Serializable {
 
   protected static final long serialVersionUID = 1L;
 
-  protected String relation;
-  protected QueryProperty queryProperty;
-  protected Direction direction;
-  protected transient List<QueryEntityRelationCondition> relationConditions;
+  protected @Nullable String relation;
+  protected @Nullable QueryProperty queryProperty;
+  protected @Nullable Direction direction;
+  protected transient @Nullable List<QueryEntityRelationCondition> relationConditions;
 
   public QueryOrderingProperty() {
   }
 
-  public QueryOrderingProperty(QueryProperty queryProperty, Direction direction) {
+  public QueryOrderingProperty(QueryProperty queryProperty, @Nullable Direction direction) {
     this.queryProperty = queryProperty;
     this.direction = direction;
   }
 
-  public QueryOrderingProperty(String relation, QueryProperty queryProperty) {
+  public QueryOrderingProperty(@Nullable String relation, QueryProperty queryProperty) {
     this.relation = relation;
     this.queryProperty = queryProperty;
   }
 
-  public QueryProperty getQueryProperty() {
+  public @Nullable QueryProperty getQueryProperty() {
     return queryProperty;
   }
 
@@ -88,15 +89,15 @@ public @NullMarked class QueryOrderingProperty implements Serializable {
     this.queryProperty = queryProperty;
   }
 
-  public void setDirection(Direction direction) {
+  public void setDirection(@Nullable Direction direction) {
     this.direction = direction;
   }
 
-  public Direction getDirection() {
+  public @Nullable Direction getDirection() {
     return direction;
   }
 
-  public List<QueryEntityRelationCondition> getRelationConditions() {
+  public @Nullable List<QueryEntityRelationCondition> getRelationConditions() {
     return relationConditions;
   }
 
@@ -108,11 +109,11 @@ public @NullMarked class QueryOrderingProperty implements Serializable {
     return relationConditions != null && !relationConditions.isEmpty();
   }
 
-  public String getRelation() {
+  public @Nullable String getRelation() {
     return relation;
   }
 
-  public void setRelation(String relation) {
+  public void setRelation(@Nullable String relation) {
     this.relation = relation;
   }
 
@@ -122,7 +123,7 @@ public @NullMarked class QueryOrderingProperty implements Serializable {
    * variable.TEXT_ (given a task query) is not contained)
    */
   public boolean isContainedProperty() {
-    return relation == null && queryProperty.getFunction() == null;
+    return relation == null && (queryProperty == null || queryProperty.getFunction() == null);
   }
 
   @Override

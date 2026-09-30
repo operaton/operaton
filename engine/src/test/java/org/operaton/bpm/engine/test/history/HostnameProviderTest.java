@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.history;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
@@ -129,14 +130,15 @@ public class HostnameProviderTest {
     assertThat(metrics.get(0).getReporter()).containsIgnoringCase(expectedReporter);
   }
 
-  public static class CustomHostnameProvider implements HostnameProvider {
+  public static @NullMarked class CustomHostnameProvider implements HostnameProvider {
     @Override
     public String getHostname(ProcessEngineConfigurationImpl processEngineConfiguration) {
       return CUSTOM_HOSTNAME;
     }
   }
 
-  public static class CustomMetricsReporterIdProvider implements MetricsReporterIdProvider {
+  @SuppressWarnings("java:S5738")
+  public static @NullMarked class CustomMetricsReporterIdProvider implements MetricsReporterIdProvider {
     @Override
     public String provideId(ProcessEngine processEngine) {
       return CUSTOM_REPORTER;

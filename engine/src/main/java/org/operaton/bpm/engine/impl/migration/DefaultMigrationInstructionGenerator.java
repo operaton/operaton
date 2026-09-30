@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.bpmn.behavior.ConditionalEventBehavior;
 import org.operaton.bpm.engine.impl.migration.validation.activity.MigrationActivityValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.CannotAddMultiInstanceInnerActivityValidator;
@@ -36,7 +38,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 /**
  * @author Thorben Lindhauer
  */
-public class DefaultMigrationInstructionGenerator implements MigrationInstructionGenerator {
+public @NullMarked class DefaultMigrationInstructionGenerator implements MigrationInstructionGenerator {
 
   protected List<MigrationActivityValidator> migrationActivityValidators = new ArrayList<>();
   protected List<MigrationInstructionValidator> migrationInstructionValidators = new ArrayList<>();

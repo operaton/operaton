@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.migration;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.migration.MigrationPlanValidationException;
  * @author Thorben Lindhauer
  *
  */
-public class MigrationLogger extends ProcessEngineLogger {
+public @NullMarked class MigrationLogger extends ProcessEngineLogger {
 
   public MigrationPlanValidationException failingMigrationPlanValidation(MigrationPlanValidationReportImpl validationReport) {
     StringBuilder sb = new StringBuilder();

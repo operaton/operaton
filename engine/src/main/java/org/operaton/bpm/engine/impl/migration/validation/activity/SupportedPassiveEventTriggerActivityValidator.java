@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.impl.migration.validation.activity;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartEventActivityBehavior;
@@ -30,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  *
  * @author Thorben Lindhauer
  */
-public class SupportedPassiveEventTriggerActivityValidator implements MigrationActivityValidator {
+public @NullMarked class SupportedPassiveEventTriggerActivityValidator implements MigrationActivityValidator {
 
   private static final List<String> SUPPORTED_TYPES = List.of(
     ActivityTypes.BOUNDARY_MESSAGE,
@@ -46,7 +49,7 @@ public class SupportedPassiveEventTriggerActivityValidator implements MigrationA
   );
 
   @Override
-  public boolean valid(ActivityImpl activity) {
+  public boolean valid(@Nullable ActivityImpl activity) {
     return activity != null && (!isPassivelyWaitingEvent(activity) || isSupportedEventType(activity));
   }
 

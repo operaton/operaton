@@ -21,13 +21,14 @@ import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import org.jspecify.annotations.NullMarked;
 
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 /**
  * @author Thorben Lindhauer
  */
-public class JsonArrayOfObjectsConverter<T> extends JsonArrayConverter<List<T>> {
+public @NullMarked class JsonArrayOfObjectsConverter<T> extends JsonArrayConverter<List<T>> {
 
   protected JsonObjectConverter<T> objectConverter;
 

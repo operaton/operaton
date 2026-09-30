@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instance;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingTransitionInstance;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
-public class AsyncMigrationValidator implements MigratingTransitionInstanceValidator {
+public @NullMarked class AsyncMigrationValidator implements MigratingTransitionInstanceValidator {
 
   @Override
   public void validate(MigratingTransitionInstance migratingInstance, MigratingProcessInstance migratingProcessInstance,
@@ -39,7 +41,5 @@ public class AsyncMigrationValidator implements MigratingTransitionInstanceValid
         }
       }
     }
-
   }
-
 }

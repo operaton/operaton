@@ -16,13 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.activity;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
 /**
  * Check if an activity can be migrated. For example
  * if the activity type is supported by the migration.
  */
-public interface MigrationActivityValidator {
+public @NullMarked interface MigrationActivityValidator {
 
   /**
    * Check that an activity can be migrated.
@@ -30,6 +33,6 @@ public interface MigrationActivityValidator {
    * @param activity the activity to migrate
    * @return true if the activity can be migrated, false otherwise
    */
-  boolean valid(ActivityImpl activity);
+  boolean valid(@Nullable ActivityImpl activity);
 
 }

@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.metrics.parser;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -26,10 +27,10 @@ import org.operaton.bpm.engine.management.Metrics;
  * @author Daniel Meyer
  *
  */
-public class MetricsCaseExecutionListener implements CaseExecutionListener {
+public @NullMarked class MetricsCaseExecutionListener implements CaseExecutionListener {
 
   @Override
-  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(DelegateCaseExecution caseExecution) throws Exception {
     Context.getProcessEngineConfiguration()
       .getMetricsRegistry()
       .markOccurrence(Metrics.ACTIVTY_INSTANCE_START);

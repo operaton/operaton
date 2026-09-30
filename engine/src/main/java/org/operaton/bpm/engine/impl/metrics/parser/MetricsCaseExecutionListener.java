@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.management.Metrics;
 public @NullMarked class MetricsCaseExecutionListener implements CaseExecutionListener {
 
   @Override
-  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(DelegateCaseExecution caseExecution) throws Exception {
     Context.getProcessEngineConfiguration()
       .getMetricsRegistry()
       .markOccurrence(Metrics.ACTIVTY_INSTANCE_START);

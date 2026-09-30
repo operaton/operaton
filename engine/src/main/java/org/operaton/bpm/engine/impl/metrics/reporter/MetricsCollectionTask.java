@@ -19,9 +19,10 @@ package org.operaton.bpm.engine.impl.metrics.reporter;
 import java.util.List;
 import java.util.TimerTask;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -35,13 +36,13 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  * @author Daniel Meyer
  *
  */
-public class MetricsCollectionTask extends TimerTask {
+public @NullMarked class MetricsCollectionTask extends TimerTask {
 
   private static final MetricsLogger LOG = ProcessEngineLogger.METRICS_LOGGER;
 
   protected MetricsRegistry metricsRegistry;
   protected CommandExecutor commandExecutor;
-  protected String reporterId;
+  protected @Nullable String reporterId;
 
   public MetricsCollectionTask(MetricsRegistry metricsRegistry, CommandExecutor commandExecutor) {
     this.metricsRegistry = metricsRegistry;
@@ -75,7 +76,7 @@ public class MetricsCollectionTask extends TimerTask {
     commandExecutor.execute(new MetricsCollectionCmd(logs));
   }
 
-  public String getReporter() {
+  public @Nullable String getReporter() {
     return reporterId;
   }
 

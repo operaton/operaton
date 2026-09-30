@@ -16,10 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instance;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingCompensationEventSubscriptionInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingEventScopeInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessInstance;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Subscriptions for compensation start events must be migrated, similar to compensation boundary events.
@@ -29,7 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  *
  * @author Thorben Lindhauer
  */
-public class NoUnmappedCompensationStartEventValidator implements MigratingCompensationInstanceValidator {
+public @NullMarked class NoUnmappedCompensationStartEventValidator implements MigratingCompensationInstanceValidator {
 
   @Override
   public void validate(MigratingEventScopeInstance migratingInstance, MigratingProcessInstance migratingProcessInstance,
@@ -37,6 +40,7 @@ public class NoUnmappedCompensationStartEventValidator implements MigratingCompe
     MigratingCompensationEventSubscriptionInstance eventSubscription = migratingInstance.getEventSubscription();
 
     ActivityImpl eventHandlerActivity = (ActivityImpl) eventSubscription.getSourceScope();
+    requireNonNull(eventHandlerActivity);
 
     // note: compensation event scopes without children are already handled by NoUnmappedLeafInstanceValidator
     if (eventHandlerActivity.isTriggeredByEvent()

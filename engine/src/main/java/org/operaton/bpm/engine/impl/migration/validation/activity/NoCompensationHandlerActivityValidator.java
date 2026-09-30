@@ -16,16 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.activity;
 
+import org.jspecify.annotations.NullMarked;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class NoCompensationHandlerActivityValidator implements MigrationActivityValidator {
+public @NullMarked class NoCompensationHandlerActivityValidator implements MigrationActivityValidator {
 
   @Override
-  public boolean valid(ActivityImpl activity) {
-    return !activity.isCompensationHandler();
+  public boolean valid(@Nullable ActivityImpl activity) {
+    return activity != null && !activity.isCompensationHandler();
   }
 }

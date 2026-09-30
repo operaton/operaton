@@ -19,9 +19,10 @@ package org.operaton.bpm.engine.impl.metrics.reporter;
 
 import java.util.Timer;
 
-import org.operaton.bpm.engine.impl.interceptor.Command;
-
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
@@ -32,17 +33,17 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  * @author Daniel Meyer
  *
  */
-public class DbMetricsReporter {
+public @NullMarked class DbMetricsReporter {
 
   protected MetricsRegistry metricsRegistry;
   protected CommandExecutor commandExecutor;
-  protected String reporterId;
+  protected @Nullable String reporterId;
 
   // log every 15 minutes...
   protected long reportingIntervalInSeconds = 60 * 15L;
 
-  protected MetricsCollectionTask metricsCollectionTask;
-  private Timer timer;
+  protected @Nullable MetricsCollectionTask metricsCollectionTask;
+  protected @Nullable Timer timer;
 
   public DbMetricsReporter(MetricsRegistry metricsRegistry, CommandExecutor commandExecutor) {
     this.metricsRegistry = metricsRegistry;
@@ -99,7 +100,7 @@ public class DbMetricsReporter {
     return commandExecutor;
   }
 
-  public MetricsCollectionTask getMetricsCollectionTask() {
+  public @Nullable MetricsCollectionTask getMetricsCollectionTask() {
     return metricsCollectionTask;
   }
 

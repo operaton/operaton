@@ -21,6 +21,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -34,7 +37,7 @@ import org.operaton.bpm.engine.management.MetricsQuery;
  * @author Daniel Meyer
  *
  */
-public class MetricsQueryImpl extends ListQueryParameterObject implements Serializable, Command<Object>, MetricsQuery {
+public @NullMarked class MetricsQueryImpl extends ListQueryParameterObject implements Serializable, Command<Object>, MetricsQuery {
 
   public static final int DEFAULT_LIMIT_SELECT_INTERVAL = 200;
   public static final long DEFAULT_SELECT_INTERVAL = 15 * 60L;
@@ -42,14 +45,14 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
   @Serial
   private static final long serialVersionUID = 1L;
 
-  protected String name;
-  protected String reporter;
-  protected Date startDate;
-  protected Date endDate;
-  protected Long startDateMilliseconds;
-  protected Long endDateMilliseconds;
-  protected Long interval;
-  protected Boolean aggregateByReporter;
+  protected @Nullable String name;
+  protected @Nullable String reporter;
+  protected @Nullable Date startDate;
+  protected @Nullable Date endDate;
+  protected @Nullable Long startDateMilliseconds;
+  protected @Nullable Long endDateMilliseconds;
+  protected @Nullable Long interval;
+  protected @Nullable Boolean aggregateByReporter;
 
   protected transient CommandExecutor commandExecutor;
 
@@ -93,9 +96,10 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
    * Note: this enables to quit with the enum distinction
    * </p>
    */
-  protected transient Command<Object> callback;
+  protected transient @Nullable Command<Object> callback;
 
   @Override
+  @SuppressWarnings("unchecked")
   public List<MetricIntervalValue> interval() {
     callback = new MetricsQueryIntervalCmd(this);
 
@@ -116,7 +120,7 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     if (callback != null) {
       return callback.execute(commandContext);
     }
@@ -149,27 +153,27 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
     this.maxResults = maxResults;
   }
 
-  public Date getStartDate() {
+  public @Nullable Date getStartDate() {
     return startDate;
   }
 
-  public Date getEndDate() {
+  public @Nullable Date getEndDate() {
     return endDate;
   }
 
-  public Long getStartDateMilliseconds() {
+  public @Nullable Long getStartDateMilliseconds() {
     return startDateMilliseconds;
   }
 
-  public Long getEndDateMilliseconds() {
+  public @Nullable Long getEndDateMilliseconds() {
     return endDateMilliseconds;
   }
 
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
-  public String getReporter() {
+  public @Nullable String getReporter() {
     return reporter;
   }
 
@@ -188,7 +192,7 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
     return super.getMaxResults();
   }
 
-  protected class MetricsQueryIntervalCmd implements Command<Object> {
+  static class MetricsQueryIntervalCmd implements Command<Object> {
 
     protected MetricsQueryImpl metricsQuery;
 
@@ -203,7 +207,7 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
     }
   }
 
-  protected class MetricsQuerySumCmd implements Command<Object> {
+  static class MetricsQuerySumCmd implements Command<Object> {
 
     protected MetricsQueryImpl metricsQuery;
 

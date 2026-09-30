@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.migration;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigrationInstructionImpl implements MigrationInstruction {
+public @NullMarked class MigrationInstructionImpl implements MigrationInstruction {
 
   protected String sourceActivityId;
   protected String targetActivityId;

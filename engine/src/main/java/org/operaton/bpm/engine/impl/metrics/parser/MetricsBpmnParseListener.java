@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.metrics.parser;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.management.Metrics;
  * @author Daniel Meyer
  *
  */
-public class MetricsBpmnParseListener implements BpmnParseListener {
+public @NullMarked class MetricsBpmnParseListener implements BpmnParseListener {
 
   public static final MetricsExecutionListener ROOT_PROCESS_INSTANCE_START_COUNTER =
       new MetricsExecutionListener(Metrics.ROOT_PROCESS_INSTANCE_START,

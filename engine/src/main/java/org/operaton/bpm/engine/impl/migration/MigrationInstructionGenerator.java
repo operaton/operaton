@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.migration;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.migration.validation.activity.MigrationActivityValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.MigrationInstructionValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.ValidatingMigrationInstructions;
@@ -31,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
  * @author Thorben Lindhauer
  *
  */
-public interface MigrationInstructionGenerator {
+public @NullMarked interface MigrationInstructionGenerator {
 
   /**
    * Sets the list of migration activity validators which validate that a activity

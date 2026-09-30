@@ -16,14 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instance;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingCompensationEventSubscriptionInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingEventScopeInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessElementInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingTransitionInstance;
+import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
-public class NoUnmappedLeafInstanceValidator implements
+public @NullMarked class NoUnmappedLeafInstanceValidator implements
   MigratingActivityInstanceValidator,
   MigratingTransitionInstanceValidator,
   MigratingCompensationInstanceValidator {
@@ -49,7 +51,7 @@ public class NoUnmappedLeafInstanceValidator implements
     if (isInvalid(migratingInstance)) {
       ancestorInstanceReport.addFailure(
             "Cannot migrate subscription for compensation handler '%s'. There is no migration instruction for the compensation boundary event"
-                .formatted(migratingInstance.getSourceScope().getId()));
+                .formatted(getSourceScopeId(migratingInstance)));
     }
   }
 
@@ -59,8 +61,13 @@ public class NoUnmappedLeafInstanceValidator implements
     if (isInvalid(migratingInstance)) {
       ancestorInstanceReport.addFailure(
           "Cannot migrate subscription for compensation handler '%s'. There is no migration instruction for the compensation start event"
-              .formatted(migratingInstance.getEventSubscription().getSourceScope().getId()));
+              .formatted(getSourceScopeId(migratingInstance)));
     }
+  }
+
+  private String getSourceScopeId(MigratingProcessElementInstance migratingInstance) {
+    ScopeImpl sourceScope = migratingInstance.getSourceScope();
+    return sourceScope != null && sourceScope.getId() != null ? sourceScope.getId() : "undefined";
   }
 
   protected boolean isInvalid(MigratingActivityInstance migratingInstance) {

@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -38,7 +41,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Thorben Lindhauer
  *
  */
-public abstract class AbstractMigrationCmd {
+public abstract @NullMarked class AbstractMigrationCmd {
 
   protected MigrationPlanExecutionBuilderImpl executionBuilder;
 
@@ -83,7 +86,7 @@ public abstract class AbstractMigrationCmd {
       ProcessDefinitionEntity sourceProcessDefinition,
       ProcessDefinitionEntity targetProcessDefinition,
       int numInstances,
-      Map<String, Object> variables,
+      @Nullable Map<String, Object> variables,
       boolean async) {
 
     List<PropertyChange> propertyChanges = new ArrayList<>();
@@ -130,7 +133,7 @@ public abstract class AbstractMigrationCmd {
     return sourceProcessDefinition;
   }
 
-  protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext,
+  protected @Nullable ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext,
                                                          String processDefinitionId) {
 
     return commandContext

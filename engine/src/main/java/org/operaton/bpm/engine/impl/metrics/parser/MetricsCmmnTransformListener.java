@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.metrics.parser;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformListener;
@@ -32,11 +35,11 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  * @author Daniel Meyer
  *
  */
-public class MetricsCmmnTransformListener implements CmmnTransformListener {
+public @NullMarked class MetricsCmmnTransformListener implements CmmnTransformListener {
 
   private static final MetricsCaseExecutionListener LISTENER = new MetricsCaseExecutionListener();
 
-  protected void addListeners(CmmnActivity activity) {
+  protected void addListeners(@Nullable CmmnActivity activity) {
     if(activity != null) {
       activity.addBuiltInListener(CaseExecutionListener.START, LISTENER);
       activity.addBuiltInListener(CaseExecutionListener.MANUAL_START, LISTENER);

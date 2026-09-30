@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.migration;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
 /**
@@ -33,7 +36,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * the activity name which is a non unique attribute.
  * </p>
  */
-public interface MigrationActivityMatcher {
+public @NullMarked interface MigrationActivityMatcher {
 
   /**
    * Checks if an activity from the source process definition of
@@ -45,6 +48,6 @@ public interface MigrationActivityMatcher {
    * @return true if the source activity matches the target activity
    *         in the context of the migration, false otherwise
    */
-  boolean matchActivities(ActivityImpl source, ActivityImpl target);
+  boolean matchActivities(@Nullable ActivityImpl source, @Nullable ActivityImpl target);
 
 }

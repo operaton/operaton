@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instance;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessInstance;
 
-public interface MigratingActivityInstanceValidator {
+public @NullMarked interface MigratingActivityInstanceValidator {
 
   void validate(MigratingActivityInstance migratingInstance, MigratingProcessInstance migratingProcessInstance, MigratingActivityInstanceValidationReportImpl instanceReport);
 

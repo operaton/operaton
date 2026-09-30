@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instance;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingTransitionInstance;
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  * @author Thorben Lindhauer
  *
  */
-public class AsyncProcessStartMigrationValidator implements MigratingTransitionInstanceValidator {
+public @NullMarked class AsyncProcessStartMigrationValidator implements MigratingTransitionInstanceValidator {
 
   @Override
   public void validate(MigratingTransitionInstance migratingInstance, MigratingProcessInstance migratingProcessInstance,

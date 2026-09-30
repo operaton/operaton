@@ -17,12 +17,13 @@
 package org.operaton.bpm.engine.impl.json;
 
 import com.google.gson.JsonArray;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public abstract class JsonArrayConverter<T> {
+public abstract @NullMarked class JsonArrayConverter<T> {
 
   public String toJson(T object) {
     return toJsonArray(object).toString();

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.metrics;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.history.event.HostnameProvider;
 
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.impl.history.event.HostnameProvider;
  * @author Thorben Lindhauer
  */
 @Deprecated(forRemoval = true, since = "1.0")
-public interface MetricsReporterIdProvider {
+public @NullMarked interface MetricsReporterIdProvider {
 
   /**
    * Provides an id that identifies the metrics reported as part of the given engine's

@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.impl.migration.validation.activity;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.bpmn.behavior.*;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -28,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * Thus, this validator is only used during migration instruction generation and migrating activity instance validation,
  * not during migration instruction validation.
  */
-public class SupportedActivityValidator implements MigrationActivityValidator {
+public @NullMarked class SupportedActivityValidator implements MigrationActivityValidator {
 
   private static final List<Class<? extends ActivityBehavior>> SUPPORTED_ACTIVITY_BEHAVIORS = List.of(
     SubProcessActivityBehavior.class,
@@ -52,7 +55,7 @@ public class SupportedActivityValidator implements MigrationActivityValidator {
   );
 
   @Override
-  public boolean valid(ActivityImpl activity) {
+  public boolean valid(@Nullable ActivityImpl activity) {
     return activity != null && (isSupportedActivity(activity) || isAsync(activity));
   }
 

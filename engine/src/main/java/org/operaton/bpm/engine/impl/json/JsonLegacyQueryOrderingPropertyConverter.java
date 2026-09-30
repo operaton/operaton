@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.json;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
@@ -42,7 +44,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author Thorben Lindhauer
  */
-public class JsonLegacyQueryOrderingPropertyConverter {
+public @NullMarked class JsonLegacyQueryOrderingPropertyConverter {
 
   public static final String ORDER_BY_DELIMITER = ",";
 

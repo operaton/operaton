@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -28,18 +31,19 @@ import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
  *
  * @author Tom Baeyens
  */
+@NullMarked
 public class MessageEntity extends JobEntity {
 
   public static final String TYPE = "message";
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  private String repeat;
+  private @Nullable String repeat;
 
-  public String getRepeat() {
+  public @Nullable String getRepeat() {
     return repeat;
   }
-  public void setRepeat(String repeat) {
+  public void setRepeat(@Nullable String repeat) {
     this.repeat = repeat;
   }
 

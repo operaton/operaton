@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -25,6 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  *
  * @author Svetlana Dorokhova
  */
+@NullMarked
 public class EverLivingJobEntity extends JobEntity {
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;

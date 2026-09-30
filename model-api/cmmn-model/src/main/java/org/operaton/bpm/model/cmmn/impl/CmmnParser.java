@@ -19,7 +19,6 @@ package org.operaton.bpm.model.cmmn.impl;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.SchemaFactory;
 
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelException;
@@ -46,7 +45,7 @@ public class CmmnParser extends AbstractModelParser {
   private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
   public CmmnParser() {
-    this.schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA);
+    this.schemaFactory = createSchemaFactory();
     addSchema(CMMN10_NS, createSchema(CMMN_10_SCHEMA_LOCATION, CmmnParser.class.getClassLoader()));
     addSchema(CMMN11_NS, createSchema(CMMN_11_SCHEMA_LOCATION, CmmnParser.class.getClassLoader()));
   }

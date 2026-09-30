@@ -22,12 +22,15 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.util.Throwables.getRootCause;
 
 class ParserSchemaTest {
 
   private static final String SCHEMA = "org/operaton/bpm/engine/impl/util/xml/greeting.xsd";
   private static final String VALID = "org/operaton/bpm/engine/impl/util/xml/greeting-valid.xml";
   private static final String INVALID = "org/operaton/bpm/engine/impl/util/xml/greeting-invalid.xml";
+  private static final String SCHEMA_WITH_EXTERNAL_DTD = "org/operaton/bpm/engine/impl/util/xml/greeting-with-external-dtd.xsd";
 
   /** Minimal concrete Parse: Parse is abstract but declares no abstract methods. */
   static class TestParse extends Parse {
@@ -122,5 +125,28 @@ class ParserSchemaTest {
     validating.execute();
 
     assertThat(validating.hasErrors()).isTrue();
+  }
+
+  /**
+   * Regression guard for the ACCESS_EXTERNAL_DTD hardening in {@code compileSchema}: the schema
+   * document itself references an external DTD via a DOCTYPE declaration. The referenced DTD
+   * file exists on disk, so if access were still allowed, compilation would succeed; the
+   * restriction must make it fail instead, and specifically because access is denied, not
+   * because the file is missing.
+   *
+   * <p>Only the {@code accessExternalDTD} property name is asserted, not the DTD's system id:
+   * the JDK-bundled Xerces version determines whether the system id is included in the message
+   * (present on JDK 25, reported as an empty string on JDK 17/21), so asserting it would make
+   * this test JDK-version-dependent.
+   */
+  @Test
+  void shouldDenyExternalDtdAccessWhenCompilingSchema() {
+    TestParser parser = new TestParser();
+    String schemaUrl = ReflectUtil.getResourceUrlAsString(SCHEMA_WITH_EXTERNAL_DTD);
+
+    assertThatThrownBy(() -> parser.schemaFor(schemaUrl)).satisfies(exception -> {
+      String rootCauseMessage = getRootCause(exception).getMessage();
+      assertThat(rootCauseMessage).contains("accessExternalDTD");
+    });
   }
 }

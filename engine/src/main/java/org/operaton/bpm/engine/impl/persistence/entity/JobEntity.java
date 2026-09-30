@@ -20,6 +20,7 @@ import java.util.*;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -53,6 +54,7 @@ import static org.operaton.bpm.engine.runtime.Incident.FAILED_JOB_HANDLER_TYPE;
  * @author Dave Syer
  * @author Frederik Heremans
  */
+@NullMarked
 public abstract class JobEntity extends AcquirableJobEntity
   implements Job, DbEntity,
     HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
@@ -61,51 +63,51 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   public static final int DEFAULT_RETRIES = 3;
 
-  protected String executionId;
+  protected @Nullable String executionId;
 
-  protected String processDefinitionId;
-  protected String processDefinitionKey;
+  protected @Nullable String processDefinitionId;
+  protected @Nullable String processDefinitionKey;
 
   protected int retries = DEFAULT_RETRIES;
 
   // entity is active by default
   protected int suspensionState = SuspensionState.ACTIVE.getStateCode();
 
-  protected String jobHandlerType;
-  protected String jobHandlerConfiguration;
+  protected @Nullable String jobHandlerType;
+  protected @Nullable String jobHandlerConfiguration;
 
-  protected ByteArrayEntity exceptionByteArray;
-  protected String exceptionByteArrayId;
+  protected @Nullable ByteArrayEntity exceptionByteArray;
+  protected @Nullable String exceptionByteArrayId;
 
-  protected String exceptionMessage;
+  protected @Nullable String exceptionMessage;
 
-  protected String deploymentId;
+  protected @Nullable String deploymentId;
 
-  protected String jobDefinitionId;
+  protected @Nullable String jobDefinitionId;
 
   protected long priority = DEFAULT_PRIORITY;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
-  protected Date createTime;
+  protected @Nullable Date createTime;
 
   // runtime state /////////////////////////////
-  protected String activityId;
-  protected JobDefinition jobDefinition;
-  protected ExecutionEntity execution;
+  protected @Nullable String activityId;
+  protected @Nullable JobDefinition jobDefinition;
+  protected @Nullable ExecutionEntity execution;
 
   // sequence counter //////////////////////////
   protected long sequenceCounter = 1;
 
   // last failure log id ///////////////////////
-  protected String lastFailureLogId;
+  protected @Nullable String lastFailureLogId;
 
   // last failing activity id ///////////////////////
-  protected String failedActivityId;
+  protected @Nullable String failedActivityId;
 
-  protected Map<String, Class<?>> persistedDependentEntities;
+  protected @Nullable Map<String, Class<?>> persistedDependentEntities;
 
-  protected String batchId;
+  protected @Nullable String batchId;
 
   public void execute(CommandContext commandContext) {
     if (executionId != null) {
@@ -273,15 +275,15 @@ public abstract class JobEntity extends AcquirableJobEntity
   // getters and setters //////////////////////////////////////////////////////
 
   @Override
-  public String getExecutionId() {
+  public @Nullable String getExecutionId() {
     return executionId;
   }
 
-  public void setExecutionId(String executionId) {
+  public void setExecutionId(@Nullable String executionId) {
     this.executionId = executionId;
   }
 
-  public ExecutionEntity getExecution() {
+  public @Nullable ExecutionEntity getExecution() {
     ensureExecutionInitialized();
     return execution;
   }
@@ -410,20 +412,20 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
-  public void setProcessDefinitionId(String processDefinitionId) {
+  public void setProcessDefinitionId(@Nullable String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
 
   @Override
-  public String getProcessDefinitionKey() {
+  public @Nullable String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
 
-  public void setProcessDefinitionKey(String processDefinitionKey) {
+  public void setProcessDefinitionKey(@Nullable String processDefinitionKey) {
     this.processDefinitionKey = processDefinitionKey;
   }
 
@@ -455,37 +457,37 @@ public abstract class JobEntity extends AcquirableJobEntity
     this.jobHandlerConfiguration = configuration.toCanonicalString();
   }
 
-  public String getJobHandlerType() {
+  public @Nullable String getJobHandlerType() {
     return jobHandlerType;
   }
 
-  public void setJobHandlerType(String jobHandlerType) {
+  public void setJobHandlerType(@Nullable String jobHandlerType) {
     this.jobHandlerType = jobHandlerType;
   }
 
-  public String getJobHandlerConfigurationRaw() {
+  public @Nullable String getJobHandlerConfigurationRaw() {
     return jobHandlerConfiguration;
   }
 
-  public void setJobHandlerConfigurationRaw(String jobHandlerConfiguration) {
+  public void setJobHandlerConfigurationRaw(@Nullable String jobHandlerConfiguration) {
     this.jobHandlerConfiguration = jobHandlerConfiguration;
   }
 
   @Override
-  public String getExceptionMessage() {
+  public @Nullable String getExceptionMessage() {
     return exceptionMessage;
   }
 
   @Override
-  public String getJobDefinitionId() {
+  public @Nullable String getJobDefinitionId() {
     return jobDefinitionId;
   }
 
-  public void setJobDefinitionId(String jobDefinitionId) {
+  public void setJobDefinitionId(@Nullable String jobDefinitionId) {
     this.jobDefinitionId = jobDefinitionId;
   }
 
-  public JobDefinition getJobDefinition() {
+  public @Nullable JobDefinition getJobDefinition() {
     ensureJobDefinitionInitialized();
     return jobDefinition;
   }
@@ -509,15 +511,15 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
-  public void setExceptionMessage(String exceptionMessage) {
+  public void setExceptionMessage(@Nullable String exceptionMessage) {
     this.exceptionMessage = StringUtil.trimToMaximumLengthAllowed(exceptionMessage);
   }
 
-  public String getExceptionByteArrayId() {
+  public @Nullable String getExceptionByteArrayId() {
     return exceptionByteArrayId;
   }
 
-  protected ByteArrayEntity getExceptionByteArray() {
+  protected @Nullable ByteArrayEntity getExceptionByteArray() {
     ensureExceptionByteArrayInitialized();
     return exceptionByteArray;
   }
@@ -548,11 +550,11 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return deploymentId;
   }
 
-  public void setDeploymentId(String deploymentId) {
+  public void setDeploymentId(@Nullable String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
@@ -561,12 +563,12 @@ public abstract class JobEntity extends AcquirableJobEntity
         || (retries == 0 && (lockOwner != null || lockExpirationTime != null));
   }
 
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     ensureActivityIdInitialized();
     return activityId;
   }
 
-  public void setActivityId(String activityId) {
+  public void setActivityId(@Nullable String activityId) {
     this.activityId = activityId;
   }
 
@@ -580,20 +582,20 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
   @Override
-  public Date getCreateTime() {
+  public @Nullable Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(Date createTime) {
+  public void setCreateTime(@Nullable Date createTime) {
     this.createTime = createTime;
   }
 
@@ -664,7 +666,7 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public Map<String, Class<?>> getDependentEntities() {
+  public @Nullable Map<String, Class<?>> getDependentEntities() {
     return persistedDependentEntities;
   }
 
@@ -679,29 +681,29 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
-  public String getLastFailureLogId() {
+  public @Nullable String getLastFailureLogId() {
     return lastFailureLogId;
   }
 
-  public void setLastFailureLogId(String lastFailureLogId) {
+  public void setLastFailureLogId(@Nullable String lastFailureLogId) {
     this.lastFailureLogId = lastFailureLogId;
   }
 
   @Override
-  public String getFailedActivityId() {
+  public @Nullable String getFailedActivityId() {
     return failedActivityId;
   }
 
-  public void setFailedActivityId(String failedActivityId) {
+  public void setFailedActivityId(@Nullable String failedActivityId) {
     this.failedActivityId = failedActivityId;
   }
 
   @Override
-  public String getBatchId() {
+  public @Nullable String getBatchId() {
     return batchId;
   }
 
-  public void setBatchId(String batchId) {
+  public void setBatchId(@Nullable String batchId) {
     this.batchId = batchId;
   }
 

@@ -20,6 +20,7 @@ import java.net.URI;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
@@ -37,7 +38,7 @@ import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_X
  * @author Daniel Meyer
  *
  */
-public class DeployProcessArchivesStep extends DeploymentOperationStep {
+public @NullMarked class DeployProcessArchivesStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {

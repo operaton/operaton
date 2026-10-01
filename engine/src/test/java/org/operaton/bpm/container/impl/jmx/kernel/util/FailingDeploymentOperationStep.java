@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.kernel.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
 
@@ -25,7 +26,7 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
  * @author Daniel Meyer
  *
  */
-public class FailingDeploymentOperationStep extends DeploymentOperationStep {
+public @NullMarked class FailingDeploymentOperationStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
@@ -34,9 +35,7 @@ public class FailingDeploymentOperationStep extends DeploymentOperationStep {
 
   @Override
   public void performOperationStep(DeploymentOperation operationContext) {
-
     throw new RuntimeException("Big time failure.");
-
   }
 
 }

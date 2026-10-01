@@ -21,6 +21,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.deployment.Attachments;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedThreadPool;
@@ -40,7 +41,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  * @author Daniel Meyer
  *
  */
-public class StartManagedThreadPoolStep extends DeploymentOperationStep {
+public @NullMarked class StartManagedThreadPoolStep extends DeploymentOperationStep {
 
   private static final int DEFAULT_CORE_POOL_SIZE = 3;
   private static final int DEFAULT_MAX_POOL_SIZE = 10;

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedBpmPlatformPlugins;
@@ -29,7 +30,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  * @author Daniel Meyer
  *
  */
-public class NotifyPostProcessApplicationUndeployedStep extends DeploymentOperationStep {
+public @NullMarked class NotifyPostProcessApplicationUndeployedStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
@@ -38,7 +39,6 @@ public class NotifyPostProcessApplicationUndeployedStep extends DeploymentOperat
 
   @Override
   public void performOperationStep(DeploymentOperation operationContext) {
-
     final AbstractProcessApplication processApplication = operationContext.getAttachment(Attachments.PROCESS_APPLICATION);
 
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();

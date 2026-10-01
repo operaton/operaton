@@ -16,19 +16,21 @@
  */
 package org.operaton.bpm.container.impl.spi;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
- * <p>An atomic step that is part of a composite {@link DeploymentOperation}.</p>
+ * An atomic step that is part of a composite {@link DeploymentOperation}.
  *
  * @author Daniel Meyer
  *
  */
-public abstract class DeploymentOperationStep {
+public abstract @NullMarked class DeploymentOperationStep {
 
   public abstract String getName();
 
   public abstract void performOperationStep(DeploymentOperation operationContext);
 
-  public void cancelOperationStep(DeploymentOperation operationContext){
+  public void cancelOperationStep(DeploymentOperation operationContext) {
     // default behavior is to to nothing if the step fails
   }
 

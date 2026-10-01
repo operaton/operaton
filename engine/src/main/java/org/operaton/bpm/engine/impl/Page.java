@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
 
 /**
  * holds the parameters of a page (partial result) for a query.
@@ -23,7 +24,7 @@ package org.operaton.bpm.engine.impl;
  * @author Joram Barrez
  * @author Tom Baeyens
  */
-public class Page {
+public @NullMarked class Page {
 
   protected int firstResult;
   protected int maxResults;

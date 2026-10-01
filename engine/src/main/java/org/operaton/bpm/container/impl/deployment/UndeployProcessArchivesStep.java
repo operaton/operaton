@@ -19,6 +19,7 @@ package org.operaton.bpm.container.impl.deployment;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
@@ -37,7 +38,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class UndeployProcessArchivesStep extends DeploymentOperationStep {
+public @NullMarked class UndeployProcessArchivesStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
@@ -54,14 +55,12 @@ public class UndeployProcessArchivesStep extends DeploymentOperationStep {
     ensureNotNull("Cannot find process application with name %s".formatted(processApplication.getName()), "deployedProcessApplication", deployedProcessApplication);
 
     Map<String, DeployedProcessArchive> deploymentMap = deployedProcessApplication.getProcessArchiveDeploymentMap();
-    if (deploymentMap != null) {
-      List<ProcessesXml> processesXmls = deployedProcessApplication.getProcessesXmls();
-      for (ProcessesXml processesXml : processesXmls) {
-        for (ProcessArchiveXml parsedProcessArchive : processesXml.getProcessArchives()) {
-          DeployedProcessArchive deployedProcessArchive = deploymentMap.get(parsedProcessArchive.getName());
-          if (deployedProcessArchive != null) {
-            operationContext.addStep(new UndeployProcessArchiveStep(deployedProcessApplication, parsedProcessArchive, deployedProcessArchive.getProcessEngineName()));
-          }
+    List<ProcessesXml> processesXmls = deployedProcessApplication.getProcessesXmls();
+    for (ProcessesXml processesXml : processesXmls) {
+      for (ProcessArchiveXml parsedProcessArchive : processesXml.getProcessArchives()) {
+        DeployedProcessArchive deployedProcessArchive = deploymentMap.get(parsedProcessArchive.getName());
+        if (deployedProcessArchive != null) {
+          operationContext.addStep(new UndeployProcessArchiveStep(deployedProcessApplication, parsedProcessArchive, deployedProcessArchive.getProcessEngineName()));
         }
       }
     }

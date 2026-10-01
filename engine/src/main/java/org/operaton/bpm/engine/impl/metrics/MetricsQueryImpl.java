@@ -63,13 +63,13 @@ public @NullMarked class MetricsQueryImpl extends ListQueryParameterObject imple
   }
 
   @Override
-  public MetricsQueryImpl name(String name) {
+  public MetricsQueryImpl name(@Nullable String name) {
     this.name = MetricsUtil.resolveInternalName(name);
     return this;
   }
 
   @Override
-  public MetricsQuery reporter(String reporter) {
+  public MetricsQuery reporter(@Nullable String reporter) {
     this.reporter = reporter;
     return this;
   }

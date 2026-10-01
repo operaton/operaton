@@ -23,11 +23,12 @@ import jakarta.el.ELResolver;
 import jakarta.el.ListELResolver;
 import jakarta.el.MapELResolver;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
 import org.operaton.bpm.engine.impl.el.VariableContextElResolver;
 import org.operaton.bpm.engine.impl.el.VariableScopeElResolver;
 
-public class MockExpressionManager extends JuelExpressionManager {
+public @NullMarked class MockExpressionManager extends JuelExpressionManager {
 
   @Override
   protected ELResolver createElResolver() {

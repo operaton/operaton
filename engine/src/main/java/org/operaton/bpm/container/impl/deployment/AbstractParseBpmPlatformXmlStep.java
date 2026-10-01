@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -46,7 +47,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Christian Lipphardt
  *
  */
-public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperationStep {
+public abstract @NullMarked class AbstractParseBpmPlatformXmlStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -79,7 +80,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
 
   }
 
-  public URL checkValidBpmPlatformXmlResourceLocation(String url) {
+  public @Nullable URL checkValidBpmPlatformXmlResourceLocation(@Nullable String url) {
     url = autoCompleteUrl(url);
 
     URL fileLocation = null;
@@ -182,7 +183,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     }
   }
 
-  public URL lookupBpmPlatformXmlLocationFromEnvironmentVariable() {
+  public @Nullable URL lookupBpmPlatformXmlLocationFromEnvironmentVariable() {
     String bpmPlatformXmlLocation = System.getenv(BPM_PLATFORM_XML_ENVIRONMENT_VARIABLE);
     String logStatement = "environment variable [%s]".formatted(BPM_PLATFORM_XML_ENVIRONMENT_VARIABLE);
 
@@ -200,7 +201,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return fileLocation;
   }
 
-  public URL lookupBpmPlatformXmlFromClassPath(String resourceLocation) {
+  public @Nullable URL lookupBpmPlatformXmlFromClassPath(String resourceLocation) {
     URL fileLocation = ClassLoaderUtil.getClassloader(getClass()).getResource(resourceLocation);
 
     if (fileLocation != null) {
@@ -210,11 +211,11 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return fileLocation;
   }
 
-  public URL lookupBpmPlatformXmlFromClassPath() {
+  public @Nullable URL lookupBpmPlatformXmlFromClassPath() {
     return lookupBpmPlatformXmlFromClassPath(BPM_PLATFORM_XML_RESOURCE_LOCATION);
   }
 
-  public URL lookupBpmPlatformXml() {
+  public @Nullable URL lookupBpmPlatformXml() {
     URL fileLocation = lookupBpmPlatformXmlLocationFromJndi();
 
     if (fileLocation == null) {
@@ -228,6 +229,6 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     return fileLocation;
   }
 
-  public abstract URL getBpmPlatformXmlStream(DeploymentOperation operationContext);
+  public abstract @Nullable URL getBpmPlatformXmlStream(DeploymentOperation operationContext);
 
 }

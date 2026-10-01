@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedJobExecutor;
@@ -40,7 +41,7 @@ import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APP
  * @author Daniel Meyer
  *
  */
-public class StartJobAcquisitionStep extends DeploymentOperationStep {
+public @NullMarked class StartJobAcquisitionStep extends DeploymentOperationStep {
 
   protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 

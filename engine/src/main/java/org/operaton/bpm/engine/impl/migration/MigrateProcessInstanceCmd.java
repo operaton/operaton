@@ -350,7 +350,7 @@ public @NullMarked class MigrateProcessInstanceCmd extends AbstractMigrationCmd 
   }
 
   protected void ensureProcessInstanceExist(String processInstanceId,
-                                            ExecutionEntity processInstance) {
+                                            @Nullable ExecutionEntity processInstance) {
     if (processInstance == null) {
       throw LOGGER.processInstanceDoesNotExist(processInstanceId);
     }

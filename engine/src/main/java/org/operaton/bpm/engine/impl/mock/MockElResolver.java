@@ -24,17 +24,17 @@ import org.jspecify.annotations.Nullable;
 public @NullMarked class MockElResolver extends ELResolver {
 
   @Override
-  public Class< ? > getCommonPropertyType(ELContext context, Object base) {
+  public Class< ? > getCommonPropertyType(ELContext context, @Nullable Object base) {
     return Object.class;
   }
 
   @Override
-  public @Nullable Class<?> getType(ELContext context, Object base, Object property) {
+  public @Nullable Class<?> getType(ELContext context, @Nullable Object base, Object property) {
     return null;
   }
 
   @Override
-  public @Nullable Object getValue(ELContext context, Object base, Object property) {
+  public @Nullable Object getValue(ELContext context, @Nullable Object base, Object property) {
     Object bean = Mocks.get(property);
     if (bean != null) {
       context.setPropertyResolved(true);
@@ -43,12 +43,12 @@ public @NullMarked class MockElResolver extends ELResolver {
   }
 
   @Override
-  public boolean isReadOnly(ELContext context, Object base, Object property) {
+  public boolean isReadOnly(ELContext context, @Nullable Object base, Object property) {
     return false;
   }
 
   @Override
-  public void setValue(ELContext context, Object base, Object property, Object value) {
+  public void setValue(ELContext context, @Nullable Object base, Object property, @Nullable Object value) {
     // no-op
   }
 

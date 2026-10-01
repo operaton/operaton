@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.metrics;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.history.event.HostnameProvider;
@@ -33,5 +34,5 @@ public @NullMarked interface MetricsReporterIdProvider {
    * Provides an id that identifies the metrics reported as part of the given engine's
    * process execution. May return null.
    */
-  String provideId(ProcessEngine processEngine);
+  @Nullable String provideId(ProcessEngine processEngine);
 }

@@ -32,7 +32,7 @@ public @NullMarked class ClassLoaderUtil {
     return Thread.currentThread().getContextClassLoader();
   }
 
-  public static ClassLoader getClassloader(final Class<?> clazz) {
+  public static @Nullable ClassLoader getClassloader(final Class<?> clazz) {
     return clazz.getClassLoader();
   }
 

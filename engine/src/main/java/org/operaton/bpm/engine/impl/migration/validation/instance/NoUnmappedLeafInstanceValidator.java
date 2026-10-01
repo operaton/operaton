@@ -61,7 +61,7 @@ public @NullMarked class NoUnmappedLeafInstanceValidator implements
     if (isInvalid(migratingInstance)) {
       ancestorInstanceReport.addFailure(
           "Cannot migrate subscription for compensation handler '%s'. There is no migration instruction for the compensation start event"
-              .formatted(getSourceScopeId(migratingInstance)));
+              .formatted(getSourceScopeId(migratingInstance.getEventSubscription())));
     }
   }
 

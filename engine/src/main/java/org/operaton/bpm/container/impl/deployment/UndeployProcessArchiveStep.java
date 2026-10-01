@@ -43,7 +43,7 @@ import static java.util.Objects.requireNonNull;
  */
 public @NullMarked class UndeployProcessArchiveStep extends DeploymentOperationStep {
 
-  protected @Nullable String processArchvieName;
+  protected @Nullable String processArchiveName;
   protected JmxManagedProcessApplication deployedProcessApplication;
   protected ProcessArchiveXml processArchive;
   protected String processEngineName;
@@ -52,11 +52,12 @@ public @NullMarked class UndeployProcessArchiveStep extends DeploymentOperationS
     this.deployedProcessApplication = deployedProcessApplication;
     this.processArchive = processArchive;
     this.processEngineName = processEngineName;
+    this.processArchiveName = processArchive.getName();
   }
 
   @Override
   public String getName() {
-    return "Undeploying process archive "+processArchvieName;
+    return "Undeploying process archive "+ processArchiveName;
   }
 
   @Override

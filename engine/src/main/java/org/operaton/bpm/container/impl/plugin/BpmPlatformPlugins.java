@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.plugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
 
@@ -38,6 +39,7 @@ public @NullMarked class BpmPlatformPlugins {
 
   public void add(@Nullable BpmPlatformPlugin plugin) {
     if (plugin != null) {
+      if (plugin != null) {
       this.plugins.add(plugin);
     }
   }

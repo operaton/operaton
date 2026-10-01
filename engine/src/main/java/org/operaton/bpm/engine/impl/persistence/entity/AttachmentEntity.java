@@ -20,6 +20,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
@@ -28,22 +31,23 @@ import org.operaton.bpm.engine.task.Attachment;
 /**
  * @author Tom Baeyens
  */
+@NullMarked
 public class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, HistoricEntity {
 
-  protected String id;
+  protected @Nullable String id;
   protected int revision;
-  protected String name;
-  protected String description;
-  protected String type;
-  protected String taskId;
-  protected String processInstanceId;
-  protected String url;
-  protected String contentId;
-  protected ByteArrayEntity content;
-  protected String tenantId;
-  protected Date createTime;
-  protected String rootProcessInstanceId;
-  protected Date removalTime;
+  protected @Nullable String name;
+  protected @Nullable String description;
+  protected @Nullable String type;
+  protected @Nullable String taskId;
+  protected @Nullable String processInstanceId;
+  protected @Nullable String url;
+  protected @Nullable String contentId;
+  protected @Nullable ByteArrayEntity content;
+  protected @Nullable String tenantId;
+  protected @Nullable Date createTime;
+  protected @Nullable String rootProcessInstanceId;
+  protected @Nullable Date removalTime;
 
   @Override
   public Object getPersistentState() {
@@ -59,7 +63,7 @@ public class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, Hi
   }
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -79,109 +83,109 @@ public class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, Hi
   }
 
   @Override
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
   @Override
-  public void setName(String name) {
+  public void setName(@Nullable String name) {
     this.name = name;
   }
 
   @Override
-  public String getDescription() {
+  public @Nullable String getDescription() {
     return description;
   }
 
   @Override
-  public void setDescription(String description) {
+  public void setDescription(@Nullable String description) {
     this.description = description;
   }
 
   @Override
-  public String getType() {
+  public @Nullable String getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(@Nullable String type) {
     this.type = type;
   }
 
   @Override
-  public String getTaskId() {
+  public @Nullable String getTaskId() {
     return taskId;
   }
 
-  public void setTaskId(String taskId) {
+  public void setTaskId(@Nullable String taskId) {
     this.taskId = taskId;
   }
 
   @Override
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 
-  public void setProcessInstanceId(String processInstanceId) {
+  public void setProcessInstanceId(@Nullable String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 
   @Override
-  public String getUrl() {
+  public @Nullable String getUrl() {
     return url;
   }
 
-  public void setUrl(String url) {
+  public void setUrl(@Nullable String url) {
     this.url = url;
   }
 
-  public String getContentId() {
+  public @Nullable String getContentId() {
     return contentId;
   }
 
-  public void setContentId(String contentId) {
+  public void setContentId(@Nullable String contentId) {
     this.contentId = contentId;
   }
 
-  public ByteArrayEntity getContent() {
+  public @Nullable ByteArrayEntity getContent() {
     return content;
   }
 
-  public void setContent(ByteArrayEntity content) {
+  public void setContent(@Nullable ByteArrayEntity content) {
     this.content = content;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
   @Override
-  public Date getCreateTime() {
+  public @Nullable Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(Date createTime) {
+  public void setCreateTime(@Nullable Date createTime) {
     this.createTime = createTime;
   }
 
   @Override
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
   @Override
-  public Date getRemovalTime() {
+  public @Nullable Date getRemovalTime() {
     return removalTime;
   }
 
-  public void setRemovalTime(Date removalTime) {
+  public void setRemovalTime(@Nullable Date removalTime) {
     this.removalTime = removalTime;
   }
 
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 

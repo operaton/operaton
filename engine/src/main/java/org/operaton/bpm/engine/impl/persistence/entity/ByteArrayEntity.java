@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.repository.ResourceType;
@@ -25,20 +28,21 @@ import org.operaton.bpm.engine.repository.ResourceType;
 /**
  * @author Tom Baeyens
  */
+@NullMarked
 public class ByteArrayEntity implements DbEntity, HasDbRevision {
 
   private static final Object PERSISTENTSTATE_NULL = new Object();
 
-  protected String id;
+  protected @Nullable String id;
   protected int revision;
-  protected String name;
-  protected byte[] bytes;
-  protected String deploymentId;
-  protected String tenantId;
-  protected Integer type;
-  protected Date createTime;
-  protected String rootProcessInstanceId;
-  protected Date removalTime;
+  protected @Nullable String name;
+  protected byte@Nullable[] bytes;
+  protected @Nullable String deploymentId;
+  protected @Nullable String tenantId;
+  protected @Nullable Integer type;
+  protected @Nullable Date createTime;
+  protected @Nullable String rootProcessInstanceId;
+  protected @Nullable Date removalTime;
 
   public ByteArrayEntity() {
   }
@@ -64,7 +68,7 @@ public class ByteArrayEntity implements DbEntity, HasDbRevision {
     this.type = type.getValue();
   }
 
-  public byte[] getBytes() {
+  public byte@Nullable[] getBytes() {
     return bytes;
   }
 
@@ -81,7 +85,7 @@ public class ByteArrayEntity implements DbEntity, HasDbRevision {
   // getters and setters //////////////////////////////////////////////////////
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -90,7 +94,7 @@ public class ByteArrayEntity implements DbEntity, HasDbRevision {
     this.id = id;
   }
 
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
@@ -98,15 +102,15 @@ public class ByteArrayEntity implements DbEntity, HasDbRevision {
     this.name = name;
   }
 
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return deploymentId;
   }
 
-  public void setDeploymentId(String deploymentId) {
+  public void setDeploymentId(@Nullable String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
-  public void setBytes(byte[] bytes) {
+  public void setBytes(byte@Nullable[] bytes) {
     this.bytes = bytes;
   }
 
@@ -120,15 +124,15 @@ public class ByteArrayEntity implements DbEntity, HasDbRevision {
     this.revision = revision;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
-  public Integer getType() {
+  public @Nullable Integer getType() {
     return type;
   }
 
@@ -136,27 +140,27 @@ public class ByteArrayEntity implements DbEntity, HasDbRevision {
     this.type = type;
   }
 
-  public Date getCreateTime() {
+  public @Nullable Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(Date createTime) {
+  public void setCreateTime(@Nullable Date createTime) {
     this.createTime = createTime;
   }
 
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
-  public Date getRemovalTime() {
+  public @Nullable Date getRemovalTime() {
     return removalTime;
   }
 
-  public void setRemovalTime(Date removalTime) {
+  public void setRemovalTime(@Nullable Date removalTime) {
     this.removalTime = removalTime;
   }
 

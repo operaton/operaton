@@ -48,7 +48,7 @@ public @NullMarked class MigrationPlanExecutionBuilderImpl implements MigrationP
   }
 
   @Override
-  public MigrationPlanExecutionBuilder processInstanceIds(List<String> processInstanceIds) {
+  public MigrationPlanExecutionBuilder processInstanceIds(@Nullable List<String> processInstanceIds) {
     this.processInstanceIds = processInstanceIds;
     return this;
   }

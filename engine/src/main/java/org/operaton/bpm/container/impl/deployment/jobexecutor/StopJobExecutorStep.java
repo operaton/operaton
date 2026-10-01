@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class StopJobExecutorStep extends DeploymentOperationStep {
+public @NullMarked class StopJobExecutorStep extends DeploymentOperationStep {
 
   protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 

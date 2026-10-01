@@ -64,7 +64,7 @@ public @NullMarked class MigrationPlanBuilderImpl implements MigrationInstructio
   }
 
   @Override
-  public MigrationPlanBuilder setVariables(Map<String, ?> variables) {
+  public MigrationPlanBuilder setVariables(@Nullable Map<String, ?> variables) {
     if (variables instanceof VariableMapImpl impl) {
       this.variables = impl;
     } else if (variables != null) {

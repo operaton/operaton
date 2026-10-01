@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.container.impl.jmx.kernel.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 
-public class TestService implements PlatformService<TestService>, TestServiceMBean {
+public @NullMarked class TestService implements PlatformService<TestService>, TestServiceMBean {
 
   @Override
   public void start(PlatformServiceContainer mBeanServiceContainer) {

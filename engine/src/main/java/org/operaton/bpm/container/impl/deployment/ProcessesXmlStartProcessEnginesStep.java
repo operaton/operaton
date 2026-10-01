@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
@@ -33,7 +34,7 @@ import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_X
  * @see AbstractParseBpmPlatformXmlStep
  *
  */
-public class ProcessesXmlStartProcessEnginesStep extends AbstractStartProcessEnginesStep {
+public @NullMarked class ProcessesXmlStartProcessEnginesStep extends AbstractStartProcessEnginesStep {
 
   @Override
   protected List<ProcessEngineXml> getProcessEnginesXmls(DeploymentOperation operationContext) {

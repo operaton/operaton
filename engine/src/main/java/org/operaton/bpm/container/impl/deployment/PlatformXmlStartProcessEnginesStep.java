@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.metadata.spi.BpmPlatformXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
@@ -31,7 +32,7 @@ import static org.operaton.bpm.container.impl.deployment.Attachments.BPM_PLATFOR
  * @see AbstractParseBpmPlatformXmlStep
  *
  */
-public class PlatformXmlStartProcessEnginesStep extends AbstractStartProcessEnginesStep {
+public @NullMarked class PlatformXmlStartProcessEnginesStep extends AbstractStartProcessEnginesStep {
 
   @Override
   protected List<ProcessEngineXml> getProcessEnginesXmls(DeploymentOperation operationContext) {

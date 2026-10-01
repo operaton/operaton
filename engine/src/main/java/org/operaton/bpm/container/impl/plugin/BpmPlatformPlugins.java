@@ -17,6 +17,7 @@
 package org.operaton.bpm.container.impl.plugin;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -34,11 +35,13 @@ public class BpmPlatformPlugins {
   }
 
   public void add(BpmPlatformPlugin plugin) {
-    this.plugins.add(plugin);
+    if (plugin != null) {
+      this.plugins.add(plugin);
+    }
   }
 
   public List<BpmPlatformPlugin> getPlugins() {
-    return plugins;
+    return Collections.unmodifiableList(plugins);
   }
 
   public static BpmPlatformPlugins load(ClassLoader classLoader) {
@@ -49,7 +52,10 @@ public class BpmPlatformPlugins {
         .iterator();
 
     while (it.hasNext()) {
-      plugins.add(it.next());
+      BpmPlatformPlugin plugin = it.next();
+      if (plugin != null) {
+        plugins.add(plugin);
+      }
     }
 
     return plugins;

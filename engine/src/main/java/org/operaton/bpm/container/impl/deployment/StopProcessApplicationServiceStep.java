@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
@@ -29,7 +30,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  * @author Daniel Meyer
  *
  */
-public class StopProcessApplicationServiceStep extends DeploymentOperationStep {
+public @NullMarked class StopProcessApplicationServiceStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {

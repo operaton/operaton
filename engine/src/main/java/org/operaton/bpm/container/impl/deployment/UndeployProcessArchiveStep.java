@@ -18,6 +18,8 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.container.impl.deployment.util.DeployedProcessArchive;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
@@ -26,8 +28,11 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * <p>Deployment operation step responsible for performing the undeployment of a
@@ -36,9 +41,9 @@ import org.operaton.bpm.engine.RepositoryService;
  * @author Daniel Meyer
  *
  */
-public class UndeployProcessArchiveStep extends DeploymentOperationStep {
+public @NullMarked class UndeployProcessArchiveStep extends DeploymentOperationStep {
 
-  protected String processArchvieName;
+  protected @Nullable String processArchiveName;
   protected JmxManagedProcessApplication deployedProcessApplication;
   protected ProcessArchiveXml processArchive;
   protected String processEngineName;
@@ -47,11 +52,12 @@ public class UndeployProcessArchiveStep extends DeploymentOperationStep {
     this.deployedProcessApplication = deployedProcessApplication;
     this.processArchive = processArchive;
     this.processEngineName = processEngineName;
+    this.processArchiveName = processArchive.getName();
   }
 
   @Override
   public String getName() {
-    return "Undeploying process archive "+processArchvieName;
+    return "Undeploying process archive "+ processArchiveName;
   }
 
   @Override
@@ -64,7 +70,8 @@ public class UndeployProcessArchiveStep extends DeploymentOperationStep {
     final ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, processEngineName);
 
     // unregrister with the process engine.
-    processEngine.getManagementService().unregisterProcessApplication(deployedProcessArchive.getAllDeploymentIds(), true);
+    ManagementService managementService = requireNonNull(processEngine).getManagementService();
+    managementService.unregisterProcessApplication(deployedProcessArchive.getAllDeploymentIds(), true);
 
     // delete the deployment if not disabled
     if (PropertyHelper.getBooleanProperty(processArchive.getProperties(), ProcessArchiveXml.PROP_IS_DELETE_UPON_UNDEPLOY, false)) {

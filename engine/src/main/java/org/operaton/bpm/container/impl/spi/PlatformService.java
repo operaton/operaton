@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.spi;
 
+import org.jspecify.annotations.NullMarked;
 
 /**
  * @author Daniel Meyer
@@ -24,7 +25,7 @@ package org.operaton.bpm.container.impl.spi;
  *
  * @param <S>
  */
-public interface PlatformService<S> {
+public @NullMarked interface PlatformService<S> {
 
   void start(PlatformServiceContainer mBeanServiceContainer);
 

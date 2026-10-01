@@ -22,6 +22,7 @@ import java.util.Set;
 import javax.management.ObjectName;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.container.impl.spi.DeploymentOperation.DeploymentOperationBuilder;
@@ -79,7 +80,7 @@ public interface PlatformServiceContainer {
   /**
    * A ServiceType is a collection of services that share a common name prefix.
    */
-  interface ServiceType {
+  @NullMarked interface ServiceType {
 
     /**
      * Returns a wildcard name that allows to query the service container

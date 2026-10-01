@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.deployment.Attachments;
 import org.operaton.bpm.container.impl.metadata.spi.BpmPlatformXml;
 import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
@@ -29,7 +30,7 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
  * @author Daniel Meyer
  *
  */
-public class StartJobExecutorStep extends DeploymentOperationStep {
+public @NullMarked class StartJobExecutorStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
@@ -52,7 +53,5 @@ public class StartJobExecutorStep extends DeploymentOperationStep {
     BpmPlatformXml bpmPlatformXml = operationContext.getAttachment(Attachments.BPM_PLATFORM_XML);
     return bpmPlatformXml.getJobExecutor();
   }
-
-
 
 }

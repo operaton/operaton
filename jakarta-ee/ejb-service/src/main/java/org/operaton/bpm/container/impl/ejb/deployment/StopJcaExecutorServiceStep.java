@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.ejb.deployment;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
@@ -30,7 +31,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  * @author Daniel Meyer
  *
  */
-public class StopJcaExecutorServiceStep extends DeploymentOperationStep {
+public @NullMarked class StopJcaExecutorServiceStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
@@ -42,7 +43,6 @@ public class StopJcaExecutorServiceStep extends DeploymentOperationStep {
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
 
     serviceContainer.stopService(ServiceTypes.BPM_PLATFORM, RuntimeContainerDelegateImpl.SERVICE_NAME_EXECUTOR);
-
   }
 
 }

@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class StopProcessEnginesStep extends DeploymentOperationStep {
+public @NullMarked class StopProcessEnginesStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -42,14 +43,12 @@ public class StopProcessEnginesStep extends DeploymentOperationStep {
 
   @Override
   public void performOperationStep(DeploymentOperation operationContext) {
-
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
     Set<String> serviceNames = serviceContainer.getServiceNames(ServiceTypes.PROCESS_ENGINE);
 
     for (String serviceName : serviceNames) {
       stopProcessEngine(serviceName, serviceContainer);
     }
-
   }
 
   /**
@@ -57,14 +56,12 @@ public class StopProcessEnginesStep extends DeploymentOperationStep {
    *
    */
   private void stopProcessEngine(String serviceName, PlatformServiceContainer serviceContainer) {
-
     try {
       serviceContainer.stopService(serviceName);
     }
     catch(Exception e) {
       LOG.exceptionWhileStopping("Process Engine", serviceName, e);
     }
-
   }
 
 }

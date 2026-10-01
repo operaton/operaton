@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.jmx.services;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
 import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugins;
 import org.operaton.bpm.container.impl.spi.PlatformService;
@@ -27,7 +28,7 @@ import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
  * @author Thorben Lindhauer
  *
  */
-public class JmxManagedBpmPlatformPlugins implements PlatformService<BpmPlatformPlugins>, JmxManagedBpmPlatformPluginsMBean {
+public @NullMarked class JmxManagedBpmPlatformPlugins implements PlatformService<BpmPlatformPlugins>, JmxManagedBpmPlatformPluginsMBean {
 
   protected BpmPlatformPlugins plugins;
 
@@ -57,9 +58,7 @@ public class JmxManagedBpmPlatformPlugins implements PlatformService<BpmPlatform
     String[] names = new String[pluginList.size()];
     for (int i = 0; i < names.length; i++) {
       BpmPlatformPlugin bpmPlatformPlugin = pluginList.get(i);
-      if(bpmPlatformPlugin != null) {
-        names[i] = bpmPlatformPlugin.getClass().getName();
-      }
+      names[i] = bpmPlatformPlugin.getClass().getName();
     }
     return names;
   }

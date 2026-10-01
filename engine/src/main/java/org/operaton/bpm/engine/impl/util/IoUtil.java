@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Tom Baeyens
@@ -47,10 +48,11 @@ public final class IoUtil {
   private IoUtil() {
   }
 
-  public static byte[] readInputStream(InputStream inputStream, @Nullable String inputStreamName) {
+  public static byte[] readInputStream(@Nullable InputStream inputStream, @Nullable String inputStreamName) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     byte[] buffer = new byte[16*1024];
     try {
+      requireNonNull(inputStream);
       int bytesRead = inputStream.read(buffer);
       while (bytesRead!=-1) {
         outputStream.write(buffer, 0, bytesRead);

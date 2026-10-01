@@ -18,11 +18,15 @@ package org.operaton.bpm.container.impl.jmx.services;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.impl.jmx.MBeanServiceContainer;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * <p>Represents a process engine managed by the {@link MBeanServiceContainer}</p>
@@ -30,9 +34,9 @@ import org.operaton.bpm.engine.ProcessEngine;
  * @author Daniel Meyer
  *
  */
-public class JmxManagedProcessEngine implements PlatformService<ProcessEngine>, JmxManagedProcessEngineMBean {
+public @NullMarked class JmxManagedProcessEngine implements PlatformService<ProcessEngine>, JmxManagedProcessEngineMBean {
 
-  protected ProcessEngine processEngine;
+  protected @Nullable ProcessEngine processEngine;
 
   // for subclasses
   protected JmxManagedProcessEngine() {
@@ -43,7 +47,7 @@ public class JmxManagedProcessEngine implements PlatformService<ProcessEngine>, 
   }
 
   @Override
-  public void start(PlatformServiceContainer contanier) {
+  public void start(PlatformServiceContainer container) {
     // this one has no lifecycle support
   }
 
@@ -54,40 +58,41 @@ public class JmxManagedProcessEngine implements PlatformService<ProcessEngine>, 
 
   @Override
   public String getName() {
-    return processEngine.getName();
+    return getProcessEngine().getName();
   }
 
   public ProcessEngine getProcessEngine() {
-    return processEngine;
+    return requireNonNull(processEngine);
   }
 
   @Override
   public ProcessEngine getValue() {
-    return processEngine;
+    return getProcessEngine();
   }
 
   @Override
   public Set<String> getRegisteredDeployments() {
-    ManagementService managementService = processEngine.getManagementService();
-    return managementService.getRegisteredDeployments();
+    return getManagementService().getRegisteredDeployments();
   }
 
   @Override
   public void registerDeployment(String deploymentId) {
-    ManagementService managementService = processEngine.getManagementService();
-    managementService.registerDeploymentForJobExecutor(deploymentId);
+    getManagementService().registerDeploymentForJobExecutor(deploymentId);
   }
 
   @Override
   public void unregisterDeployment(String deploymentId) {
-    ManagementService managementService = processEngine.getManagementService();
-    managementService.unregisterDeploymentForJobExecutor(deploymentId);
+    getManagementService().unregisterDeploymentForJobExecutor(deploymentId);
   }
 
   @Override
   public void reportDbMetrics() {
-    ManagementService managementService = processEngine.getManagementService();
-    managementService.reportDbMetricsNow();
+    getManagementService().reportDbMetricsNow();
+  }
+
+  private ManagementService getManagementService() {
+    ManagementService managementService = getProcessEngine().getManagementService();
+    return requireNonNull(managementService);
   }
 
 }

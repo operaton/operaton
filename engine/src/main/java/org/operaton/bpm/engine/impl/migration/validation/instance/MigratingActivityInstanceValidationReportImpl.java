@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.migration.MigratingActivityInstanceValidationReport;
@@ -29,7 +30,7 @@ public @NullMarked class MigratingActivityInstanceValidationReportImpl implement
 
   protected String activityInstanceId;
   protected String sourceScopeId;
-  protected MigrationInstruction migrationInstruction;
+  protected @Nullable MigrationInstruction migrationInstruction;
   protected List<String> failures = new ArrayList<>();
 
   public MigratingActivityInstanceValidationReportImpl(MigratingActivityInstance migratingActivityInstance) {
@@ -49,7 +50,7 @@ public @NullMarked class MigratingActivityInstanceValidationReportImpl implement
   }
 
   @Override
-  public MigrationInstruction getMigrationInstruction() {
+  public @Nullable MigrationInstruction getMigrationInstruction() {
     return migrationInstruction;
   }
 

@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -43,7 +45,7 @@ import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITIO
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.TENANT;
 
-public class OptimizeManager extends AbstractManager {
+public @NullMarked class OptimizeManager extends AbstractManager {
 
   private static final String CREATED_AFTER = "createdAfter";
   private static final String CREATED_AT = "createdAt";
@@ -72,8 +74,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricActivityInstance> getCompletedHistoricActivityInstances(Date finishedAfter,
-                                                                              Date finishedAt,
+  public List<HistoricActivityInstance> getCompletedHistoricActivityInstances(@Nullable Date finishedAfter,
+                                                                              @Nullable Date finishedAt,
                                                                               int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -86,8 +88,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricActivityInstance> getRunningHistoricActivityInstances(Date startedAfter,
-                                                                            Date startedAt,
+  public List<HistoricActivityInstance> getRunningHistoricActivityInstances(@Nullable Date startedAfter,
+                                                                            @Nullable Date startedAt,
                                                                             int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -100,8 +102,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricTaskInstance> getCompletedHistoricTaskInstances(Date finishedAfter,
-                                                                      Date finishedAt,
+  public List<HistoricTaskInstance> getCompletedHistoricTaskInstances(@Nullable Date finishedAfter,
+                                                                      @Nullable Date finishedAt,
                                                                       int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -114,8 +116,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricTaskInstance> getRunningHistoricTaskInstances(Date startedAfter,
-                                                                    Date startedAt,
+  public List<HistoricTaskInstance> getRunningHistoricTaskInstances(@Nullable Date startedAfter,
+                                                                    @Nullable Date startedAt,
                                                                     int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -128,8 +130,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<UserOperationLogEntry> getHistoricUserOperationLogs(Date occurredAfter,
-                                                                  Date occurredAt,
+  public List<UserOperationLogEntry> getHistoricUserOperationLogs(@Nullable Date occurredAfter,
+                                                                  @Nullable Date occurredAt,
                                                                   int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -150,8 +152,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<OptimizeHistoricIdentityLinkLogEntity> getHistoricIdentityLinkLogs(Date occurredAfter,
-                                                                                 Date occurredAt,
+  public List<OptimizeHistoricIdentityLinkLogEntity> getHistoricIdentityLinkLogs(@Nullable Date occurredAfter,
+                                                                                 @Nullable Date occurredAt,
                                                                                  int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -164,8 +166,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricProcessInstance> getCompletedHistoricProcessInstances(Date finishedAfter,
-                                                                            Date finishedAt,
+  public List<HistoricProcessInstance> getCompletedHistoricProcessInstances(@Nullable Date finishedAfter,
+                                                                            @Nullable Date finishedAt,
                                                                             int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -178,8 +180,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricProcessInstance> getRunningHistoricProcessInstances(Date startedAfter,
-                                                                          Date startedAt,
+  public List<HistoricProcessInstance> getRunningHistoricProcessInstances(@Nullable Date startedAfter,
+                                                                          @Nullable Date startedAt,
                                                                           int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -192,8 +194,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricVariableUpdate> getHistoricVariableUpdates(Date occurredAfter,
-                                                                 Date occurredAt,
+  public List<HistoricVariableUpdate> getHistoricVariableUpdates(@Nullable Date occurredAfter,
+                                                                 @Nullable Date occurredAt,
                                                                  int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -206,8 +208,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricIncidentEntity> getCompletedHistoricIncidents(Date finishedAfter,
-                                                                    Date finishedAt,
+  public List<HistoricIncidentEntity> getCompletedHistoricIncidents(@Nullable Date finishedAfter,
+                                                                    @Nullable Date finishedAt,
                                                                     int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -220,8 +222,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricIncidentEntity> getOpenHistoricIncidents(Date createdAfter,
-                                                               Date createdAt,
+  public List<HistoricIncidentEntity> getOpenHistoricIncidents(@Nullable Date createdAfter,
+                                                               @Nullable Date createdAt,
                                                                int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
@@ -234,8 +236,8 @@ public class OptimizeManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<HistoricDecisionInstance> getHistoricDecisionInstances(Date evaluatedAfter,
-                                                                     Date evaluatedAt,
+  public List<HistoricDecisionInstance> getHistoricDecisionInstances(@Nullable Date evaluatedAfter,
+                                                                     @Nullable Date evaluatedAt,
                                                                      int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 

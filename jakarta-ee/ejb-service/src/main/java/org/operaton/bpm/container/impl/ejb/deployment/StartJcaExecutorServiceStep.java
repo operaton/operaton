@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.deployment.Attachments;
@@ -37,7 +38,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  * @author Daniel Meyer
  *
  */
-public class StartJcaExecutorServiceStep extends DeploymentOperationStep {
+public @NullMarked class StartJcaExecutorServiceStep extends DeploymentOperationStep {
 
   protected ExecutorService executorService;
 

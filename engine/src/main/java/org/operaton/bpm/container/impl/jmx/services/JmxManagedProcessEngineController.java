@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.services;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.jmx.MBeanServiceContainer;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
  * @author Daniel Meyer
  *
  */
-public class JmxManagedProcessEngineController extends JmxManagedProcessEngine implements JmxManagedProcessEngineMBean {
+public @NullMarked class JmxManagedProcessEngineController extends JmxManagedProcessEngine implements JmxManagedProcessEngineMBean {
 
   protected ProcessEngineConfiguration processEngineConfiguration;
 
@@ -41,7 +42,7 @@ public class JmxManagedProcessEngineController extends JmxManagedProcessEngine i
 
   @Override
   public void stop(PlatformServiceContainer container) {
-    processEngine.close();
+    getProcessEngine().close();
   }
 
 }

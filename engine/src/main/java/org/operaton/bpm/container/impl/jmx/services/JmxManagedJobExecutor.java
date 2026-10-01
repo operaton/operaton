@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.services;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
  * @author Daniel Meyer
  *
  */
-public class JmxManagedJobExecutor implements PlatformService<JobExecutor>, JmxManagedJobExecutorMBean {
+public @NullMarked class JmxManagedJobExecutor implements PlatformService<JobExecutor>, JmxManagedJobExecutorMBean {
 
   protected final JobExecutor jobExecutor;
 

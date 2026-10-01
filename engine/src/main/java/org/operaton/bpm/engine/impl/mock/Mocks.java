@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.mock;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /** Registry for mock objects.
@@ -31,7 +32,7 @@ import org.jspecify.annotations.Nullable;
  *
  * @author Nils Preusker - n.preusker@gmail.com
  */
-public final class Mocks {
+public final @NullMarked class Mocks {
 
   private static final ThreadLocal<Map<String, Object>> mockContainer = new ThreadLocal<>();
 

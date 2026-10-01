@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
@@ -26,7 +27,7 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  * @author Daniel Meyer
  *
  */
-public class StopManagedThreadPoolStep extends DeploymentOperationStep {
+public @NullMarked class StopManagedThreadPoolStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {

@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -39,12 +41,14 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 import org.operaton.bpm.engine.repository.ProcessApplicationDeploymentBuilder;
 import org.operaton.bpm.engine.repository.ResumePreviousBy;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -55,13 +59,13 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class DeployProcessArchiveStep extends DeploymentOperationStep {
+public @NullMarked class DeployProcessArchiveStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected final ProcessArchiveXml processArchive;
   protected URI metaFileUri;
-  protected ProcessApplicationDeployment deployment;
+  protected @Nullable ProcessApplicationDeployment deployment;
 
   public DeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URI uri) {
     processArchive = parsedProcessArchive;
@@ -144,6 +148,7 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
 
       // perform the process engine deployment
       deployment = deploymentBuilder.deploy();
+      EnsureUtil.ensureNotNull("Deployment of process archive '" + processArchive.getName() + "' failed.", "deployment", deployment);
 
       // add attachment
       Map<String, DeployedProcessArchive> processArchiveDeploymentMap = operationContext.getAttachment(Attachments.PROCESS_ARCHIVE_DEPLOYMENT_MAP);
@@ -180,7 +185,7 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
     return ResumePreviousBy.RESUME_BY_DEPLOYMENT_NAME.equals(resumePreviousBy) || ResumePreviousBy.RESUME_BY_PROCESS_DEFINITION_KEY.equals(resumePreviousBy);
   }
 
-  protected Map<String, byte[]> findResources(final ClassLoader processApplicationClassloader, String paResourceRoot, String[] additionalResourceSuffixes) {
+  protected Map<String, byte[]> findResources(final ClassLoader processApplicationClassloader, @Nullable String paResourceRoot, String[] additionalResourceSuffixes) {
     return ProcessApplicationScanningUtil.findResources(processApplicationClassloader, paResourceRoot, metaFileUri, additionalResourceSuffixes);
   }
 
@@ -201,7 +206,6 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
     // isDeleteUponUndeploy is set.
     if ((deployment != null
             && PropertyHelper.getBooleanProperty(processArchive.getProperties(), ProcessArchiveXml.PROP_IS_DELETE_UPON_UNDEPLOY, false))
-            && processEngine != null
     ) {
       processEngine.getRepositoryService().deleteDeployment(deployment.getId(), true);
     }
@@ -216,13 +220,13 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
     if (processEngineName != null) {
       ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, processEngineName);
       ensureNotNull("Cannot deploy process archive '%s' to process engine '%s': no such process engine exists".formatted(processArchive.getName(), processEngineName), "processEngine", processEngine);
-      return processEngine;
+      return requireNonNull(processEngine);
 
     } else {
       ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, defaultDeployToProcessEngineName);
       ensureNotNull("Cannot deploy process archive '%s' to default process: no such process engine exists".formatted(processArchive.getName()), "processEngine",
           processEngine);
-      return processEngine;
+      return requireNonNull(processEngine);
     }
   }
 

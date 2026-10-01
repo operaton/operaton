@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -37,7 +38,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class ProcessesXmlStopProcessEnginesStep extends DeploymentOperationStep {
+public @NullMarked class ProcessesXmlStopProcessEnginesStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 

@@ -18,6 +18,8 @@ package org.operaton.bpm.container.impl.ejb.deployment;
 
 import java.net.URL;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 
@@ -28,10 +30,10 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
  * @author Christian Lipphardt
  *
  */
-public class EjbJarParsePlatformXmlStep extends AbstractParseBpmPlatformXmlStep {
+public @NullMarked class EjbJarParsePlatformXmlStep extends AbstractParseBpmPlatformXmlStep {
 
   @Override
-  public URL getBpmPlatformXmlStream(DeploymentOperation operationContext) {
+  public @Nullable URL getBpmPlatformXmlStream(DeploymentOperation operationContext) {
     return lookupBpmPlatformXml();
   }
 

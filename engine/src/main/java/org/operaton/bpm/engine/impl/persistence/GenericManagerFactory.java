@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.interceptor.Session;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 /**
  * @author Tom Baeyens
  */
-public class GenericManagerFactory implements SessionFactory {
+public @NullMarked class GenericManagerFactory implements SessionFactory {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 

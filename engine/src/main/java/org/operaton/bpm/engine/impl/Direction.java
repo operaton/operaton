@@ -21,13 +21,14 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 
 /**
  * @author Tom Baeyens
  */
-public class Direction implements Serializable {
+public @NullMarked class Direction implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
 
   private static final Map<String, Direction> directions = new HashMap<>();

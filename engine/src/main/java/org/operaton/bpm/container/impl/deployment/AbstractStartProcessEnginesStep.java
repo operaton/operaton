@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
@@ -33,7 +34,7 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
  * @author Daniel Meyer
  *
  */
-public abstract class AbstractStartProcessEnginesStep extends DeploymentOperationStep {
+public abstract @NullMarked class AbstractStartProcessEnginesStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {

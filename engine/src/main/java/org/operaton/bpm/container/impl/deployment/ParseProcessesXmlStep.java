@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.impl.metadata.ProcessesXmlParser;
@@ -47,7 +48,7 @@ import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APP
  * @author Daniel Meyer
  *
  */
-public class ParseProcessesXmlStep extends DeploymentOperationStep {
+public @NullMarked class ParseProcessesXmlStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -132,7 +133,6 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
   }
 
   protected boolean isEmptyFile(URI uri) {
-
     InputStream inputStream = null;
 
     try {
@@ -143,12 +143,10 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
       throw LOG.exceptionWhileReadingProcessesXml(uri.toString(), e);
     } finally {
       IoUtil.closeSilently(inputStream);
-
     }
   }
 
   protected ProcessesXml parseProcessesXml(URI uri) {
-
     final ProcessesXmlParser processesXmlParser = new ProcessesXmlParser();
 
     return processesXmlParser.createParse()

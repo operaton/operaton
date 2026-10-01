@@ -20,6 +20,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
@@ -34,7 +36,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Christian Lipphardt
  *
  */
-public class TomcatParseBpmPlatformXmlStep extends AbstractParseBpmPlatformXmlStep {
+public @NullMarked class TomcatParseBpmPlatformXmlStep extends AbstractParseBpmPlatformXmlStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -42,7 +44,7 @@ public class TomcatParseBpmPlatformXmlStep extends AbstractParseBpmPlatformXmlSt
   public static final String CATALINA_HOME = "catalina.home";
 
   @Override
-  public URL getBpmPlatformXmlStream(DeploymentOperation operationcontext) {
+  public @Nullable URL getBpmPlatformXmlStream(DeploymentOperation operationcontext) {
     URL fileLocation = lookupBpmPlatformXml();
 
     if (fileLocation == null) {
@@ -52,7 +54,7 @@ public class TomcatParseBpmPlatformXmlStep extends AbstractParseBpmPlatformXmlSt
     return fileLocation;
   }
 
-  public URL lookupBpmPlatformXmlFromCatalinaConfDirectory() {
+  public @Nullable URL lookupBpmPlatformXmlFromCatalinaConfDirectory() {
     // read file from CATALINA_BASE if set, otherwise CATALINA_HOME directory.
     String catalinaHome = System.getProperty(CATALINA_BASE);
     if (catalinaHome == null) {

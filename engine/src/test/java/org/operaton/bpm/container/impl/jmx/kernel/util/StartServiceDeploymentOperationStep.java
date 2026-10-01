@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.container.impl.jmx.kernel.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 
-public class StartServiceDeploymentOperationStep extends DeploymentOperationStep {
+public @NullMarked class StartServiceDeploymentOperationStep extends DeploymentOperationStep {
 
   private final TestService service;
   private final String serviceName;

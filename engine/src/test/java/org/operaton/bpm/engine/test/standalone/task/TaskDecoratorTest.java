@@ -433,7 +433,7 @@ class TaskDecoratorTest {
     }
   }
 
-  protected class DecorateTaskCommand implements Command<Void> {
+  static class DecorateTaskCommand implements Command<Void> {
 
     protected TaskEntity task;
     protected TaskDecorator decorator;
@@ -451,6 +451,9 @@ class TaskDecoratorTest {
 
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   protected class DeleteTaskCommand implements Command<Void> {
 
     protected TaskEntity task;

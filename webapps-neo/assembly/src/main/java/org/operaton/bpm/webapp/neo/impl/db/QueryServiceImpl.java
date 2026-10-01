@@ -125,7 +125,7 @@ public class QueryServiceImpl implements QueryService {
     }
   }
 
-  protected class ExecuteSingleQueryCmd<T> implements Command<T> {
+  static class ExecuteSingleQueryCmd<T> implements Command<T> {
 
     protected String statement;
     protected Object parameter;

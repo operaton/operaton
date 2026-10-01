@@ -650,7 +650,7 @@ public @NullMarked class ManagementServiceImpl extends ServiceImpl implements Ma
     deleteMetrics(null);
   }
 
-  protected class DbSchemaUpgradeCmd implements Command<String> {
+  static class DbSchemaUpgradeCmd implements Command<String> {
 
     protected Connection connection;
     protected String catalog;

@@ -2197,7 +2197,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   }
 
-  protected class TaskQueryVariableValueComparable {
+  static class TaskQueryVariableValueComparable {
 
     protected TaskQueryVariableValue variableValue;
 

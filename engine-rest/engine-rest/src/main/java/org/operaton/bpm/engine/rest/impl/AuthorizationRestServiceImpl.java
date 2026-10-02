@@ -17,8 +17,8 @@
 package org.operaton.bpm.engine.rest.impl;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriBuilder;
@@ -195,12 +195,9 @@ public class AuthorizationRestServiceImpl extends AbstractAuthorizedRestResource
         .groupMember(userId)
         .unlimitedList();
 
-    List<String> groupIds = new ArrayList<>();
-    for (Group group : userGroups) {
-      groupIds.add(group.getId());
-    }
-
-    return groupIds;
+    return userGroups.stream()
+        .map(Group::getId)
+        .collect(Collectors.toList());
   }
 
 }

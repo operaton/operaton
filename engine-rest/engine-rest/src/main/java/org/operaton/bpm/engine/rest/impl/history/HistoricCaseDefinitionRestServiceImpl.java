@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.impl.history;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,12 +59,9 @@ public class HistoricCaseDefinitionRestServiceImpl implements HistoricCaseDefini
     List<HistoricCaseActivityStatistics> statistics =
         historicCaseActivityStatisticsQuery.unlimitedList();
 
-    List<HistoricCaseActivityStatisticsDto> result = new ArrayList<>();
-    for (HistoricCaseActivityStatistics currentStatistics : statistics) {
-      result.add(HistoricCaseActivityStatisticsDto.fromHistoricCaseActivityStatistics(currentStatistics));
-    }
-
-    return result;
+    return statistics.stream()
+        .map(HistoricCaseActivityStatisticsDto::fromHistoricCaseActivityStatistics)
+        .collect(Collectors.toList());
   }
 
   @Override

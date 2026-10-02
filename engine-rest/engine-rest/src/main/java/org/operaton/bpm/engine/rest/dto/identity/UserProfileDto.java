@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.dto.identity;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.identity.User;
 
@@ -44,11 +44,9 @@ public class UserProfileDto {
   }
 
   public static List<UserProfileDto> fromUserList(List<User> sourceList) {
-    List<UserProfileDto> resultList = new ArrayList<>();
-    for (User user : sourceList) {
-      resultList.add(fromUser(user));
-    }
-    return resultList;
+    return sourceList.stream()
+        .map(UserProfileDto::fromUser)
+        .collect(Collectors.toList());
   }
 
   public void update(User dbUser) {

@@ -20,12 +20,14 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * @author Daniel Meyer
  *
  */
 @SuppressWarnings("java:S1452")
-public interface HasDbReferences {
+public @NullMarked interface HasDbReferences {
 
   /**
    * <p>Scope: IN-MEMORY references

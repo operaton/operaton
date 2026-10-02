@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.calendar.BusinessCalendar;
 import org.operaton.bpm.engine.impl.calendar.CycleBusinessCalendar;
@@ -41,6 +44,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 /**
  * @author Tom Baeyens
  */
+@NullMarked
 public class TimerEntity extends JobEntity {
 
   protected static final String CYCLE_EXPRESSION_START_TYPE_1 = TimerDeclarationType.CYCLE + ": #";
@@ -49,7 +53,7 @@ public class TimerEntity extends JobEntity {
 
   public static final String TYPE = "timer";
 
-  protected String repeat;
+  protected @Nullable String repeat;
 
   protected long repeatOffset;
 
@@ -201,11 +205,11 @@ public class TimerEntity extends JobEntity {
     return ((CycleBusinessCalendar) businessCalendar).resolveDuedate(repeat, null, repeatOffset);
   }
 
-  public String getRepeat() {
+  public @Nullable String getRepeat() {
     return repeat;
   }
 
-  public void setRepeat(String repeat) {
+  public void setRepeat(@Nullable String repeat) {
     this.repeat = repeat;
   }
 

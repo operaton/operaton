@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -89,6 +89,7 @@ import static java.util.Objects.requireNonNull;
  * @author Daniel Meyer
  * @author Falko Menge
  */
+@NullMarked
 public class ExecutionEntity extends PvmExecutionImpl implements Execution, ProcessInstance, DbEntity, HasDbRevision,
     HasDbReferences, VariablesProvider<VariableInstanceEntity> {
 
@@ -122,28 +123,28 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   protected transient @Nullable ExecutionEntity parent;
 
   /** nested executions representing scopes or concurrent paths */
-  protected transient List<ExecutionEntity> executions;
+  protected transient @Nullable List<ExecutionEntity> executions;
 
   /** super execution, not-null if this execution is part of a subprocess */
-  protected transient ExecutionEntity superExecution;
+  protected transient @Nullable ExecutionEntity superExecution;
 
   /**
    * super case execution, not-null if this execution is part of a case
    * execution
    */
-  protected transient CaseExecutionEntity superCaseExecution;
+  protected transient @Nullable CaseExecutionEntity superCaseExecution;
 
   /**
    * reference to a subprocessinstance, not-null if currently subprocess is
    * started from this execution
    */
-  protected transient ExecutionEntity subProcessInstance;
+  protected transient @Nullable ExecutionEntity subProcessInstance;
 
   /**
    * reference to a subcaseinstance, not-null if currently subcase is started
    * from this execution
    */
-  protected transient CaseExecutionEntity subCaseInstance;
+  protected transient @Nullable CaseExecutionEntity subCaseInstance;
 
   protected boolean shouldQueryForSubprocessInstance;
 
@@ -152,11 +153,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   // associated entities /////////////////////////////////////////////////////
 
   // (we cache associated entities here to minimize db queries)
-  protected transient List<EventSubscriptionEntity> eventSubscriptions;
-  protected transient List<JobEntity> jobs;
-  protected transient List<TaskEntity> tasks;
-  protected transient List<ExternalTaskEntity> externalTasks;
-  protected transient List<IncidentEntity> incidents;
+  protected transient @Nullable List<EventSubscriptionEntity> eventSubscriptions;
+  protected transient @Nullable List<JobEntity> jobs;
+  protected transient @Nullable List<TaskEntity> tasks;
+  protected transient @Nullable List<ExternalTaskEntity> externalTasks;
+  protected transient @Nullable List<IncidentEntity> incidents;
   protected int cachedEntityState;
 
   @SuppressWarnings("unchecked")
@@ -178,7 +179,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * @see #setProcessDefinition(ProcessDefinitionImpl)
    * @see #getProcessDefinition()
    */
-  protected String processDefinitionId;
+  protected @Nullable String processDefinitionId;
 
   /**
    * persisted reference to the current position in the diagram within the
@@ -187,26 +188,26 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * @see #activity
    * @see #getActivity()
    */
-  protected String activityId;
+  protected @Nullable String activityId;
 
   /**
    * The name of the current activity position
    */
-  protected String activityName;
+  protected @Nullable String activityName;
 
   /**
    * persisted reference to the process instance.
    *
    * @see #getProcessInstance()
    */
-  protected String processInstanceId;
+  protected @Nullable String processInstanceId;
 
   /**
    * persisted reference to the parent of this execution.
    *
    * @see #getParent()
    */
-  protected String parentId;
+  protected @Nullable String parentId;
 
   /**
    * persisted reference to the super execution of this execution
@@ -214,14 +215,14 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * @see {@link #getSuperExecution()}
    * @see <code>setSuperExecution(ExecutionEntity)</code>
    */
-  protected String superExecutionId;
+  protected @Nullable String superExecutionId;
 
   /**
    * persisted reference to the root process instance.
    *
    * @see #getRootProcessInstanceId()
    */
-  protected String rootProcessInstanceId;
+  protected @Nullable String rootProcessInstanceId;
 
   /**
    * persisted reference to the super case execution of this execution
@@ -229,17 +230,17 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * @see {@link #getSuperCaseExecution()}
    * @see <code>setSuperCaseExecution(ExecutionEntity)</code>
    */
-  protected String superCaseExecutionId;
+  protected @Nullable String superCaseExecutionId;
 
   /**
    * Completed HPI that is being restarted through this ExecutionEntity
    */
-  protected String restartedProcessInstanceId;
+  protected @Nullable String restartedProcessInstanceId;
 
   /**
    * The name of the process definition key
    */
-  protected String processDefinitionKey;
+  protected @Nullable String processDefinitionKey;
 
   /**
    * Contains observers which are observe the execution.
@@ -731,7 +732,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     return Context.getProcessEngineConfiguration().isExecutionTreePrefetchEnabled();
   }
 
-  public void setExecutions(List<ExecutionEntity> executions) {
+  public void setExecutions(@Nullable List<ExecutionEntity> executions) {
     this.executions = executions;
   }
 
@@ -751,12 +752,12 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     return (ProcessDefinitionEntity) processDefinition;
   }
 
-  public void setProcessDefinitionId(String processDefinitionId) {
+  public void setProcessDefinitionId(@Nullable String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
 
   @Override
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
@@ -840,7 +841,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     return activityId;
   }
 
@@ -870,7 +871,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * generates an activity instance id
    */
   @Override
-  protected String generateActivityInstanceId(@NonNull String activityId) {
+  protected String generateActivityInstanceId(String activityId) {
 
     if (activityId.equals(processDefinitionId)) {
       return processInstanceId;
@@ -909,7 +910,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void setParentExecution(PvmExecutionImpl parent) {
+  public void setParentExecution(@Nullable PvmExecutionImpl parent) {
     this.parent = (ExecutionEntity) parent;
 
     if (parent != null) {
@@ -921,7 +922,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   // super- and subprocess executions /////////////////////////////////////////
 
-  public String getSuperExecutionId() {
+  public @Nullable String getSuperExecutionId() {
     return superExecutionId;
   }
 
@@ -932,7 +933,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void setSuperExecution(PvmExecutionImpl superExecution) {
+  public void setSuperExecution(@Nullable PvmExecutionImpl superExecution) {
     if (this.superExecutionId != null) {
       ensureSuperExecutionInitialized();
       this.superExecution.setSubProcessInstance(null);
@@ -955,7 +956,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public ExecutionEntity getSubProcessInstance() {
+  public @Nullable ExecutionEntity getSubProcessInstance() {
     ensureSubProcessInstanceInitialized();
     return subProcessInstance;
   }
@@ -974,30 +975,30 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   // super case executions ///////////////////////////////////////////////////
 
-  public String getSuperCaseExecutionId() {
+  public @Nullable String getSuperCaseExecutionId() {
     return superCaseExecutionId;
   }
 
-  public void setSuperCaseExecutionId(String superCaseExecutionId) {
+  public void setSuperCaseExecutionId(@Nullable String superCaseExecutionId) {
     this.superCaseExecutionId = superCaseExecutionId;
   }
 
-  public String getRestartedProcessInstanceId() {
+  public @Nullable String getRestartedProcessInstanceId() {
     return restartedProcessInstanceId;
   }
 
-  public void setRestartedProcessInstanceId(String restartedProcessInstanceId) {
+  public void setRestartedProcessInstanceId(@Nullable String restartedProcessInstanceId) {
     this.restartedProcessInstanceId = restartedProcessInstanceId;
   }
 
   @Override
-  public CaseExecutionEntity getSuperCaseExecution() {
+  public @Nullable CaseExecutionEntity getSuperCaseExecution() {
     ensureSuperCaseExecutionInitialized();
     return superCaseExecution;
   }
 
   @Override
-  public void setSuperCaseExecution(CmmnExecution superCaseExecution) {
+  public void setSuperCaseExecution(@Nullable CmmnExecution superCaseExecution) {
     this.superCaseExecution = (CaseExecutionEntity) superCaseExecution;
 
     if (superCaseExecution != null) {
@@ -1018,14 +1019,14 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   // sub case execution //////////////////////////////////////////////////////
 
   @Override
-  public CaseExecutionEntity getSubCaseInstance() {
+  public @Nullable CaseExecutionEntity getSubCaseInstance() {
     ensureSubCaseInstanceInitialized();
     return subCaseInstance;
 
   }
 
   @Override
-  public void setSubCaseInstance(CmmnExecution subCaseInstance) {
+  public void setSubCaseInstance(@Nullable CmmnExecution subCaseInstance) {
     shouldQueryForSubCaseInstance = subCaseInstance != null;
     this.subCaseInstance = (CaseExecutionEntity) subCaseInstance;
   }
@@ -1177,13 +1178,13 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void onConcurrentExpand(@NonNull PvmExecutionImpl scopeExecution) {
+  public void onConcurrentExpand(PvmExecutionImpl scopeExecution) {
     ExecutionEntity scopeExecutionEntity = (ExecutionEntity) scopeExecution;
     scopeExecutionEntity.moveConcurrentLocalVariablesTo(this);
     super.onConcurrentExpand(scopeExecutionEntity);
   }
 
-  protected void moveTasksTo(@NonNull ExecutionEntity other) {
+  protected void moveTasksTo(ExecutionEntity other) {
     // update the related tasks
     for (TaskEntity task : getTasksInternal()) {
       task.setExecution(other);
@@ -1200,7 +1201,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     getTasksInternal().clear();
   }
 
-  protected void moveExternalTasksTo(@NonNull ExecutionEntity other) {
+  protected void moveExternalTasksTo(ExecutionEntity other) {
     for (ExternalTaskEntity externalTask : getExternalTasksInternal()) {
       externalTask.setExecutionId(other.getId());
       externalTask.setExecution(other);
@@ -1211,7 +1212,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     getExternalTasksInternal().clear();
   }
 
-  protected void moveActivityLocalJobsTo(@NonNull ExecutionEntity other) {
+  protected void moveActivityLocalJobsTo(ExecutionEntity other) {
     if (activityId != null) {
       for (JobEntity job : getJobs()) {
 
@@ -1223,7 +1224,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  protected void moveVariablesTo(@NonNull ExecutionEntity other) {
+  protected void moveVariablesTo(ExecutionEntity other) {
     List<VariableInstanceEntity> variables = variableStore.getVariables();
     variableStore.removeVariables();
 
@@ -1232,7 +1233,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  protected void moveVariableTo(VariableInstanceEntity variable, @NonNull ExecutionEntity other) {
+  protected void moveVariableTo(VariableInstanceEntity variable, ExecutionEntity other) {
     if (other.variableStore.containsKey(variable.getName())) {
       CoreVariableInstance existingInstance = other.variableStore.getVariable(variable.getName());
       existingInstance.setValue(variable.getTypedValue(false));
@@ -1243,7 +1244,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  protected void moveConcurrentLocalVariablesTo(@NonNull ExecutionEntity other) {
+  protected void moveConcurrentLocalVariablesTo(ExecutionEntity other) {
     List<VariableInstanceEntity> variables = variableStore.getVariables();
 
     for (VariableInstanceEntity variable : variables) {
@@ -1255,11 +1256,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   // variables ////////////////////////////////////////////////////////////////
 
-  public void addVariableListener(@NonNull VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
+  public void addVariableListener(VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
     registeredVariableListeners.add(listener);
   }
 
-  public void removeVariableListener(@NonNull VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
+  public void removeVariableListener(VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
     registeredVariableListeners.remove(listener);
   }
 
@@ -1842,7 +1843,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     if (isProcessInstanceExecution()) {
       return rootProcessInstanceId;
     } else {
@@ -1850,20 +1851,20 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  public String getRootProcessInstanceIdRaw() {
+  public @Nullable String getRootProcessInstanceIdRaw() {
     return rootProcessInstanceId;
   }
 
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
   @Override
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 
-  public void setProcessInstanceId(String processInstanceId) {
+  public void setProcessInstanceId(@Nullable String processInstanceId) {
     this.processInstanceId = processInstanceId;
 
     if (id.equals(processInstanceId)) {
@@ -1872,11 +1873,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public String getParentId() {
+  public @Nullable String getParentId() {
     return parentId;
   }
 
-  public void setParentId(String parentId) {
+  public void setParentId(@Nullable String parentId) {
     this.parentId = parentId;
   }
 
@@ -1890,11 +1891,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     this.revision = revision;
   }
 
-  public void setActivityId(String activityId) {
+  public void setActivityId(@Nullable String activityId) {
     this.activityId = activityId;
   }
 
-  public void setSuperExecutionId(String superExecutionId) {
+  public void setSuperExecutionId(@Nullable String superExecutionId) {
     this.superExecutionId = superExecutionId;
   }
 
@@ -1946,12 +1947,12 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public String getCurrentActivityId() {
+  public @Nullable String getCurrentActivityId() {
     return activityId;
   }
 
   @Override
-  public String getCurrentActivityName() {
+  public @Nullable String getCurrentActivityName() {
     return activityName;
   }
 
@@ -2006,12 +2007,12 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     return getProcessDefinition().getTenantId();
   }
 
-  public void setProcessDefinitionKey(String processDefinitionKey) {
+  public void setProcessDefinitionKey(@Nullable String processDefinitionKey) {
     this.processDefinitionKey = processDefinitionKey;
   }
 
   @Override
-  public String getProcessDefinitionKey() {
+  public @Nullable String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
 }

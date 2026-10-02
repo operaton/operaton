@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.HashMap;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
@@ -29,13 +32,14 @@ import org.operaton.bpm.engine.management.JobDefinition;
  * @author Daniel Meyer
  *
  */
+@NullMarked
 public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbReferences, DbEntity {
 
-  protected String id;
+  protected @Nullable String id;
   protected int revision;
 
-  protected String processDefinitionId;
-  protected String processDefinitionKey;
+  protected @Nullable String processDefinitionId;
+  protected @Nullable String processDefinitionKey;
 
   /* Note: this is the id of the activity which is the cause that a Job is created.
    * If the Job corresponds to an event scope, it may or may not correspond to the
@@ -47,20 +51,20 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
    * - activity which causes the job to be created = timer event.
    * => Job definition activityId will be activityId of the timer event, not the activityId of the user task.
    */
-  protected String activityId;
+  protected @Nullable String activityId;
 
   /** timer, message, ... */
-  protected String jobType;
-  protected String jobConfiguration;
+  protected @Nullable String jobType;
+  protected @Nullable String jobConfiguration;
 
   // job definition is active by default
   protected int suspensionState = SuspensionState.ACTIVE.getStateCode();
 
-  protected Long jobPriority;
+  protected @Nullable Long jobPriority;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
-  protected String deploymentId;
+  protected @Nullable String deploymentId;
 
   public JobDefinitionEntity() {
   }
@@ -94,7 +98,7 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
   }
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -119,25 +123,25 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
   }
 
   @Override
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
-  public void setProcessDefinitionId(String processDefinitionId) {
+  public void setProcessDefinitionId(@Nullable String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
 
   @Override
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     return activityId;
   }
 
-  public void setActivityId(String activityId) {
+  public void setActivityId(@Nullable String activityId) {
     this.activityId = activityId;
   }
 
   @Override
-  public String getJobType() {
+  public @Nullable String getJobType() {
     return jobType;
   }
 
@@ -146,20 +150,20 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
   }
 
   @Override
-  public String getJobConfiguration() {
+  public @Nullable String getJobConfiguration() {
     return jobConfiguration;
   }
 
-  public void setJobConfiguration(String jobConfiguration) {
+  public void setJobConfiguration(@Nullable String jobConfiguration) {
     this.jobConfiguration = jobConfiguration;
   }
 
   @Override
-  public String getProcessDefinitionKey() {
+  public @Nullable String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
 
-  public void setProcessDefinitionKey(String processDefinitionKey) {
+  public void setProcessDefinitionKey(@Nullable String processDefinitionKey) {
     this.processDefinitionKey = processDefinitionKey;
   }
 
@@ -172,29 +176,29 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
   }
 
   @Override
-  public Long getOverridingJobPriority() {
+  public @Nullable Long getOverridingJobPriority() {
     return jobPriority;
   }
 
-  public void setJobPriority(Long jobPriority) {
+  public void setJobPriority(@Nullable Long jobPriority) {
     this.jobPriority = jobPriority;
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
   @Override
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return deploymentId;
   }
 
-  public void setDeploymentId(String deploymentId) {
+  public void setDeploymentId(@Nullable String deploymentId) {
     this.deploymentId = deploymentId;
   }
 }

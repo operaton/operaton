@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
@@ -148,20 +149,16 @@ public class DomXmlElement extends SpinXmlElement {
 
   @Override
   public List<String> attrNames() {
-    List<String> attributeNames = new ArrayList<>();
-    for (SpinXmlAttribute attribute : attrs()) {
-      attributeNames.add(attribute.name());
-    }
-    return attributeNames;
+    return attrs().stream()
+      .map(SpinXmlAttribute::name)
+      .collect(Collectors.toCollection(ArrayList::new));
   }
 
   @Override
   public List<String> attrNames(String namespace) {
-    List<String> attributeNames = new ArrayList<>();
-    for (SpinXmlAttribute attribute : attrs(namespace)) {
-      attributeNames.add(attribute.name());
-    }
-    return attributeNames;
+    return attrs(namespace).stream()
+      .map(SpinXmlAttribute::name)
+      .collect(Collectors.toCollection(ArrayList::new));
   }
 
   @Override

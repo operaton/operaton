@@ -433,7 +433,7 @@ class TaskDecoratorTest {
     }
   }
 
-  protected class DecorateTaskCommand implements Command<Void> {
+  static class DecorateTaskCommand implements Command<Void> {
 
     protected TaskEntity task;
     protected TaskDecorator decorator;
@@ -451,7 +451,7 @@ class TaskDecoratorTest {
 
   }
 
-  protected class DeleteTaskCommand implements Command<Void> {
+  protected static class DeleteTaskCommand implements Command<Void> {
 
     protected TaskEntity task;
 

@@ -87,7 +87,7 @@ public class MetricsCollectionTask extends TimerTask {
     this.reporterId = reporterId;
   }
 
-  protected class MetricsCollectionCmd implements Command<Void> {
+  protected static class MetricsCollectionCmd implements Command<Void> {
 
     protected List<MeterLogEntity> logs;
 

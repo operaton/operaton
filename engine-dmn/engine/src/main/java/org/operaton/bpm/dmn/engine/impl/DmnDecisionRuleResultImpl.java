@@ -196,7 +196,7 @@ public @NullMarked class DmnDecisionRuleResultImpl implements DmnDecisionRuleRes
     return entrySet;
   }
 
-  protected class DmnDecisionRuleOutputEntry implements Entry<String, Object> {
+  protected static class DmnDecisionRuleOutputEntry implements Entry<String, Object> {
 
     protected final String key;
     protected final @Nullable TypedValue typedValue;

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>operaton-qa</artifactId>
+    <groupId>org.operaton.bpm.qa</groupId>
+    <version>2.2.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>operaton-qa-indexes-in-sql</artifactId>
+  <name>Operaton - QA - Check indexes in SQL scripts</name>
+  <description>${project.name}</description>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sql-scripts-index-checker</id>
+            <phase>test</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <classpathScope>test</classpathScope>
+              <mainClass>org.operaton.bpm.engine.database.IndexChecker</mainClass>
+              <arguments>
+                <argument>${project.basedir}/../../engine/src/main/resources/org/operaton/bpm/engine/db/create</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

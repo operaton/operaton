@@ -55,6 +55,7 @@
   </dependencyManagement>
   <modules>
     <module>ensure-clean-db-plugin</module>
+    <module>test-db-indexes-in-scripts</module>
     <module>arquillian-extensions</module>
     <module>load-test</module>
   </modules>

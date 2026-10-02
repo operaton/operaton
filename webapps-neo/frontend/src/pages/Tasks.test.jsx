@@ -77,6 +77,10 @@ describe("TasksPage", () => {
     mockParams = {};
     mockQuery = {};
     routeFn.mockClear();
+    engine_rest.authorization.may.mockResolvedValue(true);
+    engine_rest.authorization.create.mockResolvedValue({
+      status: RESPONSE_STATE.SUCCESS,
+    });
   });
   afterEach(cleanup);
 
@@ -146,6 +150,68 @@ describe("TasksPage", () => {
       expect(engine_rest.task.get_tasks).toHaveBeenCalled();
       // sortBy is the 2nd positional arg of get_tasks(state, sortBy, ...)
       expect(engine_rest.task.get_tasks.mock.lastCall[1]).toBe("priority");
+    });
+
+    it("keeps the list the user was working through when a task is created", async () => {
+      mockQuery = { filter: "my", sortBy: "dueDate" };
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container, getByText } = renderPage(state);
+      fireEvent.click(getByText("tasks.create.open"));
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Rückruf" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() => expect(routeFn).toHaveBeenCalled());
+      expect(routeFn.mock.lastCall[0]).toContain("filter=my");
+    });
+
+    it("opens the first task when nothing is selected yet", async () => {
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [sample_task({ id: "t1" }), sample_task({ id: "t2" })],
+      };
+      renderPage(state);
+
+      await vi.waitFor(() => expect(routeFn).toHaveBeenCalled());
+      const [target, replace] = routeFn.mock.lastCall;
+      expect(target).toContain("/tasks/t1/");
+      expect(replace).toBe(true);
+    });
+
+    it("does not reopen a task the list has not caught up with", async () => {
+      // What returning from a completed task looks like: the entries from
+      // before are still there while the reload is in flight.
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [sample_task({ id: "gone" })],
+      };
+      engine_rest.task.get_tasks.mockImplementationOnce((s) => {
+        s.api.task.list.value = { status: RESPONSE_STATE.LOADING };
+      });
+      renderPage(state);
+
+      await new Promise((r) => setTimeout(r, 0));
+      expect(routeFn).not.toHaveBeenCalled();
+    });
+
+    it("keeps the hint while the list is still loading", () => {
+      state.api.task.list.value = { status: RESPONSE_STATE.LOADING };
+      const { getByText } = renderPage(state);
+      expect(getByText("tasks.select-task")).toBeTruthy();
+      expect(routeFn).not.toHaveBeenCalled();
+    });
+
+    it("keeps the hint when the list is empty", () => {
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [],
+      };
+      const { getByText } = renderPage(state);
+      expect(getByText("tasks.select-task")).toBeTruthy();
+      expect(routeFn).not.toHaveBeenCalled();
     });
 
     it("shows a 'load more' button and pages when more results exist", () => {
@@ -269,6 +335,106 @@ describe("TasksPage", () => {
     });
   });
 
+  describe("after a task turned out to be gone", () => {
+    afterEach(() => engine_rest.task.get_task.mockReset());
+
+    it("loads the next task that is opened", async () => {
+      // Reported: after "task not found", going back to the list and opening
+      // any other task reported it missing too.
+      mockParams = { task_id: "gone" };
+      engine_rest.task.get_task.mockImplementation(() => {
+        state.api.task.one.value = {
+          status: RESPONSE_STATE.ERROR,
+          error: { status: 404 },
+        };
+        return Promise.resolve();
+      });
+      const { rerender } = renderPage(state);
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_task).toHaveBeenCalled(),
+      );
+
+      // Now open a different task, which the engine still knows.
+      engine_rest.task.get_task.mockImplementation(() => {
+        signal_response(state.api.task.one, sample_task({ id: "alive" }));
+        return Promise.resolve();
+      });
+      mockParams = { task_id: "alive" };
+      rerender(h(AppState.Provider, { value: state }, h(TasksPage, {})));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_task.mock.lastCall?.[1]).toBe("alive"),
+      );
+      expect(state.api.task.one.value?.data?.id).toBe("alive");
+    });
+  });
+
+  describe("the chosen filter stays chosen", () => {
+    it("carries the filter and sorting into the link on a task", () => {
+      mockQuery = { filter: "f1", sortBy: "created", sortOrder: "desc" };
+      signal_response(state.api.task.list, [{ id: "t1", name: "One" }]);
+      const { container } = renderPage(state);
+      const href = container.querySelector("tbody a").getAttribute("href");
+      expect(href).toContain("filter=f1");
+      expect(href).toContain("sortBy=created");
+      expect(href).toContain("sortOrder=desc");
+    });
+
+    it("carries an ad-hoc criterion along too", () => {
+      mockQuery = { filter: "f1", "q.nameLike": "Review" };
+      signal_response(state.api.task.list, [{ id: "t1", name: "One" }]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("tbody a").getAttribute("href")).toContain(
+        "q.nameLike=Review",
+      );
+    });
+
+    it("adds nothing when no filter is chosen", () => {
+      signal_response(state.api.task.list, [{ id: "t1", name: "One" }]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("tbody a").getAttribute("href")).toBe(
+        "/tasks/t1/form",
+      );
+    });
+  });
+
+  describe("what the list can be sorted by", () => {
+    it("offers no sorting the request cannot carry", () => {
+      // Sorting by a variable needs its name and type alongside the key. Until
+      // the request can carry those, the choice would only ever answer
+      // "variableName is null" — or, over GET, refuse the key outright.
+      const { container } = renderPage(state);
+      const offered = [
+        ...container.querySelectorAll("#list-filter select option"),
+      ].map((o) => o.value);
+      expect(offered).not.toContain("processVariable");
+      expect(offered).not.toContain("taskVariable");
+    });
+  });
+
+  describe("a task that no longer exists", () => {
+    afterEach(() => engine_rest.task.get_task.mockReset());
+
+    it("stops after one attempt instead of loading for ever", async () => {
+      mockParams = { task_id: "gone" };
+      engine_rest.task.get_task.mockImplementation(() => {
+        state.api.task.one.value = {
+          status: RESPONSE_STATE.ERROR,
+          error: { status: 404 },
+        };
+        return Promise.resolve();
+      });
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_task).toHaveBeenCalled(),
+      );
+      const after_first = engine_rest.task.get_task.mock.calls.length;
+      await new Promise((r) => setTimeout(r, 120));
+      expect(engine_rest.task.get_task.mock.calls.length).toBe(after_first);
+    });
+  });
+
   describe("task detail", () => {
     it("loads the task chain when a task_id is in the route", () => {
       mockParams = { task_id: "t1", tab: "form" };
@@ -302,6 +468,16 @@ describe("TasksPage", () => {
       expect(getByText("tasks.task-not-found")).toBeTruthy();
     });
 
+    it("shows no process link for a task that belongs to none", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(
+        state.api.task.one,
+        sample_task({ processDefinitionId: null }),
+      );
+      const { container } = renderPage(state);
+      expect(container.querySelector('a[href^="/processes/"]')).toBeNull();
+    });
+
     it("renders the tab list once the task is loaded", () => {
       mockParams = { task_id: "t1", tab: "form" };
       signal_response(state.api.task.one, sample_task());
@@ -332,6 +508,90 @@ describe("TasksPage", () => {
       expect(getByText("hello")).toBeTruthy();
     });
 
+    it("re-reads the history when the tab is opened", () => {
+      mockParams = { task_id: "t1", tab: "history" };
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.history.user_operation, []);
+      signal_response(state.api.task.comment.list, []);
+      renderPage(state);
+      expect(
+        engine_rest.history.get_user_operation_by_task.mock.lastCall,
+      ).toEqual([state, "t1"]);
+      expect(engine_rest.task.get_comments.mock.lastCall).toEqual([
+        state,
+        "t1",
+      ]);
+    });
+
+    it("asks before an attachment is deleted", () => {
+      mockParams = { task_id: "t1", tab: "attachments" };
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.task.attachment.list, [
+        { id: "a1", name: "Rechnung.pdf", description: "" },
+      ]);
+      const { getByText, getByLabelText } = renderPage(state);
+
+      fireEvent.click(getByLabelText("common.delete"));
+      expect(engine_rest.task.delete_attachment).not.toHaveBeenCalled();
+
+      fireEvent.click(getByText("tasks.attachments.confirm-delete"));
+      expect(engine_rest.task.delete_attachment.mock.lastCall).toEqual([
+        state,
+        "t1",
+        "a1",
+      ]);
+    });
+
+    it("downloads an attachment under its own name, without a new tab", () => {
+      mockParams = { task_id: "t1", tab: "attachments" };
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.task.attachment.list, [
+        { id: "a1", name: "Rechnung.pdf", description: "" },
+      ]);
+      const { getByText } = renderPage(state);
+
+      const link = getByText("Rechnung.pdf").closest("a");
+      // The download attribute carries the name so the extension survives; a
+      // target would send it to a new tab and lose the extension.
+      expect(link.getAttribute("download")).toBe("Rechnung.pdf");
+      expect(link.getAttribute("target")).toBeNull();
+    });
+
+    it("saves the download under the attachment name, keeping the extension", async () => {
+      mockParams = { task_id: "t1", tab: "attachments" };
+      signal_response(state.api.task.one, sample_task());
+      signal_response(state.api.task.attachment.list, [
+        { id: "a1", name: "Rechnung.pdf", description: "" },
+      ]);
+
+      // Clicking fetches the bytes and downloads them from a blob, so the name
+      // is ours to set — immune to the server's headers. The programmatic
+      // blob link is the only one whose .click() method is invoked.
+      engine_rest.task.attachment_url.mockReturnValue(
+        "/api/engine/engine/default/task/t1/attachment/a1/data",
+      );
+      const fetch_spy = vi
+        .spyOn(globalThis, "fetch")
+        .mockResolvedValue({ ok: true, blob: async () => new Blob(["x"]) });
+      vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:x");
+      vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
+      let saved_as;
+      vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(
+        function () {
+          saved_as = this.download;
+        },
+      );
+
+      const { getByText } = renderPage(state);
+      fireEvent.click(getByText("Rechnung.pdf").closest("a"));
+
+      await vi.waitFor(() => expect(saved_as).toBe("Rechnung.pdf"));
+      expect(fetch_spy.mock.lastCall[0]).toContain(
+        "/task/t1/attachment/a1/data",
+      );
+      vi.restoreAllMocks();
+    });
+
     it("fetches + renders the BPMN diagram on the diagram tab", () => {
       mockParams = { task_id: "t1", tab: "diagram" };
       signal_response(state.api.task.one, sample_task());
@@ -341,6 +601,494 @@ describe("TasksPage", () => {
       const { getByTestId } = renderPage(state);
       expect(engine_rest.process_definition.diagram).toHaveBeenCalled();
       expect(getByTestId("bpmn-viewer").textContent).toBe("<bpmn>xml</bpmn>");
+    });
+  });
+
+  // The history tab reads signals that the detail's loading chain fills.
+  describe("loading what the history tab shows", () => {
+    // get_task is a shared spy; a stubbed implementation would otherwise leak
+    // into the tests that follow.
+    afterEach(() => engine_rest.task.get_task.mockReset());
+
+    const load_task = (over) =>
+      engine_rest.task.get_task.mockImplementation(() => {
+        signal_response(state.api.task.one, sample_task({ id: "t1", ...over }));
+        return Promise.resolve();
+      });
+
+    it("asks the operation log about the task, not about an execution", async () => {
+      mockParams = { task_id: "t1", tab: "history" };
+      load_task({ executionId: "exec-9", processDefinitionId: "p:1:abc" });
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(
+          engine_rest.history.get_user_operation_by_task,
+        ).toHaveBeenCalled(),
+      );
+      expect(
+        engine_rest.history.get_user_operation_by_task.mock.lastCall[1],
+      ).toBe("t1");
+      expect(engine_rest.history.get_user_operation).not.toHaveBeenCalled();
+    });
+
+    it("does not ask for a process definition a standalone task has not got", async () => {
+      mockParams = { task_id: "t1", tab: "history" };
+      load_task({ executionId: null, processDefinitionId: null });
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_comments).toHaveBeenCalled(),
+      );
+      expect(engine_rest.process_definition.one).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("tenant", () => {
+    it("names the tenant a task belongs to", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(state.api.task.one, sample_task({ tenantId: "sales" }));
+      const { getByText } = renderPage(state);
+      expect(getByText(/sales/)).toBeTruthy();
+    });
+
+    it("says nothing when the task has no tenant", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(state.api.task.one, sample_task({ tenantId: null }));
+      const { container } = renderPage(state);
+      // Scoped to the detail: the create dialog has a tenant field of its own,
+      // under the same label.
+      expect(container.querySelector("p.tenant")).toBeNull();
+    });
+  });
+
+  describe("due and follow-up dates", () => {
+    const click_in_dialog = (container, dialog_id, text) => {
+      const dialog = container.querySelector(`#${dialog_id}`);
+      const button = [...dialog.querySelectorAll("button")].find(
+        (b) => b.textContent.trim() === text,
+      );
+      fireEvent.click(button);
+    };
+
+    it("clears a due date", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(
+        state.api.task.one,
+        sample_task({ due: "2026-07-15T10:30:00.000+0200" }),
+      );
+      const { container } = renderPage(state);
+      click_in_dialog(container, "set_due_date", "tasks.dates.reset");
+
+      expect(engine_rest.task.update_task).toHaveBeenCalled();
+      const [, changeset] = engine_rest.task.update_task.mock.lastCall;
+      expect(changeset).toEqual({ due: null });
+    });
+
+    it("clears a follow-up date", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(
+        state.api.task.one,
+        sample_task({ followUp: "2026-07-15T10:30:00.000+0200" }),
+      );
+      const { container } = renderPage(state);
+      click_in_dialog(container, "set_follow_up_date", "tasks.dates.reset");
+
+      const [, changeset] = engine_rest.task.update_task.mock.lastCall;
+      expect(changeset).toEqual({ followUp: null });
+    });
+
+    it("sets a follow-up date to now", () => {
+      mockParams = { task_id: "t1", tab: "form" };
+      signal_response(state.api.task.one, sample_task());
+      const { container } = renderPage(state);
+      click_in_dialog(container, "set_follow_up_date", "tasks.dates.now");
+
+      const [, changeset] = engine_rest.task.update_task.mock.lastCall;
+      expect(changeset.followUp).toMatch(
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00\.000[+-]\d{4}$/,
+      );
+    });
+  });
+
+  describe("creating a task outside a process", () => {
+    const open_dialog = (container) =>
+      fireEvent.click(container.querySelector("button.create-task"));
+
+    it("sends name, assignee and description", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.input(container.querySelector("#new-task-assignee"), {
+        target: { value: "alice" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.create_task).toHaveBeenCalled(),
+      );
+      const [, body] = engine_rest.task.create_task.mock.lastCall;
+      expect(body.name).toBe("Call the reporter");
+      expect(body.assignee).toBe("alice");
+      expect(body.id).toBeTruthy();
+    });
+
+    it("opens the new task afterwards", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() => expect(routeFn).toHaveBeenCalled());
+      const [, body] = engine_rest.task.create_task.mock.lastCall;
+      expect(routeFn.mock.lastCall[0]).toBe(`/tasks/${body.id}/form`);
+    });
+
+    it("refuses to create a task without a name", () => {
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      expect(getByText("tasks.create.save").disabled).toBe(true);
+    });
+
+    it("suggests the tenants the user may read, not the ones they belong to", () => {
+      // An administrator is a member of no tenant and must still be able to
+      // place a task in one.
+      signal_response(state.api.tenant.by_member, []);
+      signal_response(state.api.tenant.list, [
+        { id: "sales" },
+        { id: "support" },
+      ]);
+      const { container } = renderPage(state);
+      open_dialog(container);
+      const suggested = [
+        ...container.querySelectorAll("#new-task-tenants option"),
+      ].map((o) => o.value);
+      expect(suggested).toEqual(["sales", "support"]);
+    });
+
+    it("asks for the tenant even when none is visible", () => {
+      // The old dialog always asked, and an id may be typed that the user
+      // cannot read.
+      signal_response(state.api.tenant.list, []);
+      const { container } = renderPage(state);
+      open_dialog(container);
+      expect(container.querySelector("#new-task-tenant")).not.toBeNull();
+    });
+
+    it("takes a tenant that is not in the list", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.tenant.list, [{ id: "sales" }]);
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.input(container.querySelector("#new-task-tenant"), {
+        target: { value: "elsewhere" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.create_task).toHaveBeenCalled(),
+      );
+      expect(engine_rest.task.create_task.mock.lastCall[1].tenantId).toBe(
+        "elsewhere",
+      );
+    });
+
+    it("says why the engine refused, instead of looking like a dead button", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.ERROR,
+        error: { message: "ENGINE-13034 ... no authenticated tenant." },
+      });
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.input(container.querySelector("#new-task-tenant"), {
+        target: { value: "nowhere" },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() => expect(getByText(/ENGINE-13034/)).toBeTruthy());
+      expect(routeFn).not.toHaveBeenCalled();
+    });
+
+    it("sends no tenant when the field was left blank", async () => {
+      engine_rest.task.create_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container, getByText } = renderPage(state);
+      open_dialog(container);
+      fireEvent.input(container.querySelector("#new-task-name"), {
+        target: { value: "Call the reporter" },
+      });
+      fireEvent.input(container.querySelector("#new-task-tenant"), {
+        target: { value: "   " },
+      });
+      fireEvent.click(getByText("tasks.create.save"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.task.create_task).toHaveBeenCalled(),
+      );
+      expect(engine_rest.task.create_task.mock.lastCall[1].tenantId).toBeNull();
+    });
+  });
+
+  describe("who may use a saved filter", () => {
+    const open_editor = () => {
+      mockParams = { task_id: "filter" };
+    };
+
+    it("grants everyone read access when asked", async () => {
+      open_editor();
+      engine_rest.filter.create_filter.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: { id: "f1" },
+      });
+      const { container, getByText } = renderPage(state);
+      fireEvent.input(container.querySelector("#filter-name"), {
+        target: { value: "Overdue" },
+      });
+      fireEvent.click(getByText("tasks.filter.readable-by-all"));
+      fireEvent.submit(container.querySelector("form"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.authorization.create).toHaveBeenCalled(),
+      );
+      const [, body] = engine_rest.authorization.create.mock.lastCall;
+      expect(body).toMatchObject({
+        type: 0,
+        userId: "*",
+        permissions: ["READ"],
+        resourceType: 5,
+        resourceId: "f1",
+      });
+    });
+
+    it("grants a named group read access", async () => {
+      open_editor();
+      engine_rest.filter.create_filter.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: { id: "f1" },
+      });
+      const { container, getByText } = renderPage(state);
+      fireEvent.input(container.querySelector("#filter-name"), {
+        target: { value: "Overdue" },
+      });
+      fireEvent.click(getByText("tasks.filter.add-permission"));
+      const type = container.querySelector("fieldset:last-of-type select");
+      fireEvent.change(type, { target: { value: "group" } });
+      const id = container.querySelector("fieldset:last-of-type tbody input");
+      fireEvent.input(id, { target: { value: "reviewers" } });
+      fireEvent.submit(container.querySelector("form"));
+
+      await vi.waitFor(() =>
+        expect(engine_rest.authorization.create).toHaveBeenCalled(),
+      );
+      const [, body] = engine_rest.authorization.create.mock.lastCall;
+      expect(body).toMatchObject({
+        type: 1,
+        groupId: "reviewers",
+        permissions: ["READ"],
+        resourceType: 5,
+      });
+    });
+
+    it("leaves the sharing section inert without permission to grant it", async () => {
+      open_editor();
+      engine_rest.authorization.may.mockResolvedValue(false);
+      const { container, getByText } = renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(getByText("tasks.filter.permissions-denied")).toBeTruthy(),
+      );
+      expect(container.querySelector("fieldset:last-of-type").disabled).toBe(
+        true,
+      );
+    });
+
+    it("reports a refused grant instead of navigating away", async () => {
+      open_editor();
+      engine_rest.filter.create_filter.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: { id: "f1" },
+      });
+      engine_rest.authorization.create.mockResolvedValue({
+        status: RESPONSE_STATE.ERROR,
+        error: { message: "forbidden" },
+      });
+      const { container, getByText } = renderPage(state);
+      fireEvent.input(container.querySelector("#filter-name"), {
+        target: { value: "Overdue" },
+      });
+      fireEvent.click(getByText("tasks.filter.readable-by-all"));
+      fireEvent.submit(container.querySelector("form"));
+
+      await vi.waitFor(() =>
+        expect(getByText("tasks.filter.share-failed")).toBeTruthy(),
+      );
+      expect(routeFn).not.toHaveBeenCalled();
+    });
+
+    it("adds and removes a row again", () => {
+      open_editor();
+      const { container, getByText } = renderPage(state);
+      fireEvent.click(getByText("tasks.filter.add-permission"));
+      expect(
+        container.querySelectorAll("fieldset:last-of-type tbody tr").length,
+      ).toBe(1);
+    });
+  });
+
+  describe("a task that is gone", () => {
+    // Once, not on every call: a mock that writes a signal each time it runs
+    // feeds its own re-render and never settles.
+    const vanishes_on_load = () => {
+      engine_rest.task.get_task
+        .mockImplementationOnce(() => {
+          state.api.task.one.value = {
+            status: RESPONSE_STATE.ERROR,
+            error: { status: 404 },
+          };
+          return Promise.resolve();
+        })
+        .mockResolvedValue(undefined);
+    };
+
+    afterEach(() => engine_rest.task.get_task.mockReset());
+
+    it("takes it out of the list, so it cannot be clicked again", async () => {
+      mockParams = { task_id: "gone" };
+      signal_response(state.api.task.list, [
+        { id: "gone", name: "Completed meanwhile" },
+        { id: "t2", name: "Still there" },
+      ]);
+      vanishes_on_load();
+      renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(state.api.task.list.value.data.map((t) => t.id)).toEqual(["t2"]),
+      );
+    });
+
+    it("leaves the list alone when the task is fine", async () => {
+      mockParams = { task_id: "t2" };
+      signal_response(state.api.task.list, [{ id: "t2", name: "Still there" }]);
+      signal_response(state.api.task.one, sample_task({ id: "t2" }));
+      engine_rest.task.get_task.mockResolvedValue(undefined);
+      renderPage(state);
+
+      // The last step of the chain: once it ran, the task was not dropped.
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_identity_links).toHaveBeenCalled(),
+      );
+      expect(state.api.task.list.value.data).toHaveLength(1);
+    });
+  });
+
+  describe("variables a filter shows as columns", () => {
+    const with_columns = (variables, show_undefined = false) => {
+      mockQuery = { filter: "f1" };
+      signal_response(state.api.filter.list, [
+        {
+          id: "f1",
+          name: "With columns",
+          properties: { variables, showUndefinedVariable: show_undefined },
+        },
+      ]);
+    };
+
+    it("adds a column per variable the filter names", () => {
+      with_columns([
+        { name: "amount", label: "Amount" },
+        { name: "city", label: "" },
+      ]);
+      const { container } = renderPage(state);
+      const headings = [
+        ...container.querySelectorAll("th.filter-variable"),
+      ].map((th) => th.textContent);
+      expect(headings).toEqual(["Amount", "city"]);
+    });
+
+    it("puts the value of each task into its column", () => {
+      with_columns([{ name: "amount", label: "Amount" }]);
+      signal_response(state.api.task.list, [
+        {
+          id: "t1",
+          name: "One",
+          filter_variables: { amount: { name: "amount", value: 42 } },
+        },
+      ]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("td.filter-variable").textContent).toBe(
+        "42",
+      );
+    });
+
+    it("leaves the cell empty when the task has no such variable", () => {
+      with_columns([{ name: "amount", label: "Amount" }]);
+      signal_response(state.api.task.list, [
+        { id: "t1", name: "One", filter_variables: {} },
+      ]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("td.filter-variable").textContent).toBe(
+        "",
+      );
+    });
+
+    it("marks the missing value when the filter asks for it", () => {
+      with_columns([{ name: "amount", label: "Amount" }], true);
+      signal_response(state.api.task.list, [
+        { id: "t1", name: "One", filter_variables: {} },
+      ]);
+      const { container } = renderPage(state);
+      expect(container.querySelector("td.filter-variable").textContent).toBe(
+        "—",
+      );
+    });
+
+    it("shows no extra column when the filter names none", () => {
+      with_columns([]);
+      const { container } = renderPage(state);
+      expect(container.querySelectorAll("th.filter-variable")).toHaveLength(0);
+    });
+  });
+
+  describe("saved filters", () => {
+    it("keeps the chosen filter across a reload, because it lives in the route", () => {
+      mockQuery = { filter: "f1" };
+      signal_response(state.api.filter.list, [{ id: "f1", name: "Mine" }]);
+      renderPage(state);
+      expect(engine_rest.filter.execute_filter).toHaveBeenCalled();
+      expect(engine_rest.filter.execute_filter.mock.lastCall[1]).toBe("f1");
+    });
+
+    it("asks the engine for the task list when no filter is chosen", () => {
+      renderPage(state);
+      expect(engine_rest.task.get_tasks).toHaveBeenCalled();
+      expect(engine_rest.filter.execute_filter).not.toHaveBeenCalled();
+    });
+
+    it("narrows the list to the signed-in user for 'my tasks'", () => {
+      mockQuery = { filter: "my" };
+      state.auth.user.id.value = "alice";
+      renderPage(state);
+      const [, , , , , filter] = engine_rest.task.get_tasks.mock.lastCall;
+      expect(filter).toEqual({ assignee: "alice" });
     });
   });
 
@@ -363,8 +1111,8 @@ describe("TasksPage", () => {
 
     const open_groups_dialog = (container) => {
       const detail = container.querySelector("#task-details");
-      const opener = [...detail.querySelectorAll("button.task-card")].find((b) =>
-        b.textContent.includes("tasks.groups.set"),
+      const opener = [...detail.querySelectorAll("button.task-card")].find(
+        (b) => b.textContent.includes("tasks.groups.set"),
       );
       fireEvent.click(opener);
     };
@@ -507,8 +1255,42 @@ describe("TasksPage", () => {
       engine_rest.task.get_task.mockClear();
 
       fireEvent.click(getByText("tasks.claim"));
-      await vi.waitFor(() => expect(engine_rest.task.get_task).toHaveBeenCalled());
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_task).toHaveBeenCalled(),
+      );
       expect(engine_rest.task.get_task.mock.lastCall[1]).toBe("t1");
+    });
+
+    it("re-reads the operation log, which the open history tab shows", async () => {
+      engine_rest.task.claim_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+      engine_rest.history.get_user_operation_by_task.mockClear();
+
+      fireEvent.click(getByText("tasks.claim"));
+      await vi.waitFor(() =>
+        expect(
+          engine_rest.history.get_user_operation_by_task,
+        ).toHaveBeenCalled(),
+      );
+    });
+
+    it("re-reads the list too, so the assignee column catches up", async () => {
+      engine_rest.task.claim_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      const { getByText, container } = renderDetail();
+      open_assignee_dialog(container);
+      engine_rest.task.get_tasks.mockClear();
+
+      fireEvent.click(getByText("tasks.claim"));
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_tasks).toHaveBeenCalled(),
+      );
     });
 
     it("leaves the dialog alone when the action failed", async () => {
@@ -602,10 +1384,64 @@ describe("TasksPage", () => {
       expect(engine_rest.task.update_task.mock.lastCall[2]).toBe("t1");
     });
 
+    it("re-reads the list after a due date change, so its column catches up", async () => {
+      signal_response(state.api.task.one, sample_task());
+      engine_rest.task.update_task.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { getByText } = renderDetail();
+      fireEvent.click(getByText("tasks.due-date.label").closest("button"));
+      engine_rest.task.get_tasks.mockClear();
+      fireEvent.submit(
+        getByText("tasks.due-date.title")
+          .closest("dialog")
+          .querySelector("form"),
+      );
+      await vi.waitFor(() =>
+        expect(engine_rest.task.get_tasks).toHaveBeenCalled(),
+      );
+    });
+
+    it("leaves the form read-only until the task is held by the signed-in user", () => {
+      state.auth.user.id.value = "alice";
+      signal_response(state.api.task.one, sample_task({ assignee: null }));
+      signal_response(
+        state.api.task.rendered_form,
+        '<form><label>Amount</label><input cam-variable-name="amount" cam-variable-type="String" value="42"/></form>',
+      );
+      signal_response(state.api.task.form_variables, {
+        amount: { value: "42", type: "String" },
+      });
+      const { getByText, container } = renderDetail();
+
+      expect(getByText("tasks.form.claim-first")).toBeTruthy();
+      expect(getByText("tasks.form.complete-task").disabled).toBe(true);
+      expect(
+        [...container.querySelectorAll(".task-form input")].every(
+          (i) => i.disabled,
+        ),
+      ).toBe(true);
+    });
+
+    it("keeps the form read-only when someone else holds the task", () => {
+      state.auth.user.id.value = "alice";
+      signal_response(state.api.task.one, sample_task({ assignee: "bob" }));
+      signal_response(
+        state.api.task.rendered_form,
+        '<form><label>Amount</label><input cam-variable-name="amount" cam-variable-type="String" value="42"/></form>',
+      );
+      signal_response(state.api.task.form_variables, {
+        amount: { value: "42", type: "String" },
+      });
+      const { getByText } = renderDetail();
+      expect(getByText("tasks.form.complete-task").disabled).toBe(true);
+    });
+
     it("submits the generated task form via post_task_form", () => {
       // No formKey => real TaskForm renders GeneratedTaskForm: it parses the
       // engine's rendered form into a schema and submits via post_task_form.
-      signal_response(state.api.task.one, sample_task());
+      state.auth.user.id.value = "alice";
+      signal_response(state.api.task.one, sample_task({ assignee: "alice" }));
       signal_response(
         state.api.task.rendered_form,
         '<form><label>Amount</label><input cam-variable-name="amount" cam-variable-type="String" value="42"/></form>',

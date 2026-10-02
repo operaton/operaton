@@ -1640,6 +1640,10 @@ nav:has(> .breadcrumbs) {
   display: flex;
   flex: 1;
   min-height: 0;
+  /* As a flex item its default min-width is `auto`, so the widest cell of the
+     definitions table pushed the whole pane past the window and cut the start
+     form off at the right edge. */
+  min-width: 0;
 
   header {
     padding: var(--spacing-2);
@@ -1684,8 +1688,10 @@ nav:has(> .breadcrumbs) {
      so it sits above the form and mirrors the global form label/input grid. */
   .business-key {
     display: grid;
-    grid-template-columns: 12em min(calc(100% - 2 * var(--spacing-1) - 12em),
-        30em);
+    grid-template-columns: 12em min(
+        calc(100% - 2 * var(--spacing-1) - 12em),
+        30em
+      );
     align-items: center;
     gap: var(--spacing-1);
     padding: var(--spacing-1);
@@ -1697,3 +1703,150 @@ nav:has(> .breadcrumbs) {
 }
 
 /* migrations page */
+
+/* Attachments: the native file input is replaced by a label styled as a button,
+   with the chosen file name beside it. The input itself stays in the DOM, hidden,
+   so the file dialog and assistive technology keep working. */
+.task-attachments .file-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.task-attachments .file-picker .button {
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.task-attachments .file-name {
+  color: var(--text-2);
+  font-size: var(--small-font-size);
+  overflow-wrap: anywhere;
+}
+
+#task-data header .tenant {
+  color: var(--text-2);
+  font-size: var(--small-font-size);
+  margin: 0;
+}
+
+#task-list .list-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-1);
+  margin: var(--spacing-1) 0;
+}
+
+.variable-criterion {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.variable-criterion input {
+  min-width: 0;
+}
+
+.identity-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: end;
+  margin-block-end: 1rem;
+}
+
+.identity-search label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.dashboard-section > summary {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  cursor: pointer;
+}
+
+.dashboard-section > summary h3 {
+  display: inline;
+}
+
+.task-breakdown {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0 0.5rem;
+  margin: 0.25rem 0 0;
+  font-size: 0.85em;
+}
+
+.task-breakdown dt,
+.task-breakdown dd {
+  margin: 0;
+}
+
+.relative-time {
+  cursor: default;
+}
+
+/* Fixed to the viewport so a scrolling table cannot cut it off. */
+.time-tooltip {
+  position: fixed;
+  z-index: 100;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--border-radius);
+  background: var(--text);
+  color: var(--text-inverted);
+  font-size: var(--smaller-font-size);
+  white-space: nowrap;
+  pointer-events: none;
+  /* Short delay, short fade: there on arrival, without snapping into place. */
+  animation: time-tooltip-in 120ms ease 60ms both;
+}
+
+@keyframes time-tooltip-in {
+  from {
+    opacity: 0;
+    translate: -50% calc(-100% - 0.1rem);
+  }
+  to {
+    opacity: 1;
+    translate: -50% calc(-100% - 0.4rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .time-tooltip {
+    animation: none;
+    opacity: 1;
+    translate: -50% calc(-100% - 0.4rem);
+  }
+}
+
+/* The engine's password rules, listed beside the password fields. A rule the
+   typed password breaks is marked rather than removed, so the list stays
+   stable while typing. */
+.password-policy {
+  margin: 0;
+}
+
+.password-policy p {
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.password-policy ul {
+  margin: 0;
+  padding-left: var(--spacing-4);
+}
+
+.password-policy .broken {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* The date and time of a scheduled suspension sit side by side. */
+.date-time {
+  display: flex;
+  gap: var(--spacing-2);
+}

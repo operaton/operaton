@@ -31,8 +31,16 @@ export const CamundaForm = ({ schema, data, disabled, on_submit, on_ready }) => 
     on_submit?.({ data: form_data.value, errors })
   }
 
+  // The button that submits this form lives outside it, so `on_ready` hands it
+  // a submit function — once, on mount. Handing it `submit` itself would freeze
+  // the surrounding component's state as it was then: a business key or a
+  // variable typed afterwards would never reach the request. The ref keeps the
+  // exposed function stable and its body current.
+  const submit_current = useRef(submit)
+  submit_current.current = submit
+
   useEffect(() => {
-    on_ready?.({ submit })
+    on_ready?.({ submit: () => submit_current.current() })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

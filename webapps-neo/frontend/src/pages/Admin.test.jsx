@@ -26,6 +26,7 @@ vi.mock("preact-iso", () => ({
   useLocation: () => ({ route: routeFn, path: "/admin" }),
 }));
 
+import { RESPONSE_STATE } from "../api/helper.jsx";
 import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { AdminPage } from "./Admin.jsx";
@@ -53,6 +54,8 @@ describe("AdminPage", () => {
     mockParams = {};
     routeFn.mockClear();
     resolve_all();
+    // The permission probes answer "allowed" unless a test says otherwise.
+    engine_rest.authorization.may.mockResolvedValue(true);
   });
   afterEach(cleanup);
 
@@ -76,6 +79,37 @@ describe("AdminPage", () => {
       expect(href("admin.tenants")).toBe("/admin/tenants");
       expect(href("admin.authorizations")).toBe("/admin/authorizations");
       expect(href("admin.system")).toBe("/admin/system");
+    });
+  });
+
+  describe("navigation follows the permissions", () => {
+    it("asks the engine which sections the user may reach", () => {
+      mockParams = { page_id: "users" };
+      renderPage(state);
+      expect(engine_rest.authorization.sections).toHaveBeenCalled();
+      expect(engine_rest.authorization.sections.mock.lastCall[0]).toBe(state);
+    });
+
+    it("hides a section the user has no permission for", () => {
+      mockParams = { page_id: "users" };
+      state.api.authorization.sections.value = {
+        users: true,
+        groups: true,
+        tenants: true,
+        authorizations: false,
+        system: false,
+      };
+      const { queryByText, getAllByText } = renderPage(state);
+      expect(queryByText("admin.authorizations")).toBeNull();
+      expect(queryByText("admin.system")).toBeNull();
+      expect(getAllByText("admin.users").length).toBeGreaterThan(0);
+    });
+
+    it("shows every section until the answers arrive", () => {
+      mockParams = { page_id: "users" };
+      const { getByText } = renderPage(state);
+      expect(getByText("admin.system")).toBeTruthy();
+      expect(getByText("admin.authorizations")).toBeTruthy();
     });
   });
 
@@ -103,7 +137,7 @@ describe("AdminPage", () => {
       expect(getByText("jane@example.com")).toBeTruthy();
     });
 
-    it("submits the create-user form via engine_rest.user.create", () => {
+    it("submits the create-user form via engine_rest.user.create", async () => {
       mockParams = { page_id: "users", selection_id: "create" };
       // create signal must report SUCCESS for the post-submit has_data branch.
       signal_response(state.api.user.create, { id: "newbie" });
@@ -120,7 +154,11 @@ describe("AdminPage", () => {
 
       fireEvent.submit(container.querySelector("form"));
 
-      expect(engine_rest.user.create).toHaveBeenCalled();
+      // The password is checked against the engine's policy first, so the
+      // request goes out a tick later.
+      await vi.waitFor(() =>
+        expect(engine_rest.user.create).toHaveBeenCalled(),
+      );
       const call = engine_rest.user.create.mock.lastCall;
       expect(call[0]).toBe(state);
       expect(call[1].profile.id).toBe("newbie");
@@ -141,6 +179,77 @@ describe("AdminPage", () => {
 
       expect(engine_rest.user.create).not.toHaveBeenCalled();
       expect(getByText("admin.user.password-mismatch")).toBeTruthy();
+    });
+
+    it("confirms a password change with the signed-in user's own password", async () => {
+      mockParams = { page_id: "users", selection_id: "jdoe" };
+      engine_rest.user.credentials_update.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+      });
+      const { container } = renderPage(state);
+
+      const set = (sel, value) =>
+        fireEvent.input(container.querySelector(sel), { target: { value } });
+      set("#new-password", "fresh");
+      set("#new-password-repeat", "fresh");
+      set("#own-password", "mine");
+      fireEvent.submit(container.querySelector("#new-password").form);
+
+      // The engine refuses the request outright without it.
+      await vi.waitFor(() =>
+        expect(engine_rest.user.credentials_update).toHaveBeenCalled(),
+      );
+      const call = engine_rest.user.credentials_update.mock.lastCall;
+      expect(call[2]).toEqual({
+        password: "fresh",
+        authenticatedUserPassword: "mine",
+      });
+    });
+
+    it("refuses a password the engine's policy rejects, naming the rule", async () => {
+      mockParams = { page_id: "users", selection_id: "jdoe" };
+      signal_response(state.api.user.password_policy, {
+        rules: [{ placeholder: "PASSWORD_POLICY_LENGTH", parameter: {} }],
+      });
+      engine_rest.user.password_policy.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: { rules: [{ placeholder: "PASSWORD_POLICY_LENGTH" }] },
+      });
+      engine_rest.user.check_password.mockResolvedValue({
+        status: RESPONSE_STATE.SUCCESS,
+        data: {
+          valid: false,
+          rules: [{ placeholder: "PASSWORD_POLICY_LENGTH", valid: false }],
+        },
+      });
+      const { container } = renderPage(state);
+
+      const set = (sel, value) =>
+        fireEvent.input(container.querySelector(sel), { target: { value } });
+      set("#new-password", "kurz");
+      set("#new-password-repeat", "kurz");
+      set("#own-password", "mine");
+      fireEvent.submit(container.querySelector("#new-password").form);
+
+      await vi.waitFor(() =>
+        expect(engine_rest.user.check_password).toHaveBeenCalled(),
+      );
+      expect(engine_rest.user.credentials_update).not.toHaveBeenCalled();
+      await vi.waitFor(() =>
+        expect(
+          container.querySelector(".password-policy .broken"),
+        ).toBeTruthy(),
+      );
+    });
+
+    it("hides the create link from someone who may not create users", async () => {
+      mockParams = { page_id: "users" };
+      engine_rest.authorization.may.mockResolvedValue(false);
+      const { queryByText } = renderPage(state);
+
+      await vi.waitFor(() =>
+        expect(queryByText("admin.user.create")).toBeNull(),
+      );
     });
 
     it("fetches profile, groups and tenants on the user details page", () => {
@@ -173,6 +282,58 @@ describe("AdminPage", () => {
       expect(engine_rest.user.delete).toHaveBeenCalled();
       expect(engine_rest.user.delete.mock.lastCall[0]).toBe(state);
       expect(engine_rest.user.delete.mock.lastCall[1]).toBe("jdoe");
+    });
+
+    it("unlocks a user that the engine locked out", () => {
+      mockParams = { page_id: "users", selection_id: "alice" };
+      const { getAllByText } = renderPage(state);
+      // [0] is the section heading, [1] the button
+      fireEvent.click(getAllByText("admin.user.unlock")[1]);
+      expect(engine_rest.user.unlock).toHaveBeenCalled();
+      expect(engine_rest.user.unlock.mock.lastCall[1]).toBe("alice");
+    });
+  });
+
+  describe("searching and paging the lists", () => {
+    it("runs the typed search against the engine", () => {
+      mockParams = { page_id: "users" };
+      const { container, getByText } = renderPage(state);
+      const inputs = container.querySelectorAll(".identity-search input");
+      fireEvent.input(inputs[1], { target: { value: "Al" } });
+      fireEvent.click(getByText("common.search"));
+      expect(engine_rest.user.all.mock.lastCall[1]).toEqual({
+        firstNameLike: "Al",
+      });
+    });
+
+    it("leaves an empty field out of the query", () => {
+      mockParams = { page_id: "users" };
+      const { container, getByText } = renderPage(state);
+      const inputs = container.querySelectorAll(".identity-search input");
+      fireEvent.input(inputs[0], { target: { value: "x" } });
+      fireEvent.input(inputs[0], { target: { value: "" } });
+      fireEvent.click(getByText("common.search"));
+      expect(engine_rest.user.all.mock.lastCall[1]).toEqual({});
+    });
+
+    it("offers the next page once a full page is on screen", () => {
+      mockParams = { page_id: "users" };
+      signal_response(
+        state.api.user.list,
+        Array.from({ length: 50 }, (_, i) => ({ id: `u${i}` })),
+      );
+      const { getByText } = renderPage(state);
+      fireEvent.click(getByText("common.load-more"));
+      const [, query, append] = engine_rest.user.all.mock.lastCall;
+      expect(query.firstResult).toBe(50);
+      expect(append).toBe(true);
+    });
+
+    it("does not offer the next page on a partial page", () => {
+      mockParams = { page_id: "users" };
+      signal_response(state.api.user.list, [{ id: "alice" }]);
+      const { queryByText } = renderPage(state);
+      expect(queryByText("common.load-more")).toBeNull();
     });
   });
 
@@ -255,6 +416,30 @@ describe("AdminPage", () => {
       const call = engine_rest.group.add_user.mock.lastCall;
       expect(call[1]).toBe("g1");
       expect(call[2]).toBe("alice");
+    });
+  });
+
+  describe("suggestions when adding a member", () => {
+    it("offers the users that are not members of the group yet", () => {
+      mockParams = { page_id: "groups", selection_id: "admins" };
+      signal_response(state.api.group.members, [
+        { id: "alice", name: "Alice" },
+      ]);
+      signal_response(state.api.user.list, [
+        { id: "alice", firstName: "Alice" },
+        { id: "bob", firstName: "Bob" },
+      ]);
+      const { container } = renderPage(state);
+      const suggested = [
+        ...container.querySelectorAll("#member-candidates option"),
+      ].map((option) => option.value);
+      expect(suggested).toEqual(["bob"]);
+    });
+
+    it("fetches the users it suggests", () => {
+      mockParams = { page_id: "groups", selection_id: "admins" };
+      renderPage(state);
+      expect(engine_rest.user.all).toHaveBeenCalled();
     });
   });
 
@@ -386,15 +571,159 @@ describe("AdminPage", () => {
 
       fireEvent.click(getByText("admin.authorization.create"));
       fireEvent.input(container.querySelector("#auth-user"), {
-        target: { value: "carol" },
+        target: { value: "reviewers" },
       });
       fireEvent.submit(container.querySelector("form.authorization-create"));
 
       expect(engine_rest.authorization.create).toHaveBeenCalled();
       const call = engine_rest.authorization.create.mock.lastCall;
       expect(call[0]).toBe(state);
-      expect(call[1].userId).toBe("carol");
+      // A group by default: the engine accepts a group id in userId without
+      // complaint, and the permission then matches nobody.
+      expect(call[1].groupId).toBe("reviewers");
+      expect(call[1].userId).toBeUndefined();
       expect(call[1].resourceType).toBe(1);
+    });
+
+    it("points at the row in the way instead of letting the engine refuse", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.all, [
+        {
+          id: "a1",
+          type: 1,
+          groupId: "reviewers",
+          permissions: ["READ", "UPDATE"],
+          resourceType: 1,
+          resourceId: "*",
+        },
+      ]);
+      const { container, getByText } = renderPage(state);
+
+      fireEvent.click(getByText("admin.authorization.create"));
+      fireEvent.input(container.querySelector("#auth-user"), {
+        target: { value: "reviewers" },
+      });
+      fireEvent.submit(container.querySelector("form.authorization-create"));
+
+      expect(getByText("admin.authorization.already-exists")).toBeTruthy();
+      expect(engine_rest.authorization.create).not.toHaveBeenCalled();
+    });
+
+    it("keeps the permissions it already had when one is added", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.all, [
+        {
+          id: "a1",
+          type: 1,
+          groupId: "reviewers",
+          permissions: ["READ", "UPDATE"],
+          resourceType: 1,
+          resourceId: "*",
+        },
+      ]);
+      const { container, getByText } = renderPage(state);
+
+      fireEvent.click(getByText("common.edit"));
+      const create_box = Array.from(
+        container.querySelectorAll('input[type="checkbox"]'),
+      ).find((box) => box.value === "CREATE");
+      fireEvent.input(create_box, { target: { checked: true } });
+      fireEvent.submit(container.querySelector("form"));
+
+      const call = engine_rest.authorization.update.mock.lastCall;
+      expect(call[2].permissions).toEqual(["READ", "UPDATE", "CREATE"]);
+    });
+
+    it("grants to a user when the holder is switched to one", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.create, { id: "a3" });
+      const { container, getByText } = renderPage(state);
+
+      fireEvent.click(getByText("admin.authorization.create"));
+      fireEvent.input(container.querySelector("#auth-identity-type"), {
+        target: { value: "user" },
+      });
+      fireEvent.input(container.querySelector("#auth-user"), {
+        target: { value: "carol" },
+      });
+      fireEvent.submit(container.querySelector("form.authorization-create"));
+
+      const call = engine_rest.authorization.create.mock.lastCall;
+      expect(call[1].userId).toBe("carol");
+      expect(call[1].groupId).toBeUndefined();
+    });
+
+    // Ported from the previous admin's authorizations-spec.js:
+    // "can change user and group".
+    it("turns a user grant into a group grant", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.all, [
+        {
+          id: "a1",
+          type: 1,
+          userId: "alice",
+          groupId: null,
+          permissions: ["READ"],
+          resourceType: 1,
+          resourceId: "*",
+        },
+      ]);
+      const { getByText, getByLabelText } = renderPage(state);
+
+      fireEvent.click(getByText("common.edit"));
+      fireEvent.input(getByLabelText("admin.authorization.identity-type"), {
+        target: { value: "group" },
+      });
+      fireEvent.click(getByText("common.save"));
+
+      const call = engine_rest.authorization.update.mock.lastCall;
+      expect(call[2].groupId).toBe("alice");
+      expect(call[2].userId).toBeNull();
+    });
+
+    it("forgets an abandoned edit when the row is cancelled", () => {
+      mockParams = {
+        page_id: "authorizations",
+        selection_id: "resource-type",
+        sub_selection_id: "1",
+      };
+      signal_response(state.api.authorization.all, [
+        {
+          id: "a1",
+          type: 1,
+          userId: "alice",
+          permissions: ["READ"],
+          resourceType: 1,
+          resourceId: "*",
+        },
+      ]);
+      const { container, getByText, getByLabelText } = renderPage(state);
+
+      fireEvent.click(getByText("common.edit"));
+      fireEvent.input(getByLabelText("admin.authorization.resource-id"), {
+        target: { value: "changed" },
+      });
+      fireEvent.click(getByText("common.cancel"));
+      fireEvent.click(getByText("common.edit"));
+
+      expect(getByLabelText("admin.authorization.resource-id").value).toBe("*");
+      expect(container.textContent).not.toContain("changed");
     });
 
     it("deletes an authorization row via the confirm dialog", () => {
@@ -430,17 +759,44 @@ describe("AdminPage", () => {
       expect(engine_rest.engine.telemetry.mock.lastCall[0]).toBe(state);
     });
 
-    it("renders the telemetry data from the signal", () => {
+    it("names the product, the database and the JDK", () => {
       mockParams = { page_id: "system" };
       signal_response(state.api.engine.telemetry, {
         installation: "abc-123",
+        product: {
+          name: "Operaton",
+          version: "2.2.0",
+          edition: "community",
+          internals: {
+            database: { vendor: "PostgreSQL", version: "16.2" },
+            jdk: { vendor: "Eclipse Adoptium", version: "21.0.2" },
+            webapps: ["cockpit", "admin"],
+          },
+        },
+      });
+      const { getByText, container } = renderPage(state);
+      expect(getByText("Operaton")).toBeTruthy();
+      expect(getByText("PostgreSQL 16.2")).toBeTruthy();
+      expect(getByText("Eclipse Adoptium 21.0.2")).toBeTruthy();
+      expect(getByText("cockpit, admin")).toBeTruthy();
+      expect(container.textContent).toContain("abc-123");
+    });
+
+    it("shows a dash where the engine reported nothing", () => {
+      mockParams = { page_id: "system" };
+      signal_response(state.api.engine.telemetry, {
         product: { name: "Operaton" },
       });
       const { container } = renderPage(state);
-      const pre = container.querySelector("pre");
-      expect(pre).toBeTruthy();
-      expect(pre.textContent).toContain("abc-123");
-      expect(pre.textContent).toContain("Operaton");
+      expect(container.querySelectorAll("td")[1].textContent).toBe("—");
+    });
+
+    it("keeps the raw data reachable", () => {
+      mockParams = { page_id: "system" };
+      signal_response(state.api.engine.telemetry, { installation: "abc-123" });
+      const { container } = renderPage(state);
+      const raw = container.querySelector("details pre");
+      expect(raw.textContent).toContain("abc-123");
     });
   });
 });

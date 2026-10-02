@@ -37,7 +37,11 @@ describe("config", () => {
     });
 
     it("passes through an already authenticated user", async () => {
-      serve({ authMode: "oauth2", oauth: { flow: "session", login: "/x" }, user: { id: "demo" } });
+      serve({
+        authMode: "oauth2",
+        oauth: { flow: "session", login: "/x" },
+        user: { id: "demo" },
+      });
       expect((await load_config()).user).toEqual({ id: "demo" });
     });
 

@@ -15,6 +15,7 @@ import { GET } from "../../../api/helper.jsx";
 import { RequestState } from "../../../api/engine_rest.jsx";
 import { PLUGIN_POINTS } from "../../points.js";
 import { use_plugin_api } from "../../plugin_api.jsx";
+import { latest_release, is_outdated } from "./update_check.js";
 import "./metrics.css";
 
 const PLUGIN_ID = "metrics";
@@ -109,6 +110,8 @@ const make_signals = () => ({
   definition_stats: signal(null),
   failed_jobs: signal(null),
   top_tasks: signal(null),
+  // Not an engine call, so no RequestState wrapper: null means "nothing to show".
+  latest_release: signal(null),
 });
 
 const MetricValue = ({ signal: signl, format = (v) => v }) => (
@@ -117,6 +120,32 @@ const MetricValue = ({ signal: signl, format = (v) => v }) => (
     on_success={() => <p class="metric-value">{format(signl.value.data)}</p>}
   />
 );
+
+// Rendered next to the engine version once both versions are known. Stays empty
+// while the check is disabled, still running or failed.
+//
+// The live region is always in the DOM, even while empty: a `role="status"` that
+// only appears together with its text is announced unreliably, because screen
+// readers watch existing regions for changes rather than new ones for content.
+const UpdateBadge = ({ signals }) => {
+  const [t] = useTranslation();
+  const current = signals.version.value?.data?.version;
+  const latest = signals.latest_release.value;
+  const known = current && latest;
+
+  return (
+    <div class="update-badge" role="status">
+      {known &&
+        (is_outdated(current, latest) ? (
+          <p class="is-outdated">
+            {t("plugins.metrics.update-available", { version: latest })}
+          </p>
+        ) : (
+          <p class="is-current">{t("plugins.metrics.up-to-date")}</p>
+        ))}
+    </div>
+  );
+};
 
 // Two-segment SVG donut. The circle's circumference is normalised to 100
 // (r = 100 / 2π) so dash lengths are read straight as percentages. Segments are
@@ -343,6 +372,12 @@ const MetricsPage = () => {
     metrics.definition_stats(state);
     metrics.failed_jobs(state);
     metrics.top_tasks(state);
+
+    const controller = new AbortController();
+    latest_release(controller.signal).then((tag) => {
+      signals.latest_release.value = tag;
+    });
+    return () => controller.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -353,6 +388,7 @@ const MetricsPage = () => {
         <article>
           <h2>{t("plugins.metrics.version")}</h2>
           <MetricValue signal={signals.version} format={(d) => d.version} />
+          <UpdateBadge signals={signals} />
         </article>
         <article>
           <h2>{t("plugins.metrics.process-starts")}</h2>
@@ -450,6 +486,8 @@ const translations = {
         nav: "Metrics",
         title: "Engine Metrics",
         version: "Engine version",
+        "update-available": "Update available: {{version}}",
+        "up-to-date": "Up to date",
         "process-starts": "Process starts (12 mo)",
         "flow-nodes": "Flow nodes executed (12 mo)",
         "failed-jobs": "Failed jobs",
@@ -471,6 +509,8 @@ const translations = {
         nav: "Kennzahlen",
         title: "Engine-Kennzahlen",
         version: "Engine-Version",
+        "update-available": "Update verfügbar: {{version}}",
+        "up-to-date": "Version ist aktuell",
         "process-starts": "Prozessstarts (12 Mon.)",
         "flow-nodes": "Ausgeführte Flow-Knoten (12 Mon.)",
         "failed-jobs": "Fehlgeschlagene Jobs",

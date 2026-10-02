@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 
@@ -149,15 +149,9 @@ public class ProcessInstanceSnapshot {
 
   public List<EventSubscription> getEventSubscriptionsForActivityIdAndEventName(String activityId, String eventName) {
 
-    List<EventSubscription> collectedEventsubscriptions = new ArrayList<>();
-
-    for (EventSubscription eventSubscription : getEventSubscriptions()) {
-      if (activityId.equals(eventSubscription.getActivityId()) && Objects.equals(eventName, eventSubscription.getEventName())) {
-        collectedEventsubscriptions.add(eventSubscription);
-      }
-    }
-
-    return collectedEventsubscriptions;
+    return getEventSubscriptions().stream()
+        .filter(eventSubscription -> activityId.equals(eventSubscription.getActivityId()) && Objects.equals(eventName, eventSubscription.getEventName()))
+        .collect(Collectors.toList());
   }
 
   public void setEventSubscriptions(List<EventSubscription> eventSubscriptions) {
@@ -170,13 +164,9 @@ public class ProcessInstanceSnapshot {
   }
 
   public @Nullable Job getJobForDefinitionId(String jobDefinitionId) {
-    List<Job> collectedJobs = new ArrayList<>();
-
-    for (Job job : getJobs()) {
-      if (jobDefinitionId.equals(job.getJobDefinitionId())) {
-        collectedJobs.add(job);
-      }
-    }
+    List<Job> collectedJobs = getJobs().stream()
+        .filter(job -> jobDefinitionId.equals(job.getJobDefinitionId()))
+        .collect(Collectors.toList());
 
     if (collectedJobs.isEmpty()) {
       return null;
@@ -224,13 +214,9 @@ public class ProcessInstanceSnapshot {
   }
 
   public List<JobDefinition> getJobDefinitionsForActivityIdAndType(String activityId, String jobHandlerType) {
-    List<JobDefinition> collectedDefinitions = new ArrayList<>();
-    for (JobDefinition jobDefinition : getJobDefinitions()) {
-      if (activityId.equals(jobDefinition.getActivityId()) && jobHandlerType.equals(jobDefinition.getJobType())) {
-        collectedDefinitions.add(jobDefinition);
-      }
-    }
-    return collectedDefinitions;
+    return getJobDefinitions().stream()
+        .filter(jobDefinition -> activityId.equals(jobDefinition.getActivityId()) && jobHandlerType.equals(jobDefinition.getJobType()))
+        .collect(Collectors.toList());
   }
 
   public void setJobDefinitions(List<JobDefinition> jobDefinitions) {
@@ -263,13 +249,9 @@ public class ProcessInstanceSnapshot {
   }
 
   protected VariableInstance getSingleVariable(Condition<VariableInstance> condition) {
-    List<VariableInstance> matchingVariables = new ArrayList<>();
-
-    for (VariableInstance variable : variables.values()) {
-      if (condition.matches(variable)) {
-        matchingVariables.add(variable);
-      }
-    }
+    List<VariableInstance> matchingVariables = variables.values().stream()
+        .filter(condition::matches)
+        .collect(Collectors.toList());
 
     if (matchingVariables.size() == 1) {
       return  matchingVariables.get(0);

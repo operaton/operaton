@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.dto.migration;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.migration.MigratingTransitionInstanceValidationReport;
 
@@ -61,11 +61,9 @@ public class MigratingTransitionInstanceValidationReportDto {
   }
 
   public static List<MigratingTransitionInstanceValidationReportDto> from(List<MigratingTransitionInstanceValidationReport> reports) {
-    ArrayList<MigratingTransitionInstanceValidationReportDto> dtos = new ArrayList<>();
-    for (MigratingTransitionInstanceValidationReport report : reports) {
-      dtos.add(MigratingTransitionInstanceValidationReportDto.from(report));
-    }
-    return dtos;
+    return reports.stream()
+        .map(MigratingTransitionInstanceValidationReportDto::from)
+        .collect(Collectors.toList());
   }
 
   public static MigratingTransitionInstanceValidationReportDto from(MigratingTransitionInstanceValidationReport report) {

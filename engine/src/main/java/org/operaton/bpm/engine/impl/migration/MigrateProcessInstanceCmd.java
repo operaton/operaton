@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 
@@ -198,18 +199,12 @@ public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements C
   }
 
   protected Set<MigratingScopeInstance> collectLeafInstances(MigratingProcessInstance migratingProcessInstance) {
-    Set<MigratingScopeInstance> leafInstances = new HashSet<>();
-
     Collection<MigratingScopeInstance> migratingScopeInstances =
         migratingProcessInstance.getMigratingScopeInstances();
 
-    for (MigratingScopeInstance migratingScopeInstance : migratingScopeInstances) {
-      if (migratingScopeInstance.getChildScopeInstances().isEmpty()) {
-        leafInstances.add(migratingScopeInstance);
-      }
-    }
-
-    return leafInstances;
+    return migratingScopeInstances.stream()
+        .filter(migratingScopeInstance -> migratingScopeInstance.getChildScopeInstances().isEmpty())
+        .collect(Collectors.toSet());
   }
 
   protected void validateInstructions(CommandContext commandContext,

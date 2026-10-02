@@ -19,9 +19,9 @@ package org.operaton.bpm.engine.rest.sub.task.impl;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
@@ -62,12 +62,9 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
 
     List<Attachment> taskAttachments = engine.getTaskService().getTaskAttachments(taskId);
 
-    List<AttachmentDto> attachments = new ArrayList<>();
-    for (Attachment attachment : taskAttachments) {
-      attachments.add(AttachmentDto.fromAttachment(attachment));
-    }
-
-    return attachments;
+    return taskAttachments.stream()
+        .map(AttachmentDto::fromAttachment)
+        .collect(Collectors.toList());
   }
 
   @Override

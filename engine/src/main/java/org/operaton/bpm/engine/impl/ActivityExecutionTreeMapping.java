@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -136,15 +137,9 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected List<ExecutionEntity> findLeaves(List<ExecutionEntity> executions) {
-    List<ExecutionEntity> leaves = new ArrayList<>();
-
-    for (ExecutionEntity execution : executions) {
-      if (isLeaf(execution)) {
-        leaves.add(execution);
-      }
-    }
-
-    return leaves;
+    return executions.stream()
+        .filter(this::isLeaf)
+        .collect(Collectors.toList());
   }
 
   /**

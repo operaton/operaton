@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.sub.task.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
@@ -72,11 +72,9 @@ public class TaskReportResourceImpl implements TaskReportResource {
 
   protected List<TaskCountByCandidateGroupResultDto> getTaskCountByCandidateGroupResultAsJson() {
     List<TaskCountByCandidateGroupResult> reports = queryTaskCountByCandidateGroupReport();
-    List<TaskCountByCandidateGroupResultDto> result = new ArrayList<>();
-    for (TaskCountByCandidateGroupResult report : reports) {
-      result.add(TaskCountByCandidateGroupResultDto.fromTaskCountByCandidateGroupResultDto(report));
-    }
-    return result;
+    return reports.stream()
+        .map(TaskCountByCandidateGroupResultDto::fromTaskCountByCandidateGroupResultDto)
+        .collect(Collectors.toList());
   }
 
   protected String getReportResultAsCsv() {

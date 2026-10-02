@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.core.Response.Status;
@@ -360,11 +361,9 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   protected List<Object> convertToDtoList(List<?> entities) {
-    List<Object> dtoList = new ArrayList<>();
-    for (Object entity : entities) {
-      dtoList.add(convertToDto(entity));
-    }
-    return dtoList;
+    return entities.stream()
+      .map(this::convertToDto)
+      .collect(Collectors.toList());
   }
 
   protected HalResource<?> convertToHalResource(Object entity) {
@@ -483,11 +482,9 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
 
   private List<String> collectVariableNames(List<Map<String, Object>> variables) {
     if (variables != null && !variables.isEmpty()) {
-      List<String> variableNames = new ArrayList<>();
-      for (Map<String, Object> variable : variables) {
-        variableNames.add((String) variable.get(PROPERTIES_VARIABLES_NAME_KEY));
-      }
-      return variableNames;
+      return variables.stream()
+        .map(variable -> (String) variable.get(PROPERTIES_VARIABLES_NAME_KEY))
+        .collect(Collectors.toList());
     }
     else {
       return emptyList();

@@ -17,9 +17,9 @@
 package org.operaton.bpm.engine.impl.dmn.deployer;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
@@ -114,12 +114,9 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
   @Override
   protected void ensureNoDuplicateDefinitionKeys(List<DecisionRequirementsDefinitionEntity> definitions) {
     // ignore decision requirements definitions which will not be persistent
-    ArrayList<DecisionRequirementsDefinitionEntity> persistableDefinitions = new ArrayList<>();
-    for (DecisionRequirementsDefinitionEntity definition : definitions) {
-      if (isDecisionRequirementsDefinitionPersistable(definition)) {
-        persistableDefinitions.add(definition);
-      }
-    }
+    List<DecisionRequirementsDefinitionEntity> persistableDefinitions = definitions.stream()
+        .filter(DecisionRequirementsDefinitionDeployer::isDecisionRequirementsDefinitionPersistable)
+        .collect(Collectors.toList());
 
     super.ensureNoDuplicateDefinitionKeys(persistableDefinitions);
   }

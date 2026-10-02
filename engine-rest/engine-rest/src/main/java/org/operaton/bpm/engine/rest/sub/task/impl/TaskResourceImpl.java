@@ -18,10 +18,10 @@ package org.operaton.bpm.engine.rest.sub.task.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
@@ -308,14 +308,10 @@ public class TaskResourceImpl implements TaskResource {
     TaskService taskService = engine.getTaskService();
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(taskId);
 
-    List<IdentityLinkDto> result = new ArrayList<>();
-    for (IdentityLink link : identityLinks) {
-      if (type == null || type.equals(link.getType())) {
-        result.add(IdentityLinkDto.fromIdentityLink(link));
-      }
-    }
-
-    return result;
+    return identityLinks.stream()
+        .filter(link -> type == null || type.equals(link.getType()))
+        .map(IdentityLinkDto::fromIdentityLink)
+        .collect(Collectors.toList());
   }
 
   @Override

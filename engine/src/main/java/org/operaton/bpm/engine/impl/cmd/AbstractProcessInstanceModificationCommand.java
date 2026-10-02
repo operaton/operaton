@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -181,12 +182,9 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     }
 
     // find the scope execution for the given activity instance
-    Set<ExecutionEntity> retainedExecutionsForInstance = new HashSet<>();
-    for (ExecutionEntity execution : executions) {
-      if (activityInstanceExecutions.contains(execution.getId())) {
-        retainedExecutionsForInstance.add(execution);
-      }
-    }
+    Set<ExecutionEntity> retainedExecutionsForInstance = executions.stream()
+        .filter(execution -> activityInstanceExecutions.contains(execution.getId()))
+        .collect(Collectors.toSet());
 
     if (retainedExecutionsForInstance.size() != 1) {
       throw new ProcessEngineException("There are %s (!= 1) executions for activity instance %s".formatted(retainedExecutionsForInstance.size(), activityInstance.getId()));

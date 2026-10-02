@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.bpmn.helper;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 
@@ -208,13 +209,9 @@ public final class CompensationUtil {
     final List<EventSubscriptionEntity> eventSubscriptions = collectCompensateEventSubscriptionsForScope(execution);
     final String subscriptionActivityId = getSubscriptionActivityId(execution, activityRef);
 
-    List<EventSubscriptionEntity> eventSubscriptionsForActivity = new ArrayList<>();
-    for (EventSubscriptionEntity subscription : eventSubscriptions) {
-      if (subscriptionActivityId.equals(subscription.getActivityId())) {
-        eventSubscriptionsForActivity.add(subscription);
-      }
-    }
-    return eventSubscriptionsForActivity;
+    return eventSubscriptions.stream()
+        .filter(subscription -> subscriptionActivityId.equals(subscription.getActivityId()))
+        .collect(Collectors.toList());
   }
 
   public static @Nullable ExecutionEntity getCompensatingExecution(EventSubscriptionEntity eventSubscription) {

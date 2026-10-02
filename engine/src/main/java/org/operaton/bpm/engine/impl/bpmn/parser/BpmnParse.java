@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ActivityTypes;
@@ -2052,10 +2053,9 @@ public @NullMarked class BpmnParse extends Parse {
 
   public @Nullable String parseDocumentation(Element element) {
     List<Element> docElements = element.elements(PROPERTYNAME_DOCUMENTATION);
-    List<String> docStrings = new ArrayList<>();
-    for (Element e : docElements) {
-      docStrings.add(e.getText());
-    }
+    List<String> docStrings = docElements.stream()
+        .map(Element::getText)
+        .collect(Collectors.toList());
 
     return parseDocumentation(docStrings);
   }

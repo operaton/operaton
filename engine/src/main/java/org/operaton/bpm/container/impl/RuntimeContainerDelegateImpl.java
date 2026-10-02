@@ -19,6 +19,7 @@ package org.operaton.bpm.container.impl;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.management.MBeanServer;
 
 import org.jspecify.annotations.NullMarked;
@@ -176,12 +177,9 @@ public @NullMarked class RuntimeContainerDelegateImpl implements RuntimeContaine
 
   @Override
   public Set<String> getProcessEngineNames() {
-    Set<String> processEngineNames = new HashSet<>();
-    List<ProcessEngine> processEngines = getProcessEngines();
-    for (ProcessEngine processEngine : processEngines) {
-      processEngineNames.add(processEngine.getName());
-    }
-    return processEngineNames;
+    return getProcessEngines().stream()
+        .map(ProcessEngine::getName)
+        .collect(Collectors.toSet());
   }
 
   // process application service implementation /////////////////////////////////
@@ -189,11 +187,9 @@ public @NullMarked class RuntimeContainerDelegateImpl implements RuntimeContaine
   @Override
   public Set<String> getProcessApplicationNames() {
     List<JmxManagedProcessApplication> processApplications = serviceContainer.getServiceValuesByType(ServiceTypes.PROCESS_APPLICATION);
-    Set<String> processApplicationNames = new HashSet<>();
-    for (JmxManagedProcessApplication jmxManagedProcessApplication : processApplications) {
-      processApplicationNames.add(jmxManagedProcessApplication.getProcessApplicationName());
-    }
-    return processApplicationNames;
+    return processApplications.stream()
+        .map(JmxManagedProcessApplication::getProcessApplicationName)
+        .collect(Collectors.toSet());
   }
 
   @Override

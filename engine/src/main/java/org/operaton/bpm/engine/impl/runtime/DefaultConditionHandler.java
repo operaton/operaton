@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.runtime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
@@ -105,13 +106,10 @@ public class DefaultConditionHandler implements ConditionHandler {
   }
 
   protected List<ActivityImpl> findConditionalStartEventActivities(ProcessDefinitionEntity processDefinition) {
-    List<ActivityImpl> activities = new ArrayList<>();
-    for (EventSubscriptionDeclaration declaration : EventSubscriptionDeclaration.getDeclarationsForScope(processDefinition).values()) {
-      if (isConditionStartEvent(declaration)) {
-        activities.add(((ConditionalEventDefinition) declaration).getConditionalActivity());
-      }
-    }
-    return activities;
+    return EventSubscriptionDeclaration.getDeclarationsForScope(processDefinition).values().stream()
+        .filter(this::isConditionStartEvent)
+        .map(declaration -> ((ConditionalEventDefinition) declaration).getConditionalActivity())
+        .collect(Collectors.toList());
   }
 
   protected boolean isConditionStartEvent(EventSubscriptionDeclaration declaration) {

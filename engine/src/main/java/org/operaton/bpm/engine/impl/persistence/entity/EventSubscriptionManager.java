@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.EventSubscriptionQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -249,13 +250,9 @@ public class EventSubscriptionManager extends AbstractManager {
     ExecutionEntity cachedExecution = getDbEntityManager().getCachedEntity(ExecutionEntity.class, executionId);
     if(cachedExecution != null && !lockResult) {
       List<EventSubscriptionEntity> eventSubscriptions = cachedExecution.getEventSubscriptions();
-      List<EventSubscriptionEntity> result = new ArrayList<>();
-      for (EventSubscriptionEntity subscription : eventSubscriptions) {
-        if(matchesSubscription(subscription, type, eventName)) {
-          result.add(subscription);
-        }
-      }
-      return result;
+      return eventSubscriptions.stream()
+          .filter(subscription -> matchesSubscription(subscription, type, eventName))
+          .collect(Collectors.toList());
     }
     else {
       final String query = "selectEventSubscriptionsByNameAndExecution";

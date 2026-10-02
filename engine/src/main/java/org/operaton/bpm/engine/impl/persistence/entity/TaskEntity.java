@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 
@@ -783,13 +784,9 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   @Override
   public Set<IdentityLink> getCandidates() {
-    Set<IdentityLink> potentialOwners = new HashSet<>();
-    for (IdentityLinkEntity identityLinkEntity : getIdentityLinks()) {
-      if (IdentityLinkType.CANDIDATE.equals(identityLinkEntity.getType())) {
-        potentialOwners.add(identityLinkEntity);
-      }
-    }
-    return potentialOwners;
+    return getIdentityLinks().stream()
+        .filter(identityLinkEntity -> IdentityLinkType.CANDIDATE.equals(identityLinkEntity.getType()))
+        .collect(Collectors.toSet());
   }
 
   @Override

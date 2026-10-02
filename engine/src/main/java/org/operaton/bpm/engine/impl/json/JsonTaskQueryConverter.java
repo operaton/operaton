@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.json;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -453,11 +453,9 @@ public @NullMarked class JsonTaskQueryConverter implements JsonObjectConverter<T
   }
 
   protected static List<String> getList(JsonArray array) {
-    List<String> list = new ArrayList<>();
-    for (JsonElement entry : array) {
-      list.add(JsonUtil.getString(entry));
-    }
-    return list;
+    return array.asList().stream()
+        .map(JsonUtil::getString)
+        .collect(Collectors.toList());
   }
 
   protected static void addVariables(TaskQueryImpl query, JsonArray variables, boolean isTaskVariable, boolean isProcessVariable) {

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.migration.instance.parser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
@@ -150,15 +151,9 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
   }
 
   public static List<VariableInstanceEntity> getConcurrentLocalVariables(ExecutionEntity execution) {
-    List<VariableInstanceEntity> variables = new ArrayList<>();
-
-    for (VariableInstanceEntity variable : execution.getVariablesInternal()) {
-      if (variable.isConcurrentLocal()) {
-        variables.add(variable);
-      }
-    }
-
-    return variables;
+    return execution.getVariablesInternal().stream()
+        .filter(VariableInstanceEntity::isConcurrentLocal)
+        .collect(Collectors.toList());
   }
 
 

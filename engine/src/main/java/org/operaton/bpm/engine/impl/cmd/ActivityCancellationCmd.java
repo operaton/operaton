@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -82,14 +83,11 @@ public @NullMarked class ActivityCancellationCmd extends AbstractProcessInstance
       return Collections.emptyList();
     }
 
-    List<TransitionInstance> instances = new ArrayList<>();
     TransitionInstance[] transitionInstances = tree.getChildTransitionInstances();
 
-    for (TransitionInstance transitionInstance : transitionInstances) {
-      if (activityId.equals(transitionInstance.getActivityId())) {
-        instances.add(transitionInstance);
-      }
-    }
+    List<TransitionInstance> instances = Arrays.stream(transitionInstances)
+        .filter(transitionInstance -> activityId.equals(transitionInstance.getActivityId()))
+        .collect(Collectors.toCollection(ArrayList::new));
 
     for (ActivityInstance child : tree.getChildActivityInstances()) {
       instances.addAll(getTransitionInstancesForActivity(child, parentScopeIds));
@@ -135,21 +133,19 @@ public @NullMarked class ActivityCancellationCmd extends AbstractProcessInstance
   }
 
   public List<AbstractInstanceCancellationCmd> createActivityInstanceCancellations(ActivityInstance activityInstanceTree, CommandContext commandContext) {
-    List<AbstractInstanceCancellationCmd> commands = new ArrayList<>();
-
     ExecutionEntity processInstance = requireNonNull(commandContext.getExecutionManager().findExecutionById(processInstanceId));
     ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();
     Set<String> parentScopeIds = collectParentScopeIdsForActivity(processDefinition, activityId);
 
     List<ActivityInstance> childrenForActivity = getActivityInstancesForActivity(activityInstanceTree, parentScopeIds);
-    for (ActivityInstance instance : childrenForActivity) {
-      commands.add(new ActivityInstanceCancellationCmd(processInstanceId, instance.getId()));
-    }
+    List<AbstractInstanceCancellationCmd> commands = childrenForActivity.stream()
+        .map(instance -> new ActivityInstanceCancellationCmd(processInstanceId, instance.getId()))
+        .collect(Collectors.toCollection(ArrayList::new));
 
     List<TransitionInstance> transitionInstancesForActivity = getTransitionInstancesForActivity(activityInstanceTree, parentScopeIds);
-    for (TransitionInstance instance : transitionInstancesForActivity) {
-      commands.add(new TransitionInstanceCancellationCmd(processInstanceId, instance.getId()));
-    }
+    transitionInstancesForActivity.stream()
+        .map(instance -> new TransitionInstanceCancellationCmd(processInstanceId, instance.getId()))
+        .forEach(commands::add);
     return commands;
 
   }

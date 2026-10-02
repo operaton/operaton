@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.AuthorizationException;
 
@@ -216,14 +217,12 @@ public class AuthorizationManager extends AbstractManager {
       boolean isAuthorized = isAuthorized(compositePermissionCheck);
       if (!isAuthorized) {
 
-        List<MissingAuthorization> missingAuthorizations = new ArrayList<>();
-
-        for (PermissionCheck check: compositePermissionCheck.getAllPermissionChecks()) {
-          missingAuthorizations.add(new MissingAuthorization(
-              check.getPermission().getName(),
-              check.getResource().resourceName(),
-              check.getResourceId()));
-        }
+        List<MissingAuthorization> missingAuthorizations = compositePermissionCheck.getAllPermissionChecks().stream()
+            .map(check -> new MissingAuthorization(
+                check.getPermission().getName(),
+                check.getResource().resourceName(),
+                check.getResourceId()))
+            .collect(Collectors.toList());
 
         throw new AuthorizationException(userId, missingAuthorizations);
       }

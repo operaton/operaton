@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 
@@ -1553,25 +1554,17 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   public List<EventSubscriptionEntity> getCompensateEventSubscriptions() {
     List<EventSubscriptionEntity> subscriptions = getEventSubscriptionsInternal();
-    List<EventSubscriptionEntity> result = new ArrayList<>(subscriptions.size());
-    for (EventSubscriptionEntity eventSubscriptionEntity : subscriptions) {
-      if (eventSubscriptionEntity.isSubscriptionForEventType(EventType.COMPENSATE)) {
-        result.add(eventSubscriptionEntity);
-      }
-    }
-    return result;
+    return subscriptions.stream()
+        .filter(eventSubscriptionEntity -> eventSubscriptionEntity.isSubscriptionForEventType(EventType.COMPENSATE))
+        .collect(Collectors.toList());
   }
 
   public List<EventSubscriptionEntity> getCompensateEventSubscriptions(String activityId) {
     List<EventSubscriptionEntity> subscriptions = getEventSubscriptionsInternal();
-    List<EventSubscriptionEntity> result = new ArrayList<>(subscriptions.size());
-    for (EventSubscriptionEntity eventSubscriptionEntity : subscriptions) {
-      if (eventSubscriptionEntity.isSubscriptionForEventType(EventType.COMPENSATE)
-          && activityId.equals(eventSubscriptionEntity.getActivityId())) {
-        result.add(eventSubscriptionEntity);
-      }
-    }
-    return result;
+    return subscriptions.stream()
+        .filter(eventSubscriptionEntity -> eventSubscriptionEntity.isSubscriptionForEventType(EventType.COMPENSATE)
+            && activityId.equals(eventSubscriptionEntity.getActivityId()))
+        .collect(Collectors.toList());
   }
 
   protected void ensureEventSubscriptionsInitialized() {

@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -404,13 +405,9 @@ public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions>
   // getters
 
   protected List<String> getMissingElements(Set<String> expected, Map<String, ?> actual) {
-    List<String> missingElements = new ArrayList<>();
-    for (String value : expected) {
-      if (!actual.containsKey(value)) {
-        missingElements.add(value);
-      }
-    }
-    return missingElements;
+    return expected.stream()
+        .filter(value -> !actual.containsKey(value))
+        .collect(Collectors.toList());
   }
 
   protected List<ResourceEntity> getResources(final DeploymentBuilderImpl deploymentBuilder, final CommandContext commandContext) {

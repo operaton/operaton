@@ -451,10 +451,7 @@ class TaskDecoratorTest {
 
   }
 
-  /** @deprecated Unused internal API */
-  @Deprecated(forRemoval = true, since = "2.2")
-  @SuppressWarnings("java:S1133")
-  protected class DeleteTaskCommand implements Command<Void> {
+  protected static class DeleteTaskCommand implements Command<Void> {
 
     protected TaskEntity task;
 

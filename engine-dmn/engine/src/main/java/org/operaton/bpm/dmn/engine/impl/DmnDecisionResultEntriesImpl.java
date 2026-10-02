@@ -200,7 +200,7 @@ public @NullMarked class DmnDecisionResultEntriesImpl implements DmnDecisionResu
     return entrySet;
   }
 
-  static class DmnDecisionRuleOutputEntry implements Entry<String, Object> {
+  protected static class DmnDecisionRuleOutputEntry implements Entry<String, Object> {
 
     protected final String key;
     protected final @Nullable TypedValue typedValue;

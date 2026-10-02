@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.xml.impl.type;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.xml.Model;
@@ -253,11 +254,9 @@ public @NullMarked class ModelElementTypeImpl implements ModelElementType {
 
     List<DomElement> elements = getElementsByNameNs(document, typeNamespace);
 
-    List<ModelElementInstance> resultList = new ArrayList<>();
-    for (DomElement element : elements) {
-      resultList.add(ModelUtil.getModelElement(element, modelInstanceImpl, this));
-    }
-    return resultList;
+    return elements.stream()
+      .map(element -> ModelUtil.getModelElement(element, modelInstanceImpl, this))
+      .collect(Collectors.toCollection(ArrayList::new));
   }
 
   protected List<DomElement> getElementsByNameNs(DomDocument document, @Nullable String namespaceURI) {

@@ -24,7 +24,6 @@
     <version.sourcecode>0.4.4</version.sourcecode>
     <version.paranamer>2.8.3</version.paranamer>
     <version.quarkus>3.40.1.1</version.quarkus>
-    <version.java>17</version.java>
     <version.spring>7.0.10</version.spring>
     <version.spring-boot>4.1.2</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
@@ -717,7 +716,7 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-      <modules>        
+      <modules>
         <module>distro/webjar-neo</module>
       </modules>
     </profile>

@@ -507,9 +507,13 @@
 
       <dependency>
         <groupId>com.konghq</groupId>
-        <artifactId>unirest-java</artifactId>
+        <artifactId>unirest-java-core</artifactId>
         <version>${version.unirest-java}</version>
-        <classifier>standalone</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.konghq</groupId>
+        <artifactId>unirest-modules-gson</artifactId>
+        <version>${version.unirest-java}</version>
       </dependency>
 
       <!-- scripting -->

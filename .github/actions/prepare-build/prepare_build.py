@@ -9,8 +9,10 @@ Outputs (GITHUB_OUTPUT key=value lines):
 Principle: in doubt, execute more. Every uncertain case degrades to a full build.
 """
 import argparse
+import functools
 import json
 import os
+import re
 import subprocess
 import sys
 import urllib.error
@@ -40,6 +42,32 @@ ENGINE_TEST_EXCLUDES = "org/operaton/bpm/engine"
 
 DOCS_BASENAMES = ("LICENSE", "NOTICE", "CONTRIBUTORS")
 
+# Files that cannot change what the PR build compiles or tests. They are
+# dropped before classification, so e.g. an AGENTS.md edit next to an engine
+# fix no longer escalates the PR to a full build.
+NON_BUILD_PATTERNS = tuple(re.compile(p) for p in (
+    r"(?!.*/src/).*\.md",             # docs, except packaged resources
+    r"\.claude/.*",
+    r"\.devcontainer/.*",
+    r"\.sonarlint/.*",
+    r"docs/.*",
+    r"\.gitignore",
+    r"jreleaser\.yml",
+    r"\.github/workflows/(?!pr-build\.yml$).*",
+    r"\.github/(zizmor\.yml|dependabot\.yml|auto-merge\.config\.yml)",
+    r"\.github/(labels|ISSUE_TEMPLATE|PULL_REQUEST_TEMPLATE|jreleaser)/.*",
+    r"\.devenv/scripts/(maintenance|release|smoketest|tools)/.*",
+))
+
+# Matches one added or removed `<name>value</name>` line of a unified diff.
+PROPERTY_LINE = re.compile(r"^[+-]\s*<([\w.-]+)>[^<]*</\1>\s*$")
+
+# Text files scanned for property references (resource filtering).
+PROPERTY_SCAN_SKIP_DIRS = {".git", "node_modules", "target", ".idea"}
+# This script and its tests mention property names as sample data.
+PROPERTY_SCAN_SKIP_PREFIXES = (".github/actions/prepare-build/",)
+PROPERTY_SCAN_MAX_BYTES = 1_000_000
+
 SKIP_DIRS = {".git", "node_modules", "target", "src", ".idea"}
 
 Classification = namedtuple("Classification", "full_build docs_only changed_modules")
@@ -47,7 +75,13 @@ Classification = namedtuple("Classification", "full_build docs_only changed_modu
 
 def get_changed_files(token, repo, pr_number):
     """Fetch all changed file paths for a PR via GitHub REST API (paginated)."""
-    files = []
+    return list(get_changed_files_with_patches(token, repo, pr_number))
+
+
+def get_changed_files_with_patches(token, repo, pr_number):
+    """{path: unified diff patch or None} for a PR. GitHub omits the patch
+    for large diffs; callers must treat None as "unknown change"."""
+    files = {}
     page = 1
     while True:
         url = (
@@ -58,10 +92,10 @@ def get_changed_files(token, repo, pr_number):
             data = _github_api(token, url)
         except Exception as exc:
             print(f"Warning: error fetching changed files: {exc}", file=sys.stderr)
-            return []
+            return {}
         if not data:
             break
-        files.extend(f["filename"] for f in data)
+        files.update((f["filename"], f.get("patch")) for f in data)
         if len(data) < 100:
             break
         page += 1
@@ -95,6 +129,23 @@ def get_changed_files_from_git(ref, repo_root):
     diff = git("diff", "--name-only", base).split()
     untracked = git("ls-files", "--others", "--exclude-standard").split()
     return sorted(set(diff) | set(untracked))
+
+
+def get_patches_from_git(ref, repo_root, files):
+    """{pom path: patch} vs merge-base(ref, HEAD), for property-change analysis."""
+    base = subprocess.run(["git", "merge-base", ref, "HEAD"], cwd=repo_root,
+                          capture_output=True, text=True, check=True).stdout.strip()
+    patches = {}
+    for f in files:
+        if f.rsplit("/", 1)[-1] == "pom.xml":
+            patches[f] = subprocess.run(["git", "diff", base, "--", f], cwd=repo_root,
+                                        capture_output=True, text=True).stdout
+    return patches
+
+
+def is_non_build_file(path):
+    """True if the file cannot affect the PR build's outputs or tests."""
+    return any(p.fullmatch(path) for p in NON_BUILD_PATTERNS)
 
 
 def check_skip_tests(actor, head_ref):
@@ -170,21 +221,207 @@ def map_file_to_module(path, module_dirs):
     return None
 
 
-def classify_changes(changed_files, module_dirs):
-    """Decide between docs-only, narrowed module build, and full build."""
+def _parse_pom(root, module):
+    try:
+        return ET.parse(Path(root) / module / "pom.xml").getroot()
+    except (ET.ParseError, OSError):
+        return None
+
+
+def is_leaf_module(root, module):
+    """True for a module that aggregates no sub-modules, in any profile."""
+    proj = _parse_pom(root, module)
+    return proj is not None and not proj.findall(".//{*}modules")
+
+
+def changed_properties(patch):
+    """Names of the properties whose value a pom patch changes, or None when
+    the patch changes anything else (or is unknown)."""
+    if not patch:
+        return None
+    added, removed = set(), set()
+    for line in patch.splitlines():
+        if not line or line[0] not in "+-" or line.startswith(("+++", "---")):
+            continue
+        if not line[1:].strip():
+            continue
+        m = PROPERTY_LINE.match(line)
+        if not m:
+            return None
+        (added if line[0] == "+" else removed).add(m.group(1))
+    if not added or added != removed:
+        return None
+    return added
+
+
+def _list_files(root):
+    """Tracked files (relative paths); falls back to a directory walk."""
+    try:
+        out = subprocess.run(["git", "ls-files", "-z"], cwd=root,
+                             capture_output=True, text=True, check=True).stdout
+        return [f for f in out.split("\0") if f]
+    except (OSError, subprocess.CalledProcessError):
+        files = []
+        for dirpath, dirnames, filenames in os.walk(root):
+            dirnames[:] = [d for d in dirnames if d not in PROPERTY_SCAN_SKIP_DIRS]
+            files += [(Path(dirpath) / n).relative_to(root).as_posix() for n in filenames]
+        return files
+
+
+@functools.lru_cache(maxsize=4)
+def _text_files(root):
+    """[(path, text)] of the repo's text files, read once per root."""
+    result = []
+    for rel in _list_files(root):
+        path = Path(root) / rel
+        try:
+            if path.stat().st_size > PROPERTY_SCAN_MAX_BYTES:
+                continue
+            result.append((rel, path.read_text(encoding="utf-8")))
+        except (OSError, UnicodeDecodeError):
+            continue
+    return tuple(result)
+
+
+def _plugin_users(root, module_dirs, artifact_id):
+    """Modules that bind the plugin (build/plugins, not pluginManagement)."""
+    users = set()
+    for module in module_dirs:
+        proj = _parse_pom(root, module)
+        if proj is None:
+            continue
+        bound = proj.findall("{*}build/{*}plugins/{*}plugin") + proj.findall(
+            "{*}profiles/{*}profile/{*}build/{*}plugins/{*}plugin")
+        for plugin in bound:
+            aid = plugin.find("{*}artifactId")
+            if aid is not None and aid.text == artifact_id:
+                users.add(module)
+    return users
+
+
+def _pom_usages(root, module, prop):
+    """[(in_plugin_management, plugin artifactId or None)] for each element
+    of module's pom that references ${prop}."""
+    proj = _parse_pom(root, module)
+    if proj is None:
+        return None
+    parents = {child: parent for parent in proj.iter() for child in parent}
+    ref = "${" + prop + "}"
+    usages = []
+    for el in proj.iter():
+        if ref not in (el.text or ""):
+            continue
+        parent = parents.get(el)
+        if parent is not None and parent.tag.rsplit("}", 1)[-1] == "properties":
+            continue  # defines another property; followed by the caller
+        plugin, in_mgmt, node = None, False, el
+        while node is not None:
+            tag = node.tag.rsplit("}", 1)[-1]
+            if tag == "plugin" and plugin is None:
+                aid = node.find("{*}artifactId")
+                plugin = aid.text if aid is not None else ""
+            if tag == "pluginManagement":
+                in_mgmt = True
+            node = parents.get(node)
+        usages.append((in_mgmt, plugin))
+    return usages
+
+
+def modules_affected_by_properties(root, props, module_dirs):
+    """Modules whose build a value change of props can affect, or None when
+    that cannot be narrowed down safely.
+
+    A property referenced in a pom affects that module (and, via -amd, its
+    children and dependents). A property referenced only in a pluginManagement
+    plugin configuration affects the modules that bind that plugin. A
+    reference in any other file (resource filtering) affects the module that
+    contains it."""
+    pom_modules = set(module_dirs) | {""}
+    files = _text_files(str(root))
+    affected = set()
+    todo, seen = list(props), set()
+    while todo:
+        prop = todo.pop()
+        if prop in seen:
+            continue
+        seen.add(prop)
+        refs = ("${" + prop + "}", "@" + prop + "@")
+        for path, text in files:
+            if is_non_build_file(path) or path.startswith(PROPERTY_SCAN_SKIP_PREFIXES) \
+                    or not any(r in text for r in refs):
+                continue
+            module = path.rsplit("/", 1)[0] if "/" in path else ""
+            if path.rsplit("/", 1)[-1] != "pom.xml" or module not in pom_modules:
+                module = map_file_to_module(path, module_dirs)
+                if module is None:
+                    return None
+                affected.add(module)
+                continue
+            # "" is the root pom: a non-plugin usage there affects everything,
+            # which classify_changes turns into a full build
+            usages = _pom_usages(root, module, prop)
+            if usages is None:
+                return None
+            for in_mgmt, plugin in usages:
+                if in_mgmt and plugin:
+                    affected |= _plugin_users(root, module_dirs, plugin)
+                else:
+                    affected.add(module)
+            # a property defined from this one (<a>${prop}</a>) propagates
+            proj = _parse_pom(root, module)
+            for props_el in proj.findall(".//{*}properties"):
+                for p in props_el:
+                    if "${" + prop + "}" in (p.text or ""):
+                        todo.append(p.tag.rsplit("}", 1)[-1])
+    return affected
+
+
+def _classify_pom_change(path, root, module_dirs, patches):
+    """Modules affected by a pom.xml change, or None for a full build."""
+    if root is None:
+        return None
+    module = path.rsplit("/", 1)[0] if "/" in path else ""
+    props = changed_properties((patches or {}).get(path))
+    if props is not None:
+        affected = modules_affected_by_properties(root, props, module_dirs)
+        if affected is not None:
+            return affected
+    # leaf module outside the build-wide prefixes: narrow to the module
+    if module in module_dirs and not path.startswith(FULL_BUILD_PREFIXES) \
+            and is_leaf_module(root, module):
+        return {module}
+    return None
+
+
+def classify_changes(changed_files, module_dirs, root=None, patches=None):
+    """Decide between docs-only, narrowed module build, and full build.
+
+    root enables the pom.xml rules (leaf module poms, property-only version
+    bumps); patches maps changed pom paths to their unified diff."""
     if not changed_files:
         return Classification(full_build=True, docs_only=False, changed_modules=[])
     if check_docs_only(changed_files):
         return Classification(full_build=False, docs_only=True, changed_modules=[])
+    build_files = [f for f in changed_files if not is_non_build_file(f)]
+    if not build_files:
+        return Classification(full_build=False, docs_only=True, changed_modules=[])
     modules = set()
-    for f in changed_files:
+    for f in build_files:
         name = f.rsplit("/", 1)[-1]
-        if name == "pom.xml" or f.startswith(FULL_BUILD_PREFIXES) or "/" not in f:
+        if name == "pom.xml":
+            affected = _classify_pom_change(f, root, module_dirs, patches)
+            if affected is None:
+                return Classification(True, False, [])
+            modules |= affected
+            continue
+        if f.startswith(FULL_BUILD_PREFIXES) or "/" not in f:
             return Classification(True, False, [])
         module = map_file_to_module(f, module_dirs)
         if module is None:
             return Classification(True, False, [])
         modules.add(module)
+    if any(m == "" or (m + "/").startswith(FULL_BUILD_PREFIXES) for m in modules):
+        return Classification(True, False, [])
     return Classification(False, False, sorted(modules))
 
 
@@ -286,6 +523,7 @@ def check_needs_real_frontend(changed_modules, graph):
 
 def check_skip_engine_tests(changed_files, core_api_modules):
     """True if no change can affect engine behavior or engine-packaged tests."""
+    changed_files = [f for f in changed_files if not is_non_build_file(f)]
     if not changed_files:
         return False
     guarded = (tuple(m + "/" for m in core_api_modules) + ENGINE_PACKAGE_TEST_PREFIXES
@@ -301,13 +539,14 @@ def _write_output(key, value, output_file):
         fh.write(f"{key}={value}\n")
 
 
-def decide(changed_files, repo_root):
-    """Full decision from a changed-file list: (skip_tests, skip_engine_tests, changed_modules)."""
+def decide(changed_files, repo_root, patches=None):
+    """Full decision from a changed-file list: (skip_tests, skip_engine_tests, changed_modules).
+    patches ({pom path: unified diff}) enables the property-bump analysis."""
     module_dirs = discover_modules(repo_root)
     if not module_dirs:
         print("Warning: no pom.xml files found — full build.", file=sys.stderr)
         return "false", "false", ""
-    c = classify_changes(changed_files, module_dirs)
+    c = classify_changes(changed_files, module_dirs, repo_root, patches)
     if c.docs_only:
         return "true", "false", ""
     if not c.full_build:
@@ -330,8 +569,9 @@ def analyze_recent(token, repo, count, repo_root):
         page += 1
     shortcuts = 0
     for pr in prs[:count]:
-        files = get_changed_files(token, repo, pr["number"])
-        skip_tests, skip_engine, modules = decide(files, repo_root)
+        patches = get_changed_files_with_patches(token, repo, pr["number"])
+        files = list(patches)
+        skip_tests, skip_engine, modules = decide(files, repo_root, patches)
         if skip_tests == "true":
             verdict = "skip all tests"
         elif modules:
@@ -394,7 +634,8 @@ def main():
         print(f"Changed files vs {args.diff_ref} ({len(changed_files)}): "
               f"{changed_files[:10]}{'...' if len(changed_files) > 10 else ''}",
               file=sys.stderr)
-        skip_tests, skip_engine, modules = decide(changed_files, repo_root)
+        patches = get_patches_from_git(args.diff_ref, repo_root, changed_files)
+        skip_tests, skip_engine, modules = decide(changed_files, repo_root, patches)
         _write_output("skip_tests", skip_tests, output_file)
         _write_output("skip_engine_tests", skip_engine, output_file)
         _write_output("changed_modules", modules, output_file)
@@ -418,15 +659,16 @@ def main():
         if event_path and os.path.exists(event_path):
             with open(event_path) as fh:
                 pr_number = json.load(fh).get("pull_request", {}).get("number")
-        changed_files = []
+        changed_files, patches = [], {}
         if pr_number and token and repo:
-            changed_files = get_changed_files(token, repo, pr_number)
+            patches = get_changed_files_with_patches(token, repo, pr_number)
+            changed_files = list(patches)
             preview = changed_files[:10]
             suffix = "..." if len(changed_files) > 10 else ""
             print(f"Changed files ({len(changed_files)}): {preview}{suffix}")
         else:
             print("Warning: missing pr_number/token/repo — full build.", file=sys.stderr)
-        skip_tests, skip_engine, modules = decide(changed_files, os.getcwd())
+        skip_tests, skip_engine, modules = decide(changed_files, os.getcwd(), patches)
 
     print(f"skip_tests={skip_tests}, skip_engine_tests={skip_engine}, "
           f"changed_modules={modules or '<full build>'}")

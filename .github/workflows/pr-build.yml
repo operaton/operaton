@@ -158,16 +158,12 @@ jobs:
       skip_engine_tests: ${{ steps.prepare.outputs.skip_engine_tests }}
       changed_modules: ${{ steps.prepare.outputs.changed_modules }}
     steps:
-      - name: Checkout action files and module poms
+      # Full tree, not only the poms: a version property bump is traced to
+      # every file referencing it, including filtered resources
+      - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-          # non-cone mode: the script needs every pom.xml to map changed
-          # files to Maven modules and derive the core-api module set
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /.github/actions/prepare-build/
-            **/pom.xml
       - name: Prepare build
         id: prepare
         uses: $/.github/actions/prepare-build

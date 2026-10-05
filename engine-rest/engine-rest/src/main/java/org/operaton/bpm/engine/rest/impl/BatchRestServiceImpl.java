@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,7 +56,7 @@ public class BatchRestServiceImpl extends AbstractRestProcessEngineAware impleme
 
     return matchingBatches.stream()
         .map(BatchDto::fromBatch)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override
@@ -79,7 +78,7 @@ public class BatchRestServiceImpl extends AbstractRestProcessEngineAware impleme
 
     return batchStatisticsList.stream()
         .map(BatchStatisticsDto::fromBatchStatistics)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

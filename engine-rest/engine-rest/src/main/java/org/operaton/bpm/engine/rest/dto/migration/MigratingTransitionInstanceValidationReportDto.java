@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.dto.migration;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.migration.MigratingTransitionInstanceValidationReport;
 
@@ -63,7 +62,7 @@ public class MigratingTransitionInstanceValidationReportDto {
   public static List<MigratingTransitionInstanceValidationReportDto> from(List<MigratingTransitionInstanceValidationReport> reports) {
     return reports.stream()
         .map(MigratingTransitionInstanceValidationReportDto::from)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public static MigratingTransitionInstanceValidationReportDto from(MigratingTransitionInstanceValidationReport report) {

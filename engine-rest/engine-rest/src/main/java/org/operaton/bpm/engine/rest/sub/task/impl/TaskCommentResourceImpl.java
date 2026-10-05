@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest.sub.task.impl;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
@@ -62,7 +61,7 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
 
     return taskComments.stream()
         .map(CommentDto::fromComment)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

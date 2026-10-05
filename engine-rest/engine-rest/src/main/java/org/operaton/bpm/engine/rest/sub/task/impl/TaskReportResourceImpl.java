@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.sub.task.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
@@ -74,7 +73,7 @@ public class TaskReportResourceImpl implements TaskReportResource {
     List<TaskCountByCandidateGroupResult> reports = queryTaskCountByCandidateGroupReport();
     return reports.stream()
         .map(TaskCountByCandidateGroupResultDto::fromTaskCountByCandidateGroupResultDto)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected String getReportResultAsCsv() {

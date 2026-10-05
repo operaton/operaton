@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.dto.history;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
@@ -90,7 +89,7 @@ public class UserOperationLogEntryDto {
   public static List<UserOperationLogEntryDto> map(List<UserOperationLogEntry> entries) {
     return entries.stream()
         .map(UserOperationLogEntryDto::map)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public String getId() {

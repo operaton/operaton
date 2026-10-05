@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest.dto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.Problem;
@@ -48,11 +47,11 @@ public class ParseExceptionDto extends ExceptionDto {
     for (ResourceReport report : exception.getResourceReports()) {
       List<ProblemDto> errorDtos = report.getErrors().stream()
           .map(ProblemDto::fromProblem)
-          .collect(Collectors.toList());
+          .toList();
 
       List<ProblemDto> warningDtos = report.getWarnings().stream()
           .map(ProblemDto::fromProblem)
-          .collect(Collectors.toList());
+          .toList();
       ResourceReportDto resourceReportDto = new ResourceReportDto(errorDtos, warningDtos);
       dto.details.put(report.getResourceName(), resourceReportDto);
     }

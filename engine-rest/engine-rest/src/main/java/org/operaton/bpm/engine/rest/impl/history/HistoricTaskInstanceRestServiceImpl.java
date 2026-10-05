@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.impl.history;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
@@ -110,13 +109,13 @@ public class HistoricTaskInstanceRestServiceImpl implements HistoricTaskInstance
   protected List<HistoricTaskInstanceReportResultDto> generateCountDto(List<HistoricTaskInstanceReportResult> results) {
     return results.stream()
         .map(HistoricTaskInstanceReportResultDto::fromHistoricTaskInstanceReportResult)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected List<ReportResultDto> generateDurationDto(List<? extends ReportResult> results) {
     return results.stream()
         .map(ReportResultDto::fromReportResult)
-        .collect(Collectors.toList());
+        .toList();
   }
 
 }

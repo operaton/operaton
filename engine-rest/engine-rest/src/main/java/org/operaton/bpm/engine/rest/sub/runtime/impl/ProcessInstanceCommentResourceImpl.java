@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.sub.runtime.impl;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.IdentityService;
@@ -55,7 +54,7 @@ public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommen
 
     return processInstanceComments.stream()
         .map(CommentDto::fromComment)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**

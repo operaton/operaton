@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -88,7 +87,7 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
 
     List<DeploymentResourceDto> deploymentResources = resources.stream()
       .map(DeploymentResourceDto::fromResources)
-      .collect(Collectors.toList());
+      .toList();
 
     if (!deploymentResources.isEmpty()) {
       return deploymentResources;

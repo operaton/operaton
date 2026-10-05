@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.dto.authorization;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -84,7 +83,7 @@ public class AuthorizationDto {
   public static List<AuthorizationDto> fromAuthorizationList(List<Authorization> resultList, ProcessEngineConfiguration engineConfiguration) {
     return resultList.stream()
         .map(authorization -> fromAuthorization(authorization, engineConfiguration))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   // ////////////////////////////////////////////////////

@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriInfo;
@@ -64,7 +63,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
 
     return taskAttachments.stream()
         .map(AttachmentDto::fromAttachment)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest.impl.history;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -204,7 +203,7 @@ public class HistoricProcessInstanceRestServiceImpl implements HistoricProcessIn
     List<ReportResult> reports = queryHistoricProcessInstanceReport(uriInfo);
     return reports.stream()
         .map(ReportResultDto::fromReportResult)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected String getReportResultAsCsv(UriInfo uriInfo) {

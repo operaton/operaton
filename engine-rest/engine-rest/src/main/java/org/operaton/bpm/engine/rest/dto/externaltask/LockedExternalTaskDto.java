@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest.dto.externaltask;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
@@ -149,7 +148,7 @@ public class LockedExternalTaskDto {
   public static List<LockedExternalTaskDto> fromLockedExternalTasks(List<LockedExternalTask> tasks) {
     return tasks.stream()
         .map(LockedExternalTaskDto::fromLockedExternalTask)
-        .collect(Collectors.toList());
+        .toList();
   }
   @Override
   public String toString() {

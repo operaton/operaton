@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.dto;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
 
@@ -48,7 +47,7 @@ public class MissingAuthorizationDto {
   public static List<MissingAuthorizationDto> fromInfo(Collection<MissingAuthorization> infos) {
     return infos.stream()
         .map(MissingAuthorizationDto::fromInfo)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   // getter / setters ////////////////////////

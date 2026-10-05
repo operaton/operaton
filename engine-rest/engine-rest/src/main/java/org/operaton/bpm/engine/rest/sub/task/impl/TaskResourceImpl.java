@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
@@ -311,7 +310,7 @@ public class TaskResourceImpl implements TaskResource {
     return identityLinks.stream()
         .filter(link -> type == null || type.equals(link.getType()))
         .map(IdentityLinkDto::fromIdentityLink)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

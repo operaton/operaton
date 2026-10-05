@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.impl.history;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,7 +60,7 @@ public class HistoricCaseDefinitionRestServiceImpl implements HistoricCaseDefini
 
     return statistics.stream()
         .map(HistoricCaseActivityStatisticsDto::fromHistoricCaseActivityStatistics)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

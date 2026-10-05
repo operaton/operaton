@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.impl.history;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatistics;
@@ -48,7 +47,7 @@ public class HistoricDecisionStatisticsRestServiceImpl implements HistoricDecisi
 
     return statistics.stream()
         .map(HistoricDecisionInstanceStatisticsDto::fromDecisionDefinitionStatistics)
-        .collect(Collectors.toList());
+        .toList();
   }
 
 }

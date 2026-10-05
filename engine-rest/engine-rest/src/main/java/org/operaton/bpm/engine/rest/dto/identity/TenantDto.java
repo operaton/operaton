@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.dto.identity;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.identity.Tenant;
 
@@ -52,7 +51,7 @@ public class TenantDto {
   public static List<TenantDto> fromTenantList(List<Tenant> tenants) {
     return tenants.stream()
         .map(TenantDto::fromTenant)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public void update(Tenant tenant) {

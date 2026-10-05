@@ -21,7 +21,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -182,7 +181,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
 
     return groups.stream()
       .map(Group::getId)
-      .collect(Collectors.toList());
+      .toList();
   }
 
   protected List<String> getTenantsOfUser(ProcessEngine engine, String userId) {
@@ -193,7 +192,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
 
     return tenants.stream()
       .map(Tenant::getId)
-      .collect(Collectors.toList());
+      .toList();
   }
 
   protected void clearAuthentication(ProcessEngine engine) {

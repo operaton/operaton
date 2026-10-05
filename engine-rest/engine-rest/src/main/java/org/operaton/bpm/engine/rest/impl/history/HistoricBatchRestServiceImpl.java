@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.impl.history;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,7 +66,7 @@ public class HistoricBatchRestServiceImpl implements HistoricBatchRestService {
 
     return matchingBatches.stream()
         .map(HistoricBatchDto::fromBatch)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

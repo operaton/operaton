@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.dto;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 
@@ -35,7 +34,7 @@ public class SchemaLogEntryDto {
   public static List<SchemaLogEntryDto> fromSchemaLogEntries(List<SchemaLogEntry> entries) {
     return entries.stream()
         .map(entry -> new SchemaLogEntryDto(entry.getId(), entry.getTimestamp(), entry.getVersion()))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public SchemaLogEntryDto(String id, Date timestamp, String version) {

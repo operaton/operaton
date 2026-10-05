@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import jakarta.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +47,7 @@ public class ConditionRestServiceImpl extends AbstractRestProcessEngineAware imp
 
     return processInstances.stream()
         .map(ProcessInstanceDto::fromProcessInstance)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected ConditionEvaluationBuilder createConditionEvaluationBuilder(EvaluationConditionDto conditionDto) {

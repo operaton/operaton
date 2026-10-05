@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.dto.identity;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.identity.Group;
 
@@ -50,7 +49,7 @@ public class GroupDto {
   public static List<GroupDto> fromGroupList(List<Group> dbGroupList) {
     return dbGroupList.stream()
         .map(GroupDto::fromGroup)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   // Getters / Setters ///////////////////////////

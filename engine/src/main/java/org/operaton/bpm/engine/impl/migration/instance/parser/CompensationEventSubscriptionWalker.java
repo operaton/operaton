@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 
 import static java.util.Collections.emptyList;
-import static java.util.Objects.requireNonNull;
 
 /**
  * Ensures that event subscriptions are visited in a top-down fashion, i.e.

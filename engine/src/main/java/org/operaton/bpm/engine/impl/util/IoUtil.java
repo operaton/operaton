@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 

@@ -22,8 +22,6 @@ import javax.script.ScriptEngine;
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.context.CoreExecutionContext;
-import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.util.ResourceUtil;
 

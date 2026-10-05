@@ -30,6 +30,11 @@ ENGINE_PACKAGE_TEST_PREFIXES = (
     "engine-cdi/", "engine-spring/", "engine-rest/", "quarkus-extension/", "test-utils/",
 )
 
+# Build-wide inputs (Maven version and config, parent poms, BOMs) can change how
+# the engine is built and tested without touching an engine module: never skip
+# engine tests when one of them changes.
+NEVER_SKIP_ENGINE_PREFIXES = ("parent/", "bom/", ".mvn/")
+
 ENGINE_ARTIFACT_ID = "operaton-engine"
 ENGINE_TEST_EXCLUDES = "org/operaton/bpm/engine"
 
@@ -193,8 +198,14 @@ def _pom_coords(el, default_group=None):
     return gid, txt(el, "artifactId")
 
 
+def _is_bom_import(dep):
+    scope = dep.find("{*}scope")
+    return scope is not None and scope.text and scope.text.strip() == "import"
+
+
 def build_module_graph(root):
-    """Parse poms: {module_dir: set(module_dirs it depends on)} (deps + parent)."""
+    """Parse poms: {module_dir: set(module_dirs it depends on)}
+    (deps, parent and BOMs imported in <dependencyManagement>)."""
     root = Path(root)
     poms = {}  # module_dir -> parsed data
     for module in discover_modules(root):
@@ -210,6 +221,9 @@ def build_module_graph(root):
         coords = _pom_coords(proj, default_group)
         deps = [_pom_coords(d, coords[0])
                 for d in proj.findall("{*}dependencies/{*}dependency")]
+        deps += [_pom_coords(d, coords[0])
+                 for d in proj.findall("{*}dependencyManagement/{*}dependencies/{*}dependency")
+                 if _is_bom_import(d)]
         if parent_coords:
             deps.append(parent_coords)
         poms[module] = (coords, deps)
@@ -274,7 +288,8 @@ def check_skip_engine_tests(changed_files, core_api_modules):
     """True if no change can affect engine behavior or engine-packaged tests."""
     if not changed_files:
         return False
-    guarded = tuple(m + "/" for m in core_api_modules) + ENGINE_PACKAGE_TEST_PREFIXES
+    guarded = (tuple(m + "/" for m in core_api_modules) + ENGINE_PACKAGE_TEST_PREFIXES
+               + NEVER_SKIP_ENGINE_PREFIXES)
     for f in changed_files:
         if f == "pom.xml" or f.startswith(guarded):
             return False

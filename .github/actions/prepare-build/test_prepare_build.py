@@ -27,8 +27,8 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
 def make_pom(root, module_dir, group_id, artifact_id,
-             parent=None, deps=(), produces_test_jar=False):
-    """Write a minimal pom.xml. parent/deps are (groupId, artifactId) tuples."""
+             parent=None, deps=(), produces_test_jar=False, bom_imports=()):
+    """Write a minimal pom.xml. parent/deps/bom_imports are (groupId, artifactId) tuples."""
     path = Path(root) / module_dir / "pom.xml"
     path.parent.mkdir(parents=True, exist_ok=True)
     parent_xml = ""
@@ -39,6 +39,12 @@ def make_pom(root, module_dir, group_id, artifact_id,
     deps_xml = "".join(
         f"<dependency><groupId>{g}</groupId><artifactId>{a}</artifactId></dependency>"
         for g, a in deps)
+    dep_mgmt_xml = ""
+    if bom_imports:
+        dep_mgmt_xml = "<dependencyManagement><dependencies>" + "".join(
+            f"<dependency><groupId>{g}</groupId><artifactId>{a}</artifactId>"
+            f"<version>1.0</version><scope>import</scope><type>pom</type></dependency>"
+            for g, a in bom_imports) + "</dependencies></dependencyManagement>"
     build_xml = ""
     if produces_test_jar:
         build_xml = (
@@ -52,6 +58,7 @@ def make_pom(root, module_dir, group_id, artifact_id,
         f'{parent_xml}'
         f'<groupId>{group_id}</groupId><artifactId>{artifact_id}</artifactId>'
         f'<version>1.0</version>'
+        f'{dep_mgmt_xml}'
         f'<dependencies>{deps_xml}</dependencies>'
         f'{build_xml}'
         '</project>')
@@ -72,8 +79,12 @@ class FixtureRepo(unittest.TestCase):
                  parent=("org.operaton.bpm", "operaton-parent"))
         make_pom(r, "juel", "org.operaton.bpm.juel", "operaton-juel",
                  parent=("org.operaton.bpm", "operaton-parent"))
+        make_pom(r, "bom/internal-dependencies", "org.operaton.bpm",
+                 "operaton-core-internal-dependencies",
+                 parent=("org.operaton.bpm", "operaton-parent"))
         make_pom(r, "engine", "org.operaton.bpm", "operaton-engine",
                  parent=("org.operaton.bpm", "operaton-database-settings"),
+                 bom_imports=[("org.operaton.bpm", "operaton-core-internal-dependencies")],
                  deps=[("org.operaton.commons", "operaton-commons-typed-values"),
                        ("org.operaton.bpm.juel", "operaton-juel"),
                        ("org.mybatis", "mybatis")])
@@ -282,6 +293,21 @@ class TestCoreApi(FixtureRepo):
     def test_no_skip_on_empty_files(self):
         self.assertFalse(check_skip_engine_tests([], self.core_api()))
 
+    def test_core_api_contains_imported_bom(self):
+        # engine imports the BOM in <dependencyManagement>; a version bump
+        # there changes what the engine is built and tested against
+        self.assertIn("bom/internal-dependencies", self.core_api())
+
+    def test_no_skip_when_imported_bom_touched(self):
+        self.assertFalse(check_skip_engine_tests(
+            ["bom/internal-dependencies/pom.xml"], self.core_api()))
+
+    def test_no_skip_when_build_wide_files_touched(self):
+        for f in (".mvn/wrapper/maven-wrapper.properties", ".mvn/maven.config",
+                  "bom/some-other-bom/pom.xml", "parent/pom.xml"):
+            with self.subTest(f=f):
+                self.assertFalse(check_skip_engine_tests([f], self.core_api()))
+
 
 class TestComputeDownstream(FixtureRepo):
 
@@ -449,6 +475,9 @@ class TestAgainstRealRepo(unittest.TestCase):
         self.assertNotIn("webapps/assembly", self.core)
         self.assertNotIn("clients/java/client", self.core)
         self.assertNotIn("spring-boot-starter/starter", self.core)
+
+    def test_core_api_contains_imported_internal_bom(self):
+        self.assertIn("bom/internal-dependencies", self.core)
 
 
 class TestGetChangedFilesFallback(unittest.TestCase):

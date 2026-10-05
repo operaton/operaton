@@ -249,12 +249,16 @@ def compute_downstream(graph, seed_modules):
     return down
 
 
-# The two modules whose build actually produces the npm-built frontend content
-# (gated by skip.frontend.build). Anything that depends on either, directly or
-# transitively, can observe whether that content is real or missing — e.g.
-# spring-boot-starter/starter-webapp boots a real server and asserts an admin
-# page returns 200, which 404s without the real npm build.
-FRONTEND_PRODUCER_MODULES = ("webapps/assembly", "distro/webjar")
+# The modules whose build actually produces the npm-built frontend content
+# (gated by skip.frontend.build): webapps/assembly and distro/webjar for the
+# legacy webapps, webapps-neo (root pom builds webapps-neo/frontend) and
+# distro/webjar-neo for the new webapps. Anything that depends on one of them,
+# directly or transitively, can observe whether that content is real or
+# missing — e.g. spring-boot-starter/starter-webapp boots a real server and
+# asserts an admin page returns 200, which 404s without the real npm build.
+LEGACY_FRONTEND_PRODUCER_MODULES = ("webapps/assembly", "distro/webjar")
+NEO_FRONTEND_PRODUCER_MODULES = ("webapps-neo", "distro/webjar-neo")
+FRONTEND_PRODUCER_MODULES = LEGACY_FRONTEND_PRODUCER_MODULES + NEO_FRONTEND_PRODUCER_MODULES
 
 
 def check_needs_real_frontend(changed_modules, graph):

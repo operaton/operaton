@@ -51,8 +51,10 @@ Use `.devenv/scripts/build/build.sh` flags for targeted builds:
 | `--changed-modules=<dirs>` | Whole reactor `clean install -Dmaven.test.skip=true -Dskip.frontend.build=true` (preceded by a real build of test-jar-producer modules, since `maven.test.skip` skips packaging their test-jar entirely), then `verify -pl <dirs> -amd` (affected tests) | Every changed file maps to a Maven module |
 | `--affected-by=<git-ref>` | Same as `--changed-modules`, derived from the local git diff (e.g. `--affected-by=origin/main`) | Local development only |
 
-The CI `prepare` job (`.github/actions/prepare-build/`) sets these flags automatically
-based on PR branch name, actor, and changed files. Phase 1 builds every module because
+The `prepare` job of the PR build (`.github/workflows/pr-build.yml`, action in
+`.github/actions/prepare-build/`) sets these flags automatically based on PR branch name,
+actor, and changed files. `--changed-modules` is not applied when the PR runs integration
+tests, since those need a full build of the staged artifacts. Phase 1 builds every module because
 CI runs on fresh checkouts and the reactor must be self-contained; the saving is skipping
 unaffected test suites in phase 2. Maven's `-amd` derives the affected test set from the
 live reactor, so there is no hand-maintained module map.

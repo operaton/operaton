@@ -59,36 +59,8 @@ concurrency:
 
 jobs:
 
-  prepare:
-    name: Prepare
-    runs-on: ubuntu-slim
-    permissions:
-      contents: read
-      pull-requests: read
-    outputs:
-      skip_tests: ${{ steps.prepare.outputs.skip_tests }}
-      skip_engine_tests: ${{ steps.prepare.outputs.skip_engine_tests }}
-      changed_modules: ${{ steps.prepare.outputs.changed_modules }}
-    steps:
-      - name: Checkout action files and module poms
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-          # non-cone mode: the script needs every pom.xml to map changed
-          # files to Maven modules and derive the core-api module set
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /.github/actions/prepare-build/
-            **/pom.xml
-      - name: Prepare build
-        id: prepare
-        uses: ./.github/actions/prepare-build
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
   build:
     name: Build
-    needs: [prepare]
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -168,9 +140,6 @@ jobs:
           INPUT_RUNNER: ${{ github.event.inputs.runner || 'mvnd' }}
           INPUT_REPORTS: ${{ github.event.inputs.reports || 'false' }}
           INPUT_SKIP_TESTS: ${{ github.event.inputs.skip_tests || 'false' }}
-          PREPARE_SKIP_TESTS: ${{ needs.prepare.outputs.skip_tests || 'false' }}
-          PREPARE_SKIP_ENGINE_TESTS: ${{ needs.prepare.outputs.skip_engine_tests || 'false' }}
-          PREPARE_CHANGED_MODULES: ${{ needs.prepare.outputs.changed_modules || '' }}
         run: |
           .github/scripts/jacoco-create-flag-files.sh
 
@@ -191,21 +160,10 @@ jobs:
             BUILD_CMD="$BUILD_CMD --reports"
           fi
 
-          # Add skip-tests flag (workflow_dispatch input or prepare job heuristic)
+          # Add skip-tests flag if enabled
           SKIP_TESTS="${INPUT_SKIP_TESTS}"
-          if [ "$SKIP_TESTS" = "true" ] || [ "$PREPARE_SKIP_TESTS" = "true" ]; then
+          if [ "$SKIP_TESTS" = "true" ]; then
             BUILD_CMD="$BUILD_CMD --skip-tests"
-          fi
-
-          # Add skip-engine-tests flag if set by prepare job
-          if [ "$PREPARE_SKIP_ENGINE_TESTS" = "true" ]; then
-            BUILD_CMD="$BUILD_CMD --skip-engine-tests"
-          fi
-
-          # Narrow the build to changed modules + up/downstream if the prepare
-          # job mapped every changed file to a Maven module
-          if [ -n "$PREPARE_CHANGED_MODULES" ]; then
-            BUILD_CMD="$BUILD_CMD --changed-modules=$PREPARE_CHANGED_MODULES"
           fi
 
           # Restored modules keep reporting: .mvn/maven-build-cache-config.xml

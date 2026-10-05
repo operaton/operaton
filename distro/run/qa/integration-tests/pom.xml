@@ -83,9 +83,14 @@
     </dependency>
     <dependency>
       <groupId>com.konghq</groupId>
-      <artifactId>unirest-java</artifactId>
+      <artifactId>unirest-java-core</artifactId>
       <version>${version.unirest-java}</version>
-      <classifier>standalone</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.konghq</groupId>
+      <artifactId>unirest-modules-gson</artifactId>
+      <version>${version.unirest-java}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

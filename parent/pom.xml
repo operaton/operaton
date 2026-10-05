@@ -38,13 +38,12 @@
     <version.httpcore5>5.4.3</version.httpcore5>
     <version.httpcore5-h2>5.4.4</version.httpcore5-h2>
     <version.cronutils>9.2.1</version.cronutils>
-    <version.unirest-java>3.14.5</version.unirest-java>
+    <version.unirest-java>4.10.1</version.unirest-java>
     <version.junit5>6.0.3</version.junit5>
     <version.assertj>3.27.7</version.assertj>
     <version.mockito>5.24.0</version.mockito>
     <version.jna>5.19.1</version.jna>
     <version.testcontainers>2.0.5</version.testcontainers>
-    <version.unirest-java>3.14.5</version.unirest-java>
     <version.commonj>1.1.0</version.commonj>
     <!-- application servers -->
     <version.wildfly>41.0.1.Final</version.wildfly>

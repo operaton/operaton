@@ -13,20 +13,6 @@
   <properties>
     <version.httpcomponents>4.5.10</version.httpcomponents>
   </properties>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-        <version>${version.selenium}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <profiles>
     <profile>
       <id>distro</id>

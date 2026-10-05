@@ -14,7 +14,7 @@
   <description>${project.name}</description>
 
   <properties>
-    <arquillian.container.version>4.0.0.Final</arquillian.container.version>
+    <arquillian.container.version>4.0.1.Final</arquillian.container.version>
     <arquillian.junit.version>1.10.2.Final</arquillian.junit.version>
   </properties>
 

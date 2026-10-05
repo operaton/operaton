@@ -85,6 +85,14 @@ class FixtureRepo(unittest.TestCase):
         make_pom(r, "webapps/assembly", "org.operaton.bpm.webapp", "operaton-webapp",
                  parent=("org.operaton.bpm.webapp", "operaton-webapps-root"),
                  deps=[("org.operaton.bpm", "operaton-engine-rest")])
+        make_pom(r, "webapps-neo", "org.operaton.bpm.webapp-neo", "operaton-webapp-neo-root",
+                 parent=("org.operaton.bpm", "operaton-database-settings"))
+        make_pom(r, "webapps-neo/assembly", "org.operaton.bpm.webapp-neo", "operaton-webapp-neo",
+                 parent=("org.operaton.bpm.webapp-neo", "operaton-webapp-neo-root"),
+                 deps=[("org.operaton.bpm", "operaton-engine-rest")])
+        make_pom(r, "distro/webjar-neo", "org.operaton.bpm", "operaton-webapp-webjar-neo",
+                 parent=("org.operaton.bpm", "operaton-parent"),
+                 deps=[("org.operaton.bpm.webapp-neo", "operaton-webapp-neo")])
         make_pom(r, "spring-boot-starter/starter", "org.operaton.bpm.springboot", "operaton-starter",
                  parent=("org.operaton.bpm", "operaton-parent"),
                  deps=[("org.operaton.bpm", "operaton-engine")])
@@ -314,6 +322,56 @@ class TestCheckNeedsRealFrontend(FixtureRepo):
 
     def test_false_when_closure_has_no_frontend_sensitive_module(self):
         self.assertFalse(check_needs_real_frontend(["clients/java/client"], self.graph()))
+
+    def test_true_when_neo_frontend_module_changed(self):
+        # webapps-neo (root pom) runs the npm build of webapps-neo/frontend
+        self.assertTrue(check_needs_real_frontend(["webapps-neo"], self.graph()))
+
+    def test_true_when_neo_webjar_changed(self):
+        self.assertTrue(check_needs_real_frontend(["distro/webjar-neo"], self.graph()))
+
+
+class TestWebappsNeo(FixtureRepo):
+    """Changes to the new webapps (webapps-neo) are kept apart from the legacy
+    webapps, so a neo-only change neither builds nor tests the legacy ones."""
+
+    def graph(self):
+        return build_module_graph(self.root)
+
+    def test_neo_frontend_file_maps_to_neo_root_module(self):
+        # webapps-neo/frontend has no pom.xml; its npm build lives in webapps-neo
+        self.assertEqual(
+            map_file_to_module("webapps-neo/frontend/src/app.tsx", self.module_dirs),
+            "webapps-neo")
+
+    def test_neo_assembly_file_maps_to_neo_assembly(self):
+        self.assertEqual(
+            map_file_to_module("webapps-neo/assembly/src/main/java/Foo.java", self.module_dirs),
+            "webapps-neo/assembly")
+
+    def test_neo_only_change_is_narrowed_to_neo(self):
+        c = classify_changes(
+            ["webapps-neo/frontend/src/app.tsx", "webapps-neo/frontend/package-lock.json"],
+            self.module_dirs)
+        self.assertFalse(c.full_build)
+        self.assertEqual(c.changed_modules, ["webapps-neo"])
+
+    def test_neo_change_does_not_reach_legacy_webapps(self):
+        down = compute_downstream(self.graph(), ["webapps-neo"])
+        self.assertIn("webapps-neo/assembly", down)
+        self.assertIn("distro/webjar-neo", down)
+        self.assertNotIn("webapps/assembly", down)
+
+    def test_legacy_change_does_not_reach_neo_webapps(self):
+        down = compute_downstream(self.graph(), ["webapps/assembly"])
+        self.assertNotIn("webapps-neo/assembly", down)
+        self.assertNotIn("distro/webjar-neo", down)
+
+    def test_neo_change_skips_engine_tests(self):
+        core = compute_core_api(self.graph())
+        self.assertNotIn("webapps-neo", core)
+        self.assertTrue(check_skip_engine_tests(
+            ["webapps-neo/frontend/src/app.tsx"], core))
 
 
 class TestRelevantTestJarProducers(FixtureRepo):

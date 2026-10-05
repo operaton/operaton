@@ -53,6 +53,9 @@ parse_args() {
       --webapps-only)
         CHANGED_MODULES="webapps/assembly"
         ;;
+      --webapps-neo-only)
+        CHANGED_MODULES="webapps-neo"
+        ;;
       --reports)
         REPORT_PLUGINS="true"
         ;;

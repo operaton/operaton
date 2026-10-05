@@ -330,9 +330,6 @@
                 <replace dir="target/modules" token="@version.groovy@" value="${version.groovy}">
                   <include name="**/module.xml"/>
                 </replace>
-                <replace dir="target/modules" token="@version.httpclient@" value="${version.httpclient}">
-                  <include name="**/module.xml"/>
-                </replace>
                 <replace dir="target/modules" token="@version.httpclient5@" value="${version.httpclient5}">
                   <include name="**/module.xml"/>
                 </replace>
@@ -355,9 +352,6 @@
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.json-smart@" value="${version.json-smart}">
-                  <include name="**/module.xml"/>
-                </replace>
-                <replace dir="target/modules" token="@version.commons-codec@" value="${version.commons-codec}">
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.accessors-smart@" value="${version.accessors-smart}">

@@ -21,15 +21,17 @@ import java.nio.charset.StandardCharsets;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.util.Timeout;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,8 +70,15 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
   @BeforeEach
   public void setUpHttpClientAndRuntimeData() {
-    client = HttpClients.createSystem();
-    reqConfig = RequestConfig.custom().setConnectTimeout(3 * 60 * 1000).setSocketTimeout(10 * 60 * 1000).build();
+    ConnectionConfig connConfig = ConnectionConfig.custom().setConnectTimeout(Timeout.ofMinutes(3)).build();
+    client = HttpClients.custom()
+        .useSystemProperties()
+        .setConnectionManager(PoolingHttpClientConnectionManagerBuilder.create()
+            .useSystemProperties()
+            .setDefaultConnectionConfig(connConfig)
+            .build())
+        .build();
+    reqConfig = RequestConfig.custom().setResponseTimeout(Timeout.ofMinutes(10)).build();
 
     ProcessDefinition mockDefinition = MockProvider.createMockDefinition();
 
@@ -103,7 +112,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
   @Test
   public void testBodyIsEmpty() throws Exception {
-    evaluatePostRequest(new ByteArrayEntity("".getBytes(UTF_8)), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
+    evaluatePostRequest(new ByteArrayEntity("".getBytes(UTF_8), null), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
   @Test
@@ -123,7 +132,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
   @Test
   public void testBodyIsEmptyJSONObject() throws Exception {
-    evaluatePostRequest(new ByteArrayEntity(EMPTY_JSON_OBJECT.getBytes(UTF_8)), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
+    evaluatePostRequest(new ByteArrayEntity(EMPTY_JSON_OBJECT.getBytes(UTF_8), null), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
   private void evaluatePostRequest(HttpEntity reqBody, String reqContentType, int expectedStatusCode, boolean assertResponseBody) throws IOException {
@@ -136,15 +145,14 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
     post.setEntity(reqBody);
 
-    CloseableHttpResponse response = client.execute(post);
+    client.execute(post, response -> {
+      assertThat(response.getCode()).isEqualTo(expectedStatusCode);
 
-    assertThat(response.getStatusLine().getStatusCode()).isEqualTo(expectedStatusCode);
-
-    if(assertResponseBody) {
-      assertThat(EntityUtils.toString(response.getEntity(), UTF_8)).contains(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
-    }
-
-    response.close();
+      if(assertResponseBody) {
+        assertThat(EntityUtils.toString(response.getEntity(), UTF_8)).contains(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+      }
+      return null;
+    });
   }
 
 }

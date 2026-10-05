@@ -390,7 +390,7 @@ public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInsta
   protected List<ExecutionEntity> filterNonEventScopeExecutions(List<ExecutionEntity> executionList) {
     return executionList.stream()
         .filter(execution -> !execution.isEventScope())
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected List<ExecutionEntity> loadProcessInstance(String processInstanceId, CommandContext commandContext) {

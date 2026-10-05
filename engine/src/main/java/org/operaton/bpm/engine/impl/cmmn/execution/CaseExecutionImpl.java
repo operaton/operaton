@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.cmmn.execution;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
@@ -248,7 +247,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   protected List<CaseSentryPartImpl> findSentry(String sentryId) {
     return getCaseSentryParts().stream()
         .filter(sentryPart -> sentryPart.getSentryId().equals(sentryId))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 
@@ -1217,7 +1216,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     List<String> groupIds = groups.stream()
         .map(Group::getId)
-        .collect(Collectors.toList());
+        .toList();
 
     userGroups.put(candidateUser, groupIds);
 

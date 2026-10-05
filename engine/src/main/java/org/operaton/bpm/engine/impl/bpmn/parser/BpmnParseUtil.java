@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BpmnParseException;
@@ -242,7 +241,7 @@ public final @NullMarked class BpmnParseUtil {
   private static List<ParameterValueProvider> getParameterValueProviders(Element parameterElement) {
     return parameterElement.elements().stream()
         .map(BpmnParseUtil::parseParamValueProvider)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private static boolean isTagName(Element parameterElement, String tagName) {

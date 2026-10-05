@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
@@ -92,7 +91,7 @@ public class ValidatingMigrationInstructions {
   public void filterWith(List<MigrationInstructionValidator> validators) {
     List<ValidatingMigrationInstruction> validInstructions = instructions.stream()
         .filter(instruction -> isValidInstruction(instruction, this, validators))
-        .collect(Collectors.toList());
+        .toList();
 
     instructionsBySourceScope.clear();
     instructionsByTargetScope.clear();
@@ -106,7 +105,7 @@ public class ValidatingMigrationInstructions {
   public List<MigrationInstruction> asMigrationInstructions() {
     return instructions.stream()
         .map(ValidatingMigrationInstruction::toMigrationInstruction)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public boolean contains(ValidatingMigrationInstruction instruction) {

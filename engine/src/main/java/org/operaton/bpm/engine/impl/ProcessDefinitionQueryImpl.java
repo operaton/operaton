@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.Group;
@@ -443,7 +442,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
         Collection<Documentation> documentations = processElement.getChildElementsByType(Documentation.class);
         List<String> docStrings = documentations.stream()
             .map(Documentation::getTextContent)
-            .collect(Collectors.toList());
+            .toList();
 
         ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) processDefinition;
         processDefinitionEntity.setProperty(BpmnParse.PROPERTYNAME_DOCUMENTATION, BpmnParse.parseDocumentation(docStrings));

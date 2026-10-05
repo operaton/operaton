@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -76,7 +75,7 @@ public @NullMarked class CorrelateAllMessageCmd extends AbstractCorrelateMessage
 
     List<MessageCorrelationResultImpl> results = correlationResults.stream()
         .map(correlationResult -> createMessageCorrelationResult(commandContext, correlationResult))
-        .collect(Collectors.toList());
+        .toList();
 
     produceOperationLog(commandContext, results);
 

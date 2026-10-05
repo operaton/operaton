@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.AuthorizationException;
 
@@ -222,7 +221,7 @@ public class AuthorizationManager extends AbstractManager {
                 check.getPermission().getName(),
                 check.getResource().resourceName(),
                 check.getResourceId()))
-            .collect(Collectors.toList());
+            .toList();
 
         throw new AuthorizationException(userId, missingAuthorizations);
       }

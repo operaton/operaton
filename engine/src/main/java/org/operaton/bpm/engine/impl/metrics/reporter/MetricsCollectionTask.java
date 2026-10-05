@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.metrics.reporter;
 
 import java.util.List;
 import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
@@ -72,7 +71,7 @@ public class MetricsCollectionTask extends TimerTask {
             reporterId,
             meter.getAndClear(),
             ClockUtil.getCurrentTime()))
-        .collect(Collectors.toList());
+        .toList();
 
     commandExecutor.execute(new MetricsCollectionCmd(logs));
   }

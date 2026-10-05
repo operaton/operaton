@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -187,13 +186,13 @@ public @NullMarked class SignalEventReceivedCmd implements Command<Void> {
   protected List<EventSubscriptionEntity> filterIntermediateSubscriptions(List<EventSubscriptionEntity> subscriptions) {
     return subscriptions.stream()
         .filter(subscription -> subscription.getExecutionId() != null)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   protected List<EventSubscriptionEntity> filterStartSubscriptions(List<EventSubscriptionEntity> subscriptions) {
     return subscriptions.stream()
         .filter(subscription -> subscription.getExecutionId() == null)
-        .collect(Collectors.toList());
+        .toList();
   }
 
 }

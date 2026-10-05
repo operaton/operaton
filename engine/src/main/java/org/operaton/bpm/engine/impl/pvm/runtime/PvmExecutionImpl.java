@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.pvm.runtime;
 
 import java.io.Serial;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ActivityTypes;
 
@@ -987,9 +986,9 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   @SuppressWarnings({"rawtypes", "unchecked"})
   public List<ActivityExecution> findInactiveChildExecutions(PvmActivity activity) {
     List<? extends PvmExecutionImpl> concurrentExecutions = getAllChildExecutions();
-    List<PvmExecutionImpl> inactiveConcurrentExecutionsInActivity = concurrentExecutions.stream()
+    List<? extends PvmExecutionImpl> inactiveConcurrentExecutionsInActivity = concurrentExecutions.stream()
         .filter(concurrentExecution -> concurrentExecution.getActivity() == activity && !concurrentExecution.isActive())
-        .collect(Collectors.toCollection(ArrayList::new));
+        .toList();
 
     return (List) inactiveConcurrentExecutionsInActivity;
   }
@@ -1102,7 +1101,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
     return children.stream()
         .filter(child -> !child.isEventScope())
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public List<? extends PvmExecutionImpl> getEventScopeExecutions() {
@@ -1110,7 +1109,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
     return children.stream()
         .filter(PvmExecutionImpl::isEventScope)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

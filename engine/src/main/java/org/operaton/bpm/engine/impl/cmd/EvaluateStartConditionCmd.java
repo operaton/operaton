@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cmd;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ConditionEvaluationBuilderImpl;
@@ -60,7 +59,7 @@ public @NullMarked class EvaluateStartConditionCmd implements Command<List<Proce
 
     List<ProcessInstance> processInstances = results.stream()
         .map(conditionHandlerResult -> instantiateProcess(commandContext, conditionHandlerResult))
-        .collect(Collectors.toList());
+        .toList();
 
     return processInstances;
   }

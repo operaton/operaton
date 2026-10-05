@@ -19,6 +19,7 @@ package org.operaton.bpm.model.xml.test.assertions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.assertj.core.api.AbstractAssert;
 
@@ -41,11 +42,9 @@ public class ModelElementTypeAssert extends AbstractAssert<ModelElementTypeAsser
   }
 
   private List<String> getActualAttributeNames() {
-    List<String> actualAttributeNames = new ArrayList<>();
-    for (Attribute<?> attribute : actual.getAttributes()) {
-      actualAttributeNames.add(attribute.getAttributeName());
-    }
-    return actualAttributeNames;
+    return actual.getAttributes().stream()
+      .map(Attribute::getAttributeName)
+      .collect(Collectors.toCollection(ArrayList::new));
   }
 
   private Collection<String> getTypeNames(Collection<ModelElementType> elementTypes) {
@@ -256,13 +255,9 @@ public class ModelElementTypeAssert extends AbstractAssert<ModelElementTypeAsser
     List<ModelElementType> notExtendingTypes = List.of(types);
     Collection<ModelElementType> actualExtendingTypes = actual.getExtendingTypes();
 
-    List<ModelElementType> errorTypes = new ArrayList<>();
-
-    for (ModelElementType notExtendingType : notExtendingTypes) {
-      if (actualExtendingTypes.contains(notExtendingType)) {
-        errorTypes.add(notExtendingType);
-      }
-    }
+    List<ModelElementType> errorTypes = notExtendingTypes.stream()
+      .filter(actualExtendingTypes::contains)
+      .collect(Collectors.toCollection(ArrayList::new));
 
     if (!errorTypes.isEmpty()) {
       Collection<String> errorTypeNames = getTypeNames(errorTypes);

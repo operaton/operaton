@@ -1214,10 +1214,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
         .groupMember(candidateUser)
         .list();
 
-    List<String> groupIds = new ArrayList<>();
-    for (Group group : groups) {
-      groupIds.add(group.getId());
-    }
+    List<String> groupIds = groups.stream()
+        .map(Group::getId)
+        .toList();
 
     userGroups.put(candidateUser, groupIds);
 

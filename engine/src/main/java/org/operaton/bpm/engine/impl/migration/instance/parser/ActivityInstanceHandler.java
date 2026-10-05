@@ -150,15 +150,9 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
   }
 
   public static List<VariableInstanceEntity> getConcurrentLocalVariables(ExecutionEntity execution) {
-    List<VariableInstanceEntity> variables = new ArrayList<>();
-
-    for (VariableInstanceEntity variable : execution.getVariablesInternal()) {
-      if (variable.isConcurrentLocal()) {
-        variables.add(variable);
-      }
-    }
-
-    return variables;
+    return execution.getVariablesInternal().stream()
+        .filter(VariableInstanceEntity::isConcurrentLocal)
+        .toList();
   }
 
 

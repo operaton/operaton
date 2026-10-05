@@ -2052,10 +2052,9 @@ public @NullMarked class BpmnParse extends Parse {
 
   public @Nullable String parseDocumentation(Element element) {
     List<Element> docElements = element.elements(PROPERTYNAME_DOCUMENTATION);
-    List<String> docStrings = new ArrayList<>();
-    for (Element e : docElements) {
-      docStrings.add(e.getText());
-    }
+    List<String> docStrings = docElements.stream()
+        .map(Element::getText)
+        .toList();
 
     return parseDocumentation(docStrings);
   }

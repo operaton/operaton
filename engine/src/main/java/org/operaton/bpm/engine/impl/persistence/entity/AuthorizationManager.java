@@ -216,14 +216,12 @@ public class AuthorizationManager extends AbstractManager {
       boolean isAuthorized = isAuthorized(compositePermissionCheck);
       if (!isAuthorized) {
 
-        List<MissingAuthorization> missingAuthorizations = new ArrayList<>();
-
-        for (PermissionCheck check: compositePermissionCheck.getAllPermissionChecks()) {
-          missingAuthorizations.add(new MissingAuthorization(
-              check.getPermission().getName(),
-              check.getResource().resourceName(),
-              check.getResourceId()));
-        }
+        List<MissingAuthorization> missingAuthorizations = compositePermissionCheck.getAllPermissionChecks().stream()
+            .map(check -> new MissingAuthorization(
+                check.getPermission().getName(),
+                check.getResource().resourceName(),
+                check.getResourceId()))
+            .toList();
 
         throw new AuthorizationException(userId, missingAuthorizations);
       }

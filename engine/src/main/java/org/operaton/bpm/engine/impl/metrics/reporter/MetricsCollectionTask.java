@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.metrics.reporter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -67,14 +66,12 @@ public class MetricsCollectionTask extends TimerTask {
 
   protected void collectMetrics() {
 
-    List<MeterLogEntity> logs = new ArrayList<>();
-    for (Meter meter : metricsRegistry.getDbMeters().values()) {
-      logs.add(new MeterLogEntity(meter.getName(),
-          reporterId,
-          meter.getAndClear(),
-          ClockUtil.getCurrentTime()));
-
-    }
+    List<MeterLogEntity> logs = metricsRegistry.getDbMeters().values().stream()
+        .map(meter -> new MeterLogEntity(meter.getName(),
+            reporterId,
+            meter.getAndClear(),
+            ClockUtil.getCurrentTime()))
+        .toList();
 
     commandExecutor.execute(new MetricsCollectionCmd(logs));
   }

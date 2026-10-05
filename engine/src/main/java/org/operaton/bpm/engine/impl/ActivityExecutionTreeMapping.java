@@ -136,15 +136,9 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected List<ExecutionEntity> findLeaves(List<ExecutionEntity> executions) {
-    List<ExecutionEntity> leaves = new ArrayList<>();
-
-    for (ExecutionEntity execution : executions) {
-      if (isLeaf(execution)) {
-        leaves.add(execution);
-      }
-    }
-
-    return leaves;
+    return executions.stream()
+        .filter(this::isLeaf)
+        .toList();
   }
 
   /**

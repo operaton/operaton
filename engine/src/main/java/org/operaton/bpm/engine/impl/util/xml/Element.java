@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.util.xml;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 import org.xml.sax.Attributes;
@@ -81,13 +82,9 @@ public class Element {
   }
 
   protected List<Element> elementsNS(@Nullable String nameSpaceUri, String tagName) {
-    List<Element> selectedElements = new ArrayList<>();
-    for (Element element: elements) {
-      if (tagName.equals(element.getTagName()) && (nameSpaceUri == null || nameSpaceUri.equals(element.getUri()))) {
-        selectedElements.add(element);
-      }
-    }
-    return selectedElements;
+    return elements.stream()
+        .filter(element -> tagName.equals(element.getTagName()) && (nameSpaceUri == null || nameSpaceUri.equals(element.getUri())))
+        .collect(Collectors.toList());
   }
 
   public @Nullable Element element(String tagName) {

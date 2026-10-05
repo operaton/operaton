@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.hal.casedefinition;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -42,12 +42,9 @@ public class HalCaseDefinitionResolver extends HalIdResourceCacheLinkResolver {
       .caseDefinitionIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
-    List<HalResource<?>> resolved = new ArrayList<>();
-    for (CaseDefinition caseDefinition : caseDefinitions) {
-      resolved.add(HalCaseDefinition.fromCaseDefinition(caseDefinition, processEngine));
-    }
-
-    return resolved;
+    return caseDefinitions.stream()
+      .map(caseDefinition -> HalCaseDefinition.fromCaseDefinition(caseDefinition, processEngine))
+      .collect(Collectors.toList());
   }
 
 }

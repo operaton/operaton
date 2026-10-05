@@ -249,13 +249,9 @@ public class EventSubscriptionManager extends AbstractManager {
     ExecutionEntity cachedExecution = getDbEntityManager().getCachedEntity(ExecutionEntity.class, executionId);
     if(cachedExecution != null && !lockResult) {
       List<EventSubscriptionEntity> eventSubscriptions = cachedExecution.getEventSubscriptions();
-      List<EventSubscriptionEntity> result = new ArrayList<>();
-      for (EventSubscriptionEntity subscription : eventSubscriptions) {
-        if(matchesSubscription(subscription, type, eventName)) {
-          result.add(subscription);
-        }
-      }
-      return result;
+      return eventSubscriptions.stream()
+          .filter(subscription -> matchesSubscription(subscription, type, eventName))
+          .toList();
     }
     else {
       final String query = "selectEventSubscriptionsByNameAndExecution";

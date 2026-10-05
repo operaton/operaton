@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.hal.processdefinition;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -42,12 +42,9 @@ public class HalProcessDefinitionResolver extends HalIdResourceCacheLinkResolver
       .processDefinitionIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
-    List<HalResource<?>> resolved = new ArrayList<>();
-    for (ProcessDefinition procDef : processDefinitions) {
-      resolved.add(HalProcessDefinition.fromProcessDefinition(procDef, processEngine));
-    }
-
-    return resolved;
+    return processDefinitions.stream()
+      .map(procDef -> HalProcessDefinition.fromProcessDefinition(procDef, processEngine))
+      .collect(Collectors.toList());
   }
 
 }

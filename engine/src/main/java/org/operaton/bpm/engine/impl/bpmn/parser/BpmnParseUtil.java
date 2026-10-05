@@ -239,12 +239,9 @@ public final @NullMarked class BpmnParseUtil {
   }
 
   private static List<ParameterValueProvider> getParameterValueProviders(Element parameterElement) {
-    List<ParameterValueProvider> providerList = new ArrayList<>();
-    for (Element element : parameterElement.elements()) {
-      // parse nested provider
-      providerList.add(parseParamValueProvider(element));
-    }
-    return providerList;
+    return parameterElement.elements().stream()
+        .map(BpmnParseUtil::parseParamValueProvider)
+        .toList();
   }
 
   private static boolean isTagName(Element parameterElement, String tagName) {

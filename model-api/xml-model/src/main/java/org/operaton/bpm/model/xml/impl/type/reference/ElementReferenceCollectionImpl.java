@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 
@@ -260,10 +261,9 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
         throw new UnsupportedModelOperationException("clear()", "collection is immutable");
       }
       else {
-        Collection<DomElement> view = new ArrayList<>();
-        for (SOURCE referenceSourceElement : referenceSourceCollection.get(referenceSourceParentElement)) {
-          view.add(referenceSourceElement.getDomElement());
-        }
+        Collection<DomElement> view = referenceSourceCollection.get(referenceSourceParentElement).stream()
+          .map(SOURCE::getDomElement)
+          .collect(Collectors.toCollection(ArrayList::new));
         performClearOperation(referenceSourceParentElement, view);
       }
     }

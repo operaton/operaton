@@ -201,11 +201,9 @@ public class HistoricProcessInstanceRestServiceImpl implements HistoricProcessIn
 
   protected List<ReportResultDto> getReportResultAsJson(UriInfo uriInfo) {
     List<ReportResult> reports = queryHistoricProcessInstanceReport(uriInfo);
-    List<ReportResultDto> result = new ArrayList<>();
-    for (ReportResult report : reports) {
-      result.add(ReportResultDto.fromReportResult(report));
-    }
-    return result;
+    return reports.stream()
+        .map(ReportResultDto::fromReportResult)
+        .toList();
   }
 
   protected String getReportResultAsCsv(UriInfo uriInfo) {

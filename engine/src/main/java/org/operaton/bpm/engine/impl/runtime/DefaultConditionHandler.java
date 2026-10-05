@@ -105,13 +105,10 @@ public class DefaultConditionHandler implements ConditionHandler {
   }
 
   protected List<ActivityImpl> findConditionalStartEventActivities(ProcessDefinitionEntity processDefinition) {
-    List<ActivityImpl> activities = new ArrayList<>();
-    for (EventSubscriptionDeclaration declaration : EventSubscriptionDeclaration.getDeclarationsForScope(processDefinition).values()) {
-      if (isConditionStartEvent(declaration)) {
-        activities.add(((ConditionalEventDefinition) declaration).getConditionalActivity());
-      }
-    }
-    return activities;
+    return EventSubscriptionDeclaration.getDeclarationsForScope(processDefinition).values().stream()
+        .filter(this::isConditionStartEvent)
+        .map(declaration -> ((ConditionalEventDefinition) declaration).getConditionalActivity())
+        .toList();
   }
 
   protected boolean isConditionStartEvent(EventSubscriptionDeclaration declaration) {

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.sub.task.impl;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import jakarta.ws.rs.HttpMethod;
@@ -60,12 +59,9 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
 
     List<Comment> taskComments = engine.getTaskService().getTaskComments(taskId);
 
-    List<CommentDto> comments = new ArrayList<>();
-    for (Comment comment : taskComments) {
-      comments.add(CommentDto.fromComment(comment));
-    }
-
-    return comments;
+    return taskComments.stream()
+        .map(CommentDto::fromComment)
+        .toList();
   }
 
   @Override

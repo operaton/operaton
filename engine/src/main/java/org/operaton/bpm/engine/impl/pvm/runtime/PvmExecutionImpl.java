@@ -985,13 +985,10 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   @Override
   @SuppressWarnings({"rawtypes", "unchecked"})
   public List<ActivityExecution> findInactiveChildExecutions(PvmActivity activity) {
-    List<PvmExecutionImpl> inactiveConcurrentExecutionsInActivity = new ArrayList<>();
     List<? extends PvmExecutionImpl> concurrentExecutions = getAllChildExecutions();
-    for (PvmExecutionImpl concurrentExecution : concurrentExecutions) {
-      if (concurrentExecution.getActivity() == activity && !concurrentExecution.isActive()) {
-        inactiveConcurrentExecutionsInActivity.add(concurrentExecution);
-      }
-    }
+    List<? extends PvmExecutionImpl> inactiveConcurrentExecutionsInActivity = concurrentExecutions.stream()
+        .filter(concurrentExecution -> concurrentExecution.getActivity() == activity && !concurrentExecution.isActive())
+        .toList();
 
     return (List) inactiveConcurrentExecutionsInActivity;
   }
@@ -1101,28 +1098,18 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   @Override
   public List<? extends PvmExecutionImpl> getNonEventScopeExecutions() {
     List<? extends PvmExecutionImpl> children = getExecutions();
-    List<PvmExecutionImpl> result = new ArrayList<>();
 
-    for (PvmExecutionImpl child : children) {
-      if (!child.isEventScope()) {
-        result.add(child);
-      }
-    }
-
-    return result;
+    return children.stream()
+        .filter(child -> !child.isEventScope())
+        .toList();
   }
 
   public List<? extends PvmExecutionImpl> getEventScopeExecutions() {
     List<? extends PvmExecutionImpl> children = getExecutions();
-    List<PvmExecutionImpl> result = new ArrayList<>();
 
-    for (PvmExecutionImpl child : children) {
-      if (child.isEventScope()) {
-        result.add(child);
-      }
-    }
-
-    return result;
+    return children.stream()
+        .filter(PvmExecutionImpl::isEventScope)
+        .toList();
   }
 
   @Override

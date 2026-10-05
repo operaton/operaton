@@ -404,13 +404,9 @@ public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions>
   // getters
 
   protected List<String> getMissingElements(Set<String> expected, Map<String, ?> actual) {
-    List<String> missingElements = new ArrayList<>();
-    for (String value : expected) {
-      if (!actual.containsKey(value)) {
-        missingElements.add(value);
-      }
-    }
-    return missingElements;
+    return expected.stream()
+        .filter(value -> !actual.containsKey(value))
+        .toList();
   }
 
   protected List<ResourceEntity> getResources(final DeploymentBuilderImpl deploymentBuilder, final CommandContext commandContext) {

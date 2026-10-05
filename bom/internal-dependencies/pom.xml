@@ -206,11 +206,6 @@
         <artifactId>commons-io</artifactId>
         <version>2.22.0</version>
       </dependency>
-      <dependency>
-        <groupId>commons-fileupload</groupId>
-        <artifactId>commons-fileupload</artifactId>
-        <version>1.6.0</version>
-      </dependency>
 
       <!-- Testing dependencies -->
       <dependency>
@@ -223,20 +218,6 @@
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
         <version>${version.assertj}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.junit-pioneer</groupId>
-        <artifactId>junit-pioneer</artifactId>
-        <version>2.3.0</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.wiremock</groupId>
-        <artifactId>wiremock</artifactId>
-        <version>3.13.2</version>
-        <scope>test</scope>
       </dependency>
 
       <dependency>
@@ -254,23 +235,9 @@
       </dependency>
 
       <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-library</artifactId>
-        <version>3.0</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
         <groupId>org.awaitility</groupId>
         <artifactId>awaitility</artifactId>
         <version>4.3.0</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>ch.martinelli.oss</groupId>
-        <artifactId>testcontainers-mailpit</artifactId>
-        <version>1.3.1</version>
         <scope>test</scope>
       </dependency>
 
@@ -343,25 +310,9 @@
         <version>4.0.9</version>
       </dependency>
       <dependency>
-        <groupId>io.github.frshdn</groupId>
-        <artifactId>subethasmtp-java17</artifactId>
-        <version>3.1.7</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.ant</groupId>
-        <artifactId>ant</artifactId>
-        <version>1.10.18</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
         <groupId>org.jspecify</groupId>
         <artifactId>jspecify</artifactId>
         <version>1.0.1</version>
-      </dependency>
-      <dependency>
-        <groupId>com.cronutils</groupId>
-        <artifactId>cron-utils</artifactId>
-        <version>${version.cronutils}</version>
       </dependency>
 
 
@@ -379,29 +330,7 @@
         <scope>test</scope>
       </dependency>
 
-      <!-- EMAIL -->
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-email</artifactId>
-        <version>1.6.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-email2-jakarta</artifactId>
-        <version>2.0.0-M1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.angus</groupId>
-        <artifactId>jakarta.mail</artifactId>
-        <version>2.0.5</version>
-      </dependency>
-
       <!-- Jetty -->
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-webapp</artifactId>
-        <version>${version.jetty}</version>
-      </dependency>
       <dependency>
         <groupId>org.eclipse.jetty.ee11</groupId>
         <artifactId>jetty-ee11-webapp</artifactId>
@@ -454,11 +383,6 @@
       <dependency>
         <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-annotations-api</artifactId>
-        <version>${version.tomcat}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.tomcat</groupId>
-        <artifactId>tomcat-catalina</artifactId>
         <version>${version.tomcat}</version>
       </dependency>
       <dependency>
@@ -523,21 +447,6 @@
         <groupId>org.freemarker</groupId>
         <artifactId>freemarker</artifactId>
         <version>${version.freemarker}</version>
-      </dependency>
-
-      <!-- jobexecutor-ra -->
-      <dependency>
-        <groupId>org.codehaus.fabric3.api</groupId>
-        <artifactId>commonj</artifactId>
-        <version>1.1.1</version>
-        <scope>provided</scope>
-      </dependency>
-
-      <!-- spin json -->
-      <dependency>
-        <groupId>com.jayway.jsonpath</groupId>
-        <artifactId>json-path</artifactId>
-        <version>${version.json-path}</version>
       </dependency>
 
       <!-- wildfly/modules -->

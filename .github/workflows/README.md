@@ -10,8 +10,21 @@ serves a specific purpose in the CI/CD pipeline.
 - **Filename**: `build.yml`
 - **Description**: This workflow builds Operaton and caches/restores any dependencies to improve the workflow execution time.
 - **Triggers**:
-    - On push to the `main` branch (with certain paths ignored)
-    - On pull request to the `main` branch (with certain paths ignored)
+    - On push to the `main`, `release/**` and `staging/**` branches (with certain paths ignored)
+    - Manually triggered via `workflow_dispatch`
+
+### PR Build
+
+- **Filename**: `pr-build.yml`
+- **Description**: Builds pull requests once and runs the unit tests and, depending on PR labels, the integration test matrix
+  against the staged artifacts.
+- **Triggers**:
+    - On pull request to the `main`, `release/**` and `staging/**` branches (with certain paths ignored)
+- **Jobs**:
+    - `prepare`: Runs `.github/actions/prepare-build`, which derives build shortcuts from the changed files, actor and branch:
+      `skip_tests` (Dependabot GitHub Actions / npm PRs), `skip_engine_tests` (no engine-related change) and `changed_modules`
+      (every changed file maps to a Maven module, e.g. only `webapps-neo`). The `build` job turns them into `build.sh` flags.
+      `changed_modules` is ignored when an integration stage needs the staged artifacts.
 
 ### Integration Build
 

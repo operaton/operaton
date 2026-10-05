@@ -144,10 +144,36 @@ jobs:
           fi
           echo "databases=$DATABASES" >> $GITHUB_OUTPUT
 
+  # Derives build shortcuts from the PR's changed files, actor and branch
+  # (.github/actions/prepare-build/prepare_build.py). In doubt it emits the
+  # defaults, which mean a full build with all tests.
+  prepare:
+    name: Prepare Build
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      skip_tests: ${{ steps.prepare.outputs.skip_tests }}
+      skip_engine_tests: ${{ steps.prepare.outputs.skip_engine_tests }}
+      changed_modules: ${{ steps.prepare.outputs.changed_modules }}
+    steps:
+      # Full tree, not only the poms: a version property bump is traced to
+      # every file referencing it, including filtered resources
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Prepare build
+        id: prepare
+        uses: $/.github/actions/prepare-build
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   build:
     name: Build & Unit Tests
     runs-on: ubuntu-24.04
-    needs: determine-pr-config
+    needs: [determine-pr-config, prepare]
     permissions:
       contents: read
       checks: write
@@ -186,6 +212,10 @@ jobs:
         shell: bash
         env:
           NEEDS_DETERMINE_PR_CONFIG_OUTPUTS_NEEDS_INTEGRATION_BUILD: ${{ needs.determine-pr-config.outputs.needs_integration_build }}
+          NEEDS_IT_STAGE: ${{ needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true' }}
+          PREPARE_SKIP_TESTS: ${{ needs.prepare.outputs.skip_tests || 'false' }}
+          PREPARE_SKIP_ENGINE_TESTS: ${{ needs.prepare.outputs.skip_engine_tests || 'false' }}
+          PREPARE_CHANGED_MODULES: ${{ needs.prepare.outputs.changed_modules || '' }}
         run: |
           .github/scripts/jacoco-create-flag-files.sh
 
@@ -198,6 +228,25 @@ jobs:
             BUILD_CMD="$BUILD_CMD --extra-maven-profiles=distro-wildfly,integration-test-operaton-run"
           fi
 
+          # Build shortcuts from the prepare job
+          if [ "$PREPARE_SKIP_TESTS" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --skip-tests"
+          fi
+          if [ "$PREPARE_SKIP_ENGINE_TESTS" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --skip-engine-tests"
+          fi
+          # Narrow to the changed modules and their dependents only when no
+          # integration stage consumes the staged artifacts: the narrowed build
+          # installs the reactor with -Dmaven.test.skip=true, which leaves out
+          # the test-jars the integration test cells resolve from ~/.m2.
+          if [ -n "$PREPARE_CHANGED_MODULES" ]; then
+            if [ "$NEEDS_IT_STAGE" = "true" ]; then
+              echo "ℹ️ changed_modules=$PREPARE_CHANGED_MODULES ignored — integration stage needs a full build"
+            else
+              BUILD_CMD="$BUILD_CMD --changed-modules=$PREPARE_CHANGED_MODULES"
+            fi
+          fi
+
           # Modules unchanged since the last default-branch build are restored
           # instead of rebuilt. They bring their surefire-reports and coverage
           # XML with them, so the Publish Test Report gate below still sees the
@@ -208,8 +257,10 @@ jobs:
           $BUILD_CMD
 
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
+      # A skip_tests build legitimately produces no reports, so it skips the
+      # gate rather than failing require_passed_tests.
       - name: Publish Test Report
-        if: always()
+        if: always() && needs.prepare.outputs.skip_tests != 'true'
         uses: mikepenz/action-junit-report@a9170d5795813c01ab4901ffb045b52bab4ab09d #v6.5.0
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/TEST-*.xml

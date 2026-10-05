@@ -52,20 +52,6 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- Webapps -->
-    <dependency>
-      <groupId>org.operaton.bpm.qa</groupId>
-      <artifactId>operaton-qa-integration-tests-webapps</artifactId>
-      <type>test-jar</type>
-      <version>${project.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-        </exclusion>
-      </exclusions>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-bpmn-model</artifactId>
@@ -143,4 +129,30 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>no-test-skip</id>
+      <activation>
+        <property>
+          <name>!maven.test.skip</name>
+        </property>
+      </activation>
+      <dependencies>
+        <!-- Webapps -->
+        <dependency>
+          <groupId>org.operaton.bpm.qa</groupId>
+          <artifactId>operaton-qa-integration-tests-webapps</artifactId>
+          <type>test-jar</type>
+          <version>${project.version}</version>
+          <exclusions>
+            <exclusion>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+            </exclusion>
+          </exclusions>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 </project>

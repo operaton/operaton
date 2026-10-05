@@ -136,13 +136,6 @@
         <type>pom</type>
       </dependency>
       <dependency>
-        <groupId>org.jboss.shrinkwrap.resolver</groupId>
-        <artifactId>shrinkwrap-resolver-bom</artifactId>
-        <version>${version.shrinkwrap.resolvers}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-bom</artifactId>
         <version>${version.mockito}</version>
@@ -283,18 +276,13 @@
 
       <!-- Other dependencies -->
       <!--
-        feel-engine is used unshaded; its dependency tree is pinned here to a single version
+        feel-engine (managed in engine-dmn) is used unshaded; its dependency tree is pinned here to a single version
         platform-wide. Bump these entries together with version.feel-scala: scala-library,
         fastparse (and fastparse's geny/sourcecode) track the feel-engine release, and paranamer
         tracks jackson-module-scala. jackson-module-scala itself has no entry here on purpose -
         it must follow the platform Jackson version and is managed by the imported jackson-bom.
         See https://github.com/operaton/operaton/issues/2654
       -->
-      <dependency>
-        <groupId>org.camunda.feel</groupId>
-        <artifactId>feel-engine</artifactId>
-        <version>${version.feel-scala}</version>
-      </dependency>
       <dependency>
         <groupId>org.scala-lang</groupId>
         <artifactId>scala-library</artifactId>

@@ -354,9 +354,6 @@
                 <replace dir="target/modules" token="@version.json-smart@" value="${version.json-smart}">
                   <include name="**/module.xml"/>
                 </replace>
-                <replace dir="target/modules" token="@version.commons-codec@" value="${version.commons-codec}">
-                  <include name="**/module.xml"/>
-                </replace>
                 <replace dir="target/modules" token="@version.accessors-smart@" value="${version.accessors-smart}">
                   <include name="**/module.xml"/>
                 </replace>

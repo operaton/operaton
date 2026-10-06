@@ -51,6 +51,8 @@ extract() {
       match($0, /@ [^ ]+/); module = substr($0, RSTART + 2, RLENGTH - 2); inlist = 0; next
     }
     index($0, marker) { inlist = 1; next }
+    # resolve-plugins lists the dependencies of each plugin with deeper indentation
+    inlist && /\[INFO\]     +[^ ]/ { next }
     inlist && /\[INFO\]    [^ ]/ {
       line = $0; sub(/.*\[INFO\]    /, "", line); sub(/ -- module.*/, "", line)
       print module " " line; next
@@ -78,6 +80,10 @@ record() {
     }
     extract "The following files have been resolved:" < "$log" > "$out/deps-$name.txt"
     extract "The following plugins have been resolved:" < "$log" > "$out/plugins-$name.txt"
+    if [[ ! -s "$out/deps-$name.txt" || ! -s "$out/plugins-$name.txt" ]]; then
+      echo "No dependencies or plugins extracted, see $log"
+      exit 1
+    fi
     echo "    $(wc -l < "$out/deps-$name.txt") dependency lines, $(wc -l < "$out/plugins-$name.txt") plugin lines"
   done
 }

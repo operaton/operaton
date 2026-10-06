@@ -23,7 +23,6 @@
     <version.geny>1.1.1</version.geny>
     <version.sourcecode>0.4.4</version.sourcecode>
     <version.paranamer>2.8.3</version.paranamer>
-    <version.quarkus>3.33.3.1</version.quarkus>
     <version.spring>7.0.9</version.spring>
     <version.spring-boot>4.1.1</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
@@ -238,11 +237,6 @@
           <version>1.0.7</version>
         </plugin>
         <plugin>
-          <groupId>io.quarkus</groupId>
-          <artifactId>quarkus-extension-maven-plugin</artifactId>
-          <version>${version.quarkus}</version>
-        </plugin>
-        <plugin>
           <groupId>net.kennychua</groupId>
           <artifactId>maven-urlpoller-plugin</artifactId>
           <version>1.0.3</version>
@@ -368,11 +362,6 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>3.6.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.cargo</groupId>
-          <artifactId>cargo-maven3-plugin</artifactId>
-          <version>1.10.29</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -587,11 +576,6 @@
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.8.15</version>
-        </plugin>
-        <plugin>
-          <groupId>org.jboss.shrinkwrap.resolver</groupId>
-          <artifactId>shrinkwrap-resolver-maven-plugin</artifactId>
-          <version>${version.shrinkwrap.resolvers}</version>
         </plugin>
         <plugin>
           <groupId>org.liquibase</groupId>

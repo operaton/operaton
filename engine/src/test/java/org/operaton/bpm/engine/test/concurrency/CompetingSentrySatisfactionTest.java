@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Roman Smirnov
  *
  */
+@Tag("sequential")
 class CompetingSentrySatisfactionTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();

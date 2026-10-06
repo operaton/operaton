@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.concurrency;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Tag;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.CaseService;
@@ -38,8 +39,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
- *
  */
+@Tag("sequential")
 class CompetingParentCompletionTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();

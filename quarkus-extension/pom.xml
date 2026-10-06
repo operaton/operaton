@@ -12,6 +12,9 @@
   <packaging>pom</packaging>
   <name>Operaton - Quarkus Extension - Parent</name>
   <description>${project.name}</description>
+  <properties>
+    <version.quarkus>3.33.3.1</version.quarkus>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>

@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,6 +29,12 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 
 import static org.assertj.core.api.Assertions.fail;
 
+// Tagged "sequential": these tests hand-orchestrate real background threads with
+// blocking wait()/notify() to deterministically reproduce race conditions. CPU
+// contention from concurrent forks changes thread scheduling and can expose latent
+// races in that choreography - see the surefire-plugin config in this module's
+// pom.xml. Tag inherited by all subclasses (ConcurrencyTestCase et al).
+@Tag("sequential")
 public abstract class ConcurrencyTestHelper {
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -110,10 +117,50 @@ public abstract class ConcurrencyTestHelper {
       this.executingThread = executingThread;
     }
 
+    // Bounded so a broken sync choreography fails the test instead of blocking
+    // the fork forever
+    public static final long DEFAULT_SYNC_TIMEOUT_MILLIS = 5 * 60 * 1000L;
+
+    /**
+     * Waits until the controlled thread reaches its next sync point. Fails with a thread dump
+     * if that does not happen within {@link #DEFAULT_SYNC_TIMEOUT_MILLIS}.
+     */
     public void waitForSync() {
-      waitForSync(Long.MAX_VALUE);
+      synchronized (this) {
+        if (exception != null) {
+          if (reportFailure) {
+            return;
+          } else {
+            fail("");
+          }
+        }
+        try {
+          long deadline = System.currentTimeMillis() + DEFAULT_SYNC_TIMEOUT_MILLIS;
+          while (!syncAvailable) {
+            long remaining = deadline - System.currentTimeMillis();
+            if (remaining <= 0) {
+              fail("timed out after %d ms waiting for sync of thread %s (state %s). Thread dump:%n%s"
+                  .formatted(DEFAULT_SYNC_TIMEOUT_MILLIS, executingThread, executingThread == null ? null : executingThread.getState(), threadDump()));
+            }
+            try {
+              wait(remaining);
+            } catch (InterruptedException e) {
+              if (!reportFailure || exception == null) {
+                fail("unexpected interruption");
+              }
+              return;
+            }
+          }
+        } finally {
+          syncAvailable = false;
+        }
+      }
     }
 
+    /**
+     * Waits at most {@code timeout} ms for the controlled thread to reach its next sync point.
+     * Returns silently on timeout, so callers can detect a blocked thread.
+     */
     public void waitForSync(long timeout) {
       synchronized (this) {
         if (exception != null) {
@@ -137,6 +184,18 @@ public abstract class ConcurrencyTestHelper {
           syncAvailable = false;
         }
       }
+    }
+
+    private static String threadDump() {
+      StringBuilder dump = new StringBuilder();
+      Thread.getAllStackTraces().forEach((thread, stackTrace) -> {
+        dump.append("\"%s\" %s%n".formatted(thread.getName(), thread.getState()));
+        for (StackTraceElement element : stackTrace) {
+          dump.append("    at ").append(element).append(System.lineSeparator());
+        }
+        dump.append(System.lineSeparator());
+      });
+      return dump.toString();
     }
 
     public void waitUntilDone() {

@@ -55,9 +55,11 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
 
   private static final Date CURRENT_DATE = new GregorianCalendar(2023, Calendar.MARCH, 18, 12, 0, 0).getTime();
 
-  protected static ThreadControl cleanupThread;
+  protected ThreadControl cleanupThread;
 
-  protected static ThreadLocal<Boolean> syncBeforeFlush = new ThreadLocal<>();
+  // The cleanup thread registers its own ThreadControl here. The interceptor must not read a field
+  // assigned by the test thread, since the cleanup thread can reach its first sync before that assignment.
+  protected static ThreadLocal<ThreadControl> syncBeforeFlush = new ThreadLocal<>();
 
   protected static ControllableJobExecutor jobExecutor;
 
@@ -114,8 +116,9 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
       public <T> T execute(Command<T> command) {
 
         T executed = next.execute(command);
-        if(syncBeforeFlush.get() != null && syncBeforeFlush.get()) {
-          cleanupThread.sync();
+        ThreadControl threadControl = syncBeforeFlush.get();
+        if (threadControl != null) {
+          threadControl.sync();
         }
 
         return executed;
@@ -235,7 +238,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
 
     @Override
     public Void execute(CommandContext commandContext) {
-      syncBeforeFlush.set(true);
+      syncBeforeFlush.set(monitor);
 
       managementService.executeJob(jobId);
 

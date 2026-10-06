@@ -22,6 +22,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Tag;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.ManagementService;
@@ -60,6 +61,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Thorben Lindhauer
  *
  */
+@Tag("sequential")
 class ConcurrentJobExecutorTest {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();

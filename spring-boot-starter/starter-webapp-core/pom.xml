@@ -70,7 +70,6 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
-      <version>${version.mockito}</version>
     </dependency>
   </dependencies>
   <build>

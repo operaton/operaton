@@ -18,16 +18,6 @@
     <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
     <test.excludes>$.</test.excludes>
     <skipTests.operaton-engine>false</skipTests.operaton-engine>
-    <!-- Run tests across multiple concurrent JVM forks (0.5 * available CPU cores).
-         Each fork stays single-threaded internally (execution order is unaffected);
-         only fork count changes. Safe because the h2-in-memory profile already
-         isolates each fork's H2 database via ${surefire.forkNumber} in the JDBC URL.
-         0.5C was chosen empirically over higher multipliers: on a 10-core machine,
-         0.5C (5 forks) measured faster than 0.7C (7 forks), which was faster than 1C
-         (10 forks), which was faster than 1.5C (15 forks) - beyond a certain fork
-         count, oversubscription (JVM startup/classloading cost per fork, GC/memory
-         pressure) outweighs the added parallelism. -->
-    <surefire.forkCount>0.5C</surefire.forkCount>
     <history.level>full</history.level>
     <mail.server.port>5025</mail.server.port>
     <authorizationCheckRevokes>auto</authorizationCheckRevokes>
@@ -782,6 +772,22 @@
 
     <profile>
       <id>h2-in-memory</id>
+      <properties>
+        <!-- Run tests across multiple concurrent JVM forks (0.5 * available CPU cores).
+             Each fork stays single-threaded internally (execution order is unaffected);
+             only fork count changes. Safe here because this profile isolates each
+             fork's H2 database via ${surefire.forkNumber} in the JDBC URL below.
+             Scoped to this profile only: the container-backed profiles (postgresql,
+             mysql, mariadb, oracle, db2, sqlserver) use jdbc:tc: URLs whose Testcontainers
+             cache is JVM-local, so a higher fork count would start one database
+             container (plus the configured test heap) per fork.
+             0.5C was chosen empirically over higher multipliers: on a 10-core machine,
+             0.5C (5 forks) measured faster than 0.7C (7 forks), which was faster than 1C
+             (10 forks), which was faster than 1.5C (15 forks) - beyond a certain fork
+             count, oversubscription (JVM startup/classloading cost per fork, GC/memory
+             pressure) outweighs the added parallelism. -->
+        <surefire.forkCount>0.5C</surefire.forkCount>
+      </properties>
       <build>
         <plugins>
           <plugin>

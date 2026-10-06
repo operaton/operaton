@@ -75,7 +75,9 @@
         <type>pom</type>
       </dependency>
       <!-- Netty - Place before Spring Boot, which manages 4.2.15 (CVE-2026-56745
-        et al.). Remove once spring-boot-dependencies manages netty >= 4.2.16. -->
+        et al.). Remove once spring-boot-dependencies manages netty >= 4.2.16 and the
+        Quarkus/Vert.x versions used by quarkus-extension ship netty >= 4.2.16, as
+        quarkus-extension relies on this pin as well. -->
       <dependency>
         <groupId>io.netty</groupId>
         <artifactId>netty-bom</artifactId>

@@ -455,6 +455,56 @@
             <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
+        <executions>
+          <!-- With forkCount > 1, Surefire's JUnit Platform provider can dispatch a
+               @Nested class to a different JVM fork than its enclosing class, running
+               it twice (once as part of the enclosing class's own cascade, once
+               standalone in the other fork) - this happens regardless of the
+               include/exclude file patterns above, since it's how Surefire's JUnit5
+               test-plan-based fork distribution works, not a file-scan artifact.
+               Excluding nested classes from the scan doesn't prevent it either (tried
+               that - it broke discovery of classes whose only tests live in @Nested
+               children, e.g. JobExecutorTestCase, since Surefire's own "does this class
+               have tests" pre-filter also consults that same scan). All 3 classes in
+               this module using @Nested (ProcessEngineExtensionEngineRetentionTest,
+               JobExecutorTestCase, SchemaLogTest) are tagged @Tag("sequential") and run
+               here, single-forked, instead.
+
+               Also here: the org.operaton.bpm.engine.test.concurrency package, which
+               hand-orchestrates real background threads with blocking wait()/notify()
+               to deterministically reproduce race conditions. CPU contention from
+               concurrent forks changes thread scheduling and exposes latent races in
+               that choreography (e.g. CompetingHistoryCleanupAcquisitionTest hung because
+               its controlled thread could sync on a stale static ThreadControl - fixed,
+               see that class). These tests are cheap, so they stay single-forked as a
+               precaution; ThreadControl.waitForSync() is also bounded and fails with a
+               thread dump instead of hanging. Tagged via
+               the package's shared base classes (ConcurrencyTestHelper,
+               AbstractCompetingTransactionsOptimisticLockingTest - @Tag is inherited
+               through the class hierarchy) plus the handful of classes with no shared
+               base. -->
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <excludedGroups>sequential</excludedGroups>
+            </configuration>
+          </execution>
+          <execution>
+            <id>sequential-tests</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <forkCount>1</forkCount>
+              <groups>sequential</groups>
+            </configuration>
+          </execution>
+        </executions>
         </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -722,6 +772,22 @@
 
     <profile>
       <id>h2-in-memory</id>
+      <properties>
+        <!-- Run tests across multiple concurrent JVM forks (0.5 * available CPU cores).
+             Each fork stays single-threaded internally (execution order is unaffected);
+             only fork count changes. Safe here because this profile isolates each
+             fork's H2 database via ${surefire.forkNumber} in the JDBC URL below.
+             Scoped to this profile only: the container-backed profiles (postgresql,
+             mysql, mariadb, oracle, db2, sqlserver) use jdbc:tc: URLs whose Testcontainers
+             cache is JVM-local, so a higher fork count would start one database
+             container (plus the configured test heap) per fork.
+             0.5C was chosen empirically over higher multipliers: on a 10-core machine,
+             0.5C (5 forks) measured faster than 0.7C (7 forks), which was faster than 1C
+             (10 forks), which was faster than 1.5C (15 forks) - beyond a certain fork
+             count, oversubscription (JVM startup/classloading cost per fork, GC/memory
+             pressure) outweighs the added parallelism. -->
+        <surefire.forkCount>0.5C</surefire.forkCount>
+      </properties>
       <build>
         <plugins>
           <plugin>

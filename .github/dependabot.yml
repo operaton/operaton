@@ -66,8 +66,10 @@ updates:
           - "org.jacoco:jacoco-maven-plugin"
           - "org.openapitools:openapi-generator-maven-plugin"
           - "org.sonatype.central:central-publishing-maven-plugin"
+  # Spring Boot updates: the BOM imports spring-boot-dependencies with ${version.spring-boot},
+  # but is only part of the reactor in a profile, which the "/" entry does not discover.
   - package-ecosystem: "maven"
-    directory: "/spring-boot-starter/starter"
+    directory: "/bom/internal-dependencies"
     schedule:
       interval: "daily"
       time: "00:45"

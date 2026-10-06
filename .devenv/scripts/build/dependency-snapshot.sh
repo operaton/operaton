@@ -25,6 +25,8 @@
 # Set PROFILE_SET to record only one profile set (e.g. PROFILE_SET=default), or
 # SKIP_SETS to a space-separated list of profile sets to leave out.
 # Set EXTRA_ARGS to pass additional arguments to every Maven invocation.
+# Set ALLOW_FAILURE=1 to record a snapshot even if the build fails (combine with
+# EXTRA_ARGS=-fae to keep building the modules not affected by the failure).
 
 set -euo pipefail
 
@@ -38,7 +40,7 @@ PROFILE_SETS=(
   "distro=-Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-starter,distro-webjar,distro-webjar-neo"
   "it-engine-tomcat=-Pdistro,engine-integration,tomcat,h2"
   "it-webapps-wildfly=-Pdistro,webapps-integration,wildfly,postgresql"
-  "migration=-Pinstance-migration,rolling-update,h2"
+  "migration=-Pdistro,instance-migration,rolling-update,h2"
 )
 
 # Turns maven log output into "<artifactId> <resolved entry>" lines, sorted.
@@ -70,7 +72,10 @@ record() {
     # shellcheck disable=SC2086
     (cd "$ROOT_DIR" && ./mvnw install dependency:list dependency:resolve-plugins \
       -DskipTests -DskipITs=true -Dskip.frontend.build=true -Dmaven.build.cache.enabled=false \
-      -Dsort=true $profiles $EXTRA_ARGS) > "$log" 2>&1 || { echo "Build failed, see $log"; exit 1; }
+      -Dsort=true $profiles $EXTRA_ARGS) > "$log" 2>&1 || {
+      echo "Build failed, see $log"
+      [[ -n "${ALLOW_FAILURE:-}" ]] || exit 1
+    }
     extract "The following files have been resolved:" < "$log" > "$out/deps-$name.txt"
     extract "The following plugins have been resolved:" < "$log" > "$out/plugins-$name.txt"
     echo "    $(wc -l < "$out/deps-$name.txt") dependency lines, $(wc -l < "$out/plugins-$name.txt") plugin lines"

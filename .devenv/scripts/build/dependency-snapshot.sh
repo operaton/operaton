@@ -63,6 +63,13 @@ extract() {
 
 record() {
   local label="$1" out="$SNAPSHOT_DIR/$1"
+  if [[ -z "${PROFILE_SET:-}" && -z "${SKIP_SETS:-}" ]]; then
+    # a full run replaces the snapshot
+    rm -rf "$out"
+  elif [[ -d "$out" ]]; then
+    # a partial run adds to the snapshot; sets recorded before are kept as they are
+    echo "Adding to existing snapshot '$label', keeping: $(cd "$out" && ls deps-*.txt 2>/dev/null | tr '\n' ' ')"
+  fi
   mkdir -p "$out"
   for entry in "${PROFILE_SETS[@]}"; do
     local name="${entry%%=*}" profiles="${entry#*=}"
@@ -76,7 +83,7 @@ record() {
       -DskipTests -DskipITs=true -Dskip.frontend.build=true -Dmaven.build.cache.enabled=false \
       -Dsort=true $profiles $EXTRA_ARGS) > "$log" 2>&1 || {
       echo "Build failed, see $log"
-      [[ -n "${ALLOW_FAILURE:-}" ]] || exit 1
+      [[ "${ALLOW_FAILURE:-}" == "1" ]] || exit 1
     }
     extract "The following files have been resolved:" < "$log" > "$out/deps-$name.txt"
     extract "The following plugins have been resolved:" < "$log" > "$out/plugins-$name.txt"

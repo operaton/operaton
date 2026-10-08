@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.Date;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
@@ -126,13 +127,13 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity {
       return false;
     }
     final MetricIntervalEntity other = (MetricIntervalEntity) obj;
-    if (this.name == null ? (other.name != null) : !this.name.equals(other.name)) {
+    if (!Objects.equals(this.name, other.name)) {
       return false;
     }
-    if (this.reporter == null ? (other.reporter != null) : !this.reporter.equals(other.reporter)) {
+    if (!Objects.equals(this.reporter, other.reporter)) {
       return false;
     }
-    return !(this.timestamp != other.timestamp && (this.timestamp == null || !this.timestamp.equals(other.timestamp)));
+    return Objects.equals(this.timestamp, other.timestamp);
   }
 
 }

@@ -75,9 +75,10 @@ public final class CompensationUtil {
     }
 
     // signal compensation events in REVERSE order of their 'created' timestamp
-    eventSubscriptions.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
+    List<EventSubscriptionEntity> sortedEventSubscriptions = new ArrayList<>(eventSubscriptions);
+    sortedEventSubscriptions.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
 
-    for (EventSubscriptionEntity compensateEventSubscriptionEntity : eventSubscriptions) {
+    for (EventSubscriptionEntity compensateEventSubscriptionEntity : sortedEventSubscriptions) {
       compensateEventSubscriptionEntity.eventReceived(null, async);
     }
   }

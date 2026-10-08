@@ -747,7 +747,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   @Override
   public ProcessDefinitionEntity getProcessDefinition() {
     ensureProcessDefinitionInitialized();
-    return (ProcessDefinitionEntity) requireNonNull(processDefinition);
+    return (ProcessDefinitionEntity) processDefinition;
   }
 
   public void setProcessDefinitionId(@Nullable String processDefinitionId) {
@@ -755,8 +755,8 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   }
 
   @Override
-  public String getProcessDefinitionId() {
-    return requireNonNull(processDefinitionId);
+  public @Nullable String getProcessDefinitionId() {
+    return processDefinitionId;
   }
 
   /**
@@ -804,7 +804,6 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
           ensureExecutionTreeInitialized();
         } else {
           processInstance = Context.getCommandContext().getExecutionManager().findExecutionById(processInstanceId);
-          EnsureUtil.ensureNotNull("Execution '%s': Process instance '%s' not found".formatted(id, processInstanceId), "processInstance", processInstance);
         }
       }
     }
@@ -834,9 +833,9 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
 
   /** ensures initialization and returns the activity */
   @Override
-  public ActivityImpl getActivity() {
+  public @Nullable ActivityImpl getActivity() {
     ensureActivityInitialized();
-    return requireNonNull(super.getActivity());
+    return super.getActivity();
   }
 
   @Override

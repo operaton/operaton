@@ -2175,12 +2175,11 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * @return true if the execution is on a dispatchable state, false otherwise
    */
   private boolean isOnDispatchableState(PvmExecutionImpl targetScope) {
-    ActivityImpl targetActivity = requireNonNull(targetScope.getActivity());
     return
       //if not leaf, activity id is null -> dispatchable
       targetScope.getActivityId() == null ||
         // if leaf and not scope -> dispatchable
-        !targetActivity.isScope() ||
+        !requireNonNull(targetScope.getActivity()).isScope() ||
         // if leaf, scope and state in default -> dispatchable
         (targetScope.isInState(ActivityInstanceState.DEFAULT));
   }

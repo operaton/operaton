@@ -59,12 +59,12 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
     // calculate the propagating execution
     PvmExecutionImpl propagatingExecution = execution;
 
-    PvmActivity activity = requireNonNull(execution.getActivity());
+    PvmActivity activity = execution.getActivity();
     List<PvmTransition> transitionsToTake = execution.getTransitionsToTake();
     execution.setTransitionsToTake(emptyList());
 
     // check whether the current scope needs to be destroyed
-    if (execution.isScope() && activity.isScope() && !LegacyBehavior.destroySecondNonScope(execution)) {
+    if (execution.isScope() && requireNonNull(activity).isScope() && !LegacyBehavior.destroySecondNonScope(execution)) {
       if (execution.isConcurrent()) {
         // legacy behavior
         LegacyBehavior.destroyConcurrentScope(execution);

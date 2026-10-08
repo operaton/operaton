@@ -1402,11 +1402,10 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   private void linkToParent(ExecutionEntity execution, Map<String, ExecutionEntity> executionsMap) {
-    String parentid = execution.getParentId();
-    ExecutionEntity parentExecution = executionsMap.get(parentid);
+    ExecutionEntity parentExecution = executionsMap.get(execution.getParentId());
 
     if (parentExecution == null) {
-      throw LOG.resolveParentOfExecutionFailedException(parentid, execution.getId());
+      throw LOG.resolveParentOfExecutionFailedException(execution.getParentId(), execution.getId());
     }
 
     execution.processInstance = this;

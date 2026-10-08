@@ -52,11 +52,11 @@ public interface ActivityExecution extends DelegateExecution {
 
   void setActivityInstanceId(@Nullable String id);
 
-  /** return the Id of the activity instance currently executed by this execution */
+  /** return the id of the activity instance currently executed by this execution */
   @Override
   @Nullable String getActivityInstanceId();
 
-  /** return the Id of the parent activity instance currently executed by this execution */
+  /** return the id of the parent activity instance currently executed by this execution */
   @Override
   @Nullable String getParentActivityInstanceId();
 
@@ -101,6 +101,7 @@ public interface ActivityExecution extends DelegateExecution {
    *
    * @param caseDefinition The {@link CmmnCaseDefinition} of the sub case instance.
    */
+  @SuppressWarnings("unused")
   CmmnCaseInstance createSubCaseInstance(CmmnCaseDefinition caseDefinition);
 
   /**
@@ -115,7 +116,7 @@ public interface ActivityExecution extends DelegateExecution {
   CmmnCaseInstance createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey);
 
   /**
-   * returns the parent of this execution, or null if there is no parent.
+   * returns the parent of this execution, or {@code null} if there is no parent.
    */
   @Nullable ActivityExecution getParent();
 
@@ -181,7 +182,7 @@ public interface ActivityExecution extends DelegateExecution {
   /**
    * Inactivates this execution.
    * This is useful for example in a join: the execution
-   * still exists, but it is not longer active.
+   * still exists, but it is no longer active.
    */
   void inactivate();
 
@@ -244,7 +245,7 @@ public interface ActivityExecution extends DelegateExecution {
   TransitionImpl getTransition();
 
   /**
-   * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not null).
+   * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not {@code null}).
    *
    * <p>
    * For a given target scope, this method returns the scope execution.
@@ -252,7 +253,6 @@ public interface ActivityExecution extends DelegateExecution {
    *
    * @param targetScope scope activity or process definition for which the scope execution should be found;
    *   must be an ancestor of the execution's current activity
-   * @return
    */
   @Nullable ActivityExecution findExecutionForFlowScope(PvmScope targetScope);
 
@@ -261,7 +261,7 @@ public interface ActivityExecution extends DelegateExecution {
    * are ancestors of the activity currently executed by this execution.
    *
    * <p>
-   * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not null).
+   * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not {@code null}).
    * </p>
    */
   Map<ScopeImpl, PvmExecutionImpl> createActivityExecutionMapping();

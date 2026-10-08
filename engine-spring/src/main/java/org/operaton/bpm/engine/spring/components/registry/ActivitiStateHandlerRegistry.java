@@ -114,7 +114,7 @@ public @NullMarked class ActivitiStateHandlerRegistry extends ReceiveTaskActivit
      *
      * @param processName the name of the process
      * @param stateName   the name of the state
-     * @return an unambiguous {@link org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistry} or null
+     * @return an unambiguous {@link org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistry} or {@code null}
      */
     public @Nullable ActivitiStateHandlerRegistration findRegistrationForProcessAndState(String processName, String stateName) {
 

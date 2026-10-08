@@ -21,14 +21,15 @@ import java.io.Serial;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
- * <p>Exception thrown during the encryption process.</p>
+ * Exception thrown during the encryption process.
  *
- * <p><strong>Possible reasons:</strong>
+ * <p>
+ * <strong>Possible reasons:</strong>
+ * </p>
  * <ul>
  *  <li>several hashing algorithms with the same prefix are added</li>
  *  <li>cannot resolve the hash algorithm prefix from a given encrypted password</li>
  * </ul>
- * </p>
  *
  */
 public class PasswordEncryptionException extends ProcessEngineException {

@@ -18,11 +18,11 @@ package org.operaton.bpm.integrationtest;
 
 import java.text.SimpleDateFormat;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import kong.unirest.json.JSONArray;
-import kong.unirest.json.JSONObject;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.json.JSONArray;
+import kong.unirest.core.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

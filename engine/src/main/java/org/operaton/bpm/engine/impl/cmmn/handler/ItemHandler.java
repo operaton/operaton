@@ -175,7 +175,7 @@ public abstract @NullMarked class ItemHandler extends CmmnElementHandler<CmmnEle
     String id = element.getId();
     CmmnActivity parent = context.getParent();
 
-    CmmnActivity newActivity = null;
+    CmmnActivity newActivity;
 
     if (parent != null) {
       newActivity = parent.createActivity(id);

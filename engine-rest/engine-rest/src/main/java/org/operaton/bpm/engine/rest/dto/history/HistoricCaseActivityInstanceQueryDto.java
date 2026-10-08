@@ -232,7 +232,7 @@ public class HistoricCaseActivityInstanceQueryDto extends AbstractQueryDto<Histo
       query.caseActivityInstanceId(caseActivityInstanceId);
     }
     if (caseActivityInstanceIds != null && !caseActivityInstanceIds.isEmpty()) {
-      query.caseActivityInstanceIdIn(caseActivityInstanceIds.toArray(new String[caseActivityInstanceIds.size()]));
+      query.caseActivityInstanceIdIn(caseActivityInstanceIds.toArray(String[]::new));
     }
     if (caseInstanceId != null) {
       query.caseInstanceId(caseInstanceId);
@@ -247,7 +247,7 @@ public class HistoricCaseActivityInstanceQueryDto extends AbstractQueryDto<Histo
       query.caseActivityId(caseActivityId);
     }
     if (caseActivityIds != null && !caseActivityIds.isEmpty()) {
-      query.caseActivityIdIn(caseActivityIds.toArray(new String[caseActivityIds.size()]));
+      query.caseActivityIdIn(caseActivityIds.toArray(String[]::new));
     }
     if (caseActivityName != null) {
       query.caseActivityName(caseActivityName);
@@ -295,7 +295,7 @@ public class HistoricCaseActivityInstanceQueryDto extends AbstractQueryDto<Histo
       query.terminated();
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();

@@ -29,14 +29,12 @@ import org.operaton.bpm.engine.impl.scripting.engine.Resolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ResolverFactory;
 
 /**
- * <p>
  * {@link ResolverFactory} and {@link Resolver} classes to make the beans
  * managed by the Spring container available in scripting
- * </p>
  *
  * <p>
  * {@see org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration#initScripting()}
- * <p>
+ * </p>
  *
  */
 public class SpringBeansResolverFactory implements ResolverFactory, Resolver {

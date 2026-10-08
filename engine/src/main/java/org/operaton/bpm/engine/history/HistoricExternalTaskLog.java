@@ -22,12 +22,14 @@ import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 
 /**
- * <p>The {@link HistoricExternalTaskLog} is used to have a log containing
+ * The {@link HistoricExternalTaskLog} is used to have a log containing
  * information about {@link ExternalTask task} execution. The log provides
- * details about the last lifecycle state of a {@link ExternalTask task}:</p>
+ * details about the last lifecycle state of a {@link ExternalTask task}:
  *
+ * <p>
  * An instance of {@link HistoricExternalTaskLog} represents the latest historic
  * state in the lifecycle of a {@link ExternalTask task}.
+ * </p>
  *
  */
 public interface HistoricExternalTaskLog {

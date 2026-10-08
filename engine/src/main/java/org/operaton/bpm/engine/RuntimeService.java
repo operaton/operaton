@@ -52,7 +52,7 @@ public @NullMarked interface RuntimeService {
   /**
    * Starts a new process instance in the latest version of the process definition with the given key.
    *
-   * @param processDefinitionKey key of process definition, cannot be null.
+   * @param processDefinitionKey key of process definition, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no process definition is deployed with the given key.
@@ -83,7 +83,7 @@ public @NullMarked interface RuntimeService {
    * </p>
    *
    * @param processDefinitionKey
-   *          key of process definition, cannot be null.
+   *          key of process definition, cannot be {@code null}.
    * @param businessKey
    *          a key that uniquely identifies the process instance in the context
    *          of the given process definition.
@@ -117,7 +117,7 @@ public @NullMarked interface RuntimeService {
    * </p>
    *
    * @param processDefinitionKey
-   *          key of process definition, cannot be null.
+   *          key of process definition, cannot be {@code null}.
    * @param businessKey
    *          a key that uniquely identifies the process instance in the context
    *          of the given process definition.
@@ -135,8 +135,8 @@ public @NullMarked interface RuntimeService {
 
   /** Starts a new process instance in the latest version of the process definition with the given key
    *
-   * @param processDefinitionKey key of process definition, cannot be null.
-   * @param variables the variables to pass, can be null.
+   * @param processDefinitionKey key of process definition, cannot be {@code null}.
+   * @param variables the variables to pass, can be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no process definition is deployed with the given key.
@@ -169,8 +169,8 @@ public @NullMarked interface RuntimeService {
    * The combination of processdefinitionKey-businessKey must be unique.
    * </p>
    *
-   * @param processDefinitionKey key of process definition, cannot be null.
-   * @param variables the variables to pass, can be null.
+   * @param processDefinitionKey key of process definition, cannot be {@code null}.
+   * @param variables the variables to pass, can be {@code null}.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
    *                    given process definition.
    *
@@ -204,8 +204,8 @@ public @NullMarked interface RuntimeService {
    * <p>
    * The combination of processdefinitionKey-businessKey must be unique.
    * </p>
-   * @param processDefinitionKey key of process definition, cannot be null.
-   * @param variables the variables to pass, can be null.
+   * @param processDefinitionKey key of process definition, cannot be {@code null}.
+   * @param variables the variables to pass, can be {@code null}.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
    *                    given process definition.
    * @param caseInstanceId
@@ -222,7 +222,7 @@ public @NullMarked interface RuntimeService {
 
   /** Starts a new process instance in the exactly specified version of the process definition with the given id.
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no process definition is deployed with the given key.
@@ -251,7 +251,7 @@ public @NullMarked interface RuntimeService {
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
    * </p>
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
    *                    given process definition.
    *
@@ -282,7 +282,7 @@ public @NullMarked interface RuntimeService {
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
    * </p>
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
    *                    given process definition.
    * @param caseInstanceId
@@ -299,8 +299,8 @@ public @NullMarked interface RuntimeService {
 
   /** Starts a new process instance in the exactly specified version of the process definition with the given id.
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
-   * @param variables variables to be passed, can be null
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
+   * @param variables variables to be passed, can be {@code null}
    *
    * @throws ProcessEngineException
    *          when no process definition is deployed with the given key.
@@ -329,10 +329,10 @@ public @NullMarked interface RuntimeService {
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
    * </p>
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
    *                    given process definition.
-   * @param variables variables to be passed, can be null
+   * @param variables variables to be passed, can be {@code null}
    *
    * @throws ProcessEngineException
    *          when no process definition is deployed with the given key.
@@ -361,13 +361,13 @@ public @NullMarked interface RuntimeService {
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
    * </p>
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
    *                    given process definition.
    * @param caseInstanceId
    *          an id of a case instance to associate the process instance with
    *          a case instance.
-   * @param variables variables to be passed, can be null
+   * @param variables variables to be passed, can be {@code null}
    *
    * @throws ProcessEngineException
    *          when no process definition is deployed with the given key.
@@ -405,11 +405,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessage(String messageName);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, Map)}. This method allows
    * specifying a business key.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -426,11 +428,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessage(String messageName, String businessKey);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String)}. In addition, this method allows
    * specifying a the payload of the message as a map of process variables.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -450,11 +454,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessage(String messageName, Map<String, Object> processVariables);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, Map)}. In addition, this method allows
    * specifying a business key.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -476,17 +482,19 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessage(String messageName, String businessKey, Map<String, Object> processVariables);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String)}. In addition, this method allows
    * specifying the exactly version of the process definition with the given id.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
-   *          bpmn20 {@code <message name="messageName" />} element, cannot be null.
+   *          bpmn20 {@code <message name="messageName" />} element, cannot be {@code null}.
    * @param processDefinitionId
-   *      the id of the process definition, cannot be null.
+   *      the id of the process definition, cannot be {@code null}.
    *
    * @return the {@link ProcessInstance} object representing the started process instance
    *
@@ -501,17 +509,19 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, String)}. In addition, this method allows
    * specifying the exactly version of the process definition with the given id.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
-   *          bpmn20 {@code <message name="messageName" />} element, cannot be null.
+   *          bpmn20 {@code <message name="messageName" />} element, cannot be {@code null}.
    * @param processDefinitionId
-   *      the id of the process definition, cannot be null.
+   *      the id of the process definition, cannot be {@code null}.
    * @param businessKey
    *          the business key which is added to the started process instance
    *
@@ -528,17 +538,19 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId, String businessKey);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, Map)}. In addition, this method allows
    * specifying the exactly version of the process definition with the given id.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
-   *          bpmn20 {@code <message name="messageName" />} element, cannot be null.
+   *          bpmn20 {@code <message name="messageName" />} element, cannot be {@code null}.
    * @param processDefinitionId
-   *      the id of the process definition, cannot be null.
+   *      the id of the process definition, cannot be {@code null}.
    * @param processVariables
    *          the 'payload' of the message. The variables are added as processes
    *          variables to the started process instance.
@@ -557,17 +569,19 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId, Map<String, Object> processVariables);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, String, Map)}. In addition, this method allows
    * specifying the exactly version of the process definition with the given id.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
-   *          bpmn20 {@code <message name="messageName" />} element, cannot be null.
+   *          bpmn20 {@code <message name="messageName" />} element, cannot be {@code null}.
    * @param processDefinitionId
-   *      the id of the process definition, cannot be null.
+   *      the id of the process definition, cannot be {@code null}.
    * @param businessKey
    *          the business key which is added to the started process instance
    * @param processVariables
@@ -593,11 +607,11 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceId id of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceId id of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    *
    * @throws BadUserRequestException
-   *          when the processInstanceId is null.
+   *          when the processInstanceId is {@code null}.
    * @throws NotFoundException
    *          when no process instance is found with the given processInstanceId.
    * @throws AuthorizationException
@@ -613,13 +627,13 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceIds id's of process instances to delete, cannot be null if processInstanceQuery is null.
+   * @param processInstanceIds id's of process instances to delete, cannot be {@code null} if processInstanceQuery is {@code null}.
    * @param processInstanceQuery query that will be used to fetch affected process instances.
-   *                             Cannot be null if processInstanceIds are null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   *                             Cannot be {@code null} if processInstanceIds are {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    *
    * @throws BadUserRequestException
-   *          when no process instance is found with the given id or id is null.
+   *          when no process instance is found with the given id or id is {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
@@ -633,13 +647,13 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceIds id's of process instances to delete, cannot be null if processInstanceQuery is null.
+   * @param processInstanceIds id's of process instances to delete, cannot be {@code null} if processInstanceQuery is {@code null}.
    * @param processInstanceQuery query that will be used to fetch affected process instances.
-   *                             Cannot be null if processInstanceIds are null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   *                             Cannot be {@code null} if processInstanceIds are {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners skips custom execution listeners when removing instances
    * @throws BadUserRequestException
-   *          when no process instance is found with the given id or id is null.
+   *          when no process instance is found with the given id or id is {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
@@ -653,15 +667,15 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceIds id's of process instances to delete, cannot be null if processInstanceQuery is null.
+   * @param processInstanceIds id's of process instances to delete, cannot be {@code null} if processInstanceQuery is {@code null}.
    * @param processInstanceQuery query that will be used to fetch affected process instances.
-   *                             Cannot be null if processInstanceIds are null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   *                             Cannot be {@code null} if processInstanceIds are {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners skips custom execution listeners when removing instances
    * @param skipSubprocesses skips subprocesses when removing instances
    *
    * @throws BadUserRequestException
-   *          when no process instance is found with the given id or id is null.
+   *          when no process instance is found with the given id or id is {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
@@ -679,7 +693,7 @@ public @NullMarked interface RuntimeService {
    * @param processInstanceQuery query that will be used to fetch affected process instances.
    * @param historicProcessInstanceQuery query that will be used to fetch affected
    *                                     process instances based on history data.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners skips custom execution listeners when removing instances
    * @param skipSubprocesses skips subprocesses when removing instances
    *
@@ -707,7 +721,7 @@ public @NullMarked interface RuntimeService {
    * @param processInstanceQuery query that will be used to fetch affected process instances.
    * @param historicProcessInstanceQuery query that will be used to fetch affected
    *                                     process instances based on history data.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners skips custom execution listeners when removing instances
    * @param skipSubprocesses skips subprocesses when removing instances
    * @param skipIoMappings specifies whether input/output mappings for tasks should be invoked
@@ -734,11 +748,11 @@ public @NullMarked interface RuntimeService {
    * </p>
    *
    * @param processInstanceQuery query that will be used to fetch affected process instances.
-   *                             Cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   *                             Cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    *
    * @throws BadUserRequestException
-   *          when no process instance is found with the given id or id is null.
+   *          when no process instance is found with the given id or id is {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
@@ -757,11 +771,11 @@ public @NullMarked interface RuntimeService {
    * will be deleted.
    * </p>
    *
-   * @param processInstanceIds id's of process instances to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceIds id's of process instances to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    *
    * @throws BadUserRequestException
-   *          when no process instance is found with the given id or id is null.
+   *          when no process instance is found with the given id or id is {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_RUNNING_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
@@ -775,13 +789,13 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceId id of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceId id of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    *
    * @throws BadUserRequestException
-   *          when the processInstanceId is null.
+   *          when the processInstanceId is {@code null}.
    * @throws NotFoundException
    *          when no process instance is found with the given processInstanceId.
    * @throws AuthorizationException
@@ -797,8 +811,8 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceId id of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceId id of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    * @param externallyTerminated indicator if deletion triggered from external context, for instance
@@ -806,7 +820,7 @@ public @NullMarked interface RuntimeService {
    *
    *
    * @throws BadUserRequestException
-   *          when the processInstanceId is null.
+   *          when the processInstanceId is {@code null}.
    * @throws NotFoundException
    *          when no process instance is found with the given processInstanceId.
    * @throws AuthorizationException
@@ -823,8 +837,8 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceIds ids of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceIds ids of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    * @param externallyTerminated indicator if deletion triggered from external context, for instance
@@ -832,7 +846,7 @@ public @NullMarked interface RuntimeService {
    *
    *
    * @throws BadUserRequestException
-   *          when a processInstanceId is null.
+   *          when a processInstanceId is {@code null}.
    * @throws NotFoundException
    *          when no process instance is found with a given processInstanceId.
    * @throws AuthorizationException
@@ -848,8 +862,8 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceIds ids of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceIds ids of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    * @param externallyTerminated indicator if deletion triggered from external context, for instance
@@ -858,7 +872,7 @@ public @NullMarked interface RuntimeService {
    *
    *
    * @throws BadUserRequestException
-   *          when a processInstanceId is null.
+   *          when a processInstanceId is {@code null}.
    * @throws NotFoundException
    *          when no process instance is found with a given processInstanceId.
    * @throws AuthorizationException
@@ -875,8 +889,8 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceIds ids of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceIds ids of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    * @param externallyTerminated indicator if deletion triggered from external context, for instance
@@ -885,7 +899,7 @@ public @NullMarked interface RuntimeService {
    * @param skipIoMappings specifies whether input/output mappings for tasks should be invoked
    *
    * @throws BadUserRequestException
-   *          when a processInstanceId is null.
+   *          when a processInstanceId is {@code null}.
    * @throws NotFoundException
    *          when no process instance is found with a given processInstanceId.
    * @throws AuthorizationException
@@ -906,8 +920,8 @@ public @NullMarked interface RuntimeService {
    * Does not fail if a process instance was not found.
    * </p>
    *
-   * @param processInstanceIds ids of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceIds ids of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    * @param externallyTerminated indicator if deletion triggered from external context, for instance
@@ -916,7 +930,7 @@ public @NullMarked interface RuntimeService {
    *
    *
    * @throws BadUserRequestException
-   *          when a processInstanceId is null.
+   *          when a processInstanceId is {@code null}.
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -931,8 +945,8 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceId id of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceId id of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    * @param externallyTerminated indicator if deletion triggered from external context, for instance
@@ -941,7 +955,7 @@ public @NullMarked interface RuntimeService {
    *
    *
    * @throws BadUserRequestException
-   *          when the processInstanceId is null.
+   *          when the processInstanceId is {@code null}.
    * @throws NotFoundException
    *          when no process instance is found with the given processInstanceId.
    * @throws AuthorizationException
@@ -957,8 +971,8 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param processInstanceId id of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceId id of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    * @param externallyTerminated indicator if deletion triggered from external context, for instance
@@ -968,7 +982,7 @@ public @NullMarked interface RuntimeService {
    *
    *
    * @throws BadUserRequestException
-   *          when the processInstanceId is null.
+   *          when the processInstanceId is {@code null}.
    * @throws NotFoundException
    *          when no process instance is found with the given processInstanceId.
    * @throws AuthorizationException
@@ -989,8 +1003,8 @@ public @NullMarked interface RuntimeService {
    * Does not fail if a process instance was not found.
    * </p>
    *
-   * @param processInstanceId id of process instance to delete, cannot be null.
-   * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
+   * @param processInstanceId id of process instance to delete, cannot be {@code null}.
+   * @param deleteReason reason for deleting, which will be stored in the history. Can be {@code null}.
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
    * @param externallyTerminated indicator if deletion triggered from external context, for instance
@@ -1000,7 +1014,7 @@ public @NullMarked interface RuntimeService {
    *
    *
    * @throws BadUserRequestException
-   *          when processInstanceId is null.
+   *          when processInstanceId is {@code null}.
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#DELETE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#DELETE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -1016,7 +1030,7 @@ public @NullMarked interface RuntimeService {
    * Deletion propagates upward as far as necessary.
    * </p>
    *
-   * @param executionId id of the process instance or the execution, cannot be null.
+   * @param executionId id of the process instance or the execution, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no execution exists with the given executionId.
@@ -1027,10 +1041,10 @@ public @NullMarked interface RuntimeService {
   List<String> getActiveActivityIds(String executionId);
 
   /**
-   * <p>Allows retrieving the activity instance tree for a given process instance.
+   * Allows retrieving the activity instance tree for a given process instance.
    * The activity instance tree is aligned with the concept of scope in the BPMN specification.
    * Activities that are "on the same level of subprocess" (ie. part of the same scope, contained
-   * in the same subprocess) will have their activity instances at the same level in the tree.</p>
+   * in the same subprocess) will have their activity instances at the same level in the tree.
    *
    * <h2>Examples:</h2>
    * <p><ul>
@@ -1045,12 +1059,15 @@ public @NullMarked interface RuntimeService {
    * </ul></p>
    *
    * <h2>Identity & Uniqueness:</h2>
-   * <p>Each activity instance is assigned a unique Id. The id is persistent, if you invoke this method multiple times,
+   * <p>
+   * Each activity instance is assigned a unique Id. The id is persistent, if you invoke this method multiple times,
    * the same activity instance ids will be returned for the same activity instances. (However, there might be
-   * different executions assigned, see below)</p>
+   * different executions assigned, see below)
+   * </p>
    *
    * <h2>Relation to Executions</h2>
-   * <p>The {@link Execution} concept in the process engine is not completely aligned with the activity
+   * <p>
+   * The {@link Execution} concept in the process engine is not completely aligned with the activity
    * instance concept because the execution tree is in general not aligned with the activity / scope concept in
    * BPMN. In general, there is a n-1 relationship between Executions and ActivityInstances, ie. at a given
    * point in time, an activity instance can be linked to multiple executions. In addition, it is not guaranteed
@@ -1060,13 +1077,16 @@ public @NullMarked interface RuntimeService {
    * but another execution ends it. Another special case is the process instance: if the process instance is executing
    * a non-scope activity (for example a user task) below the process definition scope, it will be referenced
    * by both the root activity instance and the user task activity instance.
+   * </p>
    *
-   * <p><strong>If you need to interpret the state of a process instance in terms of a BPMN process model, it is usually easier to
-   * use the activity instance tree as opposed to the execution tree.</strong></p>
+   * <p>
+   * <strong>If you need to interpret the state of a process instance in terms of a BPMN process model, it is usually easier to
+   * use the activity instance tree as opposed to the execution tree.</strong>
+   * </p>
    *
    * @param processInstanceId the id of the process instance for which the activity instance tree should be constructed.
    *
-   * @return the activity instance tree for a given process instance or null if no such process instance exists.
+   * @return the activity instance tree for a given process instance or {@code null} if no such process instance exists.
    *
    * @throws ProcessEngineException
    *          if processInstanceId is 'null' or an internal error occurs.
@@ -1085,10 +1105,10 @@ public @NullMarked interface RuntimeService {
    * if the process instance contains multiple executions.
    * </p>
    *
-   * @param executionId id of process instance or execution to signal, cannot be null.
+   * @param executionId id of process instance or execution to signal, cannot be {@code null}.
    *
    * @throws BadUserRequestException
-   *          when no execution is found for the given executionId or id is null.
+   *          when no execution is found for the given executionId or id is {@code null}.
    * @throws SuspendedEntityInteractionException
    *          when the execution is suspended.
    * @throws AuthorizationException
@@ -1105,10 +1125,10 @@ public @NullMarked interface RuntimeService {
    * if the process instance contains multiple executions.
    * </p>
    *
-   * @param executionId id of process instance or execution to signal, cannot be null.
-   * @param signalName name of the signal (can be null)
-   * @param signalData additional data of the signal (can be null)
-   * @param processVariables a map of process variables (can be null)
+   * @param executionId id of process instance or execution to signal, cannot be {@code null}.
+   * @param signalName name of the signal (can be {@code null})
+   * @param signalData additional data of the signal (can be {@code null})
+   * @param processVariables a map of process variables (can be {@code null})
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1126,11 +1146,11 @@ public @NullMarked interface RuntimeService {
    * if the process instance contains multiple executions.
    * </p>
    *
-   * @param executionId id of process instance or execution to signal, cannot be null.
+   * @param executionId id of process instance or execution to signal, cannot be {@code null}.
    * @param processVariables a map of process variables
    *
    * @throws BadUserRequestException
-   *          when no execution is found for the given executionId or id is null.
+   *          when no execution is found for the given executionId or id is {@code null}.
    * @throws SuspendedEntityInteractionException
    *          when the execution is suspended.
    * @throws AuthorizationException
@@ -1144,7 +1164,7 @@ public @NullMarked interface RuntimeService {
   /**
    * All variables visible from the given execution scope (including parent scopes).
    *
-   * @param executionId id of process instance or execution, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
    *
    * @return the variables or an empty map if no such variables are found.
    *
@@ -1161,7 +1181,7 @@ public @NullMarked interface RuntimeService {
   /**
    * All variables visible from the given execution scope (including parent scopes).
    *
-   * @param executionId id of process instance or execution, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
    *
    * @return the variables or an empty map if no such variables are found.
    *
@@ -1180,7 +1200,7 @@ public @NullMarked interface RuntimeService {
   /**
    * All variables visible from the given execution scope (including parent scopes).
    *
-   * @param executionId id of process instance or execution, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
    * @param deserializeValues if false, {@link SerializableValue}s will not be deserialized
    *
    * @return the variables or an empty map if no such variables are found.
@@ -1201,7 +1221,7 @@ public @NullMarked interface RuntimeService {
    * All variable values that are defined in the execution scope, without taking outer scopes into account.
    * If you have many task local variables and you only need a few, consider using {@link #getVariablesLocal(String, Collection)}
    * for better performance.
-   * @param executionId id of execution, cannot be null.
+   * @param executionId id of execution, cannot be {@code null}.
    *
    * @return the variables or an empty map if no such variables are found.
    *
@@ -1220,7 +1240,7 @@ public @NullMarked interface RuntimeService {
    * If you have many task local variables and you only need a few, consider using {@link #getVariablesLocal(String, Collection)}
    * for better performance.
    *
-   * @param executionId id of execution, cannot be null.
+   * @param executionId id of execution, cannot be {@code null}.
    *
    * @return the variables or an empty map if no such variables are found.
    *
@@ -1239,7 +1259,7 @@ public @NullMarked interface RuntimeService {
    * If you have many task local variables and you only need a few, consider using {@link #getVariablesLocal(String, Collection)}
    * for better performance.
    *
-   * @param executionId id of execution, cannot be null.
+   * @param executionId id of execution, cannot be {@code null}.
    * @param deserializeObjectValues if false, {@link SerializableValue}s will not be deserialized
    *
    * @return the variables or an empty map if no such variables are found.
@@ -1258,7 +1278,7 @@ public @NullMarked interface RuntimeService {
   /**
    * The variable values for all given variableNames, takes all variables into account which are visible from the given execution scope (including parent scopes).
    *
-   * @param executionId id of process instance or execution, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
    * @param variableNames the collection of variable names that should be retrieved.
    *
    * @return the variables or an empty map if no such variables are found.
@@ -1275,7 +1295,7 @@ public @NullMarked interface RuntimeService {
 
   /**
    * The variable values for all given variableNames, takes all variables into account which are visible from the given execution scope (including parent scopes).
-   * @param executionId id of process instance or execution, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
    * @param variableNames the collection of variable names that should be retrieved.
    * @param deserializeObjectValues if false, {@link SerializableValue}s will not be deserialized
    *
@@ -1296,7 +1316,7 @@ public @NullMarked interface RuntimeService {
   /**
    * The variable values for the given variableNames only taking the given execution scope into account, not looking in outer scopes.
    *
-   * @param executionId id of execution, cannot be null.
+   * @param executionId id of execution, cannot be {@code null}.
    * @param variableNames the collection of variable names that should be retrieved.
    *
    * @return the variables or an empty map if no such variables are found.
@@ -1313,7 +1333,7 @@ public @NullMarked interface RuntimeService {
 
   /**
    * The variable values for the given variableNames only taking the given execution scope into account, not looking in outer scopes.
-   * @param executionId id of execution, cannot be null.
+   * @param executionId id of execution, cannot be {@code null}.
    * @param variableNames the collection of variable names that should be retrieved.
    * @param deserializeObjectValues if false, {@link SerializableValue}s will not be deserialized
    *
@@ -1333,12 +1353,12 @@ public @NullMarked interface RuntimeService {
 
   /**
    * The variable value.  Searching for the variable is done in all scopes that are visible to the given execution (including parent scopes).
-   * Returns null when no variable value is found with the given name or when the value is set to null.
+   * Returns {@code null} when no variable value is found with the given name or when the value is set to {@code null}.
    *
-   * @param executionId id of process instance or execution, cannot be null.
-   * @param variableName name of variable, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
+   * @param variableName name of variable, cannot be {@code null}.
    *
-   * @return the variable value or null if the variable is undefined or the value of the variable is null.
+   * @return the variable value or {@code null} if the variable is undefined or the value of the variable is {@code null}.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1352,12 +1372,12 @@ public @NullMarked interface RuntimeService {
 
   /**
    * Returns a {@link TypedValue} for the variable. Searching for the variable is done in all scopes that are visible
-   * to the given execution (including parent scopes). Returns null when no variable value is found with the given name.
+   * to the given execution (including parent scopes). Returns {@code null} when no variable value is found with the given name.
    *
-   * @param executionId id of process instance or execution, cannot be null.
-   * @param variableName name of variable, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
+   * @param variableName name of variable, cannot be {@code null}.
    *
-   * @return the variable value or null if the variable is undefined.
+   * @return the variable value or {@code null} if the variable is undefined.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1373,13 +1393,13 @@ public @NullMarked interface RuntimeService {
 
   /**
    * Returns a {@link TypedValue} for the variable. Searching for the variable is done in all scopes that are visible
-   * to the given execution (including parent scopes). Returns null when no variable value is found with the given name.
+   * to the given execution (including parent scopes). Returns {@code null} when no variable value is found with the given name.
    *
-   * @param executionId id of process instance or execution, cannot be null.
-   * @param variableName name of variable, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
+   * @param variableName name of variable, cannot be {@code null}.
    * @param deserializeValue if false, a {@link SerializableValue} will not be deserialized
    *
-   * @return the variable value or null if the variable is undefined.
+   * @return the variable value or {@code null} if the variable is undefined.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1395,12 +1415,12 @@ public @NullMarked interface RuntimeService {
 
   /**
    * The variable value for an execution. Returns the value when the variable is set
-   * for the execution (and not searching parent scopes). Returns null when no variable value is found with the given name or when the value is set to null.
+   * for the execution (and not searching parent scopes). Returns {@code null} when no variable value is found with the given name or when the value is set to {@code null}.
    *
-   * @param executionId id of process instance or execution, cannot be null.
-   * @param variableName name of variable, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
+   * @param variableName name of variable, cannot be {@code null}.
    *
-   * @return the variable value or null if the variable is undefined or the value of the variable is null.
+   * @return the variable value or {@code null} if the variable is undefined or the value of the variable is {@code null}.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1414,12 +1434,12 @@ public @NullMarked interface RuntimeService {
 
   /**
    * Returns a {@link TypedValue} for the variable. Returns the value when the variable is set
-   * for the execution (and not searching parent scopes). Returns null when no variable value is found with the given name.
+   * for the execution (and not searching parent scopes). Returns {@code null} when no variable value is found with the given name.
    *
-   * @param executionId id of process instance or execution, cannot be null.
-   * @param variableName name of variable, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
+   * @param variableName name of variable, cannot be {@code null}.
    *
-   * @return the variable value or null if the variable is undefined.
+   * @return the variable value or {@code null} if the variable is undefined.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1435,13 +1455,13 @@ public @NullMarked interface RuntimeService {
 
   /**
    * Returns a {@link TypedValue} for the variable. Searching for the variable is done in all scopes that are visible
-   * to the given execution (and not searching parent scopes). Returns null when no variable value is found with the given name.
+   * to the given execution (and not searching parent scopes). Returns {@code null} when no variable value is found with the given name.
    *
-   * @param executionId id of process instance or execution, cannot be null.
-   * @param variableName name of variable, cannot be null.
+   * @param executionId id of process instance or execution, cannot be {@code null}.
+   * @param variableName name of variable, cannot be {@code null}.
    * @param deserializeValue if false, a {@link SerializableValue} will not be deserialized
    *
-   * @return the variable value or null if the variable is undefined.
+   * @return the variable value or {@code null} if the variable is undefined.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1460,10 +1480,10 @@ public @NullMarked interface RuntimeService {
    * somewhere in the execution hierarchy (i.e. the specified execution or any ancestor),
    * it will be created in the process instance (which is the root execution).
    *
-   * @param executionId id of process instance or execution to set variable in, cannot be null.
-   * @param variableName name of variable to set, cannot be null.
-   * @param value value to set. When null is passed, the variable is not removed,
-   * only it's value will be set to null.
+   * @param executionId id of process instance or execution to set variable in, cannot be {@code null}.
+   * @param variableName name of variable to set, cannot be {@code null}.
+   * @param value value to set. When {@code null} is passed, the variable is not removed,
+   * only it's value will be set to {@code null}.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1480,10 +1500,10 @@ public @NullMarked interface RuntimeService {
    * Update or create a variable for an execution (not considering parent scopes).
    * If the variable does not already exist, it will be created in the given execution.
    *
-   * @param executionId id of execution to set variable in, cannot be null.
-   * @param variableName name of variable to set, cannot be null.
-   * @param value value to set. When null is passed, the variable is not removed,
-   * only it's value will be set to null.
+   * @param executionId id of execution to set variable in, cannot be {@code null}.
+   * @param variableName name of variable to set, cannot be {@code null}.
+   * @param value value to set. When {@code null} is passed, the variable is not removed,
+   * only it's value will be set to {@code null}.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1500,8 +1520,8 @@ public @NullMarked interface RuntimeService {
    * Update or create given variables for an execution (including parent scopes). If the variables are not already existing, they will be created in the process instance
    * (which is the root execution).
    *
-   * @param executionId id of the process instance or the execution, cannot be null.
-   * @param variables map containing name (key) and value of variables, can be null.
+   * @param executionId id of the process instance or the execution, cannot be {@code null}.
+   * @param variables map containing name (key) and value of variables, can be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1517,8 +1537,8 @@ public @NullMarked interface RuntimeService {
   /**
    * Update or create given variables for an execution (not considering parent scopes). If the variables are not already existing, it will be created in the given execution.
    *
-   * @param executionId id of the execution, cannot be null.
-   * @param variables map containing name (key) and value of variables, can be null.
+   * @param executionId id of the execution, cannot be {@code null}.
+   * @param variables map containing name (key) and value of variables, can be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no execution is found for the given executionId.
@@ -1748,31 +1768,40 @@ public @NullMarked interface RuntimeService {
   // Process instance state //////////////////////////////////////////
 
   /**
-   * <p>Suspends the process instance with the given id. This means that the
+   * Suspends the process instance with the given id. This means that the
    * execution is stopped, so the <i>token state</i> will not change.
    * However, actions that do not change token state, like setting/removing
-   * variables, etc. will succeed.</p>
+   * variables, etc. will succeed.
    *
-   * <p>Tasks belonging to this process instance will also be suspended. This means
+   * <p>
+   * Tasks belonging to this process instance will also be suspended. This means
    * that any actions influencing the tasks' lifecycles will fail, such as
+   * </p>
    * <ul>
    *   <li>claiming</li>
    *   <li>completing</li>
    *   <li>delegation</li>
    *   <li>changes in task assignees, owners, etc.</li>
    * </ul>
+   * <p>
    * Actions that only change task properties will succeed, such as changing variables
    * or adding comments.
    * </p>
    *
-   * <p>If a process instance is in state suspended, the engine will also not
-   * execute jobs (timers, messages) associated with this instance.</p>
+   * <p>
+   * If a process instance is in state suspended, the engine will also not
+   * execute jobs (timers, messages) associated with this instance.
+   * </p>
    *
-   * <p>If you have a process instance hierarchy, suspending
+   * <p>
+   * If you have a process instance hierarchy, suspending
    * one process instance from the hierarchy will not suspend other
-   * process instances from that hierarchy.</p>
+   * process instances from that hierarchy.
+   * </p>
    *
-   * <p>Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.</p>
+   * <p>
+   * Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.
+   * </p>
    *
    * @throws ProcessEngineException
    *          if no such processInstance can be found.
@@ -1786,31 +1815,40 @@ public @NullMarked interface RuntimeService {
   void suspendProcessInstanceById(String processInstanceId);
 
   /**
-   * <p>Suspends the process instances with the given process definition id.
+   * Suspends the process instances with the given process definition id.
    * This means that the execution is stopped, so the <i>token state</i>
    * will not change. However, actions that do not change token state, like
-   * setting/removing variables, etc. will succeed.</p>
+   * setting/removing variables, etc. will succeed.
    *
-   * <p>Tasks belonging to the suspended process instance will also be suspended.
+   * <p>
+   * Tasks belonging to the suspended process instance will also be suspended.
    * This means that any actions influencing the tasks' lifecycles will fail, such as
+   * </p>
    * <ul>
    *   <li>claiming</li>
    *   <li>completing</li>
    *   <li>delegation</li>
    *   <li>changes in task assignees, owners, etc.</li>
    * </ul>
+   * <p>
    * Actions that only change task properties will succeed, such as changing variables
    * or adding comments.
    * </p>
    *
-   * <p>If a process instance is in state suspended, the engine will also not
-   * execute jobs (timers, messages) associated with this instance.</p>
+   * <p>
+   * If a process instance is in state suspended, the engine will also not
+   * execute jobs (timers, messages) associated with this instance.
+   * </p>
    *
-   * <p>If you have a process instance hierarchy, suspending
+   * <p>
+   * If you have a process instance hierarchy, suspending
    * one process instance from the hierarchy will not suspend other
-   * process instances from that hierarchy.</p>
+   * process instances from that hierarchy.
+   * </p>
    *
-   * <p>Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.</p>
+   * <p>
+   * Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.
+   * </p>
    *
    * @throws ProcessEngineException
    *          if no such processInstance can be found.
@@ -1824,31 +1862,40 @@ public @NullMarked interface RuntimeService {
   void suspendProcessInstanceByProcessDefinitionId(String processDefinitionId);
 
   /**
-   * <p>Suspends the process instances with the given process definition key.
+   * Suspends the process instances with the given process definition key.
    * This means that the execution is stopped, so the <i>token state</i>
    * will not change. However, actions that do not change token state, like
-   * setting/removing variables, etc. will succeed.</p>
+   * setting/removing variables, etc. will succeed.
    *
-   * <p>Tasks belonging to the suspended process instance will also be suspended.
+   * <p>
+   * Tasks belonging to the suspended process instance will also be suspended.
    * This means that any actions influencing the tasks' lifecycles will fail, such as
+   * </p>
    * <ul>
    *   <li>claiming</li>
    *   <li>completing</li>
    *   <li>delegation</li>
    *   <li>changes in task assignees, owners, etc.</li>
    * </ul>
+   * <p>
    * Actions that only change task properties will succeed, such as changing variables
    * or adding comments.
    * </p>
    *
-   * <p>If a process instance is in state suspended, the engine will also not
-   * execute jobs (timers, messages) associated with this instance.</p>
+   * <p>
+   * If a process instance is in state suspended, the engine will also not
+   * execute jobs (timers, messages) associated with this instance.
+   * </p>
    *
-   * <p>If you have a process instance hierarchy, suspending
+   * <p>
+   * If you have a process instance hierarchy, suspending
    * one process instance from the hierarchy will not suspend other
-   * process instances from that hierarchy.</p>
+   * process instances from that hierarchy.
+   * </p>
    *
-   * <p>Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.</p>
+   * <p>
+   * Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.
+   * </p>
    *
    * @throws ProcessEngineException
    *          if no such processInstance can be found.
@@ -1891,7 +1938,7 @@ public @NullMarked interface RuntimeService {
    * <p>Note: for more complex activate commands use {@link #updateProcessInstanceSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          if the process definition id is null
+   *          if the process definition id is {@code null}
    * @throws AuthorizationException
    *          if the user has none of the following:
    *          <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
@@ -1911,7 +1958,7 @@ public @NullMarked interface RuntimeService {
    * <p>Note: for more complex activate commands use {@link #updateProcessInstanceSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          if the process definition id is null
+   *          if the process definition id is {@code null}
    * @throws AuthorizationException
    *          if the user has none of the following:
    *          <li>{@link ProcessInstancePermissions#SUSPEND} permission on {@link Resources#PROCESS_INSTANCE}</li>
@@ -2099,7 +2146,7 @@ public @NullMarked interface RuntimeService {
    *
    * @param messageName the name of the message. Corresponds to the 'name' element
    * of the message defined in BPMN 2.0 Xml.
-   * Can be null to correlate by other criteria (businessKey, processInstanceId, correlationKeys) only.
+   * Can be {@code null} to correlate by other criteria (businessKey, processInstanceId, correlationKeys) only.
    *
    * @return the fluent builder for defining the message correlation.
    */
@@ -2114,12 +2161,12 @@ public @NullMarked interface RuntimeService {
    * </p>
    *
    * @param messageName
-   *          the name of the message event; if null, matches any event
+   *          the name of the message event; if {@code null}, matches any event
    *
    * @throws MismatchingMessageCorrelationException
    *          if none or more than one execution or process definition is correlated
    * @throws ProcessEngineException
-   *          if messageName is null
+   *          if messageName is {@code null}
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -2142,14 +2189,14 @@ public @NullMarked interface RuntimeService {
    * </p>
    *
    * @param messageName
-   *          the name of the message event; if null, matches any event
+   *          the name of the message event; if {@code null}, matches any event
    * @param businessKey
    *          the business key of process instances to correlate against
    *
    * @throws MismatchingMessageCorrelationException
    *          if none or more than one execution or process definition is correlated
    * @throws ProcessEngineException
-   *          if messageName is null and businessKey is null
+   *          if messageName is {@code null} and businessKey is {@code null}
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -2173,14 +2220,14 @@ public @NullMarked interface RuntimeService {
    * </p>
    *
    * @param messageName
-   *          the name of the message event; if null, matches any event
+   *          the name of the message event; if {@code null}, matches any event
    * @param correlationKeys
    *          a map of key value pairs that are used to correlate the message to an execution
    *
    * @throws MismatchingMessageCorrelationException
    *          if none or more than one execution or process definition is correlated
    * @throws ProcessEngineException
-   *          if messageName is null and correlationKeys is null
+   *          if messageName is {@code null} and correlationKeys is {@code null}
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -2197,14 +2244,16 @@ public @NullMarked interface RuntimeService {
    *    a process definition that can be started by this message.
    *  </li>
    * </ul>
+   * <p>
    * and updates the process instance variables.
+   * </p>
    *
    * <p>
    * Notification and instantiation happen synchronously.
    * </p>
    *
    * @param messageName
-   *          the name of the message event; if null, matches any event
+   *          the name of the message event; if {@code null}, matches any event
    * @param businessKey
    *          the business key of process instances to correlate against
    * @param processVariables
@@ -2213,7 +2262,7 @@ public @NullMarked interface RuntimeService {
    * @throws MismatchingMessageCorrelationException
    *          if none or more than one execution or process definition is correlated
    * @throws ProcessEngineException
-   *          if messageName is null and businessKey is null
+   *          if messageName is {@code null} and businessKey is {@code null}
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -2231,14 +2280,16 @@ public @NullMarked interface RuntimeService {
    *    a process definition that can be started by this message.
    *  </li>
    * </ul>
+   * <p>
    * and updates the process instance variables.
+   * </p>
    *
    * <p>
    * Notification and instantiation happen synchronously.
    * </p>
    *
    * @param messageName
-   *          the name of the message event; if null, matches any event
+   *          the name of the message event; if {@code null}, matches any event
    * @param correlationKeys
    *          a map of key value pairs that are used to correlate the message to an execution
    * @param processVariables
@@ -2247,7 +2298,7 @@ public @NullMarked interface RuntimeService {
    * @throws MismatchingMessageCorrelationException
    *          if none or more than one execution or process definition is correlated
    * @throws ProcessEngineException
-   *          if messageName is null and correlationKeys is null
+   *          if messageName is {@code null} and correlationKeys is {@code null}
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -2266,14 +2317,16 @@ public @NullMarked interface RuntimeService {
    *    a process definition that can be started by this message.
    *  </li>
    * </ul>
+   * <p>
    * and updates the process instance variables.
+   * </p>
    *
    * <p>
    * Notification and instantiation happen synchronously.
    * </p>
    *
    * @param messageName
-   *          the name of the message event; if null, matches any event
+   *          the name of the message event; if {@code null}, matches any event
    * @param businessKey
    *          the business key of process instances to correlate against
    * @param correlationKeys
@@ -2284,7 +2337,7 @@ public @NullMarked interface RuntimeService {
    * @throws MismatchingMessageCorrelationException
    *          if none or more than one execution or process definition is correlated
    * @throws ProcessEngineException
-   *          if messageName is null and businessKey is null and correlationKeys is null
+   *          if messageName is {@code null} and businessKey is {@code null} and correlationKeys is {@code null}
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -2296,7 +2349,7 @@ public @NullMarked interface RuntimeService {
    *
    * @param messageName the name of the message. Corresponds to the 'name' element
    * of the message defined in BPMN 2.0 Xml.
-   * Can be null to correlate by other criteria only.
+   * Can be {@code null} to correlate by other criteria only.
    *
    * @return the fluent builder for defining the asynchronous message correlation.
    */
@@ -2396,7 +2449,7 @@ public @NullMarked interface RuntimeService {
   /**
    * Restarts process instances that are completed or deleted with the initial or last set of variables.
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no process definition is deployed with the given key or a process instance is still active.
@@ -2413,8 +2466,8 @@ public @NullMarked interface RuntimeService {
   /**
    * Creates an incident
    *
-   * @param incidentType the type of incident, cannot be null
-   * @param executionId execution id, cannot be null
+   * @param incidentType the type of incident, cannot be {@code null}
+   * @param executionId execution id, cannot be {@code null}
    * @param configuration
    *
    * @return a new incident
@@ -2428,8 +2481,8 @@ public @NullMarked interface RuntimeService {
   /**
    * Creates an incident
    *
-   * @param incidentType the type of incident, cannot be null
-   * @param executionId execution id, cannot be null
+   * @param incidentType the type of incident, cannot be {@code null}
+   * @param executionId execution id, cannot be {@code null}
    * @param configuration
    * @param message
    *

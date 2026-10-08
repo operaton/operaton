@@ -52,8 +52,10 @@ import static java.lang.Boolean.TRUE;
  * Implementation of the {@link TaskQuery} interface.
  *
  * <h3>Development Notes</h3>
+ * <p>
  * When adding a property filter that supports Tasklist filters,
  * the following classes need to be modified:
+ * </p>
  *
  * <ol>
  * <li>Update the {@code TaskQuery} interface</li>
@@ -1214,10 +1216,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
         .groupMember(candidateUser)
         .list();
 
-    List<String> groupIds = new ArrayList<>();
-    for (Group group : groups) {
-      groupIds.add(group.getId());
-    }
+    List<String> groupIds = groups.stream()
+        .map(Group::getId)
+        .toList();
 
     userGroups.put(candidateUser, groupIds);
 
@@ -1957,18 +1958,18 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     if (extendingQuery.getAssigneeIn() != null) {
       extendedQuery.taskAssigneeIn(extendingQuery.getAssigneeIn()
-          .toArray(new String[extendingQuery.getAssigneeIn().size()]));
+          .toArray(String[]::new));
     } else if (this.getAssigneeIn() != null) {
       extendedQuery.taskAssigneeIn(this.getAssigneeIn()
-          .toArray(new String[this.getAssigneeIn().size()]));
+          .toArray(String[]::new));
     }
 
     if (extendingQuery.getAssigneeNotIn() != null) {
       extendedQuery.taskAssigneeNotIn(extendingQuery.getAssigneeNotIn()
-          .toArray(new String[extendingQuery.getAssigneeNotIn().size()]));
+          .toArray(String[]::new));
     } else if (this.getAssigneeNotIn() != null) {
       extendedQuery.taskAssigneeNotIn(this.getAssigneeNotIn()
-          .toArray(new String[this.getAssigneeNotIn().size()]));
+          .toArray(String[]::new));
     }
 
     copyProperty(extendingQuery, this,
@@ -2197,7 +2198,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   }
 
-  protected class TaskQueryVariableValueComparable {
+  protected static class TaskQueryVariableValueComparable {
 
     protected TaskQueryVariableValue variableValue;
 

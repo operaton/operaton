@@ -234,7 +234,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * {@link Serializable} objects (which are not primitive type wrappers) are
    * not supported.
    *
-   * @param name of the variable, cannot be null.
+   * @param name of the variable, cannot be {@code null}.
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery variableValueEquals(String name, Object value);
@@ -246,7 +246,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * value. Byte-arrays and {@link Serializable} objects (which are not
    * primitive type wrappers) are not supported.
    *
-   * @param name of the variable, cannot be null.
+   * @param name of the variable, cannot be {@code null}.
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery variableValueNotEquals(String name, Object value);
@@ -258,8 +258,8 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * not supported. Only select process instances which have a variable value
    * greater than the passed value.
    *
-   * @param name  cannot be null.
-   * @param value cannot be null.
+   * @param name  cannot be {@code null}.
+   * @param value cannot be {@code null}.
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery variableValueGreaterThan(String name, Object value);
@@ -271,8 +271,8 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * not supported. Only applies to already ended process instances, otherwise
    * use a {@link ProcessInstanceQuery} instead!
    *
-   * @param name  cannot be null.
-   * @param value cannot be null.
+   * @param name  cannot be {@code null}.
+   * @param value cannot be {@code null}.
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery variableValueGreaterThanOrEqual(String name, Object value);
@@ -284,8 +284,8 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * Byte-arrays and {@link Serializable} objects (which are not primitive type
    * wrappers) are not supported.
    *
-   * @param name  cannot be null.
-   * @param value cannot be null.
+   * @param name  cannot be {@code null}.
+   * @param value cannot be {@code null}.
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery variableValueLessThan(String name, Object value);
@@ -297,8 +297,8 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * Byte-arrays and {@link Serializable} objects (which are not primitive type
    * wrappers) are not supported.
    *
-   * @param name  cannot be null.
-   * @param value cannot be null.
+   * @param name  cannot be {@code null}.
+   * @param value cannot be {@code null}.
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery variableValueLessThanOrEqual(String name, Object value);
@@ -309,8 +309,8 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * use a {@link ProcessInstanceQuery} instead! This can be used on string
    * variables only.
    *
-   * @param name  cannot be null.
-   * @param value cannot be null. The string can include the
+   * @param name  cannot be {@code null}.
+   * @param value cannot be {@code null}. The string can include the
    *              wildcard character '%' to express like-strategy: starts with
    *              (string%), ends with (%string) or contains (%string%).
    * @return HistoricProcessInstanceQuery A modified query with applied filter
@@ -412,6 +412,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * <p>
    * Note that there will always be maximum only <b>one</b>
    * such process instance that can be the result of this query.
+   * </p>
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery subProcessInstanceId(String subProcessInstanceId);
@@ -429,6 +430,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * <p>
    * Note that there will always be maximum only <b>one</b>
    * such process instance that can be the result of this query.
+   * </p>
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery subCaseInstanceId(String subCaseInstanceId);

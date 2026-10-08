@@ -39,7 +39,7 @@ public @NullMarked interface DecisionService {
    * Evaluates the decision with the given id.
    *
    * @param decisionDefinitionId
-   *          the id of the decision definition, cannot be null.
+   *          the id of the decision definition, cannot be {@code null}.
    * @param variables
    *          the input values of the decision.
    * @return the result of the evaluation.
@@ -48,7 +48,7 @@ public @NullMarked interface DecisionService {
    *           when no decision definition is deployed with the given id.
    *
    * @throws NotValidException
-   *           when the given decision definition id is null.
+   *           when the given decision definition id is {@code null}.
    *
    * @throws AuthorizationException
    *           if the user has no {@link Permissions#CREATE_INSTANCE} permission
@@ -60,7 +60,7 @@ public @NullMarked interface DecisionService {
    * Evaluates the decision with the given key in the latest version.
    *
    * @param decisionDefinitionKey
-   *          the key of the decision definition, cannot be null.
+   *          the key of the decision definition, cannot be {@code null}.
    * @param variables
    *          the input values of the decision.
    * @return the result of the evaluation.
@@ -69,7 +69,7 @@ public @NullMarked interface DecisionService {
    *           when no decision definition is deployed with the given key.
    *
    * @throws NotValidException
-   *           when the given decision definition key is null.
+   *           when the given decision definition key is {@code null}.
    *
    * @throws AuthorizationException
    *           if the user has no {@link Permissions#CREATE_INSTANCE} permission
@@ -83,7 +83,7 @@ public @NullMarked interface DecisionService {
    * taken.
    *
    * @param decisionDefinitionKey
-   *          the key of the decision definition, cannot be null.
+   *          the key of the decision definition, cannot be {@code null}.
    * @param version
    *          the version of the decision definition. If <code>null</code> then
    *          the latest version is taken.
@@ -96,7 +96,7 @@ public @NullMarked interface DecisionService {
    *           version.
    *
    * @throws NotValidException
-   *           when the given decision definition key is null.
+   *           when the given decision definition key is {@code null}.
    *
    * @throws AuthorizationException
    *           if the user has no {@link Permissions#CREATE_INSTANCE} permission

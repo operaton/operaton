@@ -57,6 +57,7 @@ public class FilterEntity implements Filter, DbEntity, HasDbRevision, HasDbRefer
   protected String resourceType;
   protected String name;
   protected String owner;
+  @SuppressWarnings("rawtypes")
   protected AbstractQuery query;
   protected Map<String, Object> properties;
   protected int revision;
@@ -225,6 +226,7 @@ public class FilterEntity implements Filter, DbEntity, HasDbRevision, HasDbRefer
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public void postLoad() {
     if (query != null) {
       query.addValidator(StoredQueryValidator.get());

@@ -27,9 +27,11 @@ import org.operaton.bpm.webapp.neo.impl.security.filter.RequestMatcher.Match;
 import org.operaton.bpm.webapp.neo.impl.security.filter.util.FilterRules;
 
 /**
- * <p>A {@link SecurityFilterRule} that deleagates to a set of {@link PathMatcher}s</p>
+ * A {@link SecurityFilterRule} that deleagates to a set of {@link PathMatcher}s
  *
- * <p>How this thing works:
+ * <p>
+ * How this thing works:
+ * </p>
  * <ul>
  * <li> A path that is not listed in <code>deniedPaths</code> is always granted anonymous access
  *  (even if the user is authenticated for a process engine).

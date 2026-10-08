@@ -40,10 +40,12 @@ public class HistoricCaseActivityInstanceManager extends AbstractHistoricManager
     }
   }
 
+  @SuppressWarnings("unused")
   public void insertHistoricCaseActivityInstance(HistoricCaseActivityInstanceEntity historicCaseActivityInstance) {
     getDbEntityManager().insert(historicCaseActivityInstance);
   }
 
+  @SuppressWarnings("unused")
   public HistoricCaseActivityInstanceEntity findHistoricCaseActivityInstance(String caseActivityId, String caseInstanceId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(CASE_ACTIVITY_ID, caseActivityId);

@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -50,12 +51,11 @@ public class OperatonBpmProperties {
     suffixes.addAll(List.of(DEFAULT_BPMN_RESOURCE_SUFFIXES));
     suffixes.addAll(List.of(DEFAULT_CMMN_RESOURCE_SUFFIXES));
 
-    final Set<String> patterns = new HashSet<>();
-    for (String suffix : suffixes) {
-      patterns.add("%s**/*.%s".formatted(CLASSPATH_ALL_URL_PREFIX, suffix));
-    }
+    final Set<String> patterns = suffixes.stream()
+      .map(suffix -> "%s**/*.%s".formatted(CLASSPATH_ALL_URL_PREFIX, suffix))
+      .collect(Collectors.toCollection(HashSet::new));
 
-    return patterns.toArray(new String[patterns.size()]);
+    return patterns.toArray(String[]::new);
   }
 
   static StringJoiner joinOn(final Class<?> clazz) {

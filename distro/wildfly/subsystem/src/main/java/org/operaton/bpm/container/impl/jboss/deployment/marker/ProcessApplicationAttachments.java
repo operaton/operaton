@@ -55,7 +55,7 @@ public final class ProcessApplicationAttachments {
   }
 
   /**
-   * Returns the attached {@link ProcessesXml} marker or null;
+   * Returns the attached {@link ProcessesXml} marker or {@code null};
    *
    */
   public static List<ProcessesXmlWrapper> getProcessesXmls(DeploymentUnit deploymentUnit) {

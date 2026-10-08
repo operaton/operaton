@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * This enables activiti-cdi to provide contextual business process management
  * services, without relying on a specific context like i.e. the conversation
  * context.
+ * </p>
  *
  * @author Daniel Meyer
  */
@@ -41,7 +42,7 @@ public interface ContextAssociationManager {
   void disAssociate();
 
   /**
-   * @return the id of the execution currently associated or null
+   * @return the id of the execution currently associated or {@code null}
    */
   String getExecutionId();
 

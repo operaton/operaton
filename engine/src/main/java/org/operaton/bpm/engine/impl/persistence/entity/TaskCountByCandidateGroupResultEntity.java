@@ -36,6 +36,7 @@ public class TaskCountByCandidateGroupResultEntity implements TaskCountByCandida
     return groupName;
   }
 
+  @SuppressWarnings("unused")
   public void setTaskCount(int taskCount) {
     this.taskCount = taskCount;
   }

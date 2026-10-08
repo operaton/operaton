@@ -196,7 +196,7 @@ public interface MessageCorrelationBuilder {
   /**
    * Executes the message correlation.
    *
-   * @see {@link #correlateWithResult()}
+   * @see #correlateWithResult()
    */
   void correlate();
 
@@ -204,7 +204,9 @@ public interface MessageCorrelationBuilder {
   /**
    * Executes the message correlation and returns a {@link MessageCorrelationResult} object.
    *
-   * <p>The call of this method will result in either:
+   * <p>
+   * The call of this method will result in either:
+   * </p>
    * <ul>
    * <li>Exactly one waiting execution is notified to continue. The notification is performed synchronously. The result contains the execution id.</li>
    * <li>Exactly one Process Instance is started in case the message name matches a message start event of a
@@ -212,8 +214,9 @@ public interface MessageCorrelationBuilder {
    * <li>MismatchingMessageCorrelationException is thrown. This means that either too many executions / process definitions match the
    *     correlation or that no execution and process definition matches the correlation.</li>
    * </ul>
-   * </p>
+   * <p>
    * The result can be identified by calling the {@link MessageCorrelationResult#getResultType}.
+   * </p>
    *
    * @throws MismatchingMessageCorrelationException
    *          if none or more than one execution or process definition is matched by the correlation
@@ -233,7 +236,7 @@ public interface MessageCorrelationBuilder {
    * Executes the message correlation. If you do not need access to the process variables, use {@link #correlateWithResult()}
    * to avoid unnecessary variable access.
    *
-   * @see {@link #correlateWithResult()}
+   * @see #correlateWithResult()
    *
    * @param deserializeValues if false, returned {@link SerializableValue}s
    *   will not be deserialized (unless they are passed into this method as a
@@ -269,22 +272,25 @@ public interface MessageCorrelationBuilder {
   /**
    * Executes the message correlation for multiple messages.
    *
-   * @see {@link #correlateAllWithResult()}
+   * @see #correlateAllWithResult()
    */
   void correlateAll();
 
   /**
    * Executes the message correlation for multiple messages and returns a list of message correlation results.
    *
-   * <p>This will result in any number of the following:
+   * <p>
+   * This will result in any number of the following:
+   * </p>
    * <ul>
    * <li>Any number of waiting executions are notified to continue. The notification is performed synchronously. The result list contains the execution ids of the
    * notified executions.</li>
    * <li>Any number of process instances are started which have a message start event that matches the message name. The instantiation is performed synchronously.
    * The result list contains the start event activity ids and process definitions from all activities on that the messages was correlated to.</li>
    * </ul>
+   * <p>
+   * Note that the message correlates to all tenants if no tenant is specified using {@link #tenantId(String)} or {@link #withoutTenantId()}.
    * </p>
-   * <p>Note that the message correlates to all tenants if no tenant is specified using {@link #tenantId(String)} or {@link #withoutTenantId()}.</p>
    *
    * @throws AuthorizationException
    *          <li>if at least one execution is matched and the user has no {@link Permissions#UPDATE} permission on
@@ -303,7 +309,7 @@ public interface MessageCorrelationBuilder {
    * Executes the message correlation. If you do not need access to the process variables, use {@link #correlateAllWithResult()}
    * to avoid unnecessary variable access.
    *
-   * @see {@link #correlateAllWithResult()}
+   * @see #correlateAllWithResult()
    *
    * @param deserializeValues if false, returned {@link SerializableValue}s
    *   will not be deserialized (unless they are passed into this method as a
@@ -320,6 +326,7 @@ public interface MessageCorrelationBuilder {
    *
    * <p>
    * This will result in either:
+   * </p>
    * <ul>
    * <li>Exactly one Process Instance is started in case the message name
    * matches a message start event of a process. The instantiation is performed
@@ -328,7 +335,6 @@ public interface MessageCorrelationBuilder {
    * either no process definition or more than one process definition matches
    * the correlation.</li>
    * </ul>
-   * </p>
    *
    * @return the newly created process instance
    *

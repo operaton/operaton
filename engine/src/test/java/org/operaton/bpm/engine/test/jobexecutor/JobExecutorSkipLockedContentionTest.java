@@ -31,7 +31,9 @@ import static org.assertj.core.api.Assertions.fail;
  * Proves or disproves, per database: while one acquisition transaction holds its
  * SKIP LOCKED row locks, a competing acquisition still gets a full, disjoint page.
  *
- * <p>This is the decisive test for two suspected vendor pathologies:
+ * <p>
+ * This is the decisive test for two suspected vendor pathologies:
+ * </p>
  * <ul>
  *   <li>over-locking — the locking clause locks more rows than the page
  *       (e.g. a plan that locks all matching rows before the row-number cutoff),
@@ -40,7 +42,9 @@ import static org.assertj.core.api.Assertions.fail;
  *       (e.g. a row-limit applied before the lock attempt), so the competitor
  *       returns fewer jobs than are freely available.</li>
  * </ul>
+ * <p>
  * Both manifest here as the competitor acquiring fewer than the expected jobs.
+ * </p>
  */
 class JobExecutorSkipLockedContentionTest extends AbstractJobExecutorSkipLockedRowLockTest {
 

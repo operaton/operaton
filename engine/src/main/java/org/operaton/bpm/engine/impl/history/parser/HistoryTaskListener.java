@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
 /**
- * <p>A {@link TaskListener} implementation that delegates to a
+ * A {@link TaskListener} implementation that delegates to a
  * {@link HistoryEventProducer}.
  *
  * @author Daniel Meyer

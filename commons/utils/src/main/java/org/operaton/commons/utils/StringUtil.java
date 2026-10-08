@@ -47,7 +47,7 @@ public final class StringUtil {
    *
    * @param text the text to split
    * @param regex the regex to split by
-   * @return the parts of the text or null if text was null
+   * @return the parts of the text or {@code null} if text was {@code null}
    */
   public static String @Nullable[] split(@Nullable String text, @Nullable String regex) {
     if (text == null) {
@@ -70,7 +70,7 @@ public final class StringUtil {
    *
    * @param delimiter the delimiter between the joined parts
    * @param parts the parts to join
-   * @return the joined String or null if parts was null
+   * @return the joined String or {@code null} if parts was {@code null}
    */
   public static @Nullable String join(@Nullable String delimiter, String @Nullable... parts) {
     if (parts == null) {
@@ -94,15 +94,13 @@ public final class StringUtil {
   /**
    * Returns either the passed in String, or if the String is <code>null</code>, an empty String ("").
    *
-   * <p>
    * <pre>
    * StringUtils.defaultString(null)  = ""
    * StringUtils.defaultString("")    = ""
    * StringUtils.defaultString("bat") = "bat"
    * </pre>
-   * </p>
    *
-   * @param text  the String to check, may be null
+   * @param text  the String to check, may be {@code null}
    * @return the passed in String, or the empty String if it  was <code>null</code>
    */
   public static String defaultString(@Nullable String text) {
@@ -125,10 +123,10 @@ public final class StringUtil {
    * Sanitizes a given string for safe logging by escaping carriage return and newline characters.
    * This method replaces all occurrences of '\r' with '\\r' and '\n' with '\\n' to prevent
    * multi-line log outputs which can disrupt log readability and parsing.
-   * If the input string is null, it returns the literal string "(null)".
+   * If the input string is {@code null}, it returns the literal string "(null)".
    *
-   * @param input the input string to sanitize, may be null
-   * @return a sanitized string with escaped line breaks or "(null)" if input was null
+   * @param input the input string to sanitize, may be {@code null}
+   * @return a sanitized string with escaped line breaks or "(null)" if input was {@code null}
    */
   public static String sanitize(@Nullable String input) {
     if (input == null) {

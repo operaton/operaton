@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.json;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -160,12 +159,12 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
 
     if (query.getAssigneeIn() != null) {
       JsonUtil.addArrayField(json, ASSIGNEE_IN,
-          query.getAssigneeIn().toArray(new String[query.getAssigneeIn().size()]));
+          query.getAssigneeIn().toArray(String[]::new));
     }
 
     if (query.getAssigneeNotIn() != null) {
       JsonUtil.addArrayField(json, ASSIGNEE_NOT_IN,
-              query.getAssigneeNotIn().toArray(new String[query.getAssigneeNotIn().size()]));
+              query.getAssigneeNotIn().toArray(String[]::new));
     }
 
     JsonUtil.addField(json, ASSIGNEE_LIKE, query.getAssigneeLike());
@@ -449,15 +448,13 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
   );
 
   protected static String[] getArray(JsonArray array) {
-    return getList(array).toArray(new String[array.size()]);
+    return getList(array).toArray(String[]::new);
   }
 
   protected static List<String> getList(JsonArray array) {
-    List<String> list = new ArrayList<>();
-    for (JsonElement entry : array) {
-      list.add(JsonUtil.getString(entry));
-    }
-    return list;
+    return array.asList().stream()
+        .map(JsonUtil::getString)
+        .toList();
   }
 
   protected static void addVariables(TaskQueryImpl query, JsonArray variables, boolean isTaskVariable, boolean isProcessVariable) {

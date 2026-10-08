@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.xml.Model;
@@ -178,10 +179,9 @@ public final @NullMarked class ModelUtil {
    */
   @SuppressWarnings("unchecked")
   public static <T extends ModelElementInstance> Collection<T> getModelElementCollection(Collection<DomElement> view, ModelInstanceImpl model) {
-    List<ModelElementInstance> resultList = new ArrayList<>();
-    for (DomElement element : view) {
-      resultList.add(getModelElement(element, model));
-    }
+    List<ModelElementInstance> resultList = view.stream()
+      .map(element -> getModelElement(element, model))
+      .collect(Collectors.toCollection(ArrayList::new));
     return (Collection<T>) resultList;
   }
 
@@ -200,10 +200,9 @@ public final @NullMarked class ModelUtil {
         return index;
       }
     }
-    Collection<String> childElementTypeNames = new ArrayList<>();
-    for (ModelElementType childElementType : childElementTypes) {
-      childElementTypeNames.add(childElementType.getTypeName());
-    }
+    Collection<String> childElementTypeNames = childElementTypes.stream()
+      .map(ModelElementType::getTypeName)
+      .collect(Collectors.toCollection(ArrayList::new));
     throw new ModelException("New child is not a valid child element type: %s; valid types are: %s".formatted(
         modelElement.getElementType().getTypeName(), childElementTypeNames));
   }

@@ -53,6 +53,7 @@ import static java.util.Objects.requireNonNull;
  * binds variables to a currently executing Activiti business process (a {@link org.operaton.bpm.engine.runtime.ProcessInstance}).
  * <p/>
  * Parts of this code are lifted wholesale from Dave Syer's work on the Spring 3.1 RefreshScope.
+ * </p>
  *
  * @author Josh Long
  */
@@ -65,6 +66,7 @@ public @NullMarked class ProcessScope implements Scope, InitializingBean, BeanFa
      * </pre>
      * <p/>
      * works in any bean - scoped or not
+     * </p>
      */
     public static final String PROCESS_SCOPE_PROCESS_VARIABLES_SINGLETON = "processVariables";
     public static final String PROCESS_SCOPE_NAME = "process";

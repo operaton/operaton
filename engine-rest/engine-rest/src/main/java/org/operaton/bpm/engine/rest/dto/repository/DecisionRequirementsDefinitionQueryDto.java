@@ -177,7 +177,7 @@ public class DecisionRequirementsDefinitionQueryDto extends AbstractQueryDto<Dec
       query.decisionRequirementsDefinitionId(decisionRequirementsDefinitionId);
     }
     if (decisionRequirementsDefinitionIdIn != null && !decisionRequirementsDefinitionIdIn.isEmpty()) {
-      query.decisionRequirementsDefinitionIdIn(decisionRequirementsDefinitionIdIn.toArray(new String[decisionRequirementsDefinitionIdIn.size()]));
+      query.decisionRequirementsDefinitionIdIn(decisionRequirementsDefinitionIdIn.toArray(String[]::new));
     }
     if (category != null) {
       query.decisionRequirementsDefinitionCategory(category);
@@ -213,7 +213,7 @@ public class DecisionRequirementsDefinitionQueryDto extends AbstractQueryDto<Dec
       query.latestVersion();
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();

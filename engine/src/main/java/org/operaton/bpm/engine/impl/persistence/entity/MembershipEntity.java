@@ -27,7 +27,7 @@ public class MembershipEntity implements DbEntity {
   protected GroupEntity group;
 
   /**
-   * To handle a MemberhipEntity in the cache, an id is necessary.
+   * To handle a MembershipEntity in the cache, an id is necessary.
    * Even though it is not going to be persisted in the database.
    */
   protected String id;

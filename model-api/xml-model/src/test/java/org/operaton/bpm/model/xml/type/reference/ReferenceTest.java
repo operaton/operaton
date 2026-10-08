@@ -179,7 +179,7 @@ public class ReferenceTest extends TestModelTest {
       .hasSize(1)
       .contains(daffy);
     assertThat(referenceTargetElements.toArray()).isEqualTo(new Object[]{daffy});
-    assertThat(referenceTargetElements.toArray(new FlyingAnimal[1])).isEqualTo(new FlyingAnimal[]{daffy});
+    assertThat(referenceTargetElements.toArray(FlyingAnimal[]::new)).isEqualTo(new FlyingAnimal[]{daffy});
 
     assertThat(referenceTargetElements.add(daisy)).isTrue();
     assertThat(referenceTargetElements)

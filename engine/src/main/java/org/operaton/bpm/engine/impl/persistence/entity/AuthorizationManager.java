@@ -219,14 +219,12 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
       boolean isAuthorized = isAuthorized(compositePermissionCheck);
       if (!isAuthorized) {
 
-        List<MissingAuthorization> missingAuthorizations = new ArrayList<>();
-
-        for (PermissionCheck check: compositePermissionCheck.getAllPermissionChecks()) {
-          missingAuthorizations.add(new MissingAuthorization(
-              check.getPermission().getName(),
-              check.getResource().resourceName(),
-              check.getResourceId()));
-        }
+        List<MissingAuthorization> missingAuthorizations = compositePermissionCheck.getAllPermissionChecks().stream()
+            .map(check -> new MissingAuthorization(
+                check.getPermission().getName(),
+                check.getResource().resourceName(),
+                check.getResourceId()))
+            .toList();
 
         throw new AuthorizationException(userId, missingAuthorizations);
       }
@@ -355,6 +353,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
     }
   }
 
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   protected boolean isResourceValidForPermission(PermissionCheck permissionCheck) {
     Resource[] permissionResources = permissionCheck.getPermission().getTypes();
     Resource givenResource = permissionCheck.getResource();
@@ -504,7 +503,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
    * {@link Groups#OPERATON_ADMIN}. The check is ignored if the authorization is
    * disabled or no authentication exists.
    *
-   * @throws AuthorizationException
+   * @throws AuthorizationException if the current authentication does not contain the group {@link Groups#OPERATON_ADMIN}
    */
   public void checkOperatonAdmin() {
     final Authentication currentAuthentication = getCurrentAuthentication();
@@ -550,6 +549,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
    * @return <code>true</code> if the given authentication contains the group
    *         {@link Groups#OPERATON_ADMIN} or the user
    */
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean isOperatonAdmin(Authentication authentication) {
     List<String> groupIds = authentication.getGroupIds();
     if (groupIds != null) {

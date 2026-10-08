@@ -47,9 +47,9 @@ public class SpringExpressionManager extends JuelExpressionManager {
   /**
    * @param applicationContext
    *          the applicationContext to use. Ignored when 'beans' parameter is
-   *          not null.
+   *          not {@code null}.
    * @param beans
-   *          a map of custom beans to expose. If null, all beans in the
+   *          a map of custom beans to expose. If {@code null}, all beans in the
    *          application-context will be exposed.
    */
   public SpringExpressionManager(ApplicationContext applicationContext, Map<Object, Object> beans) {

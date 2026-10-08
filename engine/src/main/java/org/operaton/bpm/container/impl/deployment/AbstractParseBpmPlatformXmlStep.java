@@ -83,7 +83,7 @@ public abstract @NullMarked class AbstractParseBpmPlatformXmlStep extends Deploy
   public @Nullable URL checkValidBpmPlatformXmlResourceLocation(@Nullable String url) {
     url = autoCompleteUrl(url);
 
-    URL fileLocation = null;
+    URL fileLocation;
 
     try {
       fileLocation = checkValidUrlLocation(url);

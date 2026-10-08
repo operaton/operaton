@@ -53,7 +53,7 @@ public @NullMarked interface ProcessEngineService {
 
   /**
    *
-   * @return the {@link ProcessEngine} for the given name or null if no such process engine exists.
+   * @return the {@link ProcessEngine} for the given name or {@code null} if no such process engine exists.
    */
   @Nullable ProcessEngine getProcessEngine(String name);
 

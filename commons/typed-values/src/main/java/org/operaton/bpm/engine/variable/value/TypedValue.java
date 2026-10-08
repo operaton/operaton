@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 public interface TypedValue extends Serializable {
 
   /**
-   * The actual value. May be null in case the value is null.
+   * The actual value. May be {@code null} in case the value is {@code null}.
    *
    * @return the value
    */

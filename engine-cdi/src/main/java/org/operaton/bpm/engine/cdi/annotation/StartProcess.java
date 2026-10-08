@@ -33,6 +33,7 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
  * {@link BusinessProcess#setVariable(String, Object)} within this
  * conversation is flushed to the process instance at process instantiation. The
  * same is true for instances of {@link BusinessProcessScoped} beans.
+ * </p>
  *
  * @author Daniel Meyer
  */

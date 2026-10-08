@@ -347,7 +347,7 @@ public @NullMarked class ModelElementInstanceImpl implements ModelElementInstanc
    * Returns the element after which the new element should be inserted in the DOM document.
    *
    * @param elementToInsert  the new element to insert
-   * @return the element to insert after or null
+   * @return the element to insert after or {@code null}
    */
   private @Nullable ModelElementInstance findElementToInsertAfter(ModelElementInstance elementToInsert) {
     List<ModelElementType> childElementTypes = elementType.getAllChildElementTypes();

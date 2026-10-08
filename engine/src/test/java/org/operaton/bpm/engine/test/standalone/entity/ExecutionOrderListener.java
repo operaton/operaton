@@ -49,7 +49,7 @@ public class ExecutionOrderListener implements ExecutionListener {
     return activityExecutionOrder;
   }
 
-  protected class ActivitySequenceCounterMap {
+  static class ActivitySequenceCounterMap {
 
     protected String activityId;
     protected long sequenceCounter;

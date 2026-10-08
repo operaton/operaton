@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.IdentityLink;
 
 /**
- * <p>The producer for history events. The history event producer is
+ * The producer for history events. The history event producer is
  * responsible for extracting data from the runtime structures
  * (Executions, Tasks, ...) and adding the data to a {@link HistoryEvent}.
  *
@@ -100,7 +100,7 @@ public interface HistoryEventProducer {
    * Creates the history event fired when an activity instance is <strong>updated</strong>.
    *
    * @param execution the current execution.
-   * @param task the task association that is currently updated. (May be null in case there is not task associated.)
+   * @param task the task association that is currently updated. (May be {@code null} in case there is not task associated.)
    * @return the history event
    */
   HistoryEvent createActivityInstanceUpdateEvt(DelegateExecution execution, DelegateTask task);

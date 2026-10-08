@@ -47,6 +47,7 @@ public class HistoricCaseInstanceManager extends AbstractHistoricManager {
     return null;
   }
 
+  @SuppressWarnings("unused")
   public @Nullable HistoricCaseInstanceEventEntity findHistoricCaseInstanceEvent(String eventId) {
     if (isHistoryEnabled()) {
       return getDbEntityManager().selectById(HistoricCaseInstanceEventEntity.class, eventId);

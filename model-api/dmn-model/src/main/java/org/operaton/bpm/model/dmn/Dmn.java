@@ -157,7 +157,7 @@ public class Dmn {
   }
 
   protected DmnModelInstance doReadModelFromFile(File file) {
-    DmnModelInstance result = null;
+    DmnModelInstance result;
     try (InputStream is = new FileInputStream(file)) {
       result = doReadModelFromInputStream(is);
 

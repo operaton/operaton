@@ -104,7 +104,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     }
     String activityInstanceId = execution.getActivityInstanceId();
 
-    String parentActivityInstanceId = null;
+    String parentActivityInstanceId;
     ExecutionEntity parentExecution = execution.getParent();
 
     if (parentExecution != null && CompensationBehavior.isCompensationThrowing(parentExecution) && execution.getActivity() != null) {

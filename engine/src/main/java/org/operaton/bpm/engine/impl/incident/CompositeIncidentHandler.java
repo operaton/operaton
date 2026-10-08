@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 
 /**
- * <p>
  * A composite incident handler that handles incidents of a certain type by the multiple handlers.
  * The result of handling depends on main handler.
  *

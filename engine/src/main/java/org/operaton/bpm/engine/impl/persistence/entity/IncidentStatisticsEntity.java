@@ -31,7 +31,14 @@ public class IncidentStatisticsEntity implements IncidentStatistics {
     return incidentType;
   }
 
+  /** @deprecated use {@link #setIncidentType(String)} */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public void setIncidenType(String incidentType) {
+    this.incidentType = incidentType;
+  }
+
+  public void setIncidentType(String incidentType) {
     this.incidentType = incidentType;
   }
 

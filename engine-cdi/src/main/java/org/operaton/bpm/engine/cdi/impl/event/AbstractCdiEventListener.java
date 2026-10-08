@@ -160,6 +160,6 @@ public abstract @NullMarked class AbstractCdiEventListener implements TaskListen
     } else if (event.getType() == BusinessProcessEventType.DELETE_TASK) {
       annotations.add(new DeleteTaskLiteral(event.getTaskDefinitionKey()));
     }
-    return annotations.toArray(new Annotation[annotations.size()]);
+    return annotations.toArray(Annotation[]::new);
   }
 }

@@ -46,7 +46,7 @@ public interface MessageCorrelationResult {
    * or to a process definition like a start event.
    *
    * @return the result type of the message correlation result
-   * @see {@link MessageCorrelationResultType}
+   * @see MessageCorrelationResultType
    */
   MessageCorrelationResultType getResultType();
 }

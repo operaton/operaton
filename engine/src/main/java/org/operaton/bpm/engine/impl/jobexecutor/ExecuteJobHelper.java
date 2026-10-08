@@ -113,7 +113,7 @@ public final class ExecuteJobHelper {
   /**
    * Calls FailedJobListener, in case of OptimisticLockException retries configured amount of times.
    *
-   * @return exception or null if succeeded
+   * @return exception or {@code null} if succeeded
    */
   private static @Nullable OptimisticLockingException callFailedJobListenerWithRetries(CommandExecutor commandExecutor, FailedJobListener failedJobListener) {
     try {

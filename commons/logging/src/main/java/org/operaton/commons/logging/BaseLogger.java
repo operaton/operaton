@@ -38,27 +38,37 @@ import org.slf4j.helpers.MessageFormatter;
  * }
  * </pre>
  *
+ * <p>
  * The logger can then be used in the following way:
+ * </p>
  *
  * <pre>
  * LOG.engineStarted(System.currentTimeMilliseconds());
  * </pre>
  *
+ * <p>
  * This will print the following message:
+ * </p>
  * <pre>
  * INFO  org.example - MYPROJ-01100 My super engine has started at '4234234523'
  * </pre>
  *
  * <h2>Slf4j</h2>
+ * <p>
  * This class uses slf4j as logging API. The class ensures that log messages and exception
  * messages are always formatted using the same template.
+ * </p>
  *
  * <h2>Log message format</h2>
+ * <p>
  * The log message format produced by this class is as follows:
+ * </p>
  * <pre>
  * [PROJECT_CODE]-[COMPONENT_ID][MESSAGE_ID] message
  * </pre>
+ * <p>
  * Example:
+ * </p>
  * <pre>
  * MYPROJ-01100 My super engine has started at '4234234523'
  * </pre>

@@ -37,7 +37,7 @@ public @NullMarked class GenericManagerFactory implements SessionFactory {
     this.managerImplementation = managerImplementation;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public GenericManagerFactory(String classname) {
     managerImplementation = (Class<? extends Session>) ReflectUtil.loadClass(classname);
   }

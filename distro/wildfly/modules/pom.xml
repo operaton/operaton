@@ -330,9 +330,6 @@
                 <replace dir="target/modules" token="@version.groovy@" value="${version.groovy}">
                   <include name="**/module.xml"/>
                 </replace>
-                <replace dir="target/modules" token="@version.httpclient@" value="${version.httpclient}">
-                  <include name="**/module.xml"/>
-                </replace>
                 <replace dir="target/modules" token="@version.httpclient5@" value="${version.httpclient5}">
                   <include name="**/module.xml"/>
                 </replace>

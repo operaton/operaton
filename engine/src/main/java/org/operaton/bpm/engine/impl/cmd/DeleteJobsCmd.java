@@ -56,7 +56,7 @@ public @NullMarked class DeleteJobsCmd implements Command<Void> {
 
   @Override
   public @Nullable Void execute(CommandContext commandContext) {
-    JobEntity jobToDelete = null;
+    JobEntity jobToDelete;
     for (String jobId: jobIds) {
       jobToDelete = commandContext
         .getJobManager()

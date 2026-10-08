@@ -72,6 +72,7 @@ public class EventSubscriptionManager extends AbstractManager {
     }
   }
 
+  @SuppressWarnings("unused")
   public void deleteAndFlushEventSubscription(EventSubscriptionEntity persistentObject) {
     deleteEventSubscription(persistentObject);
     getDbEntityManager().flushEntity(persistentObject);
@@ -162,7 +163,7 @@ public class EventSubscriptionManager extends AbstractManager {
     }
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<EventSubscriptionEntity> findSignalEventSubscriptionsByExecution(String executionId) {
     final String query = "selectSignalEventSubscriptionsByExecution";
     Set<EventSubscriptionEntity> selectList = new HashSet<>( getDbEntityManager().selectList(query, executionId));
@@ -210,7 +211,7 @@ public class EventSubscriptionManager extends AbstractManager {
     return getDbEntityManager().selectList(query, executionId);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<EventSubscriptionEntity> findEventSubscriptions(String executionId, String type, String activityId) {
     final String query = "selectEventSubscriptionsByExecutionTypeAndActivity";
     Map<String,String> params = new HashMap<>();
@@ -229,6 +230,7 @@ public class EventSubscriptionManager extends AbstractManager {
     return getDbEntityManager().selectList(query, params);
   }
 
+  @SuppressWarnings("unchecked")
   public List<EventSubscriptionEntity> findStartEventSubscriptionsByConfigurationLike(String configuration) {
     final String query = "selectStartEventSubscriptionsByConfigurationLike";
     Map<String,String> params = new HashMap<>();
@@ -236,7 +238,7 @@ public class EventSubscriptionManager extends AbstractManager {
     return getDbEntityManager().selectList(query, params);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<EventSubscriptionEntity> findEventSubscriptionsByNameAndTenantId(String type, String eventName, String tenantId) {
     final String query = "selectEventSubscriptionsByNameAndTenantId";
     Map<String,String> params = new HashMap<>();
@@ -252,13 +254,9 @@ public class EventSubscriptionManager extends AbstractManager {
     ExecutionEntity cachedExecution = getDbEntityManager().getCachedEntity(ExecutionEntity.class, executionId);
     if(cachedExecution != null && !lockResult) {
       List<EventSubscriptionEntity> eventSubscriptions = cachedExecution.getEventSubscriptions();
-      List<EventSubscriptionEntity> result = new ArrayList<>();
-      for (EventSubscriptionEntity subscription : eventSubscriptions) {
-        if(matchesSubscription(subscription, type, eventName)) {
-          result.add(subscription);
-        }
-      }
-      return result;
+      return eventSubscriptions.stream()
+          .filter(subscription -> matchesSubscription(subscription, type, eventName))
+          .toList();
     }
     else {
       final String query = "selectEventSubscriptionsByNameAndExecution";
@@ -300,9 +298,7 @@ public class EventSubscriptionManager extends AbstractManager {
   }
 
   /**
-   * @param tenantId
    * @return the conditional start event subscriptions with the given tenant id
-   *
    */
   @SuppressWarnings("unchecked")
   public List<EventSubscriptionEntity> findConditionalStartEventSubscriptionByTenantId(String tenantId) {
@@ -321,11 +317,21 @@ public class EventSubscriptionManager extends AbstractManager {
   public List<EventSubscriptionEntity> findConditionalStartEventSubscription() {
     ListQueryParameterObject parameter = new ListQueryParameterObject();
 
-    configurParameterObject(parameter);
+    configureParameterObject(parameter);
     return getDbEntityManager().selectList("selectConditionalStartEventSubscription", parameter);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   protected void configurParameterObject(ListQueryParameterObject parameter) {
+    configureParameterObject(parameter);
+  }
+
+  /**
+   * @since 2.2
+   */
+  protected void configureParameterObject(ListQueryParameterObject parameter) {
     getAuthorizationManager().configureConditionalEventSubscriptionQuery(parameter);
     getTenantManager().configureQuery(parameter);
   }

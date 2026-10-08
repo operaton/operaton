@@ -143,7 +143,7 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
    *
    * @param prefix the prefix to use
    * @param namespaceURI the URI to use
-   * @throws IllegalArgumentException if prefix or namespaceURI is null
+   * @throws IllegalArgumentException if prefix or namespaceURI is {@code null}
    */
   public void setNamespace(String prefix, String namespaceURI) {
     ensureNotNull("Prefix", prefix);
@@ -156,7 +156,7 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
    * Maps a map of prefix, uri pairs as namespaces.
    *
    * @param namespaces the map of namespaces
-   * @throws IllegalArgumentException if namespaces is null
+   * @throws IllegalArgumentException if namespaces is {@code null}
    */
   public void setNamespaces(Map<String, String> namespaces) {
     ensureNotNull("Namespaces", namespaces);

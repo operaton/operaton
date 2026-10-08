@@ -384,7 +384,7 @@ public class Bpmn {
   }
 
   protected BpmnModelInstance doReadModelFromFile(File file) {
-    BpmnModelInstance result = null;
+    BpmnModelInstance result;
     try (InputStream is = new FileInputStream(file)) {
       result =  doReadModelFromInputStream(is);
     } catch (FileNotFoundException e) {

@@ -28,12 +28,14 @@ import org.operaton.bpm.engine.impl.core.model.CoreActivity;
 public interface HandlerContext {
 
   /**
-   * <p>This method returns an {@link CoreActivity activity}. The
+   * This method returns an {@link CoreActivity activity}. The
    * returned activity represents a parent activity, which can
-   * contain {@link CoreActivity activities}.</p>
+   * contain {@link CoreActivity activities}.
    *
-   * <p>The returned activity should be used as a parent activity
+   * <p>
+   * The returned activity should be used as a parent activity
    * for a new {@link CoreActivity activity}.
+   * </p>
    *
    * @return a {@link CoreActivity}
    */

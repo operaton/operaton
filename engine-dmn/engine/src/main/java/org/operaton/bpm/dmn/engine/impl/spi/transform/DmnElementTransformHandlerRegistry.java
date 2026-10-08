@@ -29,7 +29,7 @@ public interface DmnElementTransformHandlerRegistry {
    * @param sourceClass the class of the source type
    * @param <SOURCE> the type of the transformation input
    * @param <TARGET> the type of the transformation output
-   * @return the {@link DmnElementTransformHandler} or null if none is registered for this source type
+   * @return the {@link DmnElementTransformHandler} or {@code null} if none is registered for this source type
    */
   <SOURCE extends DmnModelElementInstance, TARGET> DmnElementTransformHandler<SOURCE, TARGET> getHandler(Class<SOURCE> sourceClass);
 

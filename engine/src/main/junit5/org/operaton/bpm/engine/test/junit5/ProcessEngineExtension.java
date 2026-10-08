@@ -140,13 +140,13 @@ import static java.util.Objects.requireNonNull;
  * <h3>Test Lifecycle Callbacks:</h3>
  * <p>
  * This extension implements multiple JUnit lifecycle callbacks:
+ * </p>
  * <ul>
  * <li>{@link TestInstancePostProcessor} - Initializes and injects the process engine instance before each test.</li>
  * <li>{@link BeforeEachCallback} - Sets up deployment and history level requirements before each test.</li>
  * <li>{@link AfterEachCallback} - Cleans up deployments, services, and resets the engine state after each test.</li>
  * <li>{@link AfterAllCallback} - Clears service references once all tests in a class have been executed.</li>
  * </ul>
- * </p>
  *
  * <h3>Database and Diagnostics:</h3>
  * <p>

@@ -29,15 +29,16 @@ import org.operaton.bpm.model.bpmn.impl.BpmnParser;
  *
  * <p>
  * Example:
+ * </p>
  * <pre>
  * // In your implementation JAR:
  * // File: META-INF/services/org.operaton.bpm.model.bpmn.BpmnParserFactory
  * com.example.MyCustomBpmnParserFactory
  * </pre>
- * </p>
  *
  * <p>
  * To obtain an instance, use:
+ * </p>
  * <pre>
  * ServiceLoader&lt;BpmnParserFactory&gt; loader = ServiceLoader.load(BpmnParserFactory.class);
  * for (BpmnParserFactory factory : loader) {
@@ -45,7 +46,6 @@ import org.operaton.bpm.model.bpmn.impl.BpmnParser;
  *   // use parser
  * }
  * </pre>
- * </p>
  */
 public interface BpmnParserFactory {
   BpmnParser newInstance();

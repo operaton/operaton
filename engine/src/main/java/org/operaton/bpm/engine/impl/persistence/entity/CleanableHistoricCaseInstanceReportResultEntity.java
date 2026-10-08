@@ -79,6 +79,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     return finishedCaseInstanceCount;
   }
 
+  @SuppressWarnings("unused")
   public void setFinishedCaseInstanceCount(Long finishedCaseInstanceCount) {
     this.finishedCaseInstanceCount = finishedCaseInstanceCount;
   }
@@ -88,6 +89,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     return cleanableCaseInstanceCount;
   }
 
+  @SuppressWarnings("unused")
   public void setCleanableCaseInstanceCount(Long cleanableCaseInstanceCount) {
     this.cleanableCaseInstanceCount = cleanableCaseInstanceCount;
   }

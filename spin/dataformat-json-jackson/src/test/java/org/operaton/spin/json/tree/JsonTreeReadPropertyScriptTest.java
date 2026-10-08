@@ -165,7 +165,7 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
   }
 
   /**
-   * One for property argument equals null
+   * One for property argument equals {@code null}
    */
   @Test
   @Script(execute = false)

@@ -28,6 +28,7 @@ import java.util.concurrent.ConcurrentMap;
  * *Note*: The consistency of the keys queue with the keys in the cache is not ensured! This means, the keys queue
  * can contain duplicates of the same key and not all the keys of the queue are necessarily in the cache.
  * However, all the keys of the cache are at least once contained in the keys queue.
+ * </p>
  *
  * @param <K> the type of keys
  * @param <V> the type of mapped values

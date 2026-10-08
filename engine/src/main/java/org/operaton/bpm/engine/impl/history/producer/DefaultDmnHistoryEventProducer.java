@@ -359,7 +359,7 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
     String tenantId = null;
 
     if(tenantIdProvider != null) {
-      TenantIdProviderHistoricDecisionInstanceContext ctx = null;
+      TenantIdProviderHistoricDecisionInstanceContext ctx;
 
       if(event.getExecutionId() != null) {
         ctx = new TenantIdProviderHistoricDecisionInstanceContext(decisionDefinition, getExecution(event));

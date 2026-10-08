@@ -250,7 +250,7 @@ public abstract class AbstractSerializableValueSerializer<T extends Serializable
 
   /**
    * Implementations must return a byte[] representation of the provided object.
-   * The object is guaranteed not to be null.
+   * The object is guaranteed not to be {@code null}.
    *
    * @param deserializedObject the object to serialize
    * @return the byte array value of the object

@@ -26,8 +26,6 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * @author Tassilo Weidner
  */

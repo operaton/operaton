@@ -38,7 +38,7 @@ public abstract @NullMarked class DelegateInvocation {
 
   /**
    * Provide a context execution or resource definition in which context the invocation
-   *   should be performed. If both parameters are null, the invocation is performed in the
+   *   should be performed. If both parameters are {@code null}, the invocation is performed in the
    *   current context.
    *
    * @param contextExecution set to an execution
@@ -65,7 +65,7 @@ public abstract @NullMarked class DelegateInvocation {
   protected abstract void invoke() throws Exception;
 
   /**
-   * @return the result of the invocation (can be null if the invocation does
+   * @return the result of the invocation (can be {@code null} if the invocation does
    *         not return a result)
    */
   public @Nullable Object getInvocationResult() {
@@ -73,7 +73,7 @@ public abstract @NullMarked class DelegateInvocation {
   }
 
   /**
-   * returns the execution in which context this delegate is invoked. may be null
+   * returns the execution in which context this delegate is invoked. may be {@code null}
    */
   public @Nullable BaseDelegateExecution getContextExecution() {
     return contextExecution;

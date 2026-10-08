@@ -31,9 +31,11 @@ import org.operaton.bpm.model.cmmn.instance.Stage;
 import org.operaton.bpm.model.cmmn.instance.Task;
 
 /**
- * <p>A fluent builder for defining a command to execute for a case execution.</p>
+ * A fluent builder for defining a command to execute for a case execution.
  *
- * <p>This fluent builder offers different points to execute a defined command:
+ * <p>
+ * This fluent builder offers different points to execute a defined command:
+ * </p>
  *  <ul>
  *    <li>{@link #execute()}</li>
  *    <li>{@link #manualStart()}</li>
@@ -42,12 +44,15 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  *    <li>{@link #complete()}</li>
  *    <li>{@link #close()}</li>
  *  </ul>
+ *
+ * <p>
+ * The entry point to use this fluent builder is {@link CaseService#withCaseExecution(String)}.
+ * It expects an id of a case execution as parameter.
  * </p>
  *
- * <p>The entry point to use this fluent builder is {@link CaseService#withCaseExecution(String)}.
- * It expects an id of a case execution as parameter.</p>
- *
- * <p>This fluent builder can be used as follows:</p>
+ * <p>
+ * This fluent builder can be used as follows:
+ * </p>
  *
  * <p>(1) Set and remove case execution variables:</p>
  * <code>
@@ -67,12 +72,16 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  * &nbsp;&nbsp;&nbsp;&nbsp;.manualStart();
  * </code>
  *
- * <p>etc.</p>
+ * <p>
+ * etc.
+ * </p>
  *
- * <p><strong>Note:</strong> All defined changes for a case execution within this fluent
+ * <p>
+ * <strong>Note:</strong> All defined changes for a case execution within this fluent
  * builder will be performed in one command. So for example: if you set and remove
  * variables of a case execution this happens in a single command. This has the effect
- * that if anything went wrong the whole command will be rolled back.</p>
+ * that if anything went wrong the whole command will be rolled back.
+ * </p>
  *
  * @author Roman Smirnov
  *
@@ -91,7 +100,7 @@ public interface CaseExecutionCommandBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null or the same variable
+   * @throws NotValidException when the given variable name is {@code null} or the same variable
    *   should be removed in the same command
    */
   CaseExecutionCommandBuilder setVariable(String variableName, Object variableValue);
@@ -122,7 +131,7 @@ public interface CaseExecutionCommandBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null or the same variable
+   * @throws NotValidException when the given variable name is {@code null} or the same variable
    *   should be removed in the same command
    */
   CaseExecutionCommandBuilder setVariableLocal(String variableName, Object variableValue);
@@ -150,7 +159,7 @@ public interface CaseExecutionCommandBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null or the same variable
+   * @throws NotValidException when the given variable name is {@code null} or the same variable
    *         should be set in the same command
    */
   CaseExecutionCommandBuilder removeVariable(String variableName);
@@ -180,7 +189,7 @@ public interface CaseExecutionCommandBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null or the same
+   * @throws NotValidException when the given variable name is {@code null} or the same
    *         variable should be set in same command
    */
   CaseExecutionCommandBuilder removeVariableLocal(String variableName);
@@ -220,7 +229,7 @@ public interface CaseExecutionCommandBuilder {
    *   </li>
    * </ol>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution
@@ -229,22 +238,23 @@ public interface CaseExecutionCommandBuilder {
   void execute();
 
   /**
-   * <p>Additionally to {@link #execute()} the associated case execution will
+   * Additionally to {@link #execute()} the associated case execution will
    * be started manually. Therefore there happens a transition from the state
-   * <code>ENABLED</code> to state <code>ACTIVE</code>.</p>
+   * <code>ENABLED</code> to state <code>ACTIVE</code>.
    *
-   * <p>According to CMMN 1.0 specification the state <code>ACTIVE</code> means,
+   * <p>
+   * According to CMMN 1.0 specification the state <code>ACTIVE</code> means,
    * that the with the case execution related {@link Stage} or {@link Task} is
    * executing in this state:
+   * </p>
    *   <ul>
    *     <li>{@link Task}: the {@link Task task} will be completed immediately</li>
    *     <li>{@link HumanTask}: a new {@link org.operaton.bpm.engine.task.Task user task} will be instantiated</li>
    *     <li>{@link ProcessTask}: a new {@link ProcessInstance process instance} will be instantiated</li>
    *     <li>{@link CaseTask}: a new {@link CaseInstance case instance} will be instantiated</li>
    *   </ul>
-   * </p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -268,7 +278,7 @@ public interface CaseExecutionCommandBuilder {
    * disabled. This can lead to a completion of the parent case execution if
    * the completion criteria are fulfilled.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -287,7 +297,7 @@ public interface CaseExecutionCommandBuilder {
    * that the with the case execution related {@link Stage} or {@link Task} is waiting
    * for a decision to become <code>ACTIVE</code> or <code>DISABLED</code> once again.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -298,32 +308,38 @@ public interface CaseExecutionCommandBuilder {
   void reenable();
 
   /**
-   * <p>Additionally to {@link #execute()} the associated case execution will
+   * Additionally to {@link #execute()} the associated case execution will
    * be completed. Therefore there happens a transition from the state <code>ACTIVE</code>
-   * to state <code>COMPLETED</code>.</p>
+   * to state <code>COMPLETED</code>.
    *
-   * <p>It is only possible to complete a case execution which is associated with a
-   * {@link Stage} or {@link Task}.</p>
+   * <p>
+   * It is only possible to complete a case execution which is associated with a
+   * {@link Stage} or {@link Task}.
+   * </p>
    *
-   * <p>In case of a {@link Stage} the completion can only be performed when the following
-   * criteria are fulfilled:<br>
+   * <p>
+   * In case of a {@link Stage} the completion can only be performed when the following
+   * criteria are fulfilled:
+   * </p>
    * <ul>
    *  <li>there are no children in the state <code>ACTIVE</code></li>
    * </ul>
-   * </p>
    *
-   * <p>For a {@link Task} instance, this means its purpose has been accomplished:<br>
+   * <p>
+   * For a {@link Task} instance, this means its purpose has been accomplished:
+   * </p>
    *  <ul>
    *    <li>{@link HumanTask} has been completed by human.</li>
    *  </ul>
-   * </p>
    *
-   * <p>If the given case execution has a parent case execution, that parent
+   * <p>
+   * If the given case execution has a parent case execution, that parent
    * case execution will be notified that the given case execution has been
    * completed. This can lead to a completion of the parent case execution if
-   * the completion criteria are fulfilled.</p>
+   * the completion criteria are fulfilled.
+   * </p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done
@@ -336,7 +352,7 @@ public interface CaseExecutionCommandBuilder {
    * <p>Additionally to {@link #execute()} the associated case execution will
    * be terminated. Therefore there happens a transition to state <code>TERMINATED</code>.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -352,7 +368,7 @@ public interface CaseExecutionCommandBuilder {
    * associated case instance. Therefore there happens a transition from the
    * state <code>COMPLETED</code> to state <code>CLOSED</code>.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done

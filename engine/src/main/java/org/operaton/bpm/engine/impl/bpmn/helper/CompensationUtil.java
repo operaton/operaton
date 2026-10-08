@@ -75,9 +75,10 @@ public final class CompensationUtil {
     }
 
     // signal compensation events in REVERSE order of their 'created' timestamp
-    eventSubscriptions.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
+    List<EventSubscriptionEntity> sortedEventSubscriptions = new ArrayList<>(eventSubscriptions);
+    sortedEventSubscriptions.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
 
-    for (EventSubscriptionEntity compensateEventSubscriptionEntity : eventSubscriptions) {
+    for (EventSubscriptionEntity compensateEventSubscriptionEntity : sortedEventSubscriptions) {
       compensateEventSubscriptionEntity.eventReceived(null, async);
     }
   }
@@ -208,13 +209,9 @@ public final class CompensationUtil {
     final List<EventSubscriptionEntity> eventSubscriptions = collectCompensateEventSubscriptionsForScope(execution);
     final String subscriptionActivityId = getSubscriptionActivityId(execution, activityRef);
 
-    List<EventSubscriptionEntity> eventSubscriptionsForActivity = new ArrayList<>();
-    for (EventSubscriptionEntity subscription : eventSubscriptions) {
-      if (subscriptionActivityId.equals(subscription.getActivityId())) {
-        eventSubscriptionsForActivity.add(subscription);
-      }
-    }
-    return eventSubscriptionsForActivity;
+    return eventSubscriptions.stream()
+        .filter(subscription -> subscriptionActivityId.equals(subscription.getActivityId()))
+        .toList();
   }
 
   public static @Nullable ExecutionEntity getCompensatingExecution(EventSubscriptionEntity eventSubscription) {

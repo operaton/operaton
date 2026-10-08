@@ -234,7 +234,7 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback {
     }
 
     try {
-      String uri = null;
+      String uri;
       if (tenantId != null && processDefinitionKey != null) {
         uri = String.format(URI_START_PROCESS_INSTANCE_TENANT, getEngineUrl(), processDefinitionKey, tenantId);
       } else if (processDefinitionKey != null) {

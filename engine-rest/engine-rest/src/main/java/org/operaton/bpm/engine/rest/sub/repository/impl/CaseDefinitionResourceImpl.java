@@ -73,7 +73,7 @@ public class CaseDefinitionResourceImpl implements CaseDefinitionResource {
   public CaseDefinitionDto getCaseDefinition() {
     RepositoryService repositoryService = engine.getRepositoryService();
 
-    CaseDefinition definition = null;
+    CaseDefinition definition;
 
     try {
       definition = repositoryService.getCaseDefinition(caseDefinitionId);
@@ -111,7 +111,7 @@ public class CaseDefinitionResourceImpl implements CaseDefinitionResource {
   public CaseInstanceDto createCaseInstance(UriInfo context, CreateCaseInstanceDto parameters) {
     CaseService caseService = engine.getCaseService();
 
-    CaseInstance instance = null;
+    CaseInstance instance;
     try {
 
       String businessKey = parameters.getBusinessKey();

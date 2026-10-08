@@ -33,7 +33,7 @@ public interface DomDocument {
   /**
    * Returns the root element of the document.
    *
-   * @return the root element or null if non exists
+   * @return the root element or {@code null} if non exists
    */
   @Nullable DomElement getRootElement();
 
@@ -57,7 +57,7 @@ public interface DomDocument {
    * Gets an element by its id.
    *
    * @param id  the id to search for
-   * @return the element or null if no such element exists
+   * @return the element or {@code null} if no such element exists
    */
   @Nullable DomElement getElementById(String id);
 

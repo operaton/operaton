@@ -159,7 +159,7 @@ public final class ActivityInstanceAssert {
       ActivityInstanceImpl parentInstance = activityInstanceStack.peek();
       List<ActivityInstance> childInstances = new ArrayList<>(List.of(parentInstance.getChildActivityInstances()));
       childInstances.add(newInstance);
-      parentInstance.setChildActivityInstances(childInstances.toArray(new ActivityInstance[childInstances.size()]));
+      parentInstance.setChildActivityInstances(childInstances.toArray(ActivityInstance[]::new));
 
       activityInstanceStack.push(newInstance);
 
@@ -197,7 +197,7 @@ public final class ActivityInstanceAssert {
       List<TransitionInstance> childInstances = new ArrayList<>(
           List.of(parentInstance.getChildTransitionInstances()));
       childInstances.add(newInstance);
-      parentInstance.setChildTransitionInstances(childInstances.toArray(new TransitionInstance[childInstances.size()]));
+      parentInstance.setChildTransitionInstances(childInstances.toArray(TransitionInstance[]::new));
 
       return this;
     }

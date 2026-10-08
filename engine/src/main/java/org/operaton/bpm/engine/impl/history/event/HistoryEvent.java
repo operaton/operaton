@@ -39,12 +39,12 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
  * <p>History events contain data in a serializable form. Some
  * implementations may persist events directly or may serialize
  * them as an intermediate representation for later processing
- * (ie. in an asynchronous implementation).</p>
+ * (i.e. in an asynchronous implementation).</p>
  *
  * <p>This class implements {@link DbEntity}. This was chosen so
  * that {@link HistoryEvent}s can be easily persisted using the
  * {@link DbEntityManager}. This may not be used by all {@link HistoryEventHandler}
- * implementations but it does also not cause harm.</p>
+ * implementations, but it does also not cause harm.</p>
  *
  * @author Daniel Meyer
  *

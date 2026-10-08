@@ -48,7 +48,7 @@ public interface ChildElement<T extends ModelElementInstance> extends ChildEleme
    * Returns the child element.
    *
    * @param element the parent element of the child element
-   * @return the child element of the parent, or null if not exist
+   * @return the child element of the parent, or {@code null} if not exist
    */
   @Nullable T getChild(ModelElementInstance element);
 

@@ -39,7 +39,7 @@ public final class StringUtil {
    * contain expressions with commas in it.
    *
    * @param text  the comma separated list
-   * @return the Strings of the list or an empty List if text is empty or null
+   * @return the Strings of the list or an empty List if text is empty or {@code null}
    */
   public static List<String> splitCommaSeparatedList(@Nullable String text) {
     if (text == null || text.isEmpty()) {
@@ -57,7 +57,7 @@ public final class StringUtil {
    * Joins a list of Strings to a comma separated single String.
    *
    * @param list  the list to join
-   * @return the resulting comma separated string or null if the list is null
+   * @return the resulting comma separated string or {@code null} if the list is {@code null}
    */
   public static @Nullable String joinCommaSeparatedList(List<String> list) {
     return joinList(list, ", ");

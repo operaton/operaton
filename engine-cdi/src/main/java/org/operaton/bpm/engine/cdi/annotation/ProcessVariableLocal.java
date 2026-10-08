@@ -30,9 +30,10 @@ import jakarta.inject.Qualifier;
  * <li>{@code @Inject @ProcessVariableLocal Object accountNumber}</li>
  * <li>{@code @Inject @ProcessVariableLocal("accountNumber") Object account}</li>
  * </ul>
+ * <p>
  * In both cases, the local process variable with the name 'accountNumber' is
  * injected. NOTE: injection points must be of type 'object'.
- * <p />
+ * </p>
  *
  * @author Michael Scholz
  */

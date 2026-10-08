@@ -98,7 +98,7 @@ public class BatchQueryDto extends AbstractQueryDto<BatchQuery> {
       query.withoutTenantId();
     }
     if (hasElements(tenantIds)) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(suspended)) {
       query.suspended();

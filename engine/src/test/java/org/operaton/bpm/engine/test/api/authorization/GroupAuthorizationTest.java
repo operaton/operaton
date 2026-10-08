@@ -261,7 +261,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
     assertThat(isAuthorized).isTrue();
   }
 
-  protected class NullHostileList<E> extends ArrayList<E> {
+  static class NullHostileList<E> extends ArrayList<E> {
 
     public NullHostileList(Collection<E> other) {
       super(other);

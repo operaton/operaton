@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
  * and, before loading the byte array, both the variable and the byte array were
  * deleted by a concurrent transaction AND that transaction was comitted, before
  * the bytearray was loaded.
- * => loading the byte array returned null which triggered setting to null the
+ * => loading the byte array returned {@code null} which triggered setting to {@code null} the
  * byteArrayId value on the VariableInstanceEntity which in turn triggered an
  * update of the variable instance entity itself which failed with OLE because
  * the VariableInstanceEntity was already deleted.

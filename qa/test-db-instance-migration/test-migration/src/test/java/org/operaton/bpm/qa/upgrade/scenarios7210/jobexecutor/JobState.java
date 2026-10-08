@@ -123,6 +123,7 @@ public final class JobState {
      * <p>
      * Note: The conditionals of this method are on purpose left verbose (they would be further simplified) to make
      * the cases more distinct visibly to the reader.
+     * </p>
      *
      * @param job                        the job to check for lock state changes
      * @param originalLockExpirationTime the original expiration time
@@ -153,6 +154,7 @@ public final class JobState {
      * <p>
      * Note: The conditionals of this method are on purpose left verbose (they would be further simplified) to make
      * the cases more distinct visibly to the reader.
+     * </p>
      *
      * @param job the job to check for lock owner changes
      * @param originalLockOwner the original lock owner property has changed

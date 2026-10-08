@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,15 +45,13 @@ public class ParseExceptionDto extends ExceptionDto {
     dto.setMessage(exception.getMessage());
 
     for (ResourceReport report : exception.getResourceReports()) {
-      List<ProblemDto> errorDtos = new ArrayList<>();
-      for (Problem error : report.getErrors()) {
-        errorDtos.add(ProblemDto.fromProblem(error));
-      }
+      List<ProblemDto> errorDtos = report.getErrors().stream()
+          .map(ProblemDto::fromProblem)
+          .toList();
 
-      List<ProblemDto> warningDtos = new ArrayList<>();
-      for (Problem warning : report.getWarnings()) {
-        warningDtos.add(ProblemDto.fromProblem(warning));
-      }
+      List<ProblemDto> warningDtos = report.getWarnings().stream()
+          .map(ProblemDto::fromProblem)
+          .toList();
       ResourceReportDto resourceReportDto = new ResourceReportDto(errorDtos, warningDtos);
       dto.details.put(report.getResourceName(), resourceReportDto);
     }

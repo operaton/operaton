@@ -16,7 +16,6 @@
  */
 package org.operaton.templateengines;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.script.ScriptEngine;

@@ -63,7 +63,7 @@ public @NullMarked class StartJobAcquisitionStep extends DeploymentOperationStep
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
     final AbstractProcessApplication processApplication = operationContext.getAttachment(PROCESS_APPLICATION);
 
-    ClassLoader configurationClassloader = null;
+    ClassLoader configurationClassloader;
 
     if(processApplication != null) {
       configurationClassloader = processApplication.getProcessApplicationClassloader();

@@ -102,7 +102,7 @@ public class HistoryTimeToLiveParser {
    *                                (process definition key for processes, decision definition key for decisions, case definition key for cases).
    * @param skipEnforceTtl skips enforcing the TTL.
    * @return the parsed integer value of history time to live
-   * @throws NotValidException in case enforcement of non-null values is on and the parsed result was null
+   * @throws NotValidException in case enforcement of non-null values is on and the parsed result was {@code null}
    */
   protected Integer parseAndValidate(String historyTimeToLiveString, String definitionKey, boolean skipEnforceTtl) throws NotValidException {
     HTTLParsedResult result = new HTTLParsedResult(historyTimeToLiveString);

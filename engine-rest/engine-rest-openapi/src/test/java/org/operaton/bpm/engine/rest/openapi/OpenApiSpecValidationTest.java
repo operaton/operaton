@@ -29,8 +29,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Structural correctness test for the generated OpenAPI 3.0 specification.
  *
+ * <p>
  * Validates that the spec parses without errors, has valid structure, and all $ref targets resolve.
  * This test intentionally establishes a baseline on the current spec.
+ * </p>
  */
 class OpenApiSpecValidationTest {
 

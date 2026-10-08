@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.execution;
 
 import java.io.Serial;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 
@@ -294,13 +295,10 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   public void fireIfOnlySentryParts() {
     // the following steps are a workaround, because setVariable()
     // does not check nor fire a sentry!!!
-    Set<String> affectedSentries = new HashSet<>();
-    List<CmmnSentryPart> sentryParts = collectSentryParts(getSentries());
-    for (CmmnSentryPart sentryPart : sentryParts) {
-      if (isNotSatisfiedIfPartOnly(sentryPart)) {
-        affectedSentries.add(sentryPart.getSentryId());
-      }
-    }
+    Set<String> affectedSentries = collectSentryParts(getSentries()).stream()
+        .filter(this::isNotSatisfiedIfPartOnly)
+        .map(CmmnSentryPart::getSentryId)
+        .collect(Collectors.toSet());
 
     // Step 7: check each not affected sentry whether it is satisfied
     List<String> satisfiedSentries = getSatisfiedSentries(new ArrayList<>(affectedSentries));

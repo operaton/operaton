@@ -22,28 +22,38 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * <p>Determines the number of jobs to acquire and the time to wait between acquisition cycles
+ * Determines the number of jobs to acquire and the time to wait between acquisition cycles
  * by an exponential backoff strategy.
  *
- * <p>Manages two kinds of backoff times:
+ * <p>
+ * Manages two kinds of backoff times:
+ * </p>
  *   <ul>
  *     <li>idle time: Wait for a certain amount of time when no jobs are available
  *     <li>backoff time: Wait for a certain amount of time when jobs are available
  *       but could not successfully be acquired
  *   </ul>
+ * <p>
  * Both times are calculated by applying an exponential backoff. This means, when the respective conditions
  * repeatedly hold, the time increases exponentially from one acquisition cycle to the next.
+ * </p>
  *
- * <p>This implementation manages idle and backoff time in terms of levels. The initial backoff level is 0,
+ * <p>
+ * This implementation manages idle and backoff time in terms of levels. The initial backoff level is 0,
  * meaning that no backoff is applied. In case the condition for increasing backoff applies, the backoff
  * level is incremented. The actual time to wait is then computed as follows
+ * </p>
  *
  * <pre>timeToWait = baseBackoffTime * (backoffFactor ^ (backoffLevel - 1))</pre>
  *
- * <p>Accordingly, the maximum possible backoff level is
+ * <p>
+ * Accordingly, the maximum possible backoff level is
+ * </p>
  *
  * <pre>maximumLevel = floor( log( backoffFactor, maximumBackoffTime / baseBackoffTime) ) + 1</pre>
+ * <p>
  * (where log(a, b) is the logarithm of b to the base of a)
+ * </p>
  *
  * @author Thorben Lindhauer
  */

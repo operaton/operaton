@@ -22,9 +22,9 @@ import java.util.List;
 import jakarta.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import kong.unirest.HttpResponse;
-import kong.unirest.ObjectMapper;
-import kong.unirest.Unirest;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.ObjectMapper;
+import kong.unirest.core.Unirest;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;

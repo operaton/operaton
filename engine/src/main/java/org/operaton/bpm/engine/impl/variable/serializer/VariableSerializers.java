@@ -34,7 +34,7 @@ public interface VariableSerializers {
    *
    * @param value the value to persist
    * @param fallBackSerializerFactory a factory to build a fallback serializer in case no suiting serializer
-   *   can be determined. If this factory is not able to build serializer either, an exception is thrown. May be null
+   *   can be determined. If this factory is not able to build serializer either, an exception is thrown. May be {@code null}
    * @return the VariableValueserializer selected for persisting the value or 'null' in case no serializer can be found
    */
   @SuppressWarnings("rawtypes")
@@ -50,7 +50,7 @@ public interface VariableSerializers {
   /**
    *
    * @return the serializer for the given serializerName name.
-   * Returns null if no type was found with the name.
+   * Returns {@code null} if no type was found with the name.
    */
   TypedValueSerializer<?> getSerializerByName(String serializerName);
 

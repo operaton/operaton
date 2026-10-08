@@ -109,7 +109,7 @@ public class ExecutionEvent {
   }
 
   /**
-   * Gets the id of the parent of this execution. If null, the execution
+   * Gets the id of the parent of this execution. If {@code null}, the execution
    * represents a process-instance.
    */
   public String getParentId() {

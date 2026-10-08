@@ -23,7 +23,7 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ManagementService;
 
 /**
- * <p>A batch represents a number of jobs which
+ * A batch represents a number of jobs which
  * execute a number of commands asynchronously.
  * <p>
  * <p>Batches have three types of jobs:
@@ -110,11 +110,8 @@ public interface Batch {
   String getCreateUserId();
 
   /**
-   * <p>
    * Indicates whether this batch is suspended. If a batch is suspended,
    * the batch jobs will not be acquired by the job executor.
-   * </p>
-   * <p>
    * <p>
    * <strong>Note:</strong> It is still possible to manually suspend and activate
    * jobs and job definitions using the {@link ManagementService}, which will

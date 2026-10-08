@@ -52,8 +52,10 @@ import static java.lang.Boolean.TRUE;
  * Implementation of the {@link TaskQuery} interface.
  *
  * <h3>Development Notes</h3>
+ * <p>
  * When adding a property filter that supports Tasklist filters,
  * the following classes need to be modified:
+ * </p>
  *
  * <ol>
  * <li>Update the {@code TaskQuery} interface</li>

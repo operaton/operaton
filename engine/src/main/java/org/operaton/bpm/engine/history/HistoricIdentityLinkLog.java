@@ -27,13 +27,13 @@ import org.operaton.bpm.engine.identity.UserQuery;
  *
  * <p>
  * For example, historic identity link is logged on the following conditions:
+ * </p>
  * <ul>
  *   <li>a user can be an assignee/Candidate/Owner (= identity link type) for a task</li>
  *   <li>a group can be a candidate-group (= identity link type) for a task</li>
  *   <li>a user can be an candidate in the scope of process definition</li>
  *   <li>a group can be a candidate-group in the scope of process definition</li>
  * </ul>
- * </p>
  *
  * <p>
  * For every log, an operation type (add/delete) is added to the database

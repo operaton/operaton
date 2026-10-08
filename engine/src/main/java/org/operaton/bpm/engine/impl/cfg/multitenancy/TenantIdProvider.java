@@ -23,11 +23,13 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 /**
  * SPI which can be implemented to assign tenant ids to process instances, case instances and historic decision instances.
- *<p>
+ * <p>
  * The SPI is invoked if the process definition, case definition or decision definition does not have a tenant id or
  * execution does not have a tenant id.
- *<p>
+ * </p>
+ * <p>
  * An implementation of this SPI can be set on the {@link ProcessEngineConfigurationImpl}.
+ * </p>
  *
  * @author Daniel Meyer
  */
@@ -35,8 +37,9 @@ public @NullMarked interface TenantIdProvider {
 
   /**
    * Invoked when a process instance is started and the Process Definition does not have a tenant id.
-   *<p>
+   * <p>
    * Implementors can either return a tenant id or {@code null}. If {@code null} is returned the process instance is not assigned a tenant id.
+   * </p>
    *
    * @param ctx holds information about the process instance which is about to be started.
    * @return a tenant id or {@code null} if case the implementation does not assign a tenant id to the process instance
@@ -45,8 +48,9 @@ public @NullMarked interface TenantIdProvider {
 
   /**
    * Invoked when a case instance is started and the Case Definition does not have a tenant id.
-   *<p>
+   * <p>
    * Implementors can either return a tenant id or {@code null}. If {@code null} is returned the case instance is not assigned a tenant id.
+   * </p>
    *
    * @param ctx holds information about the case instance which is about to be started.
    * @return a tenant id or {@code null} if case the implementation does not assign a tenant id to case process instance
@@ -55,8 +59,9 @@ public @NullMarked interface TenantIdProvider {
 
   /**
    * Invoked when a historic decision instance is created and the Decision Definition or the Execution does not have a tenant id.
-   *<p>
+   * <p>
    * Implementors can either return a tenant id or {@code null}. If {@code null} is returned the historic decision instance is not assigned a tenant id.
+   * </p>
    *
    * @param ctx holds information about the decision definition and the execution.
    * @return a tenant id or {@code null} if case the implementation does not assign a tenant id to the historic decision instance

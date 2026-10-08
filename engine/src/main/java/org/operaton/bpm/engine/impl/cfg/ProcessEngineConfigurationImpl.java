@@ -441,13 +441,17 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * The legacy behaviour does not guarantee sequential execution of any spawned subprocesses. Instead, it works only
    * at the root level. When the feature is enabled, any spawned subprocess of the root process will be acquired and
    * executed sequentially by one thread.
+   * </p>
    * <p>
    * Note that the above configuration might introduce performance implications in complex process modelling that involves
    * high multi-instance multiplicity and numerous subprocesses.
+   * </p>
    * <p>
    * Use the feature in combination with awareness of your process modeling.
+   * </p>
    * <p>
    * Default value: false; to keep the legacy behaviour backwards compatible.
+   * </p>
    */
   protected boolean jobExecutorAcquireExclusiveOverProcessHierarchies;
 
@@ -710,10 +714,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * However, only the result from the "main" incident handler will be returned.
    * <p>
    * All {@link customIncidentHandlers} will be added as sub handlers to {@link CompositeIncidentHandler} for same handler type.
+   * </p>
    * <p>
    * By default, main handler is {@link DefaultIncidentHandler}.
    * To override the main handler you need create {@link CompositeIncidentHandler} with your main IncidentHandler and
    * init {@link incidentHandlers} before setting up the engine.
+   * </p>
    *
    * @see CompositeIncidentHandler
    * @see #initIncidentHandlers
@@ -3767,12 +3773,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * Allows configuring a database table prefix which is used for all runtime operations of the process engine.
    * For example, if you specify a prefix named 'PRE1.', activiti will query for executions in a table named
    * 'PRE1.ACT_RU_EXECUTION_'.
-   * <p>
    * <p/>
    * <strong>NOTE: the prefix is not respected by automatic database schema management. If you use
    * {@link ProcessEngineConfiguration#DB_SCHEMA_UPDATE_CREATE_DROP}
    * or {@link ProcessEngineConfiguration#DB_SCHEMA_UPDATE_TRUE}, activiti will create the database tables
    * using the default names, regardless of the prefix configured here.</strong>
+   * </p>
    */
   public ProcessEngineConfiguration setDatabaseTablePrefix(String databaseTablePrefix) {
     this.databaseTablePrefix = databaseTablePrefix;

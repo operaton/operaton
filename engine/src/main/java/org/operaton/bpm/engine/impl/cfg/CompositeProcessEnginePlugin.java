@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * all plugins added to this composite will be triggered on preInit/postInit/postProcessEngineBuild.
  * <p>
  * Use to encapsulate common behavior (like engine configuration).
+ * </p>
  */
 public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
 

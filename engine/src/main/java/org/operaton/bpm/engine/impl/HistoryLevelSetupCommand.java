@@ -22,11 +22,15 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
  * Command executed during engine startup to verify or initialize the history level stored in the
  * database.
  *
- * <p>Implementations can be supplied via
+ * <p>
+ * Implementations can be supplied via
  * {@link org.operaton.bpm.engine.ProcessEngineConfiguration#setHistoryLevelCommand} to customize
  * history level setup behavior in engine plugins.
+ * </p>
  *
- * <p>The default implementation is {@link DefaultHistoryLevelSetupCommand}.
+ * <p>
+ * The default implementation is {@link DefaultHistoryLevelSetupCommand}.
+ * </p>
  *
  * @since 2.1
  * @see DefaultHistoryLevelSetupCommand

@@ -412,6 +412,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * <p>
    * Note that there will always be maximum only <b>one</b>
    * such process instance that can be the result of this query.
+   * </p>
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery subProcessInstanceId(String subProcessInstanceId);
@@ -429,6 +430,7 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * <p>
    * Note that there will always be maximum only <b>one</b>
    * such process instance that can be the result of this query.
+   * </p>
    * @return HistoricProcessInstanceQuery A modified query with applied filter
    */
   HistoricProcessInstanceQuery subCaseInstanceId(String subCaseInstanceId);

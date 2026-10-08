@@ -26,13 +26,15 @@ import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 /**
- * <p>A DeploymentOperation allows bundling multiple deployment steps into a
- * composite operation that succeeds or fails atomically.</p>
+ * A DeploymentOperation allows bundling multiple deployment steps into a
+ * composite operation that succeeds or fails atomically.
  *
- * <p>The DeploymentOperation is composed of a list of individual steps (
+ * <p>
+ * The DeploymentOperation is composed of a list of individual steps (
  * {@link DeploymentOperationStep}). Each step may or may not install new
  * services into the container. If one of the steps fails, the operation makes
  * sure that
+ * </p>
  * <ul>
  *  <li>all successfully completed steps are notified by calling their
  *  {@link DeploymentOperationStep#cancelOperationStep(DeploymentOperation)}

@@ -45,10 +45,12 @@ import org.operaton.bpm.engine.impl.identity.Authentication;
 public interface IdentityService {
 
   /**
-   * <p>Allows to inquire whether this identity service implementation provides
-   * read-only access to the user repository, false otherwise.</p>
+   * Allows to inquire whether this identity service implementation provides
+   * read-only access to the user repository, false otherwise.
    *
+   * <p>
    * Read only identity service implementations do not support the following methods:
+   * </p>
    * <ul>
    * <li> {@link #newUser(String)} </li>
    * <li> {@link #saveUser(User)} </li>
@@ -77,10 +79,11 @@ public interface IdentityService {
    * <li> {@link #deleteTenantUserMembership(String, String)} </li>
    * <li> {@link #deleteTenantGroupMembership(String, String)} </li>
    * </ul>
-   * </p>
    *
-   * <p>If these methods are invoked on a read-only identity service implementation,
-   * the invocation will throw an {@link UnsupportedOperationException}.</p>
+   * <p>
+   * If these methods are invoked on a read-only identity service implementation,
+   * the invocation will throw an {@link UnsupportedOperationException}.
+   * </p>
    *
    * @return true if this identity service implementation provides read-only
    *         access to the user repository, false otherwise.
@@ -417,7 +420,6 @@ public interface IdentityService {
    * thread will have access to this authentication. Should be followed by
    * a call to {@link #clearAuthentication()} once the interaction is terminated.
    *
-   * <p>
    *  @param userId the id of the current user.
    *  @param groups the groups of the current user.
    * </p>

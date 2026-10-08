@@ -500,6 +500,7 @@ public @NullMarked interface TaskService {
    * Changes the priority of the task.
    * <p>
    * Authorization: actual owner / business admin
+   * </p>
    *
    * @param taskId   id of the task, cannot be {@code null}.
    * @param priority the new priority for the task.

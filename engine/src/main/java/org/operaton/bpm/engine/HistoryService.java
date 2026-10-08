@@ -101,7 +101,9 @@ public @NullMarked interface HistoryService {
   /**
    * Creates a new programmatic query to search for {@link HistoricProcessInstance}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -109,14 +111,15 @@ public @NullMarked interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricProcessInstanceQuery createHistoricProcessInstanceQuery();
 
   /**
    * Creates a new programmatic query to search for {@link HistoricActivityInstance}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -124,7 +127,6 @@ public @NullMarked interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricActivityInstanceQuery createHistoricActivityInstanceQuery();
 
@@ -147,7 +149,9 @@ public @NullMarked interface HistoryService {
   /**
    * Creates a new programmatic query to search for {@link HistoricTaskInstance}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -158,14 +162,15 @@ public @NullMarked interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricTaskInstanceQuery createHistoricTaskInstanceQuery();
 
   /**
    * Creates a new programmatic query to search for {@link HistoricDetail}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *       {@link Resources#PROCESS_DEFINITION} OR
@@ -184,14 +189,15 @@ public @NullMarked interface HistoryService {
    *       {@code enableHistoricInstancePermissions}
    *       in {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricDetailQuery createHistoricDetailQuery();
 
   /**
    * Creates a new programmatic query to search for {@link HistoricVariableInstance}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *       {@link Resources#PROCESS_DEFINITION} OR
@@ -210,14 +216,15 @@ public @NullMarked interface HistoryService {
    *       {@code enableHistoricInstancePermissions}
    *       in {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricVariableInstanceQuery createHistoricVariableInstanceQuery();
 
   /**
    * Creates a new programmatic query to search for {@link UserOperationLogEntry} instances.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -228,14 +235,15 @@ public @NullMarked interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   UserOperationLogQuery createUserOperationLogQuery();
 
   /**
    * Creates a new programmatic query to search for {@link HistoricIncident historic incidents}.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -243,7 +251,6 @@ public @NullMarked interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricIncidentQuery createHistoricIncidentQuery();
 
@@ -251,7 +258,9 @@ public @NullMarked interface HistoryService {
    * Creates a new programmatic query to search for
    * {@link HistoricIdentityLinkLog historic identity links}.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -259,7 +268,6 @@ public @NullMarked interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricIdentityLinkLogQuery createHistoricIdentityLinkLogQuery();
 
@@ -598,9 +606,11 @@ public @NullMarked interface HistoryService {
   NativeHistoricVariableInstanceQuery createNativeHistoricVariableInstanceQuery();
 
   /**
-   * <p>Creates a new programmatic query to search for {@link HistoricJobLog historic job logs}.
+   * Creates a new programmatic query to search for {@link HistoricJobLog historic job logs}.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -692,7 +702,9 @@ public @NullMarked interface HistoryService {
    * Creates a new programmatic query to search for
    * {@link HistoricExternalTaskLog historic external task logs}.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -700,7 +712,6 @@ public @NullMarked interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricExternalTaskLogQuery createHistoricExternalTaskLogQuery();
 

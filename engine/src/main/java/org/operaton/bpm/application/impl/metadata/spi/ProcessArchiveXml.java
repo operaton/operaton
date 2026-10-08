@@ -55,10 +55,12 @@ public interface ProcessArchiveXml {
   String PROP_IS_DEPLOY_CHANGED_ONLY = "isDeployChangedOnly";
 
   /**
-   * <p> The resource root of the proccess archive. This property is used when scanning for process definitions
-   * (if {@link #PROP_IS_SCAN_FOR_PROCESS_DEFINITIONS} is set to true).</p>
+   * The resource root of the proccess archive. This property is used when scanning for process definitions
+   * (if {@link #PROP_IS_SCAN_FOR_PROCESS_DEFINITIONS} is set to true).
    *
-   * <p> The path is interpreted as
+   * <p>
+   * The path is interpreted as
+   * </p>
    * <ul>
    *
    *   <li>
@@ -94,7 +96,6 @@ public interface ProcessArchiveXml {
    *    </p>
    *   </li>
    * </ul>
-   * </p>
    */
   String PROP_RESOURCE_ROOT_PATH = "resourceRootPath";
 

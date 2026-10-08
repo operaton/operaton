@@ -27,10 +27,8 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
 import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
 
 /**
- * <p>
  * A {@link AbstractProcessApplication} Implementation to be used in a Servlet
  * container environment.
- * </p>
  *
  * <p>
  * This class implements the {@link ServletContextListener} interface and can
@@ -42,6 +40,7 @@ import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
  * In a <strong>Servlet 5.0</strong> container it is sufficient adding a custom
  * subclass of {@link JakartaServletProcessApplication} annotated with
  * <code>{@literal @}ProcessApplication</code> to your application:
+ * </p>
  *
  * <pre>
  * {@literal @}ProcessApplication("Loan Approval App")
@@ -50,6 +49,7 @@ import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
  * }
  * </pre>
  *
+ * <p>
  * This, in combination with a <code>META-INF/processes.xml</code> file is
  * sufficient for making sure that the process application class is picked up at
  * runtime.
@@ -61,6 +61,7 @@ import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
  * the servlet process application modifies the context classloader of the
  * current Thread to the classloader that loaded the application-provided
  * subclass of this class. This allows
+ * </p>
  * <ul>
  * <li>the process engine to resolve {@link JavaDelegate} implementations using
  * the classloader of the process application</li>
@@ -68,8 +69,6 @@ import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
  * the naming context of the process application. JNDI name resolution is based
  * on the TCCL in Apache Tomcat.</li>
  * </ul>
- * </p>
- *
  *
  * <pre>
  *                        Set TCCL of Process Application

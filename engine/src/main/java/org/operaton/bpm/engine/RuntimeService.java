@@ -405,11 +405,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessage(String messageName);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, Map)}. This method allows
    * specifying a business key.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -426,11 +428,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessage(String messageName, String businessKey);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String)}. In addition, this method allows
    * specifying a the payload of the message as a map of process variables.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -450,11 +454,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessage(String messageName, Map<String, Object> processVariables);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, Map)}. In addition, this method allows
    * specifying a business key.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -476,11 +482,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessage(String messageName, String businessKey, Map<String, Object> processVariables);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String)}. In addition, this method allows
    * specifying the exactly version of the process definition with the given id.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -501,11 +509,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, String)}. In addition, this method allows
    * specifying the exactly version of the process definition with the given id.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -528,11 +538,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId, String businessKey);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, Map)}. In addition, this method allows
    * specifying the exactly version of the process definition with the given id.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -557,11 +569,13 @@ public @NullMarked interface RuntimeService {
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId, Map<String, Object> processVariables);
 
   /**
-   * <p>Signals the process engine that a message is received and starts a new
-   * {@link ProcessInstance}.</p>
+   * Signals the process engine that a message is received and starts a new
+   * {@link ProcessInstance}.
    *
+   * <p>
    * See {@link #startProcessInstanceByMessage(String, String, Map)}. In addition, this method allows
    * specifying the exactly version of the process definition with the given id.
+   * </p>
    *
    * @param messageName
    *          the 'name' of the message as specified as an attribute on the
@@ -1027,10 +1041,10 @@ public @NullMarked interface RuntimeService {
   List<String> getActiveActivityIds(String executionId);
 
   /**
-   * <p>Allows retrieving the activity instance tree for a given process instance.
+   * Allows retrieving the activity instance tree for a given process instance.
    * The activity instance tree is aligned with the concept of scope in the BPMN specification.
    * Activities that are "on the same level of subprocess" (ie. part of the same scope, contained
-   * in the same subprocess) will have their activity instances at the same level in the tree.</p>
+   * in the same subprocess) will have their activity instances at the same level in the tree.
    *
    * <h2>Examples:</h2>
    * <p><ul>
@@ -1045,12 +1059,15 @@ public @NullMarked interface RuntimeService {
    * </ul></p>
    *
    * <h2>Identity & Uniqueness:</h2>
-   * <p>Each activity instance is assigned a unique Id. The id is persistent, if you invoke this method multiple times,
+   * <p>
+   * Each activity instance is assigned a unique Id. The id is persistent, if you invoke this method multiple times,
    * the same activity instance ids will be returned for the same activity instances. (However, there might be
-   * different executions assigned, see below)</p>
+   * different executions assigned, see below)
+   * </p>
    *
    * <h2>Relation to Executions</h2>
-   * <p>The {@link Execution} concept in the process engine is not completely aligned with the activity
+   * <p>
+   * The {@link Execution} concept in the process engine is not completely aligned with the activity
    * instance concept because the execution tree is in general not aligned with the activity / scope concept in
    * BPMN. In general, there is a n-1 relationship between Executions and ActivityInstances, ie. at a given
    * point in time, an activity instance can be linked to multiple executions. In addition, it is not guaranteed
@@ -1060,9 +1077,12 @@ public @NullMarked interface RuntimeService {
    * but another execution ends it. Another special case is the process instance: if the process instance is executing
    * a non-scope activity (for example a user task) below the process definition scope, it will be referenced
    * by both the root activity instance and the user task activity instance.
+   * </p>
    *
-   * <p><strong>If you need to interpret the state of a process instance in terms of a BPMN process model, it is usually easier to
-   * use the activity instance tree as opposed to the execution tree.</strong></p>
+   * <p>
+   * <strong>If you need to interpret the state of a process instance in terms of a BPMN process model, it is usually easier to
+   * use the activity instance tree as opposed to the execution tree.</strong>
+   * </p>
    *
    * @param processInstanceId the id of the process instance for which the activity instance tree should be constructed.
    *
@@ -1748,31 +1768,40 @@ public @NullMarked interface RuntimeService {
   // Process instance state //////////////////////////////////////////
 
   /**
-   * <p>Suspends the process instance with the given id. This means that the
+   * Suspends the process instance with the given id. This means that the
    * execution is stopped, so the <i>token state</i> will not change.
    * However, actions that do not change token state, like setting/removing
-   * variables, etc. will succeed.</p>
+   * variables, etc. will succeed.
    *
-   * <p>Tasks belonging to this process instance will also be suspended. This means
+   * <p>
+   * Tasks belonging to this process instance will also be suspended. This means
    * that any actions influencing the tasks' lifecycles will fail, such as
+   * </p>
    * <ul>
    *   <li>claiming</li>
    *   <li>completing</li>
    *   <li>delegation</li>
    *   <li>changes in task assignees, owners, etc.</li>
    * </ul>
+   * <p>
    * Actions that only change task properties will succeed, such as changing variables
    * or adding comments.
    * </p>
    *
-   * <p>If a process instance is in state suspended, the engine will also not
-   * execute jobs (timers, messages) associated with this instance.</p>
+   * <p>
+   * If a process instance is in state suspended, the engine will also not
+   * execute jobs (timers, messages) associated with this instance.
+   * </p>
    *
-   * <p>If you have a process instance hierarchy, suspending
+   * <p>
+   * If you have a process instance hierarchy, suspending
    * one process instance from the hierarchy will not suspend other
-   * process instances from that hierarchy.</p>
+   * process instances from that hierarchy.
+   * </p>
    *
-   * <p>Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.</p>
+   * <p>
+   * Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.
+   * </p>
    *
    * @throws ProcessEngineException
    *          if no such processInstance can be found.
@@ -1786,31 +1815,40 @@ public @NullMarked interface RuntimeService {
   void suspendProcessInstanceById(String processInstanceId);
 
   /**
-   * <p>Suspends the process instances with the given process definition id.
+   * Suspends the process instances with the given process definition id.
    * This means that the execution is stopped, so the <i>token state</i>
    * will not change. However, actions that do not change token state, like
-   * setting/removing variables, etc. will succeed.</p>
+   * setting/removing variables, etc. will succeed.
    *
-   * <p>Tasks belonging to the suspended process instance will also be suspended.
+   * <p>
+   * Tasks belonging to the suspended process instance will also be suspended.
    * This means that any actions influencing the tasks' lifecycles will fail, such as
+   * </p>
    * <ul>
    *   <li>claiming</li>
    *   <li>completing</li>
    *   <li>delegation</li>
    *   <li>changes in task assignees, owners, etc.</li>
    * </ul>
+   * <p>
    * Actions that only change task properties will succeed, such as changing variables
    * or adding comments.
    * </p>
    *
-   * <p>If a process instance is in state suspended, the engine will also not
-   * execute jobs (timers, messages) associated with this instance.</p>
+   * <p>
+   * If a process instance is in state suspended, the engine will also not
+   * execute jobs (timers, messages) associated with this instance.
+   * </p>
    *
-   * <p>If you have a process instance hierarchy, suspending
+   * <p>
+   * If you have a process instance hierarchy, suspending
    * one process instance from the hierarchy will not suspend other
-   * process instances from that hierarchy.</p>
+   * process instances from that hierarchy.
+   * </p>
    *
-   * <p>Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.</p>
+   * <p>
+   * Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.
+   * </p>
    *
    * @throws ProcessEngineException
    *          if no such processInstance can be found.
@@ -1824,31 +1862,40 @@ public @NullMarked interface RuntimeService {
   void suspendProcessInstanceByProcessDefinitionId(String processDefinitionId);
 
   /**
-   * <p>Suspends the process instances with the given process definition key.
+   * Suspends the process instances with the given process definition key.
    * This means that the execution is stopped, so the <i>token state</i>
    * will not change. However, actions that do not change token state, like
-   * setting/removing variables, etc. will succeed.</p>
+   * setting/removing variables, etc. will succeed.
    *
-   * <p>Tasks belonging to the suspended process instance will also be suspended.
+   * <p>
+   * Tasks belonging to the suspended process instance will also be suspended.
    * This means that any actions influencing the tasks' lifecycles will fail, such as
+   * </p>
    * <ul>
    *   <li>claiming</li>
    *   <li>completing</li>
    *   <li>delegation</li>
    *   <li>changes in task assignees, owners, etc.</li>
    * </ul>
+   * <p>
    * Actions that only change task properties will succeed, such as changing variables
    * or adding comments.
    * </p>
    *
-   * <p>If a process instance is in state suspended, the engine will also not
-   * execute jobs (timers, messages) associated with this instance.</p>
+   * <p>
+   * If a process instance is in state suspended, the engine will also not
+   * execute jobs (timers, messages) associated with this instance.
+   * </p>
    *
-   * <p>If you have a process instance hierarchy, suspending
+   * <p>
+   * If you have a process instance hierarchy, suspending
    * one process instance from the hierarchy will not suspend other
-   * process instances from that hierarchy.</p>
+   * process instances from that hierarchy.
+   * </p>
    *
-   * <p>Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.</p>
+   * <p>
+   * Note: for more complex suspend commands use {@link #updateProcessInstanceSuspensionState()}.
+   * </p>
    *
    * @throws ProcessEngineException
    *          if no such processInstance can be found.
@@ -2197,7 +2244,9 @@ public @NullMarked interface RuntimeService {
    *    a process definition that can be started by this message.
    *  </li>
    * </ul>
+   * <p>
    * and updates the process instance variables.
+   * </p>
    *
    * <p>
    * Notification and instantiation happen synchronously.
@@ -2231,7 +2280,9 @@ public @NullMarked interface RuntimeService {
    *    a process definition that can be started by this message.
    *  </li>
    * </ul>
+   * <p>
    * and updates the process instance variables.
+   * </p>
    *
    * <p>
    * Notification and instantiation happen synchronously.
@@ -2266,7 +2317,9 @@ public @NullMarked interface RuntimeService {
    *    a process definition that can be started by this message.
    *  </li>
    * </ul>
+   * <p>
    * and updates the process instance variables.
+   * </p>
    *
    * <p>
    * Notification and instantiation happen synchronously.

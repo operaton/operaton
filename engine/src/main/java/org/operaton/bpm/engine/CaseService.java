@@ -202,19 +202,20 @@ public @NullMarked interface CaseService {
   CaseInstance createCaseInstanceById(String caseDefinitionId, String businessKey, Map<String, Object> variables);
 
   /**
-   * <p>Starts the case execution identified by the given id manually.
+   * Starts the case execution identified by the given id manually.
    * Performs the transition from state
-   * <code>ENABLED</code> to state <code>ACTIVE</code>.</p>
+   * <code>ENABLED</code> to state <code>ACTIVE</code>.
    *
-   * <p>According to CMMN 1.0 specification, the state <code>ACTIVE</code> means that the
+   * <p>
+   * According to CMMN 1.0 specification, the state <code>ACTIVE</code> means that the
    * {@link Stage} or {@link Task} related to the case execution does the following:
+   * </p>
    *   <ul>
    *     <li>{@link Task}: the {@link Task task} is completed immediately</li>
    *     <li>{@link HumanTask}: a new {@link org.operaton.bpm.engine.task.Task user task} is instantiated</li>
    *     <li>{@link ProcessTask}: a new {@link ProcessInstance process instance} is instantiated</li>
    *     <li>{@link CaseTask}: a new {@link CaseInstance case instance} is instantiated</li>
    *   </ul>
-   * </p>
    *
    * @param caseExecutionId the id of the case execution to manually start
    *
@@ -229,19 +230,20 @@ public @NullMarked interface CaseService {
   void manuallyStartCaseExecution(String caseExecutionId);
 
   /**
-   * <p>Starts the case execution identified by the given id manually.
+   * Starts the case execution identified by the given id manually.
    * Performs a transition from state
-   * <code>ENABLED</code> to state <code>ACTIVE</code>.</p>
+   * <code>ENABLED</code> to state <code>ACTIVE</code>.
    *
-   * <p>According to CMMN 1.0 specification, the state <code>ACTIVE</code> means that the
+   * <p>
+   * According to CMMN 1.0 specification, the state <code>ACTIVE</code> means that the
    * {@link Stage} or {@link Task} related to the case execution does the following:
+   * </p>
    *   <ul>
    *     <li>{@link Task}: the {@link Task task} is completed immediately</li>
    *     <li>{@link HumanTask}: a new {@link org.operaton.bpm.engine.task.Task user task} is instantiated</li>
    *     <li>{@link ProcessTask}: a new {@link ProcessInstance process instance} is instantiated</li>
    *     <li>{@link CaseTask}: a new {@link CaseInstance case instance} is instantiated</li>
    *   </ul>
-   * </p>
    *
    * @param caseExecutionId the id of the case execution to manually start
    * @param variables variables to be set on the case execution
@@ -353,31 +355,36 @@ public @NullMarked interface CaseService {
   void reenableCaseExecution(String caseExecutionId, Map<String, Object> variables);
 
   /**
-   *
-   * <p>Completes the case execution identified by the given id.
+   * Completes the case execution identified by the given id.
    * Performs a transition from state <code>ACTIVE</code>
-   * to state <code>COMPLETED</code>.</p>
+   * to state <code>COMPLETED</code>.
    *
-   * <p>It is only possible to complete a case execution which is associated with a
-   * {@link Stage} or {@link Task}.</p>
+   * <p>
+   * It is only possible to complete a case execution which is associated with a
+   * {@link Stage} or {@link Task}.
+   * </p>
    *
-   * <p>In case of a {@link Stage}, the completion can only be performed when the following
-   * criteria are fulfilled:<br>
+   * <p>
+   * In case of a {@link Stage}, the completion can only be performed when the following
+   * criteria are fulfilled:
+   * </p>
    * <ul>
    *  <li>there are no children in the state <code>ACTIVE</code></li>
    * </ul>
-   * </p>
    *
-   * <p>For a {@link Task} instance, this means its purpose has been accomplished:<br>
+   * <p>
+   * For a {@link Task} instance, this means its purpose has been accomplished:
+   * </p>
    *  <ul>
    *    <li>{@link HumanTask} has been completed by human.</li>
    *  </ul>
-   * </p>
    *
-   * <p>If the given case execution has a parent case execution, that parent
+   * <p>
+   * If the given case execution has a parent case execution, that parent
    * case execution will be notified that the given case execution has been
    * completed. This can lead to a completion of the parent case execution if
-   * the completion criteria are fulfilled.</p>
+   * the completion criteria are fulfilled.
+   * </p>
    *
    * @param caseExecutionId the id of the case execution to complete
    *
@@ -391,31 +398,36 @@ public @NullMarked interface CaseService {
   void completeCaseExecution(String caseExecutionId);
 
   /**
-  *
-  * <p>Completes the case execution identified by the given id.
+  * Completes the case execution identified by the given id.
   * Performs a transition from state <code>ACTIVE</code>
-  * to state <code>COMPLETED</code>.</p>
+  * to state <code>COMPLETED</code>.
   *
-  * <p>It is only possible to complete a case execution which is associated with a
-  * {@link Stage} or {@link Task}.</p>
+  * <p>
+  * It is only possible to complete a case execution which is associated with a
+  * {@link Stage} or {@link Task}.
+  * </p>
   *
-  * <p>In case of a {@link Stage}, the completion can only be performed when the following
-  * criteria are fulfilled:<br>
+  * <p>
+  * In case of a {@link Stage}, the completion can only be performed when the following
+  * criteria are fulfilled:
+  * </p>
   * <ul>
   *  <li>there are no children in the state <code>ACTIVE</code></li>
   * </ul>
-  * </p>
   *
-  * <p>For a {@link Task} instance, this means its purpose has been accomplished:<br>
+  * <p>
+  * For a {@link Task} instance, this means its purpose has been accomplished:
+  * </p>
   *  <ul>
   *    <li>{@link HumanTask} has been completed by human.</li>
   *  </ul>
-  * </p>
   *
-  * <p>If the given case execution has a parent case execution, that parent
+  * <p>
+  * If the given case execution has a parent case execution, that parent
   * case execution will be notified that the given case execution has been
   * completed. This can lead to a completion of the parent case execution if
-  * the completion criteria are fulfilled.</p>
+  * the completion criteria are fulfilled.
+  * </p>
   *
   * @param caseExecutionId the id of the case execution to complete
   * @param variables variables to be set on the case execution

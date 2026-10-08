@@ -32,7 +32,7 @@ public enum ActivityStartBehavior {
    * the activity is executed by the execution which enters it.
    *
    * <p>
-   * NOTE: Only activities contained in normal flow can have DEFALUT start behavior.
+   * NOTE: Only activities contained in normal flow can have DEFAULT start behavior.
    * </p>
    */
   DEFAULT,

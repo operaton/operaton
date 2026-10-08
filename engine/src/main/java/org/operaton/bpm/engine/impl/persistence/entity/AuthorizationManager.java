@@ -498,7 +498,7 @@ public class AuthorizationManager extends AbstractManager {
    * {@link Groups#OPERATON_ADMIN}. The check is ignored if the authorization is
    * disabled or no authentication exists.
    *
-   * @throws AuthorizationException
+   * @throws AuthorizationException if the current authentication does not contain the group {@link Groups#OPERATON_ADMIN}
    */
   public void checkOperatonAdmin() {
     final Authentication currentAuthentication = getCurrentAuthentication();

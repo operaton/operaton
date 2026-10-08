@@ -188,7 +188,6 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   /**
    * Updates all modifiable fields from another process definition entity.
-   * @param updatingProcessDefinition
    */
   @Override
   public void updateModifiableFieldsFromEntity(ProcessDefinitionEntity updatingProcessDefinition) {

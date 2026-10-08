@@ -133,13 +133,13 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   protected transient CaseExecutionEntity superCaseExecution;
 
   /**
-   * reference to a subprocessinstance, not-null if currently subprocess is
+   * reference to a sub process instance, not-null if currently subprocess is
    * started from this execution
    */
   protected transient ExecutionEntity subProcessInstance;
 
   /**
-   * reference to a subcaseinstance, not-null if currently subcase is started
+   * reference to a sub case instance, not-null if currently subcase is started
    * from this execution
    */
   protected transient CaseExecutionEntity subCaseInstance;
@@ -506,7 +506,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   /**
    * Method used for destroying a scope in a way that the execution can be
-   * removed afterwards.
+   * removed afterward.
    */
   @Override
   public void destroy(boolean alwaysSkipIoMappings) {
@@ -724,7 +724,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     this.executions = executions;
   }
 
-  // bussiness key ////////////////////////////////////////////////////////////
+  // business key ////////////////////////////////////////////////////////////
 
   @Override
   public String getProcessBusinessKey() {
@@ -1270,17 +1270,17 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    *
    * <p>
    * In many cases this is an optimization over fetching the execution tree
-   * lazily. Usually we need all executions anyway and it is preferable to fetch
+   * lazily. Usually we need all executions anyway, and it is preferable to fetch
    * more data in a single query (maybe even too much data) then to run multiple
    * queries, each returning a fraction of the data.
    * </p>
    *
    * <p>
-   * The most important consideration here is network roundtrip: If the process
-   * engine and database run on separate hosts, network roundtrip has to be
+   * The most important consideration here is network round-trip: If the process
+   * engine and database run on separate hosts, network round-trip has to be
    * added to each query. Economizing on the number of queries economizes on
-   * network roundtrip. The tradeoff here is network roundtrip vs. throughput:
-   * multiple roundtrips carrying small chucks of data vs. a single roundtrip
+   * network round-trip. The tradeoff here is network round-trip vs. throughput:
+   * multiple round-trips carrying small chucks of data vs. a single round-trip
    * carrying more data.
    * </p>
    *
@@ -1742,8 +1742,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   public void handleConditionalEventOnVariableChange(VariableEvent variableEvent) {
-    List<EventSubscriptionEntity> subScriptions = getEventSubscriptions();
-    for (EventSubscriptionEntity subscription : subScriptions) {
+    List<EventSubscriptionEntity> subscriptions = getEventSubscriptions();
+    for (EventSubscriptionEntity subscription : subscriptions) {
       if (EventType.CONDITONAL.name().equals(subscription.getEventType())) {
         subscription.processEventSync(variableEvent);
       }

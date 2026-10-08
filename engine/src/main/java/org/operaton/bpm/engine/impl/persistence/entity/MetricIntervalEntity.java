@@ -44,10 +44,6 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity {
 
   /**
    * Ctor will be used by Mybatis
-   *
-   * @param timestamp
-   * @param name
-   * @param reporter
    */
   public MetricIntervalEntity(Long timestamp, String name, String reporter) {
     this.timestamp = new Date(timestamp);

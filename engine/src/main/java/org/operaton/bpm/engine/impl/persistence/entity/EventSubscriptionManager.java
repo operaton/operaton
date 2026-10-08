@@ -293,9 +293,7 @@ public class EventSubscriptionManager extends AbstractManager {
   }
 
   /**
-   * @param tenantId
    * @return the conditional start event subscriptions with the given tenant id
-   *
    */
   @SuppressWarnings("unchecked")
   public List<EventSubscriptionEntity> findConditionalStartEventSubscriptionByTenantId(String tenantId) {

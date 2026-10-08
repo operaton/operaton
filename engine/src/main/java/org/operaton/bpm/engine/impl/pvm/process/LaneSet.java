@@ -23,7 +23,7 @@ import org.jspecify.annotations.Nullable;
 
 
 /**
- * A BPMN 2.0 LaneSet, containg {@link Lane}s, currently only used for
+ * A BPMN 2.0 LaneSet, containing {@link Lane}s, currently only used for
  * rendering the DI info.
  *
  * @author Frederik Heremans

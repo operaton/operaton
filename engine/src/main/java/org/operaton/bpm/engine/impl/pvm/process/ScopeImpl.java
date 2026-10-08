@@ -30,10 +30,10 @@ import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 
 /**
- * A Bpmn scope. The scope has references to two lists of activities:
+ * A BPMN scope. The scope has references to two lists of activities:
  * <ul>
- *   <li>the flow activities (activities for which the {@link ActivityImpl#getFlowScope() flow scope} is this scope</li>
- *   <li>event listener activities (activities for which the {@link ActivityImpl#getEventScope() event scope} is this scope.</li>
+ *   <li>the flow activities (activities for which the {@link ActivityImpl#getFlowScope() flow scope} is this scope)</li>
+ *   <li>event listener activities (activities for which the {@link ActivityImpl#getEventScope() event scope} is this scope)</li>
  * </ul>
  *
  * @author Tom Baeyens
@@ -112,7 +112,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    */
   public interface BacklogErrorCallback {
     /**
-     * In error case the callback will called.
+     * In error case the callback will be called.
      */
     void callback();
   }

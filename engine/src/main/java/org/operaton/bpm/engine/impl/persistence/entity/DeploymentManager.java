@@ -83,14 +83,14 @@ public class DeploymentManager extends AbstractManager {
       // is done sequential with deletion of process definition.
       //
       // For example:
-      // Deployment contains two process definiton. First process definition
+      // Deployment contains two process definition. First process definition
       // and instances will be removed, also cleared from the cache.
       // Second process definition will be removed and his instances.
       // Deletion of instances will cause redeployment this deploys again
       // first into the cache. Only the second will be removed from cache and
       // first remains in the cache after the deletion process.
       //
-      // Thats why we have to clear up all instances at first, after that
+      // That's why we have to clear up all instances at first, after that
       // we can cleanly remove the process definitions.
       for (ProcessDefinition processDefinition: processDefinitions) {
         String processDefinitionId = processDefinition.getId();
@@ -106,7 +106,7 @@ public class DeploymentManager extends AbstractManager {
       final String processDefinitionId = processDefinition.getId();
       // Process definition cascade true deletes the history and
       // process instances if instances flag is set as well to true.
-      // Problem as described above, redeployes the deployment.
+      // Problem as described above, redeploys the deployment.
       // Represents no problem if only one process definition is deleted
       // in a transaction! We have to set the instances flag to false.
       final CommandContext commandContext = Context.getCommandContext();

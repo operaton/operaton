@@ -362,7 +362,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
       .getExternalTaskManager()
       .delete(this);
 
-    // Also delete the external tasks's error details byte array
+    // Also delete the external task's error details byte array
     if (errorDetailsByteArrayId != null) {
       commandContext.getByteArrayManager().deleteByteArrayById(errorDetailsByteArrayId);
     }

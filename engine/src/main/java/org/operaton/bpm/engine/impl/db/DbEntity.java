@@ -16,14 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.db;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public interface DbEntity {
+public @NullMarked interface DbEntity {
 
-  String getId();
+  @Nullable String getId();
   void setId(String id);
 
   /**

@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.db;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Entities that are using revisions for optimistic locking, need to implement this interface.
  *
  * @author Joram Barrez
  */
-public interface HasDbRevision {
+public @NullMarked interface HasDbRevision {
 
   void setRevision(int revision);
   int getRevision();

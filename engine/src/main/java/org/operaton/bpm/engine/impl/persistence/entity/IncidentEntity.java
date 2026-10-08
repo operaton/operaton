@@ -24,9 +24,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -42,6 +43,7 @@ import org.operaton.bpm.engine.impl.incident.IncidentLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.INCIDENT_CREATE;
 import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.INCIDENT_DELETE;
 import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.INCIDENT_RESOLVE;
@@ -205,7 +207,8 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
 
       if (superExecution != null) {
         // get the incident, where this incident is the cause
-        IncidentEntity parentIncident = superExecution.getIncidentByCauseIncidentId(getId());
+        String incidentId = requireNonNull(getId());
+        IncidentEntity parentIncident = superExecution.getIncidentByCauseIncidentId(incidentId);
 
         if (parentIncident != null) {
           // remove the incident
@@ -252,7 +255,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
+  public @NonNull Set<String> getReferencedEntityIds() {
     Set<String> referenceIds = new HashSet<>();
 
     if (causeIncidentId != null) {
@@ -263,7 +266,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   }
 
   @Override
-  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+  public @NonNull Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
     Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (causeIncidentId != null) {
@@ -294,7 +297,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(@NonNull String id) {
     this.id = id;
   }
 
@@ -452,7 +455,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   }
 
   @Override
-  public Object getPersistentState() {
+  public @NonNull Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("executionId", executionId);
     persistentState.put("processDefinitionId", processDefinitionId);

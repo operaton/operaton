@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cfg.auth;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
@@ -178,7 +179,7 @@ public @NullMarked interface ResourceAuthorizationProvider {
    * @return a list of authorizations to be automatically added when an
    *          assignee of a task changes. Never {@code null}.
    */
-  AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee);
+  AuthorizationEntity[] newTaskAssignee(Task task, @Nullable String oldAssignee, @Nullable String newAssignee);
 
   /**
    * <p>Invoked whenever an user has been set as the owner of a task.</p>
@@ -190,7 +191,7 @@ public @NullMarked interface ResourceAuthorizationProvider {
    * @return a list of authorizations to be automatically added when the
    *          owner of a task changes. Never {@code null}.
    */
-  AuthorizationEntity[] newTaskOwner(Task task, String oldOwner, String newOwner);
+  AuthorizationEntity[] newTaskOwner(Task task, @Nullable String oldOwner, @Nullable String newOwner);
 
   /**
    * <p>Invoked whenever a new user identity link has been added to a task.</p>

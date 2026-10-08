@@ -18,13 +18,16 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.management.IncidentStatistics;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatistics;
 
-public class ProcessDefinitionStatisticsEntity extends ProcessDefinitionEntity implements ProcessDefinitionStatistics {
+public @NullMarked class ProcessDefinitionStatisticsEntity extends ProcessDefinitionEntity implements ProcessDefinitionStatistics {
   protected int instances;
   protected int failedJobs;
-  protected transient List<IncidentStatistics> incidentStatistics;
+  protected transient @Nullable List<IncidentStatistics> incidentStatistics;
 
   @Override
   public int getInstances() {
@@ -43,10 +46,10 @@ public class ProcessDefinitionStatisticsEntity extends ProcessDefinitionEntity i
   }
 
   @Override
-  public List<IncidentStatistics> getIncidentStatistics() {
+  public @Nullable List<IncidentStatistics> getIncidentStatistics() {
     return incidentStatistics;
   }
-  public void setIncidentStatistics(List<IncidentStatistics> incidentStatistics) {
+  public void setIncidentStatistics(@Nullable List<IncidentStatistics> incidentStatistics) {
     this.incidentStatistics = incidentStatistics;
   }
 

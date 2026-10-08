@@ -260,9 +260,7 @@ public class DbOperationManager {
     if (entity instanceof HasDbReferences hasDbReferences) {
       Map<String, Class<?>> dependentEntities = hasDbReferences.getDependentEntities();
 
-      if (dependentEntities != null) {
-        resolveDependentEntities(operation, dependentEntities);
-      }
+      resolveDependentEntities(operation, dependentEntities);
     }
   }
 

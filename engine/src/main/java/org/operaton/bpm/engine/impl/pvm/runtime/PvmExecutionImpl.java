@@ -184,10 +184,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, @Nullable String businessKey) {
     PvmExecutionImpl processInstance = getProcessInstance();
 
-    String caseId = null;
-    if (processInstance != null) {
-      caseId = processInstance.getCaseInstanceId();
-    }
+    String caseId = processInstance.getCaseInstanceId();
 
     return createSubProcessInstance(processDefinition, businessKey, caseId);
   }
@@ -232,7 +229,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
 
   public void executeIoMapping() {
     // execute Input Mappings (if they exist).
-    ScopeImpl currentScope = getScopeActivity();
+    ScopeImpl currentScope = requireNonNull(getScopeActivity());
     if (currentScope != currentScope.getProcessDefinition()) {
       ActivityImpl currentActivity = (ActivityImpl) currentScope;
 
@@ -387,7 +384,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     isEnded = true;
 
     if (hasReplacedParent()) {
-      getParent().replacedBy = null;
+      requireNonNull(getParent()).replacedBy = null;
     }
 
     performOperation(PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END);
@@ -399,10 +396,10 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     performOperation(PvmAtomicOperation.FIRE_ACTIVITY_END);
     remove();
 
-    PvmExecutionImpl parent = getParent();
+    PvmExecutionImpl parent = requireNonNull(getParent());
 
     if (parent.getActivity() == null) {
-      parent.setActivity((PvmActivity) getActivity().getFlowScope());
+      parent.setActivity((PvmActivity) requireNonNull(getActivity()).getFlowScope());
     }
 
     parent.signal(SIGNAL_COMPENSATION_DONE, null);
@@ -623,8 +620,8 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     if (eventHandlerActivity.getActivityStartBehavior() == ActivityStartBehavior.CONCURRENT_IN_FLOW_SCOPE
       && flowScope != eventScope) {
       // the current scope is the event scope of the activity
-      findExecutionForScope(eventScope, flowScope)
-        .executeActivity(eventHandlerActivity);
+      PvmExecutionImpl execution = requireNonNull(findExecutionForScope(eventScope, flowScope));
+      execution.executeActivity(eventHandlerActivity);
     } else {
       executeActivity(eventHandlerActivity);
     }
@@ -756,12 +753,12 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   // methods that translate to operations /////////////////////////////////////
 
   @Override
-  public void signal(String signalName, Object signalData) {
+  public void signal(@Nullable String signalName, @Nullable Object signalData) {
     if (getActivity() == null) {
       throw new PvmException("cannot signal execution %s: it has no current activity".formatted(this.id));
     }
 
-    SignallableActivityBehavior activityBehavior = (SignallableActivityBehavior) activity.getActivityBehavior();
+    SignallableActivityBehavior activityBehavior = (SignallableActivityBehavior) requireNonNull(activity).getActivityBehavior();
     try {
       activityBehavior.signal(this, signalName, signalData);
     } catch (RuntimeException e) {
@@ -1103,7 +1100,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   @Override
   public @Nullable PvmExecutionImpl findExecution(String activityId) {
     if ((getActivity() != null)
-      && (getActivity().getId().equals(activityId))
+      && (Objects.equals(getActivity().getId(), activityId))
       ) {
       return this;
     }
@@ -1126,7 +1123,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
 
   protected void collectExecutions(String activityId, List<PvmExecution> executions) {
     if ((getActivity() != null)
-      && (getActivity().getId().equals(activityId))
+      && (Objects.equals(getActivity().getId(), activityId))
       ) {
       executions.add(this);
     }
@@ -1145,7 +1142,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
 
   protected void collectActiveActivityIds(List<String> activeActivityIds) {
     ActivityImpl act = getActivity();
-    if (isActive && act != null) {
+    if (isActive && act != null && act.getId() != null) {
       activeActivityIds.add(act.getId());
     }
 
@@ -1157,7 +1154,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   // business key /////////////////////////////////////////
 
   @Override
-  public String getProcessBusinessKey() {
+  public @Nullable String getProcessBusinessKey() {
     return getProcessInstance().getBusinessKey();
   }
 
@@ -1214,7 +1211,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     return caseInstanceId;
   }
 
-  public void setCaseInstanceId(String caseInstanceId) {
+  public void setCaseInstanceId(@Nullable String caseInstanceId) {
     this.caseInstanceId = caseInstanceId;
   }
 
@@ -1320,7 +1317,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public void setActivityInstanceId(String activityInstanceId) {
+  public void setActivityInstanceId(@Nullable String activityInstanceId) {
     this.activityInstanceId = activityInstanceId;
   }
 
@@ -1389,15 +1386,15 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
 
   // super case execution /////////////////////////////////////////////////////
 
-  public abstract CmmnExecution getSuperCaseExecution();
+  public abstract @Nullable CmmnExecution getSuperCaseExecution();
 
-  public abstract void setSuperCaseExecution(CmmnExecution superCaseExecution);
+  public abstract void setSuperCaseExecution(@Nullable CmmnExecution superCaseExecution);
 
   // sub case execution ///////////////////////////////////////////////////////
 
-  public abstract CmmnExecution getSubCaseInstance();
+  public abstract @Nullable CmmnExecution getSubCaseInstance();
 
-  public abstract void setSubCaseInstance(CmmnExecution subCaseInstance);
+  public abstract void setSubCaseInstance(@Nullable CmmnExecution subCaseInstance);
 
   // scopes ///////////////////////////////////////////////////////////////////
 
@@ -1540,7 +1537,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
       // LEGACY: a correct implementation should also skip a compensation-throwing parent scope execution
       // (since compensation throwing activities are scopes), but this cannot be done for backwards compatibility
       // where a compensation throwing activity was no scope (and we would wrongly skip an execution in that case)
-      return getParent().getFlowScopeExecution();
+      return requireNonNull(getParent()).getFlowScopeExecution();
 
     } else {
       return this;
@@ -1548,7 +1545,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   protected ScopeImpl getFlowScope() {
-    ActivityImpl act = getActivity();
+    ActivityImpl act = requireNonNull(getActivity());
 
     if (!act.isScope() || activityInstanceId == null
       || (act.isScope() && !isScope() && act.getActivityBehavior() instanceof CompositeActivityBehavior)) {
@@ -1643,7 +1640,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public AbstractVariableScope getParentVariableScope() {
+  public @Nullable AbstractVariableScope getParentVariableScope() {
     return getParent();
   }
 
@@ -1707,11 +1704,11 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     this.externallyTerminated = externallyTerminated;
   }
 
-  public String getDeleteReason() {
+  public @Nullable String getDeleteReason() {
     return deleteReason;
   }
 
-  public void setDeleteReason(String deleteReason) {
+  public void setDeleteReason(@Nullable String deleteReason) {
     this.deleteReason = deleteReason;
   }
 
@@ -1729,7 +1726,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   public List<PvmTransition> getTransitionsToTake() {
-    return transitionsToTake;
+    return transitionsToTake != null ? transitionsToTake : Collections.emptyList();
   }
 
   public void setTransitionsToTake(List<PvmTransition> transitionsToTake) {
@@ -1831,7 +1828,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     this.isEventScope = isEventScope;
   }
 
-  public ScopeInstantiationContext getScopeInstantiationContext() {
+  public @Nullable ScopeInstantiationContext getScopeInstantiationContext() {
     return scopeInstantiationContext;
   }
 
@@ -2094,8 +2091,12 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
       PvmExecutionImpl targetScope = event.getTargetScope();
 
       String targetScopeActivityInstanceId = getActivityInstanceId(targetScope);
-      activityInstanceIds.put(targetScope, targetScopeActivityInstanceId);
-      activityIds.put(targetScope, targetScope.getActivityId());
+      if (targetScopeActivityInstanceId  != null) {
+        activityInstanceIds.put(targetScope, targetScopeActivityInstanceId);
+      }
+      if (targetScope.getActivityId() != null) {
+        activityIds.put(targetScope, targetScope.getActivityId());
+      }
     }
   }
 
@@ -2148,12 +2149,11 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * @return true if the execution is on a dispatchable state, false otherwise
    */
   private boolean isOnDispatchableState(PvmExecutionImpl targetScope) {
-    ActivityImpl targetActivity = targetScope.getActivity();
     return
       //if not leaf, activity id is null -> dispatchable
       targetScope.getActivityId() == null ||
         // if leaf and not scope -> dispatchable
-        !targetActivity.isScope() ||
+        !requireNonNull(targetScope.getActivity()).isScope() ||
         // if leaf, scope and state in default -> dispatchable
         (targetScope.isInState(ActivityInstanceState.DEFAULT));
   }
@@ -2213,7 +2213,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public Incident createIncident(String incidentType, String configuration, String message) {
+  public Incident createIncident(String incidentType, String configuration, @Nullable String message) {
     IncidentContext incidentContext = createIncidentContext(configuration);
 
     return IncidentHandling.createIncident(incidentType, incidentContext, message);
@@ -2270,6 +2270,6 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    * </ul>
    */
   public boolean isAsyncAfterScopeWithoutTransition() {
-    return activityInstanceId == null && activity.isScope() && !isActive;
+    return activityInstanceId == null && activity != null && activity.isScope() && !isActive;
   }
 }

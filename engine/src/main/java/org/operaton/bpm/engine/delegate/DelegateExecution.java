@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.runtime.Incident;
 public @NullMarked interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecutionContext, ProcessEngineServicesAware {
 
   /** Reference to the overall process instance */
-  String getProcessInstanceId();
+  @Nullable String getProcessInstanceId();
 
   /**
    * The business key for the process instance this execution is associated

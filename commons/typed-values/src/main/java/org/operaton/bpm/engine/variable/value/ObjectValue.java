@@ -40,7 +40,7 @@ public interface ObjectValue extends SerializableValue {
   boolean isDeserialized();
 
   /**
-   * Returns the Object or null in case the value is null.
+   * Returns the Object or {@code null} in case the value is {@code null}.
    *
    * @return the object represented by this TypedValue.
    * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.

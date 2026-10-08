@@ -76,7 +76,7 @@ public interface ExternalTaskClientBuilder {
    * A custom worker id the Workflow Engine is aware of. This information is optional.
    * Note: make sure to choose a unique worker id
    * <p>
-   * If not given or null, a worker id is generated automatically which consists of the
+   * If not given or {@code null}, a worker id is generated automatically which consists of the
    * hostname as well as a random and unique 128 bit string (UUID).
    *
    * @param workerId the Workflow Engine is aware of
@@ -228,7 +228,7 @@ public interface ExternalTaskClientBuilder {
    *
    * @throws ExternalTaskClientException
    * <ul>
-   *   <li> if base url is null or string is empty
+   *   <li> if base url is {@code null} or string is empty
    *   <li> if hostname cannot be retrieved
    *   <li> if maximum amount of tasks is not greater than zero
    *   <li> if maximum asynchronous response timeout is not greater than zero

@@ -41,7 +41,7 @@ public interface ContextAssociationManager {
   void disAssociate();
 
   /**
-   * @return the id of the execution currently associated or null
+   * @return the id of the execution currently associated or {@code null}
    */
   String getExecutionId();
 

@@ -193,7 +193,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
   /**
    * Returns the execution in which context the job is created. The execution
    * is used to determine the job's priority based on a BPMN activity
-   * the execution is currently executing. May be null.
+   * the execution is currently executing. May be {@code null}.
    */
   protected abstract ExecutionEntity resolveExecution(S context);
 

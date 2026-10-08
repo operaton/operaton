@@ -2151,7 +2151,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   /**
    * Compares the given activity instance id's and activity id's to check if the execution is on the same
-   * activity as before an operation was executed. The activity instance id's can be null on transitions.
+   * activity as before an operation was executed. The activity instance id's can be {@code null} on transitions.
    * In this case the activity id's have to be equal, otherwise the execution changed.
    *
    * @param lastActivityInstanceId    the last activity instance id

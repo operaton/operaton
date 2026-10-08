@@ -1307,15 +1307,15 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    *
    * @param executions
    *          the list of all executions that are part of this process instance.
-   *          Cannot be null, must include the process instance execution
+   *          Cannot be {@code null}, must include the process instance execution
    *          itself.
    * @param eventSubscriptions
    *          the list of all event subscriptions that are linked to executions
-   *          which is part of this process instance If null, event
+   *          which is part of this process instance If {@code null}, event
    *          subscriptions are not initialized and lazy loaded on demand
    * @param variables
    *          the list of all variables that are linked to executions which are
-   *          part of this process instance If null, variables are not
+   *          part of this process instance If {@code null}, variables are not
    *          initialized and are lazy loaded on demand
    */
   public void restoreProcessInstance(Collection<ExecutionEntity> executions,

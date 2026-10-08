@@ -62,11 +62,11 @@ public final class Mocks {
 
   /**
    * This method returns the mock object registered under the provided key or
-   * null if there is no object for the provided key.
+   * {@code null} if there is no object for the provided key.
    *
    * @param key
    *          the key of the requested object
-   * @return the mock object registered under the provided key or null if there
+   * @return the mock object registered under the provided key or {@code null} if there
    *         is no object for the provided key
    */
   public static @Nullable Object get(Object key) {

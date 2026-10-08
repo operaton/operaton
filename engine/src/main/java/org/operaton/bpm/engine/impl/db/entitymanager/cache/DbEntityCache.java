@@ -133,7 +133,7 @@ public @NullMarked class DbEntityCache {
    *
    * @param type the type of the object
    * @param id the id of the CachedEntity to lookup
-   * @return the cached entity or null if the entity does not exist.
+   * @return the cached entity or {@code null} if the entity does not exist.
    */
   public @Nullable CachedDbEntity getCachedEntity(Class<?> type, String id) {
     Class<?> cacheKey = cacheKeyMapping.getEntityCacheKey(type);
@@ -148,7 +148,7 @@ public @NullMarked class DbEntityCache {
   /**
    * Looks up an entity in the cache.
    * @param dbEntity the entity for which the CachedEntity should be looked up
-   * @return the cached entity or null if the entity does not exist.
+   * @return the cached entity or {@code null} if the entity does not exist.
    */
   public @Nullable CachedDbEntity getCachedEntity(DbEntity dbEntity) {
     return getCachedEntity(dbEntity.getClass(), dbEntity.getId());

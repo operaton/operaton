@@ -51,7 +51,7 @@ public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions
 
   /**
    * Will only be used during actual deployment to pass deployed artifacts (eg process definitions).
-   * Will be null otherwise.
+   * Will be {@code null} otherwise.
    */
   protected Map<Class<?>, List> deployedArtifacts;
 

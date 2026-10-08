@@ -94,7 +94,7 @@ public interface PvmScope extends PvmProcessElement {
    * Recursively finds a flow activity. This is an activitiy which is in the hierarchy of flow activities.
    *
    * @param activityId the id of the activity to find.
-   * @return the activity or null
+   * @return the activity or {@code null}
    */
   @Nullable PvmActivity findActivity(String activityId);
 
@@ -102,14 +102,14 @@ public interface PvmScope extends PvmProcessElement {
    * Finds an activity at the same level of subprocess.
    *
    * @param activityId the id of the activity to find.
-   * @return the activity or null
+   * @return the activity or {@code null}
    */
   @Nullable PvmActivity findActivityAtLevelOfSubprocess(String activityId);
 
   /**
    * Recursively finds a transition.
    * @param transitionId the transiton to find
-   * @return the transition or null
+   * @return the transition or {@code null}
    */
   @Nullable TransitionImpl findTransition(String transitionId);
 

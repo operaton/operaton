@@ -116,7 +116,7 @@ public interface ActivityExecution extends DelegateExecution {
   CmmnCaseInstance createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey);
 
   /**
-   * returns the parent of this execution, or null if there is no parent.
+   * returns the parent of this execution, or {@code null} if there is no parent.
    */
   @Nullable ActivityExecution getParent();
 
@@ -245,7 +245,7 @@ public interface ActivityExecution extends DelegateExecution {
   TransitionImpl getTransition();
 
   /**
-   * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not null).
+   * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not {@code null}).
    *
    * <p>
    * For a given target scope, this method returns the scope execution.
@@ -261,7 +261,7 @@ public interface ActivityExecution extends DelegateExecution {
    * are ancestors of the activity currently executed by this execution.
    *
    * <p>
-   * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not null).
+   * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not {@code null}).
    * </p>
    */
   Map<ScopeImpl, PvmExecutionImpl> createActivityExecutionMapping();

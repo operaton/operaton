@@ -164,7 +164,7 @@ public class LockedExternalTaskImpl implements LockedExternalTask {
    * @see org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope#collectVariables(VariableMapImpl, Collection, boolean, boolean)
    *
    * @param externalTaskEntity - source persistent entity to use for fields
-   * @param variablesToFetch - list of variable names to fetch, if null then all variables will be fetched
+   * @param variablesToFetch - list of variable names to fetch, if {@code null} then all variables will be fetched
    * @param isLocal - if true only local variables will be collected
    *
    * @return object with all fields copied from the ExternalTaskEntity, error details fetched from the

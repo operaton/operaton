@@ -39,10 +39,10 @@ import org.operaton.bpm.model.cmmn.instance.*;
 public interface CmmnActivityExecution extends DelegateCaseExecution {
 
   /**
-   * <p>Returns the parent of <code>this</code> case execution, or null
+   * <p>Returns the parent of <code>this</code> case execution, or {@code null}
    * if there is no parent.</p>
 
-   * @return a {@link CmmnActivityExecution parent} or null.
+   * @return a {@link CmmnActivityExecution parent} or {@code null}.
    */
   @Nullable CmmnActivityExecution getParent();
 

@@ -1177,21 +1177,17 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.lifecycleState = state;
     this.taskState = this.lifecycleState.name;
 
-    switch (state) {
-    case STATE_CREATED:
-      Context.findCommandContext().ifPresent(commandContext -> commandContext.getHistoricTaskInstanceManager().createHistoricTask(this));
-      return fireEvent(TaskListener.EVENTNAME_CREATE) && fireAssignmentEvent();
-
-    case STATE_COMPLETED:
-      return fireEvent(TaskListener.EVENTNAME_COMPLETE) && TaskState.STATE_COMPLETED.equals(this.lifecycleState);
-
-    case STATE_DELETED:
-      return fireEvent(EVENTNAME_DELETE);
-
-    case STATE_INIT:
-    default:
-      throw new ProcessEngineException("Task %s cannot transition into state %s.".formatted(id, state));
-    }
+    return switch (state) {
+      case STATE_CREATED -> {
+        Context.findCommandContext()
+            .ifPresent(commandContext -> commandContext.getHistoricTaskInstanceManager().createHistoricTask(this));
+        yield fireEvent(TaskListener.EVENTNAME_CREATE) && fireAssignmentEvent();
+      }
+      case STATE_COMPLETED ->
+          fireEvent(TaskListener.EVENTNAME_COMPLETE) && TaskState.STATE_COMPLETED.equals(this.lifecycleState);
+      case STATE_DELETED -> fireEvent(EVENTNAME_DELETE);
+      default -> throw new ProcessEngineException("Task %s cannot transition into state %s.".formatted(id, state));
+    };
   }
 
   public boolean triggerUpdateEvent() {
@@ -1800,7 +1796,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     STATE_DELETED("Deleted"),
     STATE_UPDATED("Updated");
 
-    private String name;
+    private final String name;
 
     TaskState(String name) {
       this.name = name;

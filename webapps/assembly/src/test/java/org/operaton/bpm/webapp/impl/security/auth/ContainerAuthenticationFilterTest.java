@@ -247,10 +247,8 @@ class ContainerAuthenticationFilterTest {
       request = new MockHttpServletRequest(mockServletContext);
       requestUrl = applicationPath + requestUrl;
       ServletContextUtil.setAppPath(applicationPath, mockServletContext);
-
     } else {
       request = new MockHttpServletRequest();
-
     }
 
     request.setRequestURI(SERVICE_PATH  + requestUrl);

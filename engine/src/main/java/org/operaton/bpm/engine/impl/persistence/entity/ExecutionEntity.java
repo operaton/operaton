@@ -1786,7 +1786,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       incidents = new ArrayList<>();
     }
     if (!variableStore.isInitialized() && !BitMaskUtil.isBitOn(cachedEntityState, VARIABLES_STATE_BIT)) {
-      variableStore.setVariablesProvider(VariableCollectionProvider.<VariableInstanceEntity> emptyVariables());
+      variableStore.setVariablesProvider(VariableCollectionProvider.emptyVariables());
       variableStore.forceInitialization();
     }
     if (externalTasks == null && !BitMaskUtil.isBitOn(cachedEntityState, EXTERNAL_TASKS_BIT)) {

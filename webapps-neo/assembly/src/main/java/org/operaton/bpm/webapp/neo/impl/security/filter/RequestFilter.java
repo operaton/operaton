@@ -24,13 +24,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <p>A request matcher that matches uris compatible to the JAX-RS syntax
- * and extracts the arguments on match.</p>
+ * A request matcher that matches uris compatible to the JAX-RS syntax
+ * and extracts the arguments on match.
  *
+ * <p>
  * Example uris:
+ * </p>
  *
+ * <p>
  * <code>/some/url/{param1}/{param2}/{param3:.*}</code>
  * <code>/some/url/{param1:foo}/.*</code>
+ * </p>
  *
  * @author Daniel Meyer
  * @author nico.rehwaldt

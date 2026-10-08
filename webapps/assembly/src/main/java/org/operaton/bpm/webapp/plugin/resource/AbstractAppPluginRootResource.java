@@ -46,6 +46,7 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  * <p>
  * Subresources must properly initialize the subresources via
  * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource) }.
+ * </p>
  *
  * <pre>
  * @Path("myplugin")
@@ -57,7 +58,6 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  *   }
  * }
  * </pre>
- * </p>
  *
  * @author nico.rehwaldt
  * @author Daniel Meyer

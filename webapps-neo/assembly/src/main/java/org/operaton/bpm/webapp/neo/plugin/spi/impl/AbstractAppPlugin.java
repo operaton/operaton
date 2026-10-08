@@ -38,9 +38,9 @@ public abstract class AbstractAppPlugin implements AppPlugin {
    * The directory must be unique across all plugins.
    *
    * <p>
-   *
    * This implementation assumes that the resources are provided in the directory <code>plugin-webapp/PLUGIN_ID</code>,
    * absolute to the root directory.
+   * </p>
    *
    * @return the directory providing the plugins client side resources
    */

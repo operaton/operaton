@@ -49,6 +49,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
  * <p>
  * Since the fallback {@link DbIdentityServiceProvider} is a writeable provider
  * this class is also writeable but with OAuth2 authentication it works effectively as a read-only provider.
+ * </p>
  */
 public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 

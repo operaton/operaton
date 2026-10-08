@@ -90,11 +90,6 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     return namedOutgoingTransitions.get(transitionId);
   }
 
-  @Override
-  public String toString() {
-    return "Activity(%s)".formatted(id);
-  }
-
   // restricted setters ///////////////////////////////////////////////////////
 
   @SuppressWarnings("unused")

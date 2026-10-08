@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.task.Event;
  *
  * @author Tom Baeyens
  */
-@SuppressWarnings("removal")
+@SuppressWarnings({"removal", "unused"})
 public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
 
   public static final String TYPE_EVENT = "event";

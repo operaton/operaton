@@ -980,6 +980,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     return superCaseExecutionId;
   }
 
+  @SuppressWarnings("unused")
   public void setSuperCaseExecutionId(String superCaseExecutionId) {
     this.superCaseExecutionId = superCaseExecutionId;
   }
@@ -1888,6 +1889,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     this.activityId = activityId;
   }
 
+  @SuppressWarnings("unused")
   public void setSuperExecutionId(String superExecutionId) {
     this.superExecutionId = superExecutionId;
   }

@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.JobState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
@@ -28,45 +31,45 @@ import org.operaton.bpm.engine.impl.util.StringUtil;
  * @author Roman Smirnov
  *
  */
-public class HistoricJobLogEvent extends HistoryEvent {
+public @NullMarked class HistoricJobLogEvent extends HistoryEvent {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected Date timestamp;
+  protected @Nullable Date timestamp;
 
-  protected String jobId;
+  protected @Nullable String jobId;
 
-  protected Date jobDueDate;
+  protected @Nullable Date jobDueDate;
 
   protected int jobRetries;
 
   protected long jobPriority;
 
-  protected String jobExceptionMessage;
+  protected @Nullable String jobExceptionMessage;
 
-  protected String exceptionByteArrayId;
+  protected @Nullable String exceptionByteArrayId;
 
-  protected String jobDefinitionId;
+  protected @Nullable String jobDefinitionId;
 
-  protected String jobDefinitionType;
+  protected @Nullable String jobDefinitionType;
 
-  protected String jobDefinitionConfiguration;
+  protected @Nullable String jobDefinitionConfiguration;
 
-  protected String activityId;
+  protected @Nullable String activityId;
 
-  protected String failedActivityId;
+  protected @Nullable String failedActivityId;
 
-  protected String deploymentId;
+  protected @Nullable String deploymentId;
 
   protected int state;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
-  protected String hostname;
+  protected @Nullable String hostname;
 
-  protected String batchId;
+  protected @Nullable String batchId;
 
-  public Date getTimestamp() {
+  public @Nullable Date getTimestamp() {
     return timestamp;
   }
 
@@ -74,7 +77,7 @@ public class HistoricJobLogEvent extends HistoryEvent {
     this.timestamp = timestamp;
   }
 
-  public String getJobId() {
+  public @Nullable String getJobId() {
     return jobId;
   }
 
@@ -82,11 +85,11 @@ public class HistoricJobLogEvent extends HistoryEvent {
     this.jobId = jobId;
   }
 
-  public Date getJobDueDate() {
+  public @Nullable Date getJobDueDate() {
     return jobDueDate;
   }
 
-  public void setJobDueDate(Date jobDueDate) {
+  public void setJobDueDate(@Nullable Date jobDueDate) {
     this.jobDueDate = jobDueDate;
   }
 
@@ -106,11 +109,11 @@ public class HistoricJobLogEvent extends HistoryEvent {
     this.jobPriority = jobPriority;
   }
 
-  public String getJobExceptionMessage() {
+  public @Nullable String getJobExceptionMessage() {
     return jobExceptionMessage;
   }
 
-  public void setJobExceptionMessage(String jobExceptionMessage) {
+  public void setJobExceptionMessage(@Nullable String jobExceptionMessage) {
     // note: it is not a clean way to truncate where the history event is produced, since truncation is only
     //   relevant for relational history databases that follow our schema restrictions;
     //   a similar problem exists in JobEntity#setExceptionMessage where truncation may not be required for custom
@@ -118,20 +121,20 @@ public class HistoricJobLogEvent extends HistoryEvent {
     this.jobExceptionMessage = StringUtil.trimToMaximumLengthAllowed(jobExceptionMessage);
   }
 
-  public String getExceptionByteArrayId() {
+  public @Nullable String getExceptionByteArrayId() {
     return exceptionByteArrayId;
   }
 
-  public void setExceptionByteArrayId(String exceptionByteArrayId) {
+  public void setExceptionByteArrayId(@Nullable String exceptionByteArrayId) {
     this.exceptionByteArrayId = exceptionByteArrayId;
   }
 
-  public String getExceptionStacktrace() {
+  public @Nullable String getExceptionStacktrace() {
     ByteArrayEntity byteArray = getExceptionByteArray();
     return ExceptionUtil.getExceptionStacktrace(byteArray);
   }
 
-  protected ByteArrayEntity getExceptionByteArray() {
+  protected @Nullable ByteArrayEntity getExceptionByteArray() {
     if (exceptionByteArrayId != null) {
       return Context
         .getCommandContext()
@@ -142,43 +145,43 @@ public class HistoricJobLogEvent extends HistoryEvent {
     return null;
   }
 
-  public String getJobDefinitionId() {
+  public @Nullable String getJobDefinitionId() {
     return jobDefinitionId;
   }
 
-  public void setJobDefinitionId(String jobDefinitionId) {
+  public void setJobDefinitionId(@Nullable String jobDefinitionId) {
     this.jobDefinitionId = jobDefinitionId;
   }
 
-  public String getJobDefinitionType() {
+  public @Nullable String getJobDefinitionType() {
     return jobDefinitionType;
   }
 
-  public void setJobDefinitionType(String jobDefinitionType) {
+  public void setJobDefinitionType(@Nullable String jobDefinitionType) {
     this.jobDefinitionType = jobDefinitionType;
   }
 
-  public String getJobDefinitionConfiguration() {
+  public @Nullable String getJobDefinitionConfiguration() {
     return jobDefinitionConfiguration;
   }
 
-  public void setJobDefinitionConfiguration(String jobDefinitionConfiguration) {
+  public void setJobDefinitionConfiguration(@Nullable String jobDefinitionConfiguration) {
     this.jobDefinitionConfiguration = jobDefinitionConfiguration;
   }
 
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     return activityId;
   }
 
-  public void setActivityId(String activityId) {
+  public void setActivityId(@Nullable String activityId) {
     this.activityId = activityId;
   }
 
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return deploymentId;
   }
 
-  public void setDeploymentId(String deploymentId) {
+  public void setDeploymentId(@Nullable String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
@@ -190,19 +193,19 @@ public class HistoricJobLogEvent extends HistoryEvent {
     this.state = state;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
-  public String getHostname() {
+  public @Nullable String getHostname() {
     return hostname;
   }
 
-  public void setHostname(String hostname) {
+  public void setHostname(@Nullable String hostname) {
     this.hostname = hostname;
   }
 
@@ -223,28 +226,28 @@ public class HistoricJobLogEvent extends HistoryEvent {
   }
 
   @Override
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
   @Override
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
-  public String getFailedActivityId() {
+  public @Nullable String getFailedActivityId() {
     return failedActivityId;
   }
 
-  public void setFailedActivityId(String failedActivityId) {
+  public void setFailedActivityId(@Nullable String failedActivityId) {
     this.failedActivityId = failedActivityId;
   }
 
-  public String getBatchId() {
+  public @Nullable String getBatchId() {
     return batchId;
   }
 
-  public void setBatchId(String batchId) {
+  public void setBatchId(@Nullable String batchId) {
     this.batchId = batchId;
   }
 }

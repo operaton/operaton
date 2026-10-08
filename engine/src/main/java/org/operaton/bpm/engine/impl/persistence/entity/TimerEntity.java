@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.calendar.BusinessCalendar;
 import org.operaton.bpm.engine.impl.calendar.CycleBusinessCalendar;
@@ -38,10 +41,12 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.TimerJobConfiguration;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  */
-public class TimerEntity extends JobEntity {
+public @NullMarked class TimerEntity extends JobEntity {
 
   protected static final String CYCLE_EXPRESSION_START_TYPE_1 = TimerDeclarationType.CYCLE + ": #";
   protected static final String CYCLE_EXPRESSION_START_TYPE_2 = TimerDeclarationType.CYCLE + ": $";
@@ -49,7 +54,7 @@ public class TimerEntity extends JobEntity {
 
   public static final String TYPE = "timer";
 
-  protected String repeat;
+  protected @Nullable String repeat;
 
   protected long repeatOffset;
 
@@ -112,9 +117,9 @@ public class TimerEntity extends JobEntity {
     }
   }
 
-  protected String parseExpression(CommandContext commandContext) {
+  protected @Nullable String parseExpression(CommandContext commandContext) {
     String expressionValue = null;
-    String expression = jobDefinition.getJobConfiguration().substring(CYCLE_EXPRESSION_START_TYPE_1.length() - 1);
+    String expression = requireNonNull(jobDefinition).getJobConfiguration().substring(CYCLE_EXPRESSION_START_TYPE_1.length() - 1);
     try {
       expressionValue = commandContext.getProcessEngineConfiguration()
           .getExpressionManager()
@@ -132,7 +137,7 @@ public class TimerEntity extends JobEntity {
 
   protected boolean isCycleExpression() {
     // Note timer cycle configuration is constructed in BpmnParse#parseTimer
-    String jobConfiguration = jobDefinition.getJobConfiguration();
+    String jobConfiguration = requireNonNull(jobDefinition).getJobConfiguration();
     return jobConfiguration.contains(CYCLE_EXPRESSION_START_TYPE_1)
         || jobConfiguration.contains(CYCLE_EXPRESSION_START_TYPE_2);
   }
@@ -140,7 +145,7 @@ public class TimerEntity extends JobEntity {
   protected String adjustRepeatBasedOnNewExpression(String expressionValue) {
     String changedRepeat;
     if (expressionValue.startsWith("R")) { // changed to a repeatable interval
-      if (repeat.startsWith("R")) {
+      if (requireNonNull(repeat).startsWith("R")) {
         if (isSameRepeatCycle(expressionValue)) {
           // the same repeatable interval => keep the start date
           changedRepeat = repeat;
@@ -160,7 +165,7 @@ public class TimerEntity extends JobEntity {
   }
 
   protected boolean isSameRepeatCycle(String expressionValue) {
-    String[] currentRepeat = repeat.split("/");      // "R3/date/PT2H"
+    String[] currentRepeat = requireNonNull(repeat).split("/");      // "R3/date/PT2H"
     String[] newRepeat = expressionValue.split("/"); // "R3/PT2H" or "R3/date/PT2H"
     if (currentRepeat.length == 3 && newRepeat.length == 2) {
       return currentRepeat[0].equals(newRepeat[0]) && currentRepeat[2].equals(newRepeat[1]);
@@ -193,7 +198,7 @@ public class TimerEntity extends JobEntity {
     Context.getCommandContext().getJobManager().schedule(newTimer);
   }
 
-  public Date calculateNewDueDate() {
+  public @Nullable Date calculateNewDueDate() {
     BusinessCalendar businessCalendar = Context
         .getProcessEngineConfiguration()
         .getBusinessCalendarManager()
@@ -201,11 +206,11 @@ public class TimerEntity extends JobEntity {
     return ((CycleBusinessCalendar) businessCalendar).resolveDuedate(repeat, null, repeatOffset);
   }
 
-  public String getRepeat() {
+  public @Nullable String getRepeat() {
     return repeat;
   }
 
-  public void setRepeat(String repeat) {
+  public void setRepeat(@Nullable String repeat) {
     this.repeat = repeat;
   }
 
@@ -223,6 +228,7 @@ public class TimerEntity extends JobEntity {
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = (HashMap) super.getPersistentState();
     persistentState.put("repeat", repeat);

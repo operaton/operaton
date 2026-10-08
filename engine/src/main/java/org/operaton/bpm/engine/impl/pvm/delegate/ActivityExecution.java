@@ -50,7 +50,7 @@ public interface ActivityExecution extends DelegateExecution {
   /** invoked to notify the execution that an activity instance is ended. */
   void leaveActivityInstance();
 
-  void setActivityInstanceId(String id);
+  void setActivityInstanceId(@Nullable String id);
 
   /** return the Id of the activity instance currently executed by this execution */
   @Override
@@ -233,7 +233,7 @@ public interface ActivityExecution extends DelegateExecution {
   void remove();
   void destroy();
 
-  void signal(String string, Object signalData);
+  void signal(@Nullable String string, @Nullable Object signalData);
 
   void setActivity(PvmActivity activity);
 

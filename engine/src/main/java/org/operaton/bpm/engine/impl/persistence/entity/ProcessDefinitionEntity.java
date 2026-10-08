@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.*;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -44,36 +45,36 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinition, ResourceDefinitionEntity<ProcessDefinitionEntity>, DbEntity, HasDbRevision {
+public @NullMarked class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinition, ResourceDefinitionEntity<ProcessDefinitionEntity>, DbEntity, HasDbRevision {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  protected String key;
+  protected @Nullable String key;
   protected int revision = 1;
   protected int version;
-  protected String category;
-  protected String deploymentId;
-  protected String resourceName;
-  protected Integer historyLevel;
-  protected transient StartFormHandler startFormHandler;
-  protected transient FormDefinition startFormDefinition;
-  protected String diagramResourceName;
+  protected @Nullable String category;
+  protected @Nullable String deploymentId;
+  protected @Nullable String resourceName;
+  protected @Nullable Integer historyLevel;
+  protected transient @Nullable StartFormHandler startFormHandler;
+  protected transient @Nullable FormDefinition startFormDefinition;
+  protected @Nullable String diagramResourceName;
   protected boolean isGraphicalNotationDefined;
-  protected transient Map<String, TaskDefinition> taskDefinitions;
+  protected transient @Nullable Map<String, TaskDefinition> taskDefinitions;
   protected boolean hasStartFormKey;
   protected int suspensionState = SuspensionState.ACTIVE.getStateCode();
-  protected String tenantId;
-  protected String versionTag;
-  protected Integer historyTimeToLive;
+  protected @Nullable String tenantId;
+  protected @Nullable String versionTag;
+  protected @Nullable Integer historyTimeToLive;
   protected boolean isIdentityLinksInitialized;
   protected transient List<IdentityLinkEntity> definitionIdentityLinkEntities = new ArrayList<>();
-  protected transient Set<Expression> candidateStarterUserIdExpressions = new HashSet<>();
-  protected transient Set<Expression> candidateStarterGroupIdExpressions = new HashSet<>();
+  protected transient @Nullable Set<Expression> candidateStarterUserIdExpressions = new HashSet<>();
+  protected transient @Nullable Set<Expression> candidateStarterGroupIdExpressions = new HashSet<>();
   protected boolean isStartableInTasklist;
 
   // firstVersion is true, when version == 1 or when
   // this definition does not have any previous definitions
   protected boolean firstVersion;
-  protected String previousProcessDefinitionId;
+  protected @Nullable String previousProcessDefinitionId;
 
   public ProcessDefinitionEntity() {
     super(null);
@@ -117,7 +118,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public ExecutionEntity createProcessInstance(String businessKey, String caseInstanceId, ActivityImpl initial) {
+  public ExecutionEntity createProcessInstance(@Nullable String businessKey, @Nullable String caseInstanceId, @Nullable ActivityImpl initial) {
     ensureNotSuspended();
 
     ExecutionEntity processInstance = (ExecutionEntity) createProcessInstanceForInitial(initial);
@@ -205,7 +206,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   // previous process definition //////////////////////////////////////////////
 
   @Override
-  public ProcessDefinitionEntity getPreviousDefinition() {
+  public @Nullable ProcessDefinitionEntity getPreviousDefinition() {
     ProcessDefinitionEntity previousProcessDefinition = null;
 
     String previousProcessDefId = getPreviousProcessDefinitionId();
@@ -229,7 +230,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   /**
    * Returns the cached version if exists; does not update the entity from the database in that case
    */
-  protected ProcessDefinitionEntity loadProcessDefinition(String processDefinitionId) {
+  protected @Nullable ProcessDefinitionEntity loadProcessDefinition(String processDefinitionId) {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = configuration.getDeploymentCache();
 
@@ -249,7 +250,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   }
 
-  public String getPreviousProcessDefinitionId() {
+  public @Nullable String getPreviousProcessDefinitionId() {
     ensurePreviousProcessDefinitionIdInitialized();
     return previousProcessDefinitionId;
   }
@@ -259,7 +260,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     ensurePreviousProcessDefinitionIdInitialized();
   }
 
-  protected void setPreviousProcessDefinitionId(String previousProcessDefinitionId) {
+  protected void setPreviousProcessDefinitionId(@Nullable String previousProcessDefinitionId) {
     this.previousProcessDefinitionId = previousProcessDefinitionId;
   }
 
@@ -287,7 +288,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public String getKey() {
+  public @Nullable String getKey() {
     return key;
   }
 
@@ -297,17 +298,17 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public String getDescription() {
+  public @Nullable String getDescription() {
     return (String) getProperty(BpmnParse.PROPERTYNAME_DOCUMENTATION);
   }
 
   @Override
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return deploymentId;
   }
 
   @Override
-  public void setDeploymentId(String deploymentId) {
+  public void setDeploymentId(@Nullable String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
@@ -328,49 +329,49 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public String getResourceName() {
+  public @Nullable String getResourceName() {
     return resourceName;
   }
 
   @Override
-  public void setResourceName(String resourceName) {
+  public void setResourceName(@Nullable String resourceName) {
     this.resourceName = resourceName;
   }
 
-  public Integer getHistoryLevel() {
+  public @Nullable Integer getHistoryLevel() {
     return historyLevel;
   }
 
-  public void setHistoryLevel(Integer historyLevel) {
+  public void setHistoryLevel(@Nullable Integer historyLevel) {
     this.historyLevel = historyLevel;
   }
 
-  public StartFormHandler getStartFormHandler() {
+  public @Nullable StartFormHandler getStartFormHandler() {
     return startFormHandler;
   }
 
-  public void setStartFormHandler(StartFormHandler startFormHandler) {
+  public void setStartFormHandler(@Nullable StartFormHandler startFormHandler) {
     this.startFormHandler = startFormHandler;
   }
 
-  public FormDefinition getStartFormDefinition() {
+  public @Nullable FormDefinition getStartFormDefinition() {
     return startFormDefinition;
   }
 
-  public void setStartFormDefinition(FormDefinition startFormDefinition) {
+  public void setStartFormDefinition(@Nullable FormDefinition startFormDefinition) {
     this.startFormDefinition = startFormDefinition;
   }
 
-  public Map<String, TaskDefinition> getTaskDefinitions() {
+  public @Nullable Map<String, TaskDefinition> getTaskDefinitions() {
     return taskDefinitions;
   }
 
-  public void setTaskDefinitions(Map<String, TaskDefinition> taskDefinitions) {
+  public void setTaskDefinitions(@Nullable Map<String, TaskDefinition> taskDefinitions) {
     this.taskDefinitions = taskDefinitions;
   }
 
   @Override
-  public String getCategory() {
+  public @Nullable String getCategory() {
     return category;
   }
 
@@ -380,12 +381,12 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public String getDiagramResourceName() {
+  public @Nullable String getDiagramResourceName() {
     return diagramResourceName;
   }
 
   @Override
-  public void setDiagramResourceName(String diagramResourceName) {
+  public void setDiagramResourceName(@Nullable String diagramResourceName) {
     this.diagramResourceName = diagramResourceName;
   }
 
@@ -465,7 +466,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
@@ -475,7 +476,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public String getVersionTag() {
+  public @Nullable String getVersionTag() {
     return versionTag;
   }
 
@@ -484,12 +485,12 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public Integer getHistoryTimeToLive() {
+  public @Nullable Integer getHistoryTimeToLive() {
     return historyTimeToLive;
   }
 
   @Override
-  public void setHistoryTimeToLive(Integer historyTimeToLive) {
+  public void setHistoryTimeToLive(@Nullable Integer historyTimeToLive) {
     this.historyTimeToLive = historyTimeToLive;
   }
 

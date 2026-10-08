@@ -26,6 +26,7 @@ import java.util.StringTokenizer;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
@@ -34,34 +35,35 @@ import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Event;
 
 /**
- * @author Tom Baeyens
- *
  * Implements the deprecated {@link Event} interface only to remain compatible with
  * {@code TaskService#getTaskEvents} (backed by {@code GetTaskEventsCmd}), for as long
  * as that deprecated API still exists.
+ *
+ * @author Tom Baeyens
  */
-@SuppressWarnings("removal")
-public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
+@SuppressWarnings({"removal", "unused"})
+public @NullMarked class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
 
   public static final String TYPE_EVENT = "event";
   public static final String TYPE_COMMENT = "comment";
 
-  protected String id;
+  protected @Nullable String id;
 
-  protected String type;
-  protected String userId;
-  protected Date time;
-  protected String taskId;
-  protected String processInstanceId;
-  protected String action;
-  protected String message;
-  protected String fullMessage;
-  protected String tenantId;
-  protected String rootProcessInstanceId;
-  protected Date removalTime;
+  protected @Nullable String type;
+  protected @Nullable String userId;
+  protected @Nullable Date time;
+  protected @Nullable String taskId;
+  protected @Nullable String processInstanceId;
+  protected @Nullable String action;
+  protected @Nullable String message;
+  protected @Nullable String fullMessage;
+  protected @Nullable String tenantId;
+  protected @Nullable String rootProcessInstanceId;
+  protected @Nullable Date removalTime;
   protected int revision;
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("message", message);
@@ -72,13 +74,13 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
     return fullMessage != null ? StringUtil.toByteArray(fullMessage) : null;
   }
 
-  public void setFullMessageBytes(byte[] fullMessageBytes) {
+  public void setFullMessageBytes(byte@Nullable[] fullMessageBytes) {
     fullMessage = fullMessageBytes != null ? StringUtil.fromBytes(fullMessageBytes) : null;
   }
 
   public static final String MESSAGE_PARTS_MARKER = "_|_";
 
-  public void setMessage(String[] messageParts) {
+  public void setMessage(@Nullable String[] messageParts) {
     StringBuilder stringBuilder = new StringBuilder();
     for (String part: messageParts) {
       if (part!=null) {
@@ -96,6 +98,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public List<String> getMessageParts() {
     if (message==null) {
       return Collections.emptyList();
@@ -116,7 +119,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   // getters and setters //////////////////////////////////////////////////////
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -126,34 +129,34 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   }
 
   @Override
-  public String getUserId() {
+  public @Nullable String getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(@Nullable String userId) {
     this.userId = userId;
   }
 
   @Override
-  public String getTaskId() {
+  public @Nullable String getTaskId() {
     return taskId;
   }
 
-  public void setTaskId(String taskId) {
+  public void setTaskId(@Nullable String taskId) {
     this.taskId = taskId;
   }
 
   @Override
-  public String getMessage() {
+  public @Nullable String getMessage() {
     return message;
   }
 
-  public void setMessage(String message) {
+  public void setMessage(@Nullable String message) {
     this.message = message;
   }
 
   @Override
-  public Date getTime() {
+  public @Nullable Date getTime() {
     return time;
   }
 
@@ -162,63 +165,63 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   }
 
   @Override
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 
-  public void setProcessInstanceId(String processInstanceId) {
+  public void setProcessInstanceId(@Nullable String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 
-  public String getType() {
+  public @Nullable String getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(@Nullable String type) {
     this.type = type;
   }
 
   @Override
-  public String getFullMessage() {
+  public @Nullable String getFullMessage() {
     return fullMessage;
   }
 
-  public void setFullMessage(String fullMessage) {
+  public void setFullMessage(@Nullable String fullMessage) {
     this.fullMessage = fullMessage;
   }
 
   @Override
-  public String getAction() {
+  public @Nullable String getAction() {
     return action;
   }
 
-  public void setAction(String action) {
+  public void setAction(@Nullable String action) {
     this.action = action;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
   @Override
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
   @Override
-  public Date getRemovalTime() {
+  public @Nullable Date getRemovalTime() {
     return removalTime;
   }
 
-  public void setRemovalTime(Date removalTime) {
+  public void setRemovalTime(@Nullable Date removalTime) {
     this.removalTime = removalTime;
   }
 

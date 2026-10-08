@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.event;
 
-
+import org.jspecify.annotations.NullMarked;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public interface VariableEventDispatcher {
+public @NullMarked interface VariableEventDispatcher {
 
   void dispatchEvent(VariableEvent variableEvent);
 }

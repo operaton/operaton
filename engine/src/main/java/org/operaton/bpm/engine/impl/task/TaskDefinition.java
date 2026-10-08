@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.Expression;
 
 import org.jspecify.annotations.Nullable;
@@ -29,6 +30,8 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.form.FormDefinition;
 import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
 import org.operaton.commons.utils.CollectionUtil;
+
+import static java.util.Collections.emptyList;
 
 /**
  * Container for task definition information gathered at parsing time.
@@ -157,16 +160,19 @@ public class TaskDefinition {
     this.taskListeners = taskListeners;
   }
 
-  public @Nullable List<TaskListener> getTaskListenersForEvent(String eventName) {
-    return taskListeners.get(eventName);
+  public @NonNull List<TaskListener> getTaskListenersForEvent(String eventName) {
+    List<TaskListener> listeners = taskListeners.get(eventName);
+    return listeners != null ? listeners : emptyList();
   }
 
-  public @Nullable List<TaskListener> getBuiltinTaskListenersForEvent(String eventName) {
-    return builtinTaskListeners.get(eventName);
+  public @NonNull List<TaskListener> getBuiltinTaskListenersForEvent(String eventName) {
+    List<TaskListener> listeners = builtinTaskListeners.get(eventName);
+    return listeners != null ? listeners : emptyList();
   }
 
-  public @Nullable List<TaskListener> getAllTaskListenersForEvent(String eventName) {
-    return allTaskListeners.get(eventName);
+  public @NonNull List<TaskListener> getAllTaskListenersForEvent(String eventName) {
+    List<TaskListener> listeners = allTaskListeners.get(eventName);
+    return listeners != null ? listeners : emptyList();
   }
 
   public @Nullable TaskListener getTimeoutTaskListener(String timeoutId) {

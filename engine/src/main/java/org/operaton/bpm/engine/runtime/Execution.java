@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine.runtime;
 
-
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represent a 'path of execution' in a process instance.
@@ -27,12 +28,12 @@ package org.operaton.bpm.engine.runtime;
  *
  * @author Joram Barrez
  */
-public interface Execution {
+public @NullMarked interface Execution {
 
   /**
    * The unique identifier of the execution.
    */
-  String getId();
+  @Nullable String getId();
 
   /**
    * Indicates if the execution is suspended.
@@ -46,17 +47,17 @@ public interface Execution {
 
   /** Id of the root of the execution tree representing the process instance.
    * It is the same as {@link #getId()} if this execution is the process instance. */
-  String getProcessInstanceId();
+  @Nullable String getProcessInstanceId();
 
   /**
    * The id of the tenant this execution belongs to. Can be <code>null</code>
    * if the execution belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * The Key of the process definition.
    */
-  String getProcessDefinitionKey();
+  @Nullable String getProcessDefinitionKey();
 
 }

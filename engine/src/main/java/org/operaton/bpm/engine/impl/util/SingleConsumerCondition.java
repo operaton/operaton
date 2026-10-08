@@ -23,6 +23,7 @@ import java.util.concurrent.locks.LockSupport;
  * MPSC Condition implementation.
  * <p>
  * Implementation Notes:
+ * </p>
  * <ul>
  * <li>{@link #await(long)} may spuriously return before the deadline is reached.</li>
  * <li>if {@link #signal()} is called before the consumer thread calls {@link #await(long)},

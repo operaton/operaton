@@ -664,6 +664,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * <p>
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param variableName name of the variable, cannot be {@code null}.
    */
@@ -677,6 +678,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * <p>
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param variableName name of the variable, cannot be {@code null}.
    */
@@ -687,6 +689,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * like the given value.
    * <p>
    * This be used on string variables only.
+   * </p>
    *
    * @param variableName  variable name, cannot be {@code null}.
    * @param variableValue variable value. The string can include the
@@ -700,6 +703,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * not like the given value.
    * <p>
    * This be used on string variables only.
+   * </p>
    *
    * @param variableName  variable name, cannot be {@code null}.
    * @param variableValue variable value. The string can include the
@@ -714,6 +718,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param variableName variable name, cannot be {@code null}.
    */
@@ -725,6 +730,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which
    * are not primitive type wrappers) are not supported.
+   * </p>
    *
    * @param variableName variable name, cannot be {@code null}.
    */
@@ -736,6 +742,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param variableName variable name, cannot be {@code null}.
    */
@@ -747,6 +754,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param variableName variable name, cannot be {@code null}.
    */

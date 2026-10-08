@@ -171,6 +171,7 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * <p>
    * (The signalName is specified using the 'name' attribute of the signal element
    * in the BPMN 2.0 XML.)
+   * </p>
    *
    * @param signalName the name of the signal the execution has subscribed to
    */
@@ -182,6 +183,7 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * <p>
    * (The messageName is specified using the 'name' attribute of the message element
    * in the BPMN 2.0 XML.)
+   * </p>
    *
    * @param messageName the name of the message the execution has subscribed to
    */

@@ -103,7 +103,9 @@ public interface VariableInstanceQuery extends Query<VariableInstanceQuery, Vari
    *  <li>{@link #variableValueLike(String, String)}</li>
    *  <li>{@link #variableValueNotEquals(String, Object)}</li>
    * </ul>
+   * <p>
    * It does not affect:
+   * </p>
    * <ul>
    *  <li>{@link #variableName(String)}</li>
    *  <li>{@link #variableNameIn(String...)}</li>

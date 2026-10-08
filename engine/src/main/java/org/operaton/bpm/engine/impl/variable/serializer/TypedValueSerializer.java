@@ -26,8 +26,9 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 /**
  * A {@link TypedValueSerializer} persists {@link TypedValue TypedValues} of a given
  * {@link ValueType} to provided {@link ValueFields}.
- *<p>
+ * <p>
  * Replaces the "VariableType" interface in previous versions.
+ * </p>
  *
  * @author Daniel Meyer
  *

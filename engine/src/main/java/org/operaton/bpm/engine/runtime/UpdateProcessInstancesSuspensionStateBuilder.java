@@ -46,23 +46,23 @@ public interface UpdateProcessInstancesSuspensionStateBuilder extends UpdateProc
   Batch activateAsync();
 
   /**
-   * <p>
    * Suspends the provided process instances asynchronously. This means that the execution is
    * stopped, so the <i>token state</i> will not change. However, actions that
    * do not change token state, like setting/removing variables, etc. will
    * succeed.
-   * </p>
    *
    * <p>
    * Tasks belonging to the suspended process instance will also be suspended.
    * This means that any actions influencing the tasks' lifecycles will fail,
    * such as
+   * </p>
    * <ul>
    * <li>claiming</li>
    * <li>completing</li>
    * <li>delegation</li>
    * <li>changes in task assignees, owners, etc.</li>
    * </ul>
+   * <p>
    * Actions that only change task properties will succeed, such as changing
    * variables or adding comments.
    * </p>

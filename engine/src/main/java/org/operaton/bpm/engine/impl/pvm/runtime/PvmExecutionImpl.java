@@ -789,8 +789,10 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * First, the ActivityStartBehavior is evaluated.
    * In case the start behavior is not {@link ActivityStartBehavior#DEFAULT}, the corresponding start
    * behavior is executed before executing the activity.
+   * </p>
    * <p>
    * For a given activity, the execution on which this method must be called depends on the type of the start behavior:
+   * </p>
    * <ul>
    * <li>CONCURRENT_IN_FLOW_SCOPE: scope execution for {@link PvmActivity#getFlowScope()}</li>
    * <li>INTERRUPT_EVENT_SCOPE: scope execution for {@link PvmActivity#getEventScope()}</li>
@@ -1425,6 +1427,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * <p>
    * Precondition: the execution is active and executing an activity.
    * Can be invoked for scope and non scope executions.
+   * </p>
    *
    * @param targetFlowScope scope activity or process definition for which the scope execution should be found
    * @return the scope execution for the provided targetFlowScope

@@ -25,11 +25,11 @@ import org.operaton.bpm.engine.identity.UserQuery;
  *
  * <p>
  * For example:
+ * </p>
  * <ul>
  *   <li>a user can be an assignee (= identity link type) for a task</li>
  *   <li>a group can be a candidate-group (= identity link type) for a task</li>
  * </ul>
- * </p>
  *
  * @author Joram Barrez
  */

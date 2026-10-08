@@ -36,6 +36,7 @@ public interface FileValue extends TypedValue {
    * every exception that {@link Charset#forName(String)} lists.
    * <p>
    * If no encoding has been saved it will return {@code null}.
+   * </p>
    *
    */
   @Nullable Charset getEncodingAsCharset();

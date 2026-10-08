@@ -36,6 +36,7 @@ public interface ExternalTaskClientBuilder {
    * Base url of the Operaton BPM Platform REST API. This information is mandatory.
    * <p>
    * If this method is used, it will create a permanent URL resolver with the given baseUrl.
+   * </p>
    *
    * @param baseUrl of the Operaton BPM Platform REST API
    * @return the builder
@@ -46,8 +47,10 @@ public interface ExternalTaskClientBuilder {
    * URL resolver of the Operaton REST API. This information is mandatory.
    * <p>
    * If the server is in a cluster or you are using Spring Cloud, you can create a class which implements UrlResolver..
+   * </p>
    * <p>
    * this is a sample for Spring Cloud DiscoveryClient
+   * </p>
    * <pre>
    * {@code
    * public class CustomUrlResolver implements UrlResolver {
@@ -78,6 +81,7 @@ public interface ExternalTaskClientBuilder {
    * <p>
    * If not given or {@code null}, a worker id is generated automatically which consists of the
    * hostname as well as a random and unique 128 bit string (UUID).
+   * </p>
    *
    * @param workerId the Workflow Engine is aware of
    * @return the builder
@@ -208,6 +212,7 @@ public interface ExternalTaskClientBuilder {
    * <p>
    * NOTE: Please bear in mind that disabling the client-side backoff can lead to heavy load situations on engine side.
    *       To avoid this, please specify an appropriate {@link #asyncResponseTimeout(long)}.
+   * </p>
    *
    * @return the builder
    */
@@ -217,6 +222,7 @@ public interface ExternalTaskClientBuilder {
    * Exposes the internal Apache {@link HttpClientBuilder} for custom client configurations.
    * <p>
    * Interceptors added via {@link #addInterceptor(ClientRequestInterceptor)} are added as last in the {@link #build()} method.
+   * </p>
    *
    * @param httpClientConsumer the parameter that accepts the {@link HttpClientBuilder}
    * @return the builder

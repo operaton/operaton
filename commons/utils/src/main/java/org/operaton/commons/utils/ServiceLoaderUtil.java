@@ -32,6 +32,7 @@ public final class ServiceLoaderUtil {
    * <p>
    * This method first attempts to load the service using the thread context classloader.
    * If no implementation is found, it tries again using the classloader of the service class itself.
+   * </p>
    *
    * @param serviceClass the service class to load
    * @param <T> the type of the service

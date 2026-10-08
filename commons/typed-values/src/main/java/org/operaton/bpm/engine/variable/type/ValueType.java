@@ -123,10 +123,12 @@ public interface ValueType extends Serializable {
   TypedValue convertFromTypedValue(TypedValue typedValue);
 
   /**
-   * <p>Returns whether the value type is abstract. This is <b>not related
-   * to the term <i>abstract</i> in the Java language.</b></p>
+   * Returns whether the value type is abstract. This is <b>not related
+   * to the term <i>abstract</i> in the Java language.</b>
    *
+   * <p>
    * Abstract value types cannot be used as types for variables but only used for querying.
+   * </p>
    */
   boolean isAbstract();
 

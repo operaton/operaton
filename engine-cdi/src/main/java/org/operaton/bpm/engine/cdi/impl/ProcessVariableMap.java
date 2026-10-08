@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * {@link BusinessProcess#setVariable(String, Object)} and
  * {@link BusinessProcess#getVariable(String)}, so that they are not flushed
  * prematurely.
+ * </p>
  *
  * @author Daniel Meyer
  */

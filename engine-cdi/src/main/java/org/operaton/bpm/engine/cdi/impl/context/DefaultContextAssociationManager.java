@@ -45,6 +45,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * <p />
  * Subclass in order to implement custom association schemes and association
  * with custom scopes.
+ * </p>
  *
  * @author Daniel Meyer
  */

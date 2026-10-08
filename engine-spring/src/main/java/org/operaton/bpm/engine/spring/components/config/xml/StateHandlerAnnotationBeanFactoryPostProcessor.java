@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRe
  * and {@link BeanFactoryPostProcessor}s.
  * <p/>
  * Particularly, this will register the {@link ActivitiStateHandlerRegistry} which is used to react to states.
+ * </p>
  *
  * @author Josh Long
  */

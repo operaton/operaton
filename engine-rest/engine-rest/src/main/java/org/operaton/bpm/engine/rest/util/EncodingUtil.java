@@ -30,7 +30,7 @@ public final class EncodingUtil {
   }
 
   protected static Charset getDefaultEncoding() {
-    Charset charset = null;
+    Charset charset;
     try {
       charset = StandardCharsets.UTF_8;
     }catch (Exception e){

@@ -233,7 +233,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
 
   @Override
   public void modifyVariables(PatchVariablesDto patch) {
-    VariableMap variableModifications = null;
+    VariableMap variableModifications;
     try {
       variableModifications = VariableValueDto.toMap(patch.getModifications(), engine, objectMapper);
 

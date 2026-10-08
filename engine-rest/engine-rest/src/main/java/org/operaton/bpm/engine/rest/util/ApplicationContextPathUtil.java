@@ -51,7 +51,7 @@ public final class ApplicationContextPathUtil {
   public static String getApplicationPathForDeployment(ProcessEngine engine, String deploymentId) {
 
     // get the name of the process application that made the deployment
-    String processApplicationName = null;
+    String processApplicationName;
     IdentityService identityService = engine.getIdentityService();
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
     try {

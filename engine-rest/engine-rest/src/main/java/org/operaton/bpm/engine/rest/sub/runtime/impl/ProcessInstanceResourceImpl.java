@@ -84,7 +84,7 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
   public ActivityInstanceDto getActivityInstanceTree() {
     RuntimeService runtimeService = engine.getRuntimeService();
 
-    ActivityInstance activityInstance = null;
+    ActivityInstance activityInstance;
 
     try {
       activityInstance = runtimeService.getActivityInstance(processInstanceId);
@@ -126,7 +126,7 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
 
   @Override
   public BatchDto modifyProcessInstanceAsync(ProcessInstanceModificationDto dto) {
-    Batch batch = null;
+    Batch batch;
     if (dto.getInstructions() != null && !dto.getInstructions().isEmpty()) {
       ProcessInstanceModificationBuilder modificationBuilder =
           engine.getRuntimeService().createProcessInstanceModification(processInstanceId);

@@ -104,7 +104,6 @@ class BuiltinExceptionCodeForeignKeyConstraintViolationTest extends ConcurrencyT
     thread1.waitUntilDone();
 
     // when: try to commit the transaction that deletes a process definition
-    thread2.makeContinue();
     thread2.waitUntilDone();
 
     // then

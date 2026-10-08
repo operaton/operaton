@@ -115,8 +115,10 @@ public class JobQueryTest {
 
   /**
    * Setup will create
-   *   - 3 process instances, each with one timer, each firing at t1/t2/t3 + 1 hour (see process)
-   *   - 1 message
+   * <ul>
+   *   <li>3 process instances, each with one timer, each firing at t1/t2/t3 + 1 hour (see process)</li>
+   *   <li>1 message</li>
+   * </ul>
    */
   @BeforeEach
   void setUp() {

@@ -40,8 +40,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  *
  * This Test deploys two processes:
- * - LocalSLSBInvocationTest.testStartProcess.bpmn20.xml  (1)
- * - LocalSLSBInvocationTest.callbackProcess.bpmn20.xml (2)
+ * <ul>
+ *   <li>LocalSLSBInvocationTest.testStartProcess.bpmn20.xml  (1)</li>
+ *   <li>LocalSLSBInvocationTest.callbackProcess.bpmn20.xml (2)</li>
+ * </ul>
  *
  * <p>
  * Two applications are deployed:

@@ -42,8 +42,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * <p>
  * NOTE:
- * - does not work on Jboss AS with a remote invocation (Bug in Jboss AS?) SEE HEMERA-2453
- * - works on Glassfish
+ * <ul>
+ *   <li>does not work on Jboss AS with a remote invocation (Bug in Jboss AS?) SEE HEMERA-2453</li>
+ *   <li>works on Glassfish</li>
+ * </ul>
  * </p>
  *
  * @author Daniel Meyer

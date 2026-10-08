@@ -282,10 +282,12 @@ public abstract class ProcessEngineConfiguration {
   /**
    * Provides the default task permission for the user related to a task
    * User can be related to a task in the following ways
-   * - Candidate user
-   * - Part of candidate group
-   * - Assignee
-   * - Owner
+   * <ul>
+   *   <li>Candidate user</li>
+   *   <li>Part of candidate group</li>
+   *   <li>Assignee</li>
+   *   <li>Owner</li>
+   * </ul>
    * The default value is UPDATE.
    */
   protected String defaultUserPermissionNameForTask = "UPDATE";

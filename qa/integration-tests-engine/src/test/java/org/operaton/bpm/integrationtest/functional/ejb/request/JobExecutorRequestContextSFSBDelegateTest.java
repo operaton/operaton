@@ -36,8 +36,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * <p>
  * NOTE:
- * - works on Jboss AS
- * - broken on Glassfish, see HEMERA-2454
+ * <ul>
+ *   <li>works on Jboss AS</li>
+ *   <li>broken on Glassfish, see HEMERA-2454</li>
+ * </ul>
  * </p>
  *
  * @author Daniel Meyer

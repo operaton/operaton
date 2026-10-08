@@ -40,8 +40,10 @@ public enum ActivityStartBehavior {
   /**
    * Used for activities which {@link PvmExecutionImpl#interrupt(String) interrupt}
    * their {@link PvmActivity#getFlowScope() flow scope}. Examples:
-   * - Terminate end event
-   * - Cancel end event
+   * <ul>
+   *   <li>Terminate end event</li>
+   *   <li>Cancel end event</li>
+   * </ul>
    *
    * <p>
    * NOTE: can only be used for activities contained in normal flow

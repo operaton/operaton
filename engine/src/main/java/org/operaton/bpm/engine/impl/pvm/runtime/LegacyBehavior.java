@@ -216,8 +216,10 @@ public final @NullMarked class LegacyBehavior {
   /**
    * In case the process instance was migrated from a previous version, activities which are now parsed as scopes
    * do not have scope executions. Use the flow scopes of these activities in order to find their execution.
-   * - For an event subprocess this is the scope execution of the scope in which the event subprocess is embeded in
-   * - For a multi instance sequential subprocess this is the multi instace scope body.
+   * <ul>
+   *   <li>For an event subprocess this is the scope execution of the scope in which the event subprocess is embeded in</li>
+   *   <li>For a multi instance sequential subprocess this is the multi instace scope body.</li>
+   * </ul>
    */
   public static @Nullable PvmExecutionImpl getScopeExecution(ScopeImpl scope, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping) {
     ScopeImpl flowScope = scope.getFlowScope();

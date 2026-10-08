@@ -31,8 +31,10 @@ import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 
 /**
  * A Bpmn scope. The scope has references to two lists of activities:
- * - the flow activities (activities for which the {@link ActivityImpl#getFlowScope() flow scope} is this scope
- * - event listener activities (activities for which the {@link ActivityImpl#getEventScope() event scope} is this scope.
+ * <ul>
+ *   <li>the flow activities (activities for which the {@link ActivityImpl#getFlowScope() flow scope} is this scope</li>
+ *   <li>event listener activities (activities for which the {@link ActivityImpl#getEventScope() event scope} is this scope.</li>
+ * </ul>
  *
  * @author Tom Baeyens
  * @author Daniel Meyer

@@ -405,7 +405,7 @@ public abstract class TestHelper {
    *
    * @param processEngine the {@link ProcessEngine} to test
    * @param fail if true the method will throw an {@link AssertionError} if the deployment cache is not clean
-   * @return the deployment cache summary if fail is set to false or null if deployment cache was clean
+   * @return the deployment cache summary if fail is set to false or {@code null} if deployment cache was clean
    * @throws AssertionError if the deployment cache was not clean and fail is set to true
    */
   public static @Nullable String assertAndEnsureCleanDeploymentCache(ProcessEngine processEngine, boolean fail) {

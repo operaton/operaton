@@ -311,7 +311,7 @@ public @NullMarked class ModelElementTypeImpl implements ModelElementType {
    * Return the attribute for the attribute name
    *
    * @param attributeName the name of the attribute
-   * @return the attribute or null if it not exists
+   * @return the attribute or {@code null} if it not exists
    */
   @Override
   public @Nullable Attribute<?> getAttribute(String attributeName) {

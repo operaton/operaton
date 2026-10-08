@@ -665,7 +665,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param variableName name of the variable, cannot be null.
+   * @param variableName name of the variable, cannot be {@code null}.
    */
   TaskQuery caseInstanceVariableValueEquals(String variableName, Object variableValue);
 
@@ -678,7 +678,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param variableName name of the variable, cannot be null.
+   * @param variableName name of the variable, cannot be {@code null}.
    */
   TaskQuery caseInstanceVariableValueNotEquals(String variableName, Object variableValue);
 
@@ -688,7 +688,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * <p>
    * This be used on string variables only.
    *
-   * @param variableName  variable name, cannot be null.
+   * @param variableName  variable name, cannot be {@code null}.
    * @param variableValue variable value. The string can include the
    *                      wildcard character '%' to express like-strategy:
    *                      starts with (string%), ends with (%string) or contains (%string%).
@@ -701,7 +701,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * <p>
    * This be used on string variables only.
    *
-   * @param variableName  variable name, cannot be null.
+   * @param variableName  variable name, cannot be {@code null}.
    * @param variableValue variable value. The string can include the
    *                      wildcard character '%' to express like-strategy:
    *                      starts with (string%), ends with (%string) or contains (%string%).
@@ -715,7 +715,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param variableName variable name, cannot be null.
+   * @param variableName variable name, cannot be {@code null}.
    */
   TaskQuery caseInstanceVariableValueGreaterThan(String variableName, Object variableValue);
 
@@ -726,7 +726,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * Booleans, Byte-arrays and {@link Serializable} objects (which
    * are not primitive type wrappers) are not supported.
    *
-   * @param variableName variable name, cannot be null.
+   * @param variableName variable name, cannot be {@code null}.
    */
   TaskQuery caseInstanceVariableValueGreaterThanOrEquals(String variableName, Object variableValue);
 
@@ -737,7 +737,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param variableName variable name, cannot be null.
+   * @param variableName variable name, cannot be {@code null}.
    */
   TaskQuery caseInstanceVariableValueLessThan(String variableName, Object variableValue);
 
@@ -748,7 +748,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param variableName variable name, cannot be null.
+   * @param variableName variable name, cannot be {@code null}.
    */
   TaskQuery caseInstanceVariableValueLessThanOrEquals(String variableName, Object variableValue);
 

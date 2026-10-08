@@ -134,8 +134,8 @@ public interface VariableInstanceQuery extends Query<VariableInstanceQuery, Vari
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  name of the variable, cannot be null.
-   * @param value variable value, can be null.
+   * @param name  name of the variable, cannot be {@code null}.
+   * @param value variable value, can be {@code null}.
    */
   VariableInstanceQuery variableValueEquals(String name, Object value);
 
@@ -145,8 +145,8 @@ public interface VariableInstanceQuery extends Query<VariableInstanceQuery, Vari
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  name of the variable, cannot be null.
-   * @param value variable value, can be null.
+   * @param name  name of the variable, cannot be {@code null}.
+   * @param value variable value, can be {@code null}.
    */
   VariableInstanceQuery variableValueNotEquals(String name, Object value);
 
@@ -155,8 +155,8 @@ public interface VariableInstanceQuery extends Query<VariableInstanceQuery, Vari
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   VariableInstanceQuery variableValueGreaterThan(String name, Object value);
 
@@ -165,8 +165,8 @@ public interface VariableInstanceQuery extends Query<VariableInstanceQuery, Vari
    * the passed value. Booleans, Byte-arrays and {@link Serializable} objects (which
    * are not primitive type wrappers) are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   VariableInstanceQuery variableValueGreaterThanOrEqual(String name, Object value);
 
@@ -175,8 +175,8 @@ public interface VariableInstanceQuery extends Query<VariableInstanceQuery, Vari
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   VariableInstanceQuery variableValueLessThan(String name, Object value);
 
@@ -185,8 +185,8 @@ public interface VariableInstanceQuery extends Query<VariableInstanceQuery, Vari
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   VariableInstanceQuery variableValueLessThanOrEqual(String name, Object value);
 
@@ -211,8 +211,8 @@ public interface VariableInstanceQuery extends Query<VariableInstanceQuery, Vari
    * Only select variable instances which value is like the given value.
    * This be used on string variables only.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null. The string can include the
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}. The string can include the
    *              wildcard character '%' to express like-strategy:
    *              starts with (string%), ends with (%string) or contains (%string%).
    */

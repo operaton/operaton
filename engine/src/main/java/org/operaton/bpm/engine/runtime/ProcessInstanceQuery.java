@@ -144,7 +144,7 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name name of the variable, cannot be null.
+   * @param name name of the variable, cannot be {@code null}.
    */
   ProcessInstanceQuery variableValueEquals(String name, Object value);
 
@@ -154,7 +154,7 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name name of the variable, cannot be null.
+   * @param name name of the variable, cannot be {@code null}.
    */
   ProcessInstanceQuery variableValueNotEquals(String name, Object value);
 
@@ -163,8 +163,8 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   ProcessInstanceQuery variableValueGreaterThan(String name, Object value);
 
@@ -173,8 +173,8 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    * the passed value. Booleans, Byte-arrays and {@link Serializable} objects (which
    * are not primitive type wrappers) are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   ProcessInstanceQuery variableValueGreaterThanOrEqual(String name, Object value);
 
@@ -183,8 +183,8 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   ProcessInstanceQuery variableValueLessThan(String name, Object value);
 
@@ -193,8 +193,8 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   ProcessInstanceQuery variableValueLessThanOrEqual(String name, Object value);
 
@@ -202,8 +202,8 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    * Only select process instances which have a global variable value like the given value.
    * This be used on string variables only.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null. The string can include the
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}. The string can include the
    *              wildcard character '%' to express like-strategy:
    *              starts with (string%), ends with (%string) or contains (%string%).
    */

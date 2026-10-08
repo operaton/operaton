@@ -448,7 +448,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   @SuppressWarnings("unchecked")
   protected Map<String, List<VariableInstance>> getVariableInstancesForTasks(HalTaskList halTaskList) {
     List<HalTask> halTasks = (List<HalTask>) halTaskList.getEmbedded("task");
-    return getVariableInstancesForTasks(halTasks.toArray(new HalTask[halTasks.size()]));
+    return getVariableInstancesForTasks(halTasks.toArray(HalTask[]::new));
   }
 
   protected Map<String, List<VariableInstance>> getVariableInstancesForTasks(HalTask... halTasks) {

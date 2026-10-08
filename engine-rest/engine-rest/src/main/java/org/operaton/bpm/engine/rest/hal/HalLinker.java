@@ -89,7 +89,7 @@ public class HalLinker {
     if(linkResolver != null) {
       Set<String> linkedIds = getLinkedResourceIdsByRelation(relation);
       if(!linkedIds.isEmpty()) {
-        return linkResolver.resolveLinks(linkedIds.toArray(new String[linkedIds.size()]), processEngine);
+        return linkResolver.resolveLinks(linkedIds.toArray(String[]::new), processEngine);
       } else {
         return Collections.emptyList();
       }

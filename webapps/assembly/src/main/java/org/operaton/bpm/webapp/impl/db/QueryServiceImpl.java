@@ -60,7 +60,7 @@ public @NullMarked class QueryServiceImpl implements QueryService {
     QuerySessionFactory querySessionFactory =
       (QuerySessionFactory) commandContext.getProcessEngineConfiguration();
 
-    ProcessEngineConfigurationImpl processEngineConfiguration = null;
+    ProcessEngineConfigurationImpl processEngineConfiguration;
     processEngineConfiguration = querySessionFactory.getWrappedConfiguration();
 
     return processEngineConfiguration;

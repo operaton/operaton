@@ -240,7 +240,7 @@ class ContainerAuthenticationFilterTest {
     }
 
     MockHttpServletResponse response = new MockHttpServletResponse();
-    MockHttpServletRequest request = null;
+    MockHttpServletRequest request;
 
     if (!applicationPath.isEmpty()) {
       MockServletContext mockServletContext = new MockServletContext();

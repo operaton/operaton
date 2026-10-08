@@ -85,7 +85,7 @@ public interface TypedValueSerializer<T extends TypedValue> {
 
   /**
    *
-   * @return the dataformat used by the serializer or null if this is not an object serializer
+   * @return the dataformat used by the serializer or {@code null} if this is not an object serializer
    */
   @Nullable String getSerializationDataformat();
 

@@ -76,7 +76,7 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name name of the variable, cannot be null.
+   * @param name name of the variable, cannot be {@code null}.
    */
   ExecutionQuery variableValueEquals(String name, Object value);
 
@@ -86,7 +86,7 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name name of the variable, cannot be null.
+   * @param name name of the variable, cannot be {@code null}.
    */
   ExecutionQuery variableValueNotEquals(String name, Object value);
 
@@ -95,8 +95,8 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   ExecutionQuery variableValueGreaterThan(String name, Object value);
 
@@ -105,8 +105,8 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * the passed value. Booleans, Byte-arrays and {@link Serializable} objects (which
    * are not primitive type wrappers) are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   ExecutionQuery variableValueGreaterThanOrEqual(String name, Object value);
 
@@ -115,8 +115,8 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   ExecutionQuery variableValueLessThan(String name, Object value);
 
@@ -125,8 +125,8 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null.
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}.
    */
   ExecutionQuery variableValueLessThanOrEqual(String name, Object value);
 
@@ -134,8 +134,8 @@ public interface ExecutionQuery extends Query<ExecutionQuery, Execution> {
    * Only select executions which have a local variable value like the given value.
    * This be used on string variables only.
    *
-   * @param name  variable name, cannot be null.
-   * @param value variable value, cannot be null. The string can include the
+   * @param name  variable name, cannot be {@code null}.
+   * @param value variable value, cannot be {@code null}. The string can include the
    *              wildcard character '%' to express like-strategy:
    *              starts with (string%), ends with (%string) or contains (%string%).
    */

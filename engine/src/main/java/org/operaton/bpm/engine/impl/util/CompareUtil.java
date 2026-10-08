@@ -46,7 +46,7 @@ public final class CompareUtil {
    *
    * @param values to validate
    * @param <T> the type of the comparable
-   * @return {@code false} if the not null values are in an ascending order or all the values are null, {@code true} otherwise
+   * @return {@code false} if the not {@code null} values are in an ascending order or all the values are {@code null}, {@code true} otherwise
    */
   public static <T extends Comparable<T>> boolean areNotInAscendingOrder(@Nullable T @Nullable... values) {
     boolean excluding = false;
@@ -67,7 +67,7 @@ public final class CompareUtil {
    *
    * @param values to validate
    * @param <T> the type of the comparable
-   * @return {@code false} if the not null values are in an ascending order or all the values are null, {@code true} otherwise
+   * @return {@code false} if the not {@code null} values are in an ascending order or all the values are {@code null}, {@code true} otherwise
    */
   public static <T extends Comparable<T>> boolean areNotInAscendingOrder(List<@Nullable T> values) {
 
@@ -88,7 +88,7 @@ public final class CompareUtil {
   }
 
   /**
-   * Checks if the element is not contained within the list of values. If the element, or the list are null then true is returned.
+   * Checks if the element is not contained within the list of values. If the element, or the list are {@code null} then true is returned.
    *
    * @param element to check
    * @param values to check in
@@ -105,7 +105,7 @@ public final class CompareUtil {
   }
 
   /**
-   * Checks if the element is contained within the list of values. If the element, or the list are null then true is returned.
+   * Checks if the element is contained within the list of values. If the element, or the list are {@code null} then true is returned.
    *
    * @param element to check
    * @param values to check in

@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
- * Used to serialize untyped null values.
+ * Used to serialize untyped {@code null} values.
  *
  * @author Daniel Meyer
  * @author Tom Baeyens

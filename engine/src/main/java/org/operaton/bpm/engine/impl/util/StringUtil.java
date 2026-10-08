@@ -181,7 +181,7 @@ public final class StringUtil {
 
   /**
    * @param string the String to check.
-   * @return a boolean <code>TRUE</code> if the String is not null and not empty. <code>FALSE</code> otherwise.
+   * @return a boolean <code>TRUE</code> if the String is not {@code null} and not empty. <code>FALSE</code> otherwise.
    */
   public static boolean hasText(@Nullable String string) {
     return string != null && !string.isEmpty();

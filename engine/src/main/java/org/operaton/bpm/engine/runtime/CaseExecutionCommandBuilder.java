@@ -91,7 +91,7 @@ public interface CaseExecutionCommandBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null or the same variable
+   * @throws NotValidException when the given variable name is {@code null} or the same variable
    *   should be removed in the same command
    */
   CaseExecutionCommandBuilder setVariable(String variableName, Object variableValue);
@@ -122,7 +122,7 @@ public interface CaseExecutionCommandBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null or the same variable
+   * @throws NotValidException when the given variable name is {@code null} or the same variable
    *   should be removed in the same command
    */
   CaseExecutionCommandBuilder setVariableLocal(String variableName, Object variableValue);
@@ -150,7 +150,7 @@ public interface CaseExecutionCommandBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null or the same variable
+   * @throws NotValidException when the given variable name is {@code null} or the same variable
    *         should be set in the same command
    */
   CaseExecutionCommandBuilder removeVariable(String variableName);
@@ -180,7 +180,7 @@ public interface CaseExecutionCommandBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null or the same
+   * @throws NotValidException when the given variable name is {@code null} or the same
    *         variable should be set in same command
    */
   CaseExecutionCommandBuilder removeVariableLocal(String variableName);
@@ -220,7 +220,7 @@ public interface CaseExecutionCommandBuilder {
    *   </li>
    * </ol>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution
@@ -244,7 +244,7 @@ public interface CaseExecutionCommandBuilder {
    *   </ul>
    * </p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -268,7 +268,7 @@ public interface CaseExecutionCommandBuilder {
    * disabled. This can lead to a completion of the parent case execution if
    * the completion criteria are fulfilled.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -287,7 +287,7 @@ public interface CaseExecutionCommandBuilder {
    * that the with the case execution related {@link Stage} or {@link Task} is waiting
    * for a decision to become <code>ACTIVE</code> or <code>DISABLED</code> once again.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -323,7 +323,7 @@ public interface CaseExecutionCommandBuilder {
    * completed. This can lead to a completion of the parent case execution if
    * the completion criteria are fulfilled.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done
@@ -336,7 +336,7 @@ public interface CaseExecutionCommandBuilder {
    * <p>Additionally to {@link #execute()} the associated case execution will
    * be terminated. Therefore there happens a transition to state <code>TERMINATED</code>.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -352,7 +352,7 @@ public interface CaseExecutionCommandBuilder {
    * associated case instance. Therefore there happens a transition from the
    * state <code>COMPLETED</code> to state <code>CLOSED</code>.</p>
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done

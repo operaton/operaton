@@ -224,14 +224,14 @@ public final class ReflectUtil {
   }
 
   /**
-   * Returns the field of the given object or null if it doesn't exist.
+   * Returns the field of the given object or {@code null} if it doesn't exist.
    */
   public static @Nullable Field getField(String fieldName, Object object) {
     return getField(fieldName, object.getClass());
   }
 
   /**
-   * Returns the field of the given class or null if it doesn't exist.
+   * Returns the field of the given class or {@code null} if it doesn't exist.
    */
   public static @Nullable Field getField(String fieldName, Class<?> clazz) {
     Field field = null;
@@ -296,7 +296,7 @@ public final class ReflectUtil {
   }
 
   /**
-   * Returns the setter-method for the given field name or null if no setter exists.
+   * Returns the setter-method for the given field name or {@code null} if no setter exists.
    */
   public static @Nullable Method getSetter(String fieldName, Class<?> clazz, Class<?> fieldType) {
     String setterName = buildSetterName(fieldName);
@@ -320,7 +320,7 @@ public final class ReflectUtil {
   }
 
   /**
-   * Returns a setter method based on the fieldName and the java beans setter naming convention or null if none exists.
+   * Returns a setter method based on the fieldName and the java beans setter naming convention or {@code null} if none exists.
    * If multiple setters with different parameter types are present, an exception is thrown.
    * If they have the same parameter type, one of those methods is returned.
    */

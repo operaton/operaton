@@ -98,7 +98,7 @@ public class ImmutablePair<L, R> implements Entry<L, R>, Comparable<ImmutablePai
    * The types must be {@code Comparable}.
    *
    * @param o
-   *          the other pair, not null
+   *          the other pair, not {@code null}
    * @return negative if this is less, zero if equal, positive if greater
    */
   @Override

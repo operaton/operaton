@@ -36,30 +36,30 @@ public @NullMarked interface TenantIdProvider {
   /**
    * Invoked when a process instance is started and the Process Definition does not have a tenant id.
    *<p>
-   * Implementors can either return a tenant id or null. If null is returned the process instance is not assigned a tenant id.
+   * Implementors can either return a tenant id or {@code null}. If {@code null} is returned the process instance is not assigned a tenant id.
    *
    * @param ctx holds information about the process instance which is about to be started.
-   * @return a tenant id or null if case the implementation does not assign a tenant id to the process instance
+   * @return a tenant id or {@code null} if case the implementation does not assign a tenant id to the process instance
    */
   @Nullable String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx);
 
   /**
    * Invoked when a case instance is started and the Case Definition does not have a tenant id.
    *<p>
-   * Implementors can either return a tenant id or null. If null is returned the case instance is not assigned a tenant id.
+   * Implementors can either return a tenant id or {@code null}. If {@code null} is returned the case instance is not assigned a tenant id.
    *
    * @param ctx holds information about the case instance which is about to be started.
-   * @return a tenant id or null if case the implementation does not assign a tenant id to case process instance
+   * @return a tenant id or {@code null} if case the implementation does not assign a tenant id to case process instance
    */
   @Nullable String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx);
 
   /**
    * Invoked when a historic decision instance is created and the Decision Definition or the Execution does not have a tenant id.
    *<p>
-   * Implementors can either return a tenant id or null. If null is returned the historic decision instance is not assigned a tenant id.
+   * Implementors can either return a tenant id or {@code null}. If {@code null} is returned the historic decision instance is not assigned a tenant id.
    *
    * @param ctx holds information about the decision definition and the execution.
-   * @return a tenant id or null if case the implementation does not assign a tenant id to the historic decision instance
+   * @return a tenant id or {@code null} if case the implementation does not assign a tenant id to the historic decision instance
    */
   @Nullable String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx);
 

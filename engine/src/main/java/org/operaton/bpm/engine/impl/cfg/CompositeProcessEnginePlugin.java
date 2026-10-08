@@ -54,7 +54,7 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
   /**
    * New instance with initial plugins.
    *
-   * @param plugins the initial plugins. Must not be null.
+   * @param plugins the initial plugins. Must not be {@code null}.
    */
   public CompositeProcessEnginePlugin(final List<ProcessEnginePlugin> plugins) {
     this();

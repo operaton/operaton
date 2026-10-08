@@ -119,7 +119,7 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
 
   /**
    * Returns the priority defined in the specific entity. Like a job definition priority or
-   * an activity priority. The result can also be null in that case the process
+   * an activity priority. The result can also be {@code null} in that case the process
    * priority will be used.
    *
    * @param execution the current execution
@@ -130,7 +130,7 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
   protected abstract Long getSpecificPriority(ExecutionEntity execution, T param, String jobDefinitionId);
 
   /**
-   * Returns the priority defined in the process definition. Can also be null
+   * Returns the priority defined in the process definition. Can also be {@code null}
    * in that case the fallback is the default priority.
    *
    * @param execution the current execution
@@ -142,7 +142,7 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
   /**
    * Returns the priority which is defined in the given process definition.
    * The priority value is identified with the given propertyKey.
-   * Returns null if the process definition is null or no priority was defined.
+   * Returns {@code null} if the process definition is {@code null} or no priority was defined.
    *
    * @param processDefinition the process definition that should contains the priority
    * @param propertyKey the key which identifies the property

@@ -57,7 +57,7 @@ public final @NullMarked class BpmnParseUtil {
    *
    * @param element the parent element of the extension element
    * @param extensionElementName the name of the extension element to find
-   * @return the extension element or null if not found
+   * @return the extension element or {@code null} if not found
    */
   public static @Nullable Element findOperatonExtensionElement(Element element, String extensionElementName) {
     return findExtensionElement(element, BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, extensionElementName);
@@ -69,7 +69,7 @@ public final @NullMarked class BpmnParseUtil {
    * @param element the parent element of the extension element
    * @param namespace the namespace of the extension element
    * @param extensionElementName the name of the extension element to find
-   * @return the extension element or null if not found
+   * @return the extension element or {@code null} if not found
    */
   public static @Nullable Element findExtensionElement(Element element, Namespace namespace, String extensionElementName) {
     Element extensionElements = element.element("extensionElements");
@@ -84,7 +84,7 @@ public final @NullMarked class BpmnParseUtil {
    * Returns the {@link IoMapping} of an element.
    *
    * @param element the element to parse
-   * @return the input output mapping or null if non defined
+   * @return the input output mapping or {@code null} if non defined
    * @throws BpmnParseException if a input/output parameter element is malformed
    */
   public static @Nullable IoMapping parseInputOutput(Element element) {

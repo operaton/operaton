@@ -1956,18 +1956,18 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
     if (extendingQuery.getAssigneeIn() != null) {
       extendedQuery.taskAssigneeIn(extendingQuery.getAssigneeIn()
-          .toArray(new String[extendingQuery.getAssigneeIn().size()]));
+          .toArray(String[]::new));
     } else if (this.getAssigneeIn() != null) {
       extendedQuery.taskAssigneeIn(this.getAssigneeIn()
-          .toArray(new String[this.getAssigneeIn().size()]));
+          .toArray(String[]::new));
     }
 
     if (extendingQuery.getAssigneeNotIn() != null) {
       extendedQuery.taskAssigneeNotIn(extendingQuery.getAssigneeNotIn()
-          .toArray(new String[extendingQuery.getAssigneeNotIn().size()]));
+          .toArray(String[]::new));
     } else if (this.getAssigneeNotIn() != null) {
       extendedQuery.taskAssigneeNotIn(this.getAssigneeNotIn()
-          .toArray(new String[this.getAssigneeNotIn().size()]));
+          .toArray(String[]::new));
     }
 
     copyProperty(extendingQuery, this,

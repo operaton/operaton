@@ -159,12 +159,12 @@ public @NullMarked class JsonTaskQueryConverter implements JsonObjectConverter<T
 
     if (query.getAssigneeIn() != null) {
       JsonUtil.addArrayField(json, ASSIGNEE_IN,
-          query.getAssigneeIn().toArray(new String[query.getAssigneeIn().size()]));
+          query.getAssigneeIn().toArray(String[]::new));
     }
 
     if (query.getAssigneeNotIn() != null) {
       JsonUtil.addArrayField(json, ASSIGNEE_NOT_IN,
-              query.getAssigneeNotIn().toArray(new String[query.getAssigneeNotIn().size()]));
+              query.getAssigneeNotIn().toArray(String[]::new));
     }
 
     JsonUtil.addField(json, ASSIGNEE_LIKE, query.getAssigneeLike());
@@ -448,7 +448,7 @@ public @NullMarked class JsonTaskQueryConverter implements JsonObjectConverter<T
   );
 
   protected static String[] getArray(JsonArray array) {
-    return getList(array).toArray(new String[array.size()]);
+    return getList(array).toArray(String[]::new);
   }
 
   protected static List<String> getList(JsonArray array) {

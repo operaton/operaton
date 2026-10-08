@@ -154,7 +154,7 @@ public class AuthorizationQueryImpl extends AbstractQuery<AuthorizationQuery, Au
    */
   private boolean containsIncompatibleResourceType() {
     if (queryByResourceType && queryByPermission) {
-      Resource[] resources = resourcesIntersection.toArray(new Resource[resourcesIntersection.size()]);
+      Resource[] resources = resourcesIntersection.toArray(Resource[]::new);
       return !ResourceTypeUtil.resourceIsContainedInArray(resourceType, resources);
     }
     return false;

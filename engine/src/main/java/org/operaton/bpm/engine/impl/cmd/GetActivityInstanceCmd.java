@@ -261,8 +261,8 @@ public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInsta
       }
     }
 
-    actInst.setExecutionIds(executionIds.toArray(new String[executionIds.size()]));
-    actInst.setIncidentIds(incidentIds.toArray(new String[incidentIds.size()]));
+    actInst.setExecutionIds(executionIds.toArray(String[]::new));
+    actInst.setIncidentIds(incidentIds.toArray(String[]::new));
     actInst.setIncidents(incidents.toArray(new Incident[0]));
 
     return actInst;
@@ -321,7 +321,7 @@ public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInsta
       childTransitionInstances.entrySet()) {
       ActivityInstanceImpl instance = entry.getKey();
       List<TransitionInstanceImpl> childInstances = entry.getValue();
-      instance.setChildTransitionInstances(childInstances.toArray(new TransitionInstanceImpl[childInstances.size()]));
+      instance.setChildTransitionInstances(childInstances.toArray(TransitionInstanceImpl[]::new));
     }
   }
 
@@ -331,7 +331,7 @@ public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInsta
       ActivityInstanceImpl instance = entry.getKey();
       List<ActivityInstanceImpl> childInstances = entry.getValue();
       if (childInstances != null) {
-        instance.setChildActivityInstances(childInstances.toArray(new ActivityInstanceImpl[childInstances.size()]));
+        instance.setChildActivityInstances(childInstances.toArray(ActivityInstanceImpl[]::new));
       }
     }
   }

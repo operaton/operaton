@@ -681,16 +681,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  @Override
-  public boolean isActive(String activityId) {
-    return findExecution(activityId) != null;
-  }
-
-  @Override
-  public void inactivate() {
-    this.isActive = false;
-  }
-
   // executions ///////////////////////////////////////////////////////////////
 
   public void addExecutionObserver(ExecutionObserver observer) {
@@ -1535,11 +1525,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     } else {
       return (isConcurrent ? "Concurrent" : "") + (isScope ? "Scope" : "") + "Execution[%s]".formatted(getToStringIdentity());
     }
-  }
-
-  @Override
-  protected String getToStringIdentity() {
-    return id;
   }
 
   // event subscription support //////////////////////////////////////////////

@@ -1830,6 +1830,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public String getRootProcessInstanceIdRaw() {
     return rootProcessInstanceId;
   }

@@ -613,6 +613,10 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
+  /**
+   * @deprecated use {@link #unlock()} instead
+   */
+  @Deprecated(forRemoval = true, since = "2.2")
   public void resetLock() {
     unlock();
   }

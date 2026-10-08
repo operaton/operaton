@@ -30,7 +30,7 @@ public final class EngineUtil {
   }
 
   /**
-   * Look up the process engine from the {@link ProcessEngineProvider}. If engineName is null, the default engine is returned.
+   * Look up the process engine from the {@link ProcessEngineProvider}. If engineName is {@code null}, the default engine is returned.
    * @param engineName
    * @return
    */

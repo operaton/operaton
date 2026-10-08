@@ -211,7 +211,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
   }
 
   /**
-   * May not return null
+   * May not return {@code null}
    */
   protected String extractEngineName(String requestUrl) {
 

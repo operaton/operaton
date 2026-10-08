@@ -144,10 +144,10 @@ public class VariableValueDto {
   /**
    * Convert a map of VariableValueDto to a VariableMap
    *
-   * @param variables the map of VariableValueDtos. May be null.
+   * @param variables the map of VariableValueDtos. May be {@code null}.
    * @param processEngine the process engine
    * @param objectMapper the object mapper
-   * @return the VariableMap. Never null.
+   * @return the VariableMap. Never {@code null}.
    */
   public static VariableMap toMap(Map<String, VariableValueDto> variables, ProcessEngine processEngine, ObjectMapper objectMapper) {
     if(variables == null) {

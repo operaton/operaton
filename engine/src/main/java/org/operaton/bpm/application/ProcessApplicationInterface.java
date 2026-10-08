@@ -209,7 +209,7 @@ public interface ProcessApplicationInterface {
    *
    * <p>If this method returns 'null', the process application is not notified about execution events.</p>
    *
-   * @return an {@link ExecutionListener} or null.
+   * @return an {@link ExecutionListener} or {@code null}.
    */
   @Nullable ExecutionListener getExecutionListener();
 
@@ -219,7 +219,7 @@ public interface ProcessApplicationInterface {
    *
    * <p>If this method returns 'null', the process application is not notified about Task events.</p>
    *
-   * @return a {@link TaskListener} or null.
+   * @return a {@link TaskListener} or {@code null}.
    */
   @Nullable TaskListener getTaskListener();
 

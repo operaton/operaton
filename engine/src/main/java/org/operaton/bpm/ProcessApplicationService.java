@@ -40,7 +40,7 @@ public interface ProcessApplicationService {
    *
    * @param processApplicationName
    *
-   * @return the {@link ProcessApplicationInfo} object or null if no such process application is deployed.
+   * @return the {@link ProcessApplicationInfo} object or {@code null} if no such process application is deployed.
    */
   @Nullable ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName);
 

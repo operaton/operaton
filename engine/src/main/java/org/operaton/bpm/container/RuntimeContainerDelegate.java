@@ -84,7 +84,7 @@ public @NullMarked interface RuntimeContainerDelegate {
   ExecutorService getExecutorService();
 
   /**
-   * @return a reference to the process application with the given name if deployed; null otherwise
+   * @return a reference to the process application with the given name if deployed; {@code null} otherwise
    */
   @Nullable ProcessApplicationReference getDeployedProcessApplication(String name);
 

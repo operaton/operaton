@@ -24,7 +24,7 @@ import java.util.Map;
 public interface DmnEvaluatedDecisionRule {
 
   /**
-   * @return the id of the decision rule or null if not set
+   * @return the id of the decision rule or {@code null} if not set
    */
   String getId();
 

@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.spring.components.aop.util.MetaAnnotationMatching
  * <p>
  * Advised methods can declare a return
  * type of {@link org.operaton.bpm.engine.runtime.ProcessInstance} and then subsequently
- * return null. The real return ProcessInstance value will be given by the aspect.
+ * return {@code null}. The real return ProcessInstance value will be given by the aspect.
  *
  * @author Josh Long
  */

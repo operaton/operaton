@@ -752,7 +752,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   }
 
   /**
-   * Return the pageSize. Returns null if pagination is disabled.
+   * Return the pageSize. Returns {@code null} if pagination is disabled.
    *
    * @return the pageSize
    */

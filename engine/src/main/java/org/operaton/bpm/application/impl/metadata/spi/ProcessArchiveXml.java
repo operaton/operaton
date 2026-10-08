@@ -105,7 +105,7 @@ public interface ProcessArchiveXml {
   String PROP_ADDITIONAL_RESOURCE_SUFFIXES_SEPARATOR = ",";
 
   /**
-   * @return the name of the process archive. Must not be null.
+   * @return the name of the process archive. Must not be {@code null}.
    */
   String getName();
 
@@ -115,7 +115,7 @@ public interface ProcessArchiveXml {
   String getTenantId();
 
   /**
-   * @return the name of the process engine which the deployment should be made to. If null, the "default engine" is used.
+   * @return the name of the process engine which the deployment should be made to. If {@code null}, the "default engine" is used.
    */
   String getProcessEngineName();
 

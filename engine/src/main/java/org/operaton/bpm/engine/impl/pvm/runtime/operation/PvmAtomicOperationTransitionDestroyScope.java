@@ -125,7 +125,7 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
                                                   int i,
                                                   PvmExecutionImpl scopeExecution,
                                                   List<OutgoingExecution> outgoingExecutions) {
-    PvmExecutionImpl concurrentExecution = null;
+    PvmExecutionImpl concurrentExecution;
     if (i == 0) {
       concurrentExecution = propagatingExecution;
     }

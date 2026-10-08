@@ -104,7 +104,7 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
     // load all deployment descriptor files using the classloader of the process application
     for (String deploymentDescriptor : deploymentDescriptors) {
 
-      Enumeration<URL> processesXmlFileLocations = null;
+      Enumeration<URL> processesXmlFileLocations;
       try {
         processesXmlFileLocations = processApplicationClassloader.getResources(deploymentDescriptor);
       } catch (IOException e) {

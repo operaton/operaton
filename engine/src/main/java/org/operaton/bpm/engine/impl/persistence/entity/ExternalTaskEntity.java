@@ -427,7 +427,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   public void bpmnError(String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables) {
     ensureActive();
     ActivityExecution activityExecution = getExecution();
-    BpmnError bpmnError = null;
+    BpmnError bpmnError;
     if (errorMessage != null) {
       bpmnError = new BpmnError(errorCode, errorMessage);
     } else {

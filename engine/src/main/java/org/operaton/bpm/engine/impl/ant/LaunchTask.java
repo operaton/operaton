@@ -46,7 +46,7 @@ public class LaunchTask extends Task {
       throw new BuildException("script attribute is required with the launch task");
     }
 
-    String[] cmd = null;
+    String[] cmd;
     String executable = getExecutable();
     if (args!=null) {
       List<String> pieces = new ArrayList<>();

@@ -79,7 +79,7 @@ public @NullMarked class JsonQueryOrderingPropertyConverter implements JsonObjec
       relation = JsonUtil.getString(jsonObject, RELATION);
     }
 
-    QueryOrderingProperty property = null;
+    QueryOrderingProperty property;
     if (QueryOrderingProperty.RELATION_VARIABLE.equals(relation)) {
       property = new VariableOrderProperty();
     }

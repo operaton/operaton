@@ -82,7 +82,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
   public URL checkValidBpmPlatformXmlResourceLocation(String url) {
     url = autoCompleteUrl(url);
 
-    URL fileLocation = null;
+    URL fileLocation;
 
     try {
       fileLocation = checkValidUrlLocation(url);

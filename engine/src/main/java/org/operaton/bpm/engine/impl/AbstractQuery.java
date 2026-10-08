@@ -354,7 +354,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   @SuppressWarnings("unchecked")
   public List<String> listIds() {
     this.resultType = ResultType.LIST_IDS;
-    List<String> ids = null;
+    List<String> ids;
     if (commandExecutor != null) {
       ids = (List<String>) commandExecutor.execute(this);
     } else {
@@ -371,7 +371,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   @SuppressWarnings("unchecked")
   public List<ImmutablePair<String, String>> listDeploymentIdMappings() {
     this.resultType = ResultType.LIST_DEPLOYMENT_ID_MAPPINGS;
-    List<ImmutablePair<String, String>> ids = null;
+    List<ImmutablePair<String, String>> ids;
     if (commandExecutor != null) {
       ids = (List<ImmutablePair<String, String>>) commandExecutor.execute(this);
     } else {

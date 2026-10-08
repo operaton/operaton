@@ -237,7 +237,7 @@ public class TableDataManager extends AbstractManager {
 
   public String getTableName(Class<?> entityClass, boolean withPrefix) {
     String databaseTablePrefix = getDbSqlSession().getDbSqlSessionFactory().getDatabaseTablePrefix();
-    String tableName = null;
+    String tableName;
 
     if (DbEntity.class.isAssignableFrom(entityClass)) {
       tableName = PERSISTENT_OBJECT_TO_TABLE_NAME_MAP.get(entityClass);

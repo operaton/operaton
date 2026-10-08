@@ -58,7 +58,7 @@ public class ActivityExecutionTreeMapping {
   }
 
   public ExecutionEntity getExecution(ActivityInstance activityInstance) {
-    ScopeImpl scope = null;
+    ScopeImpl scope;
 
     if (activityInstance.getId().equals(activityInstance.getProcessInstanceId())) {
       scope = processDefinition;

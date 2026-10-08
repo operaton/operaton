@@ -2401,7 +2401,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initIdGenerator() {
     if (idGenerator == null) {
-      CommandExecutor idGeneratorCommandExecutor = null;
+      CommandExecutor idGeneratorCommandExecutor;
       if (idGeneratorDataSource != null) {
         ProcessEngineConfigurationImpl processEngineConfiguration = new StandaloneProcessEngineConfiguration();
         processEngineConfiguration.setDataSource(idGeneratorDataSource);

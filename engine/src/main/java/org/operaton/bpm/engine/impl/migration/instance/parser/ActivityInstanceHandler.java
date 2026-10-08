@@ -40,10 +40,10 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
 
   @Override
   public void handle(MigratingInstanceParseContext parseContext, ActivityInstance element) {
-    MigratingActivityInstance migratingInstance = null;
+    MigratingActivityInstance migratingInstance;
 
     MigrationInstruction applyingInstruction = parseContext.getInstructionFor(element.getActivityId());
-    ScopeImpl sourceScope = null;
+    ScopeImpl sourceScope;
     ScopeImpl targetScope = null;
     ExecutionEntity representativeExecution = parseContext.getMapping().getExecution(element);
 

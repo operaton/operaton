@@ -108,8 +108,8 @@ public class ExceptionCodeInterceptor extends CommandInterceptor {
   protected Integer provideCode(ProcessEngineException pex, int initialCode) {
     SQLException sqlException = ExceptionUtil.unwrapException(pex);
 
-    Supplier<Integer> builtinSupplier = null;
-    Supplier<Integer> customSupplier = null;
+    Supplier<Integer> builtinSupplier;
+    Supplier<Integer> customSupplier;
     if (sqlException != null) {
       builtinSupplier = () -> builtinExceptionCodeProvider.provideCode(sqlException);
       customSupplier = () -> customExceptionCodeProvider.provideCode(sqlException);

@@ -1954,7 +1954,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     BpmnModelInstance bpmnModelInstance = getBpmnModelInstance();
     if (bpmnModelInstance != null) {
 
-      ModelElementInstance modelElementInstance = null;
+      ModelElementInstance modelElementInstance;
       if (ExecutionListener.EVENTNAME_TAKE.equals(eventName)) {
         modelElementInstance = bpmnModelInstance.getModelElementById(transition.getId());
       } else {

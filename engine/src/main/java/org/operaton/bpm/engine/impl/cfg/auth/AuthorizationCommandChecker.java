@@ -812,7 +812,7 @@ public @NullMarked class AuthorizationCommandChecker implements CommandChecker {
       String category = entry.getCategory();
       String processDefinitionKey = entry.getProcessDefinitionKey();
       if (category != null || processDefinitionKey != null) {
-        CompositePermissionCheck permissionCheck = null;
+        CompositePermissionCheck permissionCheck;
         if (category == null) {
           // case (3)
           permissionCheck = new PermissionCheckBuilder()

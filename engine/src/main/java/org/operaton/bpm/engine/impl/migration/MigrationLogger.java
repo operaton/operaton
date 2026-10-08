@@ -117,7 +117,7 @@ public class MigrationLogger extends ProcessEngineLogger {
 
   public ProcessEngineException cannotMigrateInstanceBetweenTenants(String processInstanceId, @Nullable String sourceTenantId, String targetTenantId) {
 
-    String detailMessage = null;
+    String detailMessage;
     if (sourceTenantId != null) {
       detailMessage = exceptionMessage(
           "010",

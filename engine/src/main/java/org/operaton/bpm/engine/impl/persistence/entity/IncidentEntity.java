@@ -195,7 +195,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
 
     if(execution != null) {
       // Extract possible super execution of the assigned execution
-      ExecutionEntity superExecution = null;
+      ExecutionEntity superExecution;
       if (execution.getId().equals(execution.getProcessInstanceId())) {
         superExecution = execution.getSuperExecution();
       } else {

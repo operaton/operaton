@@ -578,7 +578,7 @@ public abstract @NullMarked class DbSqlSession extends AbstractPersistenceSessio
 
   public boolean isTablePresent(String tableName) {
     tableName = prependDatabaseTablePrefix(tableName);
-    Connection connection = null;
+    Connection connection;
     try {
       connection = ExceptionUtil.doWithExceptionWrapper(() -> sqlSession.getConnection());
       DatabaseMetaData databaseMetaData = connection.getMetaData();

@@ -875,7 +875,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       flowScope = targetTransition.getSource().getFlowScope();
     }
 
-    PvmExecutionImpl propagatingExecution = null;
+    PvmExecutionImpl propagatingExecution;
     if (flowScope != null && flowScope.getActivityBehavior() instanceof ModificationObserverBehavior flowScopeBehavior) {
       propagatingExecution = (PvmExecutionImpl) flowScopeBehavior.createInnerInstance(this);
     } else {
@@ -1413,7 +1413,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   // scopes ///////////////////////////////////////////////////////////////////
 
   protected ScopeImpl getScopeActivity() {
-    ScopeImpl scope = null;
+    ScopeImpl scope;
     // this if condition is important during process instance startup
     // where the activity of the process instance execution may not be aligned
     // with the execution tree

@@ -91,7 +91,7 @@ public @NullMarked class ActivityExecutionHierarchyWalker extends SingleReferenc
   }
 
   protected static PvmScope getCurrentFlowScope(ActivityExecution execution) {
-    ScopeImpl scope = null;
+    ScopeImpl scope;
     if(execution.getTransition() != null) {
       scope = execution.getTransition().getDestination().getFlowScope();
     }

@@ -75,7 +75,7 @@ public class JsonLegacyQueryOrderingPropertyConverter {
 
       String[] propertyParts = propertyPart.split("\\.");
 
-      String property = null;
+      String property;
       if (propertyParts.length == 1) {
         property = propertyParts[0];
       } else if (propertyParts.length == 2) {

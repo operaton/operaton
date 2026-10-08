@@ -113,7 +113,7 @@ public class TimerEntity extends JobEntity {
   }
 
   protected String parseExpression(CommandContext commandContext) {
-    String expressionValue = null;
+    String expressionValue;
     String expression = jobDefinition.getJobConfiguration().substring(CYCLE_EXPRESSION_START_TYPE_1.length() - 1);
     try {
       expressionValue = commandContext.getProcessEngineConfiguration()

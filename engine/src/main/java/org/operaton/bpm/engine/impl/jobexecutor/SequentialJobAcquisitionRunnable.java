@@ -159,7 +159,7 @@ public class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable {
 
     LOG.jobsToAcquire(currentProcessEngine.getName(), numJobsToAcquire);
 
-    AcquiredJobs acquiredJobs = null;
+    AcquiredJobs acquiredJobs;
 
     if (numJobsToAcquire > 0) {
       jobExecutor.logAcquisitionAttempt(currentProcessEngine);

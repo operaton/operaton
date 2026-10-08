@@ -405,7 +405,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
       VariableMap variableMap = Variables.fromMap(variables);
       CaseDefinition caseDefinition = (CaseDefinition) getCaseDefinition();
 
-      TenantIdProviderCaseInstanceContext ctx = null;
+      TenantIdProviderCaseInstanceContext ctx;
 
       if (superExecutionId != null) {
         ctx = new TenantIdProviderCaseInstanceContext(caseDefinition, variableMap, getSuperExecution());

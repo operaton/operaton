@@ -54,7 +54,8 @@ class ResultMap:
     entity: str
     table: Optional[str] = None
     columns: dict = field(default_factory=dict)
-    constructor_columns: set = field(default_factory=set)
+    # {COLUMN: constructor parameter name or None}, in declaration order
+    constructor_columns: dict = field(default_factory=dict)
     reference_count: int = 0
 
 
@@ -135,8 +136,13 @@ def parse_result_maps(path):
 
         constructor = re.search(r'<constructor\b(.*?)</constructor>', body, re.S)
         if constructor:
-            for arg in re.finditer(r'column="([^"]+)"', constructor.group(1)):
-                result_map.constructor_columns.add(arg.group(1).upper())
+            for arg in re.finditer(r'<(?:idArg|arg)\b([^>]*)>', constructor.group(1)):
+                column_match = re.search(r'column="([^"]+)"', arg.group(1))
+                if not column_match:
+                    continue
+                name_match = re.search(r'name="([^"]+)"', arg.group(1))
+                result_map.constructor_columns[column_match.group(1).upper()] = (
+                    name_match.group(1) if name_match else None)
 
         outside = re.sub(r'<constructor\b.*?</constructor>', '', body, flags=re.S)
         outside = re.sub(r'<discriminator\b.*?</discriminator>', '',
@@ -181,28 +187,36 @@ def evidence_for(root, entity_simple_name):
         return []
     index = ddl_index(root)
     relaxed = upgrade_relaxations(root)
+    table = result_map.table
+
+    def ddl_evidence(column):
+        known = table and column_is_known(index, table, column)
+        count = notnull_dialect_count(index, table, column) if known else 0
+        flags = [] if known else ['PROJECTION']
+        if result_map.reference_count > 1:
+            flags.append('REUSED_RESULTMAP')
+        if (table, column) in relaxed:
+            flags.append('UPGRADE_RELAXED')
+        return count, flags
+
     rows = []
+    # Constructor arguments have no setter, so only the DDL decides.
+    for column, name in result_map.constructor_columns.items():
+        count, flags = ddl_evidence(column)
+        flags.insert(0, 'CONSTRUCTOR')
+        decision = ('CONSTRUCTOR_NONNULL'
+                    if count == 7 and 'UPGRADE_RELAXED' not in flags
+                    else 'NULLABLE')
+        rows.append((entity_simple_name, name or f'<constructor:{column}>',
+                     column, table or '', f'{count}/7', 0, '|'.join(flags),
+                     decision))
     for prop, column in sorted(result_map.columns.items()):
-        table = result_map.table
-        flags = []
-        if column in result_map.constructor_columns:
-            decision = 'CONSTRUCTOR_NONNULL'
-            count = 7
-            callers = 0
-        else:
-            known = table and column_is_known(index, table, column)
-            count = notnull_dialect_count(index, table, column) if known else 0
-            if not known:
-                flags.append('PROJECTION')
-            callers = count_null_callers(root, prop)
-            if result_map.reference_count > 1:
-                flags.append('REUSED_RESULTMAP')
-            if (table, column) in relaxed:
-                flags.append('UPGRADE_RELAXED')
-            decision = ('SETTER_NONNULL'
-                        if count == 7 and callers == 0
-                        and 'UPGRADE_RELAXED' not in flags
-                        else 'NULLABLE')
+        count, flags = ddl_evidence(column)
+        callers = count_null_callers(root, prop)
+        decision = ('SETTER_NONNULL'
+                    if count == 7 and callers == 0
+                    and 'UPGRADE_RELAXED' not in flags
+                    else 'NULLABLE')
         rows.append((entity_simple_name, prop, column, table or '',
                      f'{count}/7', callers, '|'.join(flags), decision))
     return rows

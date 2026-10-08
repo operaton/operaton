@@ -93,6 +93,16 @@ class ResultMapTest(unittest.TestCase):
         self.assertEqual(
             sorted(maps[key].constructor_columns), ['INTERVAL_', 'NAME_', 'REPORTER_'])
 
+    def test_constructor_args_are_reported_with_ddl_evidence(self):
+        # Constructor-mapped columns have no setter; their decision must
+        # come from the DDL. REPORTER_ is nullable in every dialect.
+        rows = {row[2]: row
+                for row in evidence.evidence_for(ROOT, 'MetricIntervalEntity')}
+        self.assertIn('CONSTRUCTOR', rows['REPORTER_'][6].split('|'))
+        self.assertEqual(rows['REPORTER_'][4], '0/7')
+        self.assertEqual(rows['REPORTER_'][7], 'NULLABLE')
+        self.assertEqual(rows['NAME_'][7], 'CONSTRUCTOR_NONNULL')
+
     def test_reused_result_map_is_flagged(self):
         # jobResultMap is referenced many times in Job.xml; a select that
         # omits a NOT NULL column would feed null into a non-null setter.

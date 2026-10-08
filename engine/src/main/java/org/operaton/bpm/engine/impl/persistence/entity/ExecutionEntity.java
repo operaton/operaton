@@ -737,7 +737,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   // bussiness key ////////////////////////////////////////////////////////////
 
   @Override
-  public String getProcessBusinessKey() {
+  public @Nullable String getProcessBusinessKey() {
     return getProcessInstance().getBusinessKey();
   }
 

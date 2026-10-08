@@ -1854,7 +1854,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     this.isEventScope = isEventScope;
   }
 
-  public ScopeInstantiationContext getScopeInstantiationContext() {
+  public @Nullable ScopeInstantiationContext getScopeInstantiationContext() {
     return scopeInstantiationContext;
   }
 

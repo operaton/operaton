@@ -110,6 +110,9 @@ public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions
       .add(deployedArtifact);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public Map<Class<?>, List> getDeployedArtifacts() {
     return deployedArtifacts;
   }

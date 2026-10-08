@@ -314,11 +314,21 @@ public class EventSubscriptionManager extends AbstractManager {
   public List<EventSubscriptionEntity> findConditionalStartEventSubscription() {
     ListQueryParameterObject parameter = new ListQueryParameterObject();
 
-    configurParameterObject(parameter);
+    configureParameterObject(parameter);
     return getDbEntityManager().selectList("selectConditionalStartEventSubscription", parameter);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   protected void configurParameterObject(ListQueryParameterObject parameter) {
+    configureParameterObject(parameter);
+  }
+
+  /**
+   * @since 2.2
+   */
+  protected void configureParameterObject(ListQueryParameterObject parameter) {
     getAuthorizationManager().configureConditionalEventSubscriptionQuery(parameter);
     getTenantManager().configureQuery(parameter);
   }

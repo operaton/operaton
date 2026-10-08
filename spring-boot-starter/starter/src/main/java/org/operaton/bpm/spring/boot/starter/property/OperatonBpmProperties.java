@@ -55,7 +55,7 @@ public class OperatonBpmProperties {
       .map(suffix -> "%s**/*.%s".formatted(CLASSPATH_ALL_URL_PREFIX, suffix))
       .collect(Collectors.toCollection(HashSet::new));
 
-    return patterns.toArray(new String[patterns.size()]);
+    return patterns.toArray(String[]::new);
   }
 
   static StringJoiner joinOn(final Class<?> clazz) {

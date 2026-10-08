@@ -328,7 +328,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     // in the other case:
 
-    // ensure the the Task is not suspended
+    // ensure the Task is not suspended
     ensureTaskActive();
 
     // trigger TaskListener.complete event
@@ -344,11 +344,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       .getTaskManager()
       .deleteTask(this, TaskEntity.DELETE_REASON_COMPLETED, false, skipCustomListeners);
 
-      // if the task is associated with a
-      // execution (and not a case execution)
-      // and it's still in the same activity
-      // then call signal an the associated
-      // execution.
+      // if the task is associated with an execution (and not a case execution) and it's still in the same activity
+      // then call signal on the associated execution.
       if (executionId != null) {
         ExecutionEntity exec = getExecution();
         exec.removeTask(this);
@@ -358,7 +355,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   public void caseExecutionCompleted() {
-    // ensure the the Task is not suspended
+    // ensure the Task is not suspended
     ensureTaskActive();
 
     // trigger TaskListener.complete event for a case execution associated task
@@ -1138,10 +1135,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
    * Tracks a property change. Therefore the original and new value are stored in a map.
    * It tracks multiple changes and if a property finally is changed back to the original
    * value, then the change is removed.
-   *
-   * @param propertyName
-   * @param orgValue
-   * @param newValue
    */
   protected void propertyChanged(String propertyName, Object orgValue, Object newValue) {
     if (propertyChanges.containsKey(propertyName)) { // update an existing change to save the original value

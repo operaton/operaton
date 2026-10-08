@@ -77,8 +77,8 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   protected transient boolean ignoreAsync;
 
   /**
-   * true for process instances in the initial phase. Currently
-   * this controls that historic variable updates created during this phase receive
+   * true for process instances in the initial phase.
+   * Currently, this controls that historic variable updates created during this phase receive
    * the <code>initial</code> flag (see {@link HistoricVariableUpdateEventEntity#isInitial}).
    */
   protected transient boolean isStarting;
@@ -349,7 +349,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
         performOperation(PvmAtomicOperation.FIRE_ACTIVITY_END);
       }
       // set activity instance state back to 'default'
-      // -> execution will be reused for executing more activities and we want the state to
+      // -> execution will be reused for executing more activities, and we want the state to
       // be default initially.
       activityInstanceState = ActivityInstanceState.DEFAULT.getStateCode();
     }
@@ -1015,47 +1015,31 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       recyclableExecutions = new ArrayList<>();
     }
 
-    // if recyclable executions size is greater
-    // than 1, then the executions are joined and
-    // the activity is left with 'this' execution,
-    // if it is not not the last concurrent execution.
-    // therefore it is necessary to remove the local
-    // variables (event if it is the last concurrent
-    // execution).
+    // if recyclable executions size is greater than 1, then the executions are joined and the activity is left with 'this'
+    // execution, if it is not the last concurrent execution.
+    // therefore it is necessary to remove the local variables (even if it is the last concurrent execution).
     if (recyclableExecutions.size() > 1) {
       removeVariablesLocalInternal();
     }
 
-    // mark all recyclable executions as ended
-    // if the list of recyclable executions also
-    // contains 'this' execution, then 'this' execution
-    // is also marked as ended. (if 'this' execution is
-    // pruned, then the local variables are not copied
-    // to the parent execution)
-    // this is a workaround to not delete all recyclable
-    // executions and create a new execution which leaves
-    // the activity.
+    // mark all recyclable executions as ended if the list of recyclable executions also contains 'this' execution, then 'this'
+    // execution is also marked as ended.
+    // (if 'this' execution is pruned, then the local variables are not copied to the parent execution)
+    // this is a workaround to not delete all recyclable executions and create a new execution which leaves the activity.
     for (ActivityExecution execution : recyclableExecutions) {
       execution.setEnded(true);
     }
 
-    // remove 'this' from recyclable executions to
-    // leave the activity with 'this' execution
-    // (when 'this' execution is the last concurrent
-    // execution, then 'this' execution will be pruned,
-    // and the activity is left with the scope
-    // execution)
+    // remove 'this' from recyclable executions to leave the activity with 'this' execution
+    // (when 'this' execution is the last concurrent execution, then 'this' execution will be pruned,
+    // and the activity is left with the scope execution)
     recyclableExecutions.remove(this);
 
     // End all other executions synchronously.
-    // This ensures a proper execution tree in case
-    // the activity is marked as 'async-after'.
-    // Otherwise, ending the other executions as well
-    // as the next logical operation are executed
-    // asynchronously. The order of those operations can
-    // not be guaranteed anymore. This can lead to executions
-    // getting stuck in case they rely on ending the other
-    // executions first.
+    // This ensures a proper execution tree in case the activity is marked as 'async-after'.
+    // Otherwise, ending the other executions as well as the next logical operation are executed asynchronously.
+    // The order of those operations can not be guaranteed anymore.
+    // This can lead to executions getting stuck in case they rely on ending the other executions first.
     for (ActivityExecution execution : recyclableExecutions) {
       execution.setIgnoreAsync(true);
       execution.end(transitions.isEmpty());
@@ -1624,7 +1608,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       }
       return result;
     } else {
-      // Wounderful! The trees are out of sync. This is due to legacy behavior
+      // Wonderful! The trees are out of sync. This is due to legacy behavior
       return LegacyBehavior.createActivityExecutionMapping(scopeExecutions, scopes);
     }
   }
@@ -1974,7 +1958,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   /**
-   * Cleares the current delayed variable events.
+   * Clears the current delayed variable events.
    */
   public void clearDelayedEvents() {
     if (isProcessInstanceExecution()) {
@@ -2022,7 +2006,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   /**
-   * Executes the given depending operations with the given execution.
+   * Executes the given dependent operations with the given execution.
    * The execution state will be checked with the help of the activity instance id and activity id of the execution before and after
    * the dispatching callback call. If the id's are not changed the
    * continuation callback is called.
@@ -2074,9 +2058,9 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
     //For each delayed variable event we have to check if the delayed event can be dispatched,
     //the check will be done with the help of the activity id and activity instance id.
-    //That means it will be checked if the dispatching changed the execution tree in a way that we can't dispatch the
+    //That means it will be checked if the dispatching changed the execution tree in a way that we can't dispatch
     //the other delayed variable events. We have to check the target scope with the last activity id and activity instance id
-    //and also the replace pointer if it exist. Because on concurrency the replace pointer will be set on which we have
+    //and also the replace pointer if it exists. Because on concurrency the replace pointer will be set on which we have
     //to check the latest state.
     for (DelayedVariableEvent event : delayedVariableEvents) {
       PvmExecutionImpl targetScope = event.getTargetScope();
@@ -2107,7 +2091,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   /**
    * Dispatches the delayed variable event, if the target scope and replaced by scope (if target scope was replaced) have the
-   * same activity Id's and activity instance id's.
+   * same activity id's and activity instance id's.
    *
    * @param targetScope          the target scope on which the event should be dispatched
    * @param replacedBy           the replaced by pointer which should have the same state
@@ -2148,7 +2132,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * That means if the current activity is not a leaf in the activity tree OR
    * it is a leaf but not a scope OR it is a leaf, a scope
    * and the execution is in state DEFAULT, which means not in state
-   * Starting, Execute or Ending. For this states it is
+   * Starting, Execute or Ending. For these states it is
    * prohibited to trigger conditional events, otherwise unexpected behavior can appear.
    *
    * @return true if the execution is on a dispatchable state, false otherwise
@@ -2168,7 +2152,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   /**
    * Compares the given activity instance id's and activity id's to check if the execution is on the same
    * activity as before an operation was executed. The activity instance id's can be null on transitions.
-   * In this case the activity Id's have to be equal, otherwise the execution changed.
+   * In this case the activity id's have to be equal, otherwise the execution changed.
    *
    * @param lastActivityInstanceId    the last activity instance id
    * @param lastActivityId            the last activity id
@@ -2240,8 +2224,6 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   /**
    * Resolves an incident with given id.
-   *
-   * @param incidentId
    */
   @Override
   public void resolveIncident(final String incidentId) {

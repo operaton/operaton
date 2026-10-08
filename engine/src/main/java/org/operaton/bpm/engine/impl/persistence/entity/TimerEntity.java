@@ -84,7 +84,7 @@ public class TimerEntity extends JobEntity {
       TimerJobConfiguration configuration = (TimerJobConfiguration) getJobHandlerConfiguration();
       if (repeat != null && !configuration.isFollowUpJobCreated()) {
         // this timer is a repeating timer and
-        // a follow up timer job has not been scheduled yet
+        // a follow-up timer job has not been scheduled yet
 
         // when reevaluateTimeCycleWhenDue is enabled and cycle is an expression
         if (isReevaluateTimeCycleWhenDue(commandContext) && isCycleExpression()) {
@@ -96,9 +96,9 @@ public class TimerEntity extends JobEntity {
         Date newDueDate = calculateNewDueDate();
 
         if (newDueDate != null) {
-          // the listener is added to the transaction as SYNC on ROLLABCK,
+          // the listener is added to the transaction as SYNC on ROLLBACK,
           // when it is necessary to schedule a new timer job invocation.
-          // If the transaction does not rollback, it is ignored.
+          // If the transaction does not roll back, it is ignored.
           ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
           CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequiresNew();
           RepeatingFailedJobListener listener = createRepeatingFailedJobListener(commandExecutor);

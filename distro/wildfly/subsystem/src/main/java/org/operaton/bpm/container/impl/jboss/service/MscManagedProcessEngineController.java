@@ -193,7 +193,7 @@ public class MscManagedProcessEngineController extends MscManagedProcessEngine {
 
     for (ProcessEnginePluginXml pluginXml : pluginConfigurations) {
       // create plugin instance
-      ProcessEnginePlugin plugin = null;
+      ProcessEnginePlugin plugin;
       String pluginClassName = pluginXml.getPluginClass();
       try {
         plugin = (ProcessEnginePlugin) createInstance(pluginClassName);

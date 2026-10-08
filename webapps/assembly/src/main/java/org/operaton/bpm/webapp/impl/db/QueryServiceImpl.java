@@ -60,10 +60,7 @@ public @NullMarked class QueryServiceImpl implements QueryService {
     QuerySessionFactory querySessionFactory =
       (QuerySessionFactory) commandContext.getProcessEngineConfiguration();
 
-    ProcessEngineConfigurationImpl processEngineConfiguration;
-    processEngineConfiguration = querySessionFactory.getWrappedConfiguration();
-
-    return processEngineConfiguration;
+    return querySessionFactory.getWrappedConfiguration();
   }
 
   protected void configureAuthCheck(ListQueryParameterObject parameter,

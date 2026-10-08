@@ -203,6 +203,7 @@ public abstract @NullMarked class AbstractVariableScope implements Serializable,
     return getVariableStore().getVariable(name);
   }
 
+  @SuppressWarnings("unused")
   public List<CoreVariableInstance> getVariableInstancesLocal() {
     return getVariableStore().getVariables();
   }

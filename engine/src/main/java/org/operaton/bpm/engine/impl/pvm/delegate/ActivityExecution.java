@@ -101,6 +101,7 @@ public interface ActivityExecution extends DelegateExecution {
    *
    * @param caseDefinition The {@link CmmnCaseDefinition} of the sub case instance.
    */
+  @SuppressWarnings("unused")
   CmmnCaseInstance createSubCaseInstance(CmmnCaseDefinition caseDefinition);
 
   /**

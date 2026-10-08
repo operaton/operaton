@@ -72,6 +72,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   protected String failedActivityId;
   protected String annotation;
 
+  @SuppressWarnings("UnusedReturnValue")
   public List<IncidentEntity> createRecursiveIncidents() {
     List<IncidentEntity> createdIncidents = new ArrayList<>();
     createRecursiveIncidents(id, createdIncidents);

@@ -84,6 +84,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Falko Menge
  * @author Deivarayan Azhagappan
  */
+@SuppressWarnings({"unused","UnusedReturnValue"})
 public class TaskEntity extends AbstractVariableScope implements Task, DelegateTask, DbEntity, HasDbRevision, HasDbReferences, CommandContextListener, VariablesProvider<VariableInstanceEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -94,6 +95,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @SuppressWarnings("rawtypes")
   private static final VariableInstanceFactory VARIABLE_INSTANCE_FACTORY = new VariableInstanceEntityFactory();
 
+  @SuppressWarnings({"rawtypes", "unchecked"})
   protected static final List<VariableInstanceLifecycleListener<CoreVariableInstance>> DEFAULT_VARIABLE_LIFECYCLE_LISTENERS =
       List.of(
           (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
@@ -162,7 +164,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected boolean attachmentExists;
   protected boolean commentExists;
 
-  @SuppressWarnings({ "unchecked" })
   protected transient VariableStore<VariableInstanceEntity> variableStore
   = new VariableStore<>(this, new TaskEntityReferencer(this));
 
@@ -526,6 +527,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
+  @SuppressWarnings({ "unchecked" })
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
     return VARIABLE_INSTANCE_FACTORY;
   }
@@ -856,7 +858,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return taskIdentityLinkEntities;
   }
 
-  @SuppressWarnings("unchecked")
   public Map<String, Object> getActivityInstanceVariables() {
     if (execution != null) {
       return execution.getVariables();

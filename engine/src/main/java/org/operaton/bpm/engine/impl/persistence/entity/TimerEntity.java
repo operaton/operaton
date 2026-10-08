@@ -223,8 +223,9 @@ public class TimerEntity extends JobEntity {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public Object getPersistentState() {
-    Map<String, Object> persistentState = (HashMap) super.getPersistentState();
+    Map<String, Object> persistentState = (HashMap<String, Object>) super.getPersistentState();
     persistentState.put("repeat", repeat);
 
     return persistentState;

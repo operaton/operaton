@@ -37,7 +37,9 @@ import org.operaton.spin.scripting.SpinScriptEnv;
  * A JUnit5 {@link org.junit.jupiter.api.extension.Extension} to load and execute a script.
  * Executes a {@link org.operaton.spin.impl.test.ScriptEngine}.
  *
- * <p>Provides support for loading scripts and managing script variables.
+ * <p>
+ * Provides support for loading scripts and managing script variables.
+ * </p>
  */
 public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
 

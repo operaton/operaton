@@ -34,7 +34,9 @@ import java.lang.annotation.Target;
  *   }
  * </pre>
  *
+ * <p>
  * or in a list as the variables argument of the {@literal @}{@link Script} Annotation
+ * </p>
  *
  * <pre>
  *   {@literal @}Test

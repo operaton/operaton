@@ -121,7 +121,7 @@ public abstract class HistoricDetailDto {
   }
 
   public static HistoricDetailDto fromHistoricDetail(HistoricDetail historicDetail) {
-    HistoricDetailDto dto = null;
+    HistoricDetailDto dto;
 
     if (historicDetail instanceof HistoricFormField historicFormField) {
       dto = HistoricFormFieldDto.fromHistoricFormField(historicFormField);

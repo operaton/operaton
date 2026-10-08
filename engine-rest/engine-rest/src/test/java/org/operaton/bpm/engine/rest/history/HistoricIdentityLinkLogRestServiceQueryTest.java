@@ -133,7 +133,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = null;
+    InOrder inOrder;
 
     // assignerId
     inOrder = inOrder(mockedQuery);

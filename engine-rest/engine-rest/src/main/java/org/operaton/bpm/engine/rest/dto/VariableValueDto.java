@@ -248,7 +248,7 @@ public class VariableValueDto {
 
       dto.valueInfo = new HashMap<>();
       dto.valueInfo.put(FileValueType.VALUE_INFO_FILE_NAME, binaryDataFormPart.getFileName());
-      MimeType mimeType = null;
+      MimeType mimeType;
       try {
         mimeType = new MimeType(contentType);
       } catch (MimeTypeParseException e) {

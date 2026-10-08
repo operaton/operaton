@@ -134,10 +134,12 @@ class ParserSchemaTest {
    * restriction must make it fail instead, and specifically because access is denied, not
    * because the file is missing.
    *
-   * <p>Only the {@code accessExternalDTD} property name is asserted, not the DTD's system id:
+   * <p>
+   * Only the {@code accessExternalDTD} property name is asserted, not the DTD's system id:
    * the JDK-bundled Xerces version determines whether the system id is included in the message
    * (present on JDK 25, reported as an empty string on JDK 17/21), so asserting it would make
    * this test JDK-version-dependent.
+   * </p>
    */
   @Test
   void shouldDenyExternalDtdAccessWhenCompilingSchema() {

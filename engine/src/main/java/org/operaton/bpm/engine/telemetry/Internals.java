@@ -72,8 +72,10 @@ public interface Internals {
    *   <li>The number of executed decision instances.</li>
    *   <li>The number of executed decision elements.</li>
    * </ul>
+   * <p>
    * Retrieving the data through {@link ManagementService#getTelemetryData()} will
    * not reset the count.
+   * </p>
    */
   Map<String, Metric> getMetrics();
 

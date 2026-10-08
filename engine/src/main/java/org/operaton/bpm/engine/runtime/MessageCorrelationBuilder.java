@@ -196,7 +196,7 @@ public interface MessageCorrelationBuilder {
   /**
    * Executes the message correlation.
    *
-   * @see {@link #correlateWithResult()}
+   * @see #correlateWithResult()
    */
   void correlate();
 
@@ -233,7 +233,7 @@ public interface MessageCorrelationBuilder {
    * Executes the message correlation. If you do not need access to the process variables, use {@link #correlateWithResult()}
    * to avoid unnecessary variable access.
    *
-   * @see {@link #correlateWithResult()}
+   * @see #correlateWithResult()
    *
    * @param deserializeValues if false, returned {@link SerializableValue}s
    *   will not be deserialized (unless they are passed into this method as a
@@ -269,7 +269,7 @@ public interface MessageCorrelationBuilder {
   /**
    * Executes the message correlation for multiple messages.
    *
-   * @see {@link #correlateAllWithResult()}
+   * @see #correlateAllWithResult()
    */
   void correlateAll();
 
@@ -303,7 +303,7 @@ public interface MessageCorrelationBuilder {
    * Executes the message correlation. If you do not need access to the process variables, use {@link #correlateAllWithResult()}
    * to avoid unnecessary variable access.
    *
-   * @see {@link #correlateAllWithResult()}
+   * @see #correlateAllWithResult()
    *
    * @param deserializeValues if false, returned {@link SerializableValue}s
    *   will not be deserialized (unless they are passed into this method as a

@@ -66,7 +66,7 @@ public interface HistoryLevel {
 
   /** An unique name identifying the history level.
    * The name of the history level can be used when configuring the process engine.
-   * @see {@link ProcessEngineConfiguration#setHistory(String)}
+   * @see ProcessEngineConfiguration#setHistory(String)
    */
   String getName();
 

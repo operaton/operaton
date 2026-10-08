@@ -49,7 +49,7 @@ public @NullMarked interface ExternalTaskService {
    * @param maxTasks the maximum number of tasks to return
    * @param workerId the id of the worker to lock the tasks for
    * @return a builder to define and execute an external task fetching operation
-   * @see {@link ExternalTaskService#fetchAndLock(int, java.lang.String, boolean)}.
+   * @see #fetchAndLock(int, String, boolean)
    */
   ExternalTaskQueryBuilder fetchAndLock(int maxTasks, String workerId);
 

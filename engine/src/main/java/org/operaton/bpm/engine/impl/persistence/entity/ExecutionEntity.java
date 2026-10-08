@@ -211,8 +211,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   /**
    * persisted reference to the super execution of this execution
    *
-   * @see {@link #getSuperExecution()}
-   * @see <code>setSuperExecution(ExecutionEntity)</code>
+   * @see #getSuperExecution()
+   * @see #setSuperExecution(PvmExecutionImpl)
    */
   protected String superExecutionId;
 
@@ -226,8 +226,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   /**
    * persisted reference to the super case execution of this execution
    *
-   * @see {@link #getSuperCaseExecution()}
-   * @see <code>setSuperCaseExecution(ExecutionEntity)</code>
+   * @see #getSuperCaseExecution()
+   * @see #setSuperCaseExecution(CmmnExecution)
    */
   protected String superCaseExecutionId;
 

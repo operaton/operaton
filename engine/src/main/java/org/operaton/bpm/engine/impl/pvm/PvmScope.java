@@ -37,7 +37,7 @@ public interface PvmScope extends PvmProcessElement {
    * Note: the fact that this is a scope does not mean that it is also a
    * {@link #isSubProcessScope() sub process scope.}
    *
-   * @returns true if this activity is a scope
+   * @return true if this activity is a scope
    */
   boolean isScope();
 

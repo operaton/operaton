@@ -458,7 +458,7 @@ public interface IdentityService {
 
   /** Retrieves the picture for a given user.
    * @throws ProcessEngineException if the user doesn't exist.
-   * @returns null if the user doesn't have a picture. */
+   * @return null if the user doesn't have a picture. */
   @Nullable Picture getUserPicture(String userId);
 
   /** Deletes the picture for a given user. If the user does not have a picture or if the user doesn't exists the call is ignored.

@@ -74,7 +74,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
   /**
    * Override to add different / additional contexts.
    *
-   * @returns a list of {@link Scope}-types, which are used in the given order
+   * @return a list of {@link Scope}-types, which are used in the given order
    *          to resolve the broadest active context (@link
    *          #getBroadestActiveContext()})
    */

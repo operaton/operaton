@@ -28,10 +28,12 @@ import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 
 /**
- * <p>A command interceptor to catch {@link ProcessEngineException} errors and assign error codes.
+ * A command interceptor to catch {@link ProcessEngineException} errors and assign error codes.
  *
- * <p>The interceptor assigns an error code to the {@link ProcessEngineException}
+ * <p>
+ * The interceptor assigns an error code to the {@link ProcessEngineException}
  * based on the built-in or custom {@link ExceptionCodeProvider}.
+ * </p>
  */
 public class ExceptionCodeInterceptor extends CommandInterceptor {
 
@@ -62,12 +64,14 @@ public class ExceptionCodeInterceptor extends CommandInterceptor {
   }
 
   /**
-   * <p>Built-in code provider has precedence over custom code provider and initial code (assigned via delegation code).
+   * Built-in code provider has precedence over custom code provider and initial code (assigned via delegation code).
    * Custom and initial code is tried to be reset in case it violates the reserved code range.
    *
-   * <p>When {@code disableBuiltInExceptionCodeProvider} flag
+   * <p>
+   * When {@code disableBuiltInExceptionCodeProvider} flag
    * in {@link ProcessEngineConfigurationImpl} is configured to {@code true},
    * custom provider can override reserved codes.
+   * </p>
    */
   protected Integer provideCodeBySupplier(Supplier<Integer> builtinSupplier,
                                           Supplier<Integer> customSupplier,

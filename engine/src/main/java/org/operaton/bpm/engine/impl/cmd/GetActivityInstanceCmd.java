@@ -48,7 +48,7 @@ import org.operaton.commons.utils.CollectionUtil;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
- * <p>Creates an activity instance tree according to the following strategy:
+ * Creates an activity instance tree according to the following strategy:
  *
  * <ul>
  *   <li> Event scope executions are not considered at all

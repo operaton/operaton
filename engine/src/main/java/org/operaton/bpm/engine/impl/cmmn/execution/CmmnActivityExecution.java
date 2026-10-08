@@ -112,7 +112,7 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
   boolean isSuspending();
 
   /**
-   * <p>Returns the {@link CmmnActivity activity} which is associated with
+   * Returns the {@link CmmnActivity activity} which is associated with
    * <code>this</code> case execution.
    *
    * @return the associated {@link CmmnActivity activity}
@@ -237,21 +237,29 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
   void start();
 
   /**
-   * <p>Transition to {@link CaseExecutionState#COMPLETED} state.</p>
+   * Transition to {@link CaseExecutionState#COMPLETED} state.
    *
-   * <p><code>This</code> case execution must be in {@link CaseExecutionState#ACTIVE}
-   * state to be able to do this transition.</p>
+   * <p>
+   * <code>This</code> case execution must be in {@link CaseExecutionState#ACTIVE}
+   * state to be able to do this transition.
+   * </p>
    *
-   * <p>It is only possible to complete a case execution which is associated with a
-   * {@link Stage} or {@link Task}.</p>
+   * <p>
+   * It is only possible to complete a case execution which is associated with a
+   * {@link Stage} or {@link Task}.
+   * </p>
    *
-   * <p>If <code>this</code> case execution has a parent case execution, that parent
+   * <p>
+   * If <code>this</code> case execution has a parent case execution, that parent
    * case execution will be notified that <code>this</code> case execution has been
    * completed. This can lead to a completion of the parent case execution, for more
-   * details when the parent case execution can be completed see {@link #complete()}.</p>
+   * details when the parent case execution can be completed see {@link #complete()}.
+   * </p>
    *
-   * <p>In case of a {@link Stage} the completion can only be performed when the following
-   * criteria are fulfilled:<br>
+   * <p>
+   * In case of a {@link Stage} the completion can only be performed when the following
+   * criteria are fulfilled:
+   * </p>
    * <ul>
    *  <li>there are no children in the state {@link CaseExecutionState#ACTIVE} or {@link CaseExecutionState#NEW}</li>
    *  <li>if the property <code>autoComplete</code> of the associated {@link Stage} is set to <strong><code>true</code></strong>:
@@ -279,9 +287,10 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
    *    </ul>
    *  </li>
    * </ul>
-   * </p>
    *
-   * <p>For a {@link Task} instance, this means its purpose has been accomplished:<br>
+   * <p>
+   * For a {@link Task} instance, this means its purpose has been accomplished:
+   * </p>
    *  <ul>
    *    <li>{@link HumanTask} have been completed by human.</li>
    *    <li>{@link CaseTask} have launched a new {@link CaseInstance} and if output parameters
@@ -293,7 +302,6 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
    *        then the launched {@link ProcessInstance} has completed and returned the
    *        output parameters.</li>
    *  </ul>
-   * </p>
    *
    * @throws CaseIllegalStateTransitionException will be thrown, if <code>this</code> case execution
    *         is not {@link CaseExecutionState#ACTIVE} or when the case execution cannot be
@@ -304,21 +312,29 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
   void complete();
 
   /**
-   * <p>Transition to {@link CaseExecutionState#COMPLETED} state.</p>
+   * Transition to {@link CaseExecutionState#COMPLETED} state.
    *
-   * <p><code>This</code> case execution must be in {@link CaseExecutionState#ACTIVE}
-   * state to be able to do this transition.</p>
+   * <p>
+   * <code>This</code> case execution must be in {@link CaseExecutionState#ACTIVE}
+   * state to be able to do this transition.
+   * </p>
    *
-   * <p>It is only possible to complete a case execution manually which is associated with a
-   * {@link Stage} or {@link Task}.</p>
+   * <p>
+   * It is only possible to complete a case execution manually which is associated with a
+   * {@link Stage} or {@link Task}.
+   * </p>
    *
-   * <p>If <code>this</code> case execution has a parent case execution, that parent
+   * <p>
+   * If <code>this</code> case execution has a parent case execution, that parent
    * case execution will be notified that <code>this</code> case execution has been
    * completed. This can lead to a completion of the parent case execution, for more
-   * details when the parent case execution can be completed see {@link #complete()}.</p>
+   * details when the parent case execution can be completed see {@link #complete()}.
+   * </p>
    *
-   * <p>In case of a {@link Stage} the completion can only be performed when the following
-   * criteria are fulfilled:<br>
+   * <p>
+   * In case of a {@link Stage} the completion can only be performed when the following
+   * criteria are fulfilled:
+   * </p>
    * <ul>
    *  <li>there are no children in the state {@link CaseExecutionState#ACTIVE} or {@link CaseExecutionState#NEW}</li>
    *  <li>all required (<code>requiredRule</code> evaluates to <code>true</code>) children are in state
@@ -330,13 +346,13 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
    *    </ul>
    *  </li>
    * </ul>
-   * </p>
    *
-   * <p>For a {@link Task} instance, this means its purpose has been accomplished:<br>
+   * <p>
+   * For a {@link Task} instance, this means its purpose has been accomplished:
+   * </p>
    *  <ul>
    *    <li>{@link HumanTask} have been completed by human.</li>
    *  </ul>
-   * </p>
    *
    * @throws CaseIllegalStateTransitionException will be thrown, if <code>this</code> case execution
    *         is not {@link CaseExecutionState#ACTIVE} or when the case execution cannot be
@@ -449,10 +465,12 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
   void performParentTerminate();
 
   /**
-   * <p>Transition to {@link CaseExecutionState#TERMINATING_ON_EXIT} state.</p>
+   * Transition to {@link CaseExecutionState#TERMINATING_ON_EXIT} state.
    *
-   * <p><code>This</code> case execution must be in one of the following state to
+   * <p>
+   * <code>This</code> case execution must be in one of the following state to
    * be able to do this transition:
+   * </p>
    * <ul>
    *   <li>{@link CaseExecutionState#AVAILABLE},</li>
    *   <li>{@link CaseExecutionState#ENABLED},</li>
@@ -462,17 +480,23 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
    *   <li>{@link CaseExecutionState#FAILED}</li>
    * </ul>
    *
-   * <p>It is only possible to execute an exit on a case execution which is
-   * associated with a {@link Stage} or {@link Task}.</p>
+   * <p>
+   * It is only possible to execute an exit on a case execution which is
+   * associated with a {@link Stage} or {@link Task}.
+   * </p>
    *
-   * <p>Afterwards the method {@link #performExit()} must be called to complete
-   * the transition into the state {@link CaseExecutionState#TERMINATED}.</p>
+   * <p>
+   * Afterwards the method {@link #performExit()} must be called to complete
+   * the transition into the state {@link CaseExecutionState#TERMINATED}.
+   * </p>
    *
-   * <p>If this transition is triggered by a fulfilled exit criteria and if
+   * <p>
+   * If this transition is triggered by a fulfilled exit criteria and if
    * <code>this</code> case execution has a parent case execution, that parent
    * case execution will be notified that <code>this</code> case execution has been
    * terminated. This can lead to a completion of the parent case execution, for more
-   * details when the parent case execution can be completed see {@link #complete()}.</p>
+   * details when the parent case execution can be completed see {@link #complete()}.
+   * </p>
    *
    * @throws CaseIllegalStateTransitionException will be thrown, if <code>this</code> case execution
    *         is not in the expected state.
@@ -537,10 +561,12 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
   void performSuspension();
 
   /**
-   * <p>Transition to {@link CaseExecutionState#SUSPENDING_ON_PARENT_SUSPENSION} state.</p>
+   * Transition to {@link CaseExecutionState#SUSPENDING_ON_PARENT_SUSPENSION} state.
    *
-   * <p><code>This</code> case execution must be in one of the following state to
+   * <p>
+   * <code>This</code> case execution must be in one of the following state to
    * be able to do this transition:
+   * </p>
    * <ul>
    *   <li>{@link CaseExecutionState#AVAILABLE},</li>
    *   <li>{@link CaseExecutionState#ENABLED},</li>
@@ -548,11 +574,15 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
    *   <li>{@link CaseExecutionState#ACTIVE}</li>
    * </ul>
    *
-   * <p>It is only possible to execute a parent suspension on a case execution which is
-   * associated with a {@link Stage} or {@link Task}.</p>
+   * <p>
+   * It is only possible to execute a parent suspension on a case execution which is
+   * associated with a {@link Stage} or {@link Task}.
+   * </p>
    *
-   * <p>Afterwards the method {@link #performParentSuspension()} must be called to complete
-   * the transition into the state {@link CaseExecutionState#SUSPENDED}.</p>
+   * <p>
+   * Afterwards the method {@link #performParentSuspension()} must be called to complete
+   * the transition into the state {@link CaseExecutionState#SUSPENDED}.
+   * </p>
    *
    * @throws CaseIllegalStateTransitionException will be thrown, if <code>this</code> case execution
    *         is not in the expected state.
@@ -610,25 +640,28 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
   void parentResume();
 
   /**
-   * <p>Transition to {@link CaseExecutionState#ACTIVE} state.</p>
+   * Transition to {@link CaseExecutionState#ACTIVE} state.
    *
-   * <p>If <code>this</code> case execution is associated with a {@link Stage} or
+   * <p>
+   * If <code>this</code> case execution is associated with a {@link Stage} or
    * {@link Task} and is not a case instance, then <code>this</code> case execution
    * must be in {@link CaseExecutionState#FAILED} state to be able to do this transition.<br>
    * And if <code>this</code> case execution is a case instance, then <code>this</code>
    * case instance must be in one of the following state to perform this transition:
+   * </p>
    * <ul>
    *   <li>{@link CaseExecutionState#COMPLETED},</li>
    *   <li>{@link CaseExecutionState#SUSPENDED},</li>
    *   <li>{@link CaseExecutionState#TERMINATED} or</li>
    *   <li>{@link CaseExecutionState#FAILED}</li>
    * </ul>
-   * </p>
    *
-   * <p>In case of a case instance the transition out of {@link CaseExecutionState#SUSPENDED} state
+   * <p>
+   * In case of a case instance the transition out of {@link CaseExecutionState#SUSPENDED} state
    * the resume will be propagated down to all its contained {@link EventListener EventListener},
    * {@link Milestone}, {@link Stage}, and {@link Task} instances, see {@link #resume()} and
-   * {@link #parentResume()}.</p>
+   * {@link #parentResume()}.
+   * </p>
    *
    * @throws CaseIllegalStateTransitionException will be thrown, if <code>this</code> case execution
    *         is not in the expected state.
@@ -638,18 +671,19 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
   void reactivate();
 
   /**
-   * <p>Transition to {@link CaseExecutionState#CLOSED} state when no further
-   * work or modifications should be allowed for this case instance.</p>
+   * Transition to {@link CaseExecutionState#CLOSED} state when no further
+   * work or modifications should be allowed for this case instance.
    *
-   * <p>It is only possible to close a case instance which is in one of the following
+   * <p>
+   * It is only possible to close a case instance which is in one of the following
    * states:
+   * </p>
    * <ul>
    *   <li>{@link CaseExecutionState#COMPLETED},</li>
    *   <li>{@link CaseExecutionState#SUSPENDED},</li>
    *   <li>{@link CaseExecutionState#TERMINATED} or</li>
    *   <li>{@link CaseExecutionState#FAILED}</li>
    * </ul>
-   * </p>
    *
    * @throws CaseIllegalStateTransitionException will be thrown, if <code>this</code> case execution
    *         is not in the expected state.

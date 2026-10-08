@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.IdentityLink;
 
 /**
- * <p>The producer for history events. The history event producer is
+ * The producer for history events. The history event producer is
  * responsible for extracting data from the runtime structures
  * (Executions, Tasks, ...) and adding the data to a {@link HistoryEvent}.
  *

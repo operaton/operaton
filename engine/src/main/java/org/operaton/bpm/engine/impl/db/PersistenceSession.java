@@ -34,22 +34,22 @@ public @NullMarked interface PersistenceSession extends Session {
   // Entity Operations /////////////////////////////////
 
   /**
-   * <p>Attempts to perform the operations in order and returns a flush result.
+   * Attempts to perform the operations in order and returns a flush result.
    * The result indicates if there are operations that were not successful (via {@link FlushResult#getFailedOperations()}
    * and if some operations were not executed (via {@link FlushResult#getRemainingOperations()}.
    * The remaining operations must be a suffix of the parameter (e.g. for operations [a, b, c, d],
    * [c, d] is a valid list of remaining operations, [b, c] is not).
    *
-   * <p>This method modifies the operation's state, i.e. {@link DbOperation#getState()} will
-   * be updated by calling this method:
-   *
    * <p>
+   * This method modifies the operation's state, i.e. {@link DbOperation#getState()} will
+   * be updated by calling this method:
+   * </p>
+   *
    * <ul>
    * <li>Successful operations: {@link State#APPLIED}
    * <li>Failed operations: {@link State#FAILED_ERROR} or {@link State#FAILED_CONCURRENT_MODIFICATION}.
    * <li>Remaining operations: {@link State#NOT_APPLIED}
    * </ul>
-   * </p>
    *
    * <p>
    * In addition, the number of affected rows and failure (if any) is updated in the operation.

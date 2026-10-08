@@ -32,13 +32,13 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * <p>
  * Is able to deserialize strings like:
+ * </p>
  *
  * <ul>
  *   <li>RES.ID_ asc</li>
  *   <li>LOWER(RES.NAME_) desc</li>
  *   <li>RES.ID_ asc, RES.NAME_ desc</li>
  * </ul>
- * </p>
  *
  * @author Thorben Lindhauer
  */

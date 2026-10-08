@@ -24,22 +24,27 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 
 /**
- * <p>The history level controls what kind of data is logged to the history database.
- * More formally, it controls which history events are produced by the {@link HistoryEventProducer}.</p>
+ * The history level controls what kind of data is logged to the history database.
+ * More formally, it controls which history events are produced by the {@link HistoryEventProducer}.
  *
- * <p><strong>Built-in history levels:</strong> The process engine provides a set of built-in history levels
+ * <p>
+ * <strong>Built-in history levels:</strong> The process engine provides a set of built-in history levels
  * as default configuration. The built-in history levels are:
+ * </p>
  * <ul>
  *   <li>{@link #HISTORY_LEVEL_NONE}</li>
  *   <li>{@link #HISTORY_LEVEL_ACTIVITY}</li>
  *   <li>{@link #HISTORY_LEVEL_AUDIT}</li>
  *   <li>{@link #HISTORY_LEVEL_FULL}</li>
  * </ul>
+ * <p>
  * This class provides singleton instances of these history levels as constants.
  * </p>
  *
- * <p><strong>Custom history levels:</strong>In order to implement a custom history level,
+ * <p>
+ * <strong>Custom history levels:</strong>In order to implement a custom history level,
  * the following steps are necessary:
+ * </p>
  * <ul>
  *   <li>Provide a custom implementation of this interface. Note: Make sure you choose unique values for
  *   {@link #getName()} and {@link #getId()}</li>
@@ -48,7 +53,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
  *   <li>use the name of your history level (as returned by {@link #getName()} as value for
  *   {@link ProcessEngineConfiguration#setHistory(String)}</li>
  * </ul>
- * </p>
  *
  * @author Daniel Meyer
  */

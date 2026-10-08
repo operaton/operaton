@@ -191,7 +191,7 @@ public class ChildElementCollectionTest extends TestModelTest {
       .hasSize(2)
       .contains(daisyRef);
     assertThat(flightPartnerRefs.toArray()).isEqualTo(new Object[]{daisyRef, pluckyRef});
-    assertThat(flightPartnerRefs.toArray(new FlightPartnerRef[1])).isEqualTo(new FlightPartnerRef[]{daisyRef, pluckyRef});
+    assertThat(flightPartnerRefs.toArray(FlightPartnerRef[]::new)).isEqualTo(new FlightPartnerRef[]{daisyRef, pluckyRef});
 
     assertThat(flightPartnerRefs.add(birdoRef)).isTrue();
     assertThat(flightPartnerRefs)

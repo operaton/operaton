@@ -31,6 +31,9 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.OutgoingExecution;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
+import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
@@ -56,9 +59,9 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
     // calculate the propagating execution
     PvmExecutionImpl propagatingExecution = execution;
 
-    PvmActivity activity = execution.getActivity();
+    PvmActivity activity = requireNonNull(execution.getActivity());
     List<PvmTransition> transitionsToTake = execution.getTransitionsToTake();
-    execution.setTransitionsToTake(null);
+    execution.setTransitionsToTake(emptyList());
 
     // check whether the current scope needs to be destroyed
     if (execution.isScope() && activity.isScope() && !LegacyBehavior.destroySecondNonScope(execution)) {
@@ -67,10 +70,10 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
         LegacyBehavior.destroyConcurrentScope(execution);
       }
       else {
-        propagatingExecution = execution.getParent();
+        propagatingExecution = requireNonNull(execution.getParent());
         LOG.debugDestroyScope(execution, propagatingExecution);
         execution.destroy();
-        propagatingExecution.setActivity(execution.getActivity());
+        propagatingExecution.setActivity(activity);
         propagatingExecution.setTransition(execution.getTransition());
         propagatingExecution.setActive(true);
         execution.remove();

@@ -25,8 +25,7 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 
-@NullMarked
-public class AcquirableJobEntity implements DbEntity, HasDbRevision {
+public @NullMarked class AcquirableJobEntity implements DbEntity, HasDbRevision {
 
   public static final boolean DEFAULT_EXCLUSIVE = true;
 

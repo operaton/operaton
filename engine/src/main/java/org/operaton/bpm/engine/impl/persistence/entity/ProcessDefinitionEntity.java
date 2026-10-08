@@ -45,8 +45,7 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-@NullMarked
-public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinition, ResourceDefinitionEntity<ProcessDefinitionEntity>, DbEntity, HasDbRevision {
+public @NullMarked class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinition, ResourceDefinitionEntity<ProcessDefinitionEntity>, DbEntity, HasDbRevision {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected @Nullable String key;
@@ -119,7 +118,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public ExecutionEntity createProcessInstance(String businessKey, String caseInstanceId, ActivityImpl initial) {
+  public ExecutionEntity createProcessInstance(@Nullable String businessKey, @Nullable String caseInstanceId, @Nullable ActivityImpl initial) {
     ensureNotSuspended();
 
     ExecutionEntity processInstance = (ExecutionEntity) createProcessInstanceForInitial(initial);

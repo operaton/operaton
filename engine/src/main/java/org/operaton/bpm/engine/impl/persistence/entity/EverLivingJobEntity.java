@@ -27,8 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  *
  * @author Svetlana Dorokhova
  */
-@NullMarked
-public class EverLivingJobEntity extends JobEntity {
+public @NullMarked class EverLivingJobEntity extends JobEntity {
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 

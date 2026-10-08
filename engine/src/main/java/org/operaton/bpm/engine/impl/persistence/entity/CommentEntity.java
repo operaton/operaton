@@ -35,15 +35,14 @@ import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Event;
 
 /**
- * @author Tom Baeyens
- *
  * Implements the deprecated {@link Event} interface only to remain compatible with
  * {@code TaskService#getTaskEvents} (backed by {@code GetTaskEventsCmd}), for as long
  * as that deprecated API still exists.
+ *
+ * @author Tom Baeyens
  */
-@SuppressWarnings("removal")
-@NullMarked
-public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
+@SuppressWarnings({"removal", "unused"})
+public @NullMarked class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
 
   public static final String TYPE_EVENT = "event";
   public static final String TYPE_COMMENT = "comment";
@@ -64,6 +63,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   protected int revision;
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("message", message);
@@ -80,7 +80,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
 
   public static final String MESSAGE_PARTS_MARKER = "_|_";
 
-  public void setMessage(String[] messageParts) {
+  public void setMessage(@Nullable String[] messageParts) {
     StringBuilder stringBuilder = new StringBuilder();
     for (String part: messageParts) {
       if (part!=null) {
@@ -98,6 +98,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public List<String> getMessageParts() {
     if (message==null) {
       return Collections.emptyList();

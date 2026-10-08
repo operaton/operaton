@@ -31,8 +31,7 @@ import org.operaton.bpm.engine.task.Attachment;
 /**
  * @author Tom Baeyens
  */
-@NullMarked
-public class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, HistoricEntity {
+public @NullMarked class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, HistoricEntity {
 
   protected @Nullable String id;
   protected int revision;
@@ -50,6 +49,7 @@ public class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, Hi
   protected @Nullable Date removalTime;
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("name", name);

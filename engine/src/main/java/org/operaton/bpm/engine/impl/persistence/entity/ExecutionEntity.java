@@ -89,8 +89,7 @@ import static java.util.Objects.requireNonNull;
  * @author Daniel Meyer
  * @author Falko Menge
  */
-@NullMarked
-public class ExecutionEntity extends PvmExecutionImpl implements Execution, ProcessInstance, DbEntity, HasDbRevision,
+public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Execution, ProcessInstance, DbEntity, HasDbRevision,
     HasDbReferences, VariablesProvider<VariableInstanceEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -160,7 +159,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   protected transient @Nullable List<IncidentEntity> incidents;
   protected int cachedEntityState;
 
-  @SuppressWarnings("unchecked")
   protected transient VariableStore<VariableInstanceEntity> variableStore =
     new VariableStore<>(this, new ExecutionEntityReferencer(this));
 
@@ -336,7 +334,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public CaseExecutionEntity createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey) {
+  public CaseExecutionEntity createSubCaseInstance(CmmnCaseDefinition caseDefinition, @Nullable String businessKey) {
     CaseExecutionEntity subCase = (CaseExecutionEntity) caseDefinition.createCaseInstance(businessKey);
 
     // inherit the tenant-id from the case definition
@@ -443,7 +441,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void start(Map<String, Object> variables, VariableMap formProperties) {
+  public void start(@Nullable Map<String, Object> variables, @Nullable VariableMap formProperties) {
     if (getSuperExecution() == null) {
       setRootProcessInstanceId(processInstanceId);
     } else {
@@ -456,13 +454,13 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void startWithoutExecuting(Map<String, Object> variables) {
+  public void startWithoutExecuting(@Nullable Map<String, Object> variables) {
     setRootProcessInstanceId(getProcessInstanceId());
     provideTenantId(variables, null);
     super.startWithoutExecuting(variables);
   }
 
-  protected void provideTenantId(Map<String, Object> variables, VariableMap properties) {
+  protected void provideTenantId(@Nullable Map<String, Object> variables, @Nullable VariableMap properties) {
     if (tenantId == null) {
       TenantIdProvider tenantIdProvider = Context.getProcessEngineConfiguration().getTenantIdProvider();
 
@@ -749,7 +747,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   public ProcessDefinitionEntity getProcessDefinition() {
     ensureProcessDefinitionInitialized();
-    return (ProcessDefinitionEntity) processDefinition;
+    return (ProcessDefinitionEntity) requireNonNull(processDefinition);
   }
 
   public void setProcessDefinitionId(@Nullable String processDefinitionId) {
@@ -757,8 +755,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public @Nullable String getProcessDefinitionId() {
-    return processDefinitionId;
+  public String getProcessDefinitionId() {
+    return requireNonNull(processDefinitionId);
   }
 
   /**
@@ -774,7 +772,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void setProcessDefinition(ProcessDefinitionImpl processDefinition) {
+  public void setProcessDefinition(@Nullable ProcessDefinitionImpl processDefinition) {
     this.processDefinition = processDefinition;
     if (processDefinition != null) {
       this.processDefinitionId = processDefinition.getId();
@@ -806,6 +804,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
           ensureExecutionTreeInitialized();
         } else {
           processInstance = Context.getCommandContext().getExecutionManager().findExecutionById(processInstanceId);
+          EnsureUtil.ensureNotNull("Execution '%s': Process instance '%s' not found".formatted(id, processInstanceId), "processInstance", processInstance);
         }
       }
     }
@@ -837,7 +836,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   public ActivityImpl getActivity() {
     ensureActivityInitialized();
-    return super.getActivity();
+    return requireNonNull(super.getActivity());
   }
 
   @Override
@@ -855,7 +854,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public void setActivity(PvmActivity activity) {
+  public void setActivity(@Nullable PvmActivity activity) {
     super.setActivity(activity);
     if (activity != null) {
       this.activityId = activity.getId();
@@ -1113,7 +1112,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
           // Just in case tasks where added,
           // wo do an additional check here and move it
           task.setExecution(replacedBy);
-          this.getReplacedBy().addTask(task);
+          requireNonNull(this.getReplacedBy()).addTask(task);
         }
       } else {
         task.delete(reason, false, skipCustomListeners);
@@ -1137,7 +1136,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public ExecutionEntity resolveReplacedBy() {
+  public @Nullable ExecutionEntity resolveReplacedBy() {
     return (ExecutionEntity) super.resolveReplacedBy();
   }
 
@@ -1310,7 +1309,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       }
     }
 
-    procInstance.restoreProcessInstance(executionEntities, null, null, null, null, null, null);
+    if (procInstance != null) {
+      procInstance.restoreProcessInstance(executionEntities, null, null, null, null, null, null);
+    }
   }
 
   /**
@@ -1330,9 +1331,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    *          initialized and are lazy loaded on demand
    */
   public void restoreProcessInstance(Collection<ExecutionEntity> executions,
-      Collection<EventSubscriptionEntity> eventSubscriptions, Collection<VariableInstanceEntity> variables,
-      Collection<TaskEntity> tasks, Collection<JobEntity> jobs, Collection<IncidentEntity> incidents,
-      Collection<ExternalTaskEntity> externalTasks) {
+      @Nullable Collection<EventSubscriptionEntity> eventSubscriptions, @Nullable Collection<VariableInstanceEntity> variables,
+      @Nullable Collection<TaskEntity> tasks, @Nullable Collection<JobEntity> jobs, @Nullable Collection<IncidentEntity> incidents,
+      @Nullable Collection<ExternalTaskEntity> externalTasks) {
 
     EnsureUtil.ensureNotEmpty(NullValueException.class,
         "Cannot restore state of process instance %s".formatted(processInstanceId), "list of executions", executions);
@@ -1360,7 +1361,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     return executionsMap;
   }
 
-  private Map<String, List<VariableInstanceEntity>> determineVariablesByScope(Collection<VariableInstanceEntity> variables) {
+  private Map<String, List<VariableInstanceEntity>> determineVariablesByScope(@Nullable Collection<VariableInstanceEntity> variables) {
     Map<String, List<VariableInstanceEntity>> variablesByScope = new HashMap<>();
     if (variables != null) {
       for (VariableInstanceEntity variable : variables) {
@@ -1371,8 +1372,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   private void restoreExecutionTree(Collection<ExecutionEntity> executions,
-                                    Collection<EventSubscriptionEntity> eventSubscriptions,
-                                    Collection<VariableInstanceEntity> variables,
+                                    @Nullable Collection<EventSubscriptionEntity> eventSubscriptions,
+                                    @Nullable Collection<VariableInstanceEntity> variables,
                                     Map<String, ExecutionEntity> executionsMap,
                                     Map<String, List<VariableInstanceEntity>> variablesByScope) {
     for (ExecutionEntity execution : executions) {
@@ -1381,8 +1382,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   private void restoreExecution(ExecutionEntity execution,
-                                  Collection<EventSubscriptionEntity> eventSubscriptions,
-                                  Collection<VariableInstanceEntity> variables,
+                                  @Nullable Collection<EventSubscriptionEntity> eventSubscriptions,
+                                  @Nullable Collection<VariableInstanceEntity> variables,
                                   Map<String, ExecutionEntity> executionsMap,
                                   Map<String, List<VariableInstanceEntity>> variablesByScope) {
     initializeAssociations(execution, eventSubscriptions, variables, variablesByScope);
@@ -1395,8 +1396,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   private void initializeAssociations(ExecutionEntity execution,
-                                        Collection<EventSubscriptionEntity> eventSubscriptions,
-                                        Collection<VariableInstanceEntity> variables,
+                                        @Nullable Collection<EventSubscriptionEntity> eventSubscriptions,
+                                        @Nullable Collection<VariableInstanceEntity> variables,
                                         Map<String, List<VariableInstanceEntity>> variablesByScope) {
     if (execution.executions == null) {
       execution.executions = new ArrayList<>();
@@ -1427,7 +1428,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     parentExecution.executions.add(execution);
   }
 
-  private void restoreEventSubscriptions(Collection<EventSubscriptionEntity> eventSubscriptions,
+  private void restoreEventSubscriptions(@Nullable Collection<EventSubscriptionEntity> eventSubscriptions,
       Map<String, ExecutionEntity> executionsMap) {
     if (eventSubscriptions != null) {
       // add event subscriptions to the right executions in the tree
@@ -1442,7 +1443,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  private void restoreJobs(Collection<JobEntity> jobs, Map<String, ExecutionEntity> executionsMap) {
+  private void restoreJobs(@Nullable Collection<JobEntity> jobs, Map<String, ExecutionEntity> executionsMap) {
     if (jobs != null) {
       for (JobEntity job : jobs) {
         ExecutionEntity execution = executionsMap.get(job.getExecutionId());
@@ -1451,7 +1452,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  private void restoreTasks(Collection<VariableInstanceEntity> variables, Collection<TaskEntity> tasks,
+  private void restoreTasks(@Nullable Collection<VariableInstanceEntity> variables, @Nullable Collection<TaskEntity> tasks,
       Map<String, ExecutionEntity> executionsMap, Map<String, List<VariableInstanceEntity>> variablesByScope) {
     if (tasks != null) {
       for (TaskEntity task : tasks) {
@@ -1466,7 +1467,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  private void restoreIncidents(Collection<IncidentEntity> incidents, Map<String, ExecutionEntity> executionsMap) {
+  private void restoreIncidents(@Nullable Collection<IncidentEntity> incidents, Map<String, ExecutionEntity> executionsMap) {
     if (incidents != null) {
       for (IncidentEntity incident : incidents) {
         ExecutionEntity execution = executionsMap.get(incident.getExecutionId());
@@ -1475,7 +1476,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     }
   }
 
-  private void restoreExternalTasks(Collection<ExternalTaskEntity> externalTasks,
+  private void restoreExternalTasks(@Nullable Collection<ExternalTaskEntity> externalTasks,
       Map<String, ExecutionEntity> executionsMap) {
     if (externalTasks != null) {
       for (ExternalTaskEntity externalTask : externalTasks) {
@@ -1489,6 +1490,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   // persistent state /////////////////////////////////////////////////////////
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("processDefinitionId", this.processDefinitionId);
@@ -1544,7 +1546,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   public List<EventSubscriptionEntity> getEventSubscriptionsInternal() {
     ensureEventSubscriptionsInitialized();
-    return eventSubscriptions;
+    return requireNonNull(eventSubscriptions);
   }
 
   public List<EventSubscriptionEntity> getEventSubscriptions() {
@@ -1631,7 +1633,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected List<IncidentEntity> getIncidentsInternal() {
     ensureIncidentsInitialized();
-    return incidents;
+    return requireNonNull(incidents);
   }
 
   public List<IncidentEntity> getIncidents() {
@@ -1649,7 +1651,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     getIncidentsInternal().remove(incident);
   }
 
-  public IncidentEntity getIncidentByCauseIncidentId(String causeIncidentId) {
+  public @Nullable IncidentEntity getIncidentByCauseIncidentId(String causeIncidentId) {
     return getIncidents().stream()
       .filter(incidentEntity -> Objects.equals(incidentEntity.getCauseIncidentId(), causeIncidentId))
       .findAny()
@@ -1667,7 +1669,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected List<TaskEntity> getTasksInternal() {
     ensureTasksInitialized();
-    return tasks;
+    return requireNonNull(tasks);
   }
 
   public List<TaskEntity> getTasks() {
@@ -1758,7 +1760,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   public void addVariableInternal(VariableInstanceEntity variable) {
     if (variableStore.containsKey(variable.getName())) {
       VariableInstanceEntity existingVariable = variableStore.getVariable(variable.getName());
-      existingVariable.setValue(variable.getTypedValue());
+      if (existingVariable != null) {
+        existingVariable.setValue(variable.getTypedValue());
+      }
       variable.delete();
     } else {
       variableStore.addVariable(variable);
@@ -1963,7 +1967,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
       ModelElementInstance modelElementInstance = null;
       if (ExecutionListener.EVENTNAME_TAKE.equals(eventName)) {
-        modelElementInstance = bpmnModelInstance.getModelElementById(transition.getId());
+        modelElementInstance = bpmnModelInstance.getModelElementById(requireNonNull(transition).getId());
       } else {
         modelElementInstance = bpmnModelInstance.getModelElementById(activityId);
       }
@@ -2003,7 +2007,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     return Context.getProcessEngineConfiguration().getProcessEngine();
   }
 
-  public String getProcessDefinitionTenantId() {
+  public @Nullable String getProcessDefinitionTenantId() {
     return getProcessDefinition().getTenantId();
   }
 

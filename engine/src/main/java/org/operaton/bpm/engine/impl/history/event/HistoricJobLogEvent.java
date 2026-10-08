@@ -31,8 +31,7 @@ import org.operaton.bpm.engine.impl.util.StringUtil;
  * @author Roman Smirnov
  *
  */
-@NullMarked
-public class HistoricJobLogEvent extends HistoryEvent {
+public @NullMarked class HistoricJobLogEvent extends HistoryEvent {
 
   @Serial private static final long serialVersionUID = 1L;
 

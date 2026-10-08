@@ -32,8 +32,7 @@ import org.operaton.bpm.engine.management.JobDefinition;
  * @author Daniel Meyer
  *
  */
-@NullMarked
-public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbReferences, DbEntity {
+public @NullMarked class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbReferences, DbEntity {
 
   protected @Nullable String id;
   protected int revision;
@@ -76,6 +75,7 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     HashMap<String, Object> state = new HashMap<>();
     state.put("processDefinitionId", processDefinitionId);

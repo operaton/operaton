@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.impl.history.event.HistoricJobLogEvent;
  * @author Roman Smirnov
  *
  */
-@NullMarked
-public class HistoricJobLogEventEntity extends HistoricJobLogEvent implements HistoricJobLog {
+public @NullMarked class HistoricJobLogEventEntity extends HistoricJobLogEvent implements HistoricJobLog {
 
 }

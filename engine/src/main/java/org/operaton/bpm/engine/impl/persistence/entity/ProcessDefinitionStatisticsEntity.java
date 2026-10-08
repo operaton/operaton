@@ -24,8 +24,7 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.management.IncidentStatistics;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatistics;
 
-@NullMarked
-public class ProcessDefinitionStatisticsEntity extends ProcessDefinitionEntity implements ProcessDefinitionStatistics {
+public @NullMarked class ProcessDefinitionStatisticsEntity extends ProcessDefinitionEntity implements ProcessDefinitionStatistics {
   protected int instances;
   protected int failedJobs;
   protected transient @Nullable List<IncidentStatistics> incidentStatistics;

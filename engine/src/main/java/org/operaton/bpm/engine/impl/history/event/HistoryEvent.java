@@ -49,8 +49,7 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
  * @author Daniel Meyer
  *
  */
-@NullMarked
-public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
+public @NullMarked class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
 
   @Serial private static final long serialVersionUID = 1L;
 

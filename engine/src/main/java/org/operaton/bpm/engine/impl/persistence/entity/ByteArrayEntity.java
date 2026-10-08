@@ -28,8 +28,7 @@ import org.operaton.bpm.engine.repository.ResourceType;
 /**
  * @author Tom Baeyens
  */
-@NullMarked
-public class ByteArrayEntity implements DbEntity, HasDbRevision {
+public @NullMarked class ByteArrayEntity implements DbEntity, HasDbRevision {
 
   private static final Object PERSISTENTSTATE_NULL = new Object();
 

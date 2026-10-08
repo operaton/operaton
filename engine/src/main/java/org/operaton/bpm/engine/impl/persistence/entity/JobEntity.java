@@ -39,6 +39,7 @@ import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.DefaultPriorityProvider.DEFAULT_PRIORITY;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
@@ -219,6 +220,7 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = (HashMap) super.getPersistentState();
     persistentState.put("executionId", executionId);
@@ -250,7 +252,9 @@ public abstract class JobEntity extends AcquirableJobEntity
       this.execution.addJob(this);
     }
     else {
-      this.execution.removeJob(this);
+      if (this.execution != null) {
+        this.execution.removeJob(this);
+      }
       this.execution = execution;
       processInstanceId = null;
       rootProcessInstanceId = null;
@@ -393,7 +397,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     return incidentContext;
   }
 
-  public String getExceptionStacktrace() {
+  public @Nullable String getExceptionStacktrace() {
     ByteArrayEntity byteArray = getExceptionByteArray();
     return ExceptionUtil.getExceptionStacktrace(byteArray);
   }
@@ -436,7 +440,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
     if(byteArray == null) {
       byteArray = createJobExceptionByteArray(exceptionBytes, ResourceTypes.RUNTIME);
-      exceptionByteArrayId = byteArray.getId();
+      exceptionByteArrayId = byteArray != null ? byteArray.getId() : null;
       exceptionByteArray = byteArray;
     }
     else {
@@ -444,13 +448,14 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
-  protected JobHandler<?> getJobHandler() {
+  protected @Nullable JobHandler<?> getJobHandler() {
     Map<String, JobHandler<?>> jobHandlers = Context.getProcessEngineConfiguration().getJobHandlers();
     return jobHandlers.get(jobHandlerType);
   }
 
   public JobHandlerConfiguration getJobHandlerConfiguration() {
-    return getJobHandler().newConfiguration(jobHandlerConfiguration);
+    JobHandler<?> jobHandler = requireNonNull(getJobHandler());
+    return jobHandler.newConfiguration(jobHandlerConfiguration);
   }
 
   public void setJobHandlerConfiguration(JobHandlerConfiguration configuration) {
@@ -666,8 +671,8 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public @Nullable Map<String, Class<?>> getDependentEntities() {
-    return persistedDependentEntities;
+  public Map<String, Class<?>> getDependentEntities() {
+    return persistedDependentEntities != null ? persistedDependentEntities : Collections.emptyMap();
   }
 
   @Override

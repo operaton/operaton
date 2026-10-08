@@ -67,13 +67,13 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   }
 
   @Override
-  public PvmProcessInstance createProcessInstance(String businessKey) {
+  public PvmProcessInstance createProcessInstance(@Nullable String businessKey) {
     ensureDefaultInitialExists();
     return createProcessInstance(businessKey, null, this.initial);
   }
 
   @Override
-  public PvmProcessInstance createProcessInstance(String businessKey, String caseInstanceId) {
+  public PvmProcessInstance createProcessInstance(@Nullable String businessKey, @Nullable String caseInstanceId) {
     ensureDefaultInitialExists();
     return createProcessInstance(businessKey, caseInstanceId, this.initial);
   }
@@ -82,7 +82,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     return createProcessInstance(businessKey, null, initial);
   }
 
-  public PvmProcessInstance createProcessInstance(String businessKey, String caseInstanceId, ActivityImpl initial) {
+  public PvmProcessInstance createProcessInstance(@Nullable String businessKey, @Nullable String caseInstanceId, @Nullable ActivityImpl initial) {
     PvmExecutionImpl processInstance = (PvmExecutionImpl) createProcessInstanceForInitial(initial);
 
     processInstance.setBusinessKey(businessKey);
@@ -92,7 +92,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   }
 
   /** creates a process instance using the provided activity as initial */
-  public PvmProcessInstance createProcessInstanceForInitial(ActivityImpl initial) {
+  public PvmProcessInstance createProcessInstanceForInitial(@Nullable ActivityImpl initial) {
     ensureNotNull("Cannot start process instance, initial activity where the process instance should start is null", "initial", initial);
 
     PvmExecutionImpl processInstance = newProcessInstance();

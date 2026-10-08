@@ -31,8 +31,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
  *
  * @author Tom Baeyens
  */
-@NullMarked
-public class MessageEntity extends JobEntity {
+public @NullMarked class MessageEntity extends JobEntity {
 
   public static final String TYPE = "message";
 
@@ -70,7 +69,7 @@ public class MessageEntity extends JobEntity {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(@Nullable Object o) {
     if (this == o) {return true;}
     if (o == null || getClass() != o.getClass()) {return false;}
     if (!super.equals(o)) {return false;}

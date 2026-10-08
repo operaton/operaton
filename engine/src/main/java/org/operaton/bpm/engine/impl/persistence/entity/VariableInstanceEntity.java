@@ -54,8 +54,7 @@ import static org.operaton.bpm.engine.impl.persistence.entity.util.TypedValueFie
 /**
  * @author Tom Baeyens
  */
-@NullMarked
-public class VariableInstanceEntity implements VariableInstance, CoreVariableInstance, ValueFields, DbEntity, DbEntityLifecycleAware, TypedValueUpdateListener, HasDbRevision,
+public @NullMarked class VariableInstanceEntity implements VariableInstance, CoreVariableInstance, ValueFields, DbEntity, DbEntityLifecycleAware, TypedValueUpdateListener, HasDbRevision,
   HasDbReferences {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -170,6 +169,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<>();
     if (typedValueField.getSerializerName() != null) {
@@ -314,8 +314,8 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
    * @param oldTypeAsString of the variable previously set.
    * @return {@code true} if old and new variable are both object typed.
    */
-  protected boolean isObjectTyped(ValueType newType, String oldTypeAsString) {
-    return ValueType.OBJECT.equals(newType) && newType.getName().equals(oldTypeAsString);
+  protected boolean isObjectTyped(@Nullable ValueType newType, String oldTypeAsString) {
+    return ValueType.OBJECT.equals(newType) && requireNonNull(newType).getName().equals(oldTypeAsString);
   }
 
   protected VariableSerializerFactory getFallbackSerializerFactory() {
@@ -635,14 +635,14 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     ProcessApplicationReference targetProcessApplication = getContextProcessApplication();
     if (targetProcessApplication != null) {
       Context.executeWithinProcessApplication(() -> {
-        getVariableScope().setVariableLocal(name, updatedValue);
+        requireNonNull(getVariableScope()).setVariableLocal(name, updatedValue);
         return null;
       }, requireNonNull(targetProcessApplication), new InvocationContext(getExecution()));
 
     }
     else {
       if (!isTransient) {
-        getVariableScope().setVariableLocal(name, updatedValue);
+        requireNonNull(getVariableScope()).setVariableLocal(name, updatedValue);
       }
     }
   }

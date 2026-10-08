@@ -27,8 +27,7 @@ import org.operaton.bpm.engine.repository.Resource;
 /**
  * @author Tom Baeyens
  */
-@NullMarked
-public class ResourceEntity implements DbEntity, Resource {
+public @NullMarked class ResourceEntity implements DbEntity, Resource {
 
   protected @Nullable String id;
   protected @Nullable String name;

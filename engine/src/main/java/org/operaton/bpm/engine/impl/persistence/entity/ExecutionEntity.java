@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.*;
 
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -860,7 +860,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
    * generates an activity instance id
    */
   @Override
-  protected String generateActivityInstanceId(@NonNull String activityId) {
+  protected String generateActivityInstanceId(String activityId) {
 
     if (activityId.equals(processDefinitionId)) {
       return requireNonNull(processInstanceId);
@@ -1166,13 +1166,13 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   }
 
   @Override
-  public void onConcurrentExpand(@NonNull PvmExecutionImpl scopeExecution) {
+  public void onConcurrentExpand(PvmExecutionImpl scopeExecution) {
     ExecutionEntity scopeExecutionEntity = (ExecutionEntity) scopeExecution;
     scopeExecutionEntity.moveConcurrentLocalVariablesTo(this);
     super.onConcurrentExpand(scopeExecutionEntity);
   }
 
-  protected void moveTasksTo(@NonNull ExecutionEntity other) {
+  protected void moveTasksTo(ExecutionEntity other) {
     // update the related tasks
     for (TaskEntity task : getTasksInternal()) {
       task.setExecution(other);
@@ -1189,7 +1189,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     getTasksInternal().clear();
   }
 
-  protected void moveExternalTasksTo(@NonNull ExecutionEntity other) {
+  protected void moveExternalTasksTo(ExecutionEntity other) {
     for (ExternalTaskEntity externalTask : getExternalTasksInternal()) {
       externalTask.setExecutionId(other.getId());
       externalTask.setExecution(other);
@@ -1200,7 +1200,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     getExternalTasksInternal().clear();
   }
 
-  protected void moveActivityLocalJobsTo(@NonNull ExecutionEntity other) {
+  protected void moveActivityLocalJobsTo(ExecutionEntity other) {
     if (activityId != null) {
       for (JobEntity job : getJobs()) {
 
@@ -1212,7 +1212,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     }
   }
 
-  protected void moveVariablesTo(@NonNull ExecutionEntity other) {
+  protected void moveVariablesTo(ExecutionEntity other) {
     List<VariableInstanceEntity> variables = variableStore.getVariables();
     variableStore.removeVariables();
 
@@ -1221,7 +1221,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     }
   }
 
-  protected void moveVariableTo(VariableInstanceEntity variable, @NonNull ExecutionEntity other) {
+  protected void moveVariableTo(VariableInstanceEntity variable, ExecutionEntity other) {
     String variableName = requireNonNull(variable.getName());
     if (other.variableStore.containsKey(variableName)) {
       CoreVariableInstance existingInstance = requireNonNull(other.variableStore.getVariable(variableName));
@@ -1233,7 +1233,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     }
   }
 
-  protected void moveConcurrentLocalVariablesTo(@NonNull ExecutionEntity other) {
+  protected void moveConcurrentLocalVariablesTo(ExecutionEntity other) {
     List<VariableInstanceEntity> variables = variableStore.getVariables();
 
     for (VariableInstanceEntity variable : variables) {
@@ -1246,12 +1246,12 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   // variables ////////////////////////////////////////////////////////////////
 
   @SuppressWarnings("unused")
-  public void addVariableListener(@NonNull VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
+  public void addVariableListener(VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
     registeredVariableListeners.add(listener);
   }
 
   @SuppressWarnings("unused")
-  public void removeVariableListener(@NonNull VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
+  public void removeVariableListener(VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
     registeredVariableListeners.remove(listener);
   }
 
@@ -1742,6 +1742,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     if (variableStore.containsKey(variableName)) {
       VariableInstanceEntity existingVariable = variableStore.getVariable(variableName);
       if (existingVariable != null) {
+        if (existingVariable != null) {
         existingVariable.setValue(requireNonNull(variable.getTypedValue()));
       }
       variable.delete();

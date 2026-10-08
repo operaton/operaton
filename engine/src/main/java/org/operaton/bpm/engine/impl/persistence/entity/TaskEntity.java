@@ -1055,7 +1055,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
     return true;
   }
 
-  protected List<TaskListener> getListenersForEvent(String event) {
+  protected @NonNull List<TaskListener> getListenersForEvent(String event) {
     TaskDefinition resolvedTaskDefinition = getTaskDefinition();
     if (resolvedTaskDefinition != null) {
       if (skipCustomListeners) {
@@ -1244,7 +1244,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
       }
 
       if (authorizations != null) {
-        saveAuthorizations(authorizations);
+        saveAuthorizations(requireNonNull(authorizations));
       }
     }
   }
@@ -1261,7 +1261,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
       }
 
       if (authorizations != null) {
-        saveAuthorizations(authorizations);
+        saveAuthorizations(requireNonNull(authorizations));
       }
     }
   }
@@ -1278,7 +1278,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
       }
 
       if (authorizations != null) {
-        deleteAuthorizations(authorizations);
+        deleteAuthorizations(requireNonNull(authorizations));
       }
     }
   }

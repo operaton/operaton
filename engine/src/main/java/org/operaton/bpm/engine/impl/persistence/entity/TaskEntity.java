@@ -1312,7 +1312,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public TaskDefinition getTaskDefinition() {
     if (taskDefinition == null && taskDefinitionKey != null) {
 
-      Map<String, TaskDefinition> taskDefinitions = null;
+      Map<String, TaskDefinition> taskDefinitions;
       if (processDefinitionId != null) {
         ProcessDefinitionEntity processDefinition = Context
             .getProcessEngineConfiguration()
@@ -1756,7 +1756,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public void bpmnError(String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables) {
     ensureTaskActive();
     ActivityExecution activityExecution = getExecution();
-    BpmnError bpmnError = null;
+    BpmnError bpmnError;
     if (errorMessage != null) {
       bpmnError = new BpmnError(errorCode, errorMessage);
     } else {

@@ -206,7 +206,7 @@ public @NullMarked class ProcessDefinitionEntity extends ProcessDefinitionImpl i
   // previous process definition //////////////////////////////////////////////
 
   @Override
-  public ProcessDefinitionEntity getPreviousDefinition() {
+  public @Nullable ProcessDefinitionEntity getPreviousDefinition() {
     ProcessDefinitionEntity previousProcessDefinition = null;
 
     String previousProcessDefId = getPreviousProcessDefinitionId();
@@ -230,7 +230,7 @@ public @NullMarked class ProcessDefinitionEntity extends ProcessDefinitionImpl i
   /**
    * Returns the cached version if exists; does not update the entity from the database in that case
    */
-  protected ProcessDefinitionEntity loadProcessDefinition(String processDefinitionId) {
+  protected @Nullable ProcessDefinitionEntity loadProcessDefinition(String processDefinitionId) {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = configuration.getDeploymentCache();
 

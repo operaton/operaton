@@ -275,17 +275,17 @@ public @NullMarked class VariableInstanceEntity implements VariableInstance, Cor
   // type /////////////////////////////////////////////////////////////////////
 
   @Override
-  public Object getValue() {
+  public @Nullable Object getValue() {
     return typedValueField.getValue();
   }
 
   @Override
-  public TypedValue getTypedValue() {
+  public @Nullable TypedValue getTypedValue() {
     return typedValueField.getTypedValue(isTransient);
   }
 
   @Override
-  public TypedValue getTypedValue(boolean deserializeValue) {
+  public @Nullable TypedValue getTypedValue(boolean deserializeValue) {
     return typedValueField.getTypedValue(deserializeValue, isTransient);
   }
 
@@ -555,7 +555,7 @@ public @NullMarked class VariableInstanceEntity implements VariableInstance, Cor
   }
 
   @Override
-  public String getErrorMessage() {
+  public @Nullable String getErrorMessage() {
     return typedValueField.getErrorMessage();
   }
 

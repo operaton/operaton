@@ -20,22 +20,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 
-public class AcquirableJobEntity implements DbEntity, HasDbRevision {
+public @NullMarked class AcquirableJobEntity implements DbEntity, HasDbRevision {
 
   public static final boolean DEFAULT_EXCLUSIVE = true;
 
-  protected String id;
+  protected @Nullable String id;
   protected int revision;
 
-  protected String lockOwner;
-  protected Date lockExpirationTime;
-  protected Date duedate;
+  protected @Nullable String lockOwner;
+  protected @Nullable Date lockExpirationTime;
+  protected @Nullable Date duedate;
 
-  protected String rootProcessInstanceId;
-  protected String processInstanceId;
+  protected @Nullable String rootProcessInstanceId;
+  protected @Nullable String processInstanceId;
 
   protected boolean isExclusive = DEFAULT_EXCLUSIVE;
 
@@ -57,7 +59,7 @@ public class AcquirableJobEntity implements DbEntity, HasDbRevision {
   // getters and setters //////////////////////////////////////////////////////
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -76,43 +78,43 @@ public class AcquirableJobEntity implements DbEntity, HasDbRevision {
     this.revision = revision;
   }
 
-  public Date getDuedate() {
+  public @Nullable Date getDuedate() {
     return duedate;
   }
 
-  public void setDuedate(Date duedate) {
+  public void setDuedate(@Nullable Date duedate) {
     this.duedate = duedate;
   }
 
-  public String getLockOwner() {
+  public @Nullable String getLockOwner() {
     return lockOwner;
   }
 
-  public void setLockOwner(String lockOwner) {
+  public void setLockOwner(@Nullable String lockOwner) {
     this.lockOwner = lockOwner;
   }
 
-  public Date getLockExpirationTime() {
+  public @Nullable Date getLockExpirationTime() {
     return lockExpirationTime;
   }
 
-  public void setLockExpirationTime(Date lockExpirationTime) {
+  public void setLockExpirationTime(@Nullable Date lockExpirationTime) {
     this.lockExpirationTime = lockExpirationTime;
   }
 
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 
-  public void setProcessInstanceId(String processInstanceId) {
+  public void setProcessInstanceId(@Nullable String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 

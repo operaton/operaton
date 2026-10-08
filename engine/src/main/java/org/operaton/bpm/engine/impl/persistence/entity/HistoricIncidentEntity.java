@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.history.event.HistoricIncidentEventEntity;
 
@@ -24,6 +25,6 @@ import org.operaton.bpm.engine.impl.history.event.HistoricIncidentEventEntity;
  * @author Roman Smirnov
  *
  */
-public class HistoricIncidentEntity extends HistoricIncidentEventEntity implements HistoricIncident {
+public @NullMarked class HistoricIncidentEntity extends HistoricIncidentEventEntity implements HistoricIncident {
 
 }

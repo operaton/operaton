@@ -18,25 +18,28 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.repository.Resource;
 
 /**
  * @author Tom Baeyens
  */
-public class ResourceEntity implements DbEntity, Resource {
+public @NullMarked class ResourceEntity implements DbEntity, Resource {
 
-  protected String id;
-  protected String name;
-  protected byte[] bytes;
-  protected String deploymentId;
+  protected @Nullable String id;
+  protected @Nullable String name;
+  protected byte@Nullable[] bytes;
+  protected @Nullable String deploymentId;
   protected boolean generated;
-  protected String tenantId;
-  protected Integer type;
-  protected Date createTime;
+  protected @Nullable String tenantId;
+  protected @Nullable Integer type;
+  protected @Nullable Date createTime;
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -46,29 +49,29 @@ public class ResourceEntity implements DbEntity, Resource {
   }
 
   @Override
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@Nullable String name) {
     this.name = name;
   }
 
   @Override
-  public byte[] getBytes() {
+  public byte@Nullable[] getBytes() {
     return bytes;
   }
 
-  public void setBytes(byte[] bytes) {
+  public void setBytes(byte@Nullable[] bytes) {
     this.bytes = bytes;
   }
 
   @Override
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return deploymentId;
   }
 
-  public void setDeploymentId(String deploymentId) {
+  public void setDeploymentId(@Nullable String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
@@ -89,27 +92,27 @@ public class ResourceEntity implements DbEntity, Resource {
     return generated;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
-  public Integer getType() {
+  public @Nullable Integer getType() {
     return type;
   }
 
-  public void setType(Integer type) {
+  public void setType(@Nullable Integer type) {
     this.type = type;
   }
 
-  public Date getCreateTime() {
+  public @Nullable Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(Date createTime) {
+  public void setCreateTime(@Nullable Date createTime) {
     this.createTime = createTime;
   }
 

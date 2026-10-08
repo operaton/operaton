@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -48,7 +49,7 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
  * @author Daniel Meyer
  *
  */
-public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
+public @NullMarked class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -134,62 +135,62 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
   public static final String IDENTITY_LINK_DELETE = HistoryEventTypes.IDENTITY_LINK_DELETE.getEventName();
 
   /** each {@link HistoryEvent} has a unique id */
-  protected String id;
+  protected @Nullable String id;
 
   /** the root process instance in which the event has happened */
   protected @Nullable String rootProcessInstanceId;
 
   /** the process instance in which the event has happened */
-  protected String processInstanceId;
+  protected @Nullable String processInstanceId;
 
   /** the id of the execution in which the event has happened */
-  protected String executionId;
+  protected @Nullable String executionId;
 
   /** the id of the process definition */
-  protected String processDefinitionId;
+  protected @Nullable String processDefinitionId;
 
   /** the key of the process definition */
-  protected String processDefinitionKey;
+  protected @Nullable String processDefinitionKey;
 
   /** the name of the process definition */
-  protected String processDefinitionName;
+  protected @Nullable String processDefinitionName;
 
   /** the version of the process definition */
-  protected Integer processDefinitionVersion;
+  protected @Nullable Integer processDefinitionVersion;
 
   /** the case instance in which the event has happened */
   protected @Nullable String caseInstanceId;
 
   /** the id of the case execution in which the event has happened */
-  protected String caseExecutionId;
+  protected @Nullable String caseExecutionId;
 
   /** the id of the case definition */
-  protected String caseDefinitionId;
+  protected @Nullable String caseDefinitionId;
 
   /** the key of the case definition */
-  protected String caseDefinitionKey;
+  protected @Nullable String caseDefinitionKey;
 
   /** the name of the case definition */
-  protected String caseDefinitionName;
+  protected @Nullable String caseDefinitionName;
 
   /**
    * The type of the activity audit event.
    * @see HistoryEventType#getEventName()
    * */
-  protected String eventType;
+  protected @Nullable String eventType;
 
   protected long sequenceCounter;
 
   /* the time when the history event will be deleted */
-  protected Date removalTime;
+  protected @Nullable Date removalTime;
 
   // getters / setters ///////////////////////////////////
 
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 
-  public void setProcessInstanceId(String processInstanceId) {
+  public void setProcessInstanceId(@Nullable String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 
@@ -197,71 +198,71 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
     return rootProcessInstanceId;
   }
 
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
+  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
-  public String getExecutionId() {
+  public @Nullable String getExecutionId() {
     return executionId;
   }
 
-  public void setExecutionId(String executionId) {
+  public void setExecutionId(@Nullable String executionId) {
     this.executionId = executionId;
   }
 
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
-  public void setProcessDefinitionId(String processDefinitionId) {
+  public void setProcessDefinitionId(@Nullable String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
 
-  public String getProcessDefinitionKey() {
+  public @Nullable String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
 
-  public void setProcessDefinitionKey(String processDefinitionKey) {
+  public void setProcessDefinitionKey(@Nullable String processDefinitionKey) {
     this.processDefinitionKey = processDefinitionKey;
   }
 
-  public String getProcessDefinitionName() {
+  public @Nullable String getProcessDefinitionName() {
     return processDefinitionName;
   }
 
-  public void setProcessDefinitionName(String processDefinitionName) {
+  public void setProcessDefinitionName(@Nullable String processDefinitionName) {
     this.processDefinitionName = processDefinitionName;
   }
 
-  public Integer getProcessDefinitionVersion() {
+  public @Nullable Integer getProcessDefinitionVersion() {
     return processDefinitionVersion;
   }
 
-  public void setProcessDefinitionVersion(Integer processDefinitionVersion) {
+  public void setProcessDefinitionVersion(@Nullable Integer processDefinitionVersion) {
     this.processDefinitionVersion = processDefinitionVersion;
   }
 
-  public String getCaseDefinitionName() {
+  public @Nullable String getCaseDefinitionName() {
     return caseDefinitionName;
   }
 
-  public void setCaseDefinitionName(String caseDefinitionName) {
+  public void setCaseDefinitionName(@Nullable String caseDefinitionName) {
     this.caseDefinitionName = caseDefinitionName;
   }
 
-  public String getCaseDefinitionKey() {
+  public @Nullable String getCaseDefinitionKey() {
     return caseDefinitionKey;
   }
 
-  public void setCaseDefinitionKey(String caseDefinitionKey) {
+  public void setCaseDefinitionKey(@Nullable String caseDefinitionKey) {
     this.caseDefinitionKey = caseDefinitionKey;
   }
 
-  public String getCaseDefinitionId() {
+  public @Nullable String getCaseDefinitionId() {
     return caseDefinitionId;
   }
 
-  public void setCaseDefinitionId(String caseDefinitionId) {
+  public void setCaseDefinitionId(@Nullable String caseDefinitionId) {
     this.caseDefinitionId = caseDefinitionId;
   }
 
@@ -269,15 +270,15 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
     return caseInstanceId;
   }
 
-  public void setCaseInstanceId(String caseInstanceId) {
+  public void setCaseInstanceId(@Nullable String caseInstanceId) {
     this.caseInstanceId = caseInstanceId;
   }
 
-  public String getCaseExecutionId() {
+  public @Nullable String getCaseExecutionId() {
     return caseExecutionId;
   }
 
-  public void setCaseExecutionId(String caseExecutionId) {
+  public void setCaseExecutionId(@Nullable String caseExecutionId) {
     this.caseExecutionId = caseExecutionId;
   }
 
@@ -287,15 +288,15 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
   }
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
-  public String getEventType() {
+  public @Nullable String getEventType() {
     return eventType;
   }
 
-  public void setEventType(String eventType) {
+  public void setEventType(@Nullable String eventType) {
     this.eventType = eventType;
   }
 
@@ -307,11 +308,11 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
     this.sequenceCounter = sequenceCounter;
   }
 
-  public Date getRemovalTime() {
+  public @Nullable Date getRemovalTime() {
     return removalTime;
   }
 
-  public void setRemovalTime(Date removalTime) {
+  public void setRemovalTime(@Nullable Date removalTime) {
     this.removalTime = removalTime;
   }
 

@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.operaton.bpm.application.InvocationContext;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.delegate.VariableScope;
@@ -53,31 +54,31 @@ import static org.operaton.bpm.engine.impl.persistence.entity.util.TypedValueFie
 /**
  * @author Tom Baeyens
  */
-public class VariableInstanceEntity implements VariableInstance, CoreVariableInstance, ValueFields, DbEntity, DbEntityLifecycleAware, TypedValueUpdateListener, HasDbRevision,
+public @NullMarked class VariableInstanceEntity implements VariableInstance, CoreVariableInstance, ValueFields, DbEntity, DbEntityLifecycleAware, TypedValueUpdateListener, HasDbRevision,
   HasDbReferences {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  protected String id;
+  protected @Nullable String id;
   protected int revision;
 
-  protected String name;
+  protected @Nullable String name;
 
-  protected String processDefinitionId;
-  protected String processInstanceId;
-  protected String executionId;
-  protected String taskId;
-  protected String batchId;
-  protected String caseInstanceId;
-  protected String caseExecutionId;
-  protected String activityInstanceId;
-  protected String tenantId;
+  protected @Nullable String processDefinitionId;
+  protected @Nullable String processInstanceId;
+  protected @Nullable String executionId;
+  protected @Nullable String taskId;
+  protected @Nullable String batchId;
+  protected @Nullable String caseInstanceId;
+  protected @Nullable String caseExecutionId;
+  protected @Nullable String activityInstanceId;
+  protected @Nullable String tenantId;
 
-  protected Long longValue;
-  protected Double doubleValue;
-  protected String textValue;
-  protected String textValue2;
-  protected String variableScopeId;
+  protected @Nullable Long longValue;
+  protected @Nullable Double doubleValue;
+  protected @Nullable String textValue;
+  protected @Nullable String textValue2;
+  protected @Nullable String variableScopeId;
 
   protected ByteArrayField byteArrayField = new ByteArrayField(this, ResourceTypes.RUNTIME);
 
@@ -85,7 +86,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   boolean forcedUpdate;
 
-  protected String configuration;
+  protected @Nullable String configuration;
 
   protected long sequenceCounter = 1;
 
@@ -119,7 +120,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   protected boolean isTransient;
 
   // transient properties
-  protected ExecutionEntity execution;
+  protected @Nullable ExecutionEntity execution;
 
   // Default constructor for SQL mapping
   public VariableInstanceEntity() {
@@ -168,6 +169,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<>();
     if (typedValueField.getSerializerName() != null) {
@@ -209,23 +211,23 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   // lazy initialized relations ///////////////////////////////////////////////
 
-  public void setProcessInstanceId(String processInstanceId) {
+  public void setProcessInstanceId(@Nullable String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
 
-  public void setProcessDefinitionId(String processDefinitionId) {
+  public void setProcessDefinitionId(@Nullable String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
   }
 
-  public void setExecutionId(String executionId) {
+  public void setExecutionId(@Nullable String executionId) {
     this.executionId = executionId;
   }
 
-  public void setCaseInstanceId(String caseInstanceId) {
+  public void setCaseInstanceId(@Nullable String caseInstanceId) {
     this.caseInstanceId = caseInstanceId;
   }
 
-  public void setCaseExecutionId(String caseExecutionId) {
+  public void setCaseExecutionId(@Nullable String caseExecutionId) {
     this.caseExecutionId = caseExecutionId;
   }
 
@@ -248,11 +250,11 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   // into a common class.  therefor it's duplicated in VariableInstanceEntity,
   // HistoricVariableInstance and HistoricDetailVariableInstanceUpdateEntity
 
-  public String getByteArrayValueId() {
+  public @Nullable String getByteArrayValueId() {
     return byteArrayField.getByteArrayId();
   }
 
-  public void setByteArrayValueId(String byteArrayValueId) {
+  public void setByteArrayValueId(@Nullable String byteArrayValueId) {
     this.byteArrayField.setByteArrayId(byteArrayValueId);
   }
 
@@ -273,17 +275,17 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   // type /////////////////////////////////////////////////////////////////////
 
   @Override
-  public Object getValue() {
+  public @Nullable Object getValue() {
     return typedValueField.getValue();
   }
 
   @Override
-  public TypedValue getTypedValue() {
+  public @Nullable TypedValue getTypedValue() {
     return typedValueField.getTypedValue(isTransient);
   }
 
   @Override
-  public TypedValue getTypedValue(boolean deserializeValue) {
+  public @Nullable TypedValue getTypedValue(boolean deserializeValue) {
     return typedValueField.getTypedValue(deserializeValue, isTransient);
   }
 
@@ -312,8 +314,8 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
    * @param oldTypeAsString of the variable previously set.
    * @return {@code true} if old and new variable are both object typed.
    */
-  protected boolean isObjectTyped(ValueType newType, String oldTypeAsString) {
-    return ValueType.OBJECT.equals(newType) && newType.getName().equals(oldTypeAsString);
+  protected boolean isObjectTyped(@Nullable ValueType newType, String oldTypeAsString) {
+    return ValueType.OBJECT.equals(newType) && requireNonNull(newType).getName().equals(oldTypeAsString);
   }
 
   protected VariableSerializerFactory getFallbackSerializerFactory() {
@@ -357,7 +359,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     }
   }
 
-  public ExecutionEntity getExecution() {
+  public @Nullable ExecutionEntity getExecution() {
     ensureExecutionInitialized();
     return execution;
   }
@@ -395,7 +397,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   // getters and setters //////////////////////////////////////////////////////
 
   @Override
-  public String getId() {
+  public @Nullable String getId() {
     return id;
   }
 
@@ -405,52 +407,52 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
-  public String getTextValue() {
+  public @Nullable String getTextValue() {
     return textValue;
   }
 
   @Override
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 
   @Override
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
   @Override
-  public String getExecutionId() {
+  public @Nullable String getExecutionId() {
     return executionId;
   }
 
   @Override
-  public String getCaseInstanceId() {
+  public @Nullable String getCaseInstanceId() {
     return caseInstanceId;
   }
 
   @Override
-  public String getCaseExecutionId() {
+  public @Nullable String getCaseExecutionId() {
     return caseExecutionId;
   }
 
   @Override
-  public Long getLongValue() {
+  public @Nullable Long getLongValue() {
     return longValue;
   }
 
   @Override
-  public void setLongValue(Long longValue) {
+  public void setLongValue(@Nullable Long longValue) {
     this.longValue = longValue;
   }
 
   @Override
-  public Double getDoubleValue() {
+  public @Nullable Double getDoubleValue() {
     return doubleValue;
   }
 
   @Override
-  public void setDoubleValue(Double doubleValue) {
+  public void setDoubleValue(@Nullable Double doubleValue) {
     this.doubleValue = doubleValue;
   }
 
@@ -459,12 +461,12 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
-  public void setTextValue(String textValue) {
+  public void setTextValue(@Nullable String textValue) {
     this.textValue = textValue;
   }
 
   @Override
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
@@ -491,30 +493,30 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
-  public String getTextValue2() {
+  public @Nullable String getTextValue2() {
     return textValue2;
   }
 
   @Override
-  public void setTextValue2(String textValue2) {
+  public void setTextValue2(@Nullable String textValue2) {
     this.textValue2 = textValue2;
   }
 
   @Override
-  public String getTaskId() {
+  public @Nullable String getTaskId() {
     return taskId;
   }
 
-  public void setTaskId(String taskId) {
+  public void setTaskId(@Nullable String taskId) {
     this.taskId = taskId;
   }
 
   @Override
-  public String getBatchId() {
+  public @Nullable String getBatchId() {
     return batchId;
   }
 
-  public void setBatchId(String batchId) {
+  public void setBatchId(@Nullable String batchId) {
     this.batchId = batchId;
   }
 
@@ -540,24 +542,24 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
-  public String getActivityInstanceId() {
+  public @Nullable String getActivityInstanceId() {
     return activityInstanceId;
   }
 
-  public void setActivityInstanceId(String activityInstanceId) {
+  public void setActivityInstanceId(@Nullable String activityInstanceId) {
     this.activityInstanceId = activityInstanceId;
   }
 
-  public String getSerializerName() {
+  public @Nullable String getSerializerName() {
     return typedValueField.getSerializerName();
   }
 
   @Override
-  public String getErrorMessage() {
+  public @Nullable String getErrorMessage() {
     return typedValueField.getErrorMessage();
   }
 
-  public String getVariableScopeId() {
+  public @Nullable String getVariableScopeId() {
     if (variableScopeId != null) {
       return variableScopeId;
     }
@@ -573,11 +575,11 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     return caseExecutionId;
   }
 
-  public void setVariableScopeId(String variableScopeId) {
+  public void setVariableScopeId(@Nullable String variableScopeId) {
     this.variableScopeId = variableScopeId;
   }
 
-  protected VariableScope getVariableScope() {
+  protected @Nullable VariableScope getVariableScope() {
 
     if (taskId != null) {
       return getTask();
@@ -593,7 +595,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     }
   }
 
-  protected TaskEntity getTask() {
+  protected @Nullable TaskEntity getTask() {
     if (taskId != null) {
       return Context.getCommandContext().getTaskManager().findTaskById(taskId);
     }
@@ -633,19 +635,19 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     ProcessApplicationReference targetProcessApplication = getContextProcessApplication();
     if (targetProcessApplication != null) {
       Context.executeWithinProcessApplication(() -> {
-        getVariableScope().setVariableLocal(name, updatedValue);
+        requireNonNull(getVariableScope()).setVariableLocal(name, updatedValue);
         return null;
       }, requireNonNull(targetProcessApplication), new InvocationContext(getExecution()));
 
     }
     else {
       if (!isTransient) {
-        getVariableScope().setVariableLocal(name, updatedValue);
+        requireNonNull(getVariableScope()).setVariableLocal(name, updatedValue);
       }
     }
   }
 
-  protected ProcessApplicationReference getContextProcessApplication() {
+  protected @Nullable ProcessApplicationReference getContextProcessApplication() {
     if (taskId != null) {
       return ProcessApplicationContextUtil.getTargetProcessApplication(getTask());
     }
@@ -731,11 +733,11 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

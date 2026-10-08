@@ -16,21 +16,22 @@
  */
 package org.operaton.bpm.engine.impl.pvm;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Map;
-
-
 
 /**
  * @author Tom Baeyens
  */
-public interface PvmExecution {
+public @NullMarked interface PvmExecution {
 
-  void signal(String signalName, Object signalData);
+  void signal(@Nullable String signalName, @Nullable Object signalData);
 
-  PvmActivity getActivity();
+  @Nullable PvmActivity getActivity();
 
   boolean hasVariable(String variableName);
-  void setVariable(String variableName, Object value);
-  Object getVariable(String variableName);
+  void setVariable(String variableName, @Nullable Object value);
+  @Nullable Object getVariable(String variableName);
   Map<String, Object> getVariables();
 }

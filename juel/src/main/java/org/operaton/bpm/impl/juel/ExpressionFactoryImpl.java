@@ -269,7 +269,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 		Properties properties = new Properties(loadDefaultProperties());
 
 		// try to find and load properties
-		InputStream input = null;
+		InputStream input;
 		try {
 			input = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 		} catch (SecurityException e) {
@@ -304,7 +304,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 	 */
 	protected TreeStore createTreeStore(int defaultCacheSize, Profile profile, Properties properties) {
 		// create builder
-		TreeBuilder builder = null;
+		TreeBuilder builder;
 		if (properties == null) {
 			builder = createTreeBuilder(null, profile.features());
 		} else {

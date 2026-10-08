@@ -100,7 +100,7 @@ public interface Batch {
   String getBatchJobDefinitionId();
 
   /**
-   * @return the batch's tenant id or null
+   * @return the batch's tenant id or {@code null}
    */
   @Nullable String getTenantId();
 

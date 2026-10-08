@@ -29,7 +29,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * Define variables to fetch with all tasks for the current topic. Calling
    * this method multiple times overrides the previously specified variables.
    *
-   * @param variables the variable names to fetch, if null all variables will be fetched
+   * @param variables the variable names to fetch, if {@code null} all variables will be fetched
    * @return this builder
    */
   ExternalTaskQueryTopicBuilder variables(String... variables);
@@ -38,7 +38,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
    * Define variables to fetch with all tasks for the current topic. Calling
    * this method multiple times overrides the previously specified variables.
    *
-   * @param variables the variable names to fetch, if null all variables will be fetched
+   * @param variables the variable names to fetch, if {@code null} all variables will be fetched
    * @return this builder
    */
   ExternalTaskQueryTopicBuilder variables(List<String> variables);
@@ -112,7 +112,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
   ExternalTaskQueryTopicBuilder processDefinitionVersionTag(String versionTag);
 
   /**
-   * Filter external tasks only with null tenant id.
+   * Filter external tasks only with {@code null} tenant id.
    *
    * @return this builder
    */

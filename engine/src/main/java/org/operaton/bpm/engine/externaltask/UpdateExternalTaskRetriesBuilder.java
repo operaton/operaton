@@ -38,7 +38,7 @@ public interface UpdateExternalTaskRetriesBuilder extends UpdateExternalTaskRetr
    *
    * @throws org.operaton.bpm.engine.BadUserRequestException
    *           If no external tasks are found
-   *           If a external task id is set to null
+   *           If a external task id is set to {@code null}
    *
    * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
    *   <ul>
@@ -66,7 +66,7 @@ public interface UpdateExternalTaskRetriesBuilder extends UpdateExternalTaskRetr
    * @param retries
    *
    * @throws org.operaton.bpm.engine.BadUserRequestException
-   *           If no external tasks are found or if a external task id is set to null
+   *           If no external tasks are found or if a external task id is set to {@code null}
    *
    * @throws AuthorizationException
    *           if the user has no {@link Permissions#CREATE} or

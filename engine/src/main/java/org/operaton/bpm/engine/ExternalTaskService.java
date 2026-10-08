@@ -398,7 +398,7 @@ public @NullMarked interface ExternalTaskService {
    * @param externalTaskIds the ids of the tasks to set the
    * @param retries
    * @throws NotFoundException if no external task with one of the given id exists
-   * @throws BadUserRequestException if the ids are null or the number of retries is negative
+   * @throws BadUserRequestException if the ids are {@code null} or the number of retries is negative
    * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
@@ -420,7 +420,7 @@ public @NullMarked interface ExternalTaskService {
    * @param retries
    * @param externalTaskQuery a query which selects the external tasks to set the retries for.
    * @throws NotFoundException if no external task with one of the given id exists
-   * @throws BadUserRequestException if the ids are null or the number of retries is negative
+   * @throws BadUserRequestException if the ids are {@code null} or the number of retries is negative
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_SET_EXTERNAL_TASK_RETRIES} permission on {@link Resources#BATCH}.
@@ -494,9 +494,9 @@ public @NullMarked interface ExternalTaskService {
 
   /**
    * Returns the full error details that occurred while running external task
-   * with the given id. Returns null when the external task has no error details.
+   * with the given id. Returns {@code null} when the external task has no error details.
    *
-   * @param externalTaskId id of the external task, cannot be null.
+   * @param externalTaskId id of the external task, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When no external task exists with the given id.

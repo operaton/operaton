@@ -113,10 +113,10 @@ public interface FormService {
    * same business key.
    * </p>
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
    * @param businessKey a key that uniquely identifies the process instance in the context or the
    *                    given process definition.
-   * @param properties the properties to pass, can be null.
+   * @param properties the properties to pass, can be {@code null}.
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}

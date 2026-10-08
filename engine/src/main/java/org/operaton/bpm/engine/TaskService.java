@@ -75,7 +75,7 @@ public @NullMarked interface TaskService {
    * After a new task has been saved, the task instance passed into this method
    * is updated with the id of the newly created task.
    *
-   * @param task the task, cannot be null.
+   * @param task the task, cannot be {@code null}.
    *
    * @throws AuthorizationException
    *          If the task is already present and the user has no {@link Permissions#UPDATE} permission
@@ -89,7 +89,7 @@ public @NullMarked interface TaskService {
   /**
    * Deletes the given task, not deleting historic information that is related to this task.
    *
-   * @param taskId The id of the task that will be deleted, cannot be null. If no task
+   * @param taskId The id of the task that will be deleted, cannot be {@code null}. If no task
    * exists with the given taskId, the operation is ignored.
    *
    * @throws ProcessEngineException
@@ -104,7 +104,7 @@ public @NullMarked interface TaskService {
    * Deletes all tasks of the given collection, not deleting historic information that is related
    * to these tasks.
    *
-   * @param taskIds The id's of the tasks that will be deleted, cannot be null. All
+   * @param taskIds The id's of the tasks that will be deleted, cannot be {@code null}. All
    * id's in the list that don't have an existing task will be ignored.
    *
    * @throws ProcessEngineException
@@ -118,7 +118,7 @@ public @NullMarked interface TaskService {
   /**
    * Deletes the given task.
    *
-   * @param taskId The id of the task that will be deleted, cannot be null. If no task
+   * @param taskId The id of the task that will be deleted, cannot be {@code null}. If no task
    * exists with the given taskId, the operation is ignored.
    *
    * @param cascade If cascade is true, also the historic information related to this task is deleted.
@@ -134,7 +134,7 @@ public @NullMarked interface TaskService {
   /**
    * Deletes all tasks of the given collection.
    *
-   * @param taskIds The id's of the tasks that will be deleted, cannot be null. All
+   * @param taskIds The id's of the tasks that will be deleted, cannot be {@code null}. All
    * id's in the list that don't have an existing task will be ignored.
    * @param cascade If cascade is true, also the historic information related to this task is deleted.
    *
@@ -149,7 +149,7 @@ public @NullMarked interface TaskService {
   /**
    * Deletes the given task, not deleting historic information that is related to this task.
    *
-   * @param taskId The id of the task that will be deleted, cannot be null. If no task
+   * @param taskId The id of the task that will be deleted, cannot be {@code null}. If no task
    * exists with the given taskId, the operation is ignored.
    * @param deleteReason reason the task is deleted. Is recorded in history, if enabled.
    *
@@ -164,7 +164,7 @@ public @NullMarked interface TaskService {
   /**
    * Deletes all tasks of the given collection, not deleting historic information that is related to these tasks.
    *
-   * @param taskIds The id's of the tasks that will be deleted, cannot be null. All
+   * @param taskIds The id's of the tasks that will be deleted, cannot be {@code null}. All
    * id's in the list that don't have an existing task will be ignored.
    * @param deleteReason reason the task is deleted. Is recorded in history, if enabled.
    *
@@ -183,8 +183,8 @@ public @NullMarked interface TaskService {
    * a check is done if the task already has a user assigned to it.
    * No check is done whether the user is known by the identity component.
    *
-   * @param taskId task to claim, cannot be null.
-   * @param userId user that claims the task. When userId is null the task is unclaimed,
+   * @param taskId task to claim, cannot be {@code null}.
+   * @param userId user that claims the task. When userId is {@code null} the task is unclaimed,
    * assigned to no one.
    *
    * @throws ProcessEngineException
@@ -205,7 +205,7 @@ public @NullMarked interface TaskService {
    * {@link Task#getAssignee() assignee}.
    * </p>
    *
-   * @param taskId the id of the task to complete, cannot be null.
+   * @param taskId the id of the task to complete, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no task exists with the given id or when this task is {@link DelegationState#PENDING} delegation.
@@ -251,7 +251,7 @@ public @NullMarked interface TaskService {
    * is set to {@link DelegationState#RESOLVED} and the task can be
    * {@link TaskService#complete(String) completed}.
    *
-   * @param taskId the id of the task to resolve, cannot be null.
+   * @param taskId the id of the task to resolve, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          when no task exists with the given id.
@@ -291,8 +291,8 @@ public @NullMarked interface TaskService {
    * and the required task parameters have been provided.
    * </p>
    *
-   * @param taskId the id of the task to complete, cannot be null.
-   * @param variables task parameters. May be null or empty.
+   * @param taskId the id of the task to complete, cannot be {@code null}.
+   * @param variables task parameters. May be {@code null} or empty.
    *
    * @throws ProcessEngineException
    *          when no task exists with the given id.
@@ -313,8 +313,8 @@ public @NullMarked interface TaskService {
    * and the required task parameters have been provided.
    * </p>
    *
-   * @param taskId the id of the task to complete, cannot be null.
-   * @param variables task parameters. May be null or empty.
+   * @param taskId the id of the task to complete, cannot be {@code null}.
+   * @param variables task parameters. May be {@code null} or empty.
    * @param deserializeValues if false, returned {@link SerializableValue}s
    *   will not be deserialized (unless they are passed into this method as a
    *   deserialized value or if the BPMN process triggers deserialization)
@@ -334,10 +334,10 @@ public @NullMarked interface TaskService {
    * Changes the assignee of the given task to the given userId.
    * No check is done whether the user is known by the identity component.
    *
-   * @param taskId id of the task, cannot be null.
+   * @param taskId id of the task, cannot be {@code null}.
    * @param userId id of the user to use as assignee. Set <code>null</code> to unassign the task.
    *
-   * @throws NullValueException in case the given taskId is null.
+   * @throws NullValueException in case the given taskId is {@code null}.
    * @throws NotFoundException when the task or user doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -349,10 +349,10 @@ public @NullMarked interface TaskService {
    * Transfers ownership of this task to another user.
    * No check is done whether the user is known by the identity component.
    *
-   * @param taskId id of the task, cannot be null.
+   * @param taskId id of the task, cannot be {@code null}.
    * @param userId of the person that is receiving ownership.
    *
-   * @throws NullValueException in case the given taskId or userId is null.
+   * @throws NullValueException in case the given taskId or userId is {@code null}.
    * @throws NotFoundException when the task or user doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -377,10 +377,10 @@ public @NullMarked interface TaskService {
   /**
    * Convenience shorthand for {@link #addUserIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
    *
-   * @param taskId id of the task, cannot be null.
-   * @param userId id of the user to use as candidate, cannot be null.
+   * @param taskId id of the task, cannot be {@code null}.
+   * @param userId id of the user to use as candidate, cannot be {@code null}.
    *
-   * @throws NullValueException in case the given taskId or userId is null.
+   * @throws NullValueException in case the given taskId or userId is {@code null}.
    * @throws NotFoundException when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -391,10 +391,10 @@ public @NullMarked interface TaskService {
   /**
    * Convenience shorthand for {@link #addGroupIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
    *
-   * @param taskId id of the task, cannot be null.
-   * @param groupId id of the group to use as candidate, cannot be null.
+   * @param taskId id of the task, cannot be {@code null}.
+   * @param groupId id of the group to use as candidate, cannot be {@code null}.
    *
-   * @throws NullValueException in case the given taskId or groupId is null.
+   * @throws NullValueException in case the given taskId or groupId is {@code null}.
    * @throws NotFoundException when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -406,11 +406,11 @@ public @NullMarked interface TaskService {
    * Involves a user with a task. The type of identity link is defined by the
    * given identityLinkType.
    *
-   * @param taskId id of the task, cannot be null.
-   * @param userId id of the user involve, cannot be null.
-   * @param identityLinkType type of identityLink, cannot be null (@see {@link IdentityLinkType}).
+   * @param taskId id of the task, cannot be {@code null}.
+   * @param userId id of the user involve, cannot be {@code null}.
+   * @param identityLinkType type of identityLink, cannot be {@code null} (@see {@link IdentityLinkType}).
    *
-   * @throws NullValueException in case the given taskId or userId is null.
+   * @throws NullValueException in case the given taskId or userId is {@code null}.
    * @throws NotFoundException when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -422,11 +422,11 @@ public @NullMarked interface TaskService {
    * Involves a group with a task. The type of identityLink is defined by the
    * given identityLink.
    *
-   * @param taskId id of the task, cannot be null.
-   * @param groupId id of the group to involve, cannot be null.
-   * @param identityLinkType type of identity, cannot be null (@see {@link IdentityLinkType}).
+   * @param taskId id of the task, cannot be {@code null}.
+   * @param groupId id of the group to involve, cannot be {@code null}.
+   * @param identityLinkType type of identity, cannot be {@code null} (@see {@link IdentityLinkType}).
    *
-   * @throws NullValueException in case the given taskId or groupId is null.
+   * @throws NullValueException in case the given taskId or groupId is {@code null}.
    * @throws NotFoundException when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -437,8 +437,8 @@ public @NullMarked interface TaskService {
   /**
    * Convenience shorthand for {@link #deleteUserIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
    *
-   * @param taskId id of the task, cannot be null.
-   * @param userId id of the user to use as candidate, cannot be null.
+   * @param taskId id of the task, cannot be {@code null}.
+   * @param userId id of the user to use as candidate, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          when the task or user doesn't exist.
@@ -452,8 +452,8 @@ public @NullMarked interface TaskService {
   /**
    * Convenience shorthand for {@link #deleteGroupIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
    *
-   * @param taskId id of the task, cannot be null.
-   * @param groupId id of the group to use as candidate, cannot be null.
+   * @param taskId id of the task, cannot be {@code null}.
+   * @param groupId id of the group to use as candidate, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          when the task or group doesn't exist.
@@ -467,9 +467,9 @@ public @NullMarked interface TaskService {
   /**
    * Removes the association between a user and a task for the given identityLinkType.
    *
-   * @param taskId id of the task, cannot be null.
-   * @param userId id of the user involve, cannot be null.
-   * @param identityLinkType type of identityLink, cannot be null (@see {@link IdentityLinkType}).
+   * @param taskId id of the task, cannot be {@code null}.
+   * @param userId id of the user involve, cannot be {@code null}.
+   * @param identityLinkType type of identityLink, cannot be {@code null} (@see {@link IdentityLinkType}).
    *
    * @throws ProcessEngineException
    *          when the task or user doesn't exist.
@@ -483,9 +483,9 @@ public @NullMarked interface TaskService {
   /**
    * Removes the association between a group and a task for the given identityLinkType.
    *
-   * @param taskId id of the task, cannot be null.
-   * @param groupId id of the group to involve, cannot be null.
-   * @param identityLinkType type of identity, cannot be null (@see {@link IdentityLinkType}).
+   * @param taskId id of the task, cannot be {@code null}.
+   * @param groupId id of the group to involve, cannot be {@code null}.
+   * @param identityLinkType type of identity, cannot be {@code null} (@see {@link IdentityLinkType}).
    *
    * @throws ProcessEngineException
    *          when the task or group doesn't exist.
@@ -501,9 +501,9 @@ public @NullMarked interface TaskService {
    * <p>
    * Authorization: actual owner / business admin
    *
-   * @param taskId   id of the task, cannot be null.
+   * @param taskId   id of the task, cannot be {@code null}.
    * @param priority the new priority for the task.
-   * @throws NullValueException     in case the given taskId is null.
+   * @throws NullValueException     in case the given taskId is {@code null}.
    * @throws NotFoundException      when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -514,9 +514,9 @@ public @NullMarked interface TaskService {
   /**
    * Changes the name of the task.
    *
-   * @param taskId id of the task, not null
-   * @param name   the new task name, not null
-   * @throws NullValueException     in case the taskId is null.
+   * @param taskId id of the task, not {@code null}
+   * @param name   the new task name, not {@code null}
+   * @throws NullValueException     in case the taskId is {@code null}.
    * @throws NotFoundException      when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -527,9 +527,9 @@ public @NullMarked interface TaskService {
   /**
    * Changes the description of the task.
    *
-   * @param taskId      id of the task, not null
-   * @param description the new task description, not null
-   * @throws NullValueException     in case the taskId is null.
+   * @param taskId      id of the task, not {@code null}
+   * @param description the new task description, not {@code null}
+   * @throws NullValueException     in case the taskId is {@code null}.
    * @throws NotFoundException      when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -540,9 +540,9 @@ public @NullMarked interface TaskService {
   /**
    * Changes the dueDate of the task.
    *
-   * @param taskId  id of the task, not null
-   * @param dueDate the new task dueDate, not null
-   * @throws NullValueException     in case the taskId is null.
+   * @param taskId  id of the task, not {@code null}
+   * @param dueDate the new task dueDate, not {@code null}
+   * @throws NullValueException     in case the taskId is {@code null}.
    * @throws NotFoundException      when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -553,9 +553,9 @@ public @NullMarked interface TaskService {
   /**
    * Changes the dueDate of the task.
    *
-   * @param taskId       id of the task, not null
-   * @param followUpDate the new task followUpDate, not null
-   * @throws NullValueException     in case the taskId is null.
+   * @param taskId       id of the task, not {@code null}
+   * @param followUpDate the new task followUpDate, not {@code null}
+   * @throws NullValueException     in case the taskId is {@code null}.
    * @throws NotFoundException      when the task doesn't exist.
    * @throws AuthorizationException If the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_ASSIGN} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -1110,7 +1110,7 @@ public @NullMarked interface TaskService {
    *
    * @param taskId    id of a task of a comment that is intended to be deleted
    * @param commentId id of a comment that is intended to be deleted
-   * @throws BadUserRequestException if taskId is null
+   * @throws BadUserRequestException if taskId is {@code null}
    * @throws NullValueException      if no task with the given id exists
    * @throws AuthorizationException  if the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_WORK} permissions on {@link Resources#TASK}
    *                                 or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_WORK} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -1123,7 +1123,7 @@ public @NullMarked interface TaskService {
    *
    * @param processInstanceId id of a processInstance of a comment that is intended to be deleted
    * @param commentId         id of a comment that is intended to be deleted
-   * @throws BadUserRequestException if processInstanceId is null
+   * @throws BadUserRequestException if processInstanceId is {@code null}
    * @throws NullValueException     if no process instance with the given id exists
    * @throws AuthorizationException if the user hasn't any of {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *                                or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}
@@ -1134,7 +1134,7 @@ public @NullMarked interface TaskService {
    * Deletes all comments by a given taskId
    *
    * @param taskId id of a task of all comments that are intended to be deleted
-   * @throws BadUserRequestException if taskId is null
+   * @throws BadUserRequestException if taskId is {@code null}
    * @throws NullValueException      if no task with the given id exists
    * @throws AuthorizationException if the user hasn't any of {@link Permissions#UPDATE}, {@link Permissions#TASK_WORK} permissions on {@link Resources#TASK}
    *                                or no {@link Permissions#UPDATE_TASK}, {@link Permissions#TASK_WORK} permissions on {@link Resources#PROCESS_DEFINITION}
@@ -1146,7 +1146,7 @@ public @NullMarked interface TaskService {
    * Deletes all comments by a given processInstanceId
    *
    * @param processInstanceId id of a process instance of comments that are intended to be deleted
-   * @throws BadUserRequestException if processInstanceId is null
+   * @throws BadUserRequestException if processInstanceId is {@code null}
    * @throws NullValueException     if no process instance with the given id exists
    * @throws AuthorizationException if the user hasn't any of {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *                                or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}
@@ -1211,10 +1211,10 @@ public @NullMarked interface TaskService {
    * </p>
    *
    * @param taskId - task that should have an attachment
-   * @param processInstanceId - id of a process to use if task id is null
-   * @param attachmentType - name of the attachment, can be null
-   * @param attachmentName - name of the attachment, can be null
-   * @param attachmentDescription  - full text description, can be null
+   * @param processInstanceId - id of a process to use if task id is {@code null}
+   * @param attachmentType - name of the attachment, can be {@code null}
+   * @param attachmentName - name of the attachment, can be {@code null}
+   * @param attachmentDescription  - full text description, can be {@code null}
    * @param content - byte array with content of attachment
    *
    */
@@ -1229,11 +1229,11 @@ public @NullMarked interface TaskService {
    * </p>
    *
    * @param taskId - task that should have an attachment
-   * @param processInstanceId - id of a process to use if task id is null
-   * @param attachmentType - name of the attachment, can be null
-   * @param attachmentName - name of the attachment, can be null
-   * @param attachmentDescription  - full text description, can be null
-   * @param url - url of the attachment, can be null
+   * @param processInstanceId - id of a process to use if task id is {@code null}
+   * @param attachmentType - name of the attachment, can be {@code null}
+   * @param attachmentName - name of the attachment, can be {@code null}
+   * @param attachmentDescription  - full text description, can be {@code null}
+   * @param url - url of the attachment, can be {@code null}
    *
    */
   Attachment createAttachment(@Nullable String attachmentType, @Nullable String taskId, @Nullable String processInstanceId, @Nullable String attachmentName, @Nullable String attachmentDescription, @Nullable String url);
@@ -1278,7 +1278,7 @@ public @NullMarked interface TaskService {
    * @param errorCode the error code of the corresponding bmpn error
    *
    * @throws NotFoundException if no task with the given id exists
-   * @throws BadUserRequestException if task id or error code were null or empty
+   * @throws BadUserRequestException if task id or error code were {@code null} or empty
    * @throws SuspendedEntityInteractionException if the task is suspended
    * @throws AuthorizationException if the user has none of the following permissions:
    * <li>{@link Permissions#TASK_WORK} permission on {@link Resources#TASK} or
@@ -1314,7 +1314,7 @@ public @NullMarked interface TaskService {
    * @param escalationCode the escalation code of the corresponding escalation
    *
    * @throws NotFoundException if no task with the given id exists
-   * @throws BadUserRequestException if task id or escalation code were null or empty
+   * @throws BadUserRequestException if task id or escalation code were {@code null} or empty
    * @throws SuspendedEntityInteractionException if the task is suspended
    * @throws AuthorizationException if the user has none of the following permissions:
    * <li>{@link Permissions#TASK_WORK} permission on {@link Resources#TASK} or
@@ -1332,7 +1332,7 @@ public @NullMarked interface TaskService {
    * @param variables the variables to pass to the execution
    *
    * @throws NotFoundException if no task with the given id exists
-   * @throws BadUserRequestException if task id or escalation code were null or empty
+   * @throws BadUserRequestException if task id or escalation code were {@code null} or empty
    * @throws SuspendedEntityInteractionException if the task is suspended
    * @throws AuthorizationException if the user has none of the following permissions:
    * <li>{@link Permissions#TASK_WORK} permission on {@link Resources#TASK} or

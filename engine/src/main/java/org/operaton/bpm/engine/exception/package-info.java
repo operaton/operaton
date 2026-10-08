@@ -1,6 +1,6 @@
 /**
  * Engine-specific runtime exceptions extending {@link org.operaton.bpm.engine.ProcessEngineException}.
- * Covers typed exceptions for missing resources, invalid state, and null values.
+ * Covers typed exceptions for missing resources, invalid state, and {@code null} values.
  */
 @NullMarked
 package org.operaton.bpm.engine.exception;

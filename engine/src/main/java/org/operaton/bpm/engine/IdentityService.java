@@ -90,7 +90,7 @@ public interface IdentityService {
   /**
    * Creates a new user. The user is transient and must be saved using
    * {@link #saveUser(User)}.
-   * @param userId id for the new user, cannot be null.
+   * @param userId id for the new user, cannot be {@code null}.
    * @throws UnsupportedOperationException if identity service implementation is read only. See {@link #isReadOnly()}
    * @throws AuthorizationException if the user has no {@link Permissions#CREATE} permissions on {@link Resources#USER}.
    */
@@ -98,7 +98,7 @@ public interface IdentityService {
 
   /**
    * Saves the user. If the user already existed, the user is updated.
-   * @param user user to save, cannot be null.
+   * @param user user to save, cannot be {@code null}.
    * @throws ProcessEngineException when {@link ProcessEngineConfiguration#enablePasswordPolicy}
    *                                is {@code true} and password violates password policy
    * @throws ProcessEngineException when user id violates:
@@ -119,7 +119,7 @@ public interface IdentityService {
   UserQuery createUserQuery();
 
   /**
-   * @param userId id of user to delete, cannot be null. When an id is passed
+   * @param userId id of user to delete, cannot be {@code null}. When an id is passed
    * for an unexisting user, this operation is ignored.
    * @throws UnsupportedOperationException if identity service implementation is read only. See {@link #isReadOnly()}
    * @throws AuthorizationException if the user has no {@link Permissions#DELETE} permissions on {@link Resources#USER}.
@@ -131,7 +131,7 @@ public interface IdentityService {
   /**
    * Creates a new group. The group is transient and must be saved using
    * {@link #saveGroup(Group)}.
-   * @param groupId id for the new group, cannot be null.
+   * @param groupId id for the new group, cannot be {@code null}.
    * @throws UnsupportedOperationException if identity service implementation is read only. See {@link #isReadOnly()}
    * @throws AuthorizationException if the user has no {@link Permissions#CREATE} permissions on {@link Resources#GROUP}.
    */
@@ -150,7 +150,7 @@ public interface IdentityService {
 
   /**
    * Saves the group. If the group already existed, the group is updated.
-   * @param group group to save. Cannot be null.
+   * @param group group to save. Cannot be {@code null}.
    * @throws ProcessEngineException when group id violates:
    *         <ul>
    *           <li>{@link ProcessEngineConfiguration#generalResourceWhitelistPattern} OR</li>
@@ -166,15 +166,15 @@ public interface IdentityService {
   /**
    * Deletes the group. When no group exists with the given id, this operation
    * is ignored.
-   * @param groupId id of the group that should be deleted, cannot be null.
+   * @param groupId id of the group that should be deleted, cannot be {@code null}.
    * @throws UnsupportedOperationException if identity service implementation is read only. See {@link #isReadOnly()}
    * @throws AuthorizationException if the user has no {@link Permissions#DELETE} permissions on {@link Resources#GROUP}.
    */
   void deleteGroup(String groupId);
 
   /**
-   * @param userId the userId, cannot be null.
-   * @param groupId the groupId, cannot be null.
+   * @param userId the userId, cannot be {@code null}.
+   * @param groupId the groupId, cannot be {@code null}.
    * @throws RuntimeException when the given user or group doesn't exist or when the user
    * is already member of the group.
    * @throws UnsupportedOperationException if identity service implementation is read only. See {@link #isReadOnly()}
@@ -185,8 +185,8 @@ public interface IdentityService {
   /**
    * Delete the membership of the user in the group. When the group or user don't exist
    * or when the user is not a member of the group, this operation is ignored.
-   * @param userId the user's id, cannot be null.
-   * @param groupId the group's id, cannot be null.
+   * @param userId the user's id, cannot be {@code null}.
+   * @param groupId the group's id, cannot be {@code null}.
    * @throws UnsupportedOperationException if identity service implementation is read only. See {@link #isReadOnly()}
    * @throws AuthorizationException if the user has no {@link Permissions#DELETE} permissions on {@link Resources#GROUP_MEMBERSHIP}.
    */
@@ -256,9 +256,9 @@ public interface IdentityService {
    * Creates a new membership between the given user and tenant.
    *
    * @param tenantId
-   *          the id of the tenant, cannot be null.
+   *          the id of the tenant, cannot be {@code null}.
    * @param userId
-   *          the id of the user, cannot be null.
+   *          the id of the user, cannot be {@code null}.
    * @throws RuntimeException
    *           when the given tenant or user doesn't exist or the user is
    *           already a member of this tenant.
@@ -275,9 +275,9 @@ public interface IdentityService {
    * Creates a new membership between the given group and tenant.
    *
    * @param tenantId
-   *          the id of the tenant, cannot be null.
+   *          the id of the tenant, cannot be {@code null}.
    * @param groupId
-   *          the id of the group, cannot be null.
+   *          the id of the group, cannot be {@code null}.
    * @throws RuntimeException
    *           when the given tenant or group doesn't exist or when the group
    *           is already a member of this tenant.
@@ -295,9 +295,9 @@ public interface IdentityService {
    * ignored when the given user, tenant or membership don't exist.
    *
    * @param tenantId
-   *          the id of the tenant, cannot be null.
+   *          the id of the tenant, cannot be {@code null}.
    * @param userId
-   *          the id of the user, cannot be null.
+   *          the id of the user, cannot be {@code null}.
    * @throws UnsupportedOperationException
    *           if identity service implementation is read only. See
    *           {@link #isReadOnly()}
@@ -312,9 +312,9 @@ public interface IdentityService {
    * ignored when the given group, tenant or membership don't exist.
    *
    * @param tenantId
-   *          the id of the tenant, cannot be null.
+   *          the id of the tenant, cannot be {@code null}.
    * @param groupId
-   *          the id of the group, cannot be null.
+   *          the id of the group, cannot be {@code null}.
    * @throws UnsupportedOperationException
    *           if identity service implementation is read only. See
    *           {@link #isReadOnly()}
@@ -458,7 +458,7 @@ public interface IdentityService {
 
   /** Retrieves the picture for a given user.
    * @throws ProcessEngineException if the user doesn't exist.
-   * @return null if the user doesn't have a picture. */
+   * @return {@code null} if the user doesn't have a picture. */
   @Nullable Picture getUserPicture(String userId);
 
   /** Deletes the picture for a given user. If the user does not have a picture or if the user doesn't exists the call is ignored.

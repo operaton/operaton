@@ -38,7 +38,7 @@ public @NullMarked interface ProcessEngineInfo {
 
   /**
    * Returns the exception stacktrace in case an exception occurred while initializing
-   * the engine. When no exception occurred, null is returned.
+   * the engine. When no exception occurred, {@code null} is returned.
    */
   @Nullable String getException();
 

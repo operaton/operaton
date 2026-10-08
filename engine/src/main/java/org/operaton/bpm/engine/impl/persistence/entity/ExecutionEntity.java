@@ -158,7 +158,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   protected transient List<IncidentEntity> incidents;
   protected int cachedEntityState;
 
-  @SuppressWarnings("unchecked")
   protected transient VariableStore<VariableInstanceEntity> variableStore =
     new VariableStore<>(this, new ExecutionEntityReferencer(this));
 
@@ -686,6 +685,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     executionObservers.add(observer);
   }
 
+  @SuppressWarnings("unused")
   public void removeExecutionObserver(ExecutionObserver observer) {
     executionObservers.remove(observer);
   }
@@ -1245,10 +1245,12 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   // variables ////////////////////////////////////////////////////////////////
 
+  @SuppressWarnings("unused")
   public void addVariableListener(VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
     registeredVariableListeners.add(listener);
   }
 
+  @SuppressWarnings("unused")
   public void removeVariableListener(VariableInstanceLifecycleListener<VariableInstanceEntity> listener) {
     registeredVariableListeners.remove(listener);
   }
@@ -1542,6 +1544,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
         .toList();
   }
 
+  @SuppressWarnings("unused")
   public List<EventSubscriptionEntity> getCompensateEventSubscriptions(String activityId) {
     List<EventSubscriptionEntity> subscriptions = getEventSubscriptionsInternal();
     return subscriptions.stream()
@@ -1695,6 +1698,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
     return VARIABLE_INSTANCE_FACTORY;
   }

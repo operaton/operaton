@@ -38,10 +38,12 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
     getDbEntityManager().deletePreserveOrder(HistoricActivityInstanceEntity.class, "deleteHistoricActivityInstancesByProcessInstanceIds", historicProcessInstanceIds);
   }
 
+  @SuppressWarnings("unused")
   public void insertHistoricActivityInstance(HistoricActivityInstanceEntity historicActivityInstance) {
     getDbEntityManager().insert(historicActivityInstance);
   }
 
+  @SuppressWarnings("unused")
   public HistoricActivityInstanceEntity findHistoricActivityInstance(String activityId, String processInstanceId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(ACTIVITY_ID, activityId);

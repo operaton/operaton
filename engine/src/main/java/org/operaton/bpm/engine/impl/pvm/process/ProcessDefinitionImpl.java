@@ -114,6 +114,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     return new ExecutionImpl();
   }
 
+  @SuppressWarnings("unused")
   public List<ActivityImpl> getInitialActivityStack() {
     return getInitialActivityStack(initial);
   }

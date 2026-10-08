@@ -256,6 +256,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     return extensionProperties;
   }
 
+  @SuppressWarnings("unused")
   public void setExtensionProperties(Map<String, String> extensionProperties) {
     this.extensionProperties = extensionProperties;
   }
@@ -520,6 +521,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   }
 
   protected boolean evaluateThrowBpmnError(ExecutionEntity execution, boolean continueOnException) {
+    @SuppressWarnings("unchecked")
     List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) execution.getActivity().getProperty(BpmnProperties.OPERATON_ERROR_EVENT_DEFINITION.name());
     if (operatonErrorEventDefinitions != null && !operatonErrorEventDefinitions.isEmpty()) {
       for (OperatonErrorEventDefinition operatonErrorEventDefinition : operatonErrorEventDefinitions) {

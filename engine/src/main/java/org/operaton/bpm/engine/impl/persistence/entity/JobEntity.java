@@ -323,6 +323,7 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   // special setter for MyBatis which does not influence incidents
+  @SuppressWarnings("unused")
   public void setRetriesFromPersistence(int retries) {
     this.retries = retries;
   }
@@ -351,7 +352,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
-  private boolean existsIncidentForJob(String incidentHandlerType) {
+  private boolean existsIncidentForJob(@SuppressWarnings("SameParameterValue") String incidentHandlerType) {
     // check whether there exists already an incident
     // for this job
     List<Incident> failedJobIncidents = Context

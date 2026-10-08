@@ -59,6 +59,7 @@ public class HistoricVariableInstanceManager extends AbstractHistoricManager {
     deleteHistoricVariableInstances(parameters);
   }
 
+  @SuppressWarnings("unused")
   public void deleteHistoricVariableInstanceByCaseInstanceId(String historicCaseInstanceId) {
     deleteHistoricVariableInstancesByProcessCaseInstanceId(null, historicCaseInstanceId);
   }
@@ -74,7 +75,7 @@ public class HistoricVariableInstanceManager extends AbstractHistoricManager {
     getDbEntityManager().deletePreserveOrder(HistoricVariableInstanceEntity.class, "deleteHistoricVariableInstanceByIds", parameters);
   }
 
-  protected void deleteHistoricVariableInstancesByProcessCaseInstanceId(String historicProcessInstanceId, String historicCaseInstanceId) {
+  protected void deleteHistoricVariableInstancesByProcessCaseInstanceId(@SuppressWarnings("SameParameterValue") String historicProcessInstanceId, String historicCaseInstanceId) {
     ensureOnlyOneNotNull("Only the process instance or case instance id should be set", historicProcessInstanceId, historicCaseInstanceId);
     if (isHistoryEnabled()) {
 

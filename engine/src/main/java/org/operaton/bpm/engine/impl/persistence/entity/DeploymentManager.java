@@ -264,7 +264,7 @@ public class DeploymentManager extends AbstractManager {
     return getDbEntityManager().selectList("selectResourceNamesByDeploymentId", deploymentId);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<String> findDeploymentIdsByProcessInstances(List<String> processInstanceIds) {
     return getDbEntityManager().selectList("selectDeploymentIdsByProcessInstances", processInstanceIds);
   }

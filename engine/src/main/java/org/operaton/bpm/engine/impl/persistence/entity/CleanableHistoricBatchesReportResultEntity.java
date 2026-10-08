@@ -48,6 +48,7 @@ public class CleanableHistoricBatchesReportResultEntity implements CleanableHist
     return finishedBatchesCount;
   }
 
+  @SuppressWarnings("unused")
   public void setFinishedBatchesCount(long finishedBatchCount) {
     this.finishedBatchesCount = finishedBatchCount;
   }
@@ -57,6 +58,7 @@ public class CleanableHistoricBatchesReportResultEntity implements CleanableHist
     return cleanableBatchesCount;
   }
 
+  @SuppressWarnings("unused")
   public void setCleanableBatchesCount(long cleanableBatchCount) {
     this.cleanableBatchesCount = cleanableBatchCount;
   }

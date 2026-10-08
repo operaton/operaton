@@ -38,6 +38,7 @@ public class MeterLogEntity implements DbEntity, HasDbReferences {
 
   protected long value;
 
+  @SuppressWarnings("unused")
   public MeterLogEntity(String name, long value, Date timestamp) {
     this(name, null, value, timestamp);
   }
@@ -50,6 +51,7 @@ public class MeterLogEntity implements DbEntity, HasDbReferences {
     this.milliseconds = timestamp.getTime();
   }
 
+  @SuppressWarnings("unused")
   public MeterLogEntity() {
   }
 

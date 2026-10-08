@@ -349,6 +349,7 @@ public class AuthorizationManager extends AbstractManager {
     }
   }
 
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   protected boolean isResourceValidForPermission(PermissionCheck permissionCheck) {
     Resource[] permissionResources = permissionCheck.getPermission().getTypes();
     Resource givenResource = permissionCheck.getResource();
@@ -544,6 +545,7 @@ public class AuthorizationManager extends AbstractManager {
    * @return <code>true</code> if the given authentication contains the group
    *         {@link Groups#OPERATON_ADMIN} or the user
    */
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean isOperatonAdmin(Authentication authentication) {
     List<String> groupIds = authentication.getGroupIds();
     if (groupIds != null) {

@@ -151,7 +151,7 @@ public class ExecutionManager extends AbstractManager {
     return getDbEntityManager().selectList("selectProcessInstanceDeploymentIdMappingsByQueryCriteria", processInstanceQuery);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<ExecutionEntity> findEventScopeExecutionsByActivityId(String activityRef, String parentExecutionId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(ACTIVITY_ID, activityRef);

@@ -44,6 +44,7 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
+@SuppressWarnings("unused")
 public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinition, ResourceDefinitionEntity<ProcessDefinitionEntity>, DbEntity, HasDbRevision {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -146,6 +147,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return processInstance;
   }
 
+  @SuppressWarnings("UnusedReturnValue")
   public IdentityLinkEntity addIdentityLink(String userId, String groupId) {
     IdentityLinkEntity identityLinkEntity = IdentityLinkEntity.newIdentityLink();
     getIdentityLinks().add(identityLinkEntity);

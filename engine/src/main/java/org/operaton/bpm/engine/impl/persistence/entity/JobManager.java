@@ -86,6 +86,7 @@ public class JobManager extends AbstractManager {
     JOB_DUEDATE_ORDERING_PROPERTY.setDirection(Direction.ASCENDING);
   }
 
+  @SuppressWarnings("unused")
   public void updateJob(JobEntity job) {
     getDbEntityManager().merge(job);
   }
@@ -197,6 +198,7 @@ public class JobManager extends AbstractManager {
         && (configuration.getJobExecutorPriorityRangeMax() >= jobPriority);
   }
 
+  @SuppressWarnings("unused")
   public void cancelTimers(ExecutionEntity execution) {
     List<TimerEntity> timers = Context
       .getCommandContext()
@@ -276,8 +278,8 @@ public class JobManager extends AbstractManager {
     Map<String, Object> exclusiveParams = new HashMap<>(params);
     exclusiveParams.put(SKIP_LOCKED, false);
     exclusiveParams.put("exclusiveOnly", true);
-    List<AcquirableJobEntity> exclusiveJobs = getDbEntityManager()
-        .selectList(SELECT_NEXT_JOBS_TO_EXECUTE, exclusiveParams, page);
+    @SuppressWarnings("unchecked")
+    List<AcquirableJobEntity> exclusiveJobs = getDbEntityManager().selectList(SELECT_NEXT_JOBS_TO_EXECUTE, exclusiveParams, page);
 
     int remaining = page.getMaxResults() - exclusiveJobs.size();
     List<AcquirableJobEntity> result = new ArrayList<>(exclusiveJobs);

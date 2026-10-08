@@ -160,6 +160,7 @@ public class IdentityInfoManager extends AbstractManager {
   }
 
   public void deleteUserInfoByUserId(String userId) {
+    @SuppressWarnings("unchecked")
     List<IdentityInfoEntity> identityInfos = getDbEntityManager().selectList("selectIdentityInfoByUserId", userId);
     for (IdentityInfoEntity identityInfo: identityInfos) {
       getIdentityInfoManager().deleteIdentityInfo(identityInfo);

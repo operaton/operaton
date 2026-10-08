@@ -138,6 +138,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    *
    * @return true if empty, false otherwise
    */
+  @SuppressWarnings("unused")
   public boolean isBacklogEmpty() {
     return backlog.isEmpty();
   }
@@ -201,7 +202,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   /**
    * @deprecated Use {@link #getListeners(String)} instead.
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "rawtypes"})
   @Deprecated(forRemoval = true, since = "1.0")
   public List<ExecutionListener> getExecutionListeners(String eventName) {
     return (List) super.getListeners(eventName);

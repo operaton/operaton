@@ -38,6 +38,7 @@ import org.operaton.bpm.engine.repository.*;
 /**
  * @author Tom Baeyens
  */
+@SuppressWarnings("rawtypes")
 public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
 
   protected String id;
@@ -172,6 +173,7 @@ public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions
     return validatingSchema;
   }
 
+  @SuppressWarnings("unused")
   public void setValidatingSchema(boolean validatingSchema) {
     this.validatingSchema = validatingSchema;
   }

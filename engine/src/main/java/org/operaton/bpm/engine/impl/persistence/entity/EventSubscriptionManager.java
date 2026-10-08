@@ -70,6 +70,7 @@ public class EventSubscriptionManager extends AbstractManager {
     }
   }
 
+  @SuppressWarnings("unused")
   public void deleteAndFlushEventSubscription(EventSubscriptionEntity persistentObject) {
     deleteEventSubscription(persistentObject);
     getDbEntityManager().flushEntity(persistentObject);
@@ -159,7 +160,7 @@ public class EventSubscriptionManager extends AbstractManager {
     }
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<EventSubscriptionEntity> findSignalEventSubscriptionsByExecution(String executionId) {
     final String query = "selectSignalEventSubscriptionsByExecution";
     Set<EventSubscriptionEntity> selectList = new HashSet<>( getDbEntityManager().selectList(query, executionId));
@@ -207,7 +208,7 @@ public class EventSubscriptionManager extends AbstractManager {
     return getDbEntityManager().selectList(query, executionId);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<EventSubscriptionEntity> findEventSubscriptions(String executionId, String type, String activityId) {
     final String query = "selectEventSubscriptionsByExecutionTypeAndActivity";
     Map<String,String> params = new HashMap<>();
@@ -226,6 +227,7 @@ public class EventSubscriptionManager extends AbstractManager {
     return getDbEntityManager().selectList(query, params);
   }
 
+  @SuppressWarnings("unchecked")
   public List<EventSubscriptionEntity> findStartEventSubscriptionsByConfigurationLike(String configuration) {
     final String query = "selectStartEventSubscriptionsByConfigurationLike";
     Map<String,String> params = new HashMap<>();
@@ -233,7 +235,7 @@ public class EventSubscriptionManager extends AbstractManager {
     return getDbEntityManager().selectList(query, params);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<EventSubscriptionEntity> findEventSubscriptionsByNameAndTenantId(String type, String eventName, String tenantId) {
     final String query = "selectEventSubscriptionsByNameAndTenantId";
     Map<String,String> params = new HashMap<>();

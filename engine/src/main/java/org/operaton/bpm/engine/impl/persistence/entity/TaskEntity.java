@@ -298,6 +298,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
   }
 
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   protected boolean tenantIdIsSame(final TaskEntity otherTask) {
     final String otherTenantId = otherTask.getTenantId();
 

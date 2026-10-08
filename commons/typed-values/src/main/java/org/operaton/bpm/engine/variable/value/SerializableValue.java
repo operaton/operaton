@@ -35,7 +35,7 @@ public interface SerializableValue extends TypedValue {
   boolean isDeserialized();
 
   /**
-   * Returns the value or null in case the value is null.
+   * Returns the value or {@code null} in case the value is {@code null}.
    *
    * @return the value represented by this TypedValue.
    * @throws IllegalStateException in case the value is not deserialized. See {@link #isDeserialized()}.

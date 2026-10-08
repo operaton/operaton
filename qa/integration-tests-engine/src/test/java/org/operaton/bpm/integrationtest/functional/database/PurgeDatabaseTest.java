@@ -75,7 +75,7 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
    *
    * @param processEngine the {@link ProcessEngine} to check
    * @param fail if true the method will throw an {@link AssertionError} if the database is not clean
-   * @return the database summary if fail is set to false or null if database was clean
+   * @return the database summary if fail is set to false or {@code null} if database was clean
    * @throws AssertionError if the database was not clean and fail is set to true
    */
   public static void assertAndEnsureCleanDb(ProcessEngine processEngine) {

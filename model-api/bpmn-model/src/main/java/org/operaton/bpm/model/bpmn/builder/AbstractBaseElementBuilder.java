@@ -339,7 +339,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
           y = sourceY + sourceHeight / 2 - targetHeight / 2;
         }
         else {
-          SequenceFlow[] sequenceFlows = outgoing.toArray(new SequenceFlow[outgoing.size()]);
+          SequenceFlow[] sequenceFlows = outgoing.toArray(SequenceFlow[]::new);
           SequenceFlow last = sequenceFlows[outgoing.size() - 1];
 
           BpmnShape targetShape = findBpmnShape(last.getTarget());

@@ -40,7 +40,7 @@ public interface DmnDecisionResult extends List<DmnDecisionResultEntries>, Seria
   /**
    * Returns the first {@link DmnDecisionResultEntries}.
    *
-   * @return the first decision result or null if none exits
+   * @return the first decision result or {@code null} if none exits
    */
   DmnDecisionResultEntries getFirstResult();
 
@@ -48,7 +48,7 @@ public interface DmnDecisionResult extends List<DmnDecisionResultEntries>, Seria
    * Returns the single {@link DmnDecisionResultEntries} of the result. Asserts
    * that only one decision result exist.
    *
-   * @return the single decision result or null if none exists
+   * @return the single decision result or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one decision result exists
@@ -85,7 +85,7 @@ public interface DmnDecisionResult extends List<DmnDecisionResultEntries>, Seria
    *
    * @param <T>
    *          the type of the result entry
-   * @return the value of the single result entry or null if none exists
+   * @return the value of the single result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one decision result or more than one result entry
@@ -101,7 +101,7 @@ public interface DmnDecisionResult extends List<DmnDecisionResultEntries>, Seria
    *
    * @param <T>
    *          the type of the result entry
-   * @return the typed value of the single result entry or null if none exists
+   * @return the typed value of the single result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one decision result or more than one result entry

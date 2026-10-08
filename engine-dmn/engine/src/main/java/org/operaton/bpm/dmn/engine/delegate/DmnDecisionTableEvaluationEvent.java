@@ -43,12 +43,12 @@ public interface DmnDecisionTableEvaluationEvent extends DmnDecisionLogicEvaluat
   List<DmnEvaluatedDecisionRule> getMatchingRules();
 
   /**
-   * @return the result name of the collect operation if the {@link HitPolicy#COLLECT} was used with an aggregator otherwise null
+   * @return the result name of the collect operation if the {@link HitPolicy#COLLECT} was used with an aggregator otherwise {@code null}
    */
   String getCollectResultName();
 
   /**
-   * @return the result value of the collect operation if the {@link HitPolicy#COLLECT} was used with an aggregator otherwise null
+   * @return the result value of the collect operation if the {@link HitPolicy#COLLECT} was used with an aggregator otherwise {@code null}
    */
   TypedValue getCollectResultValue();
 

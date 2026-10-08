@@ -53,12 +53,12 @@ public class DefaultScriptEngineResolver implements ScriptEngineResolver {
    * Returns a cached script engine or creates a new script engine if no such engine is currently cached.
    *
    * @param language the language (such as 'groovy' for the script engine)
-   * @return the cached engine or null if no script engine can be created for the given language
+   * @return the cached engine or {@code null} if no script engine can be created for the given language
    */
   @Override
   public @Nullable ScriptEngine getScriptEngine(String language, boolean resolveFromCache) {
 
-    ScriptEngine scriptEngine = null;
+    ScriptEngine scriptEngine;
 
     if (resolveFromCache) {
       scriptEngine = cachedEngines.get(language);
@@ -79,7 +79,7 @@ public class DefaultScriptEngineResolver implements ScriptEngineResolver {
   }
 
   protected ScriptEngine getScriptEngine(String language) {
-    ScriptEngine scriptEngine = null;
+    ScriptEngine scriptEngine;
     if (ScriptingEngines.JAVASCRIPT_SCRIPTING_LANGUAGE.equalsIgnoreCase(language) ||
         ScriptingEngines.ECMASCRIPT_SCRIPTING_LANGUAGE.equalsIgnoreCase(language)) {
       scriptEngine = getJavaScriptScriptEngine(language);
@@ -94,7 +94,7 @@ public class DefaultScriptEngineResolver implements ScriptEngineResolver {
   }
 
   protected ScriptEngine getJavaScriptScriptEngine(String language) {
-    ScriptEngine scriptEngine = null;
+    ScriptEngine scriptEngine;
     ProcessEngineConfigurationImpl config = Context.getProcessEngineConfiguration();
     if (config != null && config.getScriptEngineNameJavaScript() != null) {
       scriptEngine = scriptEngineManager.getEngineByName(config.getScriptEngineNameJavaScript());

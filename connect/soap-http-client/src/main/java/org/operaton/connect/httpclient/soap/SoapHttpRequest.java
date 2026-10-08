@@ -31,7 +31,7 @@ public interface SoapHttpRequest extends HttpBaseRequest<SoapHttpRequest, SoapHt
   SoapHttpRequest soapAction(String value);
 
   /**
-   * @return the SOAPAction header field value (used until SOAP 1.1) or null if not set
+   * @return the SOAPAction header field value (used until SOAP 1.1) or {@code null} if not set
    */
   String getSoapAction();
 

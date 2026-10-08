@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.repository.ResourceType;
  */
 public @NullMarked class ByteArrayEntity implements DbEntity, HasDbRevision {
 
-  private static final Object PERSISTENTSTATE_NULL = new Object();
+  private static final Object PERSISTENT_STATE_NULL = new Object();
 
   protected @Nullable String id;
   protected int revision;
@@ -73,7 +73,7 @@ public @NullMarked class ByteArrayEntity implements DbEntity, HasDbRevision {
 
   @Override
   public Object getPersistentState() {
-    return bytes != null ? bytes : PERSISTENTSTATE_NULL;
+    return bytes != null ? bytes : PERSISTENT_STATE_NULL;
   }
 
   @Override

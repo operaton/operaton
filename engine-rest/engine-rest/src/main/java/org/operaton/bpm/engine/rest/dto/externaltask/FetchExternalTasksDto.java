@@ -294,6 +294,7 @@ public class FetchExternalTasksDto {
    * and applies them.
    * <p>
    * To achieve that, maps are used internally to map fields and orders to the corresponding builder method.
+   * </p>
    */
   static class SortMapper {
 

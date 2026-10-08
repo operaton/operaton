@@ -27,7 +27,7 @@ import org.jboss.msc.service.ServiceTarget;
 import org.jspecify.annotations.NullMarked;
 
 /**
- * <p>Utiliy class
+ * Utiliy class
  * @author Daniel Meyer
  *
  */

@@ -37,7 +37,7 @@ public interface UpdateProcessInstancesSuspensionStateBuilder extends UpdateProc
    *
    * @throws org.operaton.bpm.engine.BadUserRequestException
    *           If no process Instances are found
-   *           If a process Instance is set to null
+   *           If a process Instance is set to {@code null}
    * @throws AuthorizationException
    *           if the user has no {@link Permissions#CREATE} or
    *           {@link BatchPermissions#CREATE_BATCH_UPDATE_PROCESS_INSTANCES_SUSPEND} permission
@@ -46,23 +46,23 @@ public interface UpdateProcessInstancesSuspensionStateBuilder extends UpdateProc
   Batch activateAsync();
 
   /**
-   * <p>
    * Suspends the provided process instances asynchronously. This means that the execution is
    * stopped, so the <i>token state</i> will not change. However, actions that
    * do not change token state, like setting/removing variables, etc. will
    * succeed.
-   * </p>
    *
    * <p>
    * Tasks belonging to the suspended process instance will also be suspended.
    * This means that any actions influencing the tasks' lifecycles will fail,
    * such as
+   * </p>
    * <ul>
    * <li>claiming</li>
    * <li>completing</li>
    * <li>delegation</li>
    * <li>changes in task assignees, owners, etc.</li>
    * </ul>
+   * <p>
    * Actions that only change task properties will succeed, such as changing
    * variables or adding comments.
    * </p>
@@ -80,7 +80,7 @@ public interface UpdateProcessInstancesSuspensionStateBuilder extends UpdateProc
    *
    * @throws org.operaton.bpm.engine.BadUserRequestException
    *           If no process Instances are found
-   *           If a process Instance is set to null
+   *           If a process Instance is set to {@code null}
    * @throws AuthorizationException
    *           if the user has no {@link Permissions#CREATE} or
    *           {@link BatchPermissions#CREATE_BATCH_UPDATE_PROCESS_INSTANCES_SUSPEND} permission

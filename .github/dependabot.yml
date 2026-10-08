@@ -39,9 +39,6 @@ updates:
         patterns:
           - "org.apache.httpcomponents.core5:*"
           - "org.apache.httpcomponents.client5:*"
-      httpcomponents4:
-        patterns:
-          - "org.apache.httpcomponents:*"
       jboss-weld:
         patterns:
           - "org.jboss.weld.servlet:weld-servlet-shaded"

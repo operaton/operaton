@@ -39,7 +39,7 @@ public class StartAfterInstructionDto extends ProcessInstanceModificationInstruc
   public void applyTo(ProcessInstanceModificationBuilder builder, ProcessEngine engine, ObjectMapper mapper) {
     checkValidity();
 
-    ProcessInstanceModificationInstantiationBuilder activityBuilder = null;
+    ProcessInstanceModificationInstantiationBuilder activityBuilder;
 
     if (ancestorActivityInstanceId != null) {
       activityBuilder = builder.startAfterActivity(activityId, ancestorActivityInstanceId);

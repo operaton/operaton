@@ -114,6 +114,7 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
     return administratorGroupName;
   }
 
+  @SuppressWarnings("unused")
   public void setAdministratorGroupName(String administratorGroupName) {
     this.administratorGroupName = administratorGroupName;
   }
@@ -122,6 +123,7 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
     return administratorUserName;
   }
 
+  @SuppressWarnings("unused")
   public void setAdministratorUserName(String administratorUserName) {
     this.administratorUserName = administratorUserName;
   }

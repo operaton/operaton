@@ -256,6 +256,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     return extensionProperties;
   }
 
+  @SuppressWarnings("unused")
   public void setExtensionProperties(Map<String, String> extensionProperties) {
     this.extensionProperties = extensionProperties;
   }
@@ -362,7 +363,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
       .getExternalTaskManager()
       .delete(this);
 
-    // Also delete the external tasks's error details byte array
+    // Also delete the external task's error details byte array
     if (errorDetailsByteArrayId != null) {
       commandContext.getByteArrayManager().deleteByteArrayById(errorDetailsByteArrayId);
     }
@@ -427,7 +428,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   public void bpmnError(String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables) {
     ensureActive();
     ActivityExecution activityExecution = getExecution();
-    BpmnError bpmnError = null;
+    BpmnError bpmnError;
     if (errorMessage != null) {
       bpmnError = new BpmnError(errorCode, errorMessage);
     } else {
@@ -520,6 +521,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   }
 
   protected boolean evaluateThrowBpmnError(ExecutionEntity execution, boolean continueOnException) {
+    @SuppressWarnings("unchecked")
     List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) execution.getActivity().getProperty(BpmnProperties.OPERATON_ERROR_EVENT_DEFINITION.name());
     if (operatonErrorEventDefinitions != null && !operatonErrorEventDefinitions.isEmpty()) {
       for (OperatonErrorEventDefinition operatonErrorEventDefinition : operatonErrorEventDefinitions) {

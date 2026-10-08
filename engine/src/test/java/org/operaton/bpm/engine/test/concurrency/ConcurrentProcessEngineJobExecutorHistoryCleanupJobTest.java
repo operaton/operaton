@@ -46,12 +46,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 /**
- * <p>Tests a concurrent attempt of a bootstrapping Process Engine to reconfigure
- * the HistoryCleanupJob while the JobExecutor tries to execute it.</p>
- *
- * The steps are the following:
+ * Tests a concurrent attempt of a bootstrapping Process Engine to reconfigure
+ * the HistoryCleanupJob while the JobExecutor tries to execute it.
  *
  * <p>
+ * The steps are the following:
+ * </p>
+ *
+ *  <p>
  *  1. The (History Cleanup) JobExecution thread is started, and stopped before the job is executed.
  *  2. The Process Engine Bootstrap thread is started, and stopped before the HistoryCleanupJob is reconfigured.
  *  3. The JobExecution thread executes the HistoryCleanupJob and stops before flushing.
@@ -65,8 +67,7 @@ import static org.awaitility.Awaitility.await;
  *  6.3 In case the OptimisticLockingListener didn't handle the OLE,
  *      it's still caught and logged in <code>ProcessEngineImpl#executeSchemaOperations()</code>
  *  7. The Process Engine Bootstrap thread successfully builds and registers the new Process Engine.
- * </p>
- *
+ *  </p>
  *
  * @author Nikola Koevski
  */

@@ -32,10 +32,12 @@ import org.operaton.bpm.engine.spring.components.aop.util.MetaAnnotationMatching
  * AOP advice for methods annotated with (by default) {@link StartProcess}.
  * <p>
  * Advised methods start a process after the method executes.
+ * </p>
  * <p>
  * Advised methods can declare a return
  * type of {@link org.operaton.bpm.engine.runtime.ProcessInstance} and then subsequently
- * return null. The real return ProcessInstance value will be given by the aspect.
+ * return {@code null}. The real return ProcessInstance value will be given by the aspect.
+ * </p>
  *
  * @author Josh Long
  */

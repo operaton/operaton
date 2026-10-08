@@ -27,15 +27,16 @@ package org.operaton.bpm.model.dmn;
  *
  * <p>
  * Example:
+ * </p>
  * <pre>
  * // In your implementation JAR:
  * // File: META-INF/services/org.operaton.bpm.model.dmn.DmnFactory
  * com.example.MyCustomDmnFactory
  * </pre>
- * </p>
  *
  * <p>
  * To obtain an instance, use:
+ * </p>
  * <pre>
  * ServiceLoader&lt;DmnFactory&gt; loader = ServiceLoader.load(DmnFactory.class);
  * for (DmnFactory factory : loader) {
@@ -43,7 +44,6 @@ package org.operaton.bpm.model.dmn;
  *   // use dmn
  * }
  * </pre>
- * </p>
  */
 public interface DmnFactory {
   Dmn newInstance();

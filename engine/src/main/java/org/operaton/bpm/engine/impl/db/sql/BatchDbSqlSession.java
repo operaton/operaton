@@ -117,7 +117,7 @@ public @NullMarked class BatchDbSqlSession extends DbSqlSession {
   }
 
   /**
-   * <p>This method can be called with three cases:
+   * This method can be called with three cases:
    *
    * <ul>
    * <li>Case 1: Success. statementResults contains the number of
@@ -130,8 +130,10 @@ public @NullMarked class BatchDbSqlSession extends DbSqlSession {
    * statements were executed after the first failed statement.
    * </ul>
    *
-   * <p>See {@link BatchUpdateException#getUpdateCounts()} for the specification
+   * <p>
+   * See {@link BatchUpdateException#getUpdateCounts()} for the specification
    * of cases 2 and 3.
+   * </p>
    *
    * @return all failed operations
    */

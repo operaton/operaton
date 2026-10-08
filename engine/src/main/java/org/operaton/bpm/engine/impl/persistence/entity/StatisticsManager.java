@@ -141,6 +141,7 @@ public class StatisticsManager extends AbstractManager {
     }
   }
 
+  @SuppressWarnings("unchecked")
   public List<HistoricDecisionInstanceStatistics> getStatisticsGroupedByDecisionRequirementsDefinition(HistoricDecisionInstanceStatisticsQueryImpl query, Page page) {
     configureQuery(query);
     return getDbEntityManager().selectList("selectDecisionDefinitionStatistics", query, page);

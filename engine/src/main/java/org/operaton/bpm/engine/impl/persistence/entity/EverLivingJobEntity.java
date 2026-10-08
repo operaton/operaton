@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 /**
- * JobEntity for ever living job, which can be rescheduled and executed again.
+ * JobEntity for an ever-living job, which can be rescheduled and executed again.
  *
  * @author Svetlana Dorokhova
  */

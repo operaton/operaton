@@ -28,8 +28,8 @@ public interface DmnHitPolicyHandlerRegistry {
    * Get a hit policy for a {@link HitPolicy} and {@link BuiltinAggregator} combination.
    *
    * @param hitPolicy the hit policy
-   * @param builtinAggregator the aggregator or null if not required
-   * @return the handler which is registered for this hit policy, or null if none exist
+   * @param builtinAggregator the aggregator or {@code null} if not required
+   * @return the handler which is registered for this hit policy, or {@code null} if none exist
    */
   DmnHitPolicyHandler getHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator);
 
@@ -37,7 +37,7 @@ public interface DmnHitPolicyHandlerRegistry {
    * Register a hit policy handler for a {@link HitPolicy} and {@link BuiltinAggregator} combination.
    *
    * @param hitPolicy the hit policy
-   * @param builtinAggregator the aggregator or null if not required
+   * @param builtinAggregator the aggregator or {@code null} if not required
    * @param hitPolicyHandler the hit policy handler to registry
    */
   void addHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator, DmnHitPolicyHandler hitPolicyHandler);

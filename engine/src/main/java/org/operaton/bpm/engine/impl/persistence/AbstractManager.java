@@ -141,6 +141,7 @@ public abstract @NullMarked class AbstractManager implements Session {
     return getSession(TaskManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected TaskReportManager getTaskReportManager() {
     return getSession(TaskReportManager.class);
   }
@@ -149,6 +150,7 @@ public abstract @NullMarked class AbstractManager implements Session {
     return getSession(IdentityLinkManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected VariableInstanceManager getVariableInstanceManager() {
     return getSession(VariableInstanceManager.class);
   }
@@ -157,6 +159,7 @@ public abstract @NullMarked class AbstractManager implements Session {
     return getSession(HistoricProcessInstanceManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected HistoricCaseInstanceManager getHistoricCaseInstanceManager() {
     return getSession(HistoricCaseInstanceManager.class);
   }
@@ -169,6 +172,7 @@ public abstract @NullMarked class AbstractManager implements Session {
     return getSession(HistoricVariableInstanceManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected HistoricActivityInstanceManager getHistoricActivityInstanceManager() {
     return getSession(HistoricActivityInstanceManager.class);
   }
@@ -193,6 +197,7 @@ public abstract @NullMarked class AbstractManager implements Session {
     return getSession(HistoricJobLogManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected HistoricExternalTaskLogManager getHistoricExternalTaskLogManager() {
     return getSession(HistoricExternalTaskLogManager.class);
   }
@@ -205,6 +210,7 @@ public abstract @NullMarked class AbstractManager implements Session {
     return getSession(JobDefinitionManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected UserOperationLogManager getUserOperationLogManager() {
     return getSession(UserOperationLogManager.class);
   }
@@ -221,6 +227,7 @@ public abstract @NullMarked class AbstractManager implements Session {
     return getSession(AttachmentManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected ReportManager getHistoricReportManager() {
     return getSession(ReportManager.class);
   }

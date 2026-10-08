@@ -27,15 +27,16 @@ package org.operaton.bpm.model.cmmn;
  *
  * <p>
  * Example:
+ * </p>
  * <pre>
  * // In your implementation JAR:
  * // File: META-INF/services/org.operaton.bpm.model.cmmn.CmmnFactory
  * com.example.MyCustomCmmnFactory
  * </pre>
- * </p>
  *
  * <p>
  * To obtain an instance, use:
+ * </p>
  * <pre>
  * ServiceLoader&lt;CmmnFactory&gt; loader = ServiceLoader.load(CmmnFactory.class);
  * for (CmmnFactory factory : loader) {
@@ -43,7 +44,6 @@ package org.operaton.bpm.model.cmmn;
  *   // use cmmn
  * }
  * </pre>
- * </p>
  */
 public interface CmmnFactory {
   Cmmn newInstance();

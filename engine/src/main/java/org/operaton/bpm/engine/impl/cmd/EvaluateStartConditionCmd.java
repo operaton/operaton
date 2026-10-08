@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
@@ -58,10 +57,9 @@ public @NullMarked class EvaluateStartConditionCmd implements Command<List<Proce
       checkAuthorization(commandContext, ConditionHandlerResult);
     }
 
-    List<ProcessInstance> processInstances = new ArrayList<>();
-    for (ConditionHandlerResult ConditionHandlerResult : results) {
-      processInstances.add(instantiateProcess(commandContext, ConditionHandlerResult));
-    }
+    List<ProcessInstance> processInstances = results.stream()
+        .map(conditionHandlerResult -> instantiateProcess(commandContext, conditionHandlerResult))
+        .toList();
 
     return processInstances;
   }

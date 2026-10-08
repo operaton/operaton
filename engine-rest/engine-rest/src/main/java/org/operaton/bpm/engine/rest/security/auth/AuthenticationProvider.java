@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 public interface AuthenticationProvider {
 
   /**
-   * Checks the request for authentication. May not return null, but always an
+   * Checks the request for authentication. May not return {@code null}, but always an
    * {@link AuthenticationResult} that indicates, whether authentication was
    * successful, and, if true, always provides the authenticated user.
    *

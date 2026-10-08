@@ -28,21 +28,21 @@ public interface CleanableHistoricDecisionInstanceReport extends Query<Cleanable
   /**
    * Only takes historic decision instances into account for the given decision definition ids.
    *
-   * @throws NotValidException if one of the given ids is null
+   * @throws NotValidException if one of the given ids is {@code null}
    */
   CleanableHistoricDecisionInstanceReport decisionDefinitionIdIn(String... decisionDefinitionIds);
 
   /**
    * Only takes historic decision instances into account for the given decision definition keys.
    *
-   * @throws NotValidException if one of the given keys is null
+   * @throws NotValidException if one of the given keys is {@code null}
    */
   CleanableHistoricDecisionInstanceReport decisionDefinitionKeyIn(String... decisionDefinitionKeys);
 
   /**
    * Only select historic decision instances with one of the given tenant ids.
    *
-   * @throws NotValidException if one of the given ids is null
+   * @throws NotValidException if one of the given ids is {@code null}
    */
   CleanableHistoricDecisionInstanceReport tenantIdIn(String... tenantIds);
 

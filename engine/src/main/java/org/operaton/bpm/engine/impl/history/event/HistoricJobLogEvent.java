@@ -225,17 +225,7 @@ public @NullMarked class HistoricJobLogEvent extends HistoryEvent {
     return state == JobState.DELETED.getStateCode();
   }
 
-  @Override
-  public @Nullable String getRootProcessInstanceId() {
-    return rootProcessInstanceId;
-  }
-
-  @Override
-  public void setRootProcessInstanceId(@Nullable String rootProcessInstanceId) {
-    this.rootProcessInstanceId = rootProcessInstanceId;
-  }
-
-  public @Nullable String getFailedActivityId() {
+  public String getFailedActivityId() {
     return failedActivityId;
   }
 

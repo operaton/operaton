@@ -40,14 +40,14 @@ import org.operaton.bpm.webapp.neo.plugin.spi.AppPlugin;
  * A resource class that provides a plugins restful API.
  *
  * <p>
- *
  * Subclasses of this class may provide subresources using annotated getters
  * in order to be multi-engine aware.
+ * </p>
  *
  * <p>
- *
  * Subresources must properly initialize the subresources via
  * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource) }.
+ * </p>
  *
  * <pre>
  * @Path("myplugin")

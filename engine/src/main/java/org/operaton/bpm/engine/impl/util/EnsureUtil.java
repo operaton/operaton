@@ -364,7 +364,7 @@ public final @NullMarked class EnsureUtil {
   }
 
   public static void ensureNotContainsNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, Collection<?> values) {
-    ensureNotNull(exceptionClass, message, variableName, values.toArray(new Object[values.size()]));
+    ensureNotNull(exceptionClass, message, variableName, values.toArray(Object[]::new));
   }
 
   @SuppressWarnings("rawtypes")

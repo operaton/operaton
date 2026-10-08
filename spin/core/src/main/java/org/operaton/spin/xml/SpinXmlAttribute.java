@@ -39,7 +39,7 @@ public abstract class SpinXmlAttribute extends SpinXmlNode<SpinXmlAttribute> {
    *
    * @param value the value to set
    * @return the wrapped xml dom attribute
-   * @throws SpinXmlNodeException if the value is null
+   * @throws SpinXmlNodeException if the value is {@code null}
    */
   public abstract SpinXmlAttribute value(String value);
 

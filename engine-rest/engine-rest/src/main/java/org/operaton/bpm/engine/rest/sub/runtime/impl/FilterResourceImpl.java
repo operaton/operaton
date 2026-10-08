@@ -360,11 +360,9 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   protected List<Object> convertToDtoList(List<?> entities) {
-    List<Object> dtoList = new ArrayList<>();
-    for (Object entity : entities) {
-      dtoList.add(convertToDto(entity));
-    }
-    return dtoList;
+    return entities.stream()
+      .map(this::convertToDto)
+      .toList();
   }
 
   protected HalResource<?> convertToHalResource(Object entity) {
@@ -450,7 +448,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   @SuppressWarnings("unchecked")
   protected Map<String, List<VariableInstance>> getVariableInstancesForTasks(HalTaskList halTaskList) {
     List<HalTask> halTasks = (List<HalTask>) halTaskList.getEmbedded("task");
-    return getVariableInstancesForTasks(halTasks.toArray(new HalTask[halTasks.size()]));
+    return getVariableInstancesForTasks(halTasks.toArray(HalTask[]::new));
   }
 
   protected Map<String, List<VariableInstance>> getVariableInstancesForTasks(HalTask... halTasks) {
@@ -483,11 +481,9 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
 
   private List<String> collectVariableNames(List<Map<String, Object>> variables) {
     if (variables != null && !variables.isEmpty()) {
-      List<String> variableNames = new ArrayList<>();
-      for (Map<String, Object> variable : variables) {
-        variableNames.add((String) variable.get(PROPERTIES_VARIABLES_NAME_KEY));
-      }
-      return variableNames;
+      return variables.stream()
+        .map(variable -> (String) variable.get(PROPERTIES_VARIABLES_NAME_KEY))
+        .toList();
     }
     else {
       return emptyList();

@@ -51,7 +51,7 @@ public class Connectors {
   }
 
   /**
-   * @return the connector for the default http connector id or null if
+   * @return the connector for the default http connector id or {@code null} if
    * no connector is registered for this id
    */
   @SuppressWarnings("unchecked")
@@ -60,7 +60,7 @@ public class Connectors {
   }
 
   /**
-   * @return the connector for the default soap http connector id or null
+   * @return the connector for the default soap http connector id or {@code null}
    * if no connector is registered for this id
    */
   @SuppressWarnings("unchecked")
@@ -69,7 +69,7 @@ public class Connectors {
   }
 
   /**
-   * @return the connector for the given id or null if no connector is
+   * @return the connector for the given id or {@code null} if no connector is
    * registered for this id
    */
   @SuppressWarnings("unchecked")
@@ -130,7 +130,7 @@ public class Connectors {
   }
 
   /**
-   * @return the connector for the given id or null if no connector is
+   * @return the connector for the given id or {@code null} if no connector is
    * registered for this id
    */
   @SuppressWarnings("unchecked")

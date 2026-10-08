@@ -144,9 +144,9 @@ public @NullMarked interface TopicSubscriptionBuilder {
    *
    * @throws ExternalTaskClientException
    * <ul>
-   *   <li> if topic name is null or an empty string
+   *   <li> if topic name is {@code null} or an empty string
    *   <li> if lock duration is not greater than zero
-   *   <li> if external task handler is null
+   *   <li> if external task handler is {@code null}
    *   <li> if topic name has already been subscribed
    * </ul>
    * @return the builder

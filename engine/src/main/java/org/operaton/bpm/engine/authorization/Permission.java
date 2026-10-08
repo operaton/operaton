@@ -19,11 +19,12 @@ package org.operaton.bpm.engine.authorization;
 import org.jspecify.annotations.NullMarked;
 
 /**
- * <p>A permission represents an authorization to interact with a given
+ * A permission represents an authorization to interact with a given
  * resource in a specific way. See {@link Permissions} for a set of built-in
- * permissions and {@link Authorization} for general overview on authorizations.</p>
+ * permissions and {@link Authorization} for general overview on authorizations.
  *
- * <p>In Operaton, multiple permissions are grouped into an {@link Authorization}.
+ * <p>
+ * In Operaton, multiple permissions are grouped into an {@link Authorization}.
  * For efficient storage and checking of authorizations, the permissons that make
  * up an authorization are coded into a single integer.
  * The implication of this design is that a permission must have a unique integer value
@@ -32,24 +33,23 @@ import org.jspecify.annotations.NullMarked;
  *
  * <p>
  * The permission can then be added to an authorization using bitwise OR:
+ * </p>
  * <pre>
  *        Auth: 0000001001001
  * Perm to add: 0000000010000
  * bit OR (|) : 0000001011001
  * </pre>
- * </p>
  *
  * <p>
  * and removed using bitwise AND of the inverted value:
+ * </p>
  * <pre>
  *        Auth: 0000001001001
  * Perm to rem: 0000000001000
  * invert (~) : 1111111110111
  * bit AND (&): 0000001000001
  * </pre>
- * </p>
  *
- * <p>
  * <h2>Defining a custom Permission</h2>
  * The XxxPermissions classes contains the values of the  built-in
  * permissions (i.e. {@link Permissions}, {@link ProcessDefinitionPermissions},
@@ -63,7 +63,6 @@ import org.jspecify.annotations.NullMarked;
  * the permission values are not already reserved for the desired
  * {@link Resource}.</p>
  * </p>
- *
  *
  * @author Daniel Meyer
  */

@@ -40,7 +40,7 @@ public interface HttpBaseRequest<Q extends HttpBaseRequest<?, ?>, R extends Conn
   Q url(String url);
 
   /**
-   * @return the url of this request or null if none is set
+   * @return the url of this request or {@code null} if none is set
    */
   String getUrl();
 
@@ -54,12 +54,12 @@ public interface HttpBaseRequest<Q extends HttpBaseRequest<?, ?>, R extends Conn
   Q header(String field, String value);
 
   /**
-   * @return the HTTP header field value of this request or null if not set
+   * @return the HTTP header field value of this request or {@code null} if not set
    */
   String getHeader(String field);
 
   /**
-   * @return the HTTP headers of this request or null if non set
+   * @return the HTTP headers of this request or {@code null} if non set
    */
   Map<String, String> getHeaders();
 
@@ -72,7 +72,7 @@ public interface HttpBaseRequest<Q extends HttpBaseRequest<?, ?>, R extends Conn
   Q contentType(String contentType);
 
   /**
-   * @return the content-type of this request or null if non set
+   * @return the content-type of this request or {@code null} if non set
    */
   String getContentType();
 
@@ -85,7 +85,7 @@ public interface HttpBaseRequest<Q extends HttpBaseRequest<?, ?>, R extends Conn
   Q payload(String payload);
 
   /**
-   * @return the payload of this request or null if non set
+   * @return the payload of this request or {@code null} if non set
    */
   String getPayload();
 
@@ -98,17 +98,17 @@ public interface HttpBaseRequest<Q extends HttpBaseRequest<?, ?>, R extends Conn
   Q method(String method);
 
   /**
-   * @return the method of this request or null if not set
+   * @return the method of this request or {@code null} if not set
    */
   String getMethod();
 
   /**
-   * @return the HTTP configuration options of this request or null if non set
+   * @return the HTTP configuration options of this request or {@code null} if non set
    */
   Map<String, Object> getConfigOptions();
 
   /**
-   * @return the HTTP configuration option value of this request or null if non set
+   * @return the HTTP configuration option value of this request or {@code null} if non set
    */
   Object getConfigOption(String field);
 

@@ -44,14 +44,15 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
  * This class encapsulates legacy runtime behavior for the process engine.
  * <p>
  * Since 7.3 the behavior of certain bpmn elements has changed slightly.
- * <p>
+ * </p>
  *
+ * <p>
  * 1. Some elements which did not used to be scopes are now scopes:
+ * </p>
  * <ul>
  *  <li>Sequential multi instance Embedded Subprocess: is now a scope, used to be non-scope.</li>
  *  <li>Event subprocess: is now a scope, used to be non-scope.</li>
  * </ul>
- * </p>
  *
  * <p>
  * 2. In certain situations, executions which were both scope and concurrent were created.
@@ -216,8 +217,10 @@ public final @NullMarked class LegacyBehavior {
   /**
    * In case the process instance was migrated from a previous version, activities which are now parsed as scopes
    * do not have scope executions. Use the flow scopes of these activities in order to find their execution.
-   * - For an event subprocess this is the scope execution of the scope in which the event subprocess is embeded in
-   * - For a multi instance sequential subprocess this is the multi instace scope body.
+   * <ul>
+   *   <li>For an event subprocess this is the scope execution of the scope in which the event subprocess is embeded in</li>
+   *   <li>For a multi instance sequential subprocess this is the multi instace scope body.</li>
+   * </ul>
    */
   public static @Nullable PvmExecutionImpl getScopeExecution(ScopeImpl scope, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping) {
     ScopeImpl flowScope = scope.getFlowScope();
@@ -400,18 +403,24 @@ public final @NullMarked class LegacyBehavior {
   }
 
   /**
-   * <p>Required for migrating active sequential MI receive tasks. These activities were formerly not scope,
+   * Required for migrating active sequential MI receive tasks. These activities were formerly not scope,
    * but are now. This has the following implications:
    *
-   * <p>Before migration:
+   * <p>
+   * Before migration:
+   * </p>
    * <ul><li> the event subscription is attached to the miBody scope execution</ul>
    *
-   * <p>After migration:
+   * <p>
+   * After migration:
+   * </p>
    * <ul><li> a new subscription is created for every instance
    * <li> the new subscription is attached to a dedicated scope execution as a child of the miBody scope
    *   execution</ul>
    *
-   * <p>Thus, this method removes the subscription on the miBody scope
+   * <p>
+   * Thus, this method removes the subscription on the miBody scope
+   * </p>
    */
   public static void removeLegacySubscriptionOnParent(ExecutionEntity execution, EventSubscriptionEntity eventSubscription) {
     ActivityImpl activity = execution.getActivity();

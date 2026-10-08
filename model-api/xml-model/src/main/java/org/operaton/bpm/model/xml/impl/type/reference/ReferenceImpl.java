@@ -54,7 +54,7 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
    * Get the reference target model element instance
    *
    * @param referenceSourceElement the reference source model element instance
-   * @return the reference target model element instance or null if not set
+   * @return the reference target model element instance or {@code null} if not set
    */
   @Override
   @SuppressWarnings("unchecked")

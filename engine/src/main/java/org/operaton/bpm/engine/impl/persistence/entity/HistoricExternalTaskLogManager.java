@@ -106,7 +106,7 @@ public class HistoricExternalTaskLogManager extends AbstractManager {
 
   // byte array delete ////////////////////////////////////////////////////////
 
-  protected void deleteExceptionByteArrayByParameterMap(String key, Object value) {
+  protected void deleteExceptionByteArrayByParameterMap(@SuppressWarnings("SameParameterValue") String key, Object value) {
     EnsureUtil.ensureNotNull(key, value);
     Map<String, Object> parameterMap = new HashMap<>();
     parameterMap.put(key, value);

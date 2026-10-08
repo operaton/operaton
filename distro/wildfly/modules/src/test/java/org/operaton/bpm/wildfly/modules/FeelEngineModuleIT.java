@@ -38,9 +38,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * visible to the module's classloader - a plain classpath test cannot catch a missing or
  * non-exported module dependency.
  *
- * <p>The error-reporting path is tested separately: fastparse builds parse error messages by
+ * <p>
+ * The error-reporting path is tested separately: fastparse builds parse error messages by
  * re-parsing with failure tracing enabled, which instantiates classes (e.g.
  * {@code sourcecode.Name}) that a successful parse never touches.
+ * </p>
  */
 class FeelEngineModuleIT {
 

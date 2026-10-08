@@ -396,7 +396,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
       addFilter(ldapConfiguration.getGroupNameAttribute(), query.getNameLike(), search);
     }
     if (query.getUserId() != null) {
-      String userDn = null;
+      String userDn;
       if (ldapConfiguration.isUsePosixGroups()) {
         userDn = query.getUserId();
       } else {
@@ -752,7 +752,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   }
 
   /**
-   * Return the pageSize. Returns null if pagination is disabled.
+   * Return the pageSize. Returns {@code null} if pagination is disabled.
    *
    * @return the pageSize
    */

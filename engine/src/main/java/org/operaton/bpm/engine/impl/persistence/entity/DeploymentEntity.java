@@ -38,6 +38,7 @@ import org.operaton.bpm.engine.repository.*;
 /**
  * @author Tom Baeyens
  */
+@SuppressWarnings("rawtypes")
 public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
 
   protected String id;
@@ -51,7 +52,7 @@ public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions
 
   /**
    * Will only be used during actual deployment to pass deployed artifacts (eg process definitions).
-   * Will be null otherwise.
+   * Will be {@code null} otherwise.
    */
   protected Map<Class<?>, List> deployedArtifacts;
 
@@ -109,6 +110,9 @@ public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions
       .add(deployedArtifact);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public Map<Class<?>, List> getDeployedArtifacts() {
     return deployedArtifacts;
   }
@@ -172,6 +176,7 @@ public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions
     return validatingSchema;
   }
 
+  @SuppressWarnings("unused")
   public void setValidatingSchema(boolean validatingSchema) {
     this.validatingSchema = validatingSchema;
   }

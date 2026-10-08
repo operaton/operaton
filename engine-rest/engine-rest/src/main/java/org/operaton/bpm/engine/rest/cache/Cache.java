@@ -30,7 +30,7 @@ public interface Cache {
    * Get a resource by id.
    *
    * @param id the id of the resource
-   * @return the resource or null if non is found or the resource time to live expired
+   * @return the resource or {@code null} if non is found or the resource time to live expired
    */
   Object get(String id);
 

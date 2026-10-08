@@ -37,6 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * header whose name matches the configured cookie name. {@code CookieConfigurator} resolves that
  * name from the {@code cookieName} init-param first, and only falls back to the servlet session
  * cookie config ({@code server.servlet.session.cookie.name}) when the init-param is absent.
+ * </p>
  * <p>
  * Here the init-param ({@code fromInitParam}) intentionally differs from the actually emitted
  * session cookie name ({@code fromServletConfig}). Because the init-param takes precedence, the
@@ -44,6 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@code fromServletConfig} cookie untouched (no {@code SameSite}). If the init-param handling were
  * ever dropped, the servlet-config fallback would kick in and wrongly apply {@code SameSite} to
  * {@code fromServletConfig}, failing this test.
+ * </p>
  */
 @SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {

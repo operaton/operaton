@@ -32,12 +32,14 @@ public interface PluginResourceOverride {
   /**
    * Invoked after a static plugin resource has been resolved.
    *
+   * <p>
    * If the implementation decides not to modify the resource, it must return the
    * original input stream passed in as parameter.
+   * </p>
    *
    * @param inputStream the content of the resource
    * @param requestInfo contains information about the request.
-   * @return the original input stream or a modified input stream or null to remove the resource.
+   * @return the original input stream or a modified input stream or {@code null} to remove the resource.
    */
   InputStream filterResource(InputStream inputStream, RequestInfo requestInfo);
 

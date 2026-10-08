@@ -103,7 +103,7 @@ public interface DeploymentBuilder {
    * All existing resources contained by the given deployment
    * will be added to the new deployment to re-deploy them.
    *
-   * @throws NotValidException if deployment id is null.
+   * @throws NotValidException if deployment id is {@code null}.
    */
   DeploymentBuilder addDeploymentResources(String deploymentId);
 
@@ -111,7 +111,7 @@ public interface DeploymentBuilder {
    * A given resource specified by id and deployment id will be added
    * to the new deployment to re-deploy the given resource.
    *
-   * @throws NotValidException if either deployment id or resource id is null.
+   * @throws NotValidException if either deployment id or resource id is {@code null}.
    */
   DeploymentBuilder addDeploymentResourceById(String deploymentId, String resourceId);
 
@@ -119,7 +119,7 @@ public interface DeploymentBuilder {
    * All given resources specified by id and deployment id will be added
    * to the new deployment to re-deploy the given resource.
    *
-   * @throws NotValidException if either deployment id or the list of resource ids is null.
+   * @throws NotValidException if either deployment id or the list of resource ids is {@code null}.
    */
   DeploymentBuilder addDeploymentResourcesById(String deploymentId, List<String> resourceIds);
 
@@ -127,7 +127,7 @@ public interface DeploymentBuilder {
    * A given resource specified by name and deployment id will be added
    * to the new deployment to re-deploy the given resource.
    *
-   * @throws NotValidException if either deployment id or resource name is null.
+   * @throws NotValidException if either deployment id or resource name is {@code null}.
    */
   DeploymentBuilder addDeploymentResourceByName(String deploymentId, String resourceName);
 
@@ -135,7 +135,7 @@ public interface DeploymentBuilder {
    * All given resources specified by name and deployment id will be added
    * to the new deployment to re-deploy the given resource.
    *
-   * @throws NotValidException if either deployment id or the list of resource names is null.
+   * @throws NotValidException if either deployment id or the list of resource names is {@code null}.
    */
   DeploymentBuilder addDeploymentResourcesByName(String deploymentId, List<String> resourceNames);
 
@@ -219,7 +219,7 @@ public interface DeploymentBuilder {
    *    if there are duplicate resource names from different deployments to re-deploy.
    *
    * @throws ParseException
-   *    In case of a BPMN Parsing exception due to null historyTimeToLive. To disable this behaviour, configure the
+   *    In case of a BPMN Parsing exception due to {@code null} historyTimeToLive. To disable this behaviour, configure the
    *    feature flag {@code enforceHistoryTimeToLive} to {@code false}.
    *
    * @throws AuthorizationException
@@ -245,7 +245,7 @@ public interface DeploymentBuilder {
    *    if there are duplicate resource names from different deployments to re-deploy.
    *
    * @throws ParseException
-   *    In case of a BPMN Parsing exception due to null historyTimeToLive. To disable this behaviour, configure the
+   *    In case of a BPMN Parsing exception due to {@code null} historyTimeToLive. To disable this behaviour, configure the
    *    feature flag {@code enforceHistoryTimeToLive} to {@code false}.
    *
    * @throws AuthorizationException

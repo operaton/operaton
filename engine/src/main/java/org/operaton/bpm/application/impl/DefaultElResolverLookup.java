@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.application.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 import jakarta.el.CompositeELResolver;
 import jakarta.el.ELResolver;
 import org.jspecify.annotations.Nullable;
@@ -42,10 +42,9 @@ public final class DefaultElResolverLookup {
   public static @Nullable ELResolver lookupResolver(AbstractProcessApplication processApplication) {
 
     ServiceLoader<ProcessApplicationElResolver> providers = ServiceLoader.load(ProcessApplicationElResolver.class);
-    List<ProcessApplicationElResolver> sortedProviders = new ArrayList<>();
-    for (ProcessApplicationElResolver provider : providers) {
-      sortedProviders.add(provider);
-    }
+    List<ProcessApplicationElResolver> sortedProviders = providers.stream()
+        .map(ServiceLoader.Provider::get)
+        .collect(Collectors.toList());
 
     if(sortedProviders.isEmpty()) {
       return null;

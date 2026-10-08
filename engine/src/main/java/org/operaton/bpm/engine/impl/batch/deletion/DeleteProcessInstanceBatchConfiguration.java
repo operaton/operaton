@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
  * deletion.
  * <p>
  * This object will be serialized and persisted as run will be performed asynchronously.
+ * </p>
  *
  * @author Askar Akhmerov
  * @see org.operaton.bpm.engine.impl.batch.deletion.DeleteProcessInstanceBatchConfigurationJsonConverter

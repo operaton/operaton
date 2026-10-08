@@ -217,14 +217,4 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     return state == ExternalTaskState.DELETED.getStateCode();
   }
 
-  @Override
-  public String getRootProcessInstanceId() {
-    return rootProcessInstanceId;
-  }
-
-  @Override
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
-    this.rootProcessInstanceId = rootProcessInstanceId;
-  }
-
 }

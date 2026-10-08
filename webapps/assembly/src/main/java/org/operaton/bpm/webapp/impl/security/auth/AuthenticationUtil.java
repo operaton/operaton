@@ -64,7 +64,7 @@ public final class AuthenticationUtil {
   }
 
   /**
-   * <p>Creates and returns a {@link UserAuthentication} with the following information:
+   * Creates and returns a {@link UserAuthentication} with the following information:
    * <ul>
    *   <li>{@code userId}
    *   <li>{@code processEngineName}
@@ -210,14 +210,16 @@ public final class AuthenticationUtil {
   }
 
   /**
-   * <p>Update/remove authentications when cache validation time (= x + TTL) is due.
+   * Update/remove authentications when cache validation time (= x + TTL) is due.
    *
    * <p>The following information is updated:<ul>
    *   <li>{@code groupIds}
    *   <li>{@code tenantIds}
    *   <li>{@code authorizedApps}
    *
-   * <p>An authorization is only removed if the user doesn't exist anymore (user was deleted).
+   * <p>
+   * An authorization is only removed if the user doesn't exist anymore (user was deleted).
+   * </p>
    */
   public static void updateCache(Authentications authentications,
                                  HttpSession session,

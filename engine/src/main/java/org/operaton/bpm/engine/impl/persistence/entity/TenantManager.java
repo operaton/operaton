@@ -60,6 +60,7 @@ public class TenantManager extends AbstractManager {
     return configureQuery(queryObject);
   }
 
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean isAuthenticatedTenant(@Nullable String tenantId) {
     if (tenantId != null && isTenantCheckEnabled()) {
 

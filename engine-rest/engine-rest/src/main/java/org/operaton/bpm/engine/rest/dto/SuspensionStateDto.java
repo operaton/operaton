@@ -45,7 +45,7 @@ public class SuspensionStateDto {
   }
 
   public void updateSuspensionState(ProcessEngine engine, String processInstanceId) {
-    UpdateProcessInstanceSuspensionStateBuilder updateSuspensionStateBuilder = null;
+    UpdateProcessInstanceSuspensionStateBuilder updateSuspensionStateBuilder;
     if (processInstanceId != null) {
       updateSuspensionStateBuilder = engine.getRuntimeService().updateProcessInstanceSuspensionState()
                                                                .byProcessInstanceId(processInstanceId);

@@ -267,6 +267,7 @@ class ExclusiveJobAcquisitionTest {
    * <p>
    * If a batch contains 1 element, it means it can be executed in parallel with other batches.
    * In order for 2 jobs to be executed exclusively, they should exist in the same batch.
+   * </p>
    */
   static class AssertJobExecutor extends DefaultJobExecutor {
 

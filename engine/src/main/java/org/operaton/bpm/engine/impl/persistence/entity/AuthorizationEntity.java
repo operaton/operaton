@@ -158,7 +158,7 @@ public @NullMarked class AuthorizationEntity implements Authorization, DbEntity,
         result.add(permission);
       }
     }
-    return result.toArray(new Permission[ result.size() ]);
+    return result.toArray(Permission[]::new);
   }
 
   @Override

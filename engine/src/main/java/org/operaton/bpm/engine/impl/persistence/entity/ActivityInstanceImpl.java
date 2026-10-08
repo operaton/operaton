@@ -136,7 +136,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
       writer.append("├── ");
     }
 
-    writer.append(getActivityId()+"=>%s%n".formatted(getId()));
+    writer.append("%s=>%s%n".formatted(getActivityId(), getId()));
 
     for (int i = 0; i < childTransitionInstances.length; i++) {
       TransitionInstance transitionInstance = childTransitionInstances[i];
@@ -176,7 +176,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
     List<ActivityInstance> instances = new ArrayList<>();
     collectActivityInstances(activityId, instances);
 
-    return instances.toArray(new ActivityInstance[instances.size()]);
+    return instances.toArray(ActivityInstance[]::new);
   }
 
   protected void collectActivityInstances(String activityId, List<ActivityInstance> instances) {
@@ -197,7 +197,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
     List<TransitionInstance> instances = new ArrayList<>();
     collectTransitionInstances(activityId, instances);
 
-    return instances.toArray(new TransitionInstance[instances.size()]);
+    return instances.toArray(TransitionInstance[]::new);
   }
 
   protected void collectTransitionInstances(String activityId, List<TransitionInstance> instances) {

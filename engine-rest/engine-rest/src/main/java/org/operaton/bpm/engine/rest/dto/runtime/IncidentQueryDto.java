@@ -236,10 +236,10 @@ public class IncidentQueryDto extends AbstractQueryDto<IncidentQuery> {
       query.configuration(configuration);
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (jobDefinitionIds != null && !jobDefinitionIds.isEmpty()) {
-      query.jobDefinitionIdIn(jobDefinitionIds.toArray(new String[jobDefinitionIds.size()]));
+      query.jobDefinitionIdIn(jobDefinitionIds.toArray(String[]::new));
     }
   }
 

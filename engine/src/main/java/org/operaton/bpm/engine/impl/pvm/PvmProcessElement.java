@@ -40,7 +40,7 @@ public @NullMarked interface PvmProcessElement extends Serializable {
 
   /**
    * @param name the name of the property
-   * @return the property value or null if not found
+   * @return the property value or {@code null} if not found
    */
   @Nullable Object getProperty(String name);
 

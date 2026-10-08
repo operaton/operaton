@@ -2052,10 +2052,9 @@ public @NullMarked class BpmnParse extends Parse {
 
   public @Nullable String parseDocumentation(Element element) {
     List<Element> docElements = element.elements(PROPERTYNAME_DOCUMENTATION);
-    List<String> docStrings = new ArrayList<>();
-    for (Element e : docElements) {
-      docStrings.add(e.getText());
-    }
+    List<String> docStrings = docElements.stream()
+        .map(Element::getText)
+        .toList();
 
     return parseDocumentation(docStrings);
   }
@@ -3550,7 +3549,7 @@ public @NullMarked class BpmnParse extends Parse {
    *
    * @param signalEventDefinitionElement the Signal Event Definition element
    * @param isThrowing true if a Throwing signal event is being parsed
-   * @return the parsed EventSubscriptionDeclaration, or null if parsing failed
+   * @return the parsed EventSubscriptionDeclaration, or {@code null} if parsing failed
    */
   protected @Nullable EventSubscriptionDeclaration parseSignalEventDefinition(Element signalEventDefinitionElement, boolean isThrowing, @Nullable String signalElementId) {
     String signalRef = signalEventDefinitionElement.attribute("signalRef");

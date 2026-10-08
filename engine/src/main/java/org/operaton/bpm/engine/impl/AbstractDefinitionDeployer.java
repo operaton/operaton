@@ -147,7 +147,7 @@ public abstract @NullMarked class AbstractDefinitionDeployer<DEFINITION_ENTITY e
    * processes will have the same image: abc.png.
    * </p>
    *
-   * @return null if no matching image resource is found.
+   * @return {@code null} if no matching image resource is found.
    */
   @SuppressWarnings("unused")
   protected @Nullable String getDiagramResourceForDefinition(DeploymentEntity deployment, String resourceName, DEFINITION_ENTITY definition, Map<String, ResourceEntity> resources) {
@@ -278,14 +278,14 @@ public abstract @NullMarked class AbstractDefinitionDeployer<DEFINITION_ENTITY e
    * Find a definition entity by deployment id and definition key.
    * @param deploymentId the deployment id
    * @param definitionKey the definition key
-   * @return the corresponding definition entity or null if non is found
+   * @return the corresponding definition entity or {@code null} if non is found
    */
   protected abstract @Nullable DEFINITION_ENTITY findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey);
 
   /**
    * Find the last deployed definition entity by definition key and tenant id.
    *
-   * @return the corresponding definition entity or null if non is found
+   * @return the corresponding definition entity or {@code null} if non is found
    */
   protected abstract @Nullable DEFINITION_ENTITY findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId);
 

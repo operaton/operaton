@@ -23,7 +23,7 @@ import org.w3c.dom.Text;
 import org.xmlunit.util.Predicate;
 
 /**
- * <p>In Java 8, a CDATA section is serialized with pretty printing as
+ * In Java 8, a CDATA section is serialized with pretty printing as
  *
  * <pre>
  * {@code
@@ -33,7 +33,9 @@ import org.xmlunit.util.Predicate;
  * }
  * </pre>
  *
- * <p>whereas in Java 9+ it becomes
+ * <p>
+ * whereas in Java 9+ it becomes
+ * </p>
  *
  * <pre>
  * {@code
@@ -45,12 +47,16 @@ import org.xmlunit.util.Predicate;
  *}
  * </pre>
  *
- * <p>Note that the bar element in the second example has three children: a text with whitespace,
+ * <p>
+ * Note that the bar element in the second example has three children: a text with whitespace,
  * a cdata section and another text with whitespace. This is semantically different XML than the
  * first example.
+ * </p>
  *
- * <p>This filter detects this whitespace pattern and removes the whitespace text
+ * <p>
+ * This filter detects this whitespace pattern and removes the whitespace text
  * nodes before xmlunit performs the comparison.
+ * </p>
  *
  * @see https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8223291
  */

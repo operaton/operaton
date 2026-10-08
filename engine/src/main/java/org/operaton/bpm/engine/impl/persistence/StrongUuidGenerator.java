@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import static java.util.Objects.requireNonNull;
 
 /**
- * {@link IdGenerator} implementation based on the current time and the ethernet
+ * {@link IdGenerator} implementation based on the current time and the Ethernet
  * address of the machine it is running on.
  *
  * @author Daniel Meyer

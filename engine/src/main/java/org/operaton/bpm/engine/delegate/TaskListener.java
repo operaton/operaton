@@ -21,7 +21,9 @@ import org.jspecify.annotations.NullMarked;
 /**
  * Listener interface implemented by user code which wants to be notified when a property of a task changes.
  *
- * <p>The following Task Events are supported:
+ * <p>
+ * The following Task Events are supported:
+ * </p>
  * <ul>
  * <li>{@link #EVENTNAME_CREATE}</li>
  * <li>{@link #EVENTNAME_ASSIGNMENT}</li>
@@ -30,7 +32,6 @@ import org.jspecify.annotations.NullMarked;
  * <li>{@link #EVENTNAME_DELETE}</li>
  * <li>{@link #EVENTNAME_TIMEOUT}</li>
  * </ul>
- * </p>
  *
  * @author Tom Baeyens
  */

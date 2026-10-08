@@ -27,14 +27,16 @@ import org.operaton.bpm.webapp.plugin.spi.impl.AbstractAppPlugin;
  *
  * <p>
  * An implementation of this SPI publishes
+ * </p>
  * <ul>
  *   <li>a unique ID</li>
  *   <li>a directory that contains the plugins client-side assets (HTML + JavaScript files)</li>
  *   <li>a number of resource classes that extend the restful API</li>
  * </ul>
- * </p>
  *
+ * <p>
  * Plugin developers should not use this interface directly but use {@link AbstractAppPlugin} as a base class.
+ * </p>
  *
  * @author nico.rehwaldt
  * @author Daniel Meyer
@@ -53,8 +55,8 @@ public interface AppPlugin {
    * Returns a set of JAX-RS resource classes that extend the rest API.
    *
    * <p>
-   *
    * Typically, a plugin publishes its API via a subclass of {@link org.operaton.bpm.cockpit.plugin.resource.AbstractPluginRootResource}.
+   * </p>
    *
    * @return the set of resource classes provided by this plugin
    */

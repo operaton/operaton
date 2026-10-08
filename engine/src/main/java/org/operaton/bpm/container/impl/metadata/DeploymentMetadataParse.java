@@ -165,7 +165,9 @@ public abstract class DeploymentMetadataParse extends Parse {
    *   &lt;property name="name"&gt;value&lt;/property&gt;
    * &lt;/properties&gt;
    * </pre>
+   * <p>
    * structure into a properties {@link Map}
+   * </p>
    *
    * <p>
    * Supports resolution of Ant-style placeholders against system properties.

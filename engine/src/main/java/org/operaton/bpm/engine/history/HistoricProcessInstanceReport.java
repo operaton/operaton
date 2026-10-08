@@ -32,7 +32,7 @@ public interface HistoricProcessInstanceReport extends Report {
   /**
    * Only takes historic process instances into account that were started before the given date.
    *
-   * @throws NotValidException if the given started before date is null
+   * @throws NotValidException if the given started before date is {@code null}
    *
    */
   HistoricProcessInstanceReport startedBefore(Date startedBefore);
@@ -40,21 +40,21 @@ public interface HistoricProcessInstanceReport extends Report {
   /**
    * Only takes historic process instances into account that were started after the given date.
    *
-   * @throws NotValidException if the given started after date is null
+   * @throws NotValidException if the given started after date is {@code null}
    */
   HistoricProcessInstanceReport startedAfter(Date startedAfter);
 
   /**
    * Only takes historic process instances into account for the given process definition ids.
    *
-   * @throws NotValidException if one of the given ids is null
+   * @throws NotValidException if one of the given ids is {@code null}
    */
   HistoricProcessInstanceReport processDefinitionIdIn(String... processDefinitionIds);
 
   /**
    * Only takes historic process instances into account for the given process definition keys.
    *
-   * @throws NotValidException if one of the given ids is null
+   * @throws NotValidException if one of the given ids is {@code null}
    */
   HistoricProcessInstanceReport processDefinitionKeyIn(String... processDefinitionKeys);
 

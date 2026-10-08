@@ -113,10 +113,10 @@ public interface FormService {
    * same business key.
    * </p>
    *
-   * @param processDefinitionId the id of the process definition, cannot be null.
+   * @param processDefinitionId the id of the process definition, cannot be {@code null}.
    * @param businessKey a key that uniquely identifies the process instance in the context or the
    *                    given process definition.
-   * @param properties the properties to pass, can be null.
+   * @param properties the properties to pass, can be {@code null}.
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
@@ -239,16 +239,17 @@ public interface FormService {
   VariableMap getStartFormVariables(String processDefinitionId, Collection<String> formVariables, boolean deserializeObjectValues);
 
   /**
-   * <p>Retrieves a list of all variables for rendering a task form. In addition to the task variables and process variables,
-   * the method takes into account FormData specified for the task. This allows defining default values for form fields.</p>
+   * Retrieves a list of all variables for rendering a task form. In addition to the task variables and process variables,
+   * the method takes into account FormData specified for the task. This allows defining default values for form fields.
    *
-   * <p>A variable is resolved in the following order:
+   * <p>
+   * A variable is resolved in the following order:
+   * </p>
    * <ul>
    *   <li>First, the method collects all form fields and creates variable instances for the form fields.</li>
    *   <li>Next, the task variables are collected.</li>
    *   <li>Next, process variables from the parent scopes of the task are collected, until the process instance scope is reached.</li>
    * </ul>
-   * </p>
    *
    * @param taskId the id of the task for which the variables should be retrieved.
    * @return a map of VariableInstances.
@@ -268,16 +269,17 @@ public interface FormService {
   VariableMap getTaskFormVariables(String taskId);
 
   /**
-   * <p>Retrieves a list of requested variables for rendering a task form. In addition to the task variables and process variables,
-   * the method takes into account FormData specified for the task. This allows defining default values for form fields.</p>
+   * Retrieves a list of requested variables for rendering a task form. In addition to the task variables and process variables,
+   * the method takes into account FormData specified for the task. This allows defining default values for form fields.
    *
-   * <p>A variable is resolved in the following order:
+   * <p>
+   * A variable is resolved in the following order:
+   * </p>
    * <ul>
    *   <li>First, the method collects all form fields and creates variable instances for the form fields.</li>
    *   <li>Next, the task variables are collected.</li>
    *   <li>Next, process variables from the parent scopes of the task are collected, until the process instance scope is reached.</li>
    * </ul>
-   * </p>
    *
    * @param taskId the id of the task for which the variables should be retrieved.
    * @param formVariables a Collection of the names of the variables to retrieve. Allows restricting the set of retrieved variables.

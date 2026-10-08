@@ -53,9 +53,13 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 /**
  * Load test to detect memory leaks.
  *
- * <p>Run with: {@code ./mvnw verify -pl qa/load-test -Pload-test}</p>
+ * <p>
+ * Run with: {@code ./mvnw verify -pl qa/load-test -Pload-test}
+ * </p>
  *
- * <p>System properties:
+ * <p>
+ * System properties:
+ * </p>
  * <ul>
  *   <li>{@code loadtest.users} - concurrent users (default: 30)</li>
  *   <li>{@code loadtest.warmup.seconds} - warmup duration (default: 10)</li>

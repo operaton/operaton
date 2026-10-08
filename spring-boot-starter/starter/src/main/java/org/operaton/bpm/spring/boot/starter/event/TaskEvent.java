@@ -76,14 +76,14 @@ public class TaskEvent {
   }
 
   /**
-   * Reference to the case definition or null if it is not related to a case.
+   * Reference to the case definition or {@code null} if it is not related to a case.
    */
   public String getCaseDefinitionId() {
     return caseDefinitionId;
   }
 
   /**
-   * Reference to the case execution or null if it is not related to a case
+   * Reference to the case execution or {@code null} if it is not related to a case
    * instance.
    */
   public String getCaseExecutionId() {
@@ -91,7 +91,7 @@ public class TaskEvent {
   }
 
   /**
-   * Reference to the case instance or null if it is not related to a case
+   * Reference to the case instance or {@code null} if it is not related to a case
    * instance.
    */
   public String getCaseInstanceId() {
@@ -127,7 +127,7 @@ public class TaskEvent {
   }
 
   /**
-   * Reference to the path of execution or null if it is not related to a
+   * Reference to the path of execution or {@code null} if it is not related to a
    * process instance.
    */
   public String getExecutionId() {
@@ -147,7 +147,7 @@ public class TaskEvent {
   /**
    * The date/time when this task was last updated.
    * All operations that fire {@link TaskListener#EVENTNAME_UPDATE} count as an update to the task.
-   * Returns null if the task was never updated before (i.e. it was only created).
+   * Returns {@code null} if the task was never updated before (i.e. it was only created).
    * */
   public Date getLastUpdated() {
     return lastUpdated;
@@ -176,7 +176,7 @@ public class TaskEvent {
   }
 
   /**
-   * Reference to the process definition or null if it is not related to a
+   * Reference to the process definition or {@code null} if it is not related to a
    * process.
    */
   public String getProcessDefinitionId() {
@@ -184,7 +184,7 @@ public class TaskEvent {
   }
 
   /**
-   * Reference to the process instance or null if it is not related to a process
+   * Reference to the process instance or {@code null} if it is not related to a process
    * instance.
    */
   public String getProcessInstanceId() {
@@ -192,7 +192,7 @@ public class TaskEvent {
   }
 
   /**
-   * The id of the activity in the process defining this task or null if this is
+   * The id of the activity in the process defining this task or {@code null} if this is
    * not related to a process
    */
   public String getTaskDefinitionKey() {

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.metrics.reporter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -27,7 +26,6 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.impl.metrics.MetricsLogger;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.persistence.entity.MeterLogEntity;
@@ -68,14 +66,12 @@ public @NullMarked class MetricsCollectionTask extends TimerTask {
 
   protected void collectMetrics() {
 
-    List<MeterLogEntity> logs = new ArrayList<>();
-    for (Meter meter : metricsRegistry.getDbMeters().values()) {
-      logs.add(new MeterLogEntity(meter.getName(),
-          reporterId,
-          meter.getAndClear(),
-          ClockUtil.getCurrentTime()));
-
-    }
+    List<MeterLogEntity> logs = metricsRegistry.getDbMeters().values().stream()
+        .map(meter -> new MeterLogEntity(meter.getName(),
+            reporterId,
+            meter.getAndClear(),
+            ClockUtil.getCurrentTime()))
+        .toList();
 
     commandExecutor.execute(new MetricsCollectionCmd(logs));
   }
@@ -88,7 +84,7 @@ public @NullMarked class MetricsCollectionTask extends TimerTask {
     this.reporterId = reporterId;
   }
 
-  static class MetricsCollectionCmd implements Command<Void> {
+  protected static class MetricsCollectionCmd implements Command<Void> {
 
     protected List<MeterLogEntity> logs;
 

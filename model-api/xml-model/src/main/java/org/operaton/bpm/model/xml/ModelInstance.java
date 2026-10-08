@@ -44,9 +44,9 @@ public interface ModelInstance {
 
   /**
    * Returns the {@link ModelElementInstanceImpl ModelElement} corresponding to the document
-   * element of this model or null if no document element exists.
+   * element of this model or {@code null} if no document element exists.
    *
-   * @return the document element or null
+   * @return the document element or {@code null}
    */
   @Nullable ModelElementInstance getDocumentElement();
 
@@ -106,7 +106,7 @@ public interface ModelInstance {
    * Find a unique element of the model by id.
    *
    * @param id  the id of the element
-   * @return the element with the id or null
+   * @return the element with the id or {@code null}
    */
   <T extends ModelElementInstance> @Nullable T getModelElementById(String id);
 

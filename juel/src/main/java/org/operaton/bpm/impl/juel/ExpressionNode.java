@@ -140,8 +140,10 @@ public interface ExpressionNode extends Node {
 	 * For example, <code>"${foo:bar()+2*foobar}"</code> may lead to
 	 * <code>"${&lt;fn>() + 2 * &lt;var>}"</code> if <code>foobar</code> is a bound variable.
 	 * Otherwise, the structural id would be <code>"${&lt;fn>() + 2 * foobar}"</code>.
+	 * </p>
 	 * <p/>
 	 * If the bindings is <code>null</code>, the full canonical subexpression is returned.
+	 * </p>
 	 */
   String getStructuralId(Bindings bindings);
 }

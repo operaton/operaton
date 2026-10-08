@@ -64,6 +64,7 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
     return null;
   }
 
+  @SuppressWarnings("unused")
   public @Nullable HistoricProcessInstanceEventEntity findHistoricProcessInstanceEvent(String eventId) {
     if (isHistoryEnabled()) {
       return getDbEntityManager().selectById(HistoricProcessInstanceEventEntity.class, eventId);

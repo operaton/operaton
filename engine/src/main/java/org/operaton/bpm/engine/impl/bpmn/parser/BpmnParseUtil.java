@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +57,7 @@ public final @NullMarked class BpmnParseUtil {
    *
    * @param element the parent element of the extension element
    * @param extensionElementName the name of the extension element to find
-   * @return the extension element or null if not found
+   * @return the extension element or {@code null} if not found
    */
   public static @Nullable Element findOperatonExtensionElement(Element element, String extensionElementName) {
     return findExtensionElement(element, BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, extensionElementName);
@@ -70,7 +69,7 @@ public final @NullMarked class BpmnParseUtil {
    * @param element the parent element of the extension element
    * @param namespace the namespace of the extension element
    * @param extensionElementName the name of the extension element to find
-   * @return the extension element or null if not found
+   * @return the extension element or {@code null} if not found
    */
   public static @Nullable Element findExtensionElement(Element element, Namespace namespace, String extensionElementName) {
     Element extensionElements = element.element("extensionElements");
@@ -85,7 +84,7 @@ public final @NullMarked class BpmnParseUtil {
    * Returns the {@link IoMapping} of an element.
    *
    * @param element the element to parse
-   * @return the input output mapping or null if non defined
+   * @return the input output mapping or {@code null} if non defined
    * @throws BpmnParseException if a input/output parameter element is malformed
    */
   public static @Nullable IoMapping parseInputOutput(Element element) {
@@ -239,12 +238,9 @@ public final @NullMarked class BpmnParseUtil {
   }
 
   private static List<ParameterValueProvider> getParameterValueProviders(Element parameterElement) {
-    List<ParameterValueProvider> providerList = new ArrayList<>();
-    for (Element element : parameterElement.elements()) {
-      // parse nested provider
-      providerList.add(parseParamValueProvider(element));
-    }
-    return providerList;
+    return parameterElement.elements().stream()
+        .map(BpmnParseUtil::parseParamValueProvider)
+        .toList();
   }
 
   private static boolean isTagName(Element parameterElement, String tagName) {

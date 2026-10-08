@@ -148,16 +148,6 @@ public class HistoricIncidentEventEntity extends HistoryEvent {
     return IncidentState.RESOLVED.getStateCode() == incidentState;
   }
 
-  @Override
-  public String getRootProcessInstanceId() {
-    return rootProcessInstanceId;
-  }
-
-  @Override
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
-    this.rootProcessInstanceId = rootProcessInstanceId;
-  }
-
   public String getFailedActivityId() {
     return failedActivityId;
   }

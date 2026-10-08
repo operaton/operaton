@@ -67,7 +67,7 @@ public @NullMarked class ScriptTaskActivityBehavior extends TaskActivityBehavior
    *
    * @param e
    *          the exception to check
-   * @return the BpmnError that was the cause of this exception or null if no
+   * @return the BpmnError that was the cause of this exception or {@code null} if no
    *         BpmnError was found
    * @deprecated unused internal API
    */

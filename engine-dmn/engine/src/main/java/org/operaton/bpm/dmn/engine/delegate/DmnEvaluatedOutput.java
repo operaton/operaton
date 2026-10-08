@@ -49,22 +49,22 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 public interface DmnEvaluatedOutput {
 
   /**
-   * @return the id of the evaluated output or null if not set
+   * @return the id of the evaluated output or {@code null} if not set
    */
   String getId();
 
   /**
-   * @return the name of the evaluated output or null if not set
+   * @return the name of the evaluated output or {@code null} if not set
    */
   String getName();
 
   /**
-   * @return the output name of the evaluated output or null if not set
+   * @return the output name of the evaluated output or {@code null} if not set
    */
   String getOutputName();
 
   /**
-   * @return the value of the evaluated output or null if non set
+   * @return the value of the evaluated output or {@code null} if non set
    */
   TypedValue getValue();
 

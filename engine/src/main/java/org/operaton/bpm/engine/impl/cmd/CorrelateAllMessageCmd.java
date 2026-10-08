@@ -73,10 +73,9 @@ public @NullMarked class CorrelateAllMessageCmd extends AbstractCorrelateMessage
       checkAuthorization(correlationResult);
     }
 
-    List<MessageCorrelationResultImpl> results = new ArrayList<>();
-    for (CorrelationHandlerResult correlationResult : correlationResults) {
-      results.add(createMessageCorrelationResult(commandContext, correlationResult));
-    }
+    List<MessageCorrelationResultImpl> results = correlationResults.stream()
+        .map(correlationResult -> createMessageCorrelationResult(commandContext, correlationResult))
+        .toList();
 
     produceOperationLog(commandContext, results);
 

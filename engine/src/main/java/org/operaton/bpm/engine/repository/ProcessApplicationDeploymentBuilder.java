@@ -50,7 +50,6 @@ public interface ProcessApplicationDeploymentBuilder extends DeploymentBuilder {
   /**
    * This method defines on what additional registrations will be based.
    * The value will only be recognized if {@link #resumePreviousVersions()} is set.
-   * <p>
    * @see ResumePreviousBy
    * @see #resumePreviousVersions()
    * @param resumeByProcessDefinitionKey one of the constants from {@link ResumePreviousBy}

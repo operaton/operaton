@@ -30,9 +30,11 @@ import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 
 /**
- * A Bpmn scope. The scope has references to two lists of activities:
- * - the flow activities (activities for which the {@link ActivityImpl#getFlowScope() flow scope} is this scope
- * - event listener activities (activities for which the {@link ActivityImpl#getEventScope() event scope} is this scope.
+ * A BPMN scope. The scope has references to two lists of activities:
+ * <ul>
+ *   <li>the flow activities (activities for which the {@link ActivityImpl#getFlowScope() flow scope} is this scope)</li>
+ *   <li>event listener activities (activities for which the {@link ActivityImpl#getEventScope() event scope} is this scope)</li>
+ * </ul>
  *
  * @author Tom Baeyens
  * @author Daniel Meyer
@@ -110,7 +112,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    */
   public interface BacklogErrorCallback {
     /**
-     * In error case the callback will called.
+     * In error case the callback will be called.
      */
     void callback();
   }
@@ -136,6 +138,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    *
    * @return true if empty, false otherwise
    */
+  @SuppressWarnings("unused")
   public boolean isBacklogEmpty() {
     return backlog.isEmpty();
   }
@@ -199,7 +202,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   /**
    * @deprecated Use {@link #getListeners(String)} instead.
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "rawtypes"})
   @Deprecated(forRemoval = true, since = "1.0")
   public List<ExecutionListener> getExecutionListeners(String eventName) {
     return (List) super.getListeners(eventName);

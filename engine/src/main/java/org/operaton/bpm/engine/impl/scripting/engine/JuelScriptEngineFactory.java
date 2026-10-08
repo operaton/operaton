@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.script.ScriptEngine;

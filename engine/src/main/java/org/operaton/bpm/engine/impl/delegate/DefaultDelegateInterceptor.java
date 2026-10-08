@@ -32,8 +32,9 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 
 /**
  * The default implementation of the DelegateInterceptor.
- *<p/>
+ * <p/>
  * This implementation has the following features:
+ * </p>
  * <ul>
  * <li>it performs context switch into the target process application (if applicable)</li>
  * <li>it checks autorizations if {@link ProcessEngineConfigurationImpl#isAuthorizationEnabledForCustomCode()} is true</li>

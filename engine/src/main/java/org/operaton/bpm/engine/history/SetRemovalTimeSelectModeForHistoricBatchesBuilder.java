@@ -42,7 +42,7 @@ public interface SetRemovalTimeSelectModeForHistoricBatchesBuilder extends SetRe
   SetRemovalTimeToHistoricBatchesBuilder calculatedRemovalTime();
 
   /**
-   * <p> Sets the removal time to {@code null}.
+   * Sets the removal time to {@code null}.
    *
    * @return the builder.
    */

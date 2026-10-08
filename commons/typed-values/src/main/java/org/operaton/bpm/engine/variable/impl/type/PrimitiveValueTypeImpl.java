@@ -176,7 +176,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       if (typedValue.getType() != ValueType.NUMBER) {
         throw unsupportedConversion(typedValue.getType());
       }
-      DoubleValueImpl doubleValue = null;
+      DoubleValueImpl doubleValue;
       NumberValue numberValue = (NumberValue) typedValue;
       if (numberValue.getValue() != null) {
         doubleValue = (DoubleValueImpl) Variables.doubleValue(numberValue.getValue().doubleValue());
@@ -232,7 +232,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
         throw unsupportedConversion(typedValue.getType());
       }
 
-      IntegerValueImpl integerValue = null;
+      IntegerValueImpl integerValue;
       NumberValue numberValue = (NumberValue) typedValue;
       if (numberValue.getValue() != null) {
         integerValue = (IntegerValueImpl) Variables.integerValue(numberValue.getValue().intValue());
@@ -288,7 +288,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
         throw unsupportedConversion(typedValue.getType());
       }
 
-      LongValueImpl longvalue = null;
+      LongValueImpl longvalue;
       NumberValue numberValue = (NumberValue) typedValue;
 
       if (numberValue.getValue() != null) {
@@ -340,7 +340,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
         throw unsupportedConversion(typedValue.getType());
       }
 
-      ShortValueImpl shortValue = null;
+      ShortValueImpl shortValue;
       NumberValue numberValue = (NumberValue) typedValue;
       if (numberValue.getValue() != null) {
         shortValue = (ShortValueImpl) Variables.shortValue(numberValue.getValue().shortValue());

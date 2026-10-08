@@ -17,11 +17,11 @@
 package org.operaton.bpm.engine.impl.bpmn.diagram;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.xpath.XPath;
@@ -74,13 +74,10 @@ public @NullMarked class Bpmn20NamespaceContext implements NamespaceContext {
   }
 
   private static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-    Set<T> keys = new HashSet<>();
-    for (Entry<T, E> entry : map.entrySet()) {
-      if (value.equals(entry.getValue())) {
-        keys.add(entry.getKey());
-      }
-    }
-    return keys;
+    return map.entrySet().stream()
+        .filter(entry -> value.equals(entry.getValue()))
+        .map(Entry::getKey)
+        .collect(Collectors.toSet());
   }
 
   private static <T, E> @Nullable T getKeyByValue(Map<T, E> map, E value) {

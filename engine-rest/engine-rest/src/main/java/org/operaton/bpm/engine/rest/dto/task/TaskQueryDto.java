@@ -1631,7 +1631,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
 
     if (taskQuery.getAssigneeIn() != null) {
       dto.assigneeIn = taskQuery.getAssigneeIn()
-          .toArray(new String[taskQuery.getAssigneeIn().size()]);
+          .toArray(String[]::new);
     }
 
     dto.assigneeLike = taskQuery.getAssigneeLike();

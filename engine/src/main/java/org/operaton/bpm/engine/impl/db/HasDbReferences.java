@@ -30,7 +30,7 @@ import org.jspecify.annotations.NullMarked;
 public @NullMarked interface HasDbReferences {
 
   /**
-   * <p>Scope: IN-MEMORY references
+   * Scope: IN-MEMORY references
    *
    * @return the ids of the entities that this entity references. Should
    *   only return ids for entities of the same type
@@ -40,7 +40,7 @@ public @NullMarked interface HasDbReferences {
   }
 
   /**
-   * <p>Scope: IN-MEMORY references
+   * Scope: IN-MEMORY references
    *
    * @return a map of the ids and the entities' classes that this
    * entity references. It's used when trying to determine if there
@@ -52,7 +52,7 @@ public @NullMarked interface HasDbReferences {
   }
 
   /**
-   * <p>Scope: PERSISTED references
+   * Scope: PERSISTED references
    */
   default Map<String, Class<?>> getDependentEntities() {
     return Collections.emptyMap();

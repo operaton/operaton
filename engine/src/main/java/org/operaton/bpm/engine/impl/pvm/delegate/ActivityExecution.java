@@ -52,11 +52,11 @@ public interface ActivityExecution extends DelegateExecution {
 
   void setActivityInstanceId(String id);
 
-  /** return the Id of the activity instance currently executed by this execution */
+  /** return the id of the activity instance currently executed by this execution */
   @Override
   String getActivityInstanceId();
 
-  /** return the Id of the parent activity instance currently executed by this execution */
+  /** return the id of the parent activity instance currently executed by this execution */
   @Override
   String getParentActivityInstanceId();
 
@@ -181,7 +181,7 @@ public interface ActivityExecution extends DelegateExecution {
   /**
    * Inactivates this execution.
    * This is useful for example in a join: the execution
-   * still exists, but it is not longer active.
+   * still exists, but it is no longer active.
    */
   void inactivate();
 
@@ -252,7 +252,6 @@ public interface ActivityExecution extends DelegateExecution {
    *
    * @param targetScope scope activity or process definition for which the scope execution should be found;
    *   must be an ancestor of the execution's current activity
-   * @return
    */
   ActivityExecution findExecutionForFlowScope(PvmScope targetScope);
 

@@ -113,7 +113,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   protected boolean isConcurrentLocal;
 
   /**
-   * Determines whether this variable is stored in the data base.
+   * Determines whether this variable is stored in the database.
    */
   protected boolean isTransient;
 
@@ -243,7 +243,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   // byte array value /////////////////////////////////////////////////////////
 
-  // i couldn't find a easy readable way to extract the common byte array value logic
+  // I couldn't find an easy readable way to extract the common byte array value logic
   // into a common class.  therefor it's duplicated in VariableInstanceEntity,
   // HistoricVariableInstance and HistoricDetailVariableInstanceUpdateEntity
 
@@ -714,7 +714,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   /**
    * @param isTransient
-   *          <code>true</code>, if the variable is not stored in the data base.
+   *          <code>true</code>, if the variable is not stored in the database.
    *          Default is <code>false</code>.
    */
   public void setTransient(boolean isTransient) {
@@ -723,7 +723,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   /**
    * @return <code>true</code>, if the variable is transient. A transient
-   *         variable is not stored in the data base.
+   *         variable is not stored in the database.
    */
   public boolean isTransient() {
     return isTransient;

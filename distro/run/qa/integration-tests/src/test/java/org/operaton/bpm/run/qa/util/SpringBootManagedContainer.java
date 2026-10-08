@@ -209,7 +209,7 @@ public class SpringBootManagedContainer {
 
   protected static void killProcess(boolean failOnException) {
     try {
-      Process p = null;
+      Process p;
 
       // must kill a hierachy of processes: the script process (which corresponds to the pid value)
       // and the Java process it has spawned
@@ -296,7 +296,7 @@ public class SpringBootManagedContainer {
 
       final InputStream stream = startupProcess.getInputStream();
       final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-      String line = null;
+      String line;
       try {
         while ((line = reader.readLine()) != null) {
           System.out.println(line);

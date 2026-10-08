@@ -693,7 +693,7 @@ class DecisionDefinitionQueryTest {
     copy.addAll(list1);
     copy.addAll(list2);
 
-    return copy.toArray(new String[numElements]);
+    return copy.toArray(String[]::new);
   }
 
   protected List<String> asIds(List<DecisionDefinition> decisions) {

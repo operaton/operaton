@@ -148,7 +148,7 @@ class ExclusiveGatewayTest {
 
 
     // Arrays are usable in exactly the same way
-    ExclusiveGatewayTestOrder[] orderArray = orders.toArray(new ExclusiveGatewayTestOrder[orders.size()]);
+    ExclusiveGatewayTestOrder[] orderArray = orders.toArray(ExclusiveGatewayTestOrder[]::new);
     orderArray[1].setPrice(10);
     pi = runtimeService.startProcessInstanceByKey(
             "decisionBasedOnListOrArrayOfBeans", CollectionUtil.singletonMap("orders", orderArray));

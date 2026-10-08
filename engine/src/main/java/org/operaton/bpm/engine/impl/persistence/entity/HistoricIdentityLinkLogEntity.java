@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.HistoricIdentityLinkLog;
 import org.operaton.bpm.engine.impl.history.event.HistoricIdentityLinkLogEventEntity;
 
@@ -24,5 +25,5 @@ import org.operaton.bpm.engine.impl.history.event.HistoricIdentityLinkLogEventEn
  * @author Deivarayan Azhagappan
  *
  */
-public class HistoricIdentityLinkLogEntity extends HistoricIdentityLinkLogEventEntity implements HistoricIdentityLinkLog {
+public @NullMarked class HistoricIdentityLinkLogEntity extends HistoricIdentityLinkLogEventEntity implements HistoricIdentityLinkLog {
 }

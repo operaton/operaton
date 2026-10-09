@@ -36,7 +36,10 @@ const APP_NAME = "neo";
 const start_session = (state, username, password) => {
   const headers = new Headers();
   set_request_headers(headers, state);
-  headers.set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+  headers.set(
+    "Content-Type",
+    "application/x-www-form-urlencoded;charset=UTF-8",
+  );
 
   return fetch(`${_url_auth()}/login/${APP_NAME}`, {
     method: "POST",
@@ -132,6 +135,9 @@ const login = (
 
   return authenticate
     .then((user_id) => {
+      // Not every sign-in follows a sign-out: a session can expire, or someone
+      // simply signs in as somebody else.
+      if (user_id !== state.auth.user.id.peek()) clear_api_state(state.api);
       state.auth.user.id.value = user_id;
       state.auth.logged_in.value = {
         status: RESPONSE_STATE.SUCCESS,
@@ -147,8 +153,28 @@ const login = (
     );
 };
 
+/**
+ * Drop every response cached under state.api.
+ *
+ * The signals outlive a session: nothing unmounts when one user signs out and
+ * another signs in, so the next user was shown the previous user's saved
+ * filters, task list and everything else until each page happened to refetch.
+ * Reload was the only way to clear it.
+ *
+ * Values are reset in place rather than replacing the tree, so components
+ * holding a reference to a signal keep writing to the one that is rendered.
+ */
+const clear_api_state = (node) => {
+  for (const entry of Object.values(node ?? {})) {
+    if (!entry || typeof entry !== "object") continue;
+    if (typeof entry.peek === "function") entry.value = null;
+    else clear_api_state(entry);
+  }
+};
+
 /** Forget everything this tab knows about who is signed in. */
 const clear_local_session = (state) => {
+  clear_api_state(state.api);
   state.auth.credentials.value = { username: null, password: null };
   state.auth.user.id.value = null;
   state.auth.authorized_apps.value = null;

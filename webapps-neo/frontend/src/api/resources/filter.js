@@ -1,4 +1,12 @@
-import { GET, POST, PUT, DELETE, RESPONSE_STATE, _url_engine_rest, set_auth_header } from "../helper.jsx";
+import {
+  GET,
+  POST,
+  PUT,
+  DELETE,
+  RESPONSE_STATE,
+  _url_engine_rest,
+  set_auth_header,
+} from "../helper.jsx";
 
 const get_filters = (state) =>
   GET("/filter?resourceType=Task", state, state.api.filter.list);
@@ -15,13 +23,24 @@ const update_filter = (state, filter_id, body) =>
 const delete_filter = (state, filter_id) =>
   DELETE(`/filter/${filter_id}`, null, state, state.api.filter.delete);
 
-const execute_filter = async (state, filter_id, firstResult = 0, maxResults = 15, sorting = { sortBy: "created", sortOrder: "desc" }) => {
+const execute_filter = async (
+  state,
+  filter_id,
+  firstResult = 0,
+  maxResults = 15,
+  sorting = { sortBy: "created", sortOrder: "desc" },
+) => {
   const prev = state.api.task.list.value;
-  if (firstResult === 0) state.api.task.list.value = { status: RESPONSE_STATE.LOADING };
+  if (firstResult === 0)
+    state.api.task.list.value = { status: RESPONSE_STATE.LOADING };
 
   const headers = new Headers();
   set_auth_header(headers, state);
   headers.set("Content-Type", "application/json");
+  // The HAL representation carries the variables the filter names along with
+  // each task, which is what the list needs for its variable columns. Plain
+  // JSON would mean one request per row.
+  headers.set("Accept", "application/hal+json");
 
   const body = {
     sorting: [sorting],
@@ -32,7 +51,16 @@ const execute_filter = async (state, filter_id, firstResult = 0, maxResults = 15
       `${_url_engine_rest(state)}/filter/${filter_id}/list?firstResult=${firstResult}&maxResults=${maxResults}`,
       { headers, method: "POST", body: JSON.stringify(body) },
     );
-    const json = await (response.ok ? response.json() : Promise.reject(response));
+    const hal = await (response.ok
+      ? response.json()
+      : Promise.reject(response));
+    const json = (hal?._embedded?.task ?? []).map((task) => ({
+      ...task,
+      // Flatten what HAL nests, so a row reads a variable by name.
+      filter_variables: Object.fromEntries(
+        (task._embedded?.variable ?? []).map((v) => [v.name, v]),
+      ),
+    }));
     const existing = firstResult > 0 ? (prev?.data ?? []) : [];
     const existingIds = new Set(existing.map((t) => t.id));
     const newTasks = json.filter((t) => !existingIds.has(t.id));

@@ -1,6 +1,9 @@
 import { describe, it, vi, beforeEach } from "vitest";
 
 vi.mock("../helper.jsx", () => ({
+  encode_id: (id) => encodeURIComponent(id ?? ""),
+  GET_LIST: vi.fn(),
+  PAGE_SIZE: 50,
   GET: vi.fn(),
   POST: vi.fn(),
   PUT: vi.fn(),
@@ -8,7 +11,7 @@ vi.mock("../helper.jsx", () => ({
   resolve_user: (state, user_name) => user_name ?? state.auth.user.id.value,
 }));
 
-import { GET, POST, PUT, DELETE } from "../helper.jsx";
+import { GET, POST, PUT, DELETE, GET_LIST } from "../helper.jsx";
 import { create_mock_state, expect_api_call } from "../../test/helpers.js";
 import tenant from "./tenant.js";
 
@@ -18,13 +21,19 @@ describe("api/resources/tenant", () => {
     state = create_mock_state();
   });
 
-  it("all() GETs the paged tenant list", () => {
+  it("all() asks for the first page, sorted by id", () => {
     tenant.all(state);
-    expect_api_call(GET, {
-      url: "/tenant?firstResult=0&maxResults=50&sortBy=id&sortOrder=asc",
-      state,
-      signal: state.api.tenant.list,
-    });
+    expect(GET_LIST).toHaveBeenCalled();
+    const [url, , signal] = GET_LIST.mock.lastCall;
+    expect(url).toBe(
+      "/tenant?firstResult=0&maxResults=50&sortBy=id&sortOrder=asc",
+    );
+    expect(signal).toBe(state.api.tenant.list);
+  });
+
+  it("all() puts a search query into the request", () => {
+    tenant.all(state, { nameLike: "Baden%" });
+    expect(GET_LIST.mock.lastCall[0]).toContain("nameLike=Baden%25");
   });
 
   it("create() POSTs the tenant to /tenant/create", () => {
@@ -133,6 +142,16 @@ describe("api/resources/tenant", () => {
       body: { id: "acme", groupId: "admins" },
       state,
       signal: state.api.tenant.remove_group,
+    });
+  });
+
+  it("escapes a slash in the tenant id", () => {
+    tenant.delete(state, "de/bw");
+    expect_api_call(DELETE, {
+      url: "/tenant/de%2Fbw",
+      body: {},
+      state,
+      signal: state.api.tenant.delete,
     });
   });
 });

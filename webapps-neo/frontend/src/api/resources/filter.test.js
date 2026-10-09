@@ -83,7 +83,9 @@ describe("api/resources/filter", () => {
     it("posts the default sorting and replaces task.list on first page", async () => {
       fetchMock.mockResolvedValue({
         ok: true,
-        json: async () => [{ id: "t1" }, { id: "t2" }],
+        json: async () => ({
+          _embedded: { task: [{ id: "t1" }, { id: "t2" }] },
+        }),
       });
       await filter.execute_filter(state, "f1", 0, 15);
 
@@ -95,7 +97,10 @@ describe("api/resources/filter", () => {
       });
       expect(state.api.task.list.value).toEqual({
         status: RESPONSE_STATE.SUCCESS,
-        data: [{ id: "t1" }, { id: "t2" }],
+        data: [
+          { id: "t1", filter_variables: {} },
+          { id: "t2", filter_variables: {} },
+        ],
         hasMore: false,
       });
     });
@@ -103,17 +108,19 @@ describe("api/resources/filter", () => {
     it("appends and de-dupes on subsequent pages and flags hasMore", async () => {
       state.api.task.list.value = {
         status: RESPONSE_STATE.SUCCESS,
-        data: [{ id: "t1" }],
+        data: [{ id: "t1", filter_variables: {} }],
       };
       fetchMock.mockResolvedValue({
         ok: true,
-        json: async () => [{ id: "t1" }, { id: "t2" }],
+        json: async () => ({
+          _embedded: { task: [{ id: "t1" }, { id: "t2" }] },
+        }),
       });
       await filter.execute_filter(state, "f1", 15, 2);
 
       expect(state.api.task.list.value.data).toEqual([
-        { id: "t1" },
-        { id: "t2" },
+        { id: "t1", filter_variables: {} },
+        { id: "t2", filter_variables: {} },
       ]);
       expect(state.api.task.list.value.hasMore).toBe(true);
     });

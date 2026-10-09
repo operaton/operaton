@@ -135,6 +135,48 @@ describe("Header", () => {
     });
   });
 
+  it("goes back to the start once the session has ended", async () => {
+    mockUrl = "/tasks/t1/form";
+    state.auth.user.id.value = "alice";
+    engine_rest.auth.logout.mockImplementation(async () => {
+      state.auth.user.id.value = null;
+    });
+    const { container } = renderHeader(state);
+
+    fireEvent.click(container.querySelector("#logout"));
+    await vi.waitFor(() => expect(route).toHaveBeenCalledWith("/"));
+  });
+
+  it("stays put when the server refuses the sign-out", async () => {
+    mockUrl = "/tasks/t1/form";
+    state.auth.user.id.value = "alice";
+    // A refused logout leaves the session alone; moving the user would say
+    // otherwise.
+    engine_rest.auth.logout.mockResolvedValue(undefined);
+    const { container } = renderHeader(state);
+
+    fireEvent.click(container.querySelector("#logout"));
+    await vi.waitFor(() => expect(engine_rest.auth.logout).toHaveBeenCalled());
+    expect(route).not.toHaveBeenCalledWith("/");
+  });
+
+  it("names the signed-in user where the account link sits", () => {
+    state.auth.user.id.value = "alice";
+    // Two: the desktop navigation and the mobile menu.
+    const { getAllByTitle } = renderHeader(state);
+    const links = getAllByTitle("nav.account");
+    expect(links).toHaveLength(2);
+    links.forEach((a) => expect(a.textContent.trim()).toBe("alice"));
+  });
+
+  it("falls back to the account label when nobody is signed in", () => {
+    state.auth.user.id.value = null;
+    const { getAllByTitle } = renderHeader(state);
+    expect(getAllByTitle("nav.account")[0].textContent.trim()).toBe(
+      "nav.account",
+    );
+  });
+
   it("calls engine_rest.auth.logout when the logout button is clicked", () => {
     const { container } = renderHeader(state);
     fireEvent.click(container.querySelector("#logout"));

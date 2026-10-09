@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.mapping;
 
+import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.CoreLogger;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
@@ -44,10 +45,14 @@ public class InputParameter extends IoParameter {
   @Override
   protected void execute(AbstractVariableScope innerScope, AbstractVariableScope outerScope) {
 
+    execute(innerScope, (VariableScope) outerScope);
+  }
+
+  public void execute(AbstractVariableScope innerScope, VariableScope outerScope) {
     // get value from outer scope
     Object value = valueProvider.getValue(outerScope);
 
-    LOG.debugMappingValueFromOuterScopeToInnerScope(value,outerScope, name, innerScope);
+    LOG.debugMappingValueFromOuterScopeToInnerScope(value, innerScope.getParentVariableScope(), name, innerScope);
 
     // set variable in inner scope
     innerScope.setVariableLocal(name, value);

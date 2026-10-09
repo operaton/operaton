@@ -19,6 +19,7 @@ package org.operaton.bpm.application;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.ProcessApplicationService;
 
 /**
@@ -29,7 +30,7 @@ import org.operaton.bpm.ProcessApplicationService;
  * @see ProcessApplicationService#getProcessApplicationInfo(String)
  *
  */
-public interface ProcessApplicationInfo {
+public @NullMarked interface ProcessApplicationInfo {
 
   /** constant for the servlet context path property */
   String PROP_SERVLET_CONTEXT_PATH = "servletContextPath";

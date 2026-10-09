@@ -18,12 +18,15 @@ package org.operaton.bpm.engine.spring.test.application;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.PreUndeploy;
 import org.operaton.bpm.application.ProcessApplicationExecutionException;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
@@ -46,7 +49,7 @@ public class PostDeployRegistrationPa extends SpringProcessApplication {
       .latestVersion()
       .singleResult();
 
-    deploymentId = processDefinition.getDeploymentId();
+    deploymentId = requireNonNull(processDefinition).getDeploymentId();
 
     // register with the process engine
     processEngine.getManagementService()
@@ -80,7 +83,7 @@ public class PostDeployRegistrationPa extends SpringProcessApplication {
 
   /** override execute to intercept calls from process engine and record that we are invoked. */
   @Override
-  public <T> T execute(Callable<T> callable) throws ProcessApplicationExecutionException {
+  public <T> T execute(@NonNull Callable<T> callable) throws ProcessApplicationExecutionException {
     T result = super.execute(callable);
     isInvoked = true;
     return result;

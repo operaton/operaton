@@ -18,15 +18,19 @@ package org.operaton.bpm.integrationtest.functional.context;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationExecutionException;
 
+import static java.util.Objects.requireNonNull;
+
 @ProcessApplication("app")
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class ProcessApplicationWithInvocationContext extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
+public @NullMarked class ProcessApplicationWithInvocationContext extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
-  private static InvocationContext invocationContext;
+  private static @Nullable InvocationContext invocationContext;
 
   @Override
   public <T> T execute(Callable<T> callable, InvocationContext invocationContext) throws ProcessApplicationExecutionException {
@@ -38,7 +42,7 @@ public class ProcessApplicationWithInvocationContext extends org.operaton.bpm.ap
   }
 
   public static synchronized InvocationContext getInvocationContext() {
-    return ProcessApplicationWithInvocationContext.invocationContext;
+    return requireNonNull(ProcessApplicationWithInvocationContext.invocationContext);
   }
 
   public static synchronized void clearInvocationContext() {

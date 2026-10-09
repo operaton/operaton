@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
@@ -551,7 +552,7 @@ public class RedeploymentProcessApplicationTest {
     }
 
     @Override
-    public <T> T execute(Callable<T> callable) throws ProcessApplicationExecutionException {
+    public <T> T execute(@NonNull Callable<T> callable) throws ProcessApplicationExecutionException {
       called = true;
       return super.execute(callable);
     }

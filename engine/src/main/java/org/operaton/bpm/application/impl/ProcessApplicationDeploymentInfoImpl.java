@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.application.impl;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
 
 
@@ -23,7 +24,12 @@ import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationDeploymentInfoImpl implements ProcessApplicationDeploymentInfo {
+public @NullMarked class ProcessApplicationDeploymentInfoImpl implements ProcessApplicationDeploymentInfo {
+
+  public ProcessApplicationDeploymentInfoImpl(String processEngineName, String deploymentId) {
+    this.processEngineName = processEngineName;
+    this.deploymentId = deploymentId;
+  }
 
   protected String processEngineName;
 
@@ -34,6 +40,9 @@ public class ProcessApplicationDeploymentInfoImpl implements ProcessApplicationD
     return processEngineName;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public void setProcessEngineName(String processEngineName) {
     this.processEngineName = processEngineName;
   }
@@ -43,6 +52,9 @@ public class ProcessApplicationDeploymentInfoImpl implements ProcessApplicationD
     return deploymentId;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public void setDeploymentId(String deploymentId) {
     this.deploymentId = deploymentId;
   }

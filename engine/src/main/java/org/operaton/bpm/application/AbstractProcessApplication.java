@@ -23,6 +23,7 @@ import java.util.ServiceLoader;
 import java.util.concurrent.Callable;
 import jakarta.el.BeanELResolver;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import javax.script.ScriptEngine;
@@ -45,15 +46,15 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 /**
  * @author Daniel Meyer
  */
-public abstract class AbstractProcessApplication implements ProcessApplicationInterface {
+public abstract @NullMarked class AbstractProcessApplication implements ProcessApplicationInterface {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
-  protected ELResolver processApplicationElResolver;
-  protected BeanELResolver processApplicationBeanElResolver;
-  protected ProcessApplicationScriptEnvironment processApplicationScriptEnvironment;
+  protected @Nullable ELResolver processApplicationElResolver;
+  protected @Nullable BeanELResolver processApplicationBeanElResolver;
+  protected @Nullable ProcessApplicationScriptEnvironment processApplicationScriptEnvironment;
 
-  protected VariableSerializers variableSerializers;
+  protected @Nullable VariableSerializers variableSerializers;
 
   protected boolean isDeployed;
 
@@ -108,7 +109,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
     if (annotation != null) {
       name = annotation.value();
 
-      if (name == null || name.isEmpty()) {
+      if (name.isEmpty()) {
         name = annotation.name();
       }
     }

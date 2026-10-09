@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.example.invoice;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
  * Process Application exposing this application's resources the process engine.
  */
 @ProcessApplication(name = "InvoiceProcessApplication")
-public class InvoiceProcessApplication extends JakartaServletProcessApplication {
+public @NullMarked class InvoiceProcessApplication extends JakartaServletProcessApplication {
 
   /**
    * In a @PostDeploy hook you can interact with the process engine and access

@@ -21,6 +21,7 @@ import java.util.concurrent.Callable;
 import jakarta.el.BeanELResolver;
 import jakarta.el.ELResolver;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.ProcessApplicationService;
@@ -86,7 +87,7 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
  * @author Daniel Meyer
  *
  */
-public interface ProcessApplicationInterface {
+public @NullMarked interface ProcessApplicationInterface {
 
   /**
    * Deploy this process application into the runtime container.

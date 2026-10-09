@@ -5,12 +5,18 @@ const path = require('path');
 let idsPkg;
 try {
   idsPkg = require(path.resolve(__dirname, 'node_modules/ids/dist/index.js'));
-} catch (e) {
+} catch (_e) {
   // fallback: try plain require in case node resolves differently
-  try { idsPkg = require('ids'); } catch (e2) { idsPkg = null; }
+  try {
+    idsPkg = require('ids');
+  } catch (_e2) {
+    idsPkg = null;
+  }
 }
 
-function isFn(v) { return typeof v === 'function'; }
+function isFn(v) {
+  return typeof v === 'function';
+}
 
 // Resolve constructor from known shapes
 let Ctor = null;
@@ -29,7 +35,10 @@ if (isFn(idsPkg)) {
 // Last resort: pick any function property
 if (!Ctor && idsPkg && typeof idsPkg === 'object') {
   for (const k of Object.keys(idsPkg)) {
-    if (isFn(idsPkg[k])) { Ctor = idsPkg[k]; break; }
+    if (isFn(idsPkg[k])) {
+      Ctor = idsPkg[k];
+      break;
+    }
   }
 }
 

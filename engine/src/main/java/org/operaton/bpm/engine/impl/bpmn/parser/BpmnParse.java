@@ -2150,8 +2150,10 @@ public @NullMarked class BpmnParse extends Parse {
     Map<String, Element> siblingsMap = new HashMap<>();
     List<Element> siblings = parentElement != null ? parentElement.elements() : Collections.emptyList();
     for (Element sibling : siblings) {
-      String siblingId = requireNonNull(sibling.attribute("id"));
-      siblingsMap.put(siblingId, sibling);
+      String siblingId = sibling.attribute("id");
+      if (siblingId != null) {
+        siblingsMap.put(siblingId, sibling);
+      }
     }
 
     for (Element sequenceFlow : seqFlows) {
@@ -2577,9 +2579,9 @@ public @NullMarked class BpmnParse extends Parse {
 
     ParameterValueProvider topicNameProvider = parseTopic(serviceTaskElement, PROPERTYNAME_EXTERNAL_TASK_TOPIC);
     if (topicNameProvider == null) {
-      addError("External tasks must specify a 'topic' attribute in the operaton namespace", serviceTaskElement);
+      // parseTopic has already reported the error; continue parsing to collect any other errors.
+      topicNameProvider = new NullValueProvider();
     }
-    requireNonNull(topicNameProvider);
     ParameterValueProvider priorityProvider = parsePriority(serviceTaskElement, PROPERTYNAME_TASK_PRIORITY);
     Map<String, String> properties = parseOperatonExtensionProperties(operatonPropertiesElement);
     activity.getProperties().set(BpmnProperties.EXTENSION_PROPERTIES, properties);

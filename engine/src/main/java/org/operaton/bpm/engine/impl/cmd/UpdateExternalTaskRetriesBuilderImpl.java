@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.jspecify.annotations.NullMarked;
@@ -64,7 +63,7 @@ public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateE
     if (externalTaskIds == null) {
       this.externalTaskIds = emptyList();
     } else {
-      this.externalTaskIds = externalTaskIds.stream().filter(Objects::nonNull).toList();
+      this.externalTaskIds = externalTaskIds.stream().toList();
     }
     return this;
   }
@@ -74,7 +73,7 @@ public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateE
     if (externalTaskIds == null) {
       this.externalTaskIds = emptyList();
     } else {
-      this.externalTaskIds = Stream.of(externalTaskIds).filter(Objects::nonNull).toList();
+      this.externalTaskIds = Stream.of(externalTaskIds).toList();
     }
     return this;
   }
@@ -84,7 +83,7 @@ public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateE
     if (processInstanceIds == null) {
       this.processInstanceIds = emptyList();
     } else {
-      this.processInstanceIds = processInstanceIds.stream().filter(Objects::nonNull).toList();
+      this.processInstanceIds = processInstanceIds.stream().toList();
     }
     return this;
   }
@@ -94,7 +93,7 @@ public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateE
     if (processInstanceIds == null) {
       this.processInstanceIds = emptyList();
     } else {
-      this.processInstanceIds = Stream.of(processInstanceIds).filter(Objects::nonNull).toList();
+      this.processInstanceIds = Stream.of(processInstanceIds).toList();
     }
     return this;
   }

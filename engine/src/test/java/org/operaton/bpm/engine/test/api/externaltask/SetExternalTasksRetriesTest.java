@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
+import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
@@ -152,6 +153,36 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
+  void shouldFailForNullExternalTaskIdInArraySync() {
+    String externalTaskId = externalTaskService.createExternalTaskQuery().list().get(0).getId();
+    var builder = externalTaskService.updateRetries().externalTaskIds(externalTaskId, null);
+
+    assertThatThrownBy(() -> builder.set(RETRIES))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("External task id cannot be null");
+  }
+
+  @Test
+  void shouldFailForNullProcessInstanceIdInListSync() {
+    List<String> ids = new ArrayList<>(processInstanceIds);
+    ids.add(null);
+    var builder = externalTaskService.updateRetries().processInstanceIds(ids);
+
+    assertThatThrownBy(() -> builder.set(RETRIES))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("processInstanceIdIn contains null value");
+  }
+
+  @Test
+  void shouldFailForNullProcessInstanceIdInArraySync() {
+    var builder = externalTaskService.updateRetries().processInstanceIds(processInstanceIds.get(0), null);
+
+    assertThatThrownBy(() -> builder.set(RETRIES))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("processInstanceIdIn contains null value");
+  }
+
+  @Test
   void shouldFailForNonExistingExternalTaskIdAsync() {
 
     List<ExternalTask> externalTasks = externalTaskService.createExternalTaskQuery().list();
@@ -191,6 +222,36 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
     assertThatThrownBy(() -> externalTaskService.setRetriesAsync((List<String>) null, null, 10))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining("externalTaskIds is empty");
+  }
+
+  @Test
+  void shouldFailForNullExternalTaskIdInArrayAsync() {
+    String externalTaskId = externalTaskService.createExternalTaskQuery().list().get(0).getId();
+    var builder = externalTaskService.updateRetries().externalTaskIds(externalTaskId, null);
+
+    assertThatThrownBy(() -> builder.setAsync(RETRIES))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("External task id cannot be null");
+  }
+
+  @Test
+  void shouldFailForNullProcessInstanceIdInListAsync() {
+    List<String> ids = new ArrayList<>(processInstanceIds);
+    ids.add(null);
+    var builder = externalTaskService.updateRetries().processInstanceIds(ids);
+
+    assertThatThrownBy(() -> builder.setAsync(RETRIES))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("processInstanceIdIn contains null value");
+  }
+
+  @Test
+  void shouldFailForNullProcessInstanceIdInArrayAsync() {
+    var builder = externalTaskService.updateRetries().processInstanceIds(processInstanceIds.get(0), null);
+
+    assertThatThrownBy(() -> builder.setAsync(RETRIES))
+        .isInstanceOf(NullValueException.class)
+        .hasMessage("processInstanceIdIn contains null value");
   }
 
   @Test

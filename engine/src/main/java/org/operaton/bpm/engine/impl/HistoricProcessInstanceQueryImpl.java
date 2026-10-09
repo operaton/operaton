@@ -846,8 +846,8 @@ public @NullMarked class HistoricProcessInstanceQueryImpl extends AbstractVariab
     return subCaseInstanceId;
   }
 
-  public String[] getTenantIds() {
-    return tenantIds != null ? tenantIds : new String[0];
+  public String@Nullable[] getTenantIds() {
+    return tenantIds;
   }
 
   public String[] getIncidentIds() {

@@ -75,11 +75,36 @@
         <type>pom</type>
       </dependency>
       <!-- Netty - Place before Spring Boot, which manages 4.2.15 (CVE-2026-56745
-        et al.). Remove once spring-boot-dependencies manages netty >= 4.2.16. -->
+        et al.). Remove once spring-boot-dependencies manages netty >= 4.2.16 and the
+        Quarkus/Vert.x versions used by quarkus-extension ship netty >= 4.2.16, as
+        quarkus-extension relies on this pin as well. -->
       <dependency>
         <groupId>io.netty</groupId>
         <artifactId>netty-bom</artifactId>
         <version>${version.netty}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <!-- Imported before Spring Boot so that the versions below take precedence
+        over the ones managed by spring-boot-dependencies. -->
+      <dependency>
+        <groupId>org.glassfish.jersey</groupId>
+        <artifactId>jersey-bom</artifactId>
+        <version>${version.jersey3}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>${version.testcontainers}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-bom</artifactId>
+        <version>${version.mockito}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -103,25 +128,6 @@
         <version>${version.rest-assured}</version>
       </dependency>
       <dependency>
-        <groupId>org.glassfish.jersey</groupId>
-        <artifactId>jersey-bom</artifactId>
-        <version>${version.jersey3}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers-bom</artifactId>
-        <version>${version.testcontainers}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers</artifactId>
-        <version>${version.testcontainers}</version>
-      </dependency>
-      <dependency>
         <groupId>org.jboss.arquillian</groupId>
         <artifactId>arquillian-bom</artifactId>
         <version>${version.arquillian}</version>
@@ -132,20 +138,6 @@
         <groupId>org.jboss.arquillian.jakarta</groupId>
         <artifactId>arquillian-jakarta-bom</artifactId>
         <version>10.0.0.Final</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.shrinkwrap.resolver</groupId>
-        <artifactId>shrinkwrap-resolver-bom</artifactId>
-        <version>${version.shrinkwrap.resolvers}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-bom</artifactId>
-        <version>${version.mockito}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -213,11 +205,6 @@
         <artifactId>commons-io</artifactId>
         <version>2.22.0</version>
       </dependency>
-      <dependency>
-        <groupId>commons-fileupload</groupId>
-        <artifactId>commons-fileupload</artifactId>
-        <version>1.6.0</version>
-      </dependency>
 
       <!-- Testing dependencies -->
       <dependency>
@@ -233,20 +220,6 @@
       </dependency>
 
       <dependency>
-        <groupId>org.junit-pioneer</groupId>
-        <artifactId>junit-pioneer</artifactId>
-        <version>2.3.0</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.wiremock</groupId>
-        <artifactId>wiremock</artifactId>
-        <version>3.13.2</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
         <groupId>org.wiremock</groupId>
         <artifactId>wiremock-standalone</artifactId>
         <version>3.13.2</version>
@@ -257,13 +230,6 @@
         <groupId>org.skyscreamer</groupId>
         <artifactId>jsonassert</artifactId>
         <version>1.5.3</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-library</artifactId>
-        <version>3.0</version>
         <scope>test</scope>
       </dependency>
 
@@ -283,18 +249,13 @@
 
       <!-- Other dependencies -->
       <!--
-        feel-engine is used unshaded; its dependency tree is pinned here to a single version
+        feel-engine (managed in engine-dmn) is used unshaded; its dependency tree is pinned here to a single version
         platform-wide. Bump these entries together with version.feel-scala: scala-library,
         fastparse (and fastparse's geny/sourcecode) track the feel-engine release, and paranamer
         tracks jackson-module-scala. jackson-module-scala itself has no entry here on purpose -
         it must follow the platform Jackson version and is managed by the imported jackson-bom.
         See https://github.com/operaton/operaton/issues/2654
       -->
-      <dependency>
-        <groupId>org.camunda.feel</groupId>
-        <artifactId>feel-engine</artifactId>
-        <version>${version.feel-scala}</version>
-      </dependency>
       <dependency>
         <groupId>org.scala-lang</groupId>
         <artifactId>scala-library</artifactId>
@@ -355,25 +316,9 @@
         <version>4.0.9</version>
       </dependency>
       <dependency>
-        <groupId>io.github.frshdn</groupId>
-        <artifactId>subethasmtp-java17</artifactId>
-        <version>3.1.7</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.ant</groupId>
-        <artifactId>ant</artifactId>
-        <version>1.10.18</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
         <groupId>org.jspecify</groupId>
         <artifactId>jspecify</artifactId>
         <version>1.0.1</version>
-      </dependency>
-      <dependency>
-        <groupId>com.cronutils</groupId>
-        <artifactId>cron-utils</artifactId>
-        <version>${version.cronutils}</version>
       </dependency>
 
 
@@ -391,29 +336,7 @@
         <scope>test</scope>
       </dependency>
 
-      <!-- EMAIL -->
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-email</artifactId>
-        <version>1.6.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-email2-jakarta</artifactId>
-        <version>2.0.0-M1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.angus</groupId>
-        <artifactId>jakarta.mail</artifactId>
-        <version>2.0.5</version>
-      </dependency>
-
       <!-- Jetty -->
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-webapp</artifactId>
-        <version>${version.jetty}</version>
-      </dependency>
       <dependency>
         <groupId>org.eclipse.jetty.ee11</groupId>
         <artifactId>jetty-ee11-webapp</artifactId>
@@ -470,11 +393,6 @@
       </dependency>
       <dependency>
         <groupId>org.apache.tomcat</groupId>
-        <artifactId>tomcat-catalina</artifactId>
-        <version>${version.tomcat}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-el-api</artifactId>
         <version>${version.tomcat}</version>
       </dependency>
@@ -497,12 +415,6 @@
         <groupId>org.apache.tomcat.embed</groupId>
         <artifactId>tomcat-embed-websocket</artifactId>
         <version>${version.tomcat}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.glassfish.jersey.core</groupId>
-        <artifactId>jersey-client</artifactId>
-        <version>${version.jersey3}</version>
       </dependency>
 
       <dependency>
@@ -539,21 +451,6 @@
         <groupId>org.freemarker</groupId>
         <artifactId>freemarker</artifactId>
         <version>${version.freemarker}</version>
-      </dependency>
-
-      <!-- jobexecutor-ra -->
-      <dependency>
-        <groupId>org.codehaus.fabric3.api</groupId>
-        <artifactId>commonj</artifactId>
-        <version>1.1.1</version>
-        <scope>provided</scope>
-      </dependency>
-
-      <!-- spin json -->
-      <dependency>
-        <groupId>com.jayway.jsonpath</groupId>
-        <artifactId>json-path</artifactId>
-        <version>${version.json-path}</version>
       </dependency>
 
       <!-- wildfly/modules -->

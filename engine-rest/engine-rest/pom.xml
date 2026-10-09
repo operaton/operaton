@@ -13,21 +13,11 @@
     <rest.http.port>38080</rest.http.port>
     <surefire.memArgs>-Xmx2g</surefire.memArgs>
   </properties>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
+      <version>1.6.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-io</groupId>
@@ -270,6 +260,7 @@
       <plugin>
         <groupId>org.jboss.shrinkwrap.resolver</groupId>
         <artifactId>shrinkwrap-resolver-maven-plugin</artifactId>
+        <version>${version.shrinkwrap.resolvers}</version>
         <executions>
           <execution>
             <goals>

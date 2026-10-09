@@ -27,6 +27,12 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+      <!-- Bump together with the feel-engine dependency tree pinned in operaton-core-internal-dependencies -->
+      <dependency>
+        <groupId>org.camunda.feel</groupId>
+        <artifactId>feel-engine</artifactId>
+        <version>${version.feel-scala}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

@@ -21,6 +21,7 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.Tag;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -36,6 +37,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
  * @author Daniel Meyer
  *
  */
+@Tag("sequential")
 class CancelAcquiredJobTest {
 
   @RegisterExtension

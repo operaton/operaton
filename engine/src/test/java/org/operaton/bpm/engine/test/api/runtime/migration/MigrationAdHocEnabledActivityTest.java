@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.SuspendedEntityInteractionException;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -39,6 +40,7 @@ import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -568,6 +570,142 @@ public class MigrationAdHocEnabledActivityTest {
     finish(process);
   }
 
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void preserveSuspendedRunningAndEnabledStateAcrossMigration(boolean insertWrapper) {
+    String children = chain() + "<userTask id=\"taskC\"/>";
+    ProcessDefinition source = deploy(model("Parallel", "${false}", children));
+    ProcessDefinition target = deploy(model("Parallel", "${false}",
+        insertWrapper ? wrapperChildren(true) : children).replace("taskB", "renamedB"));
+    ProcessInstance process = start(source);
+    String scope = scope(process, "adhoc");
+    trigger(scope, "taskA", "taskC");
+    complete(process, "taskA");
+    String beforeToken = enabled(process, "taskB").get(0).getId();
+    runtimeService.setVariableLocal(beforeToken, "tokenPayload", "retained");
+    String runningTask = task(process, "taskC").getId();
+    runtimeService.suspendProcessInstanceById(process.getId());
+    List<String> sourceExecutionIds = runtimeService.createExecutionQuery().processInstanceId(process.getId()).list().stream()
+        .map(Execution::getId).toList();
+    MigrationPlan plan = runtimeService.createMigrationPlan(source.getId(), target.getId())
+        .mapActivities("adhoc", "adhoc").mapActivities("taskB", "renamedB").mapActivities("taskC", "taskC").build();
+
+    migrate(plan, process);
+
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(process.getId())
+        .singleResult().isSuspended()).isTrue();
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).list())
+        .isNotEmpty().allMatch(Execution::isSuspended);
+    assertThat(task(process, "taskC").getId()).isEqualTo(runningTask);
+    assertThat(task(process, "taskC").isSuspended()).isTrue();
+    String token = enabled(process, "renamedB").get(0).getId();
+    assertThat(runtimeService.getVariableLocal(token, "tokenPayload")).isEqualTo("retained");
+    if (!insertWrapper) {
+      assertThat(token).isEqualTo(beforeToken);
+    } else {
+      String wrapperExecution = runtimeService.createVariableInstanceQuery().processInstanceIdIn(process.getId())
+          .variableName("wrapperLocal").singleResult().getExecutionId();
+      assertThat(sourceExecutionIds).doesNotContain(wrapperExecution);
+      assertThat(runtimeService.createExecutionQuery().executionId(wrapperExecution).singleResult().isSuspended()).isTrue();
+      assertThat(runtimeService.getActivityInstance(process.getId()).getActivityInstances("inner")).hasSize(1);
+    }
+    assertThat(runtimeService.getStartableAdHocActivities(scope)).extracting(AdHocActivity::getActivityId)
+        .contains("renamedB");
+    Map<String, Object> scopeState = runtimeService.getVariablesLocal(scope);
+    List<String> executionIds = runtimeService.createExecutionQuery().processInstanceId(process.getId()).list().stream()
+        .map(Execution::getId).toList();
+
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, List.of("renamedB"),
+        Map.of("renamedB", Map.of("blockedTrigger", true)))).isInstanceOf(SuspendedEntityInteractionException.class);
+    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(scope, Map.of("blockedCompletion", true)))
+        .isInstanceOf(SuspendedEntityInteractionException.class);
+
+    assertThat(enabled(process, "renamedB")).extracting(Execution::getId).containsExactly(token);
+    assertThat(task(process, "taskC").getId()).isEqualTo(runningTask);
+    assertThat(runtimeService.getVariablesLocal(scope)).isEqualTo(scopeState);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).list())
+        .extracting(Execution::getId).containsExactlyInAnyOrderElementsOf(executionIds);
+    assertThat(runtimeService.createVariableInstanceQuery().processInstanceIdIn(process.getId())
+        .variableName("blockedTrigger").count()).isZero();
+    assertThat(runtimeService.createVariableInstanceQuery().processInstanceIdIn(process.getId())
+        .variableName("blockedCompletion").count()).isZero();
+    assertNoJobs(process);
+
+    runtimeService.activateProcessInstanceById(process.getId());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).list())
+        .noneMatch(Execution::isSuspended);
+    complete(process, "taskC");
+    trigger(scope, "renamedB");
+    complete(process, "renamedB");
+    assertThat(taskService.createTaskQuery().processInstanceId(process.getId()).count()).isZero();
+    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES)).isEqualTo(0);
+    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_ENABLED_AD_HOC_ACTIVITIES)).isEqualTo(0);
+    assertThat(runtimeService.getActivityInstance(process.getId()).getActivityInstances("inner")).isEmpty();
+    runtimeService.completeAdHocSubProcess(scope);
+    finish(process);
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void preserveSuspendedAsyncAfterJobWhenInsertingOrdinaryWrapper(boolean suspendProcess) {
+    String child = "<userTask id=\"taskA\" operaton:asyncAfter=\"true\"><extensionElements><operaton:inputOutput>"
+        + "<operaton:inputParameter name=\"pendingLocal\">retained</operaton:inputParameter>"
+        + "</operaton:inputOutput></extensionElements></userTask>";
+    ProcessDefinition source = deploy(model("Parallel", "${false}", child));
+    String wrapper = "<subProcess id=\"inner\"><startEvent id=\"innerStart\"/>"
+        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"renamedA\"/>"
+        + child.replace("taskA", "renamedA") + "</subProcess>";
+    ProcessDefinition target = deploy(model("Parallel", "${false}", wrapper));
+    ProcessInstance process = start(source);
+    String scope = scope(process, "adhoc");
+    trigger(scope, "taskA");
+    complete(process, "taskA");
+    Job before = engine.getManagementService().createJobQuery().processInstanceId(process.getId()).singleResult();
+    if (suspendProcess) {
+      runtimeService.suspendProcessInstanceById(process.getId());
+    } else {
+      engine.getManagementService().suspendJobById(before.getId());
+    }
+    MigrationPlan plan = runtimeService.createMigrationPlan(source.getId(), target.getId())
+        .mapActivities("adhoc", "adhoc").mapActivities("taskA", "renamedA").build();
+
+    migrate(plan, process);
+
+    Job migrated = engine.getManagementService().createJobQuery().processInstanceId(process.getId()).singleResult();
+    assertThat(migrated.getId()).isEqualTo(before.getId());
+    assertThat(migrated.getExecutionId()).isEqualTo(before.getExecutionId());
+    assertThat(migrated.isSuspended()).isTrue();
+    assertThat(migrated.getRetries()).isEqualTo(before.getRetries());
+    assertThat(migrated.getProcessDefinitionId()).isEqualTo(target.getId());
+    assertThat(engine.getManagementService().createJobQuery().processInstanceId(process.getId())
+        .active().executable().count()).isZero();
+    assertThat(runtimeService.getVariableLocal(migrated.getExecutionId(), "pendingLocal")).isEqualTo("retained");
+    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)).isEqualTo(0);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).list())
+        .allMatch(execution -> execution.isSuspended() == suspendProcess);
+
+    if (suspendProcess) {
+      runtimeService.activateProcessInstanceById(process.getId());
+    } else {
+      engine.getManagementService().activateJobById(migrated.getId());
+    }
+    assertThat(engine.getManagementService().createJobQuery().jobId(migrated.getId())
+        .singleResult().isSuspended()).isFalse();
+    assertThat(engine.getManagementService().createJobQuery().processInstanceId(process.getId())
+        .active().executable().count()).isEqualTo(1);
+    engine.getManagementService().executeJob(migrated.getId());
+    assertNoJobs(process);
+    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)).isEqualTo(1);
+    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES)).isEqualTo(0);
+    assertThat(runtimeService.getActivityInstance(process.getId()).getActivityInstances("inner")).isEmpty();
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).activityId("renamedA").count())
+        .isZero();
+    assertThat(runtimeService.createVariableInstanceQuery().processInstanceIdIn(process.getId())
+        .variableName("pendingLocal").count()).isZero();
+    runtimeService.completeAdHocSubProcess(scope);
+    finish(process);
+  }
 
   @Test
   void rejectUnauthorizedMigrationBeforeChangingRunningOrEnabledState() {

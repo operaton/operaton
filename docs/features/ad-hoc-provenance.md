@@ -58,3 +58,9 @@ XML test resolves the existing MyBatis DTD through MyBatis' bundled entity resol
 This preserves the XML assertions and avoids a network lookup during validation;
 it does not change runtime XML parsing. These overlapping prerequisite changes
 are identified separately so they can be removed from the review after merging upstream.
+
+The general suspended-scope migration correction is isolated in
+[Operaton PR #3823](https://github.com/operaton/operaton/pull/3823). The continuation
+incorporates that same prerequisite commit locally. It permits only structural
+migration initialization while retaining execution/job suspension; its ordinary
+migration regressions are separate from the ad-hoc-specific suspension cases.

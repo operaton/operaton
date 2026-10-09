@@ -489,15 +489,11 @@ class InclusiveGatewayTest {
     processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(processInstance).isNull();
 
-    variableMap = new HashMap<>();
-    variableMap.put("a", 2);
-    variableMap.put("b", 2);
-    try {
-      runtimeService.startProcessInstanceByKey("InclusiveGateway", variableMap);
-      fail("");
-    } catch(ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("No outgoing sequence flow");
-    }
+    var variableMap2 = Map.<String,Object>of("a", 2, "b", 2);
+
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("InclusiveGateway", variableMap2))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("No outgoing sequence flow");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterCall.bpmn20.xml",

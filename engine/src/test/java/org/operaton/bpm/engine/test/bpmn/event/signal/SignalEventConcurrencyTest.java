@@ -20,7 +20,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -36,6 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
 
@@ -61,7 +61,7 @@ class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
 
     // create a spy from the default SignalEventHandler & set it in the config
     signalEventHandler = processEngineConfiguration.getEventHandler("signal");
-    evSpy = Mockito.spy(signalEventHandler);
+    evSpy = spy(signalEventHandler);
     processEngineConfiguration.getEventHandlers().put("signal", evSpy);
   }
 
@@ -91,12 +91,12 @@ class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
     };
 
     // stub the handleEvent method of the SignalEventHandler & block it until we complete the task in the main thread
-    Mockito.doAnswer(invocation -> {
+    doAnswer(invocation -> {
       // thread will block here until makeContinue() is called form main thread
       sendSignalCommand.getMonitor().sync();
 
       return invocation.callRealMethod();
-    }).when(evSpy).handleEvent(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any());
+    }).when(evSpy).handleEvent(any(), any(), any(), any(), any(), any());
 
     // send the signal in a separate thread & wait until it reaches our breakpoint (sync()) in the SignalEventHandler
     ThreadControl signalThread = executeControllableCommand(sendSignalCommand);

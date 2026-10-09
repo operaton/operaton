@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -29,6 +31,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Anna Pazola
  *
  */
+@NullMarked
 public class GetDeployedTaskFormCmd extends AbstractGetDeployedFormCmd {
 
   protected String taskId;
@@ -39,14 +42,18 @@ public class GetDeployedTaskFormCmd extends AbstractGetDeployedFormCmd {
   }
 
   @Override
-  protected FormData getFormData() {
-    return commandContext.runWithoutAuthorization(new GetTaskFormCmd(taskId));
+  protected @Nullable FormData getFormData() {
+    return getCommandContext().runWithoutAuthorization(new GetTaskFormCmd(taskId));
   }
 
   @Override
   protected void checkAuthorization() {
-    TaskEntity taskEntity = commandContext.getTaskManager().findTaskById(taskId);
-    for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+    TaskEntity taskEntity = getCommandContext().getTaskManager().findTaskById(taskId);
+    if (taskEntity == null) {
+      return;
+    }
+
+    for (CommandChecker checker : getCommandContext().getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadTask(taskEntity);
     }
   }

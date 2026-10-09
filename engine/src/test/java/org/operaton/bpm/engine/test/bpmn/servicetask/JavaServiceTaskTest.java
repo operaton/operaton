@@ -37,13 +37,13 @@ import org.operaton.commons.utils.CollectionUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
  * @author Frederik Heremans
  */
 @ExtendWith(ProcessEngineExtension.class)
+@SuppressWarnings("ConstantConditions")
 class JavaServiceTaskTest {
 
   RuntimeService runtimeService;
@@ -106,12 +106,9 @@ class JavaServiceTaskTest {
   @Test
   void testIllegalUseOfResultVariableName() {
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/servicetask/JavaServiceTaskTest.testIllegalUseOfResultVariableName.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("resultVariable");
-    }
+    assertThatThrownBy(deploymentBuilder::deploy)
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("resultVariable");
   }
 
   @Deployment

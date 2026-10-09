@@ -31,7 +31,7 @@ class TestHelperTest {
   @Test
   void shouldGetPublicMethod() throws Exception {
     // WHEN we call get method to retrieve a method with public accessor, no exception should be thrown
-    Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithPublicAccessor", new Class[0]);
+    Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithPublicAccessor");
     assertThat(methodName).hasToString("public void org.operaton.bpm.engine.impl.test" +
             ".TestHelperTest$SomeTestClass.testSomethingWithPublicAccessor()");
   }
@@ -39,38 +39,39 @@ class TestHelperTest {
   @Test
   void shouldGetPublicMethodFromSuperClass() throws Exception {
     // WHEN we call get method to retrieve a method with public accessor, no exception should be thrown
-    Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithPublicAccessor", new Class[0]);
+    Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithPublicAccessor");
     assertThat(methodName).hasToString("public void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithPublicAccessor()");
   }
 
   @Test
   void shouldGetPackagePrivateMethod() throws Exception {
     // WHEN we call get method to retrieve a method with package private accessor, no exception should be thrown
-    Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithPackagePrivateAccessor", new Class[0]);
+    Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithPackagePrivateAccessor");
     assertThat(methodName).hasToString("void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithPackagePrivateAccessor()");
   }
 
   @Test
   void shouldGetPackagePrivateMethodFromSuperClass() throws Exception {
     // WHEN we call get method to retrieve a method with package private accessor, no exception should be thrown
-    Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithPackagePrivateAccessor", new Class[0]);
+    Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithPackagePrivateAccessor");
     assertThat(methodName).hasToString("void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithPackagePrivateAccessor()");
   }
 
   @Test
   void shouldGetProtectedMethod() throws Exception {
     // WHEN we call get method to retrieve a method with protected accessor, no exception should be thrown
-    Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithProtected", new Class[0]);
+    Object methodName = TestHelper.getMethod(SomeTestClass.class, "testSomethingWithProtected");
     assertThat(methodName).hasToString("protected void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithProtected()");
   }
 
   @Test
   void shouldGetProtectedMethodFromSuperClass() throws Exception {
     // WHEN we call get method to retrieve a method with protected accessor, no exception should be thrown
-    Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithProtected", new Class[0]);
+    Object methodName = TestHelper.getMethod(SomeOtherTestClass.class, "testSomethingWithProtected");
     assertThat(methodName).hasToString("protected void org.operaton.bpm.engine.impl.test.TestHelperTest$SomeTestClass.testSomethingWithProtected()");
   }
 
+  @SuppressWarnings("unused")
   static class SomeTestClass {
 
     public void testSomethingWithPublicAccessor() {
@@ -130,6 +131,50 @@ class TestHelperTest {
     doNothing().when(managementService).executeJob("aJobId");
     assertThatCode(() -> TestHelper.executeJobNotExpectingException(managementService, "aJobId"))
         .doesNotThrowAnyException();
+  }
+
+  @Test
+  void shouldResolveBpmnResourceByConvention() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "someProcess");
+
+    assertThat(resource)
+        .isEqualTo("org/operaton/bpm/engine/impl/test/TestHelperTest$SomeTestClass.someProcess.bpmn20.xml");
+  }
+
+  @Test
+  void shouldReturnTheSameResolvedResourceOnRepeatedLookups() {
+    String first = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "someProcess");
+    String second = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "someProcess");
+
+    assertThat(second).isEqualTo(first);
+  }
+
+  @Test
+  void shouldResolveDistinctResourcesForDistinctNames() {
+    String first = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "processOne");
+    String second = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "processTwo");
+
+    assertThat(first).isNotEqualTo(second);
+  }
+
+  @Test
+  void shouldResolveResourceWithoutName() {
+    String resource = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, null);
+
+    assertThat(resource)
+        .isEqualTo("org/operaton/bpm/engine/impl/test/TestHelperTest$SomeTestClass.bpmn20.xml");
+  }
+
+  @Test
+  void shouldReturnTheSameResolvedResourceForARealClasspathResource() {
+    // a resource genuinely exists on the test classpath for this (type, name) pair, so this
+    // exercises the "found on classpath" branch, unlike the fallback-only tests above
+    String first = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "realResource");
+    String second = TestHelper.getBpmnProcessDefinitionResource(SomeTestClass.class, "realResource");
+
+    assertThat(first)
+        .isEqualTo("org/operaton/bpm/engine/impl/test/TestHelperTest$SomeTestClass.realResource.bpmn20.xml");
+    assertThat(second).isEqualTo(first);
   }
 
 }

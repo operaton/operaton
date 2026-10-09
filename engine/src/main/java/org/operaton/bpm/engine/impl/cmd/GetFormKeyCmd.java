@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -28,15 +31,17 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Command for retrieving start or task form keys.
  *
  * @author Falko Menge (Camunda)
  */
-public class GetFormKeyCmd implements Command<String> {
+public @NullMarked class GetFormKeyCmd implements Command<String> {
 
-  protected String taskDefinitionKey;
+  protected @Nullable String taskDefinitionKey;
   protected String processDefinitionId;
 
   /**
@@ -44,6 +49,7 @@ public class GetFormKeyCmd implements Command<String> {
    */
   public GetFormKeyCmd(String processDefinitionId) {
     setProcessDefinitionId(processDefinitionId);
+    requireNonNull(this.processDefinitionId);
   }
 
   /**
@@ -51,13 +57,14 @@ public class GetFormKeyCmd implements Command<String> {
    */
   public GetFormKeyCmd(String processDefinitionId, String taskDefinitionKey) {
     setProcessDefinitionId(processDefinitionId);
-    if (taskDefinitionKey == null || taskDefinitionKey.isEmpty()) {
+    requireNonNull(this.processDefinitionId);
+    if (taskDefinitionKey.isEmpty()) {
       throw new ProcessEngineException("The task definition key is mandatory, but '%s' has been provided.".formatted(taskDefinitionKey));
     }
     this.taskDefinitionKey = taskDefinitionKey;
   }
 
-  protected void setProcessDefinitionId(String processDefinitionId) {
+  protected void setProcessDefinitionId(@Nullable String processDefinitionId) {
     if (processDefinitionId == null || processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
@@ -65,10 +72,12 @@ public class GetFormKeyCmd implements Command<String> {
   }
 
   @Override
-  public String execute(CommandContext commandContext) {
+  public @Nullable String execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);

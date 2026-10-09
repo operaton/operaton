@@ -16,14 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BpmnParseException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.mapping.InputParameter;
@@ -44,7 +46,7 @@ import org.operaton.bpm.engine.impl.util.xml.Namespace;
 /**
  * Helper methods to reused for common parsing tasks.
  */
-public final class BpmnParseUtil {
+public final @NullMarked class BpmnParseUtil {
 
   private BpmnParseUtil() {
   }
@@ -53,11 +55,11 @@ public final class BpmnParseUtil {
    * Returns the extension element in the configured custom extension namespace
    * aliases and the given name.
    *
-    * @param element the parent element of the extension element
+   * @param element the parent element of the extension element
    * @param extensionElementName the name of the extension element to find
-   * @return the extension element or null if not found
+   * @return the extension element or {@code null} if not found
    */
-  public static Element findOperatonExtensionElement(Element element, String extensionElementName) {
+  public static @Nullable Element findOperatonExtensionElement(Element element, String extensionElementName) {
     return findExtensionElement(element, BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, extensionElementName);
   }
 
@@ -67,9 +69,9 @@ public final class BpmnParseUtil {
    * @param element the parent element of the extension element
    * @param namespace the namespace of the extension element
    * @param extensionElementName the name of the extension element to find
-   * @return the extension element or null if not found
+   * @return the extension element or {@code null} if not found
    */
-  public static Element findExtensionElement(Element element, Namespace namespace, String extensionElementName) {
+  public static @Nullable Element findExtensionElement(Element element, Namespace namespace, String extensionElementName) {
     Element extensionElements = element.element("extensionElements");
     if (extensionElements != null) {
       return extensionElements.elementNS(namespace, extensionElementName);
@@ -82,10 +84,10 @@ public final class BpmnParseUtil {
    * Returns the {@link IoMapping} of an element.
    *
    * @param element the element to parse
-   * @return the input output mapping or null if non defined
+   * @return the input output mapping or {@code null} if non defined
    * @throws BpmnParseException if a input/output parameter element is malformed
    */
-  public static IoMapping parseInputOutput(Element element) {
+  public static @Nullable IoMapping parseInputOutput(Element element) {
     Element inputOutputElement = element.elementNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, "inputOutput");
     if(inputOutputElement != null) {
       IoMapping ioMapping = new IoMapping();
@@ -167,7 +169,7 @@ public final class BpmnParseUtil {
   /**
    * @throws BpmnParseException if the parameter is invalid
    */
-  protected static ParameterValueProvider parseNestedParamValueProvider(Element element) {
+  static ParameterValueProvider parseNestedParamValueProvider(Element element) {
     // parse value provider
     if(element.elements().isEmpty()) {
       return parseParamValueProvider(element);
@@ -183,7 +185,7 @@ public final class BpmnParseUtil {
   /**
    * @throws BpmnParseException if the parameter is invalid
    */
-  protected static ParameterValueProvider parseParamValueProvider(Element parameterElement) {
+  static ParameterValueProvider parseParamValueProvider(Element parameterElement) {
     // LIST
     if(isTagName(parameterElement, "list")) {
       List<ParameterValueProvider> providerList = getParameterValueProviders(parameterElement);
@@ -216,13 +218,8 @@ public final class BpmnParseUtil {
   }
 
   private static ParameterValueProvider getScriptValueProvider(Element parameterElement) {
-    ExecutableScript executableScript = parseOperatonScript(parameterElement);
-    if (executableScript != null) {
-      return new ScriptValueProvider(executableScript);
-    }
-    else {
-      return new NullValueProvider();
-    }
+    ExecutableScript script = parseOperatonScript(parameterElement);
+    return new ScriptValueProvider(script);
   }
 
   private static TreeMap<ParameterValueProvider, ParameterValueProvider> getElValueProviders(
@@ -241,12 +238,9 @@ public final class BpmnParseUtil {
   }
 
   private static List<ParameterValueProvider> getParameterValueProviders(Element parameterElement) {
-    List<ParameterValueProvider> providerList = new ArrayList<>();
-    for (Element element : parameterElement.elements()) {
-      // parse nested provider
-      providerList.add(parseParamValueProvider(element));
-    }
-    return providerList;
+    return parameterElement.elements().stream()
+        .map(BpmnParseUtil::parseParamValueProvider)
+        .toList();
   }
 
   private static boolean isTagName(Element parameterElement, String tagName) {
@@ -258,7 +252,7 @@ public final class BpmnParseUtil {
    *
    * @param scriptElement the script element ot parse
    * @return the generated executable script
-   * @throws BpmnParseException if the a attribute is missing or the script cannot be processed
+   * @throws BpmnParseException if the attribute is missing or the script cannot be processed
    */
   public static ExecutableScript parseOperatonScript(Element scriptElement) {
     String scriptLanguage = scriptElement.attribute("scriptFormat");
@@ -284,14 +278,18 @@ public final class BpmnParseUtil {
       List<Element> properties = propertiesElement.elementsNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, "property");
       Map<String, String> propertiesMap = new HashMap<>();
       for (Element property : properties) {
-        propertiesMap.put(property.attribute("name"), property.attribute("value"));
+        String name = property.attribute("name");
+        String value = property.attribute("value");
+        if (name != null && value != null) {
+          propertiesMap.put(name, value);
+        }
       }
       return propertiesMap;
     }
     return Collections.emptyMap();
   }
 
-  protected static ExpressionManager getExpressionManager() {
+  static ExpressionManager getExpressionManager() {
     return Context.getProcessEngineConfiguration().getExpressionManager();
   }
 }

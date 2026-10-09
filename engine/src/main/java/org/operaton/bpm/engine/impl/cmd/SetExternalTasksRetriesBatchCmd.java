@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
-public class SetExternalTasksRetriesBatchCmd extends AbstractSetExternalTaskRetriesCmd<Batch> {
+public @NullMarked class SetExternalTasksRetriesBatchCmd extends AbstractSetExternalTaskRetriesCmd<Batch> {
 
   public SetExternalTasksRetriesBatchCmd(UpdateExternalTaskRetriesBuilderImpl builder) {
     super(builder);

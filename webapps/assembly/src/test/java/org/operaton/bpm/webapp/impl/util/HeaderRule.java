@@ -17,23 +17,19 @@
 package org.operaton.bpm.webapp.impl.util;
 
 import java.io.IOException;
-import java.net.BindException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URI;
-import java.util.concurrent.TimeUnit;
 
-import org.awaitility.core.ConditionTimeoutException;
 import org.eclipse.jetty.ee11.webapp.WebAppContext;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.URLResourceFactory;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
-
-import static org.awaitility.Awaitility.await;
 
 /**
  * JUnit 5 extension for managing a Jetty server during tests.
@@ -42,10 +38,10 @@ import static org.awaitility.Awaitility.await;
  */
 public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
-  private static final int SERVER_PORT = 8085;
-  private static final int RETRIES = 3;
-
-  private final Server server = new Server(SERVER_PORT);
+  // Port 0 lets the OS hand out a free port on every start(). A fixed port
+  // could not be rebound while the previous test's socket was still being torn
+  // down, which made these tests fail under load.
+  private final Server server = new Server(0);
   private final WebAppContext webAppContext = new WebAppContext();
   private HttpURLConnection connection;
 
@@ -60,6 +56,10 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
   @Override
   public void afterEach(ExtensionContext context) {
+    if (connection != null) {
+      connection.disconnect();
+      connection = null;
+    }
     try {
       server.stop();
     } catch (Exception e) {
@@ -72,10 +72,6 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
   }
 
   public void startServer(String webDescriptor, String scope, String contextPath) {
-    startServer(webDescriptor, scope, contextPath, RETRIES);
-  }
-
-  private void startServer(String webDescriptor, String scope, String contextPath, int startUpRetries) {
     webAppContext.setContextPath(contextPath);
     webAppContext.setBaseResource(new URLResourceFactory().newResource("/"));
     webAppContext.setDescriptor("src/test/resources/WEB-INF/" + scope + "/" + webDescriptor);
@@ -83,28 +79,14 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
     server.setHandler(webAppContext);
 
     try {
-      await()
-        .atMost((startUpRetries + 1) * 500L, TimeUnit.MILLISECONDS)
-        .pollInterval(500, TimeUnit.MILLISECONDS)
-        .until(() -> {
-          try {
-            server.start();
-            return true;
-          } catch (Exception e) {
-            if (e.getCause() instanceof BindException) {
-              try {
-                server.stop();
-              } catch (Exception ignored) {
-                // ignored
-              }
-              return false;
-            }
-            throw new RuntimeException(e);
-          }
-        });
-    } catch (ConditionTimeoutException e) {
-      throw new RuntimeException("Failed to start Jetty after retries", e);
+      server.start();
+    } catch (Exception e) {
+      throw new RuntimeException("Failed to start Jetty", e);
     }
+  }
+
+  private int serverPort() {
+    return ((ServerConnector) server.getConnectors()[0]).getLocalPort();
   }
 
   public void performRequest() {
@@ -121,7 +103,7 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
   public void performRequestWithHeader(String name, String value, String path, String method) {
     try {
-      connection = (HttpURLConnection) URI.create("http://localhost:" + SERVER_PORT + "/operaton" + path).toURL()
+      connection = (HttpURLConnection) URI.create("http://localhost:" + serverPort() + "/operaton" + path).toURL()
         .openConnection();
     } catch (IOException e) {
       throw new RuntimeException(e);

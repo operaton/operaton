@@ -18,13 +18,14 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 /**
  * @author Tom Baeyens
  */
-public class GetUserInfoKeysCmd implements Command<List<String>> {
+public @NullMarked class GetUserInfoKeysCmd implements Command<List<String>> {
   protected String userId;
   protected String userInfoType;
 

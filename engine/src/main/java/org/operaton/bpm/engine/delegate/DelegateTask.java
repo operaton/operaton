@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.task.IdentityLinkType;
@@ -59,23 +61,23 @@ public interface DelegateTask extends VariableScope, BpmnModelExecutionContext, 
    * [80..100] highest */
   void setPriority(int priority);
 
-  /** Reference to the process instance or null if it is not related to a process instance. */
-  String getProcessInstanceId();
+  /** Reference to the process instance or {@code null} if it is not related to a process instance. */
+  @Nullable String getProcessInstanceId();
 
-  /** Reference to the path of execution or null if it is not related to a process instance. */
-  String getExecutionId();
+  /** Reference to the path of execution or {@code null} if it is not related to a process instance. */
+  @Nullable String getExecutionId();
 
-  /** Reference to the process definition or null if it is not related to a process. */
-  String getProcessDefinitionId();
+  /** Reference to the process definition or {@code null} if it is not related to a process. */
+  @Nullable String getProcessDefinitionId();
 
-  /** Reference to the case instance or null if it is not related to a case instance. */
-  String getCaseInstanceId();
+  /** Reference to the case instance or {@code null} if it is not related to a case instance. */
+  @Nullable String getCaseInstanceId();
 
-  /** Reference to the case execution or null if it is not related to a case instance. */
-  String getCaseExecutionId();
+  /** Reference to the case execution or {@code null} if it is not related to a case instance. */
+  @Nullable String getCaseExecutionId();
 
-  /** Reference to the case definition or null if it is not related to a case. */
-  String getCaseDefinitionId();
+  /** Reference to the case definition or {@code null} if it is not related to a case. */
+  @Nullable String getCaseDefinitionId();
 
   /** The date/time when this task was created */
   Date getCreateTime();
@@ -83,12 +85,12 @@ public interface DelegateTask extends VariableScope, BpmnModelExecutionContext, 
   /**
    * The date/time when this task was last updated.
    * All operations that fire {@link TaskListener#EVENTNAME_UPDATE} count as an update to the task.
-   * Returns null if the task was never updated before (i.e. it was only created).
+   * Returns {@code null} if the task was never updated before (i.e. it was only created).
    * */
   Date getLastUpdated();
 
-  /** The id of the activity in the process defining this task or null if this is not related to a process */
-  String getTaskDefinitionKey();
+  /** The id of the activity in the process defining this task or {@code null} if this is not related to a process */
+  @Nullable String getTaskDefinitionKey();
 
   /** Returns the execution currently at the task. */
   DelegateExecution getExecution();
@@ -134,46 +136,46 @@ public interface DelegateTask extends VariableScope, BpmnModelExecutionContext, 
 
   /**
    * Involves a user with a task. The type of identity link is defined by the given identityLinkType.
-   * @param userId id of the user involve, cannot be null.
-   * @param identityLinkType type of identityLink, cannot be null (@see {@link IdentityLinkType}).
+   * @param userId id of the user involve, cannot be {@code null}.
+   * @param identityLinkType type of identityLink, cannot be {@code null} (@see {@link IdentityLinkType}).
    * @throws ProcessEngineException when the task or user doesn't exist.
    */
   void addUserIdentityLink(String userId, String identityLinkType);
 
   /**
    * Involves a group with group task. The type of identityLink is defined by the given identityLink.
-   * @param groupId id of the group to involve, cannot be null.
-   * @param identityLinkType type of identity, cannot be null (@see {@link IdentityLinkType}).
+   * @param groupId id of the group to involve, cannot be {@code null}.
+   * @param identityLinkType type of identity, cannot be {@code null} (@see {@link IdentityLinkType}).
    * @throws ProcessEngineException when the task or group doesn't exist.
    */
   void addGroupIdentityLink(String groupId, String identityLinkType);
 
   /**
    * Convenience shorthand for {@link #deleteUserIdentityLink(String, String)}; with type {@link IdentityLinkType#CANDIDATE}
-   * @param userId id of the user to use as candidate, cannot be null.
+   * @param userId id of the user to use as candidate, cannot be {@code null}.
    * @throws ProcessEngineException when the task or user doesn't exist.
    */
   void deleteCandidateUser(String userId);
 
   /**
    * Convenience shorthand for {@link #deleteGroupIdentityLink(String, String, String)}; with type {@link IdentityLinkType#CANDIDATE}
-   * @param groupId id of the group to use as candidate, cannot be null.
+   * @param groupId id of the group to use as candidate, cannot be {@code null}.
    * @throws ProcessEngineException when the task or group doesn't exist.
    */
   void deleteCandidateGroup(String groupId);
 
   /**
    * Removes the association between a user and a task for the given identityLinkType.
-   * @param userId id of the user involve, cannot be null.
-   * @param identityLinkType type of identityLink, cannot be null (@see {@link IdentityLinkType}).
+   * @param userId id of the user involve, cannot be {@code null}.
+   * @param identityLinkType type of identityLink, cannot be {@code null} (@see {@link IdentityLinkType}).
    * @throws ProcessEngineException when the task or user doesn't exist.
    */
   void deleteUserIdentityLink(String userId, String identityLinkType);
 
   /**
    * Removes the association between a group and a task for the given identityLinkType.
-   * @param groupId id of the group to involve, cannot be null.
-   * @param identityLinkType type of identity, cannot be null (@see {@link IdentityLinkType}).
+   * @param groupId id of the group to involve, cannot be {@code null}.
+   * @param identityLinkType type of identity, cannot be {@code null} (@see {@link IdentityLinkType}).
    * @throws ProcessEngineException when the task or group doesn't exist.
    */
   void deleteGroupIdentityLink(String groupId, String identityLinkType);

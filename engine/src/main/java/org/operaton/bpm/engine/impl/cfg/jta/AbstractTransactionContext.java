@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg.jta;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  *
  * @author Daniel Meyer
  */
-public abstract class AbstractTransactionContext implements TransactionContext {
+public abstract @NullMarked class AbstractTransactionContext implements TransactionContext {
 
   public static final TransactionLogger LOG = ProcessEngineLogger.TX_LOGGER;
 
@@ -59,7 +60,7 @@ public abstract class AbstractTransactionContext implements TransactionContext {
     }
   }
 
-  public abstract static class TransactionStateSynchronization {
+  public abstract static @NullMarked class TransactionStateSynchronization {
 
     protected final TransactionListener transactionListener;
     protected final TransactionState transactionState;

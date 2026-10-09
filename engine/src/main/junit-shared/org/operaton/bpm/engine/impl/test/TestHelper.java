@@ -20,10 +20,12 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.*;
@@ -64,20 +66,24 @@ public abstract class TestHelper {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  public static final String EMPTY_LINE = "                                                                                           ";
-
-  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = Arrays.asList(
+  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = List.of(
     "ACT_GE_PROPERTY",
     "ACT_GE_SCHEMA_LOG"
   );
 
-  public static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
+  private static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
 
   static {
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(BPMN_RESOURCE_SUFFIXES));
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(CMMN_RESOURCE_SUFFIXES));
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(DMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(List.of(BPMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(List.of(CMMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(List.of(DMN_RESOURCE_SUFFIXES));
   }
+
+  /**
+   * Resolving a deployment resource probes every BPMN, CMMN and DMN suffix through the
+   * classloader. The classpath does not change within a test run, so results are memoized.
+   */
+  private static final Map<String, String> BPMN_RESOURCE_NAMES = new ConcurrentHashMap<>();
 
   /**
    * @deprecated Use {@link ProcessEngineAssert} instead.
@@ -87,8 +93,8 @@ public abstract class TestHelper {
     ProcessEngineAssert.assertProcessEnded(processEngine, processInstanceId);
   }
 
-  public static String annotationDeploymentSetUp(ProcessEngine processEngine, Class<?> testClass, String methodName,
-      Deployment deploymentAnnotation, Class<?>... parameterTypes) {
+  public static @Nullable String annotationDeploymentSetUp(ProcessEngine processEngine, Class<?> testClass, String methodName,
+      @Nullable Deployment deploymentAnnotation, Class<?>... parameterTypes) {
     Method method = null;
     boolean onMethod = true;
 
@@ -129,12 +135,8 @@ public abstract class TestHelper {
     }
   }
 
-  public static String annotationDeploymentSetUp(ProcessEngine processEngine, String[] resources, Class<?> testClass, String methodName) {
-    return annotationDeploymentSetUp(processEngine, resources, testClass, true, methodName);
-  }
-
-  public static String annotationDeploymentSetUp(ProcessEngine processEngine, String[] resources, Class<?> testClass,
-      boolean onMethod, String methodName) {
+  public static @Nullable String annotationDeploymentSetUp(ProcessEngine processEngine, String @Nullable[] resources, Class<?> testClass,
+      Boolean onMethod, @Nullable String methodName) {
     if (resources != null) {
       if (resources.length == 0 && methodName != null) {
         String name = onMethod ? methodName : null;
@@ -156,7 +158,7 @@ public abstract class TestHelper {
     return null;
   }
 
-  public static String annotationDeploymentSetUp(ProcessEngine processEngine, Class<?> testClass, String methodName, Class<?>... parameterTypes) {
+  public static @Nullable String annotationDeploymentSetUp(ProcessEngine processEngine, Class<?> testClass, String methodName, Class<?>... parameterTypes) {
     return annotationDeploymentSetUp(processEngine, testClass, methodName, null, parameterTypes);
   }
 
@@ -165,7 +167,7 @@ public abstract class TestHelper {
     deleteDeployment(processEngine, deploymentId);
   }
 
-  public static void deleteDeployment(ProcessEngine processEngine, String deploymentId) {
+  public static void deleteDeployment(ProcessEngine processEngine, @Nullable String deploymentId) {
     if(deploymentId != null) {
       processEngine.getRepositoryService().deleteDeployment(deploymentId, true, true, true);
     }
@@ -179,6 +181,11 @@ public abstract class TestHelper {
    * The first resource matching a suffix will be returned.
    */
   public static String getBpmnProcessDefinitionResource(Class< ? > type, String name) {
+    String key = type.getName() + '#' + (name == null ? -1 : name.length()) + ':' + name;
+    return BPMN_RESOURCE_NAMES.computeIfAbsent(key, ignored -> resolveBpmnProcessDefinitionResource(type, name));
+  }
+
+  private static String resolveBpmnProcessDefinitionResource(Class<?> type, String name) {
     for (String suffix : RESOURCE_SUFFIXES) {
       String resource = createResourceName(type, name, suffix);
       InputStream inputStream = ReflectUtil.getResourceAsStream(resource);
@@ -197,7 +204,7 @@ public abstract class TestHelper {
     return r.append(".").append(suffix).toString();
   }
 
-  public static boolean annotationRequiredHistoryLevelCheck(ProcessEngine processEngine, RequiredHistoryLevel annotation, Class<?> testClass, String methodName) {
+  public static boolean annotationRequiredHistoryLevelCheck(ProcessEngine processEngine, @Nullable RequiredHistoryLevel annotation, Class<?> testClass, String methodName) {
 
     if (annotation != null) {
       return historyLevelCheck(processEngine, annotation);
@@ -236,7 +243,7 @@ public abstract class TestHelper {
     }
   }
 
-  public static boolean annotationRequiredDatabaseCheck(ProcessEngine processEngine, RequiredDatabase annotation, Class<?> testClass, String methodName, Class<?>... parameterTypes) {
+  public static boolean annotationRequiredDatabaseCheck(ProcessEngine processEngine, @Nullable RequiredDatabase annotation, Class<?> testClass, String methodName, Class<?>... parameterTypes) {
 
     if (annotation != null) {
       return databaseCheck(processEngine, annotation);
@@ -378,7 +385,7 @@ public abstract class TestHelper {
       message.append(paRegistrationMessage);
     }
 
-    if (fail && message.length() > 0) {
+    if (fail && !message.isEmpty()) {
       fail(message.toString());
     }
 
@@ -397,28 +404,17 @@ public abstract class TestHelper {
    * will be cleared.
    *
    * @param processEngine the {@link ProcessEngine} to test
-   * @throws AssertionError if the deployment cache was not clean
-   */
-  public static void assertAndEnsureCleanDeploymentCache(ProcessEngine processEngine) {
-    assertAndEnsureCleanDeploymentCache(processEngine, true);
-  }
-
-  /**
-   * Ensures that the deployment cache is empty after a test. If not the cache
-   * will be cleared.
-   *
-   * @param processEngine the {@link ProcessEngine} to test
    * @param fail if true the method will throw an {@link AssertionError} if the deployment cache is not clean
-   * @return the deployment cache summary if fail is set to false or null if deployment cache was clean
+   * @return the deployment cache summary if fail is set to false or {@code null} if deployment cache was clean
    * @throws AssertionError if the deployment cache was not clean and fail is set to true
    */
-  public static String assertAndEnsureCleanDeploymentCache(ProcessEngine processEngine, boolean fail) {
+  public static @Nullable String assertAndEnsureCleanDeploymentCache(ProcessEngine processEngine, boolean fail) {
     StringBuilder outputMessage = new StringBuilder();
     ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
     CachePurgeReport cachePurgeReport = processEngineConfiguration.getDeploymentCache().purgeCache();
 
     outputMessage.append(cachePurgeReport.getPurgeReportAsString());
-    if (outputMessage.length() > 0) {
+    if (!outputMessage.isEmpty()) {
       outputMessage.insert(0, "Deployment cache not clean:\n");
       LOG.error(outputMessage.toString());
 
@@ -434,8 +430,7 @@ public abstract class TestHelper {
     }
   }
 
-
-  public static String assertAndEnsureNoProcessApplicationsRegistered(ProcessEngine processEngine) {
+  public static @Nullable String assertAndEnsureNoProcessApplicationsRegistered(ProcessEngine processEngine) {
     ProcessEngineConfigurationImpl engineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
     ProcessApplicationManager processApplicationManager = engineConfiguration.getProcessApplicationManager();
 
@@ -461,7 +456,7 @@ public abstract class TestHelper {
     return getProcessEngine(configurationResource, null);
   }
 
-  public static ProcessEngine getProcessEngine(ProcessEngineConfigurationImpl processEngineConfiguration, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
+  public static ProcessEngine getProcessEngine(ProcessEngineConfigurationImpl processEngineConfiguration, @Nullable Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
     if (processEngineConfigurator != null) {
       processEngineConfigurator.accept(processEngineConfiguration);
     }

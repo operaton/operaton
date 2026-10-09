@@ -17,12 +17,27 @@
 set -euo pipefail
 echo "Generating SBOM files for Operaton modules..."
 
+# Pinned CycloneDX CLI version used for CI installs (see GitHub releases).
+CYCLONEDX_VERSION="v0.33.1"
+
 if command -v cyclonedx >/dev/null 2>&1; then
   echo "CycloneDX CLI already available."
 else
-  if [ "$CI" != "" ]; then
-    echo "Installing CycloneDX via Homebrew for CI environment..."
-    /home/linuxbrew/.linuxbrew/bin/brew install cyclonedx/cyclonedx/cyclonedx-cli
+  if [[ "${CI:-}" != "" ]]; then
+    # Download the pinned binary directly from GitHub releases. Homebrew now
+    # refuses the untrusted cyclonedx/cyclonedx tap in CI, so we bypass it.
+    case "$(uname -m)" in
+      x86_64|amd64) CYCLONEDX_ARCH="x64" ;;
+      aarch64|arm64) CYCLONEDX_ARCH="arm64" ;;
+      *) echo "❌ Unsupported CI architecture: $(uname -m)" >&2; exit 1 ;;
+    esac
+    echo "Installing CycloneDX CLI ${CYCLONEDX_VERSION} (cyclonedx-linux-${CYCLONEDX_ARCH}) for CI environment..."
+    CYCLONEDX_BIN_DIR="${RUNNER_TEMP:-/tmp}/cyclonedx-cli"
+    mkdir -p "$CYCLONEDX_BIN_DIR"
+    curl -fsSL -o "$CYCLONEDX_BIN_DIR/cyclonedx" \
+      "https://github.com/CycloneDX/cyclonedx-cli/releases/download/${CYCLONEDX_VERSION}/cyclonedx-linux-${CYCLONEDX_ARCH}"
+    chmod +x "$CYCLONEDX_BIN_DIR/cyclonedx"
+    export PATH="$CYCLONEDX_BIN_DIR:$PATH"
   elif command -v brew >/dev/null 2>&1; then
     echo "CycloneDX CLI not found — installing via Homebrew..."
     brew install cyclonedx/cyclonedx/cyclonedx-cli
@@ -37,7 +52,7 @@ fi
 CYCLONEDX="cyclonedx"
 if command -v cyclonedx >/dev/null 2>&1; then
   echo "CycloneDX CLI installation verified."
-elif [ -f /home/linuxbrew/.linuxbrew/bin/cyclonedx ]; then
+elif [[ -f /home/linuxbrew/.linuxbrew/bin/cyclonedx ]]; then
   CYCLONEDX="/home/linuxbrew/.linuxbrew/bin/cyclonedx"
   echo "CycloneDX CLI installation verified."
 else
@@ -59,7 +74,7 @@ for DISTRO in "${DISTROS[@]}"; do
       -DprojectType=application \
       -DskipAttach=true \
       -DskipNotDeployed=true
-    if [ ! -f target/sbom/operaton-modules-"$DISTRO".json ]; then
+    if [[ ! -f target/sbom/operaton-modules-"$DISTRO".json ]]; then
         echo "❌ SBOM file target/sbom/operaton-modules-$DISTRO.json not found. Maven plugin may have failed."
         exit 1
     fi

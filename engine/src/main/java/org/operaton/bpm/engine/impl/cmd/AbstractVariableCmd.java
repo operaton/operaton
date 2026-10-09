@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,11 +26,14 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Stefan Hentschel.
  */
+@NullMarked
 public abstract class AbstractVariableCmd implements Command<Void> {
-  protected CommandContext commandContext;
+  private @Nullable CommandContext commandContext;
   protected String entityId;
   protected boolean isLocal;
   protected boolean preventLogUserOperation;
@@ -43,7 +49,7 @@ public abstract class AbstractVariableCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     this.commandContext = commandContext;
 
     AbstractVariableScope scope = getEntity();
@@ -59,9 +65,13 @@ public abstract class AbstractVariableCmd implements Command<Void> {
     return null;
   }
 
-  protected abstract AbstractVariableScope getEntity();
+  protected CommandContext getCommandContext() {
+    return requireNonNull(commandContext);
+  }
 
-  protected abstract ExecutionEntity getContextExecution();
+  protected abstract @Nullable AbstractVariableScope getEntity();
+
+  protected abstract @Nullable ExecutionEntity getContextExecution();
 
   protected abstract void logVariableOperation(AbstractVariableScope scope);
 

@@ -19,10 +19,12 @@ package org.operaton.bpm.engine.impl.util;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.BatchExecutorException;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEnginePersistenceException;
@@ -58,7 +60,7 @@ public final class ExceptionUtil {
     return stringWriter.toString();
   }
 
-  public static String getExceptionStacktrace(ByteArrayEntity byteArray) {
+  public static @Nullable String getExceptionStacktrace(@Nullable ByteArrayEntity byteArray) {
     if (byteArray == null) {
       return null;
     }
@@ -66,7 +68,7 @@ public final class ExceptionUtil {
     return StringUtil.fromBytes(byteArray.getBytes());
   }
 
-  public static ByteArrayEntity createJobExceptionByteArray(byte[] byteArray, ResourceType type) {
+  public static @Nullable ByteArrayEntity createJobExceptionByteArray(byte[] byteArray, ResourceType type) {
     return createExceptionByteArray("job.exceptionByteArray", byteArray, type);
   }
 
@@ -83,7 +85,7 @@ public final class ExceptionUtil {
    * @param type - resource type of the exception
    * @return persisted entity
    */
-  public static ByteArrayEntity createExceptionByteArray(String name, byte[] byteArray, ResourceType type) {
+  public static @Nullable ByteArrayEntity createExceptionByteArray(String name, byte @Nullable[] byteArray, ResourceType type) {
     if (byteArray == null) {
       return null;
     }
@@ -95,7 +97,7 @@ public final class ExceptionUtil {
     return result;
   }
 
-  protected static Throwable getPersistenceCauseException(PersistenceException persistenceException) {
+  private static Throwable getPersistenceCauseException(PersistenceException persistenceException) {
     Throwable cause = persistenceException.getCause();
     if (cause instanceof BatchExecutorException) {
       return cause.getCause();
@@ -104,21 +106,17 @@ public final class ExceptionUtil {
     }
   }
 
-  public static SQLException unwrapException(PersistenceException persistenceException) {
+  public static @Nullable SQLException unwrapException(PersistenceException persistenceException) {
     Throwable cause = getPersistenceCauseException(persistenceException);
     if (cause instanceof SQLException sqlException) {
       SQLException nextException = sqlException.getNextException();
-      if (nextException != null) {
-        return nextException;
-      } else {
-        return sqlException;
-      }
+      return Objects.requireNonNullElse(nextException, sqlException);
     } else {
       return null;
     }
   }
 
-  public static SQLException unwrapException(ProcessEngineException genericPersistenceException) {
+  public static @Nullable SQLException unwrapException(ProcessEngineException genericPersistenceException) {
     Throwable cause = genericPersistenceException.getCause();
 
     if (cause instanceof ProcessEngineException processEngineException) {
@@ -243,9 +241,9 @@ public final class ExceptionUtil {
     ORACLE(60, "61000"),
     POSTGRES(0, "40P01"),
     H2(40001, "40001");
-    protected final int errorCode;
+    private final int errorCode;
 
-    protected final String sqlState;
+    private final String sqlState;
 
     DEADLOCK_CODES(int errorCode, String sqlState) {
       this.errorCode = errorCode;
@@ -260,7 +258,7 @@ public final class ExceptionUtil {
       return sqlState;
     }
 
-    protected boolean equals(int errorCode, String sqlState) {
+    private boolean equals(int errorCode, String sqlState) {
       return this.getErrorCode() == errorCode && this.getSqlState().equals(sqlState);
     }
 
@@ -284,7 +282,7 @@ public final class ExceptionUtil {
         H2.equals(errorCode, sqlState);
   }
 
-  public static BatchExecutorException findBatchExecutorException(PersistenceException exception) {
+  public static @Nullable BatchExecutorException findBatchExecutorException(PersistenceException exception) {
     Throwable cause = exception;
     do {
       if (cause instanceof BatchExecutorException batchExecutorException) {

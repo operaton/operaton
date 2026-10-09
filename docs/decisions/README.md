@@ -37,7 +37,16 @@ Common examples include:
 
 ## ADR Creation Process
 
-**Note:** The process of creating an ADR is part of future discussions and will be defined later.
+![image](adr-decision-process.png)
+
+- Open a new discussion on a shared editor (Etherpad, etc.)
+- Create a new issue, link the shared editor in it
+- Discuss options, weigh pros & cons until the proposal is deemed ready by participants
+- If no agreement is reached, withdraw the proposal
+- If an agreement is reached, assign an ADR number, open a PR with the ADR in this folder
+- Core contributors review, approve and request changes
+- If two core contributors (the author excluded) agree on the ADR and no veto is present by others, it is approved
+- Merge the PR, close the issue
 
 ## File Naming Convention
 
@@ -56,6 +65,7 @@ ADRs can have different statuses that indicate their current state:
 
 | Status | Meaning |
 | ------------ | -------------------------------------------------------- |
+| Draft | Being written; no decision taken yet |
 | Proposed | Under discussion; not yet approved |
 | Accepted | Decision finalized and agreed upon |
 | Rejected | Considered but not adopted |

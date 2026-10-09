@@ -16,16 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,33 +36,8 @@ import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
-import org.operaton.bpm.engine.form.FormField;
-import org.operaton.bpm.engine.form.FormProperty;
-import org.operaton.bpm.engine.form.FormType;
-import org.operaton.bpm.engine.form.StartFormData;
-import org.operaton.bpm.engine.form.TaskFormData;
-import org.operaton.bpm.engine.history.DurationReportResult;
-import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.history.HistoricActivityStatistics;
-import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
-import org.operaton.bpm.engine.history.HistoricCaseActivityStatistics;
-import org.operaton.bpm.engine.history.HistoricCaseInstance;
-import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
-import org.operaton.bpm.engine.history.HistoricDecisionInstance;
-import org.operaton.bpm.engine.history.HistoricDecisionInstanceStatistics;
-import org.operaton.bpm.engine.history.HistoricDecisionOutputInstance;
-import org.operaton.bpm.engine.history.HistoricDetail;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
-import org.operaton.bpm.engine.history.HistoricFormField;
-import org.operaton.bpm.engine.history.HistoricIdentityLinkLog;
-import org.operaton.bpm.engine.history.HistoricIncident;
-import org.operaton.bpm.engine.history.HistoricJobLog;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstanceReportResult;
-import org.operaton.bpm.engine.history.HistoricVariableInstance;
-import org.operaton.bpm.engine.history.HistoricVariableUpdate;
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
+import org.operaton.bpm.engine.form.*;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.User;
@@ -81,52 +47,14 @@ import org.operaton.bpm.engine.impl.form.OperatonFormRefImpl;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.persistence.entity.MetricIntervalEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
-import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.CommandImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.DatabaseImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.InternalsImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.MetricImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.ProductImpl;
-import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
-import org.operaton.bpm.engine.management.ActivityStatistics;
-import org.operaton.bpm.engine.management.IncidentStatistics;
-import org.operaton.bpm.engine.management.JobDefinition;
-import org.operaton.bpm.engine.management.MetricIntervalValue;
-import org.operaton.bpm.engine.management.MetricsQuery;
-import org.operaton.bpm.engine.management.ProcessDefinitionStatistics;
-import org.operaton.bpm.engine.management.SetJobRetriesBuilder;
-import org.operaton.bpm.engine.management.SetJobRetriesByJobsAsyncBuilder;
-import org.operaton.bpm.engine.management.SetJobRetriesByProcessAsyncBuilder;
+import org.operaton.bpm.engine.impl.telemetry.dto.*;
+import org.operaton.bpm.engine.management.*;
 import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.query.Query;
-import org.operaton.bpm.engine.repository.CaseDefinition;
-import org.operaton.bpm.engine.repository.DecisionDefinition;
-import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
-import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.repository.Resource;
+import org.operaton.bpm.engine.repository.*;
 import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.EventSubscription;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResultWithVariables;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
-import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.task.Attachment;
-import org.operaton.bpm.engine.task.Comment;
-import org.operaton.bpm.engine.task.DelegationState;
-import org.operaton.bpm.engine.task.IdentityLink;
-import org.operaton.bpm.engine.task.IdentityLinkType;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
+import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.task.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.value.ObjectValueImpl;
@@ -138,9 +66,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Provides mocks for the basic engine entities, such as
@@ -992,7 +918,7 @@ public abstract class MockProvider {
   public static final int EXAMPLE_PROBLEM_COLUMN_2 = 88;
   public static final String EXAMPLE_PROBLEM_ELEMENT_ID_2 = "element_89";
   public static final String EXAMPLE_RESOURCE_NAME = "abc";
-  public static final List<String> EXAMPLE_ELEMENT_IDS = Arrays.asList(EXAMPLE_PROBLEM_ELEMENT_ID, EXAMPLE_PROBLEM_ELEMENT_ID_2);
+  public static final List<String> EXAMPLE_ELEMENT_IDS = List.of(EXAMPLE_PROBLEM_ELEMENT_ID, EXAMPLE_PROBLEM_ELEMENT_ID_2);
 
   // Telemetry
   public static final String EXAMPLE_TELEMETRY_INSTALLATION_ID = "8343cc7a-8ad1-42d4-97d2-43452c0bdfa3";
@@ -1951,19 +1877,19 @@ public abstract class MockProvider {
   }
 
   public static List<Authorization> createMockAuthorizations() {
-    return Arrays.asList(createMockGlobalAuthorization(), createMockGrantAuthorization(), createMockRevokeAuthorization());
+    return List.of(createMockGlobalAuthorization(), createMockGrantAuthorization(), createMockRevokeAuthorization());
   }
 
   public static List<Authorization> createMockGrantAuthorizations() {
-    return Arrays.asList(createMockGrantAuthorization());
+    return List.of(createMockGrantAuthorization());
   }
 
   public static List<Authorization> createMockRevokeAuthorizations() {
-    return Arrays.asList(createMockRevokeAuthorization());
+    return List.of(createMockRevokeAuthorization());
   }
 
   public static List<Authorization> createMockGlobalAuthorizations() {
-    return Arrays.asList(createMockGlobalAuthorization());
+    return List.of(createMockGlobalAuthorization());
   }
 
   public static Date createMockDuedate() {
@@ -2352,7 +2278,7 @@ public abstract class MockProvider {
   }
 
   public static Set<String> createMockSetFromList(String list){
-    return new HashSet<>(Arrays.asList(list.split(",")));
+    return Set.of(list.split(","));
   }
 
   public static IdentityLink createMockUserAssigneeIdentityLink() {

@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.*;
 
 import org.operaton.bpm.engine.ProcessEngine;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -403,7 +405,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
       VariableMap variableMap = Variables.fromMap(variables);
       CaseDefinition caseDefinition = (CaseDefinition) getCaseDefinition();
 
-      TenantIdProviderCaseInstanceContext ctx = null;
+      TenantIdProviderCaseInstanceContext ctx;
 
       if (superExecutionId != null) {
         ctx = new TenantIdProviderCaseInstanceContext(caseDefinition, variableMap, getSuperExecution());
@@ -719,7 +721,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   protected List<VariableInstanceLifecycleListener<CoreVariableInstance>> getVariableInstanceLifecycleListeners() {
-    return Arrays.asList((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
+    return List.of((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
         (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER,
         (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_HISTORY_LISTENER,
         (VariableInstanceLifecycleListener) CMMN_VARIABLE_INVOCATION_LISTENER,
@@ -769,7 +771,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
     for (VariableInstanceEntity variableInstance : variableStore.getVariables()) {
       invokeVariableLifecycleListenersDelete(variableInstance, this,
-          Arrays.asList((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER));
+          List.of((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER));
       variableStore.removeVariable(variableInstance.getName());
     }
 
@@ -855,7 +857,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   }
 
   @Override
-  public CmmnModelInstance getCmmnModelInstance() {
+  public @Nullable CmmnModelInstance getCmmnModelInstance() {
     if (caseDefinitionId != null) {
 
       return Context.getProcessEngineConfiguration()
@@ -869,7 +871,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   }
 
   @Override
-  public CmmnElement getCmmnModelElementInstance() {
+  public @Nullable CmmnElement getCmmnModelElementInstance() {
     CmmnModelInstance cmmnModelInstance = getCmmnModelInstance();
     if (cmmnModelInstance != null) {
       ModelElementInstance modelElementInstance = cmmnModelInstance.getModelElementById(activityId);

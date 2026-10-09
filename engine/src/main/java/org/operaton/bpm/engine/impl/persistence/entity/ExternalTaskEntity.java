@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.EntityTypes;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -254,6 +256,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     return extensionProperties;
   }
 
+  @SuppressWarnings("unused")
   public void setExtensionProperties(Map<String, String> extensionProperties) {
     this.extensionProperties = extensionProperties;
   }
@@ -303,7 +306,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     return ExceptionUtil.getExceptionStacktrace(byteArray);
   }
 
-  public void setErrorMessage(String errorMessage) {
+  public void setErrorMessage(@Nullable String errorMessage) {
     if(errorMessage != null && errorMessage.length() > MAX_EXCEPTION_MESSAGE_LENGTH) {
       this.errorMessage = errorMessage.substring(0, MAX_EXCEPTION_MESSAGE_LENGTH);
     } else {
@@ -360,7 +363,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
       .getExternalTaskManager()
       .delete(this);
 
-    // Also delete the external tasks's error details byte array
+    // Also delete the external task's error details byte array
     if (errorDetailsByteArrayId != null) {
       commandContext.getByteArrayManager().deleteByteArrayById(errorDetailsByteArrayId);
     }
@@ -400,7 +403,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
    * @param retries - updated value of retries left
    * @param retryDuration - used for lockExpirationTime calculation
    */
-  public void failed(String errorMessage, String errorDetails, int retries, long retryDuration, Map<String, Object> variables, Map<String, Object> localVariables) {
+  public void failed(String errorMessage, @Nullable String errorDetails, int retries, long retryDuration, Map<String, Object> variables, Map<String, Object> localVariables) {
     ensureActive();
 
     ExecutionEntity associatedExecution = getExecution();
@@ -422,10 +425,10 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     setRetriesAndManageIncidents(retries);
   }
 
-  public void bpmnError(String errorCode, String errorMessage, Map<String, Object> variables) {
+  public void bpmnError(String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables) {
     ensureActive();
     ActivityExecution activityExecution = getExecution();
-    BpmnError bpmnError = null;
+    BpmnError bpmnError;
     if (errorMessage != null) {
       bpmnError = new BpmnError(errorCode, errorMessage);
     } else {
@@ -518,6 +521,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   }
 
   protected boolean evaluateThrowBpmnError(ExecutionEntity execution, boolean continueOnException) {
+    @SuppressWarnings("unchecked")
     List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) execution.getActivity().getProperty(BpmnProperties.OPERATON_ERROR_EVENT_DEFINITION.name());
     if (operatonErrorEventDefinitions != null && !operatonErrorEventDefinitions.isEmpty()) {
       for (OperatonErrorEventDefinition operatonErrorEventDefinition : operatonErrorEventDefinitions) {

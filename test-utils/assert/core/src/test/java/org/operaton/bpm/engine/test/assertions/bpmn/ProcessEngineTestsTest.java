@@ -24,49 +24,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngines;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.ExecutionQuery;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.JobQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseDefinitionAssert;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseExecutionAssert;
 import org.operaton.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
 
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.processEngine;
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.*;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.reset;
 import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProcessEngineTestsTest {
@@ -139,7 +116,7 @@ class ProcessEngineTestsTest {
   @Test
   void assertThatProcessDefinition() {
     // Given
-    ProcessDefinition processDefinition = Mockito.mock(ProcessDefinition.class);
+    ProcessDefinition processDefinition = mock(ProcessDefinition.class);
     // When
     ProcessDefinitionAssert returnedAssert = assertThat(processDefinition);
     // Then
@@ -151,7 +128,7 @@ class ProcessEngineTestsTest {
   @Test
   void assertThatProcessInstance() {
     // Given
-    ProcessInstance processInstance = Mockito.mock(ProcessInstance.class);
+    ProcessInstance processInstance = mock(ProcessInstance.class);
     // When
     ProcessInstanceAssert returnedAssert = assertThat(processInstance);
     // Then
@@ -163,7 +140,7 @@ class ProcessEngineTestsTest {
   @Test
   void assertThatTask() {
     // Given
-    Task task = Mockito.mock(Task.class);
+    Task task = mock(Task.class);
     // When
     TaskAssert returnedAssert = assertThat(task);
     // Then
@@ -175,7 +152,7 @@ class ProcessEngineTestsTest {
   @Test
   void assertThatJob() {
     // Given
-    Job job = Mockito.mock(Job.class);
+    Job job = mock(Job.class);
     // When
     JobAssert returnedAssert = assertThat(job);
     // Then
@@ -187,7 +164,7 @@ class ProcessEngineTestsTest {
   @Test
   void assertThatCaseInstance() {
     //Given
-    CaseInstance caseInstance = Mockito.mock(CaseInstance.class);
+    CaseInstance caseInstance = mock(CaseInstance.class);
     // When
     CaseInstanceAssert returnedAssert = assertThat(caseInstance);
     // Then
@@ -197,7 +174,7 @@ class ProcessEngineTestsTest {
   @Test
   void assertThatCaseExecution() {
     //Given
-    CaseExecution caseExecution = Mockito.mock(CaseExecution.class);
+    CaseExecution caseExecution = mock(CaseExecution.class);
     // When
     CaseExecutionAssert returnedAssert = assertThat(caseExecution);
     // Then
@@ -207,7 +184,7 @@ class ProcessEngineTestsTest {
   @Test
   void assertThatCaseDefinition() {
     //Given
-    CaseDefinition caseDefinition = Mockito.mock(CaseDefinition.class);
+    CaseDefinition caseDefinition = mock(CaseDefinition.class);
     // When
     CaseDefinitionAssert returnedAssert = assertThat(caseDefinition);
     // Then

@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.test.bpmn.gateway;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
-public class SignalableBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class SignalableBehavior extends AbstractBpmnActivityBehavior {
 
   @Override
   public void execute(final ActivityExecution execution) throws Exception {
@@ -27,7 +29,7 @@ public class SignalableBehavior extends AbstractBpmnActivityBehavior {
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     leave(execution);
   }
 }

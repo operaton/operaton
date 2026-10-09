@@ -30,6 +30,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 
@@ -45,7 +47,7 @@ public final class IoUtil {
   private IoUtil() {
   }
 
-  public static byte[] readInputStream(InputStream inputStream, String inputStreamName) {
+  public static byte[] readInputStream(InputStream inputStream, @Nullable String inputStreamName) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     byte[] buffer = new byte[16*1024];
     try {
@@ -56,7 +58,7 @@ public final class IoUtil {
       }
     }
     catch (Exception e) {
-      throw LOG.exceptionWhileReadingStream(inputStreamName, e);
+      throw LOG.exceptionWhileReadingStream(inputStreamName != null ? inputStreamName : "<unnamed input stream>", e);
     }
     return outputStream.toByteArray();
   }
@@ -99,6 +101,9 @@ public final class IoUtil {
     }
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public static void writeStringToFile(String content, String filePath) {
     try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(getFile(filePath)))) {
       outputStream.write(content.getBytes());
@@ -112,7 +117,7 @@ public final class IoUtil {
    * Closes the given stream. The same as calling {@link Closeable#close()}, but
    * errors while closing are silently ignored.
    */
-  public static void closeSilently(Closeable closeable) {
+  public static void closeSilently(@Nullable Closeable closeable) {
     try {
       if(closeable != null) {
         closeable.close();
@@ -126,8 +131,11 @@ public final class IoUtil {
   /**
    * Flushes the given object. The same as calling {@link Flushable#flush()}, but
    * errors while flushing are silently ignored.
+   * @deprecated Unused internal API
    */
-  public static void flushSilently(Flushable flushable) {
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
+  public static void flushSilently(@Nullable Flushable flushable) {
     try {
       if(flushable != null) {
         flushable.flush();

@@ -188,7 +188,7 @@ public class ScriptingEngines implements DmnScriptEngineResolver {
   }
 
   /**
-   * Checks if the given script engine is cachable ({@code THREADING} parameter is not null).
+   * Checks if the given script engine is cachable ({@code THREADING} parameter is not {@code null}).
    * Non-cachable engines like GraalJS require special bindings handling to avoid
    * creating additional polyglot Contexts per evaluation. They do not support the {@code THREADING} parameter.
    */

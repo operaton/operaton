@@ -78,9 +78,14 @@ public class OperatonBpmRunRestConfiguration {
     String restApiPathPattern = applicationPath.getUrlMapping();
     registration.addUrlPatterns(restApiPathPattern);
 
-    // if nothing is set, use Http Basic authentication
     OperatonBpmRunAuthenticationProperties properties = operatonBpmRunProperties.getAuth();
-    if (properties.getAuthentication() == null || OperatonBpmRunAuthenticationProperties.DEFAULT_AUTH.equals(properties.getAuthentication())) {
+    String authentication = properties.getAuthentication();
+    if (OperatonBpmRunAuthenticationProperties.OAUTH2_AUTH.equals(authentication)) {
+      // delegate to the Spring Security OAuth2 identity: the authenticated principal is
+      // resolved from the SecurityContext populated by the oauth2 starter's filter chain
+      registration.addInitParameter("authentication-provider", "org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider");
+    } else if (authentication == null || OperatonBpmRunAuthenticationProperties.DEFAULT_AUTH.equals(authentication)) {
+      // if nothing is set, use Http Basic authentication
       registration.addInitParameter("authentication-provider", "org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider");
     }
     return registration;

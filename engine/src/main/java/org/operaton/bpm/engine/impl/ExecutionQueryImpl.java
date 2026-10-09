@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.event.EventType;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -263,7 +265,7 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
     return processInstanceId;
   }
 
-  public String getProcessInstanceIds() {
+  public @Nullable String getProcessInstanceIds() {
     return null;
   }
 

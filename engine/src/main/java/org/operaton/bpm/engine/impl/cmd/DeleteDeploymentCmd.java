@@ -16,14 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationReference;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.TransactionLogger;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -34,12 +37,14 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Joram Barrez
  * @author Thorben Lindhauer
  */
+@NullMarked
 public class DeleteDeploymentCmd implements Command<Void> {
 
   private static final TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
@@ -57,7 +62,7 @@ public class DeleteDeploymentCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     ensureNotNull("deploymentId", deploymentId);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
@@ -65,7 +70,7 @@ public class DeleteDeploymentCmd implements Command<Void> {
     }
 
     UserOperationLogManager logManager = commandContext.getOperationLogManager();
-    List<PropertyChange> propertyChanges = Arrays.asList(new PropertyChange("cascade", null, cascade));
+    List<PropertyChange> propertyChanges = List.of(new PropertyChange("cascade", null, cascade));
     DeploymentEntity deployment = commandContext.getDeploymentManager().findDeploymentById(deploymentId);
     String tenantId = deployment != null ? deployment.getTenantId() : null;
     logManager.logDeploymentOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE, deploymentId, tenantId, propertyChanges);
@@ -74,13 +79,13 @@ public class DeleteDeploymentCmd implements Command<Void> {
       .getDeploymentManager()
       .deleteDeployment(deploymentId, cascade, skipCustomListeners, skipIoMappings);
 
-    ProcessApplicationReference processApplicationReference = Context
-      .getProcessEngineConfiguration()
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    ProcessApplicationReference processApplicationReference = processEngineConfiguration
       .getProcessApplicationManager()
       .getProcessApplicationForDeployment(deploymentId);
 
     DeleteDeploymentFailListener listener = new DeleteDeploymentFailListener(deploymentId, processApplicationReference,
-      Context.getProcessEngineConfiguration().getCommandExecutorTxRequiresNew());
+      processEngineConfiguration.getCommandExecutorTxRequiresNew());
 
     try {
       commandContext.runWithoutAuthorization(new UnregisterProcessApplicationCmd(deploymentId, false));

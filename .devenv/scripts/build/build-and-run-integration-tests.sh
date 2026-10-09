@@ -41,7 +41,7 @@ check_valid_values() {
 
 ##########################################################################
 parse_args() {
-  while [ "$#" -gt 0 ]; do
+  while [[ "$#" -gt 0 ]]; do
     case "$1" in
       --testsuite=*)
         TEST_SUITE="${1#*=}"
@@ -79,7 +79,7 @@ parse_args() {
 }
 
 run_build () {
-  PROFILES=(distro distro-webjar h2-in-memory)
+  PROFILES=(distro distro-webjar distro-webjar-neo h2-in-memory)
 
   if [[ "$DISTRO" == "operaton" ]]; then
     PROFILES+=(distro-run integration-test-operaton-run)

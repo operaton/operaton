@@ -19,11 +19,7 @@ package org.operaton.bpm.engine.rest.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.bpm.engine.migration.MigrationInstruction;
-import org.operaton.bpm.engine.migration.MigrationInstructionBuilder;
-import org.operaton.bpm.engine.migration.MigrationInstructionsBuilder;
-import org.operaton.bpm.engine.migration.MigrationPlan;
-import org.operaton.bpm.engine.migration.MigrationPlanBuilder;
+import org.operaton.bpm.engine.migration.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 
 import static org.mockito.Mockito.mock;

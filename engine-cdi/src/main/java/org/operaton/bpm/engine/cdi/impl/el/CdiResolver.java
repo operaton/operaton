@@ -47,11 +47,13 @@ public class CdiResolver extends ELResolver {
     }
   }
 
+  @SuppressWarnings("removal")
   protected ELResolver getWrappedResolver() {
     BeanManager beanManager = getBeanManager();
     if (beanManager == null) {
       return null;
     }
+    // Removal in favor of ELAwareBeanManager, which does not yet exist in the released cdi-api.
     return beanManager.getELResolver();
   }
 

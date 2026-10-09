@@ -28,11 +28,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DmnWriterTest extends DmnModelTest {
 
   /**
-   * <p>There is an issue in JDK 9+ that changes how CDATA section are serialized:
+   * There is an issue in JDK 9+ that changes how CDATA section are serialized:
    *
-   * <p>https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8223291
+   * <p>
+   * https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8223291
+   * </p>
    *
-   * <p>&lt; JDK9:
+   * <p>
+   * &lt; JDK9:
+   * </p>
    *
    * <pre>
    * &lt;inputEntry id="inputEntry1"&gt;
@@ -40,9 +44,13 @@ class DmnWriterTest extends DmnModelTest {
    * &lt;/inputEntry&gt;
    * </pre>
    *
-   * <p>(the text element has one child node, a CDATA section)
+   * <p>
+   * (the text element has one child node, a CDATA section)
+   * </p>
    *
-   * <p>&gt;= JDK9:
+   * <p>
+   * &gt;= JDK9:
+   * </p>
    *
    * <pre>
    * &lt;inputEntry id="inputEntry1"&gt;
@@ -52,10 +60,14 @@ class DmnWriterTest extends DmnModelTest {
    * &lt;/inputEntry&gt;
    * </pre>
    *
-   * <p>(the text element has three child nodes, a text node, a CDATA section and another text node)
+   * <p>
+   * (the text element has three child nodes, a text node, a CDATA section and another text node)
+   * </p>
    *
-   * <p>This test ensures, that a JDK9-formatted model can be read
+   * <p>
+   * This test ensures, that a JDK9-formatted model can be read
    * and the text content method returns the CDATA value only
+   * </p>
    */
   @Test
   void shouldReadJDK9StyleModel()

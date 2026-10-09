@@ -28,8 +28,8 @@ public class SignalTestRunListener implements ExecutionListener {
   @Override
   public void notify(final DelegateExecution execution) {
     final String runId = (String) execution.getVariable(PerfTestConstants.RUN_ID);
-    CommandContext commandContext = Context.getCommandContext();
-    if (runId != null && commandContext != null) {
+    if (runId != null && Context.hasActiveCommandContext()) {
+      CommandContext commandContext = Context.getCommandContext();
       commandContext.getTransactionContext()
         // signal run after the transaction was committed
         .addTransactionListener(TransactionState.COMMITTED, commandContext1 -> PerfTestRunner.signalRun(runId));

@@ -19,46 +19,24 @@ package org.operaton.bpm.engine.impl.db.entitymanager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.DeploymentQueryImpl;
-import org.operaton.bpm.engine.impl.ExecutionQueryImpl;
-import org.operaton.bpm.engine.impl.GroupQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricActivityInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricDetailQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricJobLogQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricTaskInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.HistoricVariableInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.JobQueryImpl;
-import org.operaton.bpm.engine.impl.Page;
-import org.operaton.bpm.engine.impl.ProcessDefinitionQueryImpl;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
-import org.operaton.bpm.engine.impl.TaskQueryImpl;
-import org.operaton.bpm.engine.impl.UserQueryImpl;
+import org.operaton.bpm.engine.impl.*;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionQueryImpl;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.db.DbEntity;
-import org.operaton.bpm.engine.impl.db.DbEntityLifecycleAware;
-import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
-import org.operaton.bpm.engine.impl.db.EntityLoadListener;
-import org.operaton.bpm.engine.impl.db.FlushResult;
-import org.operaton.bpm.engine.impl.db.HistoricEntity;
-import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
-import org.operaton.bpm.engine.impl.db.PersistenceSession;
+import org.operaton.bpm.engine.impl.db.*;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.CachedDbEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityCache;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbBulkOperation;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbEntityOperation;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
+import org.operaton.bpm.engine.impl.db.entitymanager.operation.*;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation.State;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationManager;
-import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType;
 import org.operaton.bpm.engine.impl.identity.db.DbGroupQueryImpl;
 import org.operaton.bpm.engine.impl.identity.db.DbUserQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Session;
@@ -68,17 +46,9 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.commons.utils.CollectionUtil;
 
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_MERGED;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_PERSISTENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.DELETED_TRANSIENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.MERGED;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.PERSISTENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.TRANSIENT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.DELETE_BULK;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.INSERT;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.UPDATE;
-import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.UPDATE_BULK;
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState.*;
+import static org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperationType.*;
 
 /**
  *
@@ -103,7 +73,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   protected PersistenceSession persistenceSession;
   protected boolean isIgnoreForeignKeysForNextFlush;
 
-  public DbEntityManager(IdGenerator idGenerator, PersistenceSession persistenceSession) {
+  public DbEntityManager(IdGenerator idGenerator, @Nullable PersistenceSession persistenceSession) {
     this.idGenerator = idGenerator;
     this.persistenceSession = persistenceSession;
     if (persistenceSession != null) {
@@ -120,7 +90,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   protected void initializeEntityCache() {
 
     final JobExecutorContext jobExecutorContext = Context.getJobExecutorContext();
-    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    final ProcessEngineConfigurationImpl processEngineConfiguration = Context.findProcessEngineConfiguration().orElse(null);
 
     if(processEngineConfiguration != null
         && processEngineConfiguration.isDbEntityCacheReuseEnabled()
@@ -153,7 +123,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return selectList(statement, parameter, 0, Integer.MAX_VALUE);
   }
 
-  public List selectList(String statement, Object parameter, Page page) {
+  public List selectList(String statement, Object parameter, @Nullable Page page) {
     if(page!=null) {
       return selectList(statement, parameter, page.getFirstResult(), page.getMaxResults());
     } else {
@@ -183,7 +153,21 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return filterLoadedObjects(loadedObjects);
   }
 
-  public Object selectOne(String statement, Object parameter) {
+  /**
+   * Selects with the row limit enforced by cutting off the cursor after
+   * {@code maxResults} fetched rows instead of by a limit clause in the SQL.
+   * For locking reads on databases that apply a SQL row limit before lock-skipping
+   * (Oracle, DB2): the statement must not emit a SQL row limit there, otherwise the
+   * limit consumes locked candidate rows and the result under-fills.
+   */
+  @SuppressWarnings("unchecked")
+  public List selectListCursorLimited(String statement, Object parameter, int maxResults) {
+    ListQueryParameterObject queryParameter = new ListQueryParameterObject(parameter, 0, maxResults);
+    List loadedObjects = persistenceSession.selectList(statement, queryParameter, maxResults);
+    return filterLoadedObjects(loadedObjects);
+  }
+
+  public @Nullable Object selectOne(String statement, Object parameter) {
     Object result = persistenceSession.selectOne(statement, parameter);
     if (result instanceof DbEntity loadedObject) {
       result = cacheFilter(loadedObject);
@@ -194,13 +178,10 @@ public class DbEntityManager implements Session, EntityLoadListener {
   @SuppressWarnings("unchecked")
   public boolean selectBoolean(String statement, Object parameter) {
     List<Object> result = (List<Object>) persistenceSession.selectList(statement, parameter);
-    if(result != null) {
-      return result.contains(1);
-    }
-    return false;
+    return result.contains(1);
   }
 
-  public <T extends DbEntity> T selectById(Class<T> entityClass, String id) {
+  public <T extends DbEntity> @Nullable T selectById(Class<T> entityClass, String id) {
     T persistentObject = dbEntityCache.get(entityClass, id);
     if (persistentObject!=null) {
       return persistentObject;
@@ -223,7 +204,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return dbEntityCache.getEntitiesByType(type);
   }
 
-  protected List filterLoadedObjects(List<Object> loadedObjects) {
+  protected @NonNull List filterLoadedObjects(@NonNull List<Object> loadedObjects) {
     if (loadedObjects.isEmpty() || loadedObjects.get(0) == null) {
       return loadedObjects;
     }
@@ -240,7 +221,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
 
   /** returns the object in the cache.  if this object was loaded before,
    * then the original object is returned. */
-  protected DbEntity cacheFilter(DbEntity persistentObject) {
+  protected @NonNull DbEntity cacheFilter(@NonNull DbEntity persistentObject) {
     DbEntity cachedPersistentObject = dbEntityCache.get(persistentObject.getClass(), persistentObject.getId());
     if (cachedPersistentObject!=null) {
       return cachedPersistentObject;
@@ -252,7 +233,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   }
 
   @Override
-  public void onEntityLoaded(DbEntity entity) {
+  public void onEntityLoaded(@NonNull DbEntity entity) {
     // we get a callback when the persistence session loads an object from the database
     DbEntity cachedPersistentObject = dbEntityCache.get(entity.getClass(), entity.getId());
     if(cachedPersistentObject == null) {
@@ -446,8 +427,9 @@ public class DbEntityManager implements Session, EntityLoadListener {
    */
   protected boolean canIgnoreHistoryModificationFailure(DbOperation dbOperation) {
     DbEntity dbEntity = ((DbEntityOperation) dbOperation).getEntity();
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
     return
-        Context.getProcessEngineConfiguration().isSkipHistoryOptimisticLockingExceptions()
+        processEngineConfiguration.isSkipHistoryOptimisticLockingExceptions()
         && (dbEntity instanceof HistoricEntity || isHistoricByteArray(dbEntity));
   }
 
@@ -641,13 +623,9 @@ public class DbEntityManager implements Session, EntityLoadListener {
   }
 
   public <T extends DbEntity> List<T> pruneDeletedEntities(List<T> listToPrune) {
-    ArrayList<T> prunedList = new ArrayList<>();
-    for (T potentiallyDeleted : listToPrune) {
-      if(!isDeleted(potentiallyDeleted)) {
-        prunedList.add(potentiallyDeleted);
-      }
-    }
-    return prunedList;
+    return listToPrune.stream()
+        .filter(potentiallyDeleted -> !isDeleted(potentiallyDeleted))
+        .collect(Collectors.toList());
   }
 
   public boolean contains(DbEntity dbEntity) {

@@ -19,12 +19,15 @@ package org.operaton.bpm.engine.impl.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.*;
 
 import static org.operaton.bpm.engine.authorization.Resources.*;
 
-public final class ResourceTypeUtil {
+public final @NullMarked class ResourceTypeUtil {
 
   private ResourceTypeUtil() {
   }
@@ -34,7 +37,7 @@ public final class ResourceTypeUtil {
    * the respective {@link Permission} Enum class for this resource.<p>
    * NOTE: In case of new {@link Permission} Enum class, please adjust the map accordingly
    */
-  protected static final Map<Integer, Class<? extends Enum<? extends Permission>>> PERMISSION_ENUMS;
+  private static final Map<Integer, Class<? extends Enum<? extends Permission>>> PERMISSION_ENUMS;
 
   static {
     PERMISSION_ENUMS = new HashMap<>(Map.of(
@@ -113,7 +116,7 @@ public final class ResourceTypeUtil {
    * Iterates over the {@link Resources} and
    * returns either the resource with specified <code>resourceType</code> or <code>null</code>.
    */
-  public static Resource getResourceByType(int resourceType) {
+  public static @Nullable Resource getResourceByType(int resourceType) {
     for (Resource resource : Resources.values()) {
       if (resource.resourceType() == resourceType) {
         return resource;

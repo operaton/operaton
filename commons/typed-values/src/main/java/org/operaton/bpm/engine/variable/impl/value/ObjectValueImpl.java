@@ -17,7 +17,9 @@
 package org.operaton.bpm.engine.variable.impl.value;
 
 import java.io.Serial;
-
+import java.util.Objects;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
@@ -104,8 +106,9 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T> T getValue(Class<T> type) {
+  public <T> @NonNull T getValue(@NonNull Class<T> type) {
     Object value = getValue();
+    Objects.requireNonNull(value, "The value of this object is null.");
     if(type.isAssignableFrom(value.getClass())) {
       return (T) value;
     }
@@ -115,7 +118,7 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
   }
 
   @Override
-  public Class<?> getObjectType() {
+  public @Nullable Class<?> getObjectType() {
     Object value = getValue();
 
     if(value == null) {

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.mock;
 
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.Nullable;
 
 public class MockElResolver extends ELResolver {
 
@@ -27,7 +28,7 @@ public class MockElResolver extends ELResolver {
   }
 
   @Override
-  public Class< ? > getType(ELContext context, Object base, Object property) {
+  public @Nullable Class<?> getType(ELContext context, Object base, Object property) {
     return null;
   }
 

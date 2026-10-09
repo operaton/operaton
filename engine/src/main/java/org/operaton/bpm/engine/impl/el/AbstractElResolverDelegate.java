@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.el;
 
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Thorben Lindhauer
@@ -27,7 +28,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
   protected abstract ELResolver getElResolverDelegate();
 
   @Override
-  public Class<?> getCommonPropertyType(ELContext context, Object base) {
+  public @Nullable Class<?> getCommonPropertyType(ELContext context, Object base) {
     ELResolver delegate = getElResolverDelegate();
     if(delegate == null) {
       return null;
@@ -37,7 +38,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
   }
 
   @Override
-  public Class<?> getType(ELContext context, Object base, Object property) {
+  public @Nullable Class<?> getType(ELContext context, Object base, Object property) {
     context.setPropertyResolved(false);
     ELResolver delegate = getElResolverDelegate();
     if(delegate == null) {
@@ -47,9 +48,8 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
     }
   }
 
-
   @Override
-  public Object getValue(ELContext context, Object base, Object property) {
+  public @Nullable Object getValue(ELContext context, Object base, Object property) {
     context.setPropertyResolved(false);
     ELResolver delegate = getElResolverDelegate();
     if(delegate == null) {
@@ -80,7 +80,7 @@ public abstract class AbstractElResolverDelegate extends ELResolver {
   }
 
   @Override
-  public Object invoke(ELContext context, Object base, Object method, Class<?>[] paramTypes, Object[] params) {
+  public @Nullable Object invoke(ELContext context, Object base, Object method, Class<?>[] paramTypes, Object[] params) {
     context.setPropertyResolved(false);
     ELResolver delegate = getElResolverDelegate();
     if(delegate == null) {

@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
@@ -36,6 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.DIAGRAM_RESOURCE_SUFFIXES;
 
 /**
@@ -46,14 +45,14 @@ import static org.operaton.bpm.engine.impl.ResourceSuffixes.DIAGRAM_RESOURCE_SUF
  * Note: Implementations must be thread-safe. In particular they should not keep deployment-specific state.
  * </p>
  */
-public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends ResourceDefinitionEntity> implements Deployer {
+public abstract @NullMarked class AbstractDefinitionDeployer<DEFINITION_ENTITY extends ResourceDefinitionEntity> implements Deployer {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  protected IdGenerator idGenerator;
+  protected @Nullable IdGenerator idGenerator;
 
   public IdGenerator getIdGenerator() {
-    return idGenerator;
+    return requireNonNull(idGenerator);
   }
 
   public void setIdGenerator(IdGenerator idGenerator) {
@@ -148,10 +147,10 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
    * processes will have the same image: abc.png.
    * </p>
    *
-   * @return null if no matching image resource is found.
+   * @return {@code null} if no matching image resource is found.
    */
   @SuppressWarnings("unused")
-  protected String getDiagramResourceForDefinition(DeploymentEntity deployment, String resourceName, DEFINITION_ENTITY definition, Map<String, ResourceEntity> resources) {
+  protected @Nullable String getDiagramResourceForDefinition(DeploymentEntity deployment, String resourceName, DEFINITION_ENTITY definition, Map<String, ResourceEntity> resources) {
     for (String diagramSuffix: getDiagramSuffixes()) {
       String definitionDiagramResource = getDefinitionDiagramResourceName(resourceName, definition, diagramSuffix);
       String diagramForFileResource = getGeneralDiagramResourceName(resourceName, definition, diagramSuffix);
@@ -233,7 +232,7 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
     }
   }
 
-  protected void updateDefinitionByLatestDefinition(DeploymentEntity deployment, DEFINITION_ENTITY definition, DEFINITION_ENTITY latestDefinition) {
+  protected void updateDefinitionByLatestDefinition(DeploymentEntity deployment, DEFINITION_ENTITY definition, @Nullable DEFINITION_ENTITY latestDefinition) {
     definition.setVersion(getNextVersion(deployment, definition, latestDefinition));
     definition.setId(generateDefinitionId(deployment, definition, latestDefinition));
     definition.setDeploymentId(deployment.getId());
@@ -279,16 +278,16 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
    * Find a definition entity by deployment id and definition key.
    * @param deploymentId the deployment id
    * @param definitionKey the definition key
-   * @return the corresponding definition entity or null if non is found
+   * @return the corresponding definition entity or {@code null} if non is found
    */
-  protected abstract DEFINITION_ENTITY findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey);
+  protected abstract @Nullable DEFINITION_ENTITY findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey);
 
   /**
    * Find the last deployed definition entity by definition key and tenant id.
    *
-   * @return the corresponding definition entity or null if non is found
+   * @return the corresponding definition entity or {@code null} if non is found
    */
-  protected abstract DEFINITION_ENTITY findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId);
+  protected abstract @Nullable DEFINITION_ENTITY findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId);
 
   /**
    * Persist definition entity into the database.
@@ -332,7 +331,7 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
    * versions with deployment / build versions.
    */
   @SuppressWarnings("unused")
-  protected int getNextVersion(DeploymentEntity deployment, DEFINITION_ENTITY newDefinition, DEFINITION_ENTITY latestDefinition) {
+  protected int getNextVersion(DeploymentEntity deployment, DEFINITION_ENTITY newDefinition, @Nullable DEFINITION_ENTITY latestDefinition) {
     int result = 1;
     if (latestDefinition != null) {
       int latestVersion = latestDefinition.getVersion();
@@ -347,8 +346,8 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
    * You might want to hook in your own implementation here.
    */
   @SuppressWarnings("unused")
-  protected String generateDefinitionId(DeploymentEntity deployment, DEFINITION_ENTITY newDefinition, DEFINITION_ENTITY latestDefinition) {
-    String nextId = idGenerator.getNextId();
+  protected String generateDefinitionId(DeploymentEntity deployment, DEFINITION_ENTITY newDefinition, @Nullable DEFINITION_ENTITY latestDefinition) {
+    String nextId = getIdGenerator().getNextId();
 
     String definitionKey = newDefinition.getKey();
     int definitionVersion = newDefinition.getVersion();

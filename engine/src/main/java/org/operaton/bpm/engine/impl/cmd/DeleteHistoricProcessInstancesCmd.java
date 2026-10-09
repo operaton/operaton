@@ -20,7 +20,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
@@ -29,6 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -37,7 +41,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Askar Akhmerov
  */
-public class DeleteHistoricProcessInstancesCmd implements Command<Void> {
+public @NullMarked class DeleteHistoricProcessInstancesCmd implements Command<Void> {
 
   protected final List<String> processInstanceIds;
   protected final boolean failIfNotExists;
@@ -48,13 +52,14 @@ public class DeleteHistoricProcessInstancesCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotEmpty(BadUserRequestException.class,"processInstanceIds", processInstanceIds);
     ensureNotContainsNull(BadUserRequestException.class, "processInstanceId is null", "processInstanceIds", processInstanceIds);
 
     // Check if process instance is still running
     List<HistoricProcessInstance> instances = commandContext.runWithoutAuthorization(
         () -> new HistoricProcessInstanceQueryImpl().processInstanceIds(new HashSet<>(processInstanceIds)).list());
+    requireNonNull(instances);
 
     if (failIfNotExists) {
       if (processInstanceIds.size() == 1) {
@@ -67,7 +72,7 @@ public class DeleteHistoricProcessInstancesCmd implements Command<Void> {
 
     List<String> existingIds = new ArrayList<>();
 
-    for (HistoricProcessInstance historicProcessInstance : instances) {
+    for (HistoricProcessInstance historicProcessInstance : requireNonNull(instances)) {
       existingIds.add(historicProcessInstance.getId());
 
       for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {

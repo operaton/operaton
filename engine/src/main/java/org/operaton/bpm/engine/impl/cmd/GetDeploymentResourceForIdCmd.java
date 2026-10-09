@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -29,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author kristin.polenz@camunda.com
  */
-public class GetDeploymentResourceForIdCmd implements Command<InputStream> {
+public @NullMarked class GetDeploymentResourceForIdCmd implements Command<InputStream> {
   protected String deploymentId;
   protected String resourceId;
 

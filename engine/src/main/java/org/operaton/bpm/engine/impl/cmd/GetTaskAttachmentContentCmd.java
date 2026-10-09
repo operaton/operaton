@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
@@ -27,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 /**
  * @author kristin.polenz@camunda.com
  */
-public class GetTaskAttachmentContentCmd implements Command<InputStream> {
+public @NullMarked class GetTaskAttachmentContentCmd implements Command<InputStream> {
   protected String attachmentId;
   protected String taskId;
 
@@ -37,7 +40,7 @@ public class GetTaskAttachmentContentCmd implements Command<InputStream> {
   }
 
   @Override
-  public InputStream execute(CommandContext commandContext) {
+  public @Nullable InputStream execute(CommandContext commandContext) {
     AttachmentEntity attachment = (AttachmentEntity) commandContext
         .getAttachmentManager()
         .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);
@@ -55,6 +58,9 @@ public class GetTaskAttachmentContentCmd implements Command<InputStream> {
         .getDbEntityManager()
         .selectById(ByteArrayEntity.class, contentId);
 
+    if (byteArray == null) {
+      return null;
+    }
     byte[] bytes = byteArray.getBytes();
 
     return new ByteArrayInputStream(bytes);

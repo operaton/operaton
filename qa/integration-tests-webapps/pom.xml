@@ -85,8 +85,11 @@
     </dependency>
     <dependency>
       <groupId>com.konghq</groupId>
-      <artifactId>unirest-java</artifactId>
-      <classifier>standalone</classifier>
+      <artifactId>unirest-java-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.konghq</groupId>
+      <artifactId>unirest-modules-gson</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jboss.arquillian.junit5</groupId>
@@ -243,7 +246,6 @@
               <includes>
                 <include>**/*IT.java</include>
               </includes>
-              <parallel>false</parallel>
               <failIfNoTests>true</failIfNoTests>
               <systemPropertyVariables>
                 <arquillian.launch>tomcat</arquillian.launch>
@@ -345,7 +347,6 @@
                 <includes>
                   <include>**/*IT.java</include>
                 </includes>
-                <parallel>false</parallel>
                 <failIfNoTests>true</failIfNoTests>
                 <systemPropertyVariables>
                   <arquillian.launch>wildfly</arquillian.launch>

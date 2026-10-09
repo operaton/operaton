@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.pvm;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 
@@ -31,11 +33,12 @@ public interface PvmScope extends PvmProcessElement {
   /**
    * Indicates whether this is a local scope for variables and events
    * if true, there will _always_ be a scope execution created for it.
-   *<p>
+   * <p>
    * Note: the fact that this is a scope does not mean that it is also a
    * {@link #isSubProcessScope() sub process scope.}
+   * </p>
    *
-   * @returns true if this activity is a scope
+   * @return true if this activity is a scope
    */
   boolean isScope();
 
@@ -54,8 +57,9 @@ public interface PvmScope extends PvmProcessElement {
    * The event scope for an activity is the scope in which the activity listens for events.
    * This may or may not be the {@link #getFlowScope() flow scope.}.
    * Consider: boundary events have a different event scope than flow scope.
-   *<p>
+   * <p>
    * The event scope is always a {@link #isScope() scope}.
+   * </p>
    *
    * @return the event scope of the activity
    */
@@ -63,9 +67,10 @@ public interface PvmScope extends PvmProcessElement {
 
   /**
    * The flow scope of the activity. The scope in which the activity itself is executed.
-   *<p>
+   * <p>
    * Note: in order to ensure backwards compatible behavior,  a flow scope is not necessarily
    * a {@link #isScope() a scope}. Example: event sub processes.
+   * </p>
    */
   ScopeImpl getFlowScope();
 
@@ -92,23 +97,23 @@ public interface PvmScope extends PvmProcessElement {
    * Recursively finds a flow activity. This is an activitiy which is in the hierarchy of flow activities.
    *
    * @param activityId the id of the activity to find.
-   * @return the activity or null
+   * @return the activity or {@code null}
    */
-  PvmActivity findActivity(String activityId);
+  @Nullable PvmActivity findActivity(String activityId);
 
   /**
    * Finds an activity at the same level of subprocess.
    *
    * @param activityId the id of the activity to find.
-   * @return the activity or null
+   * @return the activity or {@code null}
    */
-  PvmActivity findActivityAtLevelOfSubprocess(String activityId);
+  @Nullable PvmActivity findActivityAtLevelOfSubprocess(String activityId);
 
   /**
    * Recursively finds a transition.
    * @param transitionId the transiton to find
-   * @return the transition or null
+   * @return the transition or {@code null}
    */
-  TransitionImpl findTransition(String transitionId);
+  @Nullable TransitionImpl findTransition(String transitionId);
 
 }

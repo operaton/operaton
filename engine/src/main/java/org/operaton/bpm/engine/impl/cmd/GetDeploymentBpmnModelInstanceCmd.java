@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -26,6 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -34,11 +36,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Sebastian Menski
  */
-public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInstance> {
+public @NullMarked class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInstance> {
   protected String processDefinitionId;
 
   public GetDeploymentBpmnModelInstanceCmd(String processDefinitionId) {
-    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
+    if (processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
     this.processDefinitionId = processDefinitionId;
@@ -50,6 +52,8 @@ public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInsta
     final DeploymentCache deploymentCache = configuration.getDeploymentCache();
 
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);

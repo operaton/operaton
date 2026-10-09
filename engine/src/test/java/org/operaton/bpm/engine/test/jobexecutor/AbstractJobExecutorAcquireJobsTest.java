@@ -44,45 +44,41 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
 
   private boolean jobExecutorAcquireByDueDate;
   private boolean jobExecutorAcquireByPriority;
+  private boolean jobExecutorAcquireWithSkipLocked;
   private boolean jobExecutorPreferTimerJobs;
   private boolean jobEnsureDueDateSet;
   private Long jobExecutorPriorityRangeMin;
   private Long jobExecutorPriorityRangeMax;
 
   @BeforeEach
-  public void saveProcessEngineConfiguration() {
+  protected void setUpBase() {
     jobExecutorAcquireByDueDate = configuration.isJobExecutorAcquireByDueDate();
     jobExecutorAcquireByPriority = configuration.isJobExecutorAcquireByPriority();
+    jobExecutorAcquireWithSkipLocked = configuration.isJobExecutorAcquireWithSkipLocked();
     jobExecutorPreferTimerJobs = configuration.isJobExecutorPreferTimerJobs();
     jobEnsureDueDateSet = configuration.isEnsureJobDueDateNotNull();
     jobExecutorPriorityRangeMin = configuration.getJobExecutorPriorityRangeMin();
     jobExecutorPriorityRangeMax = configuration.getJobExecutorPriorityRangeMax();
-  }
-
-  @BeforeEach
-  public void setClock() {
     ClockTestUtil.setClockToDateWithoutMilliseconds();
   }
 
   @AfterEach
-  public void restoreProcessEngineConfiguration() {
+  protected void tearDownBase() {
     configuration.setJobExecutorAcquireByDueDate(jobExecutorAcquireByDueDate);
     configuration.setJobExecutorAcquireByPriority(jobExecutorAcquireByPriority);
+    configuration.setJobExecutorAcquireWithSkipLocked(jobExecutorAcquireWithSkipLocked);
     configuration.setJobExecutorPreferTimerJobs(jobExecutorPreferTimerJobs);
     configuration.setEnsureJobDueDateNotNull(jobEnsureDueDateSet);
     configuration.setJobExecutorPriorityRangeMin(jobExecutorPriorityRangeMin);
     configuration.setJobExecutorPriorityRangeMax(jobExecutorPriorityRangeMax);
-  }
-
-  @AfterEach
-  public void resetClock() {
     ClockUtil.reset();
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {
-    return configuration.getCommandExecutorTxRequired().execute(commandContext -> commandContext
-        .getJobManager()
-        .findNextJobsToExecute(new Page(0, 100)));
+    return configuration.getCommandExecutorTxRequired()
+            .execute(commandContext -> commandContext
+            .getJobManager()
+            .findNextJobsToExecute(new Page(0, 100)));
   }
 
   protected String startProcess(String processDefinitionKey, String activity) {

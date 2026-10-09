@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.metrics;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Daniel Meyer
  *
@@ -28,7 +30,7 @@ public class MetricsRegistry {
   protected Map<String, Meter> dbMeters = new HashMap<>();
   protected Map<String, Meter> diagnosticsMeters = new HashMap<>();
 
-  public Meter getDbMeterByName(String name) {
+  public @Nullable Meter getDbMeterByName(String name) {
     return dbMeters.get(name);
   }
 

@@ -18,9 +18,9 @@ package org.operaton.bpm.run.qa.webapps;
 
 import java.net.URI;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -37,14 +37,23 @@ import org.operaton.bpm.integrationtest.util.SeleniumScreenshotExtension;
  */
 public abstract class AbstractWebappUiIT extends AbstractWebIT {
 
-  protected static WebDriver driver;
+  protected WebDriver driver;
 
   @RegisterExtension
   @SuppressWarnings("unused")
-  private final SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
+  private final SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(() -> driver);
 
-  @BeforeAll
-  static void createDriver() {
+  /**
+   * A fresh browser is created for every test method (and disposed afterwards). The webapps share
+   * a single JSESSIONID/XSRF-TOKEN pair across cockpit/tasklist/admin/welcome, so reusing one
+   * browser across tests leaks authenticated-session and CSRF-token state: the first login
+   * succeeds, but a stale JSESSIONID that outlives an in-browser cookie wipe prevents the server
+   * from re-issuing an XSRF-TOKEN, so every subsequent login is rejected. A brand-new browser
+   * guarantees each test starts from the clean state that reliably logs in.
+   */
+  @BeforeEach
+  void setUp(TestInfo testInfo) {
+    // create driver
     ChromeDriverService chromeDriverService = new ChromeDriverService.Builder()
         .withVerbose(true)
         .usingAnyFreePort()
@@ -57,6 +66,11 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
         .addArguments("--disable-dev-shm-usage");
 
     driver = new ChromeDriver(chromeDriverService, chromeOptions);
+
+    // create client
+    preventRaceConditions();
+    createClient(getWebappCtxPath());
+    appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
   public static ExpectedCondition<Boolean> currentURIIs(final URI pageURI) {
@@ -75,16 +89,11 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
     return webDriver -> webDriver.getCurrentUrl().contains(url);
   }
 
-  @BeforeEach
-  void createClient() {
-    preventRaceConditions();
-    createClient(getWebappCtxPath());
-    appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
+  @AfterEach
+  void quitDriver() {
+    if (driver != null) {
+      driver.quit();
+      driver = null;
+    }
   }
-
-  @AfterAll
-  static void quitDriver() {
-    driver.quit();
-  }
-
 }

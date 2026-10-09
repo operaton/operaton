@@ -19,6 +19,8 @@ package org.operaton.bpm.model.xml;
 import java.util.Collection;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
@@ -42,17 +44,17 @@ public interface Model {
    * Gets the defined {@link ModelElementType} of a {@link ModelElementInstance}.
    *
    * @param instanceClass  the instance class to find the type for
-   * @return the corresponding element type or null if no type is defined for the instance
+   * @return the corresponding element type or {@code null} if no type is defined for the instance
    */
-  ModelElementType getType(Class<? extends ModelElementInstance> instanceClass);
+  @Nullable ModelElementType getType(Class<? extends ModelElementInstance> instanceClass);
 
   /**
    * Gets the defined {@link ModelElementType} for a type by its name.
    *
    * @param typeName  the name of the type
-   * @return the element type or null if no type is defined for the name
+   * @return the element type or {@code null} if no type is defined for the name
    */
-  ModelElementType getTypeForName(String typeName);
+  @Nullable ModelElementType getTypeForName(String typeName);
 
   /**
    * Gets the defined {@link ModelElementType} for a type by its name and namespace URI.
@@ -60,9 +62,9 @@ public interface Model {
    *
    * @param namespaceUri  the namespace URI for the type
    * @param typeName  the name of the type
-   * @return the element type or null if no type is defined for the name and namespace URI
+   * @return the element type or {@code null} if no type is defined for the name and namespace URI
    */
-  ModelElementType getTypeForName(String namespaceUri, String typeName);
+  @Nullable ModelElementType getTypeForName(String namespaceUri, String typeName);
 
   /**
    * Returns the model name, which is the identifier of this model.
@@ -74,17 +76,17 @@ public interface Model {
   /**
    * Returns the actual namespace URI for an alternative namespace URI
    * @param alternativeNs the alternative namespace URI
-   * @return the actual namespace URI or null if none is set
+   * @return the actual namespace URI or {@code null} if none is set
    */
-  String getActualNamespace(String alternativeNs);
+  @Nullable String getActualNamespace(String alternativeNs);
 
   /**
    * Returns the alternative namespace URI for a namespace URI
    * @param actualNs the actual namespace URI
-   * @return the alternative namespace URI or null if none is set
+   * @return the alternative namespace URI or {@code null} if none is set
    */
-  String getAlternativeNamespace(String actualNs);
+  @Nullable String getAlternativeNamespace(String actualNs);
 
-  Set<String> getAlternativeNamespaces(String actualNs);
+  @Nullable Set<String> getAlternativeNamespaces(String actualNs);
 
 }

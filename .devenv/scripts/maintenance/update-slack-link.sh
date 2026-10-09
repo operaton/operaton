@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [ -z "$1" ]; then
+if [[ -z "$1" ]]; then
   echo "⚠️ SLACK_INVITATION_URL is not set. Exiting..."
   exit 1
 fi

@@ -17,7 +17,9 @@
 package org.operaton.bpm.engine.impl.util.xml;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 
@@ -32,7 +34,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class Element {
 
-  protected String uri;
+  protected @Nullable String uri;
   protected String tagName;
 
   /*
@@ -47,14 +49,14 @@ public class Element {
   protected StringBuilder text = new StringBuilder();
   protected List<Element> elements = new ArrayList<>();
 
-  public Element(String uri, String localName, String qName, Attributes attributes, Locator locator) {
+  public Element(@Nullable String uri, String localName, String qName, @Nullable Attributes attributes, @Nullable Locator locator) {
     this.uri = uri;
-    this.tagName = uri == null || "".equals(uri) ? qName : localName;
+    this.tagName = uri == null || uri.isEmpty() ? qName : localName;
 
     if (attributes!=null) {
       for (int i=0; i<attributes.getLength(); i++) {
         String attributeUri = attributes.getURI(i);
-        String name = attributeUri == null || "".equals(attributeUri) ? attributes.getQName(i) : attributes.getLocalName(i);
+        String name = attributeUri == null || attributeUri.isEmpty() ? attributes.getQName(i) : attributes.getLocalName(i);
         String value = attributes.getValue(i);
         this.attributeMap.put(composeMapKey(attributeUri, name),
           new Attribute(name, value, attributeUri));
@@ -79,21 +81,17 @@ public class Element {
     return elementsNS;
   }
 
-  protected List<Element> elementsNS(String nameSpaceUri, String tagName) {
-    List<Element> selectedElements = new ArrayList<>();
-    for (Element element: elements) {
-      if (tagName.equals(element.getTagName()) && (nameSpaceUri == null || nameSpaceUri.equals(element.getUri()))) {
-        selectedElements.add(element);
-      }
-    }
-    return selectedElements;
+  protected List<Element> elementsNS(@Nullable String nameSpaceUri, String tagName) {
+    return elements.stream()
+        .filter(element -> tagName.equals(element.getTagName()) && (nameSpaceUri == null || nameSpaceUri.equals(element.getUri())))
+        .collect(Collectors.toList());
   }
 
-  public Element element(String tagName) {
+  public @Nullable Element element(String tagName) {
     return elementNS(new Namespace(null), tagName);
   }
 
-  public Element elementNS(Namespace nameSpace, String tagName) {
+  public @Nullable Element elementNS(Namespace nameSpace, String tagName) {
     List<Element> elementList = elementsNS(nameSpace.getNamespaceUri(), tagName);
     if (elementList.isEmpty() && nameSpace.hasAlternativeUri()) {
       elementList = elementsNS(nameSpace.getAlternativeUri(), tagName);
@@ -110,7 +108,7 @@ public class Element {
     elements.add(element);
   }
 
-  public String attribute(String name) {
+  public @Nullable String attribute(String name) {
     if (attributeMap.containsKey(name)) {
       return attributeMap.get(name).getValue();
     }
@@ -121,7 +119,7 @@ public class Element {
     return attributeMap.keySet();
   }
 
-  public String attributeNS(Namespace namespace, String name) {
+  public @Nullable String attributeNS(Namespace namespace, String name) {
     String attribute = attribute(composeMapKey(namespace.getNamespaceUri(), name));
     if (attribute == null && namespace.hasAlternativeUri()) {
       attribute = attribute(composeMapKey(namespace.getAlternativeUri(), name));
@@ -136,7 +134,7 @@ public class Element {
     return defaultValue;
   }
 
-  public String attributeNS(Namespace namespace, String name, String defaultValue) {
+  public @Nullable String attributeNS(Namespace namespace, String name, @Nullable String defaultValue) {
     String attribute = attribute(composeMapKey(namespace.getNamespaceUri(), name));
     if (attribute == null && namespace.hasAlternativeUri()) {
       attribute = attribute(composeMapKey(namespace.getAlternativeUri(), name));
@@ -147,9 +145,9 @@ public class Element {
     return attribute;
   }
 
-  protected String composeMapKey(String attributeUri, String attributeName) {
+  protected String composeMapKey(@Nullable String attributeUri, String attributeName) {
     StringBuilder strb = new StringBuilder();
-    if (attributeUri != null && !"".equals(attributeUri)) {
+    if (attributeUri != null && !attributeUri.isEmpty()) {
       strb.append(attributeUri);
       strb.append(":");
     }
@@ -167,7 +165,7 @@ public class Element {
   }
 
 
-  public String getUri() {
+  public @Nullable String getUri() {
     return uri;
   }
   public String getTagName() {
@@ -195,7 +193,10 @@ public class Element {
    * allows to recursively collect the ids of all elements in the tree.
    */
   public void collectIds(List<String> ids) {
-    ids.add(attribute("id"));
+    String id = attribute("id");
+    if (id != null) {
+      ids.add(id);
+    }
     for (Element child : elements) {
       child.collectIds(ids);
     }

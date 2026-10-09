@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -23,14 +25,14 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 /**
  * Command to change a Task's name to a new value.
  */
-public class SetTaskNameCmd extends AbstractSetTaskPropertyCmd<String> {
+public @NullMarked class SetTaskNameCmd extends AbstractSetTaskPropertyCmd<String> {
 
   /**
    * Public Constructor.
    *
    * @param taskId the id of the referenced task, non-null
    * @param name   the new name value to set, non-null
-   * @throws NullValueException in case the given taskId or the given name value are null
+   * @throws NullValueException in case the given taskId or the given name value are {@code null}
    */
   public SetTaskNameCmd(String taskId, String name) {
     super(taskId, name);
@@ -42,7 +44,7 @@ public class SetTaskNameCmd extends AbstractSetTaskPropertyCmd<String> {
   }
 
   @Override
-  protected void executeSetOperation(TaskEntity task, String value) {
+  protected void executeSetOperation(TaskEntity task, @Nullable String value) {
     task.setName(value);
   }
 

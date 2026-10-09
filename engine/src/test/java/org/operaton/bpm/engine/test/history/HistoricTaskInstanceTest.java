@@ -28,6 +28,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -62,6 +63,7 @@ class HistoricTaskInstanceTest {
   ProcessEngineConfigurationImpl processEngineConfiguration;
   RuntimeService runtimeService;
   TaskService taskService;
+  IdentityService identityService;
   HistoryService historyService;
   RepositoryService repositoryService;
   CaseService caseService;
@@ -143,6 +145,18 @@ class HistoricTaskInstanceTest {
   void testDeleteHistoricTaskInstance() {
     // deleting unexisting historic task instance should be silently ignored
     assertThatCode(() -> historyService.deleteHistoricTaskInstance("unexistingId")).doesNotThrowAnyException();
+  }
+
+  @Test
+  void testDeleteHistoricTaskInstanceWithAuthenticatedUser() {
+    // the user operation log is only written for an authenticated user; deleting an unexisting
+    // historic task instance must still be silently ignored instead of failing to log it
+    identityService.setAuthenticatedUserId("kermit");
+    try {
+      assertThatCode(() -> historyService.deleteHistoricTaskInstance("unexistingId")).doesNotThrowAnyException();
+    } finally {
+      identityService.clearAuthentication();
+    }
   }
 
   @Deployment

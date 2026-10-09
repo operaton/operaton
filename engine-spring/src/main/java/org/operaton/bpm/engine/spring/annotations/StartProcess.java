@@ -22,7 +22,6 @@ import java.lang.annotation.*;
  * sucessful invocation of a method that's annotated with it.
  *
  * @author Josh Long
- * @since 1.0
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

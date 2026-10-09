@@ -24,6 +24,8 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Svetlana Dorokhova.
  */
@@ -55,7 +57,9 @@ public final class ModificationUtil {
       modificationObserverBehavior.destroyInnerInstance(executionInParentScope);
     }
     else {
+      requireNonNull(executionInParentScope);
       if (executionInParentScope.isConcurrent()) {
+        requireNonNull(scopeExecution);
         executionInParentScope.remove();
         scopeExecution.tryPruneLastConcurrentChild();
         scopeExecution.forceUpdate();

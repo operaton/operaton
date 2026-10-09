@@ -18,11 +18,12 @@ package org.operaton.bpm.engine.impl.json;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.migration.MigrationPlanImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 
-public class MigrationPlanJsonConverter implements JsonObjectConverter<MigrationPlan> {
+public @NullMarked class MigrationPlanJsonConverter implements JsonObjectConverter<MigrationPlan> {
 
   public static final String SOURCE_PROCESS_DEFINITION_ID = "sourceProcessDefinitionId";
   public static final String TARGET_PROCESS_DEFINITION_ID = "targetProcessDefinitionId";

@@ -19,6 +19,8 @@ package org.operaton.bpm.model.xml.impl.instance;
 import java.util.List;
 
 import javax.xml.transform.dom.DOMSource;
+
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -45,7 +47,7 @@ public class DomDocumentImpl implements DomDocument {
   }
 
   @Override
-  public DomElement getRootElement() {
+  public @Nullable DomElement getRootElement() {
     synchronized(document) {
       Element documentElement = document.getDocumentElement();
       if (documentElement != null) {
@@ -82,7 +84,7 @@ public class DomDocumentImpl implements DomDocument {
   }
 
   @Override
-  public DomElement getElementById(String id) {
+  public @Nullable DomElement getElementById(String id) {
     synchronized(document) {
       Element element = document.getElementById(id);
       if (element != null) {

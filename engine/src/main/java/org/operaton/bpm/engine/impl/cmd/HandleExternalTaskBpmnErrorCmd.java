@@ -18,28 +18,34 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
+
+import static java.util.Collections.emptyMap;
 
 /**
  * Command to handle an external task BPMN error.
  *
  * @author Christopher Zell
  */
-public class HandleExternalTaskBpmnErrorCmd extends HandleExternalTaskCmd {
+public @NullMarked class HandleExternalTaskBpmnErrorCmd extends HandleExternalTaskCmd {
   /**
    * The error code of the corresponding bpmn error.
    */
   protected String errorCode;
-  protected String errorMessage;
+  protected @Nullable String errorMessage;
   protected Map<String, Object> variables;
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public HandleExternalTaskBpmnErrorCmd(String externalTaskId, String workerId, String errorCode) {
-    super(externalTaskId, workerId);
-    this.errorCode = errorCode;
+    this(externalTaskId, workerId, errorCode, null, emptyMap());
   }
 
-  public HandleExternalTaskBpmnErrorCmd(String externalTaskId, String workerId, String errorCode, String errorMessage, Map<String, Object> variables) {
+  public HandleExternalTaskBpmnErrorCmd(String externalTaskId, String workerId, String errorCode, @Nullable String errorMessage, Map<String, Object> variables) {
     super(externalTaskId, workerId);
     this.errorCode = errorCode;
     this.errorMessage = errorMessage;

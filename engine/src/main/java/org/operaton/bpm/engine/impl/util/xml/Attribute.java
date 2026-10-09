@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.util.xml;
 
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Joram Barrez
@@ -26,14 +27,14 @@ public class Attribute {
 
   protected String value;
 
-  protected String uri;
+  protected @Nullable String uri;
 
   public Attribute(String name, String value) {
     this.name = name;
     this.value = value;
   }
 
-  public Attribute(String name, String value, String uri) {
+  public Attribute(String name, String value, @Nullable String uri) {
     this(name, value);
     this.uri = uri;
   }
@@ -54,7 +55,7 @@ public class Attribute {
     this.value = value;
   }
 
-  public String getUri() {
+  public @Nullable String getUri() {
     return uri;
   }
 

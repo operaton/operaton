@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -39,15 +41,14 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * those methods expect from a given invocation (ie: which process, which process variables).
  *
  * @author Josh Long
- * @since 1.0
  */
-public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior implements BeanFactoryAware, BeanNameAware, ActivityBehavior, InitializingBean {
+public @NullMarked class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior implements BeanFactoryAware, BeanNameAware, ActivityBehavior, InitializingBean {
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     private final ConcurrentHashMap<String, ActivitiStateHandlerRegistration> registrations = new ConcurrentHashMap<>();
 
-    private ProcessEngine processEngine;
+    private @Nullable ProcessEngine processEngine;
 
     public void setProcessEngine(ProcessEngine processEngine) {
         this.processEngine = processEngine;
@@ -58,12 +59,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
         // nothing to do here
     }
 
-    @Override
-    public void signal(ActivityExecution execution, String signalName, Object data) throws Exception {
-        leave(execution);
-    }
-
-    protected String registrationKey(String processName, String stateName) {
+    protected String registrationKey(@Nullable String processName, String stateName) {
         return (org.operaton.commons.utils.StringUtil.defaultString(processName) +
                 ":" + org.operaton.commons.utils.StringUtil.defaultString(stateName)).toLowerCase();
     }
@@ -118,9 +114,9 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
      *
      * @param processName the name of the process
      * @param stateName   the name of the state
-     * @return an unambiguous {@link org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistry} or null
+     * @return an unambiguous {@link org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistry} or {@code null}
      */
-    public ActivitiStateHandlerRegistration findRegistrationForProcessAndState(String processName, String stateName) {
+    public @Nullable ActivitiStateHandlerRegistration findRegistrationForProcessAndState(String processName, String stateName) {
 
         ActivitiStateHandlerRegistration r = null;
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -25,7 +27,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd<Void>  implements Command<Void> {
+public @NullMarked class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd<Void>  implements Command<Void> {
   String groupId;
 
   public DeleteGroupCmd(String groupId) {
@@ -33,7 +35,7 @@ public class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd<Void>  im
   }
 
   @Override
-  protected Void executeCmd(CommandContext commandContext) {
+  protected @Nullable Void executeCmd(CommandContext commandContext) {
     ensureNotNull("groupId", groupId);
 
     IdentityOperationResult operationResult = commandContext

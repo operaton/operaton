@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
  *
  * @author Askar Akhmerov
  */
-public class DeleteProcessInstanceBatchConfigurationJsonConverter
+public @NullMarked class DeleteProcessInstanceBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<DeleteProcessInstanceBatchConfiguration> {
 
   public static final String DELETE_REASON = "deleteReason";

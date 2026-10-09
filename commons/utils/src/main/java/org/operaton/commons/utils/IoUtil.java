@@ -21,11 +21,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Sebastian Menski
  */
-public class IoUtil {
+public @NullMarked class IoUtil {
   private static final IoUtilLogger LOG = UtilsLogger.IO_UTIL_LOGGER;
   public static final Charset ENCODING_CHARSET = StandardCharsets.UTF_8;
 
@@ -90,7 +92,7 @@ public class IoUtil {
    *
    * @param closeable the closable to close
    */
-  public static void closeSilently(Closeable closeable) {
+  public static void closeSilently(@Nullable Closeable closeable) {
     try {
       if (closeable != null) {
         closeable.close();
@@ -106,7 +108,7 @@ public class IoUtil {
    * @param filename name of the file to load
    * @return Content of the file as String
    */
-  public static String fileAsString(String filename) {
+  public static String fileAsString(@Nullable String filename) {
     File classpathFile = getClasspathFile(filename);
     return fileAsString(classpathFile);
   }
@@ -147,7 +149,7 @@ public class IoUtil {
    * @return the file content as input stream
    * @throws IoUtilException if the file cannot be loaded
    */
-  public static InputStream fileAsStream(String filename) {
+  public static InputStream fileAsStream(@Nullable String filename) {
     File classpathFile = getClasspathFile(filename);
     return fileAsStream(classpathFile);
   }
@@ -173,11 +175,7 @@ public class IoUtil {
    * @param filename the filename to load
    * @return the file object
    */
-  public static File getClasspathFile(String filename) {
-    if(filename == null) {
-      throw LOG.nullParameter("filename");
-    }
-
+  public static File getClasspathFile(@Nullable String filename) {
     return getClasspathFile(filename, null);
   }
 
@@ -185,15 +183,11 @@ public class IoUtil {
    * Returns the File for a filename.
    *
    * @param filename the filename to load
-   * @param classLoader the classLoader to load file with, if null falls back to TCCL and then this class's classloader
+   * @param classLoader the classLoader to load file with, if {@code null} falls back to TCCL and then this class's classloader
    * @return the file object
    * @throws IoUtilException if the file cannot be loaded
    */
-  public static File getClasspathFile(String filename, ClassLoader classLoader) {
-    if(filename == null) {
-      throw LOG.nullParameter("filename");
-    }
-
+  public static File getClasspathFile(@Nullable String filename, @Nullable ClassLoader classLoader) {
     URL fileUrl = null;
 
     if (classLoader != null) {
@@ -202,9 +196,11 @@ public class IoUtil {
     if (fileUrl == null) {
       // Try the current Thread context classloader
       classLoader = Thread.currentThread().getContextClassLoader();
-      fileUrl = classLoader.getResource(filename);
+      if (classLoader != null && filename != null) {
+        fileUrl = classLoader.getResource(filename);
+      }
 
-      if (fileUrl == null) {
+      if (fileUrl == null && filename != null) {
         // Finally, try the classloader for this class
         classLoader = IoUtil.class.getClassLoader();
         fileUrl = classLoader.getResource(filename);

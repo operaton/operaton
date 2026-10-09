@@ -36,7 +36,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  void testSimpleTextMail() {
+  void testSimpleTextMail() throws Exception {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<Message> receivedEmails = getReceivedEmails();
@@ -44,7 +44,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(receivedEmails.get(0));
     assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), null);
+            List.of("kermit@operaton.org"), null);
     testRule.assertProcessEnded(procId);
   }
 
@@ -71,7 +71,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  void testTextMailExpressions() {
+  void testTextMailExpressions() throws Exception {
 
     String sender = "mispiggy@activiti.org";
     String recipient = "fozziebear@activiti.org";
@@ -91,19 +91,19 @@ class EmailServiceTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(messages.get(0));
     assertEmailSend(rawMessage, false, subject, "Hello " + recipientName + ", this is an e-mail",
-            sender, Arrays.asList(recipient), null);
+            sender, List.of(recipient), null);
   }
 
   @Deployment
   @Test
-  void testCcAndBcc() {
+  void testCcAndBcc() throws Exception {
     runtimeService.startProcessInstanceByKey("ccAndBcc");
 
     List<Message> messages = getReceivedEmails();
     Message emailMsg = messages.get(0);
     String rawMessage = getRawMessage(emailMsg);
     assertEmailSend(rawMessage, false, "Hello world", "This is the content", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), Arrays.asList("fozzie@operaton.org"));
+            List.of("kermit@operaton.org"), List.of("fozzie@operaton.org"));
 
     // Bcc is not stored in the header (obviously)
     // so the only way to verify the bcc, is that the messae has the bcc field in Mailpit message.
@@ -113,7 +113,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  void testHtmlMail() {
+  void testHtmlMail() throws Exception {
     runtimeService.startProcessInstanceByKey("htmlMail", CollectionUtil.singletonMap("gender", "male"));
 
     List<Message> messages = getReceivedEmails();
@@ -121,7 +121,7 @@ class EmailServiceTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(messages.get(0));
     assertEmailSend(rawMessage, true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), null);
+            List.of("kermit@operaton.org"), null);
   }
 
   @Deployment

@@ -19,8 +19,10 @@ package org.operaton.bpm.spring.boot.starter.property;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -45,16 +47,15 @@ public class OperatonBpmProperties {
 
   static String[] initDeploymentResourcePattern() {
     final Set<String> suffixes = new HashSet<>();
-    suffixes.addAll(Arrays.asList(DEFAULT_DMN_RESOURCE_SUFFIXES));
-    suffixes.addAll(Arrays.asList(DEFAULT_BPMN_RESOURCE_SUFFIXES));
-    suffixes.addAll(Arrays.asList(DEFAULT_CMMN_RESOURCE_SUFFIXES));
+    suffixes.addAll(List.of(DEFAULT_DMN_RESOURCE_SUFFIXES));
+    suffixes.addAll(List.of(DEFAULT_BPMN_RESOURCE_SUFFIXES));
+    suffixes.addAll(List.of(DEFAULT_CMMN_RESOURCE_SUFFIXES));
 
-    final Set<String> patterns = new HashSet<>();
-    for (String suffix : suffixes) {
-      patterns.add("%s**/*.%s".formatted(CLASSPATH_ALL_URL_PREFIX, suffix));
-    }
+    final Set<String> patterns = suffixes.stream()
+      .map(suffix -> "%s**/*.%s".formatted(CLASSPATH_ALL_URL_PREFIX, suffix))
+      .collect(Collectors.toCollection(HashSet::new));
 
-    return patterns.toArray(new String[patterns.size()]);
+    return patterns.toArray(String[]::new);
   }
 
   static StringJoiner joinOn(final Class<?> clazz) {
@@ -77,6 +78,8 @@ public class OperatonBpmProperties {
   private String idGenerator = IdGeneratorConfiguration.STRONG;
 
   private Boolean jobExecutorAcquireByPriority;
+
+  private Boolean jobExecutorAcquireWithSkipLocked;
 
   private Integer defaultNumberOfRetries;
 
@@ -312,6 +315,14 @@ public class OperatonBpmProperties {
     this.jobExecutorAcquireByPriority = jobExecutorAcquireByPriority;
   }
 
+  public Boolean getJobExecutorAcquireWithSkipLocked() {
+    return jobExecutorAcquireWithSkipLocked;
+  }
+
+  public void setJobExecutorAcquireWithSkipLocked(Boolean jobExecutorAcquireWithSkipLocked) {
+    this.jobExecutorAcquireWithSkipLocked = jobExecutorAcquireWithSkipLocked;
+  }
+
   public Integer getDefaultNumberOfRetries() {
     return defaultNumberOfRetries;
   }
@@ -368,6 +379,7 @@ public class OperatonBpmProperties {
       .add("filter=" + filter)
       .add("idGenerator=" + idGenerator)
       .add("jobExecutorAcquireByPriority=" + jobExecutorAcquireByPriority)
+      .add("jobExecutorAcquireWithSkipLocked=" + jobExecutorAcquireWithSkipLocked)
       .add("defaultNumberOfRetries" + defaultNumberOfRetries)
       .toString();
   }

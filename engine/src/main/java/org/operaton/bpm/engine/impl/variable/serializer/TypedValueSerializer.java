@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.variable.serializer;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
@@ -24,8 +26,9 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 /**
  * A {@link TypedValueSerializer} persists {@link TypedValue TypedValues} of a given
  * {@link ValueType} to provided {@link ValueFields}.
- *<p>
+ * <p>
  * Replaces the "VariableType" interface in previous versions.
+ * </p>
  *
  * @author Daniel Meyer
  *
@@ -83,9 +86,9 @@ public interface TypedValueSerializer<T extends TypedValue> {
 
   /**
    *
-   * @return the dataformat used by the serializer or null if this is not an object serializer
+   * @return the dataformat used by the serializer or {@code null} if this is not an object serializer
    */
-  String getSerializationDataformat();
+  @Nullable String getSerializationDataformat();
 
   /**
    * @return whether values serialized by this serializer can be mutable and

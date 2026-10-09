@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.identity.TenantQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
  * Contains the possible properties that can be used by the {@link TenantQuery}.
  */
-public final class TenantQueryProperty {
+public final @NullMarked class TenantQueryProperty {
 
   public static final QueryProperty TENANT_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty NAME = new QueryPropertyImpl("NAME_");

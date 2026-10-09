@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.NotFoundException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.SignalEventReceivedBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -45,7 +47,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  * @author Joram Barrez
  */
-public class SignalEventReceivedCmd implements Command<Void> {
+public @NullMarked class SignalEventReceivedCmd implements Command<Void> {
 
   protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -56,7 +58,7 @@ public class SignalEventReceivedCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
 
     String signalName = builder.getSignalName();
     String executionId = builder.getExecutionId();
@@ -182,27 +184,15 @@ public class SignalEventReceivedCmd implements Command<Void> {
   }
 
   protected List<EventSubscriptionEntity> filterIntermediateSubscriptions(List<EventSubscriptionEntity> subscriptions) {
-    List<EventSubscriptionEntity> result = new ArrayList<>();
-
-    for (EventSubscriptionEntity subscription : subscriptions) {
-      if (subscription.getExecutionId() != null) {
-        result.add(subscription);
-      }
-    }
-
-    return result;
+    return subscriptions.stream()
+        .filter(subscription -> subscription.getExecutionId() != null)
+        .toList();
   }
 
   protected List<EventSubscriptionEntity> filterStartSubscriptions(List<EventSubscriptionEntity> subscriptions) {
-    List<EventSubscriptionEntity> result = new ArrayList<>();
-
-    for (EventSubscriptionEntity subscription : subscriptions) {
-      if (subscription.getExecutionId() == null) {
-        result.add(subscription);
-      }
-    }
-
-    return result;
+    return subscriptions.stream()
+        .filter(subscription -> subscription.getExecutionId() == null)
+        .toList();
   }
 
 }

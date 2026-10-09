@@ -75,13 +75,13 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
     return this;
   }
 
-  /* ProcessInstanceQuery, automatically narrowed to actual {@link ProcessDefinition} */
+  /** ProcessInstanceQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected ProcessInstanceQuery processInstanceQuery() {
     return super.processInstanceQuery().processDefinitionId(actual.getId());
   }
 
-  /* ProcessDefinitionQuery, automatically narrowed to actual {@link ProcessDefinition} */
+  /** ProcessDefinitionQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected ProcessDefinitionQuery processDefinitionQuery() {
     return super.processDefinitionQuery().processDefinitionId(actual.getId());

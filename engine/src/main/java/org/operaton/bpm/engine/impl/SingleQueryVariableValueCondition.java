@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
@@ -67,7 +68,7 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
     serializer.writeValue(typedValue, this);
     this.type = serializer.getName();
     if (ValueType.STRING.getName().equals(type) && DbSqlSessionFactory.ORACLE.equals(dbType)
-            && ("".equals(textValue)  && Arrays.asList(EQUALS, NOT_EQUALS).contains(wrappedQueryValue.getOperator()))) {
+            && ("".equals(textValue)  && List.of(EQUALS, NOT_EQUALS).contains(wrappedQueryValue.getOperator()))) {
       this.findNulledEmptyStrings = true;
     }
   }
@@ -142,7 +143,7 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
   }
 
   @Override
-  public byte[] getByteArrayValue() {
+  public byte @Nullable[] getByteArrayValue() {
     return null;
   }
 

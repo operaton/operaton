@@ -50,6 +50,7 @@ public class AbstractHistoricManager extends AbstractManager {
     return isHistoryEnabled;
   }
 
+  @SuppressWarnings("unused")
   public boolean isHistoryLevelFullEnabled() {
     return isHistoryLevelFullEnabled;
   }
@@ -58,7 +59,7 @@ public class AbstractHistoricManager extends AbstractManager {
     return entities == null || entities.isEmpty() || entities.contains(entityClass.getName());
   }
 
-  protected static boolean isPerformUpdateOnly(Set<String> entities, Class<?> entityClass) {
+  protected static boolean isPerformUpdateOnly(Set<String> entities, @SuppressWarnings("SameParameterValue") Class<?> entityClass) {
     return entities != null && entities.size() == 1 && entities.contains(entityClass.getName());
   }
 

@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.run.qa;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
@@ -40,7 +40,7 @@ class ComponentAvailabilityIT {
   public boolean exampleAvailable;
 
   public static Collection<Object[]> commands() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { new String[0], true, true, true },
         { new String[]{"--rest"}, true, false, false },
         { new String[]{"--rest", "--webapps"}, true, true, false },

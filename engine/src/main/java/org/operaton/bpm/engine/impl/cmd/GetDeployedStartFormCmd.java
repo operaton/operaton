@@ -16,21 +16,25 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
+
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  *
  * @author Anna Pazola
  *
  */
-public class GetDeployedStartFormCmd extends AbstractGetDeployedFormCmd {
+public @NullMarked class GetDeployedStartFormCmd extends AbstractGetDeployedFormCmd {
 
   protected String processDefinitionId;
 
@@ -40,16 +44,19 @@ public class GetDeployedStartFormCmd extends AbstractGetDeployedFormCmd {
   }
 
   @Override
-  protected FormData getFormData() {
-    return commandContext.runWithoutAuthorization(new GetStartFormCmd(processDefinitionId));
+  protected @Nullable FormData getFormData() {
+    return getCommandContext().runWithoutAuthorization(new GetStartFormCmd(processDefinitionId));
   }
 
   @Override
   protected void checkAuthorization() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    ProcessEngineConfigurationImpl processEngineConfiguration = getCommandContext().getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
-    for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
+
+    for (CommandChecker checker : getCommandContext().getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);
     }
   }

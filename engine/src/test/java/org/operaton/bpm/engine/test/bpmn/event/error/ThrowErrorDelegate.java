@@ -20,11 +20,13 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
-public class ThrowErrorDelegate extends AbstractBpmnActivityBehavior implements Serializable {
+public @NullMarked class ThrowErrorDelegate extends AbstractBpmnActivityBehavior implements Serializable {
 
   public static final long serialVersionUID = 1L;
 
@@ -34,7 +36,7 @@ public class ThrowErrorDelegate extends AbstractBpmnActivityBehavior implements 
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     handle(execution, "signaled");
   }
 
@@ -54,15 +56,15 @@ public class ThrowErrorDelegate extends AbstractBpmnActivityBehavior implements 
   }
 
   public static Map<String, Object> throwError() {
-    return Collections.singletonMap("type", (Object) "error");
+    return Collections.singletonMap("type", "error");
   }
 
   public static Map<String, Object> throwException() {
-    return Collections.singletonMap("type", (Object) "exception");
+    return Collections.singletonMap("type", "exception");
   }
 
   public static Map<String, Object> leaveExecution() {
-    return Collections.singletonMap("type", (Object) "leave");
+    return Collections.singletonMap("type", "leave");
   }
 
 }

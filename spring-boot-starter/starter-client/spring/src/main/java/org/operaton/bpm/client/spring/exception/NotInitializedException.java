@@ -17,7 +17,6 @@
 package org.operaton.bpm.client.spring.exception;
 
 /**
- * <p>
  * Exception is thrown when subscription has not yet been initialized
  */
 public class NotInitializedException extends SpringExternalTaskClientException {

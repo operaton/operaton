@@ -59,16 +59,6 @@ class UserOperationLogAnnotationTest {
   HistoryService historyService;
   TaskService taskService;
 
-  @AfterEach
-  void clearDatabase() {
-    taskService.deleteTask(TASK_ID, true);
-  }
-
-  @AfterEach
-  void resetClock() {
-    ClockUtil.reset();
-  }
-
   @BeforeEach
   void setAuthentication() {
     engineRule.getIdentityService()
@@ -76,7 +66,9 @@ class UserOperationLogAnnotationTest {
   }
 
   @AfterEach
-  void clearAuthentication() {
+  void tearDown() {
+    taskService.deleteTask(TASK_ID, true);
+    ClockUtil.reset();
     engineRule.getIdentityService()
         .clearAuthentication();
   }

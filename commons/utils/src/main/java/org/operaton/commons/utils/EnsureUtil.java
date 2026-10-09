@@ -16,6 +16,9 @@
  */
 package org.operaton.commons.utils;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Stefan Hentschel.
  */
@@ -27,13 +30,13 @@ public class EnsureUtil {
   private static final EnsureUtilLogger LOG = UtilsLogger.ENSURE_UTIL_LOGGER;
 
   /**
-   * Ensures that the parameter is not null.
+   * Ensures that the parameter is not {@code null}.
    *
    * @param parameterName the parameter name
-   * @param value the value to ensure to be not null
-   * @throws IllegalArgumentException if the parameter value is null
+   * @param value the value to ensure to be not {@code null}
+   * @throws IllegalArgumentException if the parameter value is {@code null}
    */
-  public static void ensureNotNull(String parameterName, Object value) {
+  public static void ensureNotNull(String parameterName, @Nullable Object value) {
     if(value == null) {
       throw LOG.parameterIsNullException(parameterName);
     }
@@ -49,7 +52,7 @@ public class EnsureUtil {
    * @throws IllegalArgumentException in case object cannot be casted to type
    */
   @SuppressWarnings("unchecked")
-  public static <T> T ensureParamInstanceOf(String objectName, Object object, Class<T> type) {
+  public static <T> T ensureParamInstanceOf(String objectName, Object object, @NonNull Class<T> type) {
     if(type.isAssignableFrom(object.getClass())) {
       return (T) object;
     } else {

@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class IncrementCounterListener implements ExecutionListener {
 

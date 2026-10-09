@@ -153,7 +153,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
    *
    * @param name the name of the variable
    * @param value the value of the variable
-   * @throws NotValidException if the name is null
+   * @throws NotValidException if the name is {@code null}
    */
   HistoricCaseInstanceQuery variableValueEquals(String name, Object value);
 
@@ -163,7 +163,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
    *
    * @param name the name of the variable
    * @param value the value of the variable
-   * @throws NotValidException if the name is null
+   * @throws NotValidException if the name is {@code null}
    */
   HistoricCaseInstanceQuery variableValueNotEquals(String name, Object value);
 
@@ -173,7 +173,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
    *
    * @param name the name of the variable
    * @param value the value of the variable
-   * @throws NotValidException if the name or value is null
+   * @throws NotValidException if the name or value is {@code null}
    */
   HistoricCaseInstanceQuery variableValueGreaterThan(String name, Object value);
 
@@ -183,7 +183,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
    *
    * @param name the name of the variable
    * @param value the value of the variable
-   * @throws NotValidException if the name or value is null
+   * @throws NotValidException if the name or value is {@code null}
    */
   HistoricCaseInstanceQuery variableValueGreaterThanOrEqual(String name, Object value);
 
@@ -193,7 +193,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
    *
    * @param name the name of the variable
    * @param value the value of the variable
-   * @throws NotValidException if the name or value is null
+   * @throws NotValidException if the name or value is {@code null}
    */
   HistoricCaseInstanceQuery variableValueLessThan(String name, Object value);
 
@@ -203,7 +203,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
    *
    * @param name the name of the variable
    * @param value the value of the variable
-   * @throws NotValidException if the name or value is null
+   * @throws NotValidException if the name or value is {@code null}
    */
   HistoricCaseInstanceQuery variableValueLessThanOrEqual(String name, Object value);
 
@@ -215,7 +215,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
    * @param value the value of the variable, it can include the wildcard character '%'
    *              to express like-strategy: starts with (string%), ends with (%string),
    *              contains (%string%)
-   * @throws NotValidException if the name or value is null
+   * @throws NotValidException if the name or value is {@code null}
    */
   HistoricCaseInstanceQuery variableValueLike(String name, String value);
 
@@ -227,7 +227,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
    * @param value the value of the variable, it can include the wildcard character '%'
    *              to express like-strategy: starts with (string%), ends with (%string),
    *              contains (%string%)
-   * @throws NotValidException if the name or value is null or a null-value or a boolean-value is used
+   * @throws NotValidException if the name or value is {@code null} or a null-value or a boolean-value is used
    */
   HistoricCaseInstanceQuery variableValueNotLike(String name, String value);
 

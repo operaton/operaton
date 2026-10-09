@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -105,9 +104,9 @@ public class AuthorizationQueryImpl extends AbstractQuery<AuthorizationQuery, Au
     queryByPermission = true;
 
     if (resourcesIntersection.isEmpty()) {
-      resourcesIntersection.addAll(Arrays.asList(p.getTypes()));
+      resourcesIntersection.addAll(List.of(p.getTypes()));
     } else {
-      resourcesIntersection.retainAll(new HashSet<>(Arrays.asList(p.getTypes())));
+      resourcesIntersection.retainAll(new HashSet<>(List.of(p.getTypes())));
     }
 
     this.permission |= p.getValue();
@@ -155,7 +154,7 @@ public class AuthorizationQueryImpl extends AbstractQuery<AuthorizationQuery, Au
    */
   private boolean containsIncompatibleResourceType() {
     if (queryByResourceType && queryByPermission) {
-      Resource[] resources = resourcesIntersection.toArray(new Resource[resourcesIntersection.size()]);
+      Resource[] resources = resourcesIntersection.toArray(Resource[]::new);
       return !ResourceTypeUtil.resourceIsContainedInArray(resourceType, resources);
     }
     return false;

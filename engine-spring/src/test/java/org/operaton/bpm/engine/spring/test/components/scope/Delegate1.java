@@ -31,9 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Josh Long
- * @since 5.3
  */
-
 @SuppressWarnings("unused")
 public class Delegate1 implements JavaDelegate, InitializingBean {
 

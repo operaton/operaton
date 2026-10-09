@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.batch.history;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -33,7 +35,7 @@ public class DeleteHistoricBatchCmd implements Command<Object> {
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "Historic batch id must not be null", "historic batch id", batchId);
 
     HistoricBatchEntity historicBatch = commandContext.getHistoricBatchManager().findHistoricBatchById(batchId);

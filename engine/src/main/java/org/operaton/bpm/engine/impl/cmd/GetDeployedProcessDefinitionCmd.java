@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessInstantiationBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -23,14 +25,16 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
-public class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitionEntity> {
+public @NullMarked class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitionEntity> {
 
-  protected String processDefinitionId;
-  protected String processDefinitionKey;
+  protected @Nullable String processDefinitionId;
+  protected @Nullable String processDefinitionKey;
 
-  protected String processDefinitionTenantId;
+  protected @Nullable String processDefinitionTenantId;
   protected boolean isTenantIdSet;
 
   protected final boolean checkReadPermission;
@@ -54,6 +58,8 @@ public class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitio
     ensureOnlyOneNotNull("either process definition id or key must be set", processDefinitionId, processDefinitionKey);
 
     ProcessDefinitionEntity processDefinition = find(commandContext);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     if (checkReadPermission) {
       for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
@@ -64,25 +70,24 @@ public class GetDeployedProcessDefinitionCmd implements Command<ProcessDefinitio
     return processDefinition;
   }
 
-  protected ProcessDefinitionEntity find(CommandContext commandContext) {
+  protected @Nullable ProcessDefinitionEntity find(CommandContext commandContext) {
     DeploymentCache deploymentCache = commandContext.getProcessEngineConfiguration().getDeploymentCache();
 
     if (processDefinitionId != null) {
       return findById(deploymentCache, processDefinitionId);
-
     } else {
+      requireNonNull(processDefinitionKey);
       return findByKey(deploymentCache, processDefinitionKey);
     }
   }
 
-  protected ProcessDefinitionEntity findById(DeploymentCache deploymentCache, String processDefinitionId) {
+  protected @Nullable ProcessDefinitionEntity findById(DeploymentCache deploymentCache, String processDefinitionId) {
     return deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
   }
 
-  protected ProcessDefinitionEntity findByKey(DeploymentCache deploymentCache, String processDefinitionKey) {
+  protected @Nullable ProcessDefinitionEntity findByKey(DeploymentCache deploymentCache, String processDefinitionKey) {
     if (isTenantIdSet) {
       return deploymentCache.findDeployedLatestProcessDefinitionByKeyAndTenantId(processDefinitionKey, processDefinitionTenantId);
-
     } else {
       return deploymentCache.findDeployedLatestProcessDefinitionByKey(processDefinitionKey);
     }

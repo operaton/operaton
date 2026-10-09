@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
@@ -29,11 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.authorization.Authorization;
-import org.operaton.bpm.engine.authorization.AuthorizationQuery;
-import org.operaton.bpm.engine.authorization.Permission;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.authorization.*;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.identity.Authentication;
@@ -200,12 +194,9 @@ public class AuthorizationRestServiceImpl extends AbstractAuthorizedRestResource
         .groupMember(userId)
         .unlimitedList();
 
-    List<String> groupIds = new ArrayList<>();
-    for (Group group : userGroups) {
-      groupIds.add(group.getId());
-    }
-
-    return groupIds;
+    return userGroups.stream()
+        .map(Group::getId)
+        .toList();
   }
 
 }

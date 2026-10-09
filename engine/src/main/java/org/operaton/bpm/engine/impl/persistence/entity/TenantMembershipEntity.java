@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 
 /**
- * A relationship between a tenant and an user or a group.
+ * A relationship between a tenant and a user or a group.
  */
 public class TenantMembershipEntity implements DbEntity {
 
@@ -65,7 +67,7 @@ public class TenantMembershipEntity implements DbEntity {
     return tenant.getId();
   }
 
-  public String getUserId() {
+  public @Nullable String getUserId() {
     if (user != null) {
       return user.getId();
     } else {
@@ -73,7 +75,7 @@ public class TenantMembershipEntity implements DbEntity {
     }
   }
 
-  public String getGroupId() {
+  public @Nullable String getGroupId() {
     if (group != null) {
       return group.getId();
     } else {

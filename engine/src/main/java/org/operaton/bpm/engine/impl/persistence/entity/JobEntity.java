@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.*;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.*;
@@ -51,6 +53,7 @@ import static org.operaton.bpm.engine.runtime.Incident.FAILED_JOB_HANDLER_TYPE;
  * @author Dave Syer
  * @author Frederik Heremans
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class JobEntity extends AcquirableJobEntity
   implements Job, DbEntity,
     HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
@@ -233,7 +236,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     return persistentState;
   }
 
-  public void setExecution(ExecutionEntity execution) {
+  public void setExecution(@Nullable ExecutionEntity execution) {
     if (execution != null) {
       this.execution = execution;
       executionId = execution.getId();
@@ -320,6 +323,7 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   // special setter for MyBatis which does not influence incidents
+  @SuppressWarnings("unused")
   public void setRetriesFromPersistence(int retries) {
     this.retries = retries;
   }
@@ -348,7 +352,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
-  private boolean existsIncidentForJob(String incidentHandlerType) {
+  private boolean existsIncidentForJob(@SuppressWarnings("SameParameterValue") String incidentHandlerType) {
     // check whether there exists already an incident
     // for this job
     List<Incident> failedJobIncidents = Context
@@ -488,7 +492,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     return jobDefinition;
   }
 
-  public void setJobDefinition(JobDefinition jobDefinition) {
+  public void setJobDefinition(@Nullable JobDefinition jobDefinition) {
     this.jobDefinition = jobDefinition;
     if (jobDefinition != null) {
       jobDefinitionId = jobDefinition.getId();
@@ -610,6 +614,10 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
+  /**
+   * @deprecated use {@link #unlock()} instead
+   */
+  @Deprecated(forRemoval = true, since = "2.2")
   public void resetLock() {
     unlock();
   }

@@ -16,7 +16,7 @@
     <dependencySet>
       <outputDirectory>server</outputDirectory>
       <includes>
-        <include>org.wildfly:wildfly-dist:tar.gz:${version.wildfly}</include>
+        <include>org.wildfly:wildfly-dist:zip:${version.wildfly}</include>
       </includes>
       <unpack>true</unpack>
       <unpackOptions>

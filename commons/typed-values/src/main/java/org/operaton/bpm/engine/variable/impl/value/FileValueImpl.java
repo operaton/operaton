@@ -20,7 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serial;
 import java.nio.charset.Charset;
-
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.type.FileValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
@@ -32,14 +32,14 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 public class FileValueImpl implements FileValue {
 
   @Serial private static final long serialVersionUID = 1L;
-  protected String mimeType;
+  protected @Nullable String mimeType;
   protected String filename;
   protected byte[] value;
   protected FileValueType type;
-  protected String encoding;
+  protected @Nullable String encoding;
   protected boolean isTransient;
 
-  public FileValueImpl(byte[] value, FileValueType type, String filename, String mimeType, String encoding) {
+  public FileValueImpl(byte[] value, FileValueType type, String filename, @Nullable String mimeType, @Nullable String encoding) {
     this.value = value;
     this.type = type;
     this.filename = filename;
@@ -57,11 +57,11 @@ public class FileValueImpl implements FileValue {
   }
 
   @Override
-  public String getMimeType() {
+  public @Nullable String getMimeType() {
     return mimeType;
   }
 
-  public void setMimeType(String mimeType) {
+  public void setMimeType(@Nullable String mimeType) {
     this.mimeType = mimeType;
   }
 
@@ -70,7 +70,7 @@ public class FileValueImpl implements FileValue {
   }
 
   @Override
-  public InputStream getValue() {
+  public @Nullable InputStream getValue() {
     if (value == null) {
       return null;
     }
@@ -82,7 +82,7 @@ public class FileValueImpl implements FileValue {
     return type;
   }
 
-  public void setEncoding(String encoding) {
+  public void setEncoding(@Nullable String encoding) {
     this.encoding = encoding;
   }
 
@@ -91,7 +91,7 @@ public class FileValueImpl implements FileValue {
   }
 
   @Override
-  public Charset getEncodingAsCharset() {
+  public @Nullable Charset getEncodingAsCharset() {
     if (encoding == null) {
       return null;
     }
@@ -99,7 +99,7 @@ public class FileValueImpl implements FileValue {
   }
 
   @Override
-  public String getEncoding() {
+  public @Nullable String getEncoding() {
     return encoding;
   }
 

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.variable.impl.value;
 
 import java.io.Serial;
-
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -51,7 +51,7 @@ public class UntypedValueImpl implements TypedValue {
   }
 
   @Override
-  public ValueType getType() {
+  public @Nullable ValueType getType() {
     // no type
     return null;
   }

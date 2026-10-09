@@ -24,8 +24,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -86,7 +89,7 @@ public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements C
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     final MigrationPlan migrationPlan = executionBuilder.getMigrationPlan();
     final Collection<String> processInstanceIds = collectProcessInstanceIds();
 
@@ -116,7 +119,7 @@ public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements C
     return null;
   }
 
-  public Void migrateProcessInstance(CommandContext commandContext,
+  public @Nullable Void migrateProcessInstance(CommandContext commandContext,
                                      String processInstanceId,
                                      MigrationPlan migrationPlan,
                                      ProcessDefinitionEntity targetProcessDefinition,
@@ -196,18 +199,12 @@ public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements C
   }
 
   protected Set<MigratingScopeInstance> collectLeafInstances(MigratingProcessInstance migratingProcessInstance) {
-    Set<MigratingScopeInstance> leafInstances = new HashSet<>();
-
     Collection<MigratingScopeInstance> migratingScopeInstances =
         migratingProcessInstance.getMigratingScopeInstances();
 
-    for (MigratingScopeInstance migratingScopeInstance : migratingScopeInstances) {
-      if (migratingScopeInstance.getChildScopeInstances().isEmpty()) {
-        leafInstances.add(migratingScopeInstance);
-      }
-    }
-
-    return leafInstances;
+    return migratingScopeInstances.stream()
+        .filter(migratingScopeInstance -> migratingScopeInstance.getChildScopeInstances().isEmpty())
+        .collect(Collectors.toSet());
   }
 
   protected void validateInstructions(CommandContext commandContext,

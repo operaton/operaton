@@ -18,7 +18,6 @@ package org.operaton.bpm.qa.upgrade.util;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,10 +41,10 @@ public class ExpectedActivityInstance {
     this.activityIds = activityIds;
   }
   public void setActivityIds(String[] activityIds) {
-    this.activityIds = Arrays.asList(activityIds);
+    this.activityIds = List.of(activityIds);
   }
   public void setActivityId(String activityId) {
-    this.activityIds = Arrays.asList(activityId);
+    this.activityIds = List.of(activityId);
   }
   public List<ExpectedActivityInstance> getChildActivityInstances() {
     return childActivityInstances;

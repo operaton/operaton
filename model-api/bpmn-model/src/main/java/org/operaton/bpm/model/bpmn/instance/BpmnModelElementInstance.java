@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.builder.AbstractBaseElementBuilder;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 
@@ -45,8 +47,8 @@ public interface BpmnModelElementInstance extends ModelElementInstance {
    * Gets the element which is the scope of this element. Like
    * the parent process or sub-process.
    *
-   * @return the scope element or null if non is found
+   * @return the scope element or {@code null} if non is found
    */
-  BpmnModelElementInstance getScope();
+  @Nullable BpmnModelElementInstance getScope();
 
 }

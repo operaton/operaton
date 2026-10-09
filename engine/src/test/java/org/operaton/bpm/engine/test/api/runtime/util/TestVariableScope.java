@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance.SimpleVariableInstanceFactory;
@@ -41,7 +43,7 @@ public class TestVariableScope extends AbstractVariableScope {
   }
 
   @Override
-  public AbstractVariableScope getParentVariableScope() {
+  public @Nullable AbstractVariableScope getParentVariableScope() {
     return null;
   }
 

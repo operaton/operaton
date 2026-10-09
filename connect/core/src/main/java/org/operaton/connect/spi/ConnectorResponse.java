@@ -37,7 +37,7 @@ public interface ConnectorResponse {
    * parameter is set.
    *
    * @param name the name of the response parameter
-   * @return the value of the response parameter of null.
+   * @return the value of the response parameter of {@code null}.
    */
   <V> V getResponseParameter(String name);
 

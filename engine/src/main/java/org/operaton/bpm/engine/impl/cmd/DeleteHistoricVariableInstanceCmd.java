@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -33,7 +36,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tobias Metzke
  *
  */
-public class DeleteHistoricVariableInstanceCmd implements Command<Void> {
+public @NullMarked class DeleteHistoricVariableInstanceCmd implements Command<Void> {
   private final String variableInstanceId;
 
   public DeleteHistoricVariableInstanceCmd(String variableInstanceId) {
@@ -41,7 +44,7 @@ public class DeleteHistoricVariableInstanceCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotEmpty(BadUserRequestException.class,"variableInstanceId", variableInstanceId);
 
     HistoricVariableInstanceEntity variable = commandContext.getHistoricVariableInstanceManager().findHistoricVariableInstanceByVariableInstanceId(variableInstanceId);

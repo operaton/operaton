@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.ActivityExecutionTreeMapping;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
@@ -190,7 +192,7 @@ public class MigratingInstanceParseContext {
     return targetProcessDefinition;
   }
 
-  public ActivityImpl getTargetActivity(MigrationInstruction instruction) {
+  public @Nullable ActivityImpl getTargetActivity(@Nullable MigrationInstruction instruction) {
     if (instruction != null) {
       return targetProcessDefinition.findActivity(instruction.getTargetActivityId());
     }
@@ -199,7 +201,7 @@ public class MigratingInstanceParseContext {
     }
   }
 
-  public JobDefinitionEntity getTargetJobDefinition(String activityId, String jobHandlerType) {
+  public @Nullable JobDefinitionEntity getTargetJobDefinition(String activityId, String jobHandlerType) {
     List<JobDefinitionEntity> jobDefinitionsForActivity = targetJobDefinitions.get(activityId);
 
     if (jobDefinitionsForActivity != null) {
@@ -218,7 +220,7 @@ public class MigratingInstanceParseContext {
     return mapping;
   }
 
-  public MigrationInstruction getInstructionFor(String scopeId) {
+  public @Nullable MigrationInstruction getInstructionFor(String scopeId) {
     List<MigrationInstruction> instructions = instructionsBySourceScope.get(scopeId);
 
     if (instructions == null || instructions.isEmpty()) {
@@ -228,23 +230,23 @@ public class MigratingInstanceParseContext {
     }
   }
 
-  public MigratingActivityInstance getMigratingActivityInstanceById(String activityInstanceId) {
+  public @Nullable MigratingActivityInstance getMigratingActivityInstanceById(String activityInstanceId) {
     return activityInstances.get(activityInstanceId);
   }
 
-  public MigratingScopeInstance getMigratingCompensationInstanceByExecutionId(String id) {
+  public @Nullable MigratingScopeInstance getMigratingCompensationInstanceByExecutionId(String id) {
     return compensationInstances.get(id);
   }
 
-  public MigratingJobInstance getMigratingJobInstanceById(String jobId) {
+  public @Nullable MigratingJobInstance getMigratingJobInstanceById(String jobId) {
     return migratingJobs.get(jobId);
   }
 
-  public MigratingExternalTaskInstance getMigratingExternalTaskInstanceById(String externalTaskId) {
+  public @Nullable MigratingExternalTaskInstance getMigratingExternalTaskInstanceById(String externalTaskId) {
     return migratingExternalTasks.get(externalTaskId);
   }
 
-  public MigrationInstruction findSingleMigrationInstruction(String sourceScopeId) {
+  public @Nullable MigrationInstruction findSingleMigrationInstruction(String sourceScopeId) {
     List<MigrationInstruction> instructions = instructionsBySourceScope.get(sourceScopeId);
 
     if (instructions != null && !instructions.isEmpty()) {

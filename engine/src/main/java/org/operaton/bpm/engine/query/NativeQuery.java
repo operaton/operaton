@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.query;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -47,12 +49,12 @@ public interface NativeQuery<T extends NativeQuery< ? , ? >, U extends Object> {
   long count();
 
   /**
-   * Executes the query and returns the resulting entity or null if no
+   * Executes the query and returns the resulting entity or {@code null} if no
    * entity matches the query criteria.
    * @throws ProcessEngineException when the query results in more than one
-   * entities.
+   * entity.
    */
-  U singleResult();
+  @Nullable U singleResult();
 
   /** Executes the query and get a list of entities as the result. */
   List<U> list();

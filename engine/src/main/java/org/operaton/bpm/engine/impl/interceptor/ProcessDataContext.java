@@ -25,19 +25,21 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.commons.logging.MdcAccess;
 
 /**
- * Holds the contextual process data.<br>
+ * Holds the contextual process data.
  *
  * <p>
  * New context properties are always part of a section that can be started by
  * {@link #pushSection(ExecutionEntity)}. The section keeps track of all pushed
  * properties. Those can easily be cleared by popping the section with
- * {@link #popSection()} afterwards, e.g. after the successful execution.<br>
+ * {@link #popSection()} afterwards, e.g. after the successful execution.
  * </p>
  *
  * <p>
@@ -45,6 +47,7 @@ import org.operaton.commons.logging.MdcAccess;
  * non-empty context name for it in the {@link ProcessEngineConfigurationImpl
  * process engine configuration}. The following configuration options are
  * available:
+ * </p>
  * <ul>
  * <li>loggingContextActivityId - the context property for the activity id</li>
  * <li>loggingContextApplicationName - the context property for the application name</li>
@@ -54,7 +57,6 @@ import org.operaton.commons.logging.MdcAccess;
  * <li>loggingContextRootProcessInstanceId - the context property for the root process instance id</li>
  * <li>loggingContextTenantId - the context property for the tenant id</li>
  * </ul>
- * </p>
  */
 public class ProcessDataContext {
 
@@ -262,7 +264,7 @@ public class ProcessDataContext {
    * @return the latest value of the activity id property if exists, <code>null</code>
    *         otherwise
    */
-  public String getLatestActivityId() {
+  public @Nullable String getLatestActivityId() {
     return activityIdStack.getCurrentValue();
   }
 
@@ -316,7 +318,7 @@ public class ProcessDataContext {
       return deque.isEmpty();
     }
 
-    public String getCurrentValue() {
+    public @Nullable String getCurrentValue() {
       return deque.peekFirst();
     }
 

@@ -224,7 +224,7 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
       query.incidentMessageLike(incidentMessageLike);
     }
     if (tenantIdIn != null && !tenantIdIn.isEmpty()) {
-      query.tenantIdIn(tenantIdIn.toArray(new String[tenantIdIn.size()]));
+      query.tenantIdIn(tenantIdIn.toArray(String[]::new));
     }
     if(TRUE.equals(variableNamesIgnoreCase)) {
       query.matchVariableNamesIgnoreCase();

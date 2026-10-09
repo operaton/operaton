@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.*;
 
 import org.operaton.bpm.model.xml.ModelException;
@@ -74,7 +75,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public DomDocument getDocument() {
+  public @Nullable DomDocument getDocument() {
     synchronized(document) {
       Document ownerDocument = element.getOwnerDocument();
       if (ownerDocument != null) {
@@ -87,7 +88,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public DomElement getRootElement() {
+  public @Nullable DomElement getRootElement() {
     synchronized(document) {
       DomDocument doc = getDocument();
       if (doc != null) {
@@ -100,7 +101,7 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public DomElement getParentElement() {
+  public @Nullable DomElement getParentElement() {
     synchronized(document) {
       Node parentNode = element.getParentNode();
       if (parentNode instanceof Element elem) {
@@ -219,13 +220,12 @@ public class DomElementImpl implements DomElement {
   }
 
   @Override
-  public String getAttribute(String attributeName) {
+  public @Nullable String getAttribute(String attributeName) {
     return getAttribute(null, attributeName);
   }
 
-
   @Override
-  public String getAttribute(String namespaceUri, String localName) {
+  public @Nullable String getAttribute(String namespaceUri, String localName) {
     synchronized(document) {
       XmlQName xmlQName = new XmlQName(this, namespaceUri, localName);
       String value;

@@ -18,6 +18,8 @@ package org.operaton.bpm.model.xml.type.reference;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
@@ -36,9 +38,9 @@ public interface Reference<T extends ModelElementInstance> {
    * @param referenceSourceElement the reference source model element instance
    * @return the reference identifier
    */
-  String getReferenceIdentifier(ModelElementInstance referenceSourceElement);
+  @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement);
 
-  T getReferenceTargetElement(ModelElementInstance modelElement);
+  @Nullable T getReferenceTargetElement(ModelElementInstance modelElement);
 
   void setReferenceTargetElement(ModelElementInstance referenceSourceElement, T referenceTargetElement);
 

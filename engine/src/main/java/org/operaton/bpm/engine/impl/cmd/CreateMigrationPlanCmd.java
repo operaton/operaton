@@ -20,6 +20,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -42,11 +44,13 @@ import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
+public @NullMarked class CreateMigrationPlanCmd implements Command<MigrationPlan> {
 
   public static final MigrationLogger LOG = ProcessEngineLogger.MIGRATION_LOGGER;
 
@@ -61,6 +65,8 @@ public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
     ProcessDefinitionEntity sourceProcessDefinition = getProcessDefinition(commandContext, migrationBuilder.getSourceProcessDefinitionId(), "Source");
     ProcessDefinitionEntity targetProcessDefinition = getProcessDefinition(commandContext, migrationBuilder.getTargetProcessDefinitionId(), "Target");
 
+    requireNonNull(sourceProcessDefinition);
+    requireNonNull(targetProcessDefinition);
     checkAuthorization(commandContext, sourceProcessDefinition, targetProcessDefinition);
 
     MigrationPlanImpl migrationPlan = new MigrationPlanImpl(sourceProcessDefinition.getId(), targetProcessDefinition.getId());
@@ -123,7 +129,7 @@ public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
     });
   }
 
-  protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String id, String type) {
+  protected @Nullable ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String id, String type) {
     EnsureUtil.ensureNotNull(BadUserRequestException.class, type + " process definition id", id);
 
     try {
@@ -209,7 +215,7 @@ public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
     }
   }
 
-  private void validateActivityIds(MigrationInstructionValidationReportImpl instructionReport, String sourceActivityId, String targetActivityId) {
+  private void validateActivityIds(MigrationInstructionValidationReportImpl instructionReport, @Nullable String sourceActivityId, @Nullable String targetActivityId) {
     if (sourceActivityId == null) {
       instructionReport.addFailure("Source activity id is null");
     }

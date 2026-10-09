@@ -28,6 +28,8 @@ import org.apache.ibatis.executor.BatchExecutorException;
 import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.session.ExecutorType;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.FlushResult;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbBulkOperation;
@@ -43,7 +45,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * For mybatis {@link ExecutorType#BATCH}
  */
-public class BatchDbSqlSession extends DbSqlSession {
+public @NullMarked class BatchDbSqlSession extends DbSqlSession {
 
   public BatchDbSqlSession(DbSqlSessionFactory dbSqlSessionFactory) {
     super(dbSqlSessionFactory);
@@ -115,7 +117,7 @@ public class BatchDbSqlSession extends DbSqlSession {
   }
 
   /**
-   * <p>This method can be called with three cases:
+   * This method can be called with three cases:
    *
    * <ul>
    * <li>Case 1: Success. statementResults contains the number of
@@ -128,15 +130,17 @@ public class BatchDbSqlSession extends DbSqlSession {
    * statements were executed after the first failed statement.
    * </ul>
    *
-   * <p>See {@link BatchUpdateException#getUpdateCounts()} for the specification
+   * <p>
+   * See {@link BatchUpdateException#getUpdateCounts()} for the specification
    * of cases 2 and 3.
+   * </p>
    *
    * @return all failed operations
    */
   protected void postProcessJdbcBatchResult(
       Iterator<DbOperation> operationsIt,
       int[] statementResults,
-      PersistenceException failure,
+      @Nullable PersistenceException failure,
       List<DbOperation> failedOperations) {
     boolean failureHandled = false;
 
@@ -210,7 +214,7 @@ public class BatchDbSqlSession extends DbSqlSession {
 
   protected void postProcessOperationPerformed(DbOperation operation,
                                                int rowsAffected,
-                                               PersistenceException failure) {
+                                               @Nullable PersistenceException failure) {
 
     switch(operation.getOperationType()) {
 

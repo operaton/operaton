@@ -20,7 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.auth.ResourceAuthorizationProvider;
@@ -31,7 +34,9 @@ import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManage
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 
-public class DecisionDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<DecisionDefinitionEntity> {
+import static java.util.Objects.requireNonNull;
+
+public @NullMarked class DecisionDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<DecisionDefinitionEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
   private static final String DECISION_DEFINITION_KEY = "decisionDefinitionKey";
@@ -45,7 +50,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
     getDbEntityManager().delete(DecisionDefinitionEntity.class, "deleteDecisionDefinitionsByDeploymentId", deploymentId);
   }
 
-  public DecisionDefinitionEntity findDecisionDefinitionById(String decisionDefinitionId) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionById(String decisionDefinitionId) {
     return getDbEntityManager().selectById(DecisionDefinitionEntity.class, decisionDefinitionId);
   }
 
@@ -56,7 +61,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
    *
    * @see #findLatestDecisionDefinitionByKeyAndTenantId(String, String)
    */
-  public DecisionDefinitionEntity findLatestDecisionDefinitionByKey(String decisionDefinitionKey) {
+  public @Nullable DecisionDefinitionEntity findLatestDecisionDefinitionByKey(String decisionDefinitionKey) {
     @SuppressWarnings("unchecked")
     List<DecisionDefinitionEntity> decisionDefinitions = getDbEntityManager().selectList("selectLatestDecisionDefinitionByKey", configureParameterizedQuery(decisionDefinitionKey));
 
@@ -76,7 +81,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
    *
    * @see #findLatestDecisionDefinitionByKey(String)
    */
-  public DecisionDefinitionEntity findLatestDecisionDefinitionByKeyAndTenantId(String decisionDefinitionKey, String tenantId) {
+  public @Nullable DecisionDefinitionEntity findLatestDecisionDefinitionByKeyAndTenantId(String decisionDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
     parameters.put(TENANT_ID, tenantId);
@@ -88,14 +93,14 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
     }
   }
 
-  public DecisionDefinitionEntity findDecisionDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
     return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByKeyAndVersion", configureParameterizedQuery(parameters));
   }
 
-  public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, @Nullable Integer decisionDefinitionVersion, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -108,7 +113,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   }
 
   @SuppressWarnings("unchecked")
-  public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, String decisionDefinitionVersionTag, String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, @Nullable String decisionDefinitionVersionTag, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersionTag", decisionDefinitionVersionTag);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -128,7 +133,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
     }
   }
 
-  public DecisionDefinitionEntity findDecisionDefinitionByDeploymentAndKey(String deploymentId, String decisionDefinitionKey) {
+  public @Nullable DecisionDefinitionEntity findDecisionDefinitionByDeploymentAndKey(String deploymentId, String decisionDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
     parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
@@ -143,10 +148,12 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
 
   public long findDecisionDefinitionCountByQueryCriteria(DecisionDefinitionQueryImpl decisionDefinitionQuery) {
     configureDecisionDefinitionQuery(decisionDefinitionQuery);
-    return (Long) getDbEntityManager().selectOne("selectDecisionDefinitionCountByQueryCriteria", decisionDefinitionQuery);
+    Long count = (Long) getDbEntityManager().selectOne("selectDecisionDefinitionCountByQueryCriteria", decisionDefinitionQuery);
+    requireNonNull(count);
+    return count;
   }
 
-  public String findPreviousDecisionDefinitionId(String decisionDefinitionKey, Integer version, String tenantId) {
+  public @Nullable String findPreviousDecisionDefinitionId(String decisionDefinitionKey, Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put("key", decisionDefinitionKey);
     params.put("version", version);
@@ -158,8 +165,6 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   public List<DecisionDefinition> findDecisionDefinitionByDeploymentId(String deploymentId) {
     return getDbEntityManager().selectList("selectDecisionDefinitionByDeploymentId", deploymentId);
   }
-
-
 
   protected void createDefaultAuthorizations(DecisionDefinition decisionDefinition) {
     if(isAuthorizationEnabled()) {
@@ -179,37 +184,37 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   }
 
   @Override
-  public DecisionDefinitionEntity findLatestDefinitionById(String id) {
+  public @Nullable DecisionDefinitionEntity findLatestDefinitionById(String id) {
     return findDecisionDefinitionById(id);
   }
 
   @Override
-  public DecisionDefinitionEntity findLatestDefinitionByKey(String key) {
+  public @Nullable DecisionDefinitionEntity findLatestDefinitionByKey(String key) {
     return findLatestDecisionDefinitionByKey(key);
   }
 
   @Override
-  public DecisionDefinitionEntity getCachedResourceDefinitionEntity(String definitionId) {
+  public @Nullable DecisionDefinitionEntity getCachedResourceDefinitionEntity(String definitionId) {
     return getDbEntityManager().getCachedEntity(DecisionDefinitionEntity.class, definitionId);
   }
 
   @Override
-  public DecisionDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  public @Nullable DecisionDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return findLatestDecisionDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 
   @Override
-  public DecisionDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, @Nullable Integer definitionVersion, @Nullable String tenantId) {
     return findDecisionDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId);
   }
 
   @Override
-  public DecisionDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId) {
+  public @Nullable DecisionDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, @Nullable String definitionVersionTag, @Nullable String tenantId) {
     return findDecisionDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId);
   }
 
   @Override
-  public DecisionDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  public @Nullable DecisionDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     return findDecisionDefinitionByDeploymentAndKey(deploymentId, definitionKey);
   }
 }

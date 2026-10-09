@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +36,7 @@ import org.operaton.bpm.engine.impl.TenantQueryImpl;
 import org.operaton.bpm.engine.impl.UserQueryImpl;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
 import org.operaton.bpm.engine.impl.identity.IdentityProviderException;
+import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.identity.db.DbIdentityServiceProvider;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
@@ -47,6 +49,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
  * <p>
  * Since the fallback {@link DbIdentityServiceProvider} is a writeable provider
  * this class is also writeable but with OAuth2 authentication it works effectively as a read-only provider.
+ * </p>
  */
 public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 
@@ -146,7 +149,12 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 
   @Override
   public UserQuery createUserQuery() {
-    return springSecurityAuthentication() ? new OAuth2UserQuery() : super.createUserQuery();
+    if (springSecurityAuthentication()) {
+      var query = new OAuth2UserQuery();
+      query.setCommandExecutor(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
+      return query;
+    }
+    return super.createUserQuery();
   }
 
   @Override
@@ -196,7 +204,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
   }
 
   @Override
-  public GroupEntity findGroupById(String groupId) {
+  public @Nullable GroupEntity findGroupById(String groupId) {
     if (springSecurityAuthentication()) {
       var groups = transformGroups();
       return (GroupEntity) groups.stream().filter(g -> g.getId().equals(groupId)).findFirst().orElse(null);
@@ -207,7 +215,12 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 
   @Override
   public GroupQuery createGroupQuery() {
-    return springSecurityAuthentication() ? new OAuth2GroupQuery() : super.createGroupQuery();
+    if (springSecurityAuthentication()) {
+      var query = new OAuth2GroupQuery();
+      query.setCommandExecutor(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
+      return query;
+    }
+    return super.createGroupQuery();
   }
 
   @Override
@@ -228,13 +241,18 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
   }
 
   @Override
-  public TenantEntity findTenantById(String tenantId) {
+  public @Nullable TenantEntity findTenantById(String tenantId) {
     return springSecurityAuthentication() ? null : super.findTenantById(tenantId);
   }
 
   @Override
   public TenantQuery createTenantQuery() {
-    return springSecurityAuthentication() ? new OAuth2TenantQuery() : super.createTenantQuery();
+    if (springSecurityAuthentication()) {
+      var query = new OAuth2TenantQuery();
+      query.setCommandExecutor(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
+      return query;
+    }
+    return super.createTenantQuery();
   }
 
   @Override

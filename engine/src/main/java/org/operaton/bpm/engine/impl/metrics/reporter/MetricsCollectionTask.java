@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.metrics.reporter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
-import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.impl.metrics.MetricsLogger;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.persistence.entity.MeterLogEntity;
@@ -65,14 +65,12 @@ public class MetricsCollectionTask extends TimerTask {
 
   protected void collectMetrics() {
 
-    List<MeterLogEntity> logs = new ArrayList<>();
-    for (Meter meter : metricsRegistry.getDbMeters().values()) {
-      logs.add(new MeterLogEntity(meter.getName(),
-          reporterId,
-          meter.getAndClear(),
-          ClockUtil.getCurrentTime()));
-
-    }
+    List<MeterLogEntity> logs = metricsRegistry.getDbMeters().values().stream()
+        .map(meter -> new MeterLogEntity(meter.getName(),
+            reporterId,
+            meter.getAndClear(),
+            ClockUtil.getCurrentTime()))
+        .toList();
 
     commandExecutor.execute(new MetricsCollectionCmd(logs));
   }
@@ -85,7 +83,7 @@ public class MetricsCollectionTask extends TimerTask {
     this.reporterId = reporterId;
   }
 
-  protected class MetricsCollectionCmd implements Command<Void> {
+  protected static class MetricsCollectionCmd implements Command<Void> {
 
     protected List<MeterLogEntity> logs;
 
@@ -94,7 +92,7 @@ public class MetricsCollectionTask extends TimerTask {
     }
 
     @Override
-    public Void execute(CommandContext commandContext) {
+    public @Nullable Void execute(CommandContext commandContext) {
       for (MeterLogEntity meterLogEntity : logs) {
         commandContext.getMeterLogManager().insert(meterLogEntity);
       }

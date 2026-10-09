@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.delegate.VariableListener;
@@ -28,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CmmnActivityTest {
 
-  static class TestCmmnActivity extends CmmnActivity {
+  static @NullMarked class TestCmmnActivity extends CmmnActivity {
     private final Map<String, List<VariableListener<?>>> customLocal = new HashMap<>();
     private final Map<String, List<VariableListener<?>>> builtInLocal = new HashMap<>();
 

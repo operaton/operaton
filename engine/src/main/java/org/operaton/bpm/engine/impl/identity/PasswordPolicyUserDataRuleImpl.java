@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.identity;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.identity.PasswordPolicyRule;
 import org.operaton.bpm.engine.identity.User;
 
@@ -54,7 +56,7 @@ public class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRule {
     }
   }
 
-  public String upperCase(String string) {
+  public @Nullable String upperCase(String string) {
     return string == null ? null : string.toUpperCase();
   }
 

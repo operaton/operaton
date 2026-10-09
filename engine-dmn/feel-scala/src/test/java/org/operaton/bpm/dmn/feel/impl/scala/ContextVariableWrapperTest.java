@@ -18,8 +18,8 @@ package org.operaton.bpm.dmn.feel.impl.scala;
 
 import java.util.Set;
 
-import camundajar.impl.scala.Option;
-import camundajar.impl.scala.Some;
+import scala.Option;
+import scala.Some;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.variable.context.VariableContext;

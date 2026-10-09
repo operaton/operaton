@@ -19,6 +19,8 @@ package org.operaton.bpm.model.xml.type;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
@@ -28,11 +30,11 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
  * @author Daniel Meyer
  *
  */
-public interface ModelElementType {
+public @NullMarked interface ModelElementType {
 
   String getTypeName();
 
-  String getTypeNamespace();
+  @Nullable String getTypeNamespace();
 
   Class<? extends ModelElementInstance> getInstanceType();
 
@@ -40,7 +42,7 @@ public interface ModelElementType {
 
   ModelElementInstance newInstance(ModelInstance modelInstance);
 
-  ModelElementType getBaseType();
+  @Nullable ModelElementType getBaseType();
 
   boolean isAbstract();
 
@@ -48,7 +50,7 @@ public interface ModelElementType {
 
   Collection<ModelElementType> getAllExtendingTypes();
 
-  Attribute<?> getAttribute(String attributeName);
+  @Nullable Attribute<?> getAttribute(String attributeName);
 
   Model getModel();
 

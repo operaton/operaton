@@ -47,7 +47,7 @@ public class CollectEntriesDecisionResultMapper implements DecisionResultMapper 
 
       } else {
         String outputName = outputNames.iterator().next();
-        return decisionResult.collectEntries(outputName);
+        return Collections.unmodifiableList(decisionResult.collectEntries(outputName));
       }
     }
   }

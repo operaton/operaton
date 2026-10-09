@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.NotFoundException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
@@ -30,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Tassilo Weidner
  */
-public class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefinitionCmd {
+public @NullMarked class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefinitionCmd {
   private final String processDefinitionKey;
   private final String tenantId;
   private final boolean isTenantIdSet;
@@ -45,7 +48,7 @@ public class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefin
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull("processDefinitionKey", processDefinitionKey);
 
     List<ProcessDefinition> processDefinitions = commandContext.getProcessDefinitionManager()

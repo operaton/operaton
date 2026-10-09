@@ -31,6 +31,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  * @author Daniel Meyer
@@ -97,7 +99,7 @@ public abstract class AbstractCorrelateMessageCmd {
   }
 
   protected void checkAuthorization(CorrelationHandlerResult correlation) {
-    CommandContext commandContext = Context.getCommandContext();
+    CommandContext commandContext = requireNonNull(Context.getCommandContext());
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       if (MessageCorrelationResultType.Execution.equals(correlation.getResultType())) {

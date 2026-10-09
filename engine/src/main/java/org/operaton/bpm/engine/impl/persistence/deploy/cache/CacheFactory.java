@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.commons.utils.cache.Cache;
 
 /**
  * <p>Builds the caches for the {@link DeploymentCache}.</p>
  */
-public interface CacheFactory {
+public @NullMarked interface CacheFactory {
 
   /**
    * Creates a cache that does not exceed a specified number of elements.

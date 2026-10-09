@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.bpmn.parser;
 import java.util.Collections;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
@@ -34,50 +37,54 @@ import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  * @author Falko Menge
  * @author Danny Gräf
  */
-public class EventSubscriptionDeclaration {
+public @NullMarked class EventSubscriptionDeclaration {
   private static final StartProcessVariableScope START_PROCESS_VARIABLE_SCOPE = new StartProcessVariableScope();
 
   private final EventType eventType;
-  private final Expression eventName;
-  private final CallableElement eventPayload;
+  private final @Nullable Expression eventName;
+  private final @Nullable CallableElement eventPayload;
 
   private boolean async;
-  protected String activityId;
-  private String eventScopeActivityId;
+  protected @Nullable String activityId;
+  private @Nullable String eventScopeActivityId;
   private boolean isStartEvent;
 
-  private EventSubscriptionJobDeclaration jobDeclaration;
+  private @Nullable EventSubscriptionJobDeclaration jobDeclaration;
 
-  public EventSubscriptionDeclaration(Expression eventExpression, EventType eventType) {
+  public EventSubscriptionDeclaration(@Nullable Expression eventExpression, EventType eventType) {
     this.eventName = eventExpression;
     this.eventType = eventType;
     this.eventPayload = null;
   }
 
-  public EventSubscriptionDeclaration(Expression eventExpression, EventType eventType, CallableElement eventPayload) {
+  public EventSubscriptionDeclaration(@Nullable Expression eventExpression, EventType eventType, @Nullable CallableElement eventPayload) {
     this.eventType = eventType;
     this.eventName = eventExpression;
     this.eventPayload = eventPayload;
   }
 
-  public static Map<String, EventSubscriptionDeclaration> getDeclarationsForScope(PvmScope scope) {
+  public static Map<String, EventSubscriptionDeclaration> getDeclarationsForScope(@Nullable PvmScope scope) {
     if (scope == null) {
       return Collections.emptyMap();
     }
 
-    return scope.getProperties().get(BpmnProperties.EVENT_SUBSCRIPTION_DECLARATIONS);
+    Map<String, EventSubscriptionDeclaration> declarationsForScope = scope.getProperties()
+            .get(BpmnProperties.EVENT_SUBSCRIPTION_DECLARATIONS);
+    return declarationsForScope != null ? declarationsForScope : Collections.emptyMap();
   }
 
   /**
    * Returns the name of the event without evaluating the possible expression that it might contain.
    */
   public String getUnresolvedEventName() {
-    return eventName.getExpressionText();
+    return eventName != null ? eventName.getExpressionText() : "";
   }
 
   public boolean hasEventName() {
@@ -85,7 +92,7 @@ public class EventSubscriptionDeclaration {
   }
 
   public boolean isEventNameLiteralText() {
-    return eventName.isLiteralText();
+    return hasEventName() && requireNonNull(eventName).isLiteralText();
   }
 
   public boolean isAsync() {
@@ -96,19 +103,19 @@ public class EventSubscriptionDeclaration {
     this.async = async;
   }
 
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     return activityId;
   }
 
-  public void setActivityId(String activityId) {
+  public void setActivityId(@Nullable String activityId) {
     this.activityId = activityId;
   }
 
-  public String getEventScopeActivityId() {
+  public @Nullable String getEventScopeActivityId() {
     return eventScopeActivityId;
   }
 
-  public void setEventScopeActivityId(String eventScopeActivityId) {
+  public void setEventScopeActivityId(@Nullable String eventScopeActivityId) {
     this.eventScopeActivityId = eventScopeActivityId;
   }
 
@@ -124,7 +131,7 @@ public class EventSubscriptionDeclaration {
     return eventType.name();
   }
 
-  public CallableElement getEventPayload() {
+  public @Nullable CallableElement getEventPayload() {
     return eventPayload;
   }
 
@@ -166,8 +173,9 @@ public class EventSubscriptionDeclaration {
   /**
    * Resolves the event name within the given scope.
    */
-  public String resolveExpressionOfEventName(VariableScope scope) {
+  public @Nullable String resolveExpressionOfEventName(VariableScope scope) {
     if (isExpressionAvailable()) {
+      requireNonNull(eventName);
       if (scope instanceof BaseDelegateExecution execution) {
         // the variable scope execution is also the current context execution
         // during expression evaluation the current context is updated with the scope execution

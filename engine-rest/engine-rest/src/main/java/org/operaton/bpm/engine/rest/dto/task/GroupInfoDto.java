@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author: drobisch
+ * @author drobisch
  */
 public class GroupInfoDto {
 

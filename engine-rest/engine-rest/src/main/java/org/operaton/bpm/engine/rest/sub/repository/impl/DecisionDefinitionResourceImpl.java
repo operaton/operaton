@@ -29,11 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.dmn.engine.DmnEngineException;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -71,7 +67,7 @@ public class DecisionDefinitionResourceImpl implements DecisionDefinitionResourc
   public DecisionDefinitionDto getDecisionDefinition() {
     RepositoryService repositoryService = engine.getRepositoryService();
 
-    DecisionDefinition definition = null;
+    DecisionDefinition definition;
 
     try {
       definition = repositoryService.getDecisionDefinition(decisionDefinitionId);

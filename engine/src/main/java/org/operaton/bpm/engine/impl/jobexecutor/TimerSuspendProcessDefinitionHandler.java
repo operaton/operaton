@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmd.AbstractSetProcessDefinitionStateCmd;
 import org.operaton.bpm.engine.impl.cmd.SuspendProcessDefinitionCmd;
 
@@ -23,6 +24,7 @@ import org.operaton.bpm.engine.impl.cmd.SuspendProcessDefinitionCmd;
  * @author Joram Barrez
  * @author roman.smirnov
  */
+@NullMarked
 public class TimerSuspendProcessDefinitionHandler extends TimerChangeProcessDefinitionSuspensionStateJobHandler {
 
   public static final String TYPE = "suspend-processdefinition";

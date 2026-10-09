@@ -26,11 +26,7 @@ import jakarta.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.rest.dto.CreateIncidentDto;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.dto.runtime.AdHocActivitiesTriggerDto;
@@ -195,7 +191,7 @@ public class ExecutionResourceImpl implements ExecutionResource {
 
   @Override
   public IncidentDto createIncident(CreateIncidentDto createIncidentDto) {
-    Incident newIncident = null;
+    Incident newIncident;
 
     try {
       newIncident = engine.getRuntimeService()

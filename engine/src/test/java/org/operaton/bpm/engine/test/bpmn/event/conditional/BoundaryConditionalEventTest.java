@@ -34,14 +34,14 @@ import org.operaton.bpm.model.bpmn.builder.AbstractActivityBuilder;
 import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonExecutionListener;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
+@SuppressWarnings("ConstantConditions")
 class BoundaryConditionalEventTest extends AbstractConditionalEventTestCase {
 
   @Test
@@ -1613,12 +1613,9 @@ class BoundaryConditionalEventTest extends AbstractConditionalEventTestCase {
 
     //when variable which triggers condition is set
     //then exception is expected
-    try {
-      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
-      fail("Should fail!");
-    } catch (SuspendedEntityInteractionException seie) {
-      //expected
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1))
+            .isInstanceOf(SuspendedEntityInteractionException.class);
+
     runtimeService.activateProcessInstanceById(processInstanceId);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }
@@ -1646,12 +1643,9 @@ class BoundaryConditionalEventTest extends AbstractConditionalEventTestCase {
 
     //when variable which triggers condition is set
     //then exception is expected
-    try {
-      runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1);
-      fail("Should fail!");
-    } catch (SuspendedEntityInteractionException seie) {
-      //expected
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, VARIABLE_NAME, 1))
+            .isInstanceOf(SuspendedEntityInteractionException.class);
+
     runtimeService.activateProcessInstanceById(processInstanceId);
     tasksAfterVariableIsSet = taskService.createTaskQuery().list();
   }

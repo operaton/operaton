@@ -26,9 +26,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * and one or more {@link org.operaton.bpm.engine.ProcessEngineComponent.ActivitiComponent} annotations present.
  * <p/>
  * Describes the metadata extracted from the bean at configuration time
+ * </p>
  *
  * @author Josh Long
- * @since 1.0
  */
 public class ActivitiStateHandlerRegistration {
 	private Map<Integer, String> processVariablesExpected = new ConcurrentHashMap<>();

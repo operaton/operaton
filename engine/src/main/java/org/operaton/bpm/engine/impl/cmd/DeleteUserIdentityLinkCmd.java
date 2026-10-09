@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
@@ -23,13 +26,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 /**
  * @author Danny Gräf
  */
-public class DeleteUserIdentityLinkCmd extends DeleteIdentityLinkCmd {
+public @NullMarked class DeleteUserIdentityLinkCmd extends DeleteIdentityLinkCmd {
   public DeleteUserIdentityLinkCmd(String taskId, String userId, String type) {
     super(taskId, userId, null, type);
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     super.execute(commandContext);
 
     PropertyChange propertyChange = new PropertyChange(type, null, userId);

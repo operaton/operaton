@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -23,12 +26,13 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  */
-public class DelegateTaskCmd implements Command<Object> {
+public @NullMarked class DelegateTaskCmd implements Command<Object> {
   protected String taskId;
   protected String userId;
 
@@ -38,12 +42,13 @@ public class DelegateTaskCmd implements Command<Object> {
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
     ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkDelegateTask(task, commandContext);
 

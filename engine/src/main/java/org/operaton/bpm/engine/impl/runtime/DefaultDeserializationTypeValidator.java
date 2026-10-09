@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.runtime;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
@@ -32,11 +31,11 @@ import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
  */
 public class DefaultDeserializationTypeValidator implements WhitelistingDeserializationTypeValidator {
 
-  protected static final Collection<String> ALLOWED_PACKAGES = Arrays.asList("java.lang");
-  protected static final Collection<String> ALLOWED_CLASSES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+  protected static final Collection<String> ALLOWED_PACKAGES = List.of("java.lang");
+  protected static final Collection<String> ALLOWED_CLASSES = Set.of(
       "java.util.ArrayList", "java.util.Arrays$ArrayList", "java.util.HashMap", "java.util.HashSet",
       "java.util.LinkedHashMap", "java.util.LinkedHashSet", "java.util.LinkedList",
-      "java.util.Properties", "java.util.TreeMap", "java.util.TreeSet")));
+      "java.util.Properties", "java.util.TreeMap", "java.util.TreeSet");
 
   protected Set<String> allowedClasses = new HashSet<>(ALLOWED_CLASSES);
   protected Set<String> allowedPackages = new HashSet<>(ALLOWED_PACKAGES);

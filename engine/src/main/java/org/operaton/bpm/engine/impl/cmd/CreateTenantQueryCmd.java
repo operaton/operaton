@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.identity.TenantQuery;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-public class CreateTenantQueryCmd implements Command<TenantQuery> {
+public @NullMarked class CreateTenantQueryCmd implements Command<TenantQuery> {
   @Override
   public TenantQuery execute(CommandContext commandContext) {
     return commandContext
       .getReadOnlyIdentityProvider()
       .createTenantQuery();
   }
-
 }

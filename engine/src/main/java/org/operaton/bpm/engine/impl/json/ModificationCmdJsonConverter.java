@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.json;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmd.AbstractProcessInstanceModificationCommand;
 import org.operaton.bpm.engine.impl.cmd.ActivityAfterInstantiationCmd;
 import org.operaton.bpm.engine.impl.cmd.ActivityBeforeInstantiationCmd;
@@ -27,7 +29,9 @@ import org.operaton.bpm.engine.impl.cmd.TransitionInstanceCancellationCmd;
 import org.operaton.bpm.engine.impl.cmd.TransitionInstantiationCmd;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public class ModificationCmdJsonConverter implements JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
+import static java.util.Objects.requireNonNull;
+
+public @NullMarked class ModificationCmdJsonConverter implements JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
 
   public static final String START_BEFORE = "startBeforeActivity";
   public static final String START_AFTER = "startAfterActivity";
@@ -72,34 +76,34 @@ public class ModificationCmdJsonConverter implements JsonObjectConverter<Abstrac
   }
 
   @Override
-  public AbstractProcessInstanceModificationCommand toObject(JsonObject json) {
+  public @Nullable AbstractProcessInstanceModificationCommand toObject(JsonObject json) {
 
     AbstractProcessInstanceModificationCommand cmd = null;
 
     if (json.has(START_BEFORE)) {
-      cmd = new ActivityBeforeInstantiationCmd(JsonUtil.getString(json, START_BEFORE));
+      cmd = new ActivityBeforeInstantiationCmd(requireNonNull(JsonUtil.getString(json, START_BEFORE)));
       if (json.has(ANCESTOR_ACTIVITY_INSTANCE_ID)) {
-        ((ActivityBeforeInstantiationCmd) cmd).setAncestorActivityInstanceId(
-            JsonUtil.getString(json, ANCESTOR_ACTIVITY_INSTANCE_ID));
+        String ancestorActivityInstanceId = JsonUtil.getString(json, ANCESTOR_ACTIVITY_INSTANCE_ID);
+        ((ActivityBeforeInstantiationCmd) cmd).setAncestorActivityInstanceId(ancestorActivityInstanceId);
       }
     } else if (json.has(START_AFTER)) {
-      cmd = new ActivityAfterInstantiationCmd(JsonUtil.getString(json, START_AFTER));
+      cmd = new ActivityAfterInstantiationCmd(requireNonNull(JsonUtil.getString(json, START_AFTER)));
       if (json.has(ANCESTOR_ACTIVITY_INSTANCE_ID)) {
         ((ActivityAfterInstantiationCmd) cmd).setAncestorActivityInstanceId(
             JsonUtil.getString(json, ANCESTOR_ACTIVITY_INSTANCE_ID));
       }
     } else if (json.has(START_TRANSITION)) {
-      cmd = new TransitionInstantiationCmd(JsonUtil.getString(json, START_TRANSITION));
+      cmd = new TransitionInstantiationCmd(requireNonNull(JsonUtil.getString(json, START_TRANSITION)));
     } else if (json.has(CANCEL_ALL)) {
-      cmd = new ActivityCancellationCmd(JsonUtil.getString(json, CANCEL_ALL));
+      cmd = new ActivityCancellationCmd(requireNonNull(JsonUtil.getString(json, CANCEL_ALL)));
       boolean cancelCurrentActiveActivityInstances = JsonUtil.getBoolean(json, CANCEL_CURRENT);
       ((ActivityCancellationCmd) cmd).setCancelCurrentActiveActivityInstances(cancelCurrentActiveActivityInstances);
     } else if (json.has(CANCEL_ACTIVITY_INSTANCES)) {
-      cmd = new ActivityInstanceCancellationCmd(JsonUtil.getString(json, PROCESS_INSTANCE),
-          JsonUtil.getString(json, CANCEL_ACTIVITY_INSTANCES));
+      cmd = new ActivityInstanceCancellationCmd(requireNonNull(JsonUtil.getString(json, PROCESS_INSTANCE)),
+          requireNonNull(JsonUtil.getString(json, CANCEL_ACTIVITY_INSTANCES)));
     } else if (json.has(CANCEL_TRANSITION_INSTANCES)) {
-      cmd = new TransitionInstanceCancellationCmd(JsonUtil.getString(json, PROCESS_INSTANCE),
-          JsonUtil.getString(json, CANCEL_TRANSITION_INSTANCES));
+      cmd = new TransitionInstanceCancellationCmd(requireNonNull(JsonUtil.getString(json, PROCESS_INSTANCE)),
+          requireNonNull(JsonUtil.getString(json, CANCEL_TRANSITION_INSTANCES)));
     }
 
     return cmd;

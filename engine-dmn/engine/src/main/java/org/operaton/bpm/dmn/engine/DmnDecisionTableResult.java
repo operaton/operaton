@@ -32,7 +32,7 @@ public interface DmnDecisionTableResult extends List<DmnDecisionRuleResult>, Ser
   /**
    * Returns the first {@link DmnDecisionRuleResult}.
    *
-   * @return the first decision rule result or null if none exits
+   * @return the first decision rule result or {@code null} if none exits
    */
   DmnDecisionRuleResult getFirstResult();
 
@@ -40,7 +40,7 @@ public interface DmnDecisionTableResult extends List<DmnDecisionRuleResult>, Ser
    * Returns the single {@link DmnDecisionRuleResult} of the result. Which asserts
    * that only one decision rule result exist.
    *
-   * @return the single decision rule result or null if none exists
+   * @return the single decision rule result or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one decision rule result exists
@@ -77,7 +77,7 @@ public interface DmnDecisionTableResult extends List<DmnDecisionRuleResult>, Ser
    *
    * @param <T>
    *          the type of the result entry
-   * @return the value of the single result entry or null if none exists
+   * @return the value of the single result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one decision rule result or more than one result entry
@@ -93,7 +93,7 @@ public interface DmnDecisionTableResult extends List<DmnDecisionRuleResult>, Ser
    *
    * @param <T>
    *          the type of the result entry
-   * @return the typed value of the single result entry or null if none exists
+   * @return the typed value of the single result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one decision rule result or more than one result entry

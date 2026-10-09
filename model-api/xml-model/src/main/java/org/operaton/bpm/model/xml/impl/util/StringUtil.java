@@ -17,11 +17,12 @@
 package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Sebastian Menski
@@ -38,9 +39,9 @@ public final class StringUtil {
    * contain expressions with commas in it.
    *
    * @param text  the comma separated list
-   * @return the Strings of the list or an empty List if text is empty or null
+   * @return the Strings of the list or an empty List if text is empty or {@code null}
    */
-  public static List<String> splitCommaSeparatedList(String text) {
+  public static List<String> splitCommaSeparatedList(@Nullable String text) {
     if (text == null || text.isEmpty()) {
       return Collections.emptyList();
     }
@@ -56,21 +57,21 @@ public final class StringUtil {
    * Joins a list of Strings to a comma separated single String.
    *
    * @param list  the list to join
-   * @return the resulting comma separated string or null if the list is null
+   * @return the resulting comma separated string or {@code null} if the list is {@code null}
    */
-  public static String joinCommaSeparatedList(List<String> list) {
+  public static @Nullable String joinCommaSeparatedList(List<String> list) {
     return joinList(list, ", ");
   }
 
-  public static List<String> splitListBySeparator(String text, String separator) {
+  public static List<String> splitListBySeparator(@Nullable String text, String separator) {
     String[] result = new String[]{};
     if (text != null) {
       result = text.split(separator);
     }
-    return new ArrayList<>(Arrays.asList(result));
+    return new ArrayList<>(List.of(result));
   }
 
-  public static String joinList(List<String> list, String separator) {
+  public static @Nullable String joinList(@Nullable List<String> list, String separator) {
     if (list == null) {
       return null;
     }

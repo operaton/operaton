@@ -24,12 +24,7 @@ import jakarta.ws.rs.core.UriInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -42,11 +37,7 @@ import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceSuspensionStateAsyncDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceSuspensionStateDto;
-import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesByProcessDto;
+import org.operaton.bpm.engine.rest.dto.runtime.*;
 import org.operaton.bpm.engine.rest.dto.runtime.batch.CorrelationMessageAsyncDto;
 import org.operaton.bpm.engine.rest.dto.runtime.batch.DeleteProcessInstancesDto;
 import org.operaton.bpm.engine.rest.dto.runtime.batch.SetVariablesAsyncDto;
@@ -123,7 +114,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
 
   @Override
   public BatchDto updateSuspensionStateAsync(ProcessInstanceSuspensionStateAsyncDto dto){
-    Batch batch = null;
+    Batch batch;
     try {
       batch = dto.updateSuspensionStateAsync(getProcessEngine());
       return BatchDto.fromBatch(batch);
@@ -243,7 +234,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
   public BatchDto setVariablesAsync(SetVariablesAsyncDto setVariablesAsyncDto) {
     Map<String, VariableValueDto> variables = setVariablesAsyncDto.getVariables();
 
-    VariableMap variableMap = null;
+    VariableMap variableMap;
     try {
       variableMap = VariableValueDto.toMap(variables, getProcessEngine(), objectMapper);
 
@@ -259,7 +250,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
 
     RuntimeService runtimeService = getProcessEngine().getRuntimeService();
 
-    Batch batch = null;
+    Batch batch;
     try {
       batch = runtimeService.setVariablesAsync(ids, runtimeQuery, historyQuery, variableMap);
 
@@ -280,7 +271,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
   public BatchDto correlateMessageAsync(CorrelationMessageAsyncDto correlationMessageAsyncDto) {
     Map<String, VariableValueDto> variables = correlationMessageAsyncDto.getVariables();
 
-    VariableMap variableMap = null;
+    VariableMap variableMap;
     try {
       variableMap = VariableValueDto.toMap(variables, getProcessEngine(), objectMapper);
     } catch (RestException e) {
@@ -295,7 +286,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
 
     RuntimeService runtimeService = getProcessEngine().getRuntimeService();
 
-    Batch batch = null;
+    Batch batch;
     try {
       MessageCorrelationAsyncBuilder messageCorrelationBuilder = runtimeService
         .createMessageCorrelationAsync(messageName)

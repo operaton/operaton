@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,32 +31,33 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.task.Comment;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Command to delete a comment by a given commentId and taskId or to delete all comments
  * of a given task Id
  */
-
-public class DeleteTaskCommentCmd implements Command<Object> {
-  protected String commentId;
+public @NullMarked class DeleteTaskCommentCmd implements Command<Object> {
+  protected @Nullable String commentId;
   protected String taskId;
 
-  public DeleteTaskCommentCmd(String taskId, String commentId) {
+  public DeleteTaskCommentCmd(String taskId, @Nullable String commentId) {
     this.taskId = taskId;
     this.commentId = commentId;
   }
 
   public DeleteTaskCommentCmd(String taskId) {
-    this.taskId = taskId;
+    this(taskId, null);
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     ensureNotNull(BadUserRequestException.class, "taskId", taskId);
 
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
     ensureNotNull("No task exists with taskId: %s".formatted(taskId), "task", task);
+    requireNonNull(task);
     checkTaskWork(task, commandContext);
 
     if (commentId != null) {

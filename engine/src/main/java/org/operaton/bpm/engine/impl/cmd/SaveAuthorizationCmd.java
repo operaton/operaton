@@ -20,6 +20,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -34,9 +36,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
 /**
  * @author Daniel Meyer
- *
  */
-public class SaveAuthorizationCmd implements Command<Authorization> {
+public @NullMarked class SaveAuthorizationCmd implements Command<Authorization> {
 
   protected AuthorizationEntity authorization;
 
@@ -75,14 +76,13 @@ public class SaveAuthorizationCmd implements Command<Authorization> {
   }
 
   protected void provideRemovalTime(CommandContext commandContext) {
-    for (Entry<Resources, Supplier<HistoryEvent>> resourceEntry :
+    for (Entry<Resources, Supplier<@Nullable HistoryEvent>> resourceEntry :
         getHistoricInstanceResources(commandContext)) {
       Resources resource = resourceEntry.getKey();
       if (isResourceEqualTo(resource)) {
+        Supplier<@Nullable HistoryEvent> historyEventSupplier = resourceEntry.getValue();
 
-        Supplier<HistoryEvent> historyEventSupplier = resourceEntry.getValue();
-
-        HistoryEvent historyEvent = historyEventSupplier.get();
+        @Nullable HistoryEvent historyEvent = historyEventSupplier.get();
         provideRemovalTime(historyEvent);
 
         break;
@@ -90,18 +90,17 @@ public class SaveAuthorizationCmd implements Command<Authorization> {
     }
   }
 
-  protected Set<Entry<Resources, Supplier<HistoryEvent>>> getHistoricInstanceResources(
+  protected Set<Entry<Resources, Supplier<@Nullable HistoryEvent>>> getHistoricInstanceResources(
       CommandContext commandContext) {
-    Map<Resources, Supplier<HistoryEvent>> resources = new EnumMap<>(Resources.class);
+    Map<Resources, Supplier<@Nullable HistoryEvent>> resources = new EnumMap<>(Resources.class);
 
-    resources.put(Resources.HISTORIC_PROCESS_INSTANCE, () ->
-        getHistoricProcessInstance(commandContext));
+    resources.put(Resources.HISTORIC_PROCESS_INSTANCE, () -> getHistoricProcessInstance(commandContext));
     resources.put(Resources.HISTORIC_TASK, () -> getHistoricTaskInstance(commandContext));
 
     return resources.entrySet();
   }
 
-  protected void provideRemovalTime(HistoryEvent historicInstance) {
+  protected void provideRemovalTime(@Nullable HistoryEvent historicInstance) {
 
     if (historicInstance != null) {
       String rootProcessInstanceId = historicInstance.getRootProcessInstanceId();
@@ -117,7 +116,7 @@ public class SaveAuthorizationCmd implements Command<Authorization> {
     }
   }
 
-  protected HistoryEvent getHistoricProcessInstance(CommandContext commandContext) {
+  protected @Nullable HistoryEvent getHistoricProcessInstance(CommandContext commandContext) {
     String historicProcessInstanceId = authorization.getResourceId();
 
     if (isNullOrAny(historicProcessInstanceId)) {
@@ -128,7 +127,7 @@ public class SaveAuthorizationCmd implements Command<Authorization> {
         .findHistoricProcessInstance(historicProcessInstanceId);
   }
 
-  protected HistoryEvent getHistoricTaskInstance(CommandContext commandContext) {
+  protected @Nullable HistoryEvent getHistoricTaskInstance(CommandContext commandContext) {
     String historicTaskInstanceId = authorization.getResourceId();
 
     if (isNullOrAny(historicTaskInstanceId)) {
@@ -139,7 +138,7 @@ public class SaveAuthorizationCmd implements Command<Authorization> {
         .findHistoricTaskInstanceById(historicTaskInstanceId);
   }
 
-  protected boolean isNullOrAny(String resourceId) {
+  protected boolean isNullOrAny(@Nullable String resourceId) {
     return resourceId == null || isAny(resourceId);
   }
 

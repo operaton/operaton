@@ -251,7 +251,7 @@ public class Cmmn {
   }
 
   protected CmmnModelInstance doReadModelFromFile(File file) {
-    CmmnModelInstance result = null;
+    CmmnModelInstance result;
     try (InputStream is = new FileInputStream(file)) {
       result = doReadModelFromInputStream(is);
     } catch (FileNotFoundException e) {

@@ -24,18 +24,26 @@ import java.lang.annotation.Target;
 import org.operaton.bpm.engine.ProcessEngine;
 
 /**
- * <p>Annotation that can be placed on a method of a {@link AbstractProcessApplication ProcessApplication} class.</p>
+ * Annotation that can be placed on a method of a {@link AbstractProcessApplication ProcessApplication} class.
  *
- * <p>The method will be invoked before the process application is undeployed.
+ * <p>
+ * The method will be invoked before the process application is undeployed.
+ * </p>
  *
- * <p><strong>LIMITATION:</strong> the annotation must be placed on a method of the same class carrying the
- * <code>{@literal @}ProcessApplication</code> annotation. Methods of superclasses are not detected.</p>
+ * <p>
+ * <strong>LIMITATION:</strong> the annotation must be placed on a method of the same class carrying the
+ * <code>{@literal @}ProcessApplication</code> annotation. Methods of superclasses are not detected.
+ * </p>
  *
- * <p><strong>NOTE:</strong> A process application class must only define a single <code>{@literal @}PostDeploy</code>
- * Method.</p>
+ * <p>
+ * <strong>NOTE:</strong> A process application class must only define a single <code>{@literal @}PostDeploy</code>
+ * Method.
+ * </p>
  *
- * <p><strong>NOTE:</strong> if the {@literal @}PostDeploy method throws an exception, the exception is logged but
- * the container will still undeploy the application.</p>
+ * <p>
+ * <strong>NOTE:</strong> if the {@literal @}PostDeploy method throws an exception, the exception is logged but
+ * the container will still undeploy the application.
+ * </p>
  *
  * <h2>Basic Usage example:</h2>
  * <pre>
@@ -52,10 +60,11 @@ import org.operaton.bpm.engine.ProcessEngine;
  * <p>
  * }
  * </pre>
- * </p>
  *
- * <p>A method annotated with <code>{@literal @}PreUndeploy</code> may additionally take the following set of
+ * <p>
+ * A method annotated with <code>{@literal @}PreUndeploy</code> may additionally take the following set of
  * parameters, in any oder:
+ * </p>
  * <ul>
  *  <li>{@link ProcessApplicationInfo}: the {@link ProcessApplicationInfo} object for this process application is injected</li>
  *  <li>{@link ProcessEngine} the default process engine is injected</li>

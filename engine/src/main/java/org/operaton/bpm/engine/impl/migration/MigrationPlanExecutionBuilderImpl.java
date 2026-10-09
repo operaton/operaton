@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.migration.batch.MigrateProcessInstanceBatchCmd;
@@ -52,7 +53,7 @@ public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecution
   }
 
   @Override
-  public MigrationPlanExecutionBuilder processInstanceIds(String... processInstanceIds) {
+  public MigrationPlanExecutionBuilder processInstanceIds(@Nullable String @Nullable... processInstanceIds) {
     if (processInstanceIds == null) {
       this.processInstanceIds = Collections.emptyList();
     }

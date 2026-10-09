@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
@@ -25,7 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * Please any remove usages of the command.
  */
 @Deprecated(since = "1.0", forRemoval = true)
-public class TelemetryConfigureCmd implements Command<Void> {
+public @NullMarked class TelemetryConfigureCmd implements Command<Void> {
 
   protected boolean telemetryEnabled;
 
@@ -34,7 +37,7 @@ public class TelemetryConfigureCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     return null;
   }
 

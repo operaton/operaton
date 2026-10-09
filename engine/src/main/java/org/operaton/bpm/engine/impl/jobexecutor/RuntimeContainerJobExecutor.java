@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedThreadPool;
@@ -80,7 +82,7 @@ public class RuntimeContainerJobExecutor extends JobExecutor {
   }
 
   @Override
-  public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
+  public Runnable getExecuteJobsRunnable(List<String> jobIds, @NonNull ProcessEngineImpl processEngine) {
     final RuntimeContainerDelegate runtimeContainerDelegate = getRuntimeContainerDelegate();
     final ExecutorService executorService = runtimeContainerDelegate.getExecutorService();
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.builder;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.CompensateEventDefinition;
 import org.operaton.bpm.model.bpmn.instance.ErrorEventDefinition;
@@ -183,7 +185,7 @@ public abstract class AbstractStartEventBuilder<B extends AbstractStartEventBuil
    *
    * @return the error event definition builder object
    */
-  public ErrorEventDefinitionBuilder errorEventDefinition(String id) {
+  public ErrorEventDefinitionBuilder errorEventDefinition(@Nullable String id) {
     ErrorEventDefinition errorEventDefinition = createEmptyErrorEventDefinition();
     if (id != null) {
       errorEventDefinition.setId(id);

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -27,7 +28,7 @@ import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TY
  * @author Daniel Meyer
  *
  */
-public class AddGroupIdentityLinkCmd extends AbstractAddIdentityLinkCmd {
+public @NullMarked class AddGroupIdentityLinkCmd extends AbstractAddIdentityLinkCmd {
 
   public AddGroupIdentityLinkCmd(String taskId, String groupId, String type) {
     super(taskId, null, groupId, type);

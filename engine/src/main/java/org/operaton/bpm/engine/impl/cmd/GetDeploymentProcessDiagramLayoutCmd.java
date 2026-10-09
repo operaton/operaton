@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
+
 import org.operaton.bpm.engine.impl.bpmn.diagram.ProcessDiagramLayoutFactory;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -26,6 +29,9 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.repository.DiagramLayout;
+
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Provides positions and dimensions of elements in a process diagram as
@@ -35,22 +41,24 @@ import org.operaton.bpm.engine.repository.DiagramLayout;
  * </p>
  * @author Falko Menge
  */
-public class GetDeploymentProcessDiagramLayoutCmd implements Command<DiagramLayout> {
+public @NullMarked class GetDeploymentProcessDiagramLayoutCmd implements Command<DiagramLayout> {
   protected String processDefinitionId;
 
   public GetDeploymentProcessDiagramLayoutCmd(String processDefinitionId) {
-    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
+    if (processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
     this.processDefinitionId = processDefinitionId;
   }
 
   @Override
-  public DiagramLayout execute(final CommandContext commandContext) {
+  public @Nullable DiagramLayout execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
         .getProcessEngineConfiguration()
         .getDeploymentCache()
         .findDeployedProcessDefinitionById(processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);

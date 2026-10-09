@@ -18,16 +18,10 @@ package org.operaton.bpm.engine.rest.security.auth;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.core.MediaType;
@@ -185,11 +179,9 @@ public class ProcessEngineAuthenticationFilter implements Filter {
       .groupMember(userId)
       .list();
 
-    List<String> groupIds = new ArrayList<>();
-    for (Group group : groups) {
-      groupIds.add(group.getId());
-    }
-    return groupIds;
+    return groups.stream()
+      .map(Group::getId)
+      .toList();
   }
 
   protected List<String> getTenantsOfUser(ProcessEngine engine, String userId) {
@@ -198,11 +190,9 @@ public class ProcessEngineAuthenticationFilter implements Filter {
       .includingGroupsOfUser(true)
       .list();
 
-    List<String> tenantIds = new ArrayList<>();
-    for(Tenant tenant : tenants) {
-      tenantIds.add(tenant.getId());
-    }
-    return tenantIds;
+    return tenants.stream()
+      .map(Tenant::getId)
+      .toList();
   }
 
   protected void clearAuthentication(ProcessEngine engine) {
@@ -221,7 +211,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
   }
 
   /**
-   * May not return null
+   * May not return {@code null}
    */
   protected String extractEngineName(String requestUrl) {
 

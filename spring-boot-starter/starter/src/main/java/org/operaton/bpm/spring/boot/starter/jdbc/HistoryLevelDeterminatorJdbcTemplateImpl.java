@@ -17,7 +17,6 @@
 package org.operaton.bpm.spring.boot.starter.jdbc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class HistoryLevelDeterminatorJdbcTemplateImpl implements HistoryLevelDet
 
   protected static final String SQL_TEMPLATE = "SELECT VALUE_ FROM " + TABLE_PREFIX_PLACEHOLDER + "ACT_GE_PROPERTY WHERE NAME_='historyLevel'";
 
-  protected final List<HistoryLevel> historyLevels = new ArrayList<>(Arrays.asList( HistoryLevel.HISTORY_LEVEL_ACTIVITY,
+  protected final List<HistoryLevel> historyLevels = new ArrayList<>(List.of( HistoryLevel.HISTORY_LEVEL_ACTIVITY,
       HistoryLevel.HISTORY_LEVEL_AUDIT, HistoryLevel.HISTORY_LEVEL_FULL, HistoryLevel.HISTORY_LEVEL_NONE));
 
   protected String defaultHistoryLevel = new SpringProcessEngineConfiguration().getHistory();

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.impl.cfg.auth.DefaultAuthorizationProvider;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
@@ -24,10 +26,10 @@ import org.operaton.bpm.engine.task.Task;
 /**
  * @author Johannes Heinemann
  */
-public class MyExtendedPermissionDefaultAuthorizationProvider extends DefaultAuthorizationProvider{
+public @NullMarked class MyExtendedPermissionDefaultAuthorizationProvider extends DefaultAuthorizationProvider {
 
   @Override
-  public AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
+  public AuthorizationEntity[] newTaskAssignee(Task task, @Nullable String oldAssignee, @Nullable String newAssignee) {
     AuthorizationEntity[] authorizations = super.newTaskAssignee(task, oldAssignee, newAssignee);
     authorizations[0].addPermission(Permissions.DELETE);
     return authorizations;

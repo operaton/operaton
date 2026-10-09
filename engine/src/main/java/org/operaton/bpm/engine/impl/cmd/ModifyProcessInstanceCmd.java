@@ -20,7 +20,10 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.ProcessInstanceModificationBuilderImpl;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -36,7 +39,7 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
  * @author Thorben Lindhauer
  *
  */
-public class ModifyProcessInstanceCmd implements Command<Void> {
+public @NullMarked class ModifyProcessInstanceCmd implements Command<Void> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -52,9 +55,8 @@ public class ModifyProcessInstanceCmd implements Command<Void> {
     this.writeOperationLog = writeOperationLog;
   }
 
-
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     String processInstanceId = builder.getProcessInstanceId();
 
     ExecutionManager executionManager = commandContext.getExecutionManager();
@@ -116,7 +118,7 @@ public class ModifyProcessInstanceCmd implements Command<Void> {
     }
   }
 
-  protected void ensureProcessInstanceExist(String processInstanceId, ExecutionEntity processInstance) {
+  protected void ensureProcessInstanceExist(String processInstanceId, @Nullable ExecutionEntity processInstance) {
     if (processInstance == null) {
       throw LOG.processInstanceDoesNotExist(processInstanceId);
     }
@@ -126,13 +128,19 @@ public class ModifyProcessInstanceCmd implements Command<Void> {
     return UserOperationLogEntry.OPERATION_TYPE_MODIFY_PROCESS_INSTANCE;
   }
 
-  protected void checkUpdateProcessInstance(ExecutionEntity execution, CommandContext commandContext) {
+  protected void checkUpdateProcessInstance(@Nullable ExecutionEntity execution, CommandContext commandContext) {
+    if (execution == null) {
+        return;
+    }
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstance(execution);
     }
   }
 
-  protected void checkDeleteProcessInstance(ExecutionEntity execution, CommandContext commandContext) {
+  protected void checkDeleteProcessInstance(@Nullable ExecutionEntity execution, CommandContext commandContext) {
+    if (execution == null) {
+        return;
+    }
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteProcessInstance(execution);
     }

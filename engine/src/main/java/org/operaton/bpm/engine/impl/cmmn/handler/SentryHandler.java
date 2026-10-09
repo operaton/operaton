@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.Expression;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnIfPartDeclaration;
@@ -54,7 +56,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
   protected static final CmmnTransformerLogger LOG = ProcessEngineLogger.CMMN_TRANSFORMER_LOGGER;
 
   @Override
-  public CmmnSentryDeclaration handleElement(Sentry element, CmmnHandlerContext context) {
+  public @Nullable CmmnSentryDeclaration handleElement(Sentry element, CmmnHandlerContext context) {
 
     String id = element.getId();
     Collection<OnPart> onParts = element.getOnParts();

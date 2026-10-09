@@ -25,12 +25,14 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
 /**
- * <p>For synchronizing gateways (inclusive; parallel), the situation in which
+ * For synchronizing gateways (inclusive; parallel), the situation in which
  *  more tokens end up at the target gateway than there are incoming sequence flows
  *  must be avoided. Else, the migrated process instance may appear as broken to users
  *  since the migration logic cannot trigger these gateways immediately.
  *
- *  <p>Such situations can be avoided by enforcing that
+ *  <p>
+ *  Such situations can be avoided by enforcing that
+ *  </p>
  *  <ul>
  *  <li>the target gateway has at least the same number of incoming sequence flows
  *  <li>the target gateway's flow scope is not removed

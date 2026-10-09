@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Implementation of the BPMN 2.0 'manual task': a task that is external to the
  * BPMS and to which there is no reference to IT systems whatsoever.
@@ -27,6 +29,6 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
  *
  * @author Joram Barrez
  */
-public class ManualTaskActivityBehavior extends TaskActivityBehavior {
+public @NullMarked class ManualTaskActivityBehavior extends TaskActivityBehavior {
 
 }

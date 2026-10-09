@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryTimeToLiveParser;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -28,6 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureGreaterThanOrEqual;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -41,7 +44,7 @@ public class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext context) {
+  public @Nullable Void execute(CommandContext context) {
     ensureNotNull(BadUserRequestException.class, "caseDefinitionId", caseDefinitionId);
 
     if (historyTimeToLive != null) {
@@ -51,6 +54,8 @@ public class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void> {
     validate(historyTimeToLive, context);
 
     CaseDefinitionEntity caseDefinitionEntity = context.getCaseDefinitionManager().findLatestDefinitionById(caseDefinitionId);
+    ensureNotNull("Case Definition '%s' not found".formatted(caseDefinitionId), "caseDefinition", caseDefinitionEntity);
+    requireNonNull(caseDefinitionEntity);
 
     for (CommandChecker checker : context.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateCaseDefinition(caseDefinitionEntity);

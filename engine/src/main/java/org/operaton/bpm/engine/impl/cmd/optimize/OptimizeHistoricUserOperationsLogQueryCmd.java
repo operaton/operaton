@@ -19,11 +19,12 @@ package org.operaton.bpm.engine.impl.cmd.optimize;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-public class OptimizeHistoricUserOperationsLogQueryCmd implements Command<List<UserOperationLogEntry>> {
+public @NullMarked class OptimizeHistoricUserOperationsLogQueryCmd implements Command<List<UserOperationLogEntry>> {
 
   protected Date occurredAfter;
   protected Date occurredAt;

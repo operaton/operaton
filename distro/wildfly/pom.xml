@@ -12,6 +12,12 @@
   <packaging>pom</packaging>
   <name>Operaton - Wildfly</name>
   <description>${project.name}</description>
+  <properties>
+    <!-- Server distro assemblies are only repackaging steps, but their
+      archives dominate the build cache volume (hundreds of MB per distro);
+      storing them buys a few seconds of zip work for a lot of storage -->
+    <maven.build.cache.enabled>false</maven.build.cache.enabled>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>

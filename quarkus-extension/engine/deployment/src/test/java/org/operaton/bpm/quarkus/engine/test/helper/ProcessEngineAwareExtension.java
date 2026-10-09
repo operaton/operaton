@@ -49,12 +49,12 @@ public class ProcessEngineAwareExtension extends QuarkusUnitTest {
         String testMethodName = testMethod.getName();
         Class<?> testHelperClass = loadClass(TestHelper.class);
         Method annotationDeploymentSetUp = testHelperClass.getMethod("annotationDeploymentSetUp",
-            loadClass(ProcessEngine.class), String[].class, Class.class, String.class);
+            loadClass(ProcessEngine.class), String[].class, Class.class, Boolean.class, String.class);
 
         String[] resources = annotation.resources();
         Class<?> testClass = context.getTestClass().orElse(null);
         deploymentId = (String) annotationDeploymentSetUp.invoke(testHelperClass, processEngine, resources, testClass,
-            testMethodName);
+            Boolean.TRUE, testMethodName);
       }
     }
   }

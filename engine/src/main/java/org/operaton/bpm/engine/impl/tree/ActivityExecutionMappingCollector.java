@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.tree;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
@@ -33,7 +36,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Philipp Ossler
  *
  */
-public class ActivityExecutionMappingCollector implements TreeVisitor<ActivityExecution> {
+public @NullMarked class ActivityExecutionMappingCollector implements TreeVisitor<ActivityExecution> {
 
   private final Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = new HashMap<>();
 
@@ -64,7 +67,7 @@ public class ActivityExecutionMappingCollector implements TreeVisitor<ActivityEx
   /**
    * @return the mapped execution for scope or <code>null</code>, if no mapping exists
    */
-  public PvmExecutionImpl getExecutionForScope(PvmScope scope) {
+  public @Nullable PvmExecutionImpl getExecutionForScope(PvmScope scope) {
     return activityExecutionMapping.get(scope);
   }
 }

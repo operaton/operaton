@@ -22,7 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessDefinitionQueryImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -37,13 +40,15 @@ import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  * @author Falko Menge
  * @author Saeid Mirzaei
  * @author Christopher Zell
  */
-public class ProcessDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<ProcessDefinitionEntity> {
+public @NullMarked class ProcessDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<ProcessDefinitionEntity> {
   private static final String DEPLOYMENT_ID = "deploymentId";
   private static final String PROCESS_DEFINITION_IDS = "processDefinitionIds";
   private static final String PROCESS_DEFINITION_VERSION = "processDefinitionVersion";
@@ -67,7 +72,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
    *
    * @see #findLatestProcessDefinitionByKeyAndTenantId(String, String)
    */
-  public ProcessDefinitionEntity findLatestProcessDefinitionByKey(String processDefinitionKey) {
+  public @Nullable ProcessDefinitionEntity findLatestProcessDefinitionByKey(String processDefinitionKey) {
     List<ProcessDefinitionEntity> processDefinitions = findLatestProcessDefinitionsByKey(processDefinitionKey);
 
     if (processDefinitions.isEmpty()) {
@@ -98,7 +103,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
    *
    * @see #findLatestProcessDefinitionByKeyAndTenantId(String, String)
    */
-  public ProcessDefinitionEntity findLatestProcessDefinitionByKeyAndTenantId(String processDefinitionKey, String tenantId) {
+  public @Nullable ProcessDefinitionEntity findLatestProcessDefinitionByKeyAndTenantId(String processDefinitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
     parameters.put(TENANT_ID, tenantId);
@@ -110,38 +115,40 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
     }
   }
 
-  public ProcessDefinitionEntity findLatestProcessDefinitionById(String processDefinitionId) {
+  public @Nullable ProcessDefinitionEntity findLatestProcessDefinitionById(String processDefinitionId) {
     return getDbEntityManager().selectById(ProcessDefinitionEntity.class, processDefinitionId);
   }
 
   @SuppressWarnings({ "unchecked" })
-  public List<ProcessDefinition> findProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery, Page page) {
+  public List<ProcessDefinition> findProcessDefinitionsByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery, @Nullable Page page) {
     configureProcessDefinitionQuery(processDefinitionQuery);
     return getDbEntityManager().selectList("selectProcessDefinitionsByQueryCriteria", processDefinitionQuery, page);
   }
 
   public long findProcessDefinitionCountByQueryCriteria(ProcessDefinitionQueryImpl processDefinitionQuery) {
     configureProcessDefinitionQuery(processDefinitionQuery);
-    return (Long) getDbEntityManager().selectOne("selectProcessDefinitionCountByQueryCriteria", processDefinitionQuery);
+    Long count = (Long) getDbEntityManager().selectOne(
+            "selectProcessDefinitionCountByQueryCriteria", processDefinitionQuery);
+    return requireNonNull(count);
   }
 
-  public ProcessDefinitionEntity findProcessDefinitionByDeploymentAndKey(String deploymentId, String processDefinitionKey) {
+  public @Nullable ProcessDefinitionEntity findProcessDefinitionByDeploymentAndKey(String deploymentId, String processDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(DEPLOYMENT_ID, deploymentId);
     parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
     return (ProcessDefinitionEntity) getDbEntityManager().selectOne("selectProcessDefinitionByDeploymentAndKey", parameters);
   }
 
-  public ProcessDefinitionEntity findProcessDefinitionByKeyVersionAndTenantId(String processDefinitionKey, Integer processDefinitionVersion, String tenantId) {
+  public @Nullable ProcessDefinitionEntity findProcessDefinitionByKeyVersionAndTenantId(String processDefinitionKey, @Nullable Integer processDefinitionVersion, @Nullable String tenantId) {
     return findProcessDefinitionByKeyVersionOrVersionTag(processDefinitionKey, processDefinitionVersion, null, tenantId);
   }
 
-  public ProcessDefinitionEntity findProcessDefinitionByKeyVersionTagAndTenantId(String processDefinitionKey, String processDefinitionVersionTag, String tenantId) {
+  public @Nullable ProcessDefinitionEntity findProcessDefinitionByKeyVersionTagAndTenantId(String processDefinitionKey, @Nullable String processDefinitionVersionTag, @Nullable String tenantId) {
     return findProcessDefinitionByKeyVersionOrVersionTag(processDefinitionKey, null, processDefinitionVersionTag, tenantId);
   }
 
-  protected ProcessDefinitionEntity findProcessDefinitionByKeyVersionOrVersionTag(String processDefinitionKey, Integer processDefinitionVersion, String processDefinitionVersionTag,
-      String tenantId) {
+  protected @Nullable ProcessDefinitionEntity findProcessDefinitionByKeyVersionOrVersionTag(String processDefinitionKey, @Nullable Integer processDefinitionVersion, @Nullable String processDefinitionVersionTag,
+      @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     if (processDefinitionVersion != null) {
       parameters.put(PROCESS_DEFINITION_VERSION, processDefinitionVersion);
@@ -165,16 +172,22 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
     return null;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public List<ProcessDefinition> findProcessDefinitionsByKey(String processDefinitionKey) {
     ProcessDefinitionQueryImpl processDefinitionQuery = (ProcessDefinitionQueryImpl) new ProcessDefinitionQueryImpl().processDefinitionKeyIn(processDefinitionKey);
     return findProcessDefinitionsByQueryCriteria(processDefinitionQuery, null);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public List<ProcessDefinition> findProcessDefinitionsStartableByUser(String user) {
     return new ProcessDefinitionQueryImpl().startableByUser(user).list();
   }
 
-  public String findPreviousProcessDefinitionId(String processDefinitionKey, Integer version, String tenantId) {
+  public @Nullable String findPreviousProcessDefinitionId(String processDefinitionKey, Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put("key", processDefinitionKey);
     params.put("version", version);
@@ -193,7 +206,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
   }
 
   @SuppressWarnings("unchecked")
-  public List<ProcessDefinition> findDefinitionsByKeyAndTenantId(String processDefinitionKey, String tenantId, boolean isTenantIdSet) {
+  public List<ProcessDefinition> findDefinitionsByKeyAndTenantId(String processDefinitionKey, @Nullable String tenantId, boolean isTenantIdSet) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
     parameters.put(IS_TENANT_ID_SET, isTenantIdSet);
@@ -228,7 +241,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
     getDbEntityManager().update(ProcessDefinitionEntity.class, "updateProcessDefinitionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
-  public void updateProcessDefinitionSuspensionStateByKeyAndTenantId(String processDefinitionKey, String tenantId, SuspensionState suspensionState) {
+  public void updateProcessDefinitionSuspensionStateByKeyAndTenantId(String processDefinitionKey, @Nullable String tenantId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
     parameters.put(IS_TENANT_ID_SET, true);
@@ -292,11 +305,10 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
    * @param processDefinitionId the id of the process definition
    */
   public void deleteSubscriptionsForProcessDefinition(String processDefinitionId) {
-    List<EventSubscriptionEntity> eventSubscriptionsToRemove = new ArrayList<>();
     // remove message event subscriptions:
     List<EventSubscriptionEntity> messageEventSubscriptions = getEventSubscriptionManager()
       .findEventSubscriptionsByConfiguration(EventType.MESSAGE.name(), processDefinitionId);
-    eventSubscriptionsToRemove.addAll(messageEventSubscriptions);
+    List<EventSubscriptionEntity> eventSubscriptionsToRemove = new ArrayList<>(messageEventSubscriptions);
 
     // remove signal event subscriptions:
     List<EventSubscriptionEntity> signalEventSubscriptions = getEventSubscriptionManager().findEventSubscriptionsByConfiguration(EventType.SIGNAL.name(), processDefinitionId);
@@ -406,37 +418,37 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
   }
 
   @Override
-  public ProcessDefinitionEntity findLatestDefinitionByKey(String key) {
+  public @Nullable ProcessDefinitionEntity findLatestDefinitionByKey(String key) {
     return findLatestProcessDefinitionByKey(key);
   }
 
   @Override
-  public ProcessDefinitionEntity findLatestDefinitionById(String id) {
+  public @Nullable ProcessDefinitionEntity findLatestDefinitionById(String id) {
     return findLatestProcessDefinitionById(id);
   }
 
   @Override
-  public ProcessDefinitionEntity getCachedResourceDefinitionEntity(String definitionId) {
+  public @Nullable ProcessDefinitionEntity getCachedResourceDefinitionEntity(String definitionId) {
     return getDbEntityManager().getCachedEntity(ProcessDefinitionEntity.class, definitionId);
   }
 
   @Override
-  public ProcessDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  public @Nullable ProcessDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return findLatestProcessDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 
   @Override
-  public ProcessDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId) {
+  public @Nullable ProcessDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey, @Nullable Integer definitionVersion, @Nullable String tenantId) {
     return findProcessDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId);
   }
 
   @Override
-  public ProcessDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId) {
+  public @Nullable ProcessDefinitionEntity findDefinitionByKeyVersionTagAndTenantId(String definitionKey, @Nullable String definitionVersionTag, @Nullable String tenantId) {
     return findProcessDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId);
   }
 
   @Override
-  public ProcessDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  public @Nullable ProcessDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     return findProcessDefinitionByDeploymentAndKey(deploymentId, definitionKey);
   }
 }

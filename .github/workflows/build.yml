@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - release/**
+      - staging/**
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'
@@ -14,6 +15,7 @@ on:
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
       - '.github/auto-merge.config.yml'
+      - '.claude/**'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -21,24 +23,6 @@ on:
       - 'LICENSE'
       - 'NOTICE'
       - 'jreleaser.yml'
-  pull_request:
-    branches:
-      - main
-      - release/**
-    paths-ignore:
-      - '.github/workflows/**'
-      - '!.github/workflows/build.yml'
-      - '.github/jreleaser/changelog.tpl'
-      - '.github/ISSUE_TEMPLATE/**'
-      - '.github/PULL_REQUEST_TEMPLATE/**'
-      - '.github/dependabot.yml'
-      - '.github/auto-merge.config.yml'
-      - '**/*.md'
-      - 'distro/**'
-      - 'settings/**'
-      - '.gitingore'
-      - 'LICENSE'
-      - 'NOTICE'
   workflow_dispatch:
     inputs:
       profile:
@@ -74,23 +58,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint-adr:
-    name: Lint ADRs
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v6.0.3
-        with:
-          sparse-checkout: |
-            docs/decisions
-      - name: Lint ADR files
-        # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@ded1f9488f68a970bc66ea5619e13e9b52e601cd
-        with:
-          globs: |
-            docs/decisions/*.md
 
   build:
     name: Build
@@ -99,25 +66,64 @@ jobs:
       contents: read
       checks: write
       actions: write
+    env:
+      # Build cache, but never for a max-profile or a skip_tests run.
+      #
+      # Restoring a module skips its Surefire and JaCoCo executions and replays
+      # the stored surefire-reports instead. For an ordinary push that is the
+      # point. For the nightly it is not: the nightly exists to re-run
+      # everything and surface non-determinism, and a module unchanged since the
+      # last default-branch build would never be tested again. Both flaky
+      # failures found in August 2026 - the missing reactor edge in
+      # quarkus-extension and the fixed Jetty port in webapps/assembly - sat in
+      # unchanged modules and would have been restored rather than run.
+      #
+      # Keyed on the profile, not on github.event_name: nightly-trigger.yml
+      # dispatches this workflow with profile=max, and a manual dispatch used to
+      # reproduce a nightly failure passes the same value. Keying on the event
+      # would make that reproduction behave differently from the run it is meant
+      # to reproduce.
+      #
+      # The skip_tests opt-out is about what such a run leaves behind: module
+      # artifacts with no surefire-reports beside them. Saving those would
+      # hand pr-build.yml modules it restores instead of tests, leaving the
+      # Publish Test Report gate below with no results for them - a red PR whose
+      # cause sits in an unrelated dispatch from days earlier. Restoring is
+      # disabled along with saving: a restored module contributes reports the
+      # run was explicitly asked not to produce.
+      #
+      # Consequence: pushes (profile=normal, skip_tests unset) produce the cache
+      # that pr-build.yml restores; max and skip_tests runs neither read nor
+      # write it.
+      USE_BUILD_CACHE: ${{ (github.event.inputs.profile || 'normal') != 'max' && github.event.inputs.skip_tests != 'true' }}
+      # Only main and release branches write caches.
+      CACHE_WRITES: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/') }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - name: Cache Maven packages
-        uses: actions/cache@v5
+          persist-credentials: false
+      - name: Restore Maven packages
+        id: m2-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v5
+      # Sole producer of the Maven build cache, for the same reason this job is
+      # the sole m2-cache producer: entries written from a PR branch are
+      # readable only by that PR, so only a default-branch job can populate a
+      # cache that PR builds are able to restore.
+      - name: Restore Maven build cache
+        if: env.USE_BUILD_CACHE == 'true'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          path: ~/.m2/build-cache
+          key: "${{ runner.os }}-build-cache-${{ github.sha }}"
+          restore-keys: ${{ runner.os }}-build-cache-
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0  # zizmor: ignore[cache-poisoning]
         with:
           node-version: 24
           cache: 'npm'
@@ -125,10 +131,15 @@ jobs:
           # This ensures the cache is unique based on ANY lock file change
           cache-dependency-path: '**/package-lock.json'
       - name: Setup mvnd
-        uses: ./.github/actions/mvnd-setup
+        uses: $/.github/actions/mvnd-setup
       - name: Maven Build
         id: maven-build
         shell: bash
+        env:
+          INPUT_PROFILE: ${{ github.event.inputs.profile || 'normal' }}
+          INPUT_RUNNER: ${{ github.event.inputs.runner || 'mvnd' }}
+          INPUT_REPORTS: ${{ github.event.inputs.reports || 'false' }}
+          INPUT_SKIP_TESTS: ${{ github.event.inputs.skip_tests || 'false' }}
         run: |
           .github/scripts/jacoco-create-flag-files.sh
 
@@ -136,45 +147,146 @@ jobs:
           BUILD_CMD=".devenv/scripts/build/build.sh"
 
           # Add profile parameter
-          PROFILE="${{ github.event.inputs.profile || 'normal' }}"
+          PROFILE="${INPUT_PROFILE}"
           BUILD_CMD="$BUILD_CMD --profile=$PROFILE"
 
           # Add runner parameter
-          RUNNER="${{ github.event.inputs.runner || 'mvnd' }}"
+          RUNNER="${INPUT_RUNNER}"
           BUILD_CMD="$BUILD_CMD --runner=$RUNNER"
 
           # Add reports flag if enabled
-          REPORTS="${{ github.event.inputs.reports || 'false' }}"
+          REPORTS="${INPUT_REPORTS}"
           if [ "$REPORTS" = "true" ]; then
             BUILD_CMD="$BUILD_CMD --reports"
           fi
 
           # Add skip-tests flag if enabled
-          SKIP_TESTS="${{ github.event.inputs.skip_tests || 'false' }}"
+          SKIP_TESTS="${INPUT_SKIP_TESTS}"
           if [ "$SKIP_TESTS" = "true" ]; then
             BUILD_CMD="$BUILD_CMD --skip-tests"
+          fi
+
+          # Restored modules keep reporting: .mvn/maven-build-cache-config.xml
+          # caches surefire-reports, site/jacoco and classes alongside the
+          # artifact, so this job stays the authoritative source of test and
+          # coverage data even when most of the reactor is restored.
+          # See USE_BUILD_CACHE at the job level for why max and skip_tests runs
+          # opt out.
+          BUILD_CMD="$BUILD_CMD -Dmaven.build.cache.enabled=${USE_BUILD_CACHE}"
+          if [ "$USE_BUILD_CACHE" != "true" ]; then
+            echo "ℹ️ profile=$PROFILE, skip_tests=$SKIP_TESTS — build cache off, nothing is restored or saved"
           fi
 
           echo "ℹ️ Executing: $BUILD_CMD"
           $BUILD_CMD
 
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
-      - name: Publish Test Report
+      - name: Build cache statistics
         if: always()
-        uses: mikepenz/action-junit-report@3a81627bfac62268172037048872e8ebd4207e6d #v6.4.1
-        continue-on-error: true
+        shell: bash
+        run: |
+          echo "build cache size: $(du -sh ~/.m2/build-cache 2>/dev/null | cut -f1 || echo none)"
+          echo "cached module builds: $(find ~/.m2/build-cache -name buildinfo.xml 2>/dev/null | wc -l)"
+      # A max run builds with the extension disabled, so nothing new lands in
+      # ~/.m2/build-cache. Saving would burn a fresh sha-keyed entry in the
+      # shared 10 GB pool for no content.
+      - name: Save Maven build cache
+        if: env.USE_BUILD_CACHE == 'true' && env.CACHE_WRITES == 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.m2/build-cache
+          key: "${{ runner.os }}-build-cache-${{ github.sha }}"
+      # require_passed_tests turns an empty report set into a failure, which is
+      # what we want for a normal build - see the build cache notes above, a
+      # restored module has to bring its reports with it. A skip_tests dispatch
+      # legitimately produces none, so it skips the gate rather than failing it.
+      - name: Publish Test Report
+        if: always() && github.event.inputs.skip_tests != 'true'
+        uses: mikepenz/action-junit-report@a9170d5795813c01ab4901ffb045b52bab4ab09d #v6.5.0
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
           retention-days: 30
+      - name: Stage build output for Sonar analysis
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
+        shell: bash
+        run: find . -type d -name target -not -path '*/node_modules/*' -print0 | tar -czf /tmp/sonar-workspace.tar.gz --null -T -
+      - name: Upload Sonar workspace artifact
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sonar-workspace
+          path: /tmp/sonar-workspace.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+      - name: Cache build artifacts
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            distro/**/target/operaton-*.gz
+            distro/webjar/target/operaton-webapp-webjar-*.jar
+          key: ${{ github.run_id }}-build-artifacts
+      # This job is the only m2-cache producer: cache entries written from PR
+      # branches are readable only by that same PR, so PR-side writes just fill
+      # the shared 10 GB pool (the LRU evictions behind the recurring nightly
+      # failures). All other jobs restore-only. The freshly installed
+      # org/operaton artifacts are purged before saving — restoring them into
+      # later builds would make them accidentally incremental and can mask
+      # stale-artifact bugs.
+      - name: Purge Operaton artifacts before cache save
+        if: steps.m2-cache.outputs.cache-hit != 'true' && env.CACHE_WRITES == 'true'
+        run: rm -rf ~/.m2/repository/org/operaton
+      - name: Save Maven packages
+        if: steps.m2-cache.outputs.cache-hit != 'true' && env.CACHE_WRITES == 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+
+  static-analysis:
+    name: Static Code Analysis
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Restore Maven packages
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      # Restore+save needed for incremental SonarCloud analysis; this job only
+      # runs on push to main/release or a maintainer-triggered workflow_dispatch
+      # of build.yml, both of which already require repo write access.
+      - name: Cache SonarCloud packages
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0  # zizmor: ignore[cache-poisoning]
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Download Sonar workspace artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: sonar-workspace
+          path: /tmp
+      - name: Restore build output
+        run: tar -xzf /tmp/sonar-workspace.tar.gz
       - name: Sonarqube Analysis
-        if: env.SONAR_TOKEN && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
+        # SONAR_TOKEN is not available on PRs from forks — the step skips itself there
+        if: env.SONAR_TOKEN
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -182,22 +294,9 @@ jobs:
         run: |
           ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=operaton_operaton \
-          -Dsonar.exclusions=webapps/assembly/**,\
-              qa/performance-tests-engine/**,\
-              qa/integration-tests-webapps/**,\
-              qa/integration-tests-engine/** \
-          -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
-              qa/integration-tests-webapps/**,\
-              qa/integration-tests-engine/**,\
-              webapps/**
+          "-Dsonar.exclusions=webapps/assembly/**,webapps-neo/assembly/**,qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**" \
+          "-Dsonar.coverage.exclusions=qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**,webapps/**"
         continue-on-error: true
-      - name: Cache build artifacts
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            distro/**/target/operaton-*.gz
-            distro/webjar/target/operaton-webapp-webjar-*.jar
-          key: ${{ github.run_id }}-build-artifacts
 
   publish:
     name: Publish
@@ -211,12 +310,13 @@ jobs:
     continue-on-error: true
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Restore build artifacts cache
         id: restore-build-artifacts
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             distro/**/target/operaton-*.gz
@@ -235,10 +335,24 @@ jobs:
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
         continue-on-error: true
         run: gh cache delete ${{ github.run_id }}-build-artifacts
+      # The Maven build cache is saved under a new sha-keyed entry per default
+      # branch build, so without pruning it would accumulate in the shared
+      # 10 GB pool and evict the m2 and sonar caches. Keep the newest only.
+      - name: Prune superseded Maven build caches
+        continue-on-error: true
+        run: |
+          gh cache list --limit 100 --json id,key,createdAt \
+            | jq -r --arg prefix "${{ runner.os }}-build-cache-" \
+                '[.[] | select(.key | startswith($prefix))]
+                 | sort_by(.createdAt) | reverse | .[1:] | .[].id' \
+            | while read -r cache_id; do
+                echo "deleting superseded build cache $cache_id"
+                gh cache delete "$cache_id"
+              done
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
@@ -247,7 +361,7 @@ jobs:
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-*.tar.gz

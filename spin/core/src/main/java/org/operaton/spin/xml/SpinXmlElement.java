@@ -36,7 +36,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param attributeName the name of the attribute
    * @return true if the element has an attribute with this name under the local namespace, false otherwise
-   * @throws IllegalArgumentException if the attributeName is null
+   * @throws IllegalArgumentException if the attributeName is {@code null}
    */
   public abstract boolean hasAttr(String attributeName);
 
@@ -45,7 +45,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param attributeName the name of the attribute
    * @return the wrapped {@link SpinXmlAttribute attribute}
-   * @throws IllegalArgumentException if the attributeName is null
+   * @throws IllegalArgumentException if the attributeName is {@code null}
    * @throws SpinXmlAttributeException if the attribute is not found
    */
   public abstract SpinXmlAttribute attr(String attributeName);
@@ -56,7 +56,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param attributeName the name of the attribute
    * @param value the value to set
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the attributeName or value is null
+   * @throws IllegalArgumentException if the attributeName or value is {@code null}
    */
   public abstract SpinXmlElement attr(String attributeName, String value);
 
@@ -65,7 +65,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param attributeName the name of the attribute
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the attributeName is null
+   * @throws IllegalArgumentException if the attributeName is {@code null}
    */
   public abstract SpinXmlElement removeAttr(String attributeName);
 
@@ -75,7 +75,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param namespace the namespace of the attribute
    * @param attributeName the name of the attribute
    * @return true if the element has an attribute with this name under given namespace, false otherwise
-   * @throws IllegalArgumentException if the attributeName is null
+   * @throws IllegalArgumentException if the attributeName is {@code null}
    */
   public abstract boolean hasAttrNs(String namespace, String attributeName);
 
@@ -85,7 +85,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param namespace the namespace of the attribute
    * @param attributeName the name of the attribute
    * @return the wrapped {@link SpinXmlAttribute attribute}
-   * @throws IllegalArgumentException if attributeName or value is null
+   * @throws IllegalArgumentException if attributeName or value is {@code null}
    * @throws SpinXmlElementImplementationException if the attribute cannot be set in the underlying implementation
    */
   public abstract SpinXmlAttribute attrNs(String namespace, String attributeName);
@@ -97,7 +97,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param attributeName the name of the attribute
    * @param value the value to set
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if attributeName or value is null
+   * @throws IllegalArgumentException if attributeName or value is {@code null}
    * @throws SpinXmlElementImplementationException if the attribute cannot be set in the underlying implementation
    */
   public abstract SpinXmlElement attrNs(String namespace, String attributeName, String value);
@@ -108,7 +108,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param namespace the namespace of the attribute
    * @param attributeName the name of the attribute
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the attributeName is null
+   * @throws IllegalArgumentException if the attributeName is {@code null}
    */
   public abstract SpinXmlElement removeAttrNs(String namespace, String attributeName);
 
@@ -152,7 +152,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * Sets the text content of an element.
    * @param textContent the text content to set
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the textContent is null
+   * @throws IllegalArgumentException if the textContent is {@code null}
    */
   public abstract SpinXmlElement textContent(String textContent);
 
@@ -162,7 +162,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param elementName the element name
    * @return the wrapped child {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the elementName is null
+   * @throws IllegalArgumentException if the elementName is {@code null}
    * @throws SpinXmlElementException if none or more than one child element is found
    */
   public abstract SpinXmlElement childElement(String elementName);
@@ -174,7 +174,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param namespace the namespace of the element
    * @param elementName the element name
    * @return the wrapped child {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the elementName is null
+   * @throws IllegalArgumentException if the elementName is {@code null}
    * @throws SpinXmlElementException if none or more than one child element is found
    */
   public abstract SpinXmlElement childElement(String namespace, String elementName);
@@ -192,7 +192,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param elementName the element name
    * @return a collection of wrapped {@link SpinXmlElement elements}
-   * @throws IllegalArgumentException if the element name is null
+   * @throws IllegalArgumentException if the element name is {@code null}
    * @throws SpinXmlElementException if no child element was found
    */
   public abstract SpinList<SpinXmlElement> childElements(String elementName);
@@ -203,7 +203,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param namespace the namespace of the element
    * @param elementName the element name
    * @return a collection of wrapped {@link SpinXmlElement elements}
-   * @throws IllegalArgumentException if the element name is null
+   * @throws IllegalArgumentException if the element name is {@code null}
    * @throws SpinXmlElementException if no child element was found
    */
   public abstract SpinList<SpinXmlElement> childElements(String namespace, String elementName);
@@ -213,7 +213,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param childElements the child elements to append
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the childElements is null or one of them
+   * @throws IllegalArgumentException if the childElements is {@code null} or one of them
    * @throws SpinXmlElementImplementationException if a child element cannot be appended in the underlying implementation
    */
   public abstract SpinXmlElement append(SpinXmlElement... childElements);
@@ -223,7 +223,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param childElements the child elements to append
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the childElements is null or one of them
+   * @throws IllegalArgumentException if the childElements is {@code null} or one of them
    * @throws SpinXmlElementImplementationException if a child element cannot be appended in the underlying implementation
    */
   public abstract SpinXmlElement append(Collection<SpinXmlElement> childElements);
@@ -234,7 +234,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param childElement the child element to append
    * @param existingChildElement the child element to append before
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the child element or existing child element is null
+   * @throws IllegalArgumentException if the child element or existing child element is {@code null}
    * @throws SpinXmlElementException if the existing child element is not a child of this element
    * @throws SpinXmlElementImplementationException if the new child element cannot be inserted in the underlying implementation
    */
@@ -246,7 +246,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param childElement the child element to append
    * @param existingChildElement the child element to append after
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the child element or existing child element is null
+   * @throws IllegalArgumentException if the child element or existing child element is {@code null}
    * @throws SpinXmlElementException if the existing child element is not a child of this element
    * @throws SpinXmlElementImplementationException if the new child element cannot be inserted in the underlying implementation
    */
@@ -257,7 +257,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param childElements the child elements to remove
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if child elements is null or any of them
+   * @throws IllegalArgumentException if child elements is {@code null} or any of them
    * @throws SpinXmlElementException if one of the child elements does not exist
    * @throws SpinXmlElementImplementationException if the child element cannot be removed in the underlying implementation
    */
@@ -268,7 +268,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param childElements the child elements to remove
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if child elements is null or any of them
+   * @throws IllegalArgumentException if child elements is {@code null} or any of them
    * @throws SpinXmlElementException if one of the child elements does not exist
    * @throws SpinXmlElementImplementationException if the child element cannot be removed in the underlying implementation
    */
@@ -279,7 +279,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    *
    * @param newChildElement the new element
    * @return the new wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if the new element is null or has the wrong type
+   * @throws IllegalArgumentException if the new element is {@code null} or has the wrong type
    * @throws SpinXmlElementException if this element has no parent element
    * @throws SpinXmlElementImplementationException if the element cannot be replaced in the underlying implementation
    */
@@ -291,7 +291,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param existingChildElement the existing child element to replace
    * @param newChildElement the new child element
    * @return the wrapped {@link SpinXmlElement element}
-   * @throws IllegalArgumentException if any of the child elements is null
+   * @throws IllegalArgumentException if any of the child elements is {@code null}
    * @throws SpinXmlElementException if the existing element is not a child element of this
    * @throws SpinXmlElementImplementationException if the child cannot be replaced in the underlying implementation
    */

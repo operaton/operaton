@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnCaseInstance;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
@@ -37,10 +39,10 @@ import static org.operaton.bpm.engine.impl.util.CallableElementUtil.getCaseDefin
  * @author Roman Smirnov
  *
  */
-public class CaseCallActivityBehavior extends CallableElementActivityBehavior implements MigrationObserverBehavior {
+public @NullMarked class CaseCallActivityBehavior extends CallableElementActivityBehavior implements MigrationObserverBehavior {
 
   @Override
-  protected void startInstance(ActivityExecution execution, VariableMap variables, String businessKey) {
+  protected void startInstance(ActivityExecution execution, VariableMap variables, @Nullable String businessKey) {
     ExecutionEntity executionEntity = (ExecutionEntity) execution;
 
     CmmnCaseDefinition definition = getCaseDefinitionToCall(executionEntity,

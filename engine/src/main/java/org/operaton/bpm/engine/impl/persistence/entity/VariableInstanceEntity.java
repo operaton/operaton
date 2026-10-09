@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.application.InvocationContext;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -111,7 +113,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   protected boolean isConcurrentLocal;
 
   /**
-   * Determines whether this variable is stored in the data base.
+   * Determines whether this variable is stored in the database.
    */
   protected boolean isTransient;
 
@@ -226,7 +228,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     this.caseExecutionId = caseExecutionId;
   }
 
-  public void setCaseExecution(CaseExecutionEntity caseExecution) {
+  public void setCaseExecution(@Nullable CaseExecutionEntity caseExecution) {
     if (caseExecution != null) {
       this.caseInstanceId = caseExecution.getCaseInstanceId();
       this.caseExecutionId = caseExecution.getId();
@@ -241,7 +243,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   // byte array value /////////////////////////////////////////////////////////
 
-  // i couldn't find a easy readable way to extract the common byte array value logic
+  // I couldn't find an easy readable way to extract the common byte array value logic
   // into a common class.  therefor it's duplicated in VariableInstanceEntity,
   // HistoricVariableInstance and HistoricDetailVariableInstanceUpdateEntity
 
@@ -359,7 +361,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     return execution;
   }
 
-  public void setExecution(ExecutionEntity execution) {
+  public void setExecution(@Nullable ExecutionEntity execution) {
     this.execution = execution;
 
     if (execution == null) {
@@ -379,7 +381,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   // case execution ///////////////////////////////////////////////////////////
 
-  public CaseExecutionEntity getCaseExecution() {
+  public @Nullable CaseExecutionEntity getCaseExecution() {
     if (caseExecutionId != null) {
       return Context
           .getCommandContext()
@@ -515,7 +517,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     this.batchId = batchId;
   }
 
-  public void setTask(TaskEntity task) {
+  public void setTask(@Nullable TaskEntity task) {
     if (task != null) {
       this.taskId = task.getId();
       this.tenantId = task.getTenantId();
@@ -701,18 +703,15 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     }
     VariableInstanceEntity other = (VariableInstanceEntity) obj;
     if (id == null) {
-      if (other.id != null) {
-        return false;
-      }
-    } else if (!id.equals(other.id)) {
-      return false;
+      return other.id == null;
+    } else {
+      return id.equals(other.id);
     }
-    return true;
   }
 
   /**
    * @param isTransient
-   *          <code>true</code>, if the variable is not stored in the data base.
+   *          <code>true</code>, if the variable is not stored in the database.
    *          Default is <code>false</code>.
    */
   public void setTransient(boolean isTransient) {
@@ -721,7 +720,7 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
   /**
    * @return <code>true</code>, if the variable is transient. A transient
-   *         variable is not stored in the data base.
+   *         variable is not stored in the database.
    */
   public boolean isTransient() {
     return isTransient;

@@ -17,7 +17,6 @@
 package org.operaton.bpm.dmn.feel.impl.juel.transform;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;
@@ -45,7 +44,7 @@ public class ListTransformer implements FeelToJuelTransformer {
   }
 
   private List<String> splitExpression(String feelExpression) {
-    return Arrays.asList(feelExpression.split(COMMA_SEPARATOR_REGEX, -1));
+    return List.of(feelExpression.split(COMMA_SEPARATOR_REGEX, -1));
   }
 
   protected List<String> transformExpressions(FeelToJuelTransform transform, String feelExpression, String inputName) {

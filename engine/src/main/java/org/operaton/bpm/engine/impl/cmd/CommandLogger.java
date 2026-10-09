@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Arrays;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.impl.util.ClassNameUtil;
  * @author Daniel Meyer
  *
  */
-public class CommandLogger extends ProcessEngineLogger {
+public @NullMarked class CommandLogger extends ProcessEngineLogger {
 
 
   public void debugCreatingNewDeployment() {

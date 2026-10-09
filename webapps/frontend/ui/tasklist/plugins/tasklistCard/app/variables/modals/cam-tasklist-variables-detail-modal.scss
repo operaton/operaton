@@ -1,7 +1,9 @@
+@use "sass:color";
+
 .variable-modal-detail {
   .variable-type {
     display: inline;
-    border: 1px solid darken($gray-lighter, 5%);
+    border: 1px solid color.adjust($gray-lighter, $lightness: -5%);
     background-color: $gray-lighter;
     padding: 1px 3px;
     font-family: monospace;

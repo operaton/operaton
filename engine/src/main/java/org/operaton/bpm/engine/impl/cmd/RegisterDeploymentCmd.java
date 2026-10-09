@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Thorben Lindhauer
  */
-public class RegisterDeploymentCmd implements Command<Void> {
+public @NullMarked class RegisterDeploymentCmd implements Command<Void> {
 
   protected String deploymentId;
 
@@ -36,7 +39,7 @@ public class RegisterDeploymentCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     Deployment deployment = commandContext.getDeploymentManager().findDeploymentById(deploymentId);
 
     ensureNotNull("Deployment %s does not exist".formatted(deploymentId), "deployment", deployment);

@@ -56,7 +56,7 @@ public class StopProcessApplicationsStep extends DeploymentOperationStep {
   }
 
   /**
-   * <p> Stops a process application. Exceptions are logged but not re-thrown).
+   * Stops a process application. Exceptions are logged but not re-thrown).
    *
    * @param processApplicationReference
    */

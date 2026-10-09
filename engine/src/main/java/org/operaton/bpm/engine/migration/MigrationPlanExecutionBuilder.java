@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.migration;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
@@ -39,7 +40,7 @@ public interface MigrationPlanExecutionBuilder {
   /**
    * @param processInstanceIds the process instance ids to migrate.
    */
-  MigrationPlanExecutionBuilder processInstanceIds(String... processInstanceIds);
+  MigrationPlanExecutionBuilder processInstanceIds(@Nullable String @Nullable... processInstanceIds);
 
   /**
    * @param processInstanceQuery a query which selects the process instances to migrate.

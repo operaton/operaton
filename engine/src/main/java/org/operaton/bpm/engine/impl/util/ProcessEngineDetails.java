@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.util;
 /**
  * Holds process engine version and edition (enterprise or community)
  * Used in retrieving the process engine details for diagnostics data
+ *
+ * @deprecated There is no enterprise edition anymore. References to this class will be removed.
  */
+@Deprecated(forRemoval = true, since = "2.2")
 public class ProcessEngineDetails {
 
   public static final String EDITION_ENTERPRISE = "enterprise";

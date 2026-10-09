@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.parser.ConditionalEventDefinition;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class IntermediateConditionalEventBehavior extends IntermediateCatchEventActivityBehavior implements ConditionalEventBehavior {
+public @NullMarked class IntermediateConditionalEventBehavior extends IntermediateCatchEventActivityBehavior implements ConditionalEventBehavior {
 
   protected final ConditionalEventDefinition conditionalEvent;
 
@@ -49,7 +51,7 @@ public class IntermediateConditionalEventBehavior extends IntermediateCatchEvent
   }
 
   @Override
-  public void leaveOnSatisfiedCondition(final EventSubscriptionEntity eventSubscription, final VariableEvent variableEvent) {
+  public void leaveOnSatisfiedCondition(final EventSubscriptionEntity eventSubscription, final @Nullable VariableEvent variableEvent) {
     PvmExecutionImpl execution = eventSubscription.getExecution();
 
     if (execution != null && !execution.isEnded()

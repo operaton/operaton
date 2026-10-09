@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.util.migration;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class MigrationExecutionDtoBuilder {
   }
 
   public MigrationExecutionDtoBuilder processInstances(String... processInstanceIds) {
-    migrationExecution.put(PROP_PROCESS_INSTANCE_IDS, Arrays.asList(processInstanceIds));
+    migrationExecution.put(PROP_PROCESS_INSTANCE_IDS, List.of(processInstanceIds));
     return this;
   }
 

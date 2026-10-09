@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
 
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.SpinRuntimeException;
@@ -59,7 +58,7 @@ class JsonDeserializationValidationTest {
     format.getMapper().validateType(type, validator);
 
     // then
-    Mockito.verifyNoInteractions(validator);
+    verifyNoInteractions(validator);
   }
 
   @Test
@@ -193,8 +192,8 @@ class JsonDeserializationValidationTest {
   }
 
   protected DeserializationTypeValidator createValidatorMock(boolean result) {
-    DeserializationTypeValidator newValidator = Mockito.mock(DeserializationTypeValidator.class);
-    Mockito.when(newValidator.validate(Mockito.anyString())).thenReturn(result);
+    DeserializationTypeValidator newValidator = mock(DeserializationTypeValidator.class);
+    when(newValidator.validate(anyString())).thenReturn(result);
     return newValidator;
   }
 }

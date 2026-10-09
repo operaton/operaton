@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.externaltask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,10 +120,10 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
 
   @Override
   public ExternalTaskQueryTopicBuilder variables(String... variables) {
-    // don't use plain Arrays.asList since this returns an instance of a different list class
+    // don't use plain List.of since this returns an instance of a different list class
     // that is private and may mess mybatis queries up
     if (variables != null) {
-      currentInstruction.setVariablesToFetch(new ArrayList<>(Arrays.asList(variables)));
+      currentInstruction.setVariablesToFetch(new ArrayList<>(List.of(variables)));
     }
     return this;
   }

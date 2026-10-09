@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler;
@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.test.cmmn.handler.specification.ScriptExecutionLi
 public final class ExecutionListenerCases {
 
   public static final Iterable<Object[]> TASK_OR_STAGE_CASES =
-      Arrays.asList(new Object[][] {
+      List.of(new Object[][] {
           // class delegate
           {new ClassExecutionListenerSpec(CaseExecutionListener.CREATE)},
           {new ClassExecutionListenerSpec(CaseExecutionListener.ENABLE)},
@@ -127,7 +127,7 @@ public final class ExecutionListenerCases {
 
 
   public static final Iterable<Object[]> EVENTLISTENER_OR_MILESTONE_CASES =
-      Arrays.asList(new Object[][] {
+      List.of(new Object[][] {
           // class delegate
           {new ClassExecutionListenerSpec(CaseExecutionListener.CREATE)},
           {new ClassExecutionListenerSpec(CaseExecutionListener.SUSPEND)},
@@ -196,7 +196,7 @@ public final class ExecutionListenerCases {
       });
 
   public static final Iterable<Object[]> CASE_PLAN_MODEL_CASES =
-      Arrays.asList(new Object[][] {
+      List.of(new Object[][] {
           // class delegate
           {new ClassExecutionListenerSpec(CaseExecutionListener.CREATE)},
           {new ClassExecutionListenerSpec(CaseExecutionListener.COMPLETE)},

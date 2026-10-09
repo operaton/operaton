@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.spring;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 
@@ -26,6 +27,7 @@ import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
  *
  * @author Svetlana Dorokhova
  */
+@NullMarked
 public class SpringArtifactFactory implements ArtifactFactory {
 
   private final ArtifactFactory defaultArtifactFactory = new DefaultArtifactFactory();

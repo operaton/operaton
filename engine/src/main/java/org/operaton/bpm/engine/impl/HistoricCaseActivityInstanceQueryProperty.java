@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstanceQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
-
 
 /**
  * Contains the possible properties which can be used in a {@link HistoricCaseActivityInstanceQuery}.
  *
  * @author Sebastian Menski
  */
-final class HistoricCaseActivityInstanceQueryProperty {
+final @NullMarked class HistoricCaseActivityInstanceQueryProperty {
 
   public static final QueryProperty HISTORIC_CASE_ACTIVITY_INSTANCE_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty CASE_INSTANCE_ID = new QueryPropertyImpl("CASE_INST_ID_");

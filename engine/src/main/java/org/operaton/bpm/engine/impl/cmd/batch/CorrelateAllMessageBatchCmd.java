@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -43,10 +45,10 @@ import org.operaton.commons.utils.CollectionUtil;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
-public class CorrelateAllMessageBatchCmd implements Command<Batch> {
+public @NullMarked class CorrelateAllMessageBatchCmd implements Command<Batch> {
 
   protected String messageName;
-  protected Map<String, Object> variables;
+  protected @Nullable Map<String, Object> variables;
 
   protected List<String> processInstanceIds;
   protected ProcessInstanceQuery processInstanceQuery;

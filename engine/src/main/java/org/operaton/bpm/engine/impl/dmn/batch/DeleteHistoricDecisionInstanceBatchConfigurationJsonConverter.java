@@ -20,13 +20,14 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public class DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter extends AbstractBatchConfigurationObjectConverter<BatchConfiguration> {
+public @NullMarked class DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter extends AbstractBatchConfigurationObjectConverter<BatchConfiguration> {
 
   public static final String HISTORIC_DECISION_INSTANCE_IDS = "historicDecisionInstanceIds";
   public static final String HISTORIC_DECISION_INSTANCE_ID_MAPPINGS = "historicDecisionInstanceIdMappingss";

@@ -17,14 +17,17 @@
 package org.operaton.bpm.engine.impl.bpmn.diagram;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.xpath.XPath;
+
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 
 /**
@@ -36,7 +39,7 @@ import javax.xml.xpath.XPath;
  *
  * @author Falko Menge
  */
-public class Bpmn20NamespaceContext implements NamespaceContext {
+public @NullMarked class Bpmn20NamespaceContext implements NamespaceContext {
 
   public static final String BPMN = "bpmn";
   public static final String BPMNDI = "bpmndi";
@@ -56,12 +59,12 @@ public class Bpmn20NamespaceContext implements NamespaceContext {
   }
 
   @Override
-  public String getNamespaceURI(String prefix) {
+  public @Nullable String getNamespaceURI(String prefix) {
     return namespaceUris.get(prefix);
   }
 
   @Override
-  public String getPrefix(String namespaceURI) {
+  public @Nullable String getPrefix(String namespaceURI) {
     return getKeyByValue(namespaceUris, namespaceURI);
   }
 
@@ -71,16 +74,13 @@ public class Bpmn20NamespaceContext implements NamespaceContext {
   }
 
   private static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-    Set<T> keys = new HashSet<>();
-    for (Entry<T, E> entry : map.entrySet()) {
-      if (value.equals(entry.getValue())) {
-        keys.add(entry.getKey());
-      }
-    }
-    return keys;
+    return map.entrySet().stream()
+        .filter(entry -> value.equals(entry.getValue()))
+        .map(Entry::getKey)
+        .collect(Collectors.toSet());
   }
 
-  private static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+  private static <T, E> @Nullable T getKeyByValue(Map<T, E> map, E value) {
     for (Entry<T, E> entry : map.entrySet()) {
       if (value.equals(entry.getValue())) {
         return entry.getKey();

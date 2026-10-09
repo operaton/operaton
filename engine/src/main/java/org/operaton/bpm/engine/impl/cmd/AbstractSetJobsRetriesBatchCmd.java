@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -37,10 +39,11 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 /**
  * @author Askar Akhmerov
  */
+@NullMarked
 public abstract class AbstractSetJobsRetriesBatchCmd implements Command<Batch> {
 
   protected int retries;
-  protected Date dueDate;
+  protected @Nullable Date dueDate;
   protected boolean isDueDateSet;
 
   @Override

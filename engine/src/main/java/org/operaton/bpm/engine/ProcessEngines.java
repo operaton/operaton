@@ -24,8 +24,9 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +34,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.operaton.bpm.engine.impl.ProcessEngineInfoImpl;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
@@ -151,7 +154,7 @@ public final class ProcessEngines {
    */
   @Deprecated(since = "1.1", forRemoval = true)
   @SuppressWarnings("java:S1133")
-  protected static void initProcessEngineFromSpringResource(URL resource) {
+  static void initProcessEngineFromSpringResource(URL resource) {
     try {
       initProcessEngineFromSpringResource(resource.toURI());
     } catch (URISyntaxException e) {
@@ -230,7 +233,7 @@ public final class ProcessEngines {
       PROCESS_ENGINE_INFOS_BY_NAME.put(processEngineName, processEngineInfo);
     } catch (RuntimeException e) {
       LOG.exceptionWhileInitializingProcessengine(e);
-      processEngineInfo = new ProcessEngineInfoImpl(null, resourceUrlString, getExceptionString(e));
+      processEngineInfo = new ProcessEngineInfoImpl("<uninitialized>", resourceUrlString, getExceptionString(e));
     }
     PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.put(resourceUrlString, processEngineInfo);
     PROCESS_ENGINE_INFOS.add(processEngineInfo);
@@ -272,29 +275,30 @@ public final class ProcessEngines {
    * {@link ProcessEngineInfo} is available for engines which were registered
    * programmatically.
    */
-  public static ProcessEngineInfo getProcessEngineInfo(String processEngineName) {
+  @SuppressWarnings("unused")
+  public static @Nullable ProcessEngineInfo getProcessEngineInfo(String processEngineName) {
     return PROCESS_ENGINE_INFOS_BY_NAME.get(processEngineName);
   }
 
-  public static ProcessEngine getDefaultProcessEngine() {
+  public static @Nullable ProcessEngine getDefaultProcessEngine() {
     return getDefaultProcessEngine(true);
   }
 
-  public static ProcessEngine getDefaultProcessEngine(boolean forceCreate) {
+  public static @Nullable ProcessEngine getDefaultProcessEngine(boolean forceCreate) {
     return getProcessEngine(NAME_DEFAULT, forceCreate);
   }
 
-  public static ProcessEngine getProcessEngine(String processEngineName) {
+  public static @Nullable ProcessEngine getProcessEngine(String processEngineName) {
     return getProcessEngine(processEngineName, true);
   }
 
   /**
    * obtain a process engine by name.
    *
-   * @param processEngineName is the name of the process engine or null for the
+   * @param processEngineName is the name of the process engine or {@code null} for the
    *                          default process engine.
    */
-  public static ProcessEngine getProcessEngine(String processEngineName, boolean forceCreate) {
+  public static @Nullable ProcessEngine getProcessEngine(String processEngineName, boolean forceCreate) {
     if (!isInitialized) {
       init(forceCreate);
     }
@@ -324,18 +328,14 @@ public final class ProcessEngines {
    */
   public static synchronized void destroy() {
     if (isInitialized) {
-      Map<String, ProcessEngine> engines = new HashMap<>(processEngines);
+      Collection<ProcessEngine> engines = new ArrayList<>(processEngines.values());
       processEngines = new ConcurrentHashMap<>();
 
-      for (var processEngine : engines.values()) {
+      for (var processEngine : engines) {
         try {
           processEngine.close();
         } catch (Exception e) {
-          LOG.exceptionWhileClosingProcessEngine(
-              processEngine.getName() == null
-                  ? "the default process engine"
-                  : "process engine " + processEngine.getName(),
-              e);
+          LOG.exceptionWhileClosingProcessEngine("process engine " + processEngine.getName(), e);
         }
       }
 

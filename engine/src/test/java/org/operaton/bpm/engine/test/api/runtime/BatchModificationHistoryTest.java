@@ -83,12 +83,8 @@ public class BatchModificationHistoryTest {
   }
 
   @BeforeEach
-  void setClock() {
+  void setUp() {
     ClockUtil.setCurrentTime(START_DATE);
-  }
-
-  @BeforeEach
-  void createBpmnModelInstance() {
     this.instance = Bpmn.createExecutableProcess("process1")
         .startEvent("start")
         .userTask("user1")
@@ -96,15 +92,7 @@ public class BatchModificationHistoryTest {
         .userTask("user2")
         .endEvent("end")
         .done();
-  }
-
-  @BeforeEach
-  void initServices() {
     runtimeService = rule.getRuntimeService();
-  }
-
-  @BeforeEach
-  void storeEngineSettings() {
     defaultBatchJobsPerSeed = processEngineConfiguration.getBatchJobsPerSeed();
     defaultInvocationsPerBatchJob = processEngineConfiguration.getInvocationsPerBatchJob();
     defaultEnsureJobDueDateSet = processEngineConfiguration.isEnsureJobDueDateNotNull();
@@ -112,24 +100,12 @@ public class BatchModificationHistoryTest {
   }
 
   @AfterEach
-  void removeInstanceIds() {
+  void tearDown() {
     helper.currentProcessInstances = new ArrayList<>();
-  }
-
-  @AfterEach
-  void removeBatches() {
     helper.removeAllRunningAndHistoricBatches();
-  }
-
-  @AfterEach
-  void restoreEngineSettings() {
     processEngineConfiguration.setBatchJobsPerSeed(defaultBatchJobsPerSeed);
     processEngineConfiguration.setInvocationsPerBatchJob(defaultInvocationsPerBatchJob);
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
-  }
-
-  @AfterEach
-  void resetClock() {
     ClockUtil.reset();
   }
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Create and destroy artifacts of a given class in a container specific way.
  * This SPI hides differences between CDI, Spring, etc.
@@ -35,6 +37,7 @@ package org.operaton.bpm.engine;
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
+@NullMarked
 public interface ArtifactFactory {
   /**
    *

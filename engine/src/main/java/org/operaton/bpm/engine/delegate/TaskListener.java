@@ -19,7 +19,9 @@ package org.operaton.bpm.engine.delegate;
 /**
  * Listener interface implemented by user code which wants to be notified when a property of a task changes.
  *
- * <p>The following Task Events are supported:
+ * <p>
+ * The following Task Events are supported:
+ * </p>
  * <ul>
  * <li>{@link #EVENTNAME_CREATE}</li>
  * <li>{@link #EVENTNAME_ASSIGNMENT}</li>
@@ -28,7 +30,6 @@ package org.operaton.bpm.engine.delegate;
  * <li>{@link #EVENTNAME_DELETE}</li>
  * <li>{@link #EVENTNAME_TIMEOUT}</li>
  * </ul>
- * </p>
  *
  * @author Tom Baeyens
  */

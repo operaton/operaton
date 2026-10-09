@@ -158,10 +158,10 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "Exception while invoking method '{}' on object of type '{}': {}'", methodName, target, e.getMessage()), e);
   }
 
-  public ProcessEngineException unableToAccessField(Field field, String name) {
+  public ProcessEngineException unableToAccessField(String fieldName, String className) {
     return new ProcessEngineException(exceptionMessage(
         "020",
-        "Unable to access field {} on class {}, access protected", field, name));
+        "Unable to access field {} on class {}, access protected", fieldName, className));
   }
 
   public ProcessEngineException unableToAccessMethod(String methodName, String name) {

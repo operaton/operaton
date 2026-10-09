@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.TaskFormData;
@@ -29,13 +30,14 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd {
+public @NullMarked class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd {
   public GetTaskFormVariablesCmd(String taskId, Collection<String> variableNames, boolean deserializeObjectValues) {
     super(taskId, variableNames, deserializeObjectValues);
   }
@@ -46,6 +48,7 @@ public class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd {
     TaskEntity task = taskManager.findTaskById(resourceId);
 
     ensureNotNull(BadUserRequestException.class, "Cannot find task with id '%s'.".formatted(resourceId), "task", task);
+    requireNonNull(task);
 
     checkGetTaskFormVariables(task, commandContext);
 

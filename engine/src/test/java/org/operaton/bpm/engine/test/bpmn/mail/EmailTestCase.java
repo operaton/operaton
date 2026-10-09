@@ -44,7 +44,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
@@ -96,32 +95,27 @@ public abstract class EmailTestCase {
   }
 
   protected void assertEmailSend(String rawEmailMessage, boolean htmlMail, String subject, String message,
-                                     String from, List<String> to, List<String> cc) {
-    try {
-      MimeMessage mimeMessage = createMimeMessageFromRawData(rawEmailMessage);
+                                     String from, List<String> to, List<String> cc) throws MessagingException, IOException {
+    MimeMessage mimeMessage = createMimeMessageFromRawData(rawEmailMessage);
 
-      if (htmlMail) {
-        assertThat(mimeMessage.getContentType()).contains("multipart/mixed");
-      } else {
-        assertThat(mimeMessage.getContentType()).contains("text/plain");
+    if (htmlMail) {
+      assertThat(mimeMessage.getContentType()).contains("multipart/mixed");
+    } else {
+      assertThat(mimeMessage.getContentType()).contains("text/plain");
+    }
+
+    assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo(subject);
+    assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
+    assertThat(getMessage(mimeMessage)).contains(message);
+
+    for (String t : to) {
+      assertThat(mimeMessage.getHeader("To", null)).contains(t);
+    }
+
+    if (cc != null) {
+      for (String c : cc) {
+        assertThat(mimeMessage.getHeader("Cc", null)).contains(c);
       }
-
-      assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo(subject);
-      assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
-      assertThat(getMessage(mimeMessage)).contains(message);
-
-      for (String t : to) {
-        assertThat(mimeMessage.getHeader("To", null)).contains(t);
-      }
-
-      if (cc != null) {
-        for (String c : cc) {
-          assertThat(mimeMessage.getHeader("Cc", null)).contains(c);
-        }
-      }
-
-    } catch (MessagingException | IOException e) {
-      fail(e.getMessage());
     }
   }
 

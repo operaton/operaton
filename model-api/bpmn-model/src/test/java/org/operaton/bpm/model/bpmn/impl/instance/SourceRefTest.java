@@ -23,6 +23,7 @@ import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings("java:S2187") // no test methods defined here, all defined by superclass
 public class SourceRefTest extends BpmnModelElementInstanceTest {
 
   @Override

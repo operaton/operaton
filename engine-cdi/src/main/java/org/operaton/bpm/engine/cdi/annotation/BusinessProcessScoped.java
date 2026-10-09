@@ -32,12 +32,14 @@ import jakarta.enterprise.context.RequestScoped;
  * Note: {@code @BusinessProcessScoped} bean instances must be "passivation capable",
  *       meaning the bean defining classes must implement the {@link Serializable}
  *       interface and their references (dependencies) must be "passivation capable" as well.
+ * </p>
  * <p />
  * Note: BusinessProcessScoped is not capable of managing local process variables,
  * and there is currently also no respective other implementation for that. Please use
  * {@link org.operaton.bpm.engine.cdi.BusinessProcess#setVariableLocal(String, Object)}
  * and {@link org.operaton.bpm.engine.cdi.BusinessProcess#getVariableLocal(String)}
  * or an injected Map of local process variables instead.
+ * </p>
  * <p />
  * If no ProcessInstance is currently managed, instances of
  * {@link BusinessProcessScoped} beans are temporarily stored in a local scope
@@ -45,8 +47,10 @@ import jakarta.enterprise.context.RequestScoped;
  * on {@link ConversationScoped} and {@link RequestScoped} to find out when
  * either context is active). If this scope is later associated with a business
  * process instance, the bean instances are flushed to the ProcessInstance.
+ * </p>
  * <p />
  * Example:
+ * </p>
  * <pre>
  * {@code @BusinessProcessScoped}
  * public class Authorization implements Serializable {

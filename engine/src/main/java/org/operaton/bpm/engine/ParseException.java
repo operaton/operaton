@@ -20,9 +20,10 @@ import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.parser.ResourceReportImpl;
 
-public class ParseException extends ProcessEngineException {
+public @NullMarked class ParseException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 

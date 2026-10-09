@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.batch.history;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Historic representation of a {@link org.operaton.bpm.engine.batch.Batch}.
  */
@@ -64,9 +66,9 @@ public interface HistoricBatch {
   String getBatchJobDefinitionId();
 
   /**
-   * @return the batch's tenant id or null
+   * @return the batch's tenant id or {@code null}
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * @return the batch creator's user id

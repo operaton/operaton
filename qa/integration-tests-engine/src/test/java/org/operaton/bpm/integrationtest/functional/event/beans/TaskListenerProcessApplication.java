@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.event.beans;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
@@ -30,7 +32,7 @@ public class TaskListenerProcessApplication extends org.operaton.bpm.application
   public static final String LISTENER_INVOCATION_COUNT = "listenerInvocationCount";
 
   @Override
-  public TaskListener getTaskListener() {
+  public @NonNull TaskListener getTaskListener() {
     return delegateTask ->
       delegateTask.setVariable(delegateTask.getEventName(), true);
   }

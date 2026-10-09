@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cfg.auth;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
@@ -27,7 +30,7 @@ import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
  * @author Tobias Metzke
  *
  */
-public class DefaultPermissionProvider implements PermissionProvider {
+public @NullMarked class DefaultPermissionProvider implements PermissionProvider {
 
   @Override
   public Permission getPermissionForName(String name, int resourceType) {
@@ -40,7 +43,7 @@ public class DefaultPermissionProvider implements PermissionProvider {
   }
 
   @Override
-  public String getNameForResource(int resourceType) {
+  public @Nullable String getNameForResource(int resourceType) {
     Resource resourceByType = ResourceTypeUtil.getResourceByType(resourceType);
     return resourceByType == null ? null : resourceByType.resourceName();
   }

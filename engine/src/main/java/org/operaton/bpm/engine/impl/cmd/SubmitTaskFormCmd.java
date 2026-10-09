@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
@@ -33,13 +34,14 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class SubmitTaskFormCmd implements Command<VariableMap> {
+public @NullMarked class SubmitTaskFormCmd implements Command<VariableMap> {
   private static final VariableMapImpl EMPTY_VARIABLE_MAP = new VariableMapImpl();
   protected String taskId;
   protected VariableMap properties;
@@ -62,6 +64,7 @@ public class SubmitTaskFormCmd implements Command<VariableMap> {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
     ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkTaskWork(task);

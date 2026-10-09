@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 
 /**
@@ -23,7 +25,7 @@ import java.io.Serial;
  *
  * @author Sebastian Menski
  */
-public class ScriptEngineException extends ProcessEngineException {
+public @NullMarked class ScriptEngineException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 

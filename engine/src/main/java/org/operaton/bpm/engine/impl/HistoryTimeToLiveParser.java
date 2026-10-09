@@ -20,6 +20,8 @@ package org.operaton.bpm.engine.impl;
 import java.util.Objects;
 
 import org.operaton.bpm.engine.exception.NotAllowedException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.ConfigurationLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -67,7 +69,7 @@ public class HistoryTimeToLiveParser {
     return new HistoryTimeToLiveParser(enforceHistoryTimeToLive, historyTimeToLive);
   }
 
-  public void validate(Integer historyTimeToLive) {
+  public void validate(@Nullable Integer historyTimeToLive) {
     if (enforceNonNullValue && historyTimeToLive == null) {
       throw new NotAllowedException("Null historyTimeToLive values are not allowed");
     }
@@ -100,7 +102,7 @@ public class HistoryTimeToLiveParser {
    *                                (process definition key for processes, decision definition key for decisions, case definition key for cases).
    * @param skipEnforceTtl skips enforcing the TTL.
    * @return the parsed integer value of history time to live
-   * @throws NotValidException in case enforcement of non-null values is on and the parsed result was null
+   * @throws NotValidException in case enforcement of non-null values is on and the parsed result was {@code null}
    */
   protected Integer parseAndValidate(String historyTimeToLiveString, String definitionKey, boolean skipEnforceTtl) throws NotValidException {
     HTTLParsedResult result = new HTTLParsedResult(historyTimeToLiveString);

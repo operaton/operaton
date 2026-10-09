@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.context.Context;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
@@ -33,6 +35,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -72,7 +75,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   public EventSubscriptionEntity(ExecutionEntity executionEntity, EventType eventType) {
     this(eventType);
     setExecution(executionEntity);
-    setActivity(execution.getActivity());
+    setActivity(requireNonNull(execution).getActivity());
     this.processInstanceId = executionEntity.getProcessInstanceId();
     this.tenantId = executionEntity.getTenantId();
   }
@@ -96,7 +99,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
 
   protected void processEventSync(Object payload, Object payloadLocal, Object payloadToTriggeredScope, String businessKey) {
     EventHandler eventHandler = Context.getProcessEngineConfiguration().getEventHandler(eventType);
-    ensureNotNull("Could not find eventhandler for event of type '%s'".formatted(eventType), "eventHandler", eventHandler);
+    ensureNotNull("Could not find event handler for event of type '%s'".formatted(eventType), "eventHandler", eventHandler);
     eventHandler.handleEvent(this, payload, payloadLocal, payloadToTriggeredScope, businessKey, Context.getCommandContext());
   }
 
@@ -183,7 +186,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
     return execution;
   }
 
-  public void setExecution(ExecutionEntity execution) {
+  public void setExecution(@Nullable ExecutionEntity execution) {
     if(execution != null) {
       this.execution = execution;
       this.executionId = execution.getId();
@@ -218,7 +221,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
     }
   }
 
-  public void setActivity(ActivityImpl activity) {
+  public void setActivity(@Nullable ActivityImpl activity) {
     this.activity = activity;
     if(activity != null) {
       this.activityId = activity.getId();
@@ -354,13 +357,10 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
     }
     EventSubscriptionEntity other = (EventSubscriptionEntity) obj;
     if (id == null) {
-      if (other.id != null) {
-        return false;
-      }
-    } else if (!id.equals(other.id)) {
-      return false;
+      return other.id == null;
+    } else {
+      return id.equals(other.id);
     }
-    return true;
   }
 
   @Override

@@ -20,25 +20,28 @@ import java.util.Date;
 
 import org.assertj.core.api.Assertions;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 
 /**
  * Assertions for a {@link Task}.
  */
-public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
+public @NullMarked class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
-  protected TaskAssert(final ProcessEngine engine, final Task actual) {
+  protected TaskAssert(ProcessEngine engine, @Nullable Task actual) {
     super(engine, actual, TaskAssert.class);
   }
 
-  protected static TaskAssert assertThat(final ProcessEngine engine, final Task actual) {
+  protected static TaskAssert assertThat(ProcessEngine engine, @Nullable Task actual) {
     return new TaskAssert(engine, actual);
   }
 
   @Override
-  protected Task getCurrent() {
+  protected @Nullable Task getCurrent() {
     return taskQuery().taskId(actual.getId()).singleResult();
   }
 
@@ -83,7 +86,6 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    *
    * @param   candidateGroupId id of a candidate group the task is waiting to be assigned to
    * @return  this {@link TaskAssert}
-   * @since   Operaton.0
    */
   public TaskAssert hasCandidateGroup(final String candidateGroupId) {
     return hasCandidateGroup(candidateGroupId, true);
@@ -96,7 +98,6 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    *
    * @param   candidateGroupId id of a candidate group the task is associated to
    * @return  this {@link TaskAssert}
-   * @since   Operaton.3
    */
   public TaskAssert hasCandidateGroupAssociated(final String candidateGroupId) {
     return hasCandidateGroup(candidateGroupId, false);
@@ -126,7 +127,6 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    *
    * @param   candidateUserId id of a candidate user the task is waiting to be assigned to
    * @return  this {@link TaskAssert}
-   * @since   Operaton.0
    */
   public TaskAssert hasCandidateUser(final String candidateUserId) {
     return hasCandidateUser(candidateUserId, true);
@@ -139,7 +139,6 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    *
    * @param   candidateUserId id of a candidate user the task is associated to
    * @return  this {@link TaskAssert}
-   * @since   Operaton.3
    */
   public TaskAssert hasCandidateUserAssociated(final String candidateUserId) {
     return hasCandidateUser(candidateUserId, false);
@@ -276,7 +275,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   @Override
-  protected String toString(Task task) {
+  protected String toString(@Nullable Task task) {
     return task != null ?
       ("%s {" +
         "id='%s', " +
@@ -288,12 +287,10 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
         task.getProcessInstanceId(),
         task.getTaskDefinitionKey(),
         task.getName()
-      ) : null;
+      ) : "<null>";
   }
 
-  /* TaskQuery, automatically narrowed to {@link ProcessInstance} of actual
-   * {@link Task}
-   */
+  /** TaskQuery, automatically narrowed to {@link ProcessInstance} of actual {@link Task} */
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processInstanceId(actual.getProcessInstanceId());

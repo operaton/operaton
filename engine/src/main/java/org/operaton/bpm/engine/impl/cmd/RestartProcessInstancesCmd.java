@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -42,6 +45,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -51,7 +55,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Anna Pazola
  *
  */
-public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd<Void> {
+public @NullMarked class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd<Void> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -61,7 +65,7 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     List<AbstractProcessInstanceModificationCommand> instructions = builder.getInstructions();
 
     ensureNotEmpty(BadUserRequestException.class,
@@ -75,16 +79,15 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
     ensureNotContainsNull(BadUserRequestException.class,
         "Process instance ids cannot be null", "Process instance ids", processInstanceIds);
 
-    ProcessDefinitionEntity processDefinition =
-        getProcessDefinition(commandContext, builder.getProcessDefinitionId());
-    ensureNotNull("Process definition cannot be found",
-        "processDefinition", processDefinition);
+    final String processDefinitionId = builder.getProcessDefinitionId();
+    ProcessDefinitionEntity processDefinition = getProcessDefinition(commandContext, processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     checkAuthorization(commandContext, processDefinition);
 
     writeUserOperationLog(commandContext, processDefinition, processInstanceIds.size(), false);
 
-    final String processDefinitionId = builder.getProcessDefinitionId();
 
     Runnable runnable = () -> {
 
@@ -129,7 +132,7 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
             processDefinition.getKey());
   }
 
-  protected HistoricProcessInstance getHistoricProcessInstance(CommandContext commandContext,
+  protected @Nullable HistoricProcessInstance getHistoricProcessInstance(CommandContext commandContext,
                                                                String processInstanceId) {
     HistoryService historyService = commandContext.getProcessEngineConfiguration()
         .getHistoryService();
@@ -202,15 +205,13 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
     if (historicDetails.isEmpty()) {
       HistoricActivityInstance startActivityInstance = resolveStartActivityInstance(processInstance);
 
-      if (startActivityInstance != null) {
-        HistoricDetailQueryImpl queryWithStartActivities = (HistoricDetailQueryImpl) historyService.createHistoricDetailQuery()
-                .variableUpdates()
-                .activityInstanceId(startActivityInstance.getId())
-                .executionId(processInstance.getId());
-        historicDetails = queryWithStartActivities
-               .sequenceCounter(1)
-               .list();
-      }
+      HistoricDetailQueryImpl queryWithStartActivities = (HistoricDetailQueryImpl) historyService.createHistoricDetailQuery()
+              .variableUpdates()
+              .activityInstanceId(startActivityInstance.getId())
+              .executionId(processInstance.getId());
+      historicDetails = queryWithStartActivities
+             .sequenceCounter(1)
+             .list();
     }
 
     VariableMap variables = new VariableMapImpl();

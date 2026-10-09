@@ -408,10 +408,10 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
       query.processDefinitionKey(processDefinitionKey);
     }
     if (processDefinitionKeys != null && !processDefinitionKeys.isEmpty()) {
-      query.processDefinitionKeyIn(processDefinitionKeys.toArray(new String[processDefinitionKeys.size()]));
+      query.processDefinitionKeyIn(processDefinitionKeys.toArray(String[]::new));
     }
     if (processDefinitionKeyNotIn != null && !processDefinitionKeyNotIn.isEmpty()) {
-      query.processDefinitionKeyNotIn(processDefinitionKeyNotIn.toArray(new String[processDefinitionKeyNotIn.size()]));
+      query.processDefinitionKeyNotIn(processDefinitionKeyNotIn.toArray(String[]::new));
     }
     if (deploymentId != null) {
       query.deploymentId(deploymentId);
@@ -465,13 +465,13 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
       query.incidentMessageLike(incidentMessageLike);
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();
     }
     if (activityIds != null && !activityIds.isEmpty()) {
-      query.activityIdIn(activityIds.toArray(new String[activityIds.size()]));
+      query.activityIdIn(activityIds.toArray(String[]::new));
     }
     if (TRUE.equals(rootProcessInstances)) {
       query.rootProcessInstances();

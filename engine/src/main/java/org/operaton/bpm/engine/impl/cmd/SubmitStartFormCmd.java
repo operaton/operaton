@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -33,18 +35,19 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class SubmitStartFormCmd implements Command<ProcessInstance> {
+public @NullMarked class SubmitStartFormCmd implements Command<ProcessInstance> {
   protected final String processDefinitionId;
-  protected final String businessKey;
+  protected final @Nullable String businessKey;
   protected VariableMap variables;
 
-  public SubmitStartFormCmd(String processDefinitionId, String businessKey, Map<String, Object> properties) {
+  public SubmitStartFormCmd(String processDefinitionId, @Nullable String businessKey, Map<String, Object> properties) {
     this.processDefinitionId = processDefinitionId;
     this.businessKey = businessKey;
     this.variables = Variables.fromMap(properties);
@@ -55,13 +58,14 @@ public class SubmitStartFormCmd implements Command<ProcessInstance> {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
-    ensureNotNull("No process definition found for id = '%s'".formatted(processDefinitionId), "processDefinition", processDefinition);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkCreateProcessInstance(processDefinition);
     }
 
-    ExecutionEntity processInstance = null;
+    ExecutionEntity processInstance;
     if (businessKey != null) {
       processInstance = processDefinition.createProcessInstance(businessKey);
     } else {

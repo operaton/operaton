@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.builder;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.BoundaryEvent;
 import org.operaton.bpm.model.bpmn.instance.ErrorEventDefinition;
@@ -93,7 +95,7 @@ public abstract class AbstractBoundaryEventBuilder<B extends AbstractBoundaryEve
    *
    * @return the error event definition builder object
    */
-  public ErrorEventDefinitionBuilder errorEventDefinition(String id) {
+  public ErrorEventDefinitionBuilder errorEventDefinition(@Nullable String id) {
     ErrorEventDefinition errorEventDefinition = createEmptyErrorEventDefinition();
     if (id != null) {
       errorEventDefinition.setId(id);

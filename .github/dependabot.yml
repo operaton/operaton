@@ -15,6 +15,10 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
+    cooldown:  # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
+      exclude:
+        - "org.springframework.boot:*"
+        - "org.springframework:spring-framework-bom"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -23,9 +27,6 @@ updates:
       - dependency-name: "org.jruby:*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
       - dependency-name: "io.quarkus:*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
-      # upgrade causes problems with bundled Scala module from feel-engine:scala shaded
-      - dependency-name: "version.jackson"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
@@ -38,9 +39,6 @@ updates:
         patterns:
           - "org.apache.httpcomponents.core5:*"
           - "org.apache.httpcomponents.client5:*"
-      httpcomponents4:
-        patterns:
-          - "org.apache.httpcomponents:*"
       jboss-weld:
         patterns:
           - "org.jboss.weld.servlet:weld-servlet-shaded"
@@ -55,6 +53,16 @@ updates:
       jaxb:
         patterns:
           - "org.glassfish.jaxb:*"
+      maven-plugins:
+        patterns:
+          - "org.apache.maven.plugins:*"
+          - "org.apache.maven.extensions:maven-build-cache-extension"
+          - "org.apache.felix:maven-bundle-plugin"
+          - "org.codehaus.cargo:cargo-maven3-plugin"
+          - "org.codehaus.mojo:*"
+          - "org.jacoco:jacoco-maven-plugin"
+          - "org.openapitools:openapi-generator-maven-plugin"
+          - "org.sonatype.central:central-publishing-maven-plugin"
   - package-ecosystem: "maven"
     directory: "/spring-boot-starter/starter"
     schedule:
@@ -63,6 +71,10 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
+    cooldown:  # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
+      exclude:
+        - "org.springframework.boot:*"
+        - "org.springframework:spring-framework-bom"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -141,6 +153,13 @@ updates:
     labels:
       - "dependencies:github-action"
     milestone: 23
+    groups:
+      github-actions:
+        patterns:
+          - "actions/*"
+      3rd-party-actions:
+        patterns:
+          - "*"
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -149,144 +168,6 @@ updates:
     labels:
       - "dependencies:devcontainers"
     milestone: 23
-
-  # Release 1.1.x branch - all updates
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "00:45"
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.1.x"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
-    labels:
-      - "dependencies:maven"
-    milestone: 26
-    groups:
-      httpcomponents5:
-        patterns:
-          - "org.apache.httpcomponents.core5:httpcore5"
-          - "org.apache.httpcomponents.client5:httpclient5"
-      httpcomponents4:
-        patterns:
-          - "org.apache.httpcomponents:*"
-      jboss-weld:
-        patterns:
-          - "org.jboss.weld.servlet:weld-servlet-shaded"
-          - "org.jboss.weld:weld-core-bom"
-      openrewrite:
-        patterns:
-          - "org.openrewrite.recipe:*"
-          - "org.openrewrite.maven:*"
-      arquillian:
-        patterns:
-          - "org.jboss.arquillian*:*"
-      jaxb:
-        patterns:
-          - "org.glassfish.jaxb:*"
-      spring-boot:
-        patterns:
-          - "org.springframework.boot:*"
-  - package-ecosystem: "maven"
-    directory: "/spring-boot-starter/starter"
-    schedule:
-      interval: "daily"
-      time: "00:45"
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.1.x"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-    labels:
-      - "dependencies:maven"
-    milestone: 26
-    groups:
-      spring-boot:
-        patterns:
-          - "org.springframework.boot:*"
-  - package-ecosystem: "npm"
-    directory: "/webapps/frontend"
-    schedule:
-      interval: "cron"
-      cronjob: "15 2 * * 1,3,5"
-    cooldown:
-      default-days: 7
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.1.x"
-    labels:
-      - "dependencies:npm"
-    milestone: 26
-    groups:
-      angular:
-        patterns:
-          - "angular*"
-      babel:
-        patterns:
-          - "@babel/*"
-      Xmn-js:
-        patterns:
-          - "bpmn-js"
-          - "camunda-dmn-js"
-          - "cmmn-js"
-          - "dmn-js"
-          - "dmn-js-*"
-      eslint:
-        patterns:
-          - "eslint*"
-          - "prettier"
-      webpack:
-        patterns:
-          - "webpack*"
-    ignore:
-      - dependency-name: "eslint*"
-        # Known incompatibility with eslint 10
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "bootstrap"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "jquery"
-        update-types: ["version-update:semver-major"]
-  - package-ecosystem: "npm"
-    directory: "/engine-rest/docs"
-    schedule:
-      interval: "cron"
-      cronjob: "15 2 * * 1,3,5"
-    cooldown:
-      default-days: 7
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.1.x"
-    labels:
-      - "dependencies:npm"
-    milestone: 26
-    groups:
-      react:
-        patterns:
-          - "react*"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    cooldown:
-      default-days: 7
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.1.x"
-    labels:
-      - "dependencies:github-action"
-    milestone: 26
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    target-branch: "release/1.1.x"
-    labels:
-      - "dependencies:devcontainers"
-    milestone: 26
 
 # Release 2.1.x branch - all updates
   - package-ecosystem: "maven"
@@ -297,52 +178,19 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "release/2.1.x"
+    cooldown:
+      exclude:
+        - "org.springframework.boot:*"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 25
+    milestone: 30
     groups:
-      httpcomponents5:
+      all:
         patterns:
-          - "org.apache.httpcomponents.core5:httpcore5"
-          - "org.apache.httpcomponents.client5:httpclient5"
-      httpcomponents4:
-        patterns:
-          - "org.apache.httpcomponents:*"
-      jboss-weld:
-        patterns:
-          - "org.jboss.weld.servlet:weld-servlet-shaded"
-          - "org.jboss.weld:weld-core-bom"
-      openrewrite:
-        patterns:
-          - "org.openrewrite.recipe:*"
-          - "org.openrewrite.maven:*"
-      arquillian:
-        patterns:
-          - "org.jboss.arquillian*:*"
-      jaxb:
-        patterns:
-          - "org.glassfish.jaxb:*"
-  - package-ecosystem: "maven"
-    directory: "/spring-boot-starter/starter"
-    schedule:
-      interval: "daily"
-      time: "00:45"
-    reviewers:
-      - "kthoms"
-    target-branch: "release/2.1.x"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-    labels:
-      - "dependencies:maven"
-    milestone: 25
-    groups:
-      spring-boot:
-        patterns:
-          - "org.springframework.boot:*"
+          - "*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -355,41 +203,19 @@ updates:
     target-branch: "release/2.1.x"
     labels:
       - "dependencies:npm"
-    milestone: 25
+    milestone: 30
     groups:
-      angular:
+      all:
         patterns:
-          - "angular*"
-      babel:
-        patterns:
-          - "@babel/*"
-      Xmn-js:
-        patterns:
-          - "bpmn-js"
-          - "camunda-dmn-js"
-          - "cmmn-js"
-          - "dmn-js"
-          - "dmn-js-*"
-      eslint:
-        patterns:
-          - "eslint*"
-          - "prettier"
-      webpack:
-        patterns:
-          - "webpack*"
+          - "*"
     ignore:
-      - dependency-name: "eslint*"
-        # Known incompatibility with eslint 10
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "bootstrap"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "jquery"
+      - dependency-name: "*"
         update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
       interval: "cron"
-      cronjob: "15 2 * * 1,3,5"
+      cronjob: "30 2 * * 1,3,5"
     cooldown:
       default-days: 7
     reviewers:
@@ -397,11 +223,14 @@ updates:
     target-branch: "release/2.1.x"
     labels:
       - "dependencies:npm"
-    milestone: 25
+    milestone: 30
     groups:
-      react:
+      all:
         patterns:
-          - "react*"
+          - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -413,7 +242,14 @@ updates:
     target-branch: "release/2.1.x"
     labels:
       - "dependencies:github-action"
-    milestone: 25
+    milestone: 30
+    groups:
+      github-actions:
+        patterns:
+          - "actions/*"
+      3rd-party-actions:
+        patterns:
+          - "*"
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -421,4 +257,4 @@ updates:
     target-branch: "release/2.1.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 25
+    milestone: 30

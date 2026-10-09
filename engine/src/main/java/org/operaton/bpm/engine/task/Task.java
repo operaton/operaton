@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.task;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -86,28 +88,28 @@ public interface Task {
   /** The current {@link DelegationState} for this task. */
   void setDelegationState(DelegationState delegationState);
 
-  /** Reference to the process instance or null if it is not related to a process instance. */
-  String getProcessInstanceId();
+  /** Reference to the process instance or {@code null} if it is not related to a process instance. */
+  @Nullable String getProcessInstanceId();
 
-  /** Reference to the path of execution or null if it is not related to a process instance. */
-  String getExecutionId();
+  /** Reference to the path of execution or {@code null} if it is not related to a process instance. */
+  @Nullable String getExecutionId();
 
-  /** Reference to the process definition or null if it is not related to a process. */
-  String getProcessDefinitionId();
+  /** Reference to the process definition or {@code null} if it is not related to a process. */
+  @Nullable String getProcessDefinitionId();
 
-  /** Reference to the case instance or null if it is not related to a case instance. */
-  String getCaseInstanceId();
+  /** Reference to the case instance or {@code null} if it is not related to a case instance. */
+  @Nullable String getCaseInstanceId();
 
   /**
    * The case instance id for which this task is associated for.
    */
   void setCaseInstanceId(String caseInstanceId);
 
-  /** Reference to the path of case execution or null if it is not related to a case instance. */
-  String getCaseExecutionId();
+  /** Reference to the path of case execution or {@code null} if it is not related to a case instance. */
+  @Nullable String getCaseExecutionId();
 
-  /** Reference to the case definition or null if it is not related to a case. */
-  String getCaseDefinitionId();
+  /** Reference to the case definition or {@code null} if it is not related to a case. */
+  @Nullable String getCaseDefinitionId();
 
   /** The date/time when this task was created */
   Date getCreateTime();
@@ -115,12 +117,12 @@ public interface Task {
   /**
    * The date/time when this task was last updated.
    * All operations that fire {@link TaskListener#EVENTNAME_UPDATE} count as an update to the task.
-   * Returns null if the task was never updated before (i.e. it was only created).
+   * Returns {@code null} if the task was never updated before (i.e. it was only created).
    * */
   Date getLastUpdated();
 
-  /** The id of the activity in the process defining this task or null if this is not related to a process */
-  String getTaskDefinitionKey();
+  /** The id of the activity in the process defining this task or {@code null} if this is not related to a process */
+  @Nullable String getTaskDefinitionKey();
 
   /** Due date of the task. */
   Date getDueDate();
@@ -172,12 +174,12 @@ public interface Task {
   OperatonFormRef getOperatonFormRef();
 
   /**
-   * Returns the task's tenant id or null in case this task does not belong to a tenant.
+   * Returns the task's tenant id or {@code null} in case this task does not belong to a tenant.
    *
-   * @return the task's tenant id or null
+   * @return the task's tenant id or {@code null}
    *
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * Sets the tenant id for this task.

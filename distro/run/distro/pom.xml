@@ -37,6 +37,21 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- and after webapps-neo, whose target/dependency this assembly also
+    copies in a fileSet -->
+    <dependency>
+      <groupId>org.operaton.bpm.run</groupId>
+      <artifactId>operaton-bpm-run-modules-webapps-neo</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+      <exclusions>
+        <!-- we don't need any transitive dependencies -->
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

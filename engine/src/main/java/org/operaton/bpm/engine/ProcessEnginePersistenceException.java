@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Exception thrown by the persistence layer of the process engine in the occurrence of a problematic interaction
  * with the datasource.
  */
-public class ProcessEnginePersistenceException extends ProcessEngineException {
+public @NullMarked class ProcessEnginePersistenceException extends ProcessEngineException {
 
   public ProcessEnginePersistenceException(String message, Throwable cause) {
     super(message, cause);

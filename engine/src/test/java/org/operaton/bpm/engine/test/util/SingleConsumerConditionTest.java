@@ -69,9 +69,4 @@ class SingleConsumerConditionTest {
     assertThatThrownBy(() -> condition.await(0)).isInstanceOf(RuntimeException.class);
   }
 
-  @Test
-  void cannotCreateWithNull() {
-    assertThatThrownBy(() -> new SingleConsumerCondition(null)).isInstanceOf(IllegalArgumentException.class);
-  }
-
 }

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.converter;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class StringListConverter extends JacksonAwareStringToTypeConverter<List<
       return Collections.emptyList();
     }
     else {
-      return Arrays.asList(value.split(","));
+      return List.of(value.split(","));
     }
   }
 }

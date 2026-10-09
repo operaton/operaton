@@ -187,7 +187,7 @@ public class JobDefinitionQueryDto extends AbstractQueryDto<JobDefinitionQuery> 
     }
 
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();

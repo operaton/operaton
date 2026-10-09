@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
  * @author roman.smirnov
  */
-final class IncidentQueryProperty {
+final @NullMarked class IncidentQueryProperty {
 
   public static final QueryProperty INCIDENT_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty INCIDENT_MESSAGE = new QueryPropertyImpl("INCIDENT_MSG_");

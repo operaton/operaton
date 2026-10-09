@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEntity;
@@ -30,18 +32,19 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Event;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  */
-public class AddCommentCmd implements Command<Comment> {
-  protected String taskId;
-  protected String processInstanceId;
+public @NullMarked class AddCommentCmd implements Command<Comment> {
+  protected @Nullable String taskId;
+  protected @Nullable String processInstanceId;
   protected String message;
 
-  public AddCommentCmd(String taskId, String processInstanceId, String message) {
+  public AddCommentCmd(@Nullable String taskId, @Nullable String processInstanceId, String message) {
     this.taskId = taskId;
     this.processInstanceId = processInstanceId;
     this.message = message;
@@ -91,7 +94,7 @@ public class AddCommentCmd implements Command<Comment> {
     return comment;
   }
 
-  protected ExecutionEntity getExecution(CommandContext commandContext) {
+  protected @Nullable ExecutionEntity getExecution(CommandContext commandContext) {
 
     if (taskId != null) {
       TaskEntity task = getTask(commandContext);
@@ -105,7 +108,7 @@ public class AddCommentCmd implements Command<Comment> {
     }
   }
 
-  protected ExecutionEntity getProcessInstance(CommandContext commandContext) {
+  protected @Nullable ExecutionEntity getProcessInstance(CommandContext commandContext) {
     if (processInstanceId != null) {
       return commandContext.getExecutionManager().findExecutionById(processInstanceId);
     } else {
@@ -113,7 +116,7 @@ public class AddCommentCmd implements Command<Comment> {
     }
   }
 
-  protected TaskEntity getTask(CommandContext commandContext) {
+  protected @Nullable TaskEntity getTask(CommandContext commandContext) {
     if (taskId != null) {
       return commandContext.getTaskManager().findTaskById(taskId);
     } else {
@@ -126,12 +129,14 @@ public class AddCommentCmd implements Command<Comment> {
   }
 
   protected String getHistoryRemovalTimeStrategy() {
-    return Context.getProcessEngineConfiguration()
+    var processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    return processEngineConfiguration
       .getHistoryRemovalTimeStrategy();
   }
 
-  protected HistoricProcessInstanceEventEntity getHistoricRootProcessInstance(String rootProcessInstanceId) {
-    return Context.getCommandContext()
+  protected @Nullable HistoricProcessInstanceEventEntity getHistoricRootProcessInstance(String rootProcessInstanceId) {
+    CommandContext commandContext = requireNonNull(Context.getCommandContext());
+    return commandContext
       .getDbEntityManager()
       .selectById(HistoricProcessInstanceEventEntity.class, rootProcessInstanceId);
   }

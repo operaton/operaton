@@ -34,12 +34,7 @@ import org.operaton.bpm.engine.runtime.IncidentQuery;
 
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION;
 import static io.restassured.RestAssured.given;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 
 public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest {
 
@@ -62,7 +57,8 @@ public class IncidentRestServiceInteractionTest extends AbstractRestServiceTest 
     IncidentQuery sampleQuery = mock(IncidentQuery.class);
 
     when(sampleQuery.incidentId(anyString())).thenReturn(sampleQuery);
-    when(sampleQuery.singleResult()).thenReturn(mock(Incident.class));
+    Incident mockIncident = mock(Incident.class);
+    when(sampleQuery.singleResult()).thenReturn(mockIncident);
 
     mockRuntimeService = mock(RuntimeServiceImpl.class);
     when(processEngine.getRuntimeService()).thenReturn(mockRuntimeService);

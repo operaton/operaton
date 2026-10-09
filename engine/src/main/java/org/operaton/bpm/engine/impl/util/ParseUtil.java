@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -34,7 +36,7 @@ public final class ParseUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  protected static final Pattern REGEX_TTL_ISO = Pattern.compile("^P(\\d+)D$");
+  private static final Pattern REGEX_TTL_ISO = Pattern.compile("^P(\\d+)D$");
 
   private ParseUtil() {
   }
@@ -43,7 +45,7 @@ public final class ParseUtil {
    * Parse History Time To Live in ISO-8601 format to integer and set into the given entity
    * @param historyTimeToLive
    */
-  public static Integer parseHistoryTimeToLive(String historyTimeToLive) {
+  public static @Nullable Integer parseHistoryTimeToLive(@Nullable String historyTimeToLive) {
     Integer timeToLive = null;
 
     if (historyTimeToLive != null && !historyTimeToLive.isEmpty()) {
@@ -51,7 +53,14 @@ public final class ParseUtil {
       if (matISO.find()) {
         historyTimeToLive = matISO.group(1);
       }
-      timeToLive = parseIntegerAttribute("historyTimeToLive", historyTimeToLive);
+      if (historyTimeToLive != null && !historyTimeToLive.isEmpty()) {
+        try {
+          timeToLive = Integer.parseInt(historyTimeToLive);
+        }
+        catch (NumberFormatException e) {
+          throw new ProcessEngineException("Cannot parse historyTimeToLive: %s".formatted(e.getMessage()));
+        }
+      }
     }
 
     if (timeToLive != null && timeToLive < 0) {
@@ -61,22 +70,7 @@ public final class ParseUtil {
     return timeToLive;
   }
 
-  protected static Integer parseIntegerAttribute(String attributeName, String text) {
-    Integer result = null;
-
-    if (text != null && !text.isEmpty()) {
-      try {
-        result = Integer.parseInt(text);
-      }
-      catch (NumberFormatException e) {
-        throw new ProcessEngineException("Cannot parse %s: %s".formatted(attributeName, e.getMessage()));
-      }
-    }
-
-    return result;
-  }
-
-  public static FailedJobRetryConfiguration parseRetryIntervals(String retryIntervals) {
+  public static @Nullable FailedJobRetryConfiguration parseRetryIntervals(@Nullable String retryIntervals) {
 
     if (retryIntervals != null && !retryIntervals.isEmpty()) {
 
@@ -101,17 +95,27 @@ public final class ParseUtil {
           return null;
         }
       }
-      return new FailedJobRetryConfiguration(retries, Arrays.asList(intervals));
+      return new FailedJobRetryConfiguration(retries, List.of(intervals));
     } else {
       return null;
     }
   }
 
+  /**
+   * @deprecated There is no enterprise edition anymore. References to this class will be removed.
+   */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings({"java:S1133","java:S5738"})
   public static ProcessEngineDetails parseProcessEngineVersion(boolean trimSuffixEE) {
     String version = ProductPropertiesUtil.getProductVersion();
     return parseProcessEngineVersion(version, trimSuffixEE);
   }
 
+  /**
+   * @deprecated There is no enterprise edition anymore. References to this class will be removed.
+   */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings({"java:S1133","java:S5738"})
   public static ProcessEngineDetails parseProcessEngineVersion(String version, boolean trimSuffixEE) {
     String edition = ProcessEngineDetails.EDITION_COMMUNITY;
 

@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -32,11 +28,7 @@ import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
-import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
-import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringSetConverter;
-import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
+import org.operaton.bpm.engine.rest.dto.converter.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
 import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;

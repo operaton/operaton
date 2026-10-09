@@ -19,22 +19,27 @@ package org.operaton.bpm.engine.impl.identity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
- * <p>Allows to expose the id of the currently authenticated user,
- * his groups and his tenants to the process engine.</p>
+ * Allows to expose the id of the currently authenticated user,
+ * his groups and his tenants to the process engine.
  *
- * <p>The current authentication is managed using a Thread Local. The value can
+ * <p>
+ * The current authentication is managed using a Thread Local. The value can
  * be set using {@link #setCurrentAuthentication(String, List)},
  * retrieved using {@link #getCurrentAuthentication()} and cleared
- * using {@link #clearCurrentAuthentication()}.</p>
+ * using {@link #clearCurrentAuthentication()}.
+ * </p>
  *
- * <p>Users typically do not use this class directly but rather use
+ * <p>
+ * Users typically do not use this class directly but rather use
  * the corresponding Service API methods:
+ * </p>
  * <ul>
  * <li></li>
  * </ul>
- * </p>
  *
  * @author Tom Baeyens
  * @author Daniel Meyer
@@ -52,7 +57,7 @@ public class Authentication {
     this(authenticatedUserId, groupIds, null);
   }
 
-  public Authentication(String authenticatedUserId, List<String> authenticatedGroupIds, List<String> authenticatedTenantIds) {
+  public Authentication(String authenticatedUserId, @Nullable List<String> authenticatedGroupIds, @Nullable List<String> authenticatedTenantIds) {
     this.authenticatedUserId = authenticatedUserId;
 
     if (authenticatedGroupIds != null) {

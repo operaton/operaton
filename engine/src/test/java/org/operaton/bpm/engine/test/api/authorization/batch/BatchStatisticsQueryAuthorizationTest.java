@@ -60,10 +60,7 @@ class BatchStatisticsQueryAuthorizationTest {
   @BeforeEach
   void setUp() {
     authRule.createUserAndGroup("user", "group");
-  }
 
-  @BeforeEach
-  void deployProcessesAndCreateMigrationPlan() {
     ProcessInstance pi = createMigrationPlan();
 
     batch1 = engineRule.getRuntimeService()
@@ -83,10 +80,6 @@ class BatchStatisticsQueryAuthorizationTest {
   @AfterEach
   void tearDown() {
     authRule.deleteUsersAndGroups();
-  }
-
-  @AfterEach
-  void deleteBatches() {
     engineRule.getManagementService().deleteBatch(batch1.getId(), true);
     engineRule.getManagementService().deleteBatch(batch2.getId(), true);
     if (batch3 != null) {

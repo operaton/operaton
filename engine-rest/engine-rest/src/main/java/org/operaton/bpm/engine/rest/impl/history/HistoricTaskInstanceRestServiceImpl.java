@@ -30,11 +30,7 @@ import org.operaton.bpm.engine.history.HistoricTaskInstanceReportResult;
 import org.operaton.bpm.engine.history.ReportResult;
 import org.operaton.bpm.engine.rest.dto.AbstractReportDto;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricTaskInstanceDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricTaskInstanceQueryDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricTaskInstanceReportQueryDto;
-import org.operaton.bpm.engine.rest.dto.history.HistoricTaskInstanceReportResultDto;
-import org.operaton.bpm.engine.rest.dto.history.ReportResultDto;
+import org.operaton.bpm.engine.rest.dto.history.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.history.HistoricTaskInstanceRestService;
 import org.operaton.bpm.engine.rest.util.QueryUtil;
@@ -111,23 +107,15 @@ public class HistoricTaskInstanceRestServiceImpl implements HistoricTaskInstance
   }
 
   protected List<HistoricTaskInstanceReportResultDto> generateCountDto(List<HistoricTaskInstanceReportResult> results) {
-    List<HistoricTaskInstanceReportResultDto> dtoList = new ArrayList<>();
-
-    for( HistoricTaskInstanceReportResult result : results ) {
-      dtoList.add(HistoricTaskInstanceReportResultDto.fromHistoricTaskInstanceReportResult(result));
-    }
-
-    return dtoList;
+    return results.stream()
+        .map(HistoricTaskInstanceReportResultDto::fromHistoricTaskInstanceReportResult)
+        .toList();
   }
 
   protected List<ReportResultDto> generateDurationDto(List<? extends ReportResult> results) {
-    List<ReportResultDto> dtoList = new ArrayList<>();
-
-    for( ReportResult result : results ) {
-      dtoList.add(ReportResultDto.fromReportResult(result));
-    }
-
-    return dtoList;
+    return results.stream()
+        .map(ReportResultDto::fromReportResult)
+        .toList();
   }
 
 }

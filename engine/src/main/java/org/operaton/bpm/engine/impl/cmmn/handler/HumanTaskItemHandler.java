@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.cmmn.handler;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.Expression;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
@@ -43,14 +46,17 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonField;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonScript;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonTaskListener;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public class HumanTaskItemHandler extends TaskItemHandler {
+public @NullMarked class HumanTaskItemHandler extends TaskItemHandler {
 
   @Override
-  public CmmnActivity handleElement(CmmnElement element, CmmnHandlerContext context) {
+  public @Nullable CmmnActivity handleElement(CmmnElement element, CmmnHandlerContext context) {
     HumanTask definition = getDefinition(element);
 
     if (!definition.isBlocking()) {
@@ -158,7 +164,7 @@ public class HumanTaskItemHandler extends TaskItemHandler {
     HumanTask definition = getDefinition(element);
     Role performer = definition.getPerformer();
 
-    String assignee = null;
+    String assignee;
     if (performer != null) {
       assignee = performer.getName();
     } else {
@@ -266,7 +272,7 @@ public class HumanTaskItemHandler extends TaskItemHandler {
     }
   }
 
-  protected TaskListener initializeTaskListener(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonTaskListener listener) {
+  protected @Nullable TaskListener initializeTaskListener(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonTaskListener listener) {
     Collection<OperatonField> fields = listener.getOperatonFields();
     List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(context, fields);
 
@@ -302,7 +308,10 @@ public class HumanTaskItemHandler extends TaskItemHandler {
 
   @Override
   protected HumanTask getDefinition(CmmnElement element) {
-    return (HumanTask) super.getDefinition(element);
+    HumanTask definition = (HumanTask) super.getDefinition(element);
+    ensureNotNull("Human Task '%s' not found".formatted(element.getId()), "humanTask", definition);
+    requireNonNull(definition);
+    return definition;
   }
 
   @Override

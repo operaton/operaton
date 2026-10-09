@@ -16,6 +16,9 @@
  */
 package org.operaton.commons.logging;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 public enum Level {
 
   ERROR("ERROR"),
@@ -37,7 +40,7 @@ public enum Level {
    * @param defaultLevel the fallback default value
    * @return the parsed log level
    */
-  public static Level parse(String value, Level defaultLevel) {
+  public static Level parse(@Nullable String value, @NonNull Level defaultLevel) {
     if (value == null) {
       return defaultLevel;
     }
@@ -51,7 +54,7 @@ public enum Level {
   /**
    * @return the string value of the level
    */
-  public String getValue() {
+  public @NonNull String getValue() {
     return value;
   }
 }

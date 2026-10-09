@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupJobHandler;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.runtime.Job;
 /**
  * @author Svetlana Dorokhova
  */
-public class FindHistoryCleanupJobsCmd implements Command<List<Job>> {
+public @NullMarked class FindHistoryCleanupJobsCmd implements Command<List<Job>> {
   @Override
   public List<Job> execute(CommandContext commandContext) {
     return commandContext.getJobManager().findJobsByHandlerType(HistoryCleanupJobHandler.TYPE);

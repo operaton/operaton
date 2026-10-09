@@ -16,16 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.mapping.value;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class NullValueProvider implements ParameterValueProvider {
+public @NullMarked class NullValueProvider implements ParameterValueProvider {
 
   @Override
-  public Object getValue(VariableScope variableScope) {
+  public @Nullable Object getValue(VariableScope variableScope) {
     return null;
   }
 

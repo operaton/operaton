@@ -18,8 +18,10 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
@@ -30,13 +32,14 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-public class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivityBehavior {
+public @NullMarked class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
   @Override
   protected void createInstances(ActivityExecution execution, int nrOfInstances) {
     Collection<?> collection = evaluateCollection(execution);
+    collection = collection != null ? collection : Collections.emptyList();
     prepareScope(execution, nrOfInstances);
     setLoopVariable(execution, NUMBER_OF_ACTIVE_INSTANCES, 1);
 
@@ -56,6 +59,7 @@ public class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivi
     }
     else {
       Collection<?> collection = evaluateCollection(scopeExecution);
+      collection = collection != null ? collection : Collections.emptyList();
       PvmActivity innerActivity = getInnerActivity(scopeExecution.getActivity());
       performInstance(scopeExecution, innerActivity, loopCounter, collection);
     }

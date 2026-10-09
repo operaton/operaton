@@ -25,16 +25,15 @@ import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 public final class ApplicationContextPathUtil {
   private ApplicationContextPathUtil() {
   }
 
   public static String getApplicationPathByProcessDefinitionId(ProcessEngine engine, String processDefinitionId) {
     ProcessDefinition processDefinition = engine.getRepositoryService().getProcessDefinition(processDefinitionId);
-
-    if (processDefinition == null) {
-      return null;
-    }
+    requireNonNull(processDefinition);
 
     return getApplicationPathForDeployment(engine, processDefinition.getDeploymentId());
   }
@@ -52,7 +51,7 @@ public final class ApplicationContextPathUtil {
   public static String getApplicationPathForDeployment(ProcessEngine engine, String deploymentId) {
 
     // get the name of the process application that made the deployment
-    String processApplicationName = null;
+    String processApplicationName;
     IdentityService identityService = engine.getIdentityService();
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
     try {

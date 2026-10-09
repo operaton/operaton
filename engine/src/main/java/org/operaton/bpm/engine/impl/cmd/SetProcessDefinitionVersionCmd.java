@@ -22,7 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -46,6 +49,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
@@ -82,11 +86,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
  * update or the "real work" wins, i.e., this is a race condition.
  * </p>
  *
- * @see http://forums.activiti.org/en/viewtopic.php?t=2918
+ * @see https://forums.activiti.org/en/viewtopic.php?t=2918
  * @author Falko Menge
  * @author Ingo Richtsmeier
  */
-public class SetProcessDefinitionVersionCmd implements Command<Void> {
+public @NullMarked class SetProcessDefinitionVersionCmd implements Command<Void> {
   private final String processInstanceId;
   private final Integer processDefinitionVersion;
 
@@ -99,7 +103,7 @@ public class SetProcessDefinitionVersionCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
 
     // check that the new process definition is just another version of the same
@@ -120,11 +124,16 @@ public class SetProcessDefinitionVersionCmd implements Command<Void> {
     if (currentProcessDefinitionImpl instanceof ProcessDefinitionEntity processDefinition) {
       currentProcessDefinition = processDefinition;
     } else {
+      requireNonNull(currentProcessDefinitionImpl);
       currentProcessDefinition = deploymentCache.findDeployedProcessDefinitionById(currentProcessDefinitionImpl.getId());
     }
 
     ProcessDefinitionEntity newProcessDefinition = deploymentCache
       .findDeployedProcessDefinitionByKeyVersionAndTenantId(currentProcessDefinition.getKey(), processDefinitionVersion, currentProcessDefinition.getTenantId());
+    ensureNotNull("Process Definition with key '%s', version '%s' and tenant '%s' not found"
+        .formatted(currentProcessDefinition.getKey(), processDefinitionVersion, currentProcessDefinition.getTenantId()),
+        "newProcessDefinition", newProcessDefinition);
+    requireNonNull(newProcessDefinition);
 
     validateAndSwitchVersionOfExecution(commandContext, processInstance, newProcessDefinition);
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.management.Metrics;
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.management.Metrics;
 public class SuccessfulJobListener implements Command<Void> {
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     logJobSuccess(commandContext);
 
     return null;

@@ -44,7 +44,8 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     prerelease:
       enabled: true
     issues:
-      enabled: true
+      # Temporarily disabled due to https://github.com/jreleaser/jreleaser/issues/2172
+      enabled: false
       comment: '🎉 This issue has been resolved in `{{tagName}}` ([Release Notes]({{releaseNotesUrl}}))'
       applyMilestone: ALWAYS
     changelog:
@@ -151,6 +152,9 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
           - 'GitHub'
           - 'ageduldig'
           - 'Copilot'
+          - 'Claude Sonnet 4.6'
+          - 'Claude Opus 5'
+          - 'Claude Opus 5 (1M context)'
         categories:
           - 'merge'
           - 'wip'

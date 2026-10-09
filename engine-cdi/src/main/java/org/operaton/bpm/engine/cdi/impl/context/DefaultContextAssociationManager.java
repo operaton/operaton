@@ -45,6 +45,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * <p />
  * Subclass in order to implement custom association schemes and association
  * with custom scopes.
+ * </p>
  *
  * @author Daniel Meyer
  */
@@ -74,7 +75,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
   /**
    * Override to add different / additional contexts.
    *
-   * @returns a list of {@link Scope}-types, which are used in the given order
+   * @return a list of {@link Scope}-types, which are used in the given order
    *          to resolve the broadest active context (@link
    *          #getBroadestActiveContext()})
    */
@@ -188,7 +189,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
   }
 
   protected ExecutionEntity getExecutionFromContext() {
-    if(Context.getCommandContext() != null) {
+    if(Context.hasActiveCommandContext()) {
       BpmnExecutionContext executionContext = Context.getBpmnExecutionContext();
       if(executionContext != null) {
         return executionContext.getExecution();
@@ -228,7 +229,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
   }
 
   protected void ensureCommandContextNotActive() {
-    if(Context.getCommandContext() != null) {
+    if(Context.hasActiveCommandContext()) {
       throw new ProcessEngineCdiException("Cannot work with scoped associations inside command context.");
     }
   }

@@ -21,7 +21,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoricCaseInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -31,7 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureEquals;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 
-public class DeleteHistoricCaseInstancesBulkCmd implements Command<Void> {
+public @NullMarked class DeleteHistoricCaseInstancesBulkCmd implements Command<Void> {
   protected final List<String> caseInstanceIds;
 
   public DeleteHistoricCaseInstancesBulkCmd(List<String> caseInstanceIds) {
@@ -39,7 +42,7 @@ public class DeleteHistoricCaseInstancesBulkCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotEmpty(BadUserRequestException.class, "caseInstanceIds", caseInstanceIds);
 
     // Check if case instances are all closed

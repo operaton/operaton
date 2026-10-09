@@ -58,10 +58,8 @@ class BatchQueryAuthorizationTest {
   @BeforeEach
   void setUp() {
     authRule.createUserAndGroup("user", "group");
-  }
 
-  @BeforeEach
-  void deployProcessesAndCreateMigrationPlan() {
+    // deploy process and migration plan
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
@@ -85,10 +83,6 @@ class BatchQueryAuthorizationTest {
   @AfterEach
   void tearDown() {
     authRule.deleteUsersAndGroups();
-  }
-
-  @AfterEach
-  void deleteBatches() {
     engineRule.getManagementService().deleteBatch(batch1.getId(), true);
     engineRule.getManagementService().deleteBatch(batch2.getId(), true);
   }

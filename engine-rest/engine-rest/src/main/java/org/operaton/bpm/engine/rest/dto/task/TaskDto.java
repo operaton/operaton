@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.rest.dto.task;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.rest.dto.converter.DelegationStateConverter;
@@ -47,6 +49,8 @@ public class TaskDto {
   private String caseDefinitionId;
   private boolean suspended;
   private String formKey;
+  /** Derived from the process model; {@link #updateTask(Task)} never reads it. */
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private OperatonFormRef operatonFormRef;
   private String tenantId;
   /**

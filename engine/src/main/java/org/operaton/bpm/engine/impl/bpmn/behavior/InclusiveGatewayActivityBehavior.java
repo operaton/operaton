@@ -18,11 +18,14 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -40,7 +43,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
  * @author Tom Van Buskirk
  * @author Joram Barrez
  */
-public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
+public @NullMarked class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -86,7 +89,7 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     execution.leaveActivityViaTransitions(transitionsToTake, joinedExecutions);
   }
 
-  private boolean isNotDefaultFlow(PvmTransition transition, String defaultSequenceFlow) {
+  private boolean isNotDefaultFlow(PvmTransition transition, @Nullable String defaultSequenceFlow) {
     return defaultSequenceFlow == null || !transition.getId().equals(defaultSequenceFlow);
   }
 
@@ -95,10 +98,10 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     return condition == null || condition.evaluate(execution);
   }
 
-  protected Collection<ActivityExecution> getLeafExecutions(ActivityExecution parent) {
+  protected Collection<ActivityExecution> getLeafExecutions(@Nullable ActivityExecution parent) {
     List<ActivityExecution> executionlist = new ArrayList<>();
-    List<? extends ActivityExecution> subExecutions = parent.getNonEventScopeExecutions();
-    if (subExecutions.isEmpty()) {
+    List<? extends ActivityExecution> subExecutions = parent != null ? parent.getNonEventScopeExecutions() : Collections.emptyList();
+    if (subExecutions.isEmpty() && parent != null) {
       executionlist.add(parent);
     } else {
       for (ActivityExecution concurrentExecution : subExecutions) {

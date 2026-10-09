@@ -24,6 +24,8 @@ import java.net.URL;
 
 import org.operaton.bpm.model.xml.ModelException;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
  * @author Tom Baeyens
@@ -50,7 +52,7 @@ public final class ReflectUtil {
     return getResource(name, null);
   }
 
-  public static URL getResource(String name, ClassLoader classLoader) {
+  public static URL getResource(String name, @Nullable ClassLoader classLoader) {
     if(classLoader == null) {
       // Try the current Thread context class loader
       classLoader = Thread.currentThread().getContextClassLoader();

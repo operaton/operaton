@@ -26,10 +26,12 @@ import java.lang.annotation.*;
  * <p/>
  * For example, suppose we have registered a BPMN process that has
  * the following declaration:
+ * </p>
  * <p/>
  * <code>
  * &lt;service-task operaton:expression = "myBean" id = "confirm-receipt" /&gt;
  * </code>
+ * </p>
  * <p/>
  * This is a state that will be entered from Operaton and execution will flow through to the bean
  * registered in the context as "myBean." To subscribe to that, a POJO need only implement
@@ -38,13 +40,15 @@ import java.lang.annotation.*;
  * tasked with responding to a state. If applied to a bean and there are no {@link org.operaton.bpm.engine.annotations.ProcessEngineComponent}
  * annotations present, then one option might be to automatically enlist all public methods
  * as handlers for states whose IDs or names are inferred from the method name:
+ * </p>
  * <p/>
  * <code>public void confirmReceipt(..)</code> would be treated the same as
+ * </p>
  * <p/>
  * <code>@State( "confirm-receipt") public void confirmReceipt (..)</code>,
+ * </p>
  *
  * @author Josh Long
- * @since 1.0
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

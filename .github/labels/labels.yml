@@ -15,6 +15,10 @@
   color: "#0075ca"
   description: "Improvements or additions to documentation"
 
+- name: "documentation:adr"
+  color: "#0075ca"
+  description: "Architectural Decision Record (ADR) documentation"
+
 - name: "idea"
   color: "#9BDF57"
   description: "New feature idea for Operaton"
@@ -169,13 +173,9 @@
   color: "#E390CA"
   description: "Issues & changes related to db2 DB"
 
-# Platform
-- name: "platform:wildfly"
-  color: "#5EFDF1"
-  description: ""
-
 # Distributions
 - name: "distro:wildfly"
+  from_name: "platform:wildfly"
   color: "#7628d5"
   description: "Issues & changes related to the Wildfly distribution"
 
@@ -197,8 +197,13 @@
   description: "Quarkus dependencies & quarkus-extension"
 
 - name: "integration:tomcat"
-  color: "#aaaaaa"
-  description: ""
+  color: "#ec6de6"
+  description: "Tomcat dependencies & Tomcat distribution"
+
+# Platform
+- name: "integration:wildfly"
+  color: "#ec6de6"
+  description: "Wildfly dependencies & Wildfly distribution"
 
 # Scope
 - name: "scope:assert"
@@ -229,9 +234,14 @@
   color: "#FEF1B4"
   description: "Changes related to the DMN model & engine"
 
-- name: "scope:e2e-qa"
+- name: "scope:qa-e2e"
   color: "#FEF1B4"
   description: "Changes to the E2E tests"
+  from_name: "scope:e2e-qa"
+
+- name: "scope:qa-db"
+  color: "#FEF1B4"
+  description: "Changes to the database tests"
 
 - name: "scope:external-task-client-java"
   color: "#FEF1B4"
@@ -273,7 +283,11 @@
 
 - name: "scope:webapp"
   color: "#FEF1B4"
-  description: "Changes affecting all the webapps."
+  description: "Changes affecting the legacy webapps."
+
+- name: "scope:webapp-neo"
+  color: "#FEF1B4"
+  description: "Changes affecting the new webapps."
 
 # Backporting
 - name: "backport:c7"

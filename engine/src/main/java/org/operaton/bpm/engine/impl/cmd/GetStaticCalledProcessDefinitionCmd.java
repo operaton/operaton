@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -37,9 +38,10 @@ import org.operaton.bpm.engine.impl.util.CallableElementUtil;
 import org.operaton.bpm.engine.repository.CalledProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ProcessEngineLogger.CMD_LOGGER;
 
-public class GetStaticCalledProcessDefinitionCmd implements Command<Collection<CalledProcessDefinition>> {
+public @NullMarked class GetStaticCalledProcessDefinitionCmd implements Command<Collection<CalledProcessDefinition>> {
 
   protected String processDefinitionId;
 
@@ -67,6 +69,7 @@ public class GetStaticCalledProcessDefinitionCmd implements Command<Collection<C
   @Override
   public Collection<CalledProcessDefinition> execute(CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = new GetDeployedProcessDefinitionCmd(processDefinitionId, true).execute(commandContext);
+    requireNonNull(processDefinition);
 
     List<ActivityImpl> callActivities = findCallActivitiesInProcess(processDefinition);
 

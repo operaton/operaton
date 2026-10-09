@@ -1,0 +1,21 @@
+{
+  "pathFilter": {
+    "deniedPaths": [
+      { "path": "/api/engine/.*", "methods": "*" },
+      { "path": "/api/admin/.*", "methods": "*" }
+    ],
+    "allowedPaths": [
+      { "path": "/api/engine/engine/", "methods": "GET" },
+      { "path": "/api/engine/engine/{engine}/.*", "methods": "*", "authorizer": "org.operaton.bpm.webapp.neo.impl.security.filter.EngineRequestAuthorizer" },
+
+      { "path": "/api/admin/auth/user/{engine}", "methods": "GET" },
+      { "path": "/api/admin/auth/user/{engine}/login/{app}", "methods": "POST" },
+      { "path": "/api/admin/auth/user/{engine}/logout", "methods": "POST" },
+      { "path": "/api/admin/auth/user/{engine}/.*", "methods": "*", "authorizer": "org.operaton.bpm.webapp.neo.impl.security.filter.EngineRequestAuthorizer" },
+
+      { "path": "/api/admin/setup/{engine}", "methods": "GET" },
+      { "path": "/api/admin/setup/{engine}/user/create", "methods": "POST" },
+      { "path": "/api/admin/setup/{engine}/.*", "methods": "*", "authorizer": "org.operaton.bpm.webapp.neo.impl.security.filter.EngineRequestAuthorizer" }
+    ]
+  }
+}

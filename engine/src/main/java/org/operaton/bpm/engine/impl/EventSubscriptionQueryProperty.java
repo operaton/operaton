@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
-
-
 
 /**
  * @author Daniel Meyer
  */
-final class EventSubscriptionQueryProperty {
+final @NullMarked class EventSubscriptionQueryProperty {
 
   // properties used in event subscription queries:
 

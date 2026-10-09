@@ -18,22 +18,24 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
  * @author Falko Menge
  */
-public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior {
 
-  protected PvmActivity cancelBoundaryEvent;
+  protected @Nullable PvmActivity cancelBoundaryEvent;
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
@@ -56,20 +58,20 @@ public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
   @Override
   public void doLeave(ActivityExecution execution) {
     // continue via the appropriate cancel boundary event
-    ScopeImpl eventScope = (ScopeImpl) cancelBoundaryEvent.getEventScope();
+    ScopeImpl eventScope = (ScopeImpl) getCancelBoundaryEvent().getEventScope();
 
     ActivityExecution boundaryEventScopeExecution = execution.findExecutionForFlowScope(eventScope);
-    boundaryEventScopeExecution.executeActivity(cancelBoundaryEvent);
+    boundaryEventScopeExecution.executeActivity(getCancelBoundaryEvent());
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
 
     // join compensating executions
     if(!execution.hasChildren()) {
       leave(execution);
     } else {
-      ((ExecutionEntity)execution).forceUpdate();
+      execution.forceUpdate();
     }
   }
 
@@ -78,6 +80,8 @@ public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
   }
 
   public PvmActivity getCancelBoundaryEvent() {
+    EnsureUtil.ensureNotNull("cancelBoundaryEvent", cancelBoundaryEvent);
+    requireNonNull(cancelBoundaryEvent);
     return cancelBoundaryEvent;
   }
 

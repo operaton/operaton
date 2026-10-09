@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.variable.serializer;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -29,7 +31,7 @@ public class ValueFieldsImpl implements ValueFields {
   protected byte[] byteArrayValue;
 
   @Override
-  public String getName() {
+  public @Nullable String getName() {
     return null;
   }
 

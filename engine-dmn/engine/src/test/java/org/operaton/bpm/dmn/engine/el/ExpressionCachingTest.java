@@ -51,7 +51,8 @@ class ExpressionCachingTest {
 
     scriptEngineSpy = mock(GroovyScriptEngineImpl.class);
     when(scriptEngineSpy.createBindings()).thenReturn(new SimpleBindings());
-    when(scriptEngineSpy.compile(anyString())).thenReturn(mock(CompiledScript.class));
+    CompiledScript compiledScriptMock = mock(CompiledScript.class);
+    when(scriptEngineSpy.compile(anyString())).thenReturn(compiledScriptMock);
     when(scriptEngineManager.getEngineByName(anyString())).thenReturn(scriptEngineSpy);
 
     // Stub factory so isCachableEngine() can check THREADING parameter

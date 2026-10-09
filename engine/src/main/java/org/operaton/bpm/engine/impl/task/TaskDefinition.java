@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.delegate.Expression;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.form.FormDefinition;
 import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
@@ -147,27 +149,33 @@ public class TaskDefinition {
     return taskListeners;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public Map<String, List<TaskListener>> getBuiltinTaskListeners() {
     return builtinTaskListeners;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public void setTaskListeners(Map<String, List<TaskListener>> taskListeners) {
     this.taskListeners = taskListeners;
   }
 
-  public List<TaskListener> getTaskListenersForEvent(String eventName) {
+  public @Nullable List<TaskListener> getTaskListenersForEvent(String eventName) {
     return taskListeners.get(eventName);
   }
 
-  public List<TaskListener> getBuiltinTaskListenersForEvent(String eventName) {
+  public @Nullable List<TaskListener> getBuiltinTaskListenersForEvent(String eventName) {
     return builtinTaskListeners.get(eventName);
   }
 
-  public List<TaskListener> getAllTaskListenersForEvent(String eventName) {
+  public @Nullable List<TaskListener> getAllTaskListenersForEvent(String eventName) {
     return allTaskListeners.get(eventName);
   }
 
-  public TaskListener getTimeoutTaskListener(String timeoutId) {
+  public @Nullable TaskListener getTimeoutTaskListener(String timeoutId) {
     return timeoutTaskListeners.get(timeoutId);
   }
 

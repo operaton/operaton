@@ -25,13 +25,15 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionResultEntries;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
+public @NullMarked class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -44,7 +46,7 @@ public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
   }
 
   @Override
-  public DmnDecisionRuleResult getFirstResult() {
+  public @Nullable DmnDecisionRuleResult getFirstResult() {
     if (!isEmpty()) {
       return get(0);
     } else {
@@ -53,7 +55,7 @@ public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
   }
 
   @Override
-  public DmnDecisionRuleResult getSingleResult() {
+  public @Nullable DmnDecisionRuleResult getSingleResult() {
     if (size() == 1) {
       return get(0);
     } else if (isEmpty()) {
@@ -91,7 +93,7 @@ public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
   }
 
   @Override
-  public <T> T getSingleEntry() {
+  public @Nullable <T> T getSingleEntry() {
     DmnDecisionRuleResult result = getSingleResult();
     if (result != null) {
       return result.getSingleEntry();
@@ -101,7 +103,7 @@ public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
   }
 
   @Override
-  public <T extends TypedValue> T getSingleEntryTyped() {
+  public @Nullable <T extends TypedValue> T getSingleEntryTyped() {
     DmnDecisionRuleResult result = getSingleResult();
     if (result != null) {
       return result.getSingleEntryTyped();

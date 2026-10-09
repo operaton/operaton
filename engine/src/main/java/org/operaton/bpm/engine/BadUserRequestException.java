@@ -16,23 +16,26 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 
 /**
- * <p>Exception resulting from a bad user request. A bad user request is
+ * Exception resulting from a bad user request. A bad user request is
  * an interaction where the user requests some non-existing state or
- * attempts to perform an illegal action on some entity.</p>
+ * attempts to perform an illegal action on some entity.
  *
- * <p><strong>Examples:</strong>
+ * <p>
+ * <strong>Examples:</strong>
+ * </p>
  * <ul>
  *  <li>cancelling a non-existing process instance</li>
  *  <li>triggering a suspended execution...</li>
  * </ul>
- * </p>
  *
  * @author Sebastian Menski
  */
-public class BadUserRequestException extends ProcessEngineException {
+public @NullMarked class BadUserRequestException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 

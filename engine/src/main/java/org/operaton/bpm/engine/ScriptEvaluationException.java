@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 
 /**
@@ -23,7 +25,8 @@ import java.io.Serial;
  *
  * @author Sebastian Menski
  */
-public class ScriptEvaluationException extends ScriptEngineException {
+@SuppressWarnings("java:S110")
+public @NullMarked class ScriptEvaluationException extends ScriptEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 

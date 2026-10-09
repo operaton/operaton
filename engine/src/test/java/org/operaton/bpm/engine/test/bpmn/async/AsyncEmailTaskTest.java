@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import java.util.Arrays;
 import java.util.List;
 
 import ch.martinelli.oss.testcontainers.mailpit.Message;
@@ -37,7 +36,7 @@ class AsyncEmailTaskTest extends EmailTestCase {
   // copied from org.operaton.bpm.engine.test.bpmn.mail.EmailServiceTaskTest
   @Deployment
   @Test
-  void testSimpleTextMail() {
+  void testSimpleTextMail() throws Exception {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
     List<Message> messages = getReceivedEmails();
@@ -50,14 +49,14 @@ class AsyncEmailTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(messages.get(0));
     assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), null);
+            List.of("kermit@operaton.org"), null);
     testRule.assertProcessEnded(procId);
   }
 
   // copied from org.operaton.bpm.engine.test.bpmn.mail.EmailSendTaskTest
   @Deployment
   @Test
-  void testSimpleTextMailSendTask() {
+  void testSimpleTextMailSendTask() throws Exception {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
     List<Message> messages = getReceivedEmails();
@@ -70,7 +69,7 @@ class AsyncEmailTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(messages.get(0));
     assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), null);
+            List.of("kermit@operaton.org"), null);
   }
 
 }

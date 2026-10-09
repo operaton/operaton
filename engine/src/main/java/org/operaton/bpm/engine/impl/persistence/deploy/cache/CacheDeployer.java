@@ -20,15 +20,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
-public class CacheDeployer {
+public @NullMarked class CacheDeployer {
 
   protected List<Deployer> deployers;
 
@@ -60,7 +62,7 @@ public class CacheDeployer {
     deployment.setResources(null);
   }
 
-  protected void initDeployment(final DeploymentEntity deployment, String... resourceNames) {
+  protected void initDeployment(final DeploymentEntity deployment, @Nullable String... resourceNames) {
     deployment.clearResources();
     for (String resourceName : resourceNames) {
       if (resourceName != null) {

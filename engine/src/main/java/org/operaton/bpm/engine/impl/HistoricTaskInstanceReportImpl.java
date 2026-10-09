@@ -52,13 +52,11 @@ public class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceRepor
 
   @Override
   public List<HistoricTaskInstanceReportResult> countByProcessDefinitionKey() {
-    CommandContext commandContext = Context.getCommandContext();
-
-    if(commandContext == null) {
+    if(!Context.hasActiveCommandContext()) {
       return commandExecutor.execute(new HistoricTaskInstanceCountByProcessDefinitionKey());
     }
     else {
-      return executeCountByProcessDefinitionKey(commandContext);
+      return executeCountByProcessDefinitionKey(Context.getCommandContext());
     }
   }
 
@@ -69,13 +67,11 @@ public class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceRepor
 
   @Override
   public List<HistoricTaskInstanceReportResult> countByTaskName() {
-    CommandContext commandContext = Context.getCommandContext();
-
-    if(commandContext == null) {
+    if(!Context.hasActiveCommandContext()) {
       return commandExecutor.execute(new HistoricTaskInstanceCountByNameCmd());
     }
     else {
-      return executeCountByTaskName(commandContext);
+      return executeCountByTaskName(Context.getCommandContext());
     }
   }
 
@@ -89,13 +85,11 @@ public class HistoricTaskInstanceReportImpl implements HistoricTaskInstanceRepor
     ensureNotNull(NotValidException.class, "periodUnit", periodUnit);
     this.durationPeriodUnit = periodUnit;
 
-    CommandContext commandContext = Context.getCommandContext();
-
-    if(commandContext == null) {
+    if(!Context.hasActiveCommandContext()) {
       return commandExecutor.execute(new ExecuteDurationCmd());
     }
     else {
-      return executeDuration(commandContext);
+      return executeDuration(Context.getCommandContext());
     }
   }
 

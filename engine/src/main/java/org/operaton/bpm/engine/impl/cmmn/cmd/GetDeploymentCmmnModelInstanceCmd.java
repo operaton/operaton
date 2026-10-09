@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -49,6 +50,8 @@ public class GetDeploymentCmmnModelInstanceCmd implements Command<CmmnModelInsta
     final DeploymentCache deploymentCache = configuration.getDeploymentCache();
 
     CaseDefinitionEntity caseDefinition = deploymentCache.findDeployedCaseDefinitionById(caseDefinitionId);
+    ensureNotNull("Case Definition '%s' not found".formatted(caseDefinitionId), "caseDefinition", caseDefinition);
+    requireNonNull(caseDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadCaseDefinition(caseDefinition);

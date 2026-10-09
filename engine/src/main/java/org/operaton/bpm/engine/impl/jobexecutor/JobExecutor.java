@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -155,34 +158,32 @@ public abstract class JobExecutor {
     }
   }
 
-  public void logAcquiredJobs(ProcessEngineImpl engine, int numJobs) {
-    if (engine != null && engine.getProcessEngineConfiguration().isMetricsEnabled()) {
+  public void logAcquiredJobs(@NonNull ProcessEngineImpl engine, int numJobs) {
+    if (engine.getProcessEngineConfiguration().isMetricsEnabled()) {
       engine.getProcessEngineConfiguration()
         .getMetricsRegistry()
         .markOccurrence(Metrics.JOB_ACQUIRED_SUCCESS, numJobs);
     }
   }
 
-  public void logAcquisitionFailureJobs(ProcessEngineImpl engine, int numJobs) {
-    if (engine != null && engine.getProcessEngineConfiguration().isMetricsEnabled()) {
+  public void logAcquisitionFailureJobs(@NonNull ProcessEngineImpl engine, int numJobs) {
+    if (engine.getProcessEngineConfiguration().isMetricsEnabled()) {
       engine.getProcessEngineConfiguration()
         .getMetricsRegistry()
         .markOccurrence(Metrics.JOB_ACQUIRED_FAILURE, numJobs);
     }
   }
 
-  public void logRejectedExecution(ProcessEngineImpl engine, int numJobs) {
-    if (engine != null) {
-      LOG.rejectedJobExecutions(engine.getName(), numJobs);
-      if (engine.getProcessEngineConfiguration().isMetricsEnabled()) {
-        engine.getProcessEngineConfiguration()
-                .getMetricsRegistry()
-                .markOccurrence(Metrics.JOB_EXECUTION_REJECTED, numJobs);
-      }
+  public void logRejectedExecution(@NonNull ProcessEngineImpl engine, int numJobs) {
+    LOG.rejectedJobExecutions(engine.getName(), numJobs);
+    if (engine.getProcessEngineConfiguration().isMetricsEnabled()) {
+      engine.getProcessEngineConfiguration()
+              .getMetricsRegistry()
+              .markOccurrence(Metrics.JOB_EXECUTION_REJECTED, numJobs);
     }
   }
 
-  public void logJobExecutionInfo(ProcessEngineImpl engine,
+  public void logJobExecutionInfo(@Nullable ProcessEngineImpl engine,
                                   int executionQueueSize,
                                   int executionQueueCapacity,
                                   int maxExecutionThreads,
@@ -236,7 +237,7 @@ public abstract class JobExecutor {
    * @deprecated Use {@link #getProcessEngines()} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public CommandExecutor getCommandExecutor() {
+  public @Nullable CommandExecutor getCommandExecutor() {
     if(processEngines.isEmpty()) {
       return null;
     } else {
@@ -387,7 +388,7 @@ public abstract class JobExecutor {
     return acquireJobsRunnable;
   }
 
-  public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
+  public Runnable getExecuteJobsRunnable(List<String> jobIds, @NonNull ProcessEngineImpl processEngine) {
     return new ExecuteJobsRunnable(jobIds, processEngine);
   }
 

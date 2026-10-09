@@ -18,25 +18,15 @@ package org.operaton.bpm.engine.rest.sub.runtime.impl;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Request;
+import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.UriBuilder;
-import jakarta.ws.rs.core.UriInfo;
-import jakarta.ws.rs.core.Variant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -54,12 +44,7 @@ import org.operaton.bpm.engine.rest.dto.runtime.FilterDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.hal.EmptyHalCollection;
-import org.operaton.bpm.engine.rest.hal.EmptyHalResource;
-import org.operaton.bpm.engine.rest.hal.Hal;
-import org.operaton.bpm.engine.rest.hal.HalCollectionResource;
-import org.operaton.bpm.engine.rest.hal.HalResource;
-import org.operaton.bpm.engine.rest.hal.HalVariableValue;
+import org.operaton.bpm.engine.rest.hal.*;
 import org.operaton.bpm.engine.rest.hal.task.HalTask;
 import org.operaton.bpm.engine.rest.hal.task.HalTaskList;
 import org.operaton.bpm.engine.rest.impl.AbstractAuthorizedRestResource;
@@ -67,9 +52,7 @@ import org.operaton.bpm.engine.rest.sub.runtime.FilterResource;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Permissions.*;
 import static org.operaton.bpm.engine.authorization.Resources.FILTER;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
@@ -158,7 +141,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   @Override
-  public Object querySingleResult(Request request, String extendingQuery) {
+  public @Nullable Object querySingleResult(Request request, String extendingQuery) {
     Variant variant = request.selectVariant(VARIANTS);
     if (variant != null) {
       if (MediaType.APPLICATION_JSON_TYPE.equals(variant.getMediaType())) {
@@ -355,7 +338,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     return dto;
   }
 
-  protected Query<?,?> convertQuery(String queryString) {
+  protected @Nullable Query<?,?> convertQuery(String queryString) {
     if (isEmptyJson(queryString)) {
       return null;
     }
@@ -377,11 +360,9 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   protected List<Object> convertToDtoList(List<?> entities) {
-    List<Object> dtoList = new ArrayList<>();
-    for (Object entity : entities) {
-      dtoList.add(convertToDto(entity));
-    }
-    return dtoList;
+    return entities.stream()
+      .map(this::convertToDto)
+      .toList();
   }
 
   protected HalResource<?> convertToHalResource(Object entity) {
@@ -467,7 +448,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   @SuppressWarnings("unchecked")
   protected Map<String, List<VariableInstance>> getVariableInstancesForTasks(HalTaskList halTaskList) {
     List<HalTask> halTasks = (List<HalTask>) halTaskList.getEmbedded("task");
-    return getVariableInstancesForTasks(halTasks.toArray(new HalTask[halTasks.size()]));
+    return getVariableInstancesForTasks(halTasks.toArray(HalTask[]::new));
   }
 
   protected Map<String, List<VariableInstance>> getVariableInstancesForTasks(HalTask... halTasks) {
@@ -500,11 +481,9 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
 
   private List<String> collectVariableNames(List<Map<String, Object>> variables) {
     if (variables != null && !variables.isEmpty()) {
-      List<String> variableNames = new ArrayList<>();
-      for (Map<String, Object> variable : variables) {
-        variableNames.add((String) variable.get(PROPERTIES_VARIABLES_NAME_KEY));
-      }
-      return variableNames;
+      return variables.stream()
+        .map(variable -> (String) variable.get(PROPERTIES_VARIABLES_NAME_KEY))
+        .toList();
     }
     else {
       return emptyList();

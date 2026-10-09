@@ -19,11 +19,12 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ExternalTaskQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-public class GetTopicNamesCmd implements Command<List<String>> {
+public @NullMarked class GetTopicNamesCmd implements Command<List<String>> {
 
   protected ExternalTaskQueryImpl externalTaskQuery = new ExternalTaskQueryImpl();
 

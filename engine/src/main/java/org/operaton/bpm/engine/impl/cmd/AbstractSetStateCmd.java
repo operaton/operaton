@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
@@ -30,23 +33,23 @@ import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 
 /**
  * @author Roman Smirnov
- *
  */
+@NullMarked
 public abstract class AbstractSetStateCmd implements Command<Void> {
 
   protected static final String SUSPENSION_STATE_PROPERTY = "suspensionState";
 
   protected boolean includeSubResources;
   protected boolean isLogUserOperationDisabled;
-  protected Date executionDate;
+  protected @Nullable Date executionDate;
 
-  protected AbstractSetStateCmd(boolean includeSubResources, Date executionDate) {
+  protected AbstractSetStateCmd(boolean includeSubResources, @Nullable Date executionDate) {
     this.includeSubResources = includeSubResources;
     this.executionDate = executionDate;
   }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     checkParameters(commandContext);
     checkAuthorization(commandContext);
 
@@ -79,7 +82,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
   }
 
   protected void triggerHistoryEvent(CommandContext commandContext) {
-
+    // no-op
   }
 
   public void disableLogUserOperation() {
@@ -107,15 +110,15 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
     commandContext.getJobManager().schedule(timer);
   }
 
-  protected String getDelayedExecutionJobHandlerType() {
+  protected @Nullable String getDelayedExecutionJobHandlerType() {
     return null;
   }
 
-  protected JobHandlerConfiguration getJobHandlerConfiguration() {
+  protected @Nullable JobHandlerConfiguration getJobHandlerConfiguration() {
     return null;
   }
 
-  protected AbstractSetStateCmd getNextCommand() {
+  protected @Nullable AbstractSetStateCmd getNextCommand() {
     return null;
   }
 
@@ -126,7 +129,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
    *         for that deployment can execute the resulting job
    */
   @SuppressWarnings("unused")
-  protected String getDeploymentId(CommandContext commandContext) {
+  protected @Nullable String getDeploymentId(CommandContext commandContext) {
     return null;
   }
 
@@ -142,7 +145,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
 
   protected abstract SuspensionState getNewSuspensionState();
 
-  protected String getDeploymentIdByProcessDefinition(CommandContext commandContext, String processDefinitionId) {
+  protected @Nullable String getDeploymentIdByProcessDefinition(CommandContext commandContext, String processDefinitionId) {
     ProcessDefinitionEntity definition = commandContext.getProcessDefinitionManager().getCachedResourceDefinitionEntity(processDefinitionId);
     if (definition == null) {
       definition = commandContext.getProcessDefinitionManager().findLatestDefinitionById(processDefinitionId);
@@ -153,9 +156,9 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
     return null;
   }
 
-  protected String getDeploymentIdByProcessDefinitionKey(CommandContext commandContext, String processDefinitionKey,
+  protected @Nullable String getDeploymentIdByProcessDefinitionKey(CommandContext commandContext, String processDefinitionKey,
       boolean tenantIdSet, String tenantId) {
-    ProcessDefinitionEntity definition = null;
+    ProcessDefinitionEntity definition;
     if (tenantIdSet) {
       definition = commandContext.getProcessDefinitionManager().findLatestProcessDefinitionByKeyAndTenantId(processDefinitionKey, tenantId);
     } else {
@@ -169,7 +172,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
     return null;
   }
 
-  protected String getDeploymentIdByJobDefinition(CommandContext commandContext, String jobDefinitionId) {
+  protected @Nullable String getDeploymentIdByJobDefinition(CommandContext commandContext, String jobDefinitionId) {
     JobDefinitionManager jobDefinitionManager = commandContext.getJobDefinitionManager();
     JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
     if (jobDefinition != null && jobDefinition.getProcessDefinitionId() != null) {

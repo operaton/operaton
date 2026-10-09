@@ -293,7 +293,7 @@ public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseI
       query.subProcessInstanceId(subProcessInstanceId);
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();
@@ -329,7 +329,7 @@ public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseI
       query.notClosed();
     }
     if (caseActivityIdIn != null && !caseActivityIdIn.isEmpty()) {
-      query.caseActivityIdIn(caseActivityIdIn.toArray(new String[caseActivityIdIn.size()]));
+      query.caseActivityIdIn(caseActivityIdIn.toArray(String[]::new));
     }
     if(Boolean.TRUE.equals(variableNamesIgnoreCase)) {
       query.matchVariableNamesIgnoreCase();

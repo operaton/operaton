@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
@@ -102,7 +103,7 @@ public class AttachmentManager extends AbstractHistoricManager {
         getDbEntityManager().deletePreserveOrder(AttachmentEntity.class, "deleteAttachmentByIds", parameters);
     }
 
-    public Attachment findAttachmentByTaskIdAndAttachmentId(String taskId, String attachmentId) {
+    public @Nullable Attachment findAttachmentByTaskIdAndAttachmentId(String taskId, String attachmentId) {
         checkHistoryEnabled();
 
         Map<String, String> parameters = new HashMap<>();

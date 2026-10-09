@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
 
 
@@ -29,6 +30,6 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
  * @author Daniel Meyer
  * @author Roman Smirnov
  */
-public class EventSubProcessStartEventActivityBehavior extends NoneStartEventActivityBehavior {
+public @NullMarked class EventSubProcessStartEventActivityBehavior extends NoneStartEventActivityBehavior {
 
 }

@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.repository.DeploymentQuery;
-
-
 
 /**
  * Contains the possible properties that can be used in a {@link DeploymentQuery}.
  *
  * @author Joram Barrez
  */
-final class DeploymentQueryProperty {
+final @NullMarked class DeploymentQueryProperty {
 
   public static final QueryProperty DEPLOYMENT_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty DEPLOYMENT_NAME = new QueryPropertyImpl("NAME_");

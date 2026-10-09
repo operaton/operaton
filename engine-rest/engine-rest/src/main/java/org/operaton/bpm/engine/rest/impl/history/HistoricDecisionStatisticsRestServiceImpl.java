@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.impl.history;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -38,7 +37,6 @@ public class HistoricDecisionStatisticsRestServiceImpl implements HistoricDecisi
 
   @Override
   public List<HistoricDecisionInstanceStatisticsDto> getDecisionStatistics(String decisionRequirementsDefinitionId, String decisionInstanceId) {
-    List<HistoricDecisionInstanceStatisticsDto> result = new ArrayList<>();
     HistoricDecisionInstanceStatisticsQuery statisticsQuery = processEngine.getHistoryService()
         .createHistoricDecisionInstanceStatisticsQuery(decisionRequirementsDefinitionId);
     if (decisionInstanceId != null) {
@@ -47,11 +45,9 @@ public class HistoricDecisionStatisticsRestServiceImpl implements HistoricDecisi
 
     List<HistoricDecisionInstanceStatistics> statistics = statisticsQuery.unlimitedList();
 
-    for (HistoricDecisionInstanceStatistics stats : statistics) {
-      result.add(HistoricDecisionInstanceStatisticsDto.fromDecisionDefinitionStatistics(stats));
-    }
-
-    return result;
+    return statistics.stream()
+        .map(HistoricDecisionInstanceStatisticsDto::fromDecisionDefinitionStatistics)
+        .toList();
   }
 
 }

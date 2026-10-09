@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -25,6 +28,7 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.engine.JuelScriptEngineFactory;
 
+ import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -32,7 +36,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-public final class ScriptUtil {
+public final @NullMarked class ScriptUtil {
 
   private ScriptUtil() {
   }
@@ -47,9 +51,9 @@ public final class ScriptUtil {
    * @param resource the resource path of the script code or an expression which evaluates to the resource path
    * @param expressionManager the expression manager to use to generate the expressions of dynamic scripts
    * @return the newly created script
-   * @throws NotValidException if language is null or empty or both of source and resource are null or empty
+   * @throws NotValidException if language is {@code null} or empty or both of source and resource are {@code null} or empty
    */
-  public static ExecutableScript getScript(String language, String source, String resource, ExpressionManager expressionManager) {
+  public static ExecutableScript getScript(String language, @Nullable String source, @Nullable String resource, ExpressionManager expressionManager) {
     return getScript(language, source, resource, expressionManager, getScriptFactory());
   }
 
@@ -64,9 +68,9 @@ public final class ScriptUtil {
    * @param expressionManager the expression manager to use to generate the expressions of dynamic scripts
    * @param scriptFactory the script factory used to create the script
    * @return the newly created script
-   * @throws NotValidException if language is null or empty or both of source and resource are invalid
+   * @throws NotValidException if language is {@code null} or empty or both of source and resource are invalid
    */
-  public static ExecutableScript getScript(String language, String source, String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScript(String language, @Nullable String source, @Nullable String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureAtLeastOneNotNull(NotValidException.class, "No script source or resource was given", source, resource);
     if (resource != null && !resource.isEmpty()) {
@@ -86,11 +90,12 @@ public final class ScriptUtil {
    * @param expressionManager the expression manager to use to generate the expressions of dynamic scripts
    * @param scriptFactory the script factory used to create the script
    * @return the newly created script
-   * @throws NotValidException if language is null or empty or source is null
+   * @throws NotValidException if language is {@code null} or empty or source is {@code null}
    */
-  public static ExecutableScript getScriptFormSource(String language, String source, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScriptFormSource(String language, @Nullable String source, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureNotNull(NotValidException.class, "Script source", source);
+    requireNonNull(source);
     if (isDynamicScriptExpression(language, source)) {
       Expression sourceExpression = expressionManager.createExpression(source);
       return getScriptFromSourceExpression(language, sourceExpression, scriptFactory);
@@ -107,7 +112,7 @@ public final class ScriptUtil {
    * @param source the source code of the script
    * @param scriptFactory the script factory used to create the script
    * @return the newly created script
-   * @throws NotValidException if language is null or empty or source is null
+   * @throws NotValidException if language is {@code null} or empty or source is {@code null}
    */
   public static ExecutableScript getScriptFromSource(String language, String source, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
@@ -123,7 +128,7 @@ public final class ScriptUtil {
    * @param sourceExpression the expression which evaluates to the source code
    * @param scriptFactory the script factory used to create the script
    * @return the newly created script
-   * @throws NotValidException if language is null or empty or sourceExpression is null
+   * @throws NotValidException if language is {@code null} or empty or sourceExpression is {@code null}
    */
   public static ExecutableScript getScriptFromSourceExpression(String language, Expression sourceExpression, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
@@ -140,7 +145,7 @@ public final class ScriptUtil {
    * @param expressionManager the expression manager to use to generate the expressions of dynamic scripts
    * @param scriptFactory the script factory used to create the script
    * @return the newly created script
-   * @throws NotValidException if language or resource are null or empty
+   * @throws NotValidException if language or resource are {@code null} or empty
    */
   public static ExecutableScript getScriptFromResource(String language, String resource, ExpressionManager expressionManager, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
@@ -161,9 +166,9 @@ public final class ScriptUtil {
    * @param resource the resource path of the script code
    * @param scriptFactory the script factory used to create the script
    * @return the newly created script
-   * @throws NotValidException if language or resource are null or empty
+   * @throws NotValidException if language or resource are {@code null} or empty
    */
-  public static ExecutableScript getScriptFromResource(String language, String resource, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScriptFromResource(String language, @Nullable String resource, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureNotEmpty(NotValidException.class, "Script resource", resource);
     return scriptFactory.createScriptFromResource(language, resource);
@@ -177,9 +182,9 @@ public final class ScriptUtil {
    * @param resourceExpression the expression which evaluates to the resource path
    * @param scriptFactory the script factory used to create the script
    * @return the newly created script
-   * @throws NotValidException if language is null or empty or resourceExpression is null
+   * @throws NotValidException if language is {@code null} or empty or resourceExpression is {@code null}
    */
-  public static ExecutableScript getScriptFromResourceExpression(String language, Expression resourceExpression, ScriptFactory scriptFactory) {
+  public static ExecutableScript getScriptFromResourceExpression(String language, @Nullable Expression resourceExpression, ScriptFactory scriptFactory) {
     ensureScriptLanguageNotEmpty(language);
     ensureNotNull(NotValidException.class, "Script resource expression", resourceExpression);
     return scriptFactory.createScriptFromResource(language, resourceExpression);
@@ -192,7 +197,7 @@ public final class ScriptUtil {
    * @param value the value to check
    * @return true if the value is an expression for a dynamic script source/resource, otherwise false
    */
-  public static boolean isDynamicScriptExpression(String language, String value) {
+  public static boolean isDynamicScriptExpression(@Nullable String language, String value) {
     return StringUtil.isExpression(value) && (language != null && !new JuelScriptEngineFactory().getNames().contains(language.toLowerCase()));
   }
 
@@ -200,13 +205,9 @@ public final class ScriptUtil {
    * Returns the configured script factory in the context or a new one.
    */
   public static ScriptFactory getScriptFactory() {
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    if (processEngineConfiguration != null) {
-      return processEngineConfiguration.getScriptFactory();
-    }
-    else {
-      return new ScriptFactory();
-    }
+    return Context.findProcessEngineConfiguration()
+      .map(ProcessEngineConfigurationImpl::getScriptFactory)
+      .orElse(new ScriptFactory());
   }
 
   private static void ensureScriptLanguageNotEmpty(String language) {

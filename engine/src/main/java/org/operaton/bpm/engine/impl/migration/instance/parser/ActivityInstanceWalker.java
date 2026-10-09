@@ -22,6 +22,8 @@ import java.util.Collection;
 import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 
+import static java.util.Collections.emptyList;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -33,7 +35,11 @@ public class ActivityInstanceWalker extends ReferenceWalker<ActivityInstance> {
   }
 
   protected Collection<ActivityInstance> nextElements() {
-    ActivityInstance[] children = getCurrentElement().getChildActivityInstances();
+    ActivityInstance currentElement = getCurrentElement();
+    if  (currentElement == null) {
+        return emptyList();
+    }
+    ActivityInstance[] children = currentElement.getChildActivityInstances();
     return Arrays.asList(children);
   }
 

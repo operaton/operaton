@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,8 +84,7 @@ public final class Removable {
    * @param rule the process engine test rule, non-null.
    * @return the {@link Removable}
    */
-  public static Removable of(ProcessEngineTestRule rule) {
-    Objects.requireNonNull(rule);
+  public static Removable of(@NonNull ProcessEngineTestRule rule) {
     Objects.requireNonNull(rule.processEngineRule);
 
     return of(rule.processEngineRule.getProcessEngine());
@@ -100,7 +100,7 @@ public final class Removable {
    * @param clazz the given class to delete associated entities for
    * @throws EntityRemoveException in case anything fails during the process of deletion
    */
-  public void remove(Class<?> clazz) throws EntityRemoveException {
+  public void remove(@NonNull Class<?> clazz) throws EntityRemoveException {
     Objects.requireNonNull(clazz, "remove does not accept null arguments");
 
     ThrowingRunnable runnable = mappings.get(clazz);
@@ -126,8 +126,7 @@ public final class Removable {
    * @param classes the given classes to delete associated entities for
    * @throws EntityRemoveException in case anything fails during the process of deletion for any of the classes
    */
-  public void remove(Class<?>[] classes) throws EntityRemoveException {
-    Objects.requireNonNull(classes, "remove does not accept null arguments");
+  public void remove(@NonNull Class<?>[] classes) throws EntityRemoveException {
 
     for (Class<?> clazz : classes) {
       remove(clazz);

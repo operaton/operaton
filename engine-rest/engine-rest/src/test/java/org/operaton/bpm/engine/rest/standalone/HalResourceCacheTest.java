@@ -17,16 +17,11 @@
 package org.operaton.bpm.engine.rest.standalone;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
@@ -52,8 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class HalResourceCacheTest extends AbstractRestServiceTest {
 
@@ -175,7 +169,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
     when(user.getId()).thenReturn(userIds[0]);
     when(user.getFirstName()).thenReturn("kermit");
     UserQuery userQuery = mock(UserQuery.class);
-    when(userQuery.userIdIn(Mockito.any())).thenReturn(userQuery);
+    when(userQuery.userIdIn(any())).thenReturn(userQuery);
     when(userQuery.listPage(anyInt(), anyInt())).thenReturn(List.of(user));
     when(processEngine.getIdentityService().createUserQuery()).thenReturn(userQuery);
 

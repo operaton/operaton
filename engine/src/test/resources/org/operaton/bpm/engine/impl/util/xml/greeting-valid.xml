@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<greeting xmlns="http://operaton.org/test/greeting">
+  <hello>world</hello>
+</greeting>

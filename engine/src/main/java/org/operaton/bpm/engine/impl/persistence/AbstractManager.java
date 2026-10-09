@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.persistence;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.impl.AbstractQuery;
@@ -36,7 +38,6 @@ import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.Session;
 import org.operaton.bpm.engine.impl.persistence.entity.*;
-
 
 /**
  * @author Tom Baeyens
@@ -139,6 +140,7 @@ public abstract class AbstractManager implements Session {
     return getSession(TaskManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected TaskReportManager getTaskReportManager() {
     return getSession(TaskReportManager.class);
   }
@@ -147,6 +149,7 @@ public abstract class AbstractManager implements Session {
     return getSession(IdentityLinkManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected VariableInstanceManager getVariableInstanceManager() {
     return getSession(VariableInstanceManager.class);
   }
@@ -155,6 +158,7 @@ public abstract class AbstractManager implements Session {
     return getSession(HistoricProcessInstanceManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected HistoricCaseInstanceManager getHistoricCaseInstanceManager() {
     return getSession(HistoricCaseInstanceManager.class);
   }
@@ -167,6 +171,7 @@ public abstract class AbstractManager implements Session {
     return getSession(HistoricVariableInstanceManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected HistoricActivityInstanceManager getHistoricActivityInstanceManager() {
     return getSession(HistoricActivityInstanceManager.class);
   }
@@ -191,6 +196,7 @@ public abstract class AbstractManager implements Session {
     return getSession(HistoricJobLogManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected HistoricExternalTaskLogManager getHistoricExternalTaskLogManager() {
     return getSession(HistoricExternalTaskLogManager.class);
   }
@@ -203,6 +209,7 @@ public abstract class AbstractManager implements Session {
     return getSession(JobDefinitionManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected UserOperationLogManager getUserOperationLogManager() {
     return getSession(UserOperationLogManager.class);
   }
@@ -219,6 +226,7 @@ public abstract class AbstractManager implements Session {
     return getSession(AttachmentManager.class);
   }
 
+  @SuppressWarnings("unused")
   protected ReportManager getHistoricReportManager() {
     return getSession(ReportManager.class);
   }
@@ -278,7 +286,7 @@ public abstract class AbstractManager implements Session {
     getAuthorizationManager().deleteAuthorizationsByResourceIdAndGroupId(resource, resourceId, groupId);
   }
 
-  public void saveDefaultAuthorizations(final AuthorizationEntity[] authorizations) {
+  public void saveDefaultAuthorizations(AuthorizationEntity @Nullable[] authorizations) {
     if(authorizations != null && authorizations.length > 0) {
       Context.getCommandContext().runWithoutAuthorization((Callable<Void>) () -> {
         AuthorizationManager authorizationManager = getAuthorizationManager();
@@ -296,7 +304,7 @@ public abstract class AbstractManager implements Session {
     }
   }
 
-  public void deleteDefaultAuthorizations(final AuthorizationEntity[] authorizations) {
+  public void deleteDefaultAuthorizations(AuthorizationEntity @Nullable[] authorizations) {
     if(authorizations != null && authorizations.length > 0) {
       Context.getCommandContext().runWithoutAuthorization((Callable<Void>) () -> {
         AuthorizationManager authorizationManager = getAuthorizationManager();

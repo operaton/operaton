@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import org.operaton.bpm.engine.query.QueryProperty;
+import org.jspecify.annotations.NullMarked;
 
-public final class CleanableHistoricInstanceReportProperty {
+import org.operaton.bpm.engine.query.QueryProperty;
+public final @NullMarked class CleanableHistoricInstanceReportProperty {
 
   public static final QueryProperty FINISHED_AMOUNT = new QueryPropertyImpl("FINISHED_");
 

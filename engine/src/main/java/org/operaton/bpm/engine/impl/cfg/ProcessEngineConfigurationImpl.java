@@ -50,6 +50,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -440,13 +441,17 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * The legacy behaviour does not guarantee sequential execution of any spawned subprocesses. Instead, it works only
    * at the root level. When the feature is enabled, any spawned subprocess of the root process will be acquired and
    * executed sequentially by one thread.
+   * </p>
    * <p>
    * Note that the above configuration might introduce performance implications in complex process modelling that involves
    * high multi-instance multiplicity and numerous subprocesses.
+   * </p>
    * <p>
    * Use the feature in combination with awareness of your process modeling.
+   * </p>
    * <p>
    * Default value: false; to keep the legacy behaviour backwards compatible.
+   * </p>
    */
   protected boolean jobExecutorAcquireExclusiveOverProcessHierarchies;
 
@@ -709,10 +714,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * However, only the result from the "main" incident handler will be returned.
    * <p>
    * All {@link customIncidentHandlers} will be added as sub handlers to {@link CompositeIncidentHandler} for same handler type.
+   * </p>
    * <p>
    * By default, main handler is {@link DefaultIncidentHandler}.
    * To override the main handler you need create {@link CompositeIncidentHandler} with your main IncidentHandler and
    * init {@link incidentHandlers} before setting up the engine.
+   * </p>
    *
    * @see CompositeIncidentHandler
    * @see #initIncidentHandlers
@@ -1835,7 +1842,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   @SuppressWarnings("unused")
-  public static void initSqlSessionFactoryProperties(Properties properties, String databaseTablePrefix, String databaseType) {
+  public static void initSqlSessionFactoryProperties(Properties properties, String databaseTablePrefix, @Nullable String databaseType) {
 
     if (databaseType != null) {
       properties.put("limitBefore", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeStatements().get(databaseType));
@@ -2400,7 +2407,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initIdGenerator() {
     if (idGenerator == null) {
-      CommandExecutor idGeneratorCommandExecutor = null;
+      CommandExecutor idGeneratorCommandExecutor;
       if (idGeneratorDataSource != null) {
         ProcessEngineConfigurationImpl processEngineConfiguration = new StandaloneProcessEngineConfiguration();
         processEngineConfiguration.setDataSource(idGeneratorDataSource);
@@ -2906,7 +2913,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     this.historyLevel = historyLevel;
   }
 
-  public HistoryLevel getDefaultHistoryLevel() {
+  public @Nullable HistoryLevel getDefaultHistoryLevel() {
     if (historyLevels != null) {
       for (HistoryLevel historyLvl : historyLevels) {
         if (HISTORY_DEFAULT.equalsIgnoreCase(historyLvl.getName())) {
@@ -3733,7 +3740,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public EventHandler getEventHandler(String eventType) {
+  public @Nullable EventHandler getEventHandler(String eventType) {
     return eventHandlers.get(eventType);
   }
 
@@ -3766,14 +3773,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * Allows configuring a database table prefix which is used for all runtime operations of the process engine.
    * For example, if you specify a prefix named 'PRE1.', activiti will query for executions in a table named
    * 'PRE1.ACT_RU_EXECUTION_'.
-   * <p>
    * <p/>
    * <strong>NOTE: the prefix is not respected by automatic database schema management. If you use
    * {@link ProcessEngineConfiguration#DB_SCHEMA_UPDATE_CREATE_DROP}
    * or {@link ProcessEngineConfiguration#DB_SCHEMA_UPDATE_TRUE}, activiti will create the database tables
    * using the default names, regardless of the prefix configured here.</strong>
-   *
-   * @since 5.9
+   * </p>
    */
   public ProcessEngineConfiguration setDatabaseTablePrefix(String databaseTablePrefix) {
     this.databaseTablePrefix = databaseTablePrefix;
@@ -3874,7 +3879,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     this.customHistoryEventHandlers = customHistoryEventHandlers;
   }
 
-  public IncidentHandler getIncidentHandler(String incidentType) {
+  public @Nullable IncidentHandler getIncidentHandler(String incidentType) {
     return incidentHandlers.get(incidentType);
   }
 

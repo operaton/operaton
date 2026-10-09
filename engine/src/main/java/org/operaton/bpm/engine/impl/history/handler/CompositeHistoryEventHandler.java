@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
@@ -50,7 +51,7 @@ public class CompositeHistoryEventHandler implements HistoryEventHandler {
    * @param historyEventHandlers
    *          the list of {@link HistoryEventHandler} that consume the event.
    */
-  public CompositeHistoryEventHandler(final HistoryEventHandler... historyEventHandlers) {
+  public CompositeHistoryEventHandler(final @Nullable HistoryEventHandler... historyEventHandlers) {
     initializeHistoryEventHandlers(Arrays.asList(historyEventHandlers));
   }
 

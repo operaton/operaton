@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.concurrency;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -138,7 +139,7 @@ class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
     }
   }
 
-  private static class ControllableLockExternalTaskCmd extends LockExternalTaskCmd {
+  private static @NullMarked class ControllableLockExternalTaskCmd extends LockExternalTaskCmd {
 
     protected final ThreadControl monitor;
 

@@ -17,8 +17,12 @@
 package org.operaton.bpm.model.xml.impl.type;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.xml.Model;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
@@ -34,11 +38,13 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstance
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  *
  */
-public class ModelElementTypeImpl implements ModelElementType {
+public @NullMarked class ModelElementTypeImpl implements ModelElementType {
 
   private final ModelImpl model;
 
@@ -46,9 +52,9 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   private final Class<? extends ModelElementInstance> instanceType;
 
-  private String typeNamespace;
+  private @Nullable String typeNamespace;
 
-  private ModelElementTypeImpl baseType;
+  private @Nullable ModelElementTypeImpl baseType;
 
   private final List<ModelElementType> extendingTypes = new ArrayList<>();
 
@@ -58,7 +64,7 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   private final List<ChildElementCollection<?>> childElementCollections = new ArrayList<>();
 
-  private ModelTypeInstanceProvider<?> instanceProvider;
+  private @Nullable ModelTypeInstanceProvider<?> instanceProvider;
 
   private boolean isAbstract;
 
@@ -110,6 +116,7 @@ public class ModelElementTypeImpl implements ModelElementType {
       throw new ModelTypeException("Model element type %s is abstract and no instances can be created.".formatted(getTypeName()));
     }
     else {
+      requireNonNull(instanceProvider);
       return instanceProvider.newInstance(instanceContext);
     }
   }
@@ -134,11 +141,11 @@ public class ModelElementTypeImpl implements ModelElementType {
   }
 
   @Override
-  public String getTypeNamespace() {
+  public @Nullable String getTypeNamespace() {
     return typeNamespace;
   }
 
-  public void setBaseType(ModelElementTypeImpl baseType) {
+  public void setBaseType(@Nullable ModelElementTypeImpl baseType) {
     if (this.baseType == null) {
       this.baseType = baseType;
     }
@@ -203,7 +210,7 @@ public class ModelElementTypeImpl implements ModelElementType {
 
 
   @Override
-  public ModelElementType getBaseType() {
+  public @Nullable ModelElementType getBaseType() {
     return baseType;
   }
 
@@ -247,14 +254,12 @@ public class ModelElementTypeImpl implements ModelElementType {
 
     List<DomElement> elements = getElementsByNameNs(document, typeNamespace);
 
-    List<ModelElementInstance> resultList = new ArrayList<>();
-    for (DomElement element : elements) {
-      resultList.add(ModelUtil.getModelElement(element, modelInstanceImpl, this));
-    }
-    return resultList;
+    return elements.stream()
+      .map(element -> ModelUtil.getModelElement(element, modelInstanceImpl, this))
+      .collect(Collectors.toCollection(ArrayList::new));
   }
 
-  protected List<DomElement> getElementsByNameNs(DomDocument document, String namespaceURI) {
+  protected List<DomElement> getElementsByNameNs(DomDocument document, @Nullable String namespaceURI) {
     List<DomElement> elements = document.getElementsByNameNs(namespaceURI, typeName);
 
     if (elements.isEmpty()) {
@@ -294,8 +299,7 @@ public class ModelElementTypeImpl implements ModelElementType {
    * @return the list of all attributes
    */
   public Collection<Attribute<?>> getAllAttributes() {
-    List<Attribute<?>> allAttributes = new ArrayList<>();
-    allAttributes.addAll(getAttributes());
+    List<Attribute<?>> allAttributes = new ArrayList<>(getAttributes());
     Collection<ModelElementType> baseTypes = ModelUtil.calculateAllBaseTypes(this);
     for (ModelElementType type : baseTypes) {
       allAttributes.addAll(type.getAttributes());
@@ -307,10 +311,10 @@ public class ModelElementTypeImpl implements ModelElementType {
    * Return the attribute for the attribute name
    *
    * @param attributeName the name of the attribute
-   * @return the attribute or null if it not exists
+   * @return the attribute or {@code null} if it not exists
    */
   @Override
-  public Attribute<?> getAttribute(String attributeName) {
+  public @Nullable Attribute<?> getAttribute(String attributeName) {
     for (Attribute<?> attribute : getAllAttributes()) {
       if (attribute.getAttributeName().equals(attributeName)) {
         return attribute;
@@ -319,7 +323,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     return null;
   }
 
-  public ChildElementCollection<?> getChildElementCollection(ModelElementType childElementType) {
+  public @Nullable ChildElementCollection<?> getChildElementCollection(ModelElementType childElementType) {
     for (ChildElementCollection<?> childElementCollection : getChildElementCollections()) {
       if (childElementType.equals(childElementCollection.getChildElementType(model))) {
         return childElementCollection;

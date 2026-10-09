@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -37,6 +39,7 @@ import org.operaton.bpm.engine.task.IdentityLink;
  * @author Joram Barrez
  * @author Deivarayan Azhagappan
  */
+@SuppressWarnings("unused")
 public class IdentityLinkEntity implements IdentityLink, DbEntity, HasDbReferences {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -127,7 +130,7 @@ public class IdentityLinkEntity implements IdentityLink, DbEntity, HasDbReferenc
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(@Nullable String userId) {
     if (this.groupId != null && userId != null) {
       throw LOG.taskIsAlreadyAssignedException("userId", "groupId");
     }
@@ -139,7 +142,7 @@ public class IdentityLinkEntity implements IdentityLink, DbEntity, HasDbReferenc
     return groupId;
   }
 
-  public void setGroupId(String groupId) {
+  public void setGroupId(@Nullable String groupId) {
     if (this.userId != null && groupId != null) {
       throw LOG.taskIsAlreadyAssignedException("groupId", "userId");
     }

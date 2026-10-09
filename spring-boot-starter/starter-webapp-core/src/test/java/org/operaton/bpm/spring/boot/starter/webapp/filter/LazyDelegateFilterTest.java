@@ -23,7 +23,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
@@ -46,19 +45,19 @@ class LazyDelegateFilterTest {
 
   @Test
   void initTest() throws Exception {
-    try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
+    try (MockedStatic<LazyInitRegistration> theMock = mockStatic(LazyInitRegistration.class)) {
       LazyDelegateFilter<Filter> delegateFilter = new LazyDelegateFilter<>(filterMock.getClass());
       delegateFilter.delegate = filterMock;
       delegateFilter.init(filterConfigMock);
       assertThat(delegateFilter.filterConfig).isSameAs(filterConfigMock);
-      verify(filterMock, times(0)).init(Mockito.any(FilterConfig.class));
+      verify(filterMock, times(0)).init(any(FilterConfig.class));
       theMock.verify(() -> LazyInitRegistration.lazyInit(delegateFilter));
     }
   }
 
   @Test
   void lazyInitTest() throws Exception {
-    try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
+    try (MockedStatic<LazyInitRegistration> theMock = mockStatic(LazyInitRegistration.class)) {
       LazyDelegateFilter<Filter> delegateFilter = spy(new LazyDelegateFilter<>(filterMock.getClass()));
       delegateFilter.init(filterConfigMock);
       doReturn(filterMock).when(delegateFilter).createNewFilterInstance();
@@ -69,7 +68,7 @@ class LazyDelegateFilterTest {
 
   @Test
   void lazyInitWithHookTest() throws Exception {
-    try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
+    try (MockedStatic<LazyInitRegistration> theMock = mockStatic(LazyInitRegistration.class)) {
       LazyDelegateFilter<Filter> delegateFilter = spy(new LazyDelegateFilter<>(filterMock.getClass()));
       delegateFilter.setInitHook(initHookMock);
       delegateFilter.init(filterConfigMock);
@@ -83,7 +82,7 @@ class LazyDelegateFilterTest {
 
   @Test
   void doFilterTest() throws Exception {
-    try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
+    try (MockedStatic<LazyInitRegistration> theMock = mockStatic(LazyInitRegistration.class)) {
       LazyDelegateFilter<Filter> delegateFilter = new LazyDelegateFilter<>(filterMock.getClass());
       delegateFilter.delegate = filterMock;
       ServletRequest request = mock(ServletRequest.class);
@@ -96,7 +95,7 @@ class LazyDelegateFilterTest {
 
   @Test
   void destroyTest() {
-    try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
+    try (MockedStatic<LazyInitRegistration> theMock = mockStatic(LazyInitRegistration.class)) {
       LazyDelegateFilter<Filter> delegateFilter = new LazyDelegateFilter<>(filterMock.getClass());
       delegateFilter.delegate = filterMock;
       delegateFilter.destroy();
@@ -106,7 +105,7 @@ class LazyDelegateFilterTest {
 
   @Test
   void destroyUninitializedDelegateTest() {
-    try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
+    try (MockedStatic<LazyInitRegistration> theMock = mockStatic(LazyInitRegistration.class)) {
       LazyDelegateFilter<Filter> delegateFilter = new LazyDelegateFilter<>(filterMock.getClass());
       delegateFilter.destroy();
       verify(filterMock, never()).destroy();
@@ -115,7 +114,7 @@ class LazyDelegateFilterTest {
 
   @Test
   void lazyInitRegistrationTest() {
-    try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
+    try (MockedStatic<LazyInitRegistration> theMock = mockStatic(LazyInitRegistration.class)) {
       LazyDelegateFilter<Filter> delegateFilter = new LazyDelegateFilter<>(filterMock.getClass());
       theMock.verify(() -> LazyInitRegistration.register(delegateFilter));
     }

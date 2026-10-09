@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.db;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation.State;
 import org.operaton.bpm.engine.impl.interceptor.Session;
@@ -27,27 +29,27 @@ import org.operaton.bpm.engine.impl.interceptor.Session;
  * @author Daniel Meyer
  *
  */
-public interface PersistenceSession extends Session {
+public @NullMarked interface PersistenceSession extends Session {
 
   // Entity Operations /////////////////////////////////
 
   /**
-   * <p>Attempts to perform the operations in order and returns a flush result.
+   * Attempts to perform the operations in order and returns a flush result.
    * The result indicates if there are operations that were not successful (via {@link FlushResult#getFailedOperations()}
    * and if some operations were not executed (via {@link FlushResult#getRemainingOperations()}.
    * The remaining operations must be a suffix of the parameter (e.g. for operations [a, b, c, d],
    * [c, d] is a valid list of remaining operations, [b, c] is not).
    *
-   * <p>This method modifies the operation's state, i.e. {@link DbOperation#getState()} will
-   * be updated by calling this method:
-   *
    * <p>
+   * This method modifies the operation's state, i.e. {@link DbOperation#getState()} will
+   * be updated by calling this method:
+   * </p>
+   *
    * <ul>
    * <li>Successful operations: {@link State#APPLIED}
    * <li>Failed operations: {@link State#FAILED_ERROR} or {@link State#FAILED_CONCURRENT_MODIFICATION}.
    * <li>Remaining operations: {@link State#NOT_APPLIED}
    * </ul>
-   * </p>
    *
    * <p>
    * In addition, the number of affected rows and failure (if any) is updated in the operation.
@@ -60,15 +62,26 @@ public interface PersistenceSession extends Session {
 
   void flushOperations();
 
-  List<?> selectList(String statement, Object parameter);
+  List<?> selectList(String statement, @Nullable Object parameter);
 
-  <T extends DbEntity> T selectById(Class<T> type, String id);
+  /**
+   * Like {@link #selectList(String, Object)}, but stops fetching from the cursor
+   * after {@code maxRows} rows instead of relying on a row limit in the SQL.
+   * Needed for locking reads on databases where a SQL row limit is applied before
+   * lock-skipping (Oracle, DB2), which would under-fill the result with rows that
+   * are then discarded as locked.
+   */
+  default List<?> selectList(String statement, @Nullable Object parameter, int maxRows) {
+    return selectList(statement, parameter);
+  }
 
-  Object selectOne(String statement, Object parameter);
+  <T extends DbEntity> @Nullable T selectById(Class<T> type, String id);
 
-  void lock(String statement, Object parameter);
+  @Nullable Object selectOne(String statement, @Nullable Object parameter);
 
-  int executeNonEmptyUpdateStmt(String updateStmt, Object parameter);
+  void lock(String statement, @Nullable Object parameter);
+
+  int executeNonEmptyUpdateStmt(String updateStmt, @Nullable Object parameter);
 
   void commit();
 

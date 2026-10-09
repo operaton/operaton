@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 
 /**
  * @author Tom Baeyens
@@ -28,7 +30,7 @@ public class MapBusinessCalendarManager implements BusinessCalendarManager {
   private final Map<String, BusinessCalendar> businessCalendars = new HashMap<>();
 
   @Override
-  public BusinessCalendar getBusinessCalendar(String businessCalendarRef) {
+  public @Nullable BusinessCalendar getBusinessCalendar(String businessCalendarRef) {
     return businessCalendars.get(businessCalendarRef);
   }
 

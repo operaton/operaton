@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.variable.serializer.AbstractTypedValueSerial
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.commons.utils.CollectionUtil;
 
-public class OptimizeHistoricVariableUpdateQueryCmd implements Command<List<HistoricVariableUpdate>> {
+public @NullMarked class OptimizeHistoricVariableUpdateQueryCmd implements Command<List<HistoricVariableUpdate>> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 

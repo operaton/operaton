@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.context;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.context.BpmnExecutionContext;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -33,12 +35,12 @@ public final class DelegateExecutionContext {
   }
 
   /**
-   * Returns the current delegation execution or null if the
+   * Returns the current delegation execution or {@code null} if the
    * execution is not available.
    *
-   * @return the current delegation execution or null if not available
+   * @return the current delegation execution or {@code null} if not available
    */
-  public static DelegateExecution getCurrentDelegationExecution() {
+  public static @Nullable DelegateExecution getCurrentDelegationExecution() {
     BpmnExecutionContext bpmnExecutionContext = Context.getBpmnExecutionContext();
     ExecutionEntity executionEntity = null;
     if (bpmnExecutionContext != null) {

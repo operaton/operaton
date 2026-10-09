@@ -28,21 +28,21 @@ public interface CleanableHistoricCaseInstanceReport extends Query<CleanableHist
   /**
    * Only takes historic case instances into account for the given case definition ids.
    *
-   * @throws NotValidException if one of the given ids is null
+   * @throws NotValidException if one of the given ids is {@code null}
    */
   CleanableHistoricCaseInstanceReport caseDefinitionIdIn(String... caseDefinitionIds);
 
   /**
    * Only takes historic case instances into account for the given case definition keys.
    *
-   * @throws NotValidException if one of the given keys is null
+   * @throws NotValidException if one of the given keys is {@code null}
    */
   CleanableHistoricCaseInstanceReport caseDefinitionKeyIn(String... caseDefinitionKeys);
 
   /**
    * Only select historic case instances with one of the given tenant ids.
    *
-   * @throws NotValidException if one of the given ids is null
+   * @throws NotValidException if one of the given ids is {@code null}
    */
   CleanableHistoricCaseInstanceReport tenantIdIn(String... tenantIds);
 

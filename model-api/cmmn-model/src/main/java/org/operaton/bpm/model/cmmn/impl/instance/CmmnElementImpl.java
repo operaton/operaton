@@ -18,6 +18,8 @@ package org.operaton.bpm.model.cmmn.impl.instance;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.cmmn.instance.Documentation;
@@ -30,6 +32,7 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN10_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_DESCRIPTION;
@@ -40,20 +43,20 @@ import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT;
  * @author Roman Smirnov
  *
  */
-public abstract class CmmnElementImpl extends CmmnModelElementInstanceImpl implements CmmnElement {
+public abstract @NullMarked class CmmnElementImpl extends CmmnModelElementInstanceImpl implements CmmnElement {
 
-  protected static Attribute<String> idAttribute;
-  protected static ChildElement<ExtensionElements> extensionElementsChild;
+  protected static @Nullable Attribute<String> idAttribute;
+  protected static @Nullable ChildElement<ExtensionElements> extensionElementsChild;
 
   // cmmn 1.0
   /**
    * @deprecated since 1.0, use documentationCollection instead.
    */
   @Deprecated(since = "1.0")
-  protected static Attribute<String> descriptionAttribute;
+  protected static @Nullable Attribute<String> descriptionAttribute;
 
   // cmmn 1.1
-  protected static ChildElementCollection<Documentation> documentationCollection;
+  protected static @Nullable ChildElementCollection<Documentation> documentationCollection;
 
   protected CmmnElementImpl(ModelTypeInstanceContext instanceContext) {
     super(instanceContext);
@@ -61,38 +64,43 @@ public abstract class CmmnElementImpl extends CmmnModelElementInstanceImpl imple
 
   @Override
   public String getId() {
+    requireNonNull(idAttribute);
     return idAttribute.getValue(this);
   }
 
   @Override
   public void setId(String id) {
+    requireNonNull(idAttribute);
     idAttribute.setValue(this, id);
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public String getDescription() {
+  public @Nullable String getDescription() {
+    requireNonNull(descriptionAttribute);
     return descriptionAttribute.getValue(this);
   }
 
   @Override
-  @SuppressWarnings("deprecation")
   public void setDescription(String description) {
+    requireNonNull(descriptionAttribute);
     descriptionAttribute.setValue(this, description);
   }
 
   @Override
   public Collection<Documentation> getDocumentations() {
+    requireNonNull(documentationCollection);
     return documentationCollection.get(this);
   }
 
   @Override
-  public ExtensionElements getExtensionElements() {
+  public @Nullable ExtensionElements getExtensionElements() {
+    requireNonNull(extensionElementsChild);
     return extensionElementsChild.getChild(this);
   }
 
   @Override
   public void setExtensionElements(ExtensionElements extensionElements) {
+    requireNonNull(extensionElementsChild);
     extensionElementsChild.setChild(this, extensionElements);
   }
 
@@ -100,7 +108,6 @@ public abstract class CmmnElementImpl extends CmmnModelElementInstanceImpl imple
     return CmmnModelConstants.CMMN11_NS.equals(getDomElement().getNamespaceURI());
   }
 
-  @SuppressWarnings("deprecation")
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CmmnElement.class, CMMN_ELEMENT)
         .abstractType()

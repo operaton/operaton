@@ -43,12 +43,8 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
   private ProcessInstanceResource resource;
 
   @AfterEach
-  void clearAuthentication() {
+  void tearDown() {
     identityService.clearAuthentication();
-  }
-
-  @AfterEach
-  void resetQueryMaxResultsLimit() {
     processEngineConfiguration.setQueryMaxResultsLimit(Integer.MAX_VALUE);
   }
 

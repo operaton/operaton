@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.assertj.core.api.AbstractAssert;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.FormService;
@@ -35,12 +36,16 @@ import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricCaseActivityInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
+import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.CaseDefinitionQuery;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
+import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
 import org.operaton.bpm.engine.runtime.JobQuery;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.task.TaskQuery;
 
@@ -53,7 +58,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
   private static final ThreadLocal<Map<Class<?>, AbstractProcessAssert<?, ?>>>
     lastAsserts = new ThreadLocal<>();
 
-  protected AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {
+  protected AbstractProcessAssert(ProcessEngine engine, @Nullable A actual, Class<?> selfType) {
     super(actual, selfType);
     this.engine = engine;
     setLastAssert(selfType, this);
@@ -62,7 +67,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
   /*
    * Delivers the the actual object under test.
    */
-  public A getActual() {
+  public @Nullable A getActual() {
     return actual;
   }
 
@@ -87,7 +92,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
    * Abstract method definition meant to deliver the current/refreshed persistent state of
    * the actual object under test. Needs to be correctly implemented by implementations of this.
    */
-  protected abstract A getCurrent();
+  protected abstract @Nullable A getCurrent();
 
   /*
    * Abstract method definition meant to deliver a loggable string representation of the
@@ -149,7 +154,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return engine.getCaseService();
   }
 
-  /*
+  /**
    * TaskQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or {@link ProcessDefinition})
    * by overriding this method in sub classes specialised to verify a specific
    * process engine domain class.
@@ -158,7 +163,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return taskService().createTaskQuery();
   }
 
-  /*
+  /**
    * JobQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or {@link ProcessDefinition})
    * by overriding this method in sub classes specialised to verify a specific
    * process engine domain class.
@@ -167,7 +172,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return managementService().createJobQuery();
   }
 
-  /*
+  /**
    * ProcessInstanceQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or
    * {@link ProcessDefinition}) by overriding this method in sub classes specialised to
    * verify a specific process engine domain class.
@@ -176,7 +181,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return runtimeService().createProcessInstanceQuery();
   }
 
-  /*
+  /**
    * ExecutionQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or {@link ProcessDefinition})
    * by overriding this method in sub classes specialised to verify a specific
    * process engine domain class.
@@ -185,7 +190,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return runtimeService().createExecutionQuery();
   }
 
-  /*
+  /**
    * HistoricActivityInstanceQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or
    * {@link ProcessDefinition}) by overriding this method in sub classes specialised to
    * verify a specific process engine domain class.
@@ -194,7 +199,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return historyService().createHistoricActivityInstanceQuery();
   }
 
-  /*
+  /**
    * HistoricProcessInstanceQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or
    * {@link ProcessDefinition}) by overriding this method in sub classes specialised to
    * verify a specific process engine domain class.
@@ -203,7 +208,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return historyService().createHistoricProcessInstanceQuery();
   }
 
-  /*
+  /**
    * HistoricVariableInstanceQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or
    * {@link ProcessDefinition}) by overriding this method in sub classes specialised to
    * verify a specific process engine domain class.
@@ -212,7 +217,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return historyService().createHistoricVariableInstanceQuery();
   }
 
-  /*
+  /**
    * ProcessDefinitionQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or
    * {@link ProcessDefinition}) by overriding this method in sub classes specialised to
    * verify a specific process engine domain class.
@@ -221,7 +226,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return repositoryService().createProcessDefinitionQuery();
   }
 
-  /*
+  /**
    * ExternalTaskQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or
    * {@link ProcessDefinition}) by overriding this method in sub classes specialised to
    * verify a specific process engine domain class.
@@ -230,7 +235,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return externalTaskService().createExternalTaskQuery();
   }
 
-  /*
+  /**
    * CaseExecutionQuery, unnarrowed. Narrow this to {@link CaseInstance} (or
    * {@link CaseDefinition}) by overriding this method in sub classes specialized to
    * verify a specific process engine domain class.
@@ -239,7 +244,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return caseService().createCaseExecutionQuery();
   }
 
-  /*
+  /**
    * CaseDefinitionQuery, unnarrowed. Narrow this to {@link CaseInstance} (or
    * {@link CaseDefinition}) by overriding this method in sub classes specialized to
    * verify a specific process engine domain class.
@@ -248,7 +253,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return repositoryService().createCaseDefinitionQuery();
   }
 
-  /*
+  /**
    * CaseInstanceQuery, unnarrowed. Narrow this to {@link CaseInstance} (or
    * {@link CaseDefinition}) by overriding this method in sub classes specialized to
    * verify a specific process engine domain class.
@@ -257,7 +262,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return caseService().createCaseInstanceQuery();
   }
 
-  /*
+  /**
    * HistoricCaseActivityInstanceQuery, unnarrowed. Narrow this to {@link CaseInstance} (or
    * {@link CaseDefinition}) by overriding this method in sub classes specialised to
    * verify a specific process engine domain class.

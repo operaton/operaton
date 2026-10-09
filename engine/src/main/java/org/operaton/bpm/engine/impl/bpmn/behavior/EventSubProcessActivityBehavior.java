@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  * @author Daniel Meyer
  *
  */
-public class EventSubProcessActivityBehavior extends SubProcessActivityBehavior {
+public @NullMarked class EventSubProcessActivityBehavior extends SubProcessActivityBehavior {
 
   @Override
   public void complete(ActivityExecution scopeExecution) {

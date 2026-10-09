@@ -21,6 +21,8 @@ import java.util.List;
 import javax.xml.transform.dom.DOMSource;
 import org.w3c.dom.Document;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Encapsulates a {@link Document}. Implementations of this interface must be thread-safe.
  *
@@ -31,9 +33,9 @@ public interface DomDocument {
   /**
    * Returns the root element of the document.
    *
-   * @return the root element or null if non exists
+   * @return the root element or {@code null} if non exists
    */
-  DomElement getRootElement();
+  @Nullable DomElement getRootElement();
 
   /**
    * Sets the root element of the DOM document. Replace an existing if necessary.
@@ -55,9 +57,9 @@ public interface DomDocument {
    * Gets an element by its id.
    *
    * @param id  the id to search for
-   * @return the element or null if no such element exists
+   * @return the element or {@code null} if no such element exists
    */
-  DomElement getElementById(String id);
+  @Nullable DomElement getElementById(String id);
 
   /**
    * Gets all elements with the namespace and name.

@@ -24,6 +24,7 @@ import org.operaton.bpm.model.bpmn.instance.Expression;
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings("java:S2187") // no test methods defined here, all defined by superclass
 public class ToTest extends BpmnModelElementInstanceTest {
 
   @Override

@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.TransactionContextFactory;
@@ -33,7 +35,7 @@ import org.operaton.bpm.engine.impl.util.CompositeCondition;
 /**
  * @author Tom Baeyens
  */
-public class ProcessEngineImpl implements ProcessEngine {
+public @NullMarked class ProcessEngineImpl implements ProcessEngine {
 
   /** external task conditions used to signal long polling in rest API */
   public static final CompositeCondition EXT_TASK_CONDITIONS = new CompositeCondition();
@@ -56,11 +58,11 @@ public class ProcessEngineImpl implements ProcessEngine {
   protected DecisionService decisionService;
 
   protected String databaseSchemaUpdate;
-  protected JobExecutor jobExecutor;
+  protected @Nullable JobExecutor jobExecutor;
   protected CommandExecutor commandExecutor;
   protected CommandExecutor commandExecutorSchemaOperations;
   protected Map<Class<?>, SessionFactory> sessionFactories;
-  protected ExpressionManager expressionManager;
+  protected @Nullable ExpressionManager expressionManager;
   protected HistoryLevel historyLevel;
   protected TransactionContextFactory transactionContextFactory;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineProvider;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -97,7 +99,7 @@ public class BatchMigrationHelper extends BatchHelper {
   public Batch migrateProcessInstancesAsync(int numberOfProcessInstances,
                                             ProcessDefinition sourceProcessDefinition,
                                             ProcessDefinition targetProcessDefinition,
-                                            Map<String, Object> variables,
+                                            @Nullable Map<String, Object> variables,
                                             boolean authenticated) {
     List<String> processInstanceIds = new ArrayList<>(numberOfProcessInstances);
     RuntimeService runtimeService = getRuntimeService();

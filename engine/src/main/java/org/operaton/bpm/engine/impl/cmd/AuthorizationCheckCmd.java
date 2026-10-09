@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -37,17 +39,17 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class AuthorizationCheckCmd implements Command<Boolean> {
+public @NullMarked class AuthorizationCheckCmd implements Command<Boolean> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  protected String userId;
-  protected List<String> groupIds;
+  protected @Nullable String userId;
+  protected @Nullable List<String> groupIds;
   protected Permission permission;
   protected Resource resource;
-  protected String resourceId;
+  protected @Nullable String resourceId;
 
-  public AuthorizationCheckCmd(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId) {
+  public AuthorizationCheckCmd(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId) {
     this.userId = userId;
     this.groupIds = groupIds;
     this.permission = permission;
@@ -70,7 +72,7 @@ public class AuthorizationCheckCmd implements Command<Boolean> {
     return authorizationManager.isAuthorized(userId, groupIds, permission, resource, resourceId);
   }
 
-  protected void validate(String userId, List<String> groupIds, Permission permission, Resource resource) {
+  protected void validate(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource) {
     ensureAtLeastOneNotNull("Authorization must have a 'userId' or/and a 'groupId'.", userId, groupIds);
     ensureNotNull("Invalid permission for an authorization", "authorization.getResource()", permission);
     ensureNotNull("Invalid resource for an authorization", "authorization.getResource()", resource);

@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.impl.pvm.runtime;
 
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.behavior.*;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -34,20 +37,22 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.ExecutionWalker;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
 
 /**
  * This class encapsulates legacy runtime behavior for the process engine.
  * <p>
  * Since 7.3 the behavior of certain bpmn elements has changed slightly.
- * <p>
+ * </p>
  *
+ * <p>
  * 1. Some elements which did not used to be scopes are now scopes:
+ * </p>
  * <ul>
  *  <li>Sequential multi instance Embedded Subprocess: is now a scope, used to be non-scope.</li>
  *  <li>Event subprocess: is now a scope, used to be non-scope.</li>
  * </ul>
- * </p>
  *
  * <p>
  * 2. In certain situations, executions which were both scope and concurrent were created.
@@ -62,7 +67,7 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
  *
  * @author Daniel Meyer
  */
-public final class LegacyBehavior {
+public final @NullMarked class LegacyBehavior {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
   private static final VariableInstanceHistoryListener VARIABLE_INSTANCE_HISTORY_LISTENER = new VariableInstanceHistoryListener();
@@ -83,8 +88,6 @@ public final class LegacyBehavior {
    * <p>
    * See: javadoc of this class for note about concurrent scopes.
    * </p>
-   *
-   * @param execution
    */
   public static void pruneConcurrentScope(PvmExecutionImpl execution) {
     ensureConcurrentScope(execution);
@@ -193,11 +196,9 @@ public final class LegacyBehavior {
   }
 
   /**
-   * This method
-   * @param scopeExecution
-   * @return
+   * This method determines whether legacy behavior is required for the given scope execution.
    */
-  protected static boolean isLegacyBehaviorRequired(ActivityExecution scopeExecution) {
+  private static boolean isLegacyBehaviorRequired(ActivityExecution scopeExecution) {
     // legacy behavior is turned off: the current activity was parsed as scope.
     // now we need to check whether a scope execution was correctly created for the
     // event subprocess.
@@ -216,32 +217,30 @@ public final class LegacyBehavior {
   /**
    * In case the process instance was migrated from a previous version, activities which are now parsed as scopes
    * do not have scope executions. Use the flow scopes of these activities in order to find their execution.
-   * - For an event subprocess this is the scope execution of the scope in which the event subprocess is embeded in
-   * - For a multi instance sequential subprocess this is the multi instace scope body.
-   *
-   * @param scope
-   * @param activityExecutionMapping
-   * @return
+   * <ul>
+   *   <li>For an event subprocess this is the scope execution of the scope in which the event subprocess is embeded in</li>
+   *   <li>For a multi instance sequential subprocess this is the multi instace scope body.</li>
+   * </ul>
    */
-  public static PvmExecutionImpl getScopeExecution(ScopeImpl scope, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping) {
+  public static @Nullable PvmExecutionImpl getScopeExecution(ScopeImpl scope, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping) {
     ScopeImpl flowScope = scope.getFlowScope();
     return activityExecutionMapping.get(flowScope);
   }
 
   // helpers ////////////////////////////////////////////////
 
-  protected static void ensureConcurrentScope(PvmExecutionImpl execution) {
+  private static void ensureConcurrentScope(PvmExecutionImpl execution) {
     ensureScope(execution);
     ensureConcurrent(execution);
   }
 
-  protected static void ensureConcurrent(PvmExecutionImpl execution) {
+  private static void ensureConcurrent(PvmExecutionImpl execution) {
     if(!execution.isConcurrent()) {
       throw new ProcessEngineException("Execution must be concurrent.");
     }
   }
 
-  protected static void ensureScope(PvmExecutionImpl execution) {
+  private static void ensureScope(PvmExecutionImpl execution) {
     if(!execution.isScope()) {
       throw new ProcessEngineException("Execution must be scope.");
     }
@@ -249,10 +248,6 @@ public final class LegacyBehavior {
 
   /**
    * Creates an activity execution mapping, when the scope hierarchy and the execution hierarchy are out of sync.
-   *
-   * @param scopeExecutions
-   * @param scopes
-   * @return
    */
   public static Map<ScopeImpl, PvmExecutionImpl> createActivityExecutionMapping(List<PvmExecutionImpl> scopeExecutions, List<ScopeImpl> scopes) {
     PvmExecutionImpl deepestExecution = scopeExecutions.get(0);
@@ -312,11 +307,11 @@ public final class LegacyBehavior {
   /**
    * Determines whether the given scope was a scope in previous versions
    */
-  protected static boolean wasNoScope(ActivityImpl activity, PvmExecutionImpl scopeExecutionCandidate) {
+  private static boolean wasNoScope(ActivityImpl activity, @Nullable PvmExecutionImpl scopeExecutionCandidate) {
     return wasNoScope72(activity) || wasNoScope73(activity, scopeExecutionCandidate);
   }
 
-  protected static boolean wasNoScope72(ActivityImpl activity) {
+  private static boolean wasNoScope72(ActivityImpl activity) {
     ActivityBehavior activityBehavior = activity.getActivityBehavior();
     ActivityBehavior parentActivityBehavior = (ActivityBehavior) (activity.getFlowScope() != null ? activity.getFlowScope().getActivityBehavior() : null);
     return (activityBehavior instanceof EventSubProcessActivityBehavior)
@@ -326,14 +321,14 @@ public final class LegacyBehavior {
               && parentActivityBehavior instanceof MultiInstanceActivityBehavior);
   }
 
-  protected static boolean wasNoScope73(ActivityImpl activity, PvmExecutionImpl scopeExecutionCandidate) {
+  private static boolean wasNoScope73(ActivityImpl activity, @Nullable PvmExecutionImpl scopeExecutionCandidate) {
     ActivityBehavior activityBehavior = activity.getActivityBehavior();
     return (activityBehavior instanceof CompensationEventActivityBehavior)
         || (activityBehavior instanceof CancelEndEventActivityBehavior)
         || isMultiInstanceInCompensation(activity, scopeExecutionCandidate);
   }
 
-  protected static boolean isMultiInstanceInCompensation(ActivityImpl activity, PvmExecutionImpl scopeExecutionCandidate) {
+  private static boolean isMultiInstanceInCompensation(ActivityImpl activity, @Nullable PvmExecutionImpl scopeExecutionCandidate) {
     return
         activity.getActivityBehavior() instanceof MultiInstanceActivityBehavior
         && ((scopeExecutionCandidate != null && findCompensationThrowingAncestorExecution(scopeExecutionCandidate) != null)
@@ -345,7 +340,7 @@ public final class LegacyBehavior {
    * only in that case, it can be async and waiting at the inner activity wrapped by the miBody. In versions >= 7.3,
    * the execution would reference the multi-instance body instead.
    */
-  protected static boolean isLegacyAsyncAtMultiInstance(PvmExecutionImpl execution) {
+  private static boolean isLegacyAsyncAtMultiInstance(PvmExecutionImpl execution) {
     ActivityImpl activity = execution.getActivity();
 
     if (activity != null) {
@@ -392,8 +387,9 @@ public final class LegacyBehavior {
         // skip one scope
         propagatingExecution.remove();
         PvmExecutionImpl parent = propagatingExecution.getParent();
+        requireNonNull(parent);
         parent.setActivity(propagatingExecution.getActivity());
-        return propagatingExecution.getParent();
+        return parent;
       }
     }
   }
@@ -407,18 +403,24 @@ public final class LegacyBehavior {
   }
 
   /**
-   * <p>Required for migrating active sequential MI receive tasks. These activities were formerly not scope,
+   * Required for migrating active sequential MI receive tasks. These activities were formerly not scope,
    * but are now. This has the following implications:
    *
-   * <p>Before migration:
+   * <p>
+   * Before migration:
+   * </p>
    * <ul><li> the event subscription is attached to the miBody scope execution</ul>
    *
-   * <p>After migration:
+   * <p>
+   * After migration:
+   * </p>
    * <ul><li> a new subscription is created for every instance
    * <li> the new subscription is attached to a dedicated scope execution as a child of the miBody scope
    *   execution</ul>
    *
-   * <p>Thus, this method removes the subscription on the miBody scope
+   * <p>
+   * Thus, this method removes the subscription on the miBody scope
+   * </p>
    */
   public static void removeLegacySubscriptionOnParent(ExecutionEntity execution, EventSubscriptionEntity eventSubscription) {
     ActivityImpl activity = execution.getActivity();
@@ -446,14 +448,14 @@ public final class LegacyBehavior {
   /**
    * Checks if the parameters are the same apart from the execution id
    */
-  protected static boolean areEqualEventSubscriptions(EventSubscriptionEntity subscription1, EventSubscriptionEntity subscription2) {
+  private static boolean areEqualEventSubscriptions(EventSubscriptionEntity subscription1, EventSubscriptionEntity subscription2) {
     return valuesEqual(subscription1.getEventType(), subscription2.getEventType())
         && valuesEqual(subscription1.getEventName(), subscription2.getEventName())
         && valuesEqual(subscription1.getActivityId(), subscription2.getActivityId());
 
   }
 
-  protected static <T> boolean valuesEqual(T value1, T value2) {
+  private static <T> boolean valuesEqual(@Nullable T value1, @Nullable T value2) {
     return (value1 == null && value2 == null) || (value1 != null && value1.equals(value2));
   }
 
@@ -488,7 +490,7 @@ public final class LegacyBehavior {
     }
   }
 
-  protected static ScopeImpl getTopMostScope(List<ScopeImpl> scopes) {
+  private static @Nullable ScopeImpl getTopMostScope(List<ScopeImpl> scopes) {
     ScopeImpl topMostScope = null;
 
     for (ScopeImpl candidateScope : scopes) {
@@ -529,6 +531,7 @@ public final class LegacyBehavior {
       String activityId = jobDefinition.getActivityId();
       if (activityId != null) {
         ActivityImpl activity = processDefinition.findActivity(jobDefinition.getActivityId());
+        requireNonNull(activity);
 
         if (!isAsync(activity) && isActivityWrappedInMultiInstanceBody(activity) && isAsyncJobDefinition(jobDefinition)) {
           jobDefinition.setActivityId(activity.getFlowScope().getId());
@@ -537,15 +540,15 @@ public final class LegacyBehavior {
     }
   }
 
-  protected static boolean isAsync(ActivityImpl activity) {
+  private static boolean isAsync(ActivityImpl activity) {
     return activity.isAsyncBefore() || activity.isAsyncAfter();
   }
 
-  protected static boolean isAsyncJobDefinition(JobDefinitionEntity jobDefinition) {
+  private static boolean isAsyncJobDefinition(JobDefinitionEntity jobDefinition) {
     return AsyncContinuationJobHandler.TYPE.equals(jobDefinition.getJobType());
   }
 
-  protected static boolean isActivityWrappedInMultiInstanceBody(ActivityImpl activity) {
+  private static boolean isActivityWrappedInMultiInstanceBody(ActivityImpl activity) {
     ScopeImpl flowScope = activity.getFlowScope();
 
     if (flowScope != activity.getProcessDefinition()) {
@@ -627,7 +630,7 @@ public final class LegacyBehavior {
     return isCompensationThrowing(execution, execution.createActivityExecutionMapping());
   }
 
-  protected static PvmExecutionImpl findCompensationThrowingAncestorExecution(PvmExecutionImpl execution) {
+  private static @Nullable PvmExecutionImpl findCompensationThrowingAncestorExecution(PvmExecutionImpl execution) {
     ExecutionWalker walker = new ExecutionWalker(execution);
     walker.walkUntil(element -> element == null || CompensationBehavior.isCompensationThrowing(element));
 

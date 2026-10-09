@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.ApplicationEventPublisher;
@@ -43,14 +42,14 @@ import static org.operaton.bpm.engine.delegate.TaskListener.*;
  */
 public class PublishDelegateParseListener implements BpmnParseListener {
 
-  private static final List<String> TASK_EVENTS = Arrays.asList(
+  private static final List<String> TASK_EVENTS = List.of(
     EVENTNAME_COMPLETE,
     EVENTNAME_ASSIGNMENT,
     EVENTNAME_CREATE,
     EVENTNAME_DELETE,
     EVENTNAME_UPDATE
   );
-  private static final List<String> EXECUTION_EVENTS = Arrays.asList(
+  private static final List<String> EXECUTION_EVENTS = List.of(
     EVENTNAME_START,
     EVENTNAME_END);
 

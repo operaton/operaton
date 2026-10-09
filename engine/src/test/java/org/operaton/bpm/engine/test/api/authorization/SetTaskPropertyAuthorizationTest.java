@@ -66,6 +66,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
    * methodToCall: The method to call during test cases
    * setValue: The value to use to set property to
    * taskQueryBuilderMethodName: The corresponding taskQuery builder method name to use for assertion purposes
+   * </p>
    */
   @Parameters
   public static List<Object[]> data() {

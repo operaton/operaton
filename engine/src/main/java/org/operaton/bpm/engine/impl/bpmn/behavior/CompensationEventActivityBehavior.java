@@ -18,10 +18,11 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
 import org.operaton.bpm.engine.impl.bpmn.parser.CompensateEventDefinition;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Philipp Ossler
  *
  */
-public class CompensationEventActivityBehavior extends FlowNodeActivityBehavior {
+public @NullMarked class CompensationEventActivityBehavior extends FlowNodeActivityBehavior {
 
   protected final CompensateEventDefinition compensateEventDefinition;
 
@@ -63,7 +64,7 @@ public class CompensationEventActivityBehavior extends FlowNodeActivityBehavior 
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     // join compensating executions -
     // only wait for non-event-scope executions cause a compensation event subprocess consume the compensation event and
     // do not have to compensate embedded subprocesses (which are still non-event-scope executions)
@@ -71,7 +72,7 @@ public class CompensationEventActivityBehavior extends FlowNodeActivityBehavior 
     if (((PvmExecutionImpl) execution).getNonEventScopeExecutions().isEmpty()) {
       leave(execution);
     } else {
-      ((ExecutionEntity) execution).forceUpdate();
+      execution.forceUpdate();
     }
   }
 

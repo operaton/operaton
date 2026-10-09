@@ -20,14 +20,11 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.joda.time.DateTime;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -44,7 +41,6 @@ import org.operaton.bpm.engine.query.QueryProperty;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
-
 
 /**
  * Abstract superclass for all query types.
@@ -136,7 +132,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
 
   @Override
   @SuppressWarnings("unchecked")
-  public U singleResult() {
+  public @Nullable U singleResult() {
     this.resultType = ResultType.SINGLE_RESULT;
     return (U) executeResult(resultType);
   }
@@ -157,11 +153,11 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     return (List<U>) executeResult(resultType);
   }
 
-  public Object executeResult(ResultType resultType) {
+  public @Nullable Object executeResult(ResultType resultType) {
 
     if (commandExecutor != null) {
       if (!maxResultsLimitEnabled) {
-        maxResultsLimitEnabled = Context.getCommandContext() == null;
+        maxResultsLimitEnabled = Context.findCommandContext().isEmpty();
       }
 
       return commandExecutor.execute(this);
@@ -194,7 +190,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(@NonNull CommandContext commandContext) {
     if (resultType==ResultType.LIST) {
       return evaluateExpressionsAndExecuteList(commandContext, null);
     } else if (resultType==ResultType.SINGLE_RESULT) {
@@ -238,11 +234,11 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
 
   /**
    * Executes the actual query to retrieve the list of results.
-   * @param page used if the results must be paged. If null, no paging will be applied.
+   * @param page used if the results must be paged. If {@code null}, no paging will be applied.
    */
   public abstract List<U> executeList(CommandContext commandContext, Page page);
 
-  public U executeSingleResult(CommandContext commandContext) {
+  public @Nullable U executeSingleResult(CommandContext commandContext) {
     disableMaxResultsLimit();
     List<U> results = evaluateExpressionsAndExecuteList(commandContext, new Page(0, 2));
     if (results.size() == 1) {
@@ -358,7 +354,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   @SuppressWarnings("unchecked")
   public List<String> listIds() {
     this.resultType = ResultType.LIST_IDS;
-    List<String> ids = null;
+    List<String> ids;
     if (commandExecutor != null) {
       ids = (List<String>) commandExecutor.execute(this);
     } else {
@@ -375,7 +371,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   @SuppressWarnings("unchecked")
   public List<ImmutablePair<String, String>> listDeploymentIdMappings() {
     this.resultType = ResultType.LIST_DEPLOYMENT_ID_MAPPINGS;
-    List<ImmutablePair<String, String>> ids = null;
+    List<ImmutablePair<String, String>> ids;
     if (commandExecutor != null) {
       ids = (List<ImmutablePair<String, String>>) commandExecutor.execute(this);
     } else {

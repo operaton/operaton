@@ -19,20 +19,21 @@ package org.operaton.bpm.engine;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
-import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.CaseInstanceBuilder;
-import org.operaton.bpm.engine.runtime.CaseInstanceQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+import org.operaton.bpm.model.cmmn.instance.CaseTask;
+import org.operaton.bpm.model.cmmn.instance.HumanTask;
+import org.operaton.bpm.model.cmmn.instance.ProcessTask;
+import org.operaton.bpm.model.cmmn.instance.Stage;
 
 /**
  * Service which provides access to {@link CaseInstance case instances}
@@ -42,7 +43,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  *
  *
  */
-public interface CaseService {
+public @NullMarked interface CaseService {
 
   /**
    * <p>Creates a new {@link CaseInstance} of the latest version of the case definition
@@ -50,7 +51,7 @@ public interface CaseService {
    *
    * @param caseDefinitionKey the key of the case definition to instantiate
    *
-   * @throws NotValidException when the given case definition key is null.
+   * @throws NotValidException when the given case definition key is {@code null}.
    * @throws NotFoundException when no case definition is deployed with the given key.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -76,7 +77,7 @@ public interface CaseService {
    *          a key that uniquely identifies the case instance in the context
    *          of the given case definition.
    *
-   * @throws NotValidException when the given case definition key is null.
+   * @throws NotValidException when the given case definition key is {@code null}.
    * @throws NotFoundException when no case definition is deployed with the given key.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -89,7 +90,7 @@ public interface CaseService {
    * @param caseDefinitionKey the key of the case definition to instantiate
    * @param variables variables to be set on the new case instance
    *
-   * @throws NotValidException when the given case definition key is null.
+   * @throws NotValidException when the given case definition key is {@code null}.
    * @throws NotFoundException when no case definition is deployed with the given key.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -116,7 +117,7 @@ public interface CaseService {
    *          of the given case definition.
    * @param variables variables to be set on the new case instance.
    *
-   * @throws NotValidException when the given case definition key is null.
+   * @throws NotValidException when the given case definition key is {@code null}.
    * @throws NotFoundException when no case definition is deployed with the given key.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -128,7 +129,7 @@ public interface CaseService {
    *
    * @param caseDefinitionId the id of the case definition to instantiate
    *
-   * @throws NotValidException when the given case definition id is null.
+   * @throws NotValidException when the given case definition id is {@code null}.
    * @throws NotFoundException when no case definition is deployed with the given id.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -154,7 +155,7 @@ public interface CaseService {
    *          a key that uniquely identifies the case instance in the context
    *          of the given case definition.
    *
-   * @throws NotValidException when the given case definition id is null.
+   * @throws NotValidException when the given case definition id is {@code null}.
    * @throws NotFoundException when no case definition is deployed with the given id.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -167,7 +168,7 @@ public interface CaseService {
    * @param caseDefinitionId the id of the case definition to instantiate
    * @param variables variables to be set on the new case instance.
    *
-   * @throws NotValidException when the given case definition id is null.
+   * @throws NotValidException when the given case definition id is {@code null}.
    * @throws NotFoundException when no case definition is deployed with the given id.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -194,30 +195,31 @@ public interface CaseService {
    *          of the given case definition.
    * @param variables variables to be set on the new case instance.
    *
-   * @throws NotValidException when the given case definition id is null.
+   * @throws NotValidException when the given case definition id is {@code null}.
    * @throws NotFoundException when no case definition is deployed with the given id.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
   CaseInstance createCaseInstanceById(String caseDefinitionId, String businessKey, Map<String, Object> variables);
 
   /**
-   * <p>Starts the case execution identified by the given id manually.
+   * Starts the case execution identified by the given id manually.
    * Performs the transition from state
-   * <code>ENABLED</code> to state <code>ACTIVE</code>.</p>
+   * <code>ENABLED</code> to state <code>ACTIVE</code>.
    *
-   * <p>According to CMMN 1.0 specification, the state <code>ACTIVE</code> means that the
+   * <p>
+   * According to CMMN 1.0 specification, the state <code>ACTIVE</code> means that the
    * {@link Stage} or {@link Task} related to the case execution does the following:
+   * </p>
    *   <ul>
    *     <li>{@link Task}: the {@link Task task} is completed immediately</li>
    *     <li>{@link HumanTask}: a new {@link org.operaton.bpm.engine.task.Task user task} is instantiated</li>
    *     <li>{@link ProcessTask}: a new {@link ProcessInstance process instance} is instantiated</li>
    *     <li>{@link CaseTask}: a new {@link CaseInstance case instance} is instantiated</li>
    *   </ul>
-   * </p>
    *
    * @param caseExecutionId the id of the case execution to manually start
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -228,24 +230,25 @@ public interface CaseService {
   void manuallyStartCaseExecution(String caseExecutionId);
 
   /**
-   * <p>Starts the case execution identified by the given id manually.
+   * Starts the case execution identified by the given id manually.
    * Performs a transition from state
-   * <code>ENABLED</code> to state <code>ACTIVE</code>.</p>
+   * <code>ENABLED</code> to state <code>ACTIVE</code>.
    *
-   * <p>According to CMMN 1.0 specification, the state <code>ACTIVE</code> means that the
+   * <p>
+   * According to CMMN 1.0 specification, the state <code>ACTIVE</code> means that the
    * {@link Stage} or {@link Task} related to the case execution does the following:
+   * </p>
    *   <ul>
    *     <li>{@link Task}: the {@link Task task} is completed immediately</li>
    *     <li>{@link HumanTask}: a new {@link org.operaton.bpm.engine.task.Task user task} is instantiated</li>
    *     <li>{@link ProcessTask}: a new {@link ProcessInstance process instance} is instantiated</li>
    *     <li>{@link CaseTask}: a new {@link CaseInstance case instance} is instantiated</li>
    *   </ul>
-   * </p>
    *
    * @param caseExecutionId the id of the case execution to manually start
    * @param variables variables to be set on the case execution
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -271,7 +274,7 @@ public interface CaseService {
    *
    * @param caseExecutionId the id of the case execution to disable
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -298,7 +301,7 @@ public interface CaseService {
    * @param caseExecutionId the id of the case execution to disable
    * @param variables variables to be set on the case execution
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -319,7 +322,7 @@ public interface CaseService {
    *
    * @param caseExecutionId the id of the case execution to re-enable
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -341,7 +344,7 @@ public interface CaseService {
    * @param caseExecutionId the id of the case execution to re-enable
    * @param variables variables to be set on the case execution
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done or
@@ -352,35 +355,40 @@ public interface CaseService {
   void reenableCaseExecution(String caseExecutionId, Map<String, Object> variables);
 
   /**
-   *
-   * <p>Completes the case execution identified by the given id.
+   * Completes the case execution identified by the given id.
    * Performs a transition from state <code>ACTIVE</code>
-   * to state <code>COMPLETED</code>.</p>
+   * to state <code>COMPLETED</code>.
    *
-   * <p>It is only possible to complete a case execution which is associated with a
-   * {@link Stage} or {@link Task}.</p>
+   * <p>
+   * It is only possible to complete a case execution which is associated with a
+   * {@link Stage} or {@link Task}.
+   * </p>
    *
-   * <p>In case of a {@link Stage}, the completion can only be performed when the following
-   * criteria are fulfilled:<br>
+   * <p>
+   * In case of a {@link Stage}, the completion can only be performed when the following
+   * criteria are fulfilled:
+   * </p>
    * <ul>
    *  <li>there are no children in the state <code>ACTIVE</code></li>
    * </ul>
-   * </p>
    *
-   * <p>For a {@link Task} instance, this means its purpose has been accomplished:<br>
+   * <p>
+   * For a {@link Task} instance, this means its purpose has been accomplished:
+   * </p>
    *  <ul>
    *    <li>{@link HumanTask} has been completed by human.</li>
    *  </ul>
-   * </p>
    *
-   * <p>If the given case execution has a parent case execution, that parent
+   * <p>
+   * If the given case execution has a parent case execution, that parent
    * case execution will be notified that the given case execution has been
    * completed. This can lead to a completion of the parent case execution if
-   * the completion criteria are fulfilled.</p>
+   * the completion criteria are fulfilled.
+   * </p>
    *
    * @param caseExecutionId the id of the case execution to complete
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done
@@ -390,36 +398,41 @@ public interface CaseService {
   void completeCaseExecution(String caseExecutionId);
 
   /**
-  *
-  * <p>Completes the case execution identified by the given id.
+  * Completes the case execution identified by the given id.
   * Performs a transition from state <code>ACTIVE</code>
-  * to state <code>COMPLETED</code>.</p>
+  * to state <code>COMPLETED</code>.
   *
-  * <p>It is only possible to complete a case execution which is associated with a
-  * {@link Stage} or {@link Task}.</p>
+  * <p>
+  * It is only possible to complete a case execution which is associated with a
+  * {@link Stage} or {@link Task}.
+  * </p>
   *
-  * <p>In case of a {@link Stage}, the completion can only be performed when the following
-  * criteria are fulfilled:<br>
+  * <p>
+  * In case of a {@link Stage}, the completion can only be performed when the following
+  * criteria are fulfilled:
+  * </p>
   * <ul>
   *  <li>there are no children in the state <code>ACTIVE</code></li>
   * </ul>
-  * </p>
   *
-  * <p>For a {@link Task} instance, this means its purpose has been accomplished:<br>
+  * <p>
+  * For a {@link Task} instance, this means its purpose has been accomplished:
+  * </p>
   *  <ul>
   *    <li>{@link HumanTask} has been completed by human.</li>
   *  </ul>
-  * </p>
   *
-  * <p>If the given case execution has a parent case execution, that parent
+  * <p>
+  * If the given case execution has a parent case execution, that parent
   * case execution will be notified that the given case execution has been
   * completed. This can lead to a completion of the parent case execution if
-  * the completion criteria are fulfilled.</p>
+  * the completion criteria are fulfilled.
+  * </p>
   *
   * @param caseExecutionId the id of the case execution to complete
   * @param variables variables to be set on the case execution
   *
-  * @throws NotValidException when the given case execution id is null
+  * @throws NotValidException when the given case execution id is {@code null}
   * @throws NotFoundException when no case execution is found for the
   *      given case execution id
   * @throws NotAllowedException when the transition is not allowed to be done
@@ -438,7 +451,7 @@ public interface CaseService {
    * @param caseExecutionId the id of the case execution to close
    *   the case instance for
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done
@@ -456,7 +469,7 @@ public interface CaseService {
    *
    * @param caseExecutionId the id of the case execution to be terminated
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done
@@ -477,7 +490,7 @@ public interface CaseService {
   * @param caseExecutionId the id of the case execution to terminate
   * @param variables variables to be set on the case execution
   *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the
    *      given case execution id
    * @throws NotAllowedException when the transition is not allowed to be done
@@ -493,7 +506,7 @@ public interface CaseService {
    *
    * <p>Starts a new case instance with the latest version of the corresponding case definition.</p>
    *
-   * @param caseDefinitionKey the key of a case definition to create a new case instance of, cannot be null
+   * @param caseDefinitionKey the key of a case definition to create a new case instance of, cannot be {@code null}
    *
    * @return a {@link CaseInstanceBuilder fluent builder} for defining a new case instance
    */
@@ -504,7 +517,7 @@ public interface CaseService {
    *
    * <p>Starts a new case instance with the case definition version corresponding to the given id.</p>
    *
-   * @param caseDefinitionId the id of a case definition to create a new case instance, cannot be null
+   * @param caseDefinitionId the id of a case definition to create a new case instance, cannot be {@code null}
    *
    * @return a {@link CaseInstanceBuilder fluent builder} for defining a new case instance
    */
@@ -542,11 +555,11 @@ public interface CaseService {
    * <p>If you have many local variables and you only need a few, consider
    * using {@link #getVariables(String, Collection)} for better performance.</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
    *
    * @return the variables or an empty map if no such variables are found
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -558,11 +571,11 @@ public interface CaseService {
   * <p>If you have many local variables and you only need a few, consider
   * using {@link #getVariables(String, Collection)} for better performance.</p>
   *
-  * @param caseExecutionId the id of a case instance or case execution, cannot be null
+  * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
   *
   * @return the variables or an empty map if no such variables are found
   *
-  * @throws NotValidException when the given case execution id is null
+  * @throws NotValidException when the given case execution id is {@code null}
   * @throws NotFoundException when no case execution is found for the given case execution id
   * @throws ProcessEngineException when an internal exception happens during the execution of the command
   */
@@ -574,12 +587,12 @@ public interface CaseService {
   * <p>If you have many local variables and you only need a few, consider
   * using {@link #getVariables(String, Collection)} for better performance.</p>
   *
-  * @param caseExecutionId the id of a case instance or case execution, cannot be null
+  * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
   * @param deserializeValues if false, the process engine will not attempt to deserialize {@link SerializableValue SerializableValues}.
   *
   * @return the variables or an empty map if no such variables are found
   *
-  * @throws NotValidException when the given case execution id is null
+  * @throws NotValidException when the given case execution id is {@code null}
   * @throws NotFoundException when no case execution is found for the given case execution id
   * @throws ProcessEngineException when an internal exception happens during the execution of the command
   */
@@ -592,11 +605,11 @@ public interface CaseService {
    * <p>If you have many local variables and you only need a few, consider
    * using {@link #getVariablesLocal(String, Collection)} for better performance.</p>
    *
-   * @param caseExecutionId the id of a case execution, cannot be null
+   * @param caseExecutionId the id of a case execution, cannot be {@code null}
    *
    * @return the variables or an empty map if no such variables are found
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -609,11 +622,11 @@ public interface CaseService {
    * <p>If you have many local variables and you only need a few, consider
    * using {@link #getVariablesLocal(String, Collection)} for better performance.</p>
    *
-   * @param caseExecutionId the id of a case execution, cannot be null
+   * @param caseExecutionId the id of a case execution, cannot be {@code null}
    *
    * @return the variables or an empty map if no such variables are found
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -626,12 +639,12 @@ public interface CaseService {
    * <p>If you have many local variables and you only need a few, consider
    * using {@link #getVariablesLocal(String, Collection)} for better performance.</p>
    *
-   * @param caseExecutionId the id of a case execution, cannot be null
+   * @param caseExecutionId the id of a case execution, cannot be {@code null}
    * @param deserializeValues if false, the process engine will not attempt to deserialize {@link SerializableValue SerializableValues}.
    *
    * @return the variables or an empty map if no such variables are found
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -642,12 +655,12 @@ public interface CaseService {
    * into account which are visible from the given case execution scope
    * (including parent scopes).</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
    * @param variableNames the collection of variable names that should be retrieved
    *
    * @return the variables or an empty map if no such variables are found
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -658,13 +671,13 @@ public interface CaseService {
    * into account which are visible from the given case execution scope
    * (including parent scopes).</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
    * @param variableNames the collection of variable names that should be retrieved
    * @param deserializeValues if false, {@link SerializableValue SerializableValues} will not be deserialized
    *
    * @return the variables or an empty map if no such variables are found
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -674,12 +687,12 @@ public interface CaseService {
    * <p>The variable values for the given variableNames only taking the given case
    * execution scope into account, not looking in outer scopes.</p>
    *
-   * @param caseExecutionId the id of a case execution, cannot be null
+   * @param caseExecutionId the id of a case execution, cannot be {@code null}
    * @param variableNames the collection of variable names that should be retrieved
    *
    * @return the variables or an empty map if no such variables are found
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -689,13 +702,13 @@ public interface CaseService {
    * <p>The variable values for the given variableNames only taking the given case
    * execution scope into account, not looking in outer scopes.</p>
    *
-   * @param caseExecutionId the id of a case execution, cannot be null
+   * @param caseExecutionId the id of a case execution, cannot be {@code null}
    * @param variableNames the collection of variable names that should be retrieved
    * @param deserializeValues if false, the process engine will not attempt to deserialize {@link SerializableValue SerializableValues}.
    *
    * @return the variables or an empty map if no such variables are found
    *
-   * @throws NotValidException when the given case execution id is null
+   * @throws NotValidException when the given case execution id is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
@@ -705,111 +718,111 @@ public interface CaseService {
    * <p>Searching for the variable is done in all scopes that are visible
    * to the given case execution (including parent scopes).</p>
    *
-   * <p>Returns null when no variable value is found with the given name or
-   * when the value is set to null.</p>
+   * <p>Returns {@code null} when no variable value is found with the given name or
+   * when the value is set to {@code null}.</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
-   * @param variableName the name of a variable, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
+   * @param variableName the name of a variable, cannot be {@code null}
    *
-   * @return the variable value or null if the variable is undefined or the value of the variable is null
+   * @return the variable value or {@code null} if the variable is undefined or the value of the variable is {@code null}
    *
-   * @throws NotValidException when the given case execution id or variable name is null
+   * @throws NotValidException when the given case execution id or variable name is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  Object getVariable(String caseExecutionId, String variableName);
+  @Nullable Object getVariable(String caseExecutionId, String variableName);
 
   /**
    * <p>Searching for the variable is done in all scopes that are visible
    * to the given case execution (including parent scopes).</p>
    *
-   * <p>Returns null when no variable value is found with the given name or
-   * when the value is set to null.</p>
+   * <p>Returns {@code null} when no variable value is found with the given name or
+   * when the value is set to {@code null}.</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
-   * @param variableName the name of a variable, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
+   * @param variableName the name of a variable, cannot be {@code null}
    *
-   * @return the variable value or null if the variable is undefined or the value of the variable is null
+   * @return the variable value or {@code null} if the variable is undefined or the value of the variable is {@code null}
    *
-   * @throws NotValidException when the given case execution id or variable name is null
+   * @throws NotValidException when the given case execution id or variable name is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  <T extends TypedValue> T getVariableTyped(String caseExecutionId, String variableName);
+  <T extends TypedValue> @Nullable T getVariableTyped(String caseExecutionId, String variableName);
 
   /**
    * <p>Searching for the variable is done in all scopes that are visible
    * to the given case execution (including parent scopes).</p>
    *
-   * <p>Returns null when no variable value is found with the given name or
-   * when the value is set to null.</p>
+   * <p>Returns {@code null} when no variable value is found with the given name or
+   * when the value is set to {@code null}.</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
-   * @param variableName the name of a variable, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
+   * @param variableName the name of a variable, cannot be {@code null}
    * @param deserializeValue if false, {@link SerializableValue SerializableValues} will not be deserialized
    *
-   * @return the variable value or null if the variable is undefined or the value of the variable is null
+   * @return the variable value or {@code null} if the variable is undefined or the value of the variable is {@code null}
    *
-   * @throws NotValidException when the given case execution id or variable name is null
+   * @throws NotValidException when the given case execution id or variable name is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  <T extends TypedValue> T getVariableTyped(String caseExecutionId, String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableTyped(String caseExecutionId, String variableName, boolean deserializeValue);
 
   /**
    * <p>The variable value for an case execution. Returns the value when the variable is set
    * for the case execution (and not searching parent scopes).</p>
    *
-   * <p>Returns null when no variable value is found with the given name or when the value is
-   * set to null.</p>
+   * <p>Returns {@code null} when no variable value is found with the given name or when the value is
+   * set to {@code null}.</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
-   * @param variableName the name of a variable, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
+   * @param variableName the name of a variable, cannot be {@code null}
    *
-   * @return the variable value or null if the variable is undefined or the value of the variable is null
+   * @return the variable value or {@code null} if the variable is undefined or the value of the variable is {@code null}
    *
-   * @throws NotValidException when the given case execution id or variable name is null
+   * @throws NotValidException when the given case execution id or variable name is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  Object getVariableLocal(String caseExecutionId, String variableName);
+  @Nullable Object getVariableLocal(String caseExecutionId, String variableName);
 
   /**
    * <p>The variable value for an case execution. Returns the value when the variable is set
    * for the case execution (and not searching parent scopes).</p>
    *
-   * <p>Returns null when no variable value is found with the given name or when the value is
-   * set to null.</p>
+   * <p>Returns {@code null} when no variable value is found with the given name or when the value is
+   * set to {@code null}.</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
-   * @param variableName the name of a variable, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
+   * @param variableName the name of a variable, cannot be {@code null}
    *
-   * @return the variable value or null if the variable is undefined or the value of the variable is null
+   * @return the variable value or {@code null} if the variable is undefined or the value of the variable is {@code null}
    *
-   * @throws NotValidException when the given case execution id or variable name is null
+   * @throws NotValidException when the given case execution id or variable name is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  <T extends TypedValue> T getVariableLocalTyped(String caseExecutionId, String variableName);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String caseExecutionId, String variableName);
 
   /**
    * <p>The variable value for an case execution. Returns the value when the variable is set
    * for the case execution (and not searching parent scopes).</p>
    *
-   * <p>Returns null when no variable value is found with the given name or when the value is
-   * set to null.</p>
+   * <p>Returns {@code null} when no variable value is found with the given name or when the value is
+   * set to {@code null}.</p>
    *
-   * @param caseExecutionId the id of a case instance or case execution, cannot be null
-   * @param variableName the name of a variable, cannot be null
+   * @param caseExecutionId the id of a case instance or case execution, cannot be {@code null}
+   * @param variableName the name of a variable, cannot be {@code null}
    * @param deserializeValue if false, {@link SerializableValue SerializableValues} will not be deserialized
    *
-   * @return the variable value or null if the variable is undefined or the value of the variable is null
+   * @return the variable value or {@code null} if the variable is undefined or the value of the variable is {@code null}
    *
-   * @throws NotValidException when the given case execution id or variable name is null
+   * @throws NotValidException when the given case execution id or variable name is {@code null}
    * @throws NotFoundException when no case execution is found for the given case execution id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  <T extends TypedValue> T getVariableLocalTyped(String caseExecutionId, String variableName, boolean deserializeValue);
+  <T extends TypedValue> @Nullable T getVariableLocalTyped(String caseExecutionId, String variableName, boolean deserializeValue);
 
   /**
    * <p>Pass a map of variables to the case execution. If the variables do not already
@@ -838,7 +851,7 @@ public interface CaseService {
    * @param variableName the name of the variable to set
    * @param variableValue the value of the variable to set
    *
-   * @throws NotValidException when the given variable name is null
+   * @throws NotValidException when the given variable name is {@code null}
    */
   void setVariable(String caseExecutionId, String variableName, Object variableValue);
 
@@ -849,7 +862,7 @@ public interface CaseService {
    * @param variableName the name of the variable to set
    * @param variableValue the value of the variable to set
    *
-   * @throws NotValidException when the given variable name is null
+   * @throws NotValidException when the given variable name is {@code null}
    */
   void setVariableLocal(String caseExecutionId, String variableName, Object variableValue);
 
@@ -877,7 +890,7 @@ public interface CaseService {
    * @param caseExecutionId the case execution to remove the variable from
    * @param variableName the name of the variable to remove
    *
-   * @throws NotValidException when the given variable name is null
+   * @throws NotValidException when the given variable name is {@code null}
    */
   void removeVariable(String caseExecutionId, String variableName);
 
@@ -888,7 +901,7 @@ public interface CaseService {
    * @param caseExecutionId the case execution to remove the variable from
    * @param variableName the name of a variable to remove
    *
-   * @throws NotValidException when the given variable name is null
+   * @throws NotValidException when the given variable name is {@code null}
    */
   void removeVariableLocal(String caseExecutionId, String variableName);
 }

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 /**
  * @author Tom Baeyens
  */
-public class GetPropertiesCmd implements Command<Map<String, String>> {
+public @NullMarked class GetPropertiesCmd implements Command<Map<String, String>> {
   @Override
   @SuppressWarnings("unchecked")
   public Map<String, String> execute(CommandContext commandContext) {

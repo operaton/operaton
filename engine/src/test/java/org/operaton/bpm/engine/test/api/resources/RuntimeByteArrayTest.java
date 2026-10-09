@@ -78,12 +78,8 @@ class RuntimeByteArrayTest {
   String id;
 
   @AfterEach
-  void removeBatches() {
-    helper.removeAllRunningAndHistoricBatches();
-  }
-
-  @AfterEach
   void tearDown() {
+    helper.removeAllRunningAndHistoricBatches();
     if (id != null) {
       // delete task
       taskService.deleteTask(id, true);

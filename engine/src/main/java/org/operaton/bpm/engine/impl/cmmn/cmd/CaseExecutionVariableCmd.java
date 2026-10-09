@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.operaton.bpm.engine.exception.cmmn.CaseExecutionNotFoundException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmmn.CaseExecutionCommandBuilderImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -58,7 +60,7 @@ public class CaseExecutionVariableCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull("caseExecutionId", caseExecutionId);
 
     caseExecution = commandContext

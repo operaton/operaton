@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.variable.value;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.type.ValueType;
 
 /**
@@ -29,17 +30,17 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 public interface TypedValue extends Serializable {
 
   /**
-   * The actual value. May be null in case the value is null.
+   * The actual value. May be {@code null} in case the value is {@code null}.
    *
    * @return the value
    */
-  Object getValue();
+  @Nullable Object getValue();
 
   /**
    * The type of the value. See ValueType for a list of built-in ValueTypes.
    * @return the type of the value.
    */
-  ValueType getType();
+  @Nullable ValueType getType();
 
   /**
    * Indicator for transience of the value

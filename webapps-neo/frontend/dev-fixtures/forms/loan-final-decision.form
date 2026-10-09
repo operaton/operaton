@@ -1,0 +1,67 @@
+{
+  "components": [
+    {
+      "type": "text",
+      "text": "## Final decision\n\nReview the credit, risk and reviewer recommendations, then decide.",
+      "id": "Field_header"
+    },
+    {
+      "label": "Requested amount",
+      "type": "number",
+      "key": "amount",
+      "id": "Field_amount",
+      "disabled": true
+    },
+    {
+      "label": "Credit rating",
+      "type": "textfield",
+      "key": "credit",
+      "id": "Field_credit",
+      "disabled": true
+    },
+    {
+      "label": "Risk",
+      "type": "textfield",
+      "key": "risk",
+      "id": "Field_risk",
+      "disabled": true
+    },
+    {
+      "label": "Decision",
+      "type": "radio",
+      "key": "decision",
+      "id": "Field_decision",
+      "values": [
+        { "label": "Approve", "value": "approve" },
+        { "label": "Deny", "value": "deny" },
+        { "label": "Counter-offer", "value": "counter" }
+      ],
+      "validate": { "required": true }
+    },
+    {
+      "label": "Approved amount",
+      "type": "number",
+      "key": "approvedAmount",
+      "id": "Field_approvedAmount",
+      "conditional": { "hide": "=decision != \"approve\"" }
+    },
+    {
+      "label": "Counter-offer amount",
+      "type": "number",
+      "key": "counterAmount",
+      "id": "Field_counterAmount",
+      "conditional": { "hide": "=decision != \"counter\"" }
+    },
+    {
+      "label": "Comment",
+      "type": "textarea",
+      "key": "decisionComment",
+      "id": "Field_comment"
+    }
+  ],
+  "type": "default",
+  "id": "loan-final-decision",
+  "schemaVersion": 17,
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.21.0"
+}

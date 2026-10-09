@@ -45,9 +45,10 @@ public class ByteArrayValueMapper extends PrimitiveValueMapper<BytesValue> {
     Object value = untypedValue.getValue();
     if (value instanceof byte[] bytes) {
       byteArr = bytes;
-    }
-    else {
+    } else if (value != null) {
       byteArr = IoUtil.inputStreamAsByteArray((InputStream) value);
+    } else {
+      byteArr = null;
     }
 
     return Variables.byteArrayValue(byteArr);

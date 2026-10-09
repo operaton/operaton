@@ -29,8 +29,10 @@ public interface FrontendHealthContributor {
    * Provide frontend-related health details. Implementations should at minimum
    * expose an "operational" flag indicating whether the frontend is available.
    * Example keys:
-   * - operational: boolean
-   * - path: String (application path if applicable)
+   * <ul>
+   *   <li>operational: boolean</li>
+   *   <li>path: String (application path if applicable)</li>
+   * </ul>
    */
   Map<String, Object> frontendDetails();
 }

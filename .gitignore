@@ -4,6 +4,7 @@ target
 .classpath
 .project
 .settings
+.factorypath
 .editorconfig
 .m2
 build.properties
@@ -32,6 +33,8 @@ out/jreleaser
 .env
 .mvn/*
 !.mvn/wrapper/*
+!.mvn/extensions.xml
+!.mvn/maven-build-cache-config.xml
 *.log
 .jython_cache
 *.jar
@@ -41,4 +44,6 @@ out/jreleaser
 *.zip
 sloc.txt
 /docs/superpowers
+/.worktrees
 .devenv/scripts/smoketest/screenshots/
+.skip-deploy

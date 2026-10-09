@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 
 import org.operaton.bpm.engine.authorization.BatchPermissions;
@@ -75,8 +74,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   public AuthorizationScenarioWithCount scenario;
 
   @Override
-  @BeforeEach
-  public void deployProcesses() {
+  protected void deployProcesses() {
     Deployment deploy = testHelper.deploy(DEFINITION_XML);
     sourceDefinition = engineRule.getRepositoryService()
         .createProcessDefinitionQuery().deploymentId(deploy.getId()).singleResult();

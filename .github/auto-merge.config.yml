@@ -50,6 +50,7 @@ auto-merge-rules:
       - 'com.google.guava*'
       - 'com.h2database:h2'
       - 'com.jayway.jsonpath:json-path'
+      - 'com.lihaoyi*'
       - 'com.networknt:json-schema-validator'
       - 'com.nimbusds:nimbus-jose-jwt'
       - 'com.tngtech.archunit:archunit-junit4'
@@ -80,7 +81,8 @@ auto-merge-rules:
       - 'org.slf4j*'
       - 'org.springframework:spring-framework-bom'
       - 'org.wiremock:wiremock'
-      - 'org.xmlunit:xmlunit-core'
+      - 'org.xmlunit:*'
+      - 'tools.jackson:jackson-bom'
       # version properties
       - 'okhttp-version'
       - 'version.asm'
@@ -94,21 +96,17 @@ auto-merge-rules:
       - 'version.slf4j'
       - 'version.spring-boot'
       - 'version.testcontainers'
+      - 'version.tomcat'
       - 'version.undertow'
-      # Maven plugins
-      - 'org.apache.felix:maven-bundle-plugin'
-      - 'org.apache.maven.plugins'
-      - 'org.codehaus.cargo:cargo-maven3-plugin'
-      - 'org.codehaus.mojo:*'
-      - 'org.jacoco:jacoco-maven-plugin'
-      - 'org.openapitools:openapi-generator-maven-plugin'
-      - 'org.sonatype.central:central-publishing-maven-plugin'
       # Dependency groups
+      - 'all group'
       - 'arquillian group'
+      - 'github-actions group'
+      - 'jaxb group'
       - 'jboss-weld group'
+      - 'maven-plugins group'
       - 'openrewrite group'
       - 'spring-boot group'
-      - 'jaxb group'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'
@@ -121,6 +119,7 @@ auto-merge-rules:
     labels: ['dependencies:github-action']
     includes:
       - 'actions/*'
+      - 'github-actions group'
 
   # Code cleanup PRs created by github-actions bot can be auto-merged
   - author: 'github-actions[bot]'

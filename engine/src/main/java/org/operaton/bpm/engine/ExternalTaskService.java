@@ -19,6 +19,8 @@ package org.operaton.bpm.engine;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -39,7 +41,7 @@ import org.operaton.bpm.engine.externaltask.UpdateExternalTaskRetriesSelectBuild
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-public interface ExternalTaskService {
+public @NullMarked interface ExternalTaskService {
 
   /**
    * Calls method fetchAndLock(maxTasks, workerId, usePriority), where usePriority is false.
@@ -47,35 +49,42 @@ public interface ExternalTaskService {
    * @param maxTasks the maximum number of tasks to return
    * @param workerId the id of the worker to lock the tasks for
    * @return a builder to define and execute an external task fetching operation
-   * @see {@link ExternalTaskService#fetchAndLock(int, java.lang.String, boolean)}.
+   * @see #fetchAndLock(int, String, boolean)
    */
   ExternalTaskQueryBuilder fetchAndLock(int maxTasks, String workerId);
 
   /**
-   * <p>Defines fetching of external tasks by using a fluent builder.
+   * Defines fetching of external tasks by using a fluent builder.
    * The following parameters must be specified:
    * A worker id, a maximum number of tasks to fetch and a flag that indicates
    * whether priority should be regarded or not.
    * The builder allows to specify multiple topics to fetch tasks for and
    * individual lock durations. For every topic, variables can be fetched
-   * in addition. If priority is enabled, the tasks with the highest priority are fetched.</p>
-   *
-   * <p>Returned tasks are locked for the given worker until
-   * <code>now + lockDuration</code> expires.
-   * Locked tasks cannot be fetched or completed by other workers. When the lock time has expired,
-   * a task may be fetched and locked by other workers.</p>
-   *
-   * <p>Returns at most <code>maxTasks</code> tasks. The tasks are arbitrarily
-   * distributed among the specified topics. Example: Fetching 10 tasks of topics
-   * "a"/"b"/"c" may return 3/3/4 tasks, or 10/0/0 tasks, etc.</p>
-   *
-   * <p>May return less than <code>maxTasks</code> tasks, if there exist not enough
-   * unlocked tasks matching the provided topics or if parallel fetching by other workers
-   * results in locking failures.</p>
+   * in addition. If priority is enabled, the tasks with the highest priority are fetched.
    *
    * <p>
+   * Returned tasks are locked for the given worker until
+   * <code>now + lockDuration</code> expires.
+   * Locked tasks cannot be fetched or completed by other workers. When the lock time has expired,
+   * a task may be fetched and locked by other workers.
+   * </p>
+   *
+   * <p>
+   * Returns at most <code>maxTasks</code> tasks. The tasks are arbitrarily
+   * distributed among the specified topics. Example: Fetching 10 tasks of topics
+   * "a"/"b"/"c" may return 3/3/4 tasks, or 10/0/0 tasks, etc.
+   * </p>
+   *
+   * <p>
+   * May return less than <code>maxTasks</code> tasks, if there exist not enough
+   * unlocked tasks matching the provided topics or if parallel fetching by other workers
+   * results in locking failures.
+   * </p>
+   *
+   *   <p>
    *   Returns only tasks that the currently authenticated user has at least one
    *   permission out of all of the following groups for:
+   *   </p>
    *
    *   <ul>
    *     <li>{@link Permissions#READ} on {@link Resources#PROCESS_INSTANCE}</li>
@@ -85,7 +94,6 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
-   * </p>
    *
    * @param maxTasks the maximum number of tasks to return
    * @param workerId the id of the worker to lock the tasks for
@@ -155,7 +163,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void complete(String externalTaskId, String workerId, Map<String, Object> variables);
+  void complete(String externalTaskId, String workerId, @Nullable Map<String, Object> variables);
 
   /**
    * <p>Completes an external task on behalf of a worker and submits variables
@@ -176,7 +184,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void complete(String externalTaskId, String workerId, Map<String, Object> variables, Map<String, Object> localVariables);
+  void complete(String externalTaskId, String workerId, @Nullable Map<String, Object> variables, @Nullable Map<String, Object> localVariables);
 
   /**
    * <p>Extends a lock of an external task on behalf of a worker.
@@ -223,7 +231,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleFailure(String externalTaskId, String workerId, String errorMessage, int retries, long retryTimeout);
+  void handleFailure(String externalTaskId, String workerId, @Nullable String errorMessage, int retries, long retryTimeout);
 
   /**
    * <p>Signals that an external task could not be successfully executed.
@@ -255,21 +263,27 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleFailure(String externalTaskId, String workerId, String errorMessage, String errorDetails, int retries, long retryTimeout);
+  void handleFailure(String externalTaskId, String workerId, @Nullable String errorMessage, @Nullable String errorDetails, int retries, long retryTimeout);
 
   /**
-   * <p>Signals that an external task could not be successfully executed.
+   * Signals that an external task could not be successfully executed.
    * The task must be assigned to the given worker. The number of retries left can be specified. In addition, a timeout can be
-   * provided, such that the task cannot be fetched before <code>now + retryTimeout</code> again.</p>
+   * provided, such that the task cannot be fetched before <code>now + retryTimeout</code> again.
    *
-   * <p>If <code>retries</code> is 0, an incident with the given error message is created. The incident gets resolved,
-   * once the number of retries is increased again.</p>
+   * <p>
+   * If <code>retries</code> is 0, an incident with the given error message is created. The incident gets resolved,
+   * once the number of retries is increased again.
+   * </p>
    *
-   * <p>Exceptions raised in evaluating expressions of error event definitions attached to the task will be ignored by this method
-   * and the event definitions considered as not-matching.</p>
+   * <p>
+   * Exceptions raised in evaluating expressions of error event definitions attached to the task will be ignored by this method
+   * and the event definitions considered as not-matching.
+   * </p>
    *
+   * <p>
    * Variables passed with the <code>variables</code> or <code>localVariables</code> parameter will be set before any
    * output mapping is performed.
+   * </p>
    *
    * @param externalTaskId the id of the external task to report a failure for
    * @param workerId the id of the worker that reports the failure
@@ -293,7 +307,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleFailure(String externalTaskId, String workerId, String errorMessage, String errorDetails, int retries, long retryDuration, Map<String, Object> variables, Map<String, Object> localVariables);
+  void handleFailure(String externalTaskId, String workerId, @Nullable String errorMessage, @Nullable String errorDetails, int retries, long retryDuration, @Nullable Map<String, Object> variables, @Nullable Map<String, Object> localVariables);
 
   /**
    * <p>Signals that an business error appears, which should be handled by the process engine.
@@ -334,7 +348,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleBpmnError(String externalTaskId, String workerId, String errorCode, String errorMessage);
+  void handleBpmnError(String externalTaskId, String workerId, String errorCode, @Nullable String errorMessage);
 
 
   /**
@@ -357,7 +371,7 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    */
-  void handleBpmnError(String externalTaskId, String workerId, String errorCode, String errorMessage, Map<String, Object> variables);
+  void handleBpmnError(String externalTaskId, String workerId, String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables);
 
   /**
    * Unlocks an external task instance.
@@ -396,7 +410,7 @@ public interface ExternalTaskService {
    * @param externalTaskIds the ids of the tasks to set the
    * @param retries
    * @throws NotFoundException if no external task with one of the given id exists
-   * @throws BadUserRequestException if the ids are null or the number of retries is negative
+   * @throws BadUserRequestException if the ids are {@code null} or the number of retries is negative
    * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
@@ -418,7 +432,7 @@ public interface ExternalTaskService {
    * @param retries
    * @param externalTaskQuery a query which selects the external tasks to set the retries for.
    * @throws NotFoundException if no external task with one of the given id exists
-   * @throws BadUserRequestException if the ids are null or the number of retries is negative
+   * @throws BadUserRequestException if the ids are {@code null} or the number of retries is negative
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_SET_EXTERNAL_TASK_RETRIES} permission on {@link Resources#BATCH}.
@@ -453,7 +467,6 @@ public interface ExternalTaskService {
   void setPriority(String externalTaskId, long priority);
 
   /**
-   * <p>
    *   Queries for tasks that the currently authenticated user has at least one
    *   of the following permissions for:
    *
@@ -461,7 +474,6 @@ public interface ExternalTaskService {
    *     <li>{@link Permissions#READ} on {@link Resources#PROCESS_INSTANCE}</li>
    *     <li>{@link Permissions#READ_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
-   * </p>
    *
    * @return a new {@link ExternalTaskQuery} that can be used to dynamically
    * query for external tasks.
@@ -492,9 +504,9 @@ public interface ExternalTaskService {
 
   /**
    * Returns the full error details that occurred while running external task
-   * with the given id. Returns null when the external task has no error details.
+   * with the given id. Returns {@code null} when the external task has no error details.
    *
-   * @param externalTaskId id of the external task, cannot be null.
+   * @param externalTaskId id of the external task, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When no external task exists with the given id.

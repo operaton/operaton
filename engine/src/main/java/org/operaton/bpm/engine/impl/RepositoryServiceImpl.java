@@ -22,6 +22,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.exception.DeploymentResourceNotFoundException;
@@ -64,11 +66,11 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
  * @author Falko Menge
  * @author Joram Barrez
  */
-public class RepositoryServiceImpl extends ServiceImpl implements RepositoryService {
+public @NullMarked class RepositoryServiceImpl extends ServiceImpl implements RepositoryService {
 
-  protected Charset deploymentCharset;
+  protected @Nullable Charset deploymentCharset;
 
-  public Charset getDeploymentCharset() {
+  public @Nullable Charset getDeploymentCharset() {
     return deploymentCharset;
   }
 
@@ -87,27 +89,27 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   public DeploymentWithDefinitions deployWithResult(DeploymentBuilderImpl deploymentBuilder) {
-    return commandExecutor.execute(new DeployCmd(deploymentBuilder));
+    return getCommandExecutor().execute(new DeployCmd(deploymentBuilder));
   }
 
   @Override
   public void deleteDeployment(String deploymentId) {
-    commandExecutor.execute(new DeleteDeploymentCmd(deploymentId, false, false, false));
+    getCommandExecutor().execute(new DeleteDeploymentCmd(deploymentId, false, false, false));
   }
 
   @Override
   public void deleteDeployment(String deploymentId, boolean cascade) {
-    commandExecutor.execute(new DeleteDeploymentCmd(deploymentId, cascade, false, false));
+    getCommandExecutor().execute(new DeleteDeploymentCmd(deploymentId, cascade, false, false));
   }
 
   @Override
   public void deleteDeployment(String deploymentId, boolean cascade, boolean skipCustomListeners) {
-    commandExecutor.execute(new DeleteDeploymentCmd(deploymentId, cascade, skipCustomListeners, false));
+    getCommandExecutor().execute(new DeleteDeploymentCmd(deploymentId, cascade, skipCustomListeners, false));
   }
 
   @Override
   public void deleteDeployment(String deploymentId, boolean cascade, boolean skipCustomListeners, boolean skipIoMappings) {
-    commandExecutor.execute(new DeleteDeploymentCmd(deploymentId, cascade, skipCustomListeners, skipIoMappings));
+    getCommandExecutor().execute(new DeleteDeploymentCmd(deploymentId, cascade, skipCustomListeners, skipIoMappings));
   }
 
   @Override
@@ -172,23 +174,23 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   @Override
   @SuppressWarnings("unchecked")
   public List<String> getDeploymentResourceNames(String deploymentId) {
-    return commandExecutor.execute(new GetDeploymentResourceNamesCmd(deploymentId));
+    return getCommandExecutor().execute(new GetDeploymentResourceNamesCmd(deploymentId));
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public List<Resource> getDeploymentResources(String deploymentId) {
-    return commandExecutor.execute(new GetDeploymentResourcesCmd(deploymentId));
+    return getCommandExecutor().execute(new GetDeploymentResourcesCmd(deploymentId));
   }
 
   @Override
   public InputStream getResourceAsStream(String deploymentId, String resourceName) {
-    return commandExecutor.execute(new GetDeploymentResourceCmd(deploymentId, resourceName));
+    return getCommandExecutor().execute(new GetDeploymentResourceCmd(deploymentId, resourceName));
   }
 
   @Override
   public InputStream getResourceAsStreamById(String deploymentId, String resourceId) {
-    return commandExecutor.execute(new GetDeploymentResourceForIdCmd(deploymentId, resourceId));
+    return getCommandExecutor().execute(new GetDeploymentResourceForIdCmd(deploymentId, resourceId));
   }
 
   @Override
@@ -198,11 +200,11 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
 
   @Override
   public ProcessDefinition getProcessDefinition(String processDefinitionId) {
-    return commandExecutor.execute(new GetDeployedProcessDefinitionCmd(processDefinitionId, true));
+    return getCommandExecutor().execute(new GetDeployedProcessDefinitionCmd(processDefinitionId, true));
   }
 
   public ReadOnlyProcessDefinition getDeployedProcessDefinition(String processDefinitionId) {
-    return commandExecutor.execute(new GetDeployedProcessDefinitionCmd(processDefinitionId, true));
+    return getCommandExecutor().execute(new GetDeployedProcessDefinitionCmd(processDefinitionId, true));
   }
 
   @Override
@@ -213,7 +215,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   @Override
-  public void suspendProcessDefinitionById(String processDefinitionId, boolean suspendProcessInstances, Date suspensionDate) {
+  public void suspendProcessDefinitionById(String processDefinitionId, boolean suspendProcessInstances, @Nullable Date suspensionDate) {
     updateProcessDefinitionSuspensionState()
       .byProcessDefinitionId(processDefinitionId)
       .includeProcessInstances(suspendProcessInstances)
@@ -229,7 +231,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   @Override
-  public void suspendProcessDefinitionByKey(String processDefinitionKey, boolean suspendProcessInstances, Date suspensionDate) {
+  public void suspendProcessDefinitionByKey(String processDefinitionKey, boolean suspendProcessInstances, @Nullable Date suspensionDate) {
     updateProcessDefinitionSuspensionState()
       .byProcessDefinitionKey(processDefinitionKey)
       .includeProcessInstances(suspendProcessInstances)
@@ -245,7 +247,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   @Override
-  public void activateProcessDefinitionById(String processDefinitionId, boolean activateProcessInstances, Date activationDate) {
+  public void activateProcessDefinitionById(String processDefinitionId, boolean activateProcessInstances, @Nullable Date activationDate) {
     updateProcessDefinitionSuspensionState()
       .byProcessDefinitionId(processDefinitionId)
       .includeProcessInstances(activateProcessInstances)
@@ -261,7 +263,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   @Override
-  public void activateProcessDefinitionByKey(String processDefinitionKey, boolean activateProcessInstances, Date activationDate) {
+  public void activateProcessDefinitionByKey(String processDefinitionKey, boolean activateProcessInstances, @Nullable Date activationDate) {
     updateProcessDefinitionSuspensionState()
       .byProcessDefinitionKey(processDefinitionKey)
       .includeProcessInstances(activateProcessInstances)
@@ -275,49 +277,49 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   @Override
-  public void updateProcessDefinitionHistoryTimeToLive(String processDefinitionId, Integer historyTimeToLive) {
-    commandExecutor.execute(new UpdateProcessDefinitionHistoryTimeToLiveCmd(processDefinitionId, historyTimeToLive));
+  public void updateProcessDefinitionHistoryTimeToLive(String processDefinitionId, @Nullable Integer historyTimeToLive) {
+    getCommandExecutor().execute(new UpdateProcessDefinitionHistoryTimeToLiveCmd(processDefinitionId, historyTimeToLive));
   }
 
   @Override
-  public void updateDecisionDefinitionHistoryTimeToLive(String decisionDefinitionId, Integer historyTimeToLive) {
-    commandExecutor.execute(new UpdateDecisionDefinitionHistoryTimeToLiveCmd(decisionDefinitionId, historyTimeToLive));
+  public void updateDecisionDefinitionHistoryTimeToLive(String decisionDefinitionId, @Nullable Integer historyTimeToLive) {
+    getCommandExecutor().execute(new UpdateDecisionDefinitionHistoryTimeToLiveCmd(decisionDefinitionId, historyTimeToLive));
   }
 
   @Override
-  public void updateCaseDefinitionHistoryTimeToLive(String caseDefinitionId, Integer historyTimeToLive) {
-    commandExecutor.execute(new UpdateCaseDefinitionHistoryTimeToLiveCmd(caseDefinitionId, historyTimeToLive));
+  public void updateCaseDefinitionHistoryTimeToLive(String caseDefinitionId, @Nullable Integer historyTimeToLive) {
+    getCommandExecutor().execute(new UpdateCaseDefinitionHistoryTimeToLiveCmd(caseDefinitionId, historyTimeToLive));
   }
 
   @Override
-  public InputStream getProcessModel(String processDefinitionId) {
-    return commandExecutor.execute(new GetDeploymentProcessModelCmd(processDefinitionId));
+  public @Nullable InputStream getProcessModel(String processDefinitionId) {
+    return getCommandExecutor().execute(new GetDeploymentProcessModelCmd(processDefinitionId));
   }
 
   @Override
-  public InputStream getProcessDiagram(String processDefinitionId) {
-    return commandExecutor.execute(new GetDeploymentProcessDiagramCmd(processDefinitionId));
+  public @Nullable InputStream getProcessDiagram(String processDefinitionId) {
+    return getCommandExecutor().execute(new GetDeploymentProcessDiagramCmd(processDefinitionId));
   }
 
   @Override
-  public InputStream getCaseDiagram(String caseDefinitionId) {
-    return commandExecutor.execute(new GetDeploymentCaseDiagramCmd(caseDefinitionId));
+  public @Nullable InputStream getCaseDiagram(String caseDefinitionId) {
+    return getCommandExecutor().execute(new GetDeploymentCaseDiagramCmd(caseDefinitionId));
   }
 
   @Override
-  public DiagramLayout getProcessDiagramLayout(String processDefinitionId) {
-    return commandExecutor.execute(new GetDeploymentProcessDiagramLayoutCmd(processDefinitionId));
+  public @Nullable DiagramLayout getProcessDiagramLayout(String processDefinitionId) {
+    return getCommandExecutor().execute(new GetDeploymentProcessDiagramLayoutCmd(processDefinitionId));
   }
 
   @Override
   public BpmnModelInstance getBpmnModelInstance(String processDefinitionId) {
-    return commandExecutor.execute(new GetDeploymentBpmnModelInstanceCmd(processDefinitionId));
+    return getCommandExecutor().execute(new GetDeploymentBpmnModelInstanceCmd(processDefinitionId));
   }
 
   @Override
   public CmmnModelInstance getCmmnModelInstance(String caseDefinitionId) {
     try {
-      return commandExecutor.execute(new GetDeploymentCmmnModelInstanceCmd(caseDefinitionId));
+      return getCommandExecutor().execute(new GetDeploymentCmmnModelInstanceCmd(caseDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
     } catch (CmmnModelInstanceNotFoundException | DeploymentResourceNotFoundException e) {
@@ -328,7 +330,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   @Override
   public DmnModelInstance getDmnModelInstance(String decisionDefinitionId) {
     try {
-      return commandExecutor.execute(new GetDeploymentDmnModelInstanceCmd(decisionDefinitionId));
+      return getCommandExecutor().execute(new GetDeploymentDmnModelInstanceCmd(decisionDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
     } catch (DmnModelInstanceNotFoundException | DeploymentResourceNotFoundException e) {
@@ -338,47 +340,44 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
 
   @Override
   public void addCandidateStarterUser(String processDefinitionId, String userId) {
-    commandExecutor.execute(new AddIdentityLinkForProcessDefinitionCmd(processDefinitionId, userId, null));
+    getCommandExecutor().execute(new AddIdentityLinkForProcessDefinitionCmd(processDefinitionId, userId, null));
   }
 
   @Override
   public void addCandidateStarterGroup(String processDefinitionId, String groupId) {
-    commandExecutor.execute(new AddIdentityLinkForProcessDefinitionCmd(processDefinitionId, null, groupId));
+    getCommandExecutor().execute(new AddIdentityLinkForProcessDefinitionCmd(processDefinitionId, null, groupId));
   }
 
   @Override
   public void deleteCandidateStarterGroup(String processDefinitionId, String groupId) {
-    commandExecutor.execute(new DeleteIdentityLinkForProcessDefinitionCmd(processDefinitionId, null, groupId));
+    getCommandExecutor().execute(new DeleteIdentityLinkForProcessDefinitionCmd(processDefinitionId, null, groupId));
   }
 
   @Override
   public void deleteCandidateStarterUser(String processDefinitionId, String userId) {
-    commandExecutor.execute(new DeleteIdentityLinkForProcessDefinitionCmd(processDefinitionId, userId, null));
+    getCommandExecutor().execute(new DeleteIdentityLinkForProcessDefinitionCmd(processDefinitionId, userId, null));
   }
 
   @Override
   public List<IdentityLink> getIdentityLinksForProcessDefinition(String processDefinitionId) {
-    return commandExecutor.execute(new GetIdentityLinksForProcessDefinitionCmd(processDefinitionId));
+    return getCommandExecutor().execute(new GetIdentityLinksForProcessDefinitionCmd(processDefinitionId));
   }
 
   @Override
   public CaseDefinition getCaseDefinition(String caseDefinitionId) {
     try {
-      return commandExecutor.execute(new GetDeploymentCaseDefinitionCmd(caseDefinitionId));
-
+      return getCommandExecutor().execute(new GetDeploymentCaseDefinitionCmd(caseDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
-
     } catch (CaseDefinitionNotFoundException e) {
       throw new NotFoundException(e.getMessage(), e);
-
     }
   }
 
   @Override
-  public InputStream getCaseModel(String caseDefinitionId) {
+  public @Nullable InputStream getCaseModel(String caseDefinitionId) {
     try {
-      return commandExecutor.execute(new GetDeploymentCaseModelCmd(caseDefinitionId));
+      return getCommandExecutor().execute(new GetDeploymentCaseModelCmd(caseDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
     } catch (CaseDefinitionNotFoundException | DeploymentResourceNotFoundException e) {
@@ -389,7 +388,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   @Override
   public DecisionDefinition getDecisionDefinition(String decisionDefinitionId) {
     try {
-      return commandExecutor.execute(new GetDeploymentDecisionDefinitionCmd(decisionDefinitionId));
+      return getCommandExecutor().execute(new GetDeploymentDecisionDefinitionCmd(decisionDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
     } catch (DecisionDefinitionNotFoundException e) {
@@ -400,7 +399,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   @Override
   public DecisionRequirementsDefinition getDecisionRequirementsDefinition(String decisionRequirementsDefinitionId) {
     try {
-      return commandExecutor.execute(new GetDeploymentDecisionRequirementsDefinitionCmd(decisionRequirementsDefinitionId));
+      return getCommandExecutor().execute(new GetDeploymentDecisionRequirementsDefinitionCmd(decisionRequirementsDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
     } catch (DecisionDefinitionNotFoundException e) {
@@ -411,7 +410,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   @Override
   public InputStream getDecisionModel(String decisionDefinitionId) {
     try {
-      return commandExecutor.execute(new GetDeploymentDecisionModelCmd(decisionDefinitionId));
+      return getCommandExecutor().execute(new GetDeploymentDecisionModelCmd(decisionDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
     } catch (DecisionDefinitionNotFoundException | DeploymentResourceNotFoundException e) {
@@ -422,7 +421,7 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   @Override
   public InputStream getDecisionRequirementsModel(String decisionRequirementsDefinitionId) {
     try {
-      return commandExecutor.execute(new GetDeploymentDecisionRequirementsModelCmd(decisionRequirementsDefinitionId));
+      return getCommandExecutor().execute(new GetDeploymentDecisionRequirementsModelCmd(decisionRequirementsDefinitionId));
     } catch (NullValueException e) {
       throw new NotValidException(e.getMessage(), e);
     } catch (DecisionDefinitionNotFoundException | DeploymentResourceNotFoundException e) {
@@ -431,18 +430,18 @@ public class RepositoryServiceImpl extends ServiceImpl implements RepositoryServ
   }
 
   @Override
-  public InputStream getDecisionDiagram(String decisionDefinitionId) {
-    return commandExecutor.execute(new GetDeploymentDecisionDiagramCmd(decisionDefinitionId));
+  @Nullable public InputStream getDecisionDiagram(String decisionDefinitionId) {
+    return getCommandExecutor().execute(new GetDeploymentDecisionDiagramCmd(decisionDefinitionId));
   }
 
   @Override
-  public InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId) {
-    return commandExecutor.execute(new GetDeploymentDecisionRequirementsDiagramCmd(decisionRequirementsDefinitionId));
+  public @Nullable InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId) {
+    return getCommandExecutor().execute(new GetDeploymentDecisionRequirementsDiagramCmd(decisionRequirementsDefinitionId));
   }
 
   @Override
   public Collection<CalledProcessDefinition> getStaticCalledProcessDefinitions(String processDefinitionId) {
-    return commandExecutor.execute(new GetStaticCalledProcessDefinitionCmd(processDefinitionId));
+    return getCommandExecutor().execute(new GetStaticCalledProcessDefinitionCmd(processDefinitionId));
   }
 
 }

@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.authorization;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 
@@ -34,35 +36,47 @@ import org.operaton.bpm.engine.identity.User;
  * </ul>
  *
  * <h2>Identities</h2>
- * <p>Operaton distinguishes two types of identities: <em>users</em> and
+ * <p>
+ * Operaton distinguishes two types of identities: <em>users</em> and
  * <em>groups</em>. Authorizations can either range over all users
- * (userId = {@link #ANY}), an individual {@link User} or a {@link Group} of users.</p>
+ * (userId = {@link #ANY}), an individual {@link User} or a {@link Group} of users.
+ * </p>
  *
  * <h2>Permissions</h2>
- * <p>A {@link Permission} defines the way an identity is allowed to interact
+ * <p>
+ * A {@link Permission} defines the way an identity is allowed to interact
  * with a certain resource. Examples of permissions are {@link Permissions#CREATE CREATE},
  * {@link Permissions#READ READ}, {@link Permissions#UPDATE UPDATE},
  * {@link Permissions#DELETE DELETE}, ... See {@link Permissions} for a set of
- * built-in permissions.</p>
+ * built-in permissions.
+ * </p>
  *
- * <p>A single authorization object may assign multiple permissions to a single user
- * and resource:</p>
+ * <p>
+ * A single authorization object may assign multiple permissions to a single user
+ * and resource:
+ * </p>
  * <pre>
  * authorization.addPermission(Permissions.READ);
  * authorization.addPermission(Permissions.UPDATE);
  * authorization.addPermission(Permissions.DELETE);
  * </pre>
- * <p>On top of the built-in permissions, Operaton allows using custom
- * permission types.</p>
+ * <p>
+ * On top of the built-in permissions, Operaton allows using custom
+ * permission types.
+ * </p>
  *
  * <h2>Resources</h2>
- * <p>Resources are the entities the user interacts with. Examples of resources are
+ * <p>
+ * Resources are the entities the user interacts with. Examples of resources are
  * {@link Resources#GROUP GROUPS}, {@link Resources#USER USERS},
  * process-definitions, process-instances, tasks ... See {@link Resources} for a set
- * of built-in resource. The Operaton framework supports custom resources.</p>
+ * of built-in resource. The Operaton framework supports custom resources.
+ * </p>
  *
  * <h2>Authorization Type</h2>
- * <p>There are three types of authorizations:
+ * <p>
+ * There are three types of authorizations:
+ * </p>
  * <ul>
  *   <li><strong>Global Authorizations</strong> ({@link #AUTH_TYPE_GLOBAL}) range over
  *   all users and groups (userId = {@link #ANY}) and are usually used for fixing the
@@ -74,12 +88,13 @@ import org.operaton.bpm.engine.identity.User;
  *   users and groups and revoke a set of permissions. Revoke authorizations are commonly
  *   used for revoking permissions to a user or group the the global authorization grants.</li>
  * </ul>
- * </p>
  *
  * <h2>Authorization Precedence</h2>
- * <p>Authorizations may range over all users, an individual user or a group of users.
+ * <p>
+ * Authorizations may range over all users, an individual user or a group of users.
  * They may apply to an individual resource instance or all instances of the same type
  * (resourceId = {@link #ANY}). The precedence is as follows:
+ * </p>
  * <ol>
  *  <li>An authorization applying to an individual resource instance precedes an authorization
  *  applying to all instances of the same resource type.</li>
@@ -88,12 +103,11 @@ import org.operaton.bpm.engine.identity.User;
  *  <li>A Group {@link #AUTH_TYPE_REVOKE REVOKE} authorization precedes a Group
  *  {@link #AUTH_TYPE_GRANT GRANT} authorization.</li>
  * </ol>
- * </p>
  *
  * @author Daniel Meyer
  *
  */
-public interface Authorization {
+public @NullMarked interface Authorization {
 
   /**
    * A Global Authorization ranges over all users and groups (userId = {@link #ANY}) and are
@@ -130,7 +144,7 @@ public interface Authorization {
   /**
    * Allows checking whether this authorization grants a specific permission.
    *
-   * @param perm the permission to check for
+   * @param permission the permission to check for
    * @throws IllegalStateException if this {@link Authorization} is of type {@link #AUTH_TYPE_REVOKE}
    */
   boolean isPermissionGranted(Permission permission);
@@ -138,7 +152,7 @@ public interface Authorization {
   /**
    * Allows checking whether this authorization revokes a specific permission.
    *
-   * @param perm the permission to check for
+   * @param permission the permission to check for
    * @throws IllegalStateException if this {@link Authorization} is of type {@link #AUTH_TYPE_GRANT}
    */
   boolean isPermissionRevoked(Permission permission);
@@ -172,7 +186,7 @@ public interface Authorization {
    * </ul>
    * </p>
    *
-   * @param an array of permissions to check for.
+   * @param permissions an array of permissions to check for.
    * @return Returns the set of {@link Permission Permissions} provided by this {@link Authorization}.
    *  */
   Permission[] getPermissions(Permission[] permissions);
@@ -189,23 +203,23 @@ public interface Authorization {
    * </ul>
    * </p>
    *
-   *  @param a set of permissions.
+   *  @param permissions a set of permissions.
    * */
   void setPermissions(Permission[] permissions);
 
 
   /** @return the ID of the {@link Authorization} object */
-  String getId();
+  @Nullable String getId();
 
   /**
    * set the id of the resource
    */
-  void setResourceId(String resourceId);
+  void setResourceId(@Nullable String resourceId);
 
   /**
    * @return the id of the resource
    */
-  String getResourceId();
+  @Nullable String getResourceId();
 
   /**
    * sets the type of the resource
@@ -225,22 +239,22 @@ public interface Authorization {
   /**
    * set the id of the user this authorization is created for
    */
-  void setUserId(String userId);
+  void setUserId(@Nullable String userId);
 
   /**
    * @return the id of the user this authorization is created for
    */
-  String getUserId();
+  @Nullable String getUserId();
 
   /**
    * set the id of the group this authorization is created for
    */
-  void setGroupId(String groupId);
+  void setGroupId(@Nullable String groupId);
 
   /**
    * @return the id of the group this authorization is created for
    */
-  String getGroupId();
+  @Nullable String getGroupId();
 
   /**
    * The type og the authorization. Legal values:
@@ -270,7 +284,7 @@ public interface Authorization {
    *   <li>{@code null} if removal time strategy is end and the top-level instance is not finished
    *   </ul>
    */
-  Date getRemovalTime();
+  @Nullable Date getRemovalTime();
 
   /**
    * The process instance id of the top-level (root) process instance the historic instance
@@ -288,6 +302,6 @@ public interface Authorization {
    *   <li>{@code null} if not related to a historic instance resource
    *   </ul>
    */
-  String getRootProcessInstanceId();
+  @Nullable String getRootProcessInstanceId();
 
 }

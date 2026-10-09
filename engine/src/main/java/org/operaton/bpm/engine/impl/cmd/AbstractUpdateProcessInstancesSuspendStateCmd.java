@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
@@ -33,6 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.commons.utils.CollectionUtil;
 
+@NullMarked
 public abstract class AbstractUpdateProcessInstancesSuspendStateCmd<T> implements Command<T> {
 
   protected UpdateProcessInstancesSuspensionStateBuilderImpl builder;

@@ -2,6 +2,7 @@
 
 MVN_ARGS=()
 PROFILES=()
+EXTRA_PROFILES=""
 BUILD_PROFILE="normal"
 SKIP_TESTS="false"
 REPORT_PLUGINS="false"
@@ -26,10 +27,13 @@ check_valid_values() {
 
 ##########################################################################
 parse_args() {
-  while [ "$#" -gt 0 ]; do
+  while [[ "$#" -gt 0 ]]; do
     case "$1" in
       --profile=*)
         BUILD_PROFILE="${1#*=}"
+        ;;
+      --extra-maven-profiles=*)
+        EXTRA_PROFILES="${1#*=}"
         ;;
       --skip-tests)
         SKIP_TESTS="true"
@@ -75,7 +79,7 @@ PROJECT_ROOT=$(pwd)
 
 MVN_ARGS+=(clean install)
 
-if [ "$REPORT_PLUGINS" = "true" ]; then
+if [[ "$REPORT_PLUGINS" = "true" ]]; then
   MVN_ARGS+=(versions:dependency-updates-aggregate-report)
   MVN_ARGS+=(versions:plugin-updates-aggregate-report)
   # MVN_ARGS+=(dependency:analyze-report) TODO Disabled due to issue #1095
@@ -83,21 +87,31 @@ if [ "$REPORT_PLUGINS" = "true" ]; then
   MVN_ARGS+=(-Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list)
 fi
 
-if ([ "$SKIP_TESTS" = "true" ]); then
+if [[ "$SKIP_TESTS" = "true" ]]; then
   MVN_ARGS+=(-DskipTests)
 fi
 
 case "$BUILD_PROFILE" in
   "fast")
-    PROFILES+=(distro h2-in-memory)
+    # distro-webjar-neo is activeByDefault, but an explicit -P disables every
+    # activeByDefault profile. Without it the neo webjar is never built while
+    # starter-webapp-neo-core, which needs it, stays in the reactor. The neo
+    # frontend is already built here via the distro profile, so this only adds
+    # the webjar packaging step.
+    PROFILES+=(distro distro-webjar-neo h2-in-memory)
     ;;
   "normal")
-    PROFILES+=(distro distro-webjar distro-run distro-tomcat h2-in-memory check-api-compatibility)
+    PROFILES+=(distro distro-webjar distro-webjar-neo distro-run distro-tomcat h2-in-memory check-api-compatibility)
     ;;
   "max")
-    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-starter h2-in-memory check-api-compatibility quarkus-tests)
+    PROFILES+=(distro distro-run distro-tomcat distro-wildfly distro-webjar distro-webjar-neo distro-starter h2-in-memory check-api-compatibility quarkus-tests integration-test-operaton-run)
     ;;
 esac
+
+if [[ -n "$EXTRA_PROFILES" ]]; then
+  IFS=',' read -ra EXTRA <<< "$EXTRA_PROFILES"
+  PROFILES+=("${EXTRA[@]}")
+fi
 
 MVN_CMD="$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") $(echo "${MVN_ARGS[*]}")"
 echo "ℹ️ $MVN_CMD"

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ArtifactFactory;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
@@ -24,6 +25,7 @@ import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
+@NullMarked
 public class CdiArtifactFactory implements ArtifactFactory {
 
   private final ArtifactFactory defaultArtifactFactory = new DefaultArtifactFactory();

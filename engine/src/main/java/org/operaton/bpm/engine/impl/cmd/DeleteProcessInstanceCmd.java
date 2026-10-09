@@ -16,16 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 /**
  * @author Joram Barrez
  */
-public class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implements Command<Void> {
+public @NullMarked class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd implements Command<Void> {
   protected String processInstanceId;
 
-  public DeleteProcessInstanceCmd(String processInstanceId, String deleteReason, boolean skipCustomListeners, boolean externallyTerminated,
+  public DeleteProcessInstanceCmd(String processInstanceId, @Nullable String deleteReason, boolean skipCustomListeners, boolean externallyTerminated,
       boolean skipIoMappings, boolean skipSubprocesses, boolean failIfNotExists) {
     this.processInstanceId = processInstanceId;
     this.deleteReason = deleteReason;
@@ -37,7 +40,7 @@ public class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd i
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     deleteProcessInstance(commandContext, processInstanceId);
     return null;
   }

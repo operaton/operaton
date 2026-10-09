@@ -39,7 +39,7 @@ import org.operaton.spin.Spin;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.xml.SpinXmlElement;
 
-import static camundajar.impl.scala.jdk.CollectionConverters.ListHasAsScala;
+import static scala.jdk.CollectionConverters.ListHasAsScala;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SpinValueMapperTest {

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -27,18 +30,19 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Command to update a comment by a given task ID or a process Instance ID
  */
-public class UpdateCommentCmd implements Command<Object> {
-  protected String taskId;
+public @NullMarked class UpdateCommentCmd implements Command<Object> {
+  protected @Nullable String taskId;
+  protected @Nullable String processInstanceId;
   protected String commentId;
-  protected String processInstanceId;
   protected String message;
 
-  public UpdateCommentCmd(String taskId, String processInstanceId, String commentId, String message) {
+  public UpdateCommentCmd(@Nullable String taskId, @Nullable String processInstanceId, String commentId, String message) {
     this.taskId = taskId;
     this.processInstanceId = processInstanceId;
     this.commentId = commentId;
@@ -46,7 +50,7 @@ public class UpdateCommentCmd implements Command<Object> {
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     if (processInstanceId == null && taskId == null) {
       throw new BadUserRequestException("Both process instance and task ids are null");
     }
@@ -59,17 +63,24 @@ public class UpdateCommentCmd implements Command<Object> {
     if (processInstanceId == null) {
       ensureNotNull("taskId", taskId);
       ensureNotNull("No comment exists with commentId: %s and taskId: %s".formatted(commentId, taskId), "comment", comment);
+      requireNonNull(taskId);
+      requireNonNull(comment);
+
       TaskEntity task = updateTaskComment(taskId, commandContext, comment);
       commandContext.getOperationLogManager()
           .logCommentOperation(UserOperationLogEntry.OPERATION_TYPE_UPDATE_COMMENT, task, getPropertyChange(oldMessage));
       task.triggerUpdateEvent();
     } else {
       ensureNotNull("processInstanceId", processInstanceId);
+      requireNonNull(processInstanceId);
       ensureNotNull("No comment exists with commentId: %s and processInstanceId: %s".formatted(commentId, processInstanceId),
           "comment", comment);
+      requireNonNull(comment);
       ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
       ensureNotNull("No processInstance exists with processInstanceId: %s".formatted(processInstanceId), "processInstance",
           processInstance);
+      requireNonNull(processInstance);
+
       updateProcessInstanceComment(processInstanceId, commandContext, comment);
       commandContext.getOperationLogManager()
           .logCommentOperation(UserOperationLogEntry.OPERATION_TYPE_UPDATE_COMMENT, processInstance,
@@ -82,6 +93,7 @@ public class UpdateCommentCmd implements Command<Object> {
   protected TaskEntity updateTaskComment(String taskId, CommandContext commandContext, CommentEntity comment) {
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
     ensureNotNull("No task exists with taskId: %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkTaskWork(task, commandContext);
     updateComment(commandContext, comment);
@@ -95,7 +107,7 @@ public class UpdateCommentCmd implements Command<Object> {
     updateComment(commandContext, comment);
   }
 
-  protected CommentEntity getComment(CommandContext commandContext) {
+  protected @Nullable CommentEntity getComment(CommandContext commandContext) {
     if (taskId != null) {
       return commandContext.getCommentManager().findCommentByTaskIdAndCommentId(taskId, commentId);
     }

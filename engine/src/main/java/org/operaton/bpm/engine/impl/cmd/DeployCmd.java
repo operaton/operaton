@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -69,6 +71,7 @@ import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.Case;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
 
@@ -78,12 +81,12 @@ import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIX
  * @author Thorben Lindhauer
  * @author Daniel Meyer
  */
-public class DeployCmd implements Command<DeploymentWithDefinitions> {
+public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions> {
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
   private static final TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
 
   protected DeploymentBuilderImpl deploymentBuilder;
-  protected DeploymentHandler deploymentHandler;
+  protected @Nullable DeploymentHandler deploymentHandler;
 
   public DeployCmd(DeploymentBuilderImpl deploymentBuilder) {
     this.deploymentBuilder = deploymentBuilder;
@@ -111,10 +114,11 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
     deploymentHandler = commandContext.getProcessEngineConfiguration()
         .getDeploymentHandlerFactory()
         .buildDeploymentHandler(processEngine);
+    requireNonNull(deploymentHandler);
 
     Set<String> deploymentIds = getAllDeploymentIds(deploymentBuilder);
     if (!deploymentIds.isEmpty()) {
-      String[] deploymentIdArray = deploymentIds.toArray(new String[deploymentIds.size()]);
+      String[] deploymentIdArray = deploymentIds.toArray(String[]::new);
       List<DeploymentEntity> deployments = deploymentManager.findDeploymentsByIds(deploymentIdArray);
       ensureDeploymentsWithIdsExists(deploymentIds, deployments);
     }
@@ -178,6 +182,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
       return deploymentToRegister;
     });
 
+    requireNonNull(deployment, "Deployment should not be null");
     createUserOperationLog(deploymentBuilder, deployment, commandContext);
 
     return deployment;
@@ -287,11 +292,11 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
     }
   }
 
-  protected ProcessApplicationRegistration registerProcessApplication(CommandContext commandContext,
+  protected @Nullable ProcessApplicationRegistration registerProcessApplication(CommandContext commandContext,
       DeploymentEntity deploymentToRegister,
       CandidateDeployment candidateDeployment, Collection<Resource> ignoredResources) {
 
-    ProcessApplicationDeploymentBuilderImpl appDeploymentBuilder = (ProcessApplicationDeploymentBuilderImpl) deploymentBuilder;
+    ProcessApplicationDeploymentBuilderImpl appDeploymentBuilder = (ProcessApplicationDeploymentBuilderImpl) requireNonNull(deploymentBuilder);
     final ProcessApplicationReference appReference = appDeploymentBuilder.getProcessApplicationReference();
 
     // build set of deployment ids this process app should be registered for:
@@ -368,7 +373,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
     return deployment;
   }
 
-  protected void setDeploymentName(String deploymentId, DeploymentBuilderImpl deploymentBuilder, CommandContext commandContext) {
+  protected void setDeploymentName(@Nullable String deploymentId, DeploymentBuilderImpl deploymentBuilder, CommandContext commandContext) {
     if (deploymentId != null && !deploymentId.isEmpty()) {
       DeploymentManager deploymentManager = commandContext.getDeploymentManager();
       DeploymentEntity deployment = deploymentManager.findDeploymentById(deploymentId);
@@ -399,13 +404,9 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
   // getters
 
   protected List<String> getMissingElements(Set<String> expected, Map<String, ?> actual) {
-    List<String> missingElements = new ArrayList<>();
-    for (String value : expected) {
-      if (!actual.containsKey(value)) {
-        missingElements.add(value);
-      }
-    }
-    return missingElements;
+    return expected.stream()
+        .filter(value -> !actual.containsKey(value))
+        .toList();
   }
 
   protected List<ResourceEntity> getResources(final DeploymentBuilderImpl deploymentBuilder, final CommandContext commandContext) {
@@ -452,7 +453,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
       String deploymentId = resourceEntry.getKey();
       Set<String> resourceIds = resourceEntry.getValue();
 
-      String[] resourceIdArray = resourceIds.toArray(new String[resourceIds.size()]);
+      String[] resourceIdArray = resourceIds.toArray(String[]::new);
       List<ResourceEntity> resources = resourceManager.findResourceByDeploymentIdAndResourceIds(deploymentId, resourceIdArray);
 
       ensureResourcesWithIdsExist(deploymentId, resourceIds, resources);
@@ -472,7 +473,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
       String deploymentId = entry.getKey();
       Set<String> resourceNames = entry.getValue();
 
-      String[] resourceNameArray = resourceNames.toArray(new String[resourceNames.size()]);
+      String[] resourceNameArray = resourceNames.toArray(String[]::new);
       List<ResourceEntity> resources = resourceManager.findResourceByDeploymentIdAndResourceNames(deploymentId, resourceNameArray);
 
       ensureResourcesWithNamesExist(deploymentId, resourceNames, resources);
@@ -510,7 +511,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
       }
     }
 
-    return processDefinitionKeys.toArray(new String[processDefinitionKeys.size()]);
+    return processDefinitionKeys.toArray(String[]::new);
   }
 
   protected Set<String> parseProcessDefinitionKeys(Collection<Resource> resources) {

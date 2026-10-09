@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.delegate.ScriptInvocation;
@@ -34,12 +37,12 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
  * @author Daniel Meyer
  *
  */
-public class ScriptTaskActivityBehavior extends TaskActivityBehavior {
+public @NullMarked class ScriptTaskActivityBehavior extends TaskActivityBehavior {
 
   protected ExecutableScript script;
-  protected String resultVariable;
+  protected @Nullable String resultVariable;
 
-  public ScriptTaskActivityBehavior(ExecutableScript script, String resultVariable) {
+  public ScriptTaskActivityBehavior(ExecutableScript script, @Nullable String resultVariable) {
     this.script = script;
     this.resultVariable = resultVariable;
   }
@@ -64,10 +67,13 @@ public class ScriptTaskActivityBehavior extends TaskActivityBehavior {
    *
    * @param e
    *          the exception to check
-   * @return the BpmnError that was the cause of this exception or null if no
+   * @return the BpmnError that was the cause of this exception or {@code null} if no
    *         BpmnError was found
+   * @deprecated unused internal API
    */
-  protected BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
+  protected @Nullable BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
     if (e instanceof BpmnError bpmnError) {
       return bpmnError;
     } else if (e.getCause() == null) {

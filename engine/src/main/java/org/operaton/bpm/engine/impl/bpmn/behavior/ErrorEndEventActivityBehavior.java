@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnExceptionHandler;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
@@ -25,12 +27,12 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Joram Barrez
  * @author Falko Menge
  */
-public class ErrorEndEventActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class ErrorEndEventActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected String errorCode;
-  private ParameterValueProvider errorMessageExpression;
+  private @Nullable ParameterValueProvider errorMessageExpression;
 
-  public ErrorEndEventActivityBehavior(String errorCode, ParameterValueProvider errorMessage) {
+  public ErrorEndEventActivityBehavior(String errorCode, @Nullable ParameterValueProvider errorMessage) {
     this.errorCode = errorCode;
     this.errorMessageExpression = errorMessage;
   }

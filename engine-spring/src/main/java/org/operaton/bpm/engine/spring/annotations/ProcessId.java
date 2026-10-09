@@ -21,9 +21,7 @@ import java.lang.annotation.*;
  * when used on a method parameter, this triggers the injection of the current processId.
  *
  * @author Josh Long
- * @since 5.1
  */
-
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

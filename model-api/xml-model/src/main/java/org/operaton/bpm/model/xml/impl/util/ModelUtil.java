@@ -17,7 +17,9 @@
 package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -35,7 +37,7 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
  * @author Daniel Meyer
  *
  */
-public final class ModelUtil {
+public final @NullMarked class ModelUtil {
 
   private static final String ID_ATTRIBUTE_NAME = "id";
 
@@ -78,7 +80,7 @@ public final class ModelUtil {
     return modelElement;
   }
 
-  protected static ModelElementTypeImpl getModelElement(DomElement domElement, ModelInstanceImpl modelInstance, String namespaceUri) {
+  private static ModelElementTypeImpl getModelElement(DomElement domElement, ModelInstanceImpl modelInstance, String namespaceUri) {
     String localName = domElement.getLocalName();
     ModelElementTypeImpl modelType = (ModelElementTypeImpl) modelInstance.getModel().getTypeForName(namespaceUri, localName);
 
@@ -177,10 +179,9 @@ public final class ModelUtil {
    */
   @SuppressWarnings("unchecked")
   public static <T extends ModelElementInstance> Collection<T> getModelElementCollection(Collection<DomElement> view, ModelInstanceImpl model) {
-    List<ModelElementInstance> resultList = new ArrayList<>();
-    for (DomElement element : view) {
-      resultList.add(getModelElement(element, model));
-    }
+    List<ModelElementInstance> resultList = view.stream()
+      .map(element -> getModelElement(element, model))
+      .collect(Collectors.toCollection(ArrayList::new));
     return (Collection<T>) resultList;
   }
 
@@ -199,10 +200,9 @@ public final class ModelUtil {
         return index;
       }
     }
-    Collection<String> childElementTypeNames = new ArrayList<>();
-    for (ModelElementType childElementType : childElementTypes) {
-      childElementTypeNames.add(childElementType.getTypeName());
-    }
+    Collection<String> childElementTypeNames = childElementTypes.stream()
+      .map(ModelElementType::getTypeName)
+      .collect(Collectors.toCollection(ArrayList::new));
     throw new ModelException("New child is not a valid child element type: %s; valid types are: %s".formatted(
         modelElement.getElementType().getTypeName(), childElementTypeNames));
   }
@@ -216,7 +216,9 @@ public final class ModelUtil {
     Set<ModelElementType> allExtendingTypes = new HashSet<>();
     for (ModelElementType baseType : baseTypes) {
       ModelElementTypeImpl modelElementTypeImpl = (ModelElementTypeImpl) model.getType(baseType.getInstanceType());
-      modelElementTypeImpl.resolveExtendingTypes(allExtendingTypes);
+      if (modelElementTypeImpl != null) {
+        modelElementTypeImpl.resolveExtendingTypes(allExtendingTypes);
+      }
     }
     return allExtendingTypes;
   }

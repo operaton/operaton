@@ -21,6 +21,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -30,70 +33,74 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Sebastian Menski
  * @author Roman Smirnov
  */
-public final class EnsureUtil {
+public final @NullMarked class EnsureUtil {
+
+  private static final String LAMBDA_STACK_SIGNATURE = "lambda$";
 
   private EnsureUtil() {
   }
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  public static void ensureNotNull(String variableName, Object value) {
+  public static void ensureNotNull(String variableName, @Nullable Object value) {
     ensureNotNull("", variableName, value);
   }
 
-  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String variableName, Object value) {
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String variableName, @Nullable Object value) {
     ensureNotNull(exceptionClass, null, variableName, value);
   }
 
-  public static void ensureNotNull(String message, String variableName, Object value) {
+  public static void ensureNotNull(String message, String variableName, @Nullable Object value) {
     ensureNotNull(NullValueException.class, message, variableName, value);
   }
 
-  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Object value) {
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Object value) {
     if (value == null) {
       throw generateException(exceptionClass, message, variableName, "is null");
     }
   }
 
-  public static void ensureNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Object value) {
+  public static void ensureNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, @Nullable Object value) {
     if (value != null) {
       throw generateException(exceptionClass, message, variableName, "is not null");
     }
   }
 
-  public static void ensureNotNull(String variableName, String... values) {
+  public static void ensureNotNull(String variableName, @Nullable String @Nullable... values) {
     ensureNotNull(variableName, (Object[]) values);
   }
 
-  public static void ensureNotNull(String variableName, Object... values) {
+  public static void ensureNotNull(String variableName, @Nullable Object @Nullable... values) {
     ensureNotNull("", variableName, values);
   }
 
-  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String variableName, String... values) {
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String variableName, @Nullable String @Nullable... values) {
     ensureNotNull(exceptionClass, variableName, (Object[]) values);
   }
 
-  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String variableName, Object... values) {
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String variableName, @Nullable Object @Nullable... values) {
     ensureNotNull(exceptionClass, null, variableName, values);
   }
 
-  public static void ensureNotNull(String message, String variableName, String... values) {
+  public static void ensureNotNull(String message, String variableName, @Nullable String @Nullable... values) {
     ensureNotNull(message, variableName, (Object[]) values);
   }
 
-  public static void ensureNotNull(String message, String variableName, Object... values) {
+  public static void ensureNotNull(String message, String variableName, @Nullable Object @Nullable... values) {
     ensureNotNull(NullValueException.class, message, variableName, values);
   }
 
-  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, String... values) {
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, @Nullable String @Nullable... values) {
     ensureNotNull(exceptionClass, message, variableName, (Object[]) values);
   }
 
-  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Object... values) {
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Object @Nullable... values) {
     if(values == null) {
       throw generateException(exceptionClass, message, variableName, "is null");
     }
@@ -104,50 +111,52 @@ public final class EnsureUtil {
     }
   }
 
-  public static void ensureNotEmpty(String variableName, String value) {
+  public static void ensureNotEmpty(String variableName, @Nullable String value) {
     ensureNotEmpty("", variableName, value);
   }
 
-  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String variableName, String value) {
+  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String variableName, @Nullable String value) {
     ensureNotEmpty(exceptionClass, null, variableName, value);
   }
 
-  public static void ensureNotEmpty(String message, String variableName, String value) {
+  public static void ensureNotEmpty(String message, String variableName, @Nullable String value) {
     ensureNotEmpty(ProcessEngineException.class, message, variableName, value);
   }
 
-  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, String value) {
+  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable String value) {
     ensureNotNull(exceptionClass, message, variableName, value);
+    requireNonNull(value);
     if (value.trim().isEmpty()) {
       throw generateException(exceptionClass, message, variableName, "is empty");
     }
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureNotEmpty(String variableName, Collection collection) {
+  public static void ensureNotEmpty(String variableName, @Nullable Collection collection) {
     ensureNotEmpty("", variableName, collection);
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String variableName, Collection collection) {
+  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String variableName, @Nullable Collection collection) {
     ensureNotEmpty(exceptionClass, null, variableName, collection);
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureNotEmpty(String message, String variableName, Collection collection) {
+  public static void ensureNotEmpty(String message, String variableName, @Nullable Collection collection) {
     ensureNotEmpty(ProcessEngineException.class, message, variableName, collection);
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Collection collection) {
+  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Collection collection) {
     ensureNotNull(exceptionClass, message, variableName, collection);
+    requireNonNull(collection);
     if (collection.isEmpty()) {
       throw generateException(exceptionClass, message, variableName, "is empty");
     }
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, Collection collection) {
+  public static void ensureEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, @Nullable Collection collection) {
     if (collection != null && !collection.isEmpty()) {
       String variableName = collection.iterator().next().toString();
       throw generateException(exceptionClass, message, variableName, "is not empty");
@@ -155,23 +164,24 @@ public final class EnsureUtil {
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureNotEmpty(String variableName, Map map) {
+  public static void ensureNotEmpty(String variableName, @Nullable Map map) {
     ensureNotEmpty("", variableName, map);
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String variableName, Map map) {
+  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String variableName, @Nullable Map map) {
     ensureNotEmpty(exceptionClass, null, variableName, map);
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureNotEmpty(String message, String variableName, Map map) {
+  public static void ensureNotEmpty(String message, String variableName, @Nullable Map map) {
     ensureNotEmpty(ProcessEngineException.class, message, variableName, map);
   }
 
   @SuppressWarnings("rawtypes")
-  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Map map) {
+  public static void ensureNotEmpty(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Map map) {
     ensureNotNull(exceptionClass, message, variableName, map);
+    requireNonNull(map);
     if (map.isEmpty()) {
       throw generateException(exceptionClass, message, variableName, "is empty");
     }
@@ -199,7 +209,7 @@ public final class EnsureUtil {
     ensurePositive(ProcessEngineException.class, message, variableName, value);
   }
 
-  public static void ensurePositive(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Long value) {
+  public static void ensurePositive(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, Long value) {
     ensureNotNull(exceptionClass, variableName, value);
     if (value <= 0) {
       throw generateException(exceptionClass, message, variableName, "is not greater than 0");
@@ -238,7 +248,7 @@ public final class EnsureUtil {
     ensureInstanceOf(ProcessEngineException.class, message, variableName, value, expectedClass);
   }
 
-  public static void ensureInstanceOf(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Object value, Class<?> expectedClass) {
+  public static void ensureInstanceOf(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, Object value, Class<?> expectedClass) {
     ensureNotNull(exceptionClass, message, variableName, value);
     Class<?> valueClass = value.getClass();
     if (!expectedClass.isAssignableFrom(valueClass)) {
@@ -246,46 +256,52 @@ public final class EnsureUtil {
     }
   }
 
-  public static void ensureOnlyOneNotNull(String message, String... values) {
+  public static void ensureOnlyOneNotNull(@Nullable String message, @Nullable String @Nullable... values) {
     ensureOnlyOneNotNull(message, (Object[]) values);
   }
 
-  public static void ensureOnlyOneNotNull(String message, Object... values) {
+  public static void ensureOnlyOneNotNull(@Nullable String message, @Nullable Object @Nullable... values) {
     ensureOnlyOneNotNull(NullValueException.class, message, values);
   }
 
-  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String... values) {
+  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, @Nullable String @Nullable... values) {
     ensureOnlyOneNotNull(exceptionClass, message, (Object[]) values);
   }
 
-  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, Object... values) {
+  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, @Nullable Object @Nullable... values) {
+    if (values == null) {
+      return;
+    }
     boolean oneNotNull = false;
     for (Object value : values) {
       if (value != null) {
         if (oneNotNull) {
-          throw generateException(exceptionClass, null, null, message);
+          throw generateException(exceptionClass, message, null, null);
         }
         oneNotNull = true;
       }
     }
     if (!oneNotNull) {
-      throw generateException(exceptionClass, null, null, message);
+      throw generateException(exceptionClass, message, null, null);
     }
   }
 
-  public static void ensureAtLeastOneNotNull(String message, String... values) {
+  public static void ensureAtLeastOneNotNull(String message, @Nullable String @Nullable... values) {
     ensureAtLeastOneNotNull(message, (Object[]) values);
   }
 
-    public static void ensureAtLeastOneNotNull(String message, Object... values) {
+    public static void ensureAtLeastOneNotNull(@Nullable String message, @Nullable Object @Nullable... values) {
     ensureAtLeastOneNotNull(NullValueException.class, message, values);
   }
 
-  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String... values) {
+  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, @Nullable String @Nullable... values) {
     ensureAtLeastOneNotNull(exceptionClass, message, (Object[]) values);
   }
 
-  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, Object... values) {
+  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, @Nullable Object @Nullable... values) {
+    if (values == null) {
+      return;
+    }
     for (Object value : values) {
       if (value != null) {
         return;
@@ -294,11 +310,17 @@ public final class EnsureUtil {
     throw generateException(exceptionClass, null, null, message);
   }
 
-  public static void ensureAtLeastOneNotEmpty(String message, String... values) {
+  /** @deprecated unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
+  public static void ensureAtLeastOneNotEmpty(String message, @Nullable String @Nullable... values) {
     ensureAtLeastOneNotEmpty(ProcessEngineException.class, message, values);
   }
 
-  public static void ensureAtLeastOneNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, String... values) {
+  public static void ensureAtLeastOneNotEmpty(Class<? extends ProcessEngineException> exceptionClass, String message, @Nullable String @Nullable... values) {
+    if (values == null) {
+      return;
+    }
     for (String value : values) {
       if (value != null && !value.isEmpty()) {
         return;
@@ -307,20 +329,21 @@ public final class EnsureUtil {
     throw generateException(exceptionClass, null, null, message);
   }
 
-  public static void ensureNotContainsEmptyString(String variableName, Collection<String> values) {
+  public static void ensureNotContainsEmptyString(String variableName, @Nullable Collection<String> values) {
     ensureNotContainsEmptyString((String) null, variableName, values);
   }
 
-  public static void ensureNotContainsEmptyString(String message, String variableName, Collection<String> values) {
+  public static void ensureNotContainsEmptyString(@Nullable String message, String variableName, @Nullable Collection<String> values) {
     ensureNotContainsEmptyString(NotValidException.class, message, variableName, values);
   }
 
-  public static void ensureNotContainsEmptyString(Class<? extends ProcessEngineException> exceptionClass, String variableName, Collection<String> values) {
+  public static void ensureNotContainsEmptyString(Class<? extends ProcessEngineException> exceptionClass, String variableName, @Nullable Collection<String> values) {
     ensureNotContainsEmptyString(exceptionClass, null, variableName, values);
   }
 
-  public static void ensureNotContainsEmptyString(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Collection<String> values) {
+  public static void ensureNotContainsEmptyString(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, @Nullable Collection<String> values) {
     ensureNotNull(exceptionClass, message, variableName, values);
+    requireNonNull(values);
     for (String value : values) {
       if (value.isEmpty()) {
         throw generateException(exceptionClass, message, variableName, "contains empty string");
@@ -332,7 +355,7 @@ public final class EnsureUtil {
     ensureNotContainsNull((String) null, variableName, values);
   }
 
-  public static void ensureNotContainsNull(String message, String variableName, Collection<?> values) {
+  public static void ensureNotContainsNull(@Nullable String message, String variableName, Collection<?> values) {
     ensureNotContainsNull(NullValueException.class, message, variableName, values);
   }
 
@@ -340,8 +363,8 @@ public final class EnsureUtil {
     ensureNotContainsNull(exceptionClass, null, variableName, values);
   }
 
-  public static void ensureNotContainsNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Collection<?> values) {
-    ensureNotNull(exceptionClass, message, variableName, values.toArray(new Object[values.size()]));
+  public static void ensureNotContainsNull(Class<? extends ProcessEngineException> exceptionClass, @Nullable String message, String variableName, Collection<?> values) {
+    ensureNotNull(exceptionClass, message, variableName, values.toArray(Object[]::new));
   }
 
   @SuppressWarnings("rawtypes")
@@ -410,7 +433,7 @@ public final class EnsureUtil {
     ensureTrue(message, !value);
   }
 
-  protected static String determineResourceWhitelistPattern(ProcessEngineConfiguration processEngineConfiguration, String resourceType) {
+  static String determineResourceWhitelistPattern(ProcessEngineConfiguration processEngineConfiguration, String resourceType) {
     String resourcePattern = null;
 
     if ("User".equals(resourceType)) {
@@ -432,7 +455,7 @@ public final class EnsureUtil {
     return processEngineConfiguration.getGeneralResourceWhitelistPattern();
   }
 
-  protected static <T extends ProcessEngineException> T generateException(Class<T> exceptionClass, String message, String variableName, String description) {
+  static <T extends ProcessEngineException> T generateException(Class<T> exceptionClass, @Nullable String message, @Nullable String variableName, @Nullable String description) {
     String formattedMessage = formatMessage(message, variableName, description);
 
     try {
@@ -447,13 +470,13 @@ public final class EnsureUtil {
 
   }
 
-  protected static String formatMessage(String message, String variableName, String description) {
+  static String formatMessage(@Nullable String message, @Nullable String variableName, @Nullable String description) {
     String messageElement = formatMessageElement(message, ": ");
     String variableElement = formatMessageElement(variableName, " ");
     return "%s%s%s".formatted(messageElement, variableElement, description);
   }
 
-  protected static String formatMessageElement(String element, String delimiter) {
+  static String formatMessageElement(@Nullable String element, String delimiter) {
     if (element != null && !element.isEmpty()) {
       return element.concat(delimiter);
     }
@@ -462,9 +485,34 @@ public final class EnsureUtil {
     }
   }
 
-  public static void ensureActiveCommandContext(String operation) {
-    if(Context.getCommandContext() == null) {
-      throw LOG.notInsideCommandContext(operation);
-    }
+  public static CommandContext ensureActiveCommandContext(String operation) {
+    return Context.findCommandContext().orElseThrow(() -> LOG.notInsideCommandContext(operation));
   }
+
+  public static CommandContext ensureActiveCommandContext(@Nullable CommandContext commandContext) {
+    if (commandContext == null) {
+      throw LOG.notInsideCommandContext(getCallerOperation());
+    }
+    return commandContext;
+  }
+
+  private static String getCallerOperation() {
+    StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+    if (stackTrace.length > 3) {
+      StackTraceElement caller = stackTrace[3];
+      String className = caller.getClassName();
+      String simpleClassName = className.substring(className.lastIndexOf('.') + 1);
+      return simpleClassName + "#" + unwrapLambdaMethodName(caller.getMethodName());
+    }
+    return "unknown operation";
+  }
+
+  private static String unwrapLambdaMethodName(String methodName) {
+    if (methodName.startsWith(LAMBDA_STACK_SIGNATURE)) {
+      int end = methodName.indexOf('$', LAMBDA_STACK_SIGNATURE.length());
+      return end > 0 ? methodName.substring(LAMBDA_STACK_SIGNATURE.length(), end) : methodName;
+    }
+    return methodName;
+  }
+
 }

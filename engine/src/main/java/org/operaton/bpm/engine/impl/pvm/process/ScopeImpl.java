@@ -17,13 +17,9 @@
 package org.operaton.bpm.engine.impl.pvm.process;
 
 import java.io.Serial;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -33,11 +29,12 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 
-
 /**
- * A Bpmn scope. The scope has references to two lists of activities:
- * - the flow activities (activities for which the {@link ActivityImpl#getFlowScope() flow scope} is this scope
- * - event listener activities (activities for which the {@link ActivityImpl#getEventScope() event scope} is this scope.
+ * A BPMN scope. The scope has references to two lists of activities:
+ * <ul>
+ *   <li>the flow activities (activities for which the {@link ActivityImpl#getFlowScope() flow scope} is this scope)</li>
+ *   <li>event listener activities (activities for which the {@link ActivityImpl#getEventScope() event scope} is this scope)</li>
+ * </ul>
  *
  * @author Tom Baeyens
  * @author Daniel Meyer
@@ -63,12 +60,12 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   @Override
-  public ActivityImpl findActivity(String activityId) {
+  public @Nullable ActivityImpl findActivity(String activityId) {
     return (ActivityImpl) super.findActivity(activityId);
   }
 
   @Override
-  public TransitionImpl findTransition(String transitionId) {
+  public @Nullable TransitionImpl findTransition(String transitionId) {
     for (PvmActivity childActivity : flowActivities) {
       for (PvmTransition transition : childActivity.getOutgoingTransitions()) {
         if (transitionId.equals(transition.getId())) {
@@ -88,7 +85,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   @Override
-  public ActivityImpl findActivityAtLevelOfSubprocess(String activityId) {
+  public @Nullable ActivityImpl findActivityAtLevelOfSubprocess(String activityId) {
     if(!isSubProcessScope()) {
       throw new ProcessEngineException("This is not a sub process scope.");
     }
@@ -103,7 +100,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
 
   /** searches for the activity locally */
   @Override
-  public ActivityImpl getChildActivity(String activityId) {
+  public @Nullable ActivityImpl getChildActivity(String activityId) {
     return namedFlowActivities.get(activityId);
   }
 
@@ -115,7 +112,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    */
   public interface BacklogErrorCallback {
     /**
-     * In error case the callback will called.
+     * In error case the callback will be called.
      */
     void callback();
   }
@@ -141,6 +138,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    *
    * @return true if empty, false otherwise
    */
+  @SuppressWarnings("unused")
   public boolean isBacklogEmpty() {
     return backlog.isEmpty();
   }
@@ -204,7 +202,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   /**
    * @deprecated Use {@link #getListeners(String)} instead.
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "rawtypes"})
   @Deprecated(forRemoval = true, since = "1.0")
   public List<ExecutionListener> getExecutionListeners(String eventName) {
     return (List) super.getListeners(eventName);

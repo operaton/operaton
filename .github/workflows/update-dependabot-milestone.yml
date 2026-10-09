@@ -28,10 +28,11 @@ jobs:
 
     steps:
       - name: Check out main
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Update dependabot milestone
         env:

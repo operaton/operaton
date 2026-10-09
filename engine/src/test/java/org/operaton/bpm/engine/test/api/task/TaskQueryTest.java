@@ -5605,11 +5605,13 @@ class TaskQueryTest {
 
   /**
    * Generates some test tasks.
-   * - 6 tasks where kermit is a candidate
-   * - 1 tasks where gonzo is assignee and kermit and gonzo are candidates
-   * - 2 tasks assigned to management group
-   * - 2 tasks assigned to accountancy group
-   * - 1 task assigned to fozzie and to both the management and accountancy group
+   * <ul>
+   *   <li>6 tasks where kermit is a candidate</li>
+   *   <li>1 tasks where gonzo is assignee and kermit and gonzo are candidates</li>
+   *   <li>2 tasks assigned to management group</li>
+   *   <li>2 tasks assigned to accountancy group</li>
+   *   <li>1 task assigned to fozzie and to both the management and accountancy group</li>
+   * </ul>
    */
   private List<String> generateTestTasks() throws Exception {
     List<String> ids = new ArrayList<>();

@@ -20,20 +20,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.identity.Group;
-import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.identity.NativeUserQuery;
-import org.operaton.bpm.engine.identity.Tenant;
-import org.operaton.bpm.engine.identity.TenantQuery;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.identity.UserQuery;
+import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.NativeUserQueryImpl;
 import org.operaton.bpm.engine.impl.UserQueryImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.identity.ReadOnlyIdentityProvider;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -42,6 +39,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TenantEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EncryptionUtil.saltPassword;
 
 /**
@@ -101,7 +99,8 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   protected boolean matchPassword(String password, UserEntity user) {
     String saltedPassword = saltPassword(password, user.getSalt());
-    return Context.getProcessEngineConfiguration()
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    return processEngineConfiguration
       .getPasswordManager()
       .check(saltedPassword, user.getPassword());
   }
@@ -109,14 +108,15 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   // groups //////////////////////////////////////////
 
   @Override
-  public GroupEntity findGroupById(String groupId) {
+  public @Nullable GroupEntity findGroupById(String groupId) {
     checkAuthorization(Permissions.READ, Resources.GROUP, groupId);
     return getDbEntityManager().selectById(GroupEntity.class, groupId);
   }
 
   @Override
   public GroupQuery createGroupQuery() {
-    return new DbGroupQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    return new DbGroupQueryImpl(processEngineConfiguration.getCommandExecutorTxRequired());
   }
 
   @Override
@@ -137,14 +137,15 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
   //tenants //////////////////////////////////////////
 
   @Override
-  public TenantEntity findTenantById(String tenantId) {
+  public @Nullable TenantEntity findTenantById(String tenantId) {
     checkAuthorization(Permissions.READ, Resources.TENANT, tenantId);
     return getDbEntityManager().selectById(TenantEntity.class, tenantId);
   }
 
   @Override
   public TenantQuery createTenantQuery() {
-    return new DbTenantQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    return new DbTenantQueryImpl(processEngineConfiguration.getCommandExecutorTxRequired());
   }
 
   @Override
@@ -186,14 +187,16 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   @Override
   protected void configureQuery(@SuppressWarnings("rawtypes") AbstractQuery query, Resource resource) {
-    Context.getCommandContext()
+    CommandContext commandContext = Context.getCommandContext();
+    commandContext
       .getAuthorizationManager()
       .configureQuery(query, resource);
   }
 
   @Override
   protected void checkAuthorization(Permission permission, Resource resource, String resourceId) {
-    Context.getCommandContext()
+    CommandContext commandContext = Context.getCommandContext();
+    commandContext
       .getAuthorizationManager()
       .checkAuthorization(permission, resource, resourceId);
  }

@@ -1,5 +1,9 @@
 name: Check Slack Invite Link
 
+permissions:
+  contents: read
+  issues: write
+
 on:
   schedule:
     - cron: "0 6 * * *"
@@ -11,7 +15,9 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Locate system Chromium/Chrome
         id: find_chromium
@@ -30,12 +36,13 @@ jobs:
           echo "No chromium found"; exit 1
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 20
 
       - name: Install Playwright core only
-        run: npm install --ignore-scripts playwright@1.59.1
+        # Version pinned explicitly; no lockfile needed for this single throwaway dependency used only to check a Slack invite link.
+        run: npm install --ignore-scripts playwright@1.59.1  # zizmor: ignore[adhoc-packages]
       - name: Extract Slack link from README
         id: extract
         run: |
@@ -93,7 +100,7 @@ jobs:
       - name: Check if issue already exists
         if: ${{ steps.expired.outputs.expired == 'true' }}
         id: find_issue
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           result-encoding: string
           script: |
@@ -113,7 +120,9 @@ jobs:
 
       - name: Create issue if expired and does not exist
         if: ${{ steps.expired.outputs.expired == 'true' && steps.find_issue.outputs.result == '' }}
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          SLACK_URL: ${{ steps.extract.outputs.url }}
         with:
           script: |
             await github.rest.issues.create({
@@ -121,5 +130,5 @@ jobs:
               repo: context.repo.repo,
               assignees: ["kthoms"],
               title: "Slack invite link expired",
-              body: `Hi,\n\nThe Slack invite link in README appears to be expired.\n\nURL: ${{ steps.extract.outputs.url }}`
+              body: "Hi,\n\nThe Slack invite link in README appears to be expired.\n\nURL: $SLACK_URL"
             });

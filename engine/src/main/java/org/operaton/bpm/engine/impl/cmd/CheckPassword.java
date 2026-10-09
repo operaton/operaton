@@ -16,17 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 /**
  * @author Tom Baeyens
  */
-public class CheckPassword implements Command<Boolean> {
-  String userId;
-  String password;
+public @NullMarked class CheckPassword implements Command<Boolean> {
+  @Nullable String userId;
+  @Nullable String password;
 
-  public CheckPassword(String userId, String password) {
+  public CheckPassword(@Nullable String userId, @Nullable String password) {
     this.userId = userId;
     this.password = password;
   }

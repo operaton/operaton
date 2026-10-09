@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,11 +32,9 @@ public class SchemaLogEntryDto {
   private String version;
 
   public static List<SchemaLogEntryDto> fromSchemaLogEntries(List<SchemaLogEntry> entries) {
-    List<SchemaLogEntryDto> dtos = new ArrayList<>();
-    for (SchemaLogEntry entry : entries) {
-      dtos.add(new SchemaLogEntryDto(entry.getId(), entry.getTimestamp(), entry.getVersion()));
-    }
-    return dtos;
+    return entries.stream()
+        .map(entry -> new SchemaLogEntryDto(entry.getId(), entry.getTimestamp(), entry.getVersion()))
+        .toList();
   }
 
   public SchemaLogEntryDto(String id, Date timestamp, String version) {

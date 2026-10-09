@@ -22,6 +22,8 @@ import java.util.Deque;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
@@ -92,10 +94,7 @@ public class ProcessDefinitionBuilder {
     return startTransition(destinationActivityId, null);
   }
 
-  public ProcessDefinitionBuilder startTransition(String destinationActivityId, String transitionId) {
-    if (destinationActivityId==null) {
-      throw new PvmException("destinationActivityId is null");
-    }
+  public ProcessDefinitionBuilder startTransition(@NonNull String destinationActivityId, String transitionId) {
     ActivityImpl activity = getActivity();
     transition = activity.createOutgoingTransition(transitionId);
     unresolvedTransitions.add(new Object[]{transition, destinationActivityId});

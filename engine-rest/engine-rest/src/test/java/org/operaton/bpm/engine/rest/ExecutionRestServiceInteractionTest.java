@@ -16,34 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.isNull;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -63,24 +36,14 @@ import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
-import org.operaton.bpm.engine.rest.helper.EqualsList;
-import org.operaton.bpm.engine.rest.helper.EqualsMap;
-import org.operaton.bpm.engine.rest.helper.ErrorMessageHelper;
-import org.operaton.bpm.engine.rest.helper.MockObjectValue;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
+import org.operaton.bpm.engine.rest.helper.*;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsNullValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsObjectValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
-import org.operaton.bpm.engine.runtime.AdHocActivity;
-import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
-import org.operaton.bpm.engine.runtime.EventSubscription;
-import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.ExecutionQuery;
-import org.operaton.bpm.engine.runtime.Incident;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -96,10 +59,9 @@ import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest {
@@ -1888,7 +1850,8 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
 
   @Test
   void testCreateIncident() {
-    when(runtimeServiceMock.createIncident(anyString(), anyString(), anyString(), anyString())).thenReturn(mock(Incident.class));
+    Incident mockIncident = mock(Incident.class);
+    when(runtimeServiceMock.createIncident(anyString(), anyString(), anyString(), anyString())).thenReturn(mockIncident);
     Map<String, Object> json = new HashMap<>();
     json.put("incidentType", "incidentType");
     json.put("configuration", "configuration");

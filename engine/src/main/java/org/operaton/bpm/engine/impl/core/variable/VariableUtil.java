@@ -22,6 +22,8 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -49,6 +51,9 @@ public final class VariableUtil {
    * @param value
    */
   public static boolean isJavaSerializationProhibited(TypedValue value) {
+    if (!Context.hasActiveProcessEngineConfiguration()) {
+      return false;
+    }
     ProcessEngineConfigurationImpl processEngineConfiguration =
         Context.getProcessEngineConfiguration();
 
@@ -81,12 +86,12 @@ public final class VariableUtil {
     }
   }
 
-  public static void setVariables(Map<String, ?> variables,
+  public static void setVariables(@Nullable Map<String, ?> variables,
                                   SetVariableFunction setVariableFunction) {
     if (variables != null) {
       for (var vars : variables.entrySet()) {
         String variableName = vars.getKey();
-        Object value = null;
+        Object value;
         if (variables instanceof VariableMap map) {
           value = map.getValueTyped(variableName);
 

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -42,14 +44,15 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  * @author Joram Barrez
  * @author roman.smirnov
  */
+@NullMarked
 public abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStateCmd {
 
-  protected final String processInstanceId;
-  protected String processDefinitionId;
-  protected String processDefinitionKey;
+  protected final @Nullable String processInstanceId;
+  protected final @Nullable String processDefinitionId;
+  protected final @Nullable String processDefinitionKey;
 
-  protected String processDefinitionTenantId;
-  protected boolean isProcessDefinitionTenantIdSet;
+  protected final @Nullable String processDefinitionTenantId;
+  protected final boolean isProcessDefinitionTenantIdSet;
 
   protected AbstractSetProcessInstanceStateCmd(UpdateProcessInstanceSuspensionStateBuilderImpl builder) {
     super(true, null);
@@ -119,24 +122,22 @@ public abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStat
     HistoryLevel historyLevel = commandContext.getProcessEngineConfiguration().getHistoryLevel();
     List<ProcessInstance> updatedProcessInstances = obtainProcessInstances(commandContext);
     //suspension state is not updated synchronously
-    if (getNewSuspensionState() != null && updatedProcessInstances != null) {
-      for (final ProcessInstance processInstance: updatedProcessInstances) {
+    for (final ProcessInstance processInstance: updatedProcessInstances) {
 
-        if (historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_UPDATE, processInstance)) {
-          HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
-            @Override
-            public HistoryEvent createHistoryEvent(HistoryEventProducer producer) {
-              HistoricProcessInstanceEventEntity processInstanceUpdateEvt = (HistoricProcessInstanceEventEntity)
-                  producer.createProcessInstanceUpdateEvt((DelegateExecution) processInstance);
-              if (SuspensionState.SUSPENDED.getStateCode() == getNewSuspensionState().getStateCode()) {
-                processInstanceUpdateEvt.setState(HistoricProcessInstance.STATE_SUSPENDED);
-              } else {
-                processInstanceUpdateEvt.setState(HistoricProcessInstance.STATE_ACTIVE);
-              }
-              return processInstanceUpdateEvt;
+      if (historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_UPDATE, processInstance)) {
+        HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
+          @Override
+          public HistoryEvent createHistoryEvent(HistoryEventProducer producer) {
+            HistoricProcessInstanceEventEntity processInstanceUpdateEvt = (HistoricProcessInstanceEventEntity)
+                producer.createProcessInstanceUpdateEvt((DelegateExecution) processInstance);
+            if (SuspensionState.SUSPENDED.getStateCode() == getNewSuspensionState().getStateCode()) {
+              processInstanceUpdateEvt.setState(HistoricProcessInstance.STATE_SUSPENDED);
+            } else {
+              processInstanceUpdateEvt.setState(HistoricProcessInstance.STATE_ACTIVE);
             }
-          });
-        }
+            return processInstanceUpdateEvt;
+          }
+        });
       }
     }
   }

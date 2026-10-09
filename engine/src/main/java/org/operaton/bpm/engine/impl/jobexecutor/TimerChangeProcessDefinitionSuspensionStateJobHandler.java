@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cmd.AbstractSetProcessDefinitionStateCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -30,6 +32,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
  * @author Joram Barrez
  * @author roman.smirnov
  */
+@NullMarked
 public abstract class TimerChangeProcessDefinitionSuspensionStateJobHandler implements JobHandler<ProcessDefinitionSuspensionStateConfiguration> {
 
   protected static final String JOB_HANDLER_CFG_BY = "by";
@@ -57,12 +60,12 @@ public abstract class TimerChangeProcessDefinitionSuspensionStateJobHandler impl
 
   public static class ProcessDefinitionSuspensionStateConfiguration implements JobHandlerConfiguration {
 
-    protected String processDefinitionKey;
-    protected String processDefinitionId;
+    protected @Nullable String processDefinitionKey;
+    protected @Nullable String processDefinitionId;
     protected boolean includeProcessInstances;
-    protected String tenantId;
+    protected @Nullable String tenantId;
     protected boolean isTenantIdSet;
-    protected String by;
+    protected @Nullable String by;
 
     @Override
     public String toCanonicalString() {

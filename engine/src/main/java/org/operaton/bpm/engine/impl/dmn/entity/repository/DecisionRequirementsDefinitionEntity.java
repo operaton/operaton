@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionRequirementsGraphImpl;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -93,7 +95,7 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
   }
 
   @Override
-  public Integer getHistoryTimeToLive() {
+  public @Nullable Integer getHistoryTimeToLive() {
     return null;
   }
 

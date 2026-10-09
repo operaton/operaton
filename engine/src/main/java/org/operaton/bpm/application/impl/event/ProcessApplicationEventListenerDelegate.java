@@ -32,17 +32,19 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * <p>{@link ExecutionListener} and {@link TaskListener} implementation delegating to
  * the {@link ExecutionListener} and {@link TaskListener} provided by a
  * {@link ProcessApplicationInterface ProcessApplication}.</p>
  *
  * <p>If the process application does not provide an execution listener (ie.
- * {@link ProcessApplicationInterface#getExecutionListener()} returns null), the
+ * {@link ProcessApplicationInterface#getExecutionListener()} returns {@code null}), the
  * request is silently ignored.</p>
  *
  * <p>If the process application does not provide a task listener (ie.
- * {@link ProcessApplicationInterface#getTaskListener()} returns null), the
+ * {@link ProcessApplicationInterface#getTaskListener()} returns {@code null}), the
  * request is silently ignored.</p>
  *
  *
@@ -102,9 +104,9 @@ public class ProcessApplicationEventListenerDelegate implements ExecutionListene
   }
 
   protected void notifyExecutionListener(DelegateExecution execution) throws Exception {
-    ProcessApplicationReference processApp = Context.getCurrentProcessApplication();
+    ProcessApplicationReference processApp = requireNonNull(Context.getCurrentProcessApplication());
     try {
-      ProcessApplicationInterface processApplication = processApp.getProcessApplication();
+      ProcessApplicationInterface processApplication = requireNonNull(processApp).getProcessApplication();
       ExecutionListener executionListener = processApplication.getExecutionListener();
       if(executionListener != null) {
         executionListener.notify(execution);
@@ -120,7 +122,7 @@ public class ProcessApplicationEventListenerDelegate implements ExecutionListene
   }
 
   protected void notifyTaskListener(DelegateTask task) {
-    ProcessApplicationReference processApp = Context.getCurrentProcessApplication();
+    ProcessApplicationReference processApp = requireNonNull(Context.getCurrentProcessApplication());
     try {
       ProcessApplicationInterface processApplication = processApp.getProcessApplication();
       TaskListener taskListener = processApplication.getTaskListener();

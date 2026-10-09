@@ -16,21 +16,20 @@
  */
 package org.operaton.bpm.integrationtest;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import kong.unirest.json.JSONArray;
-import kong.unirest.json.JSONObject;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.json.JSONArray;
+import kong.unirest.core.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class DateSerializationIT extends AbstractWebIntegrationTest {
 
@@ -57,11 +56,8 @@ class DateSerializationIT extends AbstractWebIntegrationTest {
     String timestamp = logElement.getString("timestamp");
 
     // Try parsing the timestamp using the predefined format
-    try {
-      new SimpleDateFormat(JacksonConfigurator.DEFAULT_DATE_FORMAT).parse(timestamp);
-    } catch (ParseException pex) {
-      fail("Couldn't parse timestamp from schema log: " + timestamp);
-    }
+    SimpleDateFormat dateFormat = new SimpleDateFormat(JacksonConfigurator.DEFAULT_DATE_FORMAT);
+    assertDoesNotThrow(() -> dateFormat.parse(timestamp), "Couldn't parse timestamp from schema log: " + timestamp);
   }
 
 }

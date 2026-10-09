@@ -34,18 +34,20 @@ public interface SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder ext
   SetRemovalTimeToHistoricDecisionInstancesBuilder absoluteRemovalTime(Date removalTime);
 
   /**
-   * <p> Calculates the removal time dynamically based on the respective decision definition time to
+   * Calculates the removal time dynamically based on the respective decision definition time to
    * live and the engine's removal time strategy.
    *
-   * <p> In case {@link SetRemovalTimeToHistoricDecisionInstancesBuilder#hierarchical()} is enabled, the removal time is being calculated
+   * <p>
+   * In case {@link SetRemovalTimeToHistoricDecisionInstancesBuilder#hierarchical()} is enabled, the removal time is being calculated
    * based on the base time and time to live of the historic root decision instance.
+   * </p>
    *
    * @return the builder.
    */
   SetRemovalTimeToHistoricDecisionInstancesBuilder calculatedRemovalTime();
 
   /**
-   * <p> Sets the removal time to {@code null}.
+   * Sets the removal time to {@code null}.
    *
    * @return the builder.
    */

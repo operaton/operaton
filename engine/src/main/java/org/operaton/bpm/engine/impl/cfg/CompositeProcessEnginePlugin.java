@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cfg;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,6 +28,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * all plugins added to this composite will be triggered on preInit/postInit/postProcessEngineBuild.
  * <p>
  * Use to encapsulate common behavior (like engine configuration).
+ * </p>
  */
 public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
 
@@ -55,7 +55,7 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
   /**
    * New instance with initial plugins.
    *
-   * @param plugins the initial plugins. Must not be null.
+   * @param plugins the initial plugins. Must not be {@code null}.
    */
   public CompositeProcessEnginePlugin(final List<ProcessEnginePlugin> plugins) {
     this();
@@ -129,7 +129,7 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
     final List<ProcessEnginePlugin> plugins = new ArrayList<>();
     plugins.add(plugin);
     if (additionalPlugins != null && additionalPlugins.length > 0) {
-      plugins.addAll(Arrays.asList(additionalPlugins));
+      plugins.addAll(List.of(additionalPlugins));
     }
     return plugins;
   }

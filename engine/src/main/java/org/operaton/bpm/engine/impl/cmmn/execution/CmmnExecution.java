@@ -18,8 +18,11 @@ package org.operaton.bpm.engine.impl.cmmn.execution;
 
 import java.io.Serial;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -93,7 +96,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   protected abstract List<? extends CmmnExecution> getCaseExecutionsInternal();
 
   @Override
-  public CmmnExecution findCaseExecution(String activityId) {
+  public @Nullable CmmnExecution findCaseExecution(String activityId) {
     if ((getActivity()!=null) && (getActivity().getId().equals(activityId))) {
      return this;
    }
@@ -292,13 +295,10 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   public void fireIfOnlySentryParts() {
     // the following steps are a workaround, because setVariable()
     // does not check nor fire a sentry!!!
-    Set<String> affectedSentries = new HashSet<>();
-    List<CmmnSentryPart> sentryParts = collectSentryParts(getSentries());
-    for (CmmnSentryPart sentryPart : sentryParts) {
-      if (isNotSatisfiedIfPartOnly(sentryPart)) {
-        affectedSentries.add(sentryPart.getSentryId());
-      }
-    }
+    Set<String> affectedSentries = collectSentryParts(getSentries()).stream()
+        .filter(this::isNotSatisfiedIfPartOnly)
+        .map(CmmnSentryPart::getSentryId)
+        .collect(Collectors.toSet());
 
     // Step 7: check each not affected sentry whether it is satisfied
     List<String> satisfiedSentries = getSatisfiedSentries(new ArrayList<>(affectedSentries));
@@ -331,6 +331,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   }
 
+  @SuppressWarnings("removal")
   protected List<String> collectAffectedSentries(CmmnExecution child, String transition) {
     List<? extends CmmnSentryPart> sentryParts = getCaseSentryParts();
 

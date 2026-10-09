@@ -27,11 +27,12 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.impl.bpmn.diagram.ProcessDiagramLayoutFactory;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.interceptor.Command;
+import org.operaton.bpm.engine.repository.DiagramLayout;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Nikola Koevski
@@ -68,16 +69,10 @@ class ProcessDiagramParseTest {
     var processEngineConfigurationImpl = engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired();
 
-    try {
-
-      // when we run this in the ProcessEngine context
-      processEngineConfigurationImpl.execute(commandContext -> new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream));
-      fail("The test model contains a DOCTYPE declaration! The test should fail.");
-    } catch (Exception e) {
-      // then
-      assertThat(e.getMessage()).contains("Error while parsing BPMN model");
-      assertThat(e.getCause().getMessage()).contains("http://apache.org/xml/features/disallow-doctype-decl");
-    }
+    Command<DiagramLayout> diagramLayoutCommand = commandContext -> new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream);
+    assertThatThrownBy(() -> processEngineConfigurationImpl.execute(diagramLayoutCommand))
+            .hasMessageContaining("Error while parsing BPMN model")
+            .cause().hasMessageContaining("http://apache.org/xml/features/disallow-doctype-decl");
   }
 
   @Test
@@ -89,16 +84,10 @@ class ProcessDiagramParseTest {
     var processEngineConfigurationImpl = engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired();
 
-    try {
-
-      // when we run this in the ProcessEngine context
-      processEngineConfigurationImpl.execute(commandContext -> new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream));
-      fail("The test model contains a DOCTYPE declaration! The test should fail.");
-    } catch (Exception e) {
-      // then
-      assertThat(e.getMessage()).contains("Error while parsing BPMN model");
-      assertThat(e.getCause().getMessage()).contains("file.txt");
-    }
+    Command<DiagramLayout> diagramLayoutCommand = commandContext -> new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream);
+    assertThatThrownBy(() -> processEngineConfigurationImpl.execute(diagramLayoutCommand))
+            .hasMessageContaining("Error while parsing BPMN model")
+            .cause().hasMessageContaining("file.txt");
   }
 
   private InputStream getResourceInputStream(String path) {

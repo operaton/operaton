@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.TimerTask;
@@ -51,6 +50,7 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProcessEngineTestRule extends TestWatcher {
@@ -112,11 +112,11 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   public DeploymentWithDefinitions deploy(BpmnModelInstance... bpmnModelInstances) {
-    return deploy(createDeploymentBuilder(), Arrays.asList(bpmnModelInstances), Collections.<String> emptyList());
+    return deploy(createDeploymentBuilder(), List.of(bpmnModelInstances), emptyList());
   }
 
   public DeploymentWithDefinitions deploy(String... resources) {
-    return deploy(createDeploymentBuilder(), Collections.<BpmnModelInstance> emptyList(), Arrays.asList(resources));
+    return deploy(createDeploymentBuilder(), emptyList(), List.of(resources));
   }
 
   public <T extends DeploymentWithDefinitions> T deploy(DeploymentBuilder deploymentBuilder) {
@@ -132,11 +132,11 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   public Deployment deployForTenant(String tenantId, BpmnModelInstance... bpmnModelInstances) {
-    return deploy(createDeploymentBuilder().tenantId(tenantId), Arrays.asList(bpmnModelInstances), Collections.<String> emptyList());
+    return deploy(createDeploymentBuilder().tenantId(tenantId), List.of(bpmnModelInstances), emptyList());
   }
 
   public Deployment deployForTenant(String tenantId, String... resources) {
-    return deploy(createDeploymentBuilder().tenantId(tenantId), Collections.<BpmnModelInstance> emptyList(), Arrays.asList(resources));
+    return deploy(createDeploymentBuilder().tenantId(tenantId), emptyList(), List.of(resources));
   }
 
   public Deployment deployForTenant(String tenant, BpmnModelInstance bpmnModelInstance, String resource) {

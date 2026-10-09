@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
 
@@ -24,7 +26,7 @@ import org.operaton.bpm.engine.runtime.ExecutionQuery;
  *
  * @author Joram Barrez
  */
-final class ExecutionQueryProperty {
+final @NullMarked class ExecutionQueryProperty {
 
   public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
   public static final QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");

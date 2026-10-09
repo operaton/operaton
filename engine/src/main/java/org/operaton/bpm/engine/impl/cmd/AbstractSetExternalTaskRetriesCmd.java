@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ExternalTaskQueryImpl;
@@ -34,6 +35,7 @@ import org.operaton.commons.utils.CollectionUtil;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 
+@NullMarked
 public abstract class AbstractSetExternalTaskRetriesCmd<T> implements Command<T> {
 
   protected UpdateExternalTaskRetriesBuilderImpl builder;

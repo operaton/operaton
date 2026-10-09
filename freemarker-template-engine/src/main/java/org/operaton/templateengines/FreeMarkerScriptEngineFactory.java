@@ -16,8 +16,6 @@
  */
 package org.operaton.templateengines;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.script.ScriptEngine;
@@ -34,15 +32,9 @@ public class FreeMarkerScriptEngineFactory implements ScriptEngineFactory {
   public static final String NAME = "freemarker";
   public static final String VERSION = "2.3.29";
 
-  public static final List<String> names;
-  public static final List<String> extensions;
-  public static final List<String> mimeTypes;
-
-  static {
-    names = Collections.unmodifiableList(Arrays.asList(NAME, "Freemarker", "FreeMarker"));
-    extensions = Collections.unmodifiableList(Collections.singletonList("ftl"));
-    mimeTypes = Collections.emptyList();
-  }
+  public static final List<String> names = List.of(NAME, "Freemarker", "FreeMarker");
+  public static final List<String> extensions = List.of("ftl");
+  public static final List<String> mimeTypes = List.of();
 
   @Override
   public String getEngineName() {

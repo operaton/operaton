@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -42,7 +44,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
   protected String monitorJobDefinitionId;
   protected String batchJobDefinitionId;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String createUserId;
 
   protected Date startTime;
@@ -113,7 +115,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

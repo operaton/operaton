@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.variable.type.ValueType;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
 
 import static org.operaton.bpm.engine.variable.type.ValueType.*;
@@ -60,7 +62,7 @@ public class ValueTypeResolverImpl implements ValueTypeResolver {
   }
 
   @Override
-  public ValueType typeForName(String typeName) {
+  public @Nullable ValueType typeForName(String typeName) {
     return knownTypes.get(typeName);
   }
 

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
 import org.operaton.bpm.engine.impl.bpmn.parser.FailedJobRetryConfiguration;
@@ -191,7 +193,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
   /**
    * Returns the execution in which context the job is created. The execution
    * is used to determine the job's priority based on a BPMN activity
-   * the execution is currently executing. May be null.
+   * the execution is currently executing. May be {@code null}.
    */
   protected abstract ExecutionEntity resolveExecution(S context);
 
@@ -240,9 +242,14 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
   }
 
   @SuppressWarnings("unused")
-  public Date resolveDueDate(S context) {
-    ProcessEngineConfiguration processEngineConfiguration = Context.getProcessEngineConfiguration();
-    if (processEngineConfiguration != null && (processEngineConfiguration.isJobExecutorAcquireByDueDate() || processEngineConfiguration.isEnsureJobDueDateNotNull())) {
+  public @Nullable Date resolveDueDate(S context) {
+    boolean isJobExecutorAcquireByDueDate = Context.findProcessEngineConfiguration()
+        .map(ProcessEngineConfiguration::isJobExecutorAcquireByDueDate)
+        .orElse(false);
+    boolean isEnsureJobDueDateNotNull = Context.findProcessEngineConfiguration()
+        .map(ProcessEngineConfiguration::isEnsureJobDueDateNotNull)
+        .orElse(false);
+    if (isJobExecutorAcquireByDueDate || isEnsureJobDueDateNotNull) {
       return ClockUtil.getCurrentTime();
     }
     else {
@@ -258,7 +265,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
     this.exclusive = exclusive;
   }
 
-  public String getActivityId() {
+  public @Nullable String getActivityId() {
     if (activity != null) {
       return activity.getId();
     }
@@ -275,7 +282,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> {
     this.activity = activity;
   }
 
-  public ProcessDefinitionImpl getProcessDefinition() {
+  public @Nullable ProcessDefinitionImpl getProcessDefinition() {
     if (activity != null) {
       return activity.getProcessDefinition();
     }

@@ -1,5 +1,8 @@
 name: Database Migration Test
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     branches:
@@ -9,7 +12,7 @@ on:
       - '**/*.sql'
       - 'qa/test-db-rolling-update/**'
   schedule:
-    - cron: "30 2 * * *"     # Runs at 2:30 AM UTC daily
+    - cron: "15 1 * * 5"     # Runs at 1:15 AM UTC Friday
   workflow_dispatch:
 
 jobs:
@@ -23,13 +26,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Set up Docker
-        uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0.11.4.1.0
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
 
       - name: Run QA script
         run: |
-          ./mvnw clean install -DskipTests -PskipFrontendBuild
+          ./mvnw clean install -DskipTests -Dskip.frontend.build=true
           cd qa/test-database-container
           ./test.sh ${{ matrix.db }}

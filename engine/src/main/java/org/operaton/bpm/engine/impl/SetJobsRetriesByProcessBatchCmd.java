@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.batch.BatchElementConfiguration;
 import org.operaton.bpm.engine.impl.cmd.AbstractSetJobsRetriesBatchCmd;
@@ -31,17 +33,18 @@ import org.operaton.commons.utils.CollectionUtil;
 /**
  * @author Askar Akhmerov
  */
+@NullMarked
 public class SetJobsRetriesByProcessBatchCmd extends AbstractSetJobsRetriesBatchCmd {
 
   protected final List<String> processInstanceIds;
   protected final ProcessInstanceQuery query;
-  protected HistoricProcessInstanceQuery historicProcessInstanceQuery;
+  protected final @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
 
   public SetJobsRetriesByProcessBatchCmd(List<String> processInstanceIds,
                                          ProcessInstanceQuery query,
-                                         HistoricProcessInstanceQuery historicProcessInstanceQuery,
+                                         @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery,
                                          int retries,
-                                         Date dueDate,
+                                         @Nullable Date dueDate,
                                          boolean isDueDateSet) {
     this.processInstanceIds = processInstanceIds;
     this.query = query;

@@ -18,8 +18,10 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.impl.migration.instance.parser.MigratingInstanceParseContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -30,12 +32,15 @@ import org.operaton.bpm.engine.impl.pvm.delegate.MigrationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavior implements MigrationObserverBehavior {
+public @NullMarked class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavior implements MigrationObserverBehavior {
 
   @Override
   protected void createInstances(ActivityExecution execution, int nrOfInstances) {
@@ -44,6 +49,7 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
     // evaluate the collection to ensure the input of collectionExpression same as before
     // also reduces the loop count of collectionExpression
     Collection<?> collection = evaluateCollection(execution);
+    collection = collection != null ? collection : Collections.emptyList();
     // initialize the scope and create the desired number of child executions
     prepareScopeExecution(execution, nrOfInstances);
 
@@ -162,6 +168,8 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
   public void destroyInnerInstance(ActivityExecution concurrentExecution) {
 
     ActivityExecution scopeExecution = concurrentExecution.getParent();
+    EnsureUtil.ensureNotNull("Parent execution must be present", "scopeExecution", scopeExecution);
+    requireNonNull(scopeExecution);
     concurrentExecution.remove();
     scopeExecution.forceUpdate();
 

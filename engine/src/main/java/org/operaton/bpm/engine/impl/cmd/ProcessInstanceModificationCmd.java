@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ModificationBuilderImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.ProcessInstanceModificationBuilderImpl;
@@ -32,7 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void> {
+public @NullMarked class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void> {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
   protected boolean shouldWriteUserOperationLog;
@@ -44,7 +47,7 @@ public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void
    }
 
   @Override
-  public Void execute(final CommandContext commandContext) {
+  public @Nullable Void execute(final CommandContext commandContext) {
     List<AbstractProcessInstanceModificationCommand> instructions = builder.getInstructions();
     ensureNotEmpty(BadUserRequestException.class,
         "Modification instructions cannot be empty", instructions);
@@ -85,16 +88,16 @@ public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void
     return null;
   }
 
-  protected void ensureSameProcessDefinition(ExecutionEntity processInstance,
+  protected void ensureSameProcessDefinition(@Nullable ExecutionEntity processInstance,
                                              String processDefinitionId) {
-    if (!processDefinitionId.equals(processInstance.getProcessDefinitionId())) {
+    if (processInstance != null && !processDefinitionId.equals(processInstance.getProcessDefinitionId())) {
       throw LOG.processDefinitionOfInstanceDoesNotMatchModification(processInstance,
           processDefinitionId);
     }
   }
 
   protected void ensureProcessInstanceExist(String processInstanceId,
-                                            ExecutionEntity processInstance) {
+                                            @Nullable ExecutionEntity processInstance) {
     if (processInstance == null) {
       throw LOG.processInstanceDoesNotExist(processInstanceId);
     }
@@ -119,15 +122,16 @@ public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void
         operations.add(instruction);
       }
       else {
-
         if (activityInstanceTree == null) {
           activityInstanceTree = commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId));
         }
 
-        List<AbstractInstanceCancellationCmd> cmds = cmd.createActivityInstanceCancellations(activityInstanceTree,
-            commandContext);
+        if (activityInstanceTree != null) {
+          List<AbstractInstanceCancellationCmd> cmds = cmd.createActivityInstanceCancellations(activityInstanceTree,
+                  commandContext);
 
-        operations.addAll(cmds);
+          operations.addAll(cmds);
+        }
       }
 
     }

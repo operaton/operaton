@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
@@ -28,6 +30,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ProcessEngineLogger.UTIL_LOGGER;
 
 /**
@@ -45,15 +48,15 @@ public final class CallableElementUtil {
         .getDeploymentCache();
   }
 
-  public static ProcessDefinitionImpl getProcessDefinitionToCall(VariableScope execution,
-      String defaultTenantId, BaseCallableElement callableElement) {
-    String processDefinitionKey = callableElement.getDefinitionKey(execution);
+  public static @Nullable ProcessDefinitionImpl getProcessDefinitionToCall(VariableScope execution,
+      @Nullable String defaultTenantId, BaseCallableElement callableElement) {
+    String processDefinitionKey = requireNonNull(callableElement.getDefinitionKey(execution));
     String tenantId = callableElement.getDefinitionTenantId(execution, defaultTenantId);
 
     return getCalledProcessDefinition(execution, callableElement, processDefinitionKey, tenantId);
   }
 
-  public static ProcessDefinition getStaticallyBoundProcessDefinition(
+  public static @Nullable ProcessDefinition getStaticallyBoundProcessDefinition(
       String callingProcessDefinitionId,
       String activityId,
       BaseCallableElement callableElement,
@@ -75,11 +78,11 @@ public final class CallableElementUtil {
     }
   }
 
-  private static ProcessDefinitionEntity getCalledProcessDefinition(
+  private static @Nullable ProcessDefinitionEntity getCalledProcessDefinition(
     VariableScope execution,
     BaseCallableElement callableElement,
     String processDefinitionKey,
-    String tenantId) {
+    @Nullable String tenantId) {
 
     DeploymentCache deploymentCache = getDeploymentCache();
 
@@ -105,8 +108,8 @@ public final class CallableElementUtil {
     return processDefinition;
   }
 
-  public static CmmnCaseDefinition getCaseDefinitionToCall(VariableScope execution, String defaultTenantId, BaseCallableElement callableElement) {
-    String caseDefinitionKey = callableElement.getDefinitionKey(execution);
+  public static @Nullable CmmnCaseDefinition getCaseDefinitionToCall(VariableScope execution, @Nullable String defaultTenantId, BaseCallableElement callableElement) {
+    String caseDefinitionKey = requireNonNull(callableElement.getDefinitionKey(execution));
     String tenantId = callableElement.getDefinitionTenantId(execution, defaultTenantId);
 
     DeploymentCache deploymentCache = getDeploymentCache();
@@ -127,8 +130,8 @@ public final class CallableElementUtil {
     return caseDefinition;
   }
 
-  public static DecisionDefinition getDecisionDefinitionToCall(VariableScope execution, String defaultTenantId, BaseCallableElement callableElement) {
-    String decisionDefinitionKey = callableElement.getDefinitionKey(execution);
+  public static @Nullable DecisionDefinition getDecisionDefinitionToCall(VariableScope execution, String defaultTenantId, BaseCallableElement callableElement) {
+    String decisionDefinitionKey = requireNonNull(callableElement.getDefinitionKey(execution));
     String tenantId = callableElement.getDefinitionTenantId(execution, defaultTenantId);
 
     DeploymentCache deploymentCache = getDeploymentCache();

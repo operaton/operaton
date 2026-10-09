@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
-
 
 /**
  * Contains the possible properties which can be used in a {@link HistoricVariableInstanceQuery}.
  *
  * @author Christian Lipphardt (Camunda)
  */
-final class HistoricVariableInstanceQueryProperty {
+final @NullMarked class HistoricVariableInstanceQueryProperty {
 
   public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("PROC_INST_ID_");
   public static final QueryProperty VARIABLE_NAME = new QueryPropertyImpl("NAME_");

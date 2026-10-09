@@ -19,6 +19,7 @@ package org.operaton.bpm.dmn.engine;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -40,22 +41,22 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *
    * @param <T>
    *          the type of the result entry
-   * @return the value of the first result entry or null if none exists
+   * @return the value of the first result entry or {@code null} if none exists
    *
    * @see #getFirstEntryTyped()
    */
-  <T> T getFirstEntry();
+  <T> @Nullable T getFirstEntry();
 
   /**
    * Returns the typed value of the first result entry.
    *
    * @param <T>
    *          the type of the result entry
-   * @return the typed value of the first result entry or null if none exists
+   * @return the typed value of the first result entry or {@code null} if none exists
    *
    * @see #getFirstEntry()
    */
-  <T extends TypedValue> T getFirstEntryTyped();
+  <T extends TypedValue> @Nullable T getFirstEntryTyped();
 
   /**
    * Returns the value of the single entry of the decision result. Asserts that
@@ -63,14 +64,14 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *
    * @param <T>
    *          the type of the result entry
-   * @return the value of the single result entry or null if none exists
+   * @return the value of the single result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one result entry exists
    *
    * @see #getSingleEntryTyped()
    */
-  <T> T getSingleEntry();
+  <T> @Nullable T getSingleEntry();
 
   /**
    * Returns the typed value of the single entry of the decision result. Asserts
@@ -78,14 +79,14 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *
    * @param <T>
    *          the type of the result entry
-   * @return the typed value of the single result entry or null if none exists
+   * @return the typed value of the single result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one result entry exists
    *
    * @see #getSingleEntry()
    */
-  <T extends TypedValue> T getSingleEntryTyped();
+  <T extends TypedValue> @Nullable T getSingleEntryTyped();
 
   /**
    * Returns the value of the result entry for a given output name.
@@ -94,12 +95,12 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *          the name of the output
    * @param <T>
    *          the type of the result entry
-   * @return the value for the given name or null if no value exists for this
+   * @return the value for the given name or {@code null} if no value exists for this
    *         name
    *
    * @see #getEntryTyped(String)
    */
-  <T> T getEntry(String name);
+  <T> @Nullable T getEntry(String name);
 
   /**
    * Returns the typed value of the result entry for a given output name.
@@ -108,12 +109,12 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *          the name of the output
    * @param <T>
    *          the type of the result entry
-   * @return the typed value for the given name or null if no value exists for
+   * @return the typed value for the given name or {@code null} if no value exists for
    *         this name
    *
    * @see #getEntry(String)
    */
-  <T extends TypedValue> T getEntryTyped(String name);
+  <T extends TypedValue> @Nullable T getEntryTyped(String name);
 
   /**
    * Returns a map of the result entry values by output name.

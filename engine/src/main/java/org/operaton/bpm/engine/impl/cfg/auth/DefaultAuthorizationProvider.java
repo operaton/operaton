@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -68,7 +70,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureValidIndividual
  * @author Daniel Meyer
  *
  */
-public class DefaultAuthorizationProvider implements ResourceAuthorizationProvider {
+public @NullMarked class DefaultAuthorizationProvider implements ResourceAuthorizationProvider {
   private static final AuthorizationEntity[] NO_AUTHORIZATIONS = new AuthorizationEntity[0];
 
   @Override
@@ -187,7 +189,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   }
 
   @Override
-  public AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
+  public AuthorizationEntity[] newTaskAssignee(Task task, @Nullable String oldAssignee, @Nullable String newAssignee) {
     if (newAssignee != null) {
 
       ensureValidIndividualResourceId("Cannot create default authorization for assignee %s".formatted(newAssignee),
@@ -202,7 +204,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   }
 
   @Override
-  public AuthorizationEntity[] newTaskOwner(Task task, String oldOwner, String newOwner) {
+  public AuthorizationEntity[] newTaskOwner(Task task, @Nullable String oldOwner, @Nullable String newOwner) {
     if (newOwner != null) {
 
       ensureValidIndividualResourceId("Cannot create default authorization for owner %s".formatted(newOwner),
@@ -269,7 +271,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return createOrUpdateAuthorizations(task, groupId, null);
   }
 
-  protected AuthorizationEntity[] createOrUpdateAuthorizationsByUserId(Task task, String userId) {
+  protected AuthorizationEntity[] createOrUpdateAuthorizationsByUserId(Task task, @Nullable String userId) {
     return createOrUpdateAuthorizations(task, null, userId);
   }
 
@@ -286,8 +288,8 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
    *             UPDATE permission is provided
    *         ->  Add READ on HISTORIC_TASK
    */
-  protected AuthorizationEntity[] createOrUpdateAuthorizations(Task task, String groupId,
-                                                               String userId) {
+  protected AuthorizationEntity[] createOrUpdateAuthorizations(Task task, @Nullable String groupId,
+                                                               @Nullable String userId) {
 
     boolean enforceSpecificVariablePermission = isEnforceSpecificVariablePermission();
 
@@ -310,8 +312,8 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     }
   }
 
-  protected AuthorizationEntity createOrUpdateAuthorization(Task task, String userId,
-                                                            String groupId, Resource resource,
+  protected AuthorizationEntity createOrUpdateAuthorization(Task task, @Nullable String userId,
+                                                            @Nullable String groupId, Resource resource,
                                                             boolean isHistoric,
                                                             Permission... permissions) {
 
@@ -355,16 +357,9 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     }
   }
 
-  protected String getRootProcessInstanceId(Task task) {
+  protected @Nullable String getRootProcessInstanceId(Task task) {
     ExecutionEntity execution = (ExecutionEntity) ((DelegateTask) task).getExecution();
-
-    if (execution != null) {
-      return execution.getRootProcessInstanceId();
-
-    } else {
-      return null;
-
-    }
+    return execution != null ? execution.getRootProcessInstanceId() : null;
   }
 
   protected boolean isHistoryRemovalTimeStrategyStart() {
@@ -376,7 +371,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
         .getHistoryRemovalTimeStrategy();
   }
 
-  protected HistoryEvent findHistoricProcessInstance(String rootProcessInstanceId) {
+  protected @Nullable HistoryEvent findHistoricProcessInstance(String rootProcessInstanceId) {
     return Context.getCommandContext()
         .getDbEntityManager()
         .selectById(HistoricProcessInstanceEventEntity.class, rootProcessInstanceId);
@@ -416,8 +411,8 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return commandContext.getAuthorizationManager();
   }
 
-  protected AuthorizationEntity getGrantAuthorization(String taskId, String userId,
-                                                      String groupId, Resource resource) {
+  protected @Nullable AuthorizationEntity getGrantAuthorization(String taskId, @Nullable String userId,
+                                                      @Nullable String groupId, Resource resource) {
     if (groupId != null) {
       return getGrantAuthorizationByGroupId(groupId, resource, taskId);
 
@@ -427,19 +422,19 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     }
   }
 
-  protected AuthorizationEntity getGrantAuthorizationByUserId(String userId, Resource resource, String resourceId) {
+  protected AuthorizationEntity getGrantAuthorizationByUserId(@Nullable String userId, Resource resource, String resourceId) {
     AuthorizationManager authorizationManager = getAuthorizationManager();
     return authorizationManager.findAuthorizationByUserIdAndResourceId(AUTH_TYPE_GRANT, userId, resource, resourceId);
   }
 
-  protected AuthorizationEntity getGrantAuthorizationByGroupId(String groupId, Resource resource, String resourceId) {
+  protected AuthorizationEntity getGrantAuthorizationByGroupId(@Nullable String groupId, Resource resource, String resourceId) {
     AuthorizationManager authorizationManager = getAuthorizationManager();
     return authorizationManager.findAuthorizationByGroupIdAndResourceId(AUTH_TYPE_GRANT, groupId, resource, resourceId);
   }
 
-  protected AuthorizationEntity createAuthorization(String userId, String groupId,
+  protected AuthorizationEntity createAuthorization(@Nullable String userId, @Nullable String groupId,
                                                     Resource resource, String resourceId,
-                                                    Permission... permissions) {
+                                                    @Nullable Permission @Nullable... permissions) {
     AuthorizationEntity authorization =
         createGrantAuthorization(userId, groupId, resource, resourceId, permissions);
 
@@ -448,7 +443,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return authorization;
   }
 
-  protected void addPermissions(AuthorizationEntity authorization, Permission... permissions) {
+  protected void addPermissions(AuthorizationEntity authorization, @Nullable Permission @Nullable... permissions) {
     if (permissions != null) {
       for (Permission permission : permissions) {
         if (permission != null) {
@@ -458,9 +453,9 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     }
   }
 
-  protected AuthorizationEntity createGrantAuthorization(String userId, String groupId,
+  protected AuthorizationEntity createGrantAuthorization(@Nullable String userId, @Nullable String groupId,
                                                          Resource resource, String resourceId,
-                                                         Permission... permissions) {
+                                                         @Nullable Permission @Nullable... permissions) {
     // assuming that there are no default authorizations for *
     if (userId != null) {
       ensureValidIndividualResourceId("Cannot create authorization for user %s".formatted(userId), userId);
@@ -495,7 +490,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
    * Searches through the cache, if there is already an authorization with same rights. If that's the case
    * update the given authorization with the permissions and remove the old one from the cache.
    */
-  protected void updateAuthorizationBasedOnCacheEntries(AuthorizationEntity authorization, String userId, String groupId,
+  protected void updateAuthorizationBasedOnCacheEntries(AuthorizationEntity authorization, @Nullable String userId, @Nullable String groupId,
                                                         Resource resource, String resourceId) {
     DbEntityManager dbManager = Context.getCommandContext().getDbEntityManager();
     List<AuthorizationEntity> list = dbManager.getCachedEntitiesByType(AuthorizationEntity.class);
@@ -510,7 +505,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     }
   }
 
-  protected boolean hasEntitySameAuthorizationRights(AuthorizationEntity authEntity, String userId, String groupId,
+  protected boolean hasEntitySameAuthorizationRights(AuthorizationEntity authEntity, @Nullable String userId, @Nullable String groupId,
                                                      Resource resource, String resourceId) {
     boolean sameUserId = areIdsEqual(authEntity.getUserId(), userId);
     boolean sameGroupId = areIdsEqual(authEntity.getGroupId(), groupId);
@@ -522,7 +517,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
         sameAuthorizationType;
   }
 
-  protected boolean areIdsEqual(String firstId, String secondId) {
+  protected boolean areIdsEqual(@Nullable String firstId, @Nullable String secondId) {
     return Objects.equals(firstId, secondId);
   }
 }

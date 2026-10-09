@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -30,17 +33,17 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  * @author Daniel Meyer
  *
  */
-public class DeleteMetricsCmd implements Command<Void> {
-  protected Date timestamp;
-  protected String reporter;
+public @NullMarked class DeleteMetricsCmd implements Command<Void> {
+  protected @Nullable Date timestamp;
+  protected @Nullable String reporter;
 
-  public DeleteMetricsCmd(Date timestamp, String reporter) {
+  public DeleteMetricsCmd(@Nullable Date timestamp, @Nullable String reporter) {
     this.timestamp = timestamp;
     this.reporter = reporter;
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkDeleteMetrics);
 
     writeUserOperationLog(commandContext);

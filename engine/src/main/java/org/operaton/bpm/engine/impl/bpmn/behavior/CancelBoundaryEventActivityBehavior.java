@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 
@@ -25,10 +26,10 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  *
  * @author Daniel Meyer
  */
-public class CancelBoundaryEventActivityBehavior extends BoundaryEventActivityBehavior {
+public @NullMarked class CancelBoundaryEventActivityBehavior extends BoundaryEventActivityBehavior {
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
 
     if (LegacyBehavior.signalCancelBoundaryEvent(signalName)) {
       // join compensating executions
@@ -36,7 +37,7 @@ public class CancelBoundaryEventActivityBehavior extends BoundaryEventActivityBe
         leave(execution);
       }
       else {
-        ((ExecutionEntity)execution).forceUpdate();
+        execution.forceUpdate();
       }
     }
     else {

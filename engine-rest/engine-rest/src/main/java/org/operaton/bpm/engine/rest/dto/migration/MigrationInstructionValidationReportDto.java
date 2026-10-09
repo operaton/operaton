@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.migration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.migration.MigrationInstructionValidationReport;
@@ -47,11 +46,9 @@ public class MigrationInstructionValidationReportDto {
   }
 
   public static List<MigrationInstructionValidationReportDto> from(List<MigrationInstructionValidationReport> instructionReports) {
-    List<MigrationInstructionValidationReportDto> dtos = new ArrayList<>();
-    for (MigrationInstructionValidationReport instructionReport : instructionReports) {
-      dtos.add(MigrationInstructionValidationReportDto.from(instructionReport));
-    }
-    return dtos;
+    return instructionReports.stream()
+        .map(MigrationInstructionValidationReportDto::from)
+        .toList();
   }
 
   public static MigrationInstructionValidationReportDto from(MigrationInstructionValidationReport instructionReport) {

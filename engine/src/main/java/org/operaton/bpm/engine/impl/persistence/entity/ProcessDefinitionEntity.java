@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -42,6 +44,7 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
+@SuppressWarnings("unused")
 public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinition, ResourceDefinitionEntity<ProcessDefinitionEntity>, DbEntity, HasDbRevision {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -144,6 +147,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return processInstance;
   }
 
+  @SuppressWarnings("UnusedReturnValue")
   public IdentityLinkEntity addIdentityLink(String userId, String groupId) {
     IdentityLinkEntity identityLinkEntity = IdentityLinkEntity.newIdentityLink();
     getIdentityLinks().add(identityLinkEntity);
@@ -186,7 +190,6 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   /**
    * Updates all modifiable fields from another process definition entity.
-   * @param updatingProcessDefinition
    */
   @Override
   public void updateModifiableFieldsFromEntity(ProcessDefinitionEntity updatingProcessDefinition) {
@@ -373,7 +376,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public void setCategory(String category) {
+  public void setCategory(@Nullable String category) {
     this.category = category;
   }
 
@@ -440,19 +443,25 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return suspensionState == SuspensionState.SUSPENDED.getStateCode();
   }
 
-  public Set<Expression> getCandidateStarterUserIdExpressions() {
-    return candidateStarterUserIdExpressions;
+  public @NonNull Set<Expression> getCandidateStarterUserIdExpressions() {
+    return Objects.requireNonNullElse(candidateStarterUserIdExpressions, Collections.emptySet());
   }
 
   public void addCandidateStarterUserIdExpression(Expression userId) {
+    if (candidateStarterUserIdExpressions == null) {
+      candidateStarterUserIdExpressions = new HashSet<>();
+    }
     candidateStarterUserIdExpressions.add(userId);
   }
 
-  public Set<Expression> getCandidateStarterGroupIdExpressions() {
-    return candidateStarterGroupIdExpressions;
+  public @NonNull Set<Expression> getCandidateStarterGroupIdExpressions() {
+    return Objects.requireNonNullElse(candidateStarterGroupIdExpressions, Collections.emptySet());
   }
 
   public void addCandidateStarterGroupIdExpression(Expression groupId) {
+    if (candidateStarterGroupIdExpressions == null) {
+      candidateStarterGroupIdExpressions = new HashSet<>();
+    }
     candidateStarterGroupIdExpressions.add(groupId);
   }
 
@@ -462,7 +471,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   }
 
   @Override
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
@@ -471,7 +480,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return versionTag;
   }
 
-  public void setVersionTag(String versionTag) {
+  public void setVersionTag(@Nullable String versionTag) {
     this.versionTag = versionTag;
   }
 

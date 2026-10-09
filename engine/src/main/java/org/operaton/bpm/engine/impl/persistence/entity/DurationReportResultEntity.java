@@ -51,6 +51,7 @@ public class DurationReportResultEntity extends ReportResultEntity implements Du
     return average;
   }
 
+  @SuppressWarnings("unused")
   public void setAverage(long average) {
     this.average = average;
   }

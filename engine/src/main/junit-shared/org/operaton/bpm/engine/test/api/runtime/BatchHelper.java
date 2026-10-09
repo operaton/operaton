@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.operaton.bpm.engine.*;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.HistoricJobLog;
@@ -39,7 +41,7 @@ public class BatchHelper {
     this.processEngineProvider = processEngineProvider;
   }
 
-  public Job getJobForDefinition(JobDefinition jobDefinition) {
+  public @Nullable Job getJobForDefinition(@Nullable JobDefinition jobDefinition) {
     if (jobDefinition != null) {
       return getManagementService()
         .createJobQuery().jobDefinitionId(jobDefinition.getId()).singleResult();
@@ -75,7 +77,7 @@ public class BatchHelper {
       .singleResult();
   }
 
-  public Job getSeedJob(Batch batch) {
+  public @Nullable Job getSeedJob(Batch batch) {
     return getJobForDefinition(getSeedJobDefinition(batch));
   }
 
@@ -88,7 +90,7 @@ public class BatchHelper {
       .createJobDefinitionQuery().jobDefinitionId(batch.getMonitorJobDefinitionId()).jobType(BatchMonitorJobHandler.TYPE).singleResult();
   }
 
-  public Job getMonitorJob(Batch batch) {
+  public @Nullable Job getMonitorJob(Batch batch) {
     return getJobForDefinition(getMonitorJobDefinition(batch));
   }
 

@@ -17,6 +17,9 @@
 
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -25,6 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -33,20 +37,20 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @param <T> the type of the value to set by this command
  */
-public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void> {
+public abstract @NullMarked class AbstractSetTaskPropertyCmd<T> implements Command<Void> {
 
   protected final String taskId;
-  protected final T value;
+  protected final @Nullable T value;
 
   /**
    * Constructor of Commands that wish to set a property to a given task.
    *
    * @param taskId the id of the task whose property should be changed
    * @param value  the new value to set to the referenced task
-   * @throws NullValueException in case the given taskId or the given value are null
+   * @throws NullValueException in case the given taskId or the given value are {@code null}
    * @throws NotFoundException  in case the referenced task does not exist
    */
-  protected AbstractSetTaskPropertyCmd(String taskId, T value) {
+  protected AbstractSetTaskPropertyCmd(String taskId, @Nullable T value) {
     this(taskId, value, false);
   }
 
@@ -58,8 +62,9 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void> {
    * @param value                  the new value to set to the referenced task
    * @param skipValueValidation if true, the validation of the value will be excluded
    */
-  protected AbstractSetTaskPropertyCmd(String taskId, T value, boolean skipValueValidation) {
-    this.taskId = ensureNotNullAndGet("taskId", taskId);
+  protected AbstractSetTaskPropertyCmd(String taskId, @Nullable T value, boolean skipValueValidation) {
+    ensureNotNullAndGet("taskId", taskId);
+    this.taskId = taskId;
     this.value = skipValueValidation ? value : ensureNotNullAndGet("value", value);
   }
 
@@ -70,7 +75,7 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void> {
    * @throws NotFoundException in case the referenced task does not exist
    */
   @Override
-  public Void execute(CommandContext context) {
+  public @Nullable Void execute(CommandContext context) {
     TaskEntity task = validateAndGet(taskId, context);
 
     executeSetOperation(task, value);
@@ -98,6 +103,7 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void> {
     TaskEntity task = taskManager.findTaskById(taskId);
 
     ensureNotNull(NotFoundException.class, "Cannot find task with id %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkTaskAgainstContext(task, context);
 
@@ -121,25 +127,25 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void> {
    *
    * @return the user operation log name
    */
-  protected abstract String getUserOperationLogName();
+  protected abstract @Nullable String getUserOperationLogName();
 
   /**
    * Executes the set operation of the concrete command.
    *
    * @param task  the task entity on which to set a property
-   * @param value the value to se
+   * @param value the value to set
    */
-  protected abstract void executeSetOperation(TaskEntity task, T value);
+  protected abstract void executeSetOperation(TaskEntity task, @Nullable T value);
 
   /**
-   * Ensures the value is not null and returns the value.
+   * Ensures the value is not {@code null} and returns the value.
    *
    * @param value the value
    * @param <S>   the type of the value
    * @return the value
-   * @throws NullValueException in case the given value is null
+   * @throws NullValueException in case the given value is {@code null}
    */
-  protected <S> S ensureNotNullAndGet(String variableName, S value) {
+  protected <S> @Nullable S ensureNotNullAndGet(String variableName, @Nullable S value) {
     ensureNotNull(variableName, value);
     return value;
   }

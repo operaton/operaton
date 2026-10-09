@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.form.type;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -42,7 +44,7 @@ public class EnumFormType extends SimpleFormFieldType {
   }
 
   @Override
-  public Object getInformation(String key) {
+  public @Nullable Object getInformation(String key) {
     if ("values".equals(key)) {
       return values;
     }

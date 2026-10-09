@@ -41,5 +41,9 @@
       <directory>../modules/webapps/target/dependency/</directory>
       <outputDirectory>internal/webapps/</outputDirectory>
     </fileSet>
+    <fileSet>
+      <directory>../modules/webapps-neo/target/dependency/</directory>
+      <outputDirectory>internal/webapps-neo/</outputDirectory>
+    </fileSet>
   </fileSets>
 </assembly>

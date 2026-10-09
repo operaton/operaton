@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -34,21 +37,21 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNumberOfElement
  * @author Daniel Meyer
  * @author Joram Barrez
  */
-public class MessageEventReceivedCmd implements Command<Void> {
+public @NullMarked class MessageEventReceivedCmd implements Command<Void> {
   protected final String executionId;
-  protected final Map<String, Object> processVariables;
-  protected final Map<String, Object> processVariablesLocal;
-  protected final Map<String, Object> processVariablesToTriggeredScope;
-  protected final String messageName;
+  protected final @Nullable Map<String, Object> processVariables;
+  protected final @Nullable Map<String, Object> processVariablesLocal;
+  protected final @Nullable Map<String, Object> processVariablesToTriggeredScope;
+  protected final @Nullable String messageName;
   protected boolean exclusive;
 
-  public MessageEventReceivedCmd(String messageName, String executionId, Map<String, Object> processVariables) {
+  public MessageEventReceivedCmd(@Nullable String messageName, String executionId, @Nullable Map<String, Object> processVariables) {
     this(messageName, executionId, processVariables, null, null);
   }
 
-  public MessageEventReceivedCmd(String messageName, String executionId, Map<String, Object> processVariables,
-                                                                         Map<String, Object> processVariablesLocal,
-                                                                         Map<String, Object> processVariablesToTriggeredScope) {
+  public MessageEventReceivedCmd(@Nullable String messageName, String executionId, @Nullable Map<String, Object> processVariables,
+                                                                         @Nullable Map<String, Object> processVariablesLocal,
+                                                                         @Nullable Map<String, Object> processVariablesToTriggeredScope) {
     this.executionId = executionId;
     this.messageName = messageName;
     this.processVariables = processVariables;
@@ -56,16 +59,16 @@ public class MessageEventReceivedCmd implements Command<Void> {
     this.processVariablesToTriggeredScope = processVariablesToTriggeredScope;
   }
 
-  public MessageEventReceivedCmd(String messageName, String executionId, Map<String, Object> processVariables,
-                                                                         Map<String, Object> processVariablesLocal,
-                                                                         Map<String, Object> processVariablesToTriggeredScope,
+  public MessageEventReceivedCmd(@Nullable String messageName, String executionId, @Nullable Map<String, Object> processVariables,
+                                                                         @Nullable Map<String, Object> processVariablesLocal,
+                                                                         @Nullable Map<String, Object> processVariablesToTriggeredScope,
                                                                          boolean exclusive) {
     this(messageName, executionId, processVariables, processVariablesLocal, processVariablesToTriggeredScope);
     this.exclusive = exclusive;
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull("executionId", executionId);
 
     EventSubscriptionManager eventSubscriptionManager = commandContext.getEventSubscriptionManager();

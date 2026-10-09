@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.impl.AbstractAuthorizedRestResource;
 import org.operaton.bpm.engine.rest.sub.authorization.AuthorizationResource;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
@@ -63,7 +64,8 @@ public class AuthorizationResourceImpl extends AbstractAuthorizedRestResource im
   @Override
   public void deleteAuthorization() {
     Authorization dbAuthorization = getDbAuthorization();
-    authorizationService.deleteAuthorization(dbAuthorization.getId());
+    String dbAuthorizationId = requireNonNull(dbAuthorization.getId());
+    authorizationService.deleteAuthorization(dbAuthorizationId);
   }
 
   @Override

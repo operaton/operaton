@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.task;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -202,7 +202,32 @@ public class TaskDecorator {
    * Extract a candidate list from a string.
    */
   protected List<String> extractCandidates(String str) {
-    return Arrays.asList(str.split("[\\s]*,[\\s]*"));
+    String[] parts = str.split(",\\s*+", -1);
+    if (parts.length == 1) {
+      return List.of(parts);
+    }
+    List<String> result = new ArrayList<>(parts.length);
+    for (int i = 0; i < parts.length - 1; i++) {
+      result.add(stripTrailingSpace(parts[i]));
+    }
+    result.add(parts[parts.length - 1]);
+    while (!result.isEmpty() && result.get(result.size() - 1).isEmpty()) {
+      result.remove(result.size() - 1); // mirrors String#split dropping trailing empty elements
+    }
+    return result;
+  }
+
+  private static String stripTrailingSpace(String part) {
+    int end = part.length();
+    while (end > 0 && isSpace(part.charAt(end - 1))) {
+      end--;
+    }
+    return part.substring(0, end);
+  }
+
+  /** The regex {@code \s} class, which is narrower than {@link String#strip()}. */
+  private static boolean isSpace(char c) {
+    return c == ' ' || c == '\t' || c == '\n' || c == 0x0B || c == '\f' || c == '\r';
   }
 
   // getters ///////////////////////////////////////////////////////////////

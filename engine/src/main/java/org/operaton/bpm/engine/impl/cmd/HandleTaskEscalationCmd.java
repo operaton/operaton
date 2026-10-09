@@ -18,23 +18,27 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Command to handle a task escalation.
  */
-public class HandleTaskEscalationCmd implements Command<Void> {
+public @NullMarked class HandleTaskEscalationCmd implements Command<Void> {
   protected String taskId;
   protected String escalationCode;
-  protected Map<String, Object> variables;
+  protected @Nullable Map<String, Object> variables;
 
   public HandleTaskEscalationCmd(String taskId, String escalationCode) {
     this.taskId = taskId;
@@ -52,11 +56,12 @@ public class HandleTaskEscalationCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     validateInput();
 
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
     ensureNotNull(NotFoundException.class,"Cannot find task with id %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkTaskWork(task);

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-public class SetExternalTaskRetriesCmd extends ExternalTaskCmd {
+public @NullMarked class SetExternalTaskRetriesCmd extends ExternalTaskCmd {
 
   protected int retries;
   protected boolean shouldWriteUserOperationLog;
@@ -51,7 +53,7 @@ public class SetExternalTaskRetriesCmd extends ExternalTaskCmd {
   }
 
   @Override
-  protected String getUserOperationLogOperationType() {
+  protected @Nullable String getUserOperationLogOperationType() {
     if (shouldWriteUserOperationLog) {
       return UserOperationLogEntry.OPERATION_TYPE_SET_EXTERNAL_TASK_RETRIES;
     }

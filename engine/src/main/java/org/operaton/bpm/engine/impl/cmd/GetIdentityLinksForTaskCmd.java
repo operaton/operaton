@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -28,13 +29,14 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 import org.operaton.bpm.engine.task.IdentityLink;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Joram Barrez
  * @author Falko Menge
  */
-public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>> {
+public @NullMarked class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>> {
   protected String taskId;
 
   public GetIdentityLinksForTaskCmd(String taskId) {
@@ -48,6 +50,7 @@ public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>> {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
     ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkGetIdentityLink(task, commandContext);
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.mapping.IoParameter;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
@@ -27,7 +29,7 @@ import org.operaton.commons.utils.EnsureUtil;
  * @author Daniel Meyer
  *
  */
-public class ElValueProvider implements ParameterValueProvider, Comparable<ElValueProvider> {
+public @NullMarked class ElValueProvider implements ParameterValueProvider, Comparable<ElValueProvider> {
 
   protected Expression expression;
 
@@ -36,7 +38,7 @@ public class ElValueProvider implements ParameterValueProvider, Comparable<ElVal
   }
 
   @Override
-  public Object getValue(VariableScope variableScope) {
+  public @Nullable Object getValue(VariableScope variableScope) {
     EnsureUtil.ensureNotNull("variableScope", variableScope);
     return expression.getValue(variableScope);
   }

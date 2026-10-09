@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -23,6 +25,8 @@ import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
+
+import static java.util.Objects.requireNonNull;
 
 public class SetAnnotationForOperationLog implements Command<Void> {
 
@@ -35,11 +39,12 @@ public class SetAnnotationForOperationLog implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     EnsureUtil.ensureNotNull(NotValidException.class, "operation id", operationId);
 
     UserOperationLogEntry operationLogEntry = commandContext.getOperationLogManager().findOperationLogByOperationId(operationId);
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "operation", operationLogEntry);
+    requireNonNull(operationLogEntry);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateUserOperationLog(operationLogEntry);

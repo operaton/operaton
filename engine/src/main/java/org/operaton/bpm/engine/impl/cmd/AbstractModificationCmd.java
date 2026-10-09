@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.ModificationBuilderImpl;
@@ -32,6 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+@NullMarked
 public abstract class AbstractModificationCmd <T> implements Command<T> {
 
   protected ModificationBuilderImpl builder;
@@ -41,13 +44,7 @@ public abstract class AbstractModificationCmd <T> implements Command<T> {
   }
 
   protected Collection<String> collectProcessInstanceIds() {
-
-    Set<String> collectedProcessInstanceIds = new HashSet<>();
-
-    List<String> processInstanceIds = builder.getProcessInstanceIds();
-    if (processInstanceIds != null) {
-      collectedProcessInstanceIds.addAll(processInstanceIds);
-    }
+    Set<String> collectedProcessInstanceIds = new HashSet<>(builder.getProcessInstanceIds());
 
     final ProcessInstanceQueryImpl processInstanceQuery = (ProcessInstanceQueryImpl) builder.getProcessInstanceQuery();
     if (processInstanceQuery != null) {
@@ -67,7 +64,7 @@ public abstract class AbstractModificationCmd <T> implements Command<T> {
       ProcessDefinition processDefinition,
       int numInstances,
       boolean async,
-      String annotation) {
+      @Nullable String annotation) {
 
     List<PropertyChange> propertyChanges = new ArrayList<>();
     propertyChanges.add(new PropertyChange("nrOfInstances",
@@ -84,8 +81,7 @@ public abstract class AbstractModificationCmd <T> implements Command<T> {
           annotation);
   }
 
-  protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
-
+  protected @Nullable ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
     return commandContext
         .getProcessEngineConfiguration()
         .getDeploymentCache()

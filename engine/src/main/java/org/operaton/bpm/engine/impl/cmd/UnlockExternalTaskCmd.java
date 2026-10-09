@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-public class UnlockExternalTaskCmd extends ExternalTaskCmd {
+public @NullMarked class UnlockExternalTaskCmd extends ExternalTaskCmd {
 
   public UnlockExternalTaskCmd(String externalTaskId) {
     super(externalTaskId);

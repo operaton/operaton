@@ -18,6 +18,7 @@ package org.operaton.bpm.model.xml.testsupport;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Parameter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +50,7 @@ public class MappedParameterContext implements ParameterContext {
 
   @Override
   public <A extends Annotation> List<A> findRepeatableAnnotations(Class<A> annotationType) {
-    return null;
+    return Collections.emptyList();
   }
 
   @Override

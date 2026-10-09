@@ -16,16 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
+import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class TransitionInstantiationCmd extends AbstractInstantiationCmd {
+public @NullMarked class TransitionInstantiationCmd extends AbstractInstantiationCmd {
 
   protected String transitionId;
 
@@ -33,12 +38,12 @@ public class TransitionInstantiationCmd extends AbstractInstantiationCmd {
     this(null, transitionId);
   }
 
-  public TransitionInstantiationCmd(String processInstanceId, String transitionId) {
+  public TransitionInstantiationCmd(@Nullable String processInstanceId, String transitionId) {
     this(processInstanceId, transitionId, null);
   }
 
-  public TransitionInstantiationCmd(String processInstanceId, String transitionId,
-      String ancestorActivityInstanceId) {
+  public TransitionInstantiationCmd(@Nullable String processInstanceId, String transitionId,
+      @Nullable String ancestorActivityInstanceId) {
     super(processInstanceId, ancestorActivityInstanceId);
     this.transitionId = transitionId;
   }
@@ -46,11 +51,12 @@ public class TransitionInstantiationCmd extends AbstractInstantiationCmd {
   @Override
   protected ScopeImpl getTargetFlowScope(ProcessDefinitionImpl processDefinition) {
     TransitionImpl transition = processDefinition.findTransition(transitionId);
-    return transition.getSource().getFlowScope();
+    ActivityImpl source = requireNonNull(transition.getSource());
+    return source.getFlowScope();
   }
 
   @Override
-  protected CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition) {
+  protected @Nullable CoreModelElement getTargetElement(ProcessDefinitionImpl processDefinition) {
     return processDefinition.findTransition(transitionId);
   }
 

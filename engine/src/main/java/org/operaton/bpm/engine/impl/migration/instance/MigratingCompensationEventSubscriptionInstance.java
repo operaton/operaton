@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.migration.MigrationLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
@@ -28,16 +31,16 @@ import org.operaton.bpm.engine.migration.MigrationInstruction;
  * @author Thorben Lindhauer
  *
  */
-public class MigratingCompensationEventSubscriptionInstance extends MigratingProcessElementInstance implements RemovingInstance {
+public @NullMarked class MigratingCompensationEventSubscriptionInstance extends MigratingProcessElementInstance implements RemovingInstance {
 
   public static final MigrationLogger MIGRATION_LOGGER = ProcessEngineLogger.MIGRATION_LOGGER;
 
   protected EventSubscriptionEntity eventSubscription;
 
   public MigratingCompensationEventSubscriptionInstance(
-      MigrationInstruction migrationInstruction,
-      ScopeImpl sourceScope,
-      ScopeImpl targetScope,
+      @Nullable MigrationInstruction migrationInstruction,
+      @Nullable ScopeImpl sourceScope,
+      @Nullable ScopeImpl targetScope,
       EventSubscriptionEntity eventSubscription) {
     this.migrationInstruction = migrationInstruction;
     this.eventSubscription = eventSubscription;
@@ -80,7 +83,7 @@ public class MigratingCompensationEventSubscriptionInstance extends MigratingPro
   }
 
   @Override
-  public ExecutionEntity resolveRepresentativeExecution() {
+  public @Nullable ExecutionEntity resolveRepresentativeExecution() {
     return null;
   }
 

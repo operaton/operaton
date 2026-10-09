@@ -20,7 +20,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.authorization.MissingAuthorization;
+
+import org.jspecify.annotations.Nullable;
 
 /**
  * <p>Exception thrown by the process engine in case a user tries to
@@ -34,9 +37,9 @@ import org.operaton.bpm.engine.authorization.MissingAuthorization;
  *
  */
 @SuppressWarnings("java:S5738")
-public class AuthorizationException extends ProcessEngineException {
+public @NullMarked class AuthorizationException extends ProcessEngineException {
 
-  protected final String userId;
+  protected final @Nullable String userId;
   protected final transient List<MissingAuthorization> missingAuthorizations;
 
   // These properties have been replaced by the list of missingAuthorizations
@@ -47,23 +50,26 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected String resourceType;
+  protected final @Nullable String resourceType;
   /**
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected String permissionName;
+  protected final @Nullable String permissionName;
   /**
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(since = "1.0", forRemoval = true)
-  protected String resourceId;
+  protected final @Nullable String resourceId;
 
   public AuthorizationException(String message) {
     super(message);
     this.userId = null;
+    this.resourceType = null;
+    this.permissionName = null;
+    this.resourceId = null;
     missingAuthorizations = new ArrayList<>();
   }
 
@@ -87,6 +93,9 @@ public class AuthorizationException extends ProcessEngineException {
     super(generateExceptionMessage(userId, info));
     this.userId = userId;
     this.missingAuthorizations = info;
+    this.resourceType = null;
+    this.permissionName = null;
+    this.resourceId = null;
   }
 
   /**
@@ -96,7 +105,7 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public String getResourceType() {
+  public @Nullable String getResourceType() {
     String result = null;
     if (missingAuthorizations.size() == 1) {
       result = missingAuthorizations.get(0).getResourceType();
@@ -112,7 +121,7 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public String getViolatedPermissionName() {
+  public @Nullable String getViolatedPermissionName() {
     if (missingAuthorizations.size() == 1) {
       return missingAuthorizations.get(0).getViolatedPermissionName();
     }
@@ -123,7 +132,7 @@ public class AuthorizationException extends ProcessEngineException {
    * @return id of the user in which context the request was made and who misses authorizations
    *  to perform it successfully.
    */
-  public String getUserId() {
+  public @Nullable String getUserId() {
     return userId;
   }
 
@@ -134,7 +143,7 @@ public class AuthorizationException extends ProcessEngineException {
    * of the {@link MissingAuthorization}(s).
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public String getResourceId() {
+  public @Nullable String getResourceId() {
     if (missingAuthorizations.size() == 1) {
       return missingAuthorizations.get(0).getResourceId();
     }

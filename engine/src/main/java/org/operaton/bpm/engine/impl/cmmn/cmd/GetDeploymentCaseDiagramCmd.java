@@ -18,13 +18,19 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Gives access to a deployed case diagram, e.g., a PNG image, through a stream
@@ -35,19 +41,21 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 public class GetDeploymentCaseDiagramCmd implements Command<InputStream> {
   protected String caseDefinitionId;
 
-  public GetDeploymentCaseDiagramCmd(String caseDefinitionId) {
-    if (caseDefinitionId == null || caseDefinitionId.isEmpty()) {
+  public GetDeploymentCaseDiagramCmd(@NonNull String caseDefinitionId) {
+    if (caseDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The case definition id is mandatory, but '%s' has been provided.".formatted(caseDefinitionId));
     }
     this.caseDefinitionId = caseDefinitionId;
   }
 
   @Override
-  public InputStream execute(final CommandContext commandContext) {
+  public @Nullable InputStream execute(final CommandContext commandContext) {
     CaseDefinitionEntity caseDefinition = Context
         .getProcessEngineConfiguration()
         .getDeploymentCache()
         .findDeployedCaseDefinitionById(caseDefinitionId);
+    ensureNotNull("Case Definition '%s' not found".formatted(caseDefinitionId), "caseDefinition", caseDefinition);
+    requireNonNull(caseDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadCaseDefinition(caseDefinition);
@@ -59,7 +67,6 @@ public class GetDeploymentCaseDiagramCmd implements Command<InputStream> {
     InputStream caseDiagramStream = null;
 
     if (resourceName != null) {
-
       caseDiagramStream = commandContext.runWithoutAuthorization(new GetDeploymentResourceCmd(deploymentId, resourceName));
     }
 

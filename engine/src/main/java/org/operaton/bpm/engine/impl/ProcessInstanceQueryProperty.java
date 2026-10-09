@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-
 
 /**
  * Contains the possible properties that can be used in a {@link ProcessInstanceQuery}.
  *
  * @author Joram Barrez
  */
-final class ProcessInstanceQueryProperty {
+final @NullMarked class ProcessInstanceQueryProperty {
 
   public static final QueryProperty PROCESS_INSTANCE_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");

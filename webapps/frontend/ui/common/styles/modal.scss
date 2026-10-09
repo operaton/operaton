@@ -1,3 +1,6 @@
+@use "sass:color";
+@use "sass:math";
+
 .modal {
   cursor: auto;
 
@@ -36,12 +39,12 @@
 
 .modal-body {
   background-color: $white;
-  border: 1px solid darken($gray-lighter, 15%);
+  border: 1px solid color.adjust($gray-lighter, $lightness: -15%);
   border-width: 1px 0;
 
   > form {
     overflow: hidden;
-    padding: ($grid-gutter-width / 2);
+    padding: math.div($grid-gutter-width, 2);
 
     > fieldset {
       max-width: 100%;

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.engine;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.form.FormData;
@@ -45,7 +47,7 @@ public class JuelFormEngine implements FormEngine {
   }
 
   @Override
-  public Object renderStartForm(StartFormData startForm) {
+  public @Nullable Object renderStartForm(StartFormData startForm) {
     if (startForm.getFormKey()==null) {
       return null;
     }
@@ -53,9 +55,8 @@ public class JuelFormEngine implements FormEngine {
     return executeScript(formTemplateString, null);
   }
 
-
   @Override
-  public Object renderTaskForm(TaskFormData taskForm) {
+  public @Nullable Object renderTaskForm(TaskFormData taskForm) {
     if (taskForm.getFormKey()==null) {
       return null;
     }

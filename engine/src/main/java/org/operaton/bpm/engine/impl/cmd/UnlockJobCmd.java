@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -24,13 +27,15 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Unlock job.
  *
  * @author Thomas Skjolberg
  */
 
-public class UnlockJobCmd implements Command<Void> {
+public @NullMarked class UnlockJobCmd implements Command<Void> {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
@@ -40,12 +45,12 @@ public class UnlockJobCmd implements Command<Void> {
     this.jobId = jobId;
   }
 
-  protected JobEntity getJob() {
+  protected @Nullable JobEntity getJob() {
     return Context.getCommandContext().getJobManager().findJobById(jobId);
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     JobEntity job = getJob();
 
     if (Context.getJobExecutorContext() == null) {
@@ -60,6 +65,7 @@ public class UnlockJobCmd implements Command<Void> {
       return null;
     }
 
+    requireNonNull(job);
     job.unlock();
 
     return null;

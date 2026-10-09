@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.UUID;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineBootstrapCommand;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -35,14 +38,14 @@ import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 /**
  * @author Nikola Koevski
  */
-public class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
+public @NullMarked class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected static final String INSTALLATION_PROPERTY_NAME = "operaton.installation.id";
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
 
     initializeInstallationId(commandContext);
 
@@ -127,7 +130,7 @@ public class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
     commandContext.getProcessEngineConfiguration().setInstallationId(installationId);
   }
 
-  protected String databaseInstallationId(CommandContext commandContext) {
+  protected @Nullable String databaseInstallationId(CommandContext commandContext) {
     try {
       PropertyEntity installationIdProperty = commandContext.getPropertyManager().findPropertyById(INSTALLATION_PROPERTY_NAME);
       return installationIdProperty != null ? installationIdProperty.getValue() : null;

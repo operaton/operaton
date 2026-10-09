@@ -27,7 +27,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
@@ -36,21 +35,14 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.IncidentQuery;
 
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_JOB_DEFINITION_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TENANT_ID_LIST;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_JOB_DEFINITION_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 
 /**
  *
@@ -142,122 +134,122 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("incidentId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("incidentId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("incidentMessage", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentMessage();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("incidentMessage", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentMessage();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("incidentTimestamp", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentTimestamp();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("incidentTimestamp", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentTimestamp();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("incidentType", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentType();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("incidentType", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentType();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("executionId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByExecutionId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("executionId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByExecutionId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("activityId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByActivityId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("activityId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByActivityId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("processInstanceId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessInstanceId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("processInstanceId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessInstanceId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("processDefinitionId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("processDefinitionId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByProcessDefinitionId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("causeIncidentId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByCauseIncidentId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("causeIncidentId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByCauseIncidentId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("rootCauseIncidentId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByRootCauseIncidentId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("rootCauseIncidentId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByRootCauseIncidentId();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("configuration", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByConfiguration();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("configuration", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByConfiguration();
     inOrder.verify(mockedQuery).desc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("tenantId", "asc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentId();
     inOrder.verify(mockedQuery).asc();
 
-    inOrder = Mockito.inOrder(mockedQuery);
+    inOrder = inOrder(mockedQuery);
     executeAndVerifySorting("tenantId", "desc", Status.OK);
     inOrder.verify(mockedQuery).orderByIncidentId();
     inOrder.verify(mockedQuery).desc();

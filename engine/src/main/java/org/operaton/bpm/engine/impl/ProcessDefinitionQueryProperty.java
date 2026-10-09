@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
-
 
 /**
  * Contains the possible properties that can be used in a {@link ProcessDefinitionQuery}.
  *
  * @author Joram Barrez
  */
-final class ProcessDefinitionQueryProperty {
+final @NullMarked class ProcessDefinitionQueryProperty {
 
   public static final QueryProperty PROCESS_DEFINITION_KEY = new QueryPropertyImpl("KEY_");
   public static final QueryProperty PROCESS_DEFINITION_CATEGORY = new QueryPropertyImpl("CATEGORY_");

@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
@@ -47,7 +48,7 @@ import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.PRIORITY;
  * @author Christopher Zell
  *
  */
-public class FetchExternalTasksCmd implements Command<List<LockedExternalTask>> {
+public @NullMarked class FetchExternalTasksCmd implements Command<List<LockedExternalTask>> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 

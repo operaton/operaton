@@ -16,13 +16,16 @@
  */
 package org.operaton.bpm.model.cmmn.instance;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Collection;
 
 /**
  * @author Roman Smirnov
  *
  */
-public interface CmmnElement extends CmmnModelElementInstance {
+public @NullMarked interface CmmnElement extends CmmnModelElementInstance {
 
   String getId();
 
@@ -32,7 +35,7 @@ public interface CmmnElement extends CmmnModelElementInstance {
    * @deprecated since 1.0, use {@link #getDocumentations()} instead, which provides structured documentation.
    */
   @Deprecated(since = "1.0")
-  String getDescription();
+  @Nullable String getDescription();
 
   /**
    * @deprecated since 1.0, use {@link #getDocumentations()} instead, which provides structured documentation.
@@ -42,7 +45,7 @@ public interface CmmnElement extends CmmnModelElementInstance {
 
   Collection<Documentation> getDocumentations();
 
-  ExtensionElements getExtensionElements();
+  @Nullable ExtensionElements getExtensionElements();
 
   void setExtensionElements(ExtensionElements extensionElements);
 

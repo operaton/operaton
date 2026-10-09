@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test.taskassignment;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -35,7 +34,7 @@ public class FakeLdapService {
   }
 
   public List<String> findAllSales() {
-    return Arrays.asList("kermit", "gonzo", "fozzie");
+    return List.of("kermit", "gonzo", "fozzie");
   }
 
   public List<String> findManagers(DelegateExecution execution, String emp) {
@@ -47,7 +46,7 @@ public class FakeLdapService {
       throw new RuntimeException("emp parameter is null or empty");
     }
 
-    return Arrays.asList("management", "directors");
+    return List.of("management", "directors");
   }
 
 }

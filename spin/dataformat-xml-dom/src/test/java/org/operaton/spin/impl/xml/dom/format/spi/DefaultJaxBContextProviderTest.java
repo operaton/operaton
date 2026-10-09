@@ -52,7 +52,8 @@ class DefaultJaxBContextProviderTest {
 
         try (var mockStaticServiceLoader = mockStatic(ServiceLoader.class)) {
             var mockServiceLoader = mock(ServiceLoader.class);
-            when(mockServiceLoader.iterator()).thenReturn(mock(Iterator.class));
+            Iterator mockIterator = mock(Iterator.class);
+            when(mockServiceLoader.iterator()).thenReturn(mockIterator);
             mockStaticServiceLoader.when(() -> ServiceLoader.load(any())).thenReturn(mockServiceLoader);
             mockStaticServiceLoader.when(() -> ServiceLoader.load(Mockito.<Class>any(), any())).thenReturn(mockServiceLoader);
             // when + then

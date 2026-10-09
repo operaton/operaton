@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -95,12 +94,10 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
     ensureNotNull(NotValidException.class, "periodUnit", periodUnit);
     this.durationPeriodUnit = periodUnit;
 
-    CommandContext commandContext = Context.getCommandContext();
-
-    if (commandContext == null) {
+    if (!Context.hasActiveCommandContext()) {
       return commandExecutor.execute(new ExecuteDurationReportCmd());
     } else {
-      return executeDurationReport(commandContext);
+      return executeDurationReport(Context.getCommandContext());
     }
 
   }
@@ -140,7 +137,7 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
     List<String> processDefinitionKeys = new ArrayList<>();
 
     if (processDefinitionKeyIn != null) {
-      processDefinitionKeys.addAll(Arrays.asList(processDefinitionKeyIn));
+      processDefinitionKeys.addAll(List.of(processDefinitionKeyIn));
     }
 
     if (processDefinitionIdIn != null) {

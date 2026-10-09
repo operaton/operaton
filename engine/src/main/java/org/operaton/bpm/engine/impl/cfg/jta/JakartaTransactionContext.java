@@ -22,6 +22,7 @@ import jakarta.transaction.SystemException;
 import jakarta.transaction.Transaction;
 import jakarta.transaction.TransactionManager;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  *
  * @author Daniel Meyer
  */
-public class JakartaTransactionContext extends AbstractTransactionContext {
+public @NullMarked class JakartaTransactionContext extends AbstractTransactionContext {
 
   protected final TransactionManager transactionManager;
 
@@ -67,7 +68,7 @@ public class JakartaTransactionContext extends AbstractTransactionContext {
     return transactionManager.getStatus() != Status.STATUS_MARKED_ROLLBACK && transactionManager.getStatus() != Status.STATUS_NO_TRANSACTION;
   }
 
-  public static class JtaTransactionStateSynchronization extends TransactionStateSynchronization implements Synchronization {
+  public static @NullMarked class JtaTransactionStateSynchronization extends TransactionStateSynchronization implements Synchronization {
 
     public JtaTransactionStateSynchronization(TransactionState transactionState, TransactionListener transactionListener, CommandContext commandContext) {
       super(transactionState, transactionListener, commandContext);

@@ -16,16 +16,20 @@
  */
 package org.operaton.connect.plugin.impl;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.behavior.TaskActivityBehavior;
 import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.connect.ConnectorException;
 import org.operaton.connect.Connectors;
 import org.operaton.connect.spi.CloseableConnectorResponse;
 import org.operaton.connect.spi.Connector;
 import org.operaton.connect.spi.ConnectorRequest;
 import org.operaton.connect.spi.ConnectorResponse;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
@@ -40,10 +44,10 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
 
   /** cached connector instance for this activity.
    * Will be initialized after the first execution of this activity. */
-  protected Connector<?> connectorInstance;
+  protected @Nullable Connector<?> connectorInstance;
 
   /** the local ioMapping for this connector. */
-  protected IoMapping ioMapping;
+  protected @Nullable IoMapping ioMapping;
 
   public ServiceTaskConnectorActivityBehavior(String connectorId, IoMapping ioMapping) {
     this.connectorId = connectorId;
@@ -53,6 +57,8 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   @Override
   public void execute(final ActivityExecution execution) throws Exception {
     ensureConnectorInitialized();
+    EnsureUtil.ensureNotNull("Connector not initialized", "connectorInstance", connectorInstance);
+    requireNonNull(connectorInstance);
 
     executeWithErrorPropagation(execution, () -> {
       ConnectorRequest<?> request = connectorInstance.createRequest();

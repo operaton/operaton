@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -101,7 +102,7 @@ public class RestartProcessInstanceBuilderImpl implements RestartProcessInstance
   }
 
   @Override
-  public RestartProcessInstanceBuilder processInstanceIds(String... processInstanceIds) {
+  public RestartProcessInstanceBuilder processInstanceIds(@Nullable String... processInstanceIds) {
     this.processInstanceIds.addAll(Arrays.asList(processInstanceIds));
     return this;
   }

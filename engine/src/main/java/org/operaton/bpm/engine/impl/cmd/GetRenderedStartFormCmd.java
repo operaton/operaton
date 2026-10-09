@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -29,28 +32,30 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class GetRenderedStartFormCmd implements Command<Object> {
+public @NullMarked class GetRenderedStartFormCmd implements Command<Object> {
   protected String processDefinitionId;
-  protected String formEngineName;
+  protected @Nullable String formEngineName;
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  public GetRenderedStartFormCmd(String processDefinitionId, String formEngineName) {
+  public GetRenderedStartFormCmd(String processDefinitionId, @Nullable String formEngineName) {
     this.processDefinitionId = processDefinitionId;
     this.formEngineName = formEngineName;
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
     ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);

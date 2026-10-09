@@ -18,14 +18,16 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-public class GetUniqueTaskWorkerCountCmd implements Command<Long> {
-  protected Date startTime;
-  protected Date endTime;
+public @NullMarked class GetUniqueTaskWorkerCountCmd implements Command<Long> {
+  protected @Nullable Date startTime;
+  protected @Nullable Date endTime;
 
-  public GetUniqueTaskWorkerCountCmd(Date startTime, Date endTime) {
+  public GetUniqueTaskWorkerCountCmd(@Nullable Date startTime, @Nullable Date endTime) {
     this.startTime = startTime;
     this.endTime = endTime;
   }

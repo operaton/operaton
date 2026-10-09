@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 
 
@@ -26,7 +28,7 @@ import java.io.Serial;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class OptimisticLockingException extends ProcessEngineException {
+public @NullMarked class OptimisticLockingException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 

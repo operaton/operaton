@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.JsonObject;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -56,6 +57,7 @@ public class FilterEntity implements Filter, DbEntity, HasDbRevision, HasDbRefer
   protected String resourceType;
   protected String name;
   protected String owner;
+  @SuppressWarnings("rawtypes")
   protected AbstractQuery query;
   protected Map<String, Object> properties;
   protected int revision;
@@ -153,7 +155,7 @@ public class FilterEntity implements Filter, DbEntity, HasDbRevision, HasDbRefer
     return this;
   }
 
-  public void setPropertiesInternal(String properties) {
+  public void setPropertiesInternal(@Nullable String properties) {
     if (properties != null) {
       JsonObject json = JsonUtil.asObject(properties);
       this.properties = JsonUtil.asMap(json);
@@ -224,6 +226,7 @@ public class FilterEntity implements Filter, DbEntity, HasDbRevision, HasDbRefer
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public void postLoad() {
     if (query != null) {
       query.addValidator(StoredQueryValidator.get());

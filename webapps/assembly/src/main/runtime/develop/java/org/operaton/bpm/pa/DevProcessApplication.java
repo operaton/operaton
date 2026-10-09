@@ -17,7 +17,6 @@
 package org.operaton.bpm.pa;
 
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -424,7 +423,7 @@ public class DevProcessApplication extends ServletProcessApplication {
       Calendar calendar = Calendar.getInstance();
       calendar.add(Calendar.DAY_OF_MONTH, -14);
       ClockUtil.setCurrentTime(calendar.getTime());
-      processEngine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.OPERATON_ADMIN));
+      processEngine.getIdentityService().setAuthentication("demo", List.of(Groups.OPERATON_ADMIN));
       Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
       processEngine.getTaskService().claim(task.getId(), "demo");
       processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", true));

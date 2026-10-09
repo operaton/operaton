@@ -1,5 +1,8 @@
 /* stylelint-disable no-descending-specificity -- There are many non-trivial fixes in here */
 
+@use "sass:color";
+@use "sass:math";
+
 @mixin abs-box($top: 0, $right: 0, $bottom: 0, $left: 0) {
   position: absolute;
   top: $top;
@@ -139,7 +142,7 @@
 
   &.divider {
     width: 1px;
-    background-color: darken($gray-lighter, 10%);
+    background-color: color.adjust($gray-lighter, $lightness: -10%);
     display: block;
     height: $height;
     margin: 0;
@@ -270,8 +273,8 @@
   height: $header-computed-height;
   padding-top: 0;
   padding-bottom: 0;
-  padding-left: $header-computed-height / 4;
-  padding-right: $grid-gutter-width / 2;
+  padding-left: math.div($header-computed-height, 4);
+  padding-right: math.div($grid-gutter-width, 2);
   color: $black;
 
   // LESS "when" guards converted to a runtime conditional:
@@ -280,7 +283,7 @@
     font-size: if(
                     $header-brand-logo-font-size != null and $header-brand-logo-font-size != false,
                     $header-brand-logo-font-size,
-                            ($header-computed-height / 2)
+                            math.div($header-computed-height, 2)
     );
   }
 }

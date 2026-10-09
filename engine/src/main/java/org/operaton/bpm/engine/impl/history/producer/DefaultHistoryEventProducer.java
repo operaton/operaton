@@ -104,7 +104,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     }
     String activityInstanceId = execution.getActivityInstanceId();
 
-    String parentActivityInstanceId = null;
+    String parentActivityInstanceId;
     ExecutionEntity parentExecution = execution.getParent();
 
     if (parentExecution != null && CompensationBehavior.isCompensationThrowing(parentExecution) && execution.getActivity() != null) {
@@ -1416,15 +1416,11 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   }
 
   protected ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
+    if (!Context.hasActiveCommandContext()) {
+      return null;
+    }
     CommandContext commandContext = Context.getCommandContext();
-    if (commandContext == null) {
-      return null;
-    }
-
     DbEntityManager dbEntityManager = commandContext.getDbEntityManager();
-    if (dbEntityManager == null) {
-      return null;
-    }
 
     return dbEntityManager.selectById(ProcessDefinitionEntity.class, processDefinitionId);
   }

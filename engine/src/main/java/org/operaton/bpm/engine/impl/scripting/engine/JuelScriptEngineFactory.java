@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
+
+import org.jspecify.annotations.Nullable;
 
 /**
  * Factory to create {@link JuelScriptEngine}s.
@@ -31,15 +30,9 @@ import javax.script.ScriptEngineFactory;
  */
 public class JuelScriptEngineFactory implements ScriptEngineFactory {
 
-  private static final List<String> names;
-  private static final List<String> extensions;
-  private static final List<String> mimeTypes;
-
-  static {
-    names = Collections.unmodifiableList(Arrays.asList("juel"));
-    extensions = names;
-    mimeTypes = Collections.unmodifiableList(new ArrayList<String>(0));
-  }
+  private static final List<String> names = List.of("juel");
+  private static final List<String> extensions = names;
+  private static final List<String> mimeTypes = List.of();
 
   @Override
   public String getEngineName() {
@@ -107,7 +100,7 @@ public class JuelScriptEngineFactory implements ScriptEngineFactory {
   }
 
   @Override
-  public String getParameter(String key) {
+  public @Nullable String getParameter(String key) {
     if (ScriptEngine.NAME.equals(key)) {
       return getLanguageName();
     } else if (ScriptEngine.ENGINE.equals(key)) {

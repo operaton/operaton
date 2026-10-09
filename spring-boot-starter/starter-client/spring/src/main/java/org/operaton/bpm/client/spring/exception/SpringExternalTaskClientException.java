@@ -19,7 +19,6 @@ package org.operaton.bpm.client.spring.exception;
 import org.operaton.bpm.client.exception.ExternalTaskClientException;
 
 /**
- * <p>
  * Spring External Task Client Exception
  */
 public class SpringExternalTaskClientException extends ExternalTaskClientException {

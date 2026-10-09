@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.Iterator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -31,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  *
  * @author Joram Barrez
  */
-public class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
+public @NullMarked class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -85,7 +87,7 @@ public class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     }
   }
 
-  private boolean isOutgoingSequenceFlow(String defaultSequenceFlow, PvmTransition seqFlow, ActivityExecution execution) {
+  private boolean isOutgoingSequenceFlow(@Nullable String defaultSequenceFlow, PvmTransition seqFlow, ActivityExecution execution) {
     Condition condition = (Condition) seqFlow.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
     return (condition == null && (defaultSequenceFlow == null || !defaultSequenceFlow.equals(seqFlow.getId())) )
         || (condition != null && condition.evaluate(execution));

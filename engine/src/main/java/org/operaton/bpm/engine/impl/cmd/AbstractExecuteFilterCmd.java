@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -28,15 +30,15 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-public abstract class AbstractExecuteFilterCmd {
+public abstract @NullMarked class AbstractExecuteFilterCmd {
   protected String filterId;
-  protected Query<?, ?> extendingQuery;
+  protected @Nullable Query<?, ?> extendingQuery;
 
   protected AbstractExecuteFilterCmd(String filterId) {
     this.filterId = filterId;
   }
 
-  protected AbstractExecuteFilterCmd(String filterId, Query<?, ?> extendingQuery) {
+  protected AbstractExecuteFilterCmd(String filterId, @Nullable Query<?, ?> extendingQuery) {
     this.filterId = filterId;
     this.extendingQuery = extendingQuery;
   }

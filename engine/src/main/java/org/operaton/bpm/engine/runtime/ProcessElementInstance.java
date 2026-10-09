@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.runtime;
 
 /**
- * <p>A ProcessElementInstance is an instance of a process construct
+ * A ProcessElementInstance is an instance of a process construct
  * such as an Activity (see {@link ActivityInstance}) or a transition
  * (see {@link TransitionInstance}).
  *

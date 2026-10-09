@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.TaskAlreadyClaimedException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -24,27 +27,29 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Joram Barrez
  */
-public class ClaimTaskCmd implements Command<Void> {
+public @NullMarked class ClaimTaskCmd implements Command<Void> {
   protected String taskId;
-  protected String userId;
+  protected @Nullable String userId;
 
-  public ClaimTaskCmd(String taskId, String userId) {
+  public ClaimTaskCmd(String taskId, @Nullable String userId) {
     this.taskId = taskId;
     this.userId = userId;
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
     ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkClaimTask(task, commandContext);
 

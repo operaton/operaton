@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collections;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.IdentityService;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -26,19 +29,21 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+import org.operaton.bpm.engine.impl.interceptor.ProcessDataContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorLogger;
 import org.operaton.bpm.engine.impl.jobexecutor.JobFailureCollector;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class ExecuteJobsCmd implements Command<Void> {
+public @NullMarked class ExecuteJobsCmd implements Command<Void> {
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected String jobId;
@@ -51,7 +56,7 @@ public class ExecuteJobsCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull("jobId", jobId);
 
     final JobEntity job = commandContext.getDbEntityManager().selectById(JobEntity.class, jobId);
@@ -106,8 +111,8 @@ public class ExecuteJobsCmd implements Command<Void> {
       job.execute(commandContext);
 
     } catch (Exception t) {
-      String failedActivityId = Context.getCommandInvocationContext()
-          .getProcessDataContext()
+      ProcessDataContext processDataContext = requireNonNull(Context.getCommandInvocationContext()).getProcessDataContext();
+      String failedActivityId = processDataContext
           .getLatestActivityId();
 
       jobFailureCollector.setFailedActivityId(failedActivityId);

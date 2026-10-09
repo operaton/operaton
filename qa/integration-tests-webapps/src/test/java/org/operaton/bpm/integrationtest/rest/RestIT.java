@@ -22,24 +22,25 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import kong.unirest.json.JSONArray;
-import kong.unirest.json.JSONObject;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.json.JSONArray;
+import kong.unirest.core.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.operaton.bpm.integrationtest.AbstractWebIntegrationTest;
 import org.operaton.bpm.engine.rest.hal.Hal;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
+import org.operaton.bpm.integrationtest.AbstractWebIntegrationTest;
 
 import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class RestIT extends AbstractWebIntegrationTest {
 
@@ -198,11 +199,8 @@ class RestIT extends AbstractWebIntegrationTest {
     JSONObject logElement = response.getBody().getArray().getJSONObject(0);
 
     String timestamp = logElement.getString("timestamp");
-    try {
-      new SimpleDateFormat(JacksonConfigurator.DEFAULT_DATE_FORMAT).parse(timestamp);
-    } catch (ParseException pex) {
-      fail("Couldn't parse timestamp from schema log: " + timestamp);
-    }
+    SimpleDateFormat dateFormat = new SimpleDateFormat(JacksonConfigurator.DEFAULT_DATE_FORMAT);
+    assertDoesNotThrow(() -> dateFormat.parse(timestamp), "Couldn't parse timestamp from schema log: " + timestamp);
   }
 
   /**

@@ -23,7 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.InvocationContext;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -63,7 +66,7 @@ import static java.util.Collections.emptyList;
  * @author Agim Emruli
  * @author Daniel Meyer
  */
-public class CommandContext {
+public @NullMarked class CommandContext {
 
   private static final ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
@@ -79,11 +82,11 @@ public class CommandContext {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected FailedJobCommandFactory failedJobCommandFactory;
 
-  protected JobEntity currentJob;
+  protected @Nullable JobEntity currentJob;
 
   protected List<CommandContextListener> commandContextListeners = new LinkedList<>();
 
-  protected String operationId;
+  protected @Nullable String operationId;
 
   public CommandContext(ProcessEngineConfigurationImpl processEngineConfiguration) {
     this(processEngineConfiguration, processEngineConfiguration.getTransactionContextFactory());
@@ -122,11 +125,11 @@ public class CommandContext {
     return processEngineConfiguration;
   }
 
-  protected ProcessApplicationReference getTargetProcessApplication(CaseExecutionEntity execution) {
+  protected @Nullable ProcessApplicationReference getTargetProcessApplication(CaseExecutionEntity execution) {
     return ProcessApplicationContextUtil.getTargetProcessApplication(execution);
   }
 
-  protected boolean requiresContextSwitch(ProcessApplicationReference processApplicationReference) {
+  protected boolean requiresContextSwitch(@Nullable ProcessApplicationReference processApplicationReference) {
     return ProcessApplicationContextUtil.requiresContextSwitch(processApplicationReference);
   }
 
@@ -497,12 +500,12 @@ public class CommandContext {
     return identityService.getCurrentAuthentication();
   }
 
-  public <T> T runWithoutAuthorization(Callable<T> runnable) {
+  public <T> @Nullable T runWithoutAuthorization(Callable<T> runnable) {
     CommandContext commandContext = Context.getCommandContext();
     return runWithoutAuthorization(runnable, commandContext);
   }
 
-  public <T> T runWithoutAuthorization(Command<T> command) {
+  public <T> @Nullable T runWithoutAuthorization(Command<T> command) {
     CommandContext commandContext = Context.getCommandContext();
     return runWithoutAuthorization(() -> command.execute(commandContext), commandContext);
   }
@@ -523,7 +526,7 @@ public class CommandContext {
     }
   }
 
-  public String getAuthenticatedUserId() {
+  public @Nullable String getAuthenticatedUserId() {
     IdentityService identityService = processEngineConfiguration.getIdentityService();
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
     if(currentAuthentication == null) {
@@ -591,7 +594,7 @@ public class CommandContext {
     return tenantCheckEnabled;
   }
 
-  public JobEntity getCurrentJob() {
+  public @Nullable JobEntity getCurrentJob() {
     return currentJob;
   }
 
@@ -607,7 +610,7 @@ public class CommandContext {
     this.restrictUserOperationLogToAuthenticatedUsers = restrictUserOperationLogToAuthenticatedUsers;
   }
 
-  public String getOperationId() {
+  public @Nullable String getOperationId() {
     if (!getOperationLogManager().isUserOperationLogEnabled()) {
       return null;
     }

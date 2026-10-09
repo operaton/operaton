@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -23,7 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Sebastian Menski
  */
-public class DeleteFilterCmd implements Command<Void> {
+public @NullMarked class DeleteFilterCmd implements Command<Void> {
   protected String filterId;
 
   public DeleteFilterCmd(String filterId) {
@@ -31,7 +34,7 @@ public class DeleteFilterCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     commandContext.getOperationLogManager().logFilterOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE, filterId);
 
     commandContext

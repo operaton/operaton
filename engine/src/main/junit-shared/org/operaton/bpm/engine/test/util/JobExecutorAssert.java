@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
  * <p>
  * Defaults are aligned with {@link JobExecutorWaitUtils} so existing behaviour
  * can be used in a more expressive way.
+ * </p>
  */
 public final class JobExecutorAssert {
 

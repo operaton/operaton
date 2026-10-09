@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -29,7 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class SetExecutionVariablesCmd extends AbstractSetVariableCmd {
+public @NullMarked class SetExecutionVariablesCmd extends AbstractSetVariableCmd {
   protected boolean failIfNotExists = true;
 
   public SetExecutionVariablesCmd(String executionId,
@@ -53,10 +55,10 @@ public class SetExecutionVariablesCmd extends AbstractSetVariableCmd {
   }
 
   @Override
-  protected ExecutionEntity getEntity() {
+  protected @Nullable ExecutionEntity getEntity() {
     ensureNotNull("executionId", entityId);
 
-    ExecutionEntity execution = commandContext
+    ExecutionEntity execution = getCommandContext()
       .getExecutionManager()
       .findExecutionById(entityId);
 
@@ -72,19 +74,19 @@ public class SetExecutionVariablesCmd extends AbstractSetVariableCmd {
   }
 
   @Override
-  protected ExecutionEntity getContextExecution() {
+  protected @Nullable ExecutionEntity getContextExecution() {
     return getEntity();
   }
 
   @Override
   protected void logVariableOperation(AbstractVariableScope scope) {
     ExecutionEntity execution = (ExecutionEntity) scope;
-    commandContext.getOperationLogManager().logVariableOperation(getLogEntryOperation(), execution.getId(),
+    getCommandContext().getOperationLogManager().logVariableOperation(getLogEntryOperation(), execution.getId(),
         null, PropertyChange.EMPTY_CHANGE);
   }
 
   protected void checkSetExecutionVariables(ExecutionEntity execution) {
-    for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+    for(CommandChecker checker : getCommandContext().getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstanceVariables(execution);
     }
   }

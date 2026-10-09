@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest.sub.task.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -30,13 +29,7 @@ import jakarta.ws.rs.core.Variant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -314,14 +307,10 @@ public class TaskResourceImpl implements TaskResource {
     TaskService taskService = engine.getTaskService();
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(taskId);
 
-    List<IdentityLinkDto> result = new ArrayList<>();
-    for (IdentityLink link : identityLinks) {
-      if (type == null || type.equals(link.getType())) {
-        result.add(IdentityLinkDto.fromIdentityLink(link));
-      }
-    }
-
-    return result;
+    return identityLinks.stream()
+        .filter(link -> type == null || type.equals(link.getType()))
+        .map(IdentityLinkDto::fromIdentityLink)
+        .toList();
   }
 
   @Override

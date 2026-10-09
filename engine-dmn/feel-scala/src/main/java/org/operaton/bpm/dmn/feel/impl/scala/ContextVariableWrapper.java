@@ -18,15 +18,15 @@ package org.operaton.bpm.dmn.feel.impl.scala;
 
 import java.util.Set;
 
-import camundajar.impl.scala.Option;
-import camundajar.impl.scala.Some;
-import camundajar.impl.scala.collection.Iterable;
+import scala.Option;
+import scala.Some;
+import scala.collection.Iterable;
 import org.camunda.feel.context.VariableProvider;
 
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import static camundajar.impl.scala.jdk.CollectionConverters.SetHasAsScala;
+import static scala.jdk.CollectionConverters.SetHasAsScala;
 
 public class ContextVariableWrapper implements VariableProvider {
 
@@ -43,7 +43,7 @@ public class ContextVariableWrapper implements VariableProvider {
       Object value = typedValue.getValue();
       return new Some<>(value);
     } else {
-      return camundajar.impl.scala.None$.MODULE$;
+      return scala.None$.MODULE$;
     }
   }
 

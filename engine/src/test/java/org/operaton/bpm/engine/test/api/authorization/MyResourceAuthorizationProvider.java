@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
@@ -116,42 +118,42 @@ public class MyResourceAuthorizationProvider implements ResourceAuthorizationPro
   }
 
   @Override
-  public AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
+  public AuthorizationEntity @Nullable[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
     MyResourceAuthorizationProvider.oldAssignee = oldAssignee;
     MyResourceAuthorizationProvider.newAssignee = newAssignee;
     return null;
   }
 
   @Override
-  public AuthorizationEntity[] newTaskOwner(Task task, String oldOwner, String newOwner) {
+  public AuthorizationEntity @Nullable[] newTaskOwner(Task task, String oldOwner, String newOwner) {
     MyResourceAuthorizationProvider.oldOwner = oldOwner;
     MyResourceAuthorizationProvider.newOwner = newOwner;
     return null;
   }
 
   @Override
-  public AuthorizationEntity[] newTaskUserIdentityLink(Task task, String userId, String type) {
+  public AuthorizationEntity @Nullable[] newTaskUserIdentityLink(Task task, String userId, String type) {
     addUserIdentityLinkType = type;
     addUserIdentityLinkUser = userId;
     return null;
   }
 
   @Override
-  public AuthorizationEntity[] newTaskGroupIdentityLink(Task task, String groupId, String type) {
+  public AuthorizationEntity @Nullable[] newTaskGroupIdentityLink(Task task, String groupId, String type) {
     addGroupIdentityLinkType = type;
     addGroupIdentityLinkGroup = groupId;
     return null;
   }
 
   @Override
-  public AuthorizationEntity[] deleteTaskUserIdentityLink(Task task, String userId, String type) {
+  public AuthorizationEntity @Nullable[] deleteTaskUserIdentityLink(Task task, String userId, String type) {
     deleteUserIdentityLinkType = type;
     deleteUserIdentityLinkUser = userId;
     return null;
   }
 
   @Override
-  public AuthorizationEntity[] deleteTaskGroupIdentityLink(Task task, String groupId, String type) {
+  public AuthorizationEntity @Nullable[] deleteTaskGroupIdentityLink(Task task, String groupId, String type) {
     deleteGroupIdentityLinkType = type;
     deleteGroupIdentityLinkGroup = groupId;
     return null;

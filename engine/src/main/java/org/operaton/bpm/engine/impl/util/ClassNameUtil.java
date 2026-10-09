@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class ClassNameUtil {
 
-  protected static final Map<Class<?>, String> cachedNames = new ConcurrentHashMap<>();
+  private static final Map<Class<?>, String> cachedNames = new ConcurrentHashMap<>();
 
   private ClassNameUtil() {
     // utility class

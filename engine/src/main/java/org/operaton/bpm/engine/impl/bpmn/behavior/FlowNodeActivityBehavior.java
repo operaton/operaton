@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
@@ -33,7 +35,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  *
  * @author Joram Barrez
  */
-public abstract class FlowNodeActivityBehavior implements SignallableActivityBehavior {
+public abstract @NullMarked class FlowNodeActivityBehavior implements SignallableActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -64,7 +66,7 @@ public abstract class FlowNodeActivityBehavior implements SignallableActivityBeh
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     // concrete activity behaviors that do accept signals should override this method;
 
     throw LOG.unsupportedSignalException(execution.getActivity().getId());

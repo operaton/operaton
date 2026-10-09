@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Collections;
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -32,13 +35,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 /**
  * @author Kristin Polenz
  */
-public class SetJobDuedateCmd implements Command<Void> {
+public @NullMarked class SetJobDuedateCmd implements Command<Void> {
   private final String jobId;
-  private final Date newDuedate;
+  private final @Nullable Date newDuedate;
   private final boolean cascade;
 
-  public SetJobDuedateCmd(String jobId, Date newDuedate, boolean cascade) {
-    if (jobId == null || jobId.isEmpty()) {
+  public SetJobDuedateCmd(String jobId, @Nullable Date newDuedate, boolean cascade) {
+    if (jobId.isEmpty()) {
       throw new ProcessEngineException("The job id is mandatory, but '%s' has been provided.".formatted(jobId));
     }
     this.jobId = jobId;
@@ -47,7 +50,7 @@ public class SetJobDuedateCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     JobEntity job = commandContext
             .getJobManager()
             .findJobById(jobId);

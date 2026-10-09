@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,6 +27,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import org.operaton.bpm.engine.AuthorizationException;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Groups;
@@ -147,7 +149,7 @@ public class AuthorizationManager extends AbstractManager {
     return new PermissionCheckBuilder();
   }
 
-  public Authorization createNewAuthorization(int type) {
+  public @NonNull Authorization createNewAuthorization(int type) {
     checkAuthorization(CREATE, AUTHORIZATION, null);
     return new AuthorizationEntity(type);
   }
@@ -176,7 +178,7 @@ public class AuthorizationManager extends AbstractManager {
     return findAuthorization(type, null, groupId, resource, resourceId);
   }
 
-  public AuthorizationEntity findAuthorization(int type, String userId, String groupId, Resource resource, String resourceId) {
+  public AuthorizationEntity findAuthorization(int type, String userId, String groupId, @Nullable Resource resource, String resourceId) {
     Map<String, Object> params = new HashMap<>();
 
     params.put(TYPE, type);
@@ -214,14 +216,12 @@ public class AuthorizationManager extends AbstractManager {
       boolean isAuthorized = isAuthorized(compositePermissionCheck);
       if (!isAuthorized) {
 
-        List<MissingAuthorization> missingAuthorizations = new ArrayList<>();
-
-        for (PermissionCheck check: compositePermissionCheck.getAllPermissionChecks()) {
-          missingAuthorizations.add(new MissingAuthorization(
-              check.getPermission().getName(),
-              check.getResource().resourceName(),
-              check.getResourceId()));
-        }
+        List<MissingAuthorization> missingAuthorizations = compositePermissionCheck.getAllPermissionChecks().stream()
+            .map(check -> new MissingAuthorization(
+                check.getPermission().getName(),
+                check.getResource().resourceName(),
+                check.getResourceId()))
+            .toList();
 
         throw new AuthorizationException(userId, missingAuthorizations);
       }
@@ -321,7 +321,7 @@ public class AuthorizationManager extends AbstractManager {
 
   protected CompositePermissionCheck createCompositePermissionCheck(PermissionCheck permissionCheck) {
     CompositePermissionCheck compositePermissionCheck = new CompositePermissionCheck();
-    compositePermissionCheck.setAtomicChecks(Arrays.asList(permissionCheck));
+    compositePermissionCheck.setAtomicChecks(List.of(permissionCheck));
     return compositePermissionCheck;
   }
 
@@ -349,6 +349,7 @@ public class AuthorizationManager extends AbstractManager {
     }
   }
 
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   protected boolean isResourceValidForPermission(PermissionCheck permissionCheck) {
     Resource[] permissionResources = permissionCheck.getPermission().getTypes();
     Resource givenResource = permissionCheck.getResource();
@@ -447,22 +448,14 @@ public class AuthorizationManager extends AbstractManager {
   // delete authorizations //////////////////////////////////////////////////
 
   public void deleteAuthorizationsByResourceIds(Resources resource,
-                                                List<String> resourceIds) {
-
-    if(resourceIds == null) {
-      throw new IllegalArgumentException("Resource ids cannot be null");
-    }
+      @NonNull List<String> resourceIds) {
 
     resourceIds.forEach(resourceId ->
         deleteAuthorizationsByResourceId(resource, resourceId));
 
   }
 
-  public void deleteAuthorizationsByResourceId(Resource resource, String resourceId) {
-
-    if(resourceId == null) {
-      throw new IllegalArgumentException("Resource id cannot be null");
-    }
+  public void deleteAuthorizationsByResourceId(Resource resource, @NonNull String resourceId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -473,11 +466,7 @@ public class AuthorizationManager extends AbstractManager {
 
   }
 
-  public void deleteAuthorizationsByResourceIdAndUserId(Resource resource, String resourceId, String userId) {
-
-    if(resourceId == null) {
-      throw new IllegalArgumentException("Resource id cannot be null");
-    }
+  public void deleteAuthorizationsByResourceIdAndUserId(Resource resource, @NonNull String resourceId, String userId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -489,11 +478,7 @@ public class AuthorizationManager extends AbstractManager {
 
   }
 
-  public void deleteAuthorizationsByResourceIdAndGroupId(Resource resource, String resourceId, String groupId) {
-
-    if(resourceId == null) {
-      throw new IllegalArgumentException("Resource id cannot be null");
-    }
+  public void deleteAuthorizationsByResourceIdAndGroupId(Resource resource, @NonNull String resourceId, String groupId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -514,7 +499,7 @@ public class AuthorizationManager extends AbstractManager {
    * {@link Groups#OPERATON_ADMIN}. The check is ignored if the authorization is
    * disabled or no authentication exists.
    *
-   * @throws AuthorizationException
+   * @throws AuthorizationException if the current authentication does not contain the group {@link Groups#OPERATON_ADMIN}
    */
   public void checkOperatonAdmin() {
     final Authentication currentAuthentication = getCurrentAuthentication();
@@ -560,11 +545,11 @@ public class AuthorizationManager extends AbstractManager {
    * @return <code>true</code> if the given authentication contains the group
    *         {@link Groups#OPERATON_ADMIN} or the user
    */
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean isOperatonAdmin(Authentication authentication) {
     List<String> groupIds = authentication.getGroupIds();
     if (groupIds != null) {
-      CommandContext commandContext = Context.getCommandContext();
-      List<String> adminGroups = commandContext.getProcessEngineConfiguration().getAdminGroups();
+      List<String> adminGroups = Context.getProcessEngineConfiguration().getAdminGroups();
       for (String adminGroup : adminGroups) {
         if (groupIds.contains(adminGroup)) {
           return true;
@@ -574,8 +559,7 @@ public class AuthorizationManager extends AbstractManager {
 
     String userId = authentication.getUserId();
     if (userId != null) {
-      CommandContext commandContext = Context.getCommandContext();
-      List<String> adminUsers = commandContext.getProcessEngineConfiguration().getAdminUsers();
+      List<String> adminUsers = Context.getProcessEngineConfiguration().getAdminUsers();
       return adminUsers != null && adminUsers.contains(userId);
     }
 
@@ -1135,7 +1119,7 @@ public class AuthorizationManager extends AbstractManager {
     configureQuery(query, BATCH, QUERYPARAM_RES_ID, READ);
   }
 
-  public List<String> filterAuthenticatedGroupIds(List<String> authenticatedGroupIds) {
+  public List<String> filterAuthenticatedGroupIds(@Nullable List<String> authenticatedGroupIds) {
     if(authenticatedGroupIds == null || authenticatedGroupIds.isEmpty()) {
       return EMPTY_LIST;
     }

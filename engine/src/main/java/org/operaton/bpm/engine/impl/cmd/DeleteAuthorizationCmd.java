@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.AuthorizationQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,8 +30,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Daniel Meyer
- *
  */
+@NullMarked
 public class DeleteAuthorizationCmd implements Command<Void> {
 
   protected String authorizationId;
@@ -38,7 +41,7 @@ public class DeleteAuthorizationCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
 
     final AuthorizationManager authorizationManager = commandContext.getAuthorizationManager();
 

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -26,7 +29,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  *
  */
-public class GetProcessApplicationForDeploymentCmd implements Command<String> {
+public @NullMarked class GetProcessApplicationForDeploymentCmd implements Command<String> {
 
   protected String deploymentId;
 
@@ -35,7 +38,7 @@ public class GetProcessApplicationForDeploymentCmd implements Command<String> {
   }
 
   @Override
-  public String execute(CommandContext commandContext) {
+  public @Nullable String execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkReadProcessApplicationForDeployment);
 
     ProcessApplicationReference reference = Context.getProcessEngineConfiguration()

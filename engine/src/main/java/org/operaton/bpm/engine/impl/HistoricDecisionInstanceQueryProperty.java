@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
 
@@ -24,7 +26,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author Philipp Ossler
  */
-final class HistoricDecisionInstanceQueryProperty {
+final @NullMarked class HistoricDecisionInstanceQueryProperty {
 
   public static final QueryProperty DECISION_INSTANCE_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty EVALUATION_TIME = new QueryPropertyImpl("EVAL_TIME_");

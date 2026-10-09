@@ -1,5 +1,8 @@
 name: Update SBOMs
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:        # Allows manual trigger
   push:
@@ -7,6 +10,8 @@ on:
       - main
       - release/**
       - ci-dev/**
+    paths:
+      - '**/pom.xml'
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -16,8 +21,7 @@ jobs:
   update_sbom:
     name: Update SBOMs
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name != 'push' || contains(join(github.event.commits.*.message, ' '), 'deps')
+    if: contains(join(github.event.commits.*.message, ' '), 'deps')
     steps:
       - name: Install Homebrew (Ubuntu/Linux)
         if: runner.os == 'Linux'
@@ -33,12 +37,14 @@ jobs:
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
       - name: Check out the code
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          # required by add-and-commit action to push with the same credentials
+          persist-credentials: true
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: temurin
           java-version: '17'
@@ -48,6 +54,6 @@ jobs:
         run: .devenv/scripts/build/build-sbom.sh
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
+        uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         with:
           message: "chore(deps) Update SBOMs"

@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
@@ -90,7 +93,7 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
   }
 
   @Override
-  public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
+  public @Nullable String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     return referenceSourceElement.getTextContent();
   }
 
@@ -258,10 +261,9 @@ public class ElementReferenceCollectionImpl<TARGET extends ModelElementInstance,
         throw new UnsupportedModelOperationException("clear()", "collection is immutable");
       }
       else {
-        Collection<DomElement> view = new ArrayList<>();
-        for (SOURCE referenceSourceElement : referenceSourceCollection.get(referenceSourceParentElement)) {
-          view.add(referenceSourceElement.getDomElement());
-        }
+        Collection<DomElement> view = referenceSourceCollection.get(referenceSourceParentElement).stream()
+          .map(SOURCE::getDomElement)
+          .collect(Collectors.toCollection(ArrayList::new));
         performClearOperation(referenceSourceParentElement, view);
       }
     }

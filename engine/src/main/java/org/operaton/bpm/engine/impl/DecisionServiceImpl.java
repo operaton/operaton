@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.dmn.DecisionEvaluationBuilder;
@@ -28,7 +30,7 @@ import org.operaton.bpm.engine.impl.dmn.DecisionTableEvaluationBuilderImpl;
 /**
  * @author Philipp Ossler
  */
-public class DecisionServiceImpl extends ServiceImpl implements DecisionService {
+public @NullMarked class DecisionServiceImpl extends ServiceImpl implements DecisionService {
 
   @Override
   public DmnDecisionTableResult evaluateDecisionTableById(String decisionDefinitionId, Map<String, Object> variables) {
@@ -45,7 +47,7 @@ public class DecisionServiceImpl extends ServiceImpl implements DecisionService 
   }
 
   @Override
-  public DmnDecisionTableResult evaluateDecisionTableByKeyAndVersion(String decisionDefinitionKey, Integer version, Map<String, Object> variables) {
+  public DmnDecisionTableResult evaluateDecisionTableByKeyAndVersion(String decisionDefinitionKey, @Nullable Integer version, Map<String, Object> variables) {
     return evaluateDecisionTableByKey(decisionDefinitionKey)
         .version(version)
         .variables(variables)

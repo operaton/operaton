@@ -20,6 +20,8 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
@@ -30,6 +32,8 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.tree.FlowScopeWalker;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
@@ -71,9 +75,10 @@ public final class CompensationUtil {
     }
 
     // signal compensation events in REVERSE order of their 'created' timestamp
-    eventSubscriptions.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
+    List<EventSubscriptionEntity> sortedEventSubscriptions = new ArrayList<>(eventSubscriptions);
+    sortedEventSubscriptions.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
 
-    for (EventSubscriptionEntity compensateEventSubscriptionEntity : eventSubscriptions) {
+    for (EventSubscriptionEntity compensateEventSubscriptionEntity : sortedEventSubscriptions) {
       compensateEventSubscriptionEntity.eventReceived(null, async);
     }
   }
@@ -144,7 +149,7 @@ public final class CompensationUtil {
     }
   }
 
-  protected static boolean hasCompensationEventSubprocess(ActivityImpl activity) {
+  static boolean hasCompensationEventSubprocess(ActivityImpl activity) {
     ActivityImpl compensationHandler = activity.findCompensationHandler();
 
     return compensationHandler != null && compensationHandler.isSubProcessScope() && compensationHandler.isTriggeredByEvent();
@@ -157,7 +162,7 @@ public final class CompensationUtil {
    * This method is not relevant when the scope has a boundary compensation handler.
    * </p>
    */
-  protected static ActivityImpl getEventScopeCompensationHandler(ExecutionEntity execution) {
+  static ActivityImpl getEventScopeCompensationHandler(ExecutionEntity execution) {
     ActivityImpl activity = execution.getActivity();
 
     ActivityImpl compensationHandler = activity.findCompensationHandler();
@@ -189,7 +194,7 @@ public final class CompensationUtil {
 
     new FlowScopeWalker(activity).addPostVisitor(eventSubscriptionCollector).walkUntil(element -> {
       Boolean consumesCompensationProperty = (Boolean) element.getProperty(BpmnParse.PROPERTYNAME_CONSUMES_COMPENSATION);
-      return consumesCompensationProperty == null || consumesCompensationProperty == Boolean.TRUE;
+      return consumesCompensationProperty == null || consumesCompensationProperty;
     });
 
     return new ArrayList<>(subscriptions);
@@ -204,16 +209,12 @@ public final class CompensationUtil {
     final List<EventSubscriptionEntity> eventSubscriptions = collectCompensateEventSubscriptionsForScope(execution);
     final String subscriptionActivityId = getSubscriptionActivityId(execution, activityRef);
 
-    List<EventSubscriptionEntity> eventSubscriptionsForActivity = new ArrayList<>();
-    for (EventSubscriptionEntity subscription : eventSubscriptions) {
-      if (subscriptionActivityId.equals(subscription.getActivityId())) {
-        eventSubscriptionsForActivity.add(subscription);
-      }
-    }
-    return eventSubscriptionsForActivity;
+    return eventSubscriptions.stream()
+        .filter(subscription -> subscriptionActivityId.equals(subscription.getActivityId()))
+        .toList();
   }
 
-  public static ExecutionEntity getCompensatingExecution(EventSubscriptionEntity eventSubscription) {
+  public static @Nullable ExecutionEntity getCompensatingExecution(EventSubscriptionEntity eventSubscription) {
     String configuration = eventSubscription.getConfiguration();
     if (configuration != null) {
       return Context.getCommandContext().getExecutionManager().findExecutionById(configuration);
@@ -225,6 +226,7 @@ public final class CompensationUtil {
 
   private static String getSubscriptionActivityId(ActivityExecution execution, String activityRef) {
     ActivityImpl activityToCompensate = ((ExecutionEntity) execution).getProcessDefinition().findActivity(activityRef);
+    requireNonNull(activityToCompensate);
 
     if (activityToCompensate.isMultiInstance()) {
 

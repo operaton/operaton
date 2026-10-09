@@ -18,12 +18,18 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
+
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Gives access to a deployed process diagram, e.g., a PNG image, through a
@@ -31,22 +37,24 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  *
  * @author Falko Menge
  */
-public class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
+public @NullMarked class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
   protected String processDefinitionId;
 
   public GetDeploymentProcessDiagramCmd(String processDefinitionId) {
-    if (processDefinitionId == null || processDefinitionId.isEmpty()) {
+    if (processDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
     this.processDefinitionId = processDefinitionId;
   }
 
   @Override
-  public InputStream execute(final CommandContext commandContext) {
+  public @Nullable InputStream execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
             .getProcessEngineConfiguration()
             .getDeploymentCache()
             .findDeployedProcessDefinitionById(processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);
@@ -55,7 +63,7 @@ public class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
     final String deploymentId = processDefinition.getDeploymentId();
     final String resourceName = processDefinition.getDiagramResourceName();
 
-    if (resourceName == null ) {
+    if (deploymentId == null || resourceName == null ) {
       return null;
     } else {
 

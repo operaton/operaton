@@ -25,11 +25,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
+public @NullMarked class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -47,8 +50,9 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @SuppressWarnings("unchecked")
   @Override
-  public <T> T getEntry(String name) {
-    return (T) outputValues.get(name).getValue();
+  public <T> @Nullable T getEntry(String name) {
+    TypedValue typedValue = outputValues.get(name);
+    return (T) (typedValue != null ? typedValue.getValue() : null);
   }
 
   @SuppressWarnings("unchecked")
@@ -59,7 +63,7 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @SuppressWarnings("unchecked")
   @Override
-  public <T extends TypedValue> T getFirstEntryTyped() {
+  public <T extends TypedValue> @Nullable T getFirstEntryTyped() {
     if (!outputValues.isEmpty()) {
       return (T) outputValues.values().iterator().next();
     } else {
@@ -68,7 +72,7 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
   }
 
   @Override
-  public <T extends TypedValue> T getSingleEntryTyped() {
+  public <T extends TypedValue> @Nullable T getSingleEntryTyped() {
     if (outputValues.size() > 1) {
       throw LOG.decisionOutputHasMoreThanOneValue(this);
     } else {
@@ -78,9 +82,10 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T> T getFirstEntry() {
+  public <T> @Nullable T getFirstEntry() {
     if (!outputValues.isEmpty()) {
-      return (T) getFirstEntryTyped().getValue();
+      TypedValue entry = getFirstEntryTyped();
+      return (T) (entry != null ? entry.getValue() : null);
     } else {
       return null;
     }
@@ -88,9 +93,10 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T> T getSingleEntry() {
+  public <T> @Nullable T getSingleEntry() {
     if (!outputValues.isEmpty()) {
-      return (T) getSingleEntryTyped().getValue();
+      TypedValue entry = getSingleEntryTyped();
+      return (T) (entry != null ? entry.getValue() : null);
     } else {
       return null;
     }
@@ -134,13 +140,9 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @Override
   public Collection<Object> values() {
-    List<Object> values = new ArrayList<>();
-
-    for (TypedValue typedValue : outputValues.values()) {
-      values.add(typedValue.getValue());
-    }
-
-    return values;
+    return outputValues.values().stream()
+      .map(TypedValue::getValue)
+      .collect(Collectors.toCollection(ArrayList::new));
   }
 
   @Override
@@ -154,13 +156,9 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
   }
 
   @Override
-  public Object get(Object key) {
+  public @Nullable Object get(Object key) {
     TypedValue typedValue = outputValues.get(key);
-    if (typedValue != null) {
-      return typedValue.getValue();
-    } else {
-      return null;
-    }
+    return (typedValue != null ? typedValue.getValue() : null);
   }
 
   @Override
@@ -195,12 +193,12 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
     return entrySet;
   }
 
-  protected class DmnDecisionRuleOutputEntry implements Entry<String, Object> {
+  protected static class DmnDecisionRuleOutputEntry implements Entry<String, Object> {
 
     protected final String key;
-    protected final TypedValue typedValue;
+    protected final @Nullable TypedValue typedValue;
 
-    public DmnDecisionRuleOutputEntry(String key, TypedValue typedValue) {
+    public DmnDecisionRuleOutputEntry(String key, @Nullable TypedValue typedValue) {
       this.key = key;
       this.typedValue = typedValue;
     }
@@ -211,12 +209,8 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
     }
 
     @Override
-    public Object getValue() {
-      if (typedValue != null) {
-        return typedValue.getValue();
-      } else {
-        return null;
-      }
+    public @Nullable Object getValue() {
+      return (typedValue != null ? typedValue.getValue() : null);
     }
 
     @Override

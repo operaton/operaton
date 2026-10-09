@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.operaton.bpm.model.bpmn.BpmnModelException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.Error;
@@ -277,7 +279,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
     return myself;
   }
 
-  public BpmnShape createBpmnShape(FlowNode node) {
+  public @Nullable BpmnShape createBpmnShape(FlowNode node) {
     BpmnPlane bpmnPlane = findBpmnPlane();
     if (bpmnPlane != null) {
       BpmnShape bpmnShape = createInstance(BpmnShape.class);
@@ -337,7 +339,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
           y = sourceY + sourceHeight / 2 - targetHeight / 2;
         }
         else {
-          SequenceFlow[] sequenceFlows = outgoing.toArray(new SequenceFlow[outgoing.size()]);
+          SequenceFlow[] sequenceFlows = outgoing.toArray(SequenceFlow[]::new);
           SequenceFlow last = sequenceFlows[outgoing.size() - 1];
 
           BpmnShape targetShape = findBpmnShape(last.getTarget());
@@ -360,11 +362,11 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
    * @deprecated Use {@link #createEdge(BaseElement)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public BpmnEdge createBpmnEdge(SequenceFlow sequenceFlow) {
+  public @Nullable BpmnEdge createBpmnEdge(SequenceFlow sequenceFlow) {
     return createEdge(sequenceFlow);
   }
 
-  public BpmnEdge createEdge(BaseElement baseElement) {
+  public @Nullable BpmnEdge createEdge(BaseElement baseElement) {
     BpmnPlane bpmnPlane = findBpmnPlane();
     if (bpmnPlane != null) {
 

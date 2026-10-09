@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * property that might be requested by the test.
  * <p>
  * It also provides useful cleanup and assertion methods for test cases.
+ * </p>
  */
 public final class TestMdcFacade {
 

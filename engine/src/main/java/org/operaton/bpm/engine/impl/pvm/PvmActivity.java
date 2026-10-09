@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.pvm;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
@@ -57,9 +59,9 @@ public interface PvmActivity extends PvmScope {
   /**
    * Finds and returns an outgoing sequence flow (transition) by it's id.
    * @param transitionId the id of the transition to find
-   * @return the transition or null in case it cannot be found
+   * @return the transition or {@code null} in case it cannot be found
    */
-  PvmTransition findOutgoingTransition(String transitionId);
+  @Nullable PvmTransition findOutgoingTransition(String transitionId);
 
   /**
    * @return the list of outgoing sequence flows (transitions)

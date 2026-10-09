@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
@@ -36,12 +38,12 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
  * <p>History events contain data in a serializable form. Some
  * implementations may persist events directly or may serialize
  * them as an intermediate representation for later processing
- * (ie. in an asynchronous implementation).</p>
+ * (i.e. in an asynchronous implementation).</p>
  *
  * <p>This class implements {@link DbEntity}. This was chosen so
  * that {@link HistoryEvent}s can be easily persisted using the
  * {@link DbEntityManager}. This may not be used by all {@link HistoryEventHandler}
- * implementations but it does also not cause harm.</p>
+ * implementations, but it does also not cause harm.</p>
  *
  * @author Daniel Meyer
  *
@@ -135,7 +137,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
   protected String id;
 
   /** the root process instance in which the event has happened */
-  protected String rootProcessInstanceId;
+  protected @Nullable String rootProcessInstanceId;
 
   /** the process instance in which the event has happened */
   protected String processInstanceId;
@@ -156,7 +158,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
   protected Integer processDefinitionVersion;
 
   /** the case instance in which the event has happened */
-  protected String caseInstanceId;
+  protected @Nullable String caseInstanceId;
 
   /** the id of the case execution in which the event has happened */
   protected String caseExecutionId;
@@ -191,7 +193,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
     this.processInstanceId = processInstanceId;
   }
 
-  public String getRootProcessInstanceId() {
+  public @Nullable String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
@@ -263,7 +265,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
     this.caseDefinitionId = caseDefinitionId;
   }
 
-  public String getCaseInstanceId() {
+  public @Nullable String getCaseInstanceId() {
     return caseInstanceId;
   }
 

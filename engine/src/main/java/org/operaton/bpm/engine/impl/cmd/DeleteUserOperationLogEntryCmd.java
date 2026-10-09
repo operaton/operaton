@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -28,7 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Thorben Lindhauer
  *
  */
-public class DeleteUserOperationLogEntryCmd implements Command<Void> {
+public @NullMarked class DeleteUserOperationLogEntryCmd implements Command<Void> {
 
   protected String entryId;
 
@@ -37,15 +40,17 @@ public class DeleteUserOperationLogEntryCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotNull(NotValidException.class, "entryId", entryId);
 
     UserOperationLogEntry entry = commandContext
       .getOperationLogManager()
       .findOperationLogById(entryId);
 
-    for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
-      checker.checkDeleteUserOperationLog(entry);
+    if (entry != null) {
+      for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+        checker.checkDeleteUserOperationLog(entry);
+      }
     }
 
     commandContext.getOperationLogManager().deleteOperationLogEntryById(entryId);

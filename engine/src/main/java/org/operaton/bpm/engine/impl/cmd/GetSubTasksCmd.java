@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.task.Task;
 /**
  * @author Tom Baeyens
  */
-public class GetSubTasksCmd implements Command<List<Task>> {
+public @NullMarked class GetSubTasksCmd implements Command<List<Task>> {
   protected String parentTaskId;
 
   public GetSubTasksCmd(String parentTaskId) {

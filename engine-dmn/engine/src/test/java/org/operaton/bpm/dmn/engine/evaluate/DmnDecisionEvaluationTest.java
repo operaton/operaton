@@ -299,7 +299,6 @@ class DmnDecisionEvaluationTest extends DmnEngineTest {
   @Test
   void shouldEvaluateDecisionWithCollectHitPolicyReturningAList() {
     DmnDecisionRequirementsGraph graph = dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_COLLECT_DMN));
-    initVariables();
     variables.putValue("dayType","WeekDay");
 
     DmnDecisionResult result = dmnEngine.evaluateDecision(graph.getDecision("dish-decision"), variables);
@@ -311,7 +310,6 @@ class DmnDecisionEvaluationTest extends DmnEngineTest {
   @Test
   void shouldEvaluateDecisionWithRuleOrderHitPolicyReturningAList() {
     DmnDecisionRequirementsGraph graph = dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_RULE_ORDER_DMN));
-    initVariables();
     variables.putValue("dayType","WeekDay");
 
     DmnDecisionResult result = dmnEngine.evaluateDecision(graph.getDecision("dish-decision"), variables);

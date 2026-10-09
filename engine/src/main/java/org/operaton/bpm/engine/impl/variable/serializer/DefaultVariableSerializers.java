@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -44,7 +46,7 @@ public class DefaultVariableSerializers implements VariableSerializers {
   }
 
   @Override
-  public TypedValueSerializer<?> getSerializerByName(String serializerName) {
+  public @Nullable TypedValueSerializer<?> getSerializerByName(String serializerName) {
      return serializerMap.get(serializerName);
   }
 

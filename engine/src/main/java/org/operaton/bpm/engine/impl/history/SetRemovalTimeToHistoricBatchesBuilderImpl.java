@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
 
   @Override
   public SetRemovalTimeToHistoricBatchesBuilder byIds(String... ids) {
-    this.ids = ids != null ? Arrays.asList(ids) : null;
+    this.ids = ids != null ? List.of(ids) : null;
     return this;
   }
 

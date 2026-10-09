@@ -17,16 +17,18 @@
 package org.operaton.bpm.engine.impl.dmn.cmd;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -43,7 +45,7 @@ public class DeleteHistoricDecisionInstanceByInstanceIdCmd implements Command<Ob
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     ensureNotNull("historicDecisionInstanceId", historicDecisionInstanceId);
 
     HistoricDecisionInstance historicDecisionInstance = commandContext
@@ -51,6 +53,7 @@ public class DeleteHistoricDecisionInstanceByInstanceIdCmd implements Command<Ob
         .findHistoricDecisionInstance(historicDecisionInstanceId);
     ensureNotNull("No historic decision instance found with id: %s".formatted(historicDecisionInstanceId),
         "historicDecisionInstance", historicDecisionInstance);
+    requireNonNull(historicDecisionInstance);
     writeUserOperationLog(commandContext, historicDecisionInstance);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
@@ -59,7 +62,7 @@ public class DeleteHistoricDecisionInstanceByInstanceIdCmd implements Command<Ob
 
     commandContext
         .getHistoricDecisionInstanceManager()
-        .deleteHistoricDecisionInstanceByIds(Arrays.asList(historicDecisionInstanceId));
+        .deleteHistoricDecisionInstanceByIds(List.of(historicDecisionInstanceId));
 
     return null;
   }

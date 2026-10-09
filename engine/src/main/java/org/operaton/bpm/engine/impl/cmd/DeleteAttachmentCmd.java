@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -30,22 +33,22 @@ import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class DeleteAttachmentCmd implements Command<Object> {
+public @NullMarked class DeleteAttachmentCmd implements Command<Object> {
   protected String attachmentId;
-  protected String taskId;
+  protected @Nullable String taskId;
 
   public DeleteAttachmentCmd(String attachmentId) {
-    this.attachmentId = attachmentId;
+    this(null, attachmentId);
   }
 
-  public DeleteAttachmentCmd(String taskId, String attachmentId) {
+  public DeleteAttachmentCmd(@Nullable String taskId, String attachmentId) {
     this.taskId = taskId;
     this.attachmentId = attachmentId;
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
-    AttachmentEntity attachment = null;
+  public @Nullable Object execute(CommandContext commandContext) {
+    AttachmentEntity attachment;
     if (hasText(taskId)) {
       attachment = (AttachmentEntity) commandContext
           .getAttachmentManager()

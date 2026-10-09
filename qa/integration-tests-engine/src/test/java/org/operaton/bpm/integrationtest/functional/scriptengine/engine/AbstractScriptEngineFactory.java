@@ -17,7 +17,6 @@
 package org.operaton.bpm.integrationtest.functional.scriptengine.engine;
 
 import java.io.Reader;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -67,7 +66,7 @@ public abstract class AbstractScriptEngineFactory implements ScriptEngineFactory
 
   @Override
   public List<String> getNames() {
-    return Arrays.asList(name);
+    return List.of(name);
   }
 
   @Override

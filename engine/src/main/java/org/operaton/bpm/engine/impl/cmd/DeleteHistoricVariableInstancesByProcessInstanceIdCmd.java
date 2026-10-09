@@ -16,9 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
+import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -28,6 +31,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEn
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -35,7 +39,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tobias Metzke
  *
  */
-public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Command<Void> {
+public @NullMarked class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Command<Void> {
   private final String processInstanceId;
 
   public DeleteHistoricVariableInstancesByProcessInstanceIdCmd(String processInstanceId) {
@@ -43,18 +47,19 @@ public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Co
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     ensureNotEmpty(BadUserRequestException.class,"processInstanceId", processInstanceId);
 
     HistoricProcessInstanceEntity instance = commandContext.getHistoricProcessInstanceManager().findHistoricProcessInstance(processInstanceId);
     ensureNotNull(NotFoundException.class, "No historic process instance found with id: %s".formatted(processInstanceId), "instance", instance);
+    requireNonNull(instance);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteHistoricVariableInstancesByProcessInstance(instance);
     }
 
-    commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(Arrays.asList(processInstanceId));
-    commandContext.getHistoricVariableInstanceManager().deleteHistoricVariableInstanceByProcessInstanceIds(Arrays.asList(processInstanceId));
+    commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(List.of(processInstanceId));
+    commandContext.getHistoricVariableInstanceManager().deleteHistoricVariableInstanceByProcessInstanceIds(List.of(processInstanceId));
 
     // create user operation log
     ResourceDefinitionEntity<?> definition = null;

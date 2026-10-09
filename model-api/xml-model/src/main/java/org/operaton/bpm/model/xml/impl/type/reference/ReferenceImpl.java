@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.operaton.bpm.model.xml.ModelInstance;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.xml.ModelReferenceException;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
 import org.operaton.bpm.model.xml.impl.type.attribute.AttributeImpl;
@@ -52,11 +54,11 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
    * Get the reference target model element instance
    *
    * @param referenceSourceElement the reference source model element instance
-   * @return the reference target model element instance or null if not set
+   * @return the reference target model element instance or {@code null} if not set
    */
   @Override
   @SuppressWarnings("unchecked")
-  public T getReferenceTargetElement(ModelElementInstance referenceSourceElement) {
+  public @Nullable T getReferenceTargetElement(ModelElementInstance referenceSourceElement) {
     String identifier = getReferenceIdentifier(referenceSourceElement);
     ModelElementInstance referenceTargetElement = referenceSourceElement.getModelInstance().getModelElementById(identifier);
     if (referenceTargetElement != null) {

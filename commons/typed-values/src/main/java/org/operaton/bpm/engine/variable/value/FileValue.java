@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.variable.value;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Ronny Bräunlich
@@ -27,24 +28,25 @@ public interface FileValue extends TypedValue {
 
   String getFilename();
 
-  String getMimeType();
+  @Nullable String getMimeType();
 
   /**
    * Convenience method to save the transformation. This method will perform no
    * check if the saved encoding is known to the JVM and therefore could throw
    * every exception that {@link Charset#forName(String)} lists.
    * <p>
-   * If no encoding has been saved it will return null.
+   * If no encoding has been saved it will return {@code null}.
+   * </p>
    *
    */
-  Charset getEncodingAsCharset();
+  @Nullable Charset getEncodingAsCharset();
 
   /**
-   * @return the saved encoding or null if none has been saved
+   * @return the saved encoding or {@code null} if none has been saved
    */
-  String getEncoding();
+  @Nullable String getEncoding();
 
   @Override
-  InputStream getValue();
+  @Nullable InputStream getValue();
 
 }

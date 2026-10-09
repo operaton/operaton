@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  *
  */
-public class CreateAuthorizationCommand implements Command<Authorization> {
+public @NullMarked class CreateAuthorizationCommand implements Command<Authorization> {
 
   protected int type;
 

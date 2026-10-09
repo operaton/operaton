@@ -36,7 +36,7 @@ public interface SetJobRetriesBuilder {
    * <strong>Note:</strong> Only one method of referencing jobs is allowed. If you use jobId, you can not use jobIds or jobDefinitionId.
    * </p>
    *
-   * @param jobId the Id of the job. Must not be null or empty ("").
+   * @param jobId the Id of the job. Must not be {@code null} or empty ("").
    *
    * @see ManagementService#setJobRetries(String, int)
    *
@@ -53,7 +53,7 @@ public interface SetJobRetriesBuilder {
    *
    * @see ManagementService#setJobRetries(List, int)
    *
-   * @param jobIds the list of job ids. Must not be null or empty and only contain valid job ids.
+   * @param jobIds the list of job ids. Must not be {@code null} or empty and only contain valid job ids.
    *
    * @return the builder instance
    */
@@ -68,7 +68,7 @@ public interface SetJobRetriesBuilder {
    *
    * @see ManagementService#setJobRetriesByJobDefinitionId(String, int)
    *
-   * @param jobDefinitionId the job definition id. Must not be null or empty ("").
+   * @param jobDefinitionId the job definition id. Must not be {@code null} or empty ("").
    *
    * @return the builder instance
    */
@@ -83,8 +83,8 @@ public interface SetJobRetriesBuilder {
    * job can be adjusted.
    * </p>
    *
-   * @param dueDate The new due date for the updated jobs. If it is null, the due date will be set to null. If
-   * {@link ProcessEngineConfiguration#isEnsureJobDueDateNotNull() ensureJobDueDateNotNull} is true, the due date will be set to the current date instead of null.
+   * @param dueDate The new due date for the updated jobs. If it is {@code null}, the due date will be set to {@code null}. If
+   * {@link ProcessEngineConfiguration#isEnsureJobDueDateNotNull() ensureJobDueDateNotNull} is true, the due date will be set to the current date instead of {@code null}.
    *
    * @return the builder instance
    */

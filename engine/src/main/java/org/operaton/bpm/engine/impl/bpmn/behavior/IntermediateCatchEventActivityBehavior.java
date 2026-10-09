@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 /**
@@ -24,7 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Roman Smirnov
  *
  */
-public class IntermediateCatchEventActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class IntermediateCatchEventActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected boolean isAfterEventBasedGateway;
 
@@ -36,7 +38,6 @@ public class IntermediateCatchEventActivityBehavior extends AbstractBpmnActivity
   public void execute(ActivityExecution execution) throws Exception {
     if (isAfterEventBasedGateway) {
       leave(execution);
-
     } else {
       // Do nothing: waitstate behavior
     }
@@ -47,7 +48,7 @@ public class IntermediateCatchEventActivityBehavior extends AbstractBpmnActivity
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     leave(execution);
   }
 }

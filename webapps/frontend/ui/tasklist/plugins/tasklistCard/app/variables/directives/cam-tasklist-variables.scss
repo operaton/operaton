@@ -8,11 +8,11 @@
   }
 
   div.row {
-    margin-bottom: ($grid-gutter-width / 5);
+    margin-bottom: op-div($grid-gutter-width, 5);
 
     > div {
-      padding-top: ($grid-gutter-width / 5);
-      padding-bottom: ($grid-gutter-width / 5);
+      padding-top: op-div($grid-gutter-width, 5);
+      padding-bottom: op-div($grid-gutter-width, 5);
       background-color: $gray-lighter;
       overflow: hidden;
     }

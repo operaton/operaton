@@ -22,45 +22,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
-import org.operaton.bpm.engine.authorization.BatchPermissions;
-import org.operaton.bpm.engine.authorization.Groups;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.authorization.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.BatchQuery;
 import org.operaton.bpm.engine.batch.BatchStatisticsQuery;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
-import org.operaton.bpm.engine.management.DeploymentStatisticsQuery;
-import org.operaton.bpm.engine.management.JobDefinition;
-import org.operaton.bpm.engine.management.JobDefinitionQuery;
-import org.operaton.bpm.engine.management.MetricsQuery;
-import org.operaton.bpm.engine.management.ProcessDefinitionStatisticsQuery;
-import org.operaton.bpm.engine.management.SchemaLogQuery;
-import org.operaton.bpm.engine.management.SetJobRetriesBuilder;
-import org.operaton.bpm.engine.management.SetJobRetriesByJobsAsyncBuilder;
-import org.operaton.bpm.engine.management.SetJobRetriesByProcessAsyncBuilder;
-import org.operaton.bpm.engine.management.TableMetaData;
-import org.operaton.bpm.engine.management.TablePage;
-import org.operaton.bpm.engine.management.TablePageQuery;
-import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateBuilder;
-import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateSelectBuilder;
-import org.operaton.bpm.engine.management.UpdateJobSuspensionStateBuilder;
-import org.operaton.bpm.engine.management.UpdateJobSuspensionStateSelectBuilder;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.JobQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.bpm.engine.management.*;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
-
-
 
 /**
  * Service for admin and maintenance operations on the process engine.
@@ -75,7 +51,7 @@ import org.operaton.bpm.engine.telemetry.TelemetryData;
  * @author Falko Menge
  * @author Thorben Lindhauer
  */
-public interface ManagementService {
+public @NullMarked interface ManagementService {
 
   /**
    * Activate a deployment for a given ProcessApplication. The effect of this
@@ -135,7 +111,7 @@ public interface ManagementService {
    * @throws AuthorizationException
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    */
-  String getProcessApplicationForDeployment(String deploymentId);
+  @Nullable String getProcessApplicationForDeployment(String deploymentId);
 
   /**
    * Get the mapping containing {table name, row count} entries of the database schema.
@@ -156,12 +132,12 @@ public interface ManagementService {
 
   /**
    * Gets the metadata (column names, column types, etc.) of a certain table.
-   * Returns null when no table exists with the given name.
+   * Returns {@code null} when no table exists with the given name.
    *
    * @throws AuthorizationException
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    */
-  TableMetaData getTableMetaData(String tableName);
+  @Nullable TableMetaData getTableMetaData(String tableName);
 
   /**
    * Creates a {@link TablePageQuery} that can be used to fetch {@link TablePage}
@@ -189,7 +165,7 @@ public interface ManagementService {
    * The job will be executed, even if the process definition and/or the process instance
    * is in suspended state.
    *
-   * @param jobId id of the job to execute, cannot be null.
+   * @param jobId id of the job to execute, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When there is no job with the given id.
@@ -202,7 +178,7 @@ public interface ManagementService {
   /**
    * Delete the job with the provided id.
    *
-   * @param jobId id of the job to execute, cannot be null.
+   * @param jobId id of the job to execute, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When there is no job with the given id.
@@ -223,7 +199,7 @@ public interface ManagementService {
    * <p>Note: for more complex activate commands use {@link #updateJobDefinitionSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the job definition id is equal null.
+   *          If the job definition id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
@@ -243,7 +219,7 @@ public interface ManagementService {
    * <p>Note: for more complex activate commands use {@link #updateJobDefinitionSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the process definition id is equal null.
+   *          If the process definition id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
@@ -262,7 +238,7 @@ public interface ManagementService {
    * <p>Note: for more complex activate commands use {@link #updateJobDefinitionSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the process definition key is equal null.
+   *          If the process definition key is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
@@ -279,7 +255,7 @@ public interface ManagementService {
    *                     will be activated too.
    *
    * @throws ProcessEngineException
-   *          If the job definition id is equal null.
+   *          If the job definition id is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -307,7 +283,7 @@ public interface ManagementService {
    *                     will be activated too.
    *
    * @throws ProcessEngineException
-   *          If the process definition id is equal null.
+   *          If the process definition id is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -334,7 +310,7 @@ public interface ManagementService {
    *                     will be activated too.
    *
    * @throws ProcessEngineException
-   *          If the process definition key is equal null.
+   *          If the process definition key is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -360,12 +336,12 @@ public interface ManagementService {
    * @param activateJobs If true, all the {@link Job}s of the provided job definition
    *                     will be activated too.
    *
-   * @param activationDate The date on which the job definition will be activated. If null, the
+   * @param activationDate The date on which the job definition will be activated. If {@code null}, the
    *                       job definition is activated immediately.
    *                       Note: The {@link JobExecutor} needs to be active to use this!
    *
    * @throws ProcessEngineException
-   *          If the job definition id is equal null.
+   *          If the job definition id is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -382,7 +358,7 @@ public interface ManagementService {
    * @see #activateJobById(String)
    * @see #activateJobByJobDefinitionId(String)
    */
-  void activateJobDefinitionById(String jobDefinitionId, boolean activateJobs, Date activationDate);
+  void activateJobDefinitionById(String jobDefinitionId, boolean activateJobs, @Nullable Date activationDate);
 
   /**
    * <p>Activates all {@link JobDefinition}s of the provided process definition id.</p>
@@ -392,12 +368,12 @@ public interface ManagementService {
    * @param activateJobs If true, all the {@link Job}s of the provided job definition
    *                     will be activated too.
    *
-   * @param activationDate The date on which the job definition will be activated. If null, the
+   * @param activationDate The date on which the job definition will be activated. If {@code null}, the
    *                       job definition is activated immediately.
    *                       Note: The {@link JobExecutor} needs to be active to use this!
    *
    * @throws ProcessEngineException
-   *          If the process definition id is equal null.
+   *          If the process definition id is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -413,7 +389,7 @@ public interface ManagementService {
    *
    * @see #activateJobByProcessDefinitionId(String)
    */
-  void activateJobDefinitionByProcessDefinitionId(String processDefinitionId, boolean activateJobs, Date activationDate);
+  void activateJobDefinitionByProcessDefinitionId(String processDefinitionId, boolean activateJobs, @Nullable Date activationDate);
 
   /**
    * <p>Activates all {@link JobDefinition}s of the provided process definition key.</p>
@@ -423,12 +399,12 @@ public interface ManagementService {
    * @param activateJobs If true, all the {@link Job}s of the provided job definition
    *                     will be activated too.
    *
-   * @param activationDate The date on which the job definition will be activated. If null, the
+   * @param activationDate The date on which the job definition will be activated. If {@code null}, the
    *                       job definition is activated immediately.
    *                       Note: The {@link JobExecutor} needs to be active to use this!
    *
    * @throws ProcessEngineException
-   *          If the process definition key is equal null.
+   *          If the process definition key is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -444,7 +420,7 @@ public interface ManagementService {
    *
    * @see #activateJobByProcessDefinitionKey(String)
    */
-  void activateJobDefinitionByProcessDefinitionKey(String processDefinitionKey, boolean activateJobs, Date activationDate);
+  void activateJobDefinitionByProcessDefinitionKey(String processDefinitionKey, boolean activateJobs, @Nullable Date activationDate);
 
   /**
    * <p>Suspends the {@link JobDefinition} with the given id immediately.</p>
@@ -477,7 +453,7 @@ public interface ManagementService {
    * </p>
    *
    * @throws ProcessEngineException
-   *          If the process definition id is equal null.
+   *          If the process definition id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
@@ -496,7 +472,7 @@ public interface ManagementService {
    * </p>
    *
    * @throws ProcessEngineException
-   *          If the process definition key is equal null.
+   *          If the process definition key is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
@@ -513,7 +489,7 @@ public interface ManagementService {
    *                     will be suspended too.
    *
    * @throws ProcessEngineException
-   *          If the job definition id is equal null.
+   *          If the job definition id is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -541,7 +517,7 @@ public interface ManagementService {
    *                     will be suspended too.
    *
    * @throws ProcessEngineException
-   *          If the process definition id is equal null.
+   *          If the process definition id is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -568,7 +544,7 @@ public interface ManagementService {
    *                     will be suspended too.
    *
    * @throws ProcessEngineException
-   *          If the process definition key is equal null.
+   *          If the process definition key is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -594,12 +570,12 @@ public interface ManagementService {
    * @param suspendJobs If true, all the {@link Job}s of the provided job definition
    *                     will be suspended too.
    *
-   * @param suspensionDate The date on which the job definition will be suspended. If null, the
+   * @param suspensionDate The date on which the job definition will be suspended. If {@code null}, the
    *                       job definition is suspended immediately.
    *                       Note: The {@link JobExecutor} needs to be active to use this!
    *
    * @throws ProcessEngineException
-   *          If the job definition id is equal null.
+   *          If the job definition id is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -616,7 +592,7 @@ public interface ManagementService {
    * @see #suspendJobById(String)
    * @see #suspendJobByJobDefinitionId(String)
    */
-  void suspendJobDefinitionById(String jobDefinitionId, boolean suspendJobs, Date suspensionDate);
+  void suspendJobDefinitionById(String jobDefinitionId, boolean suspendJobs, @Nullable Date suspensionDate);
 
   /**
    * Suspends all {@link JobDefinition}s of the provided process definition id.
@@ -626,12 +602,12 @@ public interface ManagementService {
    * @param suspendJobs If true, all the {@link Job}s of the provided job definition
    *                     will be suspended too.
    *
-   * @param suspensionDate The date on which the job definition will be suspended. If null, the
+   * @param suspensionDate The date on which the job definition will be suspended. If {@code null}, the
    *                       job definition is suspended immediately.
    *                       Note: The {@link JobExecutor} needs to be active to use this!
    *
    * @throws ProcessEngineException
-   *          If the process definition id is equal null.
+   *          If the process definition id is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -647,7 +623,7 @@ public interface ManagementService {
    *
    * @see #suspendJobByProcessDefinitionId(String)
    */
-  void suspendJobDefinitionByProcessDefinitionId(String processDefinitionId, boolean suspendJobs, Date suspensionDate);
+  void suspendJobDefinitionByProcessDefinitionId(String processDefinitionId, boolean suspendJobs, @Nullable Date suspensionDate);
 
   /**
    * Suspends all {@link JobDefinition}s of the provided process definition key.
@@ -657,12 +633,12 @@ public interface ManagementService {
    * @param suspendJobs If true, all the {@link Job}s of the provided job definition
    *                     will be suspended too.
    *
-   * @param suspensionDate The date on which the job definition will be suspended. If null, the
+   * @param suspensionDate The date on which the job definition will be suspended. If {@code null}, the
    *                       job definition is suspended immediately.
    *                       Note: The {@link JobExecutor} needs to be active to use this!
    *
    * @throws ProcessEngineException
-   *          If the process definition key is equal null.
+   *          If the process definition key is equal {@code null}.
    * @throws AuthorizationException thrown if the current user does not possess
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -678,7 +654,7 @@ public interface ManagementService {
    *
    * @see #suspendJobByProcessDefinitionKey(String)
    */
-  void suspendJobDefinitionByProcessDefinitionKey(String processDefinitionKey, boolean suspendJobs, Date suspensionDate);
+  void suspendJobDefinitionByProcessDefinitionKey(String processDefinitionKey, boolean suspendJobs, @Nullable Date suspensionDate);
 
   /**
    * <p>Activates the {@link Job} with the given id.</p>
@@ -686,7 +662,7 @@ public interface ManagementService {
    * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the job id is equal null.
+   *          If the job id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -699,7 +675,7 @@ public interface ManagementService {
    * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the job definition id is equal null.
+   *          If the job definition id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -712,7 +688,7 @@ public interface ManagementService {
    * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the process instance id is equal null.
+   *          If the process instance id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -725,7 +701,7 @@ public interface ManagementService {
    * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the process definition id is equal null.
+   *          If the process definition id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -738,7 +714,7 @@ public interface ManagementService {
    * <p>Note: for more complex activate commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the process definition key is equal null.
+   *          If the process definition key is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -751,7 +727,7 @@ public interface ManagementService {
    * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the job id is equal null.
+   *          If the job id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -764,7 +740,7 @@ public interface ManagementService {
    * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the job definition id is equal null.
+   *          If the job definition id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -777,7 +753,7 @@ public interface ManagementService {
    * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the process instance id is equal null.
+   *          If the process instance id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -790,7 +766,7 @@ public interface ManagementService {
    * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the process definition id is equal null.
+   *          If the process definition id is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -803,7 +779,7 @@ public interface ManagementService {
    * <p>Note: for more complex suspend commands use {@link #updateJobSuspensionState()}.</p>
    *
    * @throws ProcessEngineException
-   *          If the process definition key is equal null.
+   *          If the process definition key is equal {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -840,7 +816,7 @@ public interface ManagementService {
    * In that case, this method can be used to increase the number of retries.
    * </p>
    *
-   * @param jobId id of the job to modify, cannot be null.
+   * @param jobId id of the job to modify, cannot be {@code null}.
    * @param retries number of retries.
    *
    * @throws AuthorizationException
@@ -860,10 +836,10 @@ public interface ManagementService {
    * In that case, this method can be used to increase the number of retries.
    * </p>
    *
-   * @param jobIds ids of the jobs to modify, cannot be null.
+   * @param jobIds ids of the jobs to modify, cannot be {@code null}.
    * @param retries number of retries.
    *
-   * @throws BadUserRequestException if jobIds is null
+   * @throws BadUserRequestException if jobIds is {@code null}
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}
@@ -898,10 +874,10 @@ public interface ManagementService {
    * In that case, this method can be used to increase the number of retries.
    * </p>
    *
-   * @param jobIds ids of the jobs to modify, cannot be null.
+   * @param jobIds ids of the jobs to modify, cannot be {@code null}.
    * @param retries number of retries.
    *
-   * @throws BadUserRequestException if jobIds is null
+   * @throws BadUserRequestException if jobIds is {@code null}
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_SET_JOB_RETRIES} permission on {@link Resources#BATCH}.
@@ -917,10 +893,10 @@ public interface ManagementService {
    * In that case, this method can be used to increase the number of retries.
    * </p>
    *
-   * @param jobQuery query that identifies which jobs should be modified, cannot be null.
+   * @param jobQuery query that identifies which jobs should be modified, cannot be {@code null}.
    * @param retries number of retries.
    *
-   * @throws BadUserRequestException if jobQuery is null
+   * @throws BadUserRequestException if jobQuery is {@code null}
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_SET_JOB_RETRIES} permission on {@link Resources#BATCH}.
@@ -1060,7 +1036,7 @@ public interface ManagementService {
    * the corresponding incident will be resolved.
    * </p>
    *
-   * @param jobDefinitionId id of the job definition, cannot be null.
+   * @param jobDefinitionId id of the job definition, cannot be {@code null}.
    * @param retries number of retries.
    *
    * @throws AuthorizationException
@@ -1073,26 +1049,26 @@ public interface ManagementService {
 
   /**
    * Sets a new due date for the provided id.
-   * When newDuedate is null, the job is executed with the next
+   * When newDuedate is {@code null}, the job is executed with the next
    * job executor run.
    *
-   * @param jobId id of job to modify, cannot be null.
+   * @param jobId id of job to modify, cannot be {@code null}.
    * @param newDuedate new date for job execution
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void setJobDuedate(String jobId, Date newDuedate);
+  void setJobDuedate(String jobId, @Nullable Date newDuedate);
 
   /**
    * Sets a new due date for the provided id. The offset between
    * the old and the new due date can be cascaded to all follow-up
    * jobs. Cascading only works with timer jobs.
-   * When newDuedate is null, the job is executed with the next
+   * When newDuedate is {@code null}, the job is executed with the next
    * job executor run. In this case the cascade parameter is ignored.
    *
-   * @param jobId id of job to modify, cannot be null.
+   * @param jobId id of job to modify, cannot be {@code null}.
    * @param newDuedate new date for job execution
    * @param cascade indicate whether follow-up jobs should be affected
    *
@@ -1100,11 +1076,11 @@ public interface ManagementService {
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  void setJobDuedate(String jobId, Date newDuedate, boolean cascade);
+  void setJobDuedate(String jobId, @Nullable Date newDuedate, boolean cascade);
   /**
    * Triggers the recalculation for the job with the provided id.
    *
-   * @param jobId id of job to recalculate, must neither be null nor empty.
+   * @param jobId id of job to recalculate, must neither be {@code null} nor empty.
    * @param creationDateBased
    *          indicates whether the recalculation should be based on the
    *          creation date of the job or the current date
@@ -1120,7 +1096,7 @@ public interface ManagementService {
   /**
    * Sets a new priority for the job with the provided id.
    *
-   * @param jobId the id of the job to modify, must not be null
+   * @param jobId the id of the job to modify, must not be {@code null}
    * @param priority the job's new priority
    *
    * @throws AuthorizationException thrown if the current user does not possess any of the following permissions
@@ -1201,10 +1177,10 @@ public interface ManagementService {
 
   /**
    * Returns the full stacktrace of the exception that occurs when the job
-   * with the given id was last executed. Returns null when the job has no
+   * with the given id was last executed. Returns {@code null} when the job has no
    * exception stacktrace.
    *
-   * @param jobId id of the job, cannot be null.
+   * @param jobId id of the job, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When no job exists with the given id.
@@ -1212,7 +1188,7 @@ public interface ManagementService {
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  String getJobExceptionStacktrace(String jobId);
+  @Nullable String getJobExceptionStacktrace(String jobId);
 
   /**
    * @return a map of all properties.
@@ -1317,27 +1293,27 @@ public interface ManagementService {
 
   /**
    * Deletes all metrics events which are older than the specified timestamp.
-   * If the timestamp is null, all metrics will be deleted
+   * If the timestamp is {@code null}, all metrics will be deleted
    *
    * @throws AuthorizationException
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    *
-   * @param timestamp or null
+   * @param timestamp or {@code null}
    */
-  void deleteMetrics(Date timestamp);
+  void deleteMetrics(@Nullable Date timestamp);
 
   /**
    * Deletes all metrics events which are older than the specified timestamp
-   * and reported by the given reporter. If a parameter is null, all metric events
+   * and reported by the given reporter. If a parameter is {@code null}, all metric events
    * are matched in that regard.
    *
    * @throws AuthorizationException
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    *
-   * @param timestamp or null
-   * @param reporter or null
+   * @param timestamp or {@code null}
+   * @param reporter or {@code null}
    */
-  void deleteMetrics(Date timestamp, String reporter);
+  void deleteMetrics(@Nullable Date timestamp, @Nullable String reporter);
 
   /**
    * Forces this engine to commit its pending collected metrics to the database.
@@ -1354,18 +1330,18 @@ public interface ManagementService {
    * @param endTime restrict to data collected before the given date (exclusive), can be <code>null</code>
    * @return the aggregated number of unique task workers (may be restricted to a certain interval)
    */
-  long getUniqueTaskWorkerCount(Date startTime, Date endTime);
+  long getUniqueTaskWorkerCount(@Nullable Date startTime, @Nullable Date endTime);
 
   /**
    * Deletes all task metrics which are older than the specified timestamp.
-   * If the timestamp is null, all metrics will be deleted
+   * If the timestamp is {@code null}, all metrics will be deleted
    *
    * @throws AuthorizationException
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    *
    * @param timestamp or <code>null</code>
    */
-  void deleteTaskMetrics(Date timestamp);
+  void deleteTaskMetrics(@Nullable Date timestamp);
 
   /**
    * Creates a query to search for {@link org.operaton.bpm.engine.batch.Batch} instances.

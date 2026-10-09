@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.management.UpdateJobDefinitionSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 
-public class ActivateBatchCmd extends AbstractSetBatchStateCmd {
+public @NullMarked class ActivateBatchCmd extends AbstractSetBatchStateCmd {
 
   public ActivateBatchCmd(String batchId) {
     super(batchId);

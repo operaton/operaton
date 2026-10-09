@@ -19,8 +19,8 @@ package org.operaton.bpm.integrationtest;
 import java.util.Collection;
 import java.util.List;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.Unirest;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;

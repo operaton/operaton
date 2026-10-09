@@ -19,12 +19,13 @@ package org.operaton.bpm.engine;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 
 /**
  * Exception during the parsing of an BPMN model.
  */
-public class BpmnParseException extends ProcessEngineException {
+public @NullMarked class BpmnParseException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
   protected final transient Element element;

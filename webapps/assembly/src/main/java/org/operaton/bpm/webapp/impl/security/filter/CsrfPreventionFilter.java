@@ -51,7 +51,6 @@ import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.
  * then stored as a client Cookie, and sent back as an HTTP header (X-XSRF-TOKEN) on subsequent requests.
  * </p>
  *
- * <p>
  * <pre>
  * Positive scenario:
  *           Client                            Server
@@ -91,7 +90,6 @@ import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.
  *              |---------------------------------|
  *              |\                                |
  * </pre>
- * </p>
  *
  * <p>
  * <i>Parts of this code were ported from the <code>CsrfPreventionFilter</code> class

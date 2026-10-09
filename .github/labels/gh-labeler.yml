@@ -24,7 +24,6 @@ documentation:
 scope:build:
 - changed-files:
   - any-glob-to-any-file:
-    - '**/pom.xml'
     - '.mvn/**'
     - 'mvnw'
     - 'mvnw.cmd'
@@ -108,9 +107,20 @@ scope:quarkus:
       - '!**/src/test/**'
 
 scope:webapp:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'webapps/**'
+  - all:
+      - changed-files:
+          - any-glob-to-any-file:
+              - 'webapps/**'
+          - any-glob-to-any-file:
+              - '!**/src/test/**'
+
+scope:webapp-neo:
+  - all:
+      - changed-files:
+          - any-glob-to-any-file:
+              - 'webapps-neo/**'
+          - any-glob-to-any-file:
+              - '!**/src/test/**'
 
 scope:ldap:
 - all:
@@ -130,16 +140,22 @@ scope:assert:
   - any-glob-to-any-file:
     - 'test-utils/assert/**'
 
-scope:e2e-qa:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'qa/integration-tests-*/**'
+scope:qa-e2e:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'qa/integration-tests-*/**'
+
+scope:qa-db:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'qa/test-database-*/**'
+          - 'qa/test-db-*/**'
 
 api:rest:
 - all:
   - changed-files:
     - any-glob-to-any-file:
-      - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
+      - 'engine-rest/engine-rest-openapi/src/main/**'
       - 'engine-rest/docs/**'
     - any-glob-to-any-file:
       - '!engine-rest/docs/node_modules/**'

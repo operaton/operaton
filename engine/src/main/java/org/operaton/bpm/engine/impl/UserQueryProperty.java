@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
-
-
 
 /**
  * Contains the possible properties that can be used by the {@link UserQuery}.
  *
  * @author Joram Barrez
  */
-public final class UserQueryProperty {
+public final @NullMarked class UserQueryProperty {
 
   public static final QueryProperty USER_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty FIRST_NAME = new QueryPropertyImpl("FIRST_");

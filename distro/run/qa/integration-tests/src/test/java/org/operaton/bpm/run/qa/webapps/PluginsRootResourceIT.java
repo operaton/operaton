@@ -18,8 +18,8 @@ package org.operaton.bpm.run.qa.webapps;
 
 import jakarta.ws.rs.core.Response.Status;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.Unirest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;

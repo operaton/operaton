@@ -16,16 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.task.Attachment;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * @author Tom Baeyens
  */
-public class SaveAttachmentCmd implements Command<Object> {
+public @NullMarked class SaveAttachmentCmd implements Command<Object> {
   protected Attachment attachment;
 
   public SaveAttachmentCmd(Attachment attachment) {
@@ -33,10 +38,11 @@ public class SaveAttachmentCmd implements Command<Object> {
   }
 
   @Override
-  public Object execute(CommandContext commandContext) {
+  public @Nullable Object execute(CommandContext commandContext) {
     AttachmentEntity updateAttachment = commandContext
       .getDbEntityManager()
       .selectById(AttachmentEntity.class, attachment.getId());
+    ensureNotNull("No attachment found with id '%s'".formatted(attachment.getId()), "attachment", updateAttachment);
 
     updateAttachment.setName(attachment.getName());
     updateAttachment.setDescription(attachment.getDescription());

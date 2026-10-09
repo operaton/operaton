@@ -132,7 +132,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
   }
 
   /**
-   * <p>Instantiates and applies all {@link ProcessEnginePlugin}s defined in the processEngineXml
+   * Instantiates and applies all {@link ProcessEnginePlugin}s defined in the processEngineXml
    */
   protected void configurePlugins(ProcessEngineConfigurationImpl configuration, ProcessEngineXml processEngineXml, ClassLoader classLoader) {
 

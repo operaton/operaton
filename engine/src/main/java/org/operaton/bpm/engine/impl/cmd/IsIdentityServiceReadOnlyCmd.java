@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  *
  */
-public class IsIdentityServiceReadOnlyCmd implements Command<Boolean> {
+public @NullMarked class IsIdentityServiceReadOnlyCmd implements Command<Boolean> {
 
   @Override
   public Boolean execute(CommandContext commandContext) {

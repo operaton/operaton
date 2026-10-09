@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 /**
  * @author Sebastian Menski
  */
-public class SaveFilterCmd implements Command<Filter> {
+public @NullMarked class SaveFilterCmd implements Command<Filter> {
   protected Filter filter;
 
   public SaveFilterCmd(Filter filter) {

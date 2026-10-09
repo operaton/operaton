@@ -72,12 +72,8 @@ class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @AfterEach
-  void clearAuthentication() {
+  void tearDown() {
     identityService.clearAuthentication();
-  }
-
-  @AfterEach
-  void resetQueryMaxResultsLimit() {
     processEngineConfiguration.setQueryMaxResultsLimit(Integer.MAX_VALUE);
   }
 

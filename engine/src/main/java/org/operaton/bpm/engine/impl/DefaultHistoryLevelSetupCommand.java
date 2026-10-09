@@ -15,6 +15,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -29,9 +31,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
 /**
  * Default implementation of {@link HistoryLevelSetupCommand}.
  *
- * <p>Verifies that the history level configured in
+ * <p>
+ * Verifies that the history level configured in
  * {@link ProcessEngineConfigurationImpl#getHistoryLevel()} matches the one persisted in the
  * database, writing the configured level to the database if none is present yet.
+ * </p>
  *
  * @since 2.1
  */
@@ -40,7 +44,7 @@ public class DefaultHistoryLevelSetupCommand implements HistoryLevelSetupCommand
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
 
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
 

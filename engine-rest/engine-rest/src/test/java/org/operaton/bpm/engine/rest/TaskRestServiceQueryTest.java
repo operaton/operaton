@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
@@ -36,7 +31,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationInfo;
@@ -68,9 +62,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static junit.framework.TestCase.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
@@ -751,137 +743,137 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(mockQuery);
+    InOrder inOrder = inOrder(mockQuery);
     executeAndVerifySorting("dueDate", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByDueDate();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("followUpDate", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByFollowUpDate();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("instanceId", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByProcessInstanceId();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("created", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskCreateTime();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("id", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskId();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("priority", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskPriority();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("executionId", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByExecutionId();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("assignee", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskAssignee();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("description", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskDescription();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("name", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskName();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("nameCaseInsensitive", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskNameCaseInsensitive();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("caseInstanceId", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByCaseInstanceId();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("dueDate", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByDueDate();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("followUpDate", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByFollowUpDate();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("instanceId", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByProcessInstanceId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("created", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskCreateTime();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("id", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("priority", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskPriority();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("executionId", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByExecutionId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("assignee", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskAssignee();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("description", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskDescription();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("name", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskName();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("nameCaseInsensitive", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTaskNameCaseInsensitive();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("caseInstanceId", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByCaseInstanceId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("tenantId", "desc", Status.OK);
     inOrder.verify(mockQuery).orderByTenantId();
     inOrder.verify(mockQuery).desc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("tenantId", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByTenantId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySorting("lastUpdated", "asc", Status.OK);
     inOrder.verify(mockQuery).orderByLastUpdated();
     inOrder.verify(mockQuery).asc();
@@ -907,7 +899,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testSecondarySortingAsPost() {
-    InOrder inOrder = Mockito.inOrder(mockQuery);
+    InOrder inOrder = inOrder(mockQuery);
     executeAndVerifySortingAsPost(
       OrderingBuilder.create()
         .orderBy("dueDate").desc()
@@ -920,7 +912,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     inOrder.verify(mockQuery).orderByCaseExecutionId();
     inOrder.verify(mockQuery).asc();
 
-    inOrder = Mockito.inOrder(mockQuery);
+    inOrder = inOrder(mockQuery);
     executeAndVerifySortingAsPost(
       OrderingBuilder.create()
         .orderBy("processVariable").desc()

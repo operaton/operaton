@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,7 @@ class BatchElementConfigurationTest {
   void shouldProduceListOfIdsSortedByKey() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
-    configuration.addDeploymentMappings(Arrays.asList(
+    configuration.addDeploymentMappings(List.of(
         new ImmutablePair<>("ABC", "foo"), new ImmutablePair<>("ABC", "bar"), new ImmutablePair<>("AAB", "baz")));
     // when
     List<String> ids = configuration.getIds();
@@ -44,7 +43,7 @@ class BatchElementConfigurationTest {
   void shouldProduceListOfMappingsSortedByKey() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
-    configuration.addDeploymentMappings(Arrays.asList(
+    configuration.addDeploymentMappings(List.of(
         new ImmutablePair<>("ABC", "foo"), new ImmutablePair<>("ABC", "bar"), new ImmutablePair<>("AAB", "baz")));
     // when
     DeploymentMappings mappings = configuration.getMappings();
@@ -56,7 +55,7 @@ class BatchElementConfigurationTest {
   void shouldIncludeNullMappings() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
-    configuration.addDeploymentMappings(Arrays.asList(
+    configuration.addDeploymentMappings(List.of(
         new ImmutablePair<>("ABC", "foo"), new ImmutablePair<>("AAB", "baz"), new ImmutablePair<>(null, "null")));
     // when
     List<String> ids = configuration.getIds();
@@ -70,12 +69,12 @@ class BatchElementConfigurationTest {
   void shouldRecalculateMappingsWhenNewElementsAdded() {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
-    configuration.addDeploymentMappings(Arrays.asList(
+    configuration.addDeploymentMappings(List.of(
         new ImmutablePair<>("ABC", "foo"), new ImmutablePair<>("AAB", "baz")));
     configuration.getIds();
     configuration.getMappings();
     // when
-    configuration.addDeploymentMappings(Arrays.asList(
+    configuration.addDeploymentMappings(List.of(
         new ImmutablePair<>("AAB", "bar")));
     List<String> ids = configuration.getIds();
     DeploymentMappings mappings = configuration.getMappings();
@@ -90,8 +89,8 @@ class BatchElementConfigurationTest {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
     configuration.addDeploymentMappings(
-        Arrays.asList(new ImmutablePair<>("ABC", "foo"), new ImmutablePair<>("AAB", "baz")),
-        Arrays.asList("null"));
+        List.of(new ImmutablePair<>("ABC", "foo"), new ImmutablePair<>("AAB", "baz")),
+        List.of("null"));
     // when
     List<String> ids = configuration.getIds();
     DeploymentMappings mappings = configuration.getMappings();
@@ -105,8 +104,8 @@ class BatchElementConfigurationTest {
     // given
     BatchElementConfiguration configuration = new BatchElementConfiguration();
     configuration.addDeploymentMappings(
-        Arrays.asList(new ImmutablePair<>("ABC", "foo"), new ImmutablePair<>("AAB", "baz"), new ImmutablePair<>(null, "null")),
-        Arrays.asList("bar"));
+        List.of(new ImmutablePair<>("ABC", "foo"), new ImmutablePair<>("AAB", "baz"), new ImmutablePair<>(null, "null")),
+        List.of("bar"));
     // when
     List<String> ids = configuration.getIds();
     DeploymentMappings mappings = configuration.getMappings();

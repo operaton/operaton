@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.Unirest;
 import org.junit.jupiter.api.Test;
 
 import static jakarta.ws.rs.core.Response.Status.OK;

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
@@ -35,7 +37,7 @@ public class BaseCallableElement {
     VERSION("version"),
     VERSION_TAG("versionTag");
 
-    private String value;
+    private final String value;
 
     CallableElementBinding(String value) {
       this.value = value;
@@ -89,7 +91,7 @@ public class BaseCallableElement {
     return CallableElementBinding.VERSION_TAG.equals(getBinding());
   }
 
-  public Integer getVersion(VariableScope variableScope) {
+  public @Nullable Integer getVersion(VariableScope variableScope) {
     Object result = versionValueProvider.getValue(variableScope);
 
     if (result != null) {
@@ -113,7 +115,7 @@ public class BaseCallableElement {
     this.versionValueProvider = version;
   }
 
-  public String getVersionTag(VariableScope variableScope) {
+  public @Nullable String getVersionTag(VariableScope variableScope) {
     Object result = versionTagValueProvider.getValue(variableScope);
 
     if (result != null) {
@@ -127,7 +129,9 @@ public class BaseCallableElement {
     return null;
   }
 
-
+  /** @deprecated Unused method of internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("unused")
   public ParameterValueProvider getVersionTagValueProvider() {
     return versionTagValueProvider;
   }
@@ -148,7 +152,7 @@ public class BaseCallableElement {
     this.deploymentId = deploymentId;
   }
 
-  public String getDefinitionTenantId(VariableScope variableScope, String defaultTenantId) {
+  public @Nullable String getDefinitionTenantId(VariableScope variableScope, @Nullable String defaultTenantId) {
     if (tenantIdProvider != null) {
       return (String) tenantIdProvider.getValue(variableScope);
     } else {

@@ -46,19 +46,20 @@ jobs:
         database: ${{ fromJson(github.event.inputs.database) }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Cache Maven packages
-        uses: actions/cache@v5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
 
       - name: Set up Java
-        uses: actions/setup-java@v5.2.0
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         env:
           JAVA_VERSION: ${{ github.event.inputs.java_version }}
         with:
@@ -68,12 +69,14 @@ jobs:
       - name: Run Unit Tests
         id: maven-unit-tests
         shell: bash
+        env:
+          MATRIX_DATABASE: ${{ matrix.database }}
         run: |
-          .devenv/scripts/build/build-and-run-unit-tests.sh --db=${{ matrix.database }}
+          .devenv/scripts/build/build-and-run-unit-tests.sh --db=${MATRIX_DATABASE}
 
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@3a81627bfac62268172037048872e8ebd4207e6d #v6.4.1
+        uses: mikepenz/action-junit-report@a9170d5795813c01ab4901ffb045b52bab4ab09d #v6.5.0
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
@@ -81,7 +84,7 @@ jobs:
 
       - name: Upload Test Reports
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: test-reports-${{ matrix.database }}
           path: |

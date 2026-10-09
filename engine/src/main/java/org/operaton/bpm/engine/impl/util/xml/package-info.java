@@ -1,4 +1,6 @@
 /**
  * XML utility classes for DOM and namespace handling.
  */
-package org.operaton.bpm.engine.impl.util.xml;
+@NullMarked package org.operaton.bpm.engine.impl.util.xml;
+
+import org.jspecify.annotations.NullMarked;

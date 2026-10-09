@@ -1,5 +1,5 @@
 ---
-name: operaton-release
+name: operaton:release
 description: Use when preparing, performing, or announcing an Operaton release. Triggers include "prepare release X.Y.Z", "prepare the upcoming releases", "perform release X.Y.Z", "X.Y.Z-Mx", and "announce release X.Y.Z" / "announce the release(s)". Use for release pre-flight checks, build/Docker-image/documentation status, noteworthy-label and milestone hygiene, distribution smoke tests, release notes, go/no-go confidence votes, driving the release.yml workflow, and post-release announcements (website, blog, Slack, forum) plus branch-cleanup listing.
 ---
 
@@ -12,7 +12,7 @@ Three actions over the Operaton release process, sharing one knowledge base.
 | **PREPARE** | "prepare release X.Y.Z", "prepare the upcoming releases" | Pre-flight checks → fixes via PRs → **go/no-go confidence vote** | **NEVER** |
 | **PERFORM** | "perform release X.Y.Z", "perform release X.Y.Z-Mx" | Dispatches `release.yml` (dry-run first), then verifies | Yes (gated) |
 | **ANNOUNCE** | "announce release X.Y.Z", "announce the release(s)" | Post-release: website + blog PR, Slack, forum, branch-cleanup list, housekeeping | No (outward-facing; gated by confirmation) |
-
+move
 ## The Iron Guardrail
 
 **PREPARE must NEVER trigger a release.** It must not run `gh workflow run release.yml`, `mvnw ... deploy`, `jreleaser`, push tags, or anything that publishes. PREPARE only reads state and raises PRs for documentation/label/config fixes. If you catch yourself about to dispatch the release workflow during a "prepare" request — STOP. The user must explicitly say "perform".
@@ -73,11 +73,11 @@ See `references/perform-release.md`. In short:
 
 See `references/announce.md`. **Only after PERFORM verified the release is live.** Every channel is public and irreversible — draft, show the user, post only on explicit confirmation. In short:
 
-1. **Website** (`operaton/operaton.org`, PR) — update the `index.html` `#changelog` card to the **highest** version released that day; write a blog post in `_posts/` modelled on `2026-04-24-operaton-2-1-released.md`. Scaffolds via `.devenv/scripts/release/update-website.py`.
+1. **Website** (`operaton/operaton.org`, PR) — update the `index.html` `#changelog` card to the **highest** version released that day; write a blog post in `_posts/` modelled on `2026-04-24-operaton-2-1-released.md`. Scaffolds via `.devenv/scripts/release/update-website.py`. Add a link to the MD file on the branch to the PR description.
 2. **Slack** `general` — compact `@channel` post with highlights + release-notes link. Draft → confirm → post.
 3. **Forum** (forum.operaton.org, "Announcement" category) — fuller markdown version. Draft → confirm → post.
 4. **Branch cleanup** — `.devenv/scripts/release/list-merged-branches.sh "<MILESTONE>"` lists merged branches with links. **List only — you MUST NOT delete any branch.** Hand the list to the user.
-5. **Housekeeping** — `jreleaser` `previousTagName` / `changelog.tpl`, close milestone + open next, calendar, docs/download verification, optional wider social.
+5. **Housekeeping** — `changelog.tpl`, close milestone + open next, calendar, docs/download verification, optional wider social.
 
 ## Output
 

@@ -16,22 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricIncident;
@@ -42,11 +33,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.management.TableMetaData;
@@ -61,10 +48,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Frederik Heremans
@@ -735,8 +719,8 @@ class ManagementServiceTest {
 
     // when/then
     assertThatThrownBy(() -> managementService.setJobDuedate(null, duedate))
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("The job id is mandatory, but 'null' has been provided.");
+      .isInstanceOf(NullPointerException.class)
+      .hasMessageContaining("\"jobId\" is null");
   }
 
   @Test

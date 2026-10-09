@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Thorben Lindhauer
  *
  */
-public class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd {
+public @NullMarked class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd {
 
   protected String activityId;
 
@@ -37,12 +39,12 @@ public class ActivityAfterInstantiationCmd extends AbstractInstantiationCmd {
     this(null, activityId);
   }
 
-  public ActivityAfterInstantiationCmd(String processInstanceId, String activityId) {
+  public ActivityAfterInstantiationCmd(@Nullable String processInstanceId, String activityId) {
     this(processInstanceId, activityId, null);
   }
 
-  public ActivityAfterInstantiationCmd(String processInstanceId, String activityId,
-      String ancestorActivityInstanceId) {
+  public ActivityAfterInstantiationCmd(@Nullable String processInstanceId, String activityId,
+      @Nullable String ancestorActivityInstanceId) {
     super(processInstanceId, ancestorActivityInstanceId);
     this.activityId = activityId;
   }

@@ -16,8 +16,6 @@
 package org.operaton.bpm.engine.spring.components.aop;
 
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.aopalliance.aop.Advice;
@@ -34,13 +32,14 @@ import org.operaton.bpm.engine.spring.components.aop.util.MetaAnnotationMatching
  * AOP advice for methods annotated with (by default) {@link StartProcess}.
  * <p>
  * Advised methods start a process after the method executes.
+ * </p>
  * <p>
  * Advised methods can declare a return
  * type of {@link org.operaton.bpm.engine.runtime.ProcessInstance} and then subsequently
- * return null. The real return ProcessInstance value will be given by the aspect.
+ * return {@code null}. The real return ProcessInstance value will be given by the aspect.
+ * </p>
  *
  * @author Josh Long
- * @since 5.3
  */
 public class ProcessStartingPointcutAdvisor implements PointcutAdvisor {
 
@@ -48,7 +47,7 @@ public class ProcessStartingPointcutAdvisor implements PointcutAdvisor {
     /**
      * annotations that shall be scanned
      */
-    private final Set<Class<? extends Annotation>> annotations = new HashSet<>(Arrays.asList(StartProcess.class));
+    private final Set<Class<? extends Annotation>> annotations = Set.of(StartProcess.class);
 
     /**
      * the {@link org.aopalliance.intercept.MethodInterceptor} that handles launching the business process.

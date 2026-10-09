@@ -62,6 +62,16 @@
       <groupId>org.operaton.bpm.quarkus</groupId>
       <artifactId>operaton-bpm-quarkus-engine</artifactId>
     </dependency>
+    <!-- QuarkusUnitTest resolves the deployment artifact at test runtime via the
+         extension descriptor, which the Maven reactor cannot see. Declaring it
+         here adds the missing edge so a parallel build (mvnd) cannot schedule
+         this module before the deployment module has been built. -->
+    <dependency>
+      <groupId>org.operaton.bpm.quarkus</groupId>
+      <artifactId>operaton-bpm-quarkus-engine-deployment</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>

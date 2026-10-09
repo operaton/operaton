@@ -18,19 +18,21 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author roman.smirnov
  * @author Joram Barrez
  */
-public class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd {
+public @NullMarked class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd {
   public RemoveTaskVariablesCmd(String taskId, Collection<String> variableNames, boolean isLocal) {
     super(taskId, variableNames, isLocal);
   }
@@ -39,11 +41,12 @@ public class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd {
   protected TaskEntity getEntity() {
     ensureNotNull("taskId", entityId);
 
-    TaskEntity task = commandContext
+    TaskEntity task = getCommandContext()
       .getTaskManager()
       .findTaskById(entityId);
 
     ensureNotNull("Cannot find task with id %s".formatted(entityId), "task", task);
+    requireNonNull(task);
 
     checkRemoveTaskVariables(task);
 
@@ -58,11 +61,11 @@ public class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd {
   @Override
   protected void logVariableOperation(AbstractVariableScope scope) {
     TaskEntity task = (TaskEntity) scope;
-    commandContext.getOperationLogManager().logVariableOperation(getLogEntryOperation(), null, task.getId(), PropertyChange.EMPTY_CHANGE);
+    getCommandContext().getOperationLogManager().logVariableOperation(getLogEntryOperation(), null, task.getId(), PropertyChange.EMPTY_CHANGE);
   }
 
   protected void checkRemoveTaskVariables(TaskEntity task) {
-    for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
+    for(CommandChecker checker : getCommandContext().getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateTaskVariable(task);
     }
   }

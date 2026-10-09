@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.bpmn.helper;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.parser.EscalationEventDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 
 public class EscalationEventDefinitionFinder implements TreeVisitor<PvmScope> {
 
-  protected EscalationEventDefinition escalationEventDefinition;
+  protected @Nullable EscalationEventDefinition escalationEventDefinition;
 
   protected final String escalationCode;
   protected final PvmActivity throwEscalationActivity;
@@ -41,7 +42,7 @@ public class EscalationEventDefinitionFinder implements TreeVisitor<PvmScope> {
     this.escalationEventDefinition = findMatchingEscalationEventDefinition(escalationEventDefinitions);
   }
 
-  protected EscalationEventDefinition findMatchingEscalationEventDefinition(List<EscalationEventDefinition> escalationEventDefinitions) {
+  protected @Nullable EscalationEventDefinition findMatchingEscalationEventDefinition(List<EscalationEventDefinition> escalationEventDefinitions) {
     for (EscalationEventDefinition definition : escalationEventDefinitions) {
       if (isMatchingEscalationCode(definition) && !isReThrowingEscalationEventSubprocess(definition)) {
         return definition;
@@ -60,7 +61,7 @@ public class EscalationEventDefinitionFinder implements TreeVisitor<PvmScope> {
     return escalationHandler.isSubProcessScope() && escalationHandler.equals(throwEscalationActivity.getFlowScope());
   }
 
-  public EscalationEventDefinition getEscalationEventDefinition() {
+  public @Nullable EscalationEventDefinition getEscalationEventDefinition() {
     return escalationEventDefinition;
   }
 

@@ -20,11 +20,7 @@ import jakarta.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.rest.dto.SuspensionStateDto;
@@ -88,7 +84,7 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
   public ActivityInstanceDto getActivityInstanceTree() {
     RuntimeService runtimeService = engine.getRuntimeService();
 
-    ActivityInstance activityInstance = null;
+    ActivityInstance activityInstance;
 
     try {
       activityInstance = runtimeService.getActivityInstance(processInstanceId);
@@ -130,7 +126,7 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
 
   @Override
   public BatchDto modifyProcessInstanceAsync(ProcessInstanceModificationDto dto) {
-    Batch batch = null;
+    Batch batch;
     if (dto.getInstructions() != null && !dto.getInstructions().isEmpty()) {
       ProcessInstanceModificationBuilder modificationBuilder =
           engine.getRuntimeService().createProcessInstanceModification(processInstanceId);

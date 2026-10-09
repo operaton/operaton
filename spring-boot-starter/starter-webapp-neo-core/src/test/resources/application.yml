@@ -1,0 +1,9 @@
+# Test defaults for the webapps-neo integration tests.
+# The new web apps are gated independently and disabled by default at the
+# starter level, so the test apps enable them explicitly. The integration tests
+# exercise the SPA served from the /app-neo sub-path.
+operaton.bpm:
+  webapp:
+    neo:
+      enabled: true
+      application-path: /app-neo

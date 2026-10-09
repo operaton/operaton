@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
@@ -44,7 +45,7 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
  * allowed on the entity. If it is not allowed, the checker throws a
  * {@link ProcessEngineException}.
  */
-public interface CommandChecker {
+public @NullMarked interface CommandChecker {
 
   /**
    * Checks if it is allowed to evaluate the given decision.

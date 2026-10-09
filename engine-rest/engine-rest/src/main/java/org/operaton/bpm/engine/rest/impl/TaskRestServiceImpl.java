@@ -19,12 +19,8 @@ package org.operaton.bpm.engine.rest.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Request;
-import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.UriInfo;
-import jakarta.ws.rs.core.Variant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

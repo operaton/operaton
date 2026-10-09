@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.incident;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -25,7 +24,6 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 
 /**
- * <p>
  * A composite incident handler that handles incidents of a certain type by the multiple handlers.
  * The result of handling depends on main handler.
  *
@@ -58,7 +56,7 @@ public class CompositeIncidentHandler implements IncidentHandler {
    */
   public CompositeIncidentHandler(IncidentHandler mainIncidentHandler, final IncidentHandler... incidentHandlers) {
     EnsureUtil.ensureNotNull("Incident handlers", (Object[]) incidentHandlers);
-    initializeIncidentsHandlers(mainIncidentHandler, Arrays.asList(incidentHandlers));
+    initializeIncidentsHandlers(mainIncidentHandler, List.of(incidentHandlers));
   }
 
   /**

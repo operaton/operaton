@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.mock;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 /** Registry for mock objects.
  *
  * <p>Usage: <code>Mocks.register("myMock", myMock);</code></p>
@@ -60,14 +62,14 @@ public final class Mocks {
 
   /**
    * This method returns the mock object registered under the provided key or
-   * null if there is no object for the provided key.
+   * {@code null} if there is no object for the provided key.
    *
    * @param key
    *          the key of the requested object
-   * @return the mock object registered under the provided key or null if there
+   * @return the mock object registered under the provided key or {@code null} if there
    *         is no object for the provided key
    */
-  public static Object get(Object key) {
+  public static @Nullable Object get(Object key) {
     return getMocks().get(key);
   }
 

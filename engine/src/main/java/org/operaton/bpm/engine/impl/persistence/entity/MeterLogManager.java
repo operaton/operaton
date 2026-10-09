@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.Direction;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.QueryPropertyImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -87,6 +89,7 @@ public class MeterLogManager extends AbstractManager {
   public List<MetricIntervalValue> executeSelectInterval(MetricsQueryImpl query) {
     DbEntityManager dbEntityManager = requireNonNull(getDbEntityManager());
     ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    @SuppressWarnings("unchecked")
     List<MetricIntervalValue> intervalResult = dbEntityManager.selectList(SELECT_METER_INTERVAL, query);
 
     intervalResult = intervalResult != null ? intervalResult : new ArrayList<>();
@@ -139,7 +142,7 @@ public class MeterLogManager extends AbstractManager {
     getDbEntityManager().delete(MeterLogEntity.class, DELETE_ALL_METER, null);
   }
 
-  public void deleteByTimestampAndReporter(Date timestamp, String reporter) {
+  public void deleteByTimestampAndReporter(@Nullable Date timestamp, String reporter) {
     Map<String, Object> parameters = new HashMap<>();
     if (timestamp != null) {
       parameters.put(MILLISECONDS, timestamp.getTime());
@@ -150,10 +153,14 @@ public class MeterLogManager extends AbstractManager {
 
   // TASK METER LOG
 
-  public long findUniqueTaskWorkerCount(Date startTime, Date endTime) {
+  public long findUniqueTaskWorkerCount(@Nullable Date startTime, @Nullable Date endTime) {
     Map<String, Object> parameters = new HashMap<>();
-    parameters.put(START_TIME, startTime);
-    parameters.put(END_TIME, endTime);
+    if (startTime != null) {
+      parameters.put(START_TIME, startTime);
+    }
+    if (endTime != null) {
+      parameters.put(END_TIME, endTime);
+    }
 
     return (Long) getDbEntityManager().selectOne(SELECT_UNIQUE_TASK_WORKER, parameters);
   }

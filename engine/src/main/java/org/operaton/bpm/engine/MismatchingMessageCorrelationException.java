@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 import java.util.Map;
 
 /**
  * @author Thorben Lindhauer
  */
-public class MismatchingMessageCorrelationException extends
+public @NullMarked class MismatchingMessageCorrelationException extends
     ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;

@@ -20,21 +20,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
-public class DeleteTaskMetricsCmd implements Command<Void> {
-  protected Date timestamp;
+public @NullMarked class DeleteTaskMetricsCmd implements Command<Void> {
+  protected @Nullable Date timestamp;
 
-  public DeleteTaskMetricsCmd(Date timestamp) {
+  public DeleteTaskMetricsCmd(@Nullable Date timestamp) {
     this.timestamp = timestamp;
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkDeleteTaskMetrics);
 
     writeUserOperationLog(commandContext);

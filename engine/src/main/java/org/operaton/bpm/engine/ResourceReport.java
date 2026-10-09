@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.util.List;
 
 /**
  * This a report created during a parsing.
  */
-public interface ResourceReport {
+public @NullMarked interface ResourceReport {
 
   /** Returns the resource name where the problems occurred. */
   String getResourceName();

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,11 +28,11 @@ import org.operaton.bpm.engine.task.Task;
  * @author Roman Smirnov
  *
  */
-public class CreateTaskCmd implements Command<Task> {
+public @NullMarked class CreateTaskCmd implements Command<Task> {
 
-  protected String taskId;
+  protected @Nullable String taskId;
 
-  public CreateTaskCmd(String taskId) {
+  public CreateTaskCmd(@Nullable String taskId) {
     this.taskId = taskId;
   }
 

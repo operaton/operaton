@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.db.IdBlock;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 /**
  * @author Tom Baeyens
  */
-public class GetNextIdBlockCmd implements Command<IdBlock> {
+public @NullMarked class GetNextIdBlockCmd implements Command<IdBlock> {
 
   protected int idBlockSize;
 

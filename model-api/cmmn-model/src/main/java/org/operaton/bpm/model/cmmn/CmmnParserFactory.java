@@ -29,15 +29,16 @@ import org.operaton.bpm.model.cmmn.impl.CmmnParser;
  *
  * <p>
  * Example:
+ * </p>
  * <pre>
  * // In your implementation JAR:
  * // File: META-INF/services/org.operaton.bpm.model.cmmn.CmmnParserFactory
  * com.example.MyCustomCmmnParserFactory
  * </pre>
- * </p>
  *
  * <p>
  * To obtain an instance, use:
+ * </p>
  * <pre>
  * ServiceLoader&lt;CmmnParserFactory&gt; loader = ServiceLoader.load(CmmnParserFactory.class);
  * for (CmmnParserFactory factory : loader) {
@@ -45,7 +46,6 @@ import org.operaton.bpm.model.cmmn.impl.CmmnParser;
  *   // use parser
  * }
  * </pre>
- * </p>
  */
 public interface CmmnParserFactory {
   CmmnParser newInstance();

@@ -24,7 +24,7 @@ run_test() {
   retries=0
   until wait_for_db "$DB_TYPE" 2>/dev/null | grep -q "i_am_up"; do
     retries=$((retries+1))
-    if [ "$retries" -ge "$MAX_RETRIES" ]; then
+    if [[ "$retries" -ge "$MAX_RETRIES" ]]; then
       echo "❌ $DB_TYPE did not become ready in time!"
       cleanup_containers
       exit 1
@@ -35,7 +35,7 @@ run_test() {
 
   echo "🚀 $DB_TYPE is ready!"
 
-  if [ "$DB_TYPE" = "sqlserver" ]; then
+  if [[ "$DB_TYPE" = "sqlserver" ]]; then
     create_sql_server_db
   fi
 

@@ -21,13 +21,14 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class MapValueProvider implements ParameterValueProvider {
+public @NullMarked class MapValueProvider implements ParameterValueProvider {
 
   protected SortedMap<ParameterValueProvider, ParameterValueProvider> providerMap;
 
@@ -44,10 +45,16 @@ public class MapValueProvider implements ParameterValueProvider {
     return valueMap;
   }
 
+  /** @deprecated Unused method of internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("unused")
   public SortedMap<ParameterValueProvider, ParameterValueProvider> getProviderMap() {
     return providerMap;
   }
 
+  /** @deprecated Unused method of internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("unused")
   public void setProviderMap(SortedMap<ParameterValueProvider, ParameterValueProvider> providerMap) {
     this.providerMap = providerMap;
   }

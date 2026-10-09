@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.operaton.bpm.model.xml.Model;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -59,7 +61,7 @@ public class ModelInstanceImpl implements ModelInstance {
   }
 
   @Override
-  public ModelElementInstance getDocumentElement() {
+  public @Nullable ModelElementInstance getDocumentElement() {
     DomElement rootElement = document.getRootElement();
     if(rootElement != null) {
       return ModelUtil.getModelElement(rootElement, this);
@@ -123,7 +125,7 @@ public class ModelInstanceImpl implements ModelInstance {
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T extends ModelElementInstance> T getModelElementById(String id) {
+  public <T extends ModelElementInstance> @Nullable T getModelElementById(String id) {
     if (id == null) {
       return null;
     }

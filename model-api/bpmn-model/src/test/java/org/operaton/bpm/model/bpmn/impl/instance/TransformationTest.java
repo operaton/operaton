@@ -24,6 +24,7 @@ import org.operaton.bpm.model.bpmn.instance.FormalExpression;
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings("java:S2187") // no test methods defined here, all defined by superclass
 public class TransformationTest extends BpmnModelElementInstanceTest {
 
   @Override

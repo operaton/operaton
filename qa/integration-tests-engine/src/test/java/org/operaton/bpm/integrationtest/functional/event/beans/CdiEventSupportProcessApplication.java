@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.event.beans;
 
+import org.jspecify.annotations.NonNull;
+
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.engine.cdi.impl.event.CdiEventListener;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -32,7 +34,7 @@ public class CdiEventSupportProcessApplication extends org.operaton.bpm.applicat
   public static final String LISTENER_INVOCATION_COUNT = "listenerInvocationCount";
 
   @Override
-  public ExecutionListener getExecutionListener() {
+  public @NonNull ExecutionListener getExecutionListener() {
     return new CdiEventListener();
   }
 

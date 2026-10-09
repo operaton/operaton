@@ -18,13 +18,11 @@ package org.operaton.bpm.model.bpmn.impl;
 
 import java.io.InputStream;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Schema;
 
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
 import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
-import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
@@ -38,21 +36,14 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_20_SCHEMA
  */
 public class BpmnParser extends AbstractModelParser {
 
- private static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
- private static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-
-  private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
-
   public BpmnParser() {
-    this.schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA);
+    this.schemaFactory = createSchemaFactory();
     addSchema(BPMN20_NS, createSchema(BPMN_20_SCHEMA_LOCATION, BpmnParser.class.getClassLoader()));
   }
 
   @Override
-  protected void configureFactory(DocumentBuilderFactory dbf) {
-    dbf.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-    dbf.setAttribute(JAXP_SCHEMA_SOURCE, ReflectUtil.getResource(BPMN_20_SCHEMA_LOCATION, BpmnParser.class.getClassLoader()).toString());
-    super.configureFactory(dbf);
+  protected Schema getDocumentBuilderSchema() {
+    return schemas.get(BPMN20_NS);
   }
 
   @Override

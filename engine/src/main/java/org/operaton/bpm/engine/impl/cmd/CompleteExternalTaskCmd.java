@@ -18,13 +18,14 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 
 /**
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-public class CompleteExternalTaskCmd extends HandleExternalTaskCmd {
+public @NullMarked class CompleteExternalTaskCmd extends HandleExternalTaskCmd {
 
   protected Map<String, Object> variables;
   protected Map<String, Object> localVariables;

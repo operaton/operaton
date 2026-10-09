@@ -18,7 +18,10 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.util.Collections;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -29,12 +32,14 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  *
  * @author Anna Pazola
  *
  */
-public class ResolveIncidentCmd implements Command<Void> {
+public @NullMarked class ResolveIncidentCmd implements Command<Void> {
 
   protected String incidentId;
 
@@ -44,7 +49,7 @@ public class ResolveIncidentCmd implements Command<Void> {
   }
 
   @Override
-  public Void execute(CommandContext commandContext) {
+  public @Nullable Void execute(CommandContext commandContext) {
     final Incident incident = commandContext.getIncidentManager().findIncidentById(incidentId);
 
     EnsureUtil.ensureNotNull(NotFoundException.class, "Cannot find an incident with id '%s'".formatted(incidentId),
@@ -59,6 +64,7 @@ public class ResolveIncidentCmd implements Command<Void> {
 
     EnsureUtil.ensureNotNull(BadUserRequestException.class,
         "Cannot find an execution for an incident with id '%s'".formatted(incidentId), "execution", execution);
+    requireNonNull(execution);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstance(execution);

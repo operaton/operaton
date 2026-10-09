@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.delegate.VariableListener;
+
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.core.model.CoreActivity;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
@@ -37,7 +39,7 @@ public class CmmnActivity extends CoreActivity {
   @Serial private static final long serialVersionUID = 1L;
 
   protected List<CmmnActivity> activities = new ArrayList<>();
-  private Map<String, CmmnActivity> namedActivities = new HashMap<>();
+  private final Map<String, CmmnActivity> namedActivities = new HashMap<>();
 
   private CmmnElement cmmnElement;
 
@@ -47,8 +49,8 @@ public class CmmnActivity extends CoreActivity {
 
   private CmmnActivity parent;
 
-  private List<CmmnSentryDeclaration> sentries = new ArrayList<>();
-  private Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
+  private final List<CmmnSentryDeclaration> sentries = new ArrayList<>();
+  private final Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
 
   private List<CmmnSentryDeclaration> entryCriteria = new ArrayList<>();
   private List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
@@ -90,7 +92,7 @@ public class CmmnActivity extends CoreActivity {
   // child activity ////////////////////////////////////////////
 
   @Override
-  public CmmnActivity getChildActivity(String activityId) {
+  public @Nullable CmmnActivity getChildActivity(String activityId) {
     return namedActivities.get(activityId);
   }
 
@@ -101,7 +103,7 @@ public class CmmnActivity extends CoreActivity {
     return activityBehavior;
   }
 
-  public void setActivityBehavior(CmmnActivityBehavior behavior) {
+  public void setActivityBehavior(@Nullable CmmnActivityBehavior behavior) {
     this.activityBehavior = behavior;
   }
 
@@ -141,7 +143,7 @@ public class CmmnActivity extends CoreActivity {
     return sentries;
   }
 
-  public CmmnSentryDeclaration getSentry(String sentryId) {
+  public @Nullable CmmnSentryDeclaration getSentry(String sentryId) {
     return sentryMap.get(sentryId);
   }
 

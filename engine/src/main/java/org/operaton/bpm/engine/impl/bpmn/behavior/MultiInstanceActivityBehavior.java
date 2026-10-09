@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -29,8 +31,10 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ModificationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.variable.value.IntegerValue;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
@@ -41,7 +45,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavior implements CompositeActivityBehavior, ModificationObserverBehavior {
+public abstract @NullMarked class MultiInstanceActivityBehavior extends AbstractBpmnActivityBehavior implements CompositeActivityBehavior, ModificationObserverBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -53,11 +57,11 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
   // Variable names for mi-instance scoped variables (as described in the spec)
   public static final String LOOP_COUNTER = "loopCounter";
 
-  protected Expression loopCardinalityExpression;
-  protected Expression completionConditionExpression;
-  protected Expression collectionExpression;
-  protected String collectionVariable;
-  protected String collectionElementVariable;
+  protected @Nullable Expression loopCardinalityExpression;
+  protected @Nullable Expression completionConditionExpression;
+  protected @Nullable Expression collectionExpression;
+  protected @Nullable String collectionVariable;
+  protected @Nullable String collectionElementVariable;
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
@@ -82,13 +86,13 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
   }
 
   protected void evaluateCollectionVariable(ActivityExecution execution, Collection<?> collection, int loopCounter) {
-    if (usesCollection() && collectionElementVariable != null && collection != null) {
+    if (usesCollection() && collectionElementVariable != null) {
       Object value = getElementAtIndex(loopCounter, collection);
       setLoopVariable(execution, collectionElementVariable, value);
     }
   }
 
-  protected Collection<?> evaluateCollection(ActivityExecution execution) {
+  protected @Nullable Collection<?> evaluateCollection(ActivityExecution execution) {
     Collection<?> collection = null;
     if (usesCollection() && collectionElementVariable != null) {
       if (collectionExpression != null) {
@@ -126,7 +130,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
     return nrOfInstances;
   }
 
-  protected Object getElementAtIndex(int i, Collection<?> collection) {
+  protected @Nullable Object getElementAtIndex(int i, Collection<?> collection) {
     Object value = null;
     int index = 0;
     Iterator<?> it = collection.iterator();
@@ -144,6 +148,8 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
 
   protected int resolveLoopCardinality(ActivityExecution execution) {
     // Using Number since expr can evaluate to eg. Long (which is also the default for Juel)
+    EnsureUtil.ensureNotNull("loopCardinalityExpression", loopCardinalityExpression);
+    requireNonNull(loopCardinalityExpression);
     Object value = loopCardinalityExpression.getValue(execution);
     if (value instanceof Number numberValue) {
       return numberValue.intValue();
@@ -157,10 +163,9 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
   protected boolean completionConditionSatisfied(ActivityExecution execution) {
     if (completionConditionExpression != null) {
       Object value = completionConditionExpression.getValue(execution);
-      if (! (value instanceof Boolean)) {
+      if (! (value instanceof Boolean booleanValue)) {
         throw LOG.expressionNotBooleanException("completionCondition", completionConditionExpression.getExpressionText());
       }
-      Boolean booleanValue = (Boolean) value;
 
       LOG.multiInstanceCompletionConditionState(booleanValue);
       return booleanValue;
@@ -178,8 +183,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
   /**
    * Get the inner activity of the multi instance execution.
    *
-   * @param execution
-   *          of multi instance activity
+   * @param miBodyActivity execution of multi instance activity
    * @return inner activity
    */
   public ActivityImpl getInnerActivity(PvmActivity miBodyActivity) {
@@ -193,18 +197,18 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
     throw new ProcessEngineException("inner activity of multi instance body activity '%s' not found".formatted(miBodyActivity.getId()));
   }
 
-  protected void setLoopVariable(ActivityExecution execution, String variableName, Object value) {
+  protected void setLoopVariable(ActivityExecution execution, String variableName, @Nullable Object value) {
     execution.setVariableLocal(variableName, value);
   }
 
-  protected Integer getLoopVariable(ActivityExecution execution, String variableName) {
+  protected @Nullable Integer getLoopVariable(ActivityExecution execution, String variableName) {
     IntegerValue value = execution.getVariableLocalTyped(variableName);
     ensureNotNull("The variable '%s' could not be found in execution with id '%s'".formatted(variableName, execution.getId()), "value", value);
     return value.getValue();
   }
 
 
-  protected Integer getLocalLoopVariable(ActivityExecution execution, String variableName) {
+  protected @Nullable Integer getLocalLoopVariable(ActivityExecution execution, String variableName) {
     return (Integer) execution.getVariableLocal(variableName);
   }
 
@@ -218,7 +222,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
 
   // Getters and Setters ///////////////////////////////////////////////////////////
 
-  public Expression getLoopCardinalityExpression() {
+  public @Nullable Expression getLoopCardinalityExpression() {
     return loopCardinalityExpression;
   }
 
@@ -226,7 +230,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
     this.loopCardinalityExpression = loopCardinalityExpression;
   }
 
-  public Expression getCompletionConditionExpression() {
+  public @Nullable Expression getCompletionConditionExpression() {
     return completionConditionExpression;
   }
 
@@ -234,7 +238,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
     this.completionConditionExpression = completionConditionExpression;
   }
 
-  public Expression getCollectionExpression() {
+  public @Nullable Expression getCollectionExpression() {
     return collectionExpression;
   }
 
@@ -242,7 +246,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
     this.collectionExpression = collectionExpression;
   }
 
-  public String getCollectionVariable() {
+  public @Nullable String getCollectionVariable() {
     return collectionVariable;
   }
 
@@ -250,7 +254,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
     this.collectionVariable = collectionVariable;
   }
 
-  public String getCollectionElementVariable() {
+  public @Nullable String getCollectionElementVariable() {
     return collectionElementVariable;
   }
 

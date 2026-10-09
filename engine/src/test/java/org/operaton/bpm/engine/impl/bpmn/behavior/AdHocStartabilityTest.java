@@ -15,17 +15,18 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
 import org.operaton.bpm.engine.ActivityTypes;
 
-public class AdHocStartabilityTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class AdHocStartabilityTest {
 
   protected final AdHocStartability startability = AdHocStartability.INSTANCE;
 
   @Test
-  public void shouldAcceptTaskLikeAndCallableTypes() {
+  void shouldAcceptTaskLikeAndCallableTypes() {
     assertThat(startability.isStartableActivityType(ActivityTypes.TASK)).isTrue();
     assertThat(startability.isStartableActivityType(ActivityTypes.TASK_SCRIPT)).isTrue();
     assertThat(startability.isStartableActivityType(ActivityTypes.TASK_SERVICE)).isTrue();
@@ -40,7 +41,7 @@ public class AdHocStartabilityTest {
   }
 
   @Test
-  public void shouldRejectIntermediateEvents() {
+  void shouldRejectIntermediateEvents() {
     assertThat(startability.isStartableActivityType(ActivityTypes.INTERMEDIATE_EVENT_CATCH)).isFalse();
     assertThat(startability.isStartableActivityType(ActivityTypes.INTERMEDIATE_EVENT_MESSAGE)).isFalse();
     assertThat(startability.isStartableActivityType(ActivityTypes.INTERMEDIATE_EVENT_TIMER)).isFalse();
@@ -56,7 +57,7 @@ public class AdHocStartabilityTest {
   }
 
   @Test
-  public void shouldRejectGatewaysAndBoundaryEvents() {
+  void shouldRejectGatewaysAndBoundaryEvents() {
     assertThat(startability.isStartableActivityType(ActivityTypes.GATEWAY_EXCLUSIVE)).isFalse();
     assertThat(startability.isStartableActivityType(ActivityTypes.GATEWAY_INCLUSIVE)).isFalse();
     assertThat(startability.isStartableActivityType(ActivityTypes.GATEWAY_PARALLEL)).isFalse();
@@ -73,12 +74,12 @@ public class AdHocStartabilityTest {
   }
 
   @Test
-  public void shouldRejectNullType() {
+  void shouldRejectNullType() {
     assertThat(startability.isStartableActivityType(null)).isFalse();
   }
 
   @Test
-  public void shouldHandleMissingRuntimeContext() {
+  void shouldHandleMissingRuntimeContext() {
     assertThat(startability.getStartableActivities(null)).isEmpty();
     assertThat(startability.isStartableActivity(null, null)).isFalse();
     assertThat(startability.hasActiveChildExecutions(null)).isFalse();

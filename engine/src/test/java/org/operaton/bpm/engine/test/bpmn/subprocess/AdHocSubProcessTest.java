@@ -15,18 +15,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.subprocess;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_ACTIVE_ACTIVITY_IDS;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETION_CONDITION_SATISFIED;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETED_ACTIVITY_IDS;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_LAST_COMPLETED_ACTIVITY_ID;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES;
-import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,22 +22,48 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class AdHocSubProcessTest extends PluggableProcessEngineTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_ACTIVE_ACTIVITY_IDS;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETED_ACTIVITY_IDS;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETION_CONDITION_SATISFIED;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_LAST_COMPLETED_ACTIVITY_ID;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES;
+
+class AdHocSubProcessTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ManagementService managementService;
+  RepositoryService repositoryService;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   @Deployment
   @Test
-  public void testTriggerAdHocActivityAndCompleteSubProcess() {
+  void testTriggerAdHocActivityAndCompleteSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     List<Task> adHocTasks = taskService.createTaskQuery()
@@ -58,7 +72,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .asc()
         .list();
 
-    assertEquals(2, adHocTasks.size());
+    assertThat(adHocTasks).hasSize(2);
 
     // find tasks by definition key instead of relying on order
     Task taskA = adHocTasks.stream()
@@ -70,15 +84,15 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .findFirst()
         .orElse(null);
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
         .processInstanceId(processInstance.getId())
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
     assertNoAdHocInternalStateVariable(processInstance.getId(), adHocExecution.getId());
 
     taskService.complete(taskA.getId());
@@ -89,12 +103,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment
   @Test
-  public void testParallelOrderingStartsConfiguredActivitiesInParallel() {
+  void testParallelOrderingStartsConfiguredActivitiesInParallel() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessParallelOrdering");
 
     Task taskA = taskService.createTaskQuery()
@@ -107,8 +121,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskA.getId());
     taskService.complete(taskB.getId());
@@ -118,12 +132,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml")
   @Test
-  public void testParallelOrderingAllowsSameActivityWhileActive() {
+  void testParallelOrderingAllowsSameActivityWhileActive() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -131,7 +145,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
@@ -141,7 +155,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskA")
         .list();
 
-    assertEquals(2, taskAInstances.size());
+    assertThat(taskAInstances).hasSize(2);
 
     for (Task task : taskAInstances) {
       taskService.complete(task.getId());
@@ -152,12 +166,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml")
   @Test
-  public void testDiscoverParallelStartableAdHocActivities() {
+  void testDiscoverParallelStartableAdHocActivities() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -165,24 +179,24 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
     assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
-    assertEquals(2, startableActivities.size());
+    assertThat(startableActivities).hasSize(2);
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
 
     startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
     assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
-    assertEquals(2, startableActivities.size());
+    assertThat(startableActivities).hasSize(2);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingStartsSingleConfiguredActivity.bpmn20.xml")
   @Test
-  public void testSequentialOrderingStartsSingleConfiguredActivity() {
+  void testSequentialOrderingStartsSingleConfiguredActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
 
     Task taskA = taskService.createTaskQuery()
@@ -195,8 +209,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNull();
 
     taskService.complete(taskA.getId());
 
@@ -205,12 +219,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingAllowsOneActiveActivityAtATime.bpmn20.xml")
   @Test
-  public void testDiscoverSequentialStartableAdHocActivities() {
+  void testDiscoverSequentialStartableAdHocActivities() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -218,17 +232,17 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
     assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
-    assertEquals(2, startableActivities.size());
+    assertThat(startableActivities).hasSize(2);
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
 
     startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
-    assertEquals(0, startableActivities.size());
+    assertThat(startableActivities).isEmpty();
 
     Task taskA = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
@@ -245,12 +259,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
     startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
     assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
-    assertEquals(2, startableActivities.size());
+    assertThat(startableActivities).hasSize(2);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingAllowsOneActiveActivityAtATime.bpmn20.xml")
   @Test
-  public void testSequentialOrderingAllowsOneActiveActivityAtATime() {
+  void testSequentialOrderingAllowsOneActiveActivityAtATime() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -258,7 +272,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
 
@@ -267,7 +281,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskA")
         .singleResult();
 
-    assertNotNull(taskA);
+    assertThat(taskA).isNotNull();
 
     try {
       runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
@@ -277,10 +291,10 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
           e.getMessage());
     }
 
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskB")
-        .singleResult());
+        .singleResult()).isNull();
 
     taskService.complete(taskA.getId());
 
@@ -289,7 +303,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     try {
       runtimeService.triggerAdHocActivities(adHocExecution.getId(), Arrays.asList("taskA", "taskB"), null);
@@ -306,7 +320,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskB);
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskB.getId());
 
@@ -315,7 +329,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     runtimeService.completeAdHocSubProcess(adHocExecution.getId());
 
@@ -324,12 +338,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingBlocksWhileAsyncBeforeActivityWaitsForJob.bpmn20.xml")
   @Test
-  public void testSequentialOrderingBlocksWhileAsyncBeforeActivityWaitsForJob() {
+  void testSequentialOrderingBlocksWhileAsyncBeforeActivityWaitsForJob() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialAsync");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -337,7 +351,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
 
@@ -345,8 +359,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull(asyncBeforeJob);
-    assertEquals(0, runtimeService.getStartableAdHocActivities(adHocExecution.getId()).size());
+    assertThat(asyncBeforeJob).isNotNull();
+    assertThat(runtimeService.getStartableAdHocActivities(adHocExecution.getId())).isEmpty();
 
     try {
       runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
@@ -363,7 +377,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskA")
         .singleResult();
 
-    assertNotNull(taskA);
+    assertThat(taskA).isNotNull();
     taskService.complete(taskA.getId());
 
     adHocExecution = runtimeService.createExecutionQuery()
@@ -371,11 +385,11 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
     List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
     assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
-    assertEquals(2, startableActivities.size());
+    assertThat(startableActivities).hasSize(2);
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
 
@@ -384,7 +398,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskB);
+    assertThat(taskB).isNotNull();
     taskService.complete(taskB.getId());
 
     adHocExecution = runtimeService.createExecutionQuery()
@@ -399,12 +413,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingBlocksWhileAsyncBeforeActivityWaitsForJob.bpmn20.xml")
   @Test
-  public void testCompleteAdHocSubProcessFailsWhileAsyncBeforeActivityWaitsForJob() {
+  void testCompleteAdHocSubProcessFailsWhileAsyncBeforeActivityWaitsForJob() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialAsync");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -412,7 +426,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
 
@@ -427,7 +441,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull(asyncBeforeJob);
+    assertThat(asyncBeforeJob).isNotNull();
     managementService.executeJob(asyncBeforeJob.getId());
 
     Task taskA = taskService.createTaskQuery()
@@ -435,20 +449,20 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskA")
         .singleResult();
 
-    assertNotNull(taskA);
+    assertThat(taskA).isNotNull();
     taskService.complete(taskA.getId());
 
     runtimeService.completeAdHocSubProcess(adHocExecution.getId());
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNotNull();
   }
 
   @Deployment
   @Test
-  public void testParallelActivationRespectsActiveTasksList() {
+  void testParallelActivationRespectsActiveTasksList() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
         "adHocSubProcessBasic",
         Collections.singletonMap("initialTaskIds", Collections.singletonList("taskB")));
@@ -463,8 +477,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskB.getId());
 
@@ -473,56 +487,56 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testMissingActiveTasksCollectionFailsAdHocStart.bpmn20.xml")
   @Test
-  public void testMissingActiveTasksCollectionLeavesAdHocSubProcessActive() {
+  void testMissingActiveTasksCollectionLeavesAdHocSubProcessActive() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
-    assertEquals(0, taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
-        .count());
+        .count()).isZero();
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
         .processInstanceId(processInstance.getId())
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
-    assertNull(taskService.createTaskQuery()
+    assertThat(adHocExecution).isNotNull();
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testParallelActivationRespectsActiveTasksList.bpmn20.xml")
   @Test
-  public void testEmptyActiveTasksCollectionLeavesAdHocSubProcessActive() {
+  void testEmptyActiveTasksCollectionLeavesAdHocSubProcessActive() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
         "adHocSubProcessBasic",
     Collections.singletonMap("initialTaskIds", Collections.emptyList()));
 
-    assertEquals(0, taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
-        .count());
+        .count()).isZero();
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
         .processInstanceId(processInstance.getId())
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
-    assertNull(taskService.createTaskQuery()
+    assertThat(adHocExecution).isNotNull();
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml")
   @Test
-  public void testTriggerAdHocActivitiesAfterIdleStartActivatesTasks() {
+  void testTriggerAdHocActivitiesAfterIdleStartActivatesTasks() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -530,7 +544,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
     assertNoAdHocInternalStateVariable(processInstance.getId(), adHocExecution.getId());
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Arrays.asList("taskA", "taskB"), null);
@@ -546,27 +560,27 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskA.getId());
     taskService.complete(taskB.getId());
 
-    assertNull(runtimeService.createExecutionQuery()
+    assertThat(runtimeService.createExecutionQuery()
       .processInstanceId(processInstance.getId())
       .activityId("adHocSubProcess")
-      .singleResult());
+      .singleResult()).isNull();
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
       .processInstanceId(processInstance.getId())
       .taskDefinitionKey("taskAfter")
-      .singleResult());
+      .singleResult()).isNotNull();
 
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml")
   @Test
-  public void testCompleteAdHocSubProcessAfterIdleStart() {
+  void testCompleteAdHocSubProcessAfterIdleStart() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -578,20 +592,20 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       runtimeService.completeAdHocSubProcess(adHocExecution.getId());
     }
 
-    assertNull(runtimeService.createExecutionQuery()
+    assertThat(runtimeService.createExecutionQuery()
         .processInstanceId(processInstance.getId())
         .activityId("adHocSubProcess")
-        .singleResult());
+        .singleResult()).isNull();
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNotNull();
   }
 
     @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml")
     @Test
-    public void testCompleteAdHocSubProcessWithVariablesAfterIdleStart() {
+    void testCompleteAdHocSubProcessWithVariablesAfterIdleStart() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -599,27 +613,27 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       .activityId("adHocSubProcess")
       .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     runtimeService.completeAdHocSubProcess(adHocExecution.getId(),
       Collections.singletonMap("completionReason", "manual"));
 
-    assertEquals("manual", runtimeService.getVariable(processInstance.getId(), "completionReason"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "completionReason")).isEqualTo("manual");
 
-    assertNull(runtimeService.createExecutionQuery()
+    assertThat(runtimeService.createExecutionQuery()
       .processInstanceId(processInstance.getId())
       .activityId("adHocSubProcess")
-      .singleResult());
+      .singleResult()).isNull();
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
       .processInstanceId(processInstance.getId())
       .taskDefinitionKey("taskAfter")
-      .singleResult());
+      .singleResult()).isNotNull();
     }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompleteAdHocSubProcessCancelsActivitiesWhenCancelRemainingInstancesTrue.bpmn20.xml")
   @Test
-  public void testCompleteAdHocSubProcessCancelsActivitiesWhenCancelRemainingInstancesTrue() {
+  void testCompleteAdHocSubProcessCancelsActivitiesWhenCancelRemainingInstancesTrue() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -627,30 +641,30 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     runtimeService.completeAdHocSubProcess(adHocExecution.getId());
 
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskA")
-        .singleResult());
+        .singleResult()).isNull();
 
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskB")
-        .singleResult());
+        .singleResult()).isNull();
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
       .processInstanceId(processInstance.getId())
       .taskDefinitionKey("taskAfter")
-      .singleResult());
+      .singleResult()).isNotNull();
 
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompleteAdHocSubProcessFailsWhenActivitiesAreActiveAndCancelRemainingInstancesFalse.bpmn20.xml")
   @Test
-  public void testCompleteAdHocSubProcessFailsWhenActivitiesAreActiveAndCancelRemainingInstancesFalse() {
+  void testCompleteAdHocSubProcessFailsWhenActivitiesAreActiveAndCancelRemainingInstancesFalse() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessNoCancelRemaining");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -658,7 +672,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     try {
       runtimeService.completeAdHocSubProcess(adHocExecution.getId());
@@ -667,15 +681,15 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       testRule.assertTextPresent("has active child activities and cannot be completed", e.getMessage());
     }
 
-    assertNotNull(runtimeService.createExecutionQuery()
+    assertThat(runtimeService.createExecutionQuery()
         .processInstanceId(processInstance.getId())
         .activityId("adHocSubProcess")
-        .singleResult());
+        .singleResult()).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testAdHocCommandsFailForNonAdHocExecution.bpmn20.xml")
   @Test
-  public void testCompleteAdHocSubProcessFailsForNonAdHocExecution() {
+  void testCompleteAdHocSubProcessFailsForNonAdHocExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("simpleUserTaskProcess");
 
     Execution execution = runtimeService.createExecutionQuery()
@@ -693,7 +707,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testStarterActivitiesFlowToDownstreamTask.bpmn20.xml")
   @Test
-  public void testStarterActivitiesFlowToDownstreamTask() {
+  void testStarterActivitiesFlowToDownstreamTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithDownstreamFlow");
 
     Task taskA = taskService.createTaskQuery()
@@ -711,9 +725,9 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskC")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
-    assertNull(taskC);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
+    assertThat(taskC).isNull();
 
     taskService.complete(taskA.getId());
 
@@ -722,14 +736,14 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskC")
         .singleResult();
 
-    assertNotNull(taskC);
+    assertThat(taskC).isNotNull();
 
     taskB = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskB);
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskB.getId());
     taskService.complete(taskC.getId());
@@ -739,12 +753,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment
   @Test
-  public void testNonStarterConfiguredTasksFailAdHocStart() {
+  void testNonStarterConfiguredTasksFailAdHocStart() {
     try {
       runtimeService.startProcessInstanceByKey("adHocSubProcessWithDownstreamFlow");
       fail("Expected BadUserRequestException");
@@ -757,7 +771,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testOperatonNamespaceActiveTasksCollectionStartsConfiguredTasks.bpmn20.xml")
   @Test
-  public void testOperatonNamespaceActiveTasksCollectionStartsConfiguredTasks() {
+  void testOperatonNamespaceActiveTasksCollectionStartsConfiguredTasks() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     Task taskA = taskService.createTaskQuery()
@@ -770,13 +784,13 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerAdHocActivityWithUnknownActivityId.bpmn20.xml")
   @Test
-  public void testTriggerAdHocActivityWithUnknownActivityId() {
+  void testTriggerAdHocActivityWithUnknownActivityId() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -794,7 +808,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerMultipleAdHocActivitiesWithActivityVariables.bpmn20.xml")
   @Test
-  public void testTriggerMultipleAdHocActivitiesWithActivityVariables() {
+  void testTriggerMultipleAdHocActivitiesWithActivityVariables() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithThreeTasks");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -827,18 +841,18 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskA")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
-    assertNotNull(taskC);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
+    assertThat(taskC).isNotNull();
 
-    assertEquals("john", runtimeService.getVariableLocal(taskB.getExecutionId(), "assigneeHint"));
-    assertEquals("mary", runtimeService.getVariableLocal(taskC.getExecutionId(), "assigneeHint"));
-    assertNull(runtimeService.getVariableLocal(taskA.getExecutionId(), "assigneeHint"));
+    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), "assigneeHint")).isEqualTo("john");
+    assertThat(runtimeService.getVariableLocal(taskC.getExecutionId(), "assigneeHint")).isEqualTo("mary");
+    assertThat(runtimeService.getVariableLocal(taskA.getExecutionId(), "assigneeHint")).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerMultipleAdHocActivitiesWithActivityVariables.bpmn20.xml")
   @Test
-  public void testTriggerMultipleAdHocActivitiesFailsAllWhenOneIsInvalid() {
+  void testTriggerMultipleAdHocActivitiesFailsAllWhenOneIsInvalid() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithThreeTasks");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -862,13 +876,13 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskC")
         .singleResult();
 
-    assertNull(taskB);
-    assertNull(taskC);
+    assertThat(taskB).isNull();
+    assertThat(taskC).isNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testAdHocCommandsFailForNonAdHocExecution.bpmn20.xml")
   @Test
-  public void testTriggerAdHocActivityFailsForNonAdHocExecution() {
+  void testTriggerAdHocActivityFailsForNonAdHocExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("simpleUserTaskProcess");
 
     Execution execution = runtimeService.createExecutionQuery()
@@ -886,7 +900,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testStarterActivitiesFlowToDownstreamTask.bpmn20.xml")
   @Test
-  public void testTriggerAdHocActivityFailsForNonStarterActivity() {
+  void testTriggerAdHocActivityFailsForNonStarterActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithDownstreamFlow");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -904,7 +918,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerEmbeddedSubProcessAdHocActivity.bpmn20.xml")
   @Test
-  public void testTriggerEmbeddedSubProcessAdHocActivity() {
+  void testTriggerEmbeddedSubProcessAdHocActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithEmbeddedSubProcess");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -912,12 +926,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "embeddedSubProcess", "Embedded SubProcess", "subProcess");
     assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
-    assertEquals(2, startableActivities.size());
+    assertThat(startableActivities).hasSize(2);
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("embeddedSubProcess"), null);
 
@@ -926,7 +940,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("embeddedTask")
         .singleResult();
 
-    assertNotNull(embeddedTask);
+    assertThat(embeddedTask).isNotNull();
     taskService.complete(embeddedTask.getId());
 
     Task taskAfter = taskService.createTaskQuery()
@@ -934,12 +948,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerTransactionAdHocActivity.bpmn20.xml")
   @Test
-  public void testTriggerTransactionAdHocActivity() {
+  void testTriggerTransactionAdHocActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithTransaction");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -947,12 +961,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "transaction", "Transaction", "transaction");
     assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
-    assertEquals(2, startableActivities.size());
+    assertThat(startableActivities).hasSize(2);
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("transaction"), null);
 
@@ -961,7 +975,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("transactionTask")
         .singleResult();
 
-    assertNotNull(transactionTask);
+    assertThat(transactionTask).isNotNull();
     taskService.complete(transactionTask.getId());
 
     Task taskAfter = taskService.createTaskQuery()
@@ -969,12 +983,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerCallActivityAdHocActivity.bpmn20.xml")
   @Test
-  public void testTriggerCallActivityAdHocActivity() {
+  void testTriggerCallActivityAdHocActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithCallActivity");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -982,12 +996,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "callActivity", "Call Activity", "callActivity");
     assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
-    assertEquals(2, startableActivities.size());
+    assertThat(startableActivities).hasSize(2);
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("callActivity"), null);
 
@@ -995,14 +1009,14 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .superProcessInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull(calledProcessInstance);
+    assertThat(calledProcessInstance).isNotNull();
 
     Task calledTask = taskService.createTaskQuery()
         .processInstanceId(calledProcessInstance.getId())
         .taskDefinitionKey("calledTask")
         .singleResult();
 
-    assertNotNull(calledTask);
+    assertThat(calledTask).isNotNull();
     taskService.complete(calledTask.getId());
 
     Task taskAfter = taskService.createTaskQuery()
@@ -1010,12 +1024,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testBoundaryEventOnTriggeredAdHocActivityContinuesInsideScope.bpmn20.xml")
   @Test
-  public void testBoundaryEventOnTriggeredAdHocActivityContinuesInsideScope() {
+  void testBoundaryEventOnTriggeredAdHocActivityContinuesInsideScope() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithChildBoundaryEvent");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -1023,7 +1037,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
 
@@ -1032,26 +1046,26 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskA")
         .singleResult();
 
-    assertNotNull(taskA);
+    assertThat(taskA).isNotNull();
 
     Job boundaryTimer = managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull(boundaryTimer);
+    assertThat(boundaryTimer).isNotNull();
     managementService.executeJob(boundaryTimer.getId());
 
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskA")
-        .singleResult());
+        .singleResult()).isNull();
 
     Task boundaryTask = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("boundaryTask")
         .singleResult();
 
-    assertNotNull(boundaryTask);
+    assertThat(boundaryTask).isNotNull();
     taskService.complete(boundaryTask.getId());
 
     Task taskAfter = taskService.createTaskQuery()
@@ -1059,12 +1073,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testStartabilityExcludesEventSubProcessesAndCompensationHandlers.bpmn20.xml")
   @Test
-  public void testStartabilityExcludesEventSubProcessesAndCompensationHandlers() {
+  void testStartabilityExcludesEventSubProcessesAndCompensationHandlers() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithNonStartableHandlers");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -1072,11 +1086,11 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    assertNotNull(adHocExecution);
+    assertThat(adHocExecution).isNotNull();
 
     List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
     assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
-    assertEquals(1, startableActivities.size());
+    assertThat(startableActivities).hasSize(1);
 
     try {
       runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("eventSubProcess"), null);
@@ -1097,7 +1111,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCompletionConditionCancelsRemainingActivities() {
+  void testCompletionConditionCancelsRemainingActivities() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
         "adHocSubProcessWithCompletionCondition",
         Collections.singletonMap("approved", false));
@@ -1112,35 +1126,35 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     // Completing taskA with approved=true triggers completion condition
     // which cancels taskB (due to cancelRemainingInstances="true")
     taskService.complete(taskA.getId(), Collections.singletonMap("approved", true));
 
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskB")
-        .singleResult());
+        .singleResult()).isNull();
 
     Task taskAfter = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
 
     Task remainingTasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    assertEquals("taskAfter", remainingTasks.getTaskDefinitionKey());
+    assertThat(remainingTasks.getTaskDefinitionKey()).isEqualTo("taskAfter");
 
     taskService.complete(taskAfter.getId());
-    assertTrue(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count() == 0);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompletionConditionDefersUntilActiveActivitiesFinish.bpmn20.xml")
   @Test
-  public void testCompletionConditionDefersUntilActiveActivitiesFinish() {
+  void testCompletionConditionDefersUntilActiveActivitiesFinish() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
         "adHocSubProcessWithDeferredCompletion",
         Collections.singletonMap("approved", false));
@@ -1155,8 +1169,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskA.getId(), Collections.singletonMap("approved", true));
 
@@ -1165,14 +1179,14 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNull(taskAfter);
+    assertThat(taskAfter).isNull();
 
     taskB = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskB);
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskB.getId());
 
@@ -1181,12 +1195,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompletionConditionUsesCompletedActivityContext.bpmn20.xml")
   @Test
-  public void testCompletionConditionUsesCompletedActivityContext() {
+  void testCompletionConditionUsesCompletedActivityContext() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithCompletionContext");
 
     Task taskA = taskService.createTaskQuery()
@@ -1199,8 +1213,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskA.getId());
 
@@ -1209,33 +1223,34 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskB);
-    assertEquals(1, ((Number) runtimeService.getVariableLocal(taskB.getExecutionId(),
-        NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)).intValue());
-    assertEquals(1, ((Number) runtimeService.getVariableLocal(taskB.getExecutionId(),
-        NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES)).intValue());
-    assertEquals(Collections.singletonList("taskB"),
-        runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_ACTIVE_ACTIVITY_IDS));
-    assertEquals(Collections.singletonList("taskA"),
-        runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_COMPLETED_ACTIVITY_IDS));
-    assertEquals("taskA", runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_LAST_COMPLETED_ACTIVITY_ID));
+    assertThat(taskB).isNotNull();
+    assertThat(((Number) runtimeService.getVariableLocal(taskB.getExecutionId(),
+        NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)).intValue()).isEqualTo(1);
+    assertThat(((Number) runtimeService.getVariableLocal(taskB.getExecutionId(),
+        NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES)).intValue()).isEqualTo(1);
+    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_ACTIVE_ACTIVITY_IDS))
+      .isEqualTo(Collections.singletonList("taskB"));
+    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_COMPLETED_ACTIVITY_IDS))
+      .isEqualTo(Collections.singletonList("taskA"));
+    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_LAST_COMPLETED_ACTIVITY_ID))
+      .isEqualTo("taskA");
 
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNull();
 
     taskService.complete(taskB.getId());
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompletionConditionUsesActiveCountContext.bpmn20.xml")
   @Test
-  public void testCompletionConditionUsesActiveCountContext() {
+  void testCompletionConditionUsesActiveCountContext() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithActiveCountContext");
 
     Task taskA = taskService.createTaskQuery()
@@ -1248,25 +1263,25 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskA.getId());
 
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskB")
-        .singleResult());
+        .singleResult()).isNull();
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNotNull();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompletionConditionSatisfactionIsLatched.bpmn20.xml")
   @Test
-  public void testCompletionConditionSatisfactionIsLatchedUntilActiveActivitiesFinish() {
+  void testCompletionConditionSatisfactionIsLatchedUntilActiveActivitiesFinish() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithLatchedCompletion");
 
     Task taskA = taskService.createTaskQuery()
@@ -1279,8 +1294,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskA.getId());
 
@@ -1289,25 +1304,25 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskB")
         .singleResult();
 
-    assertNotNull(taskB);
-    assertEquals(Boolean.TRUE,
-        runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_COMPLETION_CONDITION_SATISFIED));
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskB).isNotNull();
+    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_COMPLETION_CONDITION_SATISFIED))
+      .isEqualTo(Boolean.TRUE);
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNull();
 
     taskService.complete(taskB.getId());
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNotNull();
   }
 
   @Deployment
   @Test
-  public void testBoundaryErrorEventOnAdHocSubProcess() {
+  void testBoundaryErrorEventOnAdHocSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBoundaryError");
 
     Task boundaryTask = taskService.createTaskQuery()
@@ -1325,17 +1340,17 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(boundaryTask);
-    assertNull(adHocTask);
-    assertNull(taskAfter);
+    assertThat(boundaryTask).isNotNull();
+    assertThat(adHocTask).isNull();
+    assertThat(taskAfter).isNull();
 
     taskService.complete(boundaryTask.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isZero();
   }
 
   @Deployment
   @Test
-  public void testMultiInstanceParallelAdHocSubProcessStartsAllInstances() {
+  void testMultiInstanceParallelAdHocSubProcessStartsAllInstances() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessMultiInstanceParallel");
 
     List<Task> adHocTasks = taskService.createTaskQuery()
@@ -1344,12 +1359,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .asc()
         .list();
 
-    assertEquals(4, adHocTasks.size());
+    assertThat(adHocTasks).hasSize(4);
 
     long taskACount = adHocTasks.stream().filter(t -> "taskA".equals(t.getTaskDefinitionKey())).count();
     long taskBCount = adHocTasks.stream().filter(t -> "taskB".equals(t.getTaskDefinitionKey())).count();
-    assertEquals(2, taskACount);
-    assertEquals(2, taskBCount);
+    assertThat(taskACount).isEqualTo(2);
+    assertThat(taskBCount).isEqualTo(2);
 
     for (Task task : adHocTasks) {
       taskService.complete(task.getId());
@@ -1360,12 +1375,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
   @Deployment
   @Test
-  public void testMultiInstanceSequentialAdHocSubProcessStartsOneInstanceAtATime() {
+  void testMultiInstanceSequentialAdHocSubProcessStartsOneInstanceAtATime() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessMultiInstanceSequential");
 
     List<Task> firstInstanceTasks = taskService.createTaskQuery()
@@ -1374,12 +1389,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .asc()
         .list();
 
-    assertEquals(2, firstInstanceTasks.size());
+    assertThat(firstInstanceTasks).hasSize(2);
 
     long firstInstanceTaskACount = firstInstanceTasks.stream().filter(t -> "taskA".equals(t.getTaskDefinitionKey())).count();
     long firstInstanceTaskBCount = firstInstanceTasks.stream().filter(t -> "taskB".equals(t.getTaskDefinitionKey())).count();
-    assertEquals(1, firstInstanceTaskACount);
-    assertEquals(1, firstInstanceTaskBCount);
+    assertThat(firstInstanceTaskACount).isEqualTo(1);
+    assertThat(firstInstanceTaskBCount).isEqualTo(1);
 
     for (Task task : firstInstanceTasks) {
       taskService.complete(task.getId());
@@ -1391,12 +1406,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .asc()
         .list();
 
-    assertEquals(2, secondInstanceTasks.size());
+    assertThat(secondInstanceTasks).hasSize(2);
 
     long secondInstanceTaskACount = secondInstanceTasks.stream().filter(t -> "taskA".equals(t.getTaskDefinitionKey())).count();
     long secondInstanceTaskBCount = secondInstanceTasks.stream().filter(t -> "taskB".equals(t.getTaskDefinitionKey())).count();
-    assertEquals(1, secondInstanceTaskACount);
-    assertEquals(1, secondInstanceTaskBCount);
+    assertThat(secondInstanceTaskACount).isEqualTo(1);
+    assertThat(secondInstanceTaskBCount).isEqualTo(1);
 
     for (Task task : secondInstanceTasks) {
       taskService.complete(task.getId());
@@ -1407,12 +1422,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .taskDefinitionKey("taskAfter")
         .singleResult();
 
-    assertNotNull(taskAfter);
+    assertThat(taskAfter).isNotNull();
   }
 
     @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testAutoCompleteAttributeFalseKeepsAdHocSubProcessOpen.bpmn20.xml")
     @Test
-    public void testAutoCompleteAttributeFalseKeepsAdHocSubProcessOpen() {
+    void testAutoCompleteAttributeFalseKeepsAdHocSubProcessOpen() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessAutoCompleteAttributeFalse");
 
     Task taskA = taskService.createTaskQuery()
@@ -1425,8 +1440,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       .taskDefinitionKey("taskB")
       .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskA.getId());
     taskService.complete(taskB.getId());
@@ -1436,23 +1451,23 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       .activityId("adHocSubProcess")
       .singleResult();
 
-    assertNotNull(adHocExecution);
-    assertNull(taskService.createTaskQuery()
+    assertThat(adHocExecution).isNotNull();
+    assertThat(taskService.createTaskQuery()
       .processInstanceId(processInstance.getId())
       .taskDefinitionKey("taskAfter")
-      .singleResult());
+      .singleResult()).isNull();
 
     runtimeService.completeAdHocSubProcess(adHocExecution.getId());
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
       .processInstanceId(processInstance.getId())
       .taskDefinitionKey("taskAfter")
-      .singleResult());
+      .singleResult()).isNotNull();
     }
 
     @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testOperatonNamespaceAutoCompleteAttributeFalseKeepsAdHocSubProcessOpen.bpmn20.xml")
     @Test
-    public void testOperatonNamespaceAutoCompleteAttributeFalseKeepsAdHocSubProcessOpen() {
+    void testOperatonNamespaceAutoCompleteAttributeFalseKeepsAdHocSubProcessOpen() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessAutoCompleteAttributeFalseOperatonNamespace");
 
     Task taskA = taskService.createTaskQuery()
@@ -1460,7 +1475,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       .taskDefinitionKey("taskA")
       .singleResult();
 
-    assertNotNull(taskA);
+    assertThat(taskA).isNotNull();
 
     taskService.complete(taskA.getId());
 
@@ -1469,23 +1484,23 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       .activityId("adHocSubProcess")
       .singleResult();
 
-    assertNotNull(adHocExecution);
-    assertNull(taskService.createTaskQuery()
+    assertThat(adHocExecution).isNotNull();
+    assertThat(taskService.createTaskQuery()
       .processInstanceId(processInstance.getId())
       .taskDefinitionKey("taskAfter")
-      .singleResult());
+      .singleResult()).isNull();
 
     runtimeService.completeAdHocSubProcess(adHocExecution.getId());
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
       .processInstanceId(processInstance.getId())
       .taskDefinitionKey("taskAfter")
-      .singleResult());
+      .singleResult()).isNotNull();
     }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testAutoCompleteAttributeTrueAutoCompletesAdHocSubProcess.bpmn20.xml")
   @Test
-  public void testAutoCompleteAttributeTrueAutoCompletesAdHocSubProcess() {
+  void testAutoCompleteAttributeTrueAutoCompletesAdHocSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessAutoCompleteAttributeTrue");
 
     Task taskA = taskService.createTaskQuery()
@@ -1498,25 +1513,25 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       .taskDefinitionKey("taskB")
       .singleResult();
 
-    assertNotNull(taskA);
-    assertNotNull(taskB);
+    assertThat(taskA).isNotNull();
+    assertThat(taskB).isNotNull();
 
     taskService.complete(taskA.getId());
     taskService.complete(taskB.getId());
 
-    assertNull(runtimeService.createExecutionQuery()
+    assertThat(runtimeService.createExecutionQuery()
       .processInstanceId(processInstance.getId())
       .activityId("adHocSubProcess")
-      .singleResult());
+      .singleResult()).isNull();
 
-    assertNotNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
       .processInstanceId(processInstance.getId())
       .taskDefinitionKey("taskAfter")
-      .singleResult());
+      .singleResult()).isNotNull();
   }
 
   @Test
-    public void testAutoCompletePropertyFailsParse() {
+  void testAutoCompletePropertyFailsParse() {
     String resource = "org/operaton/bpm/engine/test/bpmn/subprocess/"
         + "AdHocSubProcessTest.testInvalidAutoCompletePropertyFailsParse.bpmn20.xml";
 
@@ -1534,7 +1549,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testInvalidAutoCompleteAttributeFailsParse() {
+  void testInvalidAutoCompleteAttributeFailsParse() {
     String resource = "org/operaton/bpm/engine/test/bpmn/subprocess/"
         + "AdHocSubProcessTest.testInvalidAutoCompleteAttributeFailsParse.bpmn20.xml";
 
@@ -1553,7 +1568,7 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingRejectsMultipleConfiguredInitialActivities.bpmn20.xml")
   @Test
-  public void testSequentialOrderingRejectsMultipleConfiguredInitialActivities() {
+  void testSequentialOrderingRejectsMultipleConfiguredInitialActivities() {
     try {
       runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
       fail("Expected BadUserRequestException");
@@ -1565,11 +1580,11 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
   }
 
   protected void assertNoAdHocInternalStateVariable(String processInstanceId, String adHocExecutionId) {
-    assertNull(runtimeService.getVariableLocal(adHocExecutionId, "adHocActivityStarted"));
-    assertEquals(0, runtimeService.createVariableInstanceQuery()
+    assertThat(runtimeService.getVariableLocal(adHocExecutionId, "adHocActivityStarted")).isNull();
+    assertThat(runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(processInstanceId)
         .variableName("adHocActivityStarted")
-        .count());
+        .count()).isZero();
   }
 
   protected void assertStartableAdHocActivity(List<AdHocActivity> activities,
@@ -1581,8 +1596,8 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .findFirst()
         .orElse(null);
 
-    assertNotNull(activity);
-    assertEquals(activityName, activity.getActivityName());
-    assertEquals(activityType, activity.getActivityType());
+    assertThat(activity).isNotNull();
+    assertThat(activity.getActivityName()).isEqualTo(activityName);
+    assertThat(activity.getActivityType()).isEqualTo(activityType);
   }
 }

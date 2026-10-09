@@ -15,29 +15,41 @@
  */
 package org.operaton.bpm.engine.test.bpmn.subprocess;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+class AdHocSubProcessEdgeCaseTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
+
+  ManagementService managementService;
+  RuntimeService runtimeService;
+  TaskService taskService;
 
   private static final String IDLE_MODEL =
       "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml";
@@ -56,14 +68,14 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = IDLE_MODEL)
   @Test
-  public void testDiscoverStartableAdHocActivitiesFailsForUnknownExecution() {
+  void testDiscoverStartableAdHocActivitiesFailsForUnknownExecution() {
     assertBadUserRequestContains(() -> runtimeService.getStartableAdHocActivities("doesNotExist"),
         "execution doesNotExist doesn't exist");
   }
 
   @Deployment(resources = NON_AD_HOC_MODEL)
   @Test
-  public void testDiscoverStartableAdHocActivitiesFailsForNonAdHocExecution() {
+  void testDiscoverStartableAdHocActivitiesFailsForNonAdHocExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("simpleUserTaskProcess");
     Execution execution = findExecution(processInstance, "userTask");
 
@@ -73,7 +85,7 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = IDLE_MODEL)
   @Test
-  public void testTriggerAdHocActivitiesFailsForUnknownExecution() {
+  void testTriggerAdHocActivitiesFailsForUnknownExecution() {
     assertBadUserRequestContains(
         () -> runtimeService.triggerAdHocActivities("doesNotExist", Collections.singletonList("taskA"), null),
         "execution doesNotExist doesn't exist");
@@ -81,14 +93,14 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = IDLE_MODEL)
   @Test
-  public void testCompleteAdHocSubProcessFailsForUnknownExecution() {
+  void testCompleteAdHocSubProcessFailsForUnknownExecution() {
     assertBadUserRequestContains(() -> runtimeService.completeAdHocSubProcess("doesNotExist"),
         "execution doesNotExist doesn't exist");
   }
 
   @Deployment(resources = IDLE_MODEL)
   @Test
-  public void testEmptyTriggerRequestIsRejectedWithoutStartingActivities() {
+  void testEmptyTriggerRequestIsRejectedWithoutStartingActivities() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -97,12 +109,12 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
     assertNoTask(processInstance, "taskA");
     assertNoTask(processInstance, "taskB");
-    assertNotNull(findAdHocExecution(processInstance));
+    assertThat(findAdHocExecution(processInstance)).isNotNull();
   }
 
   @Deployment(resources = IDLE_MODEL)
   @Test
-  public void testNullActivityIdIsRejectedWithoutStartingEarlierActivities() {
+  void testNullActivityIdIsRejectedWithoutStartingEarlierActivities() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -111,12 +123,12 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
     assertNoTask(processInstance, "taskA");
     assertNoTask(processInstance, "taskB");
-    assertNotNull(findAdHocExecution(processInstance));
+    assertThat(findAdHocExecution(processInstance)).isNotNull();
   }
 
   @Deployment(resources = IDLE_MODEL)
   @Test
-  public void testDuplicateActivityIdsAreRejectedWithoutStartingActivities() {
+  void testDuplicateActivityIdsAreRejectedWithoutStartingActivities() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -125,12 +137,12 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
     assertNoTask(processInstance, "taskA");
     assertNoTask(processInstance, "taskB");
-    assertNotNull(findAdHocExecution(processInstance));
+    assertThat(findAdHocExecution(processInstance)).isNotNull();
   }
 
   @Deployment(resources = THREE_TASK_MODEL)
   @Test
-  public void testVariablesForNonRequestedActivityAreRejectedWithoutStartingTargets() {
+  void testVariablesForNonRequestedActivityAreRejectedWithoutStartingTargets() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithThreeTasks");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -150,7 +162,7 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = NO_CANCEL_REMAINING_MODEL)
   @Test
-  public void testRejectedManualCompleteDoesNotPersistVariables() {
+  void testRejectedManualCompleteDoesNotPersistVariables() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessNoCancelRemaining");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -158,15 +170,15 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
         Collections.singletonMap("completionReason", "shouldNotBeStored")),
         "has active child activities and cannot be completed");
 
-    assertNull(runtimeService.getVariable(processInstance.getId(), "completionReason"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "completionReason")).isNull();
     assertTaskExists(processInstance, "taskA");
     assertTaskExists(processInstance, "taskB");
-    assertNotNull(findAdHocExecution(processInstance));
+    assertThat(findAdHocExecution(processInstance)).isNotNull();
   }
 
   @Deployment(resources = CANCEL_REMAINING_MODEL)
   @Test
-  public void testManualCompleteWithVariablesCancelsActiveChildren() {
+  void testManualCompleteWithVariablesCancelsActiveChildren() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -176,12 +188,12 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
     assertNoTask(processInstance, "taskA");
     assertNoTask(processInstance, "taskB");
     assertTaskExists(processInstance, "taskAfter");
-    assertEquals("operatorCancelled", runtimeService.getVariable(processInstance.getId(), "completionReason"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "completionReason")).isEqualTo("operatorCancelled");
   }
 
   @Deployment
   @Test
-  public void testManualCompleteCancelsAsyncBeforeActivity() {
+  void testManualCompleteCancelsAsyncBeforeActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessAsyncManualComplete");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -191,20 +203,20 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull(asyncBeforeJob);
+    assertThat(asyncBeforeJob).isNotNull();
 
     runtimeService.completeAdHocSubProcess(adHocExecution.getId(),
         Collections.singletonMap("completionReason", "cancelAsync"));
 
-    assertEquals(0L, managementService.createJobQuery().processInstanceId(processInstance.getId()).count());
+    assertThat(managementService.createJobQuery().processInstanceId(processInstance.getId()).count()).isZero();
     assertNoTask(processInstance, "taskA");
     assertTaskExists(processInstance, "taskAfter");
-    assertEquals("cancelAsync", runtimeService.getVariable(processInstance.getId(), "completionReason"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "completionReason")).isEqualTo("cancelAsync");
   }
 
   @Deployment(resources = EMBEDDED_SUB_PROCESS_MODEL)
   @Test
-  public void testManualCompleteCancelsEmbeddedSubProcessActivity() {
+  void testManualCompleteCancelsEmbeddedSubProcessActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithEmbeddedSubProcess");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -219,7 +231,7 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = CALL_ACTIVITY_MODEL)
   @Test
-  public void testManualCompleteCancelsCallActivityProcessInstance() {
+  void testManualCompleteCancelsCallActivityProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithCallActivity");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -229,21 +241,21 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
         .superProcessInstanceId(processInstance.getId())
         .singleResult();
 
-    assertNotNull(calledProcessInstance);
+    assertThat(calledProcessInstance).isNotNull();
     assertTaskExists(calledProcessInstance, "calledTask");
 
     runtimeService.completeAdHocSubProcess(adHocExecution.getId());
 
-    assertEquals(0L, runtimeService.createProcessInstanceQuery()
+    assertThat(runtimeService.createProcessInstanceQuery()
         .processInstanceId(calledProcessInstance.getId())
-        .count());
+        .count()).isZero();
     assertNoTask(calledProcessInstance, "calledTask");
     assertTaskExists(processInstance, "taskAfter");
   }
 
   @Deployment(resources = EMBEDDED_SUB_PROCESS_MODEL)
   @Test
-  public void testParallelOrderingAllowsAdditionalTriggerWhileEmbeddedSubProcessIsActive() {
+  void testParallelOrderingAllowsAdditionalTriggerWhileEmbeddedSubProcessIsActive() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithEmbeddedSubProcess");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
@@ -254,10 +266,10 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
     Task taskB = assertTaskExists(processInstance, "taskB");
 
     taskService.complete(taskB.getId());
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("taskAfter")
-        .singleResult());
+        .singleResult()).isNull();
 
     taskService.complete(embeddedTask.getId());
     assertTaskExists(processInstance, "taskAfter");
@@ -265,13 +277,13 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testSequentialOrderingBlocksWhileEmbeddedSubProcessIsActive() {
+  void testSequentialOrderingBlocksWhileEmbeddedSubProcessIsActive() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialEmbedded");
     Execution adHocExecution = findAdHocExecution(processInstance);
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("embeddedSubProcess"), null);
 
-    assertEquals(0, runtimeService.getStartableAdHocActivities(adHocExecution.getId()).size());
+    assertThat(runtimeService.getStartableAdHocActivities(adHocExecution.getId())).isEmpty();
     String adHocExecutionId = adHocExecution.getId();
     assertBadUserRequestContains(() -> runtimeService.triggerAdHocActivities(adHocExecutionId,
         Collections.singletonList("taskB"), null), "already has an active child activity");
@@ -293,7 +305,7 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCompletionConditionCountsEmbeddedSubProcessCompletion() {
+  void testCompletionConditionCountsEmbeddedSubProcessCompletion() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithEmbeddedCompletion");
 
     Task embeddedTask = assertTaskExists(processInstance, "embeddedTask");
@@ -315,7 +327,7 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
         .activityId(activityId)
         .singleResult();
 
-    assertNotNull(execution);
+    assertThat(execution).isNotNull();
     return execution;
   }
 
@@ -325,19 +337,19 @@ public class AdHocSubProcessEdgeCaseTest extends PluggableProcessEngineTest {
         .taskDefinitionKey(taskDefinitionKey)
         .singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     return task;
   }
 
   protected void assertNoTask(ProcessInstance processInstance, String taskDefinitionKey) {
-    assertNull(taskService.createTaskQuery()
+    assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey(taskDefinitionKey)
-        .singleResult());
+        .singleResult()).isNull();
   }
 
   protected void assertStartableActivityIds(List<AdHocActivity> activities, String... expectedActivityIds) {
-    assertEquals(expectedActivityIds.length, activities.size());
+    assertThat(activities).hasSize(expectedActivityIds.length);
     for (String expectedActivityId : expectedActivityIds) {
       boolean found = activities.stream()
           .anyMatch(activity -> expectedActivityId.equals(activity.getActivityId()));

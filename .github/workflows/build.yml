@@ -181,6 +181,9 @@ jobs:
           $BUILD_CMD
 
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
+      - name: Verify engine test discovery
+        if: github.event.inputs.skip_tests != 'true'
+        run: python3 .devenv/scripts/build/check-engine-test-discovery.py
       - name: Build cache statistics
         if: always()
         shell: bash
@@ -211,7 +214,9 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: surefire-reports
-          path: ${{ github.workspace }}/**/target/surefire-reports/**
+          path: |
+            ${{ github.workspace }}/**/target/surefire-reports/**
+            ${{ github.workspace }}/engine/target/test-discovery/**
           retention-days: 30
       - name: Stage build output for Sonar analysis
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')

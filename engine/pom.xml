@@ -442,12 +442,14 @@
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <skip>${skipTests.operaton-engine}</skip>
+          <!-- Surefire 3.6.0 also matches these patterns against JUnit class names,
+               without the .class suffix. Keep both scanner and provider compatible. -->
           <includes>
-            <include>%regex[.*(${test.includes}).*Test.*.class]</include>
+            <include>%regex[.*(${test.includes}).*Test.*]</include>
           </includes>
           <excludes combine.children="append">
             <exclude>**/*TestCase.java</exclude>
-            <exclude>%regex[.*(${test.excludes}).*Test.*.class]</exclude>
+            <exclude>%regex[.*(${test.excludes}).*Test.*]</exclude>
             <!-- Nashorn is not part of the JDK anymore in Java 15+ -->
             <exclude>**/*NashornTest.java</exclude>
           </excludes>
@@ -976,6 +978,31 @@
      <properties>
       <test.excludes>bpmn|cmmn</test.excludes>
      </properties>
+    </profile>
+
+    <!-- Exercise the real filters against a small, isolated set of compiled tests.
+         The runner never relocates the original classes or test reports. -->
+    <profile>
+      <id>testDiscovery</id>
+      <properties>
+        <test.discovery.scenario>manual</test.discovery.scenario>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <testClassesDirectory>${project.build.directory}/test-discovery/classes</testClassesDirectory>
+              <reportsDirectory>${project.build.directory}/test-discovery/reports/${test.discovery.scenario}</reportsDirectory>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${project.build.testOutputDirectory}</additionalClasspathElement>
+              </additionalClasspathElements>
+              <!-- Only the isolated engine canaries participate in this check. -->
+              <dependenciesToScan combine.self="override" />
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
 
   </profiles>

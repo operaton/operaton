@@ -223,3 +223,55 @@ So simply call
 mvn clean test -PtestExceptBpmn
 ```
 and all the bpmn testcases won't bother you any longer.
+
+## Checking Engine Test Discovery
+
+A successful Maven build or a nonzero reactor test count does not prove that the
+engine's ordinary, parameterized and nested tests were all discovered. The
+Surefire 3.6.0 JUnit Platform provider re-applies the engine's regex filters to
+class names without the `.class` suffix, unlike the initial class-file scanner.
+The engine patterns intentionally work with both representations.
+
+After installing the reactor dependencies (for example, after a normal build),
+run the discovery regression check from the repository root:
+
+```shell
+python3 .devenv/scripts/build/check-engine-test-discovery.py
+```
+
+The check compiles the engine tests once with the Maven build cache disabled,
+then scans an isolated copy of a few existing compiled tests using the real
+engine POM and its `testDiscovery` profile. It checks exact successful testcase
+identities, including every parameterized invocation and both nested tests,
+for these scenarios:
+
+- Default filters: 33 testcases
+- `testBpmn`: 24 testcases
+- `testExceptBpmn`: 9 testcases
+- Custom dotted `test.includes`: 31 testcases
+- Combined dotted `test.includes` and `test.excludes`: 7 testcases
+- An include matching nothing: 0 testcases, preserving intentional empty selections
+
+The isolated scan also includes excluded `TestCase` and Nashorn classes. Their
+tests must remain absent. The guard does not use `-Dtest`, which would replace
+the filters being checked. The existing test sources and ordinary
+`engine/target/surefire-reports` are unchanged; diagnostic logs and reports are
+written beneath `engine/target/test-discovery`. Changes to the selected canary
+tests may require updating the explicit expected testcase identities.
+Dependency scanning is disabled only in the opt-in isolation profile; normal
+engine builds retain their ArchUnit dependency scanning. Full-suite verification
+must check that coverage separately from this focused discovery guard.
+
+PR and push builds run this check after the normal build. Maven's build cache is
+disabled for every guard invocation, so previously cached reports cannot make
+the check pass. Manually dispatched builds that skip tests also skip this check.
+
+Use another Maven runner or forward repository/settings options after `--`:
+
+```shell
+python3 .devenv/scripts/build/check-engine-test-discovery.py --runner=mvnd -- -s settings.xml
+python3 .devenv/scripts/build/check-engine-test-discovery.py --self-test
+```
+
+The second command tests the report checker without Maven, including missing,
+empty, failed, skipped, partial-parameterized and nested-only reports.

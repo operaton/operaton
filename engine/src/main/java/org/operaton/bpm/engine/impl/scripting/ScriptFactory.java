@@ -19,10 +19,16 @@ package org.operaton.bpm.engine.impl.scripting;
 import org.operaton.bpm.engine.delegate.Expression;
 
 /**
- * <p>A script factory is responsible for creating a {@link ExecutableScript}
- * instance. Users may customize (subclass) this class in order to customize script
- * creation. For instance, some users may choose to pre-process scripts before
- * they are created.</p>
+ * <p>A script factory is responsible for creating {@link ExecutableScript}
+ * instances. Users may customize (subclass) this class in order to customize script
+ * creation.</p>
+ *
+ * <p>The default executable script implementations created by this factory preserve
+ * configured script preprocessing behavior automatically. Custom subclasses that
+ * return their own {@link ExecutableScript} implementations should ensure that
+ * configured script preprocessors are still applied before evaluation if they
+ * want those custom implementations to participate in the script preprocessing
+ * feature.</p>
  *
  * @author Daniel Meyer
  *

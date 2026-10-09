@@ -38,3 +38,12 @@ migration prohibition and sequential-ordering prohibition are not adopted.
 New source copied from either project in future changes must retain its applicable
 headers/NOTICE and use the actual source commit and original author in the backport
 commit body. Merge authors must not be substituted for implementation authors.
+
+## Enabled-state scheduler and migration
+
+The persistent enabled-state scheduler follows BPMN 2.0.2 section 13.3.5 and is
+implemented against Operaton's existing PVM, execution persistence and migration
+contracts. Its new regression tests are authored for these contracts. Zeebe and
+Flowable were studied for behavioral comparison only; no source, translated code,
+tests or comments from those implementations are included in this continuation.
+See [the comparison](ad-hoc-engine-comparison.md) for version-specific references.

@@ -1238,6 +1238,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
     for (VariableInstanceEntity variable : variables) {
       if (variable.isConcurrentLocal()) {
+        // Remove the stale source-store entry before the referencer assigns the new owner.
+        // getVariables() returns a snapshot, so removal does not affect this iteration.
+        variableStore.removeVariableForMove(variable.getName());
         moveVariableTo(variable, other);
       }
     }

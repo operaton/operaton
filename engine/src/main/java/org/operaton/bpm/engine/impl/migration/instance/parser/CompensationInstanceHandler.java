@@ -118,8 +118,8 @@ public @NullMarked class CompensationInstanceHandler implements MigratingInstanc
     ExecutionEntity eventScopeExecution = CompensationUtil.getCompensatingExecution(element);
     ensureNotNull("Cannot find compensating execution for event subscription " + element, "eventScopeExecution", eventScopeExecution);
     requireNonNull(eventScopeExecution);
-    MigrationInstruction eventScopeInstruction = requireNonNull(parseContext.findSingleMigrationInstruction(eventScopeExecution.getActivityId()));
-    ActivityImpl targetScope = requireNonNull(parseContext.getTargetActivity(eventScopeInstruction));
+    MigrationInstruction eventScopeInstruction = parseContext.findSingleMigrationInstruction(eventScopeExecution.getActivityId());
+    ActivityImpl targetScope = parseContext.getTargetActivity(eventScopeInstruction);
 
     MigratingEventScopeInstance migratingCompensationInstance =
         parseContext.getMigratingProcessInstance().addEventScopeInstance(

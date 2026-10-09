@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
+import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityEndScope;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingTransitionInstance;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -39,7 +40,7 @@ public class TransitionInstanceHandler implements MigratingInstanceParseHandler<
   @Override
   public void handle(MigratingInstanceParseContext parseContext, TransitionInstance transitionInstance) {
 
-    if (!isAsyncTransitionInstance(transitionInstance)) {
+    if (!isMigratableTransitionInstance(transitionInstance)) {
       return;
     }
 
@@ -74,15 +75,34 @@ public class TransitionInstanceHandler implements MigratingInstanceParseHandler<
 
     parseContext.handleDependentVariables(migratingTransitionInstance, collectTransitionInstanceVariables(migratingTransitionInstance));
 
+    if (migratingTransitionInstance.isPendingActivityEnd()) {
+      MigratingActivityEndScope retainedScope = new MigratingActivityEndScope(migratingTransitionInstance);
+      boolean ownsScope = migratingTransitionInstance.isPendingScopedActivityEnd();
+      parseContext.handleDependentActivityInstanceJobs(retainedScope, ownsScope ? asyncExecution.getJobs() : List.of());
+      parseContext.handleDependentEventSubscriptions(retainedScope,
+          ownsScope ? asyncExecution.getEventSubscriptions() : List.of());
+      migratingTransitionInstance.addMigratingDependentInstance(retainedScope);
+    }
+
   }
 
   /**
    * Workaround for CAM-5609: In general, only async continuations should be represented as TransitionInstances, but
    * due to this bug, completed multi-instances are represented like that as well. We tolerate the second case.
+   * Enabled ad-hoc activity tokens are also transition instances, but deliberately do not own a job.
    */
-  protected boolean isAsyncTransitionInstance(TransitionInstance transitionInstance) {
+  protected boolean isMigratableTransitionInstance(TransitionInstance transitionInstance) {
     String executionId = transitionInstance.getExecutionId();
     ExecutionEntity execution = Context.getCommandContext().getExecutionManager().findExecutionById(executionId);
+    if (MigratingTransitionInstance.isAdHocEnabledActivity(execution.getActivity(), execution)) {
+      return true;
+    }
+    return isAsyncTransitionInstance(transitionInstance);
+  }
+
+  protected boolean isAsyncTransitionInstance(TransitionInstance transitionInstance) {
+    ExecutionEntity execution = Context.getCommandContext().getExecutionManager()
+        .findExecutionById(transitionInstance.getExecutionId());
     for (JobEntity job : execution.getJobs()) {
       if (AsyncContinuationJobHandler.TYPE.equals(job.getJobHandlerType())) {
         return true;
@@ -96,7 +116,18 @@ public class TransitionInstanceHandler implements MigratingInstanceParseHandler<
     List<VariableInstanceEntity> variables = new ArrayList<>();
     ExecutionEntity representativeExecution = instance.resolveRepresentativeExecution();
 
-    if (representativeExecution.isConcurrent()) {
+    if (instance.isPendingScopedActivityEnd()) {
+      // This continuation precedes scope destruction. Its locals have not been moved
+      // to a concurrent token as they would be for a sequence-flow continuation.
+      variables.addAll(representativeExecution.getVariablesInternal());
+      ExecutionEntity parent = representativeExecution.getParent();
+      if (parent != null && parent.isConcurrent()) {
+        variables.addAll(parent.getVariablesInternal());
+      } else if (parent != null) {
+        variables.addAll(ActivityInstanceHandler.getConcurrentLocalVariables(parent));
+      }
+    }
+    else if (representativeExecution.isConcurrent()) {
       variables.addAll(representativeExecution.getVariablesInternal());
     }
     else {

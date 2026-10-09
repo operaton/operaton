@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.migration.instance;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
@@ -36,8 +37,20 @@ import org.operaton.bpm.engine.management.JobDefinition;
  */
 public class MigratingAsyncJobInstance extends MigratingJobInstance {
 
+  protected final boolean deferredActivityEnd;
+
   public MigratingAsyncJobInstance(JobEntity jobEntity, JobDefinitionEntity jobDefinitionEntity, ScopeImpl targetScope) {
     super(jobEntity, jobDefinitionEntity, targetScope);
+    ActivityImpl sourceActivity = jobEntity.getExecution().getActivity();
+    AsyncContinuationConfiguration configuration = (AsyncContinuationConfiguration) jobEntity.getJobHandlerConfiguration();
+    deferredActivityEnd = sourceActivity != null
+        && PvmAtomicOperation.ACTIVITY_END.getCanonicalName().equals(configuration.getAtomicOperation())
+        && (sourceActivity.isScope() && jobEntity.getExecution().isScope()
+            || targetScope != null && targetScope.isScope() || isAdHocActivityEnd(configuration, sourceActivity));
+  }
+
+  public boolean isDeferredActivityEnd() {
+    return deferredActivityEnd;
   }
 
   @Override
@@ -84,13 +97,21 @@ public class MigratingAsyncJobInstance extends MigratingJobInstance {
     jobEntity.setJobHandlerConfiguration(targetConfiguration);
   }
 
+  /** An ad-hoc activity-end continuation has not yet evaluated completion or selected outgoing flows. */
+  public static boolean isAdHocActivityEnd(AsyncContinuationConfiguration configuration, ActivityImpl targetActivity) {
+    return PvmAtomicOperation.ACTIVITY_END.getCanonicalName().equals(configuration.getAtomicOperation())
+        && targetActivity.getFlowScope().getActivityBehavior() instanceof AdHocSubProcessActivityBehavior behavior
+        && behavior.isCompletableActivity(targetActivity);
+  }
+
   protected void updateAsyncAfterTargetConfiguration(AsyncContinuationConfiguration currentConfiguration) {
     ActivityImpl targetActivity = (ActivityImpl) targetScope;
     List<PvmTransition> outgoingTransitions = targetActivity.getOutgoingTransitions();
 
     AsyncContinuationConfiguration targetConfiguration = new AsyncContinuationConfiguration();
 
-    if (outgoingTransitions.isEmpty()) {
+    if (outgoingTransitions.isEmpty() || deferredActivityEnd
+        || isAdHocActivityEnd(currentConfiguration, targetActivity)) {
       targetConfiguration.setAtomicOperation(PvmAtomicOperation.ACTIVITY_END.getCanonicalName());
     }
     else {

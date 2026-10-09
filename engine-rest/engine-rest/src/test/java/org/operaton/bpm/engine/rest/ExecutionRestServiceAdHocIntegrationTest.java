@@ -15,17 +15,9 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
@@ -46,6 +38,15 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ExecutionRestServiceAdHocIntegrationTest extends AbstractRestServiceTest {
 
@@ -159,4 +160,58 @@ public class ExecutionRestServiceAdHocIntegrationTest extends AbstractRestServic
     assertNotNull(taskAfter);
     assertEquals("rest", runtimeService.getVariable(processInstance.getId(), "completionReason"));
   }
+
+  @Test
+  void shouldDiscoverAndActivateMigratedEnabledTokenThroughRest() {
+    RepositoryService repositoryService = realProcessEngine.getRepositoryService();
+    RuntimeService runtimeService = realProcessEngine.getRuntimeService();
+    TaskService taskService = realProcessEngine.getTaskService();
+    String xml = """
+        <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+          xmlns:operaton="http://operaton.org/schema/1.0/bpmn" targetNamespace="test">
+          <process id="enabledRest" isExecutable="true" operaton:historyTimeToLive="180">
+            <startEvent id="start"/><sequenceFlow id="enter" sourceRef="start" targetRef="adhoc"/>
+            <adHocSubProcess id="adhoc" ordering="Sequential">
+              <userTask id="a"/><userTask id="b"/>
+              <sequenceFlow id="ab" sourceRef="a" targetRef="b"/>
+            </adHocSubProcess>
+            <sequenceFlow id="leave" sourceRef="adhoc" targetRef="after"/><userTask id="after"/>
+          </process>
+        </definitions>
+        """;
+    String sourceDeployment = repositoryService.createDeployment().addString("enabled.bpmn", xml).deploy().getId();
+    String source = repositoryService.createProcessDefinitionQuery().deploymentId(sourceDeployment).singleResult().getId();
+    ProcessInstance instance = runtimeService.startProcessInstanceById(source);
+    String scope = runtimeService.createExecutionQuery().processInstanceId(instance.getId())
+        .activityId("adhoc").singleResult().getId();
+    runtimeService.triggerAdHocActivities(scope, Collections.singletonList("a"), null);
+    taskService.complete(taskService.createTaskQuery().taskDefinitionKey("a").singleResult().getId());
+    String enabledExecution = runtimeService.getStartableAdHocActivities(scope).stream()
+        .filter(activity -> "b".equals(activity.getActivityId())).findFirst().orElseThrow()
+        .getEnabledExecutionIds().get(0);
+    String targetDeployment = repositoryService.createDeployment()
+        .addString("enabled.bpmn", xml.replace("id=\"b\"", "id=\"renamed\"").replace("targetRef=\"b\"", "targetRef=\"renamed\""))
+        .deploy().getId();
+    String target = repositoryService.createProcessDefinitionQuery().deploymentId(targetDeployment).singleResult().getId();
+    runtimeService.newMigration(runtimeService.createMigrationPlan(source, target).mapEqualActivities()
+        .mapActivities("b", "renamed").build()).processInstanceIds(instance.getId()).execute();
+
+    given().pathParam("id", scope)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("find { it.activityId == 'a' }.starterActivity", equalTo(true))
+      .body("find { it.activityId == 'a' }.enabledExecutionIds", hasSize(0))
+      .body("find { it.activityId == 'renamed' }.starterActivity", equalTo(false))
+      .body("find { it.activityId == 'renamed' }.enabledExecutionIds", containsInAnyOrder(enabledExecution))
+      .when().get(STARTABLE_AD_HOC_ACTIVITIES_URL);
+    assertThat(taskService.createTaskQuery().count()).isZero();
+    given().pathParam("id", scope).contentType(ContentType.JSON)
+      .body(Map.of("activities", Collections.singletonList(Map.of("activityId", "renamed"))))
+      .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
+      .when().post(TRIGGER_AD_HOC_ACTIVITIES_URL);
+    Task task = taskService.createTaskQuery().taskDefinitionKey("renamed").singleResult();
+    assertThat(task).isNotNull();
+    taskService.complete(task.getId());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("after").count()).isEqualTo(1);
+  }
+
 }

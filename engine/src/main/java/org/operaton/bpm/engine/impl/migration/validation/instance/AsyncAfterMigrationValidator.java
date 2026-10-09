@@ -16,10 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instance;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
+import org.operaton.bpm.engine.impl.migration.instance.MigratingAsyncJobInstance;
+import org.operaton.bpm.engine.impl.migration.instance.MigratingInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingJobInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingTransitionInstance;
+import org.operaton.bpm.engine.impl.migration.instance.MigratingVariableInstance;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 
@@ -35,7 +41,19 @@ public class AsyncAfterMigrationValidator implements MigratingTransitionInstance
       AsyncContinuationConfiguration config = (AsyncContinuationConfiguration) jobInstance.getJobEntity().getJobHandlerConfiguration();
       String sourceTransitionId = config.getTransitionId();
 
-      if (targetActivity.getOutgoingTransitions().size() > 1) {
+      if (migratingInstance.isPendingScopedActivityEnd() && !targetActivity.isScope()) {
+        Set<String> names = new HashSet<>();
+        for (MigratingInstance dependent : migratingInstance.getMigratingDependentInstances()) {
+          if (dependent instanceof MigratingVariableInstance variable && !names.add(variable.getVariableName())) {
+            instanceReport.addFailure("The variable '%s' exists in both, this scope and concurrent local in the parent scope. Migrating to a non-scope activity would overwrite one of them."
+                .formatted(variable.getVariableName()));
+          }
+        }
+      }
+
+      if (targetActivity.getOutgoingTransitions().size() > 1
+          && !((MigratingAsyncJobInstance) jobInstance).isDeferredActivityEnd()
+          && !MigratingAsyncJobInstance.isAdHocActivityEnd(config, targetActivity)) {
         if (sourceTransitionId == null) {
           instanceReport.addFailure("Transition instance is assigned to no sequence flow"
               + " and target activity has more than one outgoing sequence flow");

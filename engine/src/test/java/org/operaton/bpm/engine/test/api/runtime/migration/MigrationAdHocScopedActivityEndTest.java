@@ -23,10 +23,14 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.externaltask.ExternalTask;
+import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.migration.MigratingProcessInstanceValidationException;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -64,6 +68,7 @@ class MigrationAdHocScopedActivityEndTest {
     complete(process, "taskA");
     Job job = asyncJob(process);
     String scopeExecution = job.getExecutionId();
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-deferred");
     runtime.setVariableLocal(parentExecutionId(scopeExecution), "shadow", "carrier");
     runtime.setVariableLocal(scopeExecution, "shadow", "scope");
     assertThat(runtime.getVariable(process.getId(), "endExecutions")).isEqualTo(1L);
@@ -74,6 +79,7 @@ class MigrationAdHocScopedActivityEndTest {
     runtime.newMigration(plan).processInstanceIds(process.getId()).execute();
 
     assertThat(asyncJob(process).getExecutionId()).isEqualTo(scopeExecution);
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-deferred");
     assertThat(runtime.getVariableLocal(scopeExecution, "localInput")).isEqualTo("retained");
     assertThat(runtime.getVariableLocal(scopeExecution, "shadow")).isEqualTo("scope");
     assertThat(runtime.getVariableLocal(parentExecutionId(scopeExecution), "shadow")).isEqualTo("carrier");
@@ -85,6 +91,7 @@ class MigrationAdHocScopedActivityEndTest {
           .mapActivities("adhoc", "adhoc").mapActivities("taskA", "taskA").build();
       runtime.newMigration(back).processInstanceIds(process.getId()).execute();
       assertThat(asyncJob(process).getExecutionId()).isEqualTo(scopeExecution);
+      assertThat(asyncOperation(job)).isEqualTo("activity-end-deferred");
       assertThat(runtime.getVariableLocal(scopeExecution, "shadow")).isEqualTo("scope");
       assertThat(runtime.getVariableLocal(parentExecutionId(scopeExecution), "shadow")).isEqualTo("carrier");
     }
@@ -165,11 +172,13 @@ class MigrationAdHocScopedActivityEndTest {
     ProcessInstance process = runtime.startProcessInstanceById(source.getId(), initialVariables());
     complete(process, "taskA");
     Job job = asyncJob(process);
+    assertThat(asyncOperation(job)).isEqualTo("activity-end");
     MigrationPlan plan = runtime.createMigrationPlan(source.getId(), target.getId()).mapActivities("taskA", "taskA").build();
 
     runtime.newMigration(plan).processInstanceIds(process.getId()).execute();
 
     assertThat(asyncJob(process).getExecutionId()).isEqualTo(job.getExecutionId());
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-deferred");
     assertThat(runtime.getVariableLocal(job.getExecutionId(), "localInput")).isEqualTo("retained");
     engine.getManagementService().executeJob(job.getId());
     assertThat(runtime.getVariable(process.getId(), "mappedOutput")).isEqualTo("retained-target");
@@ -243,6 +252,287 @@ class MigrationAdHocScopedActivityEndTest {
     runtime.completeAdHocSubProcess(scope);
     complete(process, "after");
     helper.assertProcessEnded(process.getId());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = {false, true})
+  void transitionSelectedBeforeTerminalRoundTripDoesNotReplayOutput(boolean multipleTargetFlows) {
+    RuntimeService runtime = engine.getRuntimeService();
+    String next = "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"taskB\"/><userTask id=\"taskB\"/>";
+    ProcessDefinition source = deploy(ordinary(task("${input}", "${localInput}") + next));
+    ProcessDefinition terminal = deploy(ordinary("<userTask id=\"taskA\" operaton:asyncAfter=\"true\"/>"));
+    String targetChildren = task("${missingInputMustNotBeReplayed}", "must-not-replay-target-output") + next;
+    if (multipleTargetFlows) {
+      targetChildren += "<sequenceFlow id=\"unexpected\" sourceRef=\"taskA\" targetRef=\"unexpectedTask\"/>"
+          + "<userTask id=\"unexpectedTask\"/>";
+    }
+    ProcessDefinition target = deploy(ordinary(targetChildren));
+    ProcessInstance process = runtime.startProcessInstanceById(source.getId(), initialVariables());
+    complete(process, "taskA");
+    Job job = asyncJob(process);
+    assertThat(asyncOperation(job)).isEqualTo("transition-notify-listener-take");
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "mappedOutput")).isEqualTo("retained");
+    MigrationPlan first = runtime.createMigrationPlan(source.getId(), terminal.getId())
+        .mapActivities("taskA", "taskA").build();
+    runtime.newMigration(first).processInstanceIds(process.getId()).execute();
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-disposed");
+    MigrationPlan second = runtime.createMigrationPlan(terminal.getId(), target.getId())
+        .mapActivities("taskA", "taskA").build();
+
+    runtime.newMigration(second).processInstanceIds(process.getId()).execute();
+    assertThat(asyncOperation(job)).isEqualTo("transition-notify-listener-take");
+    assertThat(runtime.createVariableInstanceQuery().processInstanceIdIn(process.getId()).variableName("localInput").count())
+        .isZero();
+    engine.getManagementService().executeJob(job.getId());
+
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "mappedOutput")).isEqualTo("retained");
+    assertThat(runtime.getVariable(process.getId(), "endExecutions")).isEqualTo(1L);
+    assertThat(engine.getTaskService().createTaskQuery().processInstanceId(process.getId()).list())
+        .extracting(Task::getTaskDefinitionKey).containsExactly("taskB");
+    complete(process, "taskB");
+    helper.assertProcessEnded(process.getId());
+  }
+
+  @Test
+  void transitionSelectedScopeDoesNotRunOutputAgainWhenMigratedToTerminalActivity() {
+    RuntimeService runtime = engine.getRuntimeService();
+    ProcessDefinition source = deploy(retirementModel(false, "taskA", 1, true));
+    ProcessDefinition target = deploy(retirementModel(false, "taskA", 0, true)
+        .replace("${input}", "${missingInputMustNotBeReplayed}"));
+    ProcessInstance process = runtime.startProcessInstanceById(source.getId(), initialVariables());
+    complete(process, "taskA");
+    Job job = asyncJob(process);
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    MigrationPlan plan = runtime.createMigrationPlan(source.getId(), target.getId())
+        .mapActivities("taskA", "taskA").mapActivities("keeper", "keeper").build();
+
+    runtime.newMigration(plan).processInstanceIds(process.getId()).execute();
+
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-disposed");
+    engine.getManagementService().executeJob(job.getId());
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "endExecutions")).isEqualTo(1L);
+    assertThat(engine.getTaskService().createTaskQuery().processInstanceId(process.getId()).list())
+        .extracting(Task::getTaskDefinitionKey).containsExactly("keeper");
+    complete(process, "keeper");
+    helper.assertProcessEnded(process.getId());
+  }
+
+  @Test
+  void disposedScopeOnNewWrapperFinishesWrapperWithoutReplayingChildOutput() {
+    RuntimeService runtime = engine.getRuntimeService();
+    ProcessDefinition source = deploy(ordinary(task("${input}", "${localInput}")
+        + "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"taskB\"/><userTask id=\"taskB\"/>"));
+    String targetTask = task("${missingInputMustNotBeReplayed}", "must-not-replay-target-output");
+    String targetXml = definitions("<process id=\"process\" isExecutable=\"true\"><startEvent id=\"start\"/>"
+        + "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"inner\"/>"
+        + "<subProcess id=\"inner\"><extensionElements><operaton:inputOutput>"
+        + "<operaton:inputParameter name=\"wrapperLocal\">retained</operaton:inputParameter>"
+        + "<operaton:outputParameter name=\"wrapperOutput\">"
+        + "${execution.setVariable('wrapperOutputExecutions', wrapperOutputExecutions + 1)}"
+        + "</operaton:outputParameter></operaton:inputOutput></extensionElements><startEvent id=\"innerStart\"/>"
+        + "<sequenceFlow id=\"innerEnter\" sourceRef=\"innerStart\" targetRef=\"taskA\"/>" + targetTask
+        + "</subProcess><sequenceFlow id=\"leave\" sourceRef=\"inner\" targetRef=\"after\"/>"
+        + "<userTask id=\"after\"/></process>");
+    ProcessDefinition target = deploy(targetXml);
+    ProcessInstance process = runtime.startProcessInstanceById(source.getId(), initialVariables());
+    runtime.setVariable(process.getId(), "wrapperOutputExecutions", 0);
+    complete(process, "taskA");
+    Job job = asyncJob(process);
+    MigrationPlan plan = runtime.createMigrationPlan(source.getId(), target.getId()).mapActivities("taskA", "taskA").build();
+
+    runtime.newMigration(plan).processInstanceIds(process.getId()).execute();
+
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-disposed");
+    engine.getManagementService().executeJob(job.getId());
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "endExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "wrapperOutputExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "mappedOutput")).isEqualTo("retained");
+    assertThat(runtime.getActivityInstance(process.getId()).getActivityInstances("inner")).isEmpty();
+    assertThat(runtime.createVariableInstanceQuery().processInstanceIdIn(process.getId()).variableName("wrapperLocal").count())
+        .isZero();
+    complete(process, "after");
+    helper.assertProcessEnded(process.getId());
+  }
+
+  @Test
+  void rejectUnmatchedSelectedFlowAfterTerminalMigrationWithoutChangingDisposedState() {
+    RuntimeService runtime = engine.getRuntimeService();
+    ProcessDefinition source = deploy(retirementModel(false, "taskA", 1, true));
+    ProcessDefinition terminal = deploy(retirementModel(false, "taskA", 0, false));
+    ProcessDefinition target = deploy(retirementModel(false, "taskA", 2, true).replace("wrongOne", "differentFlow"));
+    ProcessInstance process = runtime.startProcessInstanceById(source.getId(), initialVariables());
+    complete(process, "taskA");
+    Job job = asyncJob(process);
+    MigrationPlan first = runtime.createMigrationPlan(source.getId(), terminal.getId())
+        .mapActivities("taskA", "taskA").mapActivities("keeper", "keeper").build();
+    runtime.newMigration(first).processInstanceIds(process.getId()).execute();
+    MigrationPlan second = runtime.createMigrationPlan(terminal.getId(), target.getId())
+        .mapActivities("taskA", "taskA").mapActivities("keeper", "keeper").build();
+
+    assertThatThrownBy(() -> runtime.newMigration(second).processInstanceIds(process.getId()).execute())
+        .isInstanceOf(MigratingProcessInstanceValidationException.class).hasMessageContaining("cannot be matched");
+
+    assertThat(asyncJob(process).getId()).isEqualTo(job.getId());
+    assertThat(asyncJob(process).getProcessDefinitionId()).isEqualTo(terminal.getId());
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-disposed");
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    assertThat(runtime.createVariableInstanceQuery().processInstanceIdIn(process.getId()).variableName("localInput").count())
+        .isZero();
+    engine.getManagementService().executeJob(job.getId());
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    complete(process, "keeper");
+    helper.assertProcessEnded(process.getId());
+  }
+
+  private String ordinary(String children) {
+    return definitions("<process id=\"process\" isExecutable=\"true\"><startEvent id=\"start\"/>"
+        + "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"taskA\"/>" + children + "</process>");
+  }
+
+  @ParameterizedTest
+  @CsvSource({"false,false,false", "false,false,true", "false,true,false", "false,true,true",
+      "true,false,false", "true,false,true", "true,true,false", "true,true,true"})
+  void migrateUncaughtErrorWithoutTurningRetirementIntoSuccessfulCompletion(boolean targetAdHoc, boolean roundTrip,
+      boolean legacyContinuation) {
+    RuntimeService runtime = engine.getRuntimeService();
+    ProcessDefinition source = deploy(retirementModel(false, "taskA", legacyContinuation || roundTrip ? 1 : 0, true));
+    ProcessDefinition target = deploy(retirementModel(targetAdHoc, "renamedA", 2, true));
+    ProcessInstance process = runtime.startProcessInstanceById(source.getId(), initialVariables());
+    Task failing = engine.getTaskService().createTaskQuery().processInstanceId(process.getId())
+        .taskDefinitionKey("taskA").singleResult();
+    engine.getTaskService().setVariableLocal(failing.getId(), "pendingTaskLocal", "retained");
+    engine.getTaskService().handleBpmnError(failing.getId(), "uncaught");
+    Job job = asyncJob(process);
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-retire");
+    if (legacyContinuation) {
+      // Before explicit retirement provenance, outgoing error activities persisted generic END.
+      engine.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(context -> {
+        JobEntity entity = context.getDbEntityManager().selectById(JobEntity.class, job.getId());
+        AsyncContinuationConfiguration configuration = (AsyncContinuationConfiguration) entity.getJobHandlerConfiguration();
+        configuration.setAtomicOperation("activity-end");
+        entity.setJobHandlerConfiguration(configuration);
+        return null;
+      });
+    }
+    assertThat(runtime.getVariable(process.getId(), "endExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(0);
+    ProcessDefinition current = source;
+    if (roundTrip) {
+      ProcessDefinition terminal = deploy(retirementModel(false, "taskA", 0, false));
+      MigrationPlan first = runtime.createMigrationPlan(source.getId(), terminal.getId())
+          .mapActivities("taskA", "taskA").mapActivities("keeper", "keeper").build();
+      runtime.newMigration(first).processInstanceIds(process.getId()).execute();
+      assertThat(asyncOperation(job)).isEqualTo("activity-end-retire");
+      current = terminal;
+    }
+    MigrationPlan plan = runtime.createMigrationPlan(current.getId(), target.getId())
+        .mapActivities("taskA", "renamedA").mapActivities("keeper", "keeper").build();
+
+    runtime.newMigration(plan).processInstanceIds(process.getId()).execute();
+
+    assertThat(asyncJob(process).getId()).isEqualTo(job.getId());
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-retire");
+    Task retainedTask = engine.getTaskService().createTaskQuery().taskId(failing.getId()).singleResult();
+    assertThat(retainedTask.getTaskDefinitionKey()).isEqualTo("renamedA");
+    assertThat(retainedTask.getProcessDefinitionId()).isEqualTo(target.getId());
+    assertThat(engine.getTaskService().getVariableLocal(failing.getId(), "pendingTaskLocal")).isEqualTo("retained");
+    engine.getManagementService().executeJob(job.getId());
+    assertThat(engine.getTaskService().createTaskQuery().processInstanceId(process.getId()).list())
+        .extracting(Task::getTaskDefinitionKey).containsExactly("keeper");
+    assertThat(runtime.getVariable(process.getId(), "endExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    assertThat(runtime.createVariableInstanceQuery().processInstanceIdIn(process.getId()).variableName("localInput").count())
+        .isZero();
+    assertThat(runtime.createVariableInstanceQuery().processInstanceIdIn(process.getId())
+        .variableName("pendingTaskLocal").count()).isZero();
+    assertThat(engine.getManagementService().createJobQuery().processInstanceId(process.getId()).count()).isZero();
+    if (targetAdHoc) {
+      String owner = runtime.createExecutionQuery().processInstanceId(process.getId()).activityId("adhoc")
+          .singleResult().getId();
+      assertThat(runtime.getVariableLocal(owner, "nrOfCompletedAdHocActivities")).isEqualTo(0);
+      assertThat(runtime.getVariableLocal(owner, "nrOfEnabledAdHocActivities")).isEqualTo(0);
+      assertThat(runtime.getVariableLocal(owner, "adHocCompletionConditionSatisfied")).isEqualTo(false);
+      runtime.completeAdHocSubProcess(owner);
+    }
+    complete(process, "keeper");
+    helper.assertProcessEnded(process.getId());
+  }
+
+  @Test
+  void migrateExternalTaskWaitingForAsyncErrorRetirementWithoutLosingLockOrIdentity() {
+    RuntimeService runtime = engine.getRuntimeService();
+    String sourceXml = retirementModel(false, "taskA", 1, true)
+        .replace("<userTask id=\"taskA\"", "<serviceTask id=\"taskA\" operaton:type=\"external\" operaton:topic=\"work\"")
+        .replace("</userTask>", "</serviceTask>");
+    String targetXml = retirementModel(true, "renamedA", 2, true)
+        .replace("<userTask id=\"renamedA\"", "<serviceTask id=\"renamedA\" operaton:type=\"external\" operaton:topic=\"work\"")
+        .replace("</userTask>", "</serviceTask>");
+    ProcessDefinition source = deploy(sourceXml);
+    ProcessDefinition target = deploy(targetXml);
+    ProcessInstance process = runtime.startProcessInstanceById(source.getId(), initialVariables());
+    String externalId = engine.getExternalTaskService().fetchAndLock(1, "worker").topic("work", 60000L)
+        .execute().get(0).getId();
+    engine.getExternalTaskService().setRetries(externalId, 2);
+    ExternalTask before = engine.getExternalTaskService().createExternalTaskQuery().externalTaskId(externalId).singleResult();
+    engine.getExternalTaskService().handleBpmnError(externalId, "worker", "uncaught");
+    Job job = asyncJob(process);
+    MigrationPlan plan = runtime.createMigrationPlan(source.getId(), target.getId())
+        .mapActivities("taskA", "renamedA").mapActivities("keeper", "keeper").build();
+
+    runtime.newMigration(plan).processInstanceIds(process.getId()).execute();
+
+    ExternalTask retained = engine.getExternalTaskService().createExternalTaskQuery().externalTaskId(externalId).singleResult();
+    assertThat(retained).isNotNull();
+    assertThat(retained.getActivityId()).isEqualTo("renamedA");
+    assertThat(retained.getProcessDefinitionId()).isEqualTo(target.getId());
+    assertThat(retained.getWorkerId()).isEqualTo("worker");
+    assertThat(retained.getLockExpirationTime()).isEqualTo(before.getLockExpirationTime());
+    assertThat(retained.getRetries()).isEqualTo(2);
+    assertThat(asyncOperation(job)).isEqualTo("activity-end-retire");
+    engine.getManagementService().executeJob(job.getId());
+    assertThat(engine.getExternalTaskService().createExternalTaskQuery().externalTaskId(externalId).count()).isZero();
+    assertThat(runtime.getVariable(process.getId(), "outputExecutions")).isEqualTo(1L);
+    assertThat(runtime.getVariable(process.getId(), "endExecutions")).isEqualTo(1L);
+    assertThat(engine.getTaskService().createTaskQuery().processInstanceId(process.getId()).list())
+        .extracting(Task::getTaskDefinitionKey).containsExactly("keeper");
+    String owner = runtime.createExecutionQuery().processInstanceId(process.getId()).activityId("adhoc").singleResult().getId();
+    assertThat(runtime.getVariableLocal(owner, "nrOfCompletedAdHocActivities")).isEqualTo(0);
+    runtime.completeAdHocSubProcess(owner);
+    complete(process, "keeper");
+    helper.assertProcessEnded(process.getId());
+  }
+
+  private String retirementModel(boolean adHocOwner, String activityId, int outgoingCount, boolean scoped) {
+    String child = scoped ? task("${input}", "${localInput}") : "<userTask id=\"taskA\" operaton:asyncAfter=\"true\"/>";
+    String children = child.replace("taskA", activityId)
+        + "<userTask id=\"unexpectedOne\"/><userTask id=\"unexpectedTwo\"/>";
+    if (outgoingCount > 0) {
+      children += "<sequenceFlow id=\"wrongOne\" sourceRef=\"" + activityId + "\" targetRef=\"unexpectedOne\"/>";
+    }
+    if (outgoingCount > 1) {
+      children += "<sequenceFlow id=\"wrongTwo\" sourceRef=\"" + activityId + "\" targetRef=\"unexpectedTwo\"/>";
+    }
+    if (adHocOwner) {
+      children = "<adHocSubProcess id=\"adhoc\">" + children
+          + "<completionCondition>${false}</completionCondition></adHocSubProcess>";
+    }
+    return definitions("<process id=\"process\" isExecutable=\"true\"><startEvent id=\"start\"/>"
+        + "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"fork\"/><parallelGateway id=\"fork\"/>"
+        + "<sequenceFlow id=\"failingBranch\" sourceRef=\"fork\" targetRef=\""
+        + (adHocOwner ? "adhoc" : activityId) + "\"/>"
+        + "<sequenceFlow id=\"keeperBranch\" sourceRef=\"fork\" targetRef=\"keeper\"/>"
+        + children + "<userTask id=\"keeper\"/></process>");
+  }
+
+  private String asyncOperation(Job job) {
+    return engine.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(context -> {
+      JobEntity entity = context.getDbEntityManager().selectById(JobEntity.class, job.getId());
+      return ((AsyncContinuationConfiguration) entity.getJobHandlerConfiguration()).getAtomicOperation();
+    });
   }
 
   private String parentExecutionId(String executionId) {

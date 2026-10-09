@@ -53,7 +53,7 @@ public class AsyncAfterMigrationValidator implements MigratingTransitionInstance
 
       if (targetActivity.getOutgoingTransitions().size() > 1
           && !((MigratingAsyncJobInstance) jobInstance).isDeferredActivityEnd()
-          && !MigratingAsyncJobInstance.isAdHocActivityEnd(config, targetActivity)) {
+          && !((MigratingAsyncJobInstance) jobInstance).isRetiringActivityEnd()) {
         if (sourceTransitionId == null) {
           instanceReport.addFailure("Transition instance is assigned to no sequence flow"
               + " and target activity has more than one outgoing sequence flow");

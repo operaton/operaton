@@ -56,6 +56,9 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
     // async after activity depending if an outgoing sequence flow exists
     supportedOperations.put(PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE.getCanonicalName(), PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE);
     supportedOperations.put(PvmAtomicOperation.ACTIVITY_END.getCanonicalName(), PvmAtomicOperation.ACTIVITY_END);
+    supportedOperations.put(PvmAtomicOperation.ACTIVITY_END_DEFERRED.getCanonicalName(), PvmAtomicOperation.ACTIVITY_END_DEFERRED);
+    supportedOperations.put(PvmAtomicOperation.ACTIVITY_END_RETIRE.getCanonicalName(), PvmAtomicOperation.ACTIVITY_END_RETIRE);
+    supportedOperations.put(PvmAtomicOperation.ACTIVITY_END_DISPOSED.getCanonicalName(), PvmAtomicOperation.ACTIVITY_END_DISPOSED);
   }
 
   @Override

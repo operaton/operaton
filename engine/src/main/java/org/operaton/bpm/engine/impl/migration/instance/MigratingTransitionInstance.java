@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
@@ -153,8 +152,8 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
 
   public void setDependentJobInstance(MigratingAsyncJobInstance jobInstance) {
     this.jobInstance = jobInstance;
-    pendingActivityEnd = PvmAtomicOperation.ACTIVITY_END.getCanonicalName().equals(
-        ((AsyncContinuationConfiguration) jobInstance.getJobEntity().getJobHandlerConfiguration()).getAtomicOperation());
+    pendingActivityEnd = MigratingAsyncJobInstance.isActivityEnd(
+        (AsyncContinuationConfiguration) jobInstance.getJobEntity().getJobHandlerConfiguration());
     pendingScopedActivityEnd = pendingActivityEnd && sourceScope != null && sourceScope.isScope()
         && representativeExecution.isScope();
   }

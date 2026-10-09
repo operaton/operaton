@@ -87,25 +87,20 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   }
 
   /**
-   * Called by the PVM each time a concurrent child execution within this
-   * ad-hoc scope completes. Removes the ended execution, re-evaluates the
-   * completion condition and — if met — cancels any remaining running
-   * activities and leaves the subprocess.
+   * Retires a concurrent routing or aborted execution without recording a
+   * successful activity completion. A previously latched completion may finish
+   * draining, and scopes without a condition retain their auto-complete policy.
    */
   @Override
   public void concurrentChildExecutionEnded(ActivityExecution scopeExecution, ActivityExecution endedExecution) {
     ActivityImpl adHocScopeActivity = (ActivityImpl) scopeExecution.getActivity();
-    String completedActivityId = getCompletedActivityId(endedExecution);
     endedExecution.remove();
     scopeExecution.forceUpdate();
-    recordCompletedAdHocActivity(scopeExecution, adHocScopeActivity, completedActivityId);
 
     ((PvmExecutionImpl) scopeExecution).dispatchDelayedEventsAndPerformOperation(resumedScope -> {
-      // Routing events do not introduce a new Activity completion decision. They can
-      // still finish an already-latched drain or the no-condition auto-complete path.
-      ActivityImpl completedActivity = adHocScopeActivity.findActivity(completedActivityId);
-      if (completedActivity != null && isCompletableActivity(completedActivity)
-          || getCompletionCondition(adHocScopeActivity) == null
+      // Generic END retires errors and routing tokens. Successful activities use
+      // the explicit deferred-completion operation and are counted there only.
+      if (getCompletionCondition(adHocScopeActivity) == null
           || isAdHocCompletionConditionSatisfied(resumedScope)) {
         evaluateCompletionCondition(resumedScope, adHocScopeActivity, true);
       } else if (hasCompletionContext(resumedScope, adHocScopeActivity)) {
@@ -120,16 +115,18 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   }
 
   /**
-   * Called by the PVM when all concurrent executions inside the scope have
-   * finished. For ad-hoc, this is the last chance to evaluate the completion
-   * condition. If the condition is met (or not defined) the subprocess
-   * proceeds; otherwise the scope execution stays open for further triggers.
+   * Retires the last routing or aborted execution. Only successful activity
+   * completion evaluates a new completion condition; this callback may finish
+   * an already latched drain or apply the no-condition auto-complete policy.
    */
   @Override
   public void complete(ActivityExecution scopeExecution) {
     ActivityImpl scopeActivity = (ActivityImpl) scopeExecution.getActivity();
-    recordPreviouslyActiveAdHocActivities(scopeExecution, scopeActivity);
-    evaluateCompletionCondition(scopeExecution, true);
+    if (getCompletionCondition(scopeActivity) == null || isAdHocCompletionConditionSatisfied(scopeExecution)) {
+      evaluateCompletionCondition(scopeExecution, true);
+    } else if (hasCompletionContext(scopeExecution, scopeActivity)) {
+      updateActiveAdHocActivityContext(scopeExecution);
+    }
   }
 
   /**
@@ -235,7 +232,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     // earlier end-listener dispatch. Deliver their events before closing/draining
     // the owner; an interrupting conditional event may replace that continuation.
     ((PvmExecutionImpl) scopeExecution).dispatchDelayedEventsAndPerformOperation(resumedScope -> {
-      if (isAdHocCompletionConditionSatisfied(resumedScope)) {
+      if (getCompletionCondition((ActivityImpl) resumedScope.getActivity()) == null
+          || isAdHocCompletionConditionSatisfied(resumedScope)) {
         evaluateCompletionCondition(resumedScope, true);
       }
       return null;

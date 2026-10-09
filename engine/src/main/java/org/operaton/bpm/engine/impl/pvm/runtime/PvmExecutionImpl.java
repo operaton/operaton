@@ -379,8 +379,20 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    */
   @Override
   public void end(boolean completeScope) {
+    end(completeScope, PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END);
+  }
 
+  /** Complete an ad-hoc activity before deciding its outgoing continuation. */
+  public void endActivityNormally() {
+    end(true, PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END_DEFERRED);
+  }
 
+  /** Retire an unhandled BPMN error without selecting this activity's outgoing flows. */
+  public void endActivityWithoutContinuation() {
+    end(true, PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END_RETIRE);
+  }
+
+  protected void end(boolean completeScope, PvmAtomicOperation notificationOperation) {
     setCompleteScope(completeScope);
 
     isActive = false;
@@ -390,7 +402,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       getParent().replacedBy = null;
     }
 
-    performOperation(PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END);
+    performOperation(notificationOperation);
 
   }
 

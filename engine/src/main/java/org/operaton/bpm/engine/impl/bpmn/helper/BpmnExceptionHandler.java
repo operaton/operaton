@@ -134,7 +134,7 @@ public final @NullMarked class BpmnExceptionHandler {
           throw LOG.missingBoundaryCatchEventError(execution.getActivity().getId(), errorCode, errorMessage);
         } else {
           LOG.missingBoundaryCatchEvent(execution.getActivity().getId(), errorCode, errorMessage);
-          execution.end(true);
+          ((PvmExecutionImpl) execution).endActivityWithoutContinuation();
         }
       } else {
         // throw original exception

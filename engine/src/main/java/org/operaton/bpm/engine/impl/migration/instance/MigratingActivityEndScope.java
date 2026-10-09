@@ -46,12 +46,14 @@ public class MigratingActivityEndScope extends MigratingActivityInstance {
 
   @Override
   public void detachState() {
-    // Retain subscriptions and timers on the scope execution that is itself reattached.
+    detachDependentInstances();
   }
 
   @Override
   public void attachState(MigratingTransitionInstance transitionInstance) {
-    // The owning transition reattaches the retained scope execution.
+    for (MigratingInstance dependent : migratingDependentInstances) {
+      dependent.attachState(this);
+    }
   }
 
   @Override

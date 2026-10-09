@@ -101,18 +101,57 @@ scope cancellation, retaining any subtree that still has genuinely running desce
 `cancelRemainingInstances=false`. Unstarted enabled activities acquire no start/end history or end
 listener invocation merely because their structural wrapper is cleaned up.
 
-Pending ad-hoc `ACTIVITY_END` async-after jobs keep that operation, including when the activity has
-multiple outgoing sequence flows: completion and outgoing-flow selection have not happened yet.
-Changing/removing the target completion expression therefore applies when the job resumes. Existing
-`TRANSITION_NOTIFY_LISTENER_TAKE` jobs retain their previously selected transition; migration does not
-replay a source activity that already completed under a model without a condition.
+Successful non-compensation Activities inside an ad-hoc scope use `ACTIVITY_END_DEFERRED`
+(`activity-end-deferred`) when terminal or when a condition or latched completion decision requires
+handling before outgoing flow selection.
+Async-after jobs persist that phase, including when the activity has multiple outgoing sequence flows:
+completion and outgoing-flow selection have not happened yet. Outgoing activities without a condition
+or latch retain the established TAKE path, and compensation handlers retain `endCompensation`.
+Migration preserves a deferred operation when relocating the pending work into either an ordinary
+or an ad-hoc flow scope. Changing/removing the target completion expression therefore applies when
+the job resumes in an ad-hoc scope. Existing
+`TRANSITION_NOTIFY_LISTENER_TAKE` jobs have already selected a transition and disposed of the
+activity scope; migration does not replay their source activity's completed output or completion
+decision. In particular, adding a target completion condition does not retroactively count a source
+activity that already reached TAKE without one.
 
-A pending scoped activity-end continuation (for example a task with input/output mappings) retains its
-scope-local variables and pending output mapping. Such continuations support identical/renamed
-migration and insertion/removal of ordinary flow scopes. The retained activity scope execution is
+When an already-selected TAKE continuation maps to a terminal target, migration persists
+`ACTIVITY_END_DISPOSED` (`activity-end-disposed`) with the selected transition ID. That phase skips
+the child's already-performed output, scope destruction and successful-completion bookkeeping;
+structural enclosing scopes still finish normally. It has no new end-listener phase because those
+listeners already ran. A subsequent migration to a target with outgoing flows restores TAKE under
+the existing single-flow or matching-transition-ID policy. A missing match among multiple outgoing
+flows is rejected before mutation. The terminal intermediate must not erase selection provenance
+or turn the job back into a deferred completion that would rerun output.
+
+Uncaught BPMN errors instead persist `ACTIVITY_END_RETIRE` (`activity-end-retire`), including errors
+on terminal activities. Matching end-listener operations preserve the successful/retiring distinction
+before async-after scheduling. Retirement performs the normal end and scope cleanup, but does not
+select outgoing flows, enable downstream activities or count an ad-hoc success. Migration preserves
+this intent across renamed activities, ordinary/ad-hoc relocation, and intermediate terminal targets;
+removing outgoing flows and later adding them again does not change retirement into completion.
+
+An uncaught-error report can leave a user-task or external-task entity attached while its async
+retirement job waits. The retained-END scope adapter uses the existing task migration observers
+to detach and reattach those dependencies to the current execution across reparenting and scope
+changes. Task identity, local variables and history binding, or external-task identity, lock and
+retry state, follow the target mapping and remain until retirement resumes. Migration does not
+restart the work or discard its retained task state merely because it is represented by an END job.
+
+Legacy generic `ACTIVITY_END` (`activity-end`) jobs remain readable. A generic END whose source
+activity has outgoing flows is recognized as retirement and migrated to the explicit retirement
+operation. A legacy terminal generic END contains no persisted evidence distinguishing successful
+completion from an uncaught error. It retains the existing terminal-END target-continuation policy;
+migration cannot reconstruct missing error provenance. Newly created terminal-error jobs use the
+explicit retirement operation and do not have that ambiguity.
+
+A pending, not-yet-disposed scoped activity-end continuation (for example a task with input/output
+mappings) retains its scope-local variables and pending output mapping. Such continuations support
+identical/renamed migration and insertion/removal of ordinary flow scopes. The retained activity scope execution is
 reattached rather than replaced; carrier-local variables retain their ownership, and existing timer
-and event-subscription migration handlers transfer boundary dependencies. The output mapping and
-outgoing-flow selection run once when the job resumes, including in an ordinary target flow scope.
+and event-subscription migration handlers transfer boundary dependencies. The pending output mapping
+runs once when the job resumes. A successful continuation then selects outgoing flows, including in
+an ordinary target flow scope; retirement skips that selection.
 The same retained-scope path applies to ordinary terminal scoped activity-end continuations.
 Adding/removing the pending activity's I/O or event scope follows the established mapped-activity
 conversion policy: input/start behavior is not replayed; local variables transfer; only the target
@@ -144,7 +183,9 @@ No database schema changes are required.
 | Ordering | Sequential to parallel; parallel to sequential with zero/one/two active children; asynchronous waits; scope removal exposing concurrent children |
 | Multi-instance | Sequential/parallel ad-hoc instances; sequential/parallel task body and instances inside ad-hoc; continued remaining iterations |
 | Asynchronous work | Ad-hoc async-before/async-after; child async-before/async-after; preserved job identity/retries/due date/priority and incident identity/recovery; continued execution; pending completion with one/two outgoing flows; target condition changes; scoped I/O continuation; ordinary wrapper relocation/roundtrip; retained timer/subscription dependencies and exact output/end-listener counts; scope-status addition/removal and variable-shadowing rejection |
+| End intent | Deferred terminal success and condition/latch-required completion; established no-condition outgoing TAKE and compensation path; no retroactive source-completion count when a target adds a condition; explicit deferred-end operation retained through ordinary relocation/roundtrip; uncaught-error retirement retained through rename and ordinary/ad-hoc targets with multiple outgoing flows; terminal source and intermediate terminal target; legacy outgoing generic END normalized to retirement; no downstream tasks, enabled tokens or success counts on retirement; output/end-listener cleanup counts preserved; selected TAKE persisted as DISPOSED through terminal targets, immediate cleanup and roundtrip to one/multiple flows; unmatched selected-flow rejection; structural wrapper cleanup without child-output replay |
 | Event dependencies | Timer boundary job identity/due date and firing; message boundary subscription identity and post-migration correlation |
+| Pending error dependencies | User-task identity, target definition/key and local payload retained before async retirement, then removed by resume cleanup; external-task identity, lock and retries retained through migration until retirement resumes |
 | State/history | Process/scope/child variables; input mappings not replayed and target output mappings used; repeated completion IDs and counts; mapped activity references; cancellation-policy changes; latch after target expression removal/change; activity/task history identity; active scope history ID retained while definition/activity ID/name/type update to target; finished child history stays source |
 | Atomicity/security | Invalid single-instance ordering leaves tasks/jobs/state intact; invalid later instance rolls back earlier migration in the same command; authorization and tenant rejection preserve source state |
 | Suspension | Suspended instance with both running and enabled children across rename and ordinary wrapper insertion; all retained/new executions stay suspended; trigger and explicit completion reject without changing tokens, tasks or variables; resumption completes successfully. Individually suspended and process-suspended scoped async-after jobs retain identity, retries, locals and suspension through wrapper insertion, stay absent from the active/executable job query until activation, then continue |
@@ -164,6 +205,9 @@ No database schema changes are required.
 - Pending scoped async-after continuations support flow-scope relocation and scope-status changes.
   Boundary dependencies retain generic mapping/update/removal rules; unsupported ownership and
   same-name variables that would collapse into one scope fail atomically.
+- Legacy terminal generic `activity-end` jobs do not encode whether an uncaught error caused the end.
+  Their established migration policy is retained; successful/error intent is guaranteed only where
+  the persisted operation or the supported legacy outgoing-flow classification distinguishes it.
 - Existing generic constraints on multi-instance addition/removal, sequential/parallel multi-instance
   behavior changes, compensation, event trigger updates, async continuation compatibility and tenant
   boundaries still apply. This change does not relax those contracts.
@@ -191,3 +235,22 @@ Run `MigrationAdHocSubProcessTest`, `MigrationAdHocEnabledActivityTest`,
 and the existing migration suites.
 Include the ad-hoc runtime lifecycle tests because post-migration execution must obey the same ordering,
 completion and multi-instance invariants as instances started on the target definition directly.
+In particular, run `AdHocActivityEndSemanticsTest` alongside the scoped-activity-end migration suite
+to verify ordinary/ad-hoc error retirement, sync/async and I/O-scoped paths, listener errors,
+no-condition retirement and cancellation. The matrix describes regression coverage; it does not
+replace execution of these tests against the final runtime correction.
+
+### Known validation boundary: ordinary scoped-error cleanup
+
+The new runtime fixtures exposed an existing generic cleanup defect, reproduced separately without
+the ad-hoc continuation: after an ordinary scoped activity retires on an uncaught BPMN error, its
+output mapping can be evaluated again during process-end cleanup after the child's locals have
+been removed. An expression reading such a local can therefore fail. This continuation does not
+change that generic cleanup path or claim to fix the defect.
+
+The ordinary scoped-error fixtures in `AdHocActivityEndSemanticsTest` retain an input mapping to
+create the activity scope, with no output mapping, to isolate their intended termination and
+no-downstream-flow assertions. They do not establish an
+output-once guarantee for the affected ordinary error path. Ad-hoc scoped-error fixtures retain
+their local-variable expressions, and the dedicated ad-hoc output-count assertions remain unchanged.
+Their results must be reported separately from this baseline limitation and from final-suite status.

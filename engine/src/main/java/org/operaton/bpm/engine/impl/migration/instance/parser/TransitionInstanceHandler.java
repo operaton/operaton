@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.migration.instance.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.operaton.bpm.engine.impl.bpmn.behavior.ExternalTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityEndScope;
@@ -77,6 +79,12 @@ public class TransitionInstanceHandler implements MigratingInstanceParseHandler<
 
     if (migratingTransitionInstance.isPendingActivityEnd()) {
       MigratingActivityEndScope retainedScope = new MigratingActivityEndScope(migratingTransitionInstance);
+      // Reporting an uncaught BPMN error can leave its task attached until async retirement resumes.
+      if (sourceScope.getActivityBehavior() instanceof UserTaskActivityBehavior userTask) {
+        userTask.onParseMigratingInstance(parseContext, retainedScope);
+      } else if (sourceScope.getActivityBehavior() instanceof ExternalTaskActivityBehavior externalTask) {
+        externalTask.onParseMigratingInstance(parseContext, retainedScope);
+      }
       boolean ownsScope = migratingTransitionInstance.isPendingScopedActivityEnd();
       parseContext.handleDependentActivityInstanceJobs(retainedScope, ownsScope ? asyncExecution.getJobs() : List.of());
       parseContext.handleDependentEventSubscriptions(retainedScope,

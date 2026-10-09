@@ -85,12 +85,14 @@ public class BpmnActivityBehavior {
   protected void performOutgoingBehavior(ActivityExecution execution, boolean checkConditions) {
     LOG.leavingActivity(execution.getActivity().getId());
 
-    if (!execution.getActivity().getOutgoingTransitions().isEmpty()
-        && execution.getActivity().getFlowScope() instanceof ActivityImpl flowScope
+    if (execution.getActivity().getFlowScope() instanceof ActivityImpl flowScope
         && flowScope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior adHocBehavior
-        && adHocBehavior.shouldHandleChildCompletion(execution.findExecutionForFlowScope(flowScope),
-            (ActivityImpl) execution.getActivity())) {
-      execution.end(true);
+        && adHocBehavior.isCompletableActivity((ActivityImpl) execution.getActivity())
+        && !((ActivityImpl) execution.getActivity()).isCompensationHandler()
+        && (execution.getActivity().getOutgoingTransitions().isEmpty()
+            || adHocBehavior.shouldHandleChildCompletion(execution.findExecutionForFlowScope(flowScope),
+                (ActivityImpl) execution.getActivity()))) {
+      ((PvmExecutionImpl) execution).endActivityNormally();
       return;
     }
 

@@ -48,6 +48,16 @@ Flowable were studied for behavioral comparison only; no source, translated code
 tests or comments from those implementations are included in this continuation.
 See [the comparison](ad-hoc-engine-comparison.md) for version-specific references.
 
+The successful deferred-end, error-retirement and already-disposed continuation phases are an
+Operaton PVM correction. Their atomic-operation names and async-job migration handling build on
+Operaton's existing activity-end, listener, scope-destruction and job-configuration contracts.
+Pending-error task handling reuses Operaton's user-task/external-task migration observers through
+the retained-END scope adapter.
+The associated `AdHocActivityEndSemanticsTest` regressions and migration cases, including
+already-selected flow roundtrips through terminal targets, are authored for those contracts.
+They are not imported or translated from Zeebe, Flowable, Fluxnova or CIB seven. The existing
+Camunda/FINOS notices in modified files remain, and new source files carry Operaton's Apache-2.0 header.
+
 ## Validation prerequisites
 
 The continuation includes the null-handling repairs submitted separately in

@@ -38,19 +38,37 @@ import org.operaton.bpm.engine.management.JobDefinition;
 public class MigratingAsyncJobInstance extends MigratingJobInstance {
 
   protected final boolean deferredActivityEnd;
+  protected final boolean retiringActivityEnd;
 
   public MigratingAsyncJobInstance(JobEntity jobEntity, JobDefinitionEntity jobDefinitionEntity, ScopeImpl targetScope) {
     super(jobEntity, jobDefinitionEntity, targetScope);
     ActivityImpl sourceActivity = jobEntity.getExecution().getActivity();
     AsyncContinuationConfiguration configuration = (AsyncContinuationConfiguration) jobEntity.getJobHandlerConfiguration();
-    deferredActivityEnd = sourceActivity != null
-        && PvmAtomicOperation.ACTIVITY_END.getCanonicalName().equals(configuration.getAtomicOperation())
-        && (sourceActivity.isScope() && jobEntity.getExecution().isScope()
-            || targetScope != null && targetScope.isScope() || isAdHocActivityEnd(configuration, sourceActivity));
+    boolean genericActivityEnd = PvmAtomicOperation.ACTIVITY_END.getCanonicalName().equals(configuration.getAtomicOperation());
+    retiringActivityEnd = PvmAtomicOperation.ACTIVITY_END_RETIRE.getCanonicalName().equals(configuration.getAtomicOperation())
+        || genericActivityEnd && sourceActivity != null && !sourceActivity.getOutgoingTransitions().isEmpty();
+    deferredActivityEnd = PvmAtomicOperation.ACTIVITY_END_DEFERRED.getCanonicalName().equals(configuration.getAtomicOperation())
+        || genericActivityEnd && sourceActivity != null && !retiringActivityEnd
+            && (sourceActivity.isScope() && jobEntity.getExecution().isScope()
+                || targetScope != null && targetScope.isScope()
+                || isAdHocActivity(sourceActivity)
+                || targetScope instanceof ActivityImpl targetActivity && isAdHocActivity(targetActivity));
   }
 
   public boolean isDeferredActivityEnd() {
     return deferredActivityEnd;
+  }
+
+  /** Generic END on an activity with outgoing flows retires the token instead of completing normally. */
+  public boolean isRetiringActivityEnd() {
+    return retiringActivityEnd;
+  }
+
+  public static boolean isActivityEnd(AsyncContinuationConfiguration configuration) {
+    String operation = configuration.getAtomicOperation();
+    return PvmAtomicOperation.ACTIVITY_END.getCanonicalName().equals(operation)
+        || PvmAtomicOperation.ACTIVITY_END_DEFERRED.getCanonicalName().equals(operation)
+        || PvmAtomicOperation.ACTIVITY_END_RETIRE.getCanonicalName().equals(operation);
   }
 
   @Override
@@ -97,11 +115,9 @@ public class MigratingAsyncJobInstance extends MigratingJobInstance {
     jobEntity.setJobHandlerConfiguration(targetConfiguration);
   }
 
-  /** An ad-hoc activity-end continuation has not yet evaluated completion or selected outgoing flows. */
-  public static boolean isAdHocActivityEnd(AsyncContinuationConfiguration configuration, ActivityImpl targetActivity) {
-    return PvmAtomicOperation.ACTIVITY_END.getCanonicalName().equals(configuration.getAtomicOperation())
-        && targetActivity.getFlowScope().getActivityBehavior() instanceof AdHocSubProcessActivityBehavior behavior
-        && behavior.isCompletableActivity(targetActivity);
+  protected static boolean isAdHocActivity(ActivityImpl activity) {
+    return activity.getFlowScope().getActivityBehavior() instanceof AdHocSubProcessActivityBehavior behavior
+        && behavior.isCompletableActivity(activity);
   }
 
   protected void updateAsyncAfterTargetConfiguration(AsyncContinuationConfiguration currentConfiguration) {
@@ -110,9 +126,22 @@ public class MigratingAsyncJobInstance extends MigratingJobInstance {
 
     AsyncContinuationConfiguration targetConfiguration = new AsyncContinuationConfiguration();
 
-    if (outgoingTransitions.isEmpty() || deferredActivityEnd
-        || isAdHocActivityEnd(currentConfiguration, targetActivity)) {
-      targetConfiguration.setAtomicOperation(PvmAtomicOperation.ACTIVITY_END.getCanonicalName());
+    if (deferredActivityEnd) {
+      targetConfiguration.setAtomicOperation(PvmAtomicOperation.ACTIVITY_END_DEFERRED.getCanonicalName());
+    }
+    else if (retiringActivityEnd) {
+      targetConfiguration.setAtomicOperation(PvmAtomicOperation.ACTIVITY_END_RETIRE.getCanonicalName());
+    }
+    else if (outgoingTransitions.isEmpty()) {
+      String operation = currentConfiguration.getAtomicOperation();
+      if (PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE.getCanonicalName().equals(operation)
+          || PvmAtomicOperation.ACTIVITY_END_DISPOSED.getCanonicalName().equals(operation)) {
+        // Scope output/destruction already happened. Keep the selected flow for a later migration.
+        targetConfiguration.setAtomicOperation(PvmAtomicOperation.ACTIVITY_END_DISPOSED.getCanonicalName());
+        targetConfiguration.setTransitionId(currentConfiguration.getTransitionId());
+      } else {
+        targetConfiguration.setAtomicOperation(PvmAtomicOperation.ACTIVITY_END.getCanonicalName());
+      }
     }
     else {
       targetConfiguration.setAtomicOperation(PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE.getCanonicalName());

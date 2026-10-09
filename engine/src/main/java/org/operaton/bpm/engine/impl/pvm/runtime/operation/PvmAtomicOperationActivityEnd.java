@@ -41,6 +41,24 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
 
+  protected final String canonicalName;
+  protected final boolean deferredCompletion;
+  protected final boolean disposedScope;
+
+  public PvmAtomicOperationActivityEnd() {
+    this("activity-end", false);
+  }
+
+  public PvmAtomicOperationActivityEnd(String canonicalName, boolean deferredCompletion) {
+    this(canonicalName, deferredCompletion, false);
+  }
+
+  public PvmAtomicOperationActivityEnd(String canonicalName, boolean deferredCompletion, boolean disposedScope) {
+    this.canonicalName = canonicalName;
+    this.deferredCompletion = deferredCompletion;
+    this.disposedScope = disposedScope;
+  }
+
   protected PvmScope getScope(PvmExecutionImpl execution) {
     return execution.getActivity();
   }
@@ -57,28 +75,31 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
 
   @Override
   public void execute(PvmExecutionImpl execution) {
+    // A migrated TAKE carrier no longer represents its activity scope. Resolve
+    // its flow scope before restoring the enclosing activity instance id.
+    Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = disposedScope
+        ? execution.createActivityExecutionMapping() : null;
+
     // restore activity instance id
     if (execution.getActivityInstanceId() == null) {
       execution.setActivityInstanceId(execution.getParentActivityInstanceId());
     }
 
     PvmActivity activity = execution.getActivity();
-    Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = execution.createActivityExecutionMapping();
+    if (activityExecutionMapping == null) {
+      activityExecutionMapping = execution.createActivityExecutionMapping();
+    }
 
-    if (activity.getFlowScope() instanceof ActivityImpl adHocScope
+    if (deferredCompletion && activity.getFlowScope() instanceof ActivityImpl adHocScope
         && adHocScope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior adHocBehavior
-        && adHocBehavior.isCompletableActivity((ActivityImpl) activity)
-        && (adHocBehavior.shouldHandleChildCompletion(activityExecutionMapping.get(adHocScope),
-            (ActivityImpl) activity) || !activity.getOutgoingTransitions().isEmpty())) {
+        && adHocBehavior.isCompletableActivity((ActivityImpl) activity)) {
       completeAdHocActivity(execution, activityExecutionMapping.get(adHocScope), adHocBehavior);
       return;
     }
 
-    ActivityImpl modelActivity = AdHocStartability.INSTANCE.getModelActivity((ActivityImpl) activity);
-    if (!activity.getOutgoingTransitions().isEmpty()
-        && AdHocStartability.INSTANCE.isStartableActivityType(
-            (String) modelActivity.getProperty(BpmnProperties.TYPE.name()))) {
-      // Gateway/event END operations can retire joined tokens and must not take their flows again.
+    if (deferredCompletion && hasOutgoingActivityTransitions(activity)) {
+      // Only a persisted normal-completion phase can select flows here. Generic
+      // END also retires unhandled errors and joined tokens and must never do so.
       // Migration may move a deferred scoped activity end into an ordinary flow scope.
       // Its end listeners already ran; output mappings and flow selection are still pending.
       boolean destroyScope = execution.isScope() && activity.isScope()
@@ -104,7 +125,8 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
 
     PvmExecutionImpl propagatingExecution = execution;
 
-    if((execution.isScope() && activity.isScope()) && !LegacyBehavior.destroySecondNonScope(execution)) {
+    if (!disposedScope && (execution.isScope() && activity.isScope())
+        && !LegacyBehavior.destroySecondNonScope(execution)) {
       execution.destroy();
       if(!execution.isConcurrent()) {
         execution.remove();
@@ -121,6 +143,15 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
     } else {
       executeNonProcessDefinition((PvmActivity) flowScope, propagatingExecution, activity);
     }
+  }
+
+  private static boolean hasOutgoingActivityTransitions(PvmActivity activity) {
+    if (activity.getOutgoingTransitions().isEmpty()) {
+      return false;
+    }
+    ActivityImpl modelActivity = AdHocStartability.INSTANCE.getModelActivity((ActivityImpl) activity);
+    return AdHocStartability.INSTANCE.isStartableActivityType(
+        (String) modelActivity.getProperty(BpmnProperties.TYPE.name()));
   }
 
   /**
@@ -209,7 +240,7 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
 
   @Override
   public String getCanonicalName() {
-    return "activity-end";
+    return canonicalName;
   }
 
 }

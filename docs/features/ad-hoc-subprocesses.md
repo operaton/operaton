@@ -60,6 +60,20 @@ Outgoing flow selection follows that decision. End listeners, output mappings, a
 and async-after boundaries use the normal PVM lifecycle exactly once. Gateway and intermediate
 event routing do not count as additional activity completions.
 
+Successful completion and error retirement are distinct continuations. Successful non-compensation
+Activities inside an ad-hoc scope use `activity-end-deferred` when terminal, or when a condition or
+latched decision must be handled before outgoing flow selection. Outgoing activities with no condition and no latch
+retain the established transition-TAKE path; compensation handlers retain their compensation-end
+path. A migrated already-selected TAKE does not retroactively count its source activity when the
+target adds a completion condition.
+
+Uncaught BPMN errors use `activity-end-retire`, including errors on terminal activities.
+Retirement follows normal end-listener and scope-cleanup behavior, but does not select outgoing
+flows, enable downstream work or increment ad-hoc successful-completion
+counts. An async-after boundary persists this distinction, so resuming a job or migrating it does
+not turn an error into successful completion. The existing option to throw after an unhandled
+BPMN error remains applicable.
+
 Once a condition is satisfied, completion remains latched. Discovery returns no new activations
 and trigger requests are rejected. With `cancelRemainingInstances=true`, remaining work is
 canceled and its execution/job/variable state removed. With `false`, already running activities
@@ -103,6 +117,21 @@ completions. Enabled, idle and completion-latched owners require a mapped ad-hoc
 Enabled tokens may move through ordinary wrappers but retain their activation owner.
 Pending async-after activity ends preserve variables and apply the target output mapping
 once; variable-name collisions that would lose a value are rejected before mutation.
+Migration also preserves whether that pending end represents successful completion or error
+retirement. Only the successful continuation can select new target outgoing flows. Legacy generic
+terminal-END jobs have the compatibility boundary described in the migration ADR because they did
+not persist that distinction.
+Tasks or external tasks still attached while an async error-retirement job waits migrate with their
+identity, local state and applicable lock/retry state intact until the retirement job cleans them up.
+
+If outgoing flow selection and activity-scope cleanup already happened, migration to a terminal
+target records `activity-end-disposed`. Resuming it does not repeat child output or successful
+completion, while enclosing structural scopes still finish normally. A later migration to a target
+with outgoing flows uses the existing single-flow or matching selected-flow rule; it does not
+reevaluate the completed activity's flow conditions.
 
 See [source provenance](ad-hoc-provenance.md) for the preserved original import and source
 comparisons used during this continuation.
+The migration ADR also records a separately reproduced ordinary scoped-error output-cleanup
+limitation and the corresponding targeted-test boundary; this change does not repair that
+preexisting generic cleanup path.

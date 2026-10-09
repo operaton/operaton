@@ -47,3 +47,14 @@ contracts. Its new regression tests are authored for these contracts. Zeebe and
 Flowable were studied for behavioral comparison only; no source, translated code,
 tests or comments from those implementations are included in this continuation.
 See [the comparison](ad-hoc-engine-comparison.md) for version-specific references.
+
+## Validation prerequisites
+
+The continuation includes the null-handling repairs submitted separately in
+[Operaton PR #3819](https://github.com/operaton/operaton/pull/3819).
+It also includes the two-line offline XML test repair from
+[Operaton PR #3820](https://github.com/operaton/operaton/pull/3820): the Neo mapping
+XML test resolves the existing MyBatis DTD through MyBatis' bundled entity resolver.
+This preserves the XML assertions and avoids a network lookup during validation;
+it does not change runtime XML parsing. These overlapping prerequisite changes
+are identified separately so they can be removed from the review after merging upstream.

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.spring;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 
@@ -34,7 +35,7 @@ public class SpringArtifactFactory implements ArtifactFactory {
 
   private final ApplicationContext applicationContext;
 
-  public SpringArtifactFactory(ApplicationContext applicationContext) {
+  public SpringArtifactFactory(@NonNull ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
   }
 

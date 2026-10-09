@@ -16,6 +16,7 @@
 package org.operaton.bpm.engine.spring.components.config.xml;
 
 
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -46,7 +47,7 @@ public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinit
 	private static final String PROCESS_ENGINE_ATTRIBUTE = "process-engine";
 
   @Override
-  public BeanDefinition parse(Element element, ParserContext parserContext) {
+  public @Nullable BeanDefinition parse(Element element, ParserContext parserContext) {
 		registerProcessScope(element, parserContext);
 		registerStateHandlerAnnotationBeanFactoryPostProcessor(element, parserContext);
 		registerProcessStartAnnotationBeanPostProcessor(element, parserContext);

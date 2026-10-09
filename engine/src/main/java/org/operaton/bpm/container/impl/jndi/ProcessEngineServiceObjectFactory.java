@@ -22,6 +22,8 @@ import javax.naming.Context;
 import javax.naming.Name;
 import javax.naming.spi.ObjectFactory;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessEngineService;
 
@@ -32,7 +34,7 @@ import org.operaton.bpm.ProcessEngineService;
  * @author Daniel Meyer
  *
  */
-public class ProcessEngineServiceObjectFactory implements ObjectFactory {
+public @NullMarked class ProcessEngineServiceObjectFactory implements ObjectFactory {
 
   @Override
   public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment) throws Exception {

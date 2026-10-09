@@ -22,6 +22,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -32,9 +34,9 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  * @author Daniel Meyer
  *
  */
-public final class PropertyHelper {
+public final @NullMarked class PropertyHelper {
 
-  protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public static final String KEBAB_CASE = "-";
   public static final String SNAKE_CASE = "_";
@@ -155,7 +157,7 @@ public final class PropertyHelper {
     return matcher.appendTail(buffer).toString();
   }
 
-  protected static String convertToCamelCase(String value, String token) {
+  private static String convertToCamelCase(String value, String token) {
     while(value.contains(token)) {
       value = value
           .replaceFirst(token + "[a-z]",

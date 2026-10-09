@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.container.impl.tomcat.deployment;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
- * <p>Set of constant keys to be used in apache tomcat deployment operations</p>
+ * <p>Set of constant keys to be used in Apache Tomcat deployment operations</p>
  *
  * @author Daniel Meyer
  *
  */
-public final class TomcatAttachments {
+public final @NullMarked class TomcatAttachments {
 
   public static final String SERVER = "server";
 

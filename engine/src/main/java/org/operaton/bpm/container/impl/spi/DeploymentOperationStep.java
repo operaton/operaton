@@ -31,8 +31,6 @@ public abstract @NullMarked class DeploymentOperationStep {
   public abstract void performOperationStep(DeploymentOperation operationContext);
 
   public void cancelOperationStep(DeploymentOperation operationContext) {
-    // default behavior is to to nothing if the step fails
+    // default behavior is to do nothing if the step fails
   }
-
-
 }

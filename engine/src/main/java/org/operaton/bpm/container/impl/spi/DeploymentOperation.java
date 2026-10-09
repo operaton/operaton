@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.container.impl.spi;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -45,7 +44,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class DeploymentOperation {
+public @NullMarked class DeploymentOperation {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -70,7 +69,7 @@ public class DeploymentOperation {
 
   protected boolean isRollbackOnFailure = true;
 
-  protected DeploymentOperationStep currentStep;
+  protected @Nullable DeploymentOperationStep currentStep;
 
   public DeploymentOperation(String name, PlatformServiceContainer container, List<DeploymentOperationStep> steps) {
     this.name = name;
@@ -170,6 +169,7 @@ public class DeploymentOperation {
     }
   }
 
+  @SuppressWarnings("unused")
   public List<String> getInstalledServices() {
     return installedServices;
   }
@@ -206,6 +206,7 @@ public class DeploymentOperation {
       return this;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public DeploymentOperationBuilder setUndeploymentOperation() {
       isUndeploymentOperation = true;
       return this;

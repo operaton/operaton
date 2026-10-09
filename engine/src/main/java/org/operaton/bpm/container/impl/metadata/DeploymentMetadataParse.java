@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
@@ -39,7 +41,7 @@ import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstan
  * @author Daniel Meyer
  *
  */
-public abstract class DeploymentMetadataParse extends Parse {
+public abstract @NullMarked class DeploymentMetadataParse extends Parse {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -96,21 +98,15 @@ public abstract class DeploymentMetadataParse extends Parse {
     List<ProcessEnginePluginXml> plugins = new ArrayList<>();
 
     for (Element childElement : element.elements()) {
-      if(CONFIGURATION.equals(childElement.getTagName())) {
-        processEngine.setConfigurationClass(childElement.getText());
-
-      } else if(DATASOURCE.equals(childElement.getTagName())) {
-        processEngine.setDatasource(childElement.getText());
-
-      } else if(JOB_ACQUISITION.equals(childElement.getTagName())) {
-        processEngine.setJobAcquisitionName(childElement.getText());
-
-      } else if(PROPERTIES.equals(childElement.getTagName())) {
-        parseProperties(childElement, properties);
-
-      } else if(PLUGINS.equals(childElement.getTagName())) {
-        parseProcessEnginePlugins(childElement, plugins);
-
+      switch (childElement.getTagName()) {
+        case CONFIGURATION -> processEngine.setConfigurationClass(childElement.getText());
+        case DATASOURCE -> processEngine.setDatasource(childElement.getText());
+        case JOB_ACQUISITION -> processEngine.setJobAcquisitionName(childElement.getText());
+        case PROPERTIES -> parseProperties(childElement, properties);
+        case PLUGINS -> parseProcessEnginePlugins(childElement, plugins);
+        default -> {
+          // no-op
+        }
       }
     }
 
@@ -179,7 +175,10 @@ public abstract class DeploymentMetadataParse extends Parse {
     for (Element childElement : element.elements()) {
       if(PROPERTY.equals(childElement.getTagName())) {
         String resolved = PropertyHelper.resolveProperty(System.getProperties(), childElement.getText());
-        properties.put(childElement.attribute(NAME), resolved);
+        String nameAttribute = childElement.attribute(NAME);
+        if (nameAttribute != null) {
+          properties.put(nameAttribute, resolved);
+        }
       }
     }
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.spring;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
@@ -34,9 +36,9 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
  */
 public class ProcessEngineFactoryBean implements FactoryBean<ProcessEngine>, DisposableBean, ApplicationContextAware {
 
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected ApplicationContext applicationContext;
-  protected ProcessEngineImpl processEngine;
+  protected @Nullable ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected @Nullable ApplicationContext applicationContext;
+  protected @Nullable ProcessEngineImpl processEngine;
 
   @Override
   public void destroy() throws Exception {
@@ -46,7 +48,7 @@ public class ProcessEngineFactoryBean implements FactoryBean<ProcessEngine>, Dis
   }
 
   @Override
-  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+  public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
   }
 
@@ -88,12 +90,12 @@ public class ProcessEngineFactoryBean implements FactoryBean<ProcessEngine>, Dis
 
   // getters and setters //////////////////////////////////////////////////////
 
-  public ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
+  public @Nullable ProcessEngineConfigurationImpl getProcessEngineConfiguration() {
     return processEngineConfiguration;
   }
 
 
-  public void setProcessEngineConfiguration(ProcessEngineConfigurationImpl processEngineConfiguration) {
+  public void setProcessEngineConfiguration(@NonNull ProcessEngineConfigurationImpl processEngineConfiguration) {
     this.processEngineConfiguration = processEngineConfiguration;
   }
 }

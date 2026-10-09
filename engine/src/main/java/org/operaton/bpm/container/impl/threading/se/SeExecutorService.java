@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobsRunnable;
  * @author Daniel Meyer
  *
  */
-public class SeExecutorService implements ExecutorService {
+public @NullMarked class SeExecutorService implements ExecutorService {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 

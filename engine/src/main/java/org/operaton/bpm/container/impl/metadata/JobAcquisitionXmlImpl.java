@@ -18,7 +18,12 @@ package org.operaton.bpm.container.impl.metadata;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * <p>Implementation of the {@link JobAcquisitionXml} SPI interface</p>
@@ -26,15 +31,15 @@ import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
  * @author Daniel Meyer
  *
  */
-public class JobAcquisitionXmlImpl implements JobAcquisitionXml {
+public @NullMarked class JobAcquisitionXmlImpl implements JobAcquisitionXml {
 
-  private String name;
-  private String jobExecutorClassName;
-  private Map<String, String> properties;
+  private @Nullable String name;
+  private @Nullable String jobExecutorClassName;
+  private @Nullable Map<String, String> properties;
 
   @Override
   public String getName() {
-    return name;
+    return requireNonNull(name, "name");
   }
 
   public void setName(String name) {
@@ -44,7 +49,7 @@ public class JobAcquisitionXmlImpl implements JobAcquisitionXml {
 
   @Override
   public Map<String, String> getProperties() {
-    return properties;
+    return requireNonNull(properties, "properties");
   }
 
   public void setProperties(Map<String, String> properties) {
@@ -53,7 +58,7 @@ public class JobAcquisitionXmlImpl implements JobAcquisitionXml {
 
   @Override
   public String getJobExecutorClassName() {
-    return jobExecutorClassName;
+    return requireNonNull(jobExecutorClassName, "jobExecutorClassName");
   }
 
   public void setJobExecutorClassName(String jobExecutorClassName) {

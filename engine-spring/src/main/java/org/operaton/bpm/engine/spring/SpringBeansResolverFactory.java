@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ApplicationContext;
 
@@ -68,7 +68,7 @@ public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
   }
 
   @Override
-  public Object get(Object key) {
+  public @Nullable Object get(Object key) {
     if (key instanceof String stringKey) {
       try {
         return applicationContext.getBean(stringKey);

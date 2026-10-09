@@ -18,15 +18,17 @@ package org.operaton.bpm.container.impl.plugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
+
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class BpmPlatformPlugins {
+public @NullMarked class BpmPlatformPlugins {
 
   protected List<BpmPlatformPlugin> plugins;
 
@@ -34,7 +36,7 @@ public class BpmPlatformPlugins {
     this.plugins = new ArrayList<>();
   }
 
-  public void add(BpmPlatformPlugin plugin) {
+  public void add(@Nullable BpmPlatformPlugin plugin) {
     if (plugin != null) {
       this.plugins.add(plugin);
     }
@@ -47,16 +49,10 @@ public class BpmPlatformPlugins {
   public static BpmPlatformPlugins load(ClassLoader classLoader) {
     BpmPlatformPlugins plugins = new BpmPlatformPlugins();
 
-    Iterator<BpmPlatformPlugin> it = ServiceLoader
-        .load(BpmPlatformPlugin.class, classLoader)
-        .iterator();
-
-    while (it.hasNext()) {
-      BpmPlatformPlugin plugin = it.next();
-      if (plugin != null) {
-        plugins.add(plugin);
-      }
-    }
+    ServiceLoader
+      .load(BpmPlatformPlugin.class, classLoader)
+      .stream().map(ServiceLoader.Provider::get)
+      .forEach(plugins::add);
 
     return plugins;
   }

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -42,11 +42,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class MBeanServiceContainer implements PlatformServiceContainer {
+public @NullMarked class MBeanServiceContainer implements PlatformServiceContainer {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
-  protected MBeanServer mBeanServer;
+  protected @Nullable MBeanServer mBeanServer;
 
   protected Map<ObjectName, PlatformService<?>> servicesByName = new ConcurrentHashMap<>();
 
@@ -232,7 +232,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
     return serviceNames.stream()
         .map(serviceName -> (PlatformService<S>) servicesByName.get(getObjectName(serviceName)))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**
@@ -253,7 +253,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    */
   @Override
   @SuppressWarnings("unchecked")
-  public <S> @NonNull List<S> getServiceValuesByType(ServiceType type) {
+  public <S> List<S> getServiceValuesByType(ServiceType type) {
 
     // query the MBeanServer for all services of the given type
     Set<String> serviceNames = getServiceNames(type);
@@ -276,6 +276,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     return mBeanServer;
   }
 
+  @SuppressWarnings("unused")
   public synchronized void setmBeanServer(MBeanServer mBeanServer) {
     this.mBeanServer = mBeanServer;
   }

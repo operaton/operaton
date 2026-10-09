@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.container.impl.metadata;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * <p>Collection of constant string values used by the parsers.</p>
  *
  * @author Daniel Meyer
  *
  */
-public final class DeploymentMetadataConstants {
+public final @NullMarked class DeploymentMetadataConstants {
 
   public static final String NAME = "name";
   public static final String TENANT_ID = "tenantId";

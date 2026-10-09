@@ -33,7 +33,7 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation.DeploymentOperati
  * @author Ronny Bräunlich
  *
  */
-public interface PlatformServiceContainer {
+public @NullMarked interface PlatformServiceContainer {
 
   <S> void startService(ServiceType serviceType, String localName, PlatformService<S> service);
 

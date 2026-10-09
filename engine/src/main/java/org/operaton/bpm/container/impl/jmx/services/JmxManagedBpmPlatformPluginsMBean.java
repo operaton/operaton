@@ -16,11 +16,13 @@
  */
 package org.operaton.bpm.container.impl.jmx.services;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public interface JmxManagedBpmPlatformPluginsMBean {
+public @NullMarked interface JmxManagedBpmPlatformPluginsMBean {
 
   String[] getPluginNames();
 

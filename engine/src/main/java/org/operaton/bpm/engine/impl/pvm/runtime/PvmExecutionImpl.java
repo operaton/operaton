@@ -19,11 +19,13 @@ package org.operaton.bpm.engine.impl.pvm.runtime;
 import java.io.Serial;
 import java.util.*;
 
-import org.operaton.bpm.engine.ActivityTypes;
-
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability;
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
@@ -523,6 +525,14 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     // that go unnoticed
     forceUpdate();
 
+    if (isEnteredAdHocScope()) {
+      PvmExecutionImpl child = createExecution();
+      child.setConcurrent(true);
+      child.setScope(false);
+      child.setActivityInstanceId(null);
+      return child;
+    }
+
     if (children.isEmpty()) {
       // (1)
       PvmExecutionImpl replacingExecution = this.createExecution();
@@ -554,8 +564,19 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     return concurrentExecution;
   }
 
+  public boolean isEnteredAdHocScope() {
+    // A compacted ordinary scope can point at an unstarted ad-hoc target. Only
+    // an entered owner, not an async-before or enabled target, keeps this shape.
+    return isScope() && activityInstanceId != null && activity != null
+        && activity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior
+        && !AdHocStartability.INSTANCE.isEnabledExecution(this);
+  }
+
   @Override
   public boolean tryPruneLastConcurrentChild() {
+    if (isEnteredAdHocScope()) {
+      return false;
+    }
     List<? extends PvmExecutionImpl> nonEventScopeExecutions = getNonEventScopeExecutions();
     if (nonEventScopeExecutions.size() != 1 || !nonEventScopeExecutions.get(0).isConcurrent()) {
       return false;
@@ -2263,6 +2284,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * </ul>
    */
   public boolean isAsyncAfterScopeWithoutTransition() {
-    return activityInstanceId == null && activity.isScope() && !isActive;
+    return activityInstanceId == null && activity.isScope() && !isActive
+        && !AdHocStartability.INSTANCE.isEnabledExecution(this);
   }
 }

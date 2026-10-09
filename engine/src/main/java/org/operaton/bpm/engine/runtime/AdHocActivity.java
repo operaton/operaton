@@ -15,10 +15,17 @@
  */
 package org.operaton.bpm.engine.runtime;
 
+import java.util.List;
+
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * Metadata for an activity that can currently be started in an active ad-hoc subprocess.
+ *
+ * @since 2.2
  */
-public interface AdHocActivity {
+public @NullMarked interface AdHocActivity {
 
   /**
    * Returns the BPMN activity id.
@@ -26,12 +33,32 @@ public interface AdHocActivity {
   String getActivityId();
 
   /**
-   * Returns the BPMN activity name.
+   * Returns the BPMN activity name, or {@code null} if none is declared.
    */
-  String getActivityName();
+  @Nullable String getActivityName();
 
   /**
    * Returns the BPMN activity type, for example {@code userTask}.
    */
   String getActivityType();
+
+  /**
+   * Whether this activity can start without consuming an incoming-flow token.
+   * @since 2.2
+   */
+  default boolean isStarterActivity() {
+    return false;
+  }
+
+  /**
+   * Persisted enabled token execution IDs, in deterministic execution-ID order.
+   * Activation selects the first token eligible under the current ordering constraints.
+   * Execution IDs may be reused after activation, for example by a loop.
+   * An empty list can still represent an available starter activity.
+   * @since 2.2
+   */
+  default List<String> getEnabledExecutionIds() {
+    return List.of();
+  }
+
 }

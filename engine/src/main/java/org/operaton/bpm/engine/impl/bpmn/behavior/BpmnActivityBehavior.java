@@ -85,6 +85,15 @@ public class BpmnActivityBehavior {
   protected void performOutgoingBehavior(ActivityExecution execution, boolean checkConditions) {
     LOG.leavingActivity(execution.getActivity().getId());
 
+    if (!execution.getActivity().getOutgoingTransitions().isEmpty()
+        && execution.getActivity().getFlowScope() instanceof ActivityImpl flowScope
+        && flowScope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior adHocBehavior
+        && adHocBehavior.shouldHandleChildCompletion(execution.findExecutionForFlowScope(flowScope),
+            (ActivityImpl) execution.getActivity())) {
+      execution.end(true);
+      return;
+    }
+
     String defaultSequenceFlow = (String) execution.getActivity().getProperty("default");
     List<PvmTransition> outgoingTransitions = execution.getActivity().getOutgoingTransitions();
     List<PvmTransition> transitionsToTake = findTransitionsToTake(execution, checkConditions, defaultSequenceFlow,
@@ -97,6 +106,30 @@ public class BpmnActivityBehavior {
     } else {
       handleNoTransitions(execution, defaultSequenceFlow, outgoingTransitions);
     }
+  }
+
+  /**
+   * Select outgoing flows without firing activity end listeners again. Ad-hoc
+   * completion uses this after its normal activity-end continuation.
+   */
+  public List<PvmTransition> selectOutgoingTransitions(ActivityExecution execution) {
+    String defaultSequenceFlow = (String) execution.getActivity().getProperty("default");
+    List<PvmTransition> outgoingTransitions = execution.getActivity().getOutgoingTransitions();
+    List<PvmTransition> transitions = findTransitionsToTake(execution, true, defaultSequenceFlow, outgoingTransitions);
+    if (!transitions.isEmpty()) {
+      return transitions;
+    }
+    if (defaultSequenceFlow != null) {
+      PvmTransition defaultTransition = execution.getActivity().findOutgoingTransition(defaultSequenceFlow);
+      if (defaultTransition == null) {
+        throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
+      }
+      return List.of(defaultTransition);
+    }
+    if (!outgoingTransitions.isEmpty()) {
+      throw LOG.missingConditionalFlowException(execution.getActivity().getId());
+    }
+    return transitions;
   }
 
   protected List<PvmTransition> findTransitionsToTake(ActivityExecution execution, boolean checkConditions,

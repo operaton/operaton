@@ -1,5 +1,6 @@
 /*
  * Copyright 2026 FINOS
+ * Modified in 2026 by the Operaton contributors for scope-safe activation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +23,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.SuspendedEntityInteractionException;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -34,8 +35,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
- * Triggers starter activities inside an active ad-hoc subprocess execution.
+ * Selects starter activities or enabled tokens inside an entered ad-hoc subprocess scope.
  */
 public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
 
@@ -70,11 +73,20 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
       checker.checkUpdateProcessInstance(execution);
     }
 
+    if (execution.isSuspended()) {
+      throw new SuspendedEntityInteractionException("Execution " + executionId + " is suspended");
+    }
+
     ActivityImpl adHocActivity = execution.getActivity();
     ensureNotNull(BadUserRequestException.class, "execution " + executionId + " has no current activity", "activity", adHocActivity);
 
-    if (!(adHocActivity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior)) {
+    if (!execution.isEnteredAdHocScope()) {
       throw new BadUserRequestException("execution " + executionId + " is not waiting in an adHocSubProcess");
+    }
+
+    if (startability.isCompletionRequested(execution)) {
+      throw new BadUserRequestException("adHocSubProcess " + adHocActivity.getId()
+          + " has already requested completion");
     }
 
     Set<String> uniqueActivityIds = new HashSet<>();
@@ -103,7 +115,7 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
           "targetActivity",
           targetActivity);
 
-      if (!isStartableInAdHocScope(adHocActivity, targetActivity)) {
+      if (!startability.isAvailableActivity(execution, targetActivity)) {
         throw new BadUserRequestException(
             "adHoc activity '" + activityId + "' is not startable in adHocSubProcess " + adHocActivity.getId());
       }
@@ -113,19 +125,8 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
 
     ensureOrderingAllowsTrigger(execution, adHocActivity, targetActivities);
 
-    for (ActivityImpl targetActivity : targetActivities) {
-      ActivityExecution childExecution = execution.createExecution();
-      ((ExecutionEntity) execution).forceUpdate();
-      childExecution.setConcurrent(true);
-      childExecution.setScope(false);
-      if (activityVariables != null) {
-        Map<String, Object> localVariables = activityVariables.get(targetActivity.getId());
-        if (localVariables != null && !localVariables.isEmpty()) {
-          childExecution.setVariablesLocal(localVariables);
-        }
-      }
-      childExecution.executeActivity(targetActivity);
-    }
+    ((AdHocSubProcessActivityBehavior) adHocActivity.getActivityBehavior())
+        .activateActivities(execution, targetActivities, activityVariables);
 
     return null;
   }
@@ -141,14 +142,18 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
       return;
     }
 
-    if (targetActivities.size() > 1) {
-      throw new BadUserRequestException(
-          "Sequential adHocSubProcess '" + adHocActivity.getId() + "' can trigger only one activity per request");
+    Set<Object> runningActivities = new HashSet<>();
+    execution.getNonEventScopeExecutions().stream().filter(startability::isRunningActivity)
+        .forEach(runningActivities::add);
+    for (ActivityImpl activity : targetActivities) {
+      ActivityExecution enabled = startability.getEnabledExecutionForActivation(execution, activity);
+      runningActivities.add(enabled == null ? activity : startability.getDirectChild(execution, enabled));
     }
-
-    if (startability.hasActiveChildExecutions(execution)) {
-      throw new BadUserRequestException(
-          "Sequential adHocSubProcess '" + adHocActivity.getId() + "' already has an active child activity");
+    if (runningActivities.size() > 1) {
+      String reason = targetActivities.size() > 1
+          ? "can trigger only one activity per request"
+          : "already has an active child activity";
+      throw new BadUserRequestException("Sequential adHocSubProcess '" + adHocActivity.getId() + "' " + reason);
     }
   }
 }

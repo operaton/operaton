@@ -15,10 +15,14 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,15 +37,16 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * Central startability support for ad-hoc subprocess activities.
  *
  * <p>Task-like activities, call activities, subprocesses, and transactions are
- * potentially startable unless they are compensation handlers, event
- * subprocesses, or downstream activities with an incoming sequence flow from
- * inside the ad-hoc scope.
- * Runtime ordering checks are kept here as well so future discovery APIs and
- * scheduler integration can reuse the same decision point.
+ * selectable unless they are compensation handlers or event subprocesses.
+ * Activities with incoming sequence flows require a persisted enabled token;
+ * no-incoming-flow activities are reusable starters. Discovery and activation
+ * share the same runtime ordering checks.
  */
 public class AdHocStartability {
 
   public static final AdHocStartability INSTANCE = new AdHocStartability();
+
+  public static final String AD_HOC_ENABLED_ACTIVITY = "adHocEnabledActivity";
 
   public static final String ORDERING_SEQUENTIAL = "Sequential";
 
@@ -56,6 +61,7 @@ public class AdHocStartability {
       ActivityTypes.TASK_RECEIVE_TASK,
       ActivityTypes.CALL_ACTIVITY,
       ActivityTypes.SUB_PROCESS,
+      ActivityTypes.SUB_PROCESS_AD_HOC,
       ActivityTypes.TRANSACTION)));
 
   protected AdHocStartability() {
@@ -71,6 +77,7 @@ public class AdHocStartability {
     }
 
     return adHocScope.getActivities().stream()
+        .map(this::getModelActivity)
         .filter(activity -> isPotentiallyStartableActivity(adHocScope, activity))
         .collect(Collectors.toList());
   }
@@ -80,11 +87,20 @@ public class AdHocStartability {
    */
   public List<ActivityImpl> getStartableActivities(ActivityExecution adHocScopeExecution) {
     ActivityImpl adHocScope = getAdHocScope(adHocScopeExecution);
-    if (isSequentialOrdering(adHocScope) && hasOpenChildExecutions(adHocScopeExecution)) {
+    if (isCompletionRequested(adHocScopeExecution)) {
       return Collections.emptyList();
     }
 
-    return getPotentiallyStartableActivities(adHocScope);
+    Map<String, ActivityImpl> activities = new LinkedHashMap<>();
+    for (ActivityImpl starter : getPotentiallyStartableActivities(adHocScope)) {
+      activities.put(starter.getId(), starter);
+    }
+    for (ActivityExecution enabled : getEnabledExecutions(adHocScopeExecution)) {
+      ActivityImpl activity = getModelActivity((ActivityImpl) enabled.getActivity());
+      activities.putIfAbsent(activity.getId(), activity);
+    }
+    return activities.values().stream().filter(activity -> canActivate(adHocScopeExecution, activity))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -92,18 +108,19 @@ public class AdHocStartability {
    */
   public boolean isStartableActivity(ActivityExecution adHocScopeExecution, ActivityImpl activity) {
     ActivityImpl adHocScope = getAdHocScope(adHocScopeExecution);
-    if (!isPotentiallyStartableActivity(adHocScope, activity)) {
+    if (isCompletionRequested(adHocScopeExecution) || !isAvailableActivity(adHocScopeExecution, activity)) {
       return false;
     }
 
-    return !isSequentialOrdering(adHocScope) || !hasOpenChildExecutions(adHocScopeExecution);
+    return canActivate(adHocScopeExecution, activity);
   }
 
   /**
    * Checks if an activity is startable according to static ad-hoc model rules.
    */
   public boolean isPotentiallyStartableActivity(ActivityImpl adHocScope, ActivityImpl activity) {
-    if (adHocScope == null || activity == null || activity.isCompensationHandler()
+    if (adHocScope == null || activity == null || getExecutionActivity(activity).getFlowScope() != adHocScope
+        || activity.isCompensationHandler()
         || activity.isTriggeredByEvent()) {
       return false;
     }
@@ -113,7 +130,7 @@ public class AdHocStartability {
       return false;
     }
 
-    return !hasIncomingTransitionFromAdHocScope(adHocScope, activity);
+    return !hasIncomingTransitionFromAdHocScope(adHocScope, getExecutionActivity(activity));
   }
 
   /**
@@ -141,13 +158,13 @@ public class AdHocStartability {
   /**
    * Checks if any open child execution exists in the ad-hoc scope.
    *
-   * <p>Async continuations and scope activities may leave child executions that
-   * are not currently active but still represent running ad-hoc work. Those
-   * executions must still block sequential triggers and auto-completion.
+   * <p>This includes enabled tokens and routing waits as well as selected
+   * activities. Open work prevents auto-completion; sequential activation uses
+   * the narrower running-activity check.
    */
   public boolean hasOpenChildExecutions(ActivityExecution adHocScopeExecution) {
     return adHocScopeExecution != null
-        && adHocScopeExecution.getExecutions().stream().anyMatch(child -> !child.isEnded());
+        && !adHocScopeExecution.getNonEventScopeExecutions().isEmpty();
   }
 
   /**
@@ -178,6 +195,133 @@ public class AdHocStartability {
         .anyMatch(child -> child.getActivity() != null
             && activityId.equals(child.getActivity().getId())
             && child.isActive());
+  }
+
+  public boolean isEnabledExecution(ActivityExecution execution) {
+    return execution != null && Boolean.TRUE.equals(execution.getVariableLocal(AD_HOC_ENABLED_ACTIVITY));
+  }
+
+  public List<ActivityExecution> getEnabledExecutions(ActivityExecution scope) {
+    if (scope == null) {
+      return Collections.emptyList();
+    }
+    List<ActivityExecution> enabled = new ArrayList<>();
+    for (ActivityExecution child : scope.getNonEventScopeExecutions()) {
+      collectEnabledExecutions(child, enabled);
+    }
+    enabled.sort(Comparator.comparing(ActivityExecution::getId));
+    return enabled;
+  }
+
+  protected void collectEnabledExecutions(ActivityExecution execution, List<ActivityExecution> enabled) {
+    if (isEnabledExecution(execution)) {
+      enabled.add(execution);
+      return;
+    }
+    if (execution.getActivity() instanceof ActivityImpl activity
+        && activity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior) {
+      return;
+    }
+    for (ActivityExecution child : execution.getNonEventScopeExecutions()) {
+      collectEnabledExecutions(child, enabled);
+    }
+  }
+
+  public List<ActivityExecution> getEnabledExecutions(ActivityExecution scope, ActivityImpl activity) {
+    ActivityImpl executionActivity = getExecutionActivity(activity);
+    return getEnabledExecutions(scope).stream()
+        .filter(execution -> execution.getActivity() == executionActivity)
+        .collect(Collectors.toList());
+  }
+
+  /** Select deterministically among tokens whose outer activity may currently run. */
+  public ActivityExecution getEnabledExecutionForActivation(ActivityExecution scope, ActivityImpl activity) {
+    List<ActivityExecution> enabled = getEnabledExecutions(scope, activity);
+    if (isSequentialOrdering(getAdHocScope(scope)) && hasRunningActivities(scope)) {
+      return enabled.stream().filter(token -> isRunningActivity(getDirectChild(scope, token)))
+          .findFirst().orElse(null);
+    }
+    return enabled.isEmpty() ? null : enabled.get(0);
+  }
+
+  public boolean isAvailableActivity(ActivityExecution scope, ActivityImpl activity) {
+    return activity != null && activity == getModelActivity(activity)
+        && (isPotentiallyStartableActivity(getAdHocScope(scope), activity)
+        || !getEnabledExecutions(scope, activity).isEmpty());
+  }
+
+  /** Ready tokens and waiting routing events do not consume a Sequential activity slot. */
+  public boolean hasRunningActivities(ActivityExecution scope) {
+    return scope != null && scope.getNonEventScopeExecutions().stream().anyMatch(this::isRunningActivity);
+  }
+
+  public boolean isRunningActivity(ActivityExecution execution) {
+    if (hasOnlyEnabledActivities(execution)) {
+      return false;
+    }
+    if (execution.getActivity() instanceof ActivityImpl activity
+        && isStartableActivityType((String) getModelActivity(activity).getProperty(BpmnProperties.TYPE.name()))) {
+      return true;
+    }
+    return execution.getNonEventScopeExecutions().stream().anyMatch(this::isRunningActivity);
+  }
+
+  /** A migrated ordinary wrapper may have entered without any selected inner work. */
+  public boolean hasOnlyEnabledActivities(ActivityExecution execution) {
+    if (isEnabledExecution(execution)) {
+      return true;
+    }
+    if (execution.getActivity() instanceof ActivityImpl activity
+        && activity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior) {
+      return false;
+    }
+    List<? extends ActivityExecution> children = execution.getNonEventScopeExecutions();
+    return !children.isEmpty() && children.stream().allMatch(this::hasOnlyEnabledActivities);
+  }
+
+  public ActivityExecution getDirectChild(ActivityExecution scope, ActivityExecution execution) {
+    ActivityExecution child = execution;
+    while (child.getParent() != null && child.getParent() != scope) {
+      child = child.getParent();
+    }
+    return child;
+  }
+
+  /** Existing ordinary wrappers may contain enabled tokens following migration. */
+  public boolean canActivate(ActivityExecution scope, ActivityImpl activity) {
+    if (!isSequentialOrdering(getAdHocScope(scope))) {
+      return true;
+    }
+    List<? extends ActivityExecution> running = scope.getNonEventScopeExecutions().stream()
+        .filter(this::isRunningActivity).toList();
+    if (running.isEmpty()) {
+      return true;
+    }
+    return running.size() == 1 && getEnabledExecutions(scope, activity).stream()
+        .anyMatch(token -> getDirectChild(scope, token) == running.get(0));
+  }
+
+  /** Resolve a model activity to its generated multi-instance body when present. */
+  public ActivityImpl getExecutionActivity(ActivityImpl activity) {
+    if (activity.getFlowScope() instanceof ActivityImpl flowScope
+        && flowScope.getActivityBehavior() instanceof MultiInstanceActivityBehavior) {
+      return flowScope;
+    }
+    return activity;
+  }
+
+  /** Expose the BPMN activity ID, never the generated multi-instance body ID. */
+  public ActivityImpl getModelActivity(ActivityImpl activity) {
+    if (activity.getActivityBehavior() instanceof MultiInstanceActivityBehavior
+        && activity.getActivities().size() == 1) {
+      return activity.getActivities().get(0);
+    }
+    return activity;
+  }
+
+  public boolean isCompletionRequested(ActivityExecution execution) {
+    return execution != null && Boolean.TRUE.equals(execution.getVariableLocal(
+        AdHocSubProcessActivityBehavior.AD_HOC_COMPLETION_CONDITION_SATISFIED));
   }
 
   protected ActivityImpl getAdHocScope(ActivityExecution adHocScopeExecution) {

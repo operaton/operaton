@@ -31,9 +31,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.jspecify.annotations.NullMarked;
-import org.operaton.bpm.engine.ActivityTypes;
-
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -90,8 +90,8 @@ import org.operaton.bpm.engine.impl.bpmn.listener.DelegateExpressionExecutionLis
 import org.operaton.bpm.engine.impl.bpmn.listener.ExpressionExecutionListener;
 import org.operaton.bpm.engine.impl.bpmn.listener.ScriptExecutionListener;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement.CallableElementBinding;
+import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
 import org.operaton.bpm.engine.impl.core.model.CallableElementParameter;
 import org.operaton.bpm.engine.impl.core.model.Properties;
@@ -160,7 +160,6 @@ import org.operaton.bpm.engine.impl.util.xml.Parse;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.findOperatonExtensionElement;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseInputOutput;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseOperatonExtensionProperties;
@@ -169,6 +168,7 @@ import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.ALLOW
 import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.FORM_REF_BINDING_VERSION;
 import static org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity.DEFAULT_EXCLUSIVE;
 import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDelegate;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Specific parsing of one BPMN 2.0 XML file, created by the {@link BpmnParser}.
@@ -3940,6 +3940,17 @@ public @NullMarked class BpmnParse extends Parse {
   }
 
   public ActivityImpl parseAdHocSubProcess(Element adHocSubProcessElement, ScopeImpl scope) {
+    // BPMN 2.0.2 section 10.3.5: ad-hoc scopes have no start or end events.
+    // Nested ordinary/event subprocesses retain their own normal event rules.
+    for (Element child : adHocSubProcessElement.elements()) {
+      if ("startEvent".equals(child.getTagName()) || "endEvent".equals(child.getTagName())) {
+        addError("An ad-hoc subprocess must not contain a direct " + child.getTagName(), child);
+      }
+    }
+    if (Boolean.TRUE.equals(parseBooleanAttribute(adHocSubProcessElement.attribute("triggeredByEvent"), false))) {
+      addError("An ad-hoc subprocess cannot be an event subprocess", adHocSubProcessElement);
+    }
+
     ActivityImpl adHocSubProcessActivity = createActivityOnScope(adHocSubProcessElement, scope);
     adHocSubProcessActivity.setSubProcessScope(true);
 

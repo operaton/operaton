@@ -1,5 +1,6 @@
 /*
  * Copyright 2026 FINOS
+ * Modified in 2026 by the Operaton contributors for lifecycle-safe completion.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,17 +22,20 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.operaton.bpm.engine.BadUserRequestException;
+
 import org.operaton.bpm.engine.ActivityTypes;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.Condition;
-import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
+import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.el.Expression;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
+import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 /**
  * Implementation of the BPMN 2.0 Ad-Hoc Sub-Process.
@@ -56,6 +60,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   public static final String NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES = "nrOfActiveAdHocActivities";
   public static final String NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES = "nrOfCompletedAdHocActivities";
+  public static final String NUMBER_OF_ENABLED_AD_HOC_ACTIVITIES = "nrOfEnabledAdHocActivities";
+  public static final String AD_HOC_ENABLED_ACTIVITY_IDS = "adHocEnabledActivityIds";
   public static final String AD_HOC_ACTIVE_ACTIVITY_IDS = "adHocActiveActivityIds";
   public static final String AD_HOC_COMPLETED_ACTIVITY_IDS = "adHocCompletedActivityIds";
   public static final String AD_HOC_LAST_COMPLETED_ACTIVITY_ID = "adHocLastCompletedActivityId";
@@ -74,16 +80,10 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     validateConfiguredActiveTaskIds(execution, starterActivities, configuredActiveTaskIds);
     List<ActivityImpl> adHocActivities = filterStarterActivities(starterActivities, configuredActiveTaskIds);
     validateOrderingAllowsInitialActivities(execution, adHocActivities);
-    boolean adHocActivityStarted = false;
-
-    for (ActivityImpl activity : adHocActivities) {
-      if (startability.isStartableActivity(execution, activity)) {
-        startAdHocActivity(execution, activity);
-        adHocActivityStarted = true;
-      }
+    activateActivities(execution, adHocActivities, null);
+    if (isAdHocScopeExecution(execution)) {
+      evaluateCompletionCondition(execution, !adHocActivities.isEmpty());
     }
-
-    evaluateCompletionCondition(execution, adHocActivityStarted);
   }
 
   /**
@@ -100,16 +100,23 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     scopeExecution.forceUpdate();
     recordCompletedAdHocActivity(scopeExecution, adHocScopeActivity, completedActivityId);
 
-    // Evaluate before pruning so ad-hoc scope metadata and active children are still intact.
-    evaluateCompletionCondition(scopeExecution, adHocScopeActivity, true);
-
-    // If completion handling moved execution out of the ad-hoc scope, stop here.
-    if (scopeExecution.getActivity() != adHocScopeActivity) {
-      return;
-    }
-
-    scopeExecution.tryPruneLastConcurrentChild();
-    scopeExecution.forceUpdate();
+    ((PvmExecutionImpl) scopeExecution).dispatchDelayedEventsAndPerformOperation(resumedScope -> {
+      // Routing events do not introduce a new Activity completion decision. They can
+      // still finish an already-latched drain or the no-condition auto-complete path.
+      ActivityImpl completedActivity = adHocScopeActivity.findActivity(completedActivityId);
+      if (completedActivity != null && isCompletableActivity(completedActivity)
+          || getCompletionCondition(adHocScopeActivity) == null
+          || isAdHocCompletionConditionSatisfied(resumedScope)) {
+        evaluateCompletionCondition(resumedScope, adHocScopeActivity, true);
+      } else if (hasCompletionContext(resumedScope, adHocScopeActivity)) {
+        updateActiveAdHocActivityContext(resumedScope);
+      }
+      if (resumedScope.getActivity() == adHocScopeActivity) {
+        // Keep the owner addressable instead of folding its last child into it.
+        resumedScope.forceUpdate();
+      }
+      return null;
+    });
   }
 
   /**
@@ -144,7 +151,9 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     Condition completionCondition = getCompletionCondition(scopeActivity);
 
     boolean conditionMet;
-    if (completionCondition == null) {
+    if (isAdHocCompletionConditionSatisfied(scopeExecution)) {
+      conditionMet = true;
+    } else if (completionCondition == null) {
       // No condition: complete only if auto-complete is enabled and at least one
       // ad-hoc activity has started with no active children left.
       conditionMet = isAutoCompleteEnabled(scopeActivity)
@@ -164,6 +173,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       return;
     }
 
+    discardEnabledActivities(scopeExecution);
+
     boolean cancelRemaining = Boolean.TRUE.equals(
       scopeActivity.getProperty(BpmnParse.PROPERTYNAME_AD_HOC_CANCEL_REMAINING));
 
@@ -176,6 +187,135 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     // When remaining instances are preserved, only leave once no active children are left.
     if (!hasActiveChildExecutions(scopeExecution)) {
       leave(scopeExecution);
+    }
+  }
+
+  /** Whether child completion must precede selecting its outgoing sequence flows. */
+  public boolean shouldHandleChildCompletion(ActivityExecution scopeExecution, ActivityImpl activity) {
+    return isCompletableActivity(activity)
+        && (getCompletionCondition((ActivityImpl) activity.getFlowScope()) != null
+            || isAdHocCompletionConditionSatisfied(scopeExecution));
+  }
+
+  /** Gateways and events are flow nodes, but do not count as completed activities. */
+  public boolean isCompletableActivity(ActivityImpl activity) {
+    ActivityImpl modelActivity = startability.getModelActivity(activity);
+    return startability.isStartableActivityType((String) modelActivity.getProperty(BpmnProperties.TYPE.name()));
+  }
+
+  /**
+   * Record a completed activity once, after its end listeners and output mappings.
+   * The completing token is excluded while evaluating the completion condition,
+   * although it remains available for selecting an outgoing flow using local variables.
+   */
+  public boolean activityCompleted(ActivityExecution scopeExecution, ActivityExecution completingChild,
+      ActivityImpl activity) {
+    ActivityImpl scopeActivity = (ActivityImpl) activity.getFlowScope();
+    scopeExecution.forceUpdate();
+    recordCompletedAdHocActivity(scopeExecution, scopeActivity, startability.getModelActivity(activity).getId());
+    if (hasCompletionContext(scopeExecution, scopeActivity)) {
+      updateAdHocCompletionContext(scopeExecution);
+      updateActiveAdHocActivityContext(scopeExecution, completingChild);
+    }
+    Condition condition = getCompletionCondition(scopeActivity);
+    boolean completionRequested = isAdHocCompletionConditionSatisfied(scopeExecution)
+        || condition != null && condition.evaluate(scopeExecution, scopeExecution);
+    if (completionRequested) {
+      scopeExecution.setVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED, true);
+    }
+    return completionRequested;
+  }
+
+  /** Finish a token whose completion has already been recorded. */
+  public void completedActivityExecutionEnded(ActivityExecution scopeExecution, ActivityExecution endedExecution) {
+    endedExecution.remove();
+    scopeExecution.forceUpdate();
+    activityContinued(scopeExecution);
+    // Output mappings and completion-context updates happen after the activity's
+    // earlier end-listener dispatch. Deliver their events before closing/draining
+    // the owner; an interrupting conditional event may replace that continuation.
+    ((PvmExecutionImpl) scopeExecution).dispatchDelayedEventsAndPerformOperation(resumedScope -> {
+      if (isAdHocCompletionConditionSatisfied(resumedScope)) {
+        evaluateCompletionCondition(resumedScope, true);
+      }
+      return null;
+    });
+  }
+
+  /** Refresh the context after a completed activity continues along sequence flows. */
+  public void activityContinued(ActivityExecution scopeExecution) {
+    if (hasCompletionContext(scopeExecution, (ActivityImpl) scopeExecution.getActivity())) {
+      updateActiveAdHocActivityContext(scopeExecution);
+    }
+  }
+
+  protected boolean hasCompletionContext(ActivityExecution scopeExecution, ActivityImpl scopeActivity) {
+    return getCompletionCondition(scopeActivity) != null
+        || scopeExecution.hasVariableLocal(NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)
+        || scopeExecution.hasVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS);
+  }
+
+  /** Persist a ready token without starting listeners, history, input mapping or async-before. */
+  public void enableActivity(ActivityExecution scope, ActivityExecution token, ActivityImpl activity) {
+    token.setActivity(activity);
+    token.setActivityInstanceId(null);
+    token.setActive(false);
+    token.setEnded(false);
+    token.setVariableLocal(AdHocStartability.AD_HOC_ENABLED_ACTIVITY, true);
+    scope.forceUpdate();
+    if (hasCompletionContext(scope, (ActivityImpl) scope.getActivity())) {
+      updateActiveAdHocActivityContext(scope);
+    }
+  }
+
+  /** Enabled work has not started and is discarded when completion is decided. */
+  public void discardEnabledActivities(ActivityExecution scope) {
+    discardEnabledChildren(scope);
+    scope.forceUpdate();
+    if (hasCompletionContext(scope, (ActivityImpl) scope.getActivity())) {
+      updateActiveAdHocActivityContext(scope);
+    }
+  }
+
+  protected void discardEnabledChildren(ActivityExecution parent) {
+    for (ActivityExecution child : new ArrayList<>(parent.getNonEventScopeExecutions())) {
+      if (startability.hasOnlyEnabledActivities(child)) {
+        // Generic cancellation also closes entered wrapper scopes and their subscriptions.
+        // Enabled leaves have no activity-instance ID, so no unstarted activity is ended.
+        normalizeEnabledScopeExecutions(child);
+        ((PvmExecutionImpl) child).deleteCascade("adHocEnabledActivityDiscarded");
+      } else if (!(child.getActivity() instanceof ActivityImpl activity
+          && activity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior)) {
+        discardEnabledChildren(child);
+      }
+    }
+    if (parent.isScope() && !(parent.getActivity() instanceof ActivityImpl activity
+        && activity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior)) {
+      // Ordinary scopes rely on their final running token being compacted before it ends.
+      // Otherwise its concurrent-end callback removes that token but leaves the wrapper waiting.
+      parent.tryPruneLastConcurrentChild();
+    }
+  }
+
+  /** Restore structural wrapper scopes before cancellation can mistake a parked composite for an entered activity. */
+  protected void normalizeEnabledScopeExecutions(ActivityExecution execution) {
+    for (ActivityExecution child : execution.getNonEventScopeExecutions()) {
+      normalizeEnabledScopeExecutions(child);
+    }
+    if (execution.isScope() && startability.isEnabledExecution(execution)) {
+      ActivityImpl pendingActivity = (ActivityImpl) execution.getActivity();
+      if (!(pendingActivity.getFlowScope() instanceof ActivityImpl wrapper)
+          || wrapper.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior) {
+        throw new ProcessEngineException(
+            "Cannot discard an enabled scope token without an ordinary flow-scope owner");
+      }
+      PvmExecutionImpl scopeExecution = (PvmExecutionImpl) execution;
+      if (scopeExecution.createActivityExecutionMapping(wrapper).get(wrapper) != scopeExecution) {
+        throw new ProcessEngineException(
+            "Enabled scope token does not represent its enclosing flow scope");
+      }
+      execution.setActivity(wrapper);
+      execution.removeVariableLocal(AdHocStartability.AD_HOC_ENABLED_ACTIVITY);
     }
   }
 
@@ -201,9 +341,9 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
    * Cancels all active child (concurrent) executions within the ad-hoc scope.
    */
   protected void cancelAllActiveChildren(ActivityExecution scopeExecution) {
-    List<ActivityExecution> children = new ArrayList<>(scopeExecution.getExecutions());
+    List<ActivityExecution> children = new ArrayList<>(scopeExecution.getNonEventScopeExecutions());
     for (ActivityExecution child : children) {
-      child.interrupt("adHocCompletionConditionMet");
+      ((PvmExecutionImpl) child).deleteCascade("adHocCompletionConditionMet");
     }
   }
 
@@ -219,7 +359,11 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   protected void recordCompletedAdHocActivity(ActivityExecution scopeExecution, ActivityImpl scopeActivity,
       String completedActivityId) {
-    if (getCompletionCondition(scopeActivity) == null || completedActivityId == null) {
+    if (!hasCompletionContext(scopeExecution, scopeActivity) || completedActivityId == null) {
+      return;
+    }
+    ActivityImpl completedActivity = scopeActivity.findActivity(completedActivityId);
+    if (completedActivity == null || !isCompletableActivity(completedActivity)) {
       return;
     }
 
@@ -232,7 +376,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   }
 
   protected void recordPreviouslyActiveAdHocActivities(ActivityExecution scopeExecution, ActivityImpl scopeActivity) {
-    if (getCompletionCondition(scopeActivity) == null || hasActiveChildExecutions(scopeExecution)) {
+    if (!hasCompletionContext(scopeExecution, scopeActivity) || hasActiveChildExecutions(scopeExecution)) {
       return;
     }
 
@@ -243,6 +387,10 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
     List<String> completedActivityIds = getCompletedAdHocActivityIds(scopeExecution);
     for (String activeActivityId : activeActivityIds) {
+      ActivityImpl activeActivity = scopeActivity.findActivity(activeActivityId);
+      if (activeActivity == null || !isCompletableActivity(activeActivity)) {
+        continue;
+      }
       completedActivityIds.add(activeActivityId);
       scopeExecution.setVariableLocal(AD_HOC_LAST_COMPLETED_ACTIVITY_ID, activeActivityId);
     }
@@ -295,34 +443,51 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   }
 
   protected void updateActiveAdHocActivityContext(ActivityExecution scopeExecution) {
-    scopeExecution.setVariableLocal(AD_HOC_ACTIVE_ACTIVITY_IDS, getActiveAdHocActivityIds(scopeExecution));
-    scopeExecution.setVariableLocal(NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES, countActiveAdHocActivities(scopeExecution));
+    updateActiveAdHocActivityContext(scopeExecution, null);
   }
 
-  protected List<String> getActiveAdHocActivityIds(ActivityExecution scopeExecution) {
-    if (scopeExecution == null) {
-      return new ArrayList<>();
-    }
-
-    return scopeExecution.getExecutions().stream()
-        .filter(child -> !child.isEnded())
-        .map(this::getCompletedActivityId)
+  protected void updateActiveAdHocActivityContext(ActivityExecution scopeExecution, ActivityExecution excludedChild) {
+    List<? extends ActivityExecution> children = scopeExecution.getNonEventScopeExecutions().stream()
+        .filter(child -> child != excludedChild && startability.isRunningActivity(child))
+        .toList();
+    ActivityImpl scopeActivity = (ActivityImpl) scopeExecution.getActivity();
+    List<String> activityIds = children.stream()
+        .map(child -> getActiveAdHocActivityId(child, scopeActivity))
         .filter(activityId -> activityId != null)
         .collect(Collectors.toCollection(ArrayList::new));
+    scopeExecution.setVariableLocal(AD_HOC_ACTIVE_ACTIVITY_IDS, activityIds);
+    scopeExecution.setVariableLocal(NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES, children.size());
+    List<String> enabledIds = startability.getEnabledExecutions(scopeExecution).stream()
+        .map(child -> startability.getModelActivity((ActivityImpl) child.getActivity()).getId())
+        .collect(Collectors.toCollection(ArrayList::new));
+    scopeExecution.setVariableLocal(AD_HOC_ENABLED_ACTIVITY_IDS, enabledIds);
+    scopeExecution.setVariableLocal(NUMBER_OF_ENABLED_AD_HOC_ACTIVITIES, enabledIds.size());
   }
 
-  protected int countActiveAdHocActivities(ActivityExecution scopeExecution) {
-    if (scopeExecution == null) {
-      return 0;
+  protected String getActiveAdHocActivityId(ActivityExecution execution, ActivityImpl scopeActivity) {
+    ActivityImpl activity = (ActivityImpl) execution.getActivity();
+    if (activity != null) {
+      while (activity.getFlowScope() != scopeActivity
+          && activity.getFlowScope() instanceof ActivityImpl flowScope) {
+        activity = flowScope;
+      }
+      return startability.getModelActivity(activity).getId();
     }
-    return (int) scopeExecution.getExecutions().stream()
-        .filter(child -> !child.isEnded())
-        .count();
+    for (ActivityExecution child : execution.getNonEventScopeExecutions()) {
+      String activityId = getActiveAdHocActivityId(child, scopeActivity);
+      if (activityId != null) {
+        return activityId;
+      }
+    }
+    return null;
   }
 
   protected String getCompletedActivityId(ActivityExecution endedExecution) {
     if (endedExecution == null) {
       return null;
+    }
+    if (endedExecution.getActivity() instanceof ActivityImpl activity) {
+      return startability.getModelActivity(activity).getId();
     }
     if (endedExecution.getCurrentActivityId() != null) {
       return endedExecution.getCurrentActivityId();
@@ -429,12 +594,48 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     }
   }
 
-  protected void startAdHocActivity(ActivityExecution scopeExecution, ActivityImpl targetActivity) {
-    ActivityExecution childExecution = scopeExecution.createExecution();
+  /**
+   * Reserve the entire batch before running synchronous activities. Otherwise a
+   * synchronous first member could complete the scope before later members exist.
+   */
+  public void activateActivities(ActivityExecution scopeExecution, List<ActivityImpl> activities,
+      java.util.Map<String, java.util.Map<String, Object>> activityVariables) {
+    List<ActivityExecution> children = new ArrayList<>();
+    List<Boolean> enabledTokens = new ArrayList<>();
+    for (ActivityImpl activity : activities) {
+      ActivityExecution ready = startability.getEnabledExecutionForActivation(scopeExecution, activity);
+      boolean enabledToken = ready != null;
+      ActivityExecution child;
+      if (enabledToken) {
+        child = ready;
+        child.removeVariableLocal(AdHocStartability.AD_HOC_ENABLED_ACTIVITY);
+      } else {
+        child = scopeExecution.createExecution();
+        child.setConcurrent(true);
+        child.setScope(false);
+        child.setActivity(startability.getExecutionActivity(activity));
+        child.setActivityInstanceId(null);
+      }
+      child.setActive(true);
+      if (activityVariables != null && activityVariables.get(activity.getId()) != null) {
+        child.setVariablesLocal(activityVariables.get(activity.getId()));
+      }
+      children.add(child);
+      enabledTokens.add(enabledToken);
+    }
     scopeExecution.forceUpdate();
-    childExecution.setConcurrent(true);
-    childExecution.setScope(false);
-    childExecution.executeActivity(targetActivity);
+    for (int i = 0; i < children.size(); i++) {
+      ActivityExecution child = children.get(i);
+      if (!child.isEnded() && !((PvmExecutionImpl) child).isRemoved()
+          && startability.getDirectChild(scopeExecution, child).getParent() == scopeExecution) {
+        if (enabledTokens.get(i)) {
+          ((PvmExecutionImpl) child).performOperation(
+              org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation.TRANSITION_CREATE_SCOPE);
+        } else {
+          child.executeActivity(startability.getExecutionActivity(activities.get(i)));
+        }
+      }
+    }
   }
 
   @Override

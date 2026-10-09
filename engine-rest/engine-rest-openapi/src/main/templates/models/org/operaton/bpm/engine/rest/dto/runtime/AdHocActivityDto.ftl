@@ -29,7 +29,18 @@
     <@lib.property
         name = "activityType"
         type = "string"
-        desc = "The BPMN activity type, for example `userTask`."
+        desc = "The BPMN activity type, for example `userTask`."/>
+
+    <@lib.property
+        name = "starterActivity"
+        type = "boolean"
+        desc = "Whether the activity can start without consuming an incoming-flow token."/>
+
+    <@lib.property
+        name = "enabledExecutionIds"
+        type = "array"
+        itemType = "string"
+        desc = "Persisted enabled token execution ids, in deterministic execution-ID order. Activation selects the first token eligible under the current ordering constraints. Empty for a free starter with no pending tokens."
         last = true/>
 
 </@lib.dto>

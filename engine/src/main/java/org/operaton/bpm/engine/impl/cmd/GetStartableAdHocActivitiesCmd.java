@@ -15,15 +15,12 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability;
-import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -31,6 +28,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.runtime.AdHocActivityImpl;
 import org.operaton.bpm.engine.runtime.AdHocActivity;
+
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * Discovers activities that can currently be triggered in an active ad-hoc subprocess.
@@ -60,12 +59,12 @@ public class GetStartableAdHocActivitiesCmd implements Command<List<AdHocActivit
     ActivityImpl adHocActivity = execution.getActivity();
     ensureNotNull(BadUserRequestException.class, "execution " + executionId + " has no current activity", "activity", adHocActivity);
 
-    if (!(adHocActivity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior)) {
+    if (!execution.isEnteredAdHocScope()) {
       throw new BadUserRequestException("execution " + executionId + " is not waiting in an adHocSubProcess");
     }
 
     return startability.getStartableActivities(execution).stream()
-        .map(AdHocActivityImpl::fromActivity)
+        .map(activity -> AdHocActivityImpl.fromActivity(activity, execution))
         .collect(Collectors.toList());
   }
 }

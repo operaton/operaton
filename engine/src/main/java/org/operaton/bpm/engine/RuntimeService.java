@@ -1162,8 +1162,12 @@ public @NullMarked interface RuntimeService {
   /**
    * Returns the activities that can currently be triggered in an active ad-hoc subprocess execution.
    *
-   * <p>The result observes the BPMN {@code ordering} of the ad-hoc subprocess. For
-   * sequential ordering, the result is empty while any inner activity is active.
+   * <p>The result observes the BPMN {@code ordering} of the ad-hoc subprocess.
+   * Sequential ordering does not allow selection of a second concurrent outer activity.
+   * A scope whose completion condition has already been satisfied returns an empty list.
+   * Multi-instance activities are identified by their BPMN activity ID. The result includes
+   * starter activities and downstream activities enabled by incoming-flow tokens.
+   * Their enabled execution IDs expose the multiplicity of pending activations.
    *
    * @param executionId the execution id of the active ad-hoc subprocess scope
    *
@@ -1173,14 +1177,20 @@ public @NullMarked interface RuntimeService {
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+   * @since 2.2
    */
   List<AdHocActivity> getStartableAdHocActivities(String executionId);
 
   /**
    * Triggers one or more activities contained in an active ad-hoc subprocess execution.
    *
+   * <p>For downstream activities this consumes one persisted enabled token per requested
+   * activity, ordered deterministically by execution ID. Starter activities can be
+   * instantiated without an incoming token. Sequence flows enable subsequent activities;
+   * they do not automatically activate them. Duplicate IDs within one batch are rejected.
+   *
    * <p>Per-activity variables can be provided via {@code activityVariables} and will
-   * be set as local variables on the newly created child execution for each activity.
+   * be set as local variables on the selected child execution for each activity.
    *
    * @param executionId the execution id of the active ad-hoc subprocess scope
    * @param activityIds the ids of inner activities to trigger
@@ -1192,11 +1202,12 @@ public @NullMarked interface RuntimeService {
    *          not exist, the execution is not an ad-hoc subprocess scope, one or more
    *          target activities do not exist or are not startable inside the ad-hoc
    *          subprocess, or the ad-hoc subprocess uses sequential ordering and
-   *          already has an active child activity.
+   *          already has an active child activity, or completion has already been requested.
+   * @since 2.2
    */
   void triggerAdHocActivities(String executionId,
                               Collection<String> activityIds,
-                              Map<String, Map<String, Object>> activityVariables);
+                              @Nullable Map<String, Map<String, Object>> activityVariables);
 
   /**
    * Completes an active ad-hoc subprocess execution.
@@ -1214,6 +1225,7 @@ public @NullMarked interface RuntimeService {
    *          the execution is not an ad-hoc subprocess scope, or active inner
    *          activities exist while {@code cancelRemainingInstances} is
    *          {@code false}.
+   * @since 2.2
    */
   void completeAdHocSubProcess(String executionId);
 
@@ -1236,8 +1248,9 @@ public @NullMarked interface RuntimeService {
    *          the execution is not an ad-hoc subprocess scope, or active inner
    *          activities exist while {@code cancelRemainingInstances} is
    *          {@code false}.
+   * @since 2.2
    */
-  void completeAdHocSubProcess(String executionId, Map<String, Object> variables);
+  void completeAdHocSubProcess(String executionId, @Nullable Map<String, Object> variables);
 
   // Variables ////////////////////////////////////////////////////////////////////
 

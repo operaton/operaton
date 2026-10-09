@@ -40,14 +40,14 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_ACTIVE_ACTIVITY_IDS;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETED_ACTIVITY_IDS;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETION_CONDITION_SATISFIED;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_LAST_COMPLETED_ACTIVITY_ID;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class AdHocSubProcessTest {
 
@@ -730,6 +730,10 @@ class AdHocSubProcessTest {
     assertThat(taskC).isNull();
 
     taskService.complete(taskA.getId());
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("taskC").count()).isZero();
+    String scope = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess").singleResult().getId();
+    runtimeService.triggerAdHocActivities(scope, Collections.singletonList("taskC"), null);
 
     taskC = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
@@ -1060,6 +1064,9 @@ class AdHocSubProcessTest {
         .taskDefinitionKey("taskA")
         .singleResult()).isNull();
 
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("boundaryTask").count()).isZero();
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("boundaryTask"), null);
+
     Task boundaryTask = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
         .taskDefinitionKey("boundaryTask")
@@ -1202,6 +1209,8 @@ class AdHocSubProcessTest {
   @Test
   void testCompletionConditionUsesCompletedActivityContext() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithCompletionContext");
+    String scopeId = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess").singleResult().getId();
 
     Task taskA = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
@@ -1224,15 +1233,15 @@ class AdHocSubProcessTest {
         .singleResult();
 
     assertThat(taskB).isNotNull();
-    assertThat(((Number) runtimeService.getVariableLocal(taskB.getExecutionId(),
+    assertThat(((Number) runtimeService.getVariableLocal(scopeId,
         NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)).intValue()).isEqualTo(1);
-    assertThat(((Number) runtimeService.getVariableLocal(taskB.getExecutionId(),
+    assertThat(((Number) runtimeService.getVariableLocal(scopeId,
         NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES)).intValue()).isEqualTo(1);
-    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_ACTIVE_ACTIVITY_IDS))
+    assertThat(runtimeService.getVariableLocal(scopeId, AD_HOC_ACTIVE_ACTIVITY_IDS))
       .isEqualTo(Collections.singletonList("taskB"));
-    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_COMPLETED_ACTIVITY_IDS))
+    assertThat(runtimeService.getVariableLocal(scopeId, AD_HOC_COMPLETED_ACTIVITY_IDS))
       .isEqualTo(Collections.singletonList("taskA"));
-    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_LAST_COMPLETED_ACTIVITY_ID))
+    assertThat(runtimeService.getVariableLocal(scopeId, AD_HOC_LAST_COMPLETED_ACTIVITY_ID))
       .isEqualTo("taskA");
 
     assertThat(taskService.createTaskQuery()
@@ -1283,6 +1292,8 @@ class AdHocSubProcessTest {
   @Test
   void testCompletionConditionSatisfactionIsLatchedUntilActiveActivitiesFinish() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithLatchedCompletion");
+    String scopeId = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess").singleResult().getId();
 
     Task taskA = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
@@ -1305,7 +1316,7 @@ class AdHocSubProcessTest {
         .singleResult();
 
     assertThat(taskB).isNotNull();
-    assertThat(runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_COMPLETION_CONDITION_SATISFIED))
+    assertThat(runtimeService.getVariableLocal(scopeId, AD_HOC_COMPLETION_CONDITION_SATISFIED))
       .isEqualTo(Boolean.TRUE);
     assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())

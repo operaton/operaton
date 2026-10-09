@@ -16,8 +16,11 @@
 package org.operaton.bpm.engine.impl.runtime;
 
 import java.io.Serializable;
+import java.util.List;
 
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
+import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.runtime.AdHocActivity;
 
@@ -28,6 +31,8 @@ public class AdHocActivityImpl implements AdHocActivity, Serializable {
   protected String activityId;
   protected String activityName;
   protected String activityType;
+  protected boolean starterActivity;
+  protected List<String> enabledExecutionIds = List.of();
 
   public static AdHocActivityImpl fromActivity(ActivityImpl activity) {
     AdHocActivityImpl result = new AdHocActivityImpl();
@@ -35,6 +40,25 @@ public class AdHocActivityImpl implements AdHocActivity, Serializable {
     result.activityName = activity.getName();
     result.activityType = (String) activity.getProperty(BpmnProperties.TYPE.name());
     return result;
+  }
+
+  public static AdHocActivityImpl fromActivity(ActivityImpl activity, ActivityExecution scope) {
+    AdHocActivityImpl result = fromActivity(activity);
+    result.starterActivity = AdHocStartability.INSTANCE.isPotentiallyStartableActivity(
+        (ActivityImpl) scope.getActivity(), activity);
+    result.enabledExecutionIds = AdHocStartability.INSTANCE.getEnabledExecutions(scope, activity).stream()
+        .map(ActivityExecution::getId).toList();
+    return result;
+  }
+
+  @Override
+  public boolean isStarterActivity() {
+    return starterActivity;
+  }
+
+  @Override
+  public List<String> getEnabledExecutionIds() {
+    return enabledExecutionIds;
   }
 
   @Override

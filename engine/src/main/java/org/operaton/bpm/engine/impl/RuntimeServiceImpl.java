@@ -59,8 +59,8 @@ import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import static java.util.Collections.emptyList;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Collections.emptyList;
 
 /**
  * @author Tom Baeyens
@@ -535,14 +535,14 @@ public @NullMarked class RuntimeServiceImpl extends ServiceImpl implements Runti
 
   @Override
   public List<AdHocActivity> getStartableAdHocActivities(String executionId) {
-    return commandExecutor.execute(new GetStartableAdHocActivitiesCmd(executionId));
+    return getCommandExecutor().execute(new GetStartableAdHocActivitiesCmd(executionId));
   }
 
   @Override
   public void triggerAdHocActivities(String executionId,
                                      Collection<String> activityIds,
-                                     Map<String, Map<String, Object>> activityVariables) {
-    commandExecutor.execute(new TriggerAdHocActivitiesCmd(executionId, activityIds, activityVariables));
+                                     @Nullable Map<String, Map<String, Object>> activityVariables) {
+    getCommandExecutor().execute(new TriggerAdHocActivitiesCmd(executionId, activityIds, activityVariables));
   }
 
   @Override
@@ -551,8 +551,8 @@ public @NullMarked class RuntimeServiceImpl extends ServiceImpl implements Runti
   }
 
   @Override
-  public void completeAdHocSubProcess(String executionId, Map<String, Object> variables) {
-    commandExecutor.execute(new CompleteAdHocSubProcessCmd(executionId, variables));
+  public void completeAdHocSubProcess(String executionId, @Nullable Map<String, Object> variables) {
+    getCommandExecutor().execute(new CompleteAdHocSubProcessCmd(executionId, variables));
   }
 
   @Override

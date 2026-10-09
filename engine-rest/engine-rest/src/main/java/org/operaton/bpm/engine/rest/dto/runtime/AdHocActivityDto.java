@@ -25,12 +25,16 @@ public class AdHocActivityDto {
   protected String activityId;
   protected String activityName;
   protected String activityType;
+  protected boolean starterActivity;
+  protected List<String> enabledExecutionIds;
 
   public static AdHocActivityDto fromAdHocActivity(AdHocActivity activity) {
     AdHocActivityDto dto = new AdHocActivityDto();
     dto.activityId = activity.getActivityId();
     dto.activityName = activity.getActivityName();
     dto.activityType = activity.getActivityType();
+    dto.starterActivity = activity.isStarterActivity();
+    dto.enabledExecutionIds = activity.getEnabledExecutionIds();
     return dto;
   }
 
@@ -51,4 +55,13 @@ public class AdHocActivityDto {
   public String getActivityType() {
     return activityType;
   }
+
+  public boolean isStarterActivity() {
+    return starterActivity;
+  }
+
+  public List<String> getEnabledExecutionIds() {
+    return enabledExecutionIds;
+  }
+
 }

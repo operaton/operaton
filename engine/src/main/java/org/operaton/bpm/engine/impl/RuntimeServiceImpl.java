@@ -27,7 +27,25 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
-import org.operaton.bpm.engine.impl.cmd.*;
+import org.operaton.bpm.engine.impl.cmd.CompleteAdHocSubProcessCmd;
+import org.operaton.bpm.engine.impl.cmd.CreateIncidentCmd;
+import org.operaton.bpm.engine.impl.cmd.DeleteProcessInstanceCmd;
+import org.operaton.bpm.engine.impl.cmd.DeleteProcessInstancesCmd;
+import org.operaton.bpm.engine.impl.cmd.FindActiveActivityIdsCmd;
+import org.operaton.bpm.engine.impl.cmd.GetActivityInstanceCmd;
+import org.operaton.bpm.engine.impl.cmd.GetExecutionVariableCmd;
+import org.operaton.bpm.engine.impl.cmd.GetExecutionVariableTypedCmd;
+import org.operaton.bpm.engine.impl.cmd.GetExecutionVariablesCmd;
+import org.operaton.bpm.engine.impl.cmd.GetStartFormCmd;
+import org.operaton.bpm.engine.impl.cmd.GetStartableAdHocActivitiesCmd;
+import org.operaton.bpm.engine.impl.cmd.MessageEventReceivedCmd;
+import org.operaton.bpm.engine.impl.cmd.PatchExecutionVariablesCmd;
+import org.operaton.bpm.engine.impl.cmd.RemoveExecutionVariablesCmd;
+import org.operaton.bpm.engine.impl.cmd.ResolveIncidentCmd;
+import org.operaton.bpm.engine.impl.cmd.SetAnnotationForIncidentCmd;
+import org.operaton.bpm.engine.impl.cmd.SetExecutionVariablesCmd;
+import org.operaton.bpm.engine.impl.cmd.SignalCmd;
+import org.operaton.bpm.engine.impl.cmd.TriggerAdHocActivitiesCmd;
 import org.operaton.bpm.engine.impl.cmd.batch.DeleteProcessInstanceBatchCmd;
 import org.operaton.bpm.engine.impl.cmd.batch.variables.SetVariablesToProcessInstancesBatchCmd;
 import org.operaton.bpm.engine.impl.migration.MigrationPlanBuilderImpl;
@@ -41,8 +59,8 @@ import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import static java.util.Collections.emptyList;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Collections.emptyList;
 
 /**
  * @author Tom Baeyens
@@ -513,6 +531,28 @@ public @NullMarked class RuntimeServiceImpl extends ServiceImpl implements Runti
   @Override
   public void signal(String executionId, Map<String, Object> processVariables) {
     getCommandExecutor().execute(new SignalCmd(executionId, null, null, processVariables));
+  }
+
+  @Override
+  public List<AdHocActivity> getStartableAdHocActivities(String executionId) {
+    return getCommandExecutor().execute(new GetStartableAdHocActivitiesCmd(executionId));
+  }
+
+  @Override
+  public void triggerAdHocActivities(String executionId,
+                                     Collection<String> activityIds,
+                                     @Nullable Map<String, Map<String, Object>> activityVariables) {
+    getCommandExecutor().execute(new TriggerAdHocActivitiesCmd(executionId, activityIds, activityVariables));
+  }
+
+  @Override
+  public void completeAdHocSubProcess(String executionId) {
+    completeAdHocSubProcess(executionId, null);
+  }
+
+  @Override
+  public void completeAdHocSubProcess(String executionId, @Nullable Map<String, Object> variables) {
+    getCommandExecutor().execute(new CompleteAdHocSubProcessCmd(executionId, variables));
   }
 
   @Override

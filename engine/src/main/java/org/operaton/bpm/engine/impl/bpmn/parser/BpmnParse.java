@@ -31,9 +31,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.jspecify.annotations.NullMarked;
-import org.operaton.bpm.engine.ActivityTypes;
-
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -42,6 +42,7 @@ import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.HistoryTimeToLiveParser;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryConditionalEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
@@ -89,8 +90,8 @@ import org.operaton.bpm.engine.impl.bpmn.listener.DelegateExpressionExecutionLis
 import org.operaton.bpm.engine.impl.bpmn.listener.ExpressionExecutionListener;
 import org.operaton.bpm.engine.impl.bpmn.listener.ScriptExecutionListener;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement.CallableElementBinding;
+import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
 import org.operaton.bpm.engine.impl.core.model.CallableElementParameter;
 import org.operaton.bpm.engine.impl.core.model.Properties;
@@ -126,6 +127,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventSubprocessJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerTaskListenerJobHandler;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
@@ -158,7 +160,6 @@ import org.operaton.bpm.engine.impl.util.xml.Parse;
 import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.findOperatonExtensionElement;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseInputOutput;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseOperatonExtensionProperties;
@@ -167,6 +168,7 @@ import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.ALLOW
 import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.FORM_REF_BINDING_VERSION;
 import static org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity.DEFAULT_EXCLUSIVE;
 import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDelegate;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Specific parsing of one BPMN 2.0 XML file, created by the {@link BpmnParser}.
@@ -214,6 +216,13 @@ public @NullMarked class BpmnParse extends Parse {
   public static final String PROPERTYNAME_CONSUMES_COMPENSATION = "consumesCompensation";
   public static final String PROPERTYNAME_JOB_PRIORITY = "jobPriority";
   public static final String PROPERTYNAME_TASK_PRIORITY = "taskPriority";
+  public static final String PROPERTYNAME_AD_HOC_CANCEL_REMAINING = "adHocCancelRemainingInstances";
+  public static final String PROPERTYNAME_AD_HOC_AUTO_COMPLETE = "adHocAutoComplete";
+  public static final String PROPERTYNAME_AD_HOC_COMPLETION_CONDITION = "adHocCompletionCondition";
+  public static final String PROPERTYNAME_AD_HOC_COMPLETION_CONDITION_TEXT = "adHocCompletionConditionText";
+  public static final String PROPERTYNAME_AD_HOC_ACTIVE_TASKS_COLLECTION = "adHocActiveTasksCollection";
+  public static final String PROPERTYNAME_AD_HOC_ACTIVE_TASKS_COLLECTION_TEXT = "adHocActiveTasksCollectionText";
+  public static final String PROPERTYNAME_AD_HOC_ORDERING = "adHocOrdering";
   public static final String PROPERTYNAME_EXTERNAL_TASK_TOPIC = "topic";
   public static final String PROPERTYNAME_CLASS = "class";
   public static final String PROPERTYNAME_EXPRESSION = "expression";
@@ -1453,7 +1462,9 @@ public @NullMarked class BpmnParse extends Parse {
       activity = parseEventBasedGateway(activityElement, parentElement, scopeElement);
     } else if (ActivityTypes.TRANSACTION.equals(activityElement.getTagName())) {
       activity = parseTransaction(activityElement, scopeElement);
-    } else if (ActivityTypes.SUB_PROCESS_AD_HOC.equals(activityElement.getTagName()) || ActivityTypes.GATEWAY_COMPLEX.equals(activityElement.getTagName())) {
+    } else if (activityElement.getTagName().equals(ActivityTypes.SUB_PROCESS_AD_HOC)) {
+      activity = parseAdHocSubProcess(activityElement, scopeElement);
+    } else if (activityElement.getTagName().equals(ActivityTypes.GATEWAY_COMPLEX)) {
       addWarning("Ignoring unsupported activity type", activityElement);
     }
 
@@ -2139,8 +2150,10 @@ public @NullMarked class BpmnParse extends Parse {
     Map<String, Element> siblingsMap = new HashMap<>();
     List<Element> siblings = parentElement != null ? parentElement.elements() : Collections.emptyList();
     for (Element sibling : siblings) {
-      String siblingId = requireNonNull(sibling.attribute("id"));
-      siblingsMap.put(siblingId, sibling);
+      String siblingId = sibling.attribute("id");
+      if (siblingId != null) {
+        siblingsMap.put(siblingId, sibling);
+      }
     }
 
     for (Element sequenceFlow : seqFlows) {
@@ -2566,9 +2579,9 @@ public @NullMarked class BpmnParse extends Parse {
 
     ParameterValueProvider topicNameProvider = parseTopic(serviceTaskElement, PROPERTYNAME_EXTERNAL_TASK_TOPIC);
     if (topicNameProvider == null) {
-      addError("External tasks must specify a 'topic' attribute in the operaton namespace", serviceTaskElement);
+      // parseTopic has already reported the error; continue parsing to collect any other errors.
+      topicNameProvider = new NullValueProvider();
     }
-    requireNonNull(topicNameProvider);
     ParameterValueProvider priorityProvider = parsePriority(serviceTaskElement, PROPERTYNAME_TASK_PRIORITY);
     Map<String, String> properties = parseOperatonExtensionProperties(operatonPropertiesElement);
     activity.getProperties().set(BpmnProperties.EXTENSION_PROPERTIES, properties);
@@ -3926,6 +3939,92 @@ public @NullMarked class BpmnParse extends Parse {
     return subProcessActivity;
   }
 
+  public ActivityImpl parseAdHocSubProcess(Element adHocSubProcessElement, ScopeImpl scope) {
+    // BPMN 2.0.2 section 10.3.5: ad-hoc scopes have no start or end events.
+    // Nested ordinary/event subprocesses retain their own normal event rules.
+    for (Element child : adHocSubProcessElement.elements()) {
+      if ("startEvent".equals(child.getTagName()) || "endEvent".equals(child.getTagName())) {
+        addError("An ad-hoc subprocess must not contain a direct " + child.getTagName(), child);
+      }
+    }
+    if (Boolean.TRUE.equals(parseBooleanAttribute(adHocSubProcessElement.attribute("triggeredByEvent"), false))) {
+      addError("An ad-hoc subprocess cannot be an event subprocess", adHocSubProcessElement);
+    }
+
+    ActivityImpl adHocSubProcessActivity = createActivityOnScope(adHocSubProcessElement, scope);
+    adHocSubProcessActivity.setSubProcessScope(true);
+
+    parseAsynchronousContinuationForActivity(adHocSubProcessElement, adHocSubProcessActivity);
+
+    adHocSubProcessActivity.getProperties().set(BpmnProperties.TRIGGERED_BY_EVENT, false);
+    adHocSubProcessActivity.setProperty(PROPERTYNAME_CONSUMES_COMPENSATION, true);
+
+    boolean cancelRemainingInstances = parseBooleanAttribute(adHocSubProcessElement.attribute("cancelRemainingInstances"), true);
+    adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_CANCEL_REMAINING, cancelRemainingInstances);
+    adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_AUTO_COMPLETE, true);
+
+    String orderingAttributeText = adHocSubProcessElement.attribute("ordering");
+    if (orderingAttributeText == null) {
+      adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_ORDERING, "Parallel");
+    } else {
+      String trimmedOrderingAttributeText = orderingAttributeText.trim();
+      if (!"Parallel".equals(trimmedOrderingAttributeText)
+          && !"Sequential".equals(trimmedOrderingAttributeText)) {
+        addError("Invalid value '" + trimmedOrderingAttributeText
+            + "' for ad-hoc subprocess attribute 'ordering'; expected 'Parallel' or 'Sequential'",
+            adHocSubProcessElement);
+      } else {
+        adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_ORDERING, trimmedOrderingAttributeText);
+      }
+    }
+
+    String autoCompleteAttributeText = adHocSubProcessElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, "autoComplete");
+    if (autoCompleteAttributeText != null) {
+      String trimmedAutoCompleteAttributeText = autoCompleteAttributeText.trim();
+      Boolean autoCompleteAttribute = parseBooleanAttribute(trimmedAutoCompleteAttributeText);
+      if (autoCompleteAttribute == null) {
+        addError("Invalid value '" + trimmedAutoCompleteAttributeText
+            + "' for ad-hoc extension attribute 'autoComplete'; expected boolean value", adHocSubProcessElement);
+      } else {
+        adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_AUTO_COMPLETE, autoCompleteAttribute);
+      }
+    }
+
+    Element completionConditionElement = adHocSubProcessElement.element("completionCondition");
+    if (completionConditionElement != null) {
+      Condition completionCondition = parseConditionExpression(completionConditionElement, adHocSubProcessActivity.getId());
+      adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_COMPLETION_CONDITION, completionCondition);
+      adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_COMPLETION_CONDITION_TEXT, completionConditionElement.getText().trim());
+    }
+
+    Map<String, String> extensionProperties = parseOperatonExtensionProperties(adHocSubProcessElement);
+    if (extensionProperties != null) {
+      String activeTasksCollectionText = extensionProperties.get("activeTasksCollection");
+      if (activeTasksCollectionText != null) {
+        String trimmedActiveTasksCollectionText = activeTasksCollectionText.trim();
+        adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_ACTIVE_TASKS_COLLECTION_TEXT, trimmedActiveTasksCollectionText);
+        adHocSubProcessActivity.setProperty(
+            PROPERTYNAME_AD_HOC_ACTIVE_TASKS_COLLECTION,
+            expressionManager.createExpression(trimmedActiveTasksCollectionText));
+      }
+
+      if (extensionProperties.containsKey("autoComplete")) {
+        addError("Unsupported ad-hoc extension property 'autoComplete'; use extension attribute 'autoComplete' on the adHocSubProcess element",
+            adHocSubProcessElement);
+      }
+    }
+
+    adHocSubProcessActivity.setScope(true);
+    adHocSubProcessActivity.setActivityBehavior(new AdHocSubProcessActivityBehavior());
+    parseScope(adHocSubProcessElement, adHocSubProcessActivity);
+
+    for (BpmnParseListener parseListener : parseListeners) {
+      parseListener.parseSubProcess(adHocSubProcessElement, scope, adHocSubProcessActivity);
+    }
+
+    return adHocSubProcessActivity;
+  }
+
   protected ActivityImpl parseTransaction(Element transactionElement, ScopeImpl scope) {
     ActivityImpl activity = createActivityOnScope(transactionElement, scope);
 
@@ -4866,10 +4965,11 @@ public @NullMarked class BpmnParse extends Parse {
 
     if (!(tagName.toLowerCase().contains("task")
         || tagName.contains("Event")
-        || TRANSACTION_TAG.equals(tagName)
-        || SUB_PROCESS_TAG.equals(tagName)
-        || "callActivity".equals(tagName))) {
-      addError("operaton:inputOutput mapping unsupported for element type '%s'.".formatted(tagName), activityElement);
+        || tagName.equals("transaction")
+        || tagName.equals("subProcess")
+        || tagName.equals("adHocSubProcess")
+        || tagName.equals("callActivity"))) {
+      addError("operaton:inputOutput mapping unsupported for element type '" + tagName + "'.", activityElement);
       return false;
     }
 

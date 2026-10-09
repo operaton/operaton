@@ -25,9 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 
 /**
@@ -181,6 +181,15 @@ public class VariableStore<T extends CoreVariableInstance> {
     removedVariables.put(variableName, value);
 
     return value;
+  }
+
+  /** Remove an ownership reference without recording a deletion that a later write could resurrect. */
+  public @Nullable T removeVariableForMove(String variableName) {
+    T variable = removeVariable(variableName);
+    if (variable != null) {
+      removedVariables.remove(variableName);
+    }
+    return variable;
   }
 
   public void removeVariables() {

@@ -21,15 +21,20 @@ import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
+import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.AsyncContinuationConfiguration;
 import org.operaton.bpm.engine.impl.migration.MigrationLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
+import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
 
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability.AD_HOC_ENABLED_ACTIVITY;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -46,6 +51,9 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
   protected @Nullable MigratingAsyncJobInstance jobInstance;
   protected List<MigratingInstance> migratingDependentInstances = new ArrayList<>();
   protected boolean activeState;
+  protected final boolean adHocEnabledActivity;
+  protected boolean pendingActivityEnd;
+  protected boolean pendingScopedActivityEnd;
 
 
   public MigratingTransitionInstance(
@@ -61,11 +69,12 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
     this.currentScope = sourceScope;
     this.representativeExecution = asyncExecution;
     this.activeState = representativeExecution.isActive();
+    this.adHocEnabledActivity = isAdHocEnabledActivity(sourceScope, asyncExecution);
   }
 
   @Override
   public boolean isDetached() {
-    return getJobInstance().isDetached();
+    return adHocEnabledActivity ? getParent() == null : getJobInstance().isDetached();
   }
 
   @Override
@@ -75,7 +84,9 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
 
   @Override
   public void detachState() {
-    getJobInstance().detachState();
+    if (!adHocEnabledActivity) {
+      getJobInstance().detachState();
+    }
     for (MigratingInstance dependentInstance : migratingDependentInstances) {
       dependentInstance.detachState();
     }
@@ -83,7 +94,13 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
     ExecutionEntity execution = resolveRepresentativeExecution();
     execution.setActive(false);
     MigratingActivityInstance parent = getParent();
-    if (parent != null) {
+    if (pendingScopedActivityEnd) {
+      ExecutionEntity carrier = requireNonNull(execution.getParent());
+      execution.setParent(null);
+      if (parent != null) {
+        parent.destroyAttachableExecution(carrier);
+      }
+    } else if (parent != null) {
       parent.destroyAttachableExecution(execution);
     }
 
@@ -100,11 +117,18 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
 
     setParent(activityInstance);
 
-    representativeExecution = activityInstance.createAttachableExecution();
+    ExecutionEntity carrier = activityInstance.createAttachableExecution();
+    if (pendingScopedActivityEnd) {
+      resolveRepresentativeExecution().setParent(carrier);
+    } else {
+      representativeExecution = carrier;
+    }
     representativeExecution.setActivityInstanceId(null);
     representativeExecution.setActive(activeState);
 
-    getJobInstance().attachState(this);
+    if (!adHocEnabledActivity) {
+      getJobInstance().attachState(this);
+    }
 
     for (MigratingInstance dependentInstance : migratingDependentInstances) {
       dependentInstance.attachState(this);
@@ -128,6 +152,10 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
 
   public void setDependentJobInstance(MigratingAsyncJobInstance jobInstance) {
     this.jobInstance = jobInstance;
+    pendingActivityEnd = MigratingAsyncJobInstance.isActivityEnd(
+        (AsyncContinuationConfiguration) jobInstance.getJobEntity().getJobHandlerConfiguration());
+    pendingScopedActivityEnd = pendingActivityEnd && sourceScope != null && sourceScope.isScope()
+        && representativeExecution.isScope();
   }
 
   @Override
@@ -139,6 +167,15 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
     return migratingDependentInstances;
   }
 
+  /** An activity-end continuation can retain its undisposed activity scope and output mappings. */
+  public boolean isPendingScopedActivityEnd() {
+    return pendingScopedActivityEnd;
+  }
+
+  public boolean isPendingActivityEnd() {
+    return pendingActivityEnd;
+  }
+
   @Override
   public void migrateState() {
     ExecutionEntity representativeExec = resolveRepresentativeExecution();
@@ -146,12 +183,69 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
     requireNonNull(targetScope);
     representativeExec.setProcessDefinition(targetScope.getProcessDefinition());
     representativeExec.setActivity((PvmActivity) targetScope);
+    currentScope = targetScope;
+    if (pendingActivityEnd && pendingScopedActivityEnd != targetScope.isScope()) {
+      changeActivityScope();
+      representativeExec = resolveRepresentativeExecution();
+    }
+    if (isPendingScopedActivityEnd()) {
+      ExecutionEntity parent = representativeExec.getParent();
+      if (parent != null && parent.isConcurrent()) {
+        parent.setProcessDefinition(targetScope.getProcessDefinition());
+      }
+    }
+  }
+
+  /** Apply the ordinary mapped-activity scope conversion policy without replaying start or input mappings. */
+  protected void changeActivityScope() {
+    for (MigratingInstance dependent : migratingDependentInstances) {
+      if (dependent instanceof MigratingActivityEndScope retainedScope) {
+        retainedScope.removeUnmappedDependentInstances();
+      }
+    }
+    getJobInstance().detachState();
+    for (MigratingInstance dependent : migratingDependentInstances) {
+      dependent.detachState();
+    }
+
+    ExecutionEntity execution = resolveRepresentativeExecution();
+    if (pendingScopedActivityEnd) {
+      ExecutionEntity carrier = requireNonNull(execution.getParent());
+      carrier.setProcessDefinition(requireNonNull(targetScope).getProcessDefinition());
+      carrier.setActivity(execution.getActivity());
+      carrier.setActivityInstanceId(null);
+      carrier.setActive(execution.isActive());
+      carrier.setEnded(execution.isEnded());
+      execution.remove();
+      representativeExecution = carrier;
+      pendingScopedActivityEnd = false;
+    } else {
+      ExecutionEntity scope = execution.createExecution();
+      scope.setScope(true);
+      scope.setConcurrent(false);
+      scope.setActivityInstanceId(null);
+      scope.setActive(execution.isActive());
+      scope.setEnded(execution.isEnded());
+      execution.setActivity(null);
+      if (!execution.isConcurrent()) {
+        execution.leaveActivityInstance();
+      }
+      representativeExecution = scope;
+      pendingScopedActivityEnd = true;
+    }
+
+    getJobInstance().attachState(this);
+    for (MigratingInstance dependent : migratingDependentInstances) {
+      dependent.attachState(this);
+    }
   }
 
   @Override
   public void migrateDependentEntities() {
-    getJobInstance().migrateState();
-    getJobInstance().migrateDependentEntities();
+    if (!adHocEnabledActivity) {
+      getJobInstance().migrateState();
+      getJobInstance().migrateDependentEntities();
+    }
 
     for (MigratingInstance dependentInstance : migratingDependentInstances) {
       dependentInstance.migrateState();
@@ -167,11 +261,26 @@ public @NullMarked class MigratingTransitionInstance extends MigratingProcessEle
    * Else asyncBefore
    */
   public boolean isAsyncAfter() {
-    return ((MigratingAsyncJobInstance) getJobInstance()).isAsyncAfter();
+    return !adHocEnabledActivity && ((MigratingAsyncJobInstance) getJobInstance()).isAsyncAfter();
   }
 
   public boolean isAsyncBefore() {
-    return ((MigratingAsyncJobInstance) getJobInstance()).isAsyncBefore();
+    return !adHocEnabledActivity && ((MigratingAsyncJobInstance) getJobInstance()).isAsyncBefore();
+  }
+
+  public boolean isAdHocEnabledActivity() {
+    return adHocEnabledActivity;
+  }
+
+  public static boolean isAdHocEnabledActivity(@Nullable ScopeImpl activity, ExecutionEntity execution) {
+    if (!Boolean.TRUE.equals(execution.getVariableLocal(AD_HOC_ENABLED_ACTIVITY))) {
+      return false;
+    }
+    ScopeImpl scope = activity == null ? null : activity.getFlowScope();
+    while (scope != null && !(scope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior)) {
+      scope = scope.getFlowScope();
+    }
+    return scope != null;
   }
 
   public MigratingJobInstance getJobInstance() {

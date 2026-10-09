@@ -25,6 +25,18 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationActivityNotifyListenerEnd extends PvmAtomicOperationActivityInstanceEnd {
 
+  protected final PvmAtomicOperation activityEndOperation;
+  protected final String canonicalName;
+
+  public PvmAtomicOperationActivityNotifyListenerEnd() {
+    this(ACTIVITY_END, "activity-notify-listener-end");
+  }
+
+  public PvmAtomicOperationActivityNotifyListenerEnd(PvmAtomicOperation activityEndOperation, String canonicalName) {
+    this.activityEndOperation = activityEndOperation;
+    this.canonicalName = canonicalName;
+  }
+
   @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getActivity();
@@ -41,14 +53,14 @@ public class PvmAtomicOperationActivityNotifyListenerEnd extends PvmAtomicOperat
     execution.dispatchDelayedEventsAndPerformOperation(execution1 -> {
       execution1.leaveActivityInstance();
       execution1.setActivityInstanceId(null);
-      execution1.performOperation(ACTIVITY_END);
+      execution1.performOperation(activityEndOperation);
       return null;
     });
   }
 
   @Override
   public String getCanonicalName() {
-    return "activity-notify-listener-end";
+    return canonicalName;
   }
 
   @Override

@@ -243,6 +243,8 @@ import org.operaton.bpm.engine.impl.migration.validation.activity.MigrationActiv
 import org.operaton.bpm.engine.impl.migration.validation.activity.NoCompensationHandlerActivityValidator;
 import org.operaton.bpm.engine.impl.migration.validation.activity.SupportedActivityValidator;
 import org.operaton.bpm.engine.impl.migration.validation.activity.SupportedPassiveEventTriggerActivityValidator;
+import org.operaton.bpm.engine.impl.migration.validation.instance.AdHocActivityInstanceValidator;
+import org.operaton.bpm.engine.impl.migration.validation.instance.AdHocEnabledActivityValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.AsyncAfterMigrationValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.AsyncMigrationValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.AsyncProcessStartMigrationValidator;
@@ -253,6 +255,7 @@ import org.operaton.bpm.engine.impl.migration.validation.instance.NoUnmappedComp
 import org.operaton.bpm.engine.impl.migration.validation.instance.NoUnmappedLeafInstanceValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.SupportedActivityInstanceValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.VariableConflictActivityInstanceValidator;
+import org.operaton.bpm.engine.impl.migration.validation.instruction.AdHocScopeInstructionValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.AdditionalFlowScopeInstructionValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.CannotAddMultiInstanceBodyValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.CannotAddMultiInstanceInnerActivityValidator;
@@ -4629,6 +4632,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public List<MigrationInstructionValidator> getDefaultMigrationInstructionValidators() {
     List<MigrationInstructionValidator> validators = new ArrayList<>();
     validators.add(new SameBehaviorInstructionValidator());
+    validators.add(new AdHocScopeInstructionValidator());
     validators.add(new SameEventTypeValidator());
     validators.add(new OnlyOnceMappedActivityInstructionValidator());
     validators.add(new CannotAddMultiInstanceBodyValidator());
@@ -4680,6 +4684,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     validators.add(new NoUnmappedLeafInstanceValidator());
     validators.add(new VariableConflictActivityInstanceValidator());
     validators.add(new SupportedActivityInstanceValidator());
+    validators.add(new AdHocActivityInstanceValidator());
 
     return validators;
   }
@@ -4688,6 +4693,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     List<MigratingTransitionInstanceValidator> validators = new ArrayList<>();
 
     validators.add(new NoUnmappedLeafInstanceValidator());
+    validators.add(new AdHocEnabledActivityValidator());
     validators.add(new AsyncAfterMigrationValidator());
     validators.add(new AsyncProcessStartMigrationValidator());
     validators.add(new AsyncMigrationValidator());

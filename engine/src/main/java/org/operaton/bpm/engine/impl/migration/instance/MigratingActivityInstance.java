@@ -20,9 +20,11 @@ import java.util.*;
 
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
@@ -37,11 +39,12 @@ import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.MigrationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ModificationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
+import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Thorben Lindhauer
@@ -585,7 +588,27 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
       ExecutionEntity currentScopeExecution = resolveRepresentativeExecution();
       requireNonNull(sourceScope);
       requireNonNull(targetScope);
+      boolean sourceAdHoc = sourceScope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior;
+      boolean targetAdHoc = targetScope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior;
+      if (!sourceAdHoc && targetAdHoc) {
+        var children = currentScopeExecution.getNonEventScopeExecutions();
+        if (children.isEmpty() && currentScopeExecution.getActivity() != null
+            || children.size() == 1 && !children.get(0).isConcurrent()) {
+          // Ordinary scopes may share their execution with a child. Ad-hoc owners stay addressable.
+          PvmExecutionImpl additional = currentScopeExecution.createConcurrentExecution();
+          additional.remove();
+        }
+      } else if (sourceAdHoc && !targetAdHoc) {
+        currentScopeExecution.setActivity(null);
+      }
       currentScopeExecution.setProcessDefinition(targetScope.getProcessDefinition());
+      if (!sourceAdHoc && targetAdHoc) {
+        MigratingAdHocState.initializeScopeContext(currentScopeExecution);
+      } else if (sourceAdHoc && !targetAdHoc) {
+        currentScopeExecution.setVariableLocal(MigratingAdHocState.RETIRED_CONTEXT, MigratingAdHocState.RETIRED_CONTEXT_VALUE);
+        // Restore the ordinary scope's compact representation before its final child completes.
+        currentScopeExecution.tryPruneLastConcurrentChild();
+      }
 
       ExecutionEntity parentExecution = currentScopeExecution.getParent();
 
@@ -600,7 +623,10 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
         currentScopeExecution = resolveRepresentativeExecution();
       }
 
-      if (isLeafActivity(targetScope)) {
+      // An ad-hoc scope remains positioned at its own activity while its children run.
+      // In particular, an empty waiting scope must be addressable after an activity ID rename.
+      if (isLeafActivity(targetScope)
+          || targetScope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior) {
         currentScopeExecution.setActivity((PvmActivity) targetScope);
       }
 
@@ -680,7 +706,17 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
       ensureNotNull("currentScope", currentScope);
       requireNonNull(currentScope);
       CoreActivityBehavior<? extends BaseDelegateExecution> activityBehavior = currentScope.getActivityBehavior();
-      if (activityBehavior instanceof ModificationObserverBehavior behavior) {
+      if (activityBehavior instanceof AdHocSubProcessActivityBehavior) {
+        // Unlike ordinary subprocesses, the ad-hoc scope itself remains addressable and must
+        // not be expanded into a concurrent execution or cleared when attaching its first child.
+        attachableExecution = scopeExecution.createExecution();
+        attachableExecution.setActivity(null);
+        attachableExecution.setConcurrent(true);
+        attachableExecution.setScope(false);
+        attachableExecution.setActive(false);
+        scopeExecution.forceUpdate();
+      }
+      else if (activityBehavior instanceof ModificationObserverBehavior behavior) {
         attachableExecution = (ExecutionEntity) behavior.createInnerInstance(scopeExecution);
       }
       else {
@@ -706,7 +742,9 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
         if (execution.isConcurrent()) {
           execution.remove();
           ExecutionEntity parent = requireNonNull(execution.getParent());
-          parent.tryPruneLastConcurrentChild();
+          if (!(activityBehavior instanceof AdHocSubProcessActivityBehavior)) {
+            parent.tryPruneLastConcurrentChild();
+          }
           parent.forceUpdate();
         }
       }

@@ -29,4 +29,8 @@ public interface OperatonInputParameter extends BpmnModelElementInstance, Operat
 
   void setOperatonName(String operatonName);
 
+  boolean isOperatonTransient();
+
+  void setOperatonTransient(boolean isTransient);
+
 }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
 import org.operaton.bpm.engine.impl.pvm.runtime.AtomicOperation;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Sebastian Menski
  *
  */
-public interface PvmAtomicOperation extends CoreAtomicOperation<PvmExecutionImpl>, AtomicOperation {
+public @NullMarked interface PvmAtomicOperation extends CoreAtomicOperation<PvmExecutionImpl>, AtomicOperation {
 
   PvmAtomicOperation PROCESS_START = new PvmAtomicOperationProcessStart();
   PvmAtomicOperation FIRE_PROCESS_START = new PvmAtomicOperationFireProcessStart();

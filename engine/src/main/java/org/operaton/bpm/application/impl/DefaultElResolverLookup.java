@@ -22,6 +22,7 @@ import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 import jakarta.el.CompositeELResolver;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.AbstractProcessApplication;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public final class DefaultElResolverLookup {
+public final @NullMarked class DefaultElResolverLookup {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 

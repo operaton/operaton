@@ -16,19 +16,22 @@
  */
 package org.operaton.bpm.application.impl;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public final class ProcessApplicationContextImpl {
+public final @NullMarked class ProcessApplicationContextImpl {
 
-  protected static ThreadLocal<ProcessApplicationIdentifier> currentProcessApplication =
+  private static final ThreadLocal<@Nullable ProcessApplicationIdentifier> currentProcessApplication =
       new ThreadLocal<>();
 
   private ProcessApplicationContextImpl() {
   }
 
-  public static ProcessApplicationIdentifier get() {
+  public static @Nullable ProcessApplicationIdentifier get() {
     return currentProcessApplication.get();
   }
 

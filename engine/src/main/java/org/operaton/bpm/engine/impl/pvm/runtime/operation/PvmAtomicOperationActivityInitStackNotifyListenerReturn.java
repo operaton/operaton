@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
@@ -23,11 +25,13 @@ import org.operaton.bpm.engine.impl.pvm.runtime.InstantiationStack;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.ScopeInstantiationContext;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public class PvmAtomicOperationActivityInitStackNotifyListenerReturn extends PvmAtomicOperationActivityInstanceStart {
+public @NullMarked class PvmAtomicOperationActivityInitStackNotifyListenerReturn extends PvmAtomicOperationActivityInstanceStart {
 
   @Override
   public String getCanonicalName() {
@@ -35,7 +39,7 @@ public class PvmAtomicOperationActivityInitStackNotifyListenerReturn extends Pvm
   }
 
   @Override
-  protected ScopeImpl getScope(PvmExecutionImpl execution) {
+  protected @Nullable ScopeImpl getScope(PvmExecutionImpl execution) {
     ActivityImpl activity = execution.getActivity();
 
     if (activity!=null) {
@@ -57,7 +61,7 @@ public class PvmAtomicOperationActivityInitStackNotifyListenerReturn extends Pvm
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
     super.eventNotificationsCompleted(execution);
 
-    ScopeInstantiationContext startContext = execution.getScopeInstantiationContext();
+    ScopeInstantiationContext startContext = requireNonNull(execution.getScopeInstantiationContext());
     InstantiationStack instantiationStack = startContext.getInstantiationStack();
 
     // if the stack has been instantiated

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Roman Smirnov
  *
  */
-public class PvmAtomicOperationActivityStartConcurrent extends PvmAtomicOperationCreateConcurrentExecution {
+public @NullMarked class PvmAtomicOperationActivityStartConcurrent extends PvmAtomicOperationCreateConcurrentExecution {
 
   @Override
   protected void concurrentExecutionCreated(PvmExecutionImpl propagatingExecution) {

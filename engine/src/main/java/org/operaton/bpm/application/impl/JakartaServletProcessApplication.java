@@ -21,6 +21,8 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
@@ -65,7 +67,7 @@ import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
  * <ul>
  * <li>the process engine to resolve {@link JavaDelegate} implementations using
  * the classloader of the process application</li>
- * <li>In apache tomcat this allows you to resolve Naming Resources (JNDI) form
+ * <li>In Apache Tomcat this allows you to resolve Naming Resources (JNDI) form
  * the naming context of the process application. JNDI name resolution is based
  * on the TCCL in Apache Tomcat.</li>
  * </ul>
@@ -91,9 +93,9 @@ import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
  * </p>
  *
  */
-public class JakartaServletProcessApplication extends AbstractServletProcessApplication implements ServletContextListener {
+public @NullMarked class JakartaServletProcessApplication extends AbstractServletProcessApplication implements ServletContextListener {
 
-  protected ServletContext servletContext;
+  protected @Nullable ServletContext servletContext;
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
@@ -107,7 +109,7 @@ public class JakartaServletProcessApplication extends AbstractServletProcessAppl
     deploy();
   }
 
-  protected ClassLoader initProcessApplicationClassloader(ServletContextEvent sce) {
+  protected @Nullable ClassLoader initProcessApplicationClassloader(ServletContextEvent sce) {
     if (getClass().equals(JakartaServletProcessApplication.class)) {
       return JakartaClassLoaderUtil.getServletContextClassloader(sce);
     } else {
@@ -127,7 +129,7 @@ public class JakartaServletProcessApplication extends AbstractServletProcessAppl
     reference = null;
   }
 
-  public ServletContext getServletContext() {
+  public @Nullable ServletContext getServletContext() {
     return servletContext;
   }
 }

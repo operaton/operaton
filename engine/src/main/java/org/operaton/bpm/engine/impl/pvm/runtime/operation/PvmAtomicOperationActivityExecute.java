@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
@@ -23,12 +24,13 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 
 /**
  * @author Tom Baeyens
  */
-public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
+public @NullMarked class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
@@ -38,11 +40,12 @@ public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public void execute(PvmExecutionImpl execution) {
     execution.activityInstanceStarted();
 
     execution.continueIfExecutionDoesNotAffectNextOperation(execution1 -> {
-      if (execution1.getActivity().isScope()) {
+      if (requireNonNull(execution1.getActivity()).isScope()) {
         execution1.dispatchEvent(null);
       }
       return null;

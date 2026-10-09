@@ -496,7 +496,7 @@ public abstract @NullMarked class AbstractVariableScope implements Serializable,
   }
 
   @Override
-  public void dispatchEvent(VariableEvent variableEvent) {
+  public void dispatchEvent(@Nullable VariableEvent variableEvent) {
     // default implementation does nothing
   }
 

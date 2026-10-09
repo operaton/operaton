@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import javax.management.ObjectName;
 import javax.naming.NamingException;
 import org.jboss.vfs.VirtualFile;
+import org.jspecify.annotations.NullMarked;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -36,7 +37,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class ContainerIntegrationLogger extends ProcessEngineLogger {
+public @NullMarked class ContainerIntegrationLogger extends ProcessEngineLogger {
 
   public ProcessEngineException couldNotInstantiateJobExecutorClass(Exception e) {
     return new ProcessEngineException(exceptionMessage(

@@ -19,24 +19,26 @@ package org.operaton.bpm.application.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.application.ProcessApplicationReference;
 
-public class AbstractServletProcessApplication extends AbstractProcessApplication {
+public @NullMarked class AbstractServletProcessApplication extends AbstractProcessApplication {
 
-  protected String servletContextName;
-  protected String servletContextPath;
+  protected @Nullable String servletContextName;
+  protected @Nullable String servletContextPath;
 
-  protected ProcessApplicationReferenceImpl reference;
+  protected @Nullable ProcessApplicationReferenceImpl reference;
 
-  protected ClassLoader processApplicationClassloader;
+  protected @Nullable ClassLoader processApplicationClassloader;
 
 
   @Override
-  protected String autodetectProcessApplicationName() {
+  protected @Nullable String autodetectProcessApplicationName() {
     String name = servletContextName != null && !servletContextName.isEmpty() ? servletContextName : servletContextPath;
-    if(name.startsWith("/")) {
+    if(name != null && name.startsWith("/")) {
       name = name.substring(1);
     }
     return name;
@@ -51,11 +53,12 @@ public class AbstractServletProcessApplication extends AbstractProcessApplicatio
   }
 
   @Override
-  public ClassLoader getProcessApplicationClassloader() {
+  public @Nullable ClassLoader getProcessApplicationClassloader() {
     return processApplicationClassloader;
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Map<String, String> getProperties() {
     Map<String, String> properties = new HashMap<>();
 

@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.application;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * <p>Object holding information about a deployment made by a process application.</p>
  *
  * @author Daniel Meyer
  *
  */
-public interface ProcessApplicationDeploymentInfo {
+public @NullMarked interface ProcessApplicationDeploymentInfo {
 
   /**
    * @return the name of the process engine the deployment was made to

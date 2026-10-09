@@ -18,6 +18,8 @@ package org.operaton.bpm.container.impl.metadata;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.container.impl.metadata.spi.BpmPlatformXml;
 import org.operaton.bpm.container.impl.metadata.spi.JobExecutorXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
@@ -28,7 +30,7 @@ import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
  * @author Daniel Meyer
  *
  */
-public class BpmPlatformXmlImpl implements BpmPlatformXml {
+public @NullMarked class BpmPlatformXmlImpl implements BpmPlatformXml {
 
   protected JobExecutorXml jobExecutor;
 

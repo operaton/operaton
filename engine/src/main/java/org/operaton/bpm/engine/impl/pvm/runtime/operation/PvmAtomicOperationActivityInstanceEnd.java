@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Daniel Meyer
  *
  */
-public abstract class PvmAtomicOperationActivityInstanceEnd extends AbstractPvmEventAtomicOperation {
+public abstract @NullMarked class PvmAtomicOperationActivityInstanceEnd extends AbstractPvmEventAtomicOperation {
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 

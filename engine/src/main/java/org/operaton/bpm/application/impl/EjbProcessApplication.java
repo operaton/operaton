@@ -21,11 +21,15 @@ import jakarta.ejb.SessionContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Common base class for writing EJB process applications.
@@ -107,11 +111,11 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class EjbProcessApplication extends AbstractEjbProcessApplication {
+public @NullMarked class EjbProcessApplication extends AbstractEjbProcessApplication {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
-  private EjbProcessApplicationReference ejbProcessApplicationReference;
+  private @Nullable EjbProcessApplicationReference ejbProcessApplicationReference;
 
   @Override
   protected ProcessApplicationInterface lookupSelfReference() {
@@ -127,13 +131,14 @@ public class EjbProcessApplication extends AbstractEjbProcessApplication {
   @Override
   protected void ensureEjbProcessApplicationReferenceInitialized() {
     if (ejbProcessApplicationReference == null) {
-      ejbProcessApplicationReference = new EjbProcessApplicationReference(selfReference, getName());
+      ejbProcessApplicationReference = new EjbProcessApplicationReference(requireNonNull(selfReference), requireNonNull(getName()));
     }
   }
 
   @Override
   protected ProcessApplicationReference getEjbProcessApplicationReference() {
-    return ejbProcessApplicationReference;
+    ensureEjbProcessApplicationReferenceInitialized();
+    return requireNonNull(ejbProcessApplicationReference);
   }
 
 }

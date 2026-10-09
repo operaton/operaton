@@ -79,31 +79,18 @@ public @NullMarked class StartProcessApplicationServiceStep extends DeploymentOp
 
   protected ProcessApplicationInfoImpl createProcessApplicationInfo(final AbstractProcessApplication processApplication,
       final Map<String, DeployedProcessArchive> processArchiveDeploymentMap) {
-    // populate process application info
-    ProcessApplicationInfoImpl processApplicationInfo = new ProcessApplicationInfoImpl();
-
-    processApplicationInfo.setName(processApplication.getName());
-    processApplicationInfo.setProperties(processApplication.getProperties());
 
     // create deployment infos
     List<ProcessApplicationDeploymentInfo> deploymentInfoList = new ArrayList<>();
-    if (processArchiveDeploymentMap != null) {
-      for (Entry<String, DeployedProcessArchive> deployment : processArchiveDeploymentMap.entrySet()) {
-
-        final DeployedProcessArchive deployedProcessArchive = deployment.getValue();
-        for (String deploymentId : deployedProcessArchive.getAllDeploymentIds()) {
-          ProcessApplicationDeploymentInfoImpl deploymentInfo = new ProcessApplicationDeploymentInfoImpl();
-          deploymentInfo.setDeploymentId(deploymentId);
-          deploymentInfo.setProcessEngineName(deployedProcessArchive.getProcessEngineName());
-          deploymentInfoList.add(deploymentInfo);
-        }
-
+    for (Entry<String, DeployedProcessArchive> deployment : processArchiveDeploymentMap.entrySet()) {
+      final DeployedProcessArchive deployedProcessArchive = deployment.getValue();
+      for (String deploymentId : deployedProcessArchive.getAllDeploymentIds()) {
+        ProcessApplicationDeploymentInfoImpl deploymentInfo = new ProcessApplicationDeploymentInfoImpl(deployedProcessArchive.getProcessEngineName(), deploymentId);
+        deploymentInfoList.add(deploymentInfo);
       }
     }
 
-    processApplicationInfo.setDeploymentInfo(deploymentInfoList);
-
-    return processApplicationInfo;
+    return new ProcessApplicationInfoImpl(processApplication.getName(), deploymentInfoList, processApplication.getProperties());
   }
 
   protected void notifyBpmPlatformPlugins(PlatformServiceContainer serviceContainer, AbstractProcessApplication processApplication) {

@@ -1246,7 +1246,9 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
         authorizations = provider.newTaskOwner(this, oldValue, newValue);
       }
 
-      saveAuthorizations(requireNonNull(authorizations));
+      if (authorizations != null) {
+        saveAuthorizations(authorizations);
+      }
     }
   }
 
@@ -1261,7 +1263,9 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
         authorizations = provider.newTaskGroupIdentityLink(this, groupId, type);
       }
 
-      saveAuthorizations(requireNonNull(authorizations));
+      if (authorizations != null) {
+        saveAuthorizations(authorizations);
+      }
     }
   }
 
@@ -1276,7 +1280,9 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
         authorizations = provider.deleteTaskGroupIdentityLink(this, groupId, type);
       }
 
-      deleteAuthorizations(requireNonNull(authorizations));
+      if (authorizations != null) {
+        deleteAuthorizations(authorizations);
+      }
     }
   }
 

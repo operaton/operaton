@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * <p>Base atomic operation used for implementing atomic operations which
@@ -32,14 +35,14 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Roman Smirnov
  *
  */
-public abstract class PvmAtomicOperationCreateConcurrentExecution implements PvmAtomicOperation {
+public abstract @NullMarked class PvmAtomicOperationCreateConcurrentExecution implements PvmAtomicOperation {
 
   @Override
   public void execute(PvmExecutionImpl execution) {
 
     // Invariant: execution is the Scope Execution for the activity's flow scope.
 
-    PvmActivity activityToStart = execution.getNextActivity();
+    PvmActivity activityToStart = requireNonNull(execution.getNextActivity());
     execution.setNextActivity(null);
 
     PvmExecutionImpl propagatingExecution = execution.createConcurrentExecution();

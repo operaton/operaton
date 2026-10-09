@@ -17,11 +17,12 @@
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
 
+import org.jspecify.annotations.NullMarked;
 
 /**
  * @author Tom Baeyens
  */
-public class PvmAtomicOperationStartTransitionNotifyListenerTake extends AbstractPvmAtomicOperationTransitionNotifyListenerTake {
+public @NullMarked class PvmAtomicOperationStartTransitionNotifyListenerTake extends AbstractPvmAtomicOperationTransitionNotifyListenerTake {
 
   @Override
   public String getCanonicalName() {

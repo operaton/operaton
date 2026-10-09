@@ -20,15 +20,13 @@ import org.apache.catalina.Lifecycle;
 import org.apache.catalina.LifecycleEvent;
 import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.core.StandardServer;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
-import org.operaton.bpm.container.impl.deployment.DiscoverBpmPlatformPluginsStep;
-import org.operaton.bpm.container.impl.deployment.PlatformXmlStartProcessEnginesStep;
-import org.operaton.bpm.container.impl.deployment.StopProcessApplicationsStep;
-import org.operaton.bpm.container.impl.deployment.StopProcessEnginesStep;
-import org.operaton.bpm.container.impl.deployment.UnregisterBpmPlatformPluginsStep;
+import org.operaton.bpm.container.impl.deployment.*;
 import org.operaton.bpm.container.impl.deployment.jobexecutor.StartJobExecutorStep;
 import org.operaton.bpm.container.impl.deployment.jobexecutor.StartManagedThreadPoolStep;
 import org.operaton.bpm.container.impl.deployment.jobexecutor.StopJobExecutorStep;
@@ -44,13 +42,13 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class TomcatBpmPlatformBootstrap implements LifecycleListener {
+public @NullMarked class TomcatBpmPlatformBootstrap implements LifecycleListener {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
-  protected ProcessEngine processEngine;
+  protected @Nullable ProcessEngine processEngine;
 
-  protected RuntimeContainerDelegateImpl containerDelegate;
+  protected @Nullable RuntimeContainerDelegateImpl containerDelegate;
 
   @Override
   public void lifecycleEvent(LifecycleEvent event) {

@@ -21,11 +21,15 @@ import jakarta.ejb.SessionContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Common base class for writing Jakarta Enterprise Bean process applications.
@@ -105,10 +109,10 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * </p>
  *
  */
-public class JakartaEjbProcessApplication extends AbstractEjbProcessApplication {
+public @NullMarked class JakartaEjbProcessApplication extends AbstractEjbProcessApplication {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
-  private JakartaEjbProcessApplicationReference ejbProcessApplicationReference;
+  private @Nullable JakartaEjbProcessApplicationReference ejbProcessApplicationReference;
 
   @Override
   protected ProcessApplicationInterface lookupSelfReference() {
@@ -130,7 +134,8 @@ public class JakartaEjbProcessApplication extends AbstractEjbProcessApplication 
 
   @Override
   protected ProcessApplicationReference getEjbProcessApplicationReference() {
-    return ejbProcessApplicationReference;
+    ensureEjbProcessApplicationReferenceInitialized();
+    return requireNonNull(ejbProcessApplicationReference);
   }
 
 }

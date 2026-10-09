@@ -20,6 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
@@ -29,11 +31,13 @@ import org.operaton.bpm.engine.impl.management.DatabasePurgeReport;
 import org.operaton.bpm.engine.impl.management.PurgeReport;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CachePurgeReport;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  * @author Christopher Zell
  */
-public class EnsureCleanDbPlugin implements BpmPlatformPlugin {
+public @NullMarked class EnsureCleanDbPlugin implements BpmPlatformPlugin {
 
   protected static final String DATABASE_NOT_CLEAN = "Database was not clean!\n";
   protected static final String CACHE_IS_NOT_CLEAN = "Cache was not clean!\n";
@@ -46,7 +50,6 @@ public class EnsureCleanDbPlugin implements BpmPlatformPlugin {
     counter.incrementAndGet();
   }
 
-  @SuppressWarnings("resource")
   @Override
   public void postProcessApplicationUndeploy(ProcessApplicationInterface processApplication) {
     // some tests deploy multiple PAs. => only clean DB after last PA is undeployed
@@ -55,7 +58,7 @@ public class EnsureCleanDbPlugin implements BpmPlatformPlugin {
     // best example is TestWarDeploymentWithBrokenBpmnXml in integration-test-engine test suite
     if(counter.get() == 0 || counter.decrementAndGet() == 0) {
 
-      final ProcessEngine defaultProcessEngine = BpmPlatform.getDefaultProcessEngine();
+      final ProcessEngine defaultProcessEngine = requireNonNull(BpmPlatform.getDefaultProcessEngine());
       try {
         logger.log(Level.INFO, "=== Ensure Clean Database ===");
         ManagementServiceImpl managementService = (ManagementServiceImpl) defaultProcessEngine.getManagementService();

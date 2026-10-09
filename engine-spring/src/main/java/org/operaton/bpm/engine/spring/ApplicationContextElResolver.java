@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.spring;
 
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
-
+import org.jspecify.annotations.Nullable;
 import org.springframework.context.ApplicationContext;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -36,7 +36,7 @@ public class ApplicationContextElResolver extends ELResolver {
   }
 
   @Override
-  public Object getValue(ELContext context, Object base, Object property) {
+  public @Nullable Object getValue(ELContext context, Object base, Object property) {
     if (base == null) {
       // according to javadoc, can only be a String
       String key = (String) property;

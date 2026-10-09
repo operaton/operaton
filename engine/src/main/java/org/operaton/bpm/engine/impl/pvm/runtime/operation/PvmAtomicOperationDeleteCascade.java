@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 
 /**
  * @author Tom Baeyens
  */
-public class PvmAtomicOperationDeleteCascade implements PvmAtomicOperation {
+public @NullMarked class PvmAtomicOperationDeleteCascade implements PvmAtomicOperation {
 
   @Override
   public boolean isAsync(PvmExecutionImpl execution) {
@@ -58,7 +60,7 @@ public class PvmAtomicOperationDeleteCascade implements PvmAtomicOperation {
 
       PvmExecutionImpl subProcessInstance = nextLeaf.getSubProcessInstance();
       if (subProcessInstance != null) {
-        if (deleteRoot.isSkipSubprocesses()) {
+        if (deleteRoot != null && deleteRoot.isSkipSubprocesses()) {
           subProcessInstance.setSuperExecution(null);
         } else {
           subProcessInstance.deleteCascade(execution.getDeleteReason(), nextLeaf.isSkipCustomListeners(), nextLeaf.isSkipIoMappings(),
@@ -79,7 +81,7 @@ public class PvmAtomicOperationDeleteCascade implements PvmAtomicOperation {
     return execution;
   }
 
-  protected PvmExecutionImpl getDeleteRoot(PvmExecutionImpl execution) {
+  protected @Nullable PvmExecutionImpl getDeleteRoot(@Nullable PvmExecutionImpl execution) {
     if(execution == null) {
       return null;
     } else if(execution.isDeleteRoot()) {

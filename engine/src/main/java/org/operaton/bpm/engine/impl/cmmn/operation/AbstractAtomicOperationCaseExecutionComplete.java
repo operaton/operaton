@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnCompositeActivityBehavior;
@@ -32,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivity
  * @author Roman Smirnov
  *
  */
-public abstract class AbstractAtomicOperationCaseExecutionComplete extends AbstractCmmnEventAtomicOperation {
+public abstract @NullMarked class AbstractAtomicOperationCaseExecutionComplete extends AbstractCmmnEventAtomicOperation {
 
   protected static final CmmnOperationLogger LOG = ProcessEngineLogger.CMMN_OPERATION_LOGGER;
 

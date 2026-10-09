@@ -18,17 +18,20 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.runtime.InstantiationStack;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.ScopeInstantiationContext;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Instantiates the next activity on the stack of the current execution's start context.
  *
  * @author Thorben Lindhauer
  */
-public class PvmAtomicOperationActivityInitStack implements PvmAtomicOperation {
+public @NullMarked class PvmAtomicOperationActivityInitStack implements PvmAtomicOperation {
 
   protected PvmAtomicOperation operationOnScopeInitialization;
 
@@ -43,9 +46,9 @@ public class PvmAtomicOperationActivityInitStack implements PvmAtomicOperation {
 
   @Override
   public void execute(PvmExecutionImpl execution) {
-    ScopeInstantiationContext executionStartContext = execution.getScopeInstantiationContext();
+    ScopeInstantiationContext executionStartContext = requireNonNull(execution.getScopeInstantiationContext());
 
-    InstantiationStack instantiationStack = executionStartContext.getInstantiationStack();
+    InstantiationStack instantiationStack = requireNonNull(executionStartContext.getInstantiationStack());
     List<PvmActivity> activityStack = instantiationStack.getActivities();
     PvmActivity currentActivity = activityStack.remove(0);
 
@@ -69,6 +72,7 @@ public class PvmAtomicOperationActivityInitStack implements PvmAtomicOperation {
     return false;
   }
 
+  @SuppressWarnings("unused")
   public PvmExecutionImpl getStartContextExecution(PvmExecutionImpl execution) {
     return execution;
   }

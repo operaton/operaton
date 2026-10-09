@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
@@ -24,7 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 /**
  * @author Tom Baeyens
  */
-public class PvmAtomicOperationActivityStart extends PvmAtomicOperationActivityInstanceStart {
+public @NullMarked class PvmAtomicOperationActivityStart extends PvmAtomicOperationActivityInstanceStart {
 
   @Override
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
@@ -38,7 +40,7 @@ public class PvmAtomicOperationActivityStart extends PvmAtomicOperationActivityI
   }
 
   @Override
-  protected ScopeImpl getScope(PvmExecutionImpl execution) {
+  protected @Nullable ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getActivity();
   }
 

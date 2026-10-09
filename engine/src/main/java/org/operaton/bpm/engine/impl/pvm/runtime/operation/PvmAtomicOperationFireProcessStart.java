@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class PvmAtomicOperationFireProcessStart extends AbstractPvmEventAtomicOperation {
+public @NullMarked class PvmAtomicOperationFireProcessStart extends AbstractPvmEventAtomicOperation {
 
   @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {

@@ -32,10 +32,10 @@ public @NullMarked class DefaultProcessApplicationRegistration implements Proces
   protected String processEngineName;
   protected ProcessApplicationReference reference;
 
-  public DefaultProcessApplicationRegistration(ProcessApplicationReference reference, Set<String> deploymentIds, String processEnginenName) {
+  public DefaultProcessApplicationRegistration(ProcessApplicationReference reference, Set<String> deploymentIds, String processEngineName) {
     this.reference = reference;
     this.deploymentIds = deploymentIds;
-    this.processEngineName = processEnginenName;
+    this.processEngineName = processEngineName;
   }
 
   @Override

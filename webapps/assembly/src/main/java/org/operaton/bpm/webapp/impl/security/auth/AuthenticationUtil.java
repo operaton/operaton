@@ -76,11 +76,12 @@ public final class AuthenticationUtil {
 
     String userId = username;
 
-    User user = processEngine.getIdentityService()
+    List<User> users = processEngine.getIdentityService()
       .createUserQuery()
       .userId(username)
-      .singleResult();
+      .list();
 
+    User user = selectMatchingUser(users, username);
     if (user == null) {
       return null;
     }
@@ -124,6 +125,21 @@ public final class AuthenticationUtil {
     newAuthentication.setAuthorizedApps(authorizedApps);
 
     return newAuthentication;
+  }
+
+  private static User selectMatchingUser(List<User> users, String requestedUserId) {
+    if (users.isEmpty()) {
+      return null;
+    }
+
+    if (users.size() == 1) {
+      return users.get(0);
+    }
+
+    return users.stream()
+        .filter(user -> requestedUserId.equals(user.getId()))
+        .findFirst()
+        .orElse(users.get(0));
   }
 
   public static List<String> getTenantsOfUser(ProcessEngine engine, String userId) {

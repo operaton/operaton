@@ -109,4 +109,30 @@ class DefaultProcessEngineConfigurationTest {
     assertThat(configuration.getDefaultNumberOfRetries()).isEqualTo(1);
   }
 
+  @Test
+  void setCronType() {
+    instance.preInit(configuration);
+    assertThat(configuration.getCronType()).isEqualTo("SPRING53");
+
+    properties.setCronType("QUARTZ");
+    instance.preInit(configuration);
+    assertThat(configuration.getCronType()).isEqualTo("QUARTZ");
+  }
+
+  @Test
+  void setCronType_ignore_empty() {
+    properties.setCronType(" ");
+    instance.preInit(configuration);
+    assertThat(configuration.getCronType()).isEqualTo("SPRING53");
+  }
+
+  @Test
+  void setSupportLegacyQuartzSyntax() {
+    instance.preInit(configuration);
+    assertThat(configuration.isSupportLegacyQuartzSyntax()).isTrue();
+
+    properties.setSupportLegacyQuartzSyntax(false);
+    instance.preInit(configuration);
+    assertThat(configuration.isSupportLegacyQuartzSyntax()).isFalse();
+  }
 }

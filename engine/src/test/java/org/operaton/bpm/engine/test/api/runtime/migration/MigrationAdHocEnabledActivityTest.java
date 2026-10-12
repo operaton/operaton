@@ -428,7 +428,8 @@ public class MigrationAdHocEnabledActivityTest {
     String secondToken = enabled(second, "taskC").get(0).getId();
     MigrationPlan plan = runtimeService.createMigrationPlan(source.getId(), target.getId())
         .mapActivities("adhoc", "adhoc").mapActivities("taskB", "taskB").build();
-    assertThatThrownBy(() -> runtimeService.newMigration(plan).processInstanceIds(first.getId(), second.getId()).execute())
+    var migration = runtimeService.newMigration(plan).processInstanceIds(first.getId(), second.getId());
+    assertThatThrownBy(migration::execute)
         .isInstanceOf(MigratingProcessInstanceValidationException.class).hasMessageContaining("no migration instruction");
     assertSource(first, source);
     assertSource(second, source);
@@ -785,7 +786,7 @@ public class MigrationAdHocEnabledActivityTest {
     assertThat(runtimeService.getVariableLocal(migrated.getExecutionId(), "pendingLocal")).isEqualTo("retained");
     assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)).isEqualTo(0);
     assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).list())
-        .allMatch(execution -> execution.isSuspended() == suspendProcess);
+        .isNotEmpty().allMatch(execution -> execution.isSuspended() == suspendProcess);
 
     if (suspendProcess) {
       runtimeService.activateProcessInstanceById(process.getId());
@@ -827,7 +828,8 @@ public class MigrationAdHocEnabledActivityTest {
     try {
       engine.getProcessEngineConfiguration().setAuthorizationEnabled(true);
       engine.getIdentityService().setAuthenticatedUserId("migration-user-without-permission");
-      assertThatThrownBy(() -> runtimeService.newMigration(plan).processInstanceIds(process.getId()).execute())
+      var migration = runtimeService.newMigration(plan).processInstanceIds(process.getId());
+      assertThatThrownBy(migration::execute)
           .isInstanceOf(AuthorizationException.class);
     } finally {
       engine.getIdentityService().clearAuthentication();
@@ -860,7 +862,8 @@ public class MigrationAdHocEnabledActivityTest {
     try {
       engine.getProcessEngineConfiguration().setTenantCheckEnabled(true);
       engine.getIdentityService().setAuthentication("other-tenant-user", null, List.of("tenantB"));
-      assertThatThrownBy(() -> runtimeService.newMigration(plan).processInstanceIds(process.getId()).execute())
+      var migration = runtimeService.newMigration(plan).processInstanceIds(process.getId());
+      assertThatThrownBy(migration::execute)
           .isInstanceOf(ProcessEngineException.class).hasMessageContaining("no authenticated tenant");
     } finally {
       engine.getIdentityService().clearAuthentication();

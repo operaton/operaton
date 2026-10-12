@@ -86,7 +86,7 @@ public class AdHocSubProcessImpl extends SubProcessImpl implements AdHocSubProce
   @Override
   public boolean isCancelRemainingInstances() {
     Boolean value = cancelRemainingInstancesAttribute.getValue(this);
-    return value == null ? true : value;
+    return value == null || value;
   }
 
   @Override

@@ -39,7 +39,7 @@ public class GetStartableAdHocActivitiesCmd implements Command<List<AdHocActivit
   private static final long serialVersionUID = 1L;
 
   protected final String executionId;
-  protected final AdHocStartability startability = AdHocStartability.INSTANCE;
+  protected static final AdHocStartability STARTABILITY = AdHocStartability.INSTANCE;
 
   public GetStartableAdHocActivitiesCmd(String executionId) {
     this.executionId = executionId;
@@ -63,7 +63,7 @@ public class GetStartableAdHocActivitiesCmd implements Command<List<AdHocActivit
       throw new BadUserRequestException("execution " + executionId + " is not waiting in an adHocSubProcess");
     }
 
-    return startability.getStartableActivities(execution).stream()
+    return STARTABILITY.getStartableActivities(execution).stream()
         .map(activity -> AdHocActivityImpl.fromActivity(activity, execution))
         .collect(Collectors.toList());
   }

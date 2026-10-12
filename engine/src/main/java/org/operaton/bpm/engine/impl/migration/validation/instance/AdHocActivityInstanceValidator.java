@@ -77,24 +77,28 @@ public class AdHocActivityInstanceValidator implements MigratingActivityInstance
     candidates.addAll(processInstance.getMigratingTransitionInstances());
     Set<TargetOwner> owners = new HashSet<>();
     for (MigratingProcessElementInstance candidate : candidates) {
-      for (ScopeImpl scope = candidate.getTargetScope(); scope != null; scope = scope.getFlowScope()) {
-        if (scope instanceof ActivityImpl activity
-            && activity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior
-            && AdHocStartability.INSTANCE.isSequentialOrdering(activity)) {
-          MigratingProcessElementInstance anchor = candidate;
-          while (anchor != null && !isTargetAncestor(anchor.getTargetScope(), scope)) {
-            anchor = anchor.getParent();
-          }
-          if (anchor instanceof MigratingActivityInstance activityInstance) {
-            owners.add(new TargetOwner(activity, activityInstance));
-          }
-        }
-      }
+      collectTargetOwners(candidate, owners);
     }
     for (TargetOwner owner : owners) {
       if (countTargetChildren(owner.anchor(), owner.scope(), processInstance) > 1) {
         report.addFailure("Cannot migrate to a sequential ad-hoc subprocess with more than one open child activity: "
             + owner.scope().getId());
+      }
+    }
+  }
+
+  protected void collectTargetOwners(MigratingProcessElementInstance candidate, Set<TargetOwner> owners) {
+    for (ScopeImpl scope = candidate.getTargetScope(); scope != null; scope = scope.getFlowScope()) {
+      if (scope instanceof ActivityImpl activity
+          && activity.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior
+          && AdHocStartability.INSTANCE.isSequentialOrdering(activity)) {
+        MigratingProcessElementInstance anchor = candidate;
+        while (anchor != null && !isTargetAncestor(anchor.getTargetScope(), scope)) {
+          anchor = anchor.getParent();
+        }
+        if (anchor instanceof MigratingActivityInstance activityInstance) {
+          owners.add(new TargetOwner(activity, activityInstance));
+        }
       }
     }
   }

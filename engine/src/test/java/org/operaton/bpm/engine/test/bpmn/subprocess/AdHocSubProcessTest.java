@@ -47,6 +47,7 @@ import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivity
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 class AdHocSubProcessTest {
@@ -283,13 +284,11 @@ class AdHocSubProcessTest {
 
     assertThat(taskA).isNotNull();
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("Sequential adHocSubProcess 'adHocSubProcess' already has an active child activity",
-          e.getMessage());
-    }
+    String blockedExecutionId = adHocExecution.getId();
+    List<String> blockedActivities = Collections.singletonList("taskB");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(blockedExecutionId, blockedActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("Sequential adHocSubProcess 'adHocSubProcess' already has an active child activity");
 
     assertThat(taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
@@ -305,13 +304,11 @@ class AdHocSubProcessTest {
 
     assertThat(adHocExecution).isNotNull();
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Arrays.asList("taskA", "taskB"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("Sequential adHocSubProcess 'adHocSubProcess' can trigger only one activity per request",
-          e.getMessage());
-    }
+    String multipleActivitiesExecutionId = adHocExecution.getId();
+    List<String> multipleActivities = Arrays.asList("taskA", "taskB");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(multipleActivitiesExecutionId, multipleActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("Sequential adHocSubProcess 'adHocSubProcess' can trigger only one activity per request");
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
 
@@ -362,13 +359,11 @@ class AdHocSubProcessTest {
     assertThat(asyncBeforeJob).isNotNull();
     assertThat(runtimeService.getStartableAdHocActivities(adHocExecution.getId())).isEmpty();
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("Sequential adHocSubProcess 'adHocSubProcess' already has an active child activity",
-          e.getMessage());
-    }
+    String blockedExecutionId = adHocExecution.getId();
+    List<String> blockedActivities = Collections.singletonList("taskB");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(blockedExecutionId, blockedActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("Sequential adHocSubProcess 'adHocSubProcess' already has an active child activity");
 
     managementService.executeJob(asyncBeforeJob.getId());
 
@@ -430,12 +425,10 @@ class AdHocSubProcessTest {
 
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
 
-    try {
-      runtimeService.completeAdHocSubProcess(adHocExecution.getId());
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("has active child activities and cannot be completed", e.getMessage());
-    }
+    String blockedExecutionId = adHocExecution.getId();
+    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(blockedExecutionId))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("has active child activities and cannot be completed");
 
     Job asyncBeforeJob = managementService.createJobQuery()
         .processInstanceId(processInstance.getId())
@@ -674,12 +667,10 @@ class AdHocSubProcessTest {
 
     assertThat(adHocExecution).isNotNull();
 
-    try {
-      runtimeService.completeAdHocSubProcess(adHocExecution.getId());
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("has active child activities and cannot be completed", e.getMessage());
-    }
+    String blockedExecutionId = adHocExecution.getId();
+    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(blockedExecutionId))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("has active child activities and cannot be completed");
 
     assertThat(runtimeService.createExecutionQuery()
         .processInstanceId(processInstance.getId())
@@ -802,12 +793,11 @@ class AdHocSubProcessTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("doesNotExist"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("adHoc activity 'doesNotExist' does not exist in adHocSubProcess adHocSubProcess", e.getMessage());
-    }
+    String invalidActivitiesExecutionId = adHocExecution.getId();
+    List<String> invalidActivities = Collections.singletonList("doesNotExist");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(invalidActivitiesExecutionId, invalidActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("adHoc activity 'doesNotExist' does not exist in adHocSubProcess adHocSubProcess");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerMultipleAdHocActivitiesWithActivityVariables.bpmn20.xml")
@@ -864,12 +854,11 @@ class AdHocSubProcessTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Arrays.asList("taskB", "doesNotExist"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("adHoc activity 'doesNotExist' does not exist", e.getMessage());
-    }
+    String invalidActivitiesExecutionId = adHocExecution.getId();
+    List<String> invalidActivities = Arrays.asList("taskB", "doesNotExist");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(invalidActivitiesExecutionId, invalidActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("adHoc activity 'doesNotExist' does not exist");
 
     Task taskB = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
@@ -912,12 +901,11 @@ class AdHocSubProcessTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskC"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("adHoc activity 'taskC' is not startable in adHocSubProcess adHocSubProcess", e.getMessage());
-    }
+    String blockedExecutionId = adHocExecution.getId();
+    List<String> blockedActivities = Collections.singletonList("taskC");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(blockedExecutionId, blockedActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("adHoc activity 'taskC' is not startable in adHocSubProcess adHocSubProcess");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerEmbeddedSubProcessAdHocActivity.bpmn20.xml")
@@ -1107,13 +1095,11 @@ class AdHocSubProcessTest {
           e.getMessage());
     }
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("compensationTask"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("adHoc activity 'compensationTask' is not startable in adHocSubProcess adHocSubProcess",
-          e.getMessage());
-    }
+    String blockedExecutionId = adHocExecution.getId();
+    List<String> blockedActivities = Collections.singletonList("compensationTask");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(blockedExecutionId, blockedActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("adHoc activity 'compensationTask' is not startable in adHocSubProcess adHocSubProcess");
   }
 
   @Deployment
@@ -1580,14 +1566,10 @@ class AdHocSubProcessTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingRejectsMultipleConfiguredInitialActivities.bpmn20.xml")
   @Test
   void testSequentialOrderingRejectsMultipleConfiguredInitialActivities() {
-    try {
-      runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(
-          "Sequential adHocSubProcess 'adHocSubProcess' can activate only one activity from activeTasksCollection",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering"))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining(
+            "Sequential adHocSubProcess 'adHocSubProcess' can activate only one activity from activeTasksCollection");
   }
 
   protected void assertNoAdHocInternalStateVariable(String processInstanceId, String adHocExecutionId) {

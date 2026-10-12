@@ -590,17 +590,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
       requireNonNull(targetScope);
       boolean sourceAdHoc = sourceScope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior;
       boolean targetAdHoc = targetScope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior;
-      if (!sourceAdHoc && targetAdHoc) {
-        var children = currentScopeExecution.getNonEventScopeExecutions();
-        if (children.isEmpty() && currentScopeExecution.getActivity() != null
-            || children.size() == 1 && !children.get(0).isConcurrent()) {
-          // Ordinary scopes may share their execution with a child. Ad-hoc owners stay addressable.
-          PvmExecutionImpl additional = currentScopeExecution.createConcurrentExecution();
-          additional.remove();
-        }
-      } else if (sourceAdHoc && !targetAdHoc) {
-        currentScopeExecution.setActivity(null);
-      }
+      prepareAdHocScopeExecution(currentScopeExecution, sourceAdHoc, targetAdHoc);
       currentScopeExecution.setProcessDefinition(targetScope.getProcessDefinition());
       if (!sourceAdHoc && targetAdHoc) {
         MigratingAdHocState.initializeScopeContext(currentScopeExecution);
@@ -636,6 +626,21 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
       }
 
       migrateHistory(currentScopeExecution);
+    }
+
+    protected void prepareAdHocScopeExecution(ExecutionEntity currentScopeExecution,
+        boolean sourceAdHoc, boolean targetAdHoc) {
+      if (!sourceAdHoc && targetAdHoc) {
+        var children = currentScopeExecution.getNonEventScopeExecutions();
+        if (children.isEmpty() && currentScopeExecution.getActivity() != null
+            || children.size() == 1 && !children.get(0).isConcurrent()) {
+          // Ordinary scopes may share their execution with a child. Ad-hoc owners stay addressable.
+          PvmExecutionImpl additional = currentScopeExecution.createConcurrentExecution();
+          additional.remove();
+        }
+      } else if (sourceAdHoc && !targetAdHoc) {
+        currentScopeExecution.setActivity(null);
+      }
     }
 
     protected void becomeNonScope() {

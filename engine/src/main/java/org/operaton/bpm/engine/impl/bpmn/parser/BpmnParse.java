@@ -127,7 +127,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventSubprocessJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerTaskListenerJobHandler;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
@@ -194,6 +193,8 @@ import static java.util.Objects.requireNonNull;
  */
 @SuppressWarnings({"java:S3776", "java:S6541"}) // this class is complex by its nature
 public @NullMarked class BpmnParse extends Parse {
+
+  protected static final String TRIGGERED_BY_EVENT = "triggeredByEvent";
 
   public static final String MULTI_INSTANCE_BODY_ID_SUFFIX = "#multiInstanceBody";
 
@@ -3920,7 +3921,7 @@ public @NullMarked class BpmnParse extends Parse {
 
     parseAsynchronousContinuationForActivity(subProcessElement, subProcessActivity);
 
-    Boolean isTriggeredByEvent = parseBooleanAttribute(subProcessElement.attribute("triggeredByEvent"), false);
+    Boolean isTriggeredByEvent = parseBooleanAttribute(subProcessElement.attribute(TRIGGERED_BY_EVENT), false);
     subProcessActivity.getProperties().set(BpmnProperties.TRIGGERED_BY_EVENT, isTriggeredByEvent);
     subProcessActivity.setProperty(PROPERTYNAME_CONSUMES_COMPENSATION, Boolean.FALSE.equals(isTriggeredByEvent));
 
@@ -3947,7 +3948,7 @@ public @NullMarked class BpmnParse extends Parse {
         addError("An ad-hoc subprocess must not contain a direct " + child.getTagName(), child);
       }
     }
-    if (Boolean.TRUE.equals(parseBooleanAttribute(adHocSubProcessElement.attribute("triggeredByEvent"), false))) {
+    if (Boolean.TRUE.equals(parseBooleanAttribute(adHocSubProcessElement.attribute(TRIGGERED_BY_EVENT), false))) {
       addError("An ad-hoc subprocess cannot be an event subprocess", adHocSubProcessElement);
     }
 
@@ -4973,7 +4974,7 @@ public @NullMarked class BpmnParse extends Parse {
       return false;
     }
 
-    if (SUB_PROCESS_TAG.equals(tagName) && TRUE.equals(activityElement.attribute("triggeredByEvent"))) {
+    if (SUB_PROCESS_TAG.equals(tagName) && TRUE.equals(activityElement.attribute(TRIGGERED_BY_EVENT))) {
       addError("operaton:inputOutput mapping unsupported for element type '%s' with attribute 'triggeredByEvent = true'.".formatted(tagName), activityElement);
       return false;
     }

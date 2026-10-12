@@ -146,27 +146,25 @@ public class MigratingAsyncJobInstance extends MigratingJobInstance {
     else {
       targetConfiguration.setAtomicOperation(PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE.getCanonicalName());
 
-      if (outgoingTransitions.size() == 1) {
-        targetConfiguration.setTransitionId(outgoingTransitions.get(0).getId());
-      }
-      else {
-        TransitionImpl matchingTargetTransition = null;
-        String currentTransitionId = currentConfiguration.getTransitionId();
-        if (currentTransitionId != null) {
-          matchingTargetTransition = targetActivity.findOutgoingTransition(currentTransitionId);
-        }
-
-        if (matchingTargetTransition != null) {
-          targetConfiguration.setTransitionId(matchingTargetTransition.getId());
-        }
-        else {
-          // should not happen since it is avoided by validation
-          throw new ProcessEngineException("Cannot determine matching outgoing sequence flow");
-        }
-      }
+      targetConfiguration.setTransitionId(resolveTargetTransitionId(targetActivity, outgoingTransitions,
+          currentConfiguration.getTransitionId()));
     }
 
     jobEntity.setJobHandlerConfiguration(targetConfiguration);
+  }
+
+  protected String resolveTargetTransitionId(ActivityImpl targetActivity, List<PvmTransition> outgoingTransitions,
+      String currentTransitionId) {
+    if (outgoingTransitions.size() == 1) {
+      return outgoingTransitions.get(0).getId();
+    }
+    TransitionImpl matchingTargetTransition = currentTransitionId == null
+        ? null : targetActivity.findOutgoingTransition(currentTransitionId);
+    if (matchingTargetTransition != null) {
+      return matchingTargetTransition.getId();
+    }
+    // Should not happen since it is avoided by validation.
+    throw new ProcessEngineException("Cannot determine matching outgoing sequence flow");
   }
 
 }

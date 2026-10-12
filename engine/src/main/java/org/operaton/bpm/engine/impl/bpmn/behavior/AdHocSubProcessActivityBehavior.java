@@ -626,7 +626,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       ActivityExecution child = children.get(i);
       if (!child.isEnded() && !((PvmExecutionImpl) child).isRemoved()
           && startability.getDirectChild(scopeExecution, child).getParent() == scopeExecution) {
-        if (enabledTokens.get(i)) {
+        if (enabledTokens.get(i).booleanValue()) {
           ((PvmExecutionImpl) child).performOperation(
               org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation.TRANSITION_CREATE_SCOPE);
         } else {

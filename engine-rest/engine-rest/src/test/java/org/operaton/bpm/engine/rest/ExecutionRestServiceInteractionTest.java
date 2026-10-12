@@ -242,9 +242,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
       activityVariablesCaptor.capture());
 
     Map<String, Map<String, Object>> capturedActivityVariables = activityVariablesCaptor.getValue();
-    assertThat(capturedActivityVariables).hasSize(2);
-    assertThat(capturedActivityVariables).containsKey("taskA");
-    assertThat(capturedActivityVariables).containsKey("taskB");
+    assertThat(capturedActivityVariables).hasSize(2).containsKeys("taskA", "taskB");
 
     Object taskAValue = capturedActivityVariables.get("taskA").get("k1");
     Object taskBValue = capturedActivityVariables.get("taskB").get("k2");

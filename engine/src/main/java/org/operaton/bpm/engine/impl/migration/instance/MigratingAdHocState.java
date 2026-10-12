@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.migration.instance.parser.MigratingInstanceParseContext;
@@ -30,6 +31,7 @@ import org.operaton.bpm.engine.migration.MigrationInstruction;
 
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability.AD_HOC_ENABLED_ACTIVITY;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETED_ACTIVITY_IDS;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETION_CONDITION_SATISFIED;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_LAST_COMPLETED_ACTIVITY_ID;
 
 /**
@@ -42,8 +44,8 @@ public class MigratingAdHocState implements MigratingInstance {
   public static final String RETIRED_CONTEXT_VALUE = "operaton:ad-hoc-retired-context:v1";
 
   public static final List<String> STATE_VARIABLES = List.of(
-      "adHocActiveActivityIds", "nrOfActiveAdHocActivities", "adHocCompletedActivityIds",
-      "nrOfCompletedAdHocActivities", "adHocLastCompletedActivityId", "adHocCompletionConditionSatisfied",
+      "adHocActiveActivityIds", "nrOfActiveAdHocActivities", AD_HOC_COMPLETED_ACTIVITY_IDS,
+      "nrOfCompletedAdHocActivities", "adHocLastCompletedActivityId", AD_HOC_COMPLETION_CONDITION_SATISFIED,
       "adHocEnabledActivityIds", "nrOfEnabledAdHocActivities", "adHocEnabledActivity", RETIRED_CONTEXT);
 
   /** Initialize a fresh owner or resume identified retired state without replaying initial activities. */
@@ -53,16 +55,16 @@ public class MigratingAdHocState implements MigratingInstance {
       initializeMissingCompletionState(execution);
       return;
     }
-    execution.setVariableLocal("adHocCompletedActivityIds", new ArrayList<String>());
+    execution.setVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS, new ArrayList<String>());
     execution.setVariableLocal("nrOfCompletedAdHocActivities", 0);
     execution.setVariableLocal("adHocLastCompletedActivityId", null);
-    execution.setVariableLocal("adHocCompletionConditionSatisfied", false);
+    execution.setVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED, false);
   }
 
 
   protected static void initializeMissingCompletionState(ExecutionEntity execution) {
-    if (!execution.hasVariableLocal("adHocCompletedActivityIds")) {
-      execution.setVariableLocal("adHocCompletedActivityIds", new ArrayList<String>());
+    if (!execution.hasVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS)) {
+      execution.setVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS, new ArrayList<String>());
     }
     if (!execution.hasVariableLocal("nrOfCompletedAdHocActivities")) {
       execution.setVariableLocal("nrOfCompletedAdHocActivities", 0);
@@ -70,8 +72,8 @@ public class MigratingAdHocState implements MigratingInstance {
     if (!execution.hasVariableLocal("adHocLastCompletedActivityId")) {
       execution.setVariableLocal("adHocLastCompletedActivityId", null);
     }
-    if (!execution.hasVariableLocal("adHocCompletionConditionSatisfied")) {
-      execution.setVariableLocal("adHocCompletionConditionSatisfied", false);
+    if (!execution.hasVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED)) {
+      execution.setVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED, false);
     }
   }
 
@@ -129,10 +131,9 @@ public class MigratingAdHocState implements MigratingInstance {
   protected void migrateActivityIds(ExecutionEntity execution, String variableName) {
     Object value = execution.getVariableLocal(variableName);
     if (value instanceof Collection<?> ids) {
-      List<Object> migratedIds = new ArrayList<>();
-      for (Object id : ids) {
-        migratedIds.add(id instanceof String activityId ? activityIds.getOrDefault(activityId, activityId) : id);
-      }
+      List<Object> migratedIds = ids.stream()
+          .map(id -> id instanceof String activityId ? activityIds.getOrDefault(activityId, activityId) : id)
+          .collect(Collectors.toCollection(ArrayList::new));
       // An unmapped, already completed activity remains a historical source ID.
       if (!migratedIds.equals(new ArrayList<>(ids))) {
         execution.setVariableLocal(variableName, migratedIds);

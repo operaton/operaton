@@ -70,7 +70,8 @@ class AdHocSubProcessLifecycleTest {
     runtimeService.triggerAdHocActivities(scope, List.of("a", "b"), null);
     complete("a");
     assertThat(runtimeService.getStartableAdHocActivities(scope)).isEmpty();
-    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, List.of("a"), null))
+    List<String> activities = List.of("a");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, activities, null))
         .isInstanceOf(BadUserRequestException.class).hasMessageContaining("completion");
     assertThat(runtimeService.createExecutionQuery().executionId(scope).activityId("adhoc").count()).isEqualTo(1);
     complete("b");

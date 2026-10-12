@@ -228,7 +228,9 @@ class MigrateSuspendedInstanceTest {
     MigrationPlan plan = runtimeService.createMigrationPlan(source.getId(), target.getId())
         .mapActivities("outer", "outer").mapActivities("userTask", "userTask").build();
 
-    assertThatThrownBy(() -> runtimeService.newMigration(plan).processInstanceIds(process.getId()).execute())
+    var migration = runtimeService.newMigration(plan).processInstanceIds(process.getId());
+
+    assertThatThrownBy(migration::execute)
         .isInstanceOf(ProcessEngineException.class).hasRootCauseInstanceOf(SuspendedEntityInteractionException.class);
 
     ProcessInstance unchanged = runtimeService.createProcessInstanceQuery()

@@ -306,7 +306,8 @@ class AdHocSubProcessTest {
 
     String multipleActivitiesExecutionId = adHocExecution.getId();
     List<String> multipleActivities = Arrays.asList("taskA", "taskB");
-    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(multipleActivitiesExecutionId, multipleActivities, null))
+    assertThatThrownBy(() ->
+        runtimeService.triggerAdHocActivities(multipleActivitiesExecutionId, multipleActivities, null))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining("Sequential adHocSubProcess 'adHocSubProcess' can trigger only one activity per request");
 
@@ -795,7 +796,8 @@ class AdHocSubProcessTest {
 
     String invalidActivitiesExecutionId = adHocExecution.getId();
     List<String> invalidActivities = Collections.singletonList("doesNotExist");
-    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(invalidActivitiesExecutionId, invalidActivities, null))
+    assertThatThrownBy(() ->
+        runtimeService.triggerAdHocActivities(invalidActivitiesExecutionId, invalidActivities, null))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining("adHoc activity 'doesNotExist' does not exist in adHocSubProcess adHocSubProcess");
   }
@@ -856,7 +858,8 @@ class AdHocSubProcessTest {
 
     String invalidActivitiesExecutionId = adHocExecution.getId();
     List<String> invalidActivities = Arrays.asList("taskB", "doesNotExist");
-    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(invalidActivitiesExecutionId, invalidActivities, null))
+    assertThatThrownBy(() ->
+        runtimeService.triggerAdHocActivities(invalidActivitiesExecutionId, invalidActivities, null))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining("adHoc activity 'doesNotExist' does not exist");
 

@@ -103,20 +103,32 @@ class MigrateSuspendedInstanceTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void shouldInsertSuspendedScopeWithoutResumingExecution(boolean skipCustomListeners) {
-    String sourceChildren = "<startEvent id=\"outerStart\"/>"
-        + "<sequenceFlow id=\"outerEnter\" sourceRef=\"outerStart\" targetRef=\"userTask\"/>"
-        + "<userTask id=\"userTask\"/>";
-    String targetChildren = "<startEvent id=\"outerStart\"/>"
-        + "<sequenceFlow id=\"outerEnter\" sourceRef=\"outerStart\" targetRef=\"inner\"/>"
-        + "<subProcess id=\"inner\"><extensionElements>"
-        + "<operaton:executionListener event=\"start\" "
-        + "expression=\"${execution.setVariable('listenerSawSuspended', execution.isSuspended())}\"/>"
-        + "<operaton:inputOutput><operaton:inputParameter name=\"wrapperLocal\">retained</operaton:inputParameter>"
-        + "</operaton:inputOutput></extensionElements><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerEnter\" sourceRef=\"innerStart\" targetRef=\"userTask\"/>"
-        + "<userTask id=\"userTask\"/></subProcess>"
-        + "<boundaryEvent id=\"timer\" attachedToRef=\"inner\"><timerEventDefinition>"
-        + "<timeDuration>PT1H</timeDuration></timerEventDefinition></boundaryEvent>";
+    String sourceChildren = """
+        <startEvent id="outerStart"/>\
+        <sequenceFlow id="outerEnter" sourceRef="outerStart" targetRef="userTask"/>\
+        <userTask id="userTask"/>\
+        """;
+    String targetChildren = """
+        <startEvent id="outerStart"/>\
+        <sequenceFlow id="outerEnter" sourceRef="outerStart" targetRef="inner"/>\
+        <subProcess id="inner">\
+        <extensionElements>\
+        <operaton:executionListener event="start" expression="${execution.setVariable('listenerSawSuspended',\s\
+        execution.isSuspended())}"/>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="wrapperLocal">retained</operaton:inputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerEnter" sourceRef="innerStart" targetRef="userTask"/>\
+        <userTask id="userTask"/>\
+        </subProcess>\
+        <boundaryEvent id="timer" attachedToRef="inner">\
+        <timerEventDefinition>\
+        <timeDuration>PT1H</timeDuration>\
+        </timerEventDefinition>\
+        </boundaryEvent>\
+        """;
     ProcessDefinition source = testHelper.deployAndGetDefinition(suspendedScopeModel(sourceChildren));
     ProcessDefinition target = testHelper.deployAndGetDefinition(suspendedScopeModel(targetChildren));
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId());
@@ -178,21 +190,33 @@ class MigrateSuspendedInstanceTest {
 
   @Test
   void shouldRollBackSuspendedMigrationWhenListenerTriesToStartActivity() {
-    String sourceChildren = "<startEvent id=\"outerStart\"/>"
-        + "<sequenceFlow id=\"outerEnter\" sourceRef=\"outerStart\" targetRef=\"userTask\"/>"
-        + "<userTask id=\"userTask\"/>";
-    String targetChildren = "<startEvent id=\"outerStart\"/>"
-        + "<sequenceFlow id=\"outerEnter\" sourceRef=\"outerStart\" targetRef=\"inner\"/>"
-        + "<subProcess id=\"inner\"><extensionElements>"
-        + "<operaton:executionListener event=\"start\" expression=\"${execution.getProcessEngineServices()"
-        + ".getRuntimeService().createProcessInstanceModification(execution.getProcessInstanceId())"
-        + ".startBeforeActivity('extra').execute()}\"/>"
-        + "<operaton:inputOutput><operaton:inputParameter name=\"wrapperLocal\">retained</operaton:inputParameter>"
-        + "</operaton:inputOutput></extensionElements><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerEnter\" sourceRef=\"innerStart\" targetRef=\"userTask\"/>"
-        + "<userTask id=\"userTask\"/></subProcess>"
-        + "<boundaryEvent id=\"timer\" attachedToRef=\"inner\"><timerEventDefinition>"
-        + "<timeDuration>PT1H</timeDuration></timerEventDefinition></boundaryEvent>";
+    String sourceChildren = """
+        <startEvent id="outerStart"/>\
+        <sequenceFlow id="outerEnter" sourceRef="outerStart" targetRef="userTask"/>\
+        <userTask id="userTask"/>\
+        """;
+    String targetChildren = """
+        <startEvent id="outerStart"/>\
+        <sequenceFlow id="outerEnter" sourceRef="outerStart" targetRef="inner"/>\
+        <subProcess id="inner">\
+        <extensionElements>\
+        <operaton:executionListener event="start"\s\
+        expression="${execution.getProcessEngineServices().getRuntimeService()\
+        .createProcessInstanceModification(execution.getProcessInstanceId()).startBeforeActivity('extra').execute()}"/>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="wrapperLocal">retained</operaton:inputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerEnter" sourceRef="innerStart" targetRef="userTask"/>\
+        <userTask id="userTask"/>\
+        </subProcess>\
+        <boundaryEvent id="timer" attachedToRef="inner">\
+        <timerEventDefinition>\
+        <timeDuration>PT1H</timeDuration>\
+        </timerEventDefinition>\
+        </boundaryEvent>\
+        """;
     ProcessDefinition source = testHelper.deployAndGetDefinition(suspendedScopeModel(sourceChildren));
     ProcessDefinition target = testHelper.deployAndGetDefinition(suspendedScopeModel(targetChildren));
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId());
@@ -232,16 +256,26 @@ class MigrateSuspendedInstanceTest {
   }
 
   private BpmnModelInstance suspendedScopeModel(String children) {
-    String xml = "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" "
-        + "xmlns:operaton=\"http://operaton.org/schema/1.0/bpmn\" targetNamespace=\"suspended-scope-migration\">"
-        + "<process id=\"process\" isExecutable=\"true\"><startEvent id=\"start\"/>"
-        + "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"outer\"/>"
-        + "<subProcess id=\"outer\">" + children
-        + "<subProcess id=\"unused\"><startEvent id=\"unusedStart\"/>"
-        + "<sequenceFlow id=\"unusedEnter\" sourceRef=\"unusedStart\" targetRef=\"extra\"/>"
-        + "<userTask id=\"extra\"/></subProcess></subProcess>"
-        + "<sequenceFlow id=\"leave\" sourceRef=\"outer\" targetRef=\"after\"/><userTask id=\"after\"/>"
-        + "</process></definitions>";
+    String xml = """
+        <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"\s\
+        xmlns:operaton="http://operaton.org/schema/1.0/bpmn" targetNamespace="suspended-scope-migration">\
+        <process id="process" isExecutable="true">\
+        <startEvent id="start"/>\
+        <sequenceFlow id="enter" sourceRef="start" targetRef="outer"/>\
+        <subProcess id="outer">\
+        """ + children
+        + """
+            <subProcess id="unused">\
+            <startEvent id="unusedStart"/>\
+            <sequenceFlow id="unusedEnter" sourceRef="unusedStart" targetRef="extra"/>\
+            <userTask id="extra"/>\
+            </subProcess>\
+            </subProcess>\
+            <sequenceFlow id="leave" sourceRef="outer" targetRef="after"/>\
+            <userTask id="after"/>\
+            </process>\
+            </definitions>\
+            """;
     return Bpmn.readModelFromStream(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
   }
 

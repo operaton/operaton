@@ -65,10 +65,16 @@ class MigrationAdHocIntegrationTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void preserveCalledProcessOrRejectMissingCallMappingAtomically(boolean mapCall) {
-    deploy(definitions("<process id=\"called\" isExecutable=\"true\"><startEvent id=\"calledStart\"/>"
-        + "<sequenceFlow id=\"calledFlow\" sourceRef=\"calledStart\" targetRef=\"calledTask\"/>"
-        + "<userTask id=\"calledTask\"/></process>"));
-    String xml = model("", "<callActivity id=\"call\" calledElement=\"called\"/>");
+    deploy(definitions("""
+        <process id="called" isExecutable="true">\
+        <startEvent id="calledStart"/>\
+        <sequenceFlow id="calledFlow" sourceRef="calledStart" targetRef="calledTask"/>\
+        <userTask id="calledTask"/>\
+        </process>\
+        """));
+    String xml = model("", """
+        <callActivity id="call" calledElement="called"/>\
+        """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml.replace("id=\"call\"", "id=\"renamedCall\""));
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId());
@@ -104,7 +110,9 @@ class MigrationAdHocIntegrationTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void preserveExternalTaskLockRetriesAndVariablesOrRejectMissingMapping(boolean mapExternal) {
-    String xml = model("", "<serviceTask id=\"external\" operaton:type=\"external\" operaton:topic=\"work\"/>");
+    String xml = model("", """
+        <serviceTask id="external" operaton:type="external" operaton:topic="work"/>\
+        """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml.replace("id=\"external\"", "id=\"renamedExternal\""));
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId(), Map.of("businessVariable", "retained"));
@@ -146,12 +154,24 @@ class MigrationAdHocIntegrationTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void preserveEventSubprocessSubscriptionAndCorrelateAfterMigration(boolean activeBeforeMigration) {
-    String children = "<userTask id=\"taskA\"/><subProcess id=\"eventSubprocess\" triggeredByEvent=\"true\">"
-        + "<startEvent id=\"messageStart\" isInterrupting=\"false\"><messageEventDefinition messageRef=\"notice\"/></startEvent>"
-        + "<sequenceFlow id=\"eventFlow\" sourceRef=\"messageStart\" targetRef=\"eventTask\"/>"
-        + "<userTask id=\"eventTask\"/><sequenceFlow id=\"eventFinish\" sourceRef=\"eventTask\" targetRef=\"eventEnd\"/>"
-        + "<endEvent id=\"eventEnd\"/></subProcess>";
-    String xml = model("${false}", children).replace("<process", "<message id=\"notice\" name=\"notice\"/><process");
+    String children = """
+        <userTask id="taskA"/>\
+        <subProcess id="eventSubprocess" triggeredByEvent="true">\
+        <startEvent id="messageStart" isInterrupting="false">\
+        <messageEventDefinition messageRef="notice"/>\
+        </startEvent>\
+        <sequenceFlow id="eventFlow" sourceRef="messageStart" targetRef="eventTask"/>\
+        <userTask id="eventTask"/>\
+        <sequenceFlow id="eventFinish" sourceRef="eventTask" targetRef="eventEnd"/>\
+        <endEvent id="eventEnd"/>\
+        </subProcess>\
+        """;
+    String xml = model("${false}", children).replace("""
+        <process\
+        """, """
+        <message id="notice" name="notice"/>\
+        <process\
+        """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId());
@@ -182,14 +202,25 @@ class MigrationAdHocIntegrationTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void preserveCompensationOwnershipOrRejectUnmappedSubscriptionAtomically(boolean mapCompensation) {
-    String children = "<userTask id=\"taskA\"/><boundaryEvent id=\"compensationBoundary\" attachedToRef=\"taskA\">"
-        + "<compensateEventDefinition/></boundaryEvent><userTask id=\"compensationHandler\" isForCompensation=\"true\"/>"
-        + "<association id=\"compensationAssociation\" sourceRef=\"compensationBoundary\" targetRef=\"compensationHandler\"/>";
+    String children = """
+        <userTask id="taskA"/>\
+        <boundaryEvent id="compensationBoundary" attachedToRef="taskA">\
+        <compensateEventDefinition/>\
+        </boundaryEvent>\
+        <userTask id="compensationHandler" isForCompensation="true"/>\
+        <association id="compensationAssociation" sourceRef="compensationBoundary" targetRef="compensationHandler"/>\
+        """;
     String xml = model("", children).replace(
-        "<sequenceFlow id=\"finish\" sourceRef=\"after\" targetRef=\"end\"/>",
-        "<sequenceFlow id=\"finish\" sourceRef=\"after\" targetRef=\"compensate\"/>"
-        + "<intermediateThrowEvent id=\"compensate\"><compensateEventDefinition waitForCompletion=\"true\"/>"
-        + "</intermediateThrowEvent><sequenceFlow id=\"compensated\" sourceRef=\"compensate\" targetRef=\"end\"/>");
+        """
+            <sequenceFlow id="finish" sourceRef="after" targetRef="end"/>\
+            """,
+        """
+            <sequenceFlow id="finish" sourceRef="after" targetRef="compensate"/>\
+            <intermediateThrowEvent id="compensate">\
+            <compensateEventDefinition waitForCompletion="true"/>\
+            </intermediateThrowEvent>\
+            <sequenceFlow id="compensated" sourceRef="compensate" targetRef="end"/>\
+            """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId());
@@ -225,8 +256,12 @@ class MigrationAdHocIntegrationTest {
 
   @Test
   void migrateEnabledAndRunningActivitiesThroughAsyncBatch() {
-    String xml = model("${false}", "<userTask id=\"taskA\"/><userTask id=\"taskB\"/><userTask id=\"taskC\"/>"
-        + "<sequenceFlow id=\"enableB\" sourceRef=\"taskA\" targetRef=\"taskB\"/>");
+    String xml = model("${false}", """
+        <userTask id="taskA"/>\
+        <userTask id="taskB"/>\
+        <userTask id="taskC"/>\
+        <sequenceFlow id="enableB" sourceRef="taskA" targetRef="taskB"/>\
+        """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml.replace("taskB", "renamedB"));
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId());
@@ -274,18 +309,35 @@ class MigrationAdHocIntegrationTest {
   }
 
   private String model(String condition, String children) {
-    return definitions("<process id=\"process\" isExecutable=\"true\"><startEvent id=\"start\"/>"
-        + "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"adhoc\"/><adHocSubProcess id=\"adhoc\">"
-        + children + (condition.isEmpty() ? "" : "<completionCondition>" + condition + "</completionCondition>")
-        + "</adHocSubProcess><sequenceFlow id=\"leave\" sourceRef=\"adhoc\" targetRef=\"after\"/>"
-        + "<userTask id=\"after\"/><sequenceFlow id=\"finish\" sourceRef=\"after\" targetRef=\"end\"/>"
-        + "<endEvent id=\"end\"/></process>");
+    return definitions("""
+        <process id="process" isExecutable="true">\
+        <startEvent id="start"/>\
+        <sequenceFlow id="enter" sourceRef="start" targetRef="adhoc"/>\
+        <adHocSubProcess id="adhoc">\
+        """
+        + children + (condition.isEmpty() ? "" : """
+            <completionCondition>\
+            """ + condition + """
+            </completionCondition>\
+            """)
+        + """
+            </adHocSubProcess>\
+            <sequenceFlow id="leave" sourceRef="adhoc" targetRef="after"/>\
+            <userTask id="after"/>\
+            <sequenceFlow id="finish" sourceRef="after" targetRef="end"/>\
+            <endEvent id="end"/>\
+            </process>\
+            """);
   }
 
   private String definitions(String process) {
-    return "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" "
-        + "xmlns:operaton=\"http://operaton.org/schema/1.0/bpmn\" targetNamespace=\"adhoc-integration-migration\">"
-        + process + "</definitions>";
+    return """
+        <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"\s\
+        xmlns:operaton="http://operaton.org/schema/1.0/bpmn" targetNamespace="adhoc-integration-migration">\
+        """
+        + process + """
+            </definitions>\
+            """;
   }
 
   private ProcessDefinition deploy(String xml) {

@@ -81,7 +81,9 @@ class MigrationAdHocSubProcessTest {
   void migrateEmptyScopeAndUseTargetCommands(boolean renamed) {
     ProcessDefinition source = deploy(model("", "", tasks()));
     String targetId = renamed ? "renamed" : "adhoc";
-    String targetModel = model("", "", tasks() + "<userTask id=\"taskC\"/>").replace("adhoc", targetId);
+    String targetModel = model("", "", tasks() + """
+        <userTask id="taskC"/>\
+        """).replace("adhoc", targetId);
     ProcessDefinition target = deploy(targetModel);
     ProcessInstance process = start(source);
     String scopeId = scope(process, "adhoc");
@@ -120,9 +122,14 @@ class MigrationAdHocSubProcessTest {
   @Test
   void migrateBeforeEntryAndEnterChangedTargetAdHocScope() {
     String sourceXml = model("", "", tasks()).replace(
-        "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"adhoc\"/>",
-        "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"before\"/>"
-        + "<userTask id=\"before\"/><sequenceFlow id=\"toAdHoc\" sourceRef=\"before\" targetRef=\"adhoc\"/>");
+        """
+            <sequenceFlow id="enter" sourceRef="start" targetRef="adhoc"/>\
+            """,
+        """
+            <sequenceFlow id="enter" sourceRef="start" targetRef="before"/>\
+            <userTask id="before"/>\
+            <sequenceFlow id="toAdHoc" sourceRef="before" targetRef="adhoc"/>\
+            """);
     ProcessDefinition source = deploy(sourceXml);
     ProcessDefinition target = deploy(sourceXml.replace("adhoc", "renamed"));
     ProcessInstance process = start(source);
@@ -187,7 +194,9 @@ class MigrationAdHocSubProcessTest {
   void keepUnmappedCompletedActivityAsHistoricalId() {
     String condition = "${nrOfCompletedAdHocActivities >= 2}";
     ProcessDefinition source = deploy(model("", condition, tasks()));
-    ProcessDefinition target = deploy(model("", condition, "<userTask id=\"taskB\"/>"));
+    ProcessDefinition target = deploy(model("", condition, """
+        <userTask id="taskB"/>\
+        """));
     ProcessInstance process = start(source);
     String scopeId = scope(process, "adhoc");
     trigger(scopeId, "taskA");
@@ -259,7 +268,11 @@ class MigrationAdHocSubProcessTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void rejectParallelToSequentialAtomicallyWithTwoOpenChildren(boolean asyncBefore) {
-    String children = asyncBefore ? tasks().replace("<userTask", "<userTask operaton:asyncBefore=\"true\"") : tasks();
+    String children = asyncBefore ? tasks().replace("""
+        <userTask\
+        """, """
+        <userTask operaton:asyncBefore="true"\
+        """) : tasks();
     ProcessDefinition source = deploy(model("", "${false}", children));
     ProcessDefinition target = deploy(model("ordering=\"Sequential\"", "${false}", children));
     ProcessInstance process = start(source);
@@ -330,8 +343,13 @@ class MigrationAdHocSubProcessTest {
   void allowPlanForStateSensitiveAdHocAndOrdinarySubprocessConversion(boolean toAdHoc) {
     String adhoc = model("", "", tasks());
     String ordinary = adhoc.replace("adHocSubProcess", "subProcess")
-        .replace("<userTask id=\"taskA\"/>", "<startEvent id=\"innerStart\"/>"
-            + "<sequenceFlow id=\"innerEnter\" sourceRef=\"innerStart\" targetRef=\"taskA\"/><userTask id=\"taskA\"/>");
+        .replace("""
+            <userTask id="taskA"/>\
+            """, """
+            <startEvent id="innerStart"/>\
+            <sequenceFlow id="innerEnter" sourceRef="innerStart" targetRef="taskA"/>\
+            <userTask id="taskA"/>\
+            """);
     ProcessDefinition source = deploy(toAdHoc ? ordinary : adhoc);
     ProcessDefinition target = deploy(toAdHoc ? adhoc : ordinary);
     assertThat(runtimeService.createMigrationPlan(source.getId(), target.getId())
@@ -342,10 +360,18 @@ class MigrationAdHocSubProcessTest {
   @ValueSource(booleans = {false, true})
   void migrateNestedNormalAndAdHocChildScopes(boolean nestedAdHoc) {
     String inner = nestedAdHoc
-        ? "<adHocSubProcess id=\"inner\"><userTask id=\"nestedTask\"/></adHocSubProcess>"
-        : "<subProcess id=\"inner\"><startEvent id=\"innerStart\"/>"
-          + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"nestedTask\"/>"
-          + "<userTask id=\"nestedTask\"/></subProcess>";
+        ? """
+            <adHocSubProcess id="inner">\
+            <userTask id="nestedTask"/>\
+            </adHocSubProcess>\
+            """
+        : """
+            <subProcess id="inner">\
+            <startEvent id="innerStart"/>\
+            <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="nestedTask"/>\
+            <userTask id="nestedTask"/>\
+            </subProcess>\
+            """;
     String xml = model("", "", inner);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
@@ -363,10 +389,21 @@ class MigrationAdHocSubProcessTest {
 
   @Test
   void migrateAdHocNestedInOrdinarySubprocess() {
-    String xml = model("", "", tasks()).replace("<startEvent id=\"start\"/>",
-        "<startEvent id=\"outerStart\"/><sequenceFlow id=\"outerEnter\" sourceRef=\"outerStart\" targetRef=\"outer\"/>"
-        + "<subProcess id=\"outer\"><startEvent id=\"start\"/>")
-        .replace("</process>", "</subProcess></process>");
+    String xml = model("", "", tasks()).replace("""
+        <startEvent id="start"/>\
+        """,
+        """
+            <startEvent id="outerStart"/>\
+            <sequenceFlow id="outerEnter" sourceRef="outerStart" targetRef="outer"/>\
+            <subProcess id="outer">\
+            <startEvent id="start"/>\
+            """)
+        .replace("""
+            </process>\
+            """, """
+            </subProcess>\
+            </process>\
+            """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml.replace("adhoc", "renamed"));
     ProcessInstance process = start(source);
@@ -413,7 +450,11 @@ class MigrationAdHocSubProcessTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void migrateMultiInstanceChildBodyAndInstances(boolean sequential) {
-    String children = "<userTask id=\"taskA\">" + multiInstance(sequential) + "</userTask>";
+    String children = """
+        <userTask id="taskA">\
+        """ + multiInstance(sequential) + """
+        </userTask>\
+        """;
     ProcessDefinition source = deploy(model("ordering=\"Sequential\"", "", children));
     ProcessDefinition target = deploy(model("ordering=\"Sequential\"", "", children));
     ProcessInstance process = start(source);
@@ -453,7 +494,9 @@ class MigrationAdHocSubProcessTest {
   @ValueSource(booleans = {false, true})
   void migrateAsyncChildJobAndCompleteExactlyOnce(boolean asyncAfter) {
     String attribute = asyncAfter ? "operaton:asyncAfter=\"true\"" : "operaton:asyncBefore=\"true\"";
-    String xml = model("", "${nrOfCompletedAdHocActivities >= 1}", "<userTask id=\"taskA\" " + attribute + "/>");
+    String xml = model("", "${nrOfCompletedAdHocActivities >= 1}", """
+        <userTask id="taskA"\s\
+        """ + attribute + "/>");
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
     ProcessInstance process = start(source);
@@ -474,10 +517,18 @@ class MigrationAdHocSubProcessTest {
 
   @Test
   void migrateTimerBoundaryJobAndKeepItsIdentityAndDueDate() {
-    String xml = model("", "", tasks()).replace("</process>",
-        "<boundaryEvent id=\"timeout\" attachedToRef=\"adhoc\"><timerEventDefinition>"
-        + "<timeDuration>PT1H</timeDuration></timerEventDefinition></boundaryEvent>"
-        + "<sequenceFlow id=\"timeoutFlow\" sourceRef=\"timeout\" targetRef=\"after\"/></process>");
+    String xml = model("", "", tasks()).replace("""
+        </process>\
+        """,
+        """
+            <boundaryEvent id="timeout" attachedToRef="adhoc">\
+            <timerEventDefinition>\
+            <timeDuration>PT1H</timeDuration>\
+            </timerEventDefinition>\
+            </boundaryEvent>\
+            <sequenceFlow id="timeoutFlow" sourceRef="timeout" targetRef="after"/>\
+            </process>\
+            """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
     ProcessInstance process = start(source);
@@ -495,10 +546,21 @@ class MigrationAdHocSubProcessTest {
 
   @Test
   void migrateMessageBoundarySubscriptionAndCorrelateAfterwards() {
-    String xml = model("", "", tasks()).replace("<process", "<message id=\"message\" name=\"continue\"/><process")
-        .replace("</process>", "<boundaryEvent id=\"messageBoundary\" attachedToRef=\"adhoc\">"
-        + "<messageEventDefinition messageRef=\"message\"/></boundaryEvent>"
-        + "<sequenceFlow id=\"messageFlow\" sourceRef=\"messageBoundary\" targetRef=\"after\"/></process>");
+    String xml = model("", "", tasks()).replace("""
+        <process\
+        """, """
+        <message id="message" name="continue"/>\
+        <process\
+        """)
+        .replace("""
+            </process>\
+            """, """
+            <boundaryEvent id="messageBoundary" attachedToRef="adhoc">\
+            <messageEventDefinition messageRef="message"/>\
+            </boundaryEvent>\
+            <sequenceFlow id="messageFlow" sourceRef="messageBoundary" targetRef="after"/>\
+            </process>\
+            """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
     ProcessInstance process = start(source);
@@ -573,11 +635,19 @@ class MigrationAdHocSubProcessTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void migrateAddingOrRemovingOrdinaryScopeInsideAdHoc(boolean addScope) {
-    String wrapped = "<subProcess id=\"inner\"><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"taskA\"/>"
-        + "<userTask id=\"taskA\"/></subProcess>";
-    ProcessDefinition source = deploy(model("", "${false}", addScope ? "<userTask id=\"taskA\"/>" : wrapped));
-    ProcessDefinition target = deploy(model("", "${false}", addScope ? wrapped : "<userTask id=\"taskA\"/>"));
+    String wrapped = """
+        <subProcess id="inner">\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="taskA"/>\
+        <userTask id="taskA"/>\
+        </subProcess>\
+        """;
+    ProcessDefinition source = deploy(model("", "${false}", addScope ? """
+        <userTask id="taskA"/>\
+        """ : wrapped));
+    ProcessDefinition target = deploy(model("", "${false}", addScope ? wrapped : """
+        <userTask id="taskA"/>\
+        """));
     ProcessInstance process = start(source);
     trigger(scope(process, "adhoc"), addScope ? "taskA" : "inner");
     MigrationPlan plan = runtimeService.createMigrationPlan(source.getId(), target.getId())
@@ -593,10 +663,16 @@ class MigrationAdHocSubProcessTest {
 
   @Test
   void rejectSequentialTargetWhenRemovingNormalScopeWouldExposeTwoChildren() {
-    String wrapped = "<subProcess id=\"inner\"><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"fork\"/>"
-        + "<parallelGateway id=\"fork\"/><sequenceFlow id=\"a\" sourceRef=\"fork\" targetRef=\"taskA\"/>"
-        + "<sequenceFlow id=\"b\" sourceRef=\"fork\" targetRef=\"taskB\"/>" + tasks() + "</subProcess>";
+    String wrapped = """
+        <subProcess id="inner">\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="fork"/>\
+        <parallelGateway id="fork"/>\
+        <sequenceFlow id="a" sourceRef="fork" targetRef="taskA"/>\
+        <sequenceFlow id="b" sourceRef="fork" targetRef="taskB"/>\
+        """ + tasks() + """
+            </subProcess>\
+            """;
     ProcessDefinition source = deploy(model("", "", wrapped));
     ProcessDefinition target = deploy(model("ordering=\"Sequential\"", "", tasks()));
     ProcessInstance process = start(source);
@@ -612,9 +688,14 @@ class MigrationAdHocSubProcessTest {
 
   @Test
   void addFreshAdHocAncestorAroundRunningActivityWhilePreservingOuterOwner() {
-    ProcessDefinition source = deploy(model("", "", "<userTask id=\"taskA\"/>"));
-    ProcessDefinition target = deploy(model("", "", "<adHocSubProcess id=\"inner\">"
-        + "<userTask id=\"taskA\"/></adHocSubProcess>"));
+    ProcessDefinition source = deploy(model("", "", """
+        <userTask id="taskA"/>\
+        """));
+    ProcessDefinition target = deploy(model("", "", """
+        <adHocSubProcess id="inner">\
+        <userTask id="taskA"/>\
+        </adHocSubProcess>\
+        """));
     ProcessInstance process = start(source);
     String outer = scope(process, "adhoc");
     trigger(outer, "taskA");
@@ -644,10 +725,14 @@ class MigrationAdHocSubProcessTest {
 
   @Test
   void preserveInputVariablesWithoutReplayingMappingsAndRunTargetOutputMappingOnCompletion() {
-    String mappings = "<extensionElements><operaton:inputOutput>"
-        + "<operaton:inputParameter name=\"scopeInput\">${input}</operaton:inputParameter>"
-        + "<operaton:outputParameter name=\"result\">${scopeInput}</operaton:outputParameter>"
-        + "</operaton:inputOutput></extensionElements>";
+    String mappings = """
+        <extensionElements>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="scopeInput">${input}</operaton:inputParameter>\
+        <operaton:outputParameter name="result">${scopeInput}</operaton:outputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        """;
     String xml = model("", "", mappings + tasks());
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml.replace("${input}", "${changedInput}"));
@@ -707,8 +792,12 @@ class MigrationAdHocSubProcessTest {
 
   @Test
   void rejectAsyncChildMigrationWhenTargetContinuationIsMissing() {
-    ProcessDefinition source = deploy(model("", "", "<userTask id=\"taskA\" operaton:asyncBefore=\"true\"/>"));
-    ProcessDefinition target = deploy(model("", "", "<userTask id=\"taskA\"/>"));
+    ProcessDefinition source = deploy(model("", "", """
+        <userTask id="taskA" operaton:asyncBefore="true"/>\
+        """));
+    ProcessDefinition target = deploy(model("", "", """
+        <userTask id="taskA"/>\
+        """));
     ProcessInstance process = start(source);
     String scopeId = scope(process, "adhoc");
     trigger(scopeId, "taskA");
@@ -794,9 +883,15 @@ class MigrationAdHocSubProcessTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void retainedLatchSuppressesOutgoingFlowAfterTargetConditionRemoval(boolean asyncAfter) {
-    String children = "<userTask id=\"taskA\"/><userTask id=\"taskB\" "
-        + (asyncAfter ? "operaton:asyncAfter=\"true\"" : "") + "/>"
-        + "<userTask id=\"taskC\"/><sequenceFlow id=\"next\" sourceRef=\"taskB\" targetRef=\"taskC\"/>";
+    String children = """
+        <userTask id="taskA"/>\
+        <userTask id="taskB"\s\
+        """
+        + (asyncAfter ? "operaton:asyncAfter=\"true\"" : "") + """
+            />\
+            <userTask id="taskC"/>\
+            <sequenceFlow id="next" sourceRef="taskB" targetRef="taskC"/>\
+            """;
     ProcessDefinition source = deploy(model("cancelRemainingInstances=\"false\"", "${done}", children));
     ProcessDefinition target = deploy(model("cancelRemainingInstances=\"false\"", "", children));
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId(), Map.of("done", false));
@@ -819,18 +914,25 @@ class MigrationAdHocSubProcessTest {
   }
 
   private String asyncFlowChildren(int outgoingCount) {
-    return "<userTask id=\"taskA\" operaton:asyncAfter=\"true\"/><userTask id=\"taskB\"/>"
-        + "<sequenceFlow id=\"nextB\" sourceRef=\"taskA\" targetRef=\"taskB\"/>"
-        + (outgoingCount == 2 ? "<userTask id=\"taskC\"/>"
-            + "<sequenceFlow id=\"nextC\" sourceRef=\"taskA\" targetRef=\"taskC\"/>" : "");
+    return """
+        <userTask id="taskA" operaton:asyncAfter="true"/>\
+        <userTask id="taskB"/>\
+        <sequenceFlow id="nextB" sourceRef="taskA" targetRef="taskB"/>\
+        """
+        + (outgoingCount == 2 ? """
+            <userTask id="taskC"/>\
+            <sequenceFlow id="nextC" sourceRef="taskA" targetRef="taskC"/>\
+            """ : "");
   }
 
 
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void migratePendingScopedActivityEndWithLocalVariablesAndOutputMappings(boolean rename) {
-    String children = scopedAsyncTask() + "<userTask id=\"taskB\"/>"
-        + "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"taskB\"/>";
+    String children = scopedAsyncTask() + """
+        <userTask id="taskB"/>\
+        <sequenceFlow id="next" sourceRef="taskA" targetRef="taskB"/>\
+        """;
     String xml = model("", "${nrOfCompletedAdHocActivities >= 1}", children);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(rename ? xml.replace("taskA", "renamedA") : xml);
@@ -857,7 +959,9 @@ class MigrationAdHocSubProcessTest {
   @ValueSource(strings = {"remove", "add"})
   void changePendingActivityEndScopeUsingTargetModelMappings(String change) {
     boolean addScope = "add".equals(change);
-    String plainTask = "<userTask id=\"taskA\" operaton:asyncAfter=\"true\"/>";
+    String plainTask = """
+        <userTask id="taskA" operaton:asyncAfter="true"/>\
+        """;
     String sourceChildren = addScope ? plainTask : scopedAsyncTask();
     String targetChildren = addScope
         ? scopedAsyncTask().replace("${input}", "${inputMustNotBeReplayed}").replace("${localInput}", "${input}")
@@ -892,19 +996,30 @@ class MigrationAdHocSubProcessTest {
   }
 
   private String scopedAsyncTask() {
-    return "<userTask id=\"taskA\" operaton:asyncAfter=\"true\"><extensionElements><operaton:inputOutput>"
-        + "<operaton:inputParameter name=\"localInput\">${input}</operaton:inputParameter>"
-        + "<operaton:outputParameter name=\"mappedOutput\">${localInput}</operaton:outputParameter>"
-        + "</operaton:inputOutput></extensionElements></userTask>";
+    return """
+        <userTask id="taskA" operaton:asyncAfter="true">\
+        <extensionElements>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="localInput">${input}</operaton:inputParameter>\
+        <operaton:outputParameter name="mappedOutput">${localInput}</operaton:outputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        </userTask>\
+        """;
   }
 
 
   @Test
   void preserveAdHocScopeWhenReattachingOneOfTwoOpenChildren() {
     ProcessDefinition source = deploy(model("", "${false}", tasks()));
-    String targetChildren = "<subProcess id=\"inner\"><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"taskA\"/>"
-        + "<userTask id=\"taskA\"/></subProcess><userTask id=\"taskB\"/>";
+    String targetChildren = """
+        <subProcess id="inner">\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="taskA"/>\
+        <userTask id="taskA"/>\
+        </subProcess>\
+        <userTask id="taskB"/>\
+        """;
     ProcessDefinition target = deploy(model("", "${false}", targetChildren));
     ProcessInstance process = start(source);
     String scopeId = scope(process, "adhoc");
@@ -954,7 +1069,9 @@ class MigrationAdHocSubProcessTest {
 
   @Test
   void preserveExistingLatchAndApplyChangedCancellationPolicyOnNextContinuation() {
-    String children = tasks() + "<userTask id=\"taskC\"/>";
+    String children = tasks() + """
+        <userTask id="taskC"/>\
+        """;
     ProcessDefinition source = deploy(model("cancelRemainingInstances=\"false\"", "${done}", children));
     ProcessDefinition target = deploy(model("cancelRemainingInstances=\"true\"", "${false}", children));
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId(), Map.of("done", false));
@@ -976,7 +1093,9 @@ class MigrationAdHocSubProcessTest {
   @ParameterizedTest
   @ValueSource(ints = {0, 2})
   void preserveAsyncJobRetriesDueDatePriorityAndIncidentAcrossRename(int retries) {
-    String children = "<userTask id=\"taskA\" operaton:asyncAfter=\"true\"/>";
+    String children = """
+        <userTask id="taskA" operaton:asyncAfter="true"/>\
+        """;
     String xml = model("", "${nrOfCompletedAdHocActivities >= 1}", children);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml.replace("taskA", "renamedA"));
@@ -1025,24 +1144,45 @@ class MigrationAdHocSubProcessTest {
   }
 
   private String model(String attributes, String condition, String children) {
-    return "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" "
-        + "xmlns:operaton=\"http://operaton.org/schema/1.0/bpmn\" targetNamespace=\"adhoc-migration\">"
-        + "<process id=\"process\" isExecutable=\"true\"><startEvent id=\"start\"/>"
-        + "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"adhoc\"/>"
-        + "<adHocSubProcess id=\"adhoc\" " + attributes + ">" + children
-        + (condition.isEmpty() ? "" : "<completionCondition>" + condition + "</completionCondition>")
-        + "</adHocSubProcess><sequenceFlow id=\"leave\" sourceRef=\"adhoc\" targetRef=\"after\"/>"
-        + "<userTask id=\"after\"/><sequenceFlow id=\"finish\" sourceRef=\"after\" targetRef=\"end\"/>"
-        + "<endEvent id=\"end\"/></process></definitions>";
+    return """
+        <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"\s\
+        xmlns:operaton="http://operaton.org/schema/1.0/bpmn" targetNamespace="adhoc-migration">\
+        <process id="process" isExecutable="true">\
+        <startEvent id="start"/>\
+        <sequenceFlow id="enter" sourceRef="start" targetRef="adhoc"/>\
+        <adHocSubProcess id="adhoc"\s\
+        """ + attributes + ">" + children
+        + (condition.isEmpty() ? "" : """
+            <completionCondition>\
+            """ + condition + """
+            </completionCondition>\
+            """)
+        + """
+            </adHocSubProcess>\
+            <sequenceFlow id="leave" sourceRef="adhoc" targetRef="after"/>\
+            <userTask id="after"/>\
+            <sequenceFlow id="finish" sourceRef="after" targetRef="end"/>\
+            <endEvent id="end"/>\
+            </process>\
+            </definitions>\
+            """;
   }
 
   private String tasks() {
-    return "<userTask id=\"taskA\"/><userTask id=\"taskB\"/>";
+    return """
+        <userTask id="taskA"/>\
+        <userTask id="taskB"/>\
+        """;
   }
 
   private String multiInstance(boolean sequential) {
-    return "<multiInstanceLoopCharacteristics isSequential=\"" + sequential + "\">"
-        + "<loopCardinality>2</loopCardinality></multiInstanceLoopCharacteristics>";
+    return """
+        <multiInstanceLoopCharacteristics isSequential="\
+        """ + sequential + """
+        ">\
+        <loopCardinality>2</loopCardinality>\
+        </multiInstanceLoopCharacteristics>\
+        """;
   }
 
   private ProcessInstance start(ProcessDefinition definition) {

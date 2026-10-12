@@ -79,7 +79,10 @@ class AdHocSubProcessLifecycleTest {
 
   @Test
   void remainingParallelChildDoesNotReplaceAdHocScope() {
-    String scope = start("operaton:autoComplete=\"false\"", "<userTask id=\"a\"/><userTask id=\"b\"/>");
+    String scope = start("operaton:autoComplete=\"false\"", """
+        <userTask id="a"/>\
+        <userTask id="b"/>\
+        """);
     runtimeService.triggerAdHocActivities(scope, List.of("a", "b"), null);
     complete("a");
     assertThat(runtimeService.getStartableAdHocActivities(scope)).hasSize(2);
@@ -104,7 +107,10 @@ class AdHocSubProcessLifecycleTest {
 
   @Test
   void synchronousBatchReservesAllActivitiesBeforeStarting() {
-    String scope = start("", "<task id=\"a\"/><userTask id=\"b\"/>");
+    String scope = start("", """
+        <task id="a"/>\
+        <userTask id="b"/>\
+        """);
     runtimeService.triggerAdHocActivities(scope, List.of("a", "b"), null);
     assertThat(taskService.createTaskQuery().taskDefinitionKey("b").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskDefinitionKey("after").count()).isZero();
@@ -139,7 +145,11 @@ class AdHocSubProcessLifecycleTest {
 
   @Test
   void nestedAdHocActivityCanBeDiscoveredAndTriggered() {
-    String outer = start("", "<adHocSubProcess id=\"inner\"><userTask id=\"a\"/></adHocSubProcess>");
+    String outer = start("", """
+        <adHocSubProcess id="inner">\
+        <userTask id="a"/>\
+        </adHocSubProcess>\
+        """);
     assertThat(runtimeService.getStartableAdHocActivities(outer)).hasSize(1);
     runtimeService.triggerAdHocActivities(outer, List.of("inner"), null);
     Execution inner = runtimeService.createExecutionQuery().activityId("inner").singleResult();
@@ -255,7 +265,10 @@ class AdHocSubProcessLifecycleTest {
 
   @Test
   void terminalAsyncAfterJobSurvivesSynchronousBatchCompletion() {
-    String scope = start("", "<task id=\"a\" operaton:asyncAfter=\"true\"/><task id=\"b\"/>");
+    String scope = start("", """
+        <task id="a" operaton:asyncAfter="true"/>\
+        <task id="b"/>\
+        """);
     runtimeService.triggerAdHocActivities(scope, List.of("a", "b"), null);
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().count()).isZero();
@@ -265,15 +278,23 @@ class AdHocSubProcessLifecycleTest {
 
   @Test
   void parserRejectsDirectStartAndEndEvents() {
-    assertThatThrownBy(() -> start("", "<startEvent id=\"invalidStart\"/><userTask id=\"a\"/>"))
+    assertThatThrownBy(() -> start("", """
+        <startEvent id="invalidStart"/>\
+        <userTask id="a"/>\
+        """))
         .isInstanceOf(ParseException.class).hasMessageContaining("must not contain a direct startEvent");
-    assertThatThrownBy(() -> start("", "<userTask id=\"a\"/><endEvent id=\"invalidEnd\"/>"))
+    assertThatThrownBy(() -> start("", """
+        <userTask id="a"/>\
+        <endEvent id="invalidEnd"/>\
+        """))
         .isInstanceOf(ParseException.class).hasMessageContaining("must not contain a direct endEvent");
   }
 
   @Test
   void parserRejectsAdHocEventSubprocess() {
-    assertThatThrownBy(() -> start("triggeredByEvent=\"true\"", "<userTask id=\"a\"/>"))
+    assertThatThrownBy(() -> start("triggeredByEvent=\"true\"", """
+        <userTask id="a"/>\
+        """))
         .isInstanceOf(ParseException.class).hasMessageContaining("cannot be an event subprocess");
   }
 
@@ -384,7 +405,9 @@ class AdHocSubProcessLifecycleTest {
 
   @Test
   void explicitCompletionCancelsPendingTerminalAsyncAfter() {
-    String scope = start("", "<task id=\"a\" operaton:asyncAfter=\"true\"/>");
+    String scope = start("", """
+        <task id="a" operaton:asyncAfter="true"/>\
+        """);
     runtimeService.triggerAdHocActivities(scope, List.of("a"), Map.of("a", Map.of("localValue", "value")));
     assertThat(managementService.createJobQuery().count()).isEqualTo(1);
     runtimeService.completeAdHocSubProcess(scope);

@@ -190,12 +190,16 @@ class AdHocActivityEndSemanticsTest {
 
   private String start(boolean adHoc, boolean scoped, boolean asyncAfter, boolean listenerError, boolean condition,
       boolean externalTask, boolean terminatingEventSubprocess) {
-    String extensions = scoped || listenerError ? "<extensionElements>" : "";
+    String extensions = scoped || listenerError ? """
+        <extensionElements>\
+        """ : "";
     if (scoped) {
       // Input mapping alone establishes an ordinary activity scope. Keep its
       // preexisting process-end output-cleanup defect outside this regression.
       String output = adHoc
-          ? "<operaton:outputParameter name=\"mappedValue\">${localValue}</operaton:outputParameter>" : "";
+          ? """
+              <operaton:outputParameter name="mappedValue">${localValue}</operaton:outputParameter>\
+              """ : "";
       extensions += """
           <operaton:inputOutput><operaton:inputParameter name="localValue">value</operaton:inputParameter>
             %s
@@ -203,26 +207,47 @@ class AdHocActivityEndSemanticsTest {
           """.formatted(output);
     }
     if (listenerError) {
-      extensions += "<operaton:executionListener event=\"end\" class=\"" + ThrowOnceBpmnError.class.getName() + "\"/>";
+      extensions += """
+          <operaton:executionListener event="end" class="\
+          """ + ThrowOnceBpmnError.class.getName() + "\"/>";
     }
     if (scoped || listenerError) {
-      extensions += "</extensionElements>";
+      extensions += """
+          </extensionElements>\
+          """;
     }
     String activityType = externalTask ? "serviceTask" : "userTask";
     String externalAttributes = externalTask ? " operaton:type=\"external\" operaton:topic=\"work\"" : "";
     String activities = "<" + activityType + " id=\"a\" operaton:asyncAfter=\"" + asyncAfter + "\""
-        + externalAttributes + ">" + extensions + "</" + activityType + ">"
-        + "<sequenceFlow id=\"ab\" sourceRef=\"a\" targetRef=\"b\"/><userTask id=\"b\"/>";
+        + externalAttributes + ">" + extensions + """
+            </\
+            """ + activityType + """
+            >\
+            <sequenceFlow id="ab" sourceRef="a" targetRef="b"/>\
+            <userTask id="b"/>\
+            """;
     String body;
     if (adHoc) {
-      body = "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"adhoc\"/>"
-          + "<adHocSubProcess id=\"adhoc\">" + activities
-          + (condition ? "<completionCondition>${nrOfCompletedAdHocActivities == 1}</completionCondition>" : "")
-          + "</adHocSubProcess><sequenceFlow id=\"leave\" sourceRef=\"adhoc\" targetRef=\"after\"/>"
-          + "<userTask id=\"after\"/>";
+      body = """
+          <sequenceFlow id="enter" sourceRef="start" targetRef="adhoc"/>\
+          <adHocSubProcess id="adhoc">\
+          """ + activities
+          + (condition ? """
+              <completionCondition>${nrOfCompletedAdHocActivities == 1}</completionCondition>\
+              """ : "")
+          + """
+              </adHocSubProcess>\
+              <sequenceFlow id="leave" sourceRef="adhoc" targetRef="after"/>\
+              <userTask id="after"/>\
+              """;
     } else {
-      body = "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"a\"/>" + activities
-          + "<sequenceFlow id=\"leave\" sourceRef=\"b\" targetRef=\"end\"/><endEvent id=\"end\"/>";
+      body = """
+          <sequenceFlow id="enter" sourceRef="start" targetRef="a"/>\
+          """ + activities
+          + """
+              <sequenceFlow id="leave" sourceRef="b" targetRef="end"/>\
+              <endEvent id="end"/>\
+              """;
     }
     if (terminatingEventSubprocess) {
       body += """

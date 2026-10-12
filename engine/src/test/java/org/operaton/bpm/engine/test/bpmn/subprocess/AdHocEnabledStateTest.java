@@ -448,11 +448,18 @@ class AdHocEnabledStateTest {
   }
 
   private String chain() {
-    return "<userTask id=\"a\"/><userTask id=\"b\"/><sequenceFlow id=\"ab\" sourceRef=\"a\" targetRef=\"b\"/>";
+    return """
+        <userTask id="a"/>\
+        <userTask id="b"/>\
+        <sequenceFlow id="ab" sourceRef="a" targetRef="b"/>\
+        """;
   }
 
   private String fanOut() {
-    return chain() + "<userTask id=\"c\"/><sequenceFlow id=\"ac\" sourceRef=\"a\" targetRef=\"c\"/>";
+    return chain() + """
+        <userTask id="c"/>\
+        <sequenceFlow id="ac" sourceRef="a" targetRef="c"/>\
+        """;
   }
 
   private void trigger(String scope, String activity) {

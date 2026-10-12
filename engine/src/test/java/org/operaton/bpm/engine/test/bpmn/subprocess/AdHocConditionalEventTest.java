@@ -216,7 +216,9 @@ class AdHocConditionalEventTest {
         <sequenceFlow id="ab" sourceRef="a" targetRef="b">%s</sequenceFlow>
         %s
         """.formatted(taskExtensions, flowExtensions,
-            completionCondition ? "<completionCondition>${false}</completionCondition>" : "");
+            completionCondition ? """
+                <completionCondition>${false}</completionCondition>\
+                """ : "");
     return startModel(interrupting, "", contents, "flag", "${flag}", Map.of("flag", false));
   }
 

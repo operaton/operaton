@@ -112,7 +112,9 @@ public class MigrationAdHocEnabledActivityTest {
 
   @Test
   void migrateOneRunningAndOneEnabledChildToSequentialOrdering() {
-    String children = chain() + "<userTask id=\"taskC\"/>";
+    String children = chain() + """
+        <userTask id="taskC"/>\
+        """;
     ProcessDefinition source = deploy(model("Parallel", "${false}", children));
     ProcessDefinition target = deploy(model("Sequential", "${false}", children));
     ProcessInstance process = start(source);
@@ -197,9 +199,15 @@ public class MigrationAdHocEnabledActivityTest {
   void migrateEnabledActivityIntoOrdinaryWrapperAndOptionallyBackOut(boolean removeWrapper) {
     String sourceXml = model("Sequential", "${false}", chain());
     ProcessDefinition source = deploy(sourceXml);
-    String targetChildren = "<userTask id=\"taskA\"/><subProcess id=\"inner\"><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"taskB\"/>"
-        + "<userTask id=\"taskB\"/></subProcess><sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"inner\"/>";
+    String targetChildren = """
+        <userTask id="taskA"/>\
+        <subProcess id="inner">\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="taskB"/>\
+        <userTask id="taskB"/>\
+        </subProcess>\
+        <sequenceFlow id="next" sourceRef="taskA" targetRef="inner"/>\
+        """;
     ProcessDefinition target = deploy(model("Sequential", "${false}", targetChildren));
     ProcessDefinition third = deploy(sourceXml);
     ProcessInstance process = start(source);
@@ -233,7 +241,11 @@ public class MigrationAdHocEnabledActivityTest {
 
   @Test
   void preserveEnabledNestedAdHocTargetWhenBothScopesAreMapped() {
-    String children = "<adHocSubProcess id=\"inner\">" + chain() + "</adHocSubProcess>";
+    String children = """
+        <adHocSubProcess id="inner">\
+        """ + chain() + """
+        </adHocSubProcess>\
+        """;
     String xml = model("Parallel", "", children);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml.replace("inner", "renamedInner").replace("taskB", "renamedB"));
@@ -257,8 +269,14 @@ public class MigrationAdHocEnabledActivityTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void migrateEnabledMultiInstanceBodyBeforeItsInstancesStart(boolean sequential) {
-    String children = "<userTask id=\"taskA\"/><userTask id=\"taskB\">"
-        + multiInstance(sequential) + "</userTask><sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"taskB\"/>";
+    String children = """
+        <userTask id="taskA"/>\
+        <userTask id="taskB">\
+        """
+        + multiInstance(sequential) + """
+            </userTask>\
+            <sequenceFlow id="next" sourceRef="taskA" targetRef="taskB"/>\
+            """;
     String xml = model("Sequential", "", children);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
@@ -321,8 +339,14 @@ public class MigrationAdHocEnabledActivityTest {
 
   @Test
   void generateAndExecuteMappingForEnabledSynchronousServiceTask() {
-    String children = "<userTask id=\"taskA\"/><serviceTask id=\"service\" operaton:class=\""
-        + MarkCompleteDelegate.class.getName() + "\"/><sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"service\"/>";
+    String children = """
+        <userTask id="taskA"/>\
+        <serviceTask id="service" operaton:class="\
+        """
+        + MarkCompleteDelegate.class.getName() + """
+            "/>\
+            <sequenceFlow id="next" sourceRef="taskA" targetRef="service"/>\
+            """;
     String xml = model("Parallel", "", children);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
@@ -341,15 +365,21 @@ public class MigrationAdHocEnabledActivityTest {
 
   @Test
   void preserveJoinWaitAndEnabledLoopAcrossSuccessiveMigrations() {
-    String children = "<userTask id=\"rootTask\"/><parallelGateway id=\"fork\"/>"
-        + "<sequenceFlow id=\"rootFlow\" sourceRef=\"rootTask\" targetRef=\"fork\"/>"
-        + "<userTask id=\"taskA\"/><userTask id=\"taskB\"/><userTask id=\"taskC\"/>"
-        + "<sequenceFlow id=\"forkA\" sourceRef=\"fork\" targetRef=\"taskA\"/>"
-        + "<sequenceFlow id=\"forkB\" sourceRef=\"fork\" targetRef=\"taskB\"/>"
-        + "<parallelGateway id=\"join\"/><sequenceFlow id=\"joinA\" sourceRef=\"taskA\" targetRef=\"join\"/>"
-        + "<sequenceFlow id=\"joinB\" sourceRef=\"taskB\" targetRef=\"join\"/>"
-        + "<sequenceFlow id=\"joinC\" sourceRef=\"join\" targetRef=\"taskC\"/>"
-        + "<sequenceFlow id=\"loop\" sourceRef=\"taskC\" targetRef=\"taskC\"/>";
+    String children = """
+        <userTask id="rootTask"/>\
+        <parallelGateway id="fork"/>\
+        <sequenceFlow id="rootFlow" sourceRef="rootTask" targetRef="fork"/>\
+        <userTask id="taskA"/>\
+        <userTask id="taskB"/>\
+        <userTask id="taskC"/>\
+        <sequenceFlow id="forkA" sourceRef="fork" targetRef="taskA"/>\
+        <sequenceFlow id="forkB" sourceRef="fork" targetRef="taskB"/>\
+        <parallelGateway id="join"/>\
+        <sequenceFlow id="joinA" sourceRef="taskA" targetRef="join"/>\
+        <sequenceFlow id="joinB" sourceRef="taskB" targetRef="join"/>\
+        <sequenceFlow id="joinC" sourceRef="join" targetRef="taskC"/>\
+        <sequenceFlow id="loop" sourceRef="taskC" targetRef="taskC"/>\
+        """;
     String xml = model("Parallel", "${nrOfCompletedAdHocActivities >= 5}", children);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
@@ -380,8 +410,11 @@ public class MigrationAdHocEnabledActivityTest {
 
   @Test
   void rollBackMigratedEnabledTokenWhenLaterProcessHasUnmappedEnabledTarget() {
-    String children = chain() + "<userTask id=\"taskD\"/><userTask id=\"taskC\"/>"
-        + "<sequenceFlow id=\"other\" sourceRef=\"taskD\" targetRef=\"taskC\"/>";
+    String children = chain() + """
+        <userTask id="taskD"/>\
+        <userTask id="taskC"/>\
+        <sequenceFlow id="other" sourceRef="taskD" targetRef="taskC"/>\
+        """;
     String xml = model("Parallel", "", children);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
@@ -435,9 +468,13 @@ public class MigrationAdHocEnabledActivityTest {
   @ValueSource(booleans = {false, true})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   void completionLatchDiscardsPendingOnlyWrapperWhileApplyingCancellationPolicy(boolean cancelRemaining) {
-    String sourceXml = model("Parallel", "${done}", chain() + "<userTask id=\"taskC\"/>").replace(
+    String sourceXml = model("Parallel", "${done}", chain() + """
+        <userTask id="taskC"/>\
+        """).replace(
         "ordering=\"Parallel\"", "ordering=\"Parallel\" cancelRemainingInstances=\"" + cancelRemaining + "\"");
-    String targetXml = model("Parallel", "${done}", wrapperChildren(false) + "<userTask id=\"taskC\"/>").replace(
+    String targetXml = model("Parallel", "${done}", wrapperChildren(false) + """
+        <userTask id="taskC"/>\
+        """).replace(
         "ordering=\"Parallel\"", "ordering=\"Parallel\" cancelRemainingInstances=\"" + cancelRemaining + "\"");
     ProcessDefinition source = deploy(sourceXml);
     ProcessDefinition target = deploy(targetXml);
@@ -460,8 +497,13 @@ public class MigrationAdHocEnabledActivityTest {
   @ValueSource(booleans = {false, true})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   void latchedCompletionDiscardsEnabledLeafButDrainsRunningSiblingInSameWrapper(boolean reparentAgain) {
-    String sourceChildren = chain() + "<userTask id=\"taskC\"/><userTask id=\"taskD\"/>";
-    String targetChildren = wrapperChildren(true) + "<userTask id=\"taskD\"/>";
+    String sourceChildren = chain() + """
+        <userTask id="taskC"/>\
+        <userTask id="taskD"/>\
+        """;
+    String targetChildren = wrapperChildren(true) + """
+        <userTask id="taskD"/>\
+        """;
     ProcessDefinition source = deploy(model("Parallel", "${done}", sourceChildren)
         .replace("ordering=\"Parallel\"", "ordering=\"Parallel\" cancelRemainingInstances=\"false\""));
     ProcessDefinition target = deploy(model("Parallel", "${done}", targetChildren)
@@ -480,11 +522,25 @@ public class MigrationAdHocEnabledActivityTest {
       String enabledId = enabled(process, "taskB").get(0).getId();
       runtimeService.setVariableLocal(enabledId, "tokenLocal", "retained");
       String thirdChildren = targetChildren.replace("targetRef=\"inner\"", "targetRef=\"outer\"")
-          .replace("<subProcess id=\"inner\">", "<subProcess id=\"outer\"><extensionElements><operaton:inputOutput>"
-              + "<operaton:inputParameter name=\"outerLocal\">retained</operaton:inputParameter>"
-              + "</operaton:inputOutput></extensionElements><startEvent id=\"outerStart\"/>"
-              + "<sequenceFlow id=\"outerEnter\" sourceRef=\"outerStart\" targetRef=\"inner\"/><subProcess id=\"inner\">")
-          .replace("</subProcess>", "</subProcess></subProcess>");
+          .replace("""
+              <subProcess id="inner">\
+              """, """
+              <subProcess id="outer">\
+              <extensionElements>\
+              <operaton:inputOutput>\
+              <operaton:inputParameter name="outerLocal">retained</operaton:inputParameter>\
+              </operaton:inputOutput>\
+              </extensionElements>\
+              <startEvent id="outerStart"/>\
+              <sequenceFlow id="outerEnter" sourceRef="outerStart" targetRef="inner"/>\
+              <subProcess id="inner">\
+              """)
+          .replace("""
+              </subProcess>\
+              """, """
+              </subProcess>\
+              </subProcess>\
+              """);
       ProcessDefinition third = deploy(model("Parallel", "${done}", thirdChildren)
           .replace("ordering=\"Parallel\"", "ordering=\"Parallel\" cancelRemainingInstances=\"false\""));
       MigrationPlan secondPlan = runtimeService.createMigrationPlan(target.getId(), third.getId())
@@ -511,12 +567,24 @@ public class MigrationAdHocEnabledActivityTest {
   }
 
   private String wrapperChildren(boolean runningSibling) {
-    return "<userTask id=\"taskA\"/><subProcess id=\"inner\"><extensionElements><operaton:inputOutput>"
-        + "<operaton:inputParameter name=\"wrapperLocal\">retained</operaton:inputParameter>"
-        + "</operaton:inputOutput></extensionElements><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"taskB\"/>"
-        + "<userTask id=\"taskB\"/>" + (runningSibling ? "<userTask id=\"taskC\"/>" : "")
-        + "</subProcess><sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"inner\"/>";
+    return """
+        <userTask id="taskA"/>\
+        <subProcess id="inner">\
+        <extensionElements>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="wrapperLocal">retained</operaton:inputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="taskB"/>\
+        <userTask id="taskB"/>\
+        """ + (runningSibling ? """
+            <userTask id="taskC"/>\
+            """ : "")
+        + """
+            </subProcess>\
+            <sequenceFlow id="next" sourceRef="taskA" targetRef="inner"/>\
+            """;
   }
 
   private void assertPendingWrapperCleaned(ProcessInstance process) {
@@ -533,19 +601,40 @@ public class MigrationAdHocEnabledActivityTest {
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   void discardEnabledCompositeOnWrapperScopeWithoutEndingUnstartedComposite() {
-    String pending = "<subProcess id=\"pending\"><extensionElements>"
-        + "<operaton:executionListener event=\"end\" expression=\"${execution.setVariable('unstartedEnd', true)}\"/>"
-        + "<operaton:inputOutput><operaton:inputParameter name=\"pendingInput\">never</operaton:inputParameter>"
-        + "</operaton:inputOutput></extensionElements><startEvent id=\"pendingStart\"/>"
-        + "<sequenceFlow id=\"pendingFlow\" sourceRef=\"pendingStart\" targetRef=\"taskB\"/>"
-        + "<userTask id=\"taskB\"/></subProcess>";
-    String sourceChildren = "<userTask id=\"taskA\"/>" + pending
-        + "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"pending\"/>";
-    String targetChildren = "<userTask id=\"taskA\"/><subProcess id=\"inner\"><extensionElements><operaton:inputOutput>"
-        + "<operaton:inputParameter name=\"wrapperLocal\">retained</operaton:inputParameter>"
-        + "</operaton:inputOutput></extensionElements><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"pending\"/>"
-        + pending + "</subProcess><sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"inner\"/>";
+    String pending = """
+        <subProcess id="pending">\
+        <extensionElements>\
+        <operaton:executionListener event="end" expression="${execution.setVariable('unstartedEnd', true)}"/>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="pendingInput">never</operaton:inputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        <startEvent id="pendingStart"/>\
+        <sequenceFlow id="pendingFlow" sourceRef="pendingStart" targetRef="taskB"/>\
+        <userTask id="taskB"/>\
+        </subProcess>\
+        """;
+    String sourceChildren = """
+        <userTask id="taskA"/>\
+        """ + pending
+        + """
+            <sequenceFlow id="next" sourceRef="taskA" targetRef="pending"/>\
+            """;
+    String targetChildren = """
+        <userTask id="taskA"/>\
+        <subProcess id="inner">\
+        <extensionElements>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="wrapperLocal">retained</operaton:inputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="pending"/>\
+        """
+        + pending + """
+            </subProcess>\
+            <sequenceFlow id="next" sourceRef="taskA" targetRef="inner"/>\
+            """;
     ProcessDefinition source = deploy(model("Parallel", "${false}", sourceChildren)
         .replace("ordering=\"Parallel\"", "ordering=\"Parallel\" cancelRemainingInstances=\"false\""));
     ProcessDefinition target = deploy(model("Parallel", "${false}", targetChildren)
@@ -574,7 +663,9 @@ public class MigrationAdHocEnabledActivityTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void preserveSuspendedRunningAndEnabledStateAcrossMigration(boolean insertWrapper) {
-    String children = chain() + "<userTask id=\"taskC\"/>";
+    String children = chain() + """
+        <userTask id="taskC"/>\
+        """;
     ProcessDefinition source = deploy(model("Parallel", "${false}", children));
     ProcessDefinition target = deploy(model("Parallel", "${false}",
         insertWrapper ? wrapperChildren(true) : children).replace("taskB", "renamedB"));
@@ -649,13 +740,24 @@ public class MigrationAdHocEnabledActivityTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void preserveSuspendedAsyncAfterJobWhenInsertingOrdinaryWrapper(boolean suspendProcess) {
-    String child = "<userTask id=\"taskA\" operaton:asyncAfter=\"true\"><extensionElements><operaton:inputOutput>"
-        + "<operaton:inputParameter name=\"pendingLocal\">retained</operaton:inputParameter>"
-        + "</operaton:inputOutput></extensionElements></userTask>";
+    String child = """
+        <userTask id="taskA" operaton:asyncAfter="true">\
+        <extensionElements>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="pendingLocal">retained</operaton:inputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        </userTask>\
+        """;
     ProcessDefinition source = deploy(model("Parallel", "${false}", child));
-    String wrapper = "<subProcess id=\"inner\"><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"renamedA\"/>"
-        + child.replace("taskA", "renamedA") + "</subProcess>";
+    String wrapper = """
+        <subProcess id="inner">\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="renamedA"/>\
+        """
+        + child.replace("taskA", "renamedA") + """
+            </subProcess>\
+            """;
     ProcessDefinition target = deploy(model("Parallel", "${false}", wrapper));
     ProcessInstance process = start(source);
     String scope = scope(process, "adhoc");
@@ -709,7 +811,9 @@ public class MigrationAdHocEnabledActivityTest {
 
   @Test
   void rejectUnauthorizedMigrationBeforeChangingRunningOrEnabledState() {
-    String xml = model("Parallel", "${false}", chain() + "<userTask id=\"taskC\"/>");
+    String xml = model("Parallel", "${false}", chain() + """
+        <userTask id="taskC"/>\
+        """);
     ProcessDefinition source = deploy(xml);
     ProcessDefinition target = deploy(xml);
     ProcessInstance process = start(source);
@@ -738,7 +842,9 @@ public class MigrationAdHocEnabledActivityTest {
 
   @Test
   void rejectUnauthenticatedTenantBeforeChangingRunningOrEnabledState() {
-    String xml = model("Parallel", "${false}", chain() + "<userTask id=\"taskC\"/>");
+    String xml = model("Parallel", "${false}", chain() + """
+        <userTask id="taskC"/>\
+        """);
     ProcessDefinition source = testHelper.deployForTenantAndGetDefinition("tenantA", Bpmn.readModelFromStream(
         new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))));
     ProcessDefinition target = testHelper.deployForTenantAndGetDefinition("tenantA", Bpmn.readModelFromStream(
@@ -772,16 +878,35 @@ public class MigrationAdHocEnabledActivityTest {
   @ValueSource(booleans = {false, true})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   void discardUnstartedMultiInstanceBodyParkedOnOrdinaryWrapper(boolean sequential) {
-    String pending = "<userTask id=\"taskB\"><extensionElements>"
-        + "<operaton:executionListener event=\"end\" expression=\"${execution.setVariable('unstartedEnd', true)}\"/>"
-        + "</extensionElements>" + multiInstance(sequential) + "</userTask>";
-    String sourceChildren = "<userTask id=\"taskA\"/>" + pending
-        + "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"taskB\"/>";
-    String targetChildren = "<userTask id=\"taskA\"/><subProcess id=\"inner\"><extensionElements><operaton:inputOutput>"
-        + "<operaton:inputParameter name=\"wrapperLocal\">retained</operaton:inputParameter>"
-        + "</operaton:inputOutput></extensionElements><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerFlow\" sourceRef=\"innerStart\" targetRef=\"taskB\"/>"
-        + pending + "</subProcess><sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"inner\"/>";
+    String pending = """
+        <userTask id="taskB">\
+        <extensionElements>\
+        <operaton:executionListener event="end" expression="${execution.setVariable('unstartedEnd', true)}"/>\
+        </extensionElements>\
+        """ + multiInstance(sequential) + """
+            </userTask>\
+            """;
+    String sourceChildren = """
+        <userTask id="taskA"/>\
+        """ + pending
+        + """
+            <sequenceFlow id="next" sourceRef="taskA" targetRef="taskB"/>\
+            """;
+    String targetChildren = """
+        <userTask id="taskA"/>\
+        <subProcess id="inner">\
+        <extensionElements>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="wrapperLocal">retained</operaton:inputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerFlow" sourceRef="innerStart" targetRef="taskB"/>\
+        """
+        + pending + """
+            </subProcess>\
+            <sequenceFlow id="next" sourceRef="taskA" targetRef="inner"/>\
+            """;
     ProcessDefinition source = deploy(model("Parallel", "${false}", sourceChildren));
     ProcessDefinition target = deploy(model("Parallel", "${false}", targetChildren));
     ProcessInstance process = runtimeService.startProcessInstanceById(source.getId(), Map.of("unstartedEnd", false));
@@ -812,25 +937,46 @@ public class MigrationAdHocEnabledActivityTest {
   }
 
   private String chain() {
-    return "<userTask id=\"taskA\"/><userTask id=\"taskB\"/>"
-        + "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"taskB\"/>";
+    return """
+        <userTask id="taskA"/>\
+        <userTask id="taskB"/>\
+        <sequenceFlow id="next" sourceRef="taskA" targetRef="taskB"/>\
+        """;
   }
 
   private String multiInstance(boolean sequential) {
-    return "<multiInstanceLoopCharacteristics isSequential=\"" + sequential + "\">"
-        + "<loopCardinality>2</loopCardinality></multiInstanceLoopCharacteristics>";
+    return """
+        <multiInstanceLoopCharacteristics isSequential="\
+        """ + sequential + """
+        ">\
+        <loopCardinality>2</loopCardinality>\
+        </multiInstanceLoopCharacteristics>\
+        """;
   }
 
   private String model(String ordering, String condition, String children) {
-    return "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" "
-        + "xmlns:operaton=\"http://operaton.org/schema/1.0/bpmn\" targetNamespace=\"adhoc-enabled-migration\">"
-        + "<process id=\"process\" isExecutable=\"true\"><startEvent id=\"start\"/>"
-        + "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"adhoc\"/>"
-        + "<adHocSubProcess id=\"adhoc\" ordering=\"" + ordering + "\">" + children
-        + (condition.isEmpty() ? "" : "<completionCondition>" + condition + "</completionCondition>")
-        + "</adHocSubProcess><sequenceFlow id=\"leave\" sourceRef=\"adhoc\" targetRef=\"after\"/>"
-        + "<userTask id=\"after\"/><sequenceFlow id=\"finish\" sourceRef=\"after\" targetRef=\"end\"/>"
-        + "<endEvent id=\"end\"/></process></definitions>";
+    return """
+        <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"\s\
+        xmlns:operaton="http://operaton.org/schema/1.0/bpmn" targetNamespace="adhoc-enabled-migration">\
+        <process id="process" isExecutable="true">\
+        <startEvent id="start"/>\
+        <sequenceFlow id="enter" sourceRef="start" targetRef="adhoc"/>\
+        <adHocSubProcess id="adhoc" ordering="\
+        """ + ordering + "\">" + children
+        + (condition.isEmpty() ? "" : """
+            <completionCondition>\
+            """ + condition + """
+            </completionCondition>\
+            """)
+        + """
+            </adHocSubProcess>\
+            <sequenceFlow id="leave" sourceRef="adhoc" targetRef="after"/>\
+            <userTask id="after"/>\
+            <sequenceFlow id="finish" sourceRef="after" targetRef="end"/>\
+            <endEvent id="end"/>\
+            </process>\
+            </definitions>\
+            """;
   }
 
   private ProcessDefinition deploy(String xml) {

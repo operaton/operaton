@@ -59,7 +59,9 @@ class MigrationAdHocOwnerChangeTest {
     RuntimeService runtime = engine.getRuntimeService();
     ProcessDefinition source = deploy(process("taskA", task(scopedChild), "taskA"));
     ProcessDefinition target = deploy(process("owner", adhoc(ordering, "${false}", configuredInitialExtra() + task(scopedChild)
-        + "<userTask id=\"extra\"/>", ""), "owner"));
+        + """
+            <userTask id="extra"/>\
+            """, ""), "owner"));
     assertFreshTargetStartsConfiguredExtra(target);
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
     Task before = task(instance, "taskA");
@@ -98,7 +100,9 @@ class MigrationAdHocOwnerChangeTest {
     RuntimeService runtime = engine.getRuntimeService();
     ProcessDefinition source = deploy(process("owner", ordinary(task(scopedChild)), "owner"));
     ProcessDefinition target = deploy(process("owner", adhoc("Sequential", "${false}", configuredInitialExtra() + task(scopedChild)
-        + "<userTask id=\"extra\"/>", ""), "owner"));
+        + """
+            <userTask id="extra"/>\
+            """, ""), "owner"));
     assertFreshTargetStartsConfiguredExtra(target);
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
     Task before = task(instance, "taskA");
@@ -159,11 +163,15 @@ class MigrationAdHocOwnerChangeTest {
   @ValueSource(booleans = {false, true})
   void removeRunningOwnerUsingGenericWrapperOutputAndListenerPolicy(boolean skipMappingsAndListeners) {
     RuntimeService runtime = engine.getRuntimeService();
-    String extensions = "<extensionElements><operaton:executionListener event=\"end\" "
-        + "expression=\"${execution.setVariable('removedListener', true)}\"/><operaton:inputOutput>"
-        + "<operaton:inputParameter name=\"scopeLocal\">retained</operaton:inputParameter>"
-        + "<operaton:outputParameter name=\"removedOutput\">${scopeLocal}</operaton:outputParameter>"
-        + "</operaton:inputOutput></extensionElements>";
+    String extensions = """
+        <extensionElements>\
+        <operaton:executionListener event="end" expression="${execution.setVariable('removedListener', true)}"/>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="scopeLocal">retained</operaton:inputParameter>\
+        <operaton:outputParameter name="removedOutput">${scopeLocal}</operaton:outputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        """;
     ProcessDefinition source = deploy(process("owner", adhoc("Parallel", "${false}", extensions + task(false), ""), "owner"));
     ProcessDefinition target = deploy(process("taskA", task(false), "taskA"));
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId(), Map.of("removedListener", false));
@@ -192,8 +200,11 @@ class MigrationAdHocOwnerChangeTest {
   @CsvSource({"idle,true", "idle,false", "enabled,true", "enabled,false", "latched,true", "latched,false"})
   void rejectOwnerRemovalOrConversionWhenNoOrdinaryEquivalentExists(String state, boolean preserveWrapper) {
     RuntimeService runtime = engine.getRuntimeService();
-    String children = task(false) + "<userTask id=\"taskB\"/><userTask id=\"taskC\"/>"
-        + "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"taskB\"/>";
+    String children = task(false) + """
+        <userTask id="taskB"/>\
+        <userTask id="taskC"/>\
+        <sequenceFlow id="next" sourceRef="taskA" targetRef="taskB"/>\
+        """;
     ProcessDefinition source = deploy(process("owner", adhoc("Parallel", "${done}", children,
         "cancelRemainingInstances=\"false\""), "owner"));
     ProcessDefinition target = deploy(process(preserveWrapper ? "owner" : "taskA",
@@ -228,9 +239,15 @@ class MigrationAdHocOwnerChangeTest {
   @ValueSource(strings = {"Parallel", "Sequential"})
   void validateRunningCountBeforeAddingOwnerAroundConcurrentTasks(String ordering) {
     RuntimeService runtime = engine.getRuntimeService();
-    String children = "<userTask id=\"taskA\"/><userTask id=\"taskB\"/>";
-    String fork = "<parallelGateway id=\"fork\"/><sequenceFlow id=\"forkA\" sourceRef=\"fork\" targetRef=\"taskA\"/>"
-        + "<sequenceFlow id=\"forkB\" sourceRef=\"fork\" targetRef=\"taskB\"/>";
+    String children = """
+        <userTask id="taskA"/>\
+        <userTask id="taskB"/>\
+        """;
+    String fork = """
+        <parallelGateway id="fork"/>\
+        <sequenceFlow id="forkA" sourceRef="fork" targetRef="taskA"/>\
+        <sequenceFlow id="forkB" sourceRef="fork" targetRef="taskB"/>\
+        """;
     ProcessDefinition source = deploy(process("fork", fork + children, null));
     ProcessDefinition target = deploy(process("owner", adhoc(ordering, "${false}", children, ""), "owner"));
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
@@ -255,10 +272,16 @@ class MigrationAdHocOwnerChangeTest {
   @Test
   void enabledActivityCannotAcquireANewActivationOwner() {
     RuntimeService runtime = engine.getRuntimeService();
-    String children = task(false) + "<userTask id=\"taskB\"/>"
-        + "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"taskB\"/>";
+    String children = task(false) + """
+        <userTask id="taskB"/>\
+        <sequenceFlow id="next" sourceRef="taskA" targetRef="taskB"/>\
+        """;
     ProcessDefinition source = deploy(process("owner", adhoc("Parallel", "${false}", children, ""), "owner"));
-    String targetChildren = "<adHocSubProcess id=\"nested\"><userTask id=\"taskB\"/></adHocSubProcess>";
+    String targetChildren = """
+        <adHocSubProcess id="nested">\
+        <userTask id="taskB"/>\
+        </adHocSubProcess>\
+        """;
     ProcessDefinition target = deploy(process("owner", adhoc("Parallel", "${false}", targetChildren, ""), "owner"));
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
     runtime.triggerAdHocActivities(scope(instance, "owner"), List.of("taskA"), null);
@@ -272,12 +295,25 @@ class MigrationAdHocOwnerChangeTest {
   @Test
   void addSequentialOwnerIndependentlyInsideEachMultiInstanceIteration() {
     RuntimeService runtime = engine.getRuntimeService();
-    String loop = "<multiInstanceLoopCharacteristics isSequential=\"false\"><loopCardinality>2</loopCardinality>"
-        + "</multiInstanceLoopCharacteristics>";
-    String sourceOuter = ordinary(task(false)).replace("<subProcess id=\"owner\" name=\"Ordinary owner\">", "<subProcess id=\"outer\">" + loop);
-    String targetOuter = "<subProcess id=\"outer\">" + loop + "<startEvent id=\"outerStart\"/>"
-        + "<sequenceFlow id=\"outerEnter\" sourceRef=\"outerStart\" targetRef=\"owner\"/>"
-        + adhoc("Sequential", "${nrOfCompletedAdHocActivities >= 1}", task(false), "") + "</subProcess>";
+    String loop = """
+        <multiInstanceLoopCharacteristics isSequential="false">\
+        <loopCardinality>2</loopCardinality>\
+        </multiInstanceLoopCharacteristics>\
+        """;
+    String sourceOuter = ordinary(task(false)).replace("""
+        <subProcess id="owner" name="Ordinary owner">\
+        """, """
+        <subProcess id="outer">\
+        """ + loop);
+    String targetOuter = """
+        <subProcess id="outer">\
+        """ + loop + """
+        <startEvent id="outerStart"/>\
+        <sequenceFlow id="outerEnter" sourceRef="outerStart" targetRef="owner"/>\
+        """
+        + adhoc("Sequential", "${nrOfCompletedAdHocActivities >= 1}", task(false), "") + """
+            </subProcess>\
+            """;
     ProcessDefinition source = deploy(process("outer", sourceOuter, "outer"));
     ProcessDefinition target = deploy(process("outer", targetOuter, "outer"));
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
@@ -298,10 +334,16 @@ class MigrationAdHocOwnerChangeTest {
   @ValueSource(booleans = {false, true})
   void preserveTimerRoutingWaitWhenConvertingOrRemovingOwner(boolean preserveWrapper) {
     RuntimeService runtime = engine.getRuntimeService();
-    String children = task(false) + "<intermediateCatchEvent id=\"timer\"><timerEventDefinition>"
-        + "<timeDuration>PT1H</timeDuration></timerEventDefinition></intermediateCatchEvent>"
-        + "<userTask id=\"taskB\"/><sequenceFlow id=\"toTimer\" sourceRef=\"taskA\" targetRef=\"timer\"/>"
-        + "<sequenceFlow id=\"fromTimer\" sourceRef=\"timer\" targetRef=\"taskB\"/>";
+    String children = task(false) + """
+        <intermediateCatchEvent id="timer">\
+        <timerEventDefinition>\
+        <timeDuration>PT1H</timeDuration>\
+        </timerEventDefinition>\
+        </intermediateCatchEvent>\
+        <userTask id="taskB"/>\
+        <sequenceFlow id="toTimer" sourceRef="taskA" targetRef="timer"/>\
+        <sequenceFlow id="fromTimer" sourceRef="timer" targetRef="taskB"/>\
+        """;
     ProcessDefinition source = deploy(process("owner", adhoc("Parallel", "${false}", children, ""), "owner"));
     ProcessDefinition target = deploy(process(preserveWrapper ? "owner" : "taskA",
         preserveWrapper ? ordinary(children) : children, preserveWrapper ? "owner" : "taskB"));
@@ -327,9 +369,18 @@ class MigrationAdHocOwnerChangeTest {
   @Test
   void convertOrdinaryWrapperContainingAsyncBeforeAdHocWithoutLosingJobOrToken() {
     RuntimeService runtime = engine.getRuntimeService();
-    String inner = "<adHocSubProcess id=\"inner\" operaton:asyncBefore=\"true\"><userTask id=\"taskA\"/></adHocSubProcess>";
-    String ordinary = "<subProcess id=\"owner\"><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerEnter\" sourceRef=\"innerStart\" targetRef=\"inner\"/>" + inner + "</subProcess>";
+    String inner = """
+        <adHocSubProcess id="inner" operaton:asyncBefore="true">\
+        <userTask id="taskA"/>\
+        </adHocSubProcess>\
+        """;
+    String ordinary = """
+        <subProcess id="owner">\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerEnter" sourceRef="innerStart" targetRef="inner"/>\
+        """ + inner + """
+            </subProcess>\
+            """;
     ProcessDefinition source = deploy(process("owner", ordinary, "owner"));
     ProcessDefinition target = deploy(process("owner", adhoc("Sequential", "${false}", inner, ""), "owner"));
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
@@ -353,12 +404,26 @@ class MigrationAdHocOwnerChangeTest {
   @Test
   void mixedWrapperExpansionPreservesReadyAdHocAndRunningSiblingBeforeLatchedDrain() {
     RuntimeService runtime = engine.getRuntimeService();
-    String pending = "<adHocSubProcess id=\"pending\"><userTask id=\"taskB\"/></adHocSubProcess>";
-    String sourceChildren = task(false) + pending + "<userTask id=\"taskC\"/><userTask id=\"taskD\"/>"
-        + "<sequenceFlow id=\"next\" sourceRef=\"taskA\" targetRef=\"pending\"/>";
-    String wrapper = "<subProcess id=\"wrapper\"><startEvent id=\"wrapperStart\"/>"
-        + "<sequenceFlow id=\"wrapperEnter\" sourceRef=\"wrapperStart\" targetRef=\"pending\"/>"
-        + pending + "<userTask id=\"taskC\"/></subProcess><userTask id=\"taskD\"/>";
+    String pending = """
+        <adHocSubProcess id="pending">\
+        <userTask id="taskB"/>\
+        </adHocSubProcess>\
+        """;
+    String sourceChildren = task(false) + pending + """
+        <userTask id="taskC"/>\
+        <userTask id="taskD"/>\
+        <sequenceFlow id="next" sourceRef="taskA" targetRef="pending"/>\
+        """;
+    String wrapper = """
+        <subProcess id="wrapper">\
+        <startEvent id="wrapperStart"/>\
+        <sequenceFlow id="wrapperEnter" sourceRef="wrapperStart" targetRef="pending"/>\
+        """
+        + pending + """
+            <userTask id="taskC"/>\
+            </subProcess>\
+            <userTask id="taskD"/>\
+            """;
     ProcessDefinition source = deploy(process("owner", adhoc("Parallel", "${done}", sourceChildren,
         "cancelRemainingInstances=\"false\""), "owner"));
     ProcessDefinition target = deploy(process("owner", adhoc("Parallel", "${done}", wrapper,
@@ -389,12 +454,19 @@ class MigrationAdHocOwnerChangeTest {
   @Test
   void roundTripThroughOrdinaryOwnerPreservesTrackedProgressWithoutCountingOrdinaryCompletions() {
     RuntimeService runtime = engine.getRuntimeService();
-    String children = task(false) + "<userTask id=\"taskB\"/>";
+    String children = task(false) + """
+        <userTask id="taskB"/>\
+        """;
     ProcessDefinition source = deploy(process("owner", adhoc("Parallel", "${false}", children, ""), "owner"));
     ProcessDefinition ordinaryDefinition = deploy(process("owner", ordinary(children
-        + "<sequenceFlow id=\"ordinaryNext\" sourceRef=\"taskA\" targetRef=\"taskB\"/>"), "owner"));
+        + """
+            <sequenceFlow id="ordinaryNext" sourceRef="taskA" targetRef="taskB"/>\
+            """), "owner"));
     ProcessDefinition returned = deploy(process("owner", adhoc("Sequential", "${false}", configuredInitialExtra()
-        + task(false) + "<userTask id=\"renamedB\"/><userTask id=\"extra\"/>", ""), "owner"));
+        + task(false) + """
+            <userTask id="renamedB"/>\
+            <userTask id="extra"/>\
+            """, ""), "owner"));
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
     String owner = scope(instance, "owner");
     HistoricActivityInstance originalHistory = ownerHistory(instance);
@@ -437,7 +509,9 @@ class MigrationAdHocOwnerChangeTest {
   @Test
   void failedSequentialReturnLeavesRetiredContextIntactForLaterValidReturn() {
     RuntimeService runtime = engine.getRuntimeService();
-    String children = task(false) + "<userTask id=\"taskB\"/>";
+    String children = task(false) + """
+        <userTask id="taskB"/>\
+        """;
     ProcessDefinition source = deploy(process("owner", adhoc("Parallel", "${false}", children, ""), "owner"));
     ProcessDefinition ordinaryDefinition = deploy(process("owner", ordinary(children), "owner"));
     ProcessDefinition returned = deploy(process("owner", adhoc("Sequential", "${false}", children, ""), "owner"));
@@ -497,8 +571,12 @@ class MigrationAdHocOwnerChangeTest {
   @ValueSource(booleans = {false, true})
   void rejectChildMarkerCollisionWhenAddingOwnerWithoutOverwriting(boolean asyncAfter) {
     RuntimeService runtime = engine.getRuntimeService();
-    String child = task(true).replace("<userTask id=\"taskA\"",
-        "<userTask id=\"taskA\" operaton:asyncAfter=\"" + asyncAfter + "\"");
+    String child = task(true).replace("""
+        <userTask id="taskA"\
+        """,
+        """
+            <userTask id="taskA" operaton:asyncAfter="\
+            """ + asyncAfter + "\"");
     ProcessDefinition source = deploy(process("taskA", child, null));
     ProcessDefinition target = deploy(process("owner", adhoc("Parallel", "${false}", child, ""), "owner"));
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
@@ -548,14 +626,19 @@ class MigrationAdHocOwnerChangeTest {
   void addingOuterOwnerRejectsOrdinaryCarrierMarkerOfEnteredInnerOwner() {
     RuntimeService runtime = engine.getRuntimeService();
     String inner = adhoc("Parallel", "${false}", task(false), "");
-    String preparation = "<parallelGateway id=\"fork\"/>"
-        + "<sequenceFlow id=\"toPrepare\" sourceRef=\"fork\" targetRef=\"prepare\"/>"
-        + "<sequenceFlow id=\"toKeep\" sourceRef=\"fork\" targetRef=\"keep\"/>"
-        + "<userTask id=\"prepare\"/><userTask id=\"keep\"/>"
-        + "<sequenceFlow id=\"toOwner\" sourceRef=\"prepare\" targetRef=\"owner\"/>";
+    String preparation = """
+        <parallelGateway id="fork"/>\
+        <sequenceFlow id="toPrepare" sourceRef="fork" targetRef="prepare"/>\
+        <sequenceFlow id="toKeep" sourceRef="fork" targetRef="keep"/>\
+        <userTask id="prepare"/>\
+        <userTask id="keep"/>\
+        <sequenceFlow id="toOwner" sourceRef="prepare" targetRef="owner"/>\
+        """;
     ProcessDefinition source = deploy(process("fork", preparation + inner, "owner"));
     String outer = adhoc("Parallel", "${false}", inner, "").replaceFirst("id=\"owner\"", "id=\"outer\"");
-    ProcessDefinition target = deploy(process("outer", outer + "<userTask id=\"keep\"/>", "outer"));
+    ProcessDefinition target = deploy(process("outer", outer + """
+        <userTask id="keep"/>\
+        """, "outer"));
     ProcessInstance instance = runtime.startProcessInstanceById(source.getId());
     String carrier = task(instance, "prepare").getExecutionId();
     runtime.setVariableLocal(carrier, "adHocEnabledActivity", true);
@@ -599,8 +682,13 @@ class MigrationAdHocOwnerChangeTest {
   }
 
   private String configuredInitialExtra() {
-    return "<extensionElements><operaton:properties><operaton:property name=\"activeTasksCollection\" value=\"extra\"/>"
-        + "</operaton:properties></extensionElements>";
+    return """
+        <extensionElements>\
+        <operaton:properties>\
+        <operaton:property name="activeTasksCollection" value="extra"/>\
+        </operaton:properties>\
+        </extensionElements>\
+        """;
   }
 
   private void assertFreshTargetStartsConfiguredExtra(ProcessDefinition definition) {
@@ -629,28 +717,57 @@ class MigrationAdHocOwnerChangeTest {
   }
 
   private String task(boolean scoped) {
-    return scoped ? "<userTask id=\"taskA\"><extensionElements><operaton:inputOutput>"
-        + "<operaton:inputParameter name=\"localInput\">retained</operaton:inputParameter>"
-        + "</operaton:inputOutput></extensionElements></userTask>" : "<userTask id=\"taskA\"/>";
+    return scoped ? """
+        <userTask id="taskA">\
+        <extensionElements>\
+        <operaton:inputOutput>\
+        <operaton:inputParameter name="localInput">retained</operaton:inputParameter>\
+        </operaton:inputOutput>\
+        </extensionElements>\
+        </userTask>\
+        """ : """
+            <userTask id="taskA"/>\
+            """;
   }
 
   private String ordinary(String children) {
-    return "<subProcess id=\"owner\" name=\"Ordinary owner\"><startEvent id=\"innerStart\"/>"
-        + "<sequenceFlow id=\"innerEnter\" sourceRef=\"innerStart\" targetRef=\"taskA\"/>" + children + "</subProcess>";
+    return """
+        <subProcess id="owner" name="Ordinary owner">\
+        <startEvent id="innerStart"/>\
+        <sequenceFlow id="innerEnter" sourceRef="innerStart" targetRef="taskA"/>\
+        """ + children + """
+            </subProcess>\
+            """;
   }
 
   private String adhoc(String ordering, String condition, String children, String attributes) {
-    return "<adHocSubProcess id=\"owner\" name=\"Ad-hoc owner\" ordering=\"" + ordering + "\" " + attributes + ">" + children
-        + "<completionCondition>" + condition + "</completionCondition></adHocSubProcess>";
+    return """
+        <adHocSubProcess id="owner" name="Ad-hoc owner" ordering="\
+        """ + ordering + "\" " + attributes + ">" + children
+        + """
+            <completionCondition>\
+            """ + condition + """
+            </completionCondition>\
+            </adHocSubProcess>\
+            """;
   }
 
   private String process(String entry, String children, String leave) {
-    return "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" "
-        + "xmlns:operaton=\"http://operaton.org/schema/1.0/bpmn\" targetNamespace=\"adhoc-owner-migration\">"
-        + "<process id=\"process\" isExecutable=\"true\"><startEvent id=\"start\"/>"
-        + "<sequenceFlow id=\"enter\" sourceRef=\"start\" targetRef=\"" + entry + "\"/>" + children
-        + (leave == null ? "" : "<sequenceFlow id=\"leave\" sourceRef=\"" + leave + "\" targetRef=\"after\"/>")
-        + "<userTask id=\"after\"/></process></definitions>";
+    return """
+        <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"\s\
+        xmlns:operaton="http://operaton.org/schema/1.0/bpmn" targetNamespace="adhoc-owner-migration">\
+        <process id="process" isExecutable="true">\
+        <startEvent id="start"/>\
+        <sequenceFlow id="enter" sourceRef="start" targetRef="\
+        """ + entry + "\"/>" + children
+        + (leave == null ? "" : """
+            <sequenceFlow id="leave" sourceRef="\
+            """ + leave + "\" targetRef=\"after\"/>")
+        + """
+            <userTask id="after"/>\
+            </process>\
+            </definitions>\
+            """;
   }
 
   private ProcessDefinition deploy(String xml) {

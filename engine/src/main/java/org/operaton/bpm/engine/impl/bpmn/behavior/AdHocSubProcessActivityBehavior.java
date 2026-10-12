@@ -404,9 +404,9 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   protected List<String> getAdHocActivityIds(ActivityExecution scopeExecution, String variableName) {
     Object activityIds = scopeExecution.getVariableLocal(variableName);
-    if (activityIds instanceof Collection<?>) {
+    if (activityIds instanceof Collection<?> ids) {
       List<String> result = new ArrayList<>();
-      for (Object activityId : (Collection<?>) activityIds) {
+      for (Object activityId : ids) {
         if (activityId != null) {
           result.add(String.valueOf(activityId));
         }
@@ -517,9 +517,9 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       return new ArrayList<>();
     }
 
-    if (activeTasks instanceof Collection<?>) {
+    if (activeTasks instanceof Collection<?> tasks) {
       List<String> activityIds = new ArrayList<>();
-      for (Object value : (Collection<?>) activeTasks) {
+      for (Object value : tasks) {
         if (value != null) {
           String activityId = String.valueOf(value).trim();
           if (!activityId.isEmpty()) {
@@ -530,8 +530,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       return activityIds;
     }
 
-    if (activeTasks instanceof String) {
-      String activityIdsText = ((String) activeTasks).trim();
+    if (activeTasks instanceof String taskIds) {
+      String activityIdsText = taskIds.trim();
       if (activityIdsText.isEmpty()) {
         return new ArrayList<>();
       }

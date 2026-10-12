@@ -111,17 +111,17 @@ public class CompleteAdHocSubProcessCmd implements Command<Void>, Serializable {
 
   protected boolean resolveCancelRemainingInstances(ExecutionEntity execution, ActivityImpl adHocActivity) {
     FlowElement flowElement = execution.getBpmnModelElementInstance();
-    if (flowElement instanceof AdHocSubProcess) {
-      return ((AdHocSubProcess) flowElement).isCancelRemainingInstances();
+    if (flowElement instanceof AdHocSubProcess adHocSubProcess) {
+      return adHocSubProcess.isCancelRemainingInstances();
     }
 
     Object cancelRemainingProperty = adHocActivity.getProperty(BpmnParse.PROPERTYNAME_AD_HOC_CANCEL_REMAINING);
-    if (cancelRemainingProperty instanceof Boolean) {
-      return (Boolean) cancelRemainingProperty;
+    if (cancelRemainingProperty instanceof Boolean cancelRemaining) {
+      return cancelRemaining;
     }
 
-    if (cancelRemainingProperty instanceof String) {
-      return Boolean.parseBoolean((String) cancelRemainingProperty);
+    if (cancelRemainingProperty instanceof String cancelRemaining) {
+      return Boolean.parseBoolean(cancelRemaining);
     }
 
     return true;

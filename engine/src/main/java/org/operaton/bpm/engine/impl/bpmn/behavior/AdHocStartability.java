@@ -107,7 +107,6 @@ public class AdHocStartability {
    * Checks if an activity can be started in the current ad-hoc scope execution.
    */
   public boolean isStartableActivity(ActivityExecution adHocScopeExecution, ActivityImpl activity) {
-    ActivityImpl adHocScope = getAdHocScope(adHocScopeExecution);
     if (isCompletionRequested(adHocScopeExecution) || !isAvailableActivity(adHocScopeExecution, activity)) {
       return false;
     }
@@ -176,11 +175,9 @@ public class AdHocStartability {
     }
 
     for (PvmTransition incomingTransition : activity.getIncomingTransitions()) {
-      if (incomingTransition.getSource() instanceof ActivityImpl) {
-        ActivityImpl source = (ActivityImpl) incomingTransition.getSource();
-        if (adHocScope.findActivity(source.getId()) != null) {
-          return true;
-        }
+      if (incomingTransition.getSource() instanceof ActivityImpl source
+          && adHocScope.findActivity(source.getId()) != null) {
+        return true;
       }
     }
     return false;
@@ -325,9 +322,9 @@ public class AdHocStartability {
   }
 
   protected ActivityImpl getAdHocScope(ActivityExecution adHocScopeExecution) {
-    if (adHocScopeExecution == null || !(adHocScopeExecution.getActivity() instanceof ActivityImpl)) {
+    if (adHocScopeExecution == null || !(adHocScopeExecution.getActivity() instanceof ActivityImpl activity)) {
       return null;
     }
-    return (ActivityImpl) adHocScopeExecution.getActivity();
+    return activity;
   }
 }

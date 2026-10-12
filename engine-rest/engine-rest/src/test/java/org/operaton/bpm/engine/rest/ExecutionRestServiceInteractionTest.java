@@ -210,7 +210,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testTriggerAdHocActivities() {
+  void testTriggerAdHocActivities() {
     Map<String, Object> taskAVariables = VariablesBuilder.create().variable("k1", "v1").getVariables();
     Map<String, Object> taskBVariables = VariablesBuilder.create().variable("k2", 42).getVariables();
 
@@ -324,7 +324,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testCompleteAdHocSubProcessWithVariables() {
+  void testCompleteAdHocSubProcessWithVariables() {
     Map<String, Object> variables = VariablesBuilder.create().variable("completionReason", "manual").getVariables();
     Map<String, Object> payload = new HashMap<>();
     payload.put("variables", variables);

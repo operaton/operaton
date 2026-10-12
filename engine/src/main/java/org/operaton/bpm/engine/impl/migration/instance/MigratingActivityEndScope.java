@@ -29,7 +29,8 @@ public class MigratingActivityEndScope extends MigratingActivityInstance {
   protected final MigratingTransitionInstance transitionInstance;
 
   public MigratingActivityEndScope(MigratingTransitionInstance transitionInstance) {
-    super(requireNonNull(transitionInstance.getSourceScope()), transitionInstance.resolveRepresentativeExecution());
+    super(requireNonNull(transitionInstance.getSourceScope()),
+        requireNonNull(transitionInstance.resolveRepresentativeExecution()));
     this.transitionInstance = transitionInstance;
     sourceScope = transitionInstance.getSourceScope();
     targetScope = transitionInstance.getTargetScope();

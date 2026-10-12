@@ -698,7 +698,7 @@ public class MigrationAdHocEnabledActivityTest {
     } else {
       String wrapperExecution = runtimeService.createVariableInstanceQuery().processInstanceIdIn(process.getId())
           .variableName("wrapperLocal").singleResult().getExecutionId();
-      assertThat(sourceExecutionIds).doesNotContain(wrapperExecution);
+      assertThat(sourceExecutionIds).isNotEmpty().doesNotContain(wrapperExecution);
       assertThat(runtimeService.createExecutionQuery().executionId(wrapperExecution).singleResult().isSuspended()).isTrue();
       assertThat(runtimeService.getActivityInstance(process.getId()).getActivityInstances("inner")).hasSize(1);
     }

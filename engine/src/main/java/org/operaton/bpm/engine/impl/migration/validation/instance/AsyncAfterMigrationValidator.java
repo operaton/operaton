@@ -41,15 +41,7 @@ public class AsyncAfterMigrationValidator implements MigratingTransitionInstance
       AsyncContinuationConfiguration config = (AsyncContinuationConfiguration) jobInstance.getJobEntity().getJobHandlerConfiguration();
       String sourceTransitionId = config.getTransitionId();
 
-      if (migratingInstance.isPendingScopedActivityEnd() && !targetActivity.isScope()) {
-        Set<String> names = new HashSet<>();
-        for (MigratingInstance dependent : migratingInstance.getMigratingDependentInstances()) {
-          if (dependent instanceof MigratingVariableInstance variable && !names.add(variable.getVariableName())) {
-            instanceReport.addFailure("The variable '%s' exists in both, this scope and concurrent local in the parent scope. Migrating to a non-scope activity would overwrite one of them."
-                .formatted(variable.getVariableName()));
-          }
-        }
-      }
+      validateScopeRemoval(migratingInstance, targetActivity, instanceReport);
 
       if (targetActivity.getOutgoingTransitions().size() > 1
           && !((MigratingAsyncJobInstance) jobInstance).isDeferredActivityEnd()
@@ -68,6 +60,21 @@ public class AsyncAfterMigrationValidator implements MigratingTransitionInstance
       }
     }
 
+  }
+
+  protected void validateScopeRemoval(MigratingTransitionInstance migratingInstance, ActivityImpl targetActivity,
+      MigratingTransitionInstanceValidationReportImpl instanceReport) {
+    if (migratingInstance.isPendingScopedActivityEnd() && !targetActivity.isScope()) {
+      Set<String> names = new HashSet<>();
+      for (MigratingInstance dependent : migratingInstance.getMigratingDependentInstances()) {
+        if (dependent instanceof MigratingVariableInstance variable && !names.add(variable.getVariableName())) {
+          instanceReport.addFailure(
+              ("The variable '%s' exists in both, this scope and concurrent local in the parent scope. "
+                  + "Migrating to a non-scope activity would overwrite one of them.")
+                  .formatted(variable.getVariableName()));
+        }
+      }
+    }
   }
 
 }

@@ -233,7 +233,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     // earlier end-listener dispatch. Deliver their events before closing/draining
     // the owner; an interrupting conditional event may replace that continuation.
     ((PvmExecutionImpl) scopeExecution).dispatchDelayedEventsAndPerformOperation(resumedScope -> {
-      if (getCompletionCondition((ActivityImpl) resumedScope.getActivity()) == null
+      if (getCompletionCondition(resumedScope.getActivity()) == null
           || isAdHocCompletionConditionSatisfied(resumedScope)) {
         evaluateCompletionCondition(resumedScope, true);
       }

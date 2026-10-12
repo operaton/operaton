@@ -48,7 +48,6 @@ import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivity
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 class AdHocSubProcessTest {
 
@@ -689,12 +688,10 @@ class AdHocSubProcessTest {
         .activityId("userTask")
         .singleResult();
 
-    try {
-      runtimeService.completeAdHocSubProcess(execution.getId());
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("is not waiting in an adHocSubProcess", e.getMessage());
-    }
+    String rejectedExecutionId = execution.getId();
+    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(rejectedExecutionId))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("is not waiting in an adHocSubProcess");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testStarterActivitiesFlowToDownstreamTask.bpmn20.xml")
@@ -755,14 +752,10 @@ class AdHocSubProcessTest {
   @Deployment
   @Test
   void testNonStarterConfiguredTasksFailAdHocStart() {
-    try {
-      runtimeService.startProcessInstanceByKey("adHocSubProcessWithDownstreamFlow");
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(
-          "activeTasksCollection contains non-startable activities in adHocSubProcess 'adHocSubProcess': [taskC]",
-          e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("adHocSubProcessWithDownstreamFlow"))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("activeTasksCollection contains non-startable activities in adHocSubProcess "
+            + "'adHocSubProcess': [taskC]");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testOperatonNamespaceActiveTasksCollectionStartsConfiguredTasks.bpmn20.xml")
@@ -886,12 +879,11 @@ class AdHocSubProcessTest {
         .activityId("userTask")
         .singleResult();
 
-    try {
-      runtimeService.triggerAdHocActivities(execution.getId(), Collections.singletonList("taskA"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("is not waiting in an adHocSubProcess", e.getMessage());
-    }
+    String rejectedExecutionId = execution.getId();
+    List<String> rejectedActivities = Collections.singletonList("taskA");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(rejectedExecutionId, rejectedActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("is not waiting in an adHocSubProcess");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testStarterActivitiesFlowToDownstreamTask.bpmn20.xml")
@@ -1090,13 +1082,11 @@ class AdHocSubProcessTest {
     assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
     assertThat(startableActivities).hasSize(1);
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("eventSubProcess"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("adHoc activity 'eventSubProcess' is not startable in adHocSubProcess adHocSubProcess",
-          e.getMessage());
-    }
+    String rejectedExecutionId = adHocExecution.getId();
+    List<String> rejectedActivities = Collections.singletonList("eventSubProcess");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(rejectedExecutionId, rejectedActivities, null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("adHoc activity 'eventSubProcess' is not startable in adHocSubProcess adHocSubProcess");
 
     String blockedExecutionId = adHocExecution.getId();
     List<String> blockedActivities = Collections.singletonList("compensationTask");
@@ -1535,17 +1525,12 @@ class AdHocSubProcessTest {
     String resource = "org/operaton/bpm/engine/test/bpmn/subprocess/"
         + "AdHocSubProcessTest.testInvalidAutoCompletePropertyFailsParse.bpmn20.xml";
 
-    try {
-      repositoryService.createDeployment()
-          .name(resource)
-          .addClasspathResource(resource)
-          .deploy();
-      fail("Expected ParseException");
-    } catch (ParseException e) {
-      testRule.assertTextPresent(
-          "Unsupported ad-hoc extension property 'autoComplete'; use extension attribute 'autoComplete' on the adHocSubProcess element",
-          e.getMessage());
-    }
+    var deployment = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
+    assertThatThrownBy(deployment::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining(
+            "Unsupported ad-hoc extension property 'autoComplete'; "
+            + "use extension attribute 'autoComplete' on the adHocSubProcess element");
   }
 
   @Test
@@ -1553,17 +1538,11 @@ class AdHocSubProcessTest {
     String resource = "org/operaton/bpm/engine/test/bpmn/subprocess/"
         + "AdHocSubProcessTest.testInvalidAutoCompleteAttributeFailsParse.bpmn20.xml";
 
-    try {
-      repositoryService.createDeployment()
-          .name(resource)
-          .addClasspathResource(resource)
-          .deploy();
-      fail("Expected ParseException");
-    } catch (ParseException e) {
-      testRule.assertTextPresent(
-          "Invalid value 'maybe' for ad-hoc extension attribute 'autoComplete'; expected boolean value",
-          e.getMessage());
-    }
+    var deployment = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
+    assertThatThrownBy(deployment::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining(
+            "Invalid value 'maybe' for ad-hoc extension attribute 'autoComplete'; expected boolean value");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingRejectsMultipleConfiguredInitialActivities.bpmn20.xml")

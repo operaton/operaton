@@ -32,7 +32,7 @@ public class AdHocActivityImpl implements AdHocActivity, Serializable {
   protected String activityName;
   protected String activityType;
   protected boolean starterActivity;
-  protected List<String> enabledExecutionIds = List.of();
+  private List<String> enabledExecutionIds = List.of();
 
   public static AdHocActivityImpl fromActivity(ActivityImpl activity) {
     AdHocActivityImpl result = new AdHocActivityImpl();

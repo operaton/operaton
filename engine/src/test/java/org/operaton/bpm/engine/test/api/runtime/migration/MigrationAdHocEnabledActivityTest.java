@@ -708,9 +708,13 @@ public class MigrationAdHocEnabledActivityTest {
     List<String> executionIds = runtimeService.createExecutionQuery().processInstanceId(process.getId()).list().stream()
         .map(Execution::getId).toList();
 
-    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, List.of("renamedB"),
-        Map.of("renamedB", Map.of("blockedTrigger", true)))).isInstanceOf(SuspendedEntityInteractionException.class);
-    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(scope, Map.of("blockedCompletion", true)))
+    List<String> requestedActivities = List.of("renamedB");
+    Map<String, Map<String, Object>> requestVariables = Map.of("renamedB", Map.of("blockedTrigger", true));
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, requestedActivities,
+        requestVariables))
+        .isInstanceOf(SuspendedEntityInteractionException.class);
+    Map<String, Object> completionVariables = Map.of("blockedCompletion", true);
+    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(scope, completionVariables))
         .isInstanceOf(SuspendedEntityInteractionException.class);
 
     assertThat(enabled(process, "renamedB")).extracting(Execution::getId).containsExactly(token);

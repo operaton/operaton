@@ -339,7 +339,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
     verify(runtimeServiceMock).completeAdHocSubProcess(eq(MockProvider.EXAMPLE_EXECUTION_ID), variablesCaptor.capture());
 
     Map<String, Object> capturedVariables = variablesCaptor.getValue();
-    assertThat(capturedVariables.get("completionReason")).isEqualTo("manual");
+    assertThat(capturedVariables).containsEntry("completionReason", "manual");
   }
 
   @Test

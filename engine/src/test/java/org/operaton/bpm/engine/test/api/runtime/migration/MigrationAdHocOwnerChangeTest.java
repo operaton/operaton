@@ -113,7 +113,7 @@ class MigrationAdHocOwnerChangeTest {
     migrate(plan, instance);
 
     String owner = scope(instance, "owner");
-    assertOwnerHistory(instance, historyBefore, target, "owner", "adHocSubProcess", "Ad-hoc owner");
+    assertOwnerHistory(historyBefore, target, "owner", "adHocSubProcess", "Ad-hoc owner");
     assertThat(task(instance, "taskA").getId()).isEqualTo(before.getId());
     if (scopedChild) {
       assertThat(runtime.getVariableLocal(before.getExecutionId(), "localInput")).isEqualTo("retained");
@@ -149,7 +149,7 @@ class MigrationAdHocOwnerChangeTest {
     migrate(plan, instance);
 
     assertThat(task(instance, "taskA").getId()).isEqualTo(before.getId());
-    assertOwnerHistory(instance, historyBefore, target, targetOwner, "subProcess", "Ordinary owner");
+    assertOwnerHistory(historyBefore, target, targetOwner, "subProcess", "Ordinary owner");
     assertThat(engine.getHistoryService().createHistoricActivityInstanceQuery().processInstanceId(instance.getId())
         .activityId("taskA").finished().singleResult().getProcessDefinitionId()).isEqualTo(source.getId());
     assertThat(runtime.getVariableLocal(owner, "scopeLocal")).isEqualTo("retained");
@@ -498,7 +498,7 @@ class MigrationAdHocOwnerChangeTest {
     assertThat(runtime.createVariableInstanceQuery().variableId(retiredMarkerId).count()).isZero();
     assertThat(runtime.getVariableLocal(owner, "nrOfCompletedAdHocActivities")).isEqualTo(1);
     assertThat(runtime.getVariableLocal(owner, "adHocActiveActivityIds")).isEqualTo(List.of("renamedB"));
-    assertOwnerHistory(instance, originalHistory, returned, "owner", "adHocSubProcess", "Ad-hoc owner");
+    assertOwnerHistory(originalHistory, returned, "owner", "adHocSubProcess", "Ad-hoc owner");
     complete(instance, "renamedB");
     assertThat(runtime.getVariableLocal(owner, "nrOfCompletedAdHocActivities")).isEqualTo(2);
     assertThat(runtime.getVariableLocal(owner, "adHocCompletedActivityIds")).isEqualTo(List.of("taskA", "renamedB"));
@@ -705,7 +705,7 @@ class MigrationAdHocOwnerChangeTest {
         .activityId("owner").unfinished().singleResult();
   }
 
-  private void assertOwnerHistory(ProcessInstance instance, HistoricActivityInstance before,
+  private void assertOwnerHistory(HistoricActivityInstance before,
       ProcessDefinition target, String activityId, String type, String name) {
     HistoricActivityInstance after = engine.getHistoryService().createHistoricActivityInstanceQuery()
         .activityInstanceId(before.getId()).singleResult();

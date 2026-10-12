@@ -38,6 +38,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 class AdHocSubProcessEdgeCaseTest {
@@ -360,12 +361,8 @@ class AdHocSubProcessEdgeCaseTest {
   }
 
   protected void assertBadUserRequestContains(AdHocCommand command, String expectedMessagePart) {
-    try {
-      command.execute();
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(expectedMessagePart, e.getMessage());
-    }
+    assertThatThrownBy(command::execute).isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining(expectedMessagePart);
   }
 
   protected interface AdHocCommand {

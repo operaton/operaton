@@ -41,19 +41,7 @@ public class AdHocActivityInstanceValidator implements MigratingActivityInstance
     boolean targetAdHoc = instance.getTargetScope() != null
         && instance.getTargetScope().getActivityBehavior() instanceof AdHocSubProcessActivityBehavior;
     if (sourceAdHoc && !targetAdHoc) {
-      var execution = instance.resolveRepresentativeExecution();
-      if (instance.getTargetScope() != null && execution.hasVariableLocal(MigratingAdHocState.RETIRED_CONTEXT)) {
-        report.addFailure("Cannot retire an ad-hoc owner over reserved variable '" + MigratingAdHocState.RETIRED_CONTEXT + "'");
-      }
-      if (Boolean.TRUE.equals(execution.getVariableLocal("adHocCompletionConditionSatisfied"))) {
-        report.addFailure("Cannot remove or convert an ad-hoc owner with a latched completion decision");
-      }
-      if (!AdHocStartability.INSTANCE.getEnabledExecutions(execution).isEmpty()) {
-        report.addFailure("Cannot remove or convert an ad-hoc owner with enabled activities");
-      }
-      if (!AdHocStartability.INSTANCE.hasOpenChildExecutions(execution)) {
-        report.addFailure("An idle entered ad-hoc subprocess must retain its mapped ad-hoc owner");
-      }
+      validateRetiringOwner(instance, report);
     }
     if (!sourceAdHoc && targetAdHoc && !MigratingAdHocState.hasRetiredContext(instance.resolveRepresentativeExecution())) {
       for (String reserved : MigratingAdHocState.STATE_VARIABLES) {
@@ -68,6 +56,24 @@ public class AdHocActivityInstanceValidator implements MigratingActivityInstance
     }
     if (instance.getParent() == null) {
       validateTargetOrdering(processInstance, report);
+    }
+  }
+
+  protected void validateRetiringOwner(MigratingActivityInstance instance,
+      MigratingActivityInstanceValidationReportImpl report) {
+    var execution = instance.resolveRepresentativeExecution();
+    if (instance.getTargetScope() != null && execution.hasVariableLocal(MigratingAdHocState.RETIRED_CONTEXT)) {
+      report.addFailure("Cannot retire an ad-hoc owner over reserved variable '"
+          + MigratingAdHocState.RETIRED_CONTEXT + "'");
+    }
+    if (Boolean.TRUE.equals(execution.getVariableLocal("adHocCompletionConditionSatisfied"))) {
+      report.addFailure("Cannot remove or convert an ad-hoc owner with a latched completion decision");
+    }
+    if (!AdHocStartability.INSTANCE.getEnabledExecutions(execution).isEmpty()) {
+      report.addFailure("Cannot remove or convert an ad-hoc owner with enabled activities");
+    }
+    if (!AdHocStartability.INSTANCE.hasOpenChildExecutions(execution)) {
+      report.addFailure("An idle entered ad-hoc subprocess must retain its mapped ad-hoc owner");
     }
   }
 

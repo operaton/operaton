@@ -45,7 +45,7 @@ public class CompleteAdHocSubProcessCmd implements Command<Void>, Serializable {
 
   protected final String executionId;
   protected final Map<String, Object> variables;
-  protected final AdHocStartability startability = AdHocStartability.INSTANCE;
+  protected static final AdHocStartability STARTABILITY = AdHocStartability.INSTANCE;
 
   public CompleteAdHocSubProcessCmd(String executionId) {
     this(executionId, null);
@@ -81,7 +81,7 @@ public class CompleteAdHocSubProcessCmd implements Command<Void>, Serializable {
     boolean cancelRemainingInstances = resolveCancelRemainingInstances(execution, adHocActivity);
 
     boolean hasOpenChildren = execution.getNonEventScopeExecutions().stream()
-        .anyMatch(child -> !startability.hasOnlyEnabledActivities(child));
+        .anyMatch(child -> !STARTABILITY.hasOnlyEnabledActivities(child));
     if (hasOpenChildren && !cancelRemainingInstances) {
       throw new BadUserRequestException(
           "adHocSubProcess " + adHocActivity.getId() + " has active child activities and cannot be completed");

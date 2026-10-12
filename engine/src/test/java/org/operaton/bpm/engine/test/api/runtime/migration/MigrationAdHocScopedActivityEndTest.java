@@ -429,7 +429,8 @@ class MigrationAdHocScopedActivityEndTest {
     MigrationPlan second = runtime.createMigrationPlan(terminal.getId(), target.getId())
         .mapActivities("taskA", "taskA").mapActivities("keeper", "keeper").build();
 
-    assertThatThrownBy(() -> runtime.newMigration(second).processInstanceIds(process.getId()).execute())
+    var migration = runtime.newMigration(second).processInstanceIds(process.getId());
+    assertThatThrownBy(migration::execute)
         .isInstanceOf(MigratingProcessInstanceValidationException.class).hasMessageContaining("cannot be matched");
 
     assertThat(asyncJob(process).getId()).isEqualTo(job.getId());

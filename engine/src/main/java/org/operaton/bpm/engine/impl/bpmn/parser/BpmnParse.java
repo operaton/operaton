@@ -4966,8 +4966,8 @@ public @NullMarked class BpmnParse extends Parse {
 
     if (!(tagName.toLowerCase().contains("task")
         || tagName.contains("Event")
-        || tagName.equals("transaction")
-        || tagName.equals("subProcess")
+        || tagName.equals(TRANSACTION_TAG)
+        || tagName.equals(SUB_PROCESS_TAG)
         || tagName.equals("adHocSubProcess")
         || tagName.equals("callActivity"))) {
       addError("operaton:inputOutput mapping unsupported for element type '" + tagName + "'.", activityElement);

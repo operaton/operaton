@@ -101,7 +101,8 @@ class AdHocSubProcessLifecycleTest {
         <subProcess id="nested"><startEvent id="nestedStart"/><userTask id="nestedTask"/>
         <sequenceFlow id="nestedFlow" sourceRef="nestedStart" targetRef="nestedTask"/></subProcess>
         """);
-    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, List.of("nestedTask"), null))
+    List<String> requestedActivities = List.of("nestedTask");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, requestedActivities, null))
         .isInstanceOf(BadUserRequestException.class).hasMessageContaining("not startable");
     assertThat(taskService.createTaskQuery().count()).isZero();
   }
@@ -254,7 +255,8 @@ class AdHocSubProcessLifecycleTest {
           <loopCardinality>2</loopCardinality>
         </multiInstanceLoopCharacteristics></userTask>
         """);
-    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, List.of("a#multiInstanceBody"), null))
+    List<String> requestedActivities = List.of("a#multiInstanceBody");
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, requestedActivities, null))
         .isInstanceOf(BadUserRequestException.class);
     runtimeService.triggerAdHocActivities(scope, List.of("a"), null);
     assertThat(taskService.createTaskQuery().count()).isEqualTo(1);

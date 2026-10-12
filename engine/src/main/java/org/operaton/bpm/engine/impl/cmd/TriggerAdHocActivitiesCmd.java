@@ -47,7 +47,7 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
   protected final String executionId;
   protected final Collection<String> activityIds;
   protected final Map<String, Map<String, Object>> activityVariables;
-  protected final AdHocStartability startability = AdHocStartability.INSTANCE;
+  protected static final AdHocStartability STARTABILITY = AdHocStartability.INSTANCE;
 
   public TriggerAdHocActivitiesCmd(String executionId,
                                    Collection<String> activityIds,
@@ -84,28 +84,12 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
       throw new BadUserRequestException("execution " + executionId + " is not waiting in an adHocSubProcess");
     }
 
-    if (startability.isCompletionRequested(execution)) {
+    if (STARTABILITY.isCompletionRequested(execution)) {
       throw new BadUserRequestException("adHocSubProcess " + adHocActivity.getId()
           + " has already requested completion");
     }
 
-    Set<String> uniqueActivityIds = new HashSet<>();
-    List<String> normalizedActivityIds = new ArrayList<>();
-    for (String activityId : activityIds) {
-      ensureNotNull(BadUserRequestException.class, "activityId is null", "activityId", activityId);
-      if (!uniqueActivityIds.add(activityId)) {
-        throw new BadUserRequestException("duplicate adHoc activity '" + activityId + "' in request");
-      }
-      normalizedActivityIds.add(activityId);
-    }
-
-    if (activityVariables != null) {
-      for (String keyedActivityId : activityVariables.keySet()) {
-        if (!uniqueActivityIds.contains(keyedActivityId)) {
-          throw new BadUserRequestException("variables provided for non-requested adHoc activity '" + keyedActivityId + "'");
-        }
-      }
-    }
+    List<String> normalizedActivityIds = validateActivityIds();
 
     List<ActivityImpl> targetActivities = new ArrayList<>(normalizedActivityIds.size());
     for (String activityId : normalizedActivityIds) {
@@ -115,7 +99,7 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
           "targetActivity",
           targetActivity);
 
-      if (!startability.isAvailableActivity(execution, targetActivity)) {
+      if (!STARTABILITY.isAvailableActivity(execution, targetActivity)) {
         throw new BadUserRequestException(
             "adHoc activity '" + activityId + "' is not startable in adHocSubProcess " + adHocActivity.getId());
       }
@@ -131,23 +115,46 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
     return null;
   }
 
+  protected List<String> validateActivityIds() {
+    Set<String> uniqueActivityIds = new HashSet<>();
+    List<String> normalizedActivityIds = new ArrayList<>();
+    for (String activityId : activityIds) {
+      ensureNotNull(BadUserRequestException.class, "activityId is null", "activityId", activityId);
+      if (!uniqueActivityIds.add(activityId)) {
+        throw new BadUserRequestException("duplicate adHoc activity '" + activityId + "' in request");
+      }
+      normalizedActivityIds.add(activityId);
+    }
+
+    if (activityVariables != null) {
+      for (String keyedActivityId : activityVariables.keySet()) {
+        if (!uniqueActivityIds.contains(keyedActivityId)) {
+          throw new BadUserRequestException(
+              "variables provided for non-requested adHoc activity '" + keyedActivityId + "'");
+        }
+      }
+    }
+
+    return normalizedActivityIds;
+  }
+
   protected boolean isStartableInAdHocScope(ActivityImpl adHocScope, ActivityImpl activity) {
-    return startability.isPotentiallyStartableActivity(adHocScope, activity);
+    return STARTABILITY.isPotentiallyStartableActivity(adHocScope, activity);
   }
 
   protected void ensureOrderingAllowsTrigger(ActivityExecution execution,
       ActivityImpl adHocActivity,
       List<ActivityImpl> targetActivities) {
-    if (!startability.isSequentialOrdering(adHocActivity)) {
+    if (!STARTABILITY.isSequentialOrdering(adHocActivity)) {
       return;
     }
 
     Set<Object> runningActivities = new HashSet<>();
-    execution.getNonEventScopeExecutions().stream().filter(startability::isRunningActivity)
+    execution.getNonEventScopeExecutions().stream().filter(STARTABILITY::isRunningActivity)
         .forEach(runningActivities::add);
     for (ActivityImpl activity : targetActivities) {
-      ActivityExecution enabled = startability.getEnabledExecutionForActivation(execution, activity);
-      runningActivities.add(enabled == null ? activity : startability.getDirectChild(execution, enabled));
+      ActivityExecution enabled = STARTABILITY.getEnabledExecutionForActivation(execution, activity);
+      runningActivities.add(enabled == null ? activity : STARTABILITY.getDirectChild(execution, enabled));
     }
     if (runningActivities.size() > 1) {
       String reason = targetActivities.size() > 1

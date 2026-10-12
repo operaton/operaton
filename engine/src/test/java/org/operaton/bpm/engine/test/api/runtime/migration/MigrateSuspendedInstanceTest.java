@@ -139,8 +139,8 @@ class MigrateSuspendedInstanceTest {
         .stream().map(Execution::getId).toList();
 
     // Normal modification must still reject entering an unstarted scope on a suspended instance.
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceModification(process.getId())
-        .startBeforeActivity("extra").execute()).isInstanceOf(SuspendedEntityInteractionException.class);
+    var modification = runtimeService.createProcessInstanceModification(process.getId()).startBeforeActivity("extra");
+    assertThatThrownBy(modification::execute).isInstanceOf(SuspendedEntityInteractionException.class);
     assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).list())
         .extracting(Execution::getId).containsExactlyInAnyOrderElementsOf(sourceExecutionIds);
     assertThat(runtimeService.getActivityInstance(process.getId()).getActivityInstances("unused")).isEmpty();

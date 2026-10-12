@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -67,7 +68,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   public static final String AD_HOC_LAST_COMPLETED_ACTIVITY_ID = "adHocLastCompletedActivityId";
   public static final String AD_HOC_COMPLETION_CONDITION_SATISFIED = "adHocCompletionConditionSatisfied";
 
-  protected final AdHocStartability startability = AdHocStartability.INSTANCE;
+  protected static final AdHocStartability STARTABILITY = AdHocStartability.INSTANCE;
 
   /**
    * On entry into an ad-hoc subprocess, only starter activities named in the
@@ -196,8 +197,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   /** Gateways and events are flow nodes, but do not count as completed activities. */
   public boolean isCompletableActivity(ActivityImpl activity) {
-    ActivityImpl modelActivity = startability.getModelActivity(activity);
-    return startability.isStartableActivityType((String) modelActivity.getProperty(BpmnProperties.TYPE.name()));
+    ActivityImpl modelActivity = STARTABILITY.getModelActivity(activity);
+    return STARTABILITY.isStartableActivityType((String) modelActivity.getProperty(BpmnProperties.TYPE.name()));
   }
 
   /**
@@ -209,7 +210,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       ActivityImpl activity) {
     ActivityImpl scopeActivity = (ActivityImpl) activity.getFlowScope();
     scopeExecution.forceUpdate();
-    recordCompletedAdHocActivity(scopeExecution, scopeActivity, startability.getModelActivity(activity).getId());
+    recordCompletedAdHocActivity(scopeExecution, scopeActivity, STARTABILITY.getModelActivity(activity).getId());
     if (hasCompletionContext(scopeExecution, scopeActivity)) {
       updateAdHocCompletionContext(scopeExecution);
       updateActiveAdHocActivityContext(scopeExecution, completingChild);
@@ -277,7 +278,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   protected void discardEnabledChildren(ActivityExecution parent) {
     for (ActivityExecution child : new ArrayList<>(parent.getNonEventScopeExecutions())) {
-      if (startability.hasOnlyEnabledActivities(child)) {
+      if (STARTABILITY.hasOnlyEnabledActivities(child)) {
         // Generic cancellation also closes entered wrapper scopes and their subscriptions.
         // Enabled leaves have no activity-instance ID, so no unstarted activity is ended.
         normalizeEnabledScopeExecutions(child);
@@ -300,7 +301,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     for (ActivityExecution child : execution.getNonEventScopeExecutions()) {
       normalizeEnabledScopeExecutions(child);
     }
-    if (execution.isScope() && startability.isEnabledExecution(execution)) {
+    if (execution.isScope() && STARTABILITY.isEnabledExecution(execution)) {
       ActivityImpl pendingActivity = (ActivityImpl) execution.getActivity();
       if (!(pendingActivity.getFlowScope() instanceof ActivityImpl wrapper)
           || wrapper.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior) {
@@ -346,7 +347,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   }
 
   protected boolean hasActiveChildExecutions(ActivityExecution scopeExecution) {
-    return startability.hasActiveChildExecutions(scopeExecution);
+    return STARTABILITY.hasActiveChildExecutions(scopeExecution);
   }
 
   protected Condition getCompletionCondition(ActivityImpl scopeActivity) {
@@ -405,13 +406,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   protected List<String> getAdHocActivityIds(ActivityExecution scopeExecution, String variableName) {
     Object activityIds = scopeExecution.getVariableLocal(variableName);
     if (activityIds instanceof Collection<?> ids) {
-      List<String> result = new ArrayList<>();
-      for (Object activityId : ids) {
-        if (activityId != null) {
-          result.add(String.valueOf(activityId));
-        }
-      }
-      return result;
+      return ids.stream().filter(Objects::nonNull).map(String::valueOf)
+          .collect(Collectors.toCollection(ArrayList::new));
     }
     return new ArrayList<>();
   }
@@ -446,7 +442,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   protected void updateActiveAdHocActivityContext(ActivityExecution scopeExecution, ActivityExecution excludedChild) {
     List<? extends ActivityExecution> children = scopeExecution.getNonEventScopeExecutions().stream()
-        .filter(child -> child != excludedChild && startability.isRunningActivity(child))
+        .filter(child -> child != excludedChild && STARTABILITY.isRunningActivity(child))
         .toList();
     ActivityImpl scopeActivity = (ActivityImpl) scopeExecution.getActivity();
     List<String> activityIds = children.stream()
@@ -455,8 +451,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
         .collect(Collectors.toCollection(ArrayList::new));
     scopeExecution.setVariableLocal(AD_HOC_ACTIVE_ACTIVITY_IDS, activityIds);
     scopeExecution.setVariableLocal(NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES, children.size());
-    List<String> enabledIds = startability.getEnabledExecutions(scopeExecution).stream()
-        .map(child -> startability.getModelActivity((ActivityImpl) child.getActivity()).getId())
+    List<String> enabledIds = STARTABILITY.getEnabledExecutions(scopeExecution).stream()
+        .map(child -> STARTABILITY.getModelActivity((ActivityImpl) child.getActivity()).getId())
         .collect(Collectors.toCollection(ArrayList::new));
     scopeExecution.setVariableLocal(AD_HOC_ENABLED_ACTIVITY_IDS, enabledIds);
     scopeExecution.setVariableLocal(NUMBER_OF_ENABLED_AD_HOC_ACTIVITIES, enabledIds.size());
@@ -469,7 +465,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
           && activity.getFlowScope() instanceof ActivityImpl flowScope) {
         activity = flowScope;
       }
-      return startability.getModelActivity(activity).getId();
+      return STARTABILITY.getModelActivity(activity).getId();
     }
     for (ActivityExecution child : execution.getNonEventScopeExecutions()) {
       String activityId = getActiveAdHocActivityId(child, scopeActivity);
@@ -485,7 +481,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       return null;
     }
     if (endedExecution.getActivity() instanceof ActivityImpl activity) {
-      return startability.getModelActivity(activity).getId();
+      return STARTABILITY.getModelActivity(activity).getId();
     }
     if (endedExecution.getCurrentActivityId() != null) {
       return endedExecution.getCurrentActivityId();
@@ -500,7 +496,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   protected List<ActivityImpl> getInitiallyActivatableChildActivities(ActivityExecution scopeExecution) {
     ActivityImpl adHocSubProcess = (ActivityImpl) scopeExecution.getActivity();
-    return startability.getPotentiallyStartableActivities(adHocSubProcess);
+    return STARTABILITY.getPotentiallyStartableActivities(adHocSubProcess);
   }
 
   protected List<String> getConfiguredActiveTaskIds(ActivityExecution scopeExecution) {
@@ -518,16 +514,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     }
 
     if (activeTasks instanceof Collection<?> tasks) {
-      List<String> activityIds = new ArrayList<>();
-      for (Object value : tasks) {
-        if (value != null) {
-          String activityId = String.valueOf(value).trim();
-          if (!activityId.isEmpty()) {
-            activityIds.add(activityId);
-          }
-        }
-      }
-      return activityIds;
+      return tasks.stream().filter(Objects::nonNull).map(value -> String.valueOf(value).trim())
+          .filter(activityId -> !activityId.isEmpty()).collect(Collectors.toCollection(ArrayList::new));
     }
 
     if (activeTasks instanceof String taskIds) {
@@ -585,7 +573,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   protected void validateOrderingAllowsInitialActivities(ActivityExecution scopeExecution,
       List<ActivityImpl> adHocActivities) {
     ActivityImpl adHocActivity = (ActivityImpl) scopeExecution.getActivity();
-    if (startability.isSequentialOrdering(adHocActivity) && adHocActivities.size() > 1) {
+    if (STARTABILITY.isSequentialOrdering(adHocActivity) && adHocActivities.size() > 1) {
       throw new BadUserRequestException(
           "Sequential adHocSubProcess '" + adHocActivity.getId()
               + "' can activate only one activity from activeTasksCollection");
@@ -601,7 +589,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     List<ActivityExecution> children = new ArrayList<>();
     List<Boolean> enabledTokens = new ArrayList<>();
     for (ActivityImpl activity : activities) {
-      ActivityExecution ready = startability.getEnabledExecutionForActivation(scopeExecution, activity);
+      ActivityExecution ready = STARTABILITY.getEnabledExecutionForActivation(scopeExecution, activity);
       boolean enabledToken = ready != null;
       ActivityExecution child;
       if (enabledToken) {
@@ -611,7 +599,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
         child = scopeExecution.createExecution();
         child.setConcurrent(true);
         child.setScope(false);
-        child.setActivity(startability.getExecutionActivity(activity));
+        child.setActivity(STARTABILITY.getExecutionActivity(activity));
         child.setActivityInstanceId(null);
       }
       child.setActive(true);
@@ -625,12 +613,12 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     for (int i = 0; i < children.size(); i++) {
       ActivityExecution child = children.get(i);
       if (!child.isEnded() && !((PvmExecutionImpl) child).isRemoved()
-          && startability.getDirectChild(scopeExecution, child).getParent() == scopeExecution) {
+          && STARTABILITY.getDirectChild(scopeExecution, child).getParent() == scopeExecution) {
         if (enabledTokens.get(i).booleanValue()) {
           ((PvmExecutionImpl) child).performOperation(
               org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation.TRANSITION_CREATE_SCOPE);
         } else {
-          child.executeActivity(startability.getExecutionActivity(activities.get(i)));
+          child.executeActivity(STARTABILITY.getExecutionActivity(activities.get(i)));
         }
       }
     }

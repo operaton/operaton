@@ -15,6 +15,10 @@
  */
 package org.operaton.bpm.engine.test.bpmn.subprocess;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -68,6 +72,29 @@ class AdHocEnabledStateTest {
     assertThat(taskService.createTaskQuery().taskDefinitionKey("b").count()).isEqualTo(1);
     complete("b");
     assertAfter();
+  }
+
+  @Test
+  void discoveryMetadataSurvivesSerialization() throws Exception {
+    String scope = start("", chain(), Map.of());
+    trigger(scope, "a");
+    complete("a");
+    AdHocActivity original = enabled(scope, "b");
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    try (ObjectOutputStream output = new ObjectOutputStream(bytes)) {
+      output.writeObject(original);
+    }
+    AdHocActivity restored;
+    try (ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()))) {
+      restored = (AdHocActivity) input.readObject();
+    }
+    assertThat(restored.getActivityId()).isEqualTo(original.getActivityId());
+    assertThat(restored.getActivityName()).isEqualTo(original.getActivityName());
+    assertThat(restored.getActivityType()).isEqualTo(original.getActivityType());
+    assertThat(restored.isStarterActivity()).isEqualTo(original.isStarterActivity());
+    List<String> executionIds = restored.getEnabledExecutionIds();
+    assertThat(executionIds).isNotEmpty().containsExactlyElementsOf(original.getEnabledExecutionIds());
+    assertThatThrownBy(() -> executionIds.add("unexpected")).isInstanceOf(UnsupportedOperationException.class);
   }
 
   @Test
@@ -184,8 +211,11 @@ class AdHocEnabledStateTest {
     trigger(scope, "a");
     complete("a");
     List<String> tokens = enabled(scope, "b").getEnabledExecutionIds();
-    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, List.of("b", "missing"),
-        Map.of("b", Map.of("unwanted", true)))).isInstanceOf(BadUserRequestException.class);
+    List<String> requestedActivities = List.of("b", "missing");
+    Map<String, Map<String, Object>> requestVariables = Map.of("b", Map.of("unwanted", true));
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(scope, requestedActivities,
+        requestVariables))
+        .isInstanceOf(BadUserRequestException.class);
     assertThat(enabled(scope, "b").getEnabledExecutionIds()).isEqualTo(tokens);
     assertThat(runtimeService.createVariableInstanceQuery().variableName("unwanted").count()).isZero();
     assertThat(taskService.createTaskQuery().count()).isZero();
@@ -416,7 +446,8 @@ class AdHocEnabledStateTest {
     assertThatThrownBy(() -> runtimeService.getStartableAdHocActivities(execution))
         .isInstanceOf(BadUserRequestException.class);
     assertThatThrownBy(() -> trigger(execution, activity)).isInstanceOf(BadUserRequestException.class);
-    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(execution, Map.of("mustNotWrite", true)))
+    Map<String, Object> requestVariables = Map.of("mustNotWrite", true);
+    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(execution, requestVariables))
         .isInstanceOf(BadUserRequestException.class);
     assertThat(runtimeService.createVariableInstanceQuery().variableName("mustNotWrite").count()).isZero();
   }

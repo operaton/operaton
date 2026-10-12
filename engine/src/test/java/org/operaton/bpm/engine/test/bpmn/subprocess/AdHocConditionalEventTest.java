@@ -150,7 +150,8 @@ class AdHocConditionalEventTest {
     Task sourceTask = taskService.createTaskQuery().taskDefinitionKey("a").singleResult();
     String sourceExecution = sourceTask.getExecutionId();
 
-    assertThatThrownBy(() -> taskService.complete(sourceTask.getId()))
+    String sourceTaskId = sourceTask.getId();
+    assertThatThrownBy(() -> taskService.complete(sourceTaskId))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("conditional handler failed");
 

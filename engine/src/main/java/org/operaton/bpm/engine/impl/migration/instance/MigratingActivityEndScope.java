@@ -17,6 +17,8 @@ package org.operaton.bpm.engine.impl.migration.instance;
 
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Adapts the retained scope of an activity-end transition to the existing scope dependency parsers.
  * The activity already ended, so this is not another migrating activity instance and must not
@@ -27,7 +29,7 @@ public class MigratingActivityEndScope extends MigratingActivityInstance {
   protected final MigratingTransitionInstance transitionInstance;
 
   public MigratingActivityEndScope(MigratingTransitionInstance transitionInstance) {
-    super(transitionInstance.getSourceScope(), transitionInstance.resolveRepresentativeExecution());
+    super(requireNonNull(transitionInstance.getSourceScope()), transitionInstance.resolveRepresentativeExecution());
     this.transitionInstance = transitionInstance;
     sourceScope = transitionInstance.getSourceScope();
     targetScope = transitionInstance.getTargetScope();

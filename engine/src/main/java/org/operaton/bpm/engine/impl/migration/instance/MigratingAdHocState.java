@@ -33,6 +33,7 @@ import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability.AD_HO
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETED_ACTIVITY_IDS;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETION_CONDITION_SATISFIED;
 import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_LAST_COMPLETED_ACTIVITY_ID;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES;
 
 /**
  * Rewrites the engine-owned activity references after the scope and its variables have migrated.
@@ -45,7 +46,7 @@ public class MigratingAdHocState implements MigratingInstance {
 
   public static final List<String> STATE_VARIABLES = List.of(
       "adHocActiveActivityIds", "nrOfActiveAdHocActivities", AD_HOC_COMPLETED_ACTIVITY_IDS,
-      "nrOfCompletedAdHocActivities", "adHocLastCompletedActivityId", AD_HOC_COMPLETION_CONDITION_SATISFIED,
+      NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES, AD_HOC_LAST_COMPLETED_ACTIVITY_ID, AD_HOC_COMPLETION_CONDITION_SATISFIED,
       "adHocEnabledActivityIds", "nrOfEnabledAdHocActivities", "adHocEnabledActivity", RETIRED_CONTEXT);
 
   /** Initialize a fresh owner or resume identified retired state without replaying initial activities. */
@@ -56,8 +57,8 @@ public class MigratingAdHocState implements MigratingInstance {
       return;
     }
     execution.setVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS, new ArrayList<String>());
-    execution.setVariableLocal("nrOfCompletedAdHocActivities", 0);
-    execution.setVariableLocal("adHocLastCompletedActivityId", null);
+    execution.setVariableLocal(NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES, 0);
+    execution.setVariableLocal(AD_HOC_LAST_COMPLETED_ACTIVITY_ID, null);
     execution.setVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED, false);
   }
 
@@ -66,11 +67,11 @@ public class MigratingAdHocState implements MigratingInstance {
     if (!execution.hasVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS)) {
       execution.setVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS, new ArrayList<String>());
     }
-    if (!execution.hasVariableLocal("nrOfCompletedAdHocActivities")) {
-      execution.setVariableLocal("nrOfCompletedAdHocActivities", 0);
+    if (!execution.hasVariableLocal(NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)) {
+      execution.setVariableLocal(NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES, 0);
     }
-    if (!execution.hasVariableLocal("adHocLastCompletedActivityId")) {
-      execution.setVariableLocal("adHocLastCompletedActivityId", null);
+    if (!execution.hasVariableLocal(AD_HOC_LAST_COMPLETED_ACTIVITY_ID)) {
+      execution.setVariableLocal(AD_HOC_LAST_COMPLETED_ACTIVITY_ID, null);
     }
     if (!execution.hasVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED)) {
       execution.setVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED, false);

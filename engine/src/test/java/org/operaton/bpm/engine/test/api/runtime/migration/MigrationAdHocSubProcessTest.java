@@ -585,7 +585,8 @@ class MigrationAdHocSubProcessTest {
     trigger(secondScope, "taskA", "taskB");
     MigrationPlan plan = equalPlan(source, target);
 
-    assertThatThrownBy(() -> runtimeService.newMigration(plan).processInstanceIds(first.getId(), second.getId()).execute())
+    var migration = runtimeService.newMigration(plan).processInstanceIds(first.getId(), second.getId());
+    assertThatThrownBy(migration::execute)
         .isInstanceOf(MigratingProcessInstanceValidationException.class)
         .hasMessageContaining("sequential ad-hoc subprocess");
 
@@ -718,7 +719,8 @@ class MigrationAdHocSubProcessTest {
     runtimeService.completeAdHocSubProcess(scope(process, "adhoc"));
     assertAfterAndFinish(process);
     MigrationPlan plan = equalPlan(source, target);
-    assertThatThrownBy(() -> runtimeService.newMigration(plan).processInstanceIds(process.getId()).execute())
+    var migration = runtimeService.newMigration(plan).processInstanceIds(process.getId());
+    assertThatThrownBy(migration::execute)
         .isInstanceOf(ProcessEngineException.class);
   }
 

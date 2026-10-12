@@ -35,6 +35,7 @@ import org.operaton.bpm.model.bpmn.instance.AdHocSubProcess;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Completes an active ad-hoc subprocess execution.
@@ -64,7 +65,7 @@ public class CompleteAdHocSubProcessCmd implements Command<Void>, Serializable {
     ensureNotNull(BadUserRequestException.class, "execution " + executionId + " doesn't exist", "execution", execution);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
-      checker.checkUpdateProcessInstance(execution);
+      checker.checkUpdateProcessInstance(requireNonNull(execution));
     }
 
     if (execution.isSuspended()) {

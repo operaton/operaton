@@ -194,6 +194,8 @@ import static java.util.Objects.requireNonNull;
 @SuppressWarnings({"java:S3776", "java:S6541"}) // this class is complex by its nature
 public @NullMarked class BpmnParse extends Parse {
 
+  protected static final String START_EVENT_TAG = "startEvent";
+  protected static final String END_EVENT_TAG = "endEvent";
   protected static final String TRIGGERED_BY_EVENT = "triggeredByEvent";
 
   public static final String MULTI_INSTANCE_BODY_ID_SUFFIX = "#multiInstanceBody";
@@ -987,7 +989,7 @@ public @NullMarked class BpmnParse extends Parse {
    *          The {@link ScopeImpl} to which the start events must be added.
    */
   public void parseStartEvents(Element parentElement, ScopeImpl scope) {
-    List<Element> startEventElements = parentElement.elements("startEvent");
+    List<Element> startEventElements = parentElement.elements(START_EVENT_TAG);
     List<ActivityImpl> startEventActivities = new ArrayList<>();
     if (!startEventElements.isEmpty()) {
       for (Element startEventElement : startEventElements) {
@@ -1028,7 +1030,7 @@ public @NullMarked class BpmnParse extends Parse {
   protected void selectInitial(List<ActivityImpl> startEventActivities, ProcessDefinitionEntity processDefinition, Element parentElement) {
     ActivityImpl initial = null;
     // validate that there is s single none start event / timer start event:
-    List<String> exclusiveStartEventTypes = List.of("startEvent", "startTimerEvent");
+    List<String> exclusiveStartEventTypes = List.of(START_EVENT_TAG, "startTimerEvent");
 
     for (ActivityImpl activityImpl : startEventActivities) {
       if (exclusiveStartEventTypes.contains(activityImpl.getProperty(BpmnProperties.TYPE.name()))) {
@@ -3146,7 +3148,7 @@ public @NullMarked class BpmnParse extends Parse {
    *          The {@link ScopeImpl} to which the end events must be added.
    */
   public void parseEndEvents(Element parentElement, ScopeImpl scope) {
-    for (Element endEventElement : parentElement.elements("endEvent")) {
+    for (Element endEventElement : parentElement.elements(END_EVENT_TAG)) {
       ActivityImpl activity = createActivityOnScope(endEventElement, scope);
 
       Element errorEventDefinition = endEventElement.element(ERROR_EVENT_DEFINITION);
@@ -3944,7 +3946,7 @@ public @NullMarked class BpmnParse extends Parse {
     // BPMN 2.0.2 section 10.3.5: ad-hoc scopes have no start or end events.
     // Nested ordinary/event subprocesses retain their own normal event rules.
     for (Element child : adHocSubProcessElement.elements()) {
-      if ("startEvent".equals(child.getTagName()) || "endEvent".equals(child.getTagName())) {
+      if (START_EVENT_TAG.equals(child.getTagName()) || END_EVENT_TAG.equals(child.getTagName())) {
         addError("An ad-hoc subprocess must not contain a direct " + child.getTagName(), child);
       }
     }
@@ -4989,7 +4991,7 @@ public @NullMarked class BpmnParse extends Parse {
   protected boolean checkActivityOutputParameterSupported(Element activityElement, ActivityImpl activity) {
     String tagName = activityElement.getTagName();
 
-    if ("endEvent".equals(tagName)) {
+    if (END_EVENT_TAG.equals(tagName)) {
       addError("operaton:outputParameter not allowed for element type '%s'.".formatted(tagName), activityElement);
       return true;
     } else if (getMultiInstanceScope(activity) != null) {

@@ -36,6 +36,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Selects starter activities or enabled tokens inside an entered ad-hoc subprocess scope.
@@ -45,7 +46,7 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
   private static final long serialVersionUID = 1L;
 
   protected final String executionId;
-  protected final Collection<String> activityIds;
+  private final Collection<String> activityIds;
   protected final Map<String, Map<String, Object>> activityVariables;
   protected static final AdHocStartability STARTABILITY = AdHocStartability.INSTANCE;
 
@@ -70,7 +71,7 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
     ensureNotNull(BadUserRequestException.class, "execution " + executionId + " doesn't exist", "execution", execution);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
-      checker.checkUpdateProcessInstance(execution);
+      checker.checkUpdateProcessInstance(requireNonNull(execution));
     }
 
     if (execution.isSuspended()) {

@@ -230,7 +230,8 @@ class MigrationAdHocScopedActivityEndTest {
     runtime.setVariableLocal(job.getExecutionId(), "shadow", "scope");
     MigrationPlan plan = runtime.createMigrationPlan(source.getId(), target.getId()).mapEqualActivities().build();
 
-    assertThatThrownBy(() -> runtime.newMigration(plan).processInstanceIds(process.getId()).execute())
+    var migration = runtime.newMigration(plan).processInstanceIds(process.getId());
+    assertThatThrownBy(migration::execute)
         .isInstanceOf(MigratingProcessInstanceValidationException.class)
         .hasMessageContaining("Migrating to a non-scope activity would overwrite one of them");
 

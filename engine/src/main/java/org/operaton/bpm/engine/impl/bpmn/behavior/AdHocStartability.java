@@ -79,7 +79,7 @@ public class AdHocStartability {
     return adHocScope.getActivities().stream()
         .map(this::getModelActivity)
         .filter(activity -> isPotentiallyStartableActivity(adHocScope, activity))
-        .collect(Collectors.toList());
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   /**
@@ -100,7 +100,7 @@ public class AdHocStartability {
       activities.putIfAbsent(activity.getId(), activity);
     }
     return activities.values().stream().filter(activity -> canActivate(adHocScopeExecution, activity))
-        .collect(Collectors.toList());
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   /**
@@ -228,7 +228,7 @@ public class AdHocStartability {
     ActivityImpl executionActivity = getExecutionActivity(activity);
     return getEnabledExecutions(scope).stream()
         .filter(execution -> execution.getActivity() == executionActivity)
-        .collect(Collectors.toList());
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   /** Select deterministically among tokens whose outer activity may currently run. */

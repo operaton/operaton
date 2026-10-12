@@ -17,6 +17,7 @@ package org.operaton.bpm.engine.test.bpmn.subprocess;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
@@ -37,6 +38,9 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
 import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.cmd.CompleteAdHocSubProcessCmd;
+import org.operaton.bpm.engine.impl.cmd.TriggerAdHocActivitiesCmd;
 import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -75,19 +79,25 @@ class AdHocEnabledStateTest {
   }
 
   @Test
+  void changingDiscoveryResultDoesNotChangeAvailableActivities() {
+    String scope = start("", chain(), Map.of());
+    List<AdHocActivity> activities = runtimeService.getStartableAdHocActivities(scope);
+    assertThat(activities).isNotEmpty();
+
+    activities.clear();
+
+    assertThat(activities).isEmpty();
+    assertThat(runtimeService.getStartableAdHocActivities(scope)).extracting(AdHocActivity::getActivityId)
+        .contains("a");
+  }
+
+  @Test
   void discoveryMetadataSurvivesSerialization() throws Exception {
     String scope = start("", chain(), Map.of());
     trigger(scope, "a");
     complete("a");
     AdHocActivity original = enabled(scope, "b");
-    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-    try (ObjectOutputStream output = new ObjectOutputStream(bytes)) {
-      output.writeObject(original);
-    }
-    AdHocActivity restored;
-    try (ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()))) {
-      restored = (AdHocActivity) input.readObject();
-    }
+    AdHocActivity restored = (AdHocActivity) roundTrip(original);
     assertThat(restored.getActivityId()).isEqualTo(original.getActivityId());
     assertThat(restored.getActivityName()).isEqualTo(original.getActivityName());
     assertThat(restored.getActivityType()).isEqualTo(original.getActivityType());
@@ -95,6 +105,46 @@ class AdHocEnabledStateTest {
     List<String> executionIds = restored.getEnabledExecutionIds();
     assertThat(executionIds).isNotEmpty().containsExactlyElementsOf(original.getEnabledExecutionIds());
     assertThatThrownBy(() -> executionIds.add("unexpected")).isInstanceOf(UnsupportedOperationException.class);
+  }
+
+  @Test
+  void serializableCommandsRetainActivityIdsAndVariables() throws Exception {
+    String scope = start("", chain(), Map.of());
+    String processId = runtimeService.createExecutionQuery().executionId(scope).singleResult().getProcessInstanceId();
+    var configuration = (ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration();
+    var executor = configuration.getCommandExecutorTxRequired();
+    var trigger = new TriggerAdHocActivitiesCmd(scope, List.of("a"), Map.of("a", Map.of("requestPayload", 42)));
+
+    executor.execute((TriggerAdHocActivitiesCmd) roundTrip(trigger));
+
+    Task task = taskService.createTaskQuery().taskDefinitionKey("a").singleResult();
+    assertThat(task).isNotNull();
+    assertThat(runtimeService.getVariableLocal(task.getExecutionId(), "requestPayload")).isEqualTo(42);
+    var completion = new CompleteAdHocSubProcessCmd(scope, Map.of("completionPayload", "retained"));
+
+    executor.execute((CompleteAdHocSubProcessCmd) roundTrip(completion));
+
+    assertAfter();
+    assertThat(runtimeService.getVariable(processId, "completionPayload")).isEqualTo("retained");
+  }
+
+  @Test
+  void nonSerializableCommandVariablesAreNotSilentlyDropped() {
+    var trigger = new TriggerAdHocActivitiesCmd("unused", List.of("a"), Map.of("a", Map.of("value", new Object())));
+    var completion = new CompleteAdHocSubProcessCmd("unused", Map.of("value", new Object()));
+
+    assertThatThrownBy(() -> roundTrip(trigger)).isInstanceOf(NotSerializableException.class);
+    assertThatThrownBy(() -> roundTrip(completion)).isInstanceOf(NotSerializableException.class);
+  }
+
+  private Object roundTrip(Object original) throws Exception {
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    try (ObjectOutputStream output = new ObjectOutputStream(bytes)) {
+      output.writeObject(original);
+    }
+    try (ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()))) {
+      return input.readObject();
+    }
   }
 
   @Test

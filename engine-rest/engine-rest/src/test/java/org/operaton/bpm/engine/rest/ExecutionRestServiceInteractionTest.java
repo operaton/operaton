@@ -155,7 +155,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetStartableAdHocActivities() {
+  void testGetStartableAdHocActivities() {
     AdHocActivity taskA = mock(AdHocActivity.class);
     when(taskA.getActivityId()).thenReturn("taskA");
     when(taskA.getActivityName()).thenReturn("Task A");
@@ -183,7 +183,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetStartableAdHocActivitiesThrowsBadUserRequestException() {
+  void testGetStartableAdHocActivitiesThrowsBadUserRequestException() {
     doThrow(new BadUserRequestException("execution " + MockProvider.EXAMPLE_EXECUTION_ID + " is not waiting in an adHocSubProcess"))
       .when(runtimeServiceMock).getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID);
 
@@ -196,7 +196,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testGetStartableAdHocActivitiesThrowsAuthorizationException() {
+  void testGetStartableAdHocActivitiesThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(runtimeServiceMock)
       .getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID);
@@ -251,7 +251,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testTriggerAdHocActivitiesThrowsAuthorizationException() {
+  void testTriggerAdHocActivitiesThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(runtimeServiceMock)
       .triggerAdHocActivities(anyString(), any(), any());
@@ -267,7 +267,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testTriggerAdHocActivitiesThrowsProcessEngineException() {
+  void testTriggerAdHocActivitiesThrowsProcessEngineException() {
     doThrow(new ProcessEngineException("expected exception")).when(runtimeServiceMock)
       .triggerAdHocActivities(anyString(), any(), any());
 
@@ -282,7 +282,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testTriggerAdHocActivitiesWithNotSupportedVariableType() {
+  void testTriggerAdHocActivitiesWithNotSupportedVariableType() {
     Map<String, Object> instruction = new HashMap<>();
     instruction.put("activityId", "taskA");
     instruction.put("variables", VariablesBuilder.create().variable("aKey", "1abc", "X").getVariables());
@@ -298,7 +298,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testTriggerAdHocActivitiesWithNullActivitiesThrowsBadUserRequestException() {
+  void testTriggerAdHocActivitiesWithNullActivitiesThrowsBadUserRequestException() {
     doThrow(new BadUserRequestException("activityIds is empty")).when(runtimeServiceMock)
       .triggerAdHocActivities(anyString(), any(), any());
 
@@ -314,7 +314,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testCompleteAdHocSubProcess() {
+  void testCompleteAdHocSubProcess() {
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body("{}")
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(COMPLETE_AD_HOC_SUB_PROCESS_URL);
@@ -343,7 +343,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testCompleteAdHocSubProcessWithNotSupportedVariableType() {
+  void testCompleteAdHocSubProcessWithNotSupportedVariableType() {
     Map<String, Object> payload = new HashMap<>();
     payload.put("variables", VariablesBuilder.create().variable("aKey", "1abc", "X").getVariables());
 
@@ -355,7 +355,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testCompleteAdHocSubProcessThrowsAuthorizationException() {
+  void testCompleteAdHocSubProcessThrowsAuthorizationException() {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(runtimeServiceMock)
       .completeAdHocSubProcess(anyString(), isNull());
@@ -368,7 +368,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testCompleteAdHocSubProcessThrowsProcessEngineException() {
+  void testCompleteAdHocSubProcessThrowsProcessEngineException() {
     doThrow(new ProcessEngineException("expected exception")).when(runtimeServiceMock)
       .completeAdHocSubProcess(anyString(), isNull());
 
@@ -380,7 +380,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testCompleteAdHocSubProcessThrowsBadUserRequestException() {
+  void testCompleteAdHocSubProcessThrowsBadUserRequestException() {
     doThrow(new BadUserRequestException("adHocSubProcess has active child activities and cannot be completed"))
       .when(runtimeServiceMock).completeAdHocSubProcess(anyString(), isNull());
 
@@ -393,7 +393,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  public void testSignalWithUnparseableIntegerVariable() {
+  void testSignalWithUnparseableIntegerVariable() {
     String variableKey = "aKey";
     String variableValue = "1abc";
     String variableType = "Integer";

@@ -704,6 +704,24 @@ public class MigrationAdHocEnabledActivityTest {
     }
     assertThat(runtimeService.getStartableAdHocActivities(scope)).extracting(AdHocActivity::getActivityId)
         .contains("renamedB");
+    assertSuspendedCommandsLeaveStateUnchanged(process, scope, token, runningTask);
+
+    runtimeService.activateProcessInstanceById(process.getId());
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).list())
+        .noneMatch(Execution::isSuspended);
+    complete(process, "taskC");
+    trigger(scope, "renamedB");
+    complete(process, "renamedB");
+    assertThat(taskService.createTaskQuery().processInstanceId(process.getId()).count()).isZero();
+    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES)).isEqualTo(0);
+    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_ENABLED_AD_HOC_ACTIVITIES)).isEqualTo(0);
+    assertThat(runtimeService.getActivityInstance(process.getId()).getActivityInstances("inner")).isEmpty();
+    runtimeService.completeAdHocSubProcess(scope);
+    finish(process);
+  }
+
+  private void assertSuspendedCommandsLeaveStateUnchanged(ProcessInstance process, String scope,
+      String token, String runningTask) {
     Map<String, Object> scopeState = runtimeService.getVariablesLocal(scope);
     List<String> executionIds = runtimeService.createExecutionQuery().processInstanceId(process.getId()).list().stream()
         .map(Execution::getId).toList();
@@ -727,19 +745,6 @@ public class MigrationAdHocEnabledActivityTest {
     assertThat(runtimeService.createVariableInstanceQuery().processInstanceIdIn(process.getId())
         .variableName("blockedCompletion").count()).isZero();
     assertNoJobs(process);
-
-    runtimeService.activateProcessInstanceById(process.getId());
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(process.getId()).list())
-        .noneMatch(Execution::isSuspended);
-    complete(process, "taskC");
-    trigger(scope, "renamedB");
-    complete(process, "renamedB");
-    assertThat(taskService.createTaskQuery().processInstanceId(process.getId()).count()).isZero();
-    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES)).isEqualTo(0);
-    assertThat(runtimeService.getVariableLocal(scope, NUMBER_OF_ENABLED_AD_HOC_ACTIVITIES)).isEqualTo(0);
-    assertThat(runtimeService.getActivityInstance(process.getId()).getActivityInstances("inner")).isEmpty();
-    runtimeService.completeAdHocSubProcess(scope);
-    finish(process);
   }
 
   @ParameterizedTest

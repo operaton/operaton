@@ -98,28 +98,7 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
     }
 
     if (deferredCompletion && hasOutgoingActivityTransitions(activity)) {
-      // Only a persisted normal-completion phase can select flows here. Generic
-      // END also retires unhandled errors and joined tokens and must never do so.
-      // Migration may move a deferred scoped activity end into an ordinary flow scope.
-      // Its end listeners already ran; output mappings and flow selection are still pending.
-      boolean destroyScope = execution.isScope() && activity.isScope()
-          && !LegacyBehavior.destroySecondNonScope(execution);
-      if (destroyScope && execution.getActivity().getIoMapping() != null && !execution.isSkipIoMappings()) {
-        execution.getActivity().getIoMapping().executeOutputParameters(execution);
-      }
-      List<PvmTransition> transitions = new BpmnActivityBehavior().selectOutgoingTransitions(execution);
-      PvmExecutionImpl propagatingExecution = execution;
-      if (destroyScope) {
-        execution.destroy(true);
-        if (!execution.isConcurrent()) {
-          propagatingExecution = execution.getParent();
-          propagatingExecution.setActivity(activity);
-          execution.remove();
-        }
-      }
-      propagatingExecution.setEnded(false);
-      propagatingExecution.setActive(true);
-      PvmAtomicOperationTransitionDestroyScope.takeTransitions(propagatingExecution, transitions, true);
+      completeDeferredActivity(execution, activity);
       return;
     }
 
@@ -143,6 +122,31 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
     } else {
       executeNonProcessDefinition((PvmActivity) flowScope, propagatingExecution, activity);
     }
+  }
+
+  private static void completeDeferredActivity(PvmExecutionImpl execution, PvmActivity activity) {
+    // Only a persisted normal-completion phase can select flows here. Generic
+    // END also retires unhandled errors and joined tokens and must never do so.
+    // Migration may move a deferred scoped activity end into an ordinary flow scope.
+    // Its end listeners already ran; output mappings and flow selection are still pending.
+    boolean destroyScope = execution.isScope() && activity.isScope()
+        && !LegacyBehavior.destroySecondNonScope(execution);
+    if (destroyScope && execution.getActivity().getIoMapping() != null && !execution.isSkipIoMappings()) {
+      execution.getActivity().getIoMapping().executeOutputParameters(execution);
+    }
+    List<PvmTransition> transitions = new BpmnActivityBehavior().selectOutgoingTransitions(execution);
+    PvmExecutionImpl propagatingExecution = execution;
+    if (destroyScope) {
+      execution.destroy(true);
+      if (!execution.isConcurrent()) {
+        propagatingExecution = execution.getParent();
+        propagatingExecution.setActivity(activity);
+        execution.remove();
+      }
+    }
+    propagatingExecution.setEnded(false);
+    propagatingExecution.setActive(true);
+    PvmAtomicOperationTransitionDestroyScope.takeTransitions(propagatingExecution, transitions, true);
   }
 
   private static boolean hasOutgoingActivityTransitions(PvmActivity activity) {

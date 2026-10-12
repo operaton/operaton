@@ -16,6 +16,7 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ import org.operaton.bpm.engine.impl.runtime.AdHocActivityImpl;
 import org.operaton.bpm.engine.runtime.AdHocActivity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Discovers activities that can currently be triggered in an active ad-hoc subprocess.
@@ -53,7 +55,7 @@ public class GetStartableAdHocActivitiesCmd implements Command<List<AdHocActivit
     ensureNotNull(BadUserRequestException.class, "execution " + executionId + " doesn't exist", "execution", execution);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
-      checker.checkReadProcessInstance(execution);
+      checker.checkReadProcessInstance(requireNonNull(execution));
     }
 
     ActivityImpl adHocActivity = execution.getActivity();
@@ -65,6 +67,6 @@ public class GetStartableAdHocActivitiesCmd implements Command<List<AdHocActivit
 
     return STARTABILITY.getStartableActivities(execution).stream()
         .map(activity -> AdHocActivityImpl.fromActivity(activity, execution))
-        .collect(Collectors.toList());
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 }

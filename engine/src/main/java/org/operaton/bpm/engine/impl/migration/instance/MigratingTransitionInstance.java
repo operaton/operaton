@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler.Asyn
 import org.operaton.bpm.engine.impl.migration.MigrationLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
-import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;

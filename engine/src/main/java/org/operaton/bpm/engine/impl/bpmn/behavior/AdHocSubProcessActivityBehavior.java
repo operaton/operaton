@@ -447,7 +447,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     ActivityImpl scopeActivity = (ActivityImpl) scopeExecution.getActivity();
     List<String> activityIds = children.stream()
         .map(child -> getActiveAdHocActivityId(child, scopeActivity))
-        .filter(activityId -> activityId != null)
+        .filter(Objects::nonNull)
         .collect(Collectors.toCollection(ArrayList::new));
     scopeExecution.setVariableLocal(AD_HOC_ACTIVE_ACTIVITY_IDS, activityIds);
     scopeExecution.setVariableLocal(NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES, children.size());
@@ -553,7 +553,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     List<String> invalidActivityIds = configuredActiveTaskIds.stream()
         .filter(activityId -> !starterActivityIds.contains(activityId))
         .distinct()
-        .collect(Collectors.toList());
+        .toList();
 
     if (!invalidActivityIds.isEmpty()) {
       throw new BadUserRequestException(
@@ -567,7 +567,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     Set<String> configuredIds = new LinkedHashSet<>(configuredActiveTaskIds);
     return starterActivities.stream()
         .filter(activity -> configuredIds.contains(activity.getId()))
-        .collect(Collectors.toList());
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   protected void validateOrderingAllowsInitialActivities(ActivityExecution scopeExecution,

@@ -18,11 +18,12 @@ package org.operaton.bpm.integrationtest.functional.subprocess;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -47,7 +48,7 @@ public class AdHocSubProcessIntegrationTest extends AbstractFoxPlatformIntegrati
   }
 
   @Test
-  public void shouldTriggerAdHocActivitiesAndCompleteSubProcess() {
+  void shouldTriggerAdHocActivitiesAndCompleteSubProcess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessIdle");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -95,7 +96,7 @@ public class AdHocSubProcessIntegrationTest extends AbstractFoxPlatformIntegrati
   }
 
   @Test
-  public void shouldCompleteIdleAdHocSubProcessWithVariables() {
+  void shouldCompleteIdleAdHocSubProcessWithVariables() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessIdle");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -124,7 +125,7 @@ public class AdHocSubProcessIntegrationTest extends AbstractFoxPlatformIntegrati
   }
 
   @Test
-  public void shouldCompleteAdHocSubProcessAndCancelActiveTasksWhenCancelRemainingIsTrue() {
+  void shouldCompleteAdHocSubProcessAndCancelActiveTasksWhenCancelRemainingIsTrue() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasicCancelRemaining");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -172,7 +173,7 @@ public class AdHocSubProcessIntegrationTest extends AbstractFoxPlatformIntegrati
   }
 
   @Test
-  public void shouldRejectTriggeringDownstreamActivity() {
+  void shouldRejectTriggeringDownstreamActivity() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessIdle");
 
     Execution adHocExecution = runtimeService.createExecutionQuery()
@@ -182,12 +183,10 @@ public class AdHocSubProcessIntegrationTest extends AbstractFoxPlatformIntegrati
 
     assertNotNull(adHocExecution);
 
-    try {
-      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Arrays.asList("taskAfter"), null);
-      fail("Expected BadUserRequestException");
-    } catch (BadUserRequestException e) {
-      assertNotNull(e);
-    }
+    String executionId = adHocExecution.getId();
+    List<String> activities = Arrays.asList("taskAfter");
+    assertThrows(BadUserRequestException.class,
+        () -> runtimeService.triggerAdHocActivities(executionId, activities, null));
 
     assertNotNull(runtimeService.createExecutionQuery()
         .processInstanceId(processInstance.getId())

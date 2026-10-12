@@ -23,6 +23,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ManagementService;
@@ -82,6 +85,19 @@ class AdHocSubProcessEdgeCaseTest {
 
     assertBadUserRequestContains(() -> runtimeService.getStartableAdHocActivities(execution.getId()),
         "is not waiting in an adHocSubProcess");
+  }
+
+  @ParameterizedTest
+  @NullAndEmptySource
+  @ValueSource(strings = {" ", "doesNotExist"})
+  void invalidExecutionIdsKeepBadUserRequestException(String executionId) {
+    List<String> activities = Collections.singletonList("taskA");
+    assertThatThrownBy(() -> runtimeService.getStartableAdHocActivities(executionId))
+        .isInstanceOf(BadUserRequestException.class);
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(executionId, activities, null))
+        .isInstanceOf(BadUserRequestException.class);
+    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(executionId))
+        .isInstanceOf(BadUserRequestException.class);
   }
 
   @Deployment(resources = IDLE_MODEL)

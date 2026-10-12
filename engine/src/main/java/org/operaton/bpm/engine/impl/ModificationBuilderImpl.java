@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.jspecify.annotations.NullMarked;
@@ -45,7 +44,7 @@ public @NullMarked class ModificationBuilderImpl implements ModificationBuilder 
   protected CommandExecutor commandExecutor;
   protected @Nullable ProcessInstanceQuery processInstanceQuery;
   protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
-  protected List<String> processInstanceIds;
+  protected @Nullable List<String> processInstanceIds;
   protected List<AbstractProcessInstanceModificationCommand> instructions;
   protected String processDefinitionId;
 
@@ -97,7 +96,7 @@ public @NullMarked class ModificationBuilderImpl implements ModificationBuilder 
   }
 
   @Override
-  public ModificationBuilder processInstanceIds(List<String> processInstanceIds) {
+  public ModificationBuilder processInstanceIds(@Nullable List<String> processInstanceIds) {
     this.processInstanceIds = processInstanceIds;
     return this;
   }
@@ -108,7 +107,7 @@ public @NullMarked class ModificationBuilderImpl implements ModificationBuilder 
       this.processInstanceIds = Collections.emptyList();
     }
     else {
-      this.processInstanceIds = Stream.of(processInstanceIds).filter(Objects::nonNull).toList();
+      this.processInstanceIds = Stream.of(processInstanceIds).toList();
     }
     return this;
   }
@@ -168,7 +167,7 @@ public @NullMarked class ModificationBuilderImpl implements ModificationBuilder 
     return historicProcessInstanceQuery;
   }
 
-  public List<String> getProcessInstanceIds() {
+  public @Nullable List<String> getProcessInstanceIds() {
     return processInstanceIds;
   }
 

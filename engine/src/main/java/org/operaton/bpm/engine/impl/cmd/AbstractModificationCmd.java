@@ -44,7 +44,12 @@ public abstract class AbstractModificationCmd <T> implements Command<T> {
   }
 
   protected Collection<String> collectProcessInstanceIds() {
-    Set<String> collectedProcessInstanceIds = new HashSet<>(builder.getProcessInstanceIds());
+    Set<String> collectedProcessInstanceIds = new HashSet<>();
+
+    List<String> processInstanceIds = builder.getProcessInstanceIds();
+    if (processInstanceIds != null) {
+      collectedProcessInstanceIds.addAll(processInstanceIds);
+    }
 
     final ProcessInstanceQueryImpl processInstanceQuery = (ProcessInstanceQueryImpl) builder.getProcessInstanceQuery();
     if (processInstanceQuery != null) {

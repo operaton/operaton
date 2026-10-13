@@ -439,7 +439,7 @@ public interface IdentityService {
   void setAuthentication(String userId, List<String> groups, List<String> tenantIds);
 
   /**
-   * @param currentAuthentication
+   * @param currentAuthentication the authentication to set, or {@code null} to clear it
    */
   void setAuthentication(@Nullable Authentication currentAuthentication);
 

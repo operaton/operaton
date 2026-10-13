@@ -72,9 +72,10 @@ class BatchInvocationsPerJobByBatchTypeConfigTest {
   void shouldWriteLogWhenBatchTypeIsUnknown() {
     initEngine();
     // then
-    assertThat(loggingRule.getFilteredLog("ENGINE-12014 The configuration property " +
-        "'invocationsPerJobByBatchType' contains an invalid batch type 'custom-batch-operation' " +
-        "which is neither a custom nor a built-in batch type")).hasSize(1);
+    assertThat(loggingRule.getFilteredLog("""
+        ENGINE-12014 The configuration property \
+        'invocationsPerJobByBatchType' contains an invalid batch type 'custom-batch-operation' \
+        which is neither a custom nor a built-in batch type""")).hasSize(1);
   }
 
   private void initEngine() {

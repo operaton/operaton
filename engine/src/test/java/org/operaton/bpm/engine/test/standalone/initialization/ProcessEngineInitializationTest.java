@@ -41,10 +41,11 @@ class ProcessEngineInitializationTest {
     // when/then
     assertThatThrownBy(processEngineConfiguration::buildProcessEngine)
       .isInstanceOf(Exception.class)
-      .hasMessageContaining("ENGINE-03057 There are no Operaton tables in the database. " +
-        "Hint: Set <property name=\"databaseSchemaUpdate\" to value=\"true\" or value=\"create-drop\" " +
-        "(use create-drop for testing only!) in bean processEngineConfiguration " +
-        "in operaton.cfg.xml for automatic schema creation");
+      .hasMessageContaining("""
+        ENGINE-03057 There are no Operaton tables in the database. \
+        Hint: Set <property name="databaseSchemaUpdate" to value="true" or value="create-drop" \
+        (use create-drop for testing only!) in bean processEngineConfiguration \
+        in operaton.cfg.xml for automatic schema creation""");
   }
 
   @Test

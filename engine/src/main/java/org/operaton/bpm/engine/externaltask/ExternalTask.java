@@ -52,7 +52,6 @@ public interface ExternalTask {
 
   /**
    * @return the absolute time at which the task was created
-   * @return
    */
   Date getCreateTime();
 

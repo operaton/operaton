@@ -69,17 +69,17 @@ public @NullMarked interface DelegateExecution extends BaseDelegateExecution, Bp
   @Nullable String getCurrentActivityName();
 
   /**
-   * return the Id of the activity instance currently executed by this execution
+   * return the id of the activity instance currently executed by this execution
    */
   @Nullable String getActivityInstanceId();
 
   /**
-   * return the Id of the parent activity instance currently executed by this
+   * return the id of the parent activity instance currently executed by this
    * execution
    */
   @Nullable String getParentActivityInstanceId();
 
-  /** return the Id of the current transition */
+  /** return the id of the current transition */
   @Nullable String getCurrentTransitionId();
 
   /**
@@ -123,7 +123,7 @@ public @NullMarked interface DelegateExecution extends BaseDelegateExecution, Bp
    * Create an incident associated with this execution
    *
    * @param incidentType the type of incident
-   * @param configuration
+   * @param configuration the configuration of the incident
    * @return a new incident
    */
   Incident createIncident(String incidentType, String configuration);
@@ -132,8 +132,8 @@ public @NullMarked interface DelegateExecution extends BaseDelegateExecution, Bp
    * Create an incident associated with this execution
    *
    * @param incidentType the type of incident
-   * @param configuration
-   * @param message
+   * @param configuration the configuration of the incident
+   * @param message the message of the incident
    * @return a new incident
    */
   Incident createIncident(String incidentType, String configuration, String message);
@@ -141,7 +141,7 @@ public @NullMarked interface DelegateExecution extends BaseDelegateExecution, Bp
   /**
    * Resolve and remove an incident with given id
    *
-   * @param incidentId
+   * @param incidentId the id of the incident to resolve
    */
   void resolveIncident(String incidentId);
 }

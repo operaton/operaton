@@ -48,10 +48,12 @@ public @NullMarked class JobExecutorXmlImpl implements JobExecutorXml {
     this.jobAcquisitions = jobAcquisitions;
   }
 
+  @SuppressWarnings("unused")
   public String getJobExecutorClass() {
     return requireNonNull(jobExecutorClass, "jobExecutorClass");
   }
 
+  @SuppressWarnings("unused")
   public void setJobExecutorClass(String jobExecutorClass) {
     this.jobExecutorClass = jobExecutorClass;
   }

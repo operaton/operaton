@@ -109,8 +109,8 @@ public final @NullMarked class PropertyHelper {
    * This method allows to specify a property naming strategy, i.e., if a property is written in
    * <code>camelCase</code>, <code>kebab-case</code>, or <code>snake_case</code>.
    *
-   * @param configuration
-   * @param properties
+   * @param configuration the object to set the properties on
+   * @param properties the properties to set on the object
    * @param namingStrategy can be either {@link PropertyHelper#KEBAB_CASE}, {@link PropertyHelper#SNAKE_CASE}, or {@link PropertyHelper#CAMEL_CASE}.
    * @throws ProcessEngineException if a property is supplied that matches no field or
    * if the field's type is not String, nor int, nor boolean.
@@ -129,8 +129,8 @@ public final @NullMarked class PropertyHelper {
    * Sets an objects fields via reflection from String values.
    * Depending on the field's type the respective values are converted to int or boolean.
    *
-   * @param configuration
-   * @param properties
+   * @param configuration the object to set the properties on
+   * @param properties the properties to set on the object
    * @throws ProcessEngineException if a property is supplied that matches no field or
    * if the field's type is not String, nor int, nor boolean.
    */

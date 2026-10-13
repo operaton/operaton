@@ -89,7 +89,7 @@ public @NullMarked class StartProcessEngineStep extends DeploymentOperationStep 
     Class<? extends ProcessEngineConfigurationImpl> configurationClass = loadClass(configurationClassName, classLoader, ProcessEngineConfigurationImpl.class);
     ProcessEngineConfigurationImpl configuration = ReflectUtil.createInstance(configurationClass);
 
-    // set UUid generator
+    // set UUID generator
     configuration.setIdGenerator(new StrongUuidGenerator());
 
     // set configuration values
@@ -162,7 +162,6 @@ public @NullMarked class StartProcessEngineStep extends DeploymentOperationStep 
     return serviceContainer.getServiceValue(ServiceTypes.JOB_EXECUTOR, jobAcquisitionName);
   }
 
-  @SuppressWarnings("unchecked")
   protected <T> Class<? extends T> loadClass(String className, @Nullable ClassLoader customClassloader, Class<T> clazz) {
     try {
       return ReflectUtil.loadClass(className, customClassloader);
@@ -176,13 +175,13 @@ public @NullMarked class StartProcessEngineStep extends DeploymentOperationStep 
   }
 
   /**
-   * Add additional plugins that are not declared in the process engine xml.
+   * Add additional plugins that are not declared in the process engine XML.
    */
-  protected void addAdditionalPlugins(ProcessEngineConfigurationImpl configuration) {
+  protected void addAdditionalPlugins(@SuppressWarnings("unused") ProcessEngineConfigurationImpl configuration) {
     // do nothing
   }
 
-  protected void additionalConfiguration(ProcessEngineConfigurationImpl configuration) {
+  protected void additionalConfiguration(@SuppressWarnings("unused") ProcessEngineConfigurationImpl configuration) {
     // do nothing
   }
 

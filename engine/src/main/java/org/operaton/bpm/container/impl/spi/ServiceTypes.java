@@ -29,7 +29,7 @@ public enum ServiceTypes implements ServiceType {
   JOB_EXECUTOR("org.operaton.bpm.platform.job-executor"),
   PROCESS_APPLICATION("org.operaton.bpm.platform.job-executor.process-application");
 
-  protected String serviceRealm;
+  private final String serviceRealm;
 
   ServiceTypes(String serviceRealm) {
     this.serviceRealm = serviceRealm;

@@ -29,14 +29,23 @@ public @NullMarked class ProcessApplicationExecutionException extends Exception 
 
   @Serial private static final long serialVersionUID = 1L;
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public ProcessApplicationExecutionException() {
     super();
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public ProcessApplicationExecutionException(String message, Throwable cause) {
     super(message, cause);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public ProcessApplicationExecutionException(String message) {
     super(message);
   }

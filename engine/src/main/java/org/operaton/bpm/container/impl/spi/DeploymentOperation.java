@@ -16,7 +16,12 @@
  */
 package org.operaton.bpm.container.impl.spi;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -171,7 +176,7 @@ public @NullMarked class DeploymentOperation {
 
   @SuppressWarnings("unused")
   public List<String> getInstalledServices() {
-    return installedServices;
+    return Collections.unmodifiableList(installedServices);
   }
 
   // builder /////////////////////////////

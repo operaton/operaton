@@ -24,6 +24,7 @@ package org.operaton.bpm.container.impl.jmx.services;
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("unused")
 public interface JmxManagedThreadPoolMBean {
 
   int getQueueCount();

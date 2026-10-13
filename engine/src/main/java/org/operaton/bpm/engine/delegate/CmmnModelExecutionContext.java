@@ -42,6 +42,7 @@ public @NullMarked interface CmmnModelExecutionContext {
    *
    * @return the {@link CmmnElement} corresponding to the current Cmmn Model Element
    */
+  @SuppressWarnings("unused")
   CmmnElement getCmmnModelElementInstance();
 
 }

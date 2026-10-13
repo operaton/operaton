@@ -235,8 +235,8 @@ class ExpressionManagerTest {
         .startEvent()
           .exclusiveGateway()
             .condition("true", """
-                ${myBean.myMethod(execution.getVariable('v'), 
-                execution.getVariable('w'), execution.getVariable('x'), 
+                ${myBean.myMethod(execution.getVariable('v'),
+                execution.getVariable('w'), execution.getVariable('x'),
                 execution.getVariable('y'), execution.getVariable('z'))}""")
             .userTask("userTask")
           .moveToLastGateway()
@@ -276,8 +276,8 @@ class ExpressionManagerTest {
         .startEvent()
           .exclusiveGateway()
             .condition("true", """
-                ${myBean.myMethod(execution.getVariable('v'), 
-                execution.getVariable('w'), execution.getVariable('x'), 
+                ${myBean.myMethod(execution.getVariable('v'),
+                execution.getVariable('w'), execution.getVariable('x'),
                 execution.getVariable('y'), execution.getVariable('z'))}""")
             .userTask("userTask")
           .moveToLastGateway()
@@ -317,8 +317,8 @@ class ExpressionManagerTest {
         .startEvent()
           .exclusiveGateway()
             .condition("true", """
-                ${myBean.myMethod(execution.getVariable('v'), 
-                execution.getVariable('w'), execution.getVariable('x'), 
+                ${myBean.myMethod(execution.getVariable('v'),
+                execution.getVariable('w'), execution.getVariable('x'),
                 execution.getVariable('y'), execution.getVariable('z'))}""")
             .userTask("userTask")
           .moveToLastGateway()

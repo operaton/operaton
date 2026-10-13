@@ -41,21 +41,21 @@ public class SpinJsonPathTest extends AbstractFoxPlatformIntegrationTest {
   void shouldEvaluateJsonPath() {
     // given
     String json = """
-        { \
-           "foo":[ \
-              { \
-                 "bazz": "hello",\
-                 "bar":[ \
-                    42\
-                 ]\
-              },\
-              { \
-                 "bazz": "world",\
-                 "bar":[ \
-                    42\
-                 ]\
-              }\
-           ]\
+        { 
+           "foo":[ 
+              { 
+                 "bazz": "hello",
+                 "bar":[ 
+                    42
+                 ]
+              },
+              { 
+                 "bazz": "world",
+                 "bar":[ 
+                    42
+                 ]
+              }
+           ]
         }""";
 
     // when/then

@@ -211,20 +211,20 @@ class ExclusiveGatewayTest {
     // no default = "flow3" !!
     // flow3 alone would be OK, but two unconditional outgoing flows (flow3 + flow4) are not!
     String flowWithoutConditionNoDefaultFlow = """
-        <?xml version='1.0' encoding='UTF-8'?>\
-        <definitions id='definitions' xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:activiti='http://activiti.org/bpmn' targetNamespace='Examples'>\
-          <process id='exclusiveGwDefaultSequenceFlow' isExecutable='true'> \
-            <startEvent id='theStart' /> \
-            <sequenceFlow id='flow1' sourceRef='theStart' targetRef='exclusiveGw' /> \
-            <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' /> \
-            <sequenceFlow id='flow2' sourceRef='exclusiveGw' targetRef='theTask1'> \
-              <conditionExpression xsi:type='tFormalExpression'>${input == 1}</conditionExpression> \
-            </sequenceFlow> \
-            <sequenceFlow id='flow3' sourceRef='exclusiveGw' targetRef='theTask2'/> \
-            <sequenceFlow id='flow4' sourceRef='exclusiveGw' targetRef='theTask2'/> \
-            <userTask id='theTask1' name='Input is one' /> \
-            <userTask id='theTask2' name='Default input' /> \
-          </process>\
+        <?xml version='1.0' encoding='UTF-8'?>
+        <definitions id='definitions' xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:activiti='http://activiti.org/bpmn' targetNamespace='Examples'>
+          <process id='exclusiveGwDefaultSequenceFlow' isExecutable='true'> 
+            <startEvent id='theStart' /> 
+            <sequenceFlow id='flow1' sourceRef='theStart' targetRef='exclusiveGw' /> 
+            <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' /> 
+            <sequenceFlow id='flow2' sourceRef='exclusiveGw' targetRef='theTask1'> 
+              <conditionExpression xsi:type='tFormalExpression'>${input == 1}</conditionExpression> 
+            </sequenceFlow> 
+            <sequenceFlow id='flow3' sourceRef='exclusiveGw' targetRef='theTask2'/> 
+            <sequenceFlow id='flow4' sourceRef='exclusiveGw' targetRef='theTask2'/> 
+            <userTask id='theTask1' name='Input is one' /> 
+            <userTask id='theTask2' name='Default input' /> 
+          </process>
         </definitions>""";
     var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", flowWithoutConditionNoDefaultFlow);
     assertDeployParseExceptionForExclusiveGateway(deploymentBuilder,
@@ -235,21 +235,21 @@ class ExclusiveGatewayTest {
   @Test
   void testDefaultFlowWithCondition() {
     String defaultFlowWithCondition = """
-        <?xml version='1.0' encoding='UTF-8'?>\
-        <definitions id='definitions' xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:activiti='http://activiti.org/bpmn' targetNamespace='Examples'>\
-          <process id='exclusiveGwDefaultSequenceFlow' isExecutable='true'> \
-            <startEvent id='theStart' /> \
-            <sequenceFlow id='flow1' sourceRef='theStart' targetRef='exclusiveGw' /> \
-            <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' default='flow3' /> \
-            <sequenceFlow id='flow2' sourceRef='exclusiveGw' targetRef='theTask1'> \
-              <conditionExpression xsi:type='tFormalExpression'>${input == 1}</conditionExpression> \
-            </sequenceFlow> \
-            <sequenceFlow id='flow3' sourceRef='exclusiveGw' targetRef='theTask2'> \
-              <conditionExpression xsi:type='tFormalExpression'>${input == 3}</conditionExpression> \
-            </sequenceFlow> \
-            <userTask id='theTask1' name='Input is one' /> \
-            <userTask id='theTask2' name='Default input' /> \
-          </process>\
+        <?xml version='1.0' encoding='UTF-8'?>
+        <definitions id='definitions' xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:activiti='http://activiti.org/bpmn' targetNamespace='Examples'>
+          <process id='exclusiveGwDefaultSequenceFlow' isExecutable='true'> 
+            <startEvent id='theStart' /> 
+            <sequenceFlow id='flow1' sourceRef='theStart' targetRef='exclusiveGw' /> 
+            <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' default='flow3' /> 
+            <sequenceFlow id='flow2' sourceRef='exclusiveGw' targetRef='theTask1'> 
+              <conditionExpression xsi:type='tFormalExpression'>${input == 1}</conditionExpression> 
+            </sequenceFlow> 
+            <sequenceFlow id='flow3' sourceRef='exclusiveGw' targetRef='theTask2'> 
+              <conditionExpression xsi:type='tFormalExpression'>${input == 3}</conditionExpression> 
+            </sequenceFlow> 
+            <userTask id='theTask1' name='Input is one' /> 
+            <userTask id='theTask2' name='Default input' /> 
+          </process>
         </definitions>""";
     var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", defaultFlowWithCondition);
     assertDeployParseExceptionForExclusiveGateway(deploymentBuilder,
@@ -260,13 +260,13 @@ class ExclusiveGatewayTest {
   @Test
   void testNoOutgoingFlow() {
     String noOutgoingFlow = """
-        <?xml version='1.0' encoding='UTF-8'?>\
-        <definitions id='definitions' xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:activiti='http://activiti.org/bpmn' targetNamespace='Examples'>\
-          <process id='exclusiveGwDefaultSequenceFlow' isExecutable='true'> \
-            <startEvent id='theStart' /> \
-            <sequenceFlow id='flow1' sourceRef='theStart' targetRef='exclusiveGw' /> \
-            <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' /> \
-          </process>\
+        <?xml version='1.0' encoding='UTF-8'?>
+        <definitions id='definitions' xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:activiti='http://activiti.org/bpmn' targetNamespace='Examples'>
+          <process id='exclusiveGwDefaultSequenceFlow' isExecutable='true'> 
+            <startEvent id='theStart' /> 
+            <sequenceFlow id='flow1' sourceRef='theStart' targetRef='exclusiveGw' /> 
+            <exclusiveGateway id='exclusiveGw' name='Exclusive Gateway' /> 
+          </process>
         </definitions>""";
 
     var deploymentBuilder = repositoryService.createDeployment().addString("myprocess.bpmn20.xml", noOutgoingFlow);

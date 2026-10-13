@@ -146,7 +146,7 @@ class RetriesDtoObjectMapperTest {
   void shouldIncludeDueDateSetPropertySetJobRetriesByProcessDto() throws Exception {
     // given
     String json = """
-        {"retries":4,"dueDate":1675752840000,"jobIds":null,"jobQuery":null,"processInstances":[],\
+        {"retries":4,"dueDate":1675752840000,"jobIds":null,"jobQuery":null,"processInstances":[],
         "historicProcessInstanceQuery":{"processDefinitionId":null,"incidentType":null,"orQueries":null,"sorting":null}}""";
 
     ObjectMapper mapper = new ObjectMapper();

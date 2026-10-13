@@ -109,9 +109,9 @@ class SpinFunctionsTest {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("testProcess")
       .startEvent()
       .serviceTask()
-          .operatonExpression("""
-              ${ execution.setVariable('customer', \
-              S(xmlVar).xPath('/customers/customer').element().toString())}""")
+        .operatonExpression("""
+            ${ execution.setVariable('customer', \
+            S(xmlVar).xPath('/customers/customer').element().toString())}""")
       .receiveTask("wait")
       .endEvent()
     .done();

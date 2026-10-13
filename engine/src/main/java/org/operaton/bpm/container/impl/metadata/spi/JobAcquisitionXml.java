@@ -46,7 +46,7 @@ public @NullMarked interface JobAcquisitionXml {
   @Nullable String getJobExecutorClassName();
 
   /**
-   * @return a set of properties to configure the Job Executor. The
+   * @return a map of properties to configure the Job Executor. The
    *         properties are mapped to bean properties of the JobExecutor
    *         class used.
    *

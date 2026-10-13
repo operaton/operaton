@@ -44,7 +44,7 @@ public class CaseDefinitionBuilder {
     caseDefinition = new CmmnCaseDefinition(caseDefinitionId);
     activityStack.push(caseDefinition);
 
-    // instantiate casePlanModel of case definition (ie. outermost stage)
+    // instantiate casePlanModel of case definition (i.e. outermost stage)
     createActivity(caseDefinitionId);
     behavior(new StageActivityBehavior());
   }

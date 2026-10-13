@@ -1043,7 +1043,7 @@ public @NullMarked interface RuntimeService {
   /**
    * Allows retrieving the activity instance tree for a given process instance.
    * The activity instance tree is aligned with the concept of scope in the BPMN specification.
-   * Activities that are "on the same level of subprocess" (ie. part of the same scope, contained
+   * Activities that are "on the same level of subprocess" (i.e. part of the same scope, contained
    * in the same subprocess) will have their activity instances at the same level in the tree.
    *
    * <h2>Examples:</h2>

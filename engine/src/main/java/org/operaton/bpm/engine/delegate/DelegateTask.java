@@ -188,7 +188,7 @@ public interface DelegateTask extends VariableScope, BpmnModelExecutionContext, 
 
   /**
    * Provides access to the current {@link UserTask} Element from the Bpmn Model.
-   * @return the current {@link UserTask} Element from the Bpmn Model.
+   * @return the current {@link UserTask} Element from the BPMN Model.
    */
   @Override
   UserTask getBpmnModelElementInstance();

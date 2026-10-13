@@ -32,7 +32,7 @@ public interface ProcessEnginePluginXml {
   String getPluginClass();
 
   /**
-   * @return a set of additional properties. The properties are directly set on
+   * @return a map of additional properties. The properties are directly set on
    *         the {@link ProcessEnginePlugin} class (see
    *         {@link #getPluginClass()}). This means that each property
    *         name used here must be a bean property name on the plugin class

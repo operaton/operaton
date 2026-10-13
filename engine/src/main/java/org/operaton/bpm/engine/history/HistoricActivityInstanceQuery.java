@@ -119,7 +119,7 @@ public interface HistoricActivityInstanceQuery extends Query<HistoricActivityIns
 
   /**
    * <p>Sort the {@link HistoricActivityInstance activity instances} in the order in which
-   * they occurred (ie. started) and needs to be followed by {@link #asc()} or {@link #desc()}.</p>
+   * they occurred (i.e. started) and needs to be followed by {@link #asc()} or {@link #desc()}.</p>
    *
    * <p>The set of all {@link HistoricActivityInstance activity instances} is a <strong>partially
    * ordered set</strong>. At a BPMN level this means that instances of concurrent activities (example:

@@ -32,7 +32,7 @@ public interface UserOperationLogQuery extends Query<UserOperationLogQuery, User
 
   /**
    * Query for operations on entities of a given type only. This allows you to restrict the
-   * result set to all operations which were performed on the same Entity (ie. all Task Operations,
+   * result set to all operations which were performed on the same Entity (i.e. all Task Operations,
    * All IdentityLink Operations ...)
    *
    * @see EntityTypes#TASK
@@ -43,7 +43,7 @@ public interface UserOperationLogQuery extends Query<UserOperationLogQuery, User
 
   /**
    * Query for operations on entities of a given type only. This allows you to restrict the
-   * result set to all operations which were performed on the same Entity (ie. all Task Operations,
+   * result set to all operations which were performed on the same Entity (i.e. all Task Operations,
    * All IdentityLink Operations ...)
    *
    * @see EntityTypes#TASK
@@ -113,7 +113,7 @@ public interface UserOperationLogQuery extends Query<UserOperationLogQuery, User
 
   /**
    * Query for operations of the given category only. This allows you to restrict the
-   * result set to all operations which were performed in the same domain (ie. all Task Worker Operations,
+   * result set to all operations which were performed in the same domain (i.e. all Task Worker Operations,
    * All Admin Operations ...)
    *
    * @see UserOperationLogEntry#CATEGORY_ADMIN
@@ -124,7 +124,7 @@ public interface UserOperationLogQuery extends Query<UserOperationLogQuery, User
 
   /**
    * Query for operations of given categories only. This allows you to restrict the
-   * result set to all operations which were performed in the same domain (ie. all Task Worker Operations,
+   * result set to all operations which were performed in the same domain (i.e. all Task Worker Operations,
    * All Admin Operations ...)
    *
    * @see UserOperationLogEntry#CATEGORY_ADMIN

@@ -74,7 +74,7 @@ public interface HistoricDecisionInstance {
 
   /**
    * The user ID in case the decision was evaluated by an authenticated user using the decision service
-   * outside of an execution context.
+   * outside an execution context.
    */
   String getUserId();
 

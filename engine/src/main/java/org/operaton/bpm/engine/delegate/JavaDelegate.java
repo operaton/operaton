@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.delegate;
 
 
 /**
- * Convience class that should be used when a Java delegation in a BPMN 2.0
+ * Convenience class that should be used when a Java delegation in a BPMN 2.0
  * process is required (for example, to call custom business logic).
  *
  * <p>

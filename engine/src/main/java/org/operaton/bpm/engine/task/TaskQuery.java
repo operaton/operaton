@@ -918,7 +918,7 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
   TaskQuery suspended();
 
   /**
-   * Only select tasks which are active (ie. not suspended)
+   * Only select tasks which are active (i.e. not suspended)
    */
   TaskQuery active();
 

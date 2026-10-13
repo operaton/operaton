@@ -92,7 +92,7 @@ public interface HistoricDecisionInstanceQuery extends Query<HistoricDecisionIns
   HistoricDecisionInstanceQuery evaluatedAfter(Date date);
 
   /** Only select historic decision instances that were evaluated by the user with the given user ID.
-   * <p> The user ID is saved for decisions which are evaluated by a authenticated user without a process or
+   * <p> The user ID is saved for decisions which are evaluated by an authenticated user without a process or
    * case instance */
   HistoricDecisionInstanceQuery userId(String userId);
 
@@ -138,7 +138,7 @@ public interface HistoricDecisionInstanceQuery extends Query<HistoricDecisionIns
    * (needs to be followed by {@link #asc()} or {@link #desc()}). */
   HistoricDecisionInstanceQuery orderByDecisionInstanceId();
 
-  /** Order by the time when the decisions was evaluated
+  /** Order by the time when the decisions were evaluated
    * (needs to be followed by {@link #asc()} or {@link #desc()}). */
   HistoricDecisionInstanceQuery orderByEvaluationTime();
 

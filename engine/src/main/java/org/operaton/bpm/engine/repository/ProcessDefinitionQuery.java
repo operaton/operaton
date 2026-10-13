@@ -107,14 +107,14 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
 
   /**
    * <p>
-   * Only select the process definitions which are the latest deployed (ie.
+   * Only select the process definitions which are the latest deployed (i.e.
    * which have the highest version number for the given key).
    * </p>
    *
    * <p>
    * Can only be used in combination with {@link #processDefinitionKey(String)}
    * of {@link #processDefinitionKeyLike(String)}. Can also be used without any
-   * other criteria (ie. query.latest().list()), which will then give all the
+   * other criteria (i.e. query.latest().list()), which will then give all the
    * latest versions of all the deployed process definitions.
    * </p>
    *

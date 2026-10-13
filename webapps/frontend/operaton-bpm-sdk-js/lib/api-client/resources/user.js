@@ -215,7 +215,7 @@ User.updateProfile = function (options, done) {
  * @param {Object} options
  * @param {uuid} options.id                           The user's (who will be updated) id
  * @param {String} options.password                     The user's new password.
- * @param {String} [options.authenticatedUserPassword]  The password of the authenticated user who changes the password of the user (ie. the user with passed id as path parameter).
+ * @param {String} [options.authenticatedUserPassword]  The password of the authenticated user who changes the password of the user (i.e. the user with passed id as path parameter).
  * @param  {Function} done
  */
 User.updateCredentials = function (options, done) {

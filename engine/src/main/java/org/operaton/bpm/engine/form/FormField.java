@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 public interface FormField {
 
   /**
-   * @return the Id of a form property. Must be unique for a given form.
+   * @return the id of a form property. Must be unique for a given form.
    * The id is used for mapping the form field to a process variable.
    */
   String getId();

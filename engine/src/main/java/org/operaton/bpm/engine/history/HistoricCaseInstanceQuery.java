@@ -169,7 +169,7 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
 
   /**
    * Only select case instances which had a global variable with the given name
-   * and a value greater than the given value when they where closed.
+   * and a value greater than the given value when they were closed.
    *
    * @param name the name of the variable
    * @param value the value of the variable

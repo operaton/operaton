@@ -36,7 +36,7 @@ public @NullMarked class JmxManagedProcessEngineController extends JmxManagedPro
   }
 
   @Override
-  public void start(PlatformServiceContainer contanier) {
+  public void start(PlatformServiceContainer container) {
     processEngine = processEngineConfiguration.buildProcessEngine();
   }
 

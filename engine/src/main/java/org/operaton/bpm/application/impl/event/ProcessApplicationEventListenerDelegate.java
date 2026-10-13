@@ -40,11 +40,11 @@ import static java.util.Objects.requireNonNull;
  * the {@link ExecutionListener} and {@link TaskListener} provided by a
  * {@link ProcessApplicationInterface ProcessApplication}.</p>
  *
- * <p>If the process application does not provide an execution listener (ie.
+ * <p>If the process application does not provide an execution listener (i.e.
  * {@link ProcessApplicationInterface#getExecutionListener()} returns {@code null}), the
  * request is silently ignored.</p>
  *
- * <p>If the process application does not provide a task listener (ie.
+ * <p>If the process application does not provide a task listener (i.e.
  * {@link ProcessApplicationInterface#getTaskListener()} returns {@code null}), the
  * request is silently ignored.</p>
  *

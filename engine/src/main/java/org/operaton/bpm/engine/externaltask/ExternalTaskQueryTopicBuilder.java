@@ -79,7 +79,7 @@ public interface ExternalTaskQueryTopicBuilder extends ExternalTaskQueryBuilder 
   ExternalTaskQueryTopicBuilder processDefinitionId(String processDefinitionId);
 
   /**
-   * Define process definition ids to filter external tasksb by.
+   * Define process definition ids to filter external tasks by.
    *
    * @param processDefinitionIds the definition ids to filter by
    * @return this builder

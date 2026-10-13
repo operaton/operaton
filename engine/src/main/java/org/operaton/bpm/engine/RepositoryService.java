@@ -313,7 +313,7 @@ public @NullMarked interface RepositoryService {
    *
    * <p>
    * <strong>Note: all the process instances of the process definition will still be active
-   * (ie. not suspended)!</strong>
+   * (i.e. not suspended)!</strong>
    * </p>
    *
    * <p>Note: for more complex suspend commands use {@link #updateProcessDefinitionSuspensionState()}.</p>
@@ -369,7 +369,7 @@ public @NullMarked interface RepositoryService {
    *
    * <p>
    * <strong>Note: all the process instances of the process definition will still be active
-   * (ie. not suspended)!</strong>
+   * (i.e. not suspended)!</strong>
    * </p>
    *
    * <p>Note: for more complex suspend commands use {@link #updateProcessDefinitionSuspensionState()}.</p>

@@ -114,7 +114,7 @@ class ExclusiveGatewayTest {
     var variables = CollectionUtil.singletonMap("iinput", 1);
 
     // when/then
-    // Instead of 'input' we're starting a process instance with the name 'iinput' (ie. a typo)
+    // Instead of 'input' we're starting a process instance with the name 'iinput' (i.e. a typo)
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("exclusiveGwDiverging", variables))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Unknown property used in expression");

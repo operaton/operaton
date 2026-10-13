@@ -123,7 +123,7 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
    * <p>Creates new child case executions for each given {@link CmmnActivity}.</p>
    *
    * <p>Afterwards the method {@link #triggerChildExecutionsLifecycle(List)} must be called
-   * to execute each created case executions (ie. the create listener will be
+   * to execute each created case executions (i.e. the create listener will be
    * notified etc.).</p>
    *
    * <p>According to the CMMN 1.0 specification:<br>
@@ -377,7 +377,7 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
    *
    * <p>If <code>this</code> case execution has a parent case execution, that parent
    * case execution will be notified that <code>this</code> case execution has been
-   * completed (ie.the event or milestone occured). This can lead to a completion of
+   * completed (i.e.the event or milestone occured). This can lead to a completion of
    * the parent case execution, for more details when the parent case execution can
    * be completed see {@link #complete()}.</p>
    *

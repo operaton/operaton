@@ -627,7 +627,7 @@ public class BusinessProcess implements Serializable {
    *
    * <p>A successful invocation of this method will empty the variable cache.</p>
    *
-   * <p>If this method is called from an active command (ie. from inside a Java Delegate).
+   * <p>If this method is called from an active command (i.e. from inside a Java Delegate).
    * {@link ProcessEngineCdiException} is thrown.</p>
    *
    * @throws ProcessEngineCdiException if called from a process engine command or if neither a Task nor an Execution is associated.

@@ -69,7 +69,7 @@ public @NullMarked class UndeployProcessArchiveStep extends DeploymentOperationS
     final DeployedProcessArchive deployedProcessArchive = processArchiveDeploymentMap.get(processArchive.getName());
     final ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, processEngineName);
 
-    // unregrister with the process engine.
+    // unregister with the process engine.
     ManagementService managementService = requireNonNull(processEngine).getManagementService();
     managementService.unregisterProcessApplication(deployedProcessArchive.getAllDeploymentIds(), true);
 

@@ -44,7 +44,7 @@ public interface HistoricActivityStatistics {
   long getCanceled();
 
   /**
-   * The number of all instances, which complete a scope (ie. in bpmn manner: an activity
+   * The number of all instances, which complete a scope (i.e. in bpmn manner: an activity
    * which consumed a token and did not produced a new one), of the activity.
    */
   long getCompleteScope();

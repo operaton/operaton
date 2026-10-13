@@ -247,7 +247,7 @@ class CaseInstanceTest {
     // X should be enabled
     assertThat(planItemX.isEnabled()).isTrue();
 
-    // before activation (ie. manual start) X should not have any children
+    // before activation (i.e. manual start) X should not have any children
     assertThat(planItemX.getCaseExecutions()).isEmpty();
     return planItemX;
   }

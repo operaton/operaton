@@ -73,7 +73,9 @@ public @NullMarked class ProcessApplicationReferenceImpl implements ProcessAppli
     }
   }
 
-  @SuppressWarnings("unused")
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public void processEngineStopping(ProcessEngine processEngine) {
     // do nothing
   }

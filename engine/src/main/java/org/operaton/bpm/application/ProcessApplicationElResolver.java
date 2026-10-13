@@ -53,7 +53,10 @@ public @NullMarked interface ProcessApplicationElResolver {
    * Comparator used for sorting providers
    *
    * @see ProcessApplicationElResolver#getPrecedence()
+   * @deprecated Unused internal API
    */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   class ProcessApplicationElResolverSorter implements Comparator<ProcessApplicationElResolver> {
 
     @Override
@@ -62,5 +65,4 @@ public @NullMarked interface ProcessApplicationElResolver {
     }
 
   }
-
 }

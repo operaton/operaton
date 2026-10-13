@@ -17,6 +17,7 @@
 package org.operaton.bpm.application.impl;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
@@ -52,7 +53,7 @@ public final @NullMarked class DefaultElResolverLookup {
 
     } else {
       // sort providers first
-      Collections.sort(sortedProviders, new ProcessApplicationElResolver.ProcessApplicationElResolverSorter());
+      Collections.sort(sortedProviders, Comparator.comparing(ProcessApplicationElResolver::getPrecedence).reversed());
 
       // add all providers to a composite resolver
       CompositeELResolver compositeResolver = new CompositeELResolver();

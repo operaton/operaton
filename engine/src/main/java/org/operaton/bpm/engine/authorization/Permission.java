@@ -68,7 +68,7 @@ import org.jspecify.annotations.NullMarked;
  */
 public @NullMarked interface Permission {
 
-  /** returns the name of the permission, ie. 'UPDATE' */
+  /** returns the name of the permission, i.e. 'UPDATE' */
   String getName();
 
   /** returns the unique numeric value of the permission.

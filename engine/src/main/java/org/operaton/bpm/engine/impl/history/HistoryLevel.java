@@ -66,12 +66,12 @@ public @NullMarked interface HistoryLevel {
   HistoryLevel HISTORY_LEVEL_AUDIT = new HistoryLevelAudit();
   HistoryLevel HISTORY_LEVEL_FULL = new HistoryLevelFull();
 
-  /** An unique id identifying the history level.
+  /** A unique id identifying the history level.
    * The id is used internally to uniquely identify the history level and also stored in the database.
    */
   int getId();
 
-  /** An unique name identifying the history level.
+  /** A unique name identifying the history level.
    * The name of the history level can be used when configuring the process engine.
    * @see ProcessEngineConfiguration#setHistory(String)
    */

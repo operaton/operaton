@@ -377,7 +377,7 @@ public interface CmmnActivityExecution extends DelegateCaseExecution {
    *
    * <p>If <code>this</code> case execution has a parent case execution, that parent
    * case execution will be notified that <code>this</code> case execution has been
-   * completed (i.e.the event or milestone occured). This can lead to a completion of
+   * completed (i.e. the event or milestone occurred). This can lead to a completion of
    * the parent case execution, for more details when the parent case execution can
    * be completed see {@link #complete()}.</p>
    *

@@ -23,7 +23,7 @@ import java.util.Objects;
 
 /**
  * Wrapper containing the missing authorization information. It contains the name of the violated permission,
- * the type of the resouce and the Id of the resource.
+ * the type of the resource and the Id of the resource.
  *
  * @author Filip Hrisafov
  */

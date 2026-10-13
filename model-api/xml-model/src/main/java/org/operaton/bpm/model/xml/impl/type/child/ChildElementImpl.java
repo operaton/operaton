@@ -25,7 +25,7 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 
 /**
- * Represents a single Child Element (ie. maxOccurs = 1);
+ * Represents a single Child Element (i.e. maxOccurs = 1);
  *
  * @author Daniel Meyer
  *

@@ -38,7 +38,7 @@ public interface HistoricActivityStatisticsQuery extends Query<HistoricActivityS
   HistoricActivityStatisticsQuery includeCanceled();
 
   /**
-   * Include an aggregation of instances, which complete a scope (ie. in bpmn manner: an activity
+   * Include an aggregation of instances, which complete a scope (i.e. in bpmn manner: an activity
    * which consumed a token and did not produced a new one), in the result.
    */
   HistoricActivityStatisticsQuery includeCompleteScope();

@@ -30,7 +30,7 @@ public @NullMarked interface FormType {
 
   /** Retrieve type specific extra information like
    * the list of values for enum types or the format
-   * for date types. Look in the userguide for
+   * for date types. Look in the user guide for
    * which extra information keys each type provides
    * and what return type they give. */
   @Nullable Object getInformation(String key);

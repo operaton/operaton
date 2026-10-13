@@ -129,7 +129,7 @@ public @NullMarked interface ProcessApplicationInterface {
 
   /**
    * Since {@link #getReference()} may return a proxy object, this method returns the actual, unproxied object and is
-   * meant to be called from the {@link #execute(Callable)} method. (ie. from a Callable implementation passed to
+   * meant to be called from the {@link #execute(Callable)} method. (i.e. from a Callable implementation passed to
    * the method.).
    */
   ProcessApplicationInterface getRawObject();

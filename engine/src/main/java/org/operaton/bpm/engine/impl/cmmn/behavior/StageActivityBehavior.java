@@ -286,7 +286,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     // will terminated. these terminated child cannot be resumed,
     // so ignore it.
     // "child.isCompleted()": in case that an exitCriteria on caseInstance
-    // (ie. casePlanModel) has been fired, when a child inside has been
+    // (i.e. casePlanModel) has been fired, when a child inside has been
     // completed, so ignore it.
     if (!child.isTerminated() && !child.isCompleted()) {
       if (behavior instanceof StageOrTaskActivityBehavior) {

@@ -47,7 +47,7 @@ public interface FetchAndLockBuilder {
 
   /**
    * Configures the fetching during the Fetch and Lock Operation to include ordering by create time of the external tasks.
-   * This method can be combined by calling asc() or desc() afterwards to define an ascending or descending order respectively.
+   * This method can be combined by calling asc() or desc() afterward to define an ascending or descending order respectively.
    *
    * @return the builder
    */

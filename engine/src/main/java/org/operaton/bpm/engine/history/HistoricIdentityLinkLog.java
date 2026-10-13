@@ -20,7 +20,7 @@ import java.util.Date;
 
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.identity.UserQuery;
-
+import org.operaton.bpm.engine.task.IdentityLinkType;
 
 /**
  * An historic identity link stores the association of a task with a certain identity.
@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.identity.UserQuery;
  * <ul>
  *   <li>a user can be an assignee/Candidate/Owner (= identity link type) for a task</li>
  *   <li>a group can be a candidate-group (= identity link type) for a task</li>
- *   <li>a user can be an candidate in the scope of process definition</li>
+ *   <li>a user can be a candidate in the scope of process definition</li>
  *   <li>a group can be a candidate-group in the scope of process definition</li>
  * </ul>
  *
@@ -49,8 +49,7 @@ public interface HistoricIdentityLinkLog {
   /**
    * Returns the type of link (Candidate or Assignee or Owner).
    * See {@link IdentityLinkType} for the native supported types by the process engine.
-   *
-   * */
+   */
   String getType();
 
   /**

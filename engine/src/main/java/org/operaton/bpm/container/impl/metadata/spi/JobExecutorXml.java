@@ -44,7 +44,7 @@ public interface JobExecutorXml {
   List<JobAcquisitionXml> getJobAcquisitions();
 
   /**
-   * @return a set of properties to configure the Job Executor.
+   * @return a map of properties to configure the Job Executor.
    *
    * @see #QUEUE_SIZE
    * @see #CORE_POOL_SIZE

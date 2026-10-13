@@ -42,7 +42,7 @@ public @NullMarked class BpmPlatformXmlParser extends Parser {
   public static final String BPM_PLATFORM_XSD = "BpmPlatform.xsd";
 
   /**
-   * create an configure the {@link ProcessesXmlParse} object.
+   * create and configure the {@link ProcessesXmlParse} object.
    */
   @Override
   public BpmPlatformXmlParse createParse() {

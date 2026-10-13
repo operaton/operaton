@@ -197,7 +197,7 @@ public class DbOperationManager {
   /**
    * Assumptions:
    * a) all operations in the set work on entities such that the entities implement {@link HasDbReferences}.
-   * b) all operations in the set work on the same type (ie. all operations are INSERTs or DELETEs).
+   * b) all operations in the set work on the same type (i.e. all operations are INSERTs or DELETEs).
    *
    */
   protected List<DbEntityOperation> sortByReferences(SortedSet<DbEntityOperation> preSorted) {

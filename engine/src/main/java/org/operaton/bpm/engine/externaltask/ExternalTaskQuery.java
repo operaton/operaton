@@ -130,7 +130,7 @@ public interface ExternalTaskQuery extends Query<ExternalTaskQuery, ExternalTask
    * Only select external tasks with a priority that is higher than or equal to the given priority.
    *
    * @param priority the priority which is used for the query
-   * @return the builded external task query
+   * @return the built external task query
    */
   ExternalTaskQuery priorityHigherThanOrEquals(long priority);
 
@@ -138,12 +138,12 @@ public interface ExternalTaskQuery extends Query<ExternalTaskQuery, ExternalTask
    * Only select external tasks with a priority that is lower than or equal to the given priority.
    *
    * @param priority the priority which is used for the query
-   * @return the builded external task query
+   * @return the built external task query
    */
   ExternalTaskQuery priorityLowerThanOrEquals(long priority);
 
   /**
-   * Only select tasks which have are part of a process that have a variable
+   * Only select tasks which are part of a process that have a variable
    * with the given name set to the given value.
    */
   ExternalTaskQuery processVariableValueEquals(String variableName, Object variableValue);

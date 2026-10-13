@@ -392,7 +392,7 @@ public @NullMarked interface ExternalTaskService {
    * is resolved.
    *
    * @param externalTaskId the id of the task to set the
-   * @param retries
+   * @param retries the new number of retries
    * @throws NotFoundException if no external task with the given id exists
    * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
    *   <ul>
@@ -408,7 +408,7 @@ public @NullMarked interface ExternalTaskService {
    * is resolved.
    *
    * @param externalTaskIds the ids of the tasks to set the
-   * @param retries
+   * @param retries the new number of retries
    * @throws NotFoundException if no external task with one of the given id exists
    * @throws BadUserRequestException if the ids are {@code null} or the number of retries is negative
    * @throws AuthorizationException thrown if the current user does not possess any of the following permissions:
@@ -429,7 +429,7 @@ public @NullMarked interface ExternalTaskService {
    * @return the batch
    *
    * @param externalTaskIds the ids of the tasks to set the
-   * @param retries
+   * @param retries the new number of retries
    * @param externalTaskQuery a query which selects the external tasks to set the retries for.
    * @throws NotFoundException if no external task with one of the given id exists
    * @throws BadUserRequestException if the ids are {@code null} or the number of retries is negative

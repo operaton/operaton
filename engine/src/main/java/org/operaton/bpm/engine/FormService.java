@@ -187,8 +187,8 @@ public interface FormService {
   /**
    * Completes a task with the user data that was entered as properties in a task form.
    *
-   * @param taskId
-   * @param properties
+   * @param taskId the id of the task to complete
+   * @param properties the properties entered in the task form
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#TASK}
@@ -199,8 +199,8 @@ public interface FormService {
   /**
    * Completes a task with the user data that was entered as properties in a task form.
    *
-   * @param taskId
-   * @param properties
+   * @param taskId the id of the task to complete
+   * @param properties the properties entered in the task form
    * @param deserializeValues if false, returned {@link SerializableValue}s
    *   will not be deserialized (unless they are passed into this method as a
    *   deserialized value or if the BPMN process triggers deserialization)

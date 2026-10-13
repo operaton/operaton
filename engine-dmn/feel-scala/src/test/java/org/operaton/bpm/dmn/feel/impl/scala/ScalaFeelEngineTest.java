@@ -360,9 +360,9 @@ class ScalaFeelEngineTest {
       .asVariableContext();
 
     // Conditional logic to determine approval type
-    Object result = engine.evaluateSimpleExpression(
-      "if amount > 1000 and category = \"Software License Costs\" and urgent then \"manager-approval\" "
-        + "else if amount > 500 then \"team-lead-approval\" " + "else \"auto-approval\"", variableCtx);
+    Object result = engine.evaluateSimpleExpression("""
+        if amount > 1000 and category = "Software License Costs" and urgent then "manager-approval" \
+        else if amount > 500 then "team-lead-approval" else "auto-approval\"""", variableCtx);
 
     assertThat(result).isEqualTo("manager-approval");
   }

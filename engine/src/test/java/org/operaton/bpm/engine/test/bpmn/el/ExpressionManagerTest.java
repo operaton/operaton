@@ -234,9 +234,10 @@ class ExpressionManagerTest {
     BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
           .exclusiveGateway()
-            .condition("true", "${myBean.myMethod(execution.getVariable('v'), "
-                + "execution.getVariable('w'), execution.getVariable('x'), "
-                + "execution.getVariable('y'), execution.getVariable('z'))}")
+            .condition("true", """
+                ${myBean.myMethod(execution.getVariable('v'), \
+                execution.getVariable('w'), execution.getVariable('x'), \
+                execution.getVariable('y'), execution.getVariable('z'))}""")
             .userTask("userTask")
           .moveToLastGateway()
             .condition("false", "${false}")
@@ -274,9 +275,10 @@ class ExpressionManagerTest {
     BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
           .exclusiveGateway()
-            .condition("true", "${myBean.myMethod(execution.getVariable('v'), "
-                + "execution.getVariable('w'), execution.getVariable('x'), "
-                + "execution.getVariable('y'), execution.getVariable('z'))}")
+            .condition("true", """
+                ${myBean.myMethod(execution.getVariable('v'), \
+                execution.getVariable('w'), execution.getVariable('x'), \
+                execution.getVariable('y'), execution.getVariable('z'))}""")
             .userTask("userTask")
           .moveToLastGateway()
             .condition("false", "${false}")
@@ -314,9 +316,10 @@ class ExpressionManagerTest {
     BpmnModelInstance process = Bpmn.createExecutableProcess("testProcess")
         .startEvent()
           .exclusiveGateway()
-            .condition("true", "${myBean.myMethod(execution.getVariable('v'), "
-                + "execution.getVariable('w'), execution.getVariable('x'), "
-                + "execution.getVariable('y'), execution.getVariable('z'))}")
+            .condition("true", """
+                ${myBean.myMethod(execution.getVariable('v'), \
+                execution.getVariable('w'), execution.getVariable('x'), \
+                execution.getVariable('y'), execution.getVariable('z'))}""")
             .userTask("userTask")
           .moveToLastGateway()
             .condition("false", "${false}")

@@ -173,7 +173,7 @@ public @NullMarked class AuthorizationException extends ProcessEngineException {
   /**
    * Generate a String containing a list of missing authorizations.
    *
-   * @param missingAuthorizations
+   * @param missingAuthorizations the missing authorizations to list
    */
   public static String generateMissingAuthorizationsList(List<MissingAuthorization> missingAuthorizations) {
     StringBuilder sBuilder = new StringBuilder();

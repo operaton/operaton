@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.runtime.Job;
  * background work ({@link Job Jobs}).</p>
  *
  * <p>The {@link JobExecutor} is capable of dispatching to multiple process engines,
- * ie. multiple process engines can share a single Thread Pool for performing Background
+ * i.e. multiple process engines can share a single Thread Pool for performing Background
  * Work. </p>
  *
  * <p>In clustered situations, you can have multiple Job Executors running against the

@@ -434,7 +434,7 @@ class HistoricProcessInstanceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/IncidentTest.testShouldDeleteIncidentAfterJobWasSuccessfully.bpmn"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   void testHistoricProcessInstanceQueryIncidentStatusResolved() {
-    //given a incident processes instance
+    //given an incident processes instance
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("failingProcessWithUserTask", parameters);

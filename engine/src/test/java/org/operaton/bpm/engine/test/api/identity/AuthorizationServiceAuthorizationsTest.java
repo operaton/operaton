@@ -196,7 +196,7 @@ class AuthorizationServiceAuthorizationsTest {
     String authUserId = "jonny2";
     identityService.setAuthenticatedUserId(authUserId);
 
-    // create new auth wich revokes read access on auth
+    // create new auth which revokes read access on auth
     Authorization basePerms = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
     basePerms.setResource(AUTHORIZATION);
     basePerms.setResourceId(ANY);

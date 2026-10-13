@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.db.entitymanager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -625,7 +624,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   public <T extends DbEntity> List<T> pruneDeletedEntities(List<T> listToPrune) {
     return listToPrune.stream()
         .filter(potentiallyDeleted -> !isDeleted(potentiallyDeleted))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public boolean contains(DbEntity dbEntity) {

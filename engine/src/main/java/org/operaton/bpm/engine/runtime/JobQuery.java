@@ -64,7 +64,7 @@ public interface JobQuery extends Query<JobQuery, Job> {
   JobQuery withRetriesLeft();
 
   /** Only select jobs which are executable,
-   * ie. retries &gt; 0 and duedate is {@code null} or duedate is in the past **/
+   * i.e. retries &gt; 0 and duedate is {@code null} or duedate is in the past **/
   JobQuery executable();
 
   /** Only select jobs that are timers.
@@ -190,7 +190,7 @@ public interface JobQuery extends Query<JobQuery, Job> {
 
   /**
    * Only select jobs that are currently being acquired,
-   * ie. lock expiration time is not {@code null}, lock expiration is in future
+   * i.e. lock expiration time is not {@code null}, lock expiration is in future
    */
   JobQuery acquired();
 

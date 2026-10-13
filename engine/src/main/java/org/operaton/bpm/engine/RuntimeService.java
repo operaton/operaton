@@ -1069,7 +1069,7 @@ public @NullMarked interface RuntimeService {
    * <p>
    * The {@link Execution} concept in the process engine is not completely aligned with the activity
    * instance concept because the execution tree is in general not aligned with the activity / scope concept in
-   * BPMN. In general, there is a n-1 relationship between Executions and ActivityInstances, ie. at a given
+   * BPMN. In general, there is a n-1 relationship between Executions and ActivityInstances, i.e. at a given
    * point in time, an activity instance can be linked to multiple executions. In addition, it is not guaranteed
    * that the same execution that started a given activity instance will also end it. The process engine performs
    * several internal optimizations concerning the compacting of the execution tree which might lead to executions

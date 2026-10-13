@@ -422,7 +422,7 @@ public abstract class ProcessEngineConfiguration {
   /** Indicates whether type validation should be done before deserialization */
   protected boolean deserializationTypeValidationEnabled;
 
-  /** An unique installation identifier */
+  /** A unique installation identifier */
   protected String installationId;
 
   /**

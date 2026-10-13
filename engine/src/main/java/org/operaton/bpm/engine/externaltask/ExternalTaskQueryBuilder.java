@@ -31,7 +31,6 @@ public interface ExternalTaskQueryBuilder {
    * @param topicName the name of the topic
    * @param lockDuration the duration in milliseconds for which tasks should be locked;
    *   begins at the time of fetching
-   * @return
    */
   ExternalTaskQueryTopicBuilder topic(String topicName, long lockDuration);
 

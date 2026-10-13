@@ -164,6 +164,7 @@ public @NullMarked class DeployProcessArchiveStep extends DeploymentOperationSte
     }
   }
 
+  @SuppressWarnings("StringBufferReplaceableByString")
   protected void enableResumingOfPreviousVersions(ProcessApplicationDeploymentBuilder deploymentBuilder) throws IllegalArgumentException {
     deploymentBuilder.resumePreviousVersions();
     String resumePreviousBy = processArchive.getProperties().get(ProcessArchiveXml.PROP_RESUME_PREVIOUS_BY);
@@ -215,17 +216,20 @@ public @NullMarked class DeployProcessArchiveStep extends DeploymentOperationSte
     return getProcessEngine(serviceContainer, ProcessEngines.NAME_DEFAULT);
   }
 
+  @SuppressWarnings("IfStatementWithIdenticalBranches")
   protected ProcessEngine getProcessEngine(final PlatformServiceContainer serviceContainer, String defaultDeployToProcessEngineName) {
     String processEngineName = processArchive.getProcessEngineName();
     if (processEngineName != null) {
       ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, processEngineName);
-      ensureNotNull("Cannot deploy process archive '%s' to process engine '%s': no such process engine exists".formatted(processArchive.getName(), processEngineName), "processEngine", processEngine);
+      ensureNotNull("Cannot deploy process archive '%s' to process engine '%s': no such process engine exists".formatted(
+              processArchive.getName(), processEngineName), "processEngine", processEngine);
       return requireNonNull(processEngine);
 
     } else {
       ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, defaultDeployToProcessEngineName);
-      ensureNotNull("Cannot deploy process archive '%s' to default process: no such process engine exists".formatted(processArchive.getName()), "processEngine",
-          processEngine);
+      ensureNotNull("Cannot deploy process archive '%s' to default process: no such process engine exists".formatted(
+                      processArchive.getName()), "processEngine",
+              processEngine);
       return requireNonNull(processEngine);
     }
   }

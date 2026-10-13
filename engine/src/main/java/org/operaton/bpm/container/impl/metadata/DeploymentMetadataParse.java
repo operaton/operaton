@@ -98,16 +98,16 @@ public abstract @NullMarked class DeploymentMetadataParse extends Parse {
     List<ProcessEnginePluginXml> plugins = new ArrayList<>();
 
     for (Element childElement : element.elements()) {
-      switch (childElement.getTagName()) {
+        switch (childElement.getTagName()) {
         case CONFIGURATION -> processEngine.setConfigurationClass(childElement.getText());
         case DATASOURCE -> processEngine.setDatasource(childElement.getText());
         case JOB_ACQUISITION -> processEngine.setJobAcquisitionName(childElement.getText());
         case PROPERTIES -> parseProperties(childElement, properties);
         case PLUGINS -> parseProcessEnginePlugins(childElement, plugins);
         default -> {
-          // no-op
+          // do nothing, ignore unknown elements
         }
-      }
+        }
     }
 
     // set collected properties

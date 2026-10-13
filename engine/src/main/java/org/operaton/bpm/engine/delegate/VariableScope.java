@@ -69,9 +69,9 @@ public interface VariableScope {
 
   void setVariableLocal(String variableName, Object value);
 
-  void setVariables(Map<String, ? extends Object> variables);
+  void setVariables(Map<String, ?> variables);
 
-  void setVariablesLocal(Map<String, ? extends Object> variables);
+  void setVariablesLocal(Map<String, ?> variables);
 
   boolean hasVariables();
 

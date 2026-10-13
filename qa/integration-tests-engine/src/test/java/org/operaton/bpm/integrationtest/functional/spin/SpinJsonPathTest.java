@@ -40,22 +40,23 @@ public class SpinJsonPathTest extends AbstractFoxPlatformIntegrationTest {
   @Test
   void shouldEvaluateJsonPath() {
     // given
-    String json = "{ " +
-        "   \"foo\":[ " +
-        "      { " +
-        "         \"bazz\": \"hello\"," +
-        "         \"bar\":[ " +
-        "            42" +
-        "         ]" +
-        "      }," +
-        "      { " +
-        "         \"bazz\": \"world\"," +
-        "         \"bar\":[ " +
-        "            42" +
-        "         ]" +
-        "      }" +
-        "   ]" +
-        "}";
+    String json = """
+        { \
+           "foo":[ \
+              { \
+                 "bazz": "hello",\
+                 "bar":[ \
+                    42\
+                 ]\
+              },\
+              { \
+                 "bazz": "world",\
+                 "bar":[ \
+                    42\
+                 ]\
+              }\
+           ]\
+        }""";
 
     // when/then
     VariableMap variables = Variables.createVariables().putValue("data", json);

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
@@ -47,12 +48,12 @@ class CmmnActivityTest {
 
     @Override
     public List<VariableListener<?>> getVariableListenersLocal(String eventName) {
-      return customLocal.get(eventName);
+      return Objects.requireNonNullElse(customLocal.get(eventName), List.of());
     }
 
     @Override
     public List<VariableListener<?>> getBuiltInVariableListenersLocal(String eventName) {
-      return builtInLocal.get(eventName);
+      return Objects.requireNonNullElse(builtInLocal.get(eventName), List.of());
     }
   }
 

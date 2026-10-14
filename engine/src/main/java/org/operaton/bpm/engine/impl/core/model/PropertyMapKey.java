@@ -16,16 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Key of a map property.
  *
- * @param K the type of keys maintained by the map
- * @param V the type of mapped values
+ * @param <K> the type of keys maintained by the map
+ * @param <V> the type of mapped values
  *
  * @author Philipp Ossler
  *
  */
-public record PropertyMapKey<K,V>(String name, boolean allowsOverwrite) {
+public @NullMarked record PropertyMapKey<K,V>(String name, boolean allowsOverwrite) {
 
   public PropertyMapKey(String name) {
     this(name, true);

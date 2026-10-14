@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.CaseExecutionCommandBuilderImpl;
 
 import org.jspecify.annotations.Nullable;
@@ -29,9 +30,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Roman Smirnov
  *
  */
-public abstract class StateTransitionCaseExecutionCmd extends CaseExecutionVariableCmd {
-  protected StateTransitionCaseExecutionCmd(String caseExecutionId, Map<String, Object> variables, Map<String, Object> variablesLocal,
-        Collection<String> variableDeletions, Collection<String> variableLocalDeletions) {
+public abstract @NullMarked class StateTransitionCaseExecutionCmd extends CaseExecutionVariableCmd {
+  protected StateTransitionCaseExecutionCmd(String caseExecutionId, @Nullable Map<String, Object> variables, @Nullable Map<String, Object> variablesLocal,
+        @Nullable Collection<String> variableDeletions, @Nullable Collection<String> variableLocalDeletions) {
     super(caseExecutionId, variables, variablesLocal, variableDeletions, variableLocalDeletions);
   }
 

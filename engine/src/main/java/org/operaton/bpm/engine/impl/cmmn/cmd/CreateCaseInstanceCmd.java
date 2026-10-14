@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.cmmn.CaseDefinitionNotFoundException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmmn.CaseInstanceBuilderImpl;
@@ -28,6 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -35,10 +38,10 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class CreateCaseInstanceCmd implements Command<CaseInstance> {
+public @NullMarked class CreateCaseInstanceCmd implements Command<CaseInstance> {
   protected String caseDefinitionKey;
-  protected String caseDefinitionId;
-  protected Map<String, Object> variables;
+  protected @Nullable String caseDefinitionId;
+  protected @Nullable Map<String, Object> variables;
   protected String businessKey;
 
   protected String caseDefinitionTenantId;
@@ -86,14 +89,14 @@ public class CreateCaseInstanceCmd implements Command<CaseInstance> {
       ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for key '%s'".formatted(caseDefinitionKey), "caseDefinition", caseDefinition);
     }
 
-    return caseDefinition;
+    return requireNonNull(caseDefinition);
   }
 
-  protected CaseDefinitionEntity findById(DeploymentCache deploymentCache, String caseDefinitionId) {
+  protected @Nullable CaseDefinitionEntity findById(DeploymentCache deploymentCache, String caseDefinitionId) {
     return deploymentCache.findDeployedCaseDefinitionById(caseDefinitionId);
   }
 
-  protected CaseDefinitionEntity findByKey(DeploymentCache deploymentCache, String caseDefinitionKey) {
+  protected @Nullable CaseDefinitionEntity findByKey(DeploymentCache deploymentCache, String caseDefinitionKey) {
     if (isTenantIdSet) {
       return deploymentCache.findDeployedLatestCaseDefinitionByKeyAndTenantId(caseDefinitionKey, caseDefinitionTenantId);
 

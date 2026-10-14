@@ -79,7 +79,7 @@ public final class ClassDelegateUtil {
         setterMethod.invoke(target, declaration.getValue());
       }
       catch (Exception e) {
-        throw LOG.exceptionWhileApplyingFieldDeclatation(declaration.getName(), target.getClass().getName(), e);
+        throw LOG.exceptionWhileApplyingFieldDeclaration(declaration.getName(), target.getClass().getName(), e);
       }
     }
     else {

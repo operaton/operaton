@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Thorben Lindhauer
  *
  */
-public interface VariableInstanceFactory<T extends CoreVariableInstance> {
+public @NullMarked interface VariableInstanceFactory<T extends CoreVariableInstance> {
 
   T build(String name, TypedValue value, boolean isTransient);
 }

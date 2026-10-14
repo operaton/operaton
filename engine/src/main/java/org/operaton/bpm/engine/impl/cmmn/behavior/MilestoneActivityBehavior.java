@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class MilestoneActivityBehavior extends EventListenerOrMilestoneActivityBehavior {
+public @NullMarked class MilestoneActivityBehavior extends EventListenerOrMilestoneActivityBehavior {
 
   @Override
   protected void creating(CmmnActivityExecution execution) {

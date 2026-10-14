@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 
-public class BaseCallableElement {
+public @NullMarked class BaseCallableElement {
 
-  protected ParameterValueProvider definitionKeyValueProvider;
-  protected CallableElementBinding binding;
-  protected ParameterValueProvider versionValueProvider;
-  protected ParameterValueProvider versionTagValueProvider;
-  protected ParameterValueProvider tenantIdProvider;
-  protected String deploymentId;
+  protected @Nullable ParameterValueProvider definitionKeyValueProvider;
+  protected @Nullable CallableElementBinding binding;
+  protected @Nullable ParameterValueProvider versionValueProvider;
+  protected @Nullable ParameterValueProvider versionTagValueProvider;
+  protected @Nullable ParameterValueProvider tenantIdProvider;
+  protected @Nullable String deploymentId;
 
   public enum CallableElementBinding {
     LATEST("latest"),
@@ -48,7 +49,7 @@ public class BaseCallableElement {
     }
   }
 
-  public String getDefinitionKey(VariableScope variableScope) {
+  public @Nullable String getDefinitionKey(VariableScope variableScope) {
     Object result = definitionKeyValueProvider.getValue(variableScope);
 
     if (result != null && !(result instanceof String)) {
@@ -58,7 +59,7 @@ public class BaseCallableElement {
     return (String) result;
   }
 
-  public ParameterValueProvider getDefinitionKeyValueProvider() {
+  public @Nullable ParameterValueProvider getDefinitionKeyValueProvider() {
     return definitionKeyValueProvider;
   }
 
@@ -66,7 +67,7 @@ public class BaseCallableElement {
     this.definitionKeyValueProvider = definitionKey;
   }
 
-  public CallableElementBinding getBinding() {
+  public @Nullable CallableElementBinding getBinding() {
     return binding;
   }
 
@@ -92,6 +93,9 @@ public class BaseCallableElement {
   }
 
   public @Nullable Integer getVersion(VariableScope variableScope) {
+    if (versionValueProvider == null) {
+      return null;
+    }
     Object result = versionValueProvider.getValue(variableScope);
 
     if (result != null) {
@@ -107,7 +111,7 @@ public class BaseCallableElement {
     return null;
   }
 
-  public ParameterValueProvider getVersionValueProvider() {
+  public @Nullable ParameterValueProvider getVersionValueProvider() {
     return versionValueProvider;
   }
 
@@ -132,7 +136,7 @@ public class BaseCallableElement {
   /** @deprecated Unused method of internal API */
   @Deprecated(forRemoval = true, since = "2.2")
   @SuppressWarnings("unused")
-  public ParameterValueProvider getVersionTagValueProvider() {
+  public @Nullable ParameterValueProvider getVersionTagValueProvider() {
     return versionTagValueProvider;
   }
 
@@ -144,7 +148,7 @@ public class BaseCallableElement {
     this.tenantIdProvider = tenantIdProvider;
   }
 
-  public String getDeploymentId() {
+  public @Nullable String getDeploymentId() {
     return deploymentId;
   }
 
@@ -160,7 +164,7 @@ public class BaseCallableElement {
     }
   }
 
-  public ParameterValueProvider getTenantIdProvider() {
+  public @Nullable ParameterValueProvider getTenantIdProvider() {
     return tenantIdProvider;
   }
 
@@ -170,9 +174,9 @@ public class BaseCallableElement {
    */
   public boolean hasDynamicReferences() {
     return (tenantIdProvider != null && tenantIdProvider.isDynamic())
-      || definitionKeyValueProvider.isDynamic()
-      || versionValueProvider.isDynamic()
-      || versionTagValueProvider.isDynamic();
+      || (definitionKeyValueProvider != null && definitionKeyValueProvider.isDynamic())
+      || (versionValueProvider != null && versionValueProvider.isDynamic())
+      || (versionTagValueProvider != null && versionTagValueProvider.isDynamic());
   }
 
 

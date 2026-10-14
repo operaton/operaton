@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.core.operation;
 
 import java.util.List;
 
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
@@ -26,11 +25,12 @@ import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Tom Baeyens
  */
-public abstract @NullMarked class AbstractEventAtomicOperation<T extends CoreExecution> implements CoreAtomicOperation<T> {
+public abstract class AbstractEventAtomicOperation<T extends CoreExecution> implements CoreAtomicOperation<T> {
 
   @Override
   public boolean isAsync(T execution) {
@@ -39,7 +39,7 @@ public abstract @NullMarked class AbstractEventAtomicOperation<T extends CoreExe
 
   @Override
   public void execute(T execution) {
-    CoreModelElement scope = getScope(execution);
+    CoreModelElement scope = requireNonNull(getScope(execution));
     List<DelegateListener<? extends BaseDelegateExecution>> listeners = execution.hasFailedOnEndListeners()
         ? getBuiltinListeners(scope)
         : getListeners(scope, execution);
@@ -111,6 +111,7 @@ public abstract @NullMarked class AbstractEventAtomicOperation<T extends CoreExe
   protected abstract String getEventName();
   protected abstract void eventNotificationsCompleted(T execution);
 
+  @SuppressWarnings("unused")
   protected void eventNotificationsFailed(T execution, Exception exception) {
     if (exception instanceof RuntimeException runtimeException) {
       throw runtimeException;

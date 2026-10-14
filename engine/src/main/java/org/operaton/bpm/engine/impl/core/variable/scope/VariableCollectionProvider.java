@@ -18,19 +18,22 @@ package org.operaton.bpm.engine.impl.core.variable.scope;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore.VariablesProvider;
+
+import static java.util.Collections.emptySet;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class VariableCollectionProvider<T extends CoreVariableInstance> implements VariablesProvider<T> {
+public @NullMarked class VariableCollectionProvider<T extends CoreVariableInstance> implements VariablesProvider<T> {
 
-  protected Collection<T> variables;
+  protected @Nullable Collection<T> variables;
 
   public VariableCollectionProvider(Collection<T> variables) {
     this.variables = variables;
@@ -47,7 +50,7 @@ public class VariableCollectionProvider<T extends CoreVariableInstance> implemen
   }
 
   @Override
-  public Collection<T> provideVariables(Collection<String> variablesNames) {
+  public Collection<T> provideVariables(@Nullable Collection<String> variablesNames) {
     if (variablesNames == null) {
       return provideVariables();
     }
@@ -64,7 +67,7 @@ public class VariableCollectionProvider<T extends CoreVariableInstance> implemen
   }
 
   public static <T extends CoreVariableInstance> VariableCollectionProvider<T> emptyVariables() {
-    return new VariableCollectionProvider<>(Collections.<T>emptySet());
+    return new VariableCollectionProvider<>(emptySet());
   }
 
 }

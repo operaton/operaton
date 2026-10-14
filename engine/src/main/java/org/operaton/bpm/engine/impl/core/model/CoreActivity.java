@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.core.model;
 import java.io.Serial;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 
 import org.jspecify.annotations.Nullable;
@@ -31,18 +32,18 @@ import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
  * @author Sebastian Menski
  *
  */
-public abstract class CoreActivity extends CoreModelElement {
+public abstract @NullMarked class CoreActivity extends CoreModelElement {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected IoMapping ioMapping;
+  protected @Nullable IoMapping ioMapping;
 
   protected CoreActivity(String id) {
     super(id);
   }
 
   /** searches for the activity recursively */
-  public @Nullable CoreActivity findActivity(String activityId) {
+  public @Nullable CoreActivity findActivity(@Nullable String activityId) {
     CoreActivity localActivity = getChildActivity(activityId);
     if (localActivity!=null) {
       return localActivity;
@@ -61,15 +62,15 @@ public abstract class CoreActivity extends CoreModelElement {
   }
 
   /** searches for the activity locally */
-  public abstract CoreActivity getChildActivity(String activityId);
+  public abstract @Nullable CoreActivity getChildActivity(@Nullable String activityId);
 
-  public abstract CoreActivity createActivity(String activityId);
+  public abstract CoreActivity createActivity(@Nullable String activityId);
 
   public abstract List<? extends CoreActivity> getActivities();
 
-  public abstract CoreActivityBehavior<? extends BaseDelegateExecution> getActivityBehavior();
+  public abstract @Nullable CoreActivityBehavior<? extends BaseDelegateExecution> getActivityBehavior();
 
-  public IoMapping getIoMapping() {
+  public @Nullable IoMapping getIoMapping() {
     return ioMapping;
   }
 

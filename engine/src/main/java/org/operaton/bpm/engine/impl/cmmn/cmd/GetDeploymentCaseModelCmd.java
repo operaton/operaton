@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
@@ -32,7 +34,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class GetDeploymentCaseModelCmd implements Command<InputStream> {
+public @NullMarked class GetDeploymentCaseModelCmd implements Command<InputStream> {
   protected String caseDefinitionId;
 
   public GetDeploymentCaseModelCmd(String caseDefinitionId) {
@@ -40,7 +42,7 @@ public class GetDeploymentCaseModelCmd implements Command<InputStream> {
   }
 
   @Override
-  public InputStream execute(final CommandContext commandContext) {
+  public @Nullable InputStream execute(final CommandContext commandContext) {
     ensureNotNull("caseDefinitionId", caseDefinitionId);
 
     CaseDefinitionEntity caseDefinition = Context

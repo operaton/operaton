@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
  * @author Roman Smirnov
  *
  */
-public interface CmmnCompositeActivityBehavior extends CmmnActivityBehavior {
+public @NullMarked interface CmmnCompositeActivityBehavior extends CmmnActivityBehavior {
 
   void handleChildDisabled(CmmnActivityExecution execution, CmmnActivityExecution child);
 

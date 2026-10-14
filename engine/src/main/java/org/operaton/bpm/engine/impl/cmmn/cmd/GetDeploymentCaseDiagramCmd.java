@@ -18,10 +18,10 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 
-import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
@@ -38,10 +38,10 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Simon Zambrovski
  */
-public class GetDeploymentCaseDiagramCmd implements Command<InputStream> {
+public @NullMarked class GetDeploymentCaseDiagramCmd implements Command<InputStream> {
   protected String caseDefinitionId;
 
-  public GetDeploymentCaseDiagramCmd(@NonNull String caseDefinitionId) {
+  public GetDeploymentCaseDiagramCmd(String caseDefinitionId) {
     if (caseDefinitionId.isEmpty()) {
       throw new ProcessEngineException("The case definition id is mandatory, but '%s' has been provided.".formatted(caseDefinitionId));
     }

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.delegate;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.delegate.DelegateInvocation;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.delegate.DelegateInvocation;
  *
  * @author Roman Smirnov
  */
-public class CaseExecutionListenerInvocation extends DelegateInvocation {
+public @NullMarked class CaseExecutionListenerInvocation extends DelegateInvocation {
 
   protected final CaseExecutionListener listenerInstance;
   protected final DelegateCaseExecution caseExecution;

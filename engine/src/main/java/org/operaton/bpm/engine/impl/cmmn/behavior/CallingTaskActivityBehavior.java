@@ -16,21 +16,25 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement.CallableElementBinding;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public abstract class CallingTaskActivityBehavior extends TaskActivityBehavior {
+public abstract @NullMarked class CallingTaskActivityBehavior extends TaskActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 
-  protected BaseCallableElement callableElement;
+  protected @Nullable BaseCallableElement callableElement;
 
   @Override
   public void onManualCompletion(CmmnActivityExecution execution) {
@@ -44,25 +48,26 @@ public abstract class CallingTaskActivityBehavior extends TaskActivityBehavior {
   }
 
   public BaseCallableElement getCallableElement() {
-    return callableElement;
+    return requireNonNull(callableElement);
   }
 
   public void setCallableElement(BaseCallableElement callableElement) {
     this.callableElement = callableElement;
   }
 
+  @SuppressWarnings("unused")
   protected String getDefinitionKey(CmmnActivityExecution execution) {
     CmmnExecution caseExecution = (CmmnExecution) execution;
     return getCallableElement().getDefinitionKey(caseExecution);
   }
 
-  protected Integer getVersion(CmmnActivityExecution execution) {
+  protected @Nullable Integer getVersion(CmmnActivityExecution execution) {
     CmmnExecution caseExecution = (CmmnExecution) execution;
     return getCallableElement().getVersion(caseExecution);
   }
 
   @SuppressWarnings("unused")
-  protected String getDeploymentId(CmmnActivityExecution execution) {
+  protected @Nullable String getDeploymentId(CmmnActivityExecution execution) {
     return getCallableElement().getDeploymentId();
   }
 
@@ -70,18 +75,22 @@ public abstract class CallingTaskActivityBehavior extends TaskActivityBehavior {
     return getCallableElement().getBinding();
   }
 
+  @SuppressWarnings("unused")
   protected boolean isLatestBinding() {
     return getCallableElement().isLatestBinding();
   }
 
+  @SuppressWarnings("unused")
   protected boolean isDeploymentBinding() {
     return getCallableElement().isDeploymentBinding();
   }
 
+  @SuppressWarnings("unused")
   protected boolean isVersionBinding() {
     return getCallableElement().isVersionBinding();
   }
 
+  @SuppressWarnings("unused")
   protected boolean isVersionTagBinding() {
     return getCallableElement().isVersionTagBinding();
   }

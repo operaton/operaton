@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
  * @author Roman Smirnov
  *
  */
-public class EventListenerActivityBehavior extends EventListenerOrMilestoneActivityBehavior {
+public @NullMarked class EventListenerActivityBehavior extends EventListenerOrMilestoneActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 

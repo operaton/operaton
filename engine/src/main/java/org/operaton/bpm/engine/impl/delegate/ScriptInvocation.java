@@ -30,13 +30,13 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 public @NullMarked class ScriptInvocation extends DelegateInvocation {
 
   protected ExecutableScript script;
-  protected VariableScope scope;
+  protected @Nullable VariableScope scope;
 
-  public ScriptInvocation(ExecutableScript script, VariableScope scope) {
+  public ScriptInvocation(ExecutableScript script, @Nullable VariableScope scope) {
     this(script, scope, null);
   }
 
-  public ScriptInvocation(ExecutableScript script, VariableScope scope, @Nullable BaseDelegateExecution contextExecution) {
+  public ScriptInvocation(ExecutableScript script, @Nullable VariableScope scope, @Nullable BaseDelegateExecution contextExecution) {
     super(contextExecution, null);
     this.script = script;
     this.scope = scope;

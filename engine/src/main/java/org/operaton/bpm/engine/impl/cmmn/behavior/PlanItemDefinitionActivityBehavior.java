@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.behavior;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.helper.CmmnProperties;
 import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
@@ -42,7 +43,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivityBehavior {
+public abstract @NullMarked class PlanItemDefinitionActivityBehavior implements CmmnActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
   private static final String TRANSITION_CLOSE = "close";

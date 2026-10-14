@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
  * @author Roman Smirnov
  *
  */
-public interface CmmnActivityBehavior extends CoreActivityBehavior<CmmnActivityExecution> {
+public @NullMarked interface CmmnActivityBehavior extends CoreActivityBehavior<CmmnActivityExecution> {
 
   void onCreate(CmmnActivityExecution execution);
 

@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -79,7 +80,7 @@ public class ScriptingEnvironment {
    * @param scope the scope in which to execute the script
    * @return the result of the script evaluation
    */
-  public Object execute(ExecutableScript script, VariableScope scope) {
+  public Object execute(ExecutableScript script, @Nullable VariableScope scope) {
 
     // get script engine
     ScriptEngine scriptEngine = scriptingEngines.getScriptEngineForLanguage(script.getLanguage());

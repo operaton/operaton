@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.form.engine;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
@@ -30,8 +32,11 @@ import org.operaton.bpm.engine.impl.form.type.StringFormType;
 
 /**
  * @author Askar Akhmerov
+ * @deprecated Unused class
  */
-public abstract class AbstractRenderFormDelegate {
+@SuppressWarnings("unused")
+@Deprecated(since = "2.3")
+public abstract @NullMarked class AbstractRenderFormDelegate {
   /* elements */
   protected static final String FORM_ELEMENT = "form";
   protected static final String DIV_ELEMENT = "div";
@@ -121,7 +126,7 @@ public abstract class AbstractRenderFormDelegate {
   protected static final String TYPE_FIELD_MESSAGE = "Only a %s value is allowed";
   protected static final String INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern '%s'".formatted(DATE_FORMAT);
 
-  protected String renderFormData(FormData formData) {
+  protected @Nullable String renderFormData(@Nullable FormData formData) {
 
     if(formData == null
         || (formData.getFormFields() == null || formData.getFormFields().isEmpty())

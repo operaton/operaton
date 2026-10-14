@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -26,8 +27,8 @@ public interface CoreVariableInstance {
 
   String getName();
 
-  TypedValue getTypedValue(boolean deserializeValue);
+  @Nullable TypedValue getTypedValue(boolean deserializeValue);
 
-  void setValue(TypedValue typedValue);
+  void setValue(@Nullable TypedValue typedValue);
 
 }

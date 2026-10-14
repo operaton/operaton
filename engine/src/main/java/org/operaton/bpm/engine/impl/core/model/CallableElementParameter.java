@@ -16,36 +16,38 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ConstantValueProvider;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableScopeLocalAdapter;
 import org.operaton.bpm.engine.variable.VariableMap;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public class CallableElementParameter {
+public @NullMarked class CallableElementParameter {
 
-  protected ParameterValueProvider sourceValueProvider;
-  protected String target;
+  protected @Nullable ParameterValueProvider sourceValueProvider;
+  protected @Nullable String target;
   protected boolean allVariables;
   protected boolean readLocal;
 
   // source ////////////////////////////////////////////////////////
 
-  public Object getSource(VariableScope variableScope) {
-
+  public @Nullable Object getSource(VariableScope variableScope) {
+    requireNonNull(sourceValueProvider);
     if (sourceValueProvider instanceof ConstantValueProvider) {
       String variableName = (String) sourceValueProvider.getValue(variableScope);
 
       return variableScope.getVariableTyped(variableName);
-    }
-    else {
+    } else {
       return sourceValueProvider.getValue(variableScope);
     }
-
   }
 
   public void applyTo(VariableScope variableScope, VariableMap variables) {
@@ -62,7 +64,7 @@ public class CallableElementParameter {
     }
   }
 
-  public ParameterValueProvider getSourceValueProvider() {
+  public @Nullable ParameterValueProvider getSourceValueProvider() {
     return sourceValueProvider;
   }
 
@@ -72,7 +74,7 @@ public class CallableElementParameter {
 
   // target //////////////////////////////////////////////////////////
 
-  public String getTarget() {
+  public @Nullable String getTarget() {
     return target;
   }
 
@@ -96,6 +98,7 @@ public class CallableElementParameter {
     this.readLocal = readLocal;
   }
 
+  @SuppressWarnings("unused")
   public boolean isReadLocal() {
     return readLocal;
   }

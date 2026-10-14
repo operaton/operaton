@@ -21,6 +21,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.form.engine.HtmlDocumentBuilder.HtmlWriteContext;
 
 /**
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.impl.form.engine.HtmlDocumentBuilder.HtmlWriteCon
  * @author Daniel Meyer
  *
  */
-public class HtmlElementWriter {
+public @NullMarked class HtmlElementWriter {
 
   protected String tagName;
 
@@ -37,7 +39,7 @@ public class HtmlElementWriter {
    * start + end tag pair but as a single tag using "/" to close the tag
    * inline */
   protected boolean isSelfClosing;
-  protected String textContent;
+  protected @Nullable String textContent;
   protected Map<String, String> attributes = new LinkedHashMap<>();
 
   public HtmlElementWriter(String tagName) {
@@ -84,7 +86,7 @@ public class HtmlElementWriter {
   protected void writeTextContent(HtmlWriteContext context) {
     StringWriter writer = context.getWriter();
     writer.write("  "); // add additional whitespace
-    writer.write(textContent);
+    writer.write(textContent != null ? textContent : "");
   }
 
   protected void writeStartTagOpen(HtmlWriteContext context) {
@@ -136,7 +138,8 @@ public class HtmlElementWriter {
 
   // builder /////////////////////////////////////
 
-  public HtmlElementWriter attribute(String name, String value) {
+  @SuppressWarnings("ConstantConditions")
+  public HtmlElementWriter attribute(String name, @Nullable String value) {
     attributes.put(name, value);
     return this;
   }

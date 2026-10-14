@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.cmmn.CaseExecutionNotFoundException;
 
 import org.jspecify.annotations.Nullable;
@@ -34,18 +35,18 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class CaseExecutionVariableCmd implements Command<Void> {
+public @NullMarked class CaseExecutionVariableCmd implements Command<Void> {
   protected String caseExecutionId;
-  protected Map<String, Object> variables;
-  protected Map<String, Object> variablesLocal;
+  protected @Nullable Map<String, Object> variables;
+  protected @Nullable Map<String, Object> variablesLocal;
 
-  protected Collection<String> variablesDeletions;
-  protected Collection<String> variablesLocalDeletions;
+  protected @Nullable Collection<String> variablesDeletions;
+  protected @Nullable Collection<String> variablesLocalDeletions;
 
-  protected CaseExecutionEntity caseExecution;
+  protected @Nullable CaseExecutionEntity caseExecution;
 
-  public CaseExecutionVariableCmd(String caseExecutionId, Map<String, Object> variables, Map<String, Object> variablesLocal,
-      Collection<String> variablesDeletions, Collection<String> variablesLocalDeletions) {
+  public CaseExecutionVariableCmd(String caseExecutionId, @Nullable Map<String, Object> variables, @Nullable Map<String, Object> variablesLocal,
+      @Nullable Collection<String> variablesDeletions, @Nullable Collection<String> variablesLocalDeletions) {
     this.caseExecutionId = caseExecutionId;
     this.variables = variables;
     this.variablesLocal = variablesLocal;
@@ -92,7 +93,7 @@ public class CaseExecutionVariableCmd implements Command<Void> {
     return null;
   }
 
-  public CaseExecutionEntity getCaseExecution() {
+  public @Nullable CaseExecutionEntity getCaseExecution() {
     return caseExecution;
   }
 

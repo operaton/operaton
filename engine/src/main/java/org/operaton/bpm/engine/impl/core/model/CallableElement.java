@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 import org.jspecify.annotations.Nullable;
@@ -30,9 +31,9 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Roman Smirnov
  *
  */
-public class CallableElement extends BaseCallableElement {
+public @NullMarked class CallableElement extends BaseCallableElement {
 
-  protected ParameterValueProvider businessKeyValueProvider;
+  protected @Nullable ParameterValueProvider businessKeyValueProvider;
   protected List<CallableElementParameter> inputs;
   protected List<CallableElementParameter> outputs;
   protected List<CallableElementParameter> outputsLocal;
@@ -65,7 +66,7 @@ public class CallableElement extends BaseCallableElement {
     return (String) result;
   }
 
-  public ParameterValueProvider getBusinessKeyValueProvider() {
+  public @Nullable ParameterValueProvider getBusinessKeyValueProvider() {
     return businessKeyValueProvider;
   }
 

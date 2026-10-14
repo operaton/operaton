@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -31,7 +33,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  *
  * @author Thorben Lindhauer
  */
-public class VariableScopeLocalAdapter implements VariableScope {
+public @NullMarked class VariableScopeLocalAdapter implements VariableScope {
 
   protected VariableScope wrappedScope;
 
@@ -75,32 +77,32 @@ public class VariableScopeLocalAdapter implements VariableScope {
   }
 
   @Override
-  public Object getVariable(String variableName) {
+  public @Nullable Object getVariable(String variableName) {
     return getVariableLocal(variableName);
   }
 
   @Override
-  public Object getVariableLocal(String variableName) {
+  public @Nullable Object getVariableLocal(String variableName) {
     return wrappedScope.getVariableLocal(variableName);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String variableName) {
     return getVariableLocalTyped(variableName);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableTyped(String variableName, boolean deserializeValue) {
+  public <T extends TypedValue> @Nullable T getVariableTyped(String variableName, boolean deserializeValue) {
     return getVariableLocalTyped(variableName, deserializeValue);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String variableName) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String variableName) {
     return wrappedScope.getVariableLocalTyped(variableName);
   }
 
   @Override
-  public <T extends TypedValue> T getVariableLocalTyped(String variableName, boolean deserializeValue) {
+  public <T extends TypedValue> @Nullable T getVariableLocalTyped(String variableName, boolean deserializeValue) {
     return wrappedScope.getVariableLocalTyped(variableName, deserializeValue);
   }
 

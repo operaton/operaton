@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
  * @author Thorben Lindhauer
  *
  */
-public class VariableInstanceHistoryListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
+public @NullMarked class VariableInstanceHistoryListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
   @Override
   public void onCreate(final VariableInstanceEntity variableInstance, final AbstractVariableScope sourceScope) {

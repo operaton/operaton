@@ -16,25 +16,27 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class DecisionTaskActivityBehavior extends CallingTaskActivityBehavior {
+public @NullMarked class DecisionTaskActivityBehavior extends CallingTaskActivityBehavior {
 
-  protected String resultVariable;
+  protected @Nullable String resultVariable;
 
   @Override
   protected String getTypeName() {
     return "decision task";
   }
 
-  public String getResultVariable() {
+  public @Nullable String getResultVariable() {
     return resultVariable;
   }
 
-  public void setResultVariable(String resultVariable) {
+  public void setResultVariable(@Nullable String resultVariable) {
     this.resultVariable = resultVariable;
   }
 

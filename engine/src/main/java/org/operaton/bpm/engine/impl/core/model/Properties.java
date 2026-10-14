@@ -155,7 +155,7 @@ public @NullMarked class Properties {
   /**
    * Append the value to the list to which the specified property key is mapped. If
    * this properties contains no mapping for the property key, the value append to
-   * a new list witch is associate the the specified property key.
+   * a new list witch is associate the specified property key.
    *
    * @param <T>
    *          the type of elements in the list
@@ -176,7 +176,7 @@ public @NullMarked class Properties {
   /**
    * Insert the value to the map to which the specified property key is mapped. If
    * this properties contains no mapping for the property key, the value insert to
-   * a new map witch is associate the the specified property key.
+   * a new map witch is associate the specified property key.
    *
    * @param <K>
    *          the type of keys maintained by the map

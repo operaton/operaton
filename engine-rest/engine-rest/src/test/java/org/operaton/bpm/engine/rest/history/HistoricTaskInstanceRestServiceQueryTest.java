@@ -2502,9 +2502,9 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     HistoricTaskInstanceQueryImpl historicTaskInstanceQuery = mock(HistoricTaskInstanceQueryImpl.class);
     when(processEngine.getHistoryService().createHistoricTaskInstanceQuery()).thenReturn(historicTaskInstanceQuery);
 
-    String payload = "{ \"orQueries\": [{" +
-        "\"processDefinitionKey\": \"aKey\", " +
-        "\"processInstanceBusinessKey\": \"aBusinessKey\"}] }";
+    String payload = """
+        { "orQueries": [{"processDefinitionKey": "aKey",
+        "processInstanceBusinessKey": "aBusinessKey"}] }""";
 
     // when
     given()

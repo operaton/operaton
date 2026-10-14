@@ -134,7 +134,13 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
   @Test
   void testCacheCreation() {
     String contextParameter = """
-        {"%s": "%s","%s": {"%s": {"capacity": 123, "secondsToLive": 123}}}"""
+        {
+          "%s": "%s",
+          "%s": {
+            "%s": {"capacity": 123, "secondsToLive": 123}
+          }
+        }
+        """
         .formatted(CONFIG_CACHE_IMPLEMENTATION, DefaultHalResourceCache.class.getName(),
             CONFIG_CACHES, HalUser.class.getName());
 

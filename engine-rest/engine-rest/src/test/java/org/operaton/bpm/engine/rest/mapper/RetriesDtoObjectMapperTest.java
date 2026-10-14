@@ -49,7 +49,11 @@ class RetriesDtoObjectMapperTest {
   void shouldIncludeDueDateSetPropertyRetriesDto() throws Exception {
     // given
     String json = """
-        {"retries":4,"dueDate":1675752840000}""";
+            {
+              "retries": 4,
+              "dueDate": 1675752840000
+            }
+            """;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -64,7 +68,10 @@ class RetriesDtoObjectMapperTest {
   void shouldIgnoreDueDateSetPropertyRetriesDto() throws Exception {
     // given
     String json = """
-        {"retries":4}""";
+            {
+              "retries": 4
+            }
+            """;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -97,7 +104,12 @@ class RetriesDtoObjectMapperTest {
   void shouldIncludeDueDateSetPropertySetJobRetriesDto() throws Exception {
     // given
     String json = """
-        {"retries":4,"dueDate":1675752840000,"jobIds":[],"jobQuery":{"sorting":null}}""";
+        {
+          "retries": 4,
+          "dueDate": 1675752840000,
+          "jobIds": [],
+          "jobQuery": {"sorting":null}}
+        """;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -112,7 +124,12 @@ class RetriesDtoObjectMapperTest {
   void shouldIgnoreDueDateSetPropertySetJobRetriesDto() throws Exception {
     // given
     String json = """
-        {"retries":4,"jobIds":[],"jobQuery":{"sorting":null}}""";
+        {
+          "retries": 4,
+          "jobIds": [],
+          "jobQuery": {"sorting": null}
+        }
+        """;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -146,8 +163,19 @@ class RetriesDtoObjectMapperTest {
   void shouldIncludeDueDateSetPropertySetJobRetriesByProcessDto() throws Exception {
     // given
     String json = """
-        {"retries":4,"dueDate":1675752840000,"jobIds":null,"jobQuery":null,"processInstances":[],
-        "historicProcessInstanceQuery":{"processDefinitionId":null,"incidentType":null,"orQueries":null,"sorting":null}}""";
+        {
+          "retries": 4,
+          "dueDate": 1675752840000,
+          "jobIds": null,
+          "jobQuery": null,
+          "processInstances": [],
+          "historicProcessInstanceQuery": {
+            "processDefinitionId": null,
+            "incidentType": null,
+            "orQueries": null,
+            "sorting": null
+          }
+        }""";
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -161,8 +189,53 @@ class RetriesDtoObjectMapperTest {
   @Test
   void shouldIgnoreDueDateSetPropertySetJobRetriesByProcessDto() throws Exception {
     // given
-    String json = "{\"retries\":4,\"jobIds\":null,\"jobQuery\":null,\"processInstances\":[],\"processInstanceQuery\":{\"deploymentId\":null,\"processDefinitionKey\":null,\"processDefinitionKeys\":null,\"processDefinitionKeyNotIn\":null,\"businessKey\":null,\"businessKeyLike\":null,\"caseInstanceId\":null,\"processDefinitionId\":null,\"superProcessInstance\":null,\"subProcessInstance\":null,\"superCaseInstance\":null,\"subCaseInstance\":null,\"active\":null,\"suspended\":null,\"processInstanceIds\":null,\"withIncident\":null,\"incidentId\":null,\"incidentType\":null,\"incidentMessage\":null,\"incidentMessageLike\":null,\"withoutTenantId\":null,\"activityIds\":null,\"rootProcessInstances\":null,\"leafProcessInstances\":null,\"variableNamesIgnoreCase\":null,\"variableValuesIgnoreCase\":null,\"variables\":null,\"orQueries\":null,\"processDefinitionWithoutTenantId\":null,\"tenantIdIn\":null,\"sorting\":null},\"historicProcessInstanceQuery\":{\"processDefinitionId\":null,\"incidentType\":null,\"orQueries\":null,\"sorting\":null}}";
-
+    String json = """
+    {
+      "retries": 4,
+      "jobIds": null,
+      "jobQuery": null,
+      "processInstances": [],
+      "processInstanceQuery": {
+        "deploymentId": null,
+        "processDefinitionKey": null,
+        "processDefinitionKeys": null,
+        "processDefinitionKeyNotIn": null,
+        "businessKey": null,
+        "businessKeyLike": null,
+        "caseInstanceId": null,
+        "processDefinitionId": null,
+        "superProcessInstance": null,
+        "subProcessInstance": null,
+        "superCaseInstance": null,
+        "subCaseInstance": null,
+        "active": null,
+        "suspended": null,
+        "processInstanceIds": null,
+        "withIncident": null,
+        "incidentId": null,
+        "incidentType": null,
+        "incidentMessage": null,
+        "incidentMessageLike": null,
+        "withoutTenantId": null,
+        "activityIds": null,
+        "rootProcessInstances": null,
+        "leafProcessInstances": null,
+        "variableNamesIgnoreCase": null,
+        "variableValuesIgnoreCase": null,
+        "variables": null,
+        "orQueries": null,
+        "processDefinitionWithoutTenantId": null,
+        "tenantIdIn": null,
+        "sorting": null
+      },
+      "historicProcessInstanceQuery": {
+        "processDefinitionId": null,
+        "incidentType": null,
+        "orQueries": null,
+        "sorting": null
+      }
+    }
+    """;
     ObjectMapper mapper = new ObjectMapper();
 
     // when

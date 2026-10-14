@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.engine;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.form.TaskFormData;
 
@@ -23,10 +25,10 @@ import org.operaton.bpm.engine.form.TaskFormData;
 /**
  * @author Tom Baeyens
  */
-public interface FormEngine {
+public @NullMarked interface FormEngine {
 
   String getName();
-  Object renderStartForm(StartFormData startForm);
-  Object renderTaskForm(TaskFormData taskForm);
+  @Nullable Object renderStartForm(@Nullable StartFormData startForm);
+  @Nullable Object renderTaskForm(@Nullable TaskFormData taskForm);
 
 }

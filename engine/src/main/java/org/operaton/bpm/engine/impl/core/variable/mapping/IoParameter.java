@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.mapping;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
@@ -51,11 +52,7 @@ public abstract class IoParameter {
     execute(scope, scope.getParentVariableScope());
   }
 
-   /**
-   * @param innerScope
-   * @param outerScope
-   */
-  protected abstract void execute(AbstractVariableScope innerScope, AbstractVariableScope outerScope);
+  protected abstract void execute(AbstractVariableScope innerScope, @Nullable AbstractVariableScope outerScope);
 
   // getters / setters ///////////////////////////
 
@@ -67,10 +64,12 @@ public abstract class IoParameter {
     this.name = name;
   }
 
+  @SuppressWarnings("unused")
   public ParameterValueProvider getValueProvider() {
     return valueProvider;
   }
 
+  @SuppressWarnings("unused")
   public void setValueProvider(ParameterValueProvider valueProvider) {
     this.valueProvider = valueProvider;
   }

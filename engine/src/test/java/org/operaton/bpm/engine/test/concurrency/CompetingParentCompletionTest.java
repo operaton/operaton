@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -108,7 +109,7 @@ class CompetingParentCompletionTest {
 
   }
 
-  public class TerminateSingleThread extends SingleThread {
+  public @NullMarked class TerminateSingleThread extends SingleThread {
 
     public TerminateSingleThread(String caseExecutionId) {
       super(caseExecutionId, new StateTransitionCaseExecutionCmd(caseExecutionId, null, null, null, null) {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 
@@ -27,7 +28,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_IS_
  * @author Roman Smirnov
  *
  */
-public class TaskActivityBehavior extends StageOrTaskActivityBehavior {
+public @NullMarked class TaskActivityBehavior extends StageOrTaskActivityBehavior {
 
   @Override
   public void onReactivation(CmmnActivityExecution execution) {

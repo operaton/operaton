@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.model.cmmn.VariableTransition;
@@ -25,7 +26,7 @@ import org.operaton.bpm.model.cmmn.VariableTransition;
  * @author Deivarayan Azhagappan
  *
  */
-public class VariableOnPartListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
+public @NullMarked class VariableOnPartListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
   protected CmmnExecution execution;
 

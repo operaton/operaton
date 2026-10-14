@@ -23,6 +23,8 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.AbstractDefinitionDeployer;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.model.Properties;
@@ -35,7 +37,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.FORM_RESOURCE_SUFFIXES;
 
-public class OperatonFormDefinitionDeployer extends AbstractDefinitionDeployer<OperatonFormDefinitionEntity> {
+public @NullMarked class OperatonFormDefinitionDeployer extends AbstractDefinitionDeployer<OperatonFormDefinitionEntity> {
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
@@ -47,7 +49,11 @@ public class OperatonFormDefinitionDeployer extends AbstractDefinitionDeployer<O
   @Override
   protected List<OperatonFormDefinitionEntity> transformDefinitions(DeploymentEntity deployment, ResourceEntity resource,
       Properties properties) {
-    String formContent = new String(resource.getBytes(), StandardCharsets.UTF_8);
+    byte[] bytes = resource.getBytes();
+    if (bytes == null) {
+      bytes = new byte[0];
+    }
+    String formContent = new String(bytes, StandardCharsets.UTF_8);
 
     try {
       JsonObject formJsonObject = new Gson().fromJson(formContent, JsonObject.class);
@@ -64,13 +70,13 @@ public class OperatonFormDefinitionDeployer extends AbstractDefinitionDeployer<O
   }
 
   @Override
-  protected OperatonFormDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  protected @Nullable OperatonFormDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     return getCommandContext().getOperatonFormDefinitionManager().findDefinitionByDeploymentAndKey(deploymentId,
         definitionKey);
   }
 
   @Override
-  protected OperatonFormDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  protected @Nullable OperatonFormDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return getCommandContext().getOperatonFormDefinitionManager().findLatestDefinitionByKeyAndTenantId(definitionKey,
         tenantId);
   }

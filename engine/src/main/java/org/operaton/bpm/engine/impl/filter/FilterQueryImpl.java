@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.filter;
 import java.io.Serial;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
 import org.operaton.bpm.engine.impl.AbstractQuery;
@@ -31,14 +33,14 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-public class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implements FilterQuery {
+public @NullMarked class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implements FilterQuery {
 
   @Serial private static final long serialVersionUID = 1L;
-  protected String filterId;
-  protected String resourceType;
-  protected String name;
-  protected String nameLike;
-  protected String owner;
+  protected @Nullable String filterId;
+  protected @Nullable String resourceType;
+  protected @Nullable String name;
+  protected @Nullable String nameLike;
+  protected @Nullable String owner;
 
   public FilterQueryImpl() {
   }
@@ -48,35 +50,35 @@ public class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implemen
   }
 
   @Override
-  public FilterQuery filterId(String filterId) {
+  public FilterQuery filterId(@Nullable String filterId) {
     ensureNotNull("filterId", filterId);
     this.filterId = filterId;
     return this;
   }
 
   @Override
-  public FilterQuery filterResourceType(String resourceType) {
+  public FilterQuery filterResourceType(@Nullable String resourceType) {
     ensureNotNull("resourceType", resourceType);
     this.resourceType = resourceType;
     return this;
   }
 
   @Override
-  public FilterQuery filterName(String name) {
+  public FilterQuery filterName(@Nullable String name) {
     ensureNotNull("name", name);
     this.name = name;
     return this;
   }
 
   @Override
-  public FilterQuery filterNameLike(String nameLike) {
+  public FilterQuery filterNameLike(@Nullable String nameLike) {
     ensureNotNull("nameLike", nameLike);
     this.nameLike = nameLike;
     return this;
   }
 
   @Override
-  public FilterQuery filterOwner(String owner) {
+  public FilterQuery filterOwner(@Nullable String owner) {
     ensureNotNull("owner", owner);
     this.owner = owner;
     return this;

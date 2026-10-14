@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -25,12 +27,12 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Sebastian Menski
  *
  */
-public class SimpleVariableInstance implements CoreVariableInstance {
+public @NullMarked class SimpleVariableInstance implements CoreVariableInstance {
 
   protected String name;
-  protected TypedValue value;
+  protected @Nullable TypedValue value;
 
-  public SimpleVariableInstance(String name, TypedValue value) {
+  public SimpleVariableInstance(String name, @Nullable TypedValue value) {
     this.name = name;
     this.value = value;
   }
@@ -45,18 +47,18 @@ public class SimpleVariableInstance implements CoreVariableInstance {
   }
 
   @Override
-  public TypedValue getTypedValue(boolean deserialize) {
+  public @Nullable TypedValue getTypedValue(boolean deserialize) {
     return value;
   }
 
   @Override
-  public void setValue(TypedValue value) {
+  public void setValue(@Nullable TypedValue value) {
     this.value = value;
   }
 
   public static class SimpleVariableInstanceFactory implements VariableInstanceFactory<SimpleVariableInstance> {
     @Override
-    public SimpleVariableInstance build(String name, TypedValue value, boolean isTransient) {
+    public SimpleVariableInstance build(String name, @Nullable TypedValue value, boolean isTransient) {
       return new SimpleVariableInstance(name, value);
     }
   }

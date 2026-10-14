@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
  * @author Ryan Johnston
  *
  */
-public class VariableListenerInvocationListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
+public @NullMarked class VariableListenerInvocationListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
   protected final AbstractVariableScope targetScope;
 
@@ -71,11 +72,11 @@ public class VariableListenerInvocationListener implements VariableInstanceLifec
   }
 
   protected void addEventToScopeExecution(ExecutionEntity sourceScope, VariableEvent event) {
-
     // ignore events of variables that are not set in an execution
     ExecutionEntity sourceExecution = sourceScope;
     ExecutionEntity scopeExecution = sourceExecution.isScope() ? sourceExecution : sourceExecution.getParent();
-    scopeExecution.delayEvent((ExecutionEntity) targetScope, event);
-
+    if (scopeExecution != null) {
+      scopeExecution.delayEvent((ExecutionEntity) targetScope, event);
+    }
   }
 }

@@ -17,13 +17,14 @@
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public interface VariableInstanceLifecycleListener<T extends CoreVariableInstance> {
+public @NullMarked interface VariableInstanceLifecycleListener<T extends CoreVariableInstance> {
 
   default void onCreate(T variableInstance, AbstractVariableScope sourceScope) {}
 

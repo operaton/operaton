@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 
 /**
@@ -30,9 +31,9 @@ import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
  */
 public class IoMapping {
 
-  protected List<InputParameter> inputParameters;
+  protected @Nullable List<InputParameter> inputParameters;
 
-  protected List<OutputParameter> outputParameters;
+  protected @Nullable List<OutputParameter> outputParameters;
 
   public void executeInputParameters(AbstractVariableScope variableScope) {
     for (InputParameter inputParameter : getInputParameters()) {
@@ -69,6 +70,7 @@ public class IoMapping {
     }
   }
 
+  @SuppressWarnings("unused")
   public void setInputParameters(List<InputParameter> inputParameters) {
     this.inputParameters = inputParameters;
   }
@@ -82,6 +84,15 @@ public class IoMapping {
     }
   }
 
+  @SuppressWarnings("unused")
+  public void setOutputParameters(List<OutputParameter> outputParameters) {
+    this.outputParameters = outputParameters;
+  }
+
+
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public void setOuputParameters(List<OutputParameter> outputParameters) {
     this.outputParameters = outputParameters;
   }

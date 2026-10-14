@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
 
 import org.jspecify.annotations.Nullable;
@@ -34,9 +35,9 @@ import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureGreaterThanOrEqual;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void> {
+public @NullMarked class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void> {
   protected String caseDefinitionId;
-  protected Integer historyTimeToLive;
+  protected @Nullable Integer historyTimeToLive;
 
   public UpdateCaseDefinitionHistoryTimeToLiveCmd(String caseDefinitionId, Integer historyTimeToLive) {
     this.caseDefinitionId = caseDefinitionId;
@@ -79,7 +80,7 @@ public class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void> {
         propertyChanges);
   }
 
-  protected void validate(Integer historyTimeToLive, CommandContext context) {
+  protected void validate(@Nullable Integer historyTimeToLive, CommandContext context) {
     HistoryTimeToLiveParser parser = HistoryTimeToLiveParser.create(context);
     parser.validate(historyTimeToLive);
   }

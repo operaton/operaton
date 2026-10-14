@@ -1,4 +1,6 @@
 /**
  * Variable event types and dispatching infrastructure.
  */
-package org.operaton.bpm.engine.impl.core.variable.event;
+@NullMarked package org.operaton.bpm.engine.impl.core.variable.event;
+
+import org.jspecify.annotations.NullMarked;

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class CmmnVariableInvocationListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
+public @NullMarked class CmmnVariableInvocationListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
   @Override
   public void onCreate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {

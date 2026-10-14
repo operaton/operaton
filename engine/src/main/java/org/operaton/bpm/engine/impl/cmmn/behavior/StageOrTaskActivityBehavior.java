@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
@@ -34,7 +35,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_MAN
  * @author Roman Smirnov
  *
  */
-public abstract class StageOrTaskActivityBehavior extends PlanItemDefinitionActivityBehavior {
+public abstract @NullMarked class StageOrTaskActivityBehavior extends PlanItemDefinitionActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
   private static final String TRANSITION_COMPLETE = "complete";

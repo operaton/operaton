@@ -637,7 +637,7 @@ public @NullMarked class VariableInstanceEntity implements VariableInstance, Cor
       Context.executeWithinProcessApplication(() -> {
         requireNonNull(getVariableScope()).setVariableLocal(name, updatedValue);
         return null;
-      }, requireNonNull(targetProcessApplication), new InvocationContext(getExecution()));
+      }, requireNonNull(targetProcessApplication), new InvocationContext(requireNonNull(getExecution())));
 
     }
     else {
@@ -649,7 +649,7 @@ public @NullMarked class VariableInstanceEntity implements VariableInstance, Cor
 
   protected @Nullable ProcessApplicationReference getContextProcessApplication() {
     if (taskId != null) {
-      return ProcessApplicationContextUtil.getTargetProcessApplication(getTask());
+      return ProcessApplicationContextUtil.getTargetProcessApplication(requireNonNull(getTask()));
     }
     else if (executionId != null) {
       return ProcessApplicationContextUtil.getTargetProcessApplication(getExecution());

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cmmn.CaseExecutionCommandBuilderImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
  * @author Roman Smirnov
  *
  */
-public class CompleteCaseExecutionCmd extends StateTransitionCaseExecutionCmd {
+public @NullMarked class CompleteCaseExecutionCmd extends StateTransitionCaseExecutionCmd {
   public CompleteCaseExecutionCmd(CaseExecutionCommandBuilderImpl builder) {
     super(builder);
   }

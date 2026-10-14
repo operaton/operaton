@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceFactory;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Thorben Lindhauer
  *
  */
-public class VariableInstanceEntityFactory implements VariableInstanceFactory<VariableInstanceEntity> {
+public @NullMarked class VariableInstanceEntityFactory implements VariableInstanceFactory<VariableInstanceEntity> {
 
   @Override
   public VariableInstanceEntity build(String name, TypedValue value, boolean isTransient) {

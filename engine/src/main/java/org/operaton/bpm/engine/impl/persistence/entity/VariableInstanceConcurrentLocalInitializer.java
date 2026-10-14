@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycl
  * @author Thorben Lindhauer
  *
  */
-public class VariableInstanceConcurrentLocalInitializer
+public @NullMarked class VariableInstanceConcurrentLocalInitializer
   implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
   protected ExecutionEntity execution;

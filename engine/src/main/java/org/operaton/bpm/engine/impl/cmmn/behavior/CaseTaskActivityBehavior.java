@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.behavior;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
@@ -30,7 +31,7 @@ import static org.operaton.bpm.engine.impl.util.CallableElementUtil.getCaseDefin
  * @author Roman Smirnov
  *
  */
-public class CaseTaskActivityBehavior extends ProcessOrCaseTaskActivityBehavior {
+public @NullMarked class CaseTaskActivityBehavior extends ProcessOrCaseTaskActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 

@@ -126,7 +126,7 @@ public @NullMarked class TimerEntity extends JobEntity {
           .createExpression(expression)
           .getValue(execution).toString();
     } catch (Exception e) {
-      throw ProcessEngineLogger.UTIL_LOGGER.exceptionWhileParsingCycleExpresison(expression, e);
+      throw ProcessEngineLogger.UTIL_LOGGER.exceptionWhileParsingCycleExpression(expression, e);
     }
     return expressionValue;
   }

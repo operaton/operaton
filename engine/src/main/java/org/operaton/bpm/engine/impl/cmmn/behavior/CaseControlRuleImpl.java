@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.CaseControlRule;
@@ -27,13 +29,13 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class CaseControlRuleImpl implements CaseControlRule {
+public @NullMarked class CaseControlRuleImpl implements CaseControlRule {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 
-  protected Expression expression;
+  protected @Nullable Expression expression;
 
-  public CaseControlRuleImpl(Expression expression) {
+  public CaseControlRuleImpl(@Nullable Expression expression) {
     this.expression = expression;
   }
 

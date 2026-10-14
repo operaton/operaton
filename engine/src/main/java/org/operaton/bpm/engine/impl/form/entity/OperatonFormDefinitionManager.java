@@ -59,6 +59,7 @@ public @NullMarked class OperatonFormDefinitionManager extends AbstractManager
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public @Nullable OperatonFormDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(OPERATON_FORM_DEFINITION_KEY, definitionKey);
@@ -74,6 +75,7 @@ public @NullMarked class OperatonFormDefinitionManager extends AbstractManager
   }
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public @Nullable OperatonFormDefinitionEntity findDefinitionByKeyVersionAndTenantId(String definitionKey,
       @Nullable Integer definitionVersion, @Nullable String tenantId) {
 

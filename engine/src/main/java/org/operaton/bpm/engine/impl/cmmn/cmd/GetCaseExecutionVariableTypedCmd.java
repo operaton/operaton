@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.cmmn.CaseExecutionNotFoundException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -30,7 +32,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class GetCaseExecutionVariableTypedCmd implements Command<TypedValue> {
+public @NullMarked class GetCaseExecutionVariableTypedCmd implements Command<TypedValue> {
   protected String caseExecutionId;
   protected String variableName;
   protected boolean isLocal;
@@ -44,7 +46,7 @@ public class GetCaseExecutionVariableTypedCmd implements Command<TypedValue> {
   }
 
   @Override
-  public TypedValue execute(CommandContext commandContext) {
+  public @Nullable TypedValue execute(CommandContext commandContext) {
     ensureNotNull("caseExecutionId", caseExecutionId);
     ensureNotNull("variableName", variableName);
 

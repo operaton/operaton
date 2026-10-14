@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -30,7 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class GetDeploymentCaseDefinitionCmd implements Command<CaseDefinition> {
+public @NullMarked class GetDeploymentCaseDefinitionCmd implements Command<CaseDefinition> {
   protected String caseDefinitionId;
 
   public GetDeploymentCaseDefinitionCmd(String caseDefinitionId) {

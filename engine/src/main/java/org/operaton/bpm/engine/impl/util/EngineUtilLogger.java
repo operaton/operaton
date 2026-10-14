@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ClassLoadingException;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.Problem;
@@ -90,9 +91,16 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "Exception while instantiating class '{}': {}", className, e.getMessage()), e);
   }
 
-  public ProcessEngineException exceptionWhileApplyingFieldDeclatation(String declName, String className, Exception e) {
+  public ProcessEngineException exceptionWhileApplyingFieldDeclaration(String declName, String className, Exception e) {
     return new ProcessEngineException(exceptionMessage(
-        "009", "Exception while applying field declaration '{}' on class '{}': {}", declName, className, e.getMessage()), e);
+            "009", "Exception while applying field declaration '{}' on class '{}': {}", declName, className, e.getMessage()), e);
+  }
+
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
+  public ProcessEngineException exceptionWhileApplyingFieldDeclatation(String declName, String className, Exception e) {
+    return exceptionWhileApplyingFieldDeclaration(declName, className, e);
   }
 
   public ProcessEngineException incompatibleTypeForFieldDeclaration(FieldDeclaration declaration, Object target, Field field) {
@@ -196,10 +204,17 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "Operation {} requires active command context. No command context active on thread {}.", operation, Thread.currentThread()));
   }
 
-  public ProcessEngineException exceptionWhileParsingCycleExpresison(String duedateDescription, Exception e) {
+  public ProcessEngineException exceptionWhileParsingCycleExpression(String duedateDescription, Exception e) {
     return new ProcessEngineException(exceptionMessage(
-        "026",
-        "Exception while parsing cycle expression '{}': {}", duedateDescription, e.getMessage()), e);
+            "026",
+            "Exception while parsing cycle expression '{}': {}", duedateDescription, e.getMessage()), e);
+  }
+
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
+  public ProcessEngineException exceptionWhileParsingCycleExpresison(String duedateDescription, Exception e) {
+    return exceptionWhileParsingCycleExpression(duedateDescription, e);
   }
 
   public ProcessEngineException exceptionWhileResolvingDuedate(String duedate, Exception e) {
@@ -239,7 +254,7 @@ public class EngineUtilLogger extends ProcessEngineLogger {
       "If you have removed it, please restore it.", file);
   }
 
-  public ProcessEngineException exceptionDuringFormParsing(String cause, String resourceName) {
+  public ProcessEngineException exceptionDuringFormParsing(String cause, @Nullable String resourceName) {
     return new ProcessEngineException(
         exceptionMessage("033", "Could not parse Operaton Form resource {}. Cause: {}", resourceName, cause));
   }

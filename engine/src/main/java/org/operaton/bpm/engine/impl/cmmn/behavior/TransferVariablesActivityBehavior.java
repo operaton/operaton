@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
  * @author Roman Smirnov
  *
  */
-public interface TransferVariablesActivityBehavior extends CmmnActivityBehavior {
+public @NullMarked interface TransferVariablesActivityBehavior extends CmmnActivityBehavior {
 
   void transferVariables(VariableScope sourceScope, CmmnActivityExecution caseExecution);
 

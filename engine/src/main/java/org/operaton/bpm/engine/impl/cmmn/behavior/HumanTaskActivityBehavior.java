@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
@@ -24,13 +26,15 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.task.TaskDecorator;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public class HumanTaskActivityBehavior extends TaskActivityBehavior {
+public @NullMarked class HumanTaskActivityBehavior extends TaskActivityBehavior {
 
-  protected TaskDecorator taskDecorator;
+  protected @Nullable TaskDecorator taskDecorator;
 
   @Override
   protected void performStart(CmmnActivityExecution execution) {
@@ -91,7 +95,7 @@ public class HumanTaskActivityBehavior extends TaskActivityBehavior {
       .updateTaskSuspensionStateByCaseExecutionId(id, SuspensionState.ACTIVE);
   }
 
-  protected TaskEntity getTask(CmmnActivityExecution execution) {
+  protected @Nullable TaskEntity getTask(CmmnActivityExecution execution) {
     return Context
         .getCommandContext()
         .getTaskManager()
@@ -106,7 +110,7 @@ public class HumanTaskActivityBehavior extends TaskActivityBehavior {
   // getters/setters /////////////////////////////////////////////////
 
   public TaskDecorator getTaskDecorator() {
-    return taskDecorator;
+    return requireNonNull(taskDecorator);
   }
 
   public void setTaskDecorator(TaskDecorator taskDecorator) {
@@ -114,11 +118,11 @@ public class HumanTaskActivityBehavior extends TaskActivityBehavior {
   }
 
   public TaskDefinition getTaskDefinition() {
-    return taskDecorator.getTaskDefinition();
+    return getTaskDecorator().getTaskDefinition();
   }
 
   public ExpressionManager getExpressionManager() {
-    return taskDecorator.getExpressionManager();
+    return getTaskDecorator().getExpressionManager();
   }
 
 }

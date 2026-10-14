@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.cmmn.CaseIllegalStateTransitionException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 /**
  * @author Stefan Hentschel.
  */
-public class CmmnBehaviorLogger extends ProcessEngineLogger {
+public @NullMarked class CmmnBehaviorLogger extends ProcessEngineLogger {
 
   private static final String MSG_CANNOT_PERFORM_STATE_TRANSITION = "Could not perform transition '{} on case execution with id '{}'.";
 
@@ -75,7 +76,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
     return criteriaNotAllowedException(criteria, id, "case instances");
   }
 
-  CaseIllegalStateTransitionException executionAlreadyCompletedException(String transition, String id) {
+  CaseIllegalStateTransitionException executionAlreadyCompletedException(@SuppressWarnings("SameParameterValue") String transition, String id) {
     return new CaseIllegalStateTransitionException(exceptionMessage(
       "004",
       MSG_CANNOT_PERFORM_STATE_TRANSITION +

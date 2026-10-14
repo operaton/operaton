@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.core;
 
 import java.text.MessageFormat;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
@@ -31,9 +33,9 @@ import static org.operaton.bpm.engine.impl.core.variable.VariableUtil.ERROR_MSG;
  * @author Daniel Meyer
  *
  */
-public class CoreLogger extends ProcessEngineLogger {
+public @NullMarked class CoreLogger extends ProcessEngineLogger {
 
-  public void debugMappingValueFromOuterScopeToInnerScope(Object value, AbstractVariableScope outerScope, String name, AbstractVariableScope innerScope) {
+  public void debugMappingValueFromOuterScopeToInnerScope(@Nullable Object value, AbstractVariableScope outerScope, String name, AbstractVariableScope innerScope) {
     logDebug(
         "001",
         "Mapping value '{} from outer scope '{}' to variable '{}' in inner scope '{}'.",
@@ -44,11 +46,11 @@ public class CoreLogger extends ProcessEngineLogger {
    * @deprecated Use {@link #debugMappingValueFromInnerScopeToOuterScope(Object, AbstractVariableScope, String, AbstractVariableScope)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  public void debugMappingValuefromInnerScopeToOuterScope(Object value, AbstractVariableScope innerScope, String name, AbstractVariableScope outerScope) {
+  public void debugMappingValuefromInnerScopeToOuterScope(@Nullable Object value, AbstractVariableScope innerScope, String name, AbstractVariableScope outerScope) {
     debugMappingValueFromInnerScopeToOuterScope(value, innerScope, name, outerScope);
   }
 
-  public void debugMappingValueFromInnerScopeToOuterScope(Object value, AbstractVariableScope innerScope, String name, AbstractVariableScope outerScope) {
+  public void debugMappingValueFromInnerScopeToOuterScope(@Nullable Object value, AbstractVariableScope innerScope, String name, AbstractVariableScope outerScope) {
     logDebug(
         "002",
         "Mapping value '{}' from inner scope '{}' to variable '{}' in outer scope '{}'.",

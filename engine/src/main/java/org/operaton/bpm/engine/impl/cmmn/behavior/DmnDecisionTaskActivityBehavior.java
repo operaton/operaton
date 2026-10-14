@@ -16,24 +16,28 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.dmn.result.DecisionResultMapper;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateDecision;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class DmnDecisionTaskActivityBehavior extends DecisionTaskActivityBehavior {
+public @NullMarked class DmnDecisionTaskActivityBehavior extends DecisionTaskActivityBehavior {
 
-  protected DecisionResultMapper decisionResultMapper;
+  protected @Nullable DecisionResultMapper decisionResultMapper;
 
   @Override
   protected void performStart(CmmnActivityExecution execution) {
     try {
       CaseExecutionEntity executionEntity = (CaseExecutionEntity) execution;
+      requireNonNull(callableElement);
 
       evaluateDecision(executionEntity,
           executionEntity.getCaseDefinitionTenantId(),
@@ -51,11 +55,11 @@ public class DmnDecisionTaskActivityBehavior extends DecisionTaskActivityBehavio
     }
   }
 
-  public DecisionResultMapper getDecisionTableResultMapper() {
+  public @Nullable DecisionResultMapper getDecisionTableResultMapper() {
     return decisionResultMapper;
   }
 
-  public void setDecisionTableResultMapper(DecisionResultMapper decisionResultMapper) {
+  public void setDecisionTableResultMapper(@Nullable DecisionResultMapper decisionResultMapper) {
     this.decisionResultMapper = decisionResultMapper;
   }
 

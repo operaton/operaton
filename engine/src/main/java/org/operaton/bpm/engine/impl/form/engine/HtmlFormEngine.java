@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
@@ -40,7 +42,7 @@ import org.operaton.bpm.engine.impl.form.type.StringFormType;
  * @author Daniel Meyer
  *
  */
-public class HtmlFormEngine implements FormEngine {
+public @NullMarked class HtmlFormEngine implements FormEngine {
 
   /* elements */
   protected static final String FORM_ELEMENT = "form";
@@ -142,19 +144,21 @@ public class HtmlFormEngine implements FormEngine {
   }
 
   @Override
-  public Object renderStartForm(StartFormData startForm) {
+  public @Nullable Object renderStartForm(@Nullable StartFormData startForm) {
     return renderFormData(startForm);
   }
 
   @Override
-  public Object renderTaskForm(TaskFormData taskForm) {
+  public @Nullable Object renderTaskForm(@Nullable TaskFormData taskForm) {
     return renderFormData(taskForm);
   }
 
-  protected String renderFormData(FormData formData) {
+  protected @Nullable String renderFormData(@Nullable FormData formData) {
+    if(formData == null) {
+      return null;
+    }
 
-    if(formData == null
-        || (formData.getFormFields() == null || formData.getFormFields().isEmpty())
+    if((formData.getFormFields() == null || formData.getFormFields().isEmpty())
         && (formData.getFormProperties() == null || formData.getFormProperties().isEmpty())) {
       return null;
 

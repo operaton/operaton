@@ -111,7 +111,8 @@ class SpinFunctionsTest {
       .serviceTask()
         .operatonExpression("""
             ${ execution.setVariable('customer',
-            S(xmlVar).xPath('/customers/customer').element().toString())}""")
+            S(xmlVar).xPath('/customers/customer').element().toString())}
+            """)
       .receiveTask("wait")
       .endEvent()
     .done();

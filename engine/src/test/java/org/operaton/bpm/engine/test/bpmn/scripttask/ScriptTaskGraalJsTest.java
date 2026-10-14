@@ -92,35 +92,24 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   @TestTemplate
   void testJavascriptProcessVarVisibility() {
 
-    deployProcess(GRAALJS,
-
-        // GIVEN
-        // an execution variable 'foo'
-        "execution.setVariable('foo', 'a');"
-
-        // THEN
-        // there should be a script variable defined
-      + "if (typeof foo !== 'undefined') { "
-      + "  throw 'Variable foo should be defined as script variable.';"
-      + "}"
-
-        // GIVEN
-        // a script variable with the same name
-      + "var foo = 'b';"
-
-        // THEN
-        // it should not change the value of the execution variable
-      + "if(execution.getVariable('foo') != 'a') {"
-      + "  throw 'Execution should contain variable foo';"
-      + "}"
-
-        // AND
-        // it should override the visibility of the execution variable
-      + "if(foo != 'b') {"
-      + "  throw 'Script variable must override the visibiltity of the execution variable.';"
-      + "}"
-
-    );
+    deployProcess(GRAALJS, """
+        // GIVEN: an execution variable 'foo'
+        execution.setVariable('foo', 'a');
+        // THEN: there should be a script variable defined
+        if (typeof foo !== 'undefined') {
+          throw 'Variable foo should be defined as script variable.';
+        }
+        // GIVEN: a script variable with the same name
+        var foo = 'b';
+        // THEN: it should not change the value of the execution variable
+        if(execution.getVariable('foo') != 'a') {
+          throw 'Execution should contain variable foo';
+        }
+        // AND: it should override the visibility of the execution variable
+        if(foo != 'b') {
+          throw 'Script variable must override the visibiltity of the execution variable.';
+        }
+        """);
 
     if (enableNashornCompat || configureHostAccess) {
       // WHEN
@@ -146,21 +135,15 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   @TestTemplate
   void testJavascriptFunctionInvocation() {
 
-    deployProcess(GRAALJS,
-
-        // GIVEN
-        // a function named sum
-        "function sum(a,b){"
-      + "  return a+b;"
-      + "};"
-
-        // THEN
-        // i can call the function
-      + "var result = sum(1,2);"
-
-      + "execution.setVariable('foo', result);"
-
-    );
+    deployProcess(GRAALJS, """
+        // GIVEN: a function named sum
+        function sum(a,b){
+          return a+b;
+        };
+        // THEN: i can call the function
+        var result = sum(1,2);
+        execution.setVariable('foo', result);
+        """);
 
     if (enableNashornCompat || configureHostAccess) {
       // WHEN
@@ -208,11 +191,10 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
   @TestTemplate
   void testJavascriptVariableSerialization() {
-    deployProcess(GRAALJS,
-        // GIVEN
-        // setting Java classes as variables
-        "execution.setVariable('date', new java.util.Date(0));"
-      + "execution.setVariable('myVar', new org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));");
+    deployProcess(GRAALJS, """
+        // GIVEN: setting Java classes as variables
+        execution.setVariable('date', new java.util.Date(0));
+        execution.setVariable('myVar', new org.operaton.bpm.engine.test.bpmn.scripttask.MySerializable('test'));""");
 
     if (enableNashornCompat || configureHostAccess) {
       // WHEN
@@ -238,14 +220,12 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
   void shouldLoadExternalScript() {
       // GIVEN
       // an external JS file with a function
-      deployProcess(GRAALJS,
-          // WHEN
-          // we load a function from an external file
-          "load(\"" + getNormalizedResourcePath("/org/operaton/bpm/engine/test/bpmn/scripttask/sum.js") + "\");"
-          // THEN
-          // we can use that function
-        + "execution.setVariable('foo', sum(3, 4));"
-      );
+      deployProcess(GRAALJS, """
+          // WHEN: we load a function from an external file
+          load("%s");
+          // THEN: we can use that function
+          execution.setVariable('foo', sum(3, 4));"""
+          .formatted(getNormalizedResourcePath("/org/operaton/bpm/engine/test/bpmn/scripttask/sum.js")));
 
       if (enableNashornCompat || (enableExternalResources && configureHostAccess)) {
         // WHEN

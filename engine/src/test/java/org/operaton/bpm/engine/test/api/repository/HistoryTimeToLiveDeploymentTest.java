@@ -50,8 +50,9 @@ class HistoryTimeToLiveDeploymentTest {
 
   protected static final String EXPECTED_DEFAULT_CONFIG_MSG = "History Time To Live (TTL) cannot be null. ";
 
-  protected static final String EXPECTED_LONGER_TTL_MSG = "The specified Time To Live (TTL) in the model is longer than the global TTL configuration. "
-      + "The historic data related to this model will be cleaned up at later point comparing to the other processes.";
+  protected static final String EXPECTED_LONGER_TTL_MSG = """
+      The specified Time To Live (TTL) in the model is longer than the global TTL configuration. \
+      The historic data related to this model will be cleaned up at later point comparing to the other processes.""";
 
   protected static final String HTTL_CONFIG_VALUE = "180";
 

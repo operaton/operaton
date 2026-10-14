@@ -182,8 +182,9 @@ class SuppressSqlExceptionsTest {
 
     assertThat(exceptionsByHierarchy.next())
         .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("ENGINE-03004 Exception while executing Database Operation 'INSERT " +
-            "HistoricProcessInstanceEventEntity")
+        .hasMessageContaining("""
+            ENGINE-03004 Exception while executing Database Operation 'INSERT \
+            HistoricProcessInstanceEventEntity""")
         .hasMessageContaining("Flush summary: ");
 
     assertThat(exceptionsByHierarchy.next())
@@ -219,8 +220,9 @@ class SuppressSqlExceptionsTest {
 
     assertThat(exceptionsByHierarchy.next())
         .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("ENGINE-03004 Exception while executing Database Operation 'INSERT " +
-            "AuthorizationEntity")
+        .hasMessageContaining("""
+            ENGINE-03004 Exception while executing Database Operation 'INSERT \
+            AuthorizationEntity""")
         .hasMessageContaining("Flush summary: ");
 
     assertThat(exceptionsByHierarchy.next())
@@ -251,8 +253,9 @@ class SuppressSqlExceptionsTest {
     assertThat(exceptionsByHierarchy.next())
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining(batchProcessingEnabled ?
-            "ENGINE-03083 Unexpected exception while executing database " +
-                "operations with message '" :
+            """
+            ENGINE-03083 Unexpected exception while executing database \
+            operations with message '""" :
             "ENGINE-03004 Exception while executing Database Operation '")
         .hasMessageContaining("Flush summary: ");
 
@@ -284,8 +287,9 @@ class SuppressSqlExceptionsTest {
     assertThat(exceptionsByHierarchy.next())
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining( batchProcessingEnabled ?
-            "ENGINE-03083 Unexpected exception while executing " +
-                "database operations with message '" :
+            """
+            ENGINE-03083 Unexpected exception while executing \
+            database operations with message '""" :
             "ENGINE-03004 Exception while executing Database Operation '")
         .hasMessageContaining("Flush summary: ");
 
@@ -336,8 +340,9 @@ class SuppressSqlExceptionsTest {
 
     assertThat(exceptionsByHierarchy.next())
         .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("ENGINE-03004 Exception while executing Database Operation '" +
-            "UPDATE VariableInstanceEntity")
+        .hasMessageContaining("""
+            ENGINE-03004 Exception while executing Database Operation '\
+            UPDATE VariableInstanceEntity""")
         .hasMessageContaining("Flush summary: ");
 
     assertThat(exceptionsByHierarchy.next())
@@ -382,8 +387,9 @@ class SuppressSqlExceptionsTest {
     assertThat(exceptionsByHierarchy.next())
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining(batchProcessingEnabled ?
-            "ENGINE-03083 Unexpected exception while executing database " +
-                "operations with message '" :
+            """
+            ENGINE-03083 Unexpected exception while executing database \
+            operations with message '""" :
             "ENGINE-03004 Exception while executing Database Operation '")
         .hasMessageContaining("Flush summary: ");
 

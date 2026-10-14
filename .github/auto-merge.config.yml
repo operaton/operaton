@@ -91,6 +91,7 @@ auto-merge-rules:
       - 'version.jna'
       - 'version.logback'
       - 'version.mockito'
+      - 'version.netty'
       - 'version.quarkus'
       - 'version.shrinkwrap.resolvers'
       - 'version.slf4j'

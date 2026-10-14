@@ -290,6 +290,11 @@ Operaton follows established design patterns:
 * **Integration Tests**: Use `ProcessEngineExtension` for engine-related tests
 * **Test Isolation**: Each test should be independent and repeatable
 * **Test Naming**: Use descriptive names that explain the scenario being tested
+* **Multi-line String Literals**: Prefer Java text blocks (`"""..."""`) over multi-line `+` string
+  concatenation in tests when a literal's content itself spans multiple lines (e.g. inline BPMN/CMMN/DMN
+  model XML, JSON payloads, or embedded script source). Text blocks are more readable and avoid manual
+  escaping/indentation bookkeeping. This does not apply to short string splicing around a single variable
+  (e.g. building an HTTP header value) — only to literals whose content is itself multi-line.
 
 # Contribution checklist
 

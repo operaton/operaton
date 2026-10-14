@@ -194,8 +194,9 @@ class MigrationCompensationTest {
           .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
           .hasActivityInstanceFailures(
               sourceProcessDefinition.getId(),
-              "Cannot migrate subscription for compensation handler 'compensationHandler'. "
-              + "There is no migration instruction for the compensation boundary event");
+              """
+              Cannot migrate subscription for compensation handler 'compensationHandler'. \
+              There is no migration instruction for the compensation boundary event""");
       });
   }
 
@@ -222,8 +223,9 @@ class MigrationCompensationTest {
           .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
           .hasActivityInstanceFailures(
               sourceProcessDefinition.getId(),
-              "Cannot migrate subscription for compensation handler 'compensationHandler'. "
-              + "There is no migration instruction for the compensation boundary event");
+              """
+              Cannot migrate subscription for compensation handler 'compensationHandler'. \
+              There is no migration instruction for the compensation boundary event""");
       });
   }
 
@@ -843,8 +845,9 @@ class MigrationCompensationTest {
         assertThat(exception.getValidationReport())
           .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
           .hasActivityInstanceFailures(sourceProcessDefinition.getId(),
-              "Cannot migrate subscription for compensation handler 'eventSubProcess'. "
-              + "There is no migration instruction for the compensation start event");
+              """
+              Cannot migrate subscription for compensation handler 'eventSubProcess'. \
+              There is no migration instruction for the compensation start event""");
       });
   }
 
@@ -874,8 +877,9 @@ class MigrationCompensationTest {
         assertThat(exception.getValidationReport())
           .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
           .hasActivityInstanceFailures(sourceProcessDefinition.getId(),
-              "Cannot migrate subscription for compensation handler 'eventSubProcess'. "
-              + "There is no migration instruction for the compensation start event");
+              """
+              Cannot migrate subscription for compensation handler 'eventSubProcess'. \
+              There is no migration instruction for the compensation start event""");
       });
   }
 
@@ -896,8 +900,9 @@ class MigrationCompensationTest {
         var exception = (MigrationPlanValidationException) e;
         assertThat(exception.getValidationReport())
           .hasInstructionFailures("innerSubProcess",
-            "The closest mapped ancestor 'outerSubProcess' is mapped to scope 'innerSubProcess' "
-            + "which is not an ancestor of target scope 'outerSubProcess'"
+            """
+            The closest mapped ancestor 'outerSubProcess' is mapped to scope 'innerSubProcess' \
+            which is not an ancestor of target scope 'outerSubProcess'"""
           );
       });
   }
@@ -925,8 +930,9 @@ class MigrationCompensationTest {
         var exception = (MigrationPlanValidationException) e;
         assertThat(exception.getValidationReport())
           .hasInstructionFailures("compensationBoundary",
-            "The closest mapped ancestor 'subProcess' is mapped to scope 'addedSubProcess' "
-            + "which is not an ancestor of target scope 'compensationBoundary'"
+            """
+            The closest mapped ancestor 'subProcess' is mapped to scope 'addedSubProcess' \
+            which is not an ancestor of target scope 'compensationBoundary'"""
           );
       });
   }

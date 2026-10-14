@@ -64,8 +64,8 @@ public @NullMarked class ServiceTaskDelegateExpressionActivityBehavior extends T
   @Override
   public void signal(final ActivityExecution execution, final @Nullable String signalName, final @Nullable Object signalData) throws Exception {
     ProcessApplicationReference targetProcessApplication = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
-    requireNonNull(targetProcessApplication);
     if(ProcessApplicationContextUtil.requiresContextSwitch(targetProcessApplication)) {
+      requireNonNull(targetProcessApplication);
       Context.executeWithinProcessApplication(() -> {
         signal(execution, signalName, signalData);
         return null;

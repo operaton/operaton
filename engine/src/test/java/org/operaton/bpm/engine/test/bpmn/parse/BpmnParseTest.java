@@ -1401,17 +1401,18 @@ class BpmnParseTest {
   @Test
   void testTimerWithoutFullDefinition() {
     // given
-    String timerWithoutDetails = "<?xml version='1.0' encoding='UTF-8'?>" +
-          "<definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'" +
-          "  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'" +
-          "  xmlns:operaton='http://operaton.org/schema/1.0/bpmn'" +
-          "  targetNamespace='Examples'>" +
-          "  <process id='process' isExecutable='true'>" +
-          "    <startEvent id='start'>" +
-          "      <timerEventDefinition id='TimerEventDefinition_1'/>" +
-          "    </startEvent>" +
-          "  </process>" +
-          "</definitions>";
+    String timerWithoutDetails = """
+        <?xml version='1.0' encoding='UTF-8'?>
+        <definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+          xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'
+          xmlns:operaton='http://operaton.org/schema/1.0/bpmn'
+          targetNamespace='Examples'>
+          <process id='process' isExecutable='true'>
+            <startEvent id='start'>
+              <timerEventDefinition id='TimerEventDefinition_1'/>
+            </startEvent>
+          </process>
+        </definitions>""";
     var deploymentBuilder = repositoryService.createDeployment().addString("process.bpmn20.xml", timerWithoutDetails);
 
     // when/then
@@ -1429,16 +1430,17 @@ class BpmnParseTest {
   @Test
   void testSequenceFlowNoIdAndUnexistentDestination() {
     // given
-    String incorrectSequenceFlow = "<?xml version='1.0' encoding='UTF-8'?>" +
-          "<definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'" +
-          "  xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'" +
-          "  xmlns:operaton='http://operaton.org/schema/1.0/bpmn'" +
-          "  targetNamespace='Examples'>" +
-          "  <process id='process' isExecutable='true'>" +
-          "    <startEvent id='start'/>" +
-          "    <sequenceFlow sourceRef='start' targetRef='eventBasedGateway' />" +
-          "  </process>" +
-          "</definitions>";
+    String incorrectSequenceFlow = """
+        <?xml version='1.0' encoding='UTF-8'?>
+        <definitions xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+          xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL'
+          xmlns:operaton='http://operaton.org/schema/1.0/bpmn'
+          targetNamespace='Examples'>
+          <process id='process' isExecutable='true'>
+            <startEvent id='start'/>
+            <sequenceFlow sourceRef='start' targetRef='eventBasedGateway' />
+          </process>
+        </definitions>""";
     var deploymentBuilder = repositoryService.createDeployment().addString("process.bpmn20.xml", incorrectSequenceFlow);
 
     // when/then

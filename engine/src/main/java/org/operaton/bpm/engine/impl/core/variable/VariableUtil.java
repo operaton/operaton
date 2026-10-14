@@ -109,7 +109,7 @@ public final class VariableUtil {
     setVariables(variables, (name, value) -> setVariableByBatchId(batchId, name, value));
   }
 
-  public static void setVariableByBatchId(String batchId, String variableName, Object variableValue) {
+  public static void setVariableByBatchId(String batchId, String variableName, @Nullable Object variableValue) {
     TypedValue variableTypedValue = Variables.untypedValue(variableValue);
 
     boolean isTransient = variableTypedValue.isTransient();
@@ -132,17 +132,17 @@ public final class VariableUtil {
     return variableInstances.stream().collect(variablesCollector());
   }
 
-  protected static Collector<VariableInstanceEntity, ?, Map<String, TypedValue>> variablesCollector() {
+  private static Collector<VariableInstanceEntity, ?, Map<String, TypedValue>> variablesCollector() {
     return Collectors.toMap(VariableInstanceEntity::getName, VariableUtil::getSerializedValue);
   }
 
-  protected static TypedValue getSerializedValue(VariableInstanceEntity variableInstanceEntity) {
+  private static @Nullable TypedValue getSerializedValue(VariableInstanceEntity variableInstanceEntity) {
     return variableInstanceEntity.getTypedValue(false);
   }
 
   @FunctionalInterface
   public interface SetVariableFunction {
-    void apply(String variableName, Object variableValue);
+    void apply(String variableName, @Nullable Object variableValue);
 
   }
 }

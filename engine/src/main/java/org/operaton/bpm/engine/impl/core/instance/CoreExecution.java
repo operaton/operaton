@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.core.instance;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
  * @author Sebastian Menski
  *
  */
-public abstract class CoreExecution extends AbstractVariableScope implements BaseDelegateExecution {
+public abstract @NullUnmarked class CoreExecution extends AbstractVariableScope implements BaseDelegateExecution {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -157,6 +158,9 @@ public abstract class CoreExecution extends AbstractVariableScope implements Bas
     return skipSubprocesses;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public void setSkipSubprocesseses(boolean skipSubprocesses) {
     this.skipSubprocesses = skipSubprocesses;
   }

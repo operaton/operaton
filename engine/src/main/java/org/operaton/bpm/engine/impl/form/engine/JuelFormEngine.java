@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.form.engine;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -39,7 +40,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 /**
  * @author Tom Baeyens
  */
-public class JuelFormEngine implements FormEngine {
+public @NullMarked class JuelFormEngine implements FormEngine {
 
   @Override
   public String getName() {
@@ -47,8 +48,8 @@ public class JuelFormEngine implements FormEngine {
   }
 
   @Override
-  public @Nullable Object renderStartForm(StartFormData startForm) {
-    if (startForm.getFormKey()==null) {
+  public @Nullable Object renderStartForm(@Nullable StartFormData startForm) {
+    if (startForm==null || startForm.getFormKey()==null) {
       return null;
     }
     String formTemplateString = getFormTemplateString(startForm, startForm.getFormKey());
@@ -56,8 +57,8 @@ public class JuelFormEngine implements FormEngine {
   }
 
   @Override
-  public @Nullable Object renderTaskForm(TaskFormData taskForm) {
-    if (taskForm.getFormKey()==null) {
+  public @Nullable Object renderTaskForm(@Nullable TaskFormData taskForm) {
+    if (taskForm==null || taskForm.getFormKey()==null) {
       return null;
     }
     String formTemplateString = getFormTemplateString(taskForm, taskForm.getFormKey());
@@ -65,7 +66,7 @@ public class JuelFormEngine implements FormEngine {
     return executeScript(formTemplateString, task.getExecution());
   }
 
-  protected Object executeScript(String scriptSrc, VariableScope scope) {
+  protected @Nullable Object executeScript(String scriptSrc, @Nullable VariableScope scope) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     ScriptFactory scriptFactory = processEngineConfiguration.getScriptFactory();
     ExecutableScript script = scriptFactory.createScriptFromSource(ScriptingEngines.DEFAULT_SCRIPTING_LANGUAGE, scriptSrc);
@@ -95,6 +96,6 @@ public class JuelFormEngine implements FormEngine {
     ensureNotNull("Form with formKey '%s' does not exist".formatted(formKey), "resourceStream", resourceStream);
 
     byte[] resourceBytes = resourceStream.getBytes();
-    return new String(resourceBytes, UTF_8);
+    return new String(resourceBytes != null ? resourceBytes : new byte[0], UTF_8);
   }
 }

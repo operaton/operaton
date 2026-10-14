@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.CaseExecutionCommandBuilderImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -27,7 +28,10 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Roman Smirnov
  *
  */
-public class ReenableCaseExecutionCmd extends StateTransitionCaseExecutionCmd {
+public @NullMarked class ReenableCaseExecutionCmd extends StateTransitionCaseExecutionCmd {
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.3")
+  @SuppressWarnings("java:S1133")
   public ReenableCaseExecutionCmd(String caseExecutionId, Map<String, Object> variables, Map<String, Object> variablesLocal,
       Collection<String> variableDeletions, Collection<String> variableLocalDeletions) {
     super(caseExecutionId, variables, variablesLocal, variableDeletions, variableLocalDeletions);

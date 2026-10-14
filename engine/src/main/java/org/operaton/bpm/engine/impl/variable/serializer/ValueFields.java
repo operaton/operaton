@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.variable.serializer;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.impl.persistence.entity.Nameable;
 
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public interface ValueFields extends Nameable {
+public @NullUnmarked interface ValueFields extends Nameable {
 
   String getTextValue();
   void setTextValue(String textValue);

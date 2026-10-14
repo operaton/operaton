@@ -18,16 +18,20 @@ package org.operaton.bpm.engine.impl.cmmn.behavior;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
 import org.operaton.bpm.engine.variable.VariableMap;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public abstract class ProcessOrCaseTaskActivityBehavior extends CallingTaskActivityBehavior implements TransferVariablesActivityBehavior {
+public abstract @NullMarked class ProcessOrCaseTaskActivityBehavior extends CallingTaskActivityBehavior implements TransferVariablesActivityBehavior {
 
   @Override
   protected void performStart(CmmnActivityExecution execution) {
@@ -48,10 +52,10 @@ public abstract class ProcessOrCaseTaskActivityBehavior extends CallingTaskActiv
 
   @Override
   public CallableElement getCallableElement() {
-    return (CallableElement) callableElement;
+    return (CallableElement) requireNonNull(callableElement);
   }
 
-  protected String getBusinessKey(CmmnActivityExecution execution) {
+  protected @Nullable String getBusinessKey(CmmnActivityExecution execution) {
     return getCallableElement().getBusinessKey(execution);
   }
 
@@ -63,6 +67,6 @@ public abstract class ProcessOrCaseTaskActivityBehavior extends CallingTaskActiv
     return getCallableElement().getOutputVariables(variableScope);
   }
 
-  protected abstract void triggerCallableElement(CmmnActivityExecution execution, Map<String, Object> variables, String businessKey);
+  protected abstract void triggerCallableElement(CmmnActivityExecution execution, Map<String, Object> variables, @Nullable String businessKey);
 
 }

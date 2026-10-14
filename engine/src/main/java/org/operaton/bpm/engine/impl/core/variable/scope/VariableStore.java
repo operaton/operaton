@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 import org.jspecify.annotations.Nullable;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
  * @author Thorben Lindhauer
  *
  */
-public class VariableStore<T extends CoreVariableInstance> {
+public @NullMarked class VariableStore<T extends CoreVariableInstance> {
 
   protected VariablesProvider<T> variablesProvider;
   protected Map<String, T> variables;
@@ -68,7 +69,7 @@ public class VariableStore<T extends CoreVariableInstance> {
     return variables;
   }
 
-  protected Map<String, T> getVariablesMap(Collection<String> variableNames) {
+  protected Map<String, T> getVariablesMap(@Nullable Collection<String> variableNames) {
     if (variableNames == null) {
       return getVariablesMap();
     }

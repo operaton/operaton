@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.handler;
 
 import java.util.HashMap;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.HistoryTimeToLiveParser;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
@@ -35,7 +36,7 @@ import org.operaton.bpm.model.cmmn.instance.Definitions;
  * @author Roman Smirnov
  *
  */
-public class CaseHandler extends CmmnElementHandler<Case, CmmnCaseDefinition> {
+public @NullMarked class CaseHandler extends CmmnElementHandler<Case, CmmnCaseDefinition> {
 
   protected static final CmmnTransformerLogger LOG = ProcessEngineLogger.CMMN_TRANSFORMER_LOGGER;
 

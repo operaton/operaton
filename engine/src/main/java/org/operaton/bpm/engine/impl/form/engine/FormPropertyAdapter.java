@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
 import org.operaton.bpm.engine.form.FormProperty;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Daniel Meyer
  *
  */
-public class FormPropertyAdapter implements FormField {
+public @NullMarked class FormPropertyAdapter implements FormField {
 
   protected FormProperty formProperty;
   protected List<FormFieldValidationConstraint> validationConstraints;

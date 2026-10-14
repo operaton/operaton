@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Key of a typed property.
  *
- * @param T the type of the property value
+ * @param <T> the type of the property value
  *
  * @author Philipp Ossler
  *
@@ -27,5 +29,5 @@ package org.operaton.bpm.engine.impl.core.model;
  * @see PropertyMapKey
  *
  */
-public record PropertyKey<T>(String name) {
+public @NullMarked record PropertyKey<T>(String name) {
 }

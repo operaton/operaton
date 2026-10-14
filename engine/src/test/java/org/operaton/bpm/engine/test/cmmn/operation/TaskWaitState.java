@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.TaskActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
  * @author Roman Smirnov
  *
  */
-public class TaskWaitState extends TaskActivityBehavior {
+public @NullMarked class TaskWaitState extends TaskActivityBehavior {
 
   @Override
   protected void performStart(CmmnActivityExecution execution) {

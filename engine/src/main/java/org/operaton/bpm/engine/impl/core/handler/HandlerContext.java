@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.core.handler;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.model.CoreActivity;
 
 /**
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.impl.core.model.CoreActivity;
  * @author Roman Smirnov
  *
  */
-public interface HandlerContext {
+public @NullMarked interface HandlerContext {
 
   /**
    * This method returns an {@link CoreActivity activity}. The
@@ -39,6 +41,6 @@ public interface HandlerContext {
    *
    * @return a {@link CoreActivity}
    */
-  CoreActivity getParent();
+  @Nullable CoreActivity getParent();
 
 }

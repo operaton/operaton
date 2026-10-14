@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.VariableListener;
 
 import org.jspecify.annotations.Nullable;
@@ -34,20 +35,20 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  *
  */
 @SuppressWarnings("java:S1948")
-public class CmmnActivity extends CoreActivity {
+public @NullMarked class CmmnActivity extends CoreActivity {
 
   @Serial private static final long serialVersionUID = 1L;
 
   protected List<CmmnActivity> activities = new ArrayList<>();
   private final Map<String, CmmnActivity> namedActivities = new HashMap<>();
 
-  private CmmnElement cmmnElement;
+  private @Nullable CmmnElement cmmnElement;
 
-  private CmmnActivityBehavior activityBehavior;
+  private @Nullable CmmnActivityBehavior activityBehavior;
 
-  protected CmmnCaseDefinition caseDefinition;
+  protected @Nullable CmmnCaseDefinition caseDefinition;
 
-  private CmmnActivity parent;
+  private @Nullable CmmnActivity parent;
 
   private final List<CmmnSentryDeclaration> sentries = new ArrayList<>();
   private final Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
@@ -56,10 +57,10 @@ public class CmmnActivity extends CoreActivity {
   private List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
 
   // eventName => activity id => variable listeners
-  private Map<String, Map<String, List<VariableListener<?>>>> resolvedVariableListeners;
-  private Map<String, Map<String, List<VariableListener<?>>>> resolvedBuiltInVariableListeners;
+  private @Nullable Map<String, Map<String, List<VariableListener<?>>>> resolvedVariableListeners;
+  private @Nullable Map<String, Map<String, List<VariableListener<?>>>> resolvedBuiltInVariableListeners;
 
-  public CmmnActivity(String id, CmmnCaseDefinition caseDefinition) {
+  public CmmnActivity(@Nullable String id, @Nullable CmmnCaseDefinition caseDefinition) {
     super(id);
     this.caseDefinition = caseDefinition;
   }
@@ -67,7 +68,7 @@ public class CmmnActivity extends CoreActivity {
   // create a new activity ///////////////////////////////////////
 
   @Override
-  public CmmnActivity createActivity(String activityId) {
+  public CmmnActivity createActivity (@Nullable String activityId) {
     CmmnActivity activity = new CmmnActivity(activityId, caseDefinition);
     if (activityId!=null) {
       namedActivities.put(activityId, activity);
@@ -85,7 +86,7 @@ public class CmmnActivity extends CoreActivity {
   }
 
   @Override
-  public CmmnActivity findActivity(String activityId) {
+  public @Nullable CmmnActivity findActivity(String activityId) {
     return (CmmnActivity) super.findActivity(activityId);
   }
 
@@ -99,7 +100,7 @@ public class CmmnActivity extends CoreActivity {
   // behavior //////////////////////////////////////////////////
 
   @Override
-  public CmmnActivityBehavior getActivityBehavior() {
+  public @Nullable CmmnActivityBehavior getActivityBehavior() {
     return activityBehavior;
   }
 
@@ -109,27 +110,27 @@ public class CmmnActivity extends CoreActivity {
 
   // parent ////////////////////////////////////////////////////
 
-  public CmmnActivity getParent() {
+  public @Nullable CmmnActivity getParent() {
     return this.parent;
   }
 
-  public void setParent(CmmnActivity parent) {
+  public void setParent(@Nullable CmmnActivity parent) {
     this.parent = parent;
   }
 
   // case definition
 
-  public CmmnCaseDefinition getCaseDefinition() {
+  public @Nullable CmmnCaseDefinition getCaseDefinition() {
     return caseDefinition;
   }
 
-  public void setCaseDefinition(CmmnCaseDefinition caseDefinition) {
+  public void setCaseDefinition(@Nullable CmmnCaseDefinition caseDefinition) {
     this.caseDefinition = caseDefinition;
   }
 
   // cmmn element
 
-  public CmmnElement getCmmnElement() {
+  public @Nullable CmmnElement getCmmnElement() {
     return cmmnElement;
   }
 
@@ -207,6 +208,7 @@ public class CmmnActivity extends CoreActivity {
     }
   }
 
+  @SuppressWarnings("ConstantConditions")
   private Map<String, List<VariableListener<?>>> resolveVariableListeners(String eventName, boolean includeCustomListeners) {
     Map<String, List<VariableListener<?>>> resolvedListenersForEvent = new HashMap<>();
     CmmnActivity currentActivity = this;
@@ -214,7 +216,7 @@ public class CmmnActivity extends CoreActivity {
     while (currentActivity != null) {
       List<VariableListener<?>> localListeners = getVariableListenersLocal(currentActivity, eventName, includeCustomListeners);
 
-      if (localListeners != null && !localListeners.isEmpty()) {
+      if (!localListeners.isEmpty()) {
         resolvedListenersForEvent.put(currentActivity.getId(), localListeners);
       }
 

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.exception.cmmn.CmmnModelInstanceNotFoundException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -34,7 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class GetDeploymentCmmnModelInstanceCmd implements Command<CmmnModelInstance> {
+public @NullMarked class GetDeploymentCmmnModelInstanceCmd implements Command<CmmnModelInstance> {
 
   protected String caseDefinitionId;
 

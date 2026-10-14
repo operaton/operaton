@@ -16,20 +16,22 @@
  */
 package org.operaton.bpm.engine.impl.form.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.StringWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
  * <p>The {@link HtmlDocumentBuilder} is part of the {@link HtmlFormEngine}
- * and maintains a stack of element which are written out to a {@link StringWriter}.</p>
+ * and maintains a stack of elements which are written out to a {@link StringWriter}.</p>
  *
- * <p>Actual writing of the html elements is delegated to the {@link HtmlElementWriter}.</p>
+ * <p>Actual writing of the HTML elements is delegated to the {@link HtmlElementWriter}.</p>
  *
  * @author Daniel Meyer
  *
  */
-public class HtmlDocumentBuilder {
+public @NullMarked class HtmlDocumentBuilder {
 
   protected HtmlWriteContext context = new HtmlWriteContext();
 

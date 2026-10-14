@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.behavior;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
@@ -34,7 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
  * @author Roman Smirnov
  *
  */
-public class StageActivityBehavior extends StageOrTaskActivityBehavior implements CmmnCompositeActivityBehavior {
+public @NullMarked class StageActivityBehavior extends StageOrTaskActivityBehavior implements CmmnCompositeActivityBehavior {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
   private static final String TRANSITION_REACTIVATE = "reactivate";

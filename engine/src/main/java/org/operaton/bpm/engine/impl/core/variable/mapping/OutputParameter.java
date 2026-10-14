@@ -16,10 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.mapping;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.CoreLogger;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  *
@@ -43,7 +46,8 @@ public class OutputParameter extends IoParameter {
   }
 
   @Override
-  protected void execute(AbstractVariableScope innerScope, AbstractVariableScope outerScope) {
+  protected void execute(AbstractVariableScope innerScope, @Nullable AbstractVariableScope outerScope) {
+    requireNonNull(outerScope);
 
     // get value from inner scope
     Object value = valueProvider.getValue(innerScope);

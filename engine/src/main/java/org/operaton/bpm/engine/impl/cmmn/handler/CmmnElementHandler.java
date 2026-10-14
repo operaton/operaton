@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.handler;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.core.handler.ModelElementHandler;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
@@ -27,5 +28,5 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  * @author Roman Smirnov
  *
  */
-public abstract class CmmnElementHandler<T extends CmmnElement, E> implements ModelElementHandler<T, CmmnHandlerContext, E> {
+public abstract @NullMarked class CmmnElementHandler<T extends CmmnElement, E> implements ModelElementHandler<T, CmmnHandlerContext, E> {
 }

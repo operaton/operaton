@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.core.operation;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
@@ -28,7 +30,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 /**
  * @author Tom Baeyens
  */
-public abstract class AbstractEventAtomicOperation<T extends CoreExecution> implements CoreAtomicOperation<T> {
+public abstract @NullMarked class AbstractEventAtomicOperation<T extends CoreExecution> implements CoreAtomicOperation<T> {
 
   @Override
   public boolean isAsync(T execution) {
@@ -105,7 +107,7 @@ public abstract class AbstractEventAtomicOperation<T extends CoreExecution> impl
     return execution;
   }
 
-  protected abstract CoreModelElement getScope(T execution);
+  protected abstract @Nullable CoreModelElement getScope(T execution);
   protected abstract String getEventName();
   protected abstract void eventNotificationsCompleted(T execution);
 

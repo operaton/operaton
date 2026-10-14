@@ -23,6 +23,8 @@ import java.util.Map;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.engine.DefaultScriptEngineResolver;
@@ -32,11 +34,11 @@ import org.operaton.bpm.engine.impl.scripting.engine.ScriptEngineResolver;
  * @author Roman Smirnov
  *
  */
-public class ProcessApplicationScriptEnvironment {
+public @NullMarked class ProcessApplicationScriptEnvironment {
 
   protected ProcessApplicationInterface processApplication;
 
-  protected ScriptEngineResolver processApplicationScriptEngineResolver;
+  protected @Nullable ScriptEngineResolver processApplicationScriptEngineResolver;
   protected Map<String, List<ExecutableScript>> environmentScripts = new HashMap<>();
 
   public ProcessApplicationScriptEnvironment(ProcessApplicationInterface processApplication) {
@@ -55,7 +57,7 @@ public class ProcessApplicationScriptEnvironment {
    *
    * @return a {@link ScriptEngine}
    */
-  public synchronized ScriptEngine getScriptEngineForName(String scriptEngineName, boolean cache) {
+  public synchronized @Nullable ScriptEngine getScriptEngineForName(String scriptEngineName, boolean cache) {
     if(processApplicationScriptEngineResolver == null) {
       processApplicationScriptEngineResolver = new DefaultScriptEngineResolver(new ScriptEngineManager(getProcessApplicationClassloader()));
     }
@@ -69,7 +71,7 @@ public class ProcessApplicationScriptEnvironment {
     return environmentScripts;
   }
 
-  protected ClassLoader getProcessApplicationClassloader() {
+  protected @Nullable ClassLoader getProcessApplicationClassloader() {
     return processApplication.getProcessApplicationClassloader();
   }
 

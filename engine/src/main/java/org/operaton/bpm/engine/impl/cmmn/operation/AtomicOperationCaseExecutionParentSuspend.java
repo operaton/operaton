@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
+
 import static org.operaton.bpm.engine.delegate.CaseExecutionListener.PARENT_SUSPEND;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class AtomicOperationCaseExecutionParentSuspend extends AbstractAtomicOperationCaseExecutionSuspend {
+public @NullMarked class AtomicOperationCaseExecutionParentSuspend extends AbstractAtomicOperationCaseExecutionSuspend {
 
   @Override
   public String getCanonicalName() {

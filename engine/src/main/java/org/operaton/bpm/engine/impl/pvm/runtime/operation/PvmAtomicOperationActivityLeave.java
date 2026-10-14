@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.behavior.FlowNodeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
@@ -30,7 +31,7 @@ import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivity
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-public class PvmAtomicOperationActivityLeave implements PvmAtomicOperation {
+public @NullMarked class PvmAtomicOperationActivityLeave implements PvmAtomicOperation {
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 

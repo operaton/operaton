@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.container.impl.metadata;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.application.impl.metadata.ProcessesXmlParse;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.impl.util.xml.Parser;
@@ -27,7 +29,7 @@ import org.operaton.bpm.engine.impl.util.xml.Parser;
  * @author Daniel Meyer
  *
  */
-public class BpmPlatformXmlParser extends Parser {
+public @NullMarked class BpmPlatformXmlParser extends Parser {
 
   /**
    * The Operaton namespace

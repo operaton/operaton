@@ -16,17 +16,20 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 
 /**
  * @author Tom Baeyens
  */
-public class PvmAtomicOperationTransitionNotifyListenerTake extends AbstractPvmAtomicOperationTransitionNotifyListenerTake {
+public @NullMarked class PvmAtomicOperationTransitionNotifyListenerTake extends AbstractPvmAtomicOperationTransitionNotifyListenerTake {
 
   @Override
   public boolean isAsync(PvmExecutionImpl execution) {
-    return execution.getActivity().isAsyncAfter();
+    return requireNonNull(execution.getActivity()).isAsyncAfter();
   }
 
   @Override

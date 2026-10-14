@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
@@ -26,7 +27,7 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUS
  * @author Roman Smirnov
  *
  */
-public class AtomicOperationCaseExecutionSuspendingOnParentSuspension extends AbstractAtomicOperationCaseExecutionSuspending {
+public @NullMarked class AtomicOperationCaseExecutionSuspendingOnParentSuspension extends AbstractAtomicOperationCaseExecutionSuspending {
 
   @Override
   public String getCanonicalName() {

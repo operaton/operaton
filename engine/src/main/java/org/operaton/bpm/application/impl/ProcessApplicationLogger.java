@@ -20,6 +20,8 @@ import java.util.Set;
 
 import javax.naming.NamingException;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationExecutionException;
@@ -37,7 +39,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationLogger extends ProcessEngineLogger {
+public @NullMarked class ProcessApplicationLogger extends ProcessEngineLogger {
 
   public void taskNotRelatedToExecution(DelegateTask delegateTask) {
     logDebug(
@@ -106,13 +108,13 @@ public class ProcessApplicationLogger extends ProcessEngineLogger {
         "Could not autodetect EjbProcessApplicationName"), e);
   }
 
-  public ProcessApplicationUnavailableException processApplicationUnavailableException(String name, Throwable cause) {
+  public ProcessApplicationUnavailableException processApplicationUnavailableException(@Nullable String name, Throwable cause) {
     return new ProcessApplicationUnavailableException(exceptionMessage(
         "011",
         "Process Application '{}' unavailable", name), cause);
   }
 
-  public ProcessApplicationUnavailableException processApplicationUnavailableException(String name) {
+  public ProcessApplicationUnavailableException processApplicationUnavailableException(@Nullable String name) {
     return new ProcessApplicationUnavailableException(exceptionMessage(
         "011",
         "Process Application '{}' unavailable", name));

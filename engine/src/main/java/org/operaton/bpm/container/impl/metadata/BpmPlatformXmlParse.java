@@ -22,18 +22,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.container.impl.metadata.spi.BpmPlatformXml;
 import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 import org.operaton.bpm.engine.impl.util.xml.Parser;
 
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_ACQUISITION;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_EXECUTOR;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.JOB_EXECUTOR_CLASS_NAME;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.NAME;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROCESS_ENGINE;
-import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.PROPERTIES;
+import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstants.*;
+import static java.util.Objects.requireNonNull;
 
 /**
  * <p>Parse implementation for parsing the {@link BpmPlatformXml}</p>
@@ -41,10 +40,10 @@ import static org.operaton.bpm.container.impl.metadata.DeploymentMetadataConstan
  * @author Daniel Meyer
  *
  */
-public class BpmPlatformXmlParse extends DeploymentMetadataParse {
+public @NullMarked class BpmPlatformXmlParse extends DeploymentMetadataParse {
 
   /** the parsed {@link BpmPlatformXml} */
-  protected BpmPlatformXml bpmPlatformXml;
+  protected @Nullable BpmPlatformXml bpmPlatformXml;
 
   public BpmPlatformXmlParse(Parser parser) {
     super(parser);
@@ -63,16 +62,12 @@ public class BpmPlatformXmlParse extends DeploymentMetadataParse {
     JobExecutorXmlImpl jobExecutor = new JobExecutorXmlImpl();
     List<ProcessEngineXml> processEngines = new ArrayList<>();
 
-    for (Element element : rootElement.elements()) {
-
+    for (Element element : requireNonNull(rootElement).elements()) {
       if(JOB_EXECUTOR.equals(element.getTagName())) {
         parseJobExecutor(element, jobExecutor);
-
       } else if(PROCESS_ENGINE.equals(element.getTagName())) {
         parseProcessEngine(element, processEngines);
-
       }
-
     }
 
     bpmPlatformXml = new BpmPlatformXmlImpl(jobExecutor, processEngines);

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -31,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationActivityInstanceEnd {
+public @NullMarked class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOperationActivityInstanceEnd {
 
   @Override
   protected PvmExecutionImpl eventNotificationsStarted(PvmExecutionImpl execution) {
@@ -98,7 +100,7 @@ public class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOpe
     }
   }
 
-  private void continueRemoval(PvmExecutionImpl execution, PvmActivity activity) {
+  private void continueRemoval(PvmExecutionImpl execution, @Nullable PvmActivity activity) {
     boolean continueRemoval = true;
     PvmExecutionImpl propagatingExecution = execution.getParent();
     if (propagatingExecution != null && !propagatingExecution.isScope() && !propagatingExecution.hasChildren()) {
@@ -123,7 +125,10 @@ public class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOpe
     return execution.getActivityId() != null && execution.getActivityInstanceId() == null;
   }
 
-  protected ActivityImpl getFlowScopeActivity(PvmActivity activity) {
+  protected @Nullable ActivityImpl getFlowScopeActivity(@Nullable PvmActivity activity) {
+    if (activity == null) {
+      return null;
+    }
     ScopeImpl flowScope = activity.getFlowScope();
     ActivityImpl flowScopeActivity = null;
     if(flowScope.getProcessDefinition() != flowScope) {

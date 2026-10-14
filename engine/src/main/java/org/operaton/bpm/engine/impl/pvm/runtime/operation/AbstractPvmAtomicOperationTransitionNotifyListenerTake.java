@@ -16,11 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 
 /**
@@ -29,10 +33,10 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-public abstract class AbstractPvmAtomicOperationTransitionNotifyListenerTake extends AbstractPvmEventAtomicOperation {
+public abstract @NullMarked class AbstractPvmAtomicOperationTransitionNotifyListenerTake extends AbstractPvmEventAtomicOperation {
 
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
-    PvmActivity destination = execution.getTransition().getDestination();
+    PvmActivity destination = requireNonNull(execution.getTransition()).getDestination();
 
     // check start behavior of next activity
     switch (destination.getActivityStartBehavior()) {
@@ -51,7 +55,7 @@ public abstract class AbstractPvmAtomicOperationTransitionNotifyListenerTake ext
   }
 
   @Override
-  protected CoreModelElement getScope(PvmExecutionImpl execution) {
+  protected @Nullable CoreModelElement getScope(PvmExecutionImpl execution) {
     return execution.getTransition();
   }
 

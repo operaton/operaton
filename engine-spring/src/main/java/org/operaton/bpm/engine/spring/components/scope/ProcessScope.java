@@ -87,7 +87,7 @@ public @NullMarked class ProcessScope implements Scope, InitializingBean, BeanFa
 
   @Override
   @SuppressWarnings("java:S2637")
-  public Object get(String name, ObjectFactory<?> objectFactory) {
+  public @Nullable Object get(String name, ObjectFactory<?> objectFactory) {
 
         ExecutionEntity executionEntity = null;
         try {

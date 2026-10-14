@@ -21,6 +21,7 @@ import java.util.concurrent.Callable;
 import jakarta.el.BeanELResolver;
 import jakarta.el.ELResolver;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.ProcessApplicationService;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 
 /**
  * A Process Application is an ordinary Java Application that uses the operaton process engine for
- * BPM and Worklow functionality. Most such applications will start their own process engine (or use
+ * BPM and Workflow functionality. Most such applications will start their own process engine (or use
  * a process engine provided by the runtime container), deploy some BPMN 2.0 process definitions and
  * interact with process instances derived from these process definitions. Since most process applications
  * perform very similar bootstrapping, deployment and runtime tasks, we generalized this functionality.
@@ -67,7 +68,7 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
  * </p>
  * <ul>
  * <li>A Process Application class: The Process Application class constitutes the interface between
- * your application and the process engine. There are different base classes you can extent to reflect
+ * your application and the process engine. There are different base classes you can extend to reflect
  * different environments (e.g. Servlet vs. EJB Container):
  * <ul>
  *  <li> {@link ServletProcessApplication}: To be used for Process Applications in a Servlet Container like Apache Tomcat.
@@ -86,7 +87,7 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
  * @author Daniel Meyer
  *
  */
-public interface ProcessApplicationInterface {
+public @NullMarked interface ProcessApplicationInterface {
 
   /**
    * Deploy this process application into the runtime container.
@@ -116,7 +117,7 @@ public interface ProcessApplicationInterface {
   /**
    * @return the name of this process application
    */
-  String getName();
+  @Nullable String getName();
 
   /**
    * <p>Returns a globally sharable reference to this process application. This reference may be safely passed
@@ -127,7 +128,7 @@ public interface ProcessApplicationInterface {
   ProcessApplicationReference getReference();
 
   /**
-   * Since {@link #getReference()} may return a proxy object, this method returs the actual, unproxied object and is
+   * Since {@link #getReference()} may return a proxy object, this method returns the actual, unproxied object and is
    * meant to be called from the {@link #execute(Callable)} method. (ie. from a Callable implementation passed to
    * the method.).
    */
@@ -162,7 +163,7 @@ public interface ProcessApplicationInterface {
    *
    * @return the {@link ClassLoader} that can be used to load classes and resources from this process application.
    */
-  ClassLoader getProcessApplicationClassloader();
+  @Nullable ClassLoader getProcessApplicationClassloader();
 
   /**
    * <p>override this method in order to provide a map of properties.</p>
@@ -183,7 +184,7 @@ public interface ProcessApplicationInterface {
    * <p>The process engine must only call this method from Callable implementations passed
    * to {@link #execute(Callable)}</p>
    */
-  ELResolver getElResolver();
+  @Nullable ELResolver getElResolver();
 
   /**
    * <p>Returns an instance of {@link BeanELResolver} that a process application caches.</p>
@@ -210,7 +211,7 @@ public interface ProcessApplicationInterface {
 
   /**
    * <p>Allows the process application to provide an {@link ExecutionListener} which is notified about
-   * all execution events in all of the process instances deployed by this process application.</p>
+   * all execution events in all the process instances deployed by this process application.</p>
    *
    * <p>If this method returns 'null', the process application is not notified about execution events.</p>
    *
@@ -220,7 +221,7 @@ public interface ProcessApplicationInterface {
 
   /**
    * <p>Allows the process application to provide a {@link TaskListener} which is notified about
-   * all Task events in all of the process instances deployed by this process application.</p>
+   * all Task events in all the process instances deployed by this process application.</p>
    *
    * <p>If this method returns 'null', the process application is not notified about Task events.</p>
    *

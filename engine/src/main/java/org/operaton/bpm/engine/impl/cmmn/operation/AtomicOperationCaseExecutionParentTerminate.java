@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
+
 import static org.operaton.bpm.engine.delegate.CaseExecutionListener.PARENT_TERMINATE;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class AtomicOperationCaseExecutionParentTerminate extends AbstractAtomicOperationCaseExecutionTerminate {
+public @NullMarked class AtomicOperationCaseExecutionParentTerminate extends AbstractAtomicOperationCaseExecutionTerminate {
 
   @Override
   public String getCanonicalName() {

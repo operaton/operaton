@@ -21,6 +21,8 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 
+import org.jspecify.annotations.NullUnmarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
@@ -64,7 +66,7 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  * <ul>
  * <li>the process engine to resolve {@link JavaDelegate} implementations using
  * the classloader of the process application</li>
- * <li>In apache tomcat this allows you to resolve Naming Resources (JNDI) form
+ * <li>In Apache Tomcat this allows you to resolve Naming Resources (JNDI) form
  * the naming context of the process application. JNDI name resolution is based
  * on the TCCL in Apache Tomcat.</li>
  * </ul>
@@ -93,9 +95,9 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  * @author Thorben Lindhauer
  *
  */
-public class ServletProcessApplication extends AbstractServletProcessApplication implements ServletContextListener {
+public @NullUnmarked class ServletProcessApplication extends AbstractServletProcessApplication implements ServletContextListener {
 
-  protected ServletContext servletContext;
+  protected @Nullable ServletContext servletContext;
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
@@ -133,7 +135,7 @@ public class ServletProcessApplication extends AbstractServletProcessApplication
     reference = null;
   }
 
-  public ServletContext getServletContext() {
+  public @Nullable ServletContext getServletContext() {
     return servletContext;
   }
 }

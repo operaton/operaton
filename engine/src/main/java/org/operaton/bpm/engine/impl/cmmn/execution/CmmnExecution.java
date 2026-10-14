@@ -737,9 +737,9 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   /** ensures initialization and returns the parent */
   @Override
-  public abstract CmmnExecution getParent();
+  public abstract @Nullable CmmnExecution getParent();
 
-  public abstract void setParent(CmmnExecution parent);
+  public abstract void setParent(@Nullable CmmnExecution parent);
 
   // activity /////////////////////////////////////////////////////////////////
 

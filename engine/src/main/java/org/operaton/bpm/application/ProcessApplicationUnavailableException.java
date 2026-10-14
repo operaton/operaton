@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.application;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 
 /**
@@ -25,7 +27,7 @@ import java.io.Serial;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationUnavailableException extends Exception {
+public @NullMarked class ProcessApplicationUnavailableException extends Exception {
 
   @Serial private static final long serialVersionUID = 1L;
 

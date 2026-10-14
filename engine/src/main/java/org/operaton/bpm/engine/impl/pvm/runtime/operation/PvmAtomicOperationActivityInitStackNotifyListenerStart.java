@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
@@ -28,11 +30,13 @@ import org.operaton.bpm.engine.impl.pvm.runtime.InstantiationStack;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.ScopeInstantiationContext;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmAtomicOperationActivityInstanceStart {
+public @NullMarked class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmAtomicOperationActivityInstanceStart {
 
   @Override
   public String getCanonicalName() {
@@ -40,7 +44,7 @@ public class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmA
   }
 
   @Override
-  protected ScopeImpl getScope(PvmExecutionImpl execution) {
+  protected @Nullable ScopeImpl getScope(PvmExecutionImpl execution) {
     ActivityImpl activity = execution.getActivity();
 
     if (activity!=null) {
@@ -64,12 +68,12 @@ public class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmA
 
     execution.activityInstanceStarted();
 
-    ScopeInstantiationContext startContext = execution.getScopeInstantiationContext();
+    ScopeInstantiationContext startContext = requireNonNull(execution.getScopeInstantiationContext());
     InstantiationStack instantiationStack = startContext.getInstantiationStack();
 
     PvmExecutionImpl propagatingExecution = execution;
     ActivityImpl activity = execution.getActivity();
-    if (activity.getActivityBehavior() instanceof ModificationObserverBehavior behavior) {
+    if (activity != null && activity.getActivityBehavior() instanceof ModificationObserverBehavior behavior) {
       List<ActivityExecution> concurrentExecutions = behavior.initializeScope(propagatingExecution, 1);
       propagatingExecution = (PvmExecutionImpl) concurrentExecutions.get(0);
     }

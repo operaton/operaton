@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
@@ -26,7 +27,7 @@ import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivity
  * @author Roman Smirnov
  *
  */
-public abstract class AbstractAtomicOperationCaseExecutionTerminating implements CmmnAtomicOperation {
+public abstract @NullMarked class AbstractAtomicOperationCaseExecutionTerminating implements CmmnAtomicOperation {
 
   @Override
   public void execute(CmmnExecution execution) {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 
@@ -25,7 +26,7 @@ import static org.operaton.bpm.engine.delegate.CaseExecutionListener.RESUME;
  * @author Roman Smirnov
  *
  */
-public class AtomicOperationCaseExecutionResume extends AbstractAtomicOperationCaseExecutionResume {
+public @NullMarked class AtomicOperationCaseExecutionResume extends AbstractAtomicOperationCaseExecutionResume {
 
   @Override
   public String getCanonicalName() {

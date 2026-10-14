@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -39,7 +40,7 @@ import static java.util.Objects.requireNonNull;
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperation {
+public @NullMarked class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperation {
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
@@ -126,14 +127,14 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
   private static PvmExecutionImpl getPvmExecution(List<PvmTransition> transitionsToTake,
                                                   PvmExecutionImpl propagatingExecution,
                                                   int i,
-                                                  PvmExecutionImpl scopeExecution,
+                                                  @Nullable PvmExecutionImpl scopeExecution,
                                                   List<OutgoingExecution> outgoingExecutions) {
     PvmExecutionImpl concurrentExecution;
     if (i == 0) {
       concurrentExecution = propagatingExecution;
     }
     else {
-      concurrentExecution = scopeExecution.createConcurrentExecution();
+      concurrentExecution = requireNonNull(scopeExecution).createConcurrentExecution();
 
       if (i == 1 && !propagatingExecution.isConcurrent()) {
         outgoingExecutions.remove(0);

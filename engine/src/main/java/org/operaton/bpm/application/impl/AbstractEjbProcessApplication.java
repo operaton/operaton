@@ -21,6 +21,8 @@ import java.util.concurrent.Callable;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationExecutionException;
 import org.operaton.bpm.application.ProcessApplicationInterface;
@@ -28,7 +30,7 @@ import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
 
-public abstract class AbstractEjbProcessApplication extends AbstractProcessApplication {
+public abstract @NullMarked class AbstractEjbProcessApplication extends AbstractProcessApplication {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
@@ -36,7 +38,7 @@ public abstract class AbstractEjbProcessApplication extends AbstractProcessAppli
   protected static final String JAVA_APP_APP_NAME_PATH = "java:app/AppName";
   protected static final String EJB_CONTEXT_PATH = "java:comp/EJBContext";
 
-  protected ProcessApplicationInterface selfReference;
+  protected @Nullable ProcessApplicationInterface selfReference;
 
   @Override
   public ProcessApplicationReference getReference() {

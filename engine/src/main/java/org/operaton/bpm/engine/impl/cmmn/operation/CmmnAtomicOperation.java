@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
  * @author Roman Smirnov
  *
  */
-public interface CmmnAtomicOperation extends CoreAtomicOperation<CmmnExecution> {
+public @NullMarked interface CmmnAtomicOperation extends CoreAtomicOperation<CmmnExecution> {
 
   // lifecycle
   CmmnAtomicOperation CASE_INSTANCE_CREATE = new AtomicOperationCaseInstanceCreate();

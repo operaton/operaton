@@ -16,16 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
  */
-public abstract class PvmAtomicOperationCreateScope implements PvmAtomicOperation {
+public abstract @NullMarked class PvmAtomicOperationCreateScope implements PvmAtomicOperation {
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
@@ -36,7 +39,7 @@ public abstract class PvmAtomicOperationCreateScope implements PvmAtomicOperatio
     execution.setActivityInstanceId(execution.getParentActivityInstanceId());
 
     PvmExecutionImpl propagatingExecution;
-    PvmActivity activity = execution.getActivity();
+    PvmActivity activity = requireNonNull(execution.getActivity());
     if (activity.isScope()) {
       propagatingExecution = execution.createExecution();
       propagatingExecution.setActivity(activity);

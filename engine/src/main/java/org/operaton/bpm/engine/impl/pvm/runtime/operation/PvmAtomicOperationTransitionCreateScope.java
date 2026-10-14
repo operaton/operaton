@@ -16,18 +16,21 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 
 /**
  * @author Tom Baeyens
  */
-public class PvmAtomicOperationTransitionCreateScope extends PvmAtomicOperationCreateScope {
+public @NullMarked class PvmAtomicOperationTransitionCreateScope extends PvmAtomicOperationCreateScope {
 
   @Override
   public boolean isAsync(PvmExecutionImpl execution) {
-    PvmActivity activity = execution.getActivity();
+    PvmActivity activity = requireNonNull(execution.getActivity());
     return activity.isAsyncBefore();
   }
 

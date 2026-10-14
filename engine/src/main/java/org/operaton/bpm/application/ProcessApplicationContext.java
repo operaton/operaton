@@ -18,6 +18,7 @@ package org.operaton.bpm.application;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.impl.ProcessApplicationContextImpl;
 import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
 
@@ -63,7 +64,7 @@ import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
  *
  * @author Thorben Lindhauer
  */
-public final class ProcessApplicationContext {
+public final @NullMarked class ProcessApplicationContext {
 
   private ProcessApplicationContext() {
   }
@@ -128,7 +129,7 @@ public final class ProcessApplicationContext {
    * </pre>
    *
    * @param callable the callable to execute
-   * @param name the name of the process application to switch into
+   * @param processApplicationName the name of the process application to switch into
    */
   public static <T> T withProcessApplicationContext(Callable<T> callable, String processApplicationName) throws Exception {
     try {

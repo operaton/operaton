@@ -18,6 +18,8 @@ package org.operaton.bpm.application.impl;
 
 import java.lang.ref.WeakReference;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
@@ -41,14 +43,14 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationReferenceImpl implements ProcessApplicationReference {
+public @NullMarked class ProcessApplicationReferenceImpl implements ProcessApplicationReference {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   /** the weak reference to the process application */
   protected WeakReference<AbstractProcessApplication> processApplication;
 
-  protected String name;
+  protected @Nullable String name;
 
   public ProcessApplicationReferenceImpl(AbstractProcessApplication processApplication) {
     this.processApplication = new WeakReference<>(processApplication);
@@ -56,7 +58,7 @@ public class ProcessApplicationReferenceImpl implements ProcessApplicationRefere
   }
 
   @Override
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
@@ -71,6 +73,7 @@ public class ProcessApplicationReferenceImpl implements ProcessApplicationRefere
     }
   }
 
+  @SuppressWarnings("unused")
   public void processEngineStopping(ProcessEngine processEngine) {
     // do nothing
   }

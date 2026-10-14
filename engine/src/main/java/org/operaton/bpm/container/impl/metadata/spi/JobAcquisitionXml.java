@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.container.impl.metadata.spi;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Map;
 
 
@@ -25,7 +28,8 @@ import java.util.Map;
  * @author Daniel Meyer
  *
  */
-public interface JobAcquisitionXml {
+@SuppressWarnings("unused")
+public @NullMarked interface JobAcquisitionXml {
 
   String LOCK_TIME_IN_MILLIS = "lockTimeInMillis";
   String WAIT_TIME_IN_MILLIS = "waitTimeInMillis";
@@ -39,7 +43,7 @@ public interface JobAcquisitionXml {
   /**
    * @return the fully qualified classname of the JobExecutor to be used.
    */
-  String getJobExecutorClassName();
+  @Nullable String getJobExecutorClassName();
 
   /**
    * @return a set of properties to configure the Job Executor. The

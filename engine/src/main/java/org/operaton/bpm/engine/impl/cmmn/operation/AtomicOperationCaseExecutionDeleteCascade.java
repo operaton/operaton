@@ -18,13 +18,14 @@ package org.operaton.bpm.engine.impl.cmmn.operation;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class AtomicOperationCaseExecutionDeleteCascade implements CmmnAtomicOperation {
+public @NullMarked class AtomicOperationCaseExecutionDeleteCascade implements CmmnAtomicOperation {
 
   @Override
   public String getCanonicalName() {

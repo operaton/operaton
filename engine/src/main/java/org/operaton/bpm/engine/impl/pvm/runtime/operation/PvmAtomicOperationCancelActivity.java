@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
@@ -23,6 +24,8 @@ import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Implements {@link ActivityStartBehavior#CANCEL_EVENT_SCOPE}.
@@ -32,13 +35,13 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Roman Smirnov
  *
  */
-public abstract class PvmAtomicOperationCancelActivity implements PvmAtomicOperation {
+public abstract @NullMarked class PvmAtomicOperationCancelActivity implements PvmAtomicOperation {
 
   @Override
   public void execute(PvmExecutionImpl execution) {
 
     // Assumption: execution is scope
-    PvmActivity cancellingActivity = execution.getNextActivity();
+    PvmActivity cancellingActivity = requireNonNull(execution.getNextActivity());
     execution.setNextActivity(null);
 
     // first, cancel and destroy the current scope
@@ -62,6 +65,7 @@ public abstract class PvmAtomicOperationCancelActivity implements PvmAtomicOpera
       propagatingExecution = execution.getParent();
     }
 
+    requireNonNull(propagatingExecution);
     propagatingExecution.setActivity(cancellingActivity);
     setDelayedPayloadToNewScope(propagatingExecution, (CoreModelElement) cancellingActivity);
     propagatingExecution.setActive(true);

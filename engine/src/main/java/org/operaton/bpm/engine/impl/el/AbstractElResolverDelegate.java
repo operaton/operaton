@@ -18,14 +18,15 @@ package org.operaton.bpm.engine.impl.el;
 
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /**
  * @author Thorben Lindhauer
  */
-public abstract class AbstractElResolverDelegate extends ELResolver {
+public abstract @NullMarked class AbstractElResolverDelegate extends ELResolver {
 
-  protected abstract ELResolver getElResolverDelegate();
+  protected abstract @Nullable ELResolver getElResolverDelegate();
 
   @Override
   public @Nullable Class<?> getCommonPropertyType(ELContext context, Object base) {

@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.container.impl.plugin;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.application.ProcessApplicationInterface;
 
 /**
  * @author Thorben Lindhauer
  */
-public interface BpmPlatformPlugin {
+public @NullMarked interface BpmPlatformPlugin {
 
   void postProcessApplicationDeploy(ProcessApplicationInterface processApplication);
 

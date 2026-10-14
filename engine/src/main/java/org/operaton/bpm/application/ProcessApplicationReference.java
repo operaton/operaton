@@ -17,19 +17,22 @@
 package org.operaton.bpm.application;
 
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * A reference to a process application.
  *
  * @author Daniel Meyer
  *
  */
-public interface ProcessApplicationReference {
+public @NullMarked interface ProcessApplicationReference {
 
   /**
    *
    * @return the name of the process application
    */
-  String getName();
+  @Nullable String getName();
 
   /**
    * Get the process application.

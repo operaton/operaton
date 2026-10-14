@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.application.impl;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 
@@ -23,11 +25,11 @@ import org.operaton.bpm.application.ProcessApplicationReference;
  * @author Thorben Lindhauer
  *
  */
-public class ProcessApplicationIdentifier {
+public @NullMarked class ProcessApplicationIdentifier {
 
-  protected String name;
-  protected ProcessApplicationReference reference;
-  protected ProcessApplicationInterface processApplication;
+  protected @Nullable String name;
+  protected @Nullable ProcessApplicationReference reference;
+  protected @Nullable ProcessApplicationInterface processApplication;
 
   public ProcessApplicationIdentifier(String name) {
     this.name = name;
@@ -41,15 +43,15 @@ public class ProcessApplicationIdentifier {
     this.processApplication = processApplication;
   }
 
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
-  public ProcessApplicationReference getReference() {
+  public @Nullable ProcessApplicationReference getReference() {
     return reference;
   }
 
-  public ProcessApplicationInterface getProcessApplication() {
+  public @Nullable ProcessApplicationInterface getProcessApplication() {
     return processApplication;
   }
 

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.el;
 import jakarta.el.CompositeELResolver;
 import jakarta.el.ELResolver;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
@@ -41,25 +43,19 @@ import org.operaton.bpm.engine.impl.context.Context;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationElResolverDelegate extends AbstractElResolverDelegate {
+public @NullMarked class ProcessApplicationElResolverDelegate extends AbstractElResolverDelegate {
 
   @Override
-  protected ELResolver getElResolverDelegate() {
-
+  protected @Nullable ELResolver getElResolverDelegate() {
     ProcessApplicationReference processApplicationReference = Context.getCurrentProcessApplication();
-    if(processApplicationReference != null) {
-
-      try {
-        ProcessApplicationInterface processApplication = processApplicationReference.getProcessApplication();
-        return processApplication.getElResolver();
-
-      } catch (ProcessApplicationUnavailableException e) {
-        throw new ProcessEngineException("Cannot access process application '%s'".formatted(processApplicationReference.getName()), e);
-      }
-
-    } else {
+    if (processApplicationReference == null) {
       return null;
     }
-
+    try {
+      ProcessApplicationInterface processApplication = processApplicationReference.getProcessApplication();
+      return processApplication.getElResolver();
+    } catch (ProcessApplicationUnavailableException e) {
+      throw new ProcessEngineException("Cannot access process application '%s'".formatted(processApplicationReference.getName()), e);
+    }
   }
 }

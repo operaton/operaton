@@ -16,15 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  *
  */
-public abstract class PvmAtomicOperationInterruptScope implements PvmAtomicOperation {
+public abstract @NullMarked class PvmAtomicOperationInterruptScope implements PvmAtomicOperation {
 
   @Override
   public void execute(PvmExecutionImpl execution) {
@@ -39,6 +43,7 @@ public abstract class PvmAtomicOperationInterruptScope implements PvmAtomicOpera
       //   * the interruptingActivity is executed with the scope execution
       execution.remove();
     }
+    requireNonNull(scopeExecution);
 
     scopeExecution.interrupt("Interrupting activity %s executed.".formatted(interruptingActivity));
 
@@ -50,7 +55,7 @@ public abstract class PvmAtomicOperationInterruptScope implements PvmAtomicOpera
 
   protected abstract void scopeInterrupted(PvmExecutionImpl execution);
 
-  protected abstract PvmActivity getInterruptingActivity(PvmExecutionImpl execution);
+  protected abstract @Nullable PvmActivity getInterruptingActivity(PvmExecutionImpl execution);
 
   @Override
   public boolean isAsync(PvmExecutionImpl execution) {

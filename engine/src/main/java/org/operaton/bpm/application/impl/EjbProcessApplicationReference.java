@@ -18,6 +18,7 @@ package org.operaton.bpm.application.impl;
 
 import jakarta.ejb.EJBException;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class EjbProcessApplicationReference implements ProcessApplicationReference {
+public @NullMarked class EjbProcessApplicationReference implements ProcessApplicationReference {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
@@ -63,6 +64,7 @@ public class EjbProcessApplicationReference implements ProcessApplicationReferen
     return selfReference;
   }
 
+  @SuppressWarnings("unused")
   public void processEngineStopping(ProcessEngine processEngine) {
     // do nothing.
   }

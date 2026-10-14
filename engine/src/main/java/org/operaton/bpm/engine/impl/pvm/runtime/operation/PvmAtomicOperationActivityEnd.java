@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
@@ -27,20 +29,22 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
+public @NullMarked class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
 
-  protected PvmScope getScope(PvmExecutionImpl execution) {
+  protected @Nullable PvmScope getScope(PvmExecutionImpl execution) {
     return execution.getActivity();
   }
 
   @Override
   public boolean isAsync(PvmExecutionImpl execution) {
-    return execution.getActivity().isAsyncAfter();
+    return requireNonNull(execution.getActivity()).isAsyncAfter();
   }
 
   @Override
@@ -55,7 +59,7 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
       execution.setActivityInstanceId(execution.getParentActivityInstanceId());
     }
 
-    PvmActivity activity = execution.getActivity();
+    PvmActivity activity = requireNonNull(execution.getActivity());
     Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = execution.createActivityExecutionMapping();
 
     PvmExecutionImpl propagatingExecution = execution;
@@ -64,7 +68,7 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
       execution.destroy();
       if(!execution.isConcurrent()) {
         execution.remove();
-        propagatingExecution = execution.getParent();
+        propagatingExecution = requireNonNull(execution.getParent());
         propagatingExecution.setActivity(execution.getActivity());
       }
     }
@@ -84,8 +88,9 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
     // 1.1 concurrent execution => end + tryPrune()
     if(propagatingExecution.isConcurrent()) {
       propagatingExecution.remove();
-      propagatingExecution.getParent().tryPruneLastConcurrentChild();
-      propagatingExecution.getParent().forceUpdate();
+      PvmExecutionImpl parent = requireNonNull(propagatingExecution.getParent());
+      parent.tryPruneLastConcurrentChild();
+      parent.forceUpdate();
     }
     else {
       // 1.2 Process End
@@ -98,9 +103,8 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
 
   private static void executeNonProcessDefinition(PvmActivity flowScope, PvmExecutionImpl propagatingExecution, PvmActivity activity) {
     // 2. flowScope != process definition
-    PvmActivity flowScopeActivity = flowScope;
 
-    ActivityBehavior activityBehavior = flowScopeActivity.getActivityBehavior();
+    ActivityBehavior activityBehavior = flowScope.getActivityBehavior();
     if (activityBehavior instanceof CompositeActivityBehavior compositeActivityBehavior) {
       // 2.1 Concurrent execution => composite behavior.concurrentExecutionEnded()
       if(propagatingExecution.isConcurrent() && !LegacyBehavior.isConcurrentScope(propagatingExecution)) {
@@ -108,7 +112,7 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
       }
       else {
         // 2.2 Scope Execution => composite behavior.complete()
-        propagatingExecution.setActivity(flowScopeActivity);
+        propagatingExecution.setActivity(flowScope);
         compositeActivityBehavior.complete(propagatingExecution);
       }
 

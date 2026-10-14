@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.application;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 
 /**
  * The context of an invocation.
  */
-public class InvocationContext {
+public @NullMarked class InvocationContext {
 
   protected final BaseDelegateExecution execution;
 

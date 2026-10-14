@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.application;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -32,7 +34,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Inherited
-public @interface ProcessApplication {
+public @NullMarked @interface ProcessApplication {
 
   String DEFAULT_META_INF_PROCESSES_XML = "META-INF/processes.xml";
 

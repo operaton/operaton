@@ -18,6 +18,7 @@ package org.operaton.bpm.application.impl;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationExecutionException;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class EmbeddedProcessApplication extends AbstractProcessApplication {
+public @NullMarked class EmbeddedProcessApplication extends AbstractProcessApplication {
 
   public static final String DEFAULT_NAME = "Process Application";
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;

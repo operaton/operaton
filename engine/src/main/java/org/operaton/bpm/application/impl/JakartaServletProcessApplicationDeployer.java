@@ -23,6 +23,7 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.HandlesTypes;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplication;
 
 /**
@@ -36,7 +37,7 @@ import org.operaton.bpm.application.ProcessApplication;
  *
  */
 @HandlesTypes(ProcessApplication.class)
-public class JakartaServletProcessApplicationDeployer extends AbstractServletProcessApplicationDeployer implements ServletContainerInitializer {
+public @NullMarked class JakartaServletProcessApplicationDeployer extends AbstractServletProcessApplicationDeployer implements ServletContainerInitializer {
 
   @Override
   public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {

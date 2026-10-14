@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -73,7 +74,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
     }
 
   @Override
-  public Object invoke(MethodInvocation invocation) throws Throwable {
+  public @Nullable Object invoke(MethodInvocation invocation) throws Throwable {
 
         Method method = invocation.getMethod();
 

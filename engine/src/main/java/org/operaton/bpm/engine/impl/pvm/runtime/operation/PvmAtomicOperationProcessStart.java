@@ -16,21 +16,24 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperation {
+public @NullMarked class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperation {
 
   @Override
   public boolean isAsync(PvmExecutionImpl execution) {
-    return execution.getActivity().isAsyncBefore();
+    return requireNonNull(execution.getActivity()).isAsyncBefore();
   }
 
   @Override
@@ -61,6 +64,7 @@ public class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperat
     return execution;
   }
 
+  @SuppressWarnings("ConstantConditions")
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
 
     execution.continueIfExecutionDoesNotAffectNextOperation(execution1 -> {

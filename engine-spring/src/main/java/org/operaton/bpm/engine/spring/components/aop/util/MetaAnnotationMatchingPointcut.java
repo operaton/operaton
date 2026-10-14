@@ -16,7 +16,7 @@
 package org.operaton.bpm.engine.spring.components.aop.util;
 
 import java.lang.annotation.Annotation;
-
+import org.jspecify.annotations.Nullable;
 import org.springframework.aop.ClassFilter;
 import org.springframework.aop.MethodMatcher;
 import org.springframework.aop.Pointcut;
@@ -59,7 +59,7 @@ public class MetaAnnotationMatchingPointcut implements Pointcut {
 	 *                             (can be <code>null</code>)
 	 */
 	public MetaAnnotationMatchingPointcut(
-			Class<? extends Annotation> classAnnotationType, Class<? extends Annotation> methodAnnotationType) {
+    @Nullable Class<? extends Annotation> classAnnotationType, @Nullable Class<? extends Annotation> methodAnnotationType) {
 
 		Assert.isTrue(classAnnotationType != null || methodAnnotationType != null,
 				"Either Class annotation type or Method annotation type needs to be specified (or both)");

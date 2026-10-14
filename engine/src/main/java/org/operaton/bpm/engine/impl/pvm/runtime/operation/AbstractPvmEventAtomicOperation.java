@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnExceptionHandler;
 import org.operaton.bpm.engine.impl.bpmn.helper.ErrorPropagationException;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.core.operation.AbstractEventAtomicOperation;
-import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 /**
@@ -29,9 +30,9 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Sebastian Menski
  *
  */
-public abstract class AbstractPvmEventAtomicOperation extends AbstractEventAtomicOperation<PvmExecutionImpl> implements PvmAtomicOperation {
+public abstract @NullMarked class AbstractPvmEventAtomicOperation extends AbstractEventAtomicOperation<PvmExecutionImpl> implements PvmAtomicOperation {
 
-  protected abstract CoreModelElement getScope(PvmExecutionImpl execution);
+  protected abstract @Nullable CoreModelElement getScope(PvmExecutionImpl execution);
 
   @Override
   public boolean isAsyncCapable() {
@@ -42,10 +43,9 @@ public abstract class AbstractPvmEventAtomicOperation extends AbstractEventAtomi
   protected void eventNotificationsFailed(PvmExecutionImpl execution, Exception exception) {
 
     if (shouldHandleFailureAsBpmnError()) {
-      ActivityExecution activityExecution = execution;
       try {
         resetListeners(execution);
-        BpmnExceptionHandler.propagateException(activityExecution, exception);
+        BpmnExceptionHandler.propagateException(execution, exception);
       } catch (ErrorPropagationException e) {
         // exception has been logged by thrower
         // re-throw the original exception so that it is logged

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.spring.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jspecify.annotations.Nullable;
 import jakarta.el.ELResolver;
 import jakarta.servlet.ServletContext;
 
@@ -28,6 +29,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationElResolver;
 import org.operaton.bpm.application.impl.EjbProcessApplication;
+import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
 import org.operaton.bpm.engine.spring.ApplicationContextElResolver;
 
 /**
@@ -61,12 +63,12 @@ public class SpringProcessApplicationElResolver implements ProcessApplicationElR
   }
 
   @Override
-  public ELResolver getElResolver(AbstractProcessApplication processApplication) {
+  public @Nullable ELResolver getElResolver(AbstractProcessApplication processApplication) {
 
     if (processApplication instanceof SpringProcessApplication springProcessApplication) {
       return new ApplicationContextElResolver(springProcessApplication.getApplicationContext());
 
-    } else if (processApplication instanceof org.operaton.bpm.application.impl.JakartaServletProcessApplication servletProcessApplication) {
+    } else if (processApplication instanceof JakartaServletProcessApplication servletProcessApplication) {
       // Using fully-qualified class name instead of import statement to allow for automatic transformation
 
       if(!ClassUtils.isPresent("org.springframework.web.context.support.WebApplicationContextUtils", processApplication.getProcessApplicationClassloader())) {

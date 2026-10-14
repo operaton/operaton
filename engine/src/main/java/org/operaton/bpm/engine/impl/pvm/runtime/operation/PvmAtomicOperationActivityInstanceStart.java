@@ -16,10 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.CompensationBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 
 /**
@@ -32,7 +35,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Daniel Meyer
  *
  */
-public abstract class PvmAtomicOperationActivityInstanceStart extends AbstractPvmEventAtomicOperation {
+public abstract @NullMarked class PvmAtomicOperationActivityInstanceStart extends AbstractPvmEventAtomicOperation {
 
   @Override
   protected PvmExecutionImpl eventNotificationsStarted(PvmExecutionImpl execution) {
@@ -50,14 +53,14 @@ public abstract class PvmAtomicOperationActivityInstanceStart extends AbstractPv
     // if we start a scope activity, remember current activity instance in parent
     PvmExecutionImpl parent = execution.getParent();
     PvmActivity activity = execution.getActivity();
-    if(parent != null && execution.isScope() && activity.isScope() && canHaveChildScopes(execution)) {
+    if(parent != null && execution.isScope() && activity != null && activity.isScope() && canHaveChildScopes(execution)) {
       parent.setActivityInstanceId(execution.getActivityInstanceId());
     }
 
   }
 
   protected boolean canHaveChildScopes(PvmExecutionImpl execution) {
-    PvmActivity activity = execution.getActivity();
+    PvmActivity activity = requireNonNull(execution.getActivity());
     return activity.getActivityBehavior() instanceof CompositeActivityBehavior
         || CompensationBehavior.isCompensationThrowing(execution);
   }

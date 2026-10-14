@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
@@ -23,7 +25,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Daniel Meyer
  *
  */
-public class PvmAtomicOperationActivityStartInterruptEventScope extends PvmAtomicOperationInterruptScope {
+public @NullMarked class PvmAtomicOperationActivityStartInterruptEventScope extends PvmAtomicOperationInterruptScope {
 
   @Override
   public String getCanonicalName() {
@@ -37,7 +39,7 @@ public class PvmAtomicOperationActivityStartInterruptEventScope extends PvmAtomi
   }
 
   @Override
-  protected PvmActivity getInterruptingActivity(PvmExecutionImpl execution) {
+  protected @Nullable PvmActivity getInterruptingActivity(PvmExecutionImpl execution) {
     PvmActivity nextActivity = execution.getNextActivity();
     execution.setNextActivity(null);
     return nextActivity;

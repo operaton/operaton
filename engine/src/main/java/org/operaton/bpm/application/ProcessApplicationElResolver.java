@@ -19,6 +19,8 @@ package org.operaton.bpm.application;
 import java.util.Comparator;
 import java.util.ServiceLoader;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * <p>SPI interface that allows providing a custom ElResolver implementation.</p>
@@ -31,7 +33,7 @@ import jakarta.el.ELResolver;
  * @author Daniel Meyer
  *
  */
-public interface ProcessApplicationElResolver {
+public @NullMarked interface ProcessApplicationElResolver {
 
   // precedences for known providers
   int SPRING_RESOLVER = 100;
@@ -45,7 +47,7 @@ public interface ProcessApplicationElResolver {
   /**
    * return the Resolver. May be {@code null}.
    */
-  ELResolver getElResolver(AbstractProcessApplication processApplication);
+  @Nullable ELResolver getElResolver(AbstractProcessApplication processApplication);
 
   /**
    * Comparator used for sorting providers

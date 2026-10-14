@@ -16,8 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
+import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * In BPMN this is used for terminate end events
@@ -25,7 +29,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Daniel Meyer
  *
  */
-public class PvmAtomicOperationsTransitionInterruptFlowScope extends PvmAtomicOperationInterruptScope {
+public @NullMarked class PvmAtomicOperationsTransitionInterruptFlowScope extends PvmAtomicOperationInterruptScope {
 
   @Override
   public String getCanonicalName() {
@@ -39,7 +43,8 @@ public class PvmAtomicOperationsTransitionInterruptFlowScope extends PvmAtomicOp
 
   @Override
   protected PvmActivity getInterruptingActivity(PvmExecutionImpl execution) {
-    return execution.getTransition().getDestination();
+    TransitionImpl transition = requireNonNull(execution.getTransition());
+    return transition.getDestination();
   }
 
 }

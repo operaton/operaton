@@ -18,6 +18,7 @@ package org.operaton.bpm.application;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.repository.Deployment;
 
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.repository.Deployment;
  * @see ManagementService#registerProcessApplication(String, ProcessApplicationReference)
  *
  */
-public interface ProcessApplicationRegistration {
+public @NullMarked interface ProcessApplicationRegistration {
 
   /**
    * @return the id of the {@link Deployment} for which the registration was created

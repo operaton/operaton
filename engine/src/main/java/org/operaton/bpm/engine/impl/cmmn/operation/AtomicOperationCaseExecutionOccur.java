@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  * @author Roman Smirnov
  *
  */
-public class AtomicOperationCaseExecutionOccur extends AbstractAtomicOperationCaseExecutionComplete {
+public @NullMarked class AtomicOperationCaseExecutionOccur extends AbstractAtomicOperationCaseExecutionComplete {
 
   @Override
   protected String getEventName() {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -28,10 +29,12 @@ import org.operaton.bpm.engine.impl.pvm.delegate.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  */
-public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd {
+public @NullMarked class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd {
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
@@ -64,7 +67,7 @@ public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInst
 
   private static void completeSubProcessExecution(PvmExecutionImpl execution, PvmExecutionImpl superExecution) {
     // copy variables before destroying the ended sub process instance
-    PvmActivity activity = superExecution.getActivity();
+    PvmActivity activity = requireNonNull(superExecution.getActivity());
     SubProcessActivityBehavior subProcessActivityBehavior = (SubProcessActivityBehavior) activity.getActivityBehavior();
     try {
       subProcessActivityBehavior.passOutputVariables(superExecution, execution);

@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.jboss.logging.MDC;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -718,7 +719,7 @@ class ProcessDataLoggingContextTest {
     registerProcessEngine();
     TestApplicationReusingExistingEngine application = new TestApplicationReusingExistingEngine() {
       @Override
-      public void createDeployment(String processArchiveName, DeploymentBuilder deploymentBuilder) {
+      public void createDeployment(@NonNull String processArchiveName, @NonNull DeploymentBuilder deploymentBuilder) {
         deploymentBuilder.addModelInstance("test.bpmn", modelDelegateFailure()).tenantId(TENANT_ID);
       }
     };
@@ -738,7 +739,7 @@ class ProcessDataLoggingContextTest {
     registerProcessEngine();
     TestApplicationReusingExistingEngine application = new TestApplicationReusingExistingEngine() {
       @Override
-      public void createDeployment(String processArchiveName, DeploymentBuilder deploymentBuilder) {
+      public void createDeployment(@NonNull String processArchiveName, @NonNull DeploymentBuilder deploymentBuilder) {
         deploymentBuilder.addModelInstance("test.bpmn", modelExecutionListenerFailure()).tenantId(TENANT_ID);
       }
     };

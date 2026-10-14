@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public abstract class AbstractServletProcessApplicationDeployer {
+public abstract @NullUnmarked class AbstractServletProcessApplicationDeployer {
 
   protected static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 

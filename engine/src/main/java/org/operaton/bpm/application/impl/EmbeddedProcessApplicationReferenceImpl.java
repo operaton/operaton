@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.application.impl;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
@@ -26,7 +28,7 @@ import org.operaton.bpm.application.ProcessApplicationUnavailableException;
  * @author Daniel Meyer
  *
  */
-public class EmbeddedProcessApplicationReferenceImpl implements ProcessApplicationReference {
+public @NullMarked class EmbeddedProcessApplicationReferenceImpl implements ProcessApplicationReference {
 
   protected EmbeddedProcessApplication application;
 
@@ -35,7 +37,7 @@ public class EmbeddedProcessApplicationReferenceImpl implements ProcessApplicati
   }
 
   @Override
-  public String getName() {
+  public @Nullable String getName() {
     return application.getName();
   }
 

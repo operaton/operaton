@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  * @author Roman Smirnov
  *
  */
-public class PvmAtomicOperationActivityStartCancelScope extends PvmAtomicOperationCancelActivity {
+public @NullMarked class PvmAtomicOperationActivityStartCancelScope extends PvmAtomicOperationCancelActivity {
 
   @Override
   public String getCanonicalName() {
@@ -42,7 +44,8 @@ public class PvmAtomicOperationActivityStartCancelScope extends PvmAtomicOperati
     execution.performOperation(ACTIVITY_START_CREATE_SCOPE);
   }
 
-  protected PvmActivity getCancellingActivity(PvmExecutionImpl execution) {
+  @SuppressWarnings("unused")
+  protected @Nullable PvmActivity getCancellingActivity(PvmExecutionImpl execution) {
     return execution.getNextActivity();
   }
 

@@ -23,6 +23,7 @@ import java.util.ServiceLoader;
 import java.util.concurrent.Callable;
 import jakarta.el.BeanELResolver;
 import jakarta.el.ELResolver;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import javax.script.ScriptEngine;
@@ -45,15 +46,15 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 /**
  * @author Daniel Meyer
  */
-public abstract class AbstractProcessApplication implements ProcessApplicationInterface {
+public abstract @NullMarked class AbstractProcessApplication implements ProcessApplicationInterface {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
-  protected ELResolver processApplicationElResolver;
-  protected BeanELResolver processApplicationBeanElResolver;
-  protected ProcessApplicationScriptEnvironment processApplicationScriptEnvironment;
+  protected @Nullable ELResolver processApplicationElResolver;
+  protected @Nullable BeanELResolver processApplicationBeanElResolver;
+  protected @Nullable ProcessApplicationScriptEnvironment processApplicationScriptEnvironment;
 
-  protected VariableSerializers variableSerializers;
+  protected @Nullable VariableSerializers variableSerializers;
 
   protected boolean isDeployed;
 
@@ -100,7 +101,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
   // Runtime ////////////////////////////////////////////
 
   @Override
-  public String getName() {
+  public @Nullable String getName() {
     Class<? extends AbstractProcessApplication> processApplicationClass = getClass();
     String name = null;
 
@@ -108,7 +109,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
     if (annotation != null) {
       name = annotation.value();
 
-      if (name == null || name.isEmpty()) {
+      if (name.isEmpty()) {
         name = annotation.name();
       }
     }
@@ -125,7 +126,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
    * Override this method to autodetect an application name in case the
    * {@link ProcessApplication} annotation was used but without parameter.
    */
-  protected abstract String autodetectProcessApplicationName();
+  protected abstract @Nullable String autodetectProcessApplicationName();
 
   @Override
   public <T> T execute(Callable<T> callable) throws ProcessApplicationExecutionException {
@@ -151,7 +152,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
   }
 
   @Override
-  public ClassLoader getProcessApplicationClassloader() {
+  public @Nullable ClassLoader getProcessApplicationClassloader() {
     // the default implementation uses the classloader that loaded
     // the application-provided subclass of this class.
     return ClassLoaderUtil.getClassloader(getClass());
@@ -168,7 +169,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
   }
 
   @Override
-  public synchronized ELResolver getElResolver() {
+  public synchronized @Nullable ELResolver getElResolver() {
     if (processApplicationElResolver == null) {
       processApplicationElResolver = initProcessApplicationElResolver();
     }
@@ -194,10 +195,8 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
    *
    * @return the process application ElResolver.
    */
-  protected ELResolver initProcessApplicationElResolver() {
-
+  protected @Nullable ELResolver initProcessApplicationElResolver() {
     return DefaultElResolverLookup.lookupResolver(this);
-
   }
 
   @Override
@@ -213,7 +212,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
   /**
    * see {@link ProcessApplicationScriptEnvironment#getScriptEngineForName(String, boolean)}
    */
-  public ScriptEngine getScriptEngineForName(String name, boolean cache) {
+  public @Nullable ScriptEngine getScriptEngineForName(String name, boolean cache) {
     return getProcessApplicationScriptEnvironment().getScriptEngineForName(name, cache);
   }
 
@@ -231,7 +230,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
     return processApplicationScriptEnvironment;
   }
 
-  public VariableSerializers getVariableSerializers() {
+  public @Nullable VariableSerializers getVariableSerializers() {
     return variableSerializers;
   }
 
@@ -254,8 +253,6 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
    * <p>Programmatically set the name of the Process Engine to deploy to if no Process Engine
    * is defined in <code>processes.xml</code>. This allows to circumvent the "default" Process
    * Engine name and set a custom one.</p>
-   *
-   * @param defaultDeployToEngineName
    */
   protected void setDefaultDeployToEngineName(String defaultDeployToEngineName) {
     this.defaultDeployToEngineName = defaultDeployToEngineName;

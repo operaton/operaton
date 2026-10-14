@@ -590,15 +590,15 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   @Override
-  public void deleteCascade(String deleteReason) {
+  public void deleteCascade(@Nullable String deleteReason) {
     deleteCascade(deleteReason, false, false);
   }
 
-  public void deleteCascade(String deleteReason, boolean skipCustomListeners, boolean skipIoMappings) {
+  public void deleteCascade(@Nullable String deleteReason, boolean skipCustomListeners, boolean skipIoMappings) {
     deleteCascade(deleteReason, skipCustomListeners, skipIoMappings, false, false);
   }
 
-  public void deleteCascade(String deleteReason, boolean skipCustomListeners, boolean skipIoMappings, boolean externallyTerminated, boolean skipSubprocesses) {
+  public void deleteCascade(@Nullable String deleteReason, boolean skipCustomListeners, boolean skipIoMappings, boolean externallyTerminated, boolean skipSubprocesses) {
     this.deleteReason = deleteReason;
     setDeleteRoot(true);
     this.isEnded = true;
@@ -811,28 +811,27 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
       throw new ProcessEngineException("Activity '%s' with start behavior '%s' cannot be executed by non-scope execution.".formatted(activity, activityStartBehavior));
     }
 
-    PvmActivity activityImpl = activity;
     this.isEnded = false;
     this.isActive = true;
 
     switch (activityStartBehavior) {
       case CONCURRENT_IN_FLOW_SCOPE:
-        this.nextActivity = activityImpl;
+        this.nextActivity = activity;
         performOperation(PvmAtomicOperation.ACTIVITY_START_CONCURRENT);
         break;
 
       case CANCEL_EVENT_SCOPE:
-        this.nextActivity = activityImpl;
+        this.nextActivity = activity;
         performOperation(PvmAtomicOperation.ACTIVITY_START_CANCEL_SCOPE);
         break;
 
       case INTERRUPT_EVENT_SCOPE:
-        this.nextActivity = activityImpl;
+        this.nextActivity = activity;
         performOperation(PvmAtomicOperation.ACTIVITY_START_INTERRUPT_SCOPE);
         break;
 
       default:
-        setActivity(activityImpl);
+        setActivity(activity);
         setActivityInstanceId(null);
         setDelayedPayloadToNewScope(activity);
         performOperation(PvmAtomicOperation.ACTIVITY_START_CREATE_SCOPE);
@@ -1880,7 +1879,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     getProcessInstance().setStarting(starting);
   }
 
-  public void setNextActivity(PvmActivity nextActivity) {
+  public void setNextActivity(@Nullable PvmActivity nextActivity) {
     this.nextActivity = nextActivity;
   }
 
@@ -1980,6 +1979,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    *
    * @param atomicOperation the atomic operation which should be executed
    */
+  @SuppressWarnings("ConstantConditions")
   public void dispatchDelayedEventsAndPerformOperation(final PvmAtomicOperation atomicOperation) {
     dispatchDelayedEventsAndPerformOperation(param -> {
       param.performOperation(atomicOperation);
@@ -1993,6 +1993,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
    *
    * @param continuation the atomic operation continuation which should be executed
    */
+  @SuppressWarnings("ConstantConditions")
   public void dispatchDelayedEventsAndPerformOperation(final Callback<PvmExecutionImpl, Void> continuation) {
     PvmExecutionImpl execution = this;
 
@@ -2246,6 +2247,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     IncidentHandling.removeIncidents(incident.getIncidentType(), incidentContext, true);
   }
 
+  @SuppressWarnings("unused")
   public @Nullable IncidentHandler findIncidentHandler(String incidentType) {
     Map<String, IncidentHandler> incidentHandlers = Context.getProcessEngineConfiguration().getIncidentHandlers();
     return incidentHandlers.get(incidentType);

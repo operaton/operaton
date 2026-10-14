@@ -19,8 +19,13 @@ package org.operaton.bpm.container.impl.metadata;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
 import org.operaton.bpm.container.impl.metadata.spi.JobExecutorXml;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * <p>Implementation of the {@link JobExecutorXml}</p>
@@ -28,15 +33,15 @@ import org.operaton.bpm.container.impl.metadata.spi.JobExecutorXml;
  * @author Daniel Meyer
  *
  */
-public class JobExecutorXmlImpl implements JobExecutorXml {
+public @NullMarked class JobExecutorXmlImpl implements JobExecutorXml {
 
-  protected List<JobAcquisitionXml> jobAcquisitions;
-  protected String jobExecutorClass;
-  protected Map<String, String> properties;
+  protected @Nullable List<JobAcquisitionXml> jobAcquisitions;
+  protected @Nullable String jobExecutorClass;
+  protected @Nullable Map<String, String> properties;
 
   @Override
   public List<JobAcquisitionXml> getJobAcquisitions() {
-    return jobAcquisitions;
+    return requireNonNull(jobAcquisitions, "jobAcquisitions");
   }
 
   public void setJobAcquisitions(List<JobAcquisitionXml> jobAcquisitions) {
@@ -44,7 +49,7 @@ public class JobExecutorXmlImpl implements JobExecutorXml {
   }
 
   public String getJobExecutorClass() {
-    return jobExecutorClass;
+    return requireNonNull(jobExecutorClass, "jobExecutorClass");
   }
 
   public void setJobExecutorClass(String jobExecutorClass) {
@@ -57,7 +62,7 @@ public class JobExecutorXmlImpl implements JobExecutorXml {
 
   @Override
   public Map<String, String> getProperties() {
-    return properties;
+    return requireNonNull(properties, "properties");
   }
 
 }

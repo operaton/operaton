@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.application.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 
@@ -26,37 +28,20 @@ import org.operaton.bpm.application.ProcessApplicationInfo;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationInfoImpl implements ProcessApplicationInfo {
-
-  protected String name;
-  protected List<ProcessApplicationDeploymentInfo> deploymentInfo;
-  protected Map<String, String> properties;
+public @NullMarked record ProcessApplicationInfoImpl(String name, List<ProcessApplicationDeploymentInfo> deploymentInfo, Map<String, String> properties) implements ProcessApplicationInfo {
 
   @Override
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   @Override
   public List<ProcessApplicationDeploymentInfo> getDeploymentInfo() {
-    return deploymentInfo;
-  }
-
-  public void setDeploymentInfo(List<ProcessApplicationDeploymentInfo> deploymentInfo) {
-    this.deploymentInfo = deploymentInfo;
+    return Collections.unmodifiableList(deploymentInfo);
   }
 
   @Override
   public Map<String, String> getProperties() {
-    return properties;
+    return Collections.unmodifiableMap(properties);
   }
-
-  public void setProperties(Map<String, String> properties) {
-    this.properties = properties;
-  }
-
 }

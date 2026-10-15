@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright The WildFly Authors
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+<!-- overrides WildFly's own bundled module to fix CVE-2026-89044 -->
+<module name="io.netty.netty-codec-http2" xmlns="urn:jboss:module:1.9">
+    <properties>
+        <property name="jboss.api" value="private"/>
+    </properties>
+
+    <resources>
+        <resource-root path="netty-codec-http2-@version.netty.wildfly@.jar"/>
+    </resources>
+
+    <dependencies>
+        <module name="io.netty.netty-buffer"/>
+        <module name="io.netty.netty-codec"/>
+        <module name="io.netty.netty-codec-http"/>
+        <module name="io.netty.netty-common"/>
+        <module name="io.netty.netty-handler"/>
+        <module name="io.netty.netty-transport"/>
+    </dependencies>
+</module>

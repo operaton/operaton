@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright The WildFly Authors
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+<!-- overrides WildFly's own bundled module to fix CVE-2026-89044 -->
+<module name="io.netty.netty-transport-native-epoll" xmlns="urn:jboss:module:1.9">
+    <properties>
+        <property name="jboss.api" value="private"/>
+    </properties>
+
+    <resources>
+        <resource-root path="lib"/>
+        <resource-root path="netty-transport-classes-epoll-@version.netty.wildfly@.jar"/>
+    </resources>
+
+    <dependencies>
+        <module name="io.netty.netty-common"/>
+        <module name="io.netty.netty-buffer"/>
+        <module name="io.netty.netty-transport"/>
+        <module name="io.netty.netty-transport-native-unix-common"/>
+    </dependencies>
+</module>

@@ -35,6 +35,11 @@ if [[ ! -d "$MODULES_DIR" ]]; then
     exit 0
 fi
 
+if ! command -v xmllint >/dev/null 2>&1; then
+    echo "ERROR: xmllint is required to validate module resources."
+    exit 1
+fi
+
 # Find all module.xml files within the MODULES_DIR.
 # Using 'while IFS= read -r module_file' with process substitution to read each file path.
 # This ensures that changes to 'validation_failed' persist in the main shell's scope,
@@ -71,8 +76,8 @@ while IFS= read -r module_file; do
         # This assumes the resource is directly inside the module_dir or a subdirectory.
         absolute_resource_path="$module_dir/$relative_path"
 
-        # Check if the referenced file exists and is a regular file
-        if [[ ! -f "$absolute_resource_path" ]]; then
+        # JBoss Modules supports both JAR files and directories (e.g. native libraries).
+        if [[ ! -f "$absolute_resource_path" && ! -d "$absolute_resource_path" ]]; then
             echo "    ERROR: Resource not found for $module_file:"
             echo "      Referenced path: '$relative_path'"
             echo "      Expected absolute path: '$absolute_resource_path'"

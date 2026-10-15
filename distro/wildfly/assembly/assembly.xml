@@ -27,6 +27,8 @@
           <exclude>**/bin/standalone.conf.bat</exclude>
           <!-- exclude wildfly's shipped version of h2database -->
           <exclude>**/h2database/**</exclude>
+          <!-- Replace the bundled Netty modules with the patched modules assembled by Operaton. -->
+          <exclude>**/modules/system/layers/base/io/netty/**</exclude>
         </excludes>
       </unpackOptions>
     </dependencySet>

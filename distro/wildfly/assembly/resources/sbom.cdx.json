@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:0fef2dcd-7136-4f5a-96b8-f79774376341",
+  "serialNumber": "urn:uuid:761f0b89-a19d-4635-a19a-1142e9fa78a3",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-15T09:21:41Z",
+    "timestamp": "2026-10-15T16:48:16Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.75.0-SNAPSHOT-6c7a8a6be"
+          "version": "0.76.0-SNAPSHOT-cf325209a"
         }
       ]
     },
@@ -7373,45 +7373,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.sun.mail/jakarta.mail@2.0.1?type=jar",
+      "bom-ref": "pkg:maven/com.sun.mail/jakarta.mail@2.0.2?type=jar",
       "publisher": "Oracle",
       "group": "com.sun.mail",
       "name": "jakarta.mail",
-      "version": "2.0.1",
+      "version": "2.0.2",
       "description": "Jakarta Mail API",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8885560796641719f1cc0c9ea17b8bee"
+          "content": "69753278ed0fa13af0a627de3df5d8b0"
         },
         {
           "alg": "SHA-1",
-          "content": "96d3645f02a92bcc5e7ae1ff037151e44179f230"
+          "content": "6dfe5d279fb579a41baa84a7728e31a40a50d90e"
         },
         {
           "alg": "SHA-256",
-          "content": "8988bdbde922ee173db7179e23393dd2258f3b64f708f41082e03f0e0494cc23"
+          "content": "536f0ae5dd774e257f3064f19a2b982aa56072c07c675c70f98cdc262047b4b5"
         },
         {
           "alg": "SHA-512",
-          "content": "364b705fe3e51b1a612f7812cd4e57cff3b6ed844ca3566c206195d6512664661b0fcc138ecd2284ee33855fa378a4296842668fc66e3447d5dc5a1fc3e9c43d"
+          "content": "2f11a49f1afa5d86a31647e2a00632fadd98eb755e08c7cbc3eb1b0de584499dd8c0923b68d6c4cb3a8abeb383d35d6b02a43fd06da1fe0223c1589ec934e87d"
         },
         {
           "alg": "SHA-384",
-          "content": "be2357a3fc409ecdb7fa8baf62f1b28545a6bb6f9c53f567e4690014027a5a4376334da0c396a07c8931804b5f08448c"
+          "content": "9ac78040ce0f72ed9bc81910dfa4180964416d37d075607d6fade16de377f08ec3b3a2d2b41e890518138a28cc9d33b0"
         },
         {
           "alg": "SHA3-384",
-          "content": "a87d40a24eb2231094af38014c31f58a45bde3ea19e00cd16484014d2c1a7d783a29868a62cfc85369a365a69beaa484"
+          "content": "28039f8a5e302ec1e67269ffa1afd2e38dc872c504676a34146061e839a1509bcf9e6fda43a8e91455fa2d5e5cb7ee45"
         },
         {
           "alg": "SHA3-256",
-          "content": "2d70c33869619c2146d9110b1ea818526c298100373ee7161490899f3531e857"
+          "content": "a2251fa5ac36e799406e8f8894f12b690b7deb0012c332c41c34d96a223b472b"
         },
         {
           "alg": "SHA3-512",
-          "content": "52632fe175dfe6c7b22dd03dabbecd35a235931db9b045ab49691389c6e533e2e2f24c6b505c1cf1811c9b7e07a3c05ab98f88b685d55f43a6d63ebd487be6a8"
+          "content": "c76ad61ff330f356db1a566ade29ee535e6f6d2f7d59a9ef57e5d9374a87b239cf6b4a8270e5f7b85335108c71347dba08bf296497f48bf515cd4972a550ed4d"
         }
       ],
       "licenses": [
@@ -7431,7 +7431,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.sun.mail/jakarta.mail@2.0.1?type=jar",
+      "purl": "pkg:maven/com.sun.mail/jakarta.mail@2.0.2?type=jar",
       "externalReferences": [
         {
           "url": "http://eclipse-ee4j.github.io/mail/jakarta.mail",
@@ -9709,45 +9709,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.core5",
       "name": "httpcore5-h2",
-      "version": "5.4.4",
+      "version": "5.4.3",
       "description": "Apache HttpComponents HTTP/2 Core Components",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8f56560c50101d9422ca597c48973c9b"
+          "content": "4b9da0d3e87ed769ef6a162223f2265c"
         },
         {
           "alg": "SHA-1",
-          "content": "90c30ff56e226bdb96cf5c987aebc42e1a8a9f45"
+          "content": "33bcd37d645539d27c65e17420843fd7f6c0ebf4"
         },
         {
           "alg": "SHA-256",
-          "content": "9a61441889f9b222ce99581977cc549b4dfca7ac9d2841582c1e57a31fa65b48"
+          "content": "c7db7026b8e2dea39132b04a6069f6671e2858309b20a146ec5c7dd6ed73a0b6"
         },
         {
           "alg": "SHA-512",
-          "content": "6fd81dffd73dee36e85d676f587738d7a31c5b35bfc2ece82fd749cca9894b997ad1b9264bfd9ce4a92ffeba5751d0eaee4b106b03ce7ef4110e6bb4f3bb8eee"
+          "content": "0bde9a7579cba0dbb6322c8a25eefd0bdb80bd907b4e66c20570ce23558fd57daf9ae5233a571546171456b9f7da6e970507cde971a1155d1bce011c62b281af"
         },
         {
           "alg": "SHA-384",
-          "content": "28a1970490d83c9ebaba10d31ea9a933563f2d99db7eb800264e9f7da61e9d80b19ae9ea898bd2457577c0c8daa3cd1c"
+          "content": "31c865c7c4fd4975d1a60223478b1aa9a8c374e77e23f46c3033f9f88a4fa774850c5f7c4974ee6c98a8f0ac031ed843"
         },
         {
           "alg": "SHA3-384",
-          "content": "b47195f8b614c9225471dd05cad344ccab47d5716141807e5414894af4cbcb70e22095694fc59d85b36dbef637f8c509"
+          "content": "06cf3bffe6edd2fc68630b79d041cc1af328f83f55356d75e69ebed85057edcd3c3f1319d5d7c777878807122ed9c86b"
         },
         {
           "alg": "SHA3-256",
-          "content": "408ac7a375ebf2de02ace34081f259d8f62188ff32514e38a754ee717843ef4f"
+          "content": "d9e78aa4f4420d006a5df8b339df2c58d5fc680e5c344d746bdb39ecf4af1791"
         },
         {
           "alg": "SHA3-512",
-          "content": "db379c65037f375bc79c74a017815af3a83c296bdeec3c2654688b3f354eb16d4a669870201078112aa9975a7088bec36d80a727c937b84d1d78536a9a715770"
+          "content": "63557025bcf6a3b28d85a62d06840290d5587e10b35cf41f4b4a640c29d09f1cc96bba26a3aec0cc0de37098edfb42c53de401ce94cbf32680f6e1143cd091a4"
         }
       ],
       "licenses": [
@@ -9757,10 +9757,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.4/httpcore5-h2/",
+          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.3/httpcore5-h2/",
           "type": "website"
         },
         {
@@ -9776,7 +9776,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.4/httpcore5-h2",
+          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.3/httpcore5-h2",
           "type": "vcs"
         }
       ]
@@ -30181,6 +30181,80 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
+      "publisher": "The Apache Software Foundation",
+      "group": "org.apache.httpcomponents.core5",
+      "name": "httpcore5-h2",
+      "version": "5.4.4",
+      "description": "Apache HttpComponents HTTP/2 Core Components",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "8f56560c50101d9422ca597c48973c9b"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "90c30ff56e226bdb96cf5c987aebc42e1a8a9f45"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "9a61441889f9b222ce99581977cc549b4dfca7ac9d2841582c1e57a31fa65b48"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "6fd81dffd73dee36e85d676f587738d7a31c5b35bfc2ece82fd749cca9894b997ad1b9264bfd9ce4a92ffeba5751d0eaee4b106b03ce7ef4110e6bb4f3bb8eee"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "28a1970490d83c9ebaba10d31ea9a933563f2d99db7eb800264e9f7da61e9d80b19ae9ea898bd2457577c0c8daa3cd1c"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "b47195f8b614c9225471dd05cad344ccab47d5716141807e5414894af4cbcb70e22095694fc59d85b36dbef637f8c509"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "408ac7a375ebf2de02ace34081f259d8f62188ff32514e38a754ee717843ef4f"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "db379c65037f375bc79c74a017815af3a83c296bdeec3c2654688b3f354eb16d4a669870201078112aa9975a7088bec36d80a727c937b84d1d78536a9a715770"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.4/httpcore5-h2/",
+          "type": "website"
+        },
+        {
+          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://issues.apache.org/jira/browse/HTTPCORE",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://lists.apache.org/list.html?httpclient-users@hc.apache.org",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.4/httpcore5-h2",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@5.1.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
@@ -31005,7 +31079,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0f9a320f-3fa5-457a-9769-21cdc70e2346",
+      "bom-ref": "5a53e3ac-8a27-46bc-8fdd-5cd6cc835348",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36261,7 +36335,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0cdff0b8-6c31-4ba3-81e1-60883d339074",
+      "bom-ref": "f776252c-0509-4627-9443-e20b47d534c3",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36979,7 +37053,7 @@
       "ref": "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.commons/commons-email2-core@2.0.0-M1?type=jar",
-        "pkg:maven/com.sun.mail/jakarta.mail@2.0.1?type=jar"
+        "pkg:maven/com.sun.mail/jakarta.mail@2.0.2?type=jar"
       ]
     },
     {
@@ -36987,7 +37061,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.sun.mail/jakarta.mail@2.0.1?type=jar",
+      "ref": "pkg:maven/com.sun.mail/jakarta.mail@2.0.2?type=jar",
       "dependsOn": [
         "pkg:maven/com.sun.activation/jakarta.activation@2.0.1?type=jar"
       ]
@@ -37213,7 +37287,7 @@
       "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
@@ -37222,7 +37296,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar"
       ]
@@ -39727,6 +39801,12 @@
       ]
     },
     {
+      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar"
+      ]
+    },
+    {
       "ref": "pkg:maven/org.apache.groovy/groovy@5.1.3?type=jar",
       "dependsOn": []
     },
@@ -39971,13 +40051,7 @@
       "dependsOn": []
     },
     {
-      "ref": "0cdff0b8-6c31-4ba3-81e1-60883d339074",
-      "dependsOn": [
-        "0f9a320f-3fa5-457a-9769-21cdc70e2346"
-      ]
-    },
-    {
-      "ref": "0f9a320f-3fa5-457a-9769-21cdc70e2346",
+      "ref": "5a53e3ac-8a27-46bc-8fdd-5cd6cc835348",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -40024,6 +40098,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
+      ]
+    },
+    {
+      "ref": "f776252c-0509-4627-9443-e20b47d534c3",
+      "dependsOn": [
+        "5a53e3ac-8a27-46bc-8fdd-5cd6cc835348"
       ]
     },
     {

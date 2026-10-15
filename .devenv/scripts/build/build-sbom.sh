@@ -87,11 +87,28 @@ docker run --rm -v "$(pwd)":/repo aquasec/trivy:canary fs --scanners vuln --form
 
 echo "Merging CycloneDX SBOMs for each distribution..."
 for DISTRO in "${DISTROS[@]}"; do
+  OUTPUT_FILE="distro/$DISTRO/assembly/resources/sbom.cdx.json"
+
   $CYCLONEDX merge --input-files \
     target/sbom/operaton-modules-"$DISTRO".cyclonedx-json.sbom \
     target/sbom/operaton-webapps.cyclonedx-json.sbom \
-    --output-file distro/"$DISTRO"/assembly/resources/sbom.cdx.json \
+    --output-file "$OUTPUT_FILE" \
     --input-format json
+
+  # Override metadata.component.name to match distro
+  if command -v jq &> /dev/null; then
+    jq ".metadata.component.name = \"operaton-$DISTRO\"" "$OUTPUT_FILE" > "$OUTPUT_FILE.tmp" && mv "$OUTPUT_FILE.tmp" "$OUTPUT_FILE"
+  else
+    node -e "
+      const fs = require('fs');
+      const file = '$OUTPUT_FILE';
+      const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (data.metadata && data.metadata.component) {
+        data.metadata.component.name = 'operaton-$DISTRO';
+      }
+      fs.writeFileSync(file, JSON.stringify(data, null, 2));
+    "
+  fi
 done
 
 echo "📦 SBOM files generated in target/sbom/"

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:ccd332dc-c8a3-4928-bb42-eed5a675e86f",
+  "serialNumber": "urn:uuid:0fef2dcd-7136-4f5a-96b8-f79774376341",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-05T05:13:41Z",
+    "timestamp": "2026-10-15T09:21:41Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.74.0-SNAPSHOT-dc9a38453"
+          "version": "0.75.0-SNAPSHOT-6c7a8a6be"
         }
       ]
     },
@@ -4419,45 +4419,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+      "bom-ref": "pkg:maven/commons-codec/commons-codec@1.23.0?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "commons-codec",
       "name": "commons-codec",
-      "version": "1.22.1",
+      "version": "1.23.0",
       "description": "The Apache Commons Codec component contains encoders and decoders for formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "7bfd10447817907ffd7f14fbc6493940"
+          "content": "dc0c1fa739a6cfc59d948ebe371af90a"
         },
         {
           "alg": "SHA-1",
-          "content": "da09bcdb330deef7cfee70f30c6889fda70d5ebf"
+          "content": "11adf2daaeb941e80599a3e8010d63aed995f509"
         },
         {
           "alg": "SHA-256",
-          "content": "78a5d732fbd715e2d10bd7150d2f8030bae57267f8aacc5c88f642cb6c2e5d3f"
+          "content": "47504a3ce71d73a1b0af07675546b8d8c5af87f82ef12b6381f9eb3c17dd5a5b"
         },
         {
           "alg": "SHA-512",
-          "content": "1e2023b6e7715339a309226c94635db77fd3d8d7f6fc1048e0138dc4b4ff27540e1e1ff2238a41b94029a9497b2935af6e8b05eeeed69b76600c2f4eed3e36ed"
+          "content": "fdbda49825afd3eef86987155865f74f71b51f88c9145df12a473b209f52a70d4e84a5f3c19648f42c9b8a5989bcdf4a0976df0a42b85fa3dbb5b52841a350ff"
         },
         {
           "alg": "SHA-384",
-          "content": "29f01c913caa51660ff4a8623255f819961ee63b20b125a1c3e5f061b4a75864c1a349420f6d314009b4cf12524aecfb"
+          "content": "de1caffb821f8bfa44fe0570bf8dbf308e07d23f254c9c4f15825a167f70a6e22fc9f5c9df03f2e56d261f94b3cb3859"
         },
         {
           "alg": "SHA3-384",
-          "content": "de7a0317378663055c9a2f80d30bc543549924e994a27c683ee1ff405587395d00b13d277dd39ceb09fa64a9f110d09e"
+          "content": "7abb2ae4ad494c6732fea2d9c4eabc267223f70a8a3164b10297437809b82f4e2d90383f282b5c4999c5e0acaf9c9594"
         },
         {
           "alg": "SHA3-256",
-          "content": "70d7c377536c088c88d043b4f3297cb58ea9bd7d8374514f16060ca62977253e"
+          "content": "fe24f5492b702edf2dae5b3cb5ebb7a2661e5a4c02fd15dd95dd22bcea8373e7"
         },
         {
           "alg": "SHA3-512",
-          "content": "7885692a52215d8ea620afc25b22719c835d9079265592a9b790e4c13b1cd5cbb023eb9cf39a304e463cf280dd7931ca966528c9bb14b58c400018699c058ec7"
+          "content": "e5395d37af0ec14b84f8e122d89b0276e74a32389c1c88f3a3b69753eab2d5051b7236fc230396105b06faa0af7406d10392e7f6ab8a15d0586cdd45b0a872c9"
         }
       ],
       "licenses": [
@@ -4468,7 +4468,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+      "purl": "pkg:maven/commons-codec/commons-codec@1.23.0?type=jar",
       "externalReferences": [
         {
           "url": "https://commons.apache.org/proper/commons-codec/",
@@ -6389,44 +6389,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-catalina",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Tomcat Servlet Engine Core Classes and Standard implementations",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "77a82124df18c41f2528c2f0d5f4dcfd"
+          "content": "ed4c5f5bd908d57f41d9c0efebeef52e"
         },
         {
           "alg": "SHA-1",
-          "content": "fc8fe4e813ee82b0ae19d7eb9c86046e202201ec"
+          "content": "2679e7b01ad2e1e03f34a81d6a8d08247f9f6b39"
         },
         {
           "alg": "SHA-256",
-          "content": "8576d59e0f54f89af73f19b9a4ad5dd4758e2b420f58a67ec8fd850b502d819d"
+          "content": "1ded244092eb900d9ee4ac6c2f328a841704ee4619cfa0a100a6dc04b8947221"
         },
         {
           "alg": "SHA-512",
-          "content": "4f094755896fe8eb27e88654e9a946eb306ee223cf0c112d6203d6eda424edecde6fd2d8e8d49cde6f52fbce68b06b358b99110df1f2bf61200ba9cf60dfb4cd"
+          "content": "080f18ee03fa2e6d27a32e36828b769d70a05fc415d643d28361d2b5993f4e7048fa5ff56ebc0a07d66e51548dbe660850f83a0b095acb33f08e31b65a8b3b61"
         },
         {
           "alg": "SHA-384",
-          "content": "0003a0555b4535477c89fda4e81706b759131c352e0157f92ec4bb5e102cbfc15aee793d63919dcd19df24bbe4c36b75"
+          "content": "ff5589a5ecb4695857d002948eeb105170e0a784e28801558b709dd978ba03fa160e1a202fa53c2c11cb200e5f131005"
         },
         {
           "alg": "SHA3-384",
-          "content": "645df03cbd5a1c2b4f2cc604ed01ab57d7243d87546aa500de9eecdf3974873d2375b4a02417ced375da75d5fddbea8e"
+          "content": "07a837c30c58b7d0d0fd3379dae40adc0f8b54d0b28b5408328ccb81ef3697357e199e1b70625bbf26d52970dca2dee2"
         },
         {
           "alg": "SHA3-256",
-          "content": "fa8bc9e34a966d8c524aca6b251766b4a8bcf0784b0fc06de3e2109e9164a4c7"
+          "content": "2f53bff1747a73befc37c8a93bd59862ab8ab1570aba13af6e2f29a4200e8bde"
         },
         {
           "alg": "SHA3-512",
-          "content": "d9c452e7e13b15f9a5904a79d0b8cec0e86759d833d260c75c3453747a0aebf1f5be7dbf4f5aac6ac07783edd7283e41eac4828c14b59a19c7a8a4a99d634e87"
+          "content": "4f97d87f63d34c6cc34d0620c4fe62b0a7840d4dfa58c16cc28f9c4392e5b4d8f93fb116ac5d2a6b9548584ad61dcfb2e1b2a60e39e03932af607772abcb5bf3"
         }
       ],
       "licenses": [
@@ -6436,7 +6436,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6446,44 +6446,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-servlet-api",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "jakarta.servlet package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a7636e68ef8ee9d20f7afcf7b233f91e"
+          "content": "cc622c4cf837d276585e8a7d07f4f586"
         },
         {
           "alg": "SHA-1",
-          "content": "c5957d80b442d67973eb55dd4e2b3c24fb4683c8"
+          "content": "480b7a4a33fd7db934bf3bb4730c90ade648bdad"
         },
         {
           "alg": "SHA-256",
-          "content": "a9dd4fa5195c7ec4545f537696fe3fe4b6988ae07b90b1c9bcadf42b693ecfbb"
+          "content": "ca5ed30b3c06eae8cee750f38502fba7a5eed24c653c9e8e397f64dfe7d29f44"
         },
         {
           "alg": "SHA-512",
-          "content": "da42863e877df36bea69563365c537f78285bb2873aad7c39ac2f039ebd2d2efcfca68da5e368f58b398a732d68ca902450b9c759a1aa023ec0d9000a2144ef5"
+          "content": "f969e7b49b995e857f25af9b1fdd63ecf85aa7ab1cd92105c9724f107579dd48b6971c4fa115c87c3ae05c5c05b9747d6daf0fb27cd61069bbb9de9ca51ce786"
         },
         {
           "alg": "SHA-384",
-          "content": "4adb5c7fae95da67a82e18489b5d889c48d8a24c9413107c5bfde12025f05eb17afc3fc9febb50fc08cf3231bb27d47c"
+          "content": "08e8543325681857fbaf35d33ce9d0590f9e216916223fd21411c2b4317b406b23e443a4033de98f3bc078e725041c49"
         },
         {
           "alg": "SHA3-384",
-          "content": "721b6d77f4958f3c2047872f44c6b73dbe1590c25641e4ac81f12770485f2769690f73343e981a7d379cf745842d95db"
+          "content": "037b584cf597e56a02abc10c884a760ef24b992132e657ed54b07687b91d1ffafcaef83ca75409d2ce61c8b72c7a68e2"
         },
         {
           "alg": "SHA3-256",
-          "content": "edfa7a288ba7584d2b692acf56ac650787c927604899a229257680fcab4d9406"
+          "content": "0c80db31960635559e3fe260a55d4cfb83a14f9f262c85708baaf6f88dd8bfaa"
         },
         {
           "alg": "SHA3-512",
-          "content": "a63a5f815ed66017c75a13b16224aec7a500e0f61fc93c75383d033a27b7ce6f879650951d4e99e7b598c90046c20b667e39ffe7a56737dd694ad7cf6d8c24bd"
+          "content": "afaafd886fa0147c8cd39424edc9e550ea7f5d2d77c89716b7972ceb6677f1137043e4af3ee083d7a7588ddf53bb76471fd6c5178d99d513187949355c33c640"
         }
       ],
       "licenses": [
@@ -6493,7 +6493,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6503,44 +6503,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-jsp-api",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "JSP package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "0f9d7d8b2063c85e3ae9e76b73684935"
+          "content": "f9f6c8309fa3fed7031120298783114c"
         },
         {
           "alg": "SHA-1",
-          "content": "c72b36ec127dcd74432f1fa442d7b2be4c0c1529"
+          "content": "7c89b2757b50acd91210e2b2a2c5378cc72512b7"
         },
         {
           "alg": "SHA-256",
-          "content": "36ffbda73f4a7bd2f1022f84af522dfd34327627dfc1e8fdd7c71ee288b07d5f"
+          "content": "b525b3689de9e55e38baf15a1662a22dc6763cbb868b59078c81ca2fc486c00e"
         },
         {
           "alg": "SHA-512",
-          "content": "94546ff5cd55738eae9ed4deb2a2846ec05198eb115b57a6e5405bd2cb322aacf311e5f7f487753b291223f9d6c833ebbd008655549775fc2d6fbff913cfd757"
+          "content": "fe40d5997a73ab1f94006d312203fb6d7a96aa49380d7517e12c5d954d66ab3c7d831f3cb641a3c76dacc7b05621971f4f8f63d99422d1e7ade8a2ea43ef0cb4"
         },
         {
           "alg": "SHA-384",
-          "content": "b85ec997f45d6b331930636bf00151a93a6cc7acdb24d8e94b3603f12080c255505b1728c48d15ba79967f96ff4b815e"
+          "content": "b29a4ff0df36d95e3e9236b7bf3b359a3e9f1b6d4ad677c57d312f6392cb634825c79730c28e4f0005d44efafd0d0e9b"
         },
         {
           "alg": "SHA3-384",
-          "content": "4a9f9b4e46becda96cb9f81017cdc04b8401091d00b6869abbbc721c12f9d6a5b25193aabe1fecd923b8c01ac6962d72"
+          "content": "83d7b8dd89e4a90459794d72eaf316ce5b580b649399de260020bda05308ea64a316f0ea765fda164cd0d22be5e8ae6e"
         },
         {
           "alg": "SHA3-256",
-          "content": "14a79d03474533b719f1704007848e8d441c4ebd8fca385693a016fcf8e0c11b"
+          "content": "877cb6ca95eed7f968394f185db2f4056303cebb71f0f7f53a58494ddb75e7d4"
         },
         {
           "alg": "SHA3-512",
-          "content": "ec935125140e955396ba981ddaf599367db08eac399d1e3b28ccd6f26599a74c610a61ff869567f98fea5b9f603ad846f9daa4dbbbcaf485ca606f1e465d9a16"
+          "content": "aa223a07b0b1ea4f4d56a60f82f040e455fb0ae1c1e5b51ef3679a72569fdcc3ed9a8696cf532e3c71dcc8ce6a19f6b63b9a52fe05c5c5a07c7a7bfab4254025"
         }
       ],
       "licenses": [
@@ -6550,7 +6550,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6560,44 +6560,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-el-api@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-el-api@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-el-api",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Expression language package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "cd9813022d23d7f9871502f12df0dc2f"
+          "content": "0b6369c38241e19cecc6c0f7b220814f"
         },
         {
           "alg": "SHA-1",
-          "content": "1d93c0fbe2be9286e027126b3be2ea1ea8df711f"
+          "content": "d257bfeac2bb0eaf9a416c794bdda6b54a7d1dd8"
         },
         {
           "alg": "SHA-256",
-          "content": "c8ee07741634716c826201b690b323e571fe4be8a5ff58167e3acc924f3b083d"
+          "content": "cfaaf91e2ae454e8f36889af9f354c106ee9049ab956619d74dbe970949e5c68"
         },
         {
           "alg": "SHA-512",
-          "content": "866841daf0baa8f84d36b703c99f13f5aec557cfeab40e71a89af0dce58d01751c15f17d67aff6dab69238ffdd1da7dad89f21c90ad67a0c600ec314c7162a69"
+          "content": "b0a3c5a937b1f12073af6064ffeae8ba97bcf9d2654ebbc53b2a1faeffa982a75c2d60031855a0584e5db9e50e5c5360f01fdaba3999e40efb9fcea3508789dd"
         },
         {
           "alg": "SHA-384",
-          "content": "f92b0a8b8c745576a4c6d50e0af1187512e91edfd39398caaada6fa9de4cf3fe8fe3a63f423804a1f07fee89995dc76b"
+          "content": "369a739bd4968c52ed9e770adda3d275dcbc784df4de8333489877a58c44a06cc208dba4a5026206d3bb2e3fb1b535f8"
         },
         {
           "alg": "SHA3-384",
-          "content": "eae279fc18620eaa27fd5cc487ff908bd97ae3f03a302a75ee068fb5a67cf877c7d820fa4bba362ec51f9b976e57185e"
+          "content": "be3a1a3e9d69d1e554479deb6946c947d5d802c78f7291324ea41868a969fc50bcccd8ba090fa17e5104f4946f63e1a2"
         },
         {
           "alg": "SHA3-256",
-          "content": "2af944defe15d5cf472c054bf5e9f6e60179d013773b1df48bf944aebf66b451"
+          "content": "f1db648faa105b131be4bceb0d405f77574ab3cbbec3128aa6cdaadf77085ab1"
         },
         {
           "alg": "SHA3-512",
-          "content": "553e9faf4108edfe7e2ff86d01da99fe77bf19127d4890677cc2b4963eb3fd25bbf1b3323ecd32668c1a6d3a3e721d987c04fce79b637c05381db467118d1264"
+          "content": "0d2b286400e133ee102b765006f46f87aaeb5d98adb41ac5ae6367c855b481c0155ccb0f84c0a550a96f1787d2e7383cb7193aa701f16b088c42957ec3d8ed43"
         }
       ],
       "licenses": [
@@ -6607,7 +6607,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-el-api@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-el-api@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6617,44 +6617,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-juli",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Tomcat Core Logging Package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "260bf463304139e1f2766b85b8ebe9b3"
+          "content": "696c6b96f434a06d0ea892433fe372d9"
         },
         {
           "alg": "SHA-1",
-          "content": "c23731476be0ea0fe733cfcd6d03f41801109e04"
+          "content": "cfb9d11945e50a47345b85f57e28aa32ce7312cd"
         },
         {
           "alg": "SHA-256",
-          "content": "d01b4e855d0c0cd2091adb72400879eb8d6912cfe8723a93866a407fd34ed2a2"
+          "content": "1d24778651b01662cac0b59a09fbb8d81f0a6c917da6173130b50cd7a5bb9232"
         },
         {
           "alg": "SHA-512",
-          "content": "599f9664de7a34b5e46c70ca77d7dd2bd963d100e274271686534bfcd4fd832d446bd168e0ee039dbed8ed9c06f211cc9c48673e537460e6dc1d83a8934bb63c"
+          "content": "a0443f779b7c4cd91a297b7fea5461e3c4fec25f51c4ff6d3c06dc433b2e4ecb744c812067b24066179552106b16fae52c68fb4e319e814aab02b2ed6158d07d"
         },
         {
           "alg": "SHA-384",
-          "content": "16d1137f4404487c6b5cf1d7e1397b65c2fe1b07d8edd64622e8553b8e2c9e4d42debad540c1322f76d70dcd3bc03cf7"
+          "content": "d6ea478540b0bbcfa3b7622900efe2956b74277b0baa76e790d4e18bf8b04c7dbe33593b7dc09630380778e0fd24dd63"
         },
         {
           "alg": "SHA3-384",
-          "content": "03bca2b9732e22016e74806a0f1dd48818131ec48edc82953554c13cade0198e0ed4a7e8422aa3301fbe109491025dbe"
+          "content": "393263099b73f8177a7d362927a667d64965f433899ca24888991b3e62755e52138ab9abe2aeae6a0f36e3227350cbea"
         },
         {
           "alg": "SHA3-256",
-          "content": "1f5cbf885ba90e2d4e7a1e9af3723d5d40b6cc2d30cac56c313e063eb6375916"
+          "content": "fc9c7ec7360468f50ea2e6de09ec543518a79ef2834e32edb54f1c84651aa7c0"
         },
         {
           "alg": "SHA3-512",
-          "content": "ddcb26507fdcccae2da8bc07a18c2d7f77baa265b04966b38b6f7684da6faf39503f795da01efb5b9c55f06c8e353d9ed8c1860a70cda675cf283d65c9101735"
+          "content": "3c4e8ea16cc745b650c9e71e8827ceabca2b7d4c0a771e43499bb6c1f9593536d464b4b5f4429612d2339aca273073492ccddd9e90f904be204388e117fcbb9f"
         }
       ],
       "licenses": [
@@ -6664,7 +6664,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6674,44 +6674,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-annotations-api",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Annotations Package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "fd1cd6291aebf78a65057cbe3abfecb4"
+          "content": "9f971fe661feeb0f48c127a6ca51a54f"
         },
         {
           "alg": "SHA-1",
-          "content": "ce8da13a495827629d9e8a7c1b11a45f4e8826ec"
+          "content": "c833693d1f94ccd4c8237bf34ab9bb767ddba2d7"
         },
         {
           "alg": "SHA-256",
-          "content": "5a7b02d0d6bc0c2635f3da841b937485da719e855df4a81b0807e158ecf6caac"
+          "content": "34e004c54a23b8486a8f0c1541a31594afab12f85fbc84243a3271c4ce1b420b"
         },
         {
           "alg": "SHA-512",
-          "content": "eb08ef7fcb14fb5a20d4e308b8ca2dedbc38373b0c093268a17b25a5923c49a69862e6d338cee376d58d22ae40d34160d64c79f503b4d27e4691f6795ae5e31c"
+          "content": "d339ce566f51c3ad1324ac82e28e3e734c3fba89ac113921cb3a977129eabb8ca5251635f31c8eb3d958ef3b0287a9f090380788f54f55d60770b444e9e69235"
         },
         {
           "alg": "SHA-384",
-          "content": "d014a1ffca239b65c4b2a08c82a66a608fb48af7a5516fbf9f274df635a23a11c3b2b3318e4f7d35e9cd14b5aa190974"
+          "content": "19e064b680b27e80adf9dd4da84f68df217a81e14aea253ba16f8d3788f083d97230b73b519f0268077dd54838a7ef24"
         },
         {
           "alg": "SHA3-384",
-          "content": "5550be4118980e17d4869e3adce00d610a890b27e83a9ee53c243055b95a63a70257ba46b9516dc92ac839102bd71c49"
+          "content": "2d649492513d99eeb46fff269767ea4a6ef1cb0d319aedcd9b7e637ab818848ee03128b1bc336f379aac1d82e34434dc"
         },
         {
           "alg": "SHA3-256",
-          "content": "5943c5d592b45baaed4156dee6922f12f569c026e433e48469e406c82dc6ce9f"
+          "content": "038b3042d99c3e9af8db65c952958f5be3d431cb1d45d872fc3e397830ae400f"
         },
         {
           "alg": "SHA3-512",
-          "content": "84547750d7f52fd57fe16193616325ec83bb43acc928ddfa68cbabe233a6202dcfcf5167effcec06df456648bdd23888900268aca2acd17254d0a02cc9226386"
+          "content": "df3f60a65856bbf25832f2023391404bb17e057a8575332256b7cee3b17d05f9bd050cb98e5e666332abc35d97fa64ca0852a05c6ae3db5b8bee68cca6d932e3"
         }
       ],
       "licenses": [
@@ -6721,7 +6721,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6731,44 +6731,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-api",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Definition of interfaces shared by Catalina and Jasper",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "9f34e8cee3c8786c2aaf232eef6cf745"
+          "content": "1d306a84c35885a375931066dd93b055"
         },
         {
           "alg": "SHA-1",
-          "content": "4b958a218f321bcf4333d2949215d9d9315ce0ca"
+          "content": "532f3dd4df85a0c1113e91dbdd42b464807cba64"
         },
         {
           "alg": "SHA-256",
-          "content": "34f2c761d67558306224e8e6df8402fe13b05a4af4a198285c5424dad341d449"
+          "content": "76e678613f6b108a487b9dacd8164ce874aabd38e56115aa427924da124b9805"
         },
         {
           "alg": "SHA-512",
-          "content": "39dee463f24966d7a9b44a4e322ae96a55b83c912c2762b5850a16ec524a43d36bdef0536159af896a3d2622aef198c02d03460afabd52e0690671e57c5b56ad"
+          "content": "7b7906a9112048f4c5689022d3caed23a648257447d2ca9afcd7f9bdddb79e59330061d50aca1b4c2744a8dedfcaa68d6c2c9963c1ead205b87305aa4a359f47"
         },
         {
           "alg": "SHA-384",
-          "content": "590758f94afdfc8d0035dffa80e5d7c38729ddf09cbb86c89c8f1d39a1574266439c7e1cff1491bc59efc2d2979cb7d6"
+          "content": "db3e3c59db6266d062923bcc560f57dddf3782a086b18ce8d673adcba0b08ea936f5fbc702e040f65f43f80695251f33"
         },
         {
           "alg": "SHA3-384",
-          "content": "e9c7e5ac042254a8684ba81d43478c31ca231fc27e4645d0280038b7add856b0f37e27bfcdad602e1b32910f37aa326a"
+          "content": "e50804d0def78cefc9ca1e304e0d6d2a28b339bc16a083c30be8e6ad7fea9447afbef203b552b401433641203089dc0e"
         },
         {
           "alg": "SHA3-256",
-          "content": "91f1b290394199dbcd2e40363cae63d4fa574ee8d00af5787c6f4d40a3bab796"
+          "content": "bd8612bcd600713466f763c98c16804a133661c1bbaada0075f229c917be1d83"
         },
         {
           "alg": "SHA3-512",
-          "content": "a01c8e6ad05d76f25e64a824905bd76735fb2a7c51138ab3633667aaadfcdc5076afc81711dbe6538c900e9ab114cdd1fa26d8934dcbd3d8ac92026cd1b58620"
+          "content": "6f85060a1feff6b72dcfdf0b3bd6c463e0a6c85fdbf68567cc0ae57209a90981037597d1d5424cea3d1a0a38862866695507706481b5590de503f7d4562bef4a"
         }
       ],
       "licenses": [
@@ -6778,7 +6778,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6788,44 +6788,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-jni",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Interface code to the native connector",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "40cbca27410e21b7fe5d15acbd8dad76"
+          "content": "376337f28da35204d569647c505e2f59"
         },
         {
           "alg": "SHA-1",
-          "content": "3a34c5e649387b48f364772735dca46a43746052"
+          "content": "aec6502f921ed49e29e51dbefd1bd05149e3d0cb"
         },
         {
           "alg": "SHA-256",
-          "content": "52a50cc7323f74b3d690f50408c406dc023f86cac1da57300f1b447383093787"
+          "content": "20d1cf28e11cf33b45b6a40c74c9a6e72a7ddaded21c8354a8435207143f889e"
         },
         {
           "alg": "SHA-512",
-          "content": "173ff9ed1a2a27f390be8c2ea9892c8ad1e83a2078f52e982786cd2a2c19f897a8cd76a307864be134f4f1637debfd5ab2ae1d8d216fae47c49a9f3ca4f12146"
+          "content": "a73c4d0928883bc5a432621ad9917c3224f38e699c45d4c91f6120862c7616d0efab9758c3a47c7036e814d7c42013dc02ca2338e2c3bee00dd3cf714cdba01b"
         },
         {
           "alg": "SHA-384",
-          "content": "5ca46124168a1d1ce77dcb657ea2ea98071bf5f3e05488780f751eba259f3ca63ecc5a033d5483e694b619a6561f08e1"
+          "content": "fd45f2587bbc00371dcf7efe118d61ae9b7602ad0d07c7e14d73374aec9f883e6a94e95e616ea1edf31e486a7ae2ce32"
         },
         {
           "alg": "SHA3-384",
-          "content": "f332602266d6312a7cd7e662e241640491b39a31a10de161fd3ae0defa8e6b2a64eec3a93a8451040441d4e31aac217e"
+          "content": "ca5b7866796d22f492c1ef282585fd7695feed6525798e110243289ce7b9ffe7026b1fd53b8b25d0729583b6aa0108ad"
         },
         {
           "alg": "SHA3-256",
-          "content": "80eb472ded4956622fb85f76ef1b2387500b6c35b71021aadea132ce306474b8"
+          "content": "0a1645017eaf36202f78e141ad3d3fe218922d037c5a34d2e4eb00186a7e8414"
         },
         {
           "alg": "SHA3-512",
-          "content": "0df19328d489abe6c69e958dc9ad2f9b7f2fe19aabe2b1ec2b53981bede8cb36620a68356bb69f45f5819a6193d9d060f161fc42b62cf4a1d00f9a206e60bd42"
+          "content": "e420d56aaa991557169d971068b88f13271e7c507d3ebfd7bc168ce7474271b972da92fa220c128985794fe2dd1f16e7eae1d2c9703fe266d95fc9bf63744209"
         }
       ],
       "licenses": [
@@ -6835,7 +6835,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6845,44 +6845,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-coyote",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Tomcat Connectors and HTTP parser",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "82d378f81e048a4f31353cd3a2804bd9"
+          "content": "85595005c3f9ae5d9235439df142baa6"
         },
         {
           "alg": "SHA-1",
-          "content": "5196ed0ffeb178b29c968b1264c9c205aaa13679"
+          "content": "d33ade7ba854f1e159411e558a1d9ad0ef8b0082"
         },
         {
           "alg": "SHA-256",
-          "content": "a03ee5ed06cf9fb0d2de170b4d1a6011792b01a03055f62725fc7590fc1f9993"
+          "content": "06cf7f513efcc2ebad5b72b4eff87f436408352b96118d6f31d58faefba7665d"
         },
         {
           "alg": "SHA-512",
-          "content": "3db2674c638becbfe4ceaad4cc13be8e1de0afa79386710a32357724239d4ce094f496d72fc87ec0bc85914d2cb5ff565eef9508946984ab67128faf276c72b7"
+          "content": "6db2bd0682a15820cf00f25592a33b33bc416ef7ee1d30dbe4873b5f09626d492eabcc09d29ea8ab62e54db0bfdf38001e1ce0096a5d426bbeb4f0cc230132ad"
         },
         {
           "alg": "SHA-384",
-          "content": "5c120561b0b1456526ced2f5a634e5689e9f0ae2a8ce053c1fbeb52d68f3c5ba201d08817e8dc5b9f507745ecb6b706d"
+          "content": "28e89d0f73e6dcd5c4c4ae137315354d911faf195d8ea8bd39f8b901cdcbc41b546efed29fb324ed70bb3cc00e9b3a53"
         },
         {
           "alg": "SHA3-384",
-          "content": "386ca40f837f0b0ec398bc3081afdf1289254e65977f6619213ada921970b51ce3030a3ac8a88c91789222b47e356c75"
+          "content": "1eb70a757a72e9bc02261571978f67440e0d087a7cdbd3d085a6881d1ddaff8d5f45b99b16a5cc7bda6d4bbc52cc7596"
         },
         {
           "alg": "SHA3-256",
-          "content": "bca3d8c54afc9fa4b1d95b96a27fbf301a341fdeb31dbb2ad551549d6e1369ae"
+          "content": "bf0471df7485b68fbab20c53f88056c6e5121b3fb998c9d25535fc308251db08"
         },
         {
           "alg": "SHA3-512",
-          "content": "3c6bf084a981810d21dfea48e631576850fa5a54e76862ea66deb14108b9d6c8f598bdcfb31bab2fee1e8bde8cf3f1b0f030750be58d3b025f354de72da037dc"
+          "content": "5b41f6f75930b73bf570dc2d3a5fad3d64a5d4f6ccad07c33803c523417e37bf5b79e7c5e60994e45f43c2527b70954a93751bc5d8caab00b606991d472b4efb"
         }
       ],
       "licenses": [
@@ -6892,7 +6892,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6902,44 +6902,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-util",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Common code shared by multiple Tomcat components",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f584dc063a5d14122df794be9088a304"
+          "content": "8ac13bc02e40ff79e2c2f483ff5350d2"
         },
         {
           "alg": "SHA-1",
-          "content": "f0b84c3ba07391c3f00d0b6fa97f98a6ab0b0817"
+          "content": "2e6fadcd53b205794292902d5823079bb80779a6"
         },
         {
           "alg": "SHA-256",
-          "content": "ae059e34bad9d2cf17a783dfbb632034fe00a2a453eb3e63adba6cf206457503"
+          "content": "a31fbf48272d3f65e159eb12d2380cbc5952ecdba62db3c403a0a1f3f7ec872a"
         },
         {
           "alg": "SHA-512",
-          "content": "edcb6e48ba58e71d6eb9a8fb5cad784b1a19976f1aa4c501f3061878abae98412bde8865726152e20680defc9a66edccab935ee942e55fa362bc04d8b5e594af"
+          "content": "a3d6d5a8981e250a9694695d15a89950e242ae5c2b3239c1ffad71a6801e29da013cab4e4c85cfea058eb0c2e144f82c6832fcb4d68d8490deccb375faf09080"
         },
         {
           "alg": "SHA-384",
-          "content": "309b861b0fa27e27b8a6c307141239c176d44d23f5f14a13b9b34e80e66c1b5bb3fcbb9fc8521d6038df45e47acf29cd"
+          "content": "0a737befbb58f98aa742b040ddbd34e6c56d9ff74155d73df45f4ab1e498c39bf4187e61701437f4b9619a382c0596e8"
         },
         {
           "alg": "SHA3-384",
-          "content": "e7c14aa8d5ea2600e299ee026f7d489f92735ceb603e16067e66e56184a1722747048668747474528044eda202c4fa63"
+          "content": "59a9008782a262e77e588137e2553ed2c7e488187f49c160aca7f6056adeae47b894785d5fa44405eb8f6950cd51e2a4"
         },
         {
           "alg": "SHA3-256",
-          "content": "9aba0e430789dbf4a7e232422700f50f317dd2a7b077c2e9431e03f89872367c"
+          "content": "02f2b38656af78e7f0249cf735c448ad68b8d4096f8f327a0042b85db846ac73"
         },
         {
           "alg": "SHA3-512",
-          "content": "64fe3255dda7e2135657a564c8e65edd232c5f223c6084f5d5467177d419955773082de3a00a0f715667bdab073072a3d3fa21d788fef89343069b7fb4b0e1c7"
+          "content": "9ada9f6a839a784817addd3dd0ffed358a51b780f314dd404d96da42a8bbe914b68ab383b2c6207ad7558d7145c9296ea37c3b4f7238ec10547da73a481c3ca9"
         }
       ],
       "licenses": [
@@ -6949,7 +6949,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6959,44 +6959,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-util-scan",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Common code shared by Catalina and Jasper for scanning JARS and processing XML descriptors",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e6baa9e4528e686a1b9d0c464c62d440"
+          "content": "b13849ce745c223be8a2dbfbac9a3a7e"
         },
         {
           "alg": "SHA-1",
-          "content": "e5717c9115a348f720a37eef7125ccf9d35b96c5"
+          "content": "0f6b628aa94bd0c1cbf0e05b2db12010b075f188"
         },
         {
           "alg": "SHA-256",
-          "content": "5f2d77af8835baeed810f2567373d24181b9b0c5d2daa34a59491fd2a0f01d65"
+          "content": "370a50596ff693bc955a6b6fbc92d63e6bce8240458f53cfdabd4a6c7303856b"
         },
         {
           "alg": "SHA-512",
-          "content": "5f4adb974bb9cf43ca6b65fb3148a772b6a7c39162de02bf7d66c213d62767b5df4326a50fdc630c0b15f50daf8547c2d2dd8062e527d40a6698c69fac861a8f"
+          "content": "3a7bd2d21ccba58d211efa701da7a773f893c1eebb442b548b35b40c9f8d1df98a861a4f02b34cbde14bfef0c03e9f126e45aef987d8fe0feb114b9fd6e32cb1"
         },
         {
           "alg": "SHA-384",
-          "content": "5a38b6f8561ddc743a7fe772e2fff2989b0504e2d0477ad0814f73b47ce43336193e844c5ed38ceeba4c31acd9456c5a"
+          "content": "4f3cf493889b37b1eed95f40586506aee5525a98dd70106afcedcf31144024bdcc54db09a774ec0aaff492f610374a3f"
         },
         {
           "alg": "SHA3-384",
-          "content": "747fa5c54cac0c9a976243ac7a9a057693a88b652202c9901003c16729dee830b770abd5ca45f9a2b1fa74156aede291"
+          "content": "62f937108a915c36c0b3e9fe39aec6cd12727d05c2519556ff63b1745b15cf90b6c1d9947ffc1e4fdd9f59a70721c2f6"
         },
         {
           "alg": "SHA3-256",
-          "content": "6d3ca6fe5a5e5ad5f88262c35763562f0b22ef474a419160bc1a08814a921b54"
+          "content": "fda954cd4fcdb04fdaf51e917cf6336779e7c44b3abc3e1e6d7e48e0424c2843"
         },
         {
           "alg": "SHA3-512",
-          "content": "1361b018b21b39fbb0458b0a42ab45264260cfdaf377bc1810c5f0885cab991ce935cf99cd3d98658911a8980f8819223681b4ead9cf74480fcd8498cc36dbec"
+          "content": "47e58a6c0833f34cfc9e149c3dfa01e8d6205e74cd3ebe781d82a7d1fae54632620a70cc544bd149f28bca78d9048dd667f87ed8adc320625f340b27805541f7"
         }
       ],
       "licenses": [
@@ -7006,7 +7006,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -7016,44 +7016,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-jaspic-api",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "jakarta.security.auth.message package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "61b4d8abd7a7ffdaf5c97df223804ef9"
+          "content": "4924fd390ca934f6de703944f841310a"
         },
         {
           "alg": "SHA-1",
-          "content": "21c7c77ad4d5d7539cbbfc439ee57539a085ebbf"
+          "content": "d4ed9f6fc6247a4e1405b416cc832dc467889611"
         },
         {
           "alg": "SHA-256",
-          "content": "8856b8190b32089a8716fea4551e72c0312ad84a6876517cdaca0177b80304ff"
+          "content": "fe9c302663606f2e0b2fe041ade5ee23bcd6ee0540414aa8caa883253313a545"
         },
         {
           "alg": "SHA-512",
-          "content": "7bc0d0db57f6a27108b7c47d64b34211908c06ca0442ff6f2d1d63d333eaeaf62c7027253e15031ce00117554d247306e4fe4e5ff69d20fd77fb7b3f6b227a3b"
+          "content": "3a7ed5c7c9a9dcf895cc2e43d47dbf0e2a10082ce36685b44428042cfbab04331c0e355bd58df889dfdb88395e671a814eea83feff837d09528733515a3a5c0a"
         },
         {
           "alg": "SHA-384",
-          "content": "a44ee55fe6662daa1a30b43525099192e8f1588a6e4ce7623bfaab46483970f472db911a4bddd166eb654324cc33d0cc"
+          "content": "2f42ce2d9b523a1e9f8fc07fd58acf807f70581d267fb357da9f73caaffa1269d8e55e22cb1a4d2e7f4bf2d18710b3b8"
         },
         {
           "alg": "SHA3-384",
-          "content": "a3dead99fda56f58d51a05e60032445c66728981d3efc88af93d3a49becc436a39816798157bd2bd1141769ba603a562"
+          "content": "f9b0eb40f6dd4bece4a78e011f054bb42e1ac3434bed76f17d18ccc7bc2058a60ae6d6e3845ac64b2419db7eeff5023f"
         },
         {
           "alg": "SHA3-256",
-          "content": "5ec248972369afe2649b2d406913f6fdb2a0cb31784d0fe858a02a5db7166934"
+          "content": "c099de4cc20fa62baa7bfa50d2923b2cf8fc4d5a3d83363047acc6813f42e83f"
         },
         {
           "alg": "SHA3-512",
-          "content": "1baa59200aa7ccade251c6c3462edb64f9055079eac12ebda10792c7c5c028ce521d4152d8906c687fe608f3627638264e5ff8fa7f2bf91e1a071fb270417c71"
+          "content": "9ac7ee8a24cc4e89b77aa85cd136a8996bfa7b21da552a0444f796daca786cb13be6c532b48b811427377eb4bfb742bba5e74a2d24dce4369aa486711ffaaf50"
         }
       ],
       "licenses": [
@@ -7063,7 +7063,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -9561,45 +9561,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.client5",
       "name": "httpclient5",
-      "version": "5.6.4",
+      "version": "5.6.5",
       "description": "Apache HttpComponents Client",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "42f90ff32bc3f72cb8bdfdf235e28328"
+          "content": "d8cc8b781781dc447050138b9cd7bf68"
         },
         {
           "alg": "SHA-1",
-          "content": "2a8ff1366303ac253e0ea64dab1e5abb5b7687bd"
+          "content": "4540cf4269d2e4a713a434a01e195af29e1ef9e1"
         },
         {
           "alg": "SHA-256",
-          "content": "bdef5f8841145cd76c4c605ff301bc840eea0d5292332b7b892a93316c0d8ee1"
+          "content": "a10b555f7c85a720d1011a086d679d854b155816cde91a40198cc98c2b0867e8"
         },
         {
           "alg": "SHA-512",
-          "content": "2acc897cde347dc33d7c180f2b8c9b255f1fb687f6afc75e271b037998cf248d69648f1c92225c2ed1ba370ef212ad08ff36a1b90d5faad2cddb3bcc7129b0cf"
+          "content": "d31ba483b5de27071efe116b3a94913f90d0f410e71809c68d3142cf4968f289cb7dabe423320770d6bdc56acfe8d2943f8850b338e73d61afd4182bf700ffb8"
         },
         {
           "alg": "SHA-384",
-          "content": "43856479fa74a1d193930d26f37fefeb4eadef0dd480c4e840cdaabae6138304ba8aecdaed6a8940d0e971d82c597dd7"
+          "content": "91514a155a1ba9e4ca14f39f408acbca061efe3602fe3a7875ab8200589bff72adec28eace8460379b7e7aeef6459d18"
         },
         {
           "alg": "SHA3-384",
-          "content": "1684a4ccb7c533cc531d96274fc8f6ff33106840f0f1523655b4313393a952ed376b83004d5e0217213ece2035005ee3"
+          "content": "c4f5791a47f959530943619c01381ced385910caad4a3e3389f5cbcaa30ac752f0d5c361ca55d9b14296a6747392c18a"
         },
         {
           "alg": "SHA3-256",
-          "content": "ab2b8fd38edd948d38fbcc23baa8e6e2437e25610c16bb1df7bbe7d95453bbcd"
+          "content": "00ae74969636542a25131300b1da43702daa0a22e446aeb07b2a088d0290882f"
         },
         {
           "alg": "SHA3-512",
-          "content": "9503f6ec6318d2aecae0e68e3eabbfaa012c512141b89e52d12fa4f13450114482508ef2ded7e9a3262fd7c4b5f08e7f1bfe4fa343b870dae81d5c04acaac6eb"
+          "content": "1b730aca7330167292d6325c27f2ec6964d751fa7d1fb84b170ca3fc635ee2ad0a97102be01b1328d7f2ed6f996576ba98bbc321f0e3be561ee864749679a63b"
         }
       ],
       "licenses": [
@@ -9609,10 +9609,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-client-5.6.x/5.6.4/httpclient5/",
+          "url": "https://hc.apache.org/httpcomponents-client-5.6.x/5.6.5/httpclient5/",
           "type": "website"
         },
         {
@@ -9628,7 +9628,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-client/tree/5.6.4/httpclient5",
+          "url": "https://github.com/apache/httpcomponents-client/tree/5.6.5/httpclient5",
           "type": "vcs"
         }
       ]
@@ -15630,80 +15630,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
-      "publisher": "The Apache Software Foundation",
-      "group": "org.apache.httpcomponents",
-      "name": "httpclient",
-      "version": "4.5.13",
-      "description": "Apache HttpComponents Client",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "40d6b9075fbd28fa10292a45a0db9457"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "e5f6cae5ca7ecaac1ec2827a9e2d65ae2869cada"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "6fe9026a566c6a5001608cf3fc32196641f6c1e5e1986d1037ccdbd5f31ef743"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "3567739186e551f84cad3e4b6b270c5b8b19aba297675a96bcdff3663ff7d20d188611d21f675fe5ff1bfd7d8ca31362070910d7b92ab1b699872a120aa6f089"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "093ac3e2dde58e34aa70309c7305eb3c9b5be2509a9293f1672494da55479a86bd112e83326746dc7a32855472952b99"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "cd6882e7868624164e460f2f3ea01466f863c0dcb902b031c656b57356f563be83b29530df41d88d634ed3d01fc9964d"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "710b1d8d7dae0b8e4270756694ca9c83d64965f42d3b4170c609b14d47c2762c"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "276fa6a6599dc89382d658115695cf4da6b0d39b34e9c349c17a5dbd64122eaee553bb9ed75c0378ec4a83be157c8aa39370662de3c9b8fd55ebc1dd608383e6"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://hc.apache.org/httpcomponents-client",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "http://issues.apache.org/jira/browse/HTTPCLIENT",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://mail-archives.apache.org/mod_mbox/hc-httpclient-users/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/httpcomponents-client/tree/4.5.13/httpclient",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents",
@@ -15772,80 +15698,6 @@
         },
         {
           "url": "https://github.com/apache/httpcomponents-core/tree/4.4.16/httpcore",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents/httpmime@4.5.13?type=jar",
-      "publisher": "The Apache Software Foundation",
-      "group": "org.apache.httpcomponents",
-      "name": "httpmime",
-      "version": "4.5.13",
-      "description": "Apache HttpComponents HttpClient - MIME coded entities",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "3f0c1ef2c9dc47b62b780192f54b0c18"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "efc110bad4a0d45cda7858e6beee1d8a8313da5a"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "06e754d99245b98dcc2860dcb43d20e737d650da2bf2077a105f68accbd5c5cc"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "e1b0ee84bce78576074dc1b6836a69d8f5518eade38562e6890e3ddaa72b7f54bf735c8e2286142c58cddf45f745da31261e5d73b7d8092eb6ecfb20946eb36c"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "bfb59447493ea1dd69a0b5a49de8adfc9813d45aae7e005cfe8e6fe282d6caadf7aea520ec6df3f1bdeb99f129701827"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "0c728ad29e80bb4d262d4adf901880518627ab78ef39e194bfce87f91555fc62bf9423f3c15ab7f5c1b6b895865a263c"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "8bbe5a758db8c840cc2d72dc4070c2e264d01fb0d3ed3dd92489e0eb25d030c7"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "76c5f955afbbb00ff00ea39ad2179727c2d7be2a75bd3f654db01e06bb611803bd1258b7527ac30c9d81987b32d1347fbcb23ce967638188672d5ed0151cc791"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.httpcomponents/httpmime@4.5.13?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://hc.apache.org/httpcomponents-client",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "http://issues.apache.org/jira/browse/HTTPCLIENT",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://mail-archives.apache.org/mod_mbox/hc-httpclient-users/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/httpcomponents-client/tree/4.5.13/httpmime",
           "type": "vcs"
         }
       ]
@@ -16904,6 +16756,80 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
+      "publisher": "The Apache Software Foundation",
+      "group": "org.apache.httpcomponents",
+      "name": "httpclient",
+      "version": "4.5.14",
+      "description": "Apache HttpComponents Client",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "2cb357c4b763f47e58af6cad47df6ba3"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "1194890e6f56ec29177673f2f12d0b8e627dec98"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c8bc7e1c51a6d4ce72f40d2ebbabf1c4b68bfe76e732104b04381b493478e9d6"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "a084ef30fb0a2a25397d8fab439fe68f67e294bf53153e2e1355b8df92886d40fe6abe35dc84f014245f7158e92641bcbd98019b4fbbd9e5a0db495b160b4ced"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "c8ccaa1fa8ba7c421413e3c30375bd9c31284e837c476fd831e18043ad4187e92166f49554123108891241bed674b95d"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "9a17dfcf12b2af3a9b006ec369f9bc78ba322348bf1a01146e0d4f3fec2bed6cbe8b2193fac5b4d5a0c3036c06477510"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "48f0a61b691e22dec9d6db8e0b58be4ca17a42a2846c82f0875de21f72bb0faa"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "4ad2c9adc761b7e813330f0dcad3f9978702896c7d0cbf81f60a472d550e320b1527be425ba597c8c9352d587e32e1d46ceb4c73e99c70a6190df4c699a7c2a9"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://hc.apache.org/httpcomponents-client-ga",
+          "type": "website"
+        },
+        {
+          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "http://issues.apache.org/jira/browse/HTTPCLIENT",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://mail-archives.apache.org/mod_mbox/hc-httpclient-users/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/httpcomponents-client/tree/4.5.14/httpclient",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.22.3?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jaxrs",
@@ -17189,44 +17115,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.10.1?type=jar",
       "group": "com.konghq",
-      "name": "unirest-java",
-      "version": "3.14.5",
+      "name": "unirest-java-core",
+      "version": "4.10.1",
       "description": "Simplified, lightweight HTTP client library.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d2ffdeae992db9b96a9de927f255953b"
+          "content": "281e2a9f20e7a84d6a1325009e3d9eb7"
         },
         {
           "alg": "SHA-1",
-          "content": "e8ab08519b87efe5b722408f5fae90df0996cbdb"
+          "content": "52fdd8bda732d7a02da3a4526698de62f36093d7"
         },
         {
           "alg": "SHA-256",
-          "content": "4cc917b7aae90fc630b5e19c997e220cb08bc3a129b1110a51efc9e6debb834f"
+          "content": "fdc1bdb5f1220a52dc4bc74330e1153816ff7d0365242035aad5b694ac7077f1"
         },
         {
           "alg": "SHA-512",
-          "content": "aacf4e1f22a23fb24061b3ec8f6af530cc9bac06a5245acd179f42e7268292ee918fb21e2928a8a67c3346e479993b5535c1926c75efefe6607162946970029c"
+          "content": "cdfe0b1c4173ec866a5a7a1660ca480c00b8311fdf164548e679d4844705982cf343188c4a9170a813658debe34b4870fda73f2e973ad38682d2744d3b2a89f7"
         },
         {
           "alg": "SHA-384",
-          "content": "f89fb94573e90d64311481244339d30fe943be46ec2c5c41b99aefb8fafcb9194a425d29026de85c7f2e5ac987f7fda0"
+          "content": "5bd7e9fdd9b068d91f8f7afa8aea43c3b6fe93864f68178b54b7505247c642931e6dd433f2ee9834c564546e719126d2"
         },
         {
           "alg": "SHA3-384",
-          "content": "f7a953246397f1b2eb78822af41b21db7a87a0bdbfa7c62a597832ecf5dea2f79519b81131cf54f039ff03ac8fd8cf91"
+          "content": "7772207121de1b57c755481f877a1c5f3272cf695b2da70e975169e35c7e0cfd05c3663d0377eef41afe726fcd26ef55"
         },
         {
           "alg": "SHA3-256",
-          "content": "ff41b2df3c0be814e8c375e7703de06d1dee50d57168011f35048ab98fa77d9f"
+          "content": "3014ead5c4f2c24a3c26e49172bf179472eabf5536ed39240e59e1d82b0efa2c"
         },
         {
           "alg": "SHA3-512",
-          "content": "57d89f25ad9aeac2729ee0aa11f13b21b1331086409bf21f562491d8bd8f9b963b64e4227af35b36149274cf5ccf02d4630c9b304003930591b71cff29cc96cc"
+          "content": "567e827c11d654d340b41c68ffc0c30203f19f513d2d2493f48712df2b366391ba24c8563f2b5ddf8f0da4cd9460cd741309fb5bccc02917e420b00f6a0459fa"
         }
       ],
       "licenses": [
@@ -17237,10 +17163,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-java-core@4.10.1?type=jar",
       "externalReferences": [
         {
-          "url": "http://github.com/Kong/unirest-java/unirest-java/",
+          "url": "http://github.com/Kong/unirest-java/unirest-java-core/",
           "type": "website"
         },
         {
@@ -17248,155 +17174,73 @@
           "type": "distribution-intake"
         },
         {
-          "url": "https://github.com/Kong/unirest-java/unirest-java",
+          "url": "https://github.com/Kong/unirest-java/unirest-java-core",
           "type": "vcs"
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents/httpcore-nio@4.4.16?type=jar",
-      "publisher": "The Apache Software Foundation",
-      "group": "org.apache.httpcomponents",
-      "name": "httpcore-nio",
-      "version": "4.4.16",
-      "description": "Apache HttpComponents Core (non-blocking I/O)",
+      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.1?type=jar",
+      "group": "com.konghq",
+      "name": "unirest-modules-gson",
+      "version": "4.10.1",
+      "description": "Gson based object mapper for Unirest",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "597c450f3401e98103e835824ab43e77"
+          "content": "acc5bfde8b6c4b14dac971e1411780aa"
         },
         {
           "alg": "SHA-1",
-          "content": "cd21c80a9956be48c4c1cfd2f594ba02857d0927"
+          "content": "7febf36204195c441dd88a3880b55b203eaca6dc"
         },
         {
           "alg": "SHA-256",
-          "content": "4018736ede2d321034e8517ea90baefb31831a8608afccc446d8a699fb1d00d4"
+          "content": "167612c8b631accb89e76f31a2ae3c3e54ccfe1cac698512e33442907d36798b"
         },
         {
           "alg": "SHA-512",
-          "content": "197cb4f4343a02d39d61db1c19bf10757aeb2078f51c4ace77a72a250b6d03b31fa1fc51f989f43df8c2a0cf8162a36664a8a935f4bbeb860c35770a3abd1899"
+          "content": "3345459387a80eea42a903cb35154d089887fb3faad45026616d11872d2fc4e79b33b43aa51089ccf4edce8680dc032d8c0db82d201b10e3b4b81c56a747217f"
         },
         {
           "alg": "SHA-384",
-          "content": "e8827b2eca484748dd776edcac779ae67b5c4394c5c2ac1a50c614b19142bdefb4c4e01f0cf376c578007ad515add88d"
+          "content": "6a3bdac32c7904b726cb9a12474e3649e397584c01a4137ae054bf86ab9f507d0671481ee6563c0c049a1cc4d9d6cd29"
         },
         {
           "alg": "SHA3-384",
-          "content": "fb55a9718c2507954ffb779520b0233acdd0135222c7d01542083b3cd5dff669a8afffaf54d8bfe724e52c5c18c1403e"
+          "content": "ce7c3837200b081d2073415cd5a712310a0335750084b6efc68355c70581ebdb05a60175e235c7952cd1c0aace375ecb"
         },
         {
           "alg": "SHA3-256",
-          "content": "37554263bc837817c08dcfba6b4a5ee978fa1d9f99945d27c0f3ba44195501a0"
+          "content": "135d0d62cbffb8b811e28c411a494aca3c0177f5b9c1124d666c2e222827b085"
         },
         {
           "alg": "SHA3-512",
-          "content": "18692a4310956c328ddebeac514a503904b84605463063f0539673f0480f0606c002eccd6f4dbacf91d124e11e130aa122efb855ec6b0aa0cf72ee0b26ac8ef7"
+          "content": "c1743e36a7d037f40c2ae9f0d3293c5bcc1e088bd544416b5ce3e841ffd758d8bab6df525b2bce3c2cce09b0318ff46b0b2902a2506823ccc667ec9ec8cc6134"
         }
       ],
       "licenses": [
         {
           "license": {
-            "id": "Apache-2.0"
+            "id": "MIT",
+            "url": "https://opensource.org/license/mit/"
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents/httpcore-nio@4.4.16?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.10.1?type=jar",
       "externalReferences": [
         {
-          "url": "http://hc.apache.org/httpcomponents-core-ga",
+          "url": "http://github.com/Kong/unirest-java/unirest-modules-gson/",
           "type": "website"
         },
         {
-          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
+          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
           "type": "distribution-intake"
         },
         {
-          "url": "http://issues.apache.org/jira/browse/HTTPCORE",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://mail-archives.apache.org/mod_mbox/hc-httpclient-users/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/httpcomponents-core/tree/4.4.16/httpcore-nio",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents/httpasyncclient@4.1.5?type=jar",
-      "publisher": "The Apache Software Foundation",
-      "group": "org.apache.httpcomponents",
-      "name": "httpasyncclient",
-      "version": "4.1.5",
-      "description": "Apache HttpComponents AsyncClient",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "5346c547bfd0da64eb3dc54be9380d65"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "cd18227f1eb8e9a263286c1d7362ceb24f6f9b32"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "0c1877489a9d1ba4fa50f6cfcab11d1123618858cb31d56afaab5afdd5064d99"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "1e33c7fdfa63f377ec4844b7744d2f8ec30dc7867136905ff5a5a6e5f94efa5b8159ba20e81f0048f48430cf63ada7411a3974a418aefa497d2b4fab3501f5ba"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "9c4cf09ffeb61bccc3b67375f401c8a96c46bdee7c77f84e3227271a635e109a550526185407869e93ede8f081786977"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "25bcc09200af70f5624baf5ddb95ac6bf46daaffb938d141f72f63ef76df8b740ba3b50104da997cfe67c34bd520fa5e"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "ddb21eeb3e1c3f00ebcf397b58d8d972cc7ab7b140e8939654bf24b8b89382a7"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "f753a8b9607f42417912c3bddeda3f189ab9f469416dafdbcd29b1df7a358aa57deba8a79a5663fdd1a4acbe35b39a48fd24f889a50e05a4726132db85699ebd"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.httpcomponents/httpasyncclient@4.1.5?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://hc.apache.org/httpcomponents-asyncclient",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "http://issues.apache.org/jira/browse/HTTPASYNC",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://mail-archives.apache.org/mod_mbox/hc-httpclient-users/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://svn.apache.org/repos/asf/httpcomponents/httpasyncclient/branches/4.1.x/httpasyncclient",
+          "url": "https://github.com/Kong/unirest-java/unirest-modules-gson",
           "type": "vcs"
         }
       ]
@@ -18317,44 +18161,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.26?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.27?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-jdbc",
-      "version": "11.0.26",
+      "version": "11.0.27",
       "description": "Tomcat JDBC Pool Package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "68a10c0c5d5ec2735d67f6b2aea91af8"
+          "content": "e0b18dda979b06caa49e19a3841a99bc"
         },
         {
           "alg": "SHA-1",
-          "content": "99708978f5b6a56ae860efcbe2d916e55007a588"
+          "content": "068410d095db0ca8979a0be1613dd038120afe09"
         },
         {
           "alg": "SHA-256",
-          "content": "4baa50c44e490bccdfd08cbd8ef059e11378fdf60dee4127a42260c5e414c1a9"
+          "content": "d16635382bdbbba7719813f4ac696dd3d50a98ec5409b7966025581352e121b5"
         },
         {
           "alg": "SHA-512",
-          "content": "9dff13b224bfd56505ee07c4ee69b896c9f589649255c4c6d790afc2f6210ee9c9237d0ba37df396666bc9a65273ad179f159c9adf5d5622c57028ad81602cec"
+          "content": "935e8f4bf2cdac92ec24b74c2c694a511062435f99f5fbd3f8e80e03ac52bef0fe611ac9306bf7010de4b12623019befab2cf8afa2bfd630f9c5f378e04e312b"
         },
         {
           "alg": "SHA-384",
-          "content": "f1ed1a00061eee86bb30449de7ed3dc4e9b905e38d7fb61d48cc5ff973b759104b15196548d7710e7b55724da75fa9ea"
+          "content": "310f19e472d977a652f7df9a5a8b29c585b132249cc09a74af6f37f2330786e85583debe8429b4c99cf8f7b8b85e7821"
         },
         {
           "alg": "SHA3-384",
-          "content": "b13400196394795a4b3f65a1b4f4c1d7ffc814b3a3408cc521302cfa8cab3f2e3464e525223f7b963d40e45e31e64a1a"
+          "content": "6c027fb8f0218891d851bac6110a14d7946cfbb41b421857053b7ac7681ec5220ab665f7369761e9c9e2f617297aac63"
         },
         {
           "alg": "SHA3-256",
-          "content": "541eb8510549ebfa8ee2dc6f51c3e1f19c43d68231934c1409d3ecd27fc9a4c9"
+          "content": "d9b85be44c10e2887400816e98a993a99df1fe209cc097c102856731c7c3826c"
         },
         {
           "alg": "SHA3-512",
-          "content": "436f0978a12f170624ad7a71bfd0a08254dec8f8d86c3e5a263fc4416f4aaf16d2006098a374211b6eb017c1e9b3c26f8b7c0672a7a871656787886ef8af999d"
+          "content": "65e2af310319e0b6be0da362b3d5ba637a6e2bfa46a75831c2a616732caeb81418050f763fe3f697d63e730ffb1a345889c8036fdef337cd9e47421530a61847"
         }
       ],
       "licenses": [
@@ -18364,7 +18208,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.26?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.27?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -31161,7 +31005,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "39c46348-b2c4-4704-9e47-4ac936865b13",
+      "bom-ref": "0f9a320f-3fa5-457a-9769-21cdc70e2346",
       "name": "package-lock.json",
       "properties": [
         {
@@ -32276,10 +32120,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40nodable/entities@3.0.0",
+      "bom-ref": "pkg:npm/%40nodable/entities@3.1.0",
       "group": "@nodable",
       "name": "entities",
-      "version": "3.0.0",
+      "version": "3.1.0",
       "licenses": [
         {
           "license": {
@@ -32287,11 +32131,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40nodable/entities@3.0.0",
+      "purl": "pkg:npm/%40nodable/entities@3.1.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@nodable/entities@3.0.0"
+          "value": "@nodable/entities@3.1.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -32856,9 +32700,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.30.1",
+      "bom-ref": "pkg:npm/bpmn-js@18.31.0",
       "name": "bpmn-js",
-      "version": "18.30.1",
+      "version": "18.31.0",
       "licenses": [
         {
           "license": {
@@ -32866,11 +32710,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.30.1",
+      "purl": "pkg:npm/bpmn-js@18.31.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.30.1"
+          "value": "bpmn-js@18.31.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33538,9 +33382,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js-direct-editing@3.5.1",
+      "bom-ref": "pkg:npm/diagram-js-direct-editing@3.6.0",
       "name": "diagram-js-direct-editing",
-      "version": "3.5.1",
+      "version": "3.6.0",
       "licenses": [
         {
           "license": {
@@ -33548,11 +33392,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js-direct-editing@3.5.1",
+      "purl": "pkg:npm/diagram-js-direct-editing@3.6.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js-direct-editing@3.5.1"
+          "value": "diagram-js-direct-editing@3.6.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33610,9 +33454,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@15.27.1",
+      "bom-ref": "pkg:npm/diagram-js@15.28.0",
       "name": "diagram-js",
-      "version": "15.27.1",
+      "version": "15.28.0",
       "licenses": [
         {
           "license": {
@@ -33620,11 +33464,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js@15.27.1",
+      "purl": "pkg:npm/diagram-js@15.28.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@15.27.1"
+          "value": "diagram-js@15.28.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33730,9 +33574,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.12.2",
+      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.12.3",
       "name": "dmn-js-boxed-expression",
-      "version": "17.12.2",
+      "version": "17.12.3",
       "licenses": [
         {
           "license": {
@@ -33740,11 +33584,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-boxed-expression@17.12.2",
+      "purl": "pkg:npm/dmn-js-boxed-expression@17.12.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-boxed-expression@17.12.2"
+          "value": "dmn-js-boxed-expression@17.12.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33754,9 +33598,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-decision-table@17.12.2",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.12.3",
       "name": "dmn-js-decision-table",
-      "version": "17.12.2",
+      "version": "17.12.3",
       "licenses": [
         {
           "license": {
@@ -33764,11 +33608,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-decision-table@17.12.2",
+      "purl": "pkg:npm/dmn-js-decision-table@17.12.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-decision-table@17.12.2"
+          "value": "dmn-js-decision-table@17.12.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33778,9 +33622,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-drd@17.12.2",
+      "bom-ref": "pkg:npm/dmn-js-drd@17.12.3",
       "name": "dmn-js-drd",
-      "version": "17.12.2",
+      "version": "17.12.3",
       "licenses": [
         {
           "license": {
@@ -33788,11 +33632,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-drd@17.12.2",
+      "purl": "pkg:npm/dmn-js-drd@17.12.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-drd@17.12.2"
+          "value": "dmn-js-drd@17.12.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33802,9 +33646,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.12.2",
+      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.12.3",
       "name": "dmn-js-literal-expression",
-      "version": "17.12.2",
+      "version": "17.12.3",
       "licenses": [
         {
           "license": {
@@ -33812,11 +33656,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-literal-expression@17.12.2",
+      "purl": "pkg:npm/dmn-js-literal-expression@17.12.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-literal-expression@17.12.2"
+          "value": "dmn-js-literal-expression@17.12.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33850,9 +33694,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-shared@17.12.2",
+      "bom-ref": "pkg:npm/dmn-js-shared@17.12.3",
       "name": "dmn-js-shared",
-      "version": "17.12.2",
+      "version": "17.12.3",
       "licenses": [
         {
           "license": {
@@ -33860,11 +33704,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-shared@17.12.2",
+      "purl": "pkg:npm/dmn-js-shared@17.12.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-shared@17.12.2"
+          "value": "dmn-js-shared@17.12.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33874,9 +33718,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js@17.12.2",
+      "bom-ref": "pkg:npm/dmn-js@17.12.3",
       "name": "dmn-js",
-      "version": "17.12.2",
+      "version": "17.12.3",
       "licenses": [
         {
           "license": {
@@ -33884,11 +33728,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js@17.12.2",
+      "purl": "pkg:npm/dmn-js@17.12.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js@17.12.2"
+          "value": "dmn-js@17.12.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34273,9 +34117,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.11.1",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.11.2",
       "name": "fast-xml-parser",
-      "version": "5.11.1",
+      "version": "5.11.2",
       "licenses": [
         {
           "license": {
@@ -34283,11 +34127,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.11.1",
+      "purl": "pkg:npm/fast-xml-parser@5.11.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.11.1"
+          "value": "fast-xml-parser@5.11.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35752,9 +35596,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/qs@6.15.2",
+      "bom-ref": "pkg:npm/qs@6.16.0",
       "name": "qs",
-      "version": "6.15.2",
+      "version": "6.16.0",
       "licenses": [
         {
           "license": {
@@ -35762,11 +35606,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/qs@6.15.2",
+      "purl": "pkg:npm/qs@6.16.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "qs@6.15.2"
+          "value": "qs@6.16.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35961,9 +35805,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/side-channel-list@1.0.0",
+      "bom-ref": "pkg:npm/side-channel-list@1.0.1",
       "name": "side-channel-list",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "licenses": [
         {
           "license": {
@@ -35971,11 +35815,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/side-channel-list@1.0.0",
+      "purl": "pkg:npm/side-channel-list@1.0.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "side-channel-list@1.0.0"
+          "value": "side-channel-list@1.0.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36033,9 +35877,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/side-channel@1.1.0",
+      "bom-ref": "pkg:npm/side-channel@1.1.1",
       "name": "side-channel",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "licenses": [
         {
           "license": {
@@ -36043,11 +35887,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/side-channel@1.1.0",
+      "purl": "pkg:npm/side-channel@1.1.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "side-channel@1.1.0"
+          "value": "side-channel@1.1.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36417,7 +36261,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e3bd5635-5809-49eb-86c3-ef82e4aeeb46",
+      "bom-ref": "0cdff0b8-6c31-4ba3-81e1-60883d339074",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36830,13 +36674,13 @@
     {
       "ref": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "dependsOn": [
-        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.23.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.apache.commons/commons-lang3@3.21.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+      "ref": "pkg:maven/commons-codec/commons-codec@1.23.0?type=jar",
       "dependsOn": []
     },
     {
@@ -36952,7 +36796,7 @@
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/jakarta.ejb/jakarta.ejb-api@4.0.1?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.26?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.27?type=jar",
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
@@ -37049,78 +36893,78 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jsp-api@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-annotations-api@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-api@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.26?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jsp-api@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-annotations-api@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-api@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.27?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.27?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@11.0.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-el-api@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.26?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-el-api@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.27?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-el-api@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-el-api@11.0.27?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@11.0.27?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-api@11.0.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.26?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.27?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.27?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.26?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.27?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-util@11.0.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-util-scan@11.0.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-api@11.0.26?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-util@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-api@11.0.27?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-jaspic-api@11.0.27?type=jar",
       "dependsOn": []
     },
     {
@@ -37362,11 +37206,11 @@
       "ref": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.connect/operaton-connect-core@2.2.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar"
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
@@ -37698,7 +37542,8 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar",
+        "pkg:maven/com.konghq/unirest-java-core@4.10.1?type=jar",
+        "pkg:maven/com.konghq/unirest-modules-gson@4.10.1?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar"
       ]
     },
@@ -37878,19 +37723,17 @@
         "pkg:maven/org.apache.maven.resolver/maven-resolver-spi@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-util@1.9.27?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar",
-        "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
+        "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.23.0?type=jar",
         "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.20?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
-        "pkg:maven/commons-logging/commons-logging@1.3.6?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar"
+        "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar"
       ]
     },
     {
@@ -38110,7 +37953,7 @@
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven-embedded@3.3.7?type=jar",
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-impl-maven@3.3.7?type=jar",
         "pkg:maven/org.apache.maven.shared/maven-invoker@3.3.0?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.23.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar"
       ]
@@ -38165,32 +38008,13 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-java-core@4.10.1?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
-        "pkg:maven/org.apache.httpcomponents/httpmime@4.5.13?type=jar",
-        "pkg:maven/org.apache.httpcomponents/httpcore-nio@4.4.16?type=jar",
-        "pkg:maven/org.apache.httpcomponents/httpasyncclient@4.1.5?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.apache.httpcomponents/httpmime@4.5.13?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.apache.httpcomponents/httpcore-nio@4.4.16?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.apache.httpcomponents/httpasyncclient@4.1.5?type=jar",
-      "dependsOn": [
-        "pkg:maven/commons-logging/commons-logging@1.3.6?type=jar"
       ]
     },
     {
@@ -38368,8 +38192,8 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6\u0026type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.26?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.27?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.6.5?type=jar"
       ]
@@ -38392,9 +38216,9 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.26?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.26?type=jar"
+        "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar"
       ]
     },
     {
@@ -38520,7 +38344,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar",
         "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.12?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar"
       ]
@@ -38632,7 +38456,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.2.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.4?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.3?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
@@ -40147,7 +39971,13 @@
       "dependsOn": []
     },
     {
-      "ref": "39c46348-b2c4-4704-9e47-4ac936865b13",
+      "ref": "0cdff0b8-6c31-4ba3-81e1-60883d339074",
+      "dependsOn": [
+        "0f9a320f-3fa5-457a-9769-21cdc70e2346"
+      ]
+    },
+    {
+      "ref": "0f9a320f-3fa5-457a-9769-21cdc70e2346",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -40167,23 +39997,23 @@
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.13.0",
-        "pkg:npm/bpmn-js@18.30.1",
+        "pkg:npm/bpmn-js@18.31.0",
         "pkg:npm/camunda-dmn-js@3.8.3",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
         "pkg:npm/core-js@3.50.0",
         "pkg:npm/dmn-font@0.6.2",
-        "pkg:npm/dmn-js-decision-table@17.12.2",
-        "pkg:npm/dmn-js-drd@17.12.2",
-        "pkg:npm/dmn-js-literal-expression@17.12.2",
+        "pkg:npm/dmn-js-decision-table@17.12.3",
+        "pkg:npm/dmn-js-drd@17.12.3",
+        "pkg:npm/dmn-js-literal-expression@17.12.3",
         "pkg:npm/dmn-js-properties-panel@3.12.0",
-        "pkg:npm/dmn-js-shared@17.12.2",
-        "pkg:npm/dmn-js@17.12.2",
+        "pkg:npm/dmn-js-shared@17.12.3",
+        "pkg:npm/dmn-js@17.12.3",
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.4.16",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.11.1",
+        "pkg:npm/fast-xml-parser@5.11.2",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.18.1",
@@ -40194,12 +40024,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
-      ]
-    },
-    {
-      "ref": "e3bd5635-5809-49eb-86c3-ef82e4aeeb46",
-      "dependsOn": [
-        "39c46348-b2c4-4704-9e47-4ac936865b13"
       ]
     },
     {
@@ -40313,7 +40137,7 @@
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
-        "pkg:npm/diagram-js@15.27.1",
+        "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
@@ -40348,7 +40172,7 @@
         "pkg:npm/%40carbon/grid@11.62.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
-        "pkg:npm/diagram-js@15.27.1",
+        "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dompurify@3.4.16",
         "pkg:npm/feelers@3.1.0",
@@ -40576,7 +40400,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40nodable/entities@3.0.0",
+      "ref": "pkg:npm/%40nodable/entities@3.1.0",
       "dependsOn": []
     },
     {
@@ -40681,11 +40505,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.30.1",
+      "ref": "pkg:npm/bpmn-js@18.31.0",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.3.1",
-        "pkg:npm/diagram-js-direct-editing@3.5.1",
-        "pkg:npm/diagram-js@15.27.1",
+        "pkg:npm/diagram-js-direct-editing@3.6.0",
+        "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.1.0",
@@ -40722,11 +40546,11 @@
         "pkg:npm/camunda-dmn-moddle@1.3.1",
         "pkg:npm/diagram-js-grid@2.0.1",
         "pkg:npm/diagram-js-origin@1.4.0",
-        "pkg:npm/diagram-js@15.27.1",
-        "pkg:npm/dmn-js-drd@17.12.2",
+        "pkg:npm/diagram-js@15.28.0",
+        "pkg:npm/dmn-js-drd@17.12.3",
         "pkg:npm/dmn-js-properties-panel@3.12.0",
-        "pkg:npm/dmn-js-shared@17.12.2",
-        "pkg:npm/dmn-js@17.12.2",
+        "pkg:npm/dmn-js-shared@17.12.3",
+        "pkg:npm/dmn-js@17.12.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/zeebe-dmn-moddle@1.0.0"
@@ -40873,9 +40697,9 @@
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js-direct-editing@3.5.1",
+      "ref": "pkg:npm/diagram-js-direct-editing@3.6.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.27.1",
+        "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
@@ -40891,12 +40715,12 @@
     {
       "ref": "pkg:npm/diagram-js-origin@1.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.27.1",
+        "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/tiny-svg@3.1.3"
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js@15.27.1",
+      "ref": "pkg:npm/diagram-js@15.28.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.4",
         "pkg:npm/clsx@2.1.1",
@@ -40936,11 +40760,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dmn-js-boxed-expression@17.12.2",
+      "ref": "pkg:npm/dmn-js-boxed-expression@17.12.3",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.27.1",
-        "pkg:npm/dmn-js-shared@17.12.2",
+        "pkg:npm/diagram-js@15.28.0",
+        "pkg:npm/dmn-js-shared@17.12.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
@@ -40948,12 +40772,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-decision-table@17.12.2",
+      "ref": "pkg:npm/dmn-js-decision-table@17.12.3",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
-        "pkg:npm/diagram-js@15.27.1",
-        "pkg:npm/dmn-js-shared@17.12.2",
+        "pkg:npm/diagram-js@15.28.0",
+        "pkg:npm/dmn-js-shared@17.12.3",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -40963,11 +40787,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-drd@17.12.2",
+      "ref": "pkg:npm/dmn-js-drd@17.12.3",
       "dependsOn": [
-        "pkg:npm/diagram-js-direct-editing@3.5.1",
-        "pkg:npm/diagram-js@15.27.1",
-        "pkg:npm/dmn-js-shared@17.12.2",
+        "pkg:npm/diagram-js-direct-editing@3.6.0",
+        "pkg:npm/diagram-js@15.28.0",
+        "pkg:npm/dmn-js-shared@17.12.3",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.1.0",
@@ -40977,11 +40801,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-literal-expression@17.12.2",
+      "ref": "pkg:npm/dmn-js-literal-expression@17.12.3",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.27.1",
-        "pkg:npm/dmn-js-shared@17.12.2",
+        "pkg:npm/diagram-js@15.28.0",
+        "pkg:npm/dmn-js-shared@17.12.3",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -40993,17 +40817,17 @@
       "ref": "pkg:npm/dmn-js-properties-panel@3.12.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
-        "pkg:npm/diagram-js@15.27.1",
-        "pkg:npm/dmn-js@17.12.2",
+        "pkg:npm/diagram-js@15.28.0",
+        "pkg:npm/dmn-js@17.12.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-shared@17.12.2",
+      "ref": "pkg:npm/dmn-js-shared@17.12.3",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
-        "pkg:npm/diagram-js@15.27.1",
+        "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dmn-moddle@12.2.1",
         "pkg:npm/ids@3.0.2",
@@ -41016,13 +40840,13 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js@17.12.2",
+      "ref": "pkg:npm/dmn-js@17.12.3",
       "dependsOn": [
-        "pkg:npm/dmn-js-boxed-expression@17.12.2",
-        "pkg:npm/dmn-js-decision-table@17.12.2",
-        "pkg:npm/dmn-js-drd@17.12.2",
-        "pkg:npm/dmn-js-literal-expression@17.12.2",
-        "pkg:npm/dmn-js-shared@17.12.2"
+        "pkg:npm/dmn-js-boxed-expression@17.12.3",
+        "pkg:npm/dmn-js-decision-table@17.12.3",
+        "pkg:npm/dmn-js-drd@17.12.3",
+        "pkg:npm/dmn-js-literal-expression@17.12.3",
+        "pkg:npm/dmn-js-shared@17.12.3"
       ]
     },
     {
@@ -41113,9 +40937,9 @@
       ]
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.11.1",
+      "ref": "pkg:npm/fast-xml-parser@5.11.2",
       "dependsOn": [
-        "pkg:npm/%40nodable/entities@3.0.0",
+        "pkg:npm/%40nodable/entities@3.1.0",
         "pkg:npm/fast-xml-builder@1.2.0",
         "pkg:npm/is-unsafe@2.0.0",
         "pkg:npm/path-expression-matcher@1.6.2",
@@ -41440,9 +41264,10 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/qs@6.15.2",
+      "ref": "pkg:npm/qs@6.16.0",
       "dependsOn": [
-        "pkg:npm/side-channel@1.1.0"
+        "pkg:npm/es-define-property@1.0.1",
+        "pkg:npm/side-channel@1.1.1"
       ]
     },
     {
@@ -41482,7 +41307,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/side-channel-list@1.0.0",
+      "ref": "pkg:npm/side-channel-list@1.0.1",
       "dependsOn": [
         "pkg:npm/es-errors@1.3.0",
         "pkg:npm/object-inspect@1.13.4"
@@ -41508,11 +41333,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/side-channel@1.1.0",
+      "ref": "pkg:npm/side-channel@1.1.1",
       "dependsOn": [
         "pkg:npm/es-errors@1.3.0",
         "pkg:npm/object-inspect@1.13.4",
-        "pkg:npm/side-channel-list@1.0.0",
+        "pkg:npm/side-channel-list@1.0.1",
         "pkg:npm/side-channel-map@1.0.1",
         "pkg:npm/side-channel-weakmap@1.0.2"
       ]
@@ -41538,7 +41363,7 @@
         "pkg:npm/formidable@3.5.4",
         "pkg:npm/methods@1.1.2",
         "pkg:npm/mime@2.6.0",
-        "pkg:npm/qs@6.15.2"
+        "pkg:npm/qs@6.16.0"
       ]
     },
     {
@@ -41548,7 +41373,7 @@
     {
       "ref": "pkg:npm/table-js@9.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.27.1",
+        "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -42770,164 +42595,6 @@
           "versions": [
             {
               "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2026-82417",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 6.3,
-          "severity": "medium",
-          "method": "CVSSv4",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 7.5,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        }
-      ],
-      "cwes": [
-        248,
-        703
-      ],
-      "description": "### Summary\n\n\n\n\u0060qs.stringify\u0060 throws a \u0060TypeError\u0060 when it serializes an object whose own \u0060constructor\u0060 property has a truthy, non-callable \u0060isBuffer\u0060 member. \u0060utils.isBuffer\u0060 duck-types buffers by calling \u0060obj.constructor.isBuffer(obj)\u0060 after checking only that the property is truthy, so a value such as \u0060{ constructor: { isBuffer: \u0022x\u0022 } }\u0060 makes the call throw \u0060TypeError: obj.constructor.isBuffer is not a function\u0060.\n\n\n\n### Details\n\n\n\n\u0060lib/stringify.js:127\u0060 calls \u0060utils.isBuffer\u0060 on every non-primitive value it serializes. \u0060utils.isBuffer\u0060 (\u0060lib/utils.js:332\u0060) reads \u0060obj.constructor.isBuffer\u0060 and invokes it without verifying that it is a function. \u0060constructor\u0060 and \u0060isBuffer\u0060 are ordinary property names, so any object carrying them as own properties reaches the unchecked call.\n\n\n\nSuch an object can be built from untrusted input. \u0060qs.parse(\u0022x[constructor][isBuffer]=y\u0022, { plainObjects: true })\u0060 or \u0060{ allowPrototypes: true }\u0060 keeps the \u0060constructor\u0060 key as an own property (the default parse options drop it), and \u0060JSON.parse(\u0022{\\\u0022a\\\u0022:{\\\u0022constructor\\\u0022:{\\\u0022isBuffer\\\u0022:\\\u0022x\\\u0022}}}\u0022)\u0060 produces the same shape with no qs option involved. Express 4 with its default \u0060query parser\u0060 setting and body-parser with \u0060extended: true\u0060 both call \u0060qs.parse\u0060 with \u0060allowPrototypes: true\u0060, so on those stacks \u0060req.query\u0060 and \u0060req.body\u0060 can carry the shape directly.\n\n\n\n#### PoC\n\n\n\n\u0060\u0060\u0060js\n\n\n\nvar qs = require(\u0022qs\u0022);\n\n\n\nqs.stringify(qs.parse(\u0022x[constructor][isBuffer]=y\u0022, { plainObjects: true }));\n\n\n\nqs.stringify(JSON.parse(\u0022{\\\u0022a\\\u0022:{\\\u0022constructor\\\u0022:{\\\u0022isBuffer\\\u0022:\\\u0022x\\\u0022}}}\u0022));\n\n\n\n// TypeError: obj.constructor.isBuffer is not a function\n\n\n\n//     at Object.isBuffer (lib/utils.js:332:78)\n\n\n\n//     at stringify (lib/stringify.js:127:45)\n\n\n\n\u0060\u0060\u0060\n\n\n\n#### Fix\n\n\n\n\u0060lib/utils.js\u0060, applied in e83d321 on \u0060main\u0060 and released as v6.16.0:\n\n\n\n\u0060\u0060\u0060diff\n\n\n\n- return !!(obj.constructor \u0026\u0026 obj.constructor.isBuffer \u0026\u0026 obj.constructor.isBuffer(obj));\n\n\n\n\u002B return !!(obj.constructor \u0026\u0026 typeof obj.constructor.isBuffer === \u0022function\u0022 \u0026\u0026 obj.constructor.isBuffer(obj));\n\n\n\n\u0060\u0060\u0060\n\n\n\nReal \u0060Buffer\u0060, \u0060safer-buffer\u0060, and browserify \u0060buffer\u0060 polyfill instances serialize exactly as before; only the throw is removed.\n\n\n\n### Affected versions\n\n\n\n\u0060\u003E=2.2.5 \u003C6.16.0\u0060, fixed in v6.16.0.\n\n\n\nThe unguarded duck-type was introduced in 3768a75 and first shipped in v2.2.5 (September 2014). v2.2.4 and earlier used \u0060Buffer.isBuffer\u0060 and are not affected. Every release from v2.2.5 through v6.15.3 contains the unguarded call.\n\n\n\n### Impact\n\n\n\nAn unauthenticated request can make any code path that re-serializes attacker-influenced data with \u0060qs.stringify\u0060 (for example, rebuilding a query string from \u0060req.query\u0060 for a redirect or an upstream request, or serializing a parsed JSON body) throw synchronously. In a typical Node.js HTTP framework the throw is caught by the framework error boundary and the affected request returns a 500; the process survives and other requests are unaffected. Where the call runs outside an error boundary, such as an \u0060async\u0060 Express 4 handler (where the throw becomes an unhandled promise rejection) or a background job, the process exits, so the impact in that case depends on the application error handling rather than on qs.",
-      "recommendation": "Upgrade qs to version 6.16.0",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2026-82417"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2026-82417"
-        },
-        {
-          "url": "https://github.com/ljharb/qs"
-        },
-        {
-          "url": "https://github.com/ljharb/qs/commit/e83d321ffafb38cf210683ac31714fce6ce1c6c6"
-        },
-        {
-          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-4mjr-xmp4-gh2g"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82417"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2026-82417"
-        }
-      ],
-      "published": "2026-08-30T00:16:34Z",
-      "updated": "2026-09-03T18:00:36Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/qs@6.15.2",
-          "versions": [
-            {
-              "version": "6.15.2",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2026-82562",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 3.7,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 6.3,
-          "severity": "medium",
-          "method": "CVSSv4",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 3.7,
-          "severity": "low",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        }
-      ],
-      "cwes": [
-        770
-      ],
-      "description": "### Summary\n\n\n\nWhen \u0060qs.parse\u0060 is called with \u0060comma: true\u0060 and \u0060throwOnLimitExceeded: true\u0060, a comma-separated value under a bracket-push key (\u0060a[]=1,2,3,4\u0060) is split into an array without being compared against \u0060arrayLimit\u0060, while the same value under a flat key (\u0060a=1,2,3,4\u0060), an indexed key (\u0060a[0]=\u0060), a nested key (\u0060a[b]=\u0060), or a dotted key (\u0060a.b=\u0060 with \u0060allowDots\u0060) throws the documented \u0060RangeError\u0060. A single parameter such as \u0060a[]=1,2,2,...\u0060 therefore produces an inner array of arbitrary length even though the caller opted into the hard limit. This is the \u0060[]=\u0060 key form that the fix for CVE-2026-2391 (qs 6.14.2) did not cover.\n\n\n\n### Details\n\n\n\nIn \u0060lib/parse.js\u0060, a comma-separated value under a \u0060[]=\u0060 key is split and then wrapped as a single nested element (\u0060val = [val]\u0060, so that each \u0060a[]=x,y\u0060 group counts as one element of the outer array). The \u0060arrayLimit\u0060 check that 6.14.2 added for comma values runs after that wrap, so for \u0060[]=\u0060 parts it only ever saw the wrapper of length 1. 6.15.3 added a pre-split comma count so that an oversized value throws before it is allocated, but gated it on an \u0060isFlatArrayValue\u0060 flag that \u0060parseValues\u0060 set to \u0060false\u0060 for any part containing \u0060[]=\u0060, and did not pass it for object-valued input, so the gap remained.\n\n\n\n#### PoC\n\n\n\n\u0060\u0060\u0060js\n\n\n\nvar qs = require(\u0027qs\u0027);\n\n\n\nvar options = { comma: true, arrayLimit: 3, throwOnLimitExceeded: true };\n\n\n\nqs.parse(\u0027a=1,2,3,4\u0027, options);   // RangeError: Array limit exceeded. Only 3 elements allowed in an array.\n\n\n\nqs.parse(\u0027a[]=1,2,3,4\u0027, options); // { a: [ [ \u00271\u0027, \u00272\u0027, \u00273\u0027, \u00274\u0027 ] ] }  (no throw)\n\n\n\nqs.parse(\u0027a[]=\u0027 \u002B \u00271,\u0027.repeat(1000000) \u002B \u00271\u0027, { comma: true, arrayLimit: 20, throwOnLimitExceeded: true });\n\n\n\n// no throw; a 1,000,001-element inner array is allocated\n\n\n\n\u0060\u0060\u0060\n\n\n\n#### Fix\n\n\n\n\u0060lib/parse.js\u0060, applied in 8859c37 on \u0060main\u0060 and released as v6.16.0: the \u0060isFlatArrayValue\u0060 gate is removed, so every comma-split value is counted against \u0060arrayLimit\u0060 before splitting regardless of key form. An in-limit group under \u0060a[]=\u0060 still counts as one element of the outer array, and the default (\u0060throwOnLimitExceeded: false\u0060) path is unchanged.\n\n\n\n### Affected versions\n\n\n\n\u0060\u003E=6.14.2 \u003C6.16.0\u0060, fixed in v6.16.0.\n\n\n\nv6.14.2 introduced \u0060arrayLimit\u0060 enforcement for comma values (the fix for CVE-2026-2391) but only for values not under a \u0060[]=\u0060 key, and every release from v6.14.2 through v6.15.3 has the same gap. v6.14.0 and v6.14.1, where \u0060throwOnLimitExceeded\u0060 exists but does not apply to any comma form, are covered by CVE-2026-2391 rather than this record. Earlier lines (6.7.x through 6.13.x) have \u0060comma\u0060 but no \u0060throwOnLimitExceeded\u0060, so there is no hard cap on any comma path to bypass; releases before 6.7.0 have no \u0060comma\u0060 option.\n\n\n\n### Impact\n\n\n\nAn unauthenticated attacker who can reach an application that parses untrusted query strings or urlencoded bodies with both \u0060comma: true\u0060 and \u0060throwOnLimitExceeded: true\u0060 (both non-default) can bypass the configured limit with a single \u0060a[]=\u0060 parameter and force the parser to allocate an array proportional to the request size. The cost is strictly linear in the attacker-supplied bytes (about 0.1 microseconds and 6 to 7 retained bytes per input byte; the same out-of-memory threshold as the documented default \u0060throwOnLimitExceeded: false\u0060 path), so a transport-layer request or body size limit bounds it completely (and node\u0027s default maximum HTTP header size of 16 KB already bounds the request line, so multi-megabyte payloads need a body parser). The impact is that an opt-in hard limit fails open on one key spelling, not unbounded allocation from a small input.",
-      "recommendation": "Upgrade qs to version 6.16.0",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2026-82562"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2026-82562"
-        },
-        {
-          "url": "https://github.com/ljharb/qs"
-        },
-        {
-          "url": "https://github.com/ljharb/qs/commit/8859c37470e11b42b547b275e4e9bd0bc8cc5464"
-        },
-        {
-          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-w7fw-mjwx-w883"
-        },
-        {
-          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-x5fp-wj9c-mxmx"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82562"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2026-82562"
-        }
-      ],
-      "published": "2026-08-30T01:20:32Z",
-      "updated": "2026-09-03T18:00:36Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/qs@6.15.2",
-          "versions": [
-            {
-              "version": "6.15.2",
               "status": "affected"
             }
           ]

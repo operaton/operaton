@@ -31,7 +31,7 @@ import jakarta.transaction.SystemException;
 import jakarta.transaction.TransactionManager;
 import jakarta.transaction.Transactional;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import javax.sql.DataSource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -66,7 +66,7 @@ import static org.assertj.core.api.Assertions.*;
 class TransactionIntegrationTest {
 
   @RegisterExtension
-  static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
+  static QuarkusExtensionTest unitTest = new ProcessEngineAwareExtension()
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
   @Inject

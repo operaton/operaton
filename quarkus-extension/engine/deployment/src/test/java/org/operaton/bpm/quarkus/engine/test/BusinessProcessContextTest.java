@@ -22,7 +22,7 @@ import jakarta.inject.Named;
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.InjectableContext;
 import io.quarkus.arc.InjectableInstance;
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class BusinessProcessContextTest {
 
   @RegisterExtension
-  protected static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
+  protected static final QuarkusExtensionTest unitTest = new ProcessEngineAwareExtension()
       .withConfigurationResource("application.properties")
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 

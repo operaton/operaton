@@ -18,7 +18,7 @@ package org.operaton.bpm.quarkus.engine.test.persistence.conf;
 
 import jakarta.inject.Inject;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ChooseDatasourceConfigurationTest {
 
   @RegisterExtension
-  static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
+  static QuarkusExtensionTest unitTest = new ProcessEngineAwareExtension()
       .withConfigurationResource("org/operaton/bpm/quarkus/engine/test/persistence/conf/multiple-datasources-application.properties")
       .overrideConfigKey("quarkus.operaton.datasource", "secondary")
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));

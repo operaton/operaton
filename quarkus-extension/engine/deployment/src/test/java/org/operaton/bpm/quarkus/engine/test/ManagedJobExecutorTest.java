@@ -20,7 +20,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.eclipse.microprofile.context.ManagedExecutor;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -45,7 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ManagedJobExecutorTest {
 
   @RegisterExtension
-  static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
+  static final QuarkusExtensionTest unitTest = new ProcessEngineAwareExtension()
       .withConfigurationResource("org/operaton/bpm/quarkus/engine/test/config/" +
                                      "job-executor-application.properties")
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));

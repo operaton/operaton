@@ -21,7 +21,7 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Named;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProgrammaticBeanLookupTest {
 
   @RegisterExtension
-  static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
+  static final QuarkusExtensionTest unitTest = new ProcessEngineAwareExtension()
       .withConfigurationResource("application.properties")
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
           .addClass(TestBean.class)

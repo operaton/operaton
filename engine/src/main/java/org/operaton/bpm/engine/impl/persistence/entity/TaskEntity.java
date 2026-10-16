@@ -1047,11 +1047,9 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
 
     List<TaskListener> taskEventListeners = getListenersForEvent(taskEventName);
 
-    if (taskEventListeners != null) {
-      for (TaskListener taskListener : taskEventListeners) {
-        if (!invokeListener(taskEventName, taskListener)) {
-          return false;
-        }
+    for (TaskListener taskListener : taskEventListeners) {
+      if (!invokeListener(taskEventName, taskListener)) {
+        return false;
       }
     }
 
@@ -1291,13 +1289,13 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
     return processEngineConfiguration.getResourceAuthorizationProvider();
   }
 
-  protected void saveAuthorizations(AuthorizationEntity[] authorizations) {
+  protected void saveAuthorizations(AuthorizationEntity @Nullable[] authorizations) {
     CommandContext commandContext = Context.getCommandContext();
     TaskManager taskManager = commandContext.getTaskManager();
     taskManager.saveDefaultAuthorizations(authorizations);
   }
 
-  protected void deleteAuthorizations(AuthorizationEntity[] authorizations) {
+  protected void deleteAuthorizations(AuthorizationEntity @Nullable[] authorizations) {
     CommandContext commandContext = Context.getCommandContext();
     TaskManager taskManager = commandContext.getTaskManager();
     taskManager.deleteDefaultAuthorizations(authorizations);

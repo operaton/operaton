@@ -53,6 +53,11 @@ const update_task = (state, task, task_id) => {
   });
 };
 
+/** Create a task that belongs to no process. The engine answers 204, so the id
+ *  has to be chosen by the caller if the new task is to be opened afterwards. */
+const create_task = (state, task) =>
+  POST(`/task/create`, task, state, state.api.task.create);
+
 const get_task_form = (state, form_id) =>
   GET_SERVER_URL(`/${form_id}`, state, state.api.task.form);
 
@@ -139,7 +144,42 @@ const tasks_with_process_definitions = async (tasks, state) => {
   return tasks;
 };
 
-const get_tasks = (state, sort_key = "name", sort_order = "asc", firstResult = 0, maxResults = 3, filter = {}) => {
+/**
+ * How many open tasks there are, and how they are shared out: assigned, waiting
+ * for someone to take them, and — the interesting one — waiting on nobody at
+ * all, with neither an assignee nor a candidate group.
+ */
+const get_task_summary = async (state) => {
+  const count = (query) =>
+    GET(
+      `/task/count?${new URLSearchParams(query)}`,
+      state,
+      state.api.task.scratch,
+    ).then((result) => result?.data?.count ?? 0);
+
+  const [total, assigned, unattended] = await Promise.all([
+    count({}),
+    count({ assigned: true }),
+    count({ unassigned: true, withoutCandidateGroups: true }),
+  ]);
+
+  return (state.api.task.summary.value = {
+    status: "SUCCESS",
+    data: { total, assigned, unassigned: total - assigned, unattended },
+  });
+};
+
+const get_task_counts_by_group = (state) =>
+  GET("/task/report/candidate-group-count", state, state.api.task.by_group);
+
+const get_tasks = (
+  state,
+  sort_key = "name",
+  sort_order = "asc",
+  firstResult = 0,
+  maxResults = 3,
+  filter = {},
+) => {
   const prev = state.api.task.list.value;
   state.api.task.list.value = {
     status: RESPONSE_STATE.LOADING,
@@ -156,26 +196,21 @@ const get_tasks = (state, sort_key = "name", sort_order = "asc", firstResult = 0
     ...filter,
   });
 
-  fetch(
-    `${_url_engine_rest(state)}/task?${params}`,
-    { headers },
-  )
+  fetch(`${_url_engine_rest(state)}/task?${params}`, { headers })
     .then((response) =>
       response.ok ? response.json() : Promise.reject(response),
     )
     .then((tasks) => tasks_with_process_definitions(tasks, state))
-    .then(
-      (json) => {
-        const existing = firstResult > 0 ? (prev?.data ?? []) : [];
-        const existingIds = new Set(existing.map((t) => t.id));
-        const newTasks = json.filter((t) => !existingIds.has(t.id));
-        state.api.task.list.value = {
-          status: RESPONSE_STATE.SUCCESS,
-          data: [...existing, ...newTasks],
-          hasMore: json.length === maxResults,
-        };
-      },
-    )
+    .then((json) => {
+      const existing = firstResult > 0 ? (prev?.data ?? []) : [];
+      const existingIds = new Set(existing.map((t) => t.id));
+      const newTasks = json.filter((t) => !existingIds.has(t.id));
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [...existing, ...newTasks],
+        hasMore: json.length === maxResults,
+      };
+    })
     .catch(
       (error) =>
         (state.api.task.list.value = { status: RESPONSE_STATE.ERROR, error }),
@@ -203,7 +238,12 @@ const create_comment = (state, task_id, message) =>
   );
 
 const post_task_form = (state, task_id, data) =>
-  POST(`/task/${task_id}/submit-form`, { variables: data, withVariablesInReturn: true, }, state, state.api.task.submit_form );
+  POST(
+    `/task/${task_id}/submit-form`,
+    { variables: data, withVariablesInReturn: true },
+    state,
+    state.api.task.submit_form,
+  );
 
 /**
  * Complete a task directly (without a form), optionally passing variables.
@@ -241,6 +281,8 @@ const attachment_url = (state, task_id, attachment_id) =>
 
 const task = {
   get_tasks,
+  summary: get_task_summary,
+  by_group: get_task_counts_by_group,
   get_task,
   update_task,
   get_task_form,
@@ -250,6 +292,7 @@ const task = {
   get_task_deployed_form,
   get_task_deployed_form_html,
   get_task_form_variables,
+  create_task,
   claim_task,
   unclaim_task,
   assign_task,

@@ -1100,12 +1100,6 @@
     background-clip: padding-box;
   }
 
-  /* keep the hover/selected background, but drop the negative margin shift */
-  .admin-page tbody tr:hover :where(td, th),
-  .admin-page tbody tr[aria-selected="true"] :where(td, th) {
-    margin: 0;
-  }
-
   .auth-table :where(td, th) {
     vertical-align: top;
   }
@@ -1298,6 +1292,14 @@
 
     > * {
       break-inside: avoid-column;
+    }
+
+    /* A message about the form as a whole belongs across both columns; in the
+       label column it is squeezed into a few characters per line. */
+    > .error,
+    > .info-box,
+    > .password-policy {
+      grid-column: 1 / -1;
     }
 
     .form-horizontal {
@@ -1596,7 +1598,6 @@
   tbody tr:hover :where(td, th),
   tbody tr[aria-selected="true"] :where(td, th) {
     background-color: var(--background-2);
-    margin: calc(-1 * var(--border-width-2));
   }
 
   th,

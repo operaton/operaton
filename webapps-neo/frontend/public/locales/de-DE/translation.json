@@ -34,7 +34,11 @@
     "activate": "Aktivieren",
     "load-more": "Mehr laden",
     "breadcrumb": "Navigationspfad",
-    "confirmation": "Bestätigung"
+    "confirmation": "Bestätigung",
+    "search": "Suchen",
+    "ok": "OK",
+    "date": "Datum",
+    "time": "Uhrzeit"
   },
   "nav": {
     "tasks": "Aufgaben",
@@ -115,7 +119,14 @@
     "process-definitions": "Prozessdefinitionen",
     "see-all-processes": "Alle Prozesse anzeigen",
     "no-process-definitions": "Keine Prozessdefinitionen.",
-    "instances": "Instanzen"
+    "instances": "Instanzen",
+    "tasks-assigned": "Zugewiesen",
+    "tasks-unassigned": "Nicht zugewiesen",
+    "tasks-unattended": "Ohne Zuständigkeit",
+    "tasks-by-group": "Offene Aufgaben nach Gruppe",
+    "group": "Gruppe",
+    "no-group": "Ohne Gruppe",
+    "multiple-groups-hint": "Eine Aufgabe kann zu mehreren Gruppen gehören; die Summe kann deshalb über der Gesamtzahl liegen."
   },
   "tasks": {
     "title": "Aufgabenliste",
@@ -129,6 +140,17 @@
     "no-description": "Keine Beschreibung vorhanden.",
     "select-task": "Wählen Sie eine Aufgabe aus der Liste oben, um deren Details anzuzeigen.",
     "task-not-found": "Aufgabe nicht gefunden",
+    "tenant": "Mandant",
+    "dates": {
+      "now": "Jetzt",
+      "reset": "Zurücksetzen"
+    },
+    "create": {
+      "open": "Neue Aufgabe",
+      "title": "Aufgabe anlegen",
+      "save": "Anlegen",
+      "failed": "Die Aufgabe konnte nicht angelegt werden."
+    },
     "task-not-found-hint": "Diese Aufgabe existiert nicht mehr. Sie wurde möglicherweise abgeschlossen oder abgebrochen.",
     "task-load-failed": "Aufgabe konnte nicht geladen werden",
     "back-to-list": "Zurück zur Aufgabenliste",
@@ -141,7 +163,7 @@
     "assign-to-label": "Benutzerkennung",
     "assign": "Zuweisen",
     "assign-failed": "Die Aufgabe konnte nicht zugewiesen werden.",
-    "assign-unknown-user": "Unbekannte Benutzerkennung — es gibt keinen solchen Benutzer, oder Sie dürfen ihn nicht sehen.",
+    "assign-unknown-user": "Unbekannte Benutzerkennung oder Sie verfügen nicht über die notwendigen Berechtigungen, um diese Aktion durchzuführen",
     "assignee-menu": "Bearbeiter-Aktionen",
     "comment": "Kommentar",
     "comment-add": "Kommentar hinzufügen",
@@ -196,6 +218,7 @@
       "required-field": "(*) Pflichtfeld",
       "no-form": "Kein Formular für diese Aufgabe verfügbar.",
       "complete-task": "Aufgabe abschließen",
+      "claim-first": "Übernehmen Sie die Aufgabe, um sie zu bearbeiten.",
       "save-form": "Formular speichern",
       "unknown-error": "Ein unbekannter Fehler ist aufgetreten.",
       "form-title": "Formular",
@@ -204,7 +227,10 @@
       "complete-directly": "Ohne Formular abschließen",
       "legacy-html-unsupported": "Ältere AngularJS-Formulare werden von den neuen Web-Anwendungen nicht unterstützt. Bitte wechseln Sie zu form-js.",
       "legacy-html-migrate-link": "Anleitung zur Migration",
-      "unsupported": "Dieser Startformular-Typ wird noch nicht unterstützt."
+      "unsupported": "Dieser Startformular-Typ wird noch nicht unterstützt.",
+      "add-variable": "Variable hinzufügen",
+      "duplicate-variable": "Jeder Variablenname darf nur einmal vorkommen.",
+      "submit-failed": "Die Aufgabe konnte nicht abgeschlossen werden."
     },
     "start-process": {
       "title": "Aufgabe starten",
@@ -227,9 +253,9 @@
       "auto-refresh": "Automatische Aktualisierung",
       "criteria": "Kriterien",
       "add-criteria": "Kriterium hinzufügen",
-      "permissions": "Berechtigungen",
+      "permissions": "Wer diesen Filter verwenden darf",
       "accessible-by-all": "Für alle Benutzer zugänglich",
-      "add-permission": "Berechtigung hinzufügen",
+      "add-permission": "Person oder Gruppe hinzufügen",
       "group-user": "Gruppe / Benutzer",
       "identifier": "Bezeichner",
       "variables": "Variablen",
@@ -237,7 +263,14 @@
       "show-undefined": "Undefinierte Variablen anzeigen",
       "add-variable": "Variable hinzufügen",
       "label": "Bezeichnung",
-      "manage_title": "Aufgaben-Filter verwalten"
+      "manage_title": "Aufgaben-Filter verwalten",
+      "permissions-hint": "Ein gespeicherter Filter ist privat, bis jemand ihn lesen darf.",
+      "readable-by-all": "Alle dürfen ihn verwenden",
+      "user": "Benutzer",
+      "group": "Gruppe",
+      "permissions-denied": "Zum Freigeben eines Filters wird die Berechtigung benötigt, Berechtigungen anzulegen. Dieser Filter bleibt vorerst nur für dich sichtbar.",
+      "save-failed": "Der Filter konnte nicht gespeichert werden. {{reason}}",
+      "share-failed": "Der Filter wurde gespeichert, aber die Freigabe für {{identities}} ist fehlgeschlagen. Er ist vorerst nur für dich sichtbar."
     },
     "sort": {
       "label": "Sortieren nach",
@@ -281,14 +314,25 @@
       "createdBefore": "createdBefore",
       "createdAfter": "createdAfter",
       "active": "active",
-      "suspended": "suspended"
+      "suspended": "suspended",
+      "processVariables": "Prozessvariable",
+      "taskVariables": "Aufgabenvariable",
+      "owner": "Eigentümer",
+      "delegationState": "Delegationsstatus",
+      "includeAssignedTasks": "Zugewiesene einschliessen",
+      "tenantIdIn": "Mandant",
+      "withoutTenantId": "Ohne Mandant"
     },
     "attachments": {
       "empty": "Keine Anhänge.",
       "add": "Anhang hinzufügen",
       "description": "Beschreibung",
       "file": "Datei",
-      "upload": "Hochladen"
+      "choose": "Auswählen…",
+      "none-chosen": "Keine Datei ausgewählt",
+      "upload": "Hochladen",
+      "delete-confirm": "Den Anhang „{{name}}“ löschen?",
+      "confirm-delete": "Anhang löschen"
     }
   },
   "processes": {
@@ -355,7 +399,8 @@
       "suspend": "Anhalten",
       "select-all": "Alle auswählen",
       "count": "{{count}} ausgewählt",
-      "confirm-remove": "{{count}} Prozessdefinition(en) und alle zugehörigen Daten löschen? Dies kann nicht rückgängig gemacht werden."
+      "confirm-remove": "{{count}} Prozessdefinition(en) und alle zugehörigen Daten löschen? Dies kann nicht rückgängig gemacht werden.",
+      "failed": "Die Aktion wurde für {{count}} Definition(en) abgelehnt: {{reason}}"
     },
     "incidents": {
       "message": "Nachricht",
@@ -438,7 +483,8 @@
         "withoutIncidents": "withoutIncidents",
         "startedBefore": "startedBefore",
         "startedAfter": "startedAfter",
-        "finished": "finished"
+        "finished": "finished",
+        "variables": "Variable"
       },
       "manage_title": "Prozessinstanz-Filter verwalten",
       "suspend": "Anhalten",
@@ -454,7 +500,9 @@
     "variables": {
       "add": "Variable hinzufügen",
       "edit": "Variable bearbeiten",
-      "confirm-delete": "Variable \"{{name}}\" löschen?"
+      "confirm-delete": "Variable \"{{name}}\" löschen?",
+      "scope": "Gültigkeitsbereich",
+      "scope-instance": "Prozessinstanz"
     },
     "external-tasks": {
       "topic": "Thema",
@@ -482,7 +530,22 @@
       "clear-annotation": "Löschen",
       "annotation-placeholder": "Notiz zu dieser Operation hinzufügen…",
       "confirm-clear": "Anmerkung für diese Operation löschen?"
-    }
+    },
+    "version-tag": "Versionsmerkmal",
+    "suspension": {
+      "suspend": "Prozessdefinition aussetzen",
+      "activate": "Prozessdefinition aktivieren",
+      "instances-hint": "Werden die Instanzen einbezogen, wechseln auch alle vorhandenen Instanzen dieser Definition den Zustand.",
+      "jobs-hint": "Werden die Aufträge einbezogen, wechseln auch alle vorhandenen Aufträge dieser Auftragsdefinition den Zustand.",
+      "include-instances": "Laufende Instanzen einbeziehen",
+      "include-jobs": "Vorhandene Aufträge einbeziehen",
+      "when": "Zeitpunkt",
+      "immediately": "Sofort",
+      "delayed": "Zu einem Zeitpunkt"
+    },
+    "super-instance": "Übergeordnete Instanz",
+    "root-instance": "Wurzelinstanz",
+    "removal-time": "Entfernungszeitpunkt"
   },
   "decisions": {
     "title": "Entscheidungen",
@@ -563,7 +626,14 @@
       "duplicate-filtering": "Duplikatfilterung aktivieren",
       "deploy-changed-only": "Nur geänderte Ressourcen bereitstellen",
       "submit": "Bereitstellen"
-    }
+    },
+    "delete": {
+      "title": "Bereitstellung löschen",
+      "message": "Die Bereitstellung und alles daraus Bereitgestellte wird entfernt.",
+      "cascade": "Laufende Prozessinstanzen und deren Historie mit entfernen",
+      "failed": "Die Engine hat das Löschen abgelehnt. Bei laufenden Instanzen wird die Option oben benötigt."
+    },
+    "download": "Herunterladen"
   },
   "batches": {
     "title": "Batches",
@@ -704,7 +774,12 @@
       "add-to-group": "Zur Gruppe hinzufügen",
       "no-tenants": "Der Benutzer ist derzeit kein Mitglied eines Mandanten.",
       "delete": "Benutzer löschen",
-      "confirm-delete": "Möchten Sie diesen Benutzer wirklich löschen?"
+      "confirm-delete": "Möchten Sie diesen Benutzer wirklich löschen?",
+      "unlock": "Benutzer entsperren",
+      "unlock-success": "Der Benutzer wurde entsperrt.",
+      "unlock-hint": "Die Engine sperrt ein Konto nach zu vielen fehlgeschlagenen Anmeldungen. Nach dem Entsperren ist die Anmeldung wieder möglich.",
+      "own-password": "Ihr eigenes Kennwort",
+      "own-password-hint": "Die Engine verlangt zur Bestätigung das Kennwort des angemeldeten Benutzers — auch beim Ändern eines fremden Kennworts."
     },
     "group": {
       "title": "Gruppen",
@@ -762,7 +837,13 @@
       "available-permissions": "Verfügbare Berechtigungen",
       "confirm-delete": "Möchten Sie diese Autorisierung wirklich löschen?",
       "success-created": "Neue Autorisierung erfolgreich erstellt.",
-      "select-resource": "Wählen Sie eine Autorisierungsressource aus"
+      "select-resource": "Wählen Sie eine Autorisierungsressource aus",
+      "identity-type": "Inhaber",
+      "group": "Gruppe",
+      "user": "Benutzer",
+      "group-id": "Gruppenkennung",
+      "user-id": "Benutzerkennung",
+      "already-exists": "Für diese Kombination aus Typ, Benutzer bzw. Gruppe und Ressource gibt es bereits eine Autorisierung mit den Berechtigungen {{permissions}}. Die Engine lässt nur eine zu — ergänzen Sie die vorhandene Zeile in der Tabelle über „Bearbeiten“."
     },
     "authorization-resources": {
       "application": "Anwendung",
@@ -786,6 +867,32 @@
       "dashboard": "Dashboard",
       "user-operation-log": "Benutzeroperations-Protokollkategorie",
       "system": "System"
+    },
+    "search-id": "Kennung",
+    "search-name": "Name",
+    "search-first-name": "Vorname",
+    "search-last-name": "Nachname",
+    "search-email": "E-Mail",
+    "system-info": {
+      "product": "Produkt",
+      "version": "Version",
+      "edition": "Ausgabe",
+      "installation": "Installation",
+      "database": "Datenbank",
+      "application-server": "Anwendungsserver",
+      "jdk": "JDK",
+      "integration": "Einbindung",
+      "webapps": "Web-Anwendungen",
+      "raw": "Rohe Telemetriedaten"
+    },
+    "password-policy": {
+      "title": "Das Kennwort muss diese Bedingungen erfüllen:",
+      "PASSWORD_POLICY_LENGTH": "mindestens {{minLength}} Zeichen",
+      "PASSWORD_POLICY_LOWERCASE": "mindestens {{minLowerCase}} Kleinbuchstaben",
+      "PASSWORD_POLICY_UPPERCASE": "mindestens {{minUpperCase}} Großbuchstaben",
+      "PASSWORD_POLICY_DIGIT": "mindestens {{minDigit}} Ziffern",
+      "PASSWORD_POLICY_SPECIAL": "mindestens {{minSpecial}} Sonderzeichen",
+      "PASSWORD_POLICY_USER_DATA": "keine Angaben aus dem Benutzerkonto"
     }
   },
   "account": {
@@ -881,7 +988,7 @@
   "list_filter": {
     "saved_filter": "Filter",
     "all": "Alle",
-    "my": "Meine",
+    "my": "Meine Aufgaben",
     "sort_by": "Sortieren nach",
     "sort_order": "Sortierreihenfolge",
     "asc": "Aufsteigend",
@@ -906,7 +1013,25 @@
     "duplicate": "Duplizieren",
     "duplicate_suffix": "(Kopie)",
     "share_link_copied": "Link kopiert",
-    "empty": "Noch keine gespeicherten Filter."
+    "empty": "Noch keine gespeicherten Filter.",
+    "variable_name": "Variablenname",
+    "variable_operator": "Vergleich",
+    "variable_operators": {
+      "eq": "ist",
+      "neq": "ist nicht",
+      "gt": "größer als",
+      "gteq": "größer oder gleich",
+      "lt": "kleiner als",
+      "lteq": "kleiner oder gleich",
+      "like": "enthält",
+      "notLike": "enthält nicht"
+    },
+    "duplicate_criterion": "Jedes Kriterium darf einmal vorkommen. Doppelt: {{keys}}",
+    "columns": "Spalten",
+    "add_column": "Spalte hinzufügen",
+    "column_label": "Überschrift",
+    "show_undefined": "Aufgaben ohne die Variable ebenfalls zeigen",
+    "columns_hint": "Hier benannte Variablen erscheinen als zusätzliche Spalten der Aufgabenliste."
   },
   "login": {
     "title": "Anmelden",

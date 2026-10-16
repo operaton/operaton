@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.authorization.Resources;
 
 import org.jspecify.annotations.Nullable;
@@ -55,7 +56,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * @author Tom Baeyens
  */
-public class HistoricProcessInstanceManager extends AbstractHistoricManager {
+public @NullMarked class HistoricProcessInstanceManager extends AbstractHistoricManager {
 
   public @Nullable HistoricProcessInstanceEntity findHistoricProcessInstance(String processInstanceId) {
     if (isHistoryEnabled()) {
@@ -183,8 +184,8 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
 
   public Map<Class<? extends DbEntity>, DbOperation> addRemovalTimeToProcessInstancesByRootProcessInstanceId(
       String rootProcessInstanceId,
-      Date removalTime,
-      Integer batchSize,
+      @Nullable Date removalTime,
+      @Nullable Integer batchSize,
       Set<String> entities) {
 
     Map<Class<? extends DbEntity>, DbOperation> updateOperations = new HashMap<>();
@@ -274,8 +275,8 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
   }
 
   public Map<Class<? extends DbEntity>, DbOperation> addRemovalTimeById(String processInstanceId,
-      Date removalTime,
-      Integer batchSize,
+      @Nullable Date removalTime,
+      @Nullable Integer batchSize,
       Set<String> entities) {
 
     Map<Class<? extends DbEntity>, DbOperation> updateOperations = new HashMap<>();
@@ -364,11 +365,12 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
     return updateOperations;
   }
 
+  @SuppressWarnings("ConstantConditions")
   private void updateProcessInstances(String parameterKey,
                                         String parameterValue,
                                         String statement,
-                                        Date removalTime,
-                                        Integer batchSize,
+                                        @Nullable Date removalTime,
+                                        @Nullable Integer batchSize,
                                         Set<String> entities,
                                         Map<Class<? extends DbEntity>, DbOperation> updateOperations) {
     if (batchSize == null || isPerformUpdateOnly(entities, HistoricProcessInstanceEventEntity.class)) {

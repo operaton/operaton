@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.history;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.batch.history.HistoricBatchEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricDecisionInstanceEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEntity;
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
  *
  * @author Tassilo Weidner
  */
-public interface HistoryRemovalTimeProvider {
+public @NullMarked interface HistoryRemovalTimeProvider {
 
   /**
    * Calculates the removal time of historic entities related to processes.
@@ -50,7 +52,7 @@ public interface HistoryRemovalTimeProvider {
    * @param processDefinition of the historic root process instance
    * @return the removal time for historic process instances
    */
-  Date calculateRemovalTime(HistoricProcessInstanceEventEntity historicRootProcessInstance, ProcessDefinition processDefinition);
+  @Nullable Date calculateRemovalTime(HistoricProcessInstanceEventEntity historicRootProcessInstance, ProcessDefinition processDefinition);
 
   /**
    * Calculates the removal time of historic entities related to decisions.
@@ -59,7 +61,7 @@ public interface HistoryRemovalTimeProvider {
    * @param decisionDefinition of the historic root decision instance
    * @return the removal time for historic decision instances
    */
-  Date calculateRemovalTime(HistoricDecisionInstanceEntity historicRootDecisionInstance, DecisionDefinition decisionDefinition);
+  @Nullable Date calculateRemovalTime(HistoricDecisionInstanceEntity historicRootDecisionInstance, DecisionDefinition decisionDefinition);
 
   /**
    * Calculates the removal time of historic batches.
@@ -77,6 +79,6 @@ public interface HistoryRemovalTimeProvider {
    * @param historicBatch which is either in state running or ended
    * @return the removal time of historic entities
    */
-  Date calculateRemovalTime(HistoricBatchEntity historicBatch);
+  @Nullable Date calculateRemovalTime(HistoricBatchEntity historicBatch);
 
 }

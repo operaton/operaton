@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.batch.externaltask;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 
-public class SetExternalTaskRetriesJobHandler extends AbstractBatchJobHandler<SetRetriesBatchConfiguration> {
+public @NullMarked class SetExternalTaskRetriesJobHandler extends AbstractBatchJobHandler<SetRetriesBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_SET_EXTERNAL_TASK_RETRIES);
   private static final SetExternalTaskRetriesBatchConfigurationJsonConverter JSON_CONVERTER =
@@ -45,7 +47,7 @@ public class SetExternalTaskRetriesJobHandler extends AbstractBatchJobHandler<Se
   public void executeHandler(SetRetriesBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     commandContext.executeWithOperationLogPrevented(
         new SetExternalTasksRetriesCmd(

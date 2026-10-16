@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
@@ -31,6 +32,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings("ConstantConditions")
 public @NullMarked class ByteArrayManager extends AbstractManager {
 
   /**
@@ -48,7 +50,7 @@ public @NullMarked class ByteArrayManager extends AbstractManager {
     getDbEntityManager().insert(arr);
   }
 
-  public DbOperation addRemovalTimeToByteArraysByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
+  public DbOperation addRemovalTimeToByteArraysByRootProcessInstanceId(String rootProcessInstanceId, @Nullable Date removalTime, @Nullable Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);
@@ -58,7 +60,7 @@ public @NullMarked class ByteArrayManager extends AbstractManager {
       .updatePreserveOrder(ByteArrayEntity.class, "updateByteArraysByRootProcessInstanceId", parameters);
   }
 
-  public List<DbOperation> addRemovalTimeToByteArraysByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
+  public List<DbOperation> addRemovalTimeToByteArraysByProcessInstanceId(String processInstanceId, @Nullable Date removalTime, @Nullable Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);

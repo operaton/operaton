@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
@@ -28,7 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
  * Used by a seed job to manage lifecycle of execution jobs.
  * </p>
  */
-public interface BatchJobHandler<T> extends JobHandler<BatchJobConfiguration> {
+public @NullMarked interface BatchJobHandler<T> extends JobHandler<BatchJobConfiguration> {
 
   /**
    * Converts the configuration of the batch to a byte array.
@@ -44,7 +46,7 @@ public interface BatchJobHandler<T> extends JobHandler<BatchJobConfiguration> {
    * @param serializedConfiguration the serialized configuration
    * @return the deserialized configuration object
    */
-  T readConfiguration(byte[] serializedConfiguration);
+  @Nullable T readConfiguration(byte[] serializedConfiguration);
 
   /**
    * Get the job declaration for batch jobs.

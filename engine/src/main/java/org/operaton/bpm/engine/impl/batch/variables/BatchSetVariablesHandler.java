@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.batch.variables;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
@@ -33,7 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 
-public class BatchSetVariablesHandler extends AbstractBatchJobHandler<BatchConfiguration> {
+public @NullMarked class BatchSetVariablesHandler extends AbstractBatchJobHandler<BatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_SET_VARIABLES);
   private static final SetVariablesJsonConverter JSON_CONVERTER = new SetVariablesJsonConverter();
@@ -42,7 +44,7 @@ public class BatchSetVariablesHandler extends AbstractBatchJobHandler<BatchConfi
   public void executeHandler(BatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     String batchId = batchConfiguration.getBatchId();
     Map<String, ?> variables = VariableUtil.findBatchVariablesSerialized(batchId, commandContext);
@@ -84,7 +86,7 @@ public class BatchSetVariablesHandler extends AbstractBatchJobHandler<BatchConfi
     }
   }
 
-  protected ByteArrayEntity findByteArrayById(String byteArrayId, CommandContext commandContext) {
+  protected @Nullable ByteArrayEntity findByteArrayById(String byteArrayId, CommandContext commandContext) {
     return commandContext.getDbEntityManager()
         .selectById(ByteArrayEntity.class, byteArrayId);
   }

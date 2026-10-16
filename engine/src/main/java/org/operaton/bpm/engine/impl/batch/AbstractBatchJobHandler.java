@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.google.gson.JsonElement;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -41,12 +40,14 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Common methods for batch job handlers based on list of ids, providing serialization, configuration instantiation, etc.
  *
  * @author Askar Akhmerov
  */
-public abstract class AbstractBatchJobHandler<T extends BatchConfiguration> implements BatchJobHandler<T>, OptimisticLockingListener {
+public abstract @NullMarked class AbstractBatchJobHandler<T extends BatchConfiguration> implements BatchJobHandler<T>, OptimisticLockingListener {
 
   @Override
   public abstract JobDeclaration<BatchJobContext, MessageEntity> getJobDeclaration();
@@ -95,13 +96,13 @@ public abstract class AbstractBatchJobHandler<T extends BatchConfiguration> impl
   public final void execute(final BatchJobConfiguration configuration,
                             final ExecutionEntity execution,
                             final CommandContext commandContext,
-                            final String tenantId) {
+                            final @Nullable String tenantId) {
 
     // load handler config
     String byteArrayId = configuration.getConfigurationByteArrayId();
     ByteArrayEntity byteArray = commandContext.getDbEntityManager().selectById(ByteArrayEntity.class, byteArrayId);
-    byte[] configurationByteArray = byteArray.getBytes();
-    T batchConfiguration = readConfiguration(configurationByteArray);
+    byte[] configurationByteArray = byteArray != null ? byteArray.getBytes() : new byte[0];
+    T batchConfiguration = readConfiguration(configurationByteArray != null ? configurationByteArray : new byte[0]);
 
     // load batch
     String batchId = batchConfiguration.getBatchId();
@@ -123,7 +124,7 @@ public abstract class AbstractBatchJobHandler<T extends BatchConfiguration> impl
   protected abstract void executeHandler(final T configuration,
                                          final ExecutionEntity execution,
                                          final CommandContext commandContext,
-                                         final String tenantId);
+                                         final @Nullable String tenantId);
 
   protected void sanitizeMappings(DeploymentMappings idMappings, List<String> ids) {
     // for mixed version SeedJob execution, there might be ids that have been processed
@@ -147,10 +148,10 @@ public abstract class AbstractBatchJobHandler<T extends BatchConfiguration> impl
     }
   }
 
-  protected void createJobEntities(BatchEntity batch, T configuration, String deploymentId,
-      List<String> processIds, int invocationsPerBatchJob) {
+  protected void createJobEntities(BatchEntity batch, T configuration, @Nullable String deploymentId,
+                                   List<String> processIds, int invocationsPerBatchJob) {
 
-    if (processIds == null || processIds.isEmpty()) {
+    if (processIds.isEmpty()) {
       return;
     }
 
@@ -235,7 +236,7 @@ public abstract class AbstractBatchJobHandler<T extends BatchConfiguration> impl
 
   @Override
   public T readConfiguration(byte[] serializedConfiguration) {
-    return getJsonConverterInstance().toObject(JsonUtil.asObject(serializedConfiguration));
+    return requireNonNull(getJsonConverterInstance().toObject(JsonUtil.asObject(serializedConfiguration)));
   }
 
   protected abstract AbstractBatchConfigurationObjectConverter<T> getJsonConverterInstance();
@@ -258,11 +259,7 @@ public abstract class AbstractBatchJobHandler<T extends BatchConfiguration> impl
     ProcessEngineConfigurationImpl engineConfig = Context.getProcessEngineConfiguration();
     Map<String, Integer> invocationsPerBatchJobByBatchType = engineConfig.getInvocationsPerBatchJobByBatchType();
     Integer invocationCount = invocationsPerBatchJobByBatchType.get(batchType);
-    if (invocationCount != null) {
-      return invocationCount;
-    } else {
-      return engineConfig.getInvocationsPerBatchJob();
-    }
+    return Objects.requireNonNullElseGet(invocationCount, engineConfig::getInvocationsPerBatchJob);
   }
 
 }

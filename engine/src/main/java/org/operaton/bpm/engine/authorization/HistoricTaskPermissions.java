@@ -49,8 +49,8 @@ public enum HistoricTaskPermissions implements Permission {
 
   protected static final Resource[] RESOURCES = new Resource[] { Resources.HISTORIC_TASK };
 
-  protected String name;
-  protected int id;
+  private final String name;
+  private final int id;
 
   HistoricTaskPermissions(String name, int id) {
     this.name = name;

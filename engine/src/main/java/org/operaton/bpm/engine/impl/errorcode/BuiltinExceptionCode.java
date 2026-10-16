@@ -50,7 +50,7 @@ public enum BuiltinExceptionCode {
    */
   COLUMN_SIZE_TOO_SMALL(10_002);
 
-  protected final int code;
+  private final int code;
 
   BuiltinExceptionCode(int code) {
     this.code = code;

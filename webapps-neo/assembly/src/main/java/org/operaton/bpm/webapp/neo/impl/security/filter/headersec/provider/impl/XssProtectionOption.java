@@ -25,7 +25,7 @@ public enum XssProtectionOption {
   BLOCK("1; mode=block"),
   SANITIZE("1");
 
-  protected final String headerValue;
+  private final String headerValue;
 
   XssProtectionOption(String headerValue) {
     this.headerValue = headerValue;

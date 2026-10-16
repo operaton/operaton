@@ -189,8 +189,8 @@ public enum HistoryEventTypes implements HistoryEventType {
     this.eventName = eventName;
   }
 
-  protected String entityType;
-  protected String eventName;
+  private final String entityType;
+  private final String eventName;
 
   @Override
   public String getEntityType() {

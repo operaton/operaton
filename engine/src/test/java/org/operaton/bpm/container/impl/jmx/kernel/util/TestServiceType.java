@@ -23,7 +23,7 @@ public enum TestServiceType implements ServiceType {
     TYPE1("test.type1"),
     TYPE2("test.type2");
 
-    protected String serviceRealm;
+    private final String serviceRealm;
 
     TestServiceType(String serviceRealm) {
       this.serviceRealm = serviceRealm;

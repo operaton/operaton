@@ -136,6 +136,15 @@ jobs:
           GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER: ${{github.event.inputs.preliminary_release_qualifier}}
         run: .github/scripts/prepare-release-version.sh
 
+      - name: Generate SBOMs
+        # Must run after the release version is applied and before the Maven
+        # build: the distribution assemblies copy
+        # distro/*/assembly/resources/sbom.cdx.json into the archives, so the
+        # SBOM has to describe the release version and dependencies before the
+        # archives are assembled. The regenerated files are part of the
+        # release commit below. See https://github.com/operaton/operaton/issues/3852
+        run: .devenv/scripts/build/build-sbom.sh
+
       - name: Maven Build
         run: |
           PROJECT_ROOT=$(pwd)
@@ -158,6 +167,16 @@ jobs:
           .github/scripts/prepare-deploy.sh
           ./mvnw -Dmaven.build.cache.enabled=false -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
+      - name: Verify SBOMs in release archives
+        env:
+          VERSION: ${{steps.version.outputs.version}}
+        run: |
+          for ARCHIVE in distro/run/distro/target/operaton-bpm-$VERSION.zip \
+                         distro/tomcat/distro/target/operaton-bpm-tomcat-$VERSION.zip \
+                         distro/wildfly/distro/target/operaton-bpm-wildfly-$VERSION.zip; do
+            ACTUAL=$(unzip -p "$ARCHIVE" sbom.cdx.json | jq -r .metadata.component.version)
+            [[ "$ACTUAL" == "$VERSION" ]] || { echo "::error::$ARCHIVE ships SBOM version '$ACTUAL', expected '$VERSION'"; exit 1; }
+          done
       - name: Commit changes
         uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         if: ${{github.event.inputs.dry_run == 'false' }}
@@ -173,6 +192,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
+            target/sbom/**
             target/*.zip
           key: ${{ github.run_id }}-build-artifacts
 
@@ -207,7 +227,6 @@ jobs:
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
-          .devenv/scripts/build/build-sbom.sh
           pip install --only-binary :all: pystache==0.6.8
 
       - name: Cache documentation artifacts
@@ -219,7 +238,6 @@ jobs:
             target/clirr-reports.zip
             target/rest-api.zip
             target/rest-api/**
-            target/sbom/**
             **/target/reports/**
           key: ${{ github.run_id }}-documentation-artifacts
 
@@ -248,6 +266,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
+            target/sbom/**
             target/*.zip
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
@@ -261,7 +280,6 @@ jobs:
             target/clirr-reports.zip
             target/rest-api.zip
             target/rest-api/**
-            target/sbom/**
             **/target/reports/**
           key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true

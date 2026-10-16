@@ -29,7 +29,6 @@ import java.util.function.Consumer;
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.AuthorizationException;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -99,7 +98,7 @@ import static org.operaton.bpm.engine.authorization.TaskPermissions.READ_VARIABL
  * @author Daniel Meyer
  *
  */
-@SuppressWarnings({"unchecked", "rawtypes"})
+@SuppressWarnings({"unchecked", "rawtypes", "ConstantConditions"})
 public @NullMarked class AuthorizationManager extends AbstractManager {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -151,7 +150,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
     return new PermissionCheckBuilder();
   }
 
-  public @NonNull Authorization createNewAuthorization(int type) {
+  public Authorization createNewAuthorization(int type) {
     checkAuthorization(CREATE, AUTHORIZATION, null);
     return new AuthorizationEntity(type);
   }
@@ -203,8 +202,9 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
 
   @Override
   public void delete(DbEntity authorization) {
-    checkAuthorization(DELETE, AUTHORIZATION, authorization.getId());
-    deleteAuthorizationsByResourceId(AUTHORIZATION, authorization.getId());
+    String resourceId = requireNonNull(authorization.getId());
+    checkAuthorization(DELETE, AUTHORIZATION, resourceId);
+    deleteAuthorizationsByResourceId(AUTHORIZATION, resourceId);
     super.delete(authorization);
   }
 
@@ -406,7 +406,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
 
   public void enableQueryAuthCheck(AuthorizationCheck authCheck) {
     List<String> authGroupIds = authCheck.getAuthGroupIds();
-    String authUserId = authCheck.getAuthUserId();
+    String authUserId = requireNonNull(authCheck.getAuthUserId());
 
     authCheck.setAuthorizationCheckEnabled(true);
     authCheck.setAuthGroupIds(filterAuthenticatedGroupIds(authGroupIds));
@@ -452,14 +452,14 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
   // delete authorizations //////////////////////////////////////////////////
 
   public void deleteAuthorizationsByResourceIds(Resources resource,
-      @NonNull List<String> resourceIds) {
+      List<String> resourceIds) {
 
     resourceIds.forEach(resourceId ->
         deleteAuthorizationsByResourceId(resource, resourceId));
 
   }
 
-  public void deleteAuthorizationsByResourceId(Resource resource, @NonNull String resourceId) {
+  public void deleteAuthorizationsByResourceId(Resource resource, String resourceId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -470,7 +470,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
 
   }
 
-  public void deleteAuthorizationsByResourceIdAndUserId(Resource resource, @NonNull String resourceId, String userId) {
+  public void deleteAuthorizationsByResourceIdAndUserId(Resource resource, String resourceId, String userId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -482,7 +482,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
 
   }
 
-  public void deleteAuthorizationsByResourceIdAndGroupId(Resource resource, @NonNull String resourceId, String groupId) {
+  public void deleteAuthorizationsByResourceIdAndGroupId(Resource resource, String resourceId, String groupId) {
 
     if(isAuthorizationEnabled()) {
       Map<String, Object> deleteParams = new HashMap<>();
@@ -1168,7 +1168,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
   }
 
   public DbOperation addRemovalTimeToAuthorizationsByRootProcessInstanceId(String rootProcessInstanceId,
-                                                                    Date removalTime, Integer batchSize) {
+                                                                    @Nullable Date removalTime, @Nullable Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);
@@ -1180,7 +1180,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
   }
 
   public DbOperation addRemovalTimeToAuthorizationsByProcessInstanceId(String processInstanceId,
-                                                                Date removalTime, Integer batchSize) {
+                                                                @Nullable Date removalTime, @Nullable Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);

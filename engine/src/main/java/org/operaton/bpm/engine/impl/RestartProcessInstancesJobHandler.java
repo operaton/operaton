@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -37,7 +39,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
  * @author Anna Pazola
  *
  */
-public class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler<RestartProcessInstancesBatchConfiguration>{
+public @NullMarked class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler<RestartProcessInstancesBatchConfiguration>{
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_RESTART);
   private static final RestartProcessInstancesBatchConfigurationJsonConverter JSON_CONVERTER =
@@ -54,7 +56,8 @@ public class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler<R
       CommandContext commandContext = Context.getCommandContext();
       ProcessDefinitionEntity processDefinitionEntity = commandContext.getProcessEngineConfiguration().getDeploymentCache()
           .findDeployedProcessDefinitionById(configuration.getProcessDefinitionId());
-      job.setDeploymentId(processDefinitionEntity.getDeploymentId());
+      String deploymentId = processDefinitionEntity != null ? processDefinitionEntity.getDeploymentId() : null;
+      job.setDeploymentId(deploymentId);
     }
   }
 
@@ -62,7 +65,7 @@ public class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler<R
   public void executeHandler(RestartProcessInstancesBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     String processDefinitionId = batchConfiguration.getProcessDefinitionId();
     RestartProcessInstanceBuilderImpl builder =

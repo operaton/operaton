@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
@@ -40,7 +42,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  * Job handler for message correlation jobs. The jobs correlate a message to a
  * list of process instances.
  */
-public class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler<MessageCorrelationBatchConfiguration> {
+public @NullMarked class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler<MessageCorrelationBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_CORRELATE_MESSAGE);
   private static final MessageCorrelationBatchConfigurationJsonConverter JSON_CONVERTER =
@@ -80,7 +82,7 @@ public class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler<M
   public void executeHandler(MessageCorrelationBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
     String batchId = batchConfiguration.getBatchId();
 
     MessageCorrelationBuilderImpl correlationBuilder = new MessageCorrelationBuilderImpl(commandContext, batchConfiguration.getMessageName());
@@ -92,15 +94,12 @@ public class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler<M
     }
   }
 
-  protected void setVariables(String batchId,
+  protected void setVariables(@Nullable String batchId,
                               MessageCorrelationBuilder correlationBuilder,
                               CommandContext commandContext) {
-    Map<String, ?> variables = null;
     if (batchId != null) {
-      variables = VariableUtil.findBatchVariablesSerialized(batchId, commandContext);
-      if (variables != null) {
-        correlationBuilder.setVariables(new VariableMapImpl(new HashMap<>(variables)));
-      }
+      Map<String, ?> variables = VariableUtil.findBatchVariablesSerialized(batchId, commandContext);
+      correlationBuilder.setVariables(new VariableMapImpl(new HashMap<>(variables)));
     }
   }
 

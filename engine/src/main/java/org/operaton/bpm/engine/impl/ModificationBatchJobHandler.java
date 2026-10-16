@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -31,7 +33,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
-public class ModificationBatchJobHandler extends AbstractBatchJobHandler<ModificationBatchConfiguration>{
+public @NullMarked class ModificationBatchJobHandler extends AbstractBatchJobHandler<ModificationBatchConfiguration>{
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION);
   private static final ModificationBatchConfigurationJsonConverter JSON_CONVERTER =
@@ -48,7 +50,8 @@ public class ModificationBatchJobHandler extends AbstractBatchJobHandler<Modific
       CommandContext commandContext = Context.getCommandContext();
       ProcessDefinitionEntity processDefinitionEntity = commandContext.getProcessEngineConfiguration().getDeploymentCache()
           .findDeployedProcessDefinitionById(configuration.getProcessDefinitionId());
-      job.setDeploymentId(processDefinitionEntity.getDeploymentId());
+      String deploymentId = processDefinitionEntity != null ? processDefinitionEntity.getDeploymentId() : null;
+      job.setDeploymentId(deploymentId);
     }
   }
 
@@ -56,7 +59,7 @@ public class ModificationBatchJobHandler extends AbstractBatchJobHandler<Modific
   public void executeHandler(ModificationBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     ModificationBuilderImpl executionBuilder = (ModificationBuilderImpl) commandContext.getProcessEngineConfiguration()
         .getRuntimeService()
@@ -98,7 +101,7 @@ public class ModificationBatchJobHandler extends AbstractBatchJobHandler<Modific
     return JSON_CONVERTER;
   }
 
-  protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
+  protected @Nullable ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
     return commandContext.getProcessEngineConfiguration()
         .getDeploymentCache()
         .findDeployedProcessDefinitionById(processDefinitionId);

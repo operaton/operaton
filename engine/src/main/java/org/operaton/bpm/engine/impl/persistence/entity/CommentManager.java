@@ -36,6 +36,7 @@ import org.operaton.bpm.engine.task.Event;
 /**
  * @author Tom Baeyens
  */
+@SuppressWarnings({"ConstantConditions", "java_S5738" })
 public @NullMarked class CommentManager extends AbstractHistoricManager {
 
 
@@ -57,7 +58,7 @@ public @NullMarked class CommentManager extends AbstractHistoricManager {
     return getDbEntityManager().selectList("selectCommentsByTaskId", taskId);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "java:S5738"})
   public List<Event> findEventsByTaskId(String taskId) {
     checkHistoryEnabled();
 
@@ -121,7 +122,7 @@ public @NullMarked class CommentManager extends AbstractHistoricManager {
     return (CommentEntity) getDbEntityManager().selectOne("selectCommentByProcessInstanceIdAndCommentId", parameters);
   }
 
-  public DbOperation addRemovalTimeToCommentsByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
+  public DbOperation addRemovalTimeToCommentsByRootProcessInstanceId(String rootProcessInstanceId, @Nullable Date removalTime, @Nullable Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);
@@ -131,7 +132,7 @@ public @NullMarked class CommentManager extends AbstractHistoricManager {
       .updatePreserveOrder(CommentEntity.class, "updateCommentsByRootProcessInstanceId", parameters);
   }
 
-  public DbOperation addRemovalTimeToCommentsByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
+  public DbOperation addRemovalTimeToCommentsByProcessInstanceId(String processInstanceId, @Nullable Date removalTime, @Nullable Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);

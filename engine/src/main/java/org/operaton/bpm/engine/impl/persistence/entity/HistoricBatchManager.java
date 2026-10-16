@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReportResult;
 import org.operaton.bpm.engine.impl.CleanableHistoricBatchReportImpl;
@@ -46,7 +48,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 import static java.util.Objects.requireNonNull;
 
-public class HistoricBatchManager extends AbstractManager {
+public @NullMarked class HistoricBatchManager extends AbstractManager {
   private static final String MAP = "map";
 
   public long findBatchCountByQueryCriteria(HistoricBatchQueryImpl historicBatchQuery) {
@@ -61,11 +63,11 @@ public class HistoricBatchManager extends AbstractManager {
     return getDbEntityManager().selectList("selectHistoricBatchesByQueryCriteria", historicBatchQuery, page);
   }
 
-  public HistoricBatchEntity findHistoricBatchById(String batchId) {
+  public @Nullable HistoricBatchEntity findHistoricBatchById(String batchId) {
     return getDbEntityManager().selectById(HistoricBatchEntity.class, batchId);
   }
 
-  public HistoricBatchEntity findHistoricBatchByJobId(String jobId) {
+  public @Nullable HistoricBatchEntity findHistoricBatchByJobId(String jobId) {
     return (HistoricBatchEntity) getDbEntityManager().selectOne("selectHistoricBatchByJobId", jobId);
   }
 
@@ -172,7 +174,8 @@ public class HistoricBatchManager extends AbstractManager {
     }
   }
 
-  public DbOperation deleteHistoricBatchesByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
+  @SuppressWarnings("ConstantConditions")
+  public DbOperation deleteHistoricBatchesByRemovalTime(@Nullable Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(REMOVAL_TIME, removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
@@ -186,7 +189,8 @@ public class HistoricBatchManager extends AbstractManager {
         new ListQueryParameterObject(parameters, 0, batchSize));
   }
 
-  public void addRemovalTimeById(String id, Date removalTime) {
+  @SuppressWarnings("ConstantConditions")
+  public void addRemovalTimeById(String id, @Nullable Date removalTime) {
     CommandContext commandContext = Context.getCommandContext();
 
     commandContext.getHistoricIncidentManager()

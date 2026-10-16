@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.batch.update;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.UpdateProcessInstancesSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 
-public class UpdateProcessInstancesSuspendStateJobHandler extends AbstractBatchJobHandler<UpdateProcessInstancesSuspendStateBatchConfiguration> {
+public @NullMarked class UpdateProcessInstancesSuspendStateJobHandler extends AbstractBatchJobHandler<UpdateProcessInstancesSuspendStateBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_UPDATE_SUSPENSION_STATE);
   private static final UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter JSON_CONVERTER =
@@ -59,7 +61,7 @@ public class UpdateProcessInstancesSuspendStateJobHandler extends AbstractBatchJ
   public void executeHandler(UpdateProcessInstancesSuspendStateBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     CommandExecutor commandExecutor = commandContext.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired();

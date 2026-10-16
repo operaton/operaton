@@ -390,11 +390,11 @@ public final @NullMarked class EnsureUtil {
     }
   }
 
-  public static void ensureValidIndividualResourceId(String message, String id) {
+  public static void ensureValidIndividualResourceId(String message, @Nullable String id) {
     ensureValidIndividualResourceId(ProcessEngineException.class, message, id);
   }
 
-  public static void ensureValidIndividualResourceId(Class<? extends ProcessEngineException> exceptionClass, String message, String id) {
+  public static void ensureValidIndividualResourceId(Class<? extends ProcessEngineException> exceptionClass, String message, @Nullable String id) {
     ensureNotNull(exceptionClass, message, "id", id);
     if (Authorization.ANY.equals(id)) {
       throw generateException(exceptionClass, message, "id", "cannot be %s. %s is a reserved identifier.".formatted(

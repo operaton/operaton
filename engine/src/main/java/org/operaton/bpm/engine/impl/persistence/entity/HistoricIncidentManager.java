@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.HistoricIncidentQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
@@ -38,7 +40,7 @@ import static java.util.Objects.requireNonNull;
  * @author Roman Smirnov
  *
  */
-public class HistoricIncidentManager extends AbstractHistoricManager {
+public @NullMarked class HistoricIncidentManager extends AbstractHistoricManager {
 
   public long findHistoricIncidentCountByQueryCriteria(HistoricIncidentQueryImpl query) {
     configureQuery(query);
@@ -46,7 +48,7 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
     return requireNonNull(count);
   }
 
-  public HistoricIncidentEntity findHistoricIncidentById(String id) {
+  public @Nullable HistoricIncidentEntity findHistoricIncidentById(String id) {
     return (HistoricIncidentEntity) getDbEntityManager().selectOne("selectHistoricIncidentById", id);
   }
 
@@ -56,7 +58,8 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
     return getDbEntityManager().selectList("selectHistoricIncidentByQueryCriteria", query, page);
   }
 
-  public DbOperation addRemovalTimeToIncidentsByRootProcessInstanceId(String rootProcessInstanceId, Date removalTime, Integer batchSize) {
+  @SuppressWarnings("ConstantConditions")
+  public DbOperation addRemovalTimeToIncidentsByRootProcessInstanceId(String rootProcessInstanceId, @Nullable Date removalTime, @Nullable Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);
@@ -66,7 +69,8 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
       .updatePreserveOrder(HistoricIncidentEventEntity.class, "updateHistoricIncidentsByRootProcessInstanceId", parameters);
   }
 
-  public DbOperation addRemovalTimeToIncidentsByProcessInstanceId(String processInstanceId, Date removalTime, Integer batchSize) {
+  @SuppressWarnings("ConstantConditions")
+  public DbOperation addRemovalTimeToIncidentsByProcessInstanceId(String processInstanceId, @Nullable Date removalTime, @Nullable Integer batchSize) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);
@@ -125,7 +129,8 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
         new ListQueryParameterObject(parameters, 0, batchSize));
   }
 
-  public void addRemovalTimeToHistoricIncidentsByBatchId(String batchId, Date removalTime) {
+  @SuppressWarnings("ConstantConditions")
+  public void addRemovalTimeToHistoricIncidentsByBatchId(String batchId, @Nullable Date removalTime) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(BATCH_ID, batchId);
     parameters.put(REMOVAL_TIME, removalTime);

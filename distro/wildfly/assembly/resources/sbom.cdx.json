@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:761f0b89-a19d-4635-a19a-1142e9fa78a3",
+  "serialNumber": "urn:uuid:82221b54-ce99-4504-9376-3961c7d34062",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-15T16:48:16Z",
+    "timestamp": "2026-10-16T00:57:01Z",
     "tools": {
       "components": [
         {
@@ -65,7 +65,7 @@
       "bom-ref": "pkg:maven/org.operaton.bpm/operaton-root@2.2.0-SNAPSHOT?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
-      "name": "operaton-root",
+      "name": "operaton-wildfly",
       "version": "2.2.0-SNAPSHOT",
       "description": "This pom defines the modules that make up the build. The parent pom for all Operaton projects can be found in the parent directory relative to this file.",
       "licenses": [
@@ -624,7 +624,7 @@
       "group": "org.junit.jupiter",
       "name": "junit-jupiter",
       "version": "6.0.3",
-      "description": "Module \u0022junit-jupiter\u0022 of JUnit",
+      "description": "Module \"junit-jupiter\" of JUnit",
       "scope": "required",
       "hashes": [
         {
@@ -685,7 +685,7 @@
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-api",
       "version": "6.0.3",
-      "description": "Module \u0022junit-jupiter-api\u0022 of JUnit",
+      "description": "Module \"junit-jupiter-api\" of JUnit",
       "scope": "required",
       "hashes": [
         {
@@ -807,7 +807,7 @@
       "group": "org.junit.platform",
       "name": "junit-platform-commons",
       "version": "6.0.3",
-      "description": "Module \u0022junit-platform-commons\u0022 of JUnit",
+      "description": "Module \"junit-platform-commons\" of JUnit",
       "scope": "required",
       "hashes": [
         {
@@ -929,7 +929,7 @@
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-params",
       "version": "6.0.3",
-      "description": "Module \u0022junit-jupiter-params\u0022 of JUnit",
+      "description": "Module \"junit-jupiter-params\" of JUnit",
       "scope": "required",
       "hashes": [
         {
@@ -990,7 +990,7 @@
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-engine",
       "version": "6.0.3",
-      "description": "Module \u0022junit-jupiter-engine\u0022 of JUnit",
+      "description": "Module \"junit-jupiter-engine\" of JUnit",
       "scope": "required",
       "hashes": [
         {
@@ -1051,7 +1051,7 @@
       "group": "org.junit.platform",
       "name": "junit-platform-engine",
       "version": "6.0.3",
-      "description": "Module \u0022junit-platform-engine\u0022 of JUnit",
+      "description": "Module \"junit-platform-engine\" of JUnit",
       "scope": "required",
       "hashes": [
         {
@@ -1175,7 +1175,7 @@
       "group": "com.tngtech.archunit",
       "name": "archunit-junit4",
       "version": "1.5.1",
-      "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module \u0027archunit-junit4\u0027",
+      "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module 'archunit-junit4'",
       "scope": "required",
       "hashes": [
         {
@@ -1237,7 +1237,7 @@
       "group": "com.tngtech.archunit",
       "name": "archunit",
       "version": "1.5.1",
-      "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module \u0027archunit\u0027",
+      "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module 'archunit'",
       "scope": "required",
       "hashes": [
         {
@@ -1924,7 +1924,7 @@
       "group": "org.hamcrest",
       "name": "hamcrest-core",
       "version": "3.0",
-      "description": "Core Hamcrest API - deprecated, please use \u0022hamcrest\u0022 instead",
+      "description": "Core Hamcrest API - deprecated, please use \"hamcrest\" instead",
       "scope": "required",
       "hashes": [
         {
@@ -3240,7 +3240,7 @@
       "group": "org.graalvm.js",
       "name": "js-language",
       "version": "25.4.4.1.1",
-      "description": "GraalJS, a high-performance embeddable JavaScript runtime for Java. This artifact includes the core language runtime without standard libraries. It is not recommended to depend on the artifact directly. Instead, use \u0027org.graalvm.polyglot:js\u0027 or \u0027org.graalvm.polyglot:js-community\u0027 to ensure all dependencies are pulled in correctly.",
+      "description": "GraalJS, a high-performance embeddable JavaScript runtime for Java. This artifact includes the core language runtime without standard libraries. It is not recommended to depend on the artifact directly. Instead, use 'org.graalvm.polyglot:js' or 'org.graalvm.polyglot:js-community' to ensure all dependencies are pulled in correctly.",
       "scope": "required",
       "hashes": [
         {
@@ -3618,7 +3618,7 @@
       "group": "org.graalvm.truffle",
       "name": "truffle-runtime",
       "version": "25.4.4.1.1",
-      "description": "The Truffle runtime for Graal Languages. It is not recommended to depend on this artifact directly. Instead, use a POM dependency of one or more Graal Languages (for example \u0060org.graalvm.polyglot:js\u0060) to ensure all dependencies are pulled in correctly.",
+      "description": "The Truffle runtime for Graal Languages. It is not recommended to depend on this artifact directly. Instead, use a POM dependency of one or more Graal Languages (for example `org.graalvm.polyglot:js`) to ensure all dependencies are pulled in correctly.",
       "scope": "required",
       "hashes": [
         {
@@ -3742,7 +3742,7 @@
       "group": "org.graalvm.js",
       "name": "js-scriptengine",
       "version": "25.4.4.1.1",
-      "description": "GraalJS, a high-performance embeddable JavaScript runtime for Java. This artifact provides an implementation of javax.script.ScriptEngine (JSR-223) based on GraalJS. Note that this is provided for legacy reasons to allow easier migration for implementations currently based on a ScriptEngine. We strongly encourage users to only use \u0027org.graalvm.polyglot:js\u0027 or \u0027org.graalvm.polyglot:js-community\u0027 via org.graalvm.polyglot.Context to control many of the settings directly and benefit from fine-grained security settings in GraalVM.",
+      "description": "GraalJS, a high-performance embeddable JavaScript runtime for Java. This artifact provides an implementation of javax.script.ScriptEngine (JSR-223) based on GraalJS. Note that this is provided for legacy reasons to allow easier migration for implementations currently based on a ScriptEngine. We strongly encourage users to only use 'org.graalvm.polyglot:js' or 'org.graalvm.polyglot:js-community' via org.graalvm.polyglot.Context to control many of the settings directly and benefit from fine-grained security settings in GraalVM.",
       "scope": "required",
       "hashes": [
         {
@@ -7751,7 +7751,7 @@
       "group": "com.fasterxml.jackson.datatype",
       "name": "jackson-datatype-jsr310",
       "version": "2.22.3",
-      "description": "Add-on module to support JSR-310 (Java 8 Date \u0026 Time API) data types.",
+      "description": "Add-on module to support JSR-310 (Java 8 Date & Time API) data types.",
       "scope": "required",
       "hashes": [
         {
@@ -9845,7 +9845,7 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6&type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine",
@@ -9859,7 +9859,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6&type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine",
@@ -10142,7 +10142,7 @@
       "group": "net.minidev",
       "name": "json-smart",
       "version": "2.6.0",
-      "description": "JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate. It is based on a subset of the JavaScript Programming Language, Standard ECMA-262 3rd Edition - December 1999. JSON is a text format that is completely language independent but uses conventions that are familiar to programmers of the C-family of languages, including C, C\u002B\u002B, C#, Java, JavaScript, Perl, Python, and many others. These properties make JSON an ideal data-interchange language.",
+      "description": "JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate. It is based on a subset of the JavaScript Programming Language, Standard ECMA-262 3rd Edition - December 1999. JSON is a text format that is completely language independent but uses conventions that are familiar to programmers of the C-family of languages, including C, C++, C#, Java, JavaScript, Perl, Python, and many others. These properties make JSON an ideal data-interchange language.",
       "scope": "required",
       "hashes": [
         {
@@ -11784,7 +11784,7 @@
       "group": "com.fasterxml.jackson.module",
       "name": "jackson-module-jakarta-xmlbind-annotations",
       "version": "2.22.3",
-      "description": "Support for using Jakarta XML Bind (aka JAXB 3.0) annotations as an alternative to \u0022native\u0022 Jackson annotations, for configuring data-binding.",
+      "description": "Support for using Jakarta XML Bind (aka JAXB 3.0) annotations as an alternative to \"native\" Jackson annotations, for configuring data-binding.",
       "scope": "required",
       "hashes": [
         {
@@ -13541,7 +13541,7 @@
       "group": "com.google.guava",
       "name": "failureaccess",
       "version": "1.0.3",
-      "description": "Contains com.google.common.util.concurrent.internal.InternalFutureFailureAccess and InternalFutures. Most users will never need to use this artifact. Its classes are conceptually a part of Guava, but they\u0027re in this separate artifact so that Android libraries can use them without pulling in all of Guava (just as they can use ListenableFuture by depending on the listenablefuture artifact).",
+      "description": "Contains com.google.common.util.concurrent.internal.InternalFutureFailureAccess and InternalFutures. Most users will never need to use this artifact. Its classes are conceptually a part of Guava, but they're in this separate artifact so that Android libraries can use them without pulling in all of Guava (just as they can use ListenableFuture by depending on the listenablefuture artifact).",
       "scope": "required",
       "hashes": [
         {
@@ -15262,7 +15262,7 @@
       "group": "org.codehaus.plexus",
       "name": "plexus-compiler-api",
       "version": "2.16.2",
-      "description": "Plexus Compilers component\u0027s API to manipulate compilers.",
+      "description": "Plexus Compilers component's API to manipulate compilers.",
       "scope": "required",
       "hashes": [
         {
@@ -16661,7 +16661,7 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources&type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest-core",
@@ -16675,7 +16675,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources&type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest-core",
@@ -16693,7 +16693,7 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests&type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest-core",
@@ -16707,7 +16707,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests&type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest-core",
@@ -16975,7 +16975,7 @@
       "group": "com.fasterxml.jackson.module",
       "name": "jackson-module-jaxb-annotations",
       "version": "2.22.3",
-      "description": "Support for using JAXB annotations as an alternative to \u0022native\u0022 Jackson annotations, for configuring data-binding.",
+      "description": "Support for using JAXB annotations as an alternative to \"native\" Jackson annotations, for configuring data-binding.",
       "scope": "required",
       "hashes": [
         {
@@ -17247,7 +17247,7 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes&type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest",
@@ -17261,7 +17261,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes&type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest",
@@ -17279,7 +17279,7 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit5&type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine",
@@ -17293,7 +17293,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit5&type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine",
@@ -17527,7 +17527,7 @@
       "group": "jakarta.interceptor",
       "name": "jakarta.interceptor-api",
       "version": "2.2.0",
-      "description": "Jakarta Interceptors defines a means of interposing on business method invocations and specific events\u2014such as lifecycle events and timeout events\u2014that occur on instances of Jakarta EE components and other managed classes.",
+      "description": "Jakarta Interceptors defines a means of interposing on business method invocations and specific events—such as lifecycle events and timeout events—that occur on instances of Jakarta EE components and other managed classes.",
       "scope": "required",
       "hashes": [
         {
@@ -17593,7 +17593,7 @@
       "group": "jakarta.enterprise.concurrent",
       "name": "jakarta.enterprise.concurrent-api",
       "version": "3.1.1",
-      "description": "Jakarta Concurrency provides a specification for using concurrency from application components without compromising container integrity while still preserving the Jakarta EE platform\u2019s fundamental benefits.",
+      "description": "Jakarta Concurrency provides a specification for using concurrency from application components without compromising container integrity while still preserving the Jakarta EE platform’s fundamental benefits.",
       "scope": "required",
       "hashes": [
         {
@@ -18347,7 +18347,7 @@
       "group": "org.freemarker",
       "name": "freemarker",
       "version": "2.3.35",
-      "description": "FreeMarker is a \u0022template engine\u0022; a generic tool to generate text output based on templates.",
+      "description": "FreeMarker is a \"template engine\"; a generic tool to generate text output based on templates.",
       "scope": "required",
       "hashes": [
         {
@@ -18417,7 +18417,7 @@
       "group": "org.operaton.bpm",
       "name": "operaton-bpm-junit5",
       "version": "2.2.0-SNAPSHOT",
-      "description": "DEPRECATED since 1.1: This module is deprecated and will be removed in a future release. Use the following dependency instead: \u003Cdependency\u003E \u003CgroupId\u003Eorg.operaton.bpm\u003C/groupId\u003E \u003CartifactId\u003Eoperaton-engine\u003C/artifactId\u003E \u003Cclassifier\u003Ejunit5\u003C/classifier\u003E \u003Cscope\u003Etest\u003C/scope\u003E \u003C/dependency\u003E",
+      "description": "DEPRECATED since 1.1: This module is deprecated and will be removed in a future release. Use the following dependency instead: <dependency> <groupId>org.operaton.bpm</groupId> <artifactId>operaton-engine</artifactId> <classifier>junit5</classifier> <scope>test</scope> </dependency>",
       "licenses": [
         {
           "license": {
@@ -19783,7 +19783,7 @@
       "licenses": [
         {
           "license": {
-            "id": "LGPL-2.1\u002B",
+            "id": "LGPL-2.1+",
             "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
@@ -25115,7 +25115,7 @@
       "group": "org.hibernate.validator",
       "name": "hibernate-validator",
       "version": "9.1.3.Final",
-      "description": "Hibernate\u0027s Jakarta Validation reference implementation.",
+      "description": "Hibernate's Jakarta Validation reference implementation.",
       "scope": "required",
       "hashes": [
         {
@@ -25855,7 +25855,7 @@
       "group": "jakarta.authentication",
       "name": "jakarta.authentication-api",
       "version": "3.1.0",
-      "description": "Jakarta Authentication defines a general low-level SPI for authentication mechanisms, which are controllers that interact with a caller and a container\u0027s environment to obtain the caller\u0027s credentials, validate these, and pass an authenticated identity (such as name and groups) to the container. Jakarta Authentication consists of several profiles, with each profile telling how a specific container (such as Jakarta Servlet) can integrate with- and adapt to this SPI.",
+      "description": "Jakarta Authentication defines a general low-level SPI for authentication mechanisms, which are controllers that interact with a caller and a container's environment to obtain the caller's credentials, validate these, and pass an authenticated identity (such as name and groups) to the container. Jakarta Authentication consists of several profiles, with each profile telling how a specific container (such as Jakarta Servlet) can integrate with- and adapt to this SPI.",
       "scope": "required",
       "hashes": [
         {
@@ -26036,7 +26036,7 @@
       "licenses": [
         {
           "license": {
-            "id": "LGPL-2.1\u002B",
+            "id": "LGPL-2.1+",
             "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
@@ -26107,7 +26107,7 @@
       "licenses": [
         {
           "license": {
-            "id": "LGPL-2.1\u002B",
+            "id": "LGPL-2.1+",
             "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
@@ -26178,7 +26178,7 @@
       "licenses": [
         {
           "license": {
-            "id": "LGPL-2.1\u002B",
+            "id": "LGPL-2.1+",
             "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
@@ -26249,7 +26249,7 @@
       "licenses": [
         {
           "license": {
-            "id": "LGPL-2.1\u002B",
+            "id": "LGPL-2.1+",
             "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
@@ -26320,7 +26320,7 @@
       "licenses": [
         {
           "license": {
-            "id": "LGPL-2.1\u002B",
+            "id": "LGPL-2.1+",
             "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
@@ -26391,7 +26391,7 @@
       "licenses": [
         {
           "license": {
-            "id": "LGPL-2.1\u002B",
+            "id": "LGPL-2.1+",
             "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
@@ -26462,7 +26462,7 @@
       "licenses": [
         {
           "license": {
-            "id": "LGPL-2.1\u002B",
+            "id": "LGPL-2.1+",
             "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
@@ -30643,7 +30643,7 @@
       "group": "org.wildfly",
       "name": "wildfly-common-ee-dependency-management",
       "version": "41.0.1.Final",
-      "description": "Common dependency management that can be imported by other boms used for traditional capabilities like Jakarta EE. Not meant for direct use as a bom. Contains items common to *all* feature-packs that directly provide \u0027base\u0027 functionality, e.g. the wildfly-ee feature-pack.",
+      "description": "Common dependency management that can be imported by other boms used for traditional capabilities like Jakarta EE. Not meant for direct use as a bom. Contains items common to *all* feature-packs that directly provide 'base' functionality, e.g. the wildfly-ee feature-pack.",
       "scope": "required",
       "hashes": [
         {
@@ -31016,7 +31016,7 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly\u0026type=war",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly&type=war",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest",
@@ -31030,7 +31030,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly\u0026type=war",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly&type=war",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest",
@@ -31079,7 +31079,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "5a53e3ac-8a27-46bc-8fdd-5cd6cc835348",
+      "bom-ref": "d64ab587-c9d5-479e-8a7a-2b64a7b6f834",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36335,7 +36335,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "f776252c-0509-4627-9443-e20b47d534c3",
+      "bom-ref": "81b3e0fc-149d-45f5-a677-87f26a3160a8",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -37530,15 +37530,15 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?type=war",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources&type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.5.Final?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests&type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources&type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
@@ -37595,7 +37595,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests&type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
@@ -38265,7 +38265,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6&type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.27?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.27?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
@@ -38273,7 +38273,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6&type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.2.0-SNAPSHOT?type=jar",
@@ -38298,7 +38298,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit6&type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.3?type=jar"
       ]
     },
@@ -38336,11 +38336,11 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.2.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit5\u0026type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit5&type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?classifier=junit5&type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.2.0-SNAPSHOT?type=jar",
@@ -39954,7 +39954,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes&type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/org.apache.groovy/groovy@5.1.3?type=jar",
         "pkg:maven/org.apache.groovy/groovy-jsr223@5.1.3?type=jar",
@@ -40000,7 +40000,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes&type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?type=jar"
       ]
@@ -40017,7 +40017,7 @@
         "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.2.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm.wildfly/operaton-wildfly-assembly@2.2.0-SNAPSHOT?type=tar.gz",
         "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.25.0?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly\u0026type=war",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly&type=war",
         "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-wildfly@2.2.0-SNAPSHOT?type=war",
         "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.2.0-SNAPSHOT?type=war"
       ]
@@ -40032,7 +40032,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=classes&type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/org.apache.groovy/groovy@5.1.3?type=jar",
         "pkg:maven/org.apache.groovy/groovy-jsr223@5.1.3?type=jar",
@@ -40047,11 +40047,17 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly\u0026type=war",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly&type=war",
       "dependsOn": []
     },
     {
-      "ref": "5a53e3ac-8a27-46bc-8fdd-5cd6cc835348",
+      "ref": "81b3e0fc-149d-45f5-a677-87f26a3160a8",
+      "dependsOn": [
+        "d64ab587-c9d5-479e-8a7a-2b64a7b6f834"
+      ]
+    },
+    {
+      "ref": "d64ab587-c9d5-479e-8a7a-2b64a7b6f834",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -40098,12 +40104,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
-      ]
-    },
-    {
-      "ref": "f776252c-0509-4627-9443-e20b47d534c3",
-      "dependsOn": [
-        "5a53e3ac-8a27-46bc-8fdd-5cd6cc835348"
       ]
     },
     {
@@ -41507,7 +41507,7 @@
       "id": "CVE-2022-25844",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -41556,7 +41556,7 @@
       "cwes": [
         1333
       ],
-      "description": "The package angular after 1.7.0 are vulnerable to Regular Expression Denial of Service (ReDoS) by providing a custom locale rule that makes it possible to assign the parameter in posPre: \u0027 \u0027.repeat() of NUMBER_FORMATS.PATTERNS[1].posPre with a very high value. **Note:** 1) This package has been deprecated and is no longer maintained. 2) The vulnerable versions are 1.7.0 and higher.",
+      "description": "The package angular after 1.7.0 are vulnerable to Regular Expression Denial of Service (ReDoS) by providing a custom locale rule that makes it possible to assign the parameter in posPre: ' '.repeat() of NUMBER_FORMATS.PATTERNS[1].posPre with a very high value. **Note:** 1) This package has been deprecated and is no longer maintained. 2) The vulnerable versions are 1.7.0 and higher.",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2022-25844"
@@ -41631,7 +41631,7 @@
       "id": "CVE-2022-25869",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -41665,7 +41665,7 @@
       "cwes": [
         79
       ],
-      "description": "All versions of the package angular; all versions of the package angularjs.core; all versions of the package angularjs are vulnerable to Cross-site Scripting (XSS) due to insecure page caching in the Internet Explorer browser, which allows interpolation of \u003Ctextarea\u003E elements.",
+      "description": "All versions of the package angular; all versions of the package angularjs.core; all versions of the package angularjs are vulnerable to Cross-site Scripting (XSS) due to insecure page caching in the Internet Explorer browser, which allows interpolation of <textarea> elements.",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2022-25869"
@@ -41737,7 +41737,7 @@
       "id": "CVE-2023-26116",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -41846,7 +41846,7 @@
       "id": "CVE-2023-26117",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -41955,7 +41955,7 @@
       "id": "CVE-2023-26118",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -41995,7 +41995,7 @@
       "cwes": [
         1333
       ],
-      "description": "Versions of the package angular from 1.4.9 are vulnerable to Regular Expression Denial of Service (ReDoS) via the \u003Cinput type=\u0022url\u0022\u003E element due to the usage of an insecure regular expression in the input[url] functionality. Exploiting this vulnerability is possible by a large carefully-crafted input, which can result in catastrophic backtracking.",
+      "description": "Versions of the package angular from 1.4.9 are vulnerable to Regular Expression Denial of Service (ReDoS) via the <input type=\"url\"> element due to the usage of an insecure regular expression in the input[url] functionality. Exploiting this vulnerability is possible by a large carefully-crafted input, which can result in catastrophic backtracking.",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2023-26118"
@@ -42064,7 +42064,7 @@
       "id": "CVE-2024-21490",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -42164,7 +42164,7 @@
       "id": "CVE-2024-38999",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -42244,7 +42244,7 @@
       "id": "CVE-2024-8372",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -42293,7 +42293,7 @@
       "cwes": [
         1289
       ],
-      "description": "Improper sanitization of the value of the \u0027srcset\u0027 attribute in AngularJS allows attackers to bypass common image source restrictions, which can also lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing .\n\nThis issue affects AngularJS versions 1.3.0-rc.4 and greater.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
+      "description": "Improper sanitization of the value of the 'srcset' attribute in AngularJS allows attackers to bypass common image source restrictions, which can also lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing .\n\nThis issue affects AngularJS versions 1.3.0-rc.4 and greater.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-8372"
@@ -42347,7 +42347,7 @@
       "id": "CVE-2024-8373",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -42396,7 +42396,7 @@
       "cwes": [
         791
       ],
-      "description": "Improper sanitization of the value of the [srcset] attribute in \u003Csource\u003E HTML elements in AngularJS allows attackers to bypass common image source restrictions, which can also lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing .\n\nThis issue affects all versions of AngularJS.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
+      "description": "Improper sanitization of the value of the [srcset] attribute in <source> HTML elements in AngularJS allows attackers to bypass common image source restrictions, which can also lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing .\n\nThis issue affects all versions of AngularJS.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-8373"
@@ -42450,7 +42450,7 @@
       "id": "CVE-2025-0716",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -42490,7 +42490,7 @@
       "cwes": [
         791
       ],
-      "description": "Improper sanitization of the value of the \u0027href\u0027 and \u0027xlink:href\u0027 attributes in \u0027\u003Cimage\u003E\u0027 SVG elements in AngularJS allows attackers to bypass common image source restrictions. This can lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing \u00A0and also negatively affect the application\u0027s performance and behavior by using too large or slow-to-load images.\n\nThis issue affects all versions of AngularJS.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
+      "description": "Improper sanitization of the value of the 'href' and 'xlink:href' attributes in '<image>' SVG elements in AngularJS allows attackers to bypass common image source restrictions. This can lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing  and also negatively affect the application's performance and behavior by using too large or slow-to-load images.\n\nThis issue affects all versions of AngularJS.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2025-0716"
@@ -42538,7 +42538,7 @@
       "id": "CVE-2025-2336",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -42560,7 +42560,7 @@
       "cwes": [
         791
       ],
-      "description": "Improper sanitization of the value of the \u0027href\u0027 and \u0027xlink:href\u0027 attributes in \u0027\u003Cimage\u003E\u0027 SVG elements in AngularJS\u0027s\u00A0\u0027ngSanitize\u0027\u00A0module allows attackers to bypass common image source restrictions. This can lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing \u00A0and also negatively affect the application\u0027s performance and behavior by using too large or slow-to-load images.\n\nThis issue affects AngularJS versions greater than or equal to 1.3.1.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
+      "description": "Improper sanitization of the value of the 'href' and 'xlink:href' attributes in '<image>' SVG elements in AngularJS's 'ngSanitize' module allows attackers to bypass common image source restrictions. This can lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing  and also negatively affect the application's performance and behavior by using too large or slow-to-load images.\n\nThis issue affects AngularJS versions greater than or equal to 1.3.1.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2025-2336"
@@ -42608,7 +42608,7 @@
       "id": "CVE-2026-11998",
       "source": {
         "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
       },
       "ratings": [
         {
@@ -42634,7 +42634,7 @@
         791,
         79
       ],
-      "description": "A flaw in AngularJS\u0027 Strict Contextual Escaping (SCE) logic allows bypassing certain SCE policies for resource URLs and can lead to arbitrary JavaScript execution within the context of the victim\u0027s browser session.\n\n\nSCE\u0027s purpose is to ensure that only trusted or safe values are used in certain security-sensitive contexts, such as resource URLs, including URLs that define executable JavaScript scripts, \u0027\u003Ciframe\u003E\u0027 documents, route templates, etc. A flaw in the logic that tries to match entire URLs against regular expression matchers can result in partial matches for certain types of regular expressions, effectively bypassing the policies and allowing the use of unsafe values as resource URLs.\n\n\nThis issue affects AngularJS versions greater than or equal to 1.2.0-rc.3.\n\n\nNote:\nThe AngularJS project was already End-of-Life when this CVE was published and will not receive any updates to address this issue. For more information see the\u00A0 End-of-Life announcement https://docs.angularjs.org/misc/version-support-status .",
+      "description": "A flaw in AngularJS' Strict Contextual Escaping (SCE) logic allows bypassing certain SCE policies for resource URLs and can lead to arbitrary JavaScript execution within the context of the victim's browser session.\n\n\nSCE's purpose is to ensure that only trusted or safe values are used in certain security-sensitive contexts, such as resource URLs, including URLs that define executable JavaScript scripts, '<iframe>' documents, route templates, etc. A flaw in the logic that tries to match entire URLs against regular expression matchers can result in partial matches for certain types of regular expressions, effectively bypassing the policies and allowing the use of unsafe values as resource URLs.\n\n\nThis issue affects AngularJS versions greater than or equal to 1.2.0-rc.3.\n\n\nNote:\nThe AngularJS project was already End-of-Life when this CVE was published and will not receive any updates to address this issue. For more information see the  End-of-Life announcement https://docs.angularjs.org/misc/version-support-status .",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2026-11998"

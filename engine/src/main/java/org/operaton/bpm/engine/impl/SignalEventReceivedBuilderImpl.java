@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.cmd.SignalEventReceivedCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -102,7 +104,7 @@ public class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilde
     return executionId;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

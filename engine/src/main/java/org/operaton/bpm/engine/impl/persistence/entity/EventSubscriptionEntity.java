@@ -54,7 +54,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   protected String activityId;
   protected String configuration;
   protected Date created;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   // runtime state /////////////////////////////
   protected ExecutionEntity execution;
@@ -329,11 +329,11 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

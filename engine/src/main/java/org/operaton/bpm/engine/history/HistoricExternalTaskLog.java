@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.history;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 
@@ -120,7 +122,7 @@ public interface HistoricExternalTaskLog {
    * Returns the id of the tenant this external task log entry belongs to. Can be <code>null</code>
    * if the external task log entry belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * Returns <code>true</code> when <code>this</code> log represents

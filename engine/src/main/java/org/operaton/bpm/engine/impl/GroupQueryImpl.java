@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -137,7 +139,7 @@ public abstract class GroupQueryImpl extends AbstractQuery<GroupQuery, Group> im
   public String getUserId() {
     return userId;
   }
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
   public String[] getIds() {

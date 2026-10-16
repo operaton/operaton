@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.repository;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.repository.ResourceDefinition;
 
 /**
@@ -39,7 +41,7 @@ public interface ResourceDefinitionEntity<T extends ResourceDefinition> extends 
 
   void setDiagramResourceName(String diagramResourceName);
 
-  void setTenantId(String tenantId);
+  void setTenantId(@Nullable String tenantId);
 
   ResourceDefinitionEntity getPreviousDefinition();
 

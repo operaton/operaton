@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.util.ByteArrayField;
@@ -44,7 +46,7 @@ public class HistoricDecisionInputInstanceEntity extends HistoryEvent implements
   protected String textValue;
   protected String textValue2;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   protected transient ByteArrayField byteArrayField;
   protected transient TypedValueField typedValueField = new TypedValueField(this, false);
@@ -192,11 +194,11 @@ public class HistoricDecisionInputInstanceEntity extends HistoryEvent implements
     typedValueField.setSerializerName(serializerName);
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnSentryPart;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -48,7 +50,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
   protected String caseInstanceId;
   protected String caseExecutionId;
   protected String sourceCaseExecutionId;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   private boolean forcedUpdate;
 
   // id ///////////////////////////////////////////////////////////////////
@@ -168,11 +170,11 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
     return revision + 1;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

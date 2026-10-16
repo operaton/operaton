@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.runtime;
 
+import org.jspecify.annotations.Nullable;
 /**
  * <p>Represent a planned item in a case instance.</p>
  *
@@ -109,6 +110,6 @@ public interface CaseExecution {
    * The id of the tenant this case execution belongs to. Can be <code>null</code>
    * if the case execution belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
 }

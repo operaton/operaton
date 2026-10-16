@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.operaton.bpm.engine.variable.VariableMap;
 
@@ -83,7 +85,7 @@ public class ProcessInstanceWithVariablesImpl implements ProcessInstanceWithVari
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return executionEntity.getTenantId();
   }
 

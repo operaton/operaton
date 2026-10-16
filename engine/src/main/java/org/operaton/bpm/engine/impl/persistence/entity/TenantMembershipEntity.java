@@ -63,7 +63,7 @@ public class TenantMembershipEntity implements DbEntity {
     this.group = group;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenant.getId();
   }
 

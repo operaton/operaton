@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.management;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
@@ -94,7 +96,7 @@ public interface JobDefinition {
    * The id of the tenant this job definition belongs to. Can be <code>null</code>
    * if the definition belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * The id of the deployment this job definition is related to. In a deployment-aware setup,

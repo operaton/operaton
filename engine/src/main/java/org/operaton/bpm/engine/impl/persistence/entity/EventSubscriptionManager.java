@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.EventSubscriptionQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -117,7 +119,7 @@ public class EventSubscriptionManager extends AbstractManager {
    * Find all signal event subscriptions with the given event name and tenant.
    */
   @SuppressWarnings("unchecked")
-  public List<EventSubscriptionEntity> findSignalEventSubscriptionsByEventNameAndTenantId(String eventName, String tenantId) {
+  public List<EventSubscriptionEntity> findSignalEventSubscriptionsByEventNameAndTenantId(String eventName, @Nullable String tenantId) {
     final String query = "selectSignalEventSubscriptionsByEventNameAndTenantId";
 
     Map<String, Object> parameter = new HashMap<>();
@@ -138,7 +140,7 @@ public class EventSubscriptionManager extends AbstractManager {
    * Find all signal event subscriptions with the given event name which belongs to the given tenant or no tenant.
    */
   @SuppressWarnings("unchecked")
-  public List<EventSubscriptionEntity> findSignalEventSubscriptionsByEventNameAndTenantIdIncludeWithoutTenantId(String eventName, String tenantId) {
+  public List<EventSubscriptionEntity> findSignalEventSubscriptionsByEventNameAndTenantIdIncludeWithoutTenantId(String eventName, @Nullable String tenantId) {
     final String query = "selectSignalEventSubscriptionsByEventNameAndTenantIdIncludeWithoutTenantId";
 
     Map<String, Object> parameter = new HashMap<>();
@@ -155,7 +157,7 @@ public class EventSubscriptionManager extends AbstractManager {
     return new ArrayList<>(eventSubscriptions);
   }
 
-  protected boolean hasTenantId(EventSubscriptionEntity entity, String tenantId) {
+  protected boolean hasTenantId(EventSubscriptionEntity entity, @Nullable String tenantId) {
     if (tenantId == null) {
       return entity.getTenantId() == null;
     } else {
@@ -239,7 +241,7 @@ public class EventSubscriptionManager extends AbstractManager {
   }
 
   @SuppressWarnings({"unchecked", "unused"})
-  public List<EventSubscriptionEntity> findEventSubscriptionsByNameAndTenantId(String type, String eventName, String tenantId) {
+  public List<EventSubscriptionEntity> findEventSubscriptionsByNameAndTenantId(String type, String eventName, @Nullable String tenantId) {
     final String query = "selectEventSubscriptionsByNameAndTenantId";
     Map<String,String> params = new HashMap<>();
     params.put(EVENT_TYPE, type);
@@ -289,7 +291,7 @@ public class EventSubscriptionManager extends AbstractManager {
    *
    * @see #findMessageStartEventSubscriptionByName(String)
    */
-  public EventSubscriptionEntity findMessageStartEventSubscriptionByNameAndTenantId(String messageName, String tenantId) {
+  public EventSubscriptionEntity findMessageStartEventSubscriptionByNameAndTenantId(String messageName, @Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(MESSAGE_NAME, messageName);
     parameters.put(TENANT_ID, tenantId);
@@ -301,7 +303,7 @@ public class EventSubscriptionManager extends AbstractManager {
    * @return the conditional start event subscriptions with the given tenant id
    */
   @SuppressWarnings("unchecked")
-  public List<EventSubscriptionEntity> findConditionalStartEventSubscriptionByTenantId(String tenantId) {
+  public List<EventSubscriptionEntity> findConditionalStartEventSubscriptionByTenantId(@Nullable String tenantId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(TENANT_ID, tenantId);
 

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.history;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -127,5 +129,5 @@ public interface HistoricDecisionInstance {
    * The id of the tenant this historic decision instance belongs to. Can be <code>null</code>
    * if the historic decision instance belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 }

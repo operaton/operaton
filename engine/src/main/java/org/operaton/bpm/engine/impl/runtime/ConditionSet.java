@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.runtime;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ConditionEvaluationBuilderImpl;
 import org.operaton.bpm.engine.variable.VariableMap;
 
@@ -24,7 +26,7 @@ public class ConditionSet {
   protected final String businessKey;
   protected final String processDefinitionId;
   protected final VariableMap variables;
-  protected final String tenantId;
+  protected final @Nullable String tenantId;
   protected final boolean isTenantIdSet;
 
   public ConditionSet(ConditionEvaluationBuilderImpl builder) {
@@ -47,7 +49,7 @@ public class ConditionSet {
     return variables;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

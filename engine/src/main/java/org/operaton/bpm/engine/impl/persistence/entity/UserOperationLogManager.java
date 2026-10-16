@@ -178,11 +178,11 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logTenantOperation(IdentityOperationResult operationResult, String tenantId) {
+  public void logTenantOperation(IdentityOperationResult operationResult, @Nullable String tenantId) {
     logTenantOperation(getOperationType(operationResult), tenantId);
   }
 
-  public void logTenantOperation(@Nullable String operation, String tenantId) {
+  public void logTenantOperation(@Nullable String operation, @Nullable String tenantId) {
     if (operation != null && isUserOperationLogEnabled()) {
       UserOperationLogContext context = new UserOperationLogContext();
       UserOperationLogContextEntryBuilder entryBuilder =
@@ -196,7 +196,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logMembershipOperation(IdentityOperationResult operationResult, String userId, String groupId, String tenantId) {
+  public void logMembershipOperation(IdentityOperationResult operationResult, String userId, String groupId, @Nullable String tenantId) {
     logMembershipOperation(getOperationType(operationResult), userId, groupId, tenantId);
   }
 
@@ -340,7 +340,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logCaseInstanceOperation(String operation, String caseInstanceId, String tenantId, List<PropertyChange> propertyChanges) {
+  public void logCaseInstanceOperation(String operation, String caseInstanceId, @Nullable String tenantId, List<PropertyChange> propertyChanges) {
     if (isUserOperationLogEnabled()) {
 
       UserOperationLogContext context = new UserOperationLogContext();
@@ -356,7 +356,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logCaseDefinitionOperation(String operation, String caseDefinitionId, String tenantId, List<PropertyChange> propertyChanges) {
+  public void logCaseDefinitionOperation(String operation, String caseDefinitionId, @Nullable String tenantId, List<PropertyChange> propertyChanges) {
     if (isUserOperationLogEnabled()) {
 
       UserOperationLogContext context = new UserOperationLogContext();
@@ -372,7 +372,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logDecisionDefinitionOperation(String operation, String tenantId, List<PropertyChange> propertyChanges) {
+  public void logDecisionDefinitionOperation(String operation, @Nullable String tenantId, List<PropertyChange> propertyChanges) {
     if (isUserOperationLogEnabled()) {
 
       UserOperationLogContext context = new UserOperationLogContext();
@@ -594,7 +594,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logDeploymentOperation(String operation, String deploymentId, String tenantId, List<PropertyChange> propertyChanges) {
+  public void logDeploymentOperation(String operation, String deploymentId, @Nullable String tenantId, List<PropertyChange> propertyChanges) {
     if(isUserOperationLogEnabled()) {
 
       UserOperationLogContext context = new UserOperationLogContext();
@@ -612,15 +612,15 @@ public class UserOperationLogManager extends AbstractHistoricManager {
 
   }
 
-  public void logBatchOperation(String operation, String tenantId, List<PropertyChange> propertyChange) {
+  public void logBatchOperation(String operation, @Nullable String tenantId, List<PropertyChange> propertyChange) {
     logBatchOperation(operation, null, tenantId, propertyChange);
   }
 
-  public void logBatchOperation(String operation, String batchId, String tenantId, PropertyChange propertyChange) {
+  public void logBatchOperation(String operation, String batchId, @Nullable String tenantId, PropertyChange propertyChange) {
     logBatchOperation(operation, batchId, tenantId, Collections.singletonList(propertyChange));
   }
 
-  public void logBatchOperation(String operation, String batchId, String tenantId, List<PropertyChange> propertyChanges) {
+  public void logBatchOperation(String operation, String batchId, @Nullable String tenantId, List<PropertyChange> propertyChanges) {
     if(isUserOperationLogEnabled()) {
       UserOperationLogContext context = new UserOperationLogContext();
       UserOperationLogContextEntryBuilder entryBuilder =
@@ -636,7 +636,7 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logDecisionInstanceOperation(String operation, String tenantId, List<PropertyChange> propertyChanges) {
+  public void logDecisionInstanceOperation(String operation, @Nullable String tenantId, List<PropertyChange> propertyChanges) {
     if(isUserOperationLogEnabled()) {
       UserOperationLogContext context = new UserOperationLogContext();
       UserOperationLogContextEntryBuilder entryBuilder =
@@ -727,23 +727,23 @@ public class UserOperationLogManager extends AbstractHistoricManager {
     }
   }
 
-  public void logSetAnnotationOperation(String operationId, String tenantId) {
+  public void logSetAnnotationOperation(String operationId, @Nullable String tenantId) {
     logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, OPERATION_ID, UserOperationLogEntry.OPERATION_TYPE_SET_ANNOTATION, tenantId);
   }
 
-  public void logClearAnnotationOperation(String operationId, String tenantId) {
+  public void logClearAnnotationOperation(String operationId, @Nullable String tenantId) {
     logAnnotationOperation(operationId, EntityTypes.OPERATION_LOG, OPERATION_ID, UserOperationLogEntry.OPERATION_TYPE_CLEAR_ANNOTATION, tenantId);
   }
 
-  public void logSetIncidentAnnotationOperation(String incidentId, String tenantId) {
+  public void logSetIncidentAnnotationOperation(String incidentId, @Nullable String tenantId) {
     logAnnotationOperation(incidentId, EntityTypes.INCIDENT, "incidentId", UserOperationLogEntry.OPERATION_TYPE_SET_ANNOTATION, tenantId);
   }
 
-  public void logClearIncidentAnnotationOperation(String incidentId, String tenantId) {
+  public void logClearIncidentAnnotationOperation(String incidentId, @Nullable String tenantId) {
     logAnnotationOperation(incidentId, EntityTypes.INCIDENT, "incidentId", UserOperationLogEntry.OPERATION_TYPE_CLEAR_ANNOTATION, tenantId);
   }
 
-  protected void logAnnotationOperation(String id, String type, String idProperty, String operationType, String tenantId) {
+  protected void logAnnotationOperation(String id, String type, String idProperty, String operationType, @Nullable String tenantId) {
     if (isUserOperationLogEnabled()) {
 
       UserOperationLogContextEntryBuilder entryBuilder =

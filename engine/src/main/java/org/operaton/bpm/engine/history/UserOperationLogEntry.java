@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.history;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.EntityTypes;
 
 
@@ -244,5 +246,5 @@ public interface UserOperationLogEntry {
    * The id of the tenant this user operation log belongs to. Can be <code>null</code>
    * if the user operation log belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 }

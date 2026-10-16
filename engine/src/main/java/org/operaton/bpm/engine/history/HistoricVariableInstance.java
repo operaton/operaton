@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.history;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
@@ -155,7 +157,7 @@ public interface HistoricVariableInstance {
    * The id of the tenant this variable belongs to. Can be <code>null</code>
    * if the variable belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * The current state of the variable. Can be 'CREATED' or 'DELETED'

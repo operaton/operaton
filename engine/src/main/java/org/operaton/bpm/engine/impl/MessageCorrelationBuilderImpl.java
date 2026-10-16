@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.cmd.CorrelateAllMessageCmd;
 import org.operaton.bpm.engine.impl.cmd.CorrelateMessageCmd;
@@ -411,7 +413,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     return isExclusiveCorrelation;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

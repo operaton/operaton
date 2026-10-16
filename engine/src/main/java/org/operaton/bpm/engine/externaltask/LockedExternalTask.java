@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.externaltask;
 import java.util.Date;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.variable.VariableMap;
 
@@ -124,7 +126,7 @@ public interface LockedExternalTask {
    * @return the id of the tenant the task belongs to. Can be <code>null</code>
    * if the task belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * Returns the priority of the locked external task.

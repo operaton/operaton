@@ -200,7 +200,7 @@ public class ExecutionManager extends AbstractManager {
     getDbEntityManager().update(ExecutionEntity.class, "updateExecutionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
-  public void updateExecutionSuspensionStateByProcessDefinitionKeyAndTenantId(String processDefinitionKey, String tenantId, SuspensionState suspensionState) {
+  public void updateExecutionSuspensionStateByProcessDefinitionKeyAndTenantId(String processDefinitionKey, @Nullable String tenantId, SuspensionState suspensionState) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PROCESS_DEFINITION_KEY, processDefinitionKey);
     parameters.put(IS_TENANT_ID_SET, true);

@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -49,7 +51,7 @@ public class LockedExternalTaskImpl implements LockedExternalTask {
   protected String processDefinitionId;
   protected String processDefinitionKey;
   protected String processDefinitionVersionTag;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected long priority;
   protected VariableMapImpl variables;
   protected String businessKey;
@@ -126,7 +128,7 @@ public class LockedExternalTaskImpl implements LockedExternalTask {
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -49,7 +51,7 @@ public class HistoricVariableInstanceEntity implements ValueFields, HistoricVari
   protected String taskId;
   protected String executionId;
   protected String activityInstanceId;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   protected String caseDefinitionKey;
   protected String caseDefinitionId;
@@ -375,11 +377,11 @@ public class HistoricVariableInstanceEntity implements ValueFields, HistoricVari
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

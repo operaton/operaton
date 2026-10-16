@@ -19,8 +19,9 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
-import org.operaton.bpm.engine.impl.context.Context;
+import org.jspecify.annotations.Nullable;
 
+import org.operaton.bpm.engine.impl.context.Context;
 
 /**
  * @author Daniel Meyer
@@ -33,7 +34,7 @@ public class HistoricDetailEventEntity extends HistoryEvent  {
   protected String activityInstanceId;
   protected String taskId;
   protected Date timestamp;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String userOperationId;
 
   // getters and setters //////////////////////////////////////////////////////
@@ -62,11 +63,11 @@ public class HistoricDetailEventEntity extends HistoryEvent  {
     this.timestamp = timestamp;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

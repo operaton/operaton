@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.repository;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.RepositoryService;
 
 /**
@@ -51,7 +53,7 @@ public interface ResourceDefinition {
    * The id of the tenant this definition belongs to. Can be <code>null</code>
    * if the definition belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /** History time to live. Is taken into account in history cleanup. */
   Integer getHistoryTimeToLive();

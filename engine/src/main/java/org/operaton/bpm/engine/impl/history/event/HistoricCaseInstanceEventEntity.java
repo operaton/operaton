@@ -46,7 +46,7 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
   protected @Nullable String superProcessInstanceId;
 
   /** id of the tenant which belongs to the case instance  */
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   public String getBusinessKey() {
     return businessKey;
@@ -96,11 +96,11 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
     this.superProcessInstanceId = superProcessInstanceId;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

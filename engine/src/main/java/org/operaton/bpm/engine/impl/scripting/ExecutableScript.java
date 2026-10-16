@@ -23,7 +23,12 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.VariableScope;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
+import org.operaton.bpm.engine.impl.scripting.preprocessor.ScriptPreprocessor;
+import org.operaton.bpm.engine.impl.scripting.preprocessor.ScriptPreprocessorRequest;
 
 /**
  * <p>Represents an executable script.</p>
@@ -33,6 +38,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
  *
  */
 public abstract class ExecutableScript {
+
+  private static final ScriptLogger LOG = ProcessEngineLogger.SCRIPT_LOGGER;
 
   /** The language of the script. Used to resolve the
    * {@link ScriptEngine}. */
@@ -92,5 +99,49 @@ public abstract class ExecutableScript {
   }
 
   protected abstract Object evaluate(ScriptEngine scriptEngine, VariableScope variableScope, Bindings bindings);
+
+  /**
+   * Applies the configured script preprocessor chain before execution.
+   *
+   * <p>If preprocessing is disabled, no preprocessor is configured, a preprocessor returns
+   * {@code null}, or preprocessing fails, the original script is used unchanged.</p>
+   */
+  protected String preprocessScript(String script, VariableScope variableScope) {
+    if (script == null) {
+      return script;
+    }
+
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    if (processEngineConfiguration == null || !processEngineConfiguration.isEnableScriptPreprocessing()) {
+      return script;
+    }
+
+    ScriptPreprocessor scriptPreprocessor = processEngineConfiguration.getEffectiveScriptPreprocessor();
+    if (scriptPreprocessor == null) {
+      return script;
+    }
+
+    String preprocessorName = getPreprocessorName(scriptPreprocessor);
+    ScriptPreprocessorRequest request = new ScriptPreprocessorRequest(script, language, variableScope);
+
+    String processedScript;
+    try {
+      processedScript = scriptPreprocessor.process(request);
+    } catch (Throwable e) {
+      LOG.warnScriptPreprocessingFailed(language, preprocessorName, e);
+      return script;
+    }
+
+    return processedScript != null ? processedScript : script;
+  }
+
+  private String getPreprocessorName(ScriptPreprocessor scriptPreprocessor) {
+    try {
+      String name = scriptPreprocessor.getName();
+      return name != null ? name : "<unknown>";
+    } catch (Exception e) {
+      return "<unknown>";
+    }
+  }
 
 }

@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.runtime;
 
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
 
 import static java.util.Collections.emptyMap;
@@ -29,7 +31,7 @@ public class CorrelationSet {
   protected final Map<String, Object> localCorrelationKeys;
   protected final String processInstanceId;
   protected final String processDefinitionId;
-  protected final String tenantId;
+  protected final @Nullable String tenantId;
   protected final boolean isTenantIdSet;
   protected final boolean isExecutionsOnly;
 
@@ -64,7 +66,7 @@ public class CorrelationSet {
     return processDefinitionId;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

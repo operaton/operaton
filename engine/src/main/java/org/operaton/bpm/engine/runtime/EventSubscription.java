@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.runtime;
 
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A message event subscription exists, if an {@link Execution} waits for an event like a message.
@@ -62,7 +63,7 @@ public interface EventSubscription {
    * The id of the tenant this event subscription belongs to. Can be <code>null</code>
    * if the subscription belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * The time this event subscription was created.

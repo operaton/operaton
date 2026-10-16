@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
+import org.jspecify.annotations.Nullable;
 
+import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
 
 public class CleanableHistoricProcessInstanceReportResultEntity implements CleanableHistoricProcessInstanceReportResult {
 
@@ -28,7 +29,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
   protected Integer historyTimeToLive;
   protected long finishedProcessInstanceCount;
   protected long cleanableProcessInstanceCount;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   @Override
   public String getProcessDefinitionId() {
@@ -96,11 +97,11 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

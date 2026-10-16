@@ -324,7 +324,7 @@ public class UserOperationLogContextEntryBuilder {
     return this;
   }
 
-  public UserOperationLogContextEntryBuilder tenantId(String tenantId) {
+  public UserOperationLogContextEntryBuilder tenantId(@Nullable String tenantId) {
     entry.setTenantId(tenantId);
     return this;
   }

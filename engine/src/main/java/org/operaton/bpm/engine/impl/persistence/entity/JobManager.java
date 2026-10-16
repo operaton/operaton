@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.JobQueryImpl;
 import org.operaton.bpm.engine.impl.JobQueryProperty;
@@ -369,7 +371,7 @@ public class JobManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<JobEntity> findJobsByConfiguration(String jobHandlerType, String jobHandlerConfiguration, String tenantId) {
+  public List<JobEntity> findJobsByConfiguration(String jobHandlerType, String jobHandlerConfiguration, @Nullable String tenantId) {
     Map<String, String> params = new HashMap<>();
     params.put(HANDLER_TYPE, jobHandlerType);
     params.put("handlerConfiguration", jobHandlerConfiguration);

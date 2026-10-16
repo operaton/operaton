@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.history;
 
+import org.jspecify.annotations.Nullable;
 /**
  * @author Stefan Hentschel.
  */
@@ -52,5 +53,5 @@ public interface HistoricTaskInstanceReportResult {
   /**
    * <p>Returns the id of the tenant task</p>
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 }

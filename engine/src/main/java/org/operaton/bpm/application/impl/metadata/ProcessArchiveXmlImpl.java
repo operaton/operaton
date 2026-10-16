@@ -19,12 +19,14 @@ package org.operaton.bpm.application.impl.metadata;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 
 public class ProcessArchiveXmlImpl implements ProcessArchiveXml {
 
   private String name;
-  private String tenantId;
+  private @Nullable String tenantId;
   private String processEngineName;
   private List<String> processResourceNames;
   private Map<String, String> properties;
@@ -39,11 +41,11 @@ public class ProcessArchiveXmlImpl implements ProcessArchiveXml {
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

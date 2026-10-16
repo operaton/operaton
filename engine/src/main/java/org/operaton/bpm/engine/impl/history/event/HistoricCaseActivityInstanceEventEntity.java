@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
@@ -62,7 +63,7 @@ public class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstan
   protected String calledCaseInstanceId;
 
   /** id of the tenant which belongs to the case activity instance  */
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   /** the flag whether this case activity is required */
   protected boolean required;
@@ -138,11 +139,11 @@ public class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstan
     this.calledCaseInstanceId = calledCaseInstanceId;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

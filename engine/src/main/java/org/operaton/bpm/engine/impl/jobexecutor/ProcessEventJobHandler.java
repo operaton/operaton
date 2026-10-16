@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.ProcessEventJobHandler.EventSubscriptionJobConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
@@ -35,7 +37,7 @@ public class ProcessEventJobHandler implements JobHandler<EventSubscriptionJobCo
   }
 
   @Override
-  public void execute(EventSubscriptionJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
+  public void execute(EventSubscriptionJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, @Nullable String tenantId) {
     // lookup subscription:
     String eventSubscriptionId = configuration.getEventSubscriptionId();
     EventSubscriptionEntity eventSubscription = commandContext.getEventSubscriptionManager()

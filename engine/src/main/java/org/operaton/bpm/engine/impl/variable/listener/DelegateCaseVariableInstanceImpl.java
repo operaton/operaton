@@ -47,7 +47,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
   protected String caseExecutionId;
   protected String taskId;
   protected String activityInstanceId;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String errorMessage;
   protected String name;
   protected TypedValue value;
@@ -134,11 +134,11 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

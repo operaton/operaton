@@ -61,7 +61,7 @@ public class DeleteBatchCmd implements Command<Void> {
     }
   }
 
-  protected void writeUserOperationLog(CommandContext commandContext, String tenantId) {
+  protected void writeUserOperationLog(CommandContext commandContext, @Nullable String tenantId) {
     commandContext.getOperationLogManager()
       .logBatchOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE,
         batchId,

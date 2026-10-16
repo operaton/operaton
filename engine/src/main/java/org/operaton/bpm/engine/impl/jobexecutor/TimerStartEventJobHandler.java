@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -37,7 +39,7 @@ public class TimerStartEventJobHandler extends TimerEventJobHandler {
   }
 
   @Override
-  public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
+  public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, @Nullable String tenantId) {
     DeploymentCache deploymentCache = Context
             .getProcessEngineConfiguration()
             .getDeploymentCache();
@@ -47,7 +49,7 @@ public class TimerStartEventJobHandler extends TimerEventJobHandler {
     startProcessInstance(commandContext, tenantId, processDefinition);
   }
 
-  protected void startProcessInstance(CommandContext commandContext, String tenantId, ProcessDefinition processDefinition) {
+  protected void startProcessInstance(CommandContext commandContext, @Nullable String tenantId, ProcessDefinition processDefinition) {
     if(!processDefinition.isSuspended()) {
 
       RuntimeService runtimeService = commandContext.getProcessEngineConfiguration().getRuntimeService();

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.batch.builder;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.batch.Batch;
@@ -35,7 +37,7 @@ public class BatchBuilder {
   protected CommandContext commandContext;
 
   protected BatchConfiguration config;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String type;
 
   protected Integer totalJobsCount;
@@ -50,7 +52,7 @@ public class BatchBuilder {
     this.commandContext = commandContext;
   }
 
-  public BatchBuilder tenantId(String tenantId) {
+  public BatchBuilder tenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
     return this;
   }

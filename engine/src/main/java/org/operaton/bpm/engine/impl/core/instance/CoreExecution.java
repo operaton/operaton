@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.core.instance;
 import java.io.Serial;
 
 import org.jspecify.annotations.NullUnmarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -49,7 +50,7 @@ public abstract @NullUnmarked class CoreExecution extends AbstractVariableScope 
   protected String businessKey;
   protected String businessKeyWithoutCascade;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   // events ///////////////////////////////////////////////////////////////////
 
@@ -130,11 +131,11 @@ public abstract @NullUnmarked class CoreExecution extends AbstractVariableScope 
     this.businessKeyWithoutCascade = businessKey;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

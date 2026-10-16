@@ -87,7 +87,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   protected String processDefinitionVersionTag;
   protected String activityId;
   protected String activityInstanceId;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected long priority;
 
   protected Map<String, String> extensionProperties;
@@ -211,10 +211,10 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     this.processDefinitionId = processDefinitionId;
   }
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
   @Override

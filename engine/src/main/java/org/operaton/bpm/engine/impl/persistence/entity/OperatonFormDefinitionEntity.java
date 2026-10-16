@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
@@ -30,9 +32,9 @@ public class OperatonFormDefinitionEntity implements OperatonFormDefinition,
   protected int version;
   protected String deploymentId;
   protected String resourceName;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
-  public OperatonFormDefinitionEntity(String key, String deploymentId, String resourceName, String tenantId) {
+  public OperatonFormDefinitionEntity(String key, String deploymentId, String resourceName, @Nullable String tenantId) {
     this.key = key;
     this.deploymentId = deploymentId;
     this.resourceName = resourceName;
@@ -105,12 +107,12 @@ public class OperatonFormDefinitionEntity implements OperatonFormDefinition,
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
   @Override
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

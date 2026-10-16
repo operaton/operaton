@@ -19,6 +19,8 @@ package org.operaton.bpm.application.impl.metadata.spi;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.repository.ResumePreviousBy;
 
 /**
@@ -113,7 +115,7 @@ public interface ProcessArchiveXml {
   /**
    * @return the id of the tenant the resources of the process archive should deploy for. Can be <code>null</code>.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * @return the name of the process engine which the deployment should be made to. If {@code null}, the "default engine" is used.

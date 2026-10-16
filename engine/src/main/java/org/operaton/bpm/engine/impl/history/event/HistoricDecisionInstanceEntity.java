@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionOutputInstance;
@@ -57,7 +59,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
   protected String decisionRequirementsDefinitionKey;
 
   protected String userId;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   protected transient List<HistoricDecisionInputInstance> inputs;
   protected transient List<HistoricDecisionOutputInstance> outputs;
@@ -126,11 +128,11 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

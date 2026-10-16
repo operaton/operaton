@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
 import com.google.gson.JsonObject;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -37,7 +38,7 @@ public class HistoryCleanupJobHandler implements JobHandler<HistoryCleanupJobHan
   public static final String TYPE = "history-cleanup";
 
   @Override
-  public void execute(HistoryCleanupJobHandlerConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
+  public void execute(HistoryCleanupJobHandlerConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, @Nullable String tenantId) {
 
     HistoryCleanupHandler cleanupHandler = initCleanupHandler(configuration, commandContext);
 

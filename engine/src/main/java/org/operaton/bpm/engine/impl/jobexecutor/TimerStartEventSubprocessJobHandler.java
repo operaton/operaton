@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -42,7 +44,7 @@ public class TimerStartEventSubprocessJobHandler extends TimerEventJobHandler {
   }
 
   @Override
-  public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
+  public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, @Nullable String tenantId) {
     String activityId = configuration.getTimerElementKey();
     ActivityImpl eventSubprocessActivity = execution.getProcessDefinition()
       .findActivity(activityId);

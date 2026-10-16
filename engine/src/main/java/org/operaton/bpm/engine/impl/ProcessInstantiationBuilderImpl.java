@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.cmd.StartProcessInstanceAtActivitiesCmd;
 import org.operaton.bpm.engine.impl.cmd.StartProcessInstanceCmd;
@@ -205,7 +207,7 @@ public class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuil
     return modificationBuilder.getProcessVariables();
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

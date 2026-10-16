@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.CleanableHistoricCaseInstanceReportResult;
 
 public class CleanableHistoricCaseInstanceReportResultEntity implements CleanableHistoricCaseInstanceReportResult {
@@ -27,7 +29,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
   protected Integer historyTimeToLive;
   protected long finishedCaseInstanceCount;
   protected long cleanableCaseInstanceCount;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   @Override
   public String getCaseDefinitionId() {
@@ -95,11 +97,11 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

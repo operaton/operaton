@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.CleanableHistoricDecisionInstanceReportResult;
 
 public class CleanableHistoricDecisionInstanceReportResultEntity implements CleanableHistoricDecisionInstanceReportResult {
@@ -27,7 +29,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
   protected Integer historyTimeToLive;
   protected long finishedDecisionInstanceCount;
   protected long cleanableDecisionInstanceCount;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   @Override
   public String getDecisionDefinitionId() {
@@ -95,11 +97,11 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

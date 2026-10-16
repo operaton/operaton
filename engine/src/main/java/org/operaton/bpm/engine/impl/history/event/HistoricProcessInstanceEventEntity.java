@@ -53,7 +53,7 @@ public class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEve
   protected String startActivityId;
 
   /** id of the tenant which belongs to the process instance  */
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   protected String state;
 
@@ -118,11 +118,11 @@ public class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEve
     this.deleteReason = deleteReason;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

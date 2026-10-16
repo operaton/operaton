@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.history;
 
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents one execution of a case activity which is stored permanent for statistics, audit and other business intelligence purposes.
@@ -62,7 +63,7 @@ public interface HistoricCaseActivityInstance {
     * The id of the tenant this historic case activity instance belongs to. Can be <code>null</code>
     * if the historic case activity instance belongs to no single tenant.
     */
-   String getTenantId();
+   @Nullable String getTenantId();
 
    /** The time when the case activity was created. */
    Date getCreateTime();

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.repository.CalledProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
@@ -31,7 +33,7 @@ public class CalledProcessDefinitionImpl implements CalledProcessDefinition {
   protected int version;
   protected String deploymentId;
   protected boolean suspended;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String versionTag;
   protected Integer historyTimeToLive;
   protected boolean isStartableInTasklist;
@@ -135,7 +137,7 @@ public class CalledProcessDefinitionImpl implements CalledProcessDefinition {
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

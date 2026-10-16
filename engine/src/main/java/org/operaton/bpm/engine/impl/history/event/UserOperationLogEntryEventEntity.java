@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 
 /**
@@ -40,7 +42,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
   protected String newValue;
   protected String entityType;
   protected String deploymentId;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String batchId;
   protected String category;
   protected String externalTaskId;
@@ -155,11 +157,11 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

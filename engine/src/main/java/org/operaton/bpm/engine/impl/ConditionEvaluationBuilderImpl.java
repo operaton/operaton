@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.cmd.EvaluateStartConditionCmd;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -37,7 +39,7 @@ public class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilde
 
   protected VariableMap variables = new VariableMapImpl();
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected boolean isTenantIdSet;
 
   public ConditionEvaluationBuilderImpl(CommandExecutor commandExecutor) {
@@ -61,7 +63,7 @@ public class ConditionEvaluationBuilderImpl implements ConditionEvaluationBuilde
     return variables;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 

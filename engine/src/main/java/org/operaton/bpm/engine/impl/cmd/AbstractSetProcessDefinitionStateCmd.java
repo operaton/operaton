@@ -47,7 +47,7 @@ public abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetSt
   protected String processDefinitionId;
   protected String processDefinitionKey;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected boolean isTenantIdSet;
 
   protected AbstractSetProcessDefinitionStateCmd(UpdateProcessDefinitionSuspensionStateBuilderImpl builder) {

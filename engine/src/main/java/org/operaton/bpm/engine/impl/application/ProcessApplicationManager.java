@@ -16,12 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.application;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -40,6 +36,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+
+import static java.util.Collections.emptyList;
 
 /**
  * @author Daniel Meyer
@@ -93,10 +91,10 @@ public @NullMarked class ProcessApplicationManager {
     return registration;
   }
 
-  protected void removeProcessApplicationRegistration(final Set<String> deploymentIds, boolean removeProcessesFromCache) {
+  protected void removeProcessApplicationRegistration(final Set<@Nullable String> deploymentIds, boolean removeProcessesFromCache) {
     for (String deploymentId : deploymentIds) {
       try {
-        if(removeProcessesFromCache) {
+        if(deploymentId != null && removeProcessesFromCache) {
           Context.getProcessEngineConfiguration()
             .getDeploymentCache()
             .removeDeployment(deploymentId);
@@ -204,6 +202,9 @@ public @NullMarked class ProcessApplicationManager {
 
     if (entities == null) {
       String deploymentId = deployment.getId();
+      if (deploymentId == null) {
+        return emptyList();
+      }
       ProcessDefinitionManager manager = commandContext.getProcessDefinitionManager();
       return manager.findProcessDefinitionsByDeploymentId(deploymentId);
     }
@@ -220,6 +221,9 @@ public @NullMarked class ProcessApplicationManager {
 
     if (entities == null) {
       String deploymentId = deployment.getId();
+      if (deploymentId == null) {
+        return emptyList();
+      }
       CaseDefinitionManager caseDefinitionManager = commandContext.getCaseDefinitionManager();
       return caseDefinitionManager.findCaseDefinitionByDeploymentId(deploymentId);
     }

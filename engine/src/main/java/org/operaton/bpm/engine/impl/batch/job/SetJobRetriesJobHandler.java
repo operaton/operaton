@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.batch.job;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -33,7 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 /**
  * @author Askar Akhmerov
  */
-public class SetJobRetriesJobHandler extends AbstractBatchJobHandler<SetJobRetriesBatchConfiguration> {
+public @NullMarked class SetJobRetriesJobHandler extends AbstractBatchJobHandler<SetJobRetriesBatchConfiguration> {
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_SET_JOB_RETRIES);
   private static final SetJobRetriesBatchConfigurationJsonConverter JSON_CONVERTER =
       new SetJobRetriesBatchConfigurationJsonConverter();
@@ -61,7 +63,7 @@ public class SetJobRetriesJobHandler extends AbstractBatchJobHandler<SetJobRetri
   public void executeHandler(SetJobRetriesBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     commandContext.executeWithOperationLogPrevented(
         new SetJobRetriesCmd(batchConfiguration.getIds(), batchConfiguration.getRetries(), batchConfiguration.getDueDate(), batchConfiguration.isDueDateSet()));

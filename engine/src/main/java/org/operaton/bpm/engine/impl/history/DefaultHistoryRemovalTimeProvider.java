@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.history;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.batch.history.HistoricBatchEntity;
 
 import org.jspecify.annotations.Nullable;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 /**
  * @author Tassilo Weidner
  */
-public class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider {
+public @NullMarked class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider {
 
   @Override
   public @Nullable Date calculateRemovalTime(HistoricProcessInstanceEventEntity historicRootProcessInstance, ProcessDefinition processDefinition) {
@@ -95,7 +96,7 @@ public class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProv
     return historicBatch.getEndTime() != null;
   }
 
-  protected Integer getTTLByBatchOperation(String batchOperation) {
+  protected @Nullable Integer getTTLByBatchOperation(String batchOperation) {
     return Context.getCommandContext()
       .getProcessEngineConfiguration()
       .getParsedBatchOperationsForHistoryCleanup()

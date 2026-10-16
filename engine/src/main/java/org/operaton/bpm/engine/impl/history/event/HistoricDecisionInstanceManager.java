@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.authorization.Resources;
 
 import org.jspecify.annotations.Nullable;
@@ -47,11 +48,11 @@ import org.operaton.bpm.engine.impl.variable.serializer.AbstractTypedValueSerial
 import static java.util.Objects.requireNonNull;
 
 /**
- * Data base operations for {@link HistoricDecisionInstanceEntity}.
+ * Database operations for {@link HistoricDecisionInstanceEntity}.
  *
  * @author Philipp Ossler
  */
-public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
+public @NullMarked class HistoricDecisionInstanceManager extends AbstractHistoricManager {
 
   public void deleteHistoricDecisionInstancesByDecisionDefinitionId(String decisionDefinitionId) {
     if (isHistoryEnabled()) {
@@ -59,7 +60,10 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
 
       List<String> decisionInstanceIds = new ArrayList<>();
       for(HistoricDecisionInstanceEntity decisionInstance : decisionInstances) {
-        decisionInstanceIds.add(decisionInstance.getId());
+        String decisionInstanceId = decisionInstance.getId();
+        if (decisionInstanceId != null) {
+          decisionInstanceIds.add(decisionInstanceId);
+        }
         // delete decision instance
         decisionInstance.delete();
       }
@@ -99,8 +103,9 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
   protected void insertHistoricDecisionInstance(HistoricDecisionInstanceEntity historicDecisionInstance) {
     getDbEntityManager().insert(historicDecisionInstance);
 
-    insertHistoricDecisionInputInstances(historicDecisionInstance.getInputs(), historicDecisionInstance.getId());
-    insertHistoricDecisionOutputInstances(historicDecisionInstance.getOutputs(), historicDecisionInstance.getId());
+    String historicDecisionInstanceId = requireNonNull(historicDecisionInstance.getId());
+    insertHistoricDecisionInputInstances(historicDecisionInstance.getInputs(), historicDecisionInstanceId);
+    insertHistoricDecisionOutputInstances(historicDecisionInstance.getOutputs(), historicDecisionInstanceId);
   }
 
   protected void insertHistoricDecisionInputInstances(List<HistoricDecisionInputInstance> inputs, String decisionInstanceId) {
@@ -314,9 +319,10 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
     addRemovalTimeToDecisionsByRootProcessInstanceId(rootProcessInstanceId, removalTime, null, Collections.emptySet());
   }
 
+  @SuppressWarnings("ConstantConditions")
   public Map<Class<? extends DbEntity>, DbOperation> addRemovalTimeToDecisionsByRootProcessInstanceId(String rootProcessInstanceId,
-      Date removalTime,
-      Integer batchSize,
+      @Nullable Date removalTime,
+      @Nullable Integer batchSize,
       Set<String> entities) {
     Map<Class<? extends DbEntity>, DbOperation> updateOperations = new HashMap<>();
 
@@ -343,13 +349,15 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
     return updateOperations;
   }
 
+  @SuppressWarnings("unused")
   public void addRemovalTimeToDecisionsByProcessInstanceId(String processInstanceId, Date removalTime) {
     addRemovalTimeToDecisionsByProcessInstanceId(processInstanceId, removalTime, null, Collections.emptySet());
   }
 
+  @SuppressWarnings("ConstantConditions")
   public Map<Class<? extends DbEntity>, DbOperation> addRemovalTimeToDecisionsByProcessInstanceId(String processInstanceId,
-      Date removalTime,
-      Integer batchSize,
+      @Nullable Date removalTime,
+      @Nullable Integer batchSize,
       Set<String> entities) {
     Map<Class<? extends DbEntity>, DbOperation> updateOperations = new HashMap<>();
 
@@ -376,7 +384,8 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
     return updateOperations;
   }
 
-  public void addRemovalTimeToDecisionsByRootDecisionInstanceId(String rootInstanceId, Date removalTime) {
+  @SuppressWarnings("ConstantConditions")
+  public void addRemovalTimeToDecisionsByRootDecisionInstanceId(String rootInstanceId, @Nullable Date removalTime) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("rootDecisionInstanceId", rootInstanceId);
     parameters.put(REMOVAL_TIME, removalTime);
@@ -398,7 +407,8 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
             "updateDecisionOutputByteArraysByRootDecisionInstanceId", parameters);
   }
 
-  public void addRemovalTimeToDecisionsByDecisionInstanceId(String instanceId, Date removalTime) {
+  @SuppressWarnings("ConstantConditions")
+  public void addRemovalTimeToDecisionsByDecisionInstanceId(String instanceId, @Nullable Date removalTime) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionInstanceId", instanceId);
     parameters.put(REMOVAL_TIME, removalTime);

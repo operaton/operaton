@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.batch.deletion;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
@@ -35,7 +37,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 /**
  * @author Askar Akhmerov
  */
-public class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler<DeleteProcessInstanceBatchConfiguration> {
+public @NullMarked class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler<DeleteProcessInstanceBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_DELETION);
   private static final DeleteProcessInstanceBatchConfigurationJsonConverter JSON_CONVERTER =
@@ -72,7 +74,7 @@ public class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler<De
   public void executeHandler(DeleteProcessInstanceBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     commandContext.executeWithOperationLogPrevented(
         new DeleteProcessInstancesCmd(
@@ -87,8 +89,8 @@ public class DeleteProcessInstancesJobHandler extends AbstractBatchJobHandler<De
   }
 
   @Override
-  protected void createJobEntities(BatchEntity batch, DeleteProcessInstanceBatchConfiguration configuration, String deploymentId, List<String> processIds,
-      int invocationsPerBatchJob) {
+  protected void createJobEntities(BatchEntity batch, DeleteProcessInstanceBatchConfiguration configuration, @Nullable String deploymentId, List<String> processIds,
+                                   int invocationsPerBatchJob) {
     // handle legacy batch entities (no up-front deployment mapping has been done)
     if (deploymentId == null && (configuration.getIdMappings() == null || configuration.getIdMappings().isEmpty())) {
       // create deployment mappings for the ids to process

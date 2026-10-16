@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -39,13 +41,14 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEn
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 
 /**
  * @author Tassilo Weidner
  */
-public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<SetRemovalTimeBatchConfiguration> {
+public @NullMarked class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<SetRemovalTimeBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_SET_REMOVAL_TIME);
   public static final int MAX_CHUNK_SIZE = 500;
@@ -55,7 +58,7 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
   public void executeHandler(SetRemovalTimeBatchConfiguration configuration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
     if (configuration.isUpdateInChunks()) {
       // only one instance allowed if enabled, see #calculateInvocationsPerBatchJob
       String instanceId = configuration.getIds().get(0);
@@ -63,7 +66,7 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
       Integer chunkSize = getUpdateChunkSize(configuration, commandContext);
       Map<Class<? extends DbEntity>, DbOperation> operations = addRemovalTimeToInstance(instanceId, configuration,
           chunkSize, entities, commandContext);
-      MessageEntity currentJob = (MessageEntity) commandContext.getCurrentJob();
+      MessageEntity currentJob = requireNonNull((MessageEntity) commandContext.getCurrentJob());
       registerTransactionHandler(configuration, operations, chunkSize, currentJob, commandContext);
       currentJob.setRepeat("true");
     } else {
@@ -74,14 +77,14 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
 
   protected Map<Class<? extends DbEntity>, DbOperation> addRemovalTimeToInstance(String instanceId,
       SetRemovalTimeBatchConfiguration configuration,
-      Integer batchSize,
+      @Nullable Integer batchSize,
       Set<String> entities,
       CommandContext commandContext) {
     HistoricProcessInstanceEntity instance = findProcessInstanceById(instanceId, commandContext);
     if (instance != null) {
       if (configuration.isHierarchical() && hasHierarchy(instance)) {
-        String rootProcessInstanceId = instance.getRootProcessInstanceId();
-        HistoricProcessInstanceEntity rootInstance = findProcessInstanceById(rootProcessInstanceId, commandContext);
+        String rootProcessInstanceId = requireNonNull(instance.getRootProcessInstanceId());
+        HistoricProcessInstanceEntity rootInstance = requireNonNull(findProcessInstanceById(rootProcessInstanceId, commandContext));
         Date removalTime = getOrCalculateRemovalTime(configuration, rootInstance, commandContext);
         return addRemovalTimeToHierarchy(rootProcessInstanceId, removalTime, batchSize, entities, commandContext);
       } else {
@@ -94,7 +97,7 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
     return Collections.emptyMap();
   }
 
-  protected Date getOrCalculateRemovalTime(SetRemovalTimeBatchConfiguration configuration,
+  protected @Nullable Date getOrCalculateRemovalTime(SetRemovalTimeBatchConfiguration configuration,
       HistoricProcessInstanceEntity instance,
       CommandContext commandContext) {
     if (configuration.hasRemovalTime()) {
@@ -107,8 +110,8 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
   }
 
   protected Map<Class<? extends DbEntity>, DbOperation> addRemovalTimeToHierarchy(String rootProcessInstanceId,
-      Date removalTime,
-      Integer batchSize,
+      @Nullable Date removalTime,
+      @Nullable Integer batchSize,
       Set<String> entities,
       CommandContext commandContext) {
     Map<Class<? extends DbEntity>, DbOperation> operations = commandContext.getHistoricProcessInstanceManager()
@@ -121,8 +124,8 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
   }
 
   protected Map<Class<? extends DbEntity>, DbOperation> addRemovalTime(String instanceId,
-      Date removalTime,
-      Integer batchSize,
+      @Nullable Date removalTime,
+      @Nullable Integer batchSize,
       Set<String> entities,
       CommandContext commandContext) {
     Map<Class<? extends DbEntity>, DbOperation> operations = commandContext.getHistoricProcessInstanceManager()
@@ -159,7 +162,7 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
       .getHistoryRemovalTimeStrategy();
   }
 
-  protected ProcessDefinition findProcessDefinitionById(String processDefinitionId, CommandContext commandContext) {
+  protected @Nullable ProcessDefinition findProcessDefinitionById(String processDefinitionId, CommandContext commandContext) {
     return commandContext.getProcessEngineConfiguration()
       .getDeploymentCache()
       .findDeployedProcessDefinitionById(processDefinitionId);
@@ -169,20 +172,20 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
     return commandContext.getProcessEngineConfiguration().isDmnEnabled();
   }
 
-  protected Date calculateRemovalTime(HistoricProcessInstanceEntity processInstance, CommandContext commandContext) {
-    ProcessDefinition processDefinition = findProcessDefinitionById(processInstance.getProcessDefinitionId(), commandContext);
+  protected @Nullable Date calculateRemovalTime(HistoricProcessInstanceEntity processInstance, CommandContext commandContext) {
+    ProcessDefinition processDefinition = requireNonNull(findProcessDefinitionById(requireNonNull(processInstance.getProcessDefinitionId()), commandContext));
 
     return commandContext.getProcessEngineConfiguration()
       .getHistoryRemovalTimeProvider()
       .calculateRemovalTime(processInstance, processDefinition);
   }
 
-  protected ByteArrayEntity findByteArrayById(String byteArrayId, CommandContext commandContext) {
+  protected @Nullable ByteArrayEntity findByteArrayById(String byteArrayId, CommandContext commandContext) {
     return commandContext.getDbEntityManager()
       .selectById(ByteArrayEntity.class, byteArrayId);
   }
 
-  protected HistoricProcessInstanceEntity findProcessInstanceById(String instanceId, CommandContext commandContext) {
+  protected @Nullable HistoricProcessInstanceEntity findProcessInstanceById(String instanceId, CommandContext commandContext) {
     return commandContext.getHistoricProcessInstanceManager()
       .findHistoricProcessInstance(instanceId);
   }

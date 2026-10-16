@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -44,7 +45,7 @@ public class DeploymentMapping {
     return count;
   }
 
-  public List<String> getIds(List<String> ids) {
+  public List<String> getIds(@NonNull List<String> ids) {
     return ids.subList(0, count);
   }
 

@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -43,7 +45,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  * Job handler for batch migration jobs. The batch migration job
  * migrates a list of process instances.
  */
-public class MigrationBatchJobHandler extends AbstractBatchJobHandler<MigrationBatchConfiguration> {
+public @NullMarked class MigrationBatchJobHandler extends AbstractBatchJobHandler<MigrationBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_MIGRATION);
   private static final MigrationBatchConfigurationJsonConverter JSON_CONVERTER =
@@ -81,7 +83,8 @@ public class MigrationBatchJobHandler extends AbstractBatchJobHandler<MigrationB
       String sourceProcessDefinitionId = configuration.getMigrationPlan().getSourceProcessDefinitionId();
 
       ProcessDefinitionEntity processDefinition = getProcessDefinition(commandContext, sourceProcessDefinitionId);
-      job.setDeploymentId(processDefinition.getDeploymentId());
+      String deploymentId = processDefinition != null ? processDefinition.getDeploymentId() : null;
+      job.setDeploymentId(deploymentId);
     }
   }
 
@@ -89,7 +92,7 @@ public class MigrationBatchJobHandler extends AbstractBatchJobHandler<MigrationB
   public void executeHandler(MigrationBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     MigrationPlanImpl migrationPlan = (MigrationPlanImpl) batchConfiguration.getMigrationPlan();
 
@@ -112,19 +115,16 @@ public class MigrationBatchJobHandler extends AbstractBatchJobHandler<MigrationB
         new MigrateProcessInstanceCmd((MigrationPlanExecutionBuilderImpl)executionBuilder, true));
   }
 
-  protected void setVariables(String batchId,
+  protected void setVariables(@Nullable String batchId,
                               MigrationPlanImpl migrationPlan,
                               CommandContext commandContext) {
-    Map<String, ?> variables = null;
     if (batchId != null) {
-      variables = VariableUtil.findBatchVariablesSerialized(batchId, commandContext);
-      if (variables != null) {
-        migrationPlan.setVariables(new VariableMapImpl(new HashMap<>(variables)));
-      }
+      Map<String, ?> variables = VariableUtil.findBatchVariablesSerialized(batchId, commandContext);
+      migrationPlan.setVariables(new VariableMapImpl(new HashMap<>(variables)));
     }
   }
 
-  protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
+  protected @Nullable ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {
     return commandContext.getProcessEngineConfiguration()
         .getDeploymentCache()
         .findDeployedProcessDefinitionById(processDefinitionId);

@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.batch.deletion;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
@@ -32,7 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 /**
  * @author Askar Akhmerov
  */
-public class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHandler<BatchConfiguration> {
+public @NullMarked class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHandler<BatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_HISTORIC_PROCESS_INSTANCE_DELETION);
   private static final DeleteHistoricProcessInstanceBatchConfigurationJsonConverter JSON_CONVERTER =
@@ -61,7 +63,7 @@ public class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHa
   public void executeHandler(BatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
                              CommandContext commandContext,
-                             String tenantId) {
+                             @Nullable String tenantId) {
 
     commandContext.executeWithOperationLogPrevented(
         new DeleteHistoricProcessInstancesCmd(

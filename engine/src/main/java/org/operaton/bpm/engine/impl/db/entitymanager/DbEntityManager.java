@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.db.entitymanager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -221,20 +222,22 @@ public class DbEntityManager implements Session, EntityLoadListener {
   /** returns the object in the cache.  if this object was loaded before,
    * then the original object is returned. */
   protected @NonNull DbEntity cacheFilter(@NonNull DbEntity persistentObject) {
-    DbEntity cachedPersistentObject = dbEntityCache.get(persistentObject.getClass(), persistentObject.getId());
-    if (cachedPersistentObject!=null) {
-      return cachedPersistentObject;
+    String id = persistentObject.getId();
+    DbEntity cachedPersistentObject = null;
+    if (id != null) {
+      cachedPersistentObject = dbEntityCache.get(persistentObject.getClass(), id);
     }
-    else {
-      return persistentObject;
-    }
-
+    return Objects.requireNonNullElse(cachedPersistentObject, persistentObject);
   }
 
   @Override
   public void onEntityLoaded(@NonNull DbEntity entity) {
     // we get a callback when the persistence session loads an object from the database
-    DbEntity cachedPersistentObject = dbEntityCache.get(entity.getClass(), entity.getId());
+    DbEntity cachedPersistentObject = null;
+    String id = entity.getId();
+    if (id != null) {
+      cachedPersistentObject = dbEntityCache.get(entity.getClass(), id);
+    }
     if(cachedPersistentObject == null) {
       // only put into the cache if not already present
       dbEntityCache.putPersistent(entity);
@@ -434,7 +437,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
 
   protected boolean isHistoricByteArray(DbEntity dbEntity) {
     if (dbEntity instanceof ByteArrayEntity byteArrayEntity) {
-      return byteArrayEntity.getType().equals(ResourceTypes.HISTORY.getValue());
+      return Objects.equals(byteArrayEntity.getType(), ResourceTypes.HISTORY.getValue());
     } else {
       return false;
     }
@@ -497,7 +500,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   }
 
   public void insert(DbEntity dbEntity) {
-    // generate Id if not present
+    // generate id if not present
     ensureHasId(dbEntity);
 
     validateId(dbEntity);
@@ -621,6 +624,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     EnsureUtil.ensureValidIndividualResourceId("Entity %s has an invalid id".formatted(dbEntity), dbEntity.getId());
   }
 
+  @SuppressWarnings("unused")
   public <T extends DbEntity> List<T> pruneDeletedEntities(List<T> listToPrune) {
     return listToPrune.stream()
         .filter(potentiallyDeleted -> !isDeleted(potentiallyDeleted))
@@ -637,6 +641,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return dbOperationManager;
   }
 
+  @SuppressWarnings("unused")
   public void setDbOperationManager(DbOperationManager operationManager) {
     this.dbOperationManager = operationManager;
   }
@@ -645,6 +650,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return dbEntityCache;
   }
 
+  @SuppressWarnings("unused")
   public void setDbEntityCache(DbEntityCache dbEntityCache) {
     this.dbEntityCache = dbEntityCache;
   }

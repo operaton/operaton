@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 import org.jspecify.annotations.Nullable;
@@ -38,7 +39,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-public final class VariableUtil {
+public final @NullMarked class VariableUtil {
   public static final CommandLogger CMD_LOGGER = ProcessEngineLogger.CMD_LOGGER;
   public static final CoreLogger CORE_LOGGER = ProcessEngineLogger.CORE_LOGGER;
   public static final String ERROR_MSG = "Cannot set variable with name {0}. Java serialization format is prohibited";

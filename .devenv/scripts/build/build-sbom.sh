@@ -81,23 +81,42 @@ for DISTRO in "${DISTROS[@]}"; do
     mv target/sbom/operaton-modules-"$DISTRO".json target/sbom/operaton-modules-"$DISTRO".cyclonedx-json.sbom
 done
 
-echo "Generating CycloneDX SBOM for Node.js frontend module..."
+echo "Generating CycloneDX SBOMs for Node.js frontend modules..."
 mkdir -p target/sbom
-docker run --rm -v "$(pwd)":/repo aquasec/trivy:canary fs --scanners vuln --format cyclonedx --output /repo/target/sbom/operaton-webapps.cyclonedx-json.sbom /repo/webapps/frontend
+# The npm dependencies are invisible to the Maven plugin, so each frontend is
+# scanned with trivy. Entries are <sbom name>:<frontend directory>.
+FRONTENDS=("webapps:webapps/frontend" "webapps-neo:webapps-neo/frontend")
+FRONTEND_SBOMS=()
+for FRONTEND in "${FRONTENDS[@]}"; do
+  FRONTEND_NAME="${FRONTEND%%:*}"
+  FRONTEND_DIR="${FRONTEND#*:}"
+  FRONTEND_SBOM="target/sbom/operaton-$FRONTEND_NAME.cyclonedx-json.sbom"
+  echo "  - Generating SBOM for frontend: $FRONTEND_DIR"
+  # No "--scanners vuln": the SBOM is an inventory, not a scan result. Embedded
+  # findings are frozen at build time and trivy writes rating methods that are
+  # not valid CycloneDX, which makes consumers such as Dependency-Track reject
+  # the whole document (see #3855). Vulnerability analysis is the consumer's job.
+  docker run --rm -v "$(pwd)":/repo aquasec/trivy:canary fs --format cyclonedx --output "/repo/$FRONTEND_SBOM" "/repo/$FRONTEND_DIR"
+  FRONTEND_SBOMS+=("$FRONTEND_SBOM")
+done
 
 echo "Merging CycloneDX SBOMs for each distribution..."
 for DISTRO in "${DISTROS[@]}"; do
   OUTPUT_FILE="distro/$DISTRO/assembly/resources/sbom.cdx.json"
 
+  # Like the Maven aggregate, the frontend inventory covers the whole reactor
+  # and is merged into every distribution.
   $CYCLONEDX merge --input-files \
     target/sbom/operaton-modules-"$DISTRO".cyclonedx-json.sbom \
-    target/sbom/operaton-webapps.cyclonedx-json.sbom \
+    "${FRONTEND_SBOMS[@]}" \
     --output-file "$OUTPUT_FILE" \
     --input-format json
 
-  # Override metadata.component.name to match distro
+  # Override metadata.component.name to match distro and drop the
+  # vulnerabilities section (trivy still emits an empty one, which the merge
+  # keeps). The merged SBOM must contain the inventory only.
   if command -v jq &> /dev/null; then
-    jq ".metadata.component.name = \"operaton-$DISTRO\"" "$OUTPUT_FILE" > "$OUTPUT_FILE.tmp" && mv "$OUTPUT_FILE.tmp" "$OUTPUT_FILE"
+    jq ".metadata.component.name = \"operaton-$DISTRO\" | del(.vulnerabilities)" "$OUTPUT_FILE" > "$OUTPUT_FILE.tmp" && mv "$OUTPUT_FILE.tmp" "$OUTPUT_FILE"
   else
     node -e "
       const fs = require('fs');
@@ -106,9 +125,15 @@ for DISTRO in "${DISTROS[@]}"; do
       if (data.metadata && data.metadata.component) {
         data.metadata.component.name = 'operaton-$DISTRO';
       }
+      delete data.vulnerabilities;
       fs.writeFileSync(file, JSON.stringify(data, null, 2));
     "
   fi
+
+  # Fail the build if the merged SBOM does not validate against the CycloneDX
+  # schema (the spec version is detected from the document).
+  echo "  - Validating $OUTPUT_FILE"
+  $CYCLONEDX validate --input-file "$OUTPUT_FILE" --input-format json --fail-on-errors
 done
 
 echo "📦 SBOM files generated in target/sbom/"

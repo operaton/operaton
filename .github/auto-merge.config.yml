@@ -103,6 +103,7 @@ auto-merge-rules:
       - 'all group'
       - 'arquillian group'
       - 'github-actions group'
+      - 'httpcomponents5 group'
       - 'jaxb group'
       - 'jboss-weld group'
       - 'maven-plugins group'

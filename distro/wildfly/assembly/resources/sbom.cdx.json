@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:82221b54-ce99-4504-9376-3961c7d34062",
+  "serialNumber": "urn:uuid:69427aa3-d9dd-45c6-8ee1-eb3cc5762102",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-16T00:57:01Z",
+    "timestamp": "2026-10-16T10:40:22Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.76.0-SNAPSHOT-cf325209a"
+          "version": "0.76.0-SNAPSHOT-d3ade8ec0"
         }
       ]
     },
@@ -9635,45 +9635,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.4?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.core5",
       "name": "httpcore5",
-      "version": "5.4.3",
+      "version": "5.4.4",
       "description": "Apache HttpComponents HTTP/1.1 core components",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "40cba87d4704bc9e1691f340fb8042cf"
+          "content": "1d7150db6792387e1f39dd626060c746"
         },
         {
           "alg": "SHA-1",
-          "content": "32a0699fbcb103f5621c00983ee8f5aac080e4a6"
+          "content": "fb236f682f1eaae1abec9b60e940158ac369f15b"
         },
         {
           "alg": "SHA-256",
-          "content": "18bfbbabb478dfb67f31aeaf428c387f3c3df654582e1309f708ee1f3086830a"
+          "content": "b08e3c3a440fec2029e89980134c7c787dd6796454641ad1eafb81478d7e8b0b"
         },
         {
           "alg": "SHA-512",
-          "content": "2ae04ae83015c46314a502a0973bec86312680cb548f0ae68002af4f5fd958deb60c702ad9dcae72c23561e2e0954518bb0355a1496096f7e9b9a2efbb7c9bae"
+          "content": "9c341b5529705d56e13d74c4ed91b3b3afdd2add5b4783ebc0488f7c5c1299b12eaa827b92b1ebcedf4fd2516fb5cae96f8becbe604749fa47a928d42b999bab"
         },
         {
           "alg": "SHA-384",
-          "content": "09312cfbd7b33c3c8712405aff437ef7b93260a07a625b7cc491d3e2fa0d65852d72f4f6701ef707c4cae52caadcddd0"
+          "content": "dc2cc35dfaf7dc67ebc776ccbe4300f580f587db0c192d9c177f0020b7ecca0c9dc5e2932d260daac052b302336da012"
         },
         {
           "alg": "SHA3-384",
-          "content": "419f9608bec952746b274a3510bc0f0dbdb6cc4b1269c9bd89c218894a42fda0dfd7b46912b57cc722b3d76b7f11c07b"
+          "content": "af970fe47d3244c602bc966c727ebbf67073c4fee4c7ee0b957cbcfb840b692b9f2a1f8c318870179bb8d033e8700535"
         },
         {
           "alg": "SHA3-256",
-          "content": "8cb162e60b804205084fcc8e562f6eb47f5c13eefa42208cf6accab1d28e0ba2"
+          "content": "3f80bf2a9c2120c21f955e8c5976e591c55dff53a0915e65ba46e981c7164ea7"
         },
         {
           "alg": "SHA3-512",
-          "content": "eccc71fecc0525c6fca46ca9e19eaecf26d646f3e71528796e8dcc0f16cb0882d485ceffa1c48e14e60eb8b429ae0fd5935274bb8907c2869ab54cb76e931abd"
+          "content": "8b85ec771c37aaaecf35b275f1933d799024be69546a3568bfa85b2db3ba3738bccf8c5624f1412785a8d907bc2ca740beb3779238a72b20761c8c78c59bf1c9"
         }
       ],
       "licenses": [
@@ -9683,10 +9683,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.4?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.3/httpcore5/",
+          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.4/httpcore5/",
           "type": "website"
         },
         {
@@ -9702,52 +9702,52 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.3/httpcore5",
+          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.4/httpcore5",
           "type": "vcs"
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.core5",
       "name": "httpcore5-h2",
-      "version": "5.4.3",
+      "version": "5.4.4",
       "description": "Apache HttpComponents HTTP/2 Core Components",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "4b9da0d3e87ed769ef6a162223f2265c"
+          "content": "8f56560c50101d9422ca597c48973c9b"
         },
         {
           "alg": "SHA-1",
-          "content": "33bcd37d645539d27c65e17420843fd7f6c0ebf4"
+          "content": "90c30ff56e226bdb96cf5c987aebc42e1a8a9f45"
         },
         {
           "alg": "SHA-256",
-          "content": "c7db7026b8e2dea39132b04a6069f6671e2858309b20a146ec5c7dd6ed73a0b6"
+          "content": "9a61441889f9b222ce99581977cc549b4dfca7ac9d2841582c1e57a31fa65b48"
         },
         {
           "alg": "SHA-512",
-          "content": "0bde9a7579cba0dbb6322c8a25eefd0bdb80bd907b4e66c20570ce23558fd57daf9ae5233a571546171456b9f7da6e970507cde971a1155d1bce011c62b281af"
+          "content": "6fd81dffd73dee36e85d676f587738d7a31c5b35bfc2ece82fd749cca9894b997ad1b9264bfd9ce4a92ffeba5751d0eaee4b106b03ce7ef4110e6bb4f3bb8eee"
         },
         {
           "alg": "SHA-384",
-          "content": "31c865c7c4fd4975d1a60223478b1aa9a8c374e77e23f46c3033f9f88a4fa774850c5f7c4974ee6c98a8f0ac031ed843"
+          "content": "28a1970490d83c9ebaba10d31ea9a933563f2d99db7eb800264e9f7da61e9d80b19ae9ea898bd2457577c0c8daa3cd1c"
         },
         {
           "alg": "SHA3-384",
-          "content": "06cf3bffe6edd2fc68630b79d041cc1af328f83f55356d75e69ebed85057edcd3c3f1319d5d7c777878807122ed9c86b"
+          "content": "b47195f8b614c9225471dd05cad344ccab47d5716141807e5414894af4cbcb70e22095694fc59d85b36dbef637f8c509"
         },
         {
           "alg": "SHA3-256",
-          "content": "d9e78aa4f4420d006a5df8b339df2c58d5fc680e5c344d746bdb39ecf4af1791"
+          "content": "408ac7a375ebf2de02ace34081f259d8f62188ff32514e38a754ee717843ef4f"
         },
         {
           "alg": "SHA3-512",
-          "content": "63557025bcf6a3b28d85a62d06840290d5587e10b35cf41f4b4a640c29d09f1cc96bba26a3aec0cc0de37098edfb42c53de401ce94cbf32680f6e1143cd091a4"
+          "content": "db379c65037f375bc79c74a017815af3a83c296bdeec3c2654688b3f354eb16d4a669870201078112aa9975a7088bec36d80a727c937b84d1d78536a9a715770"
         }
       ],
       "licenses": [
@@ -9757,10 +9757,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.3/httpcore5-h2/",
+          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.4/httpcore5-h2/",
           "type": "website"
         },
         {
@@ -9776,7 +9776,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.3/httpcore5-h2",
+          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.4/httpcore5-h2",
           "type": "vcs"
         }
       ]
@@ -30181,80 +30181,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
-      "publisher": "The Apache Software Foundation",
-      "group": "org.apache.httpcomponents.core5",
-      "name": "httpcore5-h2",
-      "version": "5.4.4",
-      "description": "Apache HttpComponents HTTP/2 Core Components",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "8f56560c50101d9422ca597c48973c9b"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "90c30ff56e226bdb96cf5c987aebc42e1a8a9f45"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "9a61441889f9b222ce99581977cc549b4dfca7ac9d2841582c1e57a31fa65b48"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "6fd81dffd73dee36e85d676f587738d7a31c5b35bfc2ece82fd749cca9894b997ad1b9264bfd9ce4a92ffeba5751d0eaee4b106b03ce7ef4110e6bb4f3bb8eee"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "28a1970490d83c9ebaba10d31ea9a933563f2d99db7eb800264e9f7da61e9d80b19ae9ea898bd2457577c0c8daa3cd1c"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "b47195f8b614c9225471dd05cad344ccab47d5716141807e5414894af4cbcb70e22095694fc59d85b36dbef637f8c509"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "408ac7a375ebf2de02ace34081f259d8f62188ff32514e38a754ee717843ef4f"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "db379c65037f375bc79c74a017815af3a83c296bdeec3c2654688b3f354eb16d4a669870201078112aa9975a7088bec36d80a727c937b84d1d78536a9a715770"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.4/httpcore5-h2/",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://issues.apache.org/jira/browse/HTTPCORE",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://lists.apache.org/list.html?httpclient-users@hc.apache.org",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.4/httpcore5-h2",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@5.1.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
@@ -31079,7 +31005,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d64ab587-c9d5-479e-8a7a-2b64a7b6f834",
+      "bom-ref": "9757bfb8-7d28-4b99-becf-c9d2a7a893a6",
       "name": "package-lock.json",
       "properties": [
         {
@@ -32702,9 +32628,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bootstrap-icons@1.13.1",
+      "bom-ref": "pkg:npm/bootstrap-icons@1.13.2",
       "name": "bootstrap-icons",
-      "version": "1.13.1",
+      "version": "1.13.2",
       "licenses": [
         {
           "license": {
@@ -32712,11 +32638,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bootstrap-icons@1.13.1",
+      "purl": "pkg:npm/bootstrap-icons@1.13.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bootstrap-icons@1.13.1"
+          "value": "bootstrap-icons@1.13.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36335,7 +36261,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "81b3e0fc-149d-45f5-a677-87f26a3160a8",
+      "bom-ref": "ff89b0b5-c6d8-43e2-ae45-5061da0892ab",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -37286,19 +37212,19 @@
     {
       "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.4?type=jar",
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.4?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.3?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar"
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.4?type=jar"
       ]
     },
     {
@@ -39801,12 +39727,6 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.4.4?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.3?type=jar"
-      ]
-    },
-    {
       "ref": "pkg:maven/org.apache.groovy/groovy@5.1.3?type=jar",
       "dependsOn": []
     },
@@ -40051,13 +39971,7 @@
       "dependsOn": []
     },
     {
-      "ref": "81b3e0fc-149d-45f5-a677-87f26a3160a8",
-      "dependsOn": [
-        "d64ab587-c9d5-479e-8a7a-2b64a7b6f834"
-      ]
-    },
-    {
-      "ref": "d64ab587-c9d5-479e-8a7a-2b64a7b6f834",
+      "ref": "9757bfb8-7d28-4b99-becf-c9d2a7a893a6",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -40074,7 +39988,7 @@
         "pkg:npm/angular-touch@1.8.3",
         "pkg:npm/angular-translate@2.19.1",
         "pkg:npm/angular@1.8.3",
-        "pkg:npm/bootstrap-icons@1.13.1",
+        "pkg:npm/bootstrap-icons@1.13.2",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.13.0",
         "pkg:npm/bpmn-js@18.31.0",
@@ -40104,6 +40018,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
+      ]
+    },
+    {
+      "ref": "ff89b0b5-c6d8-43e2-ae45-5061da0892ab",
+      "dependsOn": [
+        "9757bfb8-7d28-4b99-becf-c9d2a7a893a6"
       ]
     },
     {
@@ -40570,7 +40490,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bootstrap-icons@1.13.1",
+      "ref": "pkg:npm/bootstrap-icons@1.13.2",
       "dependsOn": []
     },
     {

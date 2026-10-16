@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.oplog;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
 /**
@@ -47,7 +49,7 @@ public class UserOperationLogContextEntry {
   protected String rootProcessInstanceId;
   protected String externalTaskId;
   protected String annotation;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   public UserOperationLogContextEntry(String operationType, String entityType) {
     this.operationType = operationType;
@@ -206,11 +208,11 @@ public class UserOperationLogContextEntry {
     this.annotation = annotation;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 }

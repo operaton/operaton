@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -51,7 +53,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
   protected String deploymentId;
   protected String resourceName;
   protected String diagramResourceName;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected Integer historyTimeToLive;
 
   protected transient Map<String, TaskDefinition> taskDefinitions;
@@ -150,12 +152,12 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
   @Override
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

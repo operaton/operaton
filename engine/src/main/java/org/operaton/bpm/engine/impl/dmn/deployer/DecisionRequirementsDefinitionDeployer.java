@@ -20,6 +20,8 @@ import java.io.ByteArrayInputStream;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformer;
@@ -92,7 +94,7 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
   }
 
   @Override
-  protected DecisionRequirementsDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  protected DecisionRequirementsDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return getDecisionRequirementsDefinitionManager().findLatestDecisionRequirementsDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 

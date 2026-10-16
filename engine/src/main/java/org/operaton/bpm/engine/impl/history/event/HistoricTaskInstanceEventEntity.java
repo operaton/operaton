@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Marcel Wieczorek
@@ -38,7 +39,7 @@ public class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent 
   protected String deleteReason;
   protected String taskDefinitionKey;
   protected String activityInstanceId;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   /**
    * Returns task State of history tasks
@@ -143,11 +144,11 @@ public class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent 
     this.activityInstanceId = activityInstanceId;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

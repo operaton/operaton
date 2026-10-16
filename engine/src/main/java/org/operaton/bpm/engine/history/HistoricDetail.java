@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.history;
 
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 
 
@@ -70,7 +71,7 @@ public interface HistoricDetail {
    * The id of the tenant this historic detail belongs to. Can be <code>null</code>
    * if the historic detail belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * The id of operation. Helps to link records in different historic tables.

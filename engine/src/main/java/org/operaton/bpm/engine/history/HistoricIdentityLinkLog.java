@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.history;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.task.IdentityLinkType;
@@ -98,7 +100,7 @@ public interface HistoricIdentityLinkLog {
   /**
    * Returns the id of the related tenant
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * Returns the root process instance id of

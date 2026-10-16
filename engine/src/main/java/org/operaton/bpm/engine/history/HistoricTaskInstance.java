@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.history;
 
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 
 /**
@@ -106,7 +107,7 @@ public interface HistoricTaskInstance {
    * The id of the tenant this historic task instance belongs to. Can be <code>null</code>
    * if the historic task instance belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /** The time the historic task instance will be removed. */
   Date getRemovalTime();

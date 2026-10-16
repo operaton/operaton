@@ -297,7 +297,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
     return getDbEntityManager().selectBoolean("isUserAuthorizedForResource", authCheck);
   }
 
-  protected boolean isRevokeAuthCheckEnabled(String userId, List<String> groupIds) {
+  protected boolean isRevokeAuthCheckEnabled(@Nullable String userId, List<String> groupIds) {
     Boolean isRevokeAuthCheckEnabled = this.isRevokeAuthCheckUsed;
 
     if(isRevokeAuthCheckEnabled == null) {
@@ -406,7 +406,7 @@ public @NullMarked class AuthorizationManager extends AbstractManager {
 
   public void enableQueryAuthCheck(AuthorizationCheck authCheck) {
     List<String> authGroupIds = authCheck.getAuthGroupIds();
-    String authUserId = requireNonNull(authCheck.getAuthUserId());
+    String authUserId = authCheck.getAuthUserId();
 
     authCheck.setAuthorizationCheckEnabled(true);
     authCheck.setAuthGroupIds(filterAuthenticatedGroupIds(authGroupIds));

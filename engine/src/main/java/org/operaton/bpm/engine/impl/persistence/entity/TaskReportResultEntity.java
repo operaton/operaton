@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.HistoricTaskInstanceReportResult;
 
 /**
@@ -28,7 +30,7 @@ public class TaskReportResultEntity implements HistoricTaskInstanceReportResult 
   protected String processDefinitionId;
   protected String processDefinitionName;
   protected String taskName;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   @Override
   public Long getCount() {
@@ -76,11 +78,11 @@ public class TaskReportResultEntity implements HistoricTaskInstanceReportResult 
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

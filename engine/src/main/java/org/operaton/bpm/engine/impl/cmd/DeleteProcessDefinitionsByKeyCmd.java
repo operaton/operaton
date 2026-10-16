@@ -35,10 +35,10 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public @NullMarked class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefinitionCmd {
   private final String processDefinitionKey;
-  private final String tenantId;
+  private final @Nullable String tenantId;
   private final boolean isTenantIdSet;
 
-  public DeleteProcessDefinitionsByKeyCmd(String processDefinitionKey, boolean cascade, boolean skipCustomListeners, boolean skipIoMappings, String tenantId, boolean isTenantIdSet) {
+  public DeleteProcessDefinitionsByKeyCmd(String processDefinitionKey, boolean cascade, boolean skipCustomListeners, boolean skipIoMappings, @Nullable String tenantId, boolean isTenantIdSet) {
     this.processDefinitionKey = processDefinitionKey;
     this.cascade = cascade;
     this.skipCustomListeners = skipCustomListeners;

@@ -55,7 +55,7 @@ public class IdentityLinkEntity implements IdentityLink, DbEntity, HasDbReferenc
 
   protected String processDefId;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   protected TaskEntity task;
 
@@ -168,11 +168,11 @@ public class IdentityLinkEntity implements IdentityLink, DbEntity, HasDbReferenc
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

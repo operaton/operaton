@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformer;
 import org.operaton.bpm.engine.impl.AbstractDefinitionDeployer;
@@ -99,7 +101,7 @@ public class DecisionDefinitionDeployer extends AbstractDefinitionDeployer<Decis
   }
 
   @Override
-  protected DecisionDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  protected DecisionDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return getDecisionDefinitionManager().findLatestDecisionDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 

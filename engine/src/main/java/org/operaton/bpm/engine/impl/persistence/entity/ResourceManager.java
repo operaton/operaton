@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 
 
@@ -82,7 +84,7 @@ public class ResourceManager extends AbstractManager {
   }
 
   @SuppressWarnings("unchecked")
-  public Map<String, ResourceEntity> findLatestResourcesByDeploymentName(String deploymentName, Set<String> resourcesToFind, String source, String tenantId) {
+  public Map<String, ResourceEntity> findLatestResourcesByDeploymentName(String deploymentName, Set<String> resourcesToFind, String source, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put(DEPLOYMENT_NAME, deploymentName);
     params.put(RESOURCES_TO_FIND, resourcesToFind);

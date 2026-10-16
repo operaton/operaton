@@ -416,7 +416,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
    * @deprecated use {@link #tooManyProcessDefinitionsException(int, String, String, String)} instead
    */
   @Deprecated(since = "1.1", forRemoval = true)
-  public ProcessEngineException toManyProcessDefinitionsException(int count, String key, String versionAttribute, String versionValue, String tenantId) {
+  public ProcessEngineException toManyProcessDefinitionsException(int count, String key, String versionAttribute, String versionValue, @Nullable String tenantId) {
     return tooManyProcessDefinitionsException(count, key, versionAttribute, versionValue);
   }
 
@@ -594,7 +594,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
         "072", "Cannot change tenantId of Task '{}'. Current tenant id '{}', Tenant id to set '{}'", taskId, currentTenantId, tenantIdToSet));
   }
 
-  public ProcessEngineException cannotSetDifferentTenantIdOnSubtask(String parentTaskId, String tenantId, String tenantIdToSet) {
+  public ProcessEngineException cannotSetDifferentTenantIdOnSubtask(String parentTaskId, @Nullable String tenantId, String tenantIdToSet) {
     return new ProcessEngineException(exceptionMessage(
         "073", "Cannot set different tenantId on subtask than on parent Task. Parent taskId: '{}', tenantId: '{}', tenant id to set '{}'", parentTaskId, tenantId, tenantIdToSet));
   }

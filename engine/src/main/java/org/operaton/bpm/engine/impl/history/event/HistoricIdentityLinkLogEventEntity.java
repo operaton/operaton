@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 /**
  *
@@ -42,7 +43,7 @@ public class HistoricIdentityLinkLogEventEntity extends HistoryEvent {
 
   protected String assignerId;
 
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   public Date getTime() {
     return time;
@@ -100,11 +101,11 @@ public class HistoricIdentityLinkLogEventEntity extends HistoryEvent {
     this.assignerId = assignerId;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

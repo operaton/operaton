@@ -48,7 +48,7 @@ public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions
   protected boolean validatingSchema = true;
   protected boolean isNew;
   protected String source;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   /**
    * Will only be used during actual deployment to pass deployed artifacts (eg process definitions).

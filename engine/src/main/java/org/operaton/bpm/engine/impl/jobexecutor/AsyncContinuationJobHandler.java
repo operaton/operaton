@@ -64,7 +64,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
   }
 
   @Override
-  public void execute(AsyncContinuationConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
+  public void execute(AsyncContinuationConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, @Nullable String tenantId) {
 
     LegacyBehavior.repairMultiInstanceAsyncJob(execution);
 

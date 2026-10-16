@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
@@ -176,7 +178,7 @@ public abstract class UserQueryImpl extends AbstractQuery<UserQuery, User> imple
   public String getGroupId() {
     return groupId;
   }
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 }

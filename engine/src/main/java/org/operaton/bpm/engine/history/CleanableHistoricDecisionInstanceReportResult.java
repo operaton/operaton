@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.history;
 
+import org.jspecify.annotations.Nullable;
 /**
  * This interface defines the result of Cleanable historic decision instance report.
  *
@@ -61,5 +62,5 @@ public interface CleanableHistoricDecisionInstanceReportResult {
    *
    * Returns the tenant id of the current decision instances.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 }

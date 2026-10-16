@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.task;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.identity.UserQuery;
 
@@ -72,6 +74,6 @@ public interface IdentityLink {
    *
    *
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
 }

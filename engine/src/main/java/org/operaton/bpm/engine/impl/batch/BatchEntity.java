@@ -163,7 +163,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

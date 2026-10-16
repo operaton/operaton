@@ -21,6 +21,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -46,7 +48,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
   protected String deploymentId;
   protected String resourceName;
   protected String diagramResourceName;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String decisionRequirementsDefinitionId;
   protected String decisionRequirementsDefinitionKey;
 
@@ -155,12 +157,12 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
   @Override
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

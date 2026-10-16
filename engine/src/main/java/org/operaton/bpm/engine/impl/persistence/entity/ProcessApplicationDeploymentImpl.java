@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.engine.repository.*;
 
@@ -57,7 +59,7 @@ public class ProcessApplicationDeploymentImpl implements ProcessApplicationDeplo
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return deployment.getTenantId();
   }
 

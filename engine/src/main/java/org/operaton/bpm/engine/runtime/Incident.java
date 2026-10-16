@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.runtime;
 
 import java.util.Date;
+import org.jspecify.annotations.Nullable;
 
 /**
  * An {@link Incident} represents a failure in the execution of
@@ -131,7 +132,7 @@ public interface Incident {
    * Returns the id of the tenant this incident belongs to. Can be <code>null</code>
    * if the incident belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /**
    * Returns the id of the job definition the incident belongs to. Can be <code>null</code>

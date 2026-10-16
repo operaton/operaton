@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.history.IncidentState;
 
 /**
@@ -38,7 +40,7 @@ public class HistoricIncidentEventEntity extends HistoryEvent {
   protected String configuration;
   protected String incidentMessage;
   protected int incidentState;
-  protected String tenantId;
+  protected @Nullable String tenantId;
   protected String jobDefinitionId;
   protected String historyConfiguration;
   protected String failedActivityId;
@@ -120,11 +122,11 @@ public class HistoricIncidentEventEntity extends HistoryEvent {
     this.incidentState = incidentState;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

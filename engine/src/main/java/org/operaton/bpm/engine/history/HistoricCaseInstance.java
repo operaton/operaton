@@ -68,7 +68,7 @@ public interface HistoricCaseInstance {
    * The id of the tenant this historic case instance belongs to. Can be <code>null</code>
    * if the historic case instance belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /** Check if the case is active. */
   boolean isActive();

@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.runtime;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.management.JobDefinition;
 
@@ -115,7 +117,7 @@ public interface Job {
    * The id of the tenant this job belongs to. Can be <code>null</code>
    * if the job belongs to no single tenant.
    */
-  String getTenantId();
+  @Nullable String getTenantId();
 
   /** The date/time when this job has been created */
   Date getCreateTime();

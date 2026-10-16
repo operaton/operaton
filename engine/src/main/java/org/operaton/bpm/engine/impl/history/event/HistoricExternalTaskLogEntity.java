@@ -53,7 +53,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
   protected String activityId;
 
   protected String activityInstanceId;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   protected int state;
 
@@ -172,11 +172,11 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

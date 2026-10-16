@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.batch.BatchSeedJobHandler.BatchSeedJobConfiguration;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
@@ -43,7 +45,7 @@ public class BatchSeedJobHandler implements JobHandler<BatchSeedJobConfiguration
   }
 
   @Override
-  public void execute(BatchSeedJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
+  public void execute(BatchSeedJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, @Nullable String tenantId) {
 
     String batchId = configuration.getBatchId();
     BatchEntity batch = commandContext.getBatchManager().findBatchById(batchId);

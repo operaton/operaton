@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.jobexecutor;
 
 import com.google.gson.JsonObject;
+import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cmd.AbstractSetJobDefinitionStateCmd;
@@ -40,7 +41,7 @@ public abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implemen
   protected static final String JOB_HANDLER_CFG_INCLUDE_JOBS = "includeJobs";
 
   @Override
-  public void execute(JobDefinitionSuspensionStateConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
+  public void execute(JobDefinitionSuspensionStateConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, @Nullable String tenantId) {
     AbstractSetJobDefinitionStateCmd cmd = getCommand(configuration);
     cmd.disableLogUserOperation();
     cmd.execute(commandContext);
@@ -61,7 +62,7 @@ public abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implemen
     protected String processDefinitionKey;
     protected String processDefinitionId;
     protected boolean includeJobs;
-    protected String tenantId;
+    protected @Nullable String tenantId;
     protected boolean isTenantIdSet;
     protected String by;
 
@@ -173,7 +174,7 @@ public abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implemen
       return configuration;
     }
 
-    public static JobDefinitionSuspensionStateConfiguration byProcessDefinitionKeyAndTenantId(String processDefinitionKey, String tenantId, boolean includeProcessInstances) {
+    public static JobDefinitionSuspensionStateConfiguration byProcessDefinitionKeyAndTenantId(String processDefinitionKey, @Nullable String tenantId, boolean includeProcessInstances) {
       JobDefinitionSuspensionStateConfiguration configuration = byProcessDefinitionKey(processDefinitionKey, includeProcessInstances);
 
       configuration.isTenantIdSet = true;

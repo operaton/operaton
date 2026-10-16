@@ -18,8 +18,9 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 
-import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
+import org.jspecify.annotations.Nullable;
 
+import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
 
 /**
  * <p>{@link HistoryEvent} implementation for events that happen in an activity.</p>
@@ -61,7 +62,7 @@ public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEv
   protected String taskAssignee;
 
   /** id of the tenant which belongs to the activity instance  */
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   // getters and setters //////////////////////////////////////////////////////
 
@@ -157,11 +158,11 @@ public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEv
     return ActivityInstanceState.CANCELED.getStateCode() == activityInstanceState;
   }
 
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

@@ -42,7 +42,7 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
   protected String deploymentId;
   protected String resourceName;
   protected String diagramResourceName;
-  protected String tenantId;
+  protected @Nullable String tenantId;
 
   // firstVersion is true, when version == 1 or when
   // this definition does not have any previous definitions
@@ -90,7 +90,7 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
@@ -160,7 +160,7 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
   }
 
   @Override
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 

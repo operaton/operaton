@@ -645,7 +645,10 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   @SuppressWarnings("deprecation")
   protected boolean requiresUnsuspendedExecution(AtomicOperation executionOperation) {
-    return executionOperation != PvmAtomicOperation.TRANSITION_CREATE_SCOPE
+    // Migration may initialize structural scopes without resuming their suspended activity behavior.
+    return executionOperation != PvmAtomicOperation.ACTIVITY_INIT_STACK_AND_RETURN
+        && executionOperation != PvmAtomicOperation.ACTIVITY_INIT_STACK_NOTIFY_LISTENER_RETURN
+        && executionOperation != PvmAtomicOperation.TRANSITION_CREATE_SCOPE
         && executionOperation != PvmAtomicOperation.TRANSITION_DESTROY_SCOPE
         && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_START
         && executionOperation != PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE
@@ -1238,6 +1241,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
     for (VariableInstanceEntity variable : variables) {
       if (variable.isConcurrentLocal()) {
+        // Remove the stale source-store entry before the referencer assigns the new owner.
+        // getVariables() returns a snapshot, so removal does not affect this iteration.
+        variableStore.removeVariableForMove(variable.getName());
         moveVariableTo(variable, other);
       }
     }

@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -70,6 +71,7 @@ class QuerySessionFactoryTest {
     var mappingFiles = List.of("foo/mapping1.xml", "bar/mapping2.xml");
     var documentBuildFactory = DocumentBuilderFactory.newDefaultInstance();
     var builder = documentBuildFactory.newDocumentBuilder();
+    builder.setEntityResolver(new XMLMapperEntityResolver());
 
     // when
     String mappings = querySessionFactory.buildMappings(mappingFiles);

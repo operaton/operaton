@@ -102,7 +102,7 @@ module.exports = (_env, argv = {}) => {
         angular: path.resolve(__dirname, 'node_modules/angular'), // avoid loading angular twice
         // compatibility layer for `ids` module, which is needed differently by dmn-migrate and form-js
         // Use the package's exported entry directly so webpack resolves the correct ESM shape
-        'ids$': path.resolve(__dirname, 'node_modules/ids/dist/index.js'),
+        ids$: path.resolve(__dirname, 'node_modules/ids/dist/index.js'),
         // prevent`preact-markup`being tree shaken (transitive dependency of form-js
         'preact-markup': path.resolve(
           __dirname,
@@ -243,7 +243,7 @@ module.exports = (_env, argv = {}) => {
         DEV_MODE: devMode,
         Popper: ['popper.js', 'default'],
         $: 'jquery',
-        jQuery: 'jquery'
+        jQuery: 'jquery',
       }),
       new ESLintPlugin(),
     ],

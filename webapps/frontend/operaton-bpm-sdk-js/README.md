@@ -14,38 +14,33 @@ See https://docs.operaton.org/manual/latest/reference/embedded-forms/
 
 ## Development
 
-```sh
-npm install
-```
+The SDK is built and tested through the parent `webapps/frontend` package.
+Run these commands from that directory:
 
 ```sh
-grunt auto-build
+npm ci
+npm run build
 ```
 
 ### Testing
 
-#### Karma
-
 ```sh
-grunt karma
+npm run test:sdk
 ```
 
-Alternatively, you can use the specific targets
+This runs every Node SDK spec in `test/client/**/*Spec.js`. The existing
+pending resource examples remain visible in the Mocha report. `npm test`
+runs this suite followed by the webapp UI suite, which requires Chrome.
+The historical SDK browser specs are not wired into the current UI harness.
 
-```sh
-grunt karma:dev-form
-# or
-grunt karma:dev-form-angularjs
-```
-
-
-#### Mocha CLI
-
-```sh
-grunt mochacli
-# or
-grunt watch:mochacli
-```
+The REST mock in `test/superagent-mock-config.js` is restored verbatim from
+[the parent of the historical removal commit](https://github.com/operaton/operaton/commit/0aa166c85e9ee9cb0863ecae60da587c01753e72),
+where it lived at `webapps/camunda-bpm-sdk-js/test/superagent-mock-config.js`.
+Its original license and attribution are preserved. The published
+`fixturer@0.0.1` implementation and package metadata match the original
+Camunda fork at `e17687b7c78c51ff09b7b187a7641e77bfc2745e`; the fixture needs
+UUID's legacy callable API. Test-only dependencies are pinned in the parent
+package and lockfile.
 
 ### Issues
 
@@ -81,16 +76,16 @@ grunt publish:version --setversion='myNewVersion'
 
 ### Available options
 
-* --no-bower -> skip bower release
-* --no-write -> dryRun mode
+- --no-bower -> skip bower release
+- --no-write -> dryRun mode
 
 ### Examples
 
-* [standalone usage](https://github.com/camunda/camunda-bpm-examples/tree/master/sdk-js)
+- [standalone usage](https://github.com/camunda/camunda-bpm-examples/tree/master/sdk-js)
 
 ### Contributing
 
-You are __more than welcome__ to take part on the development of this project!
+You are **more than welcome** to take part on the development of this project!
 
 #### Coding
 

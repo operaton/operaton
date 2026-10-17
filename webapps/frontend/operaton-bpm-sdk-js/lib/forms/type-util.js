@@ -25,7 +25,7 @@ var FLOAT_PATTERN =
 var BOOLEAN_PATTERN = /^(true|false)$/;
 
 var DATE_PATTERN =
-  /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
+  /^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.([0-9]{0,4}))?$/;
 
 var {XMLValidator} = require('fast-xml-parser');
 
@@ -43,6 +43,49 @@ var isValidJSON = function (value) {
   }
 };
 
+var isValidDate = function (value) {
+  var parts = DATE_PATTERN.exec(dateToString(value));
+  if (!parts) return false;
+
+  var year = Number(parts[1]);
+  var month = Number(parts[2]);
+  var day = Number(parts[3]);
+  var hour = Number(parts[4]);
+  var minute = Number(parts[5]);
+  var second = Number(parts[6]);
+  var leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  var daysInMonth = [
+    31,
+    leapYear ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
+
+  // Validate local calendar fields without Date parsing or timezone conversion.
+  // Preserve leap seconds and ISO end-of-day notation in the existing grammar.
+  return (
+    month >= 1 &&
+    month <= 12 &&
+    day >= 1 &&
+    day <= daysInMonth[month - 1] &&
+    minute <= 59 &&
+    second <= 60 &&
+    (hour < 24 ||
+      (hour === 24 &&
+        minute === 0 &&
+        second === 0 &&
+        Number(parts[7] || 0) === 0))
+  );
+};
+
 var isType = function (value, type) {
   switch (type) {
     case 'Integer':
@@ -55,7 +98,7 @@ var isType = function (value, type) {
     case 'Boolean':
       return BOOLEAN_PATTERN.test(value);
     case 'Date':
-      return DATE_PATTERN.test(dateToString(value));
+      return isValidDate(value);
     case 'Xml':
       return isValidXML(value);
     case 'Json':

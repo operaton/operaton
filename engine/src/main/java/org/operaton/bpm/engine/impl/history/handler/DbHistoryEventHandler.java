@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.handler;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.repository.ResourceTypes;
  * @author Daniel Meyer
  *
  */
-public class DbHistoryEventHandler implements HistoryEventHandler {
+public @NullMarked class DbHistoryEventHandler implements HistoryEventHandler {
 
   @Override
   public void handleEvent(HistoryEvent historyEvent) {

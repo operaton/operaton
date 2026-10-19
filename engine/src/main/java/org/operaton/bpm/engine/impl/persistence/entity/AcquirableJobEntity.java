@@ -43,6 +43,7 @@ public @NullMarked class AcquirableJobEntity implements DbEntity, HasDbRevision 
 
 
   @Override
+  @SuppressWarnings("ConstantConditions")
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("lockOwner", lockOwner);
@@ -134,7 +135,7 @@ public @NullMarked class AcquirableJobEntity implements DbEntity, HasDbRevision 
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }

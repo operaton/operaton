@@ -18,6 +18,7 @@ package org.operaton.bpm.spring.boot.starter.event;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.context.ApplicationEventPublisher;
 
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 /**
  * Event handler publishing history events as Spring Events.
  */
-public class PublishHistoryEventHandler implements HistoryEventHandler {
+public @NullMarked class PublishHistoryEventHandler implements HistoryEventHandler {
 
   private final ApplicationEventPublisher publisher;
 
@@ -41,8 +42,6 @@ public class PublishHistoryEventHandler implements HistoryEventHandler {
 
   @Override
   public void handleEvents(final List<HistoryEvent> eventList) {
-    if (eventList != null) {
-      eventList.forEach(this::handleEvent);
-    }
+    eventList.forEach(this::handleEvent);
   }
 }

@@ -379,7 +379,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   public void initialize() {
     LOG.initializeExecution(this);
 
-    ScopeImpl scope = getScopeActivity();
+    ScopeImpl scope = requireNonNull(getScopeActivity());
     ensureParentInitialized();
 
     List<VariableDeclaration> variableDeclarations = (List<VariableDeclaration>)
@@ -391,7 +391,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     }
 
     if (isProcessInstanceExecution()) {
-      String initiatorVariableName = (String) processDefinition.getProperty(BpmnParse.PROPERTYNAME_INITIATOR_VARIABLE_NAME);
+      String initiatorVariableName = (String) requireNonNull(processDefinition).getProperty(BpmnParse.PROPERTYNAME_INITIATOR_VARIABLE_NAME);
       if (initiatorVariableName != null) {
         String authenticatedUserId = Context.getCommandContext().getAuthenticatedUserId();
         if (authenticatedUserId != null) {
@@ -498,7 +498,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
       HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
         @Override
         public HistoryEvent createHistoryEvent(HistoryEventProducer producer) {
-          return producer.createProcessInstanceStartEvt(processInstance);
+          return producer.createProcessInstanceStartEvt(requireNonNull(processInstance));
         }
       });
     }
@@ -657,10 +657,9 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
 
   @SuppressWarnings({ "unchecked" })
   public void scheduleAtomicOperationAsync(AtomicOperationInvocation executionOperationInvocation) {
-
     MessageJobDeclaration messageJobDeclaration = null;
-
-    List<MessageJobDeclaration> messageJobDeclarations = (List<MessageJobDeclaration>) getActivity()
+    ActivityImpl act = requireNonNull(getActivity());
+    List<MessageJobDeclaration> messageJobDeclarations = (List<MessageJobDeclaration>) act
         .getProperty(BpmnParse.PROPERTYNAME_MESSAGE_JOB_DECLARATION);
     if (messageJobDeclarations != null) {
       for (MessageJobDeclaration declaration : messageJobDeclarations) {
@@ -674,9 +673,8 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     if (messageJobDeclaration != null) {
       MessageEntity message = messageJobDeclaration.createJobInstance(executionOperationInvocation);
       Context.getCommandContext().getJobManager().send(message);
-
     } else {
-      throw LOG.requiredAsyncContinuationException(getActivity().getId());
+      throw LOG.requiredAsyncContinuationException(act.getId());
     }
   }
 
@@ -694,7 +692,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   @Override
   public List<ExecutionEntity> getExecutions() {
     ensureExecutionsInitialized();
-    return executions;
+    return requireNonNull(executions);
   }
 
   @Override
@@ -736,7 +734,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
 
   /** ensures initialization and returns the process definition. */
   @Override
-  public ProcessDefinitionEntity getProcessDefinition() {
+  public @Nullable ProcessDefinitionEntity getProcessDefinition() {
     ensureProcessDefinitionInitialized();
     return (ProcessDefinitionEntity) processDefinition;
   }
@@ -839,7 +837,8 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
    */
   protected void ensureActivityInitialized() {
     if ((activity == null) && (activityId != null)) {
-      setActivity(getProcessDefinition().findActivity(activityId));
+      ProcessDefinitionEntity definition = requireNonNull(getProcessDefinition());
+      setActivity(definition.findActivity(activityId));
     }
   }
 
@@ -863,8 +862,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   protected String generateActivityInstanceId(String activityId) {
 
     if (activityId.equals(processDefinitionId)) {
-      return processInstanceId;
-
+      return requireNonNull(processInstanceId);
     } else {
 
       String nextId = Context.getProcessEngineConfiguration().getIdGenerator().getNextId();
@@ -925,6 +923,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   public void setSuperExecution(@Nullable PvmExecutionImpl superExecution) {
     if (this.superExecutionId != null) {
       ensureSuperExecutionInitialized();
+      requireNonNull(this.superExecution);
       this.superExecution.setSubProcessInstance(null);
     }
 
@@ -1090,7 +1089,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     }
   }
 
-  protected void removeTasks(String reason, boolean skipCustomListeners) {
+  protected void removeTasks(@Nullable String reason, boolean skipCustomListeners) {
     if (reason == null) {
       reason = TaskEntity.DELETE_REASON_DELETED;
     }
@@ -1222,9 +1221,10 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   }
 
   protected void moveVariableTo(VariableInstanceEntity variable, ExecutionEntity other) {
-    if (other.variableStore.containsKey(variable.getName())) {
-      CoreVariableInstance existingInstance = other.variableStore.getVariable(variable.getName());
-      existingInstance.setValue(variable.getTypedValue(false));
+    String variableName = requireNonNull(variable.getName());
+    if (other.variableStore.containsKey(variableName)) {
+      CoreVariableInstance existingInstance = requireNonNull(other.variableStore.getVariable(variableName));
+      existingInstance.setValue(requireNonNull(variable.getTypedValue(false)));
       invokeVariableLifecycleListenersUpdate(existingInstance, this);
       invokeVariableLifecycleListenersDelete(variable, this, List.of(getVariablePersistenceListener()));
     } else {
@@ -1582,7 +1582,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
 
   protected List<JobEntity> getJobsInternal() {
     ensureJobsInitialized();
-    return jobs;
+    return requireNonNull(jobs);
   }
 
   public List<JobEntity> getJobs() {
@@ -1675,7 +1675,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
 
   protected List<ExternalTaskEntity> getExternalTasksInternal() {
     ensureExternalTasksInitialized();
-    return externalTasks;
+    return requireNonNull(externalTasks);
   }
 
   public void addExternalTask(ExternalTaskEntity externalTask) {
@@ -1732,15 +1732,16 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
 
   public void removeVariableInternal(VariableInstanceEntity variable) {
     if (variableStore.containsValue(variable)) {
-      variableStore.removeVariable(variable.getName());
+      variableStore.removeVariable(requireNonNull(variable.getName()));
     }
   }
 
   public void addVariableInternal(VariableInstanceEntity variable) {
-    if (variableStore.containsKey(variable.getName())) {
-      VariableInstanceEntity existingVariable = variableStore.getVariable(variable.getName());
+    String variableName = requireNonNull(variable.getName());
+    if (variableStore.containsKey(variableName)) {
+      VariableInstanceEntity existingVariable = variableStore.getVariable(variableName);
       if (existingVariable != null) {
-        existingVariable.setValue(variable.getTypedValue());
+        existingVariable.setValue(requireNonNull(variable.getTypedValue()));
       }
       variable.delete();
     } else {
@@ -1748,7 +1749,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     }
   }
 
-  public void handleConditionalEventOnVariableChange(VariableEvent variableEvent) {
+  public void handleConditionalEventOnVariableChange(@Nullable VariableEvent variableEvent) {
     List<EventSubscriptionEntity> subscriptions = getEventSubscriptions();
     for (EventSubscriptionEntity subscription : subscriptions) {
       if (EventType.CONDITONAL.name().equals(subscription.getEventType())) {
@@ -1758,11 +1759,11 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   }
 
   @Override
-  public void dispatchEvent(VariableEvent variableEvent) {
+  public void dispatchEvent(@Nullable VariableEvent variableEvent) {
     final List<ExecutionEntity> execs = new ArrayList<>();
     new ExecutionTopDownWalker(this).addPreVisitor(obj -> {
       if (!obj.getEventSubscriptions().isEmpty() &&
-          (obj.isInState(ActivityInstanceState.DEFAULT) || (!obj.getActivity().isScope()))) {
+          (obj.isInState(ActivityInstanceState.DEFAULT) || (!requireNonNull(obj.getActivity()).isScope()))) {
         // state is default or tree is compacted
         execs.add(obj);
       }
@@ -1991,7 +1992,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
   }
 
   public @Nullable String getProcessDefinitionTenantId() {
-    return getProcessDefinition().getTenantId();
+    return requireNonNull(getProcessDefinition()).getTenantId();
   }
 
   public void setProcessDefinitionKey(@Nullable String processDefinitionKey) {

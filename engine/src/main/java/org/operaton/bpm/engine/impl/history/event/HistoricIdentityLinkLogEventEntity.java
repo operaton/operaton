@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 import java.util.Date;
+
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -25,7 +27,7 @@ import org.jspecify.annotations.Nullable;
  * @author Deivarayan Azhagappan
  *
  */
-public class HistoricIdentityLinkLogEventEntity extends HistoryEvent {
+public @NullUnmarked class HistoricIdentityLinkLogEventEntity extends HistoryEvent {
 
   @Serial private static final long serialVersionUID = 1L;
 

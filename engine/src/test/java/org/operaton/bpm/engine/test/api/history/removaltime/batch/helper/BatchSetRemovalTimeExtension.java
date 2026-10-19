@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
@@ -55,7 +56,7 @@ public class BatchSetRemovalTimeExtension extends BatchExtension {
   }
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) {
+  public void beforeTestExecution(@NonNull ExtensionContext context) {
     getProcessEngineConfiguration()
       .setHistoryRemovalTimeProvider(new DefaultHistoryRemovalTimeProvider())
       .setHistoryRemovalTimeStrategy(ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START)
@@ -74,7 +75,7 @@ public class BatchSetRemovalTimeExtension extends BatchExtension {
   }
 
   @Override
-  public void afterTestExecution(ExtensionContext context) {
+  public void afterTestExecution(@NonNull ExtensionContext context) {
     super.afterTestExecution(context);
 
     getProcessEngineConfiguration()

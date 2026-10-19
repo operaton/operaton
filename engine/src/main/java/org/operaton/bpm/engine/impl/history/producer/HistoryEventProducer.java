@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.history.producer;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -42,7 +44,7 @@ import org.operaton.bpm.engine.task.IdentityLink;
  * @author Ingo Richtsmeier
  *
  */
-public interface HistoryEventProducer {
+public @NullMarked interface HistoryEventProducer {
 
   // Process instances //////////////////////////////////////
 
@@ -100,7 +102,7 @@ public interface HistoryEventProducer {
    * Creates the history event fired when an activity instance is <strong>updated</strong>.
    *
    * @param execution the current execution.
-   * @param task the task association that is currently updated. (May be {@code null} in case there is not task associated.)
+   * @param task the task association that is currently updated. (Maybe {@code null} in case there is not task associated.)
    * @return the history event
    */
   HistoryEvent createActivityInstanceUpdateEvt(DelegateExecution execution, DelegateTask task);
@@ -155,16 +157,16 @@ public interface HistoryEventProducer {
    * @param deleteReason
    * @return the history event
    */
-  HistoryEvent createTaskInstanceCompleteEvt(DelegateTask task, String deleteReason);
+  HistoryEvent createTaskInstanceCompleteEvt(DelegateTask task, @Nullable String deleteReason);
 
   // User Operation Logs ///////////////////////////////
 
   /**
    * Creates the history event fired whenever an operation has been performed by a user. This is
-   * used for logging actions such as creating a new Task, completing a task, canceling a
+   * used for logging actions such as creating a new Task, completing a task, canceling
    * a process instance, ...
    *
-   * @param context the {@link UserOperationLogContext} providing the needed informations
+   * @param context the {@link UserOperationLogContext} providing the needed information
    * @return a {@link List} of {@link HistoryEvent}s
    */
   List<HistoryEvent> createUserOperationLogEvents(UserOperationLogContext context);
@@ -175,7 +177,7 @@ public interface HistoryEventProducer {
    * Creates the history event fired when a variable is <strong>created</strong>.
    *
    * @param variableInstance the runtime variable instance
-   * @param the scope to which the variable is linked
+   * @param sourceVariableScope the scope to which the variable is linked
    * @return the history event
    */
   HistoryEvent createHistoricVariableCreateEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope);
@@ -184,7 +186,7 @@ public interface HistoryEventProducer {
    * Creates the history event fired when a variable is <strong>updated</strong>.
    *
    * @param variableInstance the runtime variable instance
-   * @param the scope to which the variable is linked
+   * @param sourceVariableScope the scope to which the variable is linked
    * @return the history event
    */
   HistoryEvent createHistoricVariableUpdateEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope);
@@ -193,7 +195,6 @@ public interface HistoryEventProducer {
    * Creates the history event fired when a variable is <strong>migrated</strong>.
    *
    * @param variableInstance the runtime variable instance
-   * @param the scope to which the variable is linked
    * @return the history event
    */
   HistoryEvent createHistoricVariableMigrateEvt(VariableInstanceEntity variableInstance);
@@ -201,8 +202,8 @@ public interface HistoryEventProducer {
   /**
    * Creates the history event fired when a variable is <strong>deleted</strong>.
    *
-   * @param variableInstance
-   * @param variableScopeImpl
+   * @param variableInstance the runtime variable instance
+   * @param sourceVariableScope the scope to which the variable is linked
    * @return the history event
    */
   HistoryEvent createHistoricVariableDeleteEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope);
@@ -212,10 +213,10 @@ public interface HistoryEventProducer {
   /**
    * Creates the history event fired when a form property is <strong>updated</strong>.
    *
-   * @param processInstance the id for the process instance
+   * @param execution the execution entity
    * @param propertyId the id of the form property
    * @param propertyValue the value of the form property
-   * @param taskId
+   * @param taskId the id of the task
    * @return the history event
    */
   HistoryEvent createFormPropertyUpdateEvt(ExecutionEntity execution, String propertyId, String propertyValue, String taskId);
@@ -253,20 +254,20 @@ public interface HistoryEventProducer {
   HistoryEvent createHistoricJobLogSuccessfulEvt(Job job);
 
   /**
-   * Creates the history event fired when the a job has been <strong>deleted</strong>.
+   * Creates the history event fired when a job has been <strong>deleted</strong>.
    *
    */
   HistoryEvent createHistoricJobLogDeleteEvt(Job job);
 
   /**
-   * Creates the history event fired when the a batch has been <strong>started</strong>.
+   * Creates the history event fired when a batch has been <strong>started</strong>.
    *
    */
   HistoryEvent createBatchStartEvent(Batch batch);
 
 
   /**
-   * Creates the history event fired when the a batch has been <strong>completed</strong>.
+   * Creates the history event fired when a batch has been <strong>completed</strong>.
    *
    */
   HistoryEvent createBatchEndEvent(Batch batch);
@@ -279,15 +280,11 @@ public interface HistoryEventProducer {
 
   /**
    * Fired when an identity link is added
-   * @param identitylink
-   * @return
    */
   HistoryEvent createHistoricIdentityLinkAddEvent(IdentityLink identitylink);
 
   /**
    * Fired when an identity links is deleted
-   * @param identityLink
-   * @return
    */
   HistoryEvent createHistoricIdentityLinkDeleteEvent(IdentityLink identityLink);
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.runtime;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 /**
@@ -25,27 +27,27 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
  * @author Joram Barrez
  * @author Daniel Meyer
  */
-public interface ProcessInstance extends Execution {
+public @NullMarked interface ProcessInstance extends Execution {
 
   /**
    * The id of the process definition of the process instance.
    */
-  String getProcessDefinitionId();
+  @Nullable String getProcessDefinitionId();
 
   /**
    * The business key of this process instance.
    */
-  String getBusinessKey();
+  @Nullable String getBusinessKey();
 
   /**
    * The id of the root process instance associated with this process instance.
    */
-  String getRootProcessInstanceId();
+  @Nullable String getRootProcessInstanceId();
 
   /**
    * The id of the case instance associated with this process instance.
    */
-  String getCaseInstanceId();
+  @Nullable String getCaseInstanceId();
 
   /**
    * returns true if the process instance is suspended

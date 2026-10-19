@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 import java.util.Date;
+
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
@@ -34,7 +36,7 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TER
  *
  * @author Sebastian Menski
  */
-public class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstanceEvent {
+public @NullUnmarked class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstanceEvent {
 
   @Serial private static final long serialVersionUID = 1L;
 

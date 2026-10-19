@@ -196,7 +196,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return persistentObject;
   }
 
-  public <T extends DbEntity> T getCachedEntity(Class<T> type, String id) {
+  public <T extends DbEntity> @Nullable T getCachedEntity(Class<T> type, String id) {
     return dbEntityCache.get(type, id);
   }
 

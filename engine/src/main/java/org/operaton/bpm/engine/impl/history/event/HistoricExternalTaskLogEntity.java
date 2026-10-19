@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.history.ExternalTaskState;
 
 import org.jspecify.annotations.Nullable;
@@ -30,10 +31,11 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createExceptionByteArray;
 import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
 
-public class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExternalTaskLog {
+public @NullUnmarked class HistoricExternalTaskLogEntity extends HistoryEvent implements HistoricExternalTaskLog {
 
   @Serial private static final long serialVersionUID = 1L;
   private static final String EXCEPTION_NAME = "historicExternalTaskLog.exceptionByteArray";
@@ -123,6 +125,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     return errorDetailsByteArrayId;
   }
 
+  @SuppressWarnings("unused")
   public void setErrorDetailsByteArrayId(String errorDetailsByteArrayId) {
     this.errorDetailsByteArrayId = errorDetailsByteArrayId;
   }
@@ -136,7 +139,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     EnsureUtil.ensureNotNull("exception", exception);
 
     byte[] exceptionBytes = toByteArray(exception);
-    ByteArrayEntity byteArray = createExceptionByteArray(EXCEPTION_NAME, exceptionBytes, ResourceTypes.HISTORY);
+    ByteArrayEntity byteArray = requireNonNull(createExceptionByteArray(EXCEPTION_NAME, exceptionBytes, ResourceTypes.HISTORY));
     byteArray.setRootProcessInstanceId(rootProcessInstanceId);
     byteArray.setRemovalTime(removalTime);
 

@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.impl.context.Context;
 
 import org.jspecify.annotations.Nullable;
@@ -41,7 +43,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Daniel Meyer
  */
-public class EventSubscriptionEntity implements EventSubscription, DbEntity, HasDbRevision, HasDbReferences {
+public @NullUnmarked class EventSubscriptionEntity implements EventSubscription, DbEntity, HasDbRevision, HasDbReferences {
 
   // persistent state ///////////////////////////
   protected String id;
@@ -67,12 +69,12 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   public EventSubscriptionEntity() {
   }
 
-  public EventSubscriptionEntity(EventType eventType) {
+  public EventSubscriptionEntity(@NonNull EventType eventType) {
     this.created = ClockUtil.getCurrentTime();
     this.eventType = eventType.name();
   }
 
-  public EventSubscriptionEntity(ExecutionEntity executionEntity, EventType eventType) {
+  public EventSubscriptionEntity(@NonNull ExecutionEntity executionEntity, @NonNull EventType eventType) {
     this(eventType);
     setExecution(executionEntity);
     setActivity(requireNonNull(execution).getActivity());
@@ -134,11 +136,11 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
     addToExecution();
   }
 
-  public static EventSubscriptionEntity createAndInsert(ExecutionEntity executionEntity, EventType eventType, ActivityImpl activity) {
+  public static EventSubscriptionEntity createAndInsert(@NonNull ExecutionEntity executionEntity, @NonNull EventType eventType, ActivityImpl activity) {
     return createAndInsert(executionEntity, eventType, activity, null);
   }
 
-  public static EventSubscriptionEntity createAndInsert(ExecutionEntity executionEntity, EventType eventType, ActivityImpl activity, String configuration) {
+  public static EventSubscriptionEntity createAndInsert(@NonNull ExecutionEntity executionEntity, @NonNull EventType eventType, ActivityImpl activity, String configuration) {
     EventSubscriptionEntity eventSubscription = new EventSubscriptionEntity(executionEntity, eventType);
     eventSubscription.setActivity(activity);
     eventSubscription.setTenantId(executionEntity.getTenantId());
@@ -345,7 +347,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }

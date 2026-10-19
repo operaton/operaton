@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.history;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
@@ -32,13 +34,13 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 /**
  * @author Tassilo Weidner
  */
-public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder {
+public @NullMarked class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder {
   private static final String MSG_REMOVAL_TIME_MODES_MUTUALLY_EXCLUSIVE = "The removal time modes are mutually exclusive";
 
-  protected HistoricDecisionInstanceQuery query;
-  protected List<String> ids;
-  protected Date removalTime;
-  protected Mode mode;
+  protected @Nullable HistoricDecisionInstanceQuery query;
+  protected @Nullable List<String> ids;
+  protected @Nullable Date removalTime;
+  protected @Nullable Mode mode;
   protected boolean isHierarchical;
 
   protected CommandExecutor commandExecutor;
@@ -54,7 +56,7 @@ public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements Set
   }
 
   @Override
-  public SetRemovalTimeToHistoricDecisionInstancesBuilder byIds(String... ids) {
+  public SetRemovalTimeToHistoricDecisionInstancesBuilder byIds(String @Nullable ... ids) {
     this.ids = ids !=  null ? List.of(ids) : null;
     return this;
   }
@@ -95,19 +97,19 @@ public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements Set
     return commandExecutor.execute(new SetRemovalTimeToHistoricDecisionInstancesCmd(this));
   }
 
-  public HistoricDecisionInstanceQuery getQuery() {
+  public @Nullable HistoricDecisionInstanceQuery getQuery() {
     return query;
   }
 
-  public List<String> getIds() {
+  public @Nullable List<String> getIds() {
     return ids;
   }
 
-  public Date getRemovalTime() {
+  public @Nullable Date getRemovalTime() {
     return removalTime;
   }
 
-  public Mode getMode() {
+  public @Nullable Mode getMode() {
     return mode;
   }
 

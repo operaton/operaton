@@ -16,25 +16,29 @@
  */
 package org.operaton.bpm.engine.impl.history.parser;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  *
  */
-public class ActivityInstanceEndListener extends HistoryExecutionListener {
+public @NullMarked class ActivityInstanceEndListener extends HistoryExecutionListener {
 
   public ActivityInstanceEndListener(HistoryEventProducer historyEventProducer) {
     super(historyEventProducer);
   }
 
   @Override
-  protected HistoryEvent createHistoryEvent(DelegateExecution execution) {
+  protected @Nullable HistoryEvent createHistoryEvent(DelegateExecution execution) {
     ensureHistoryLevelInitialized();
-    if(historyLevel.isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_END, execution)) {
+    if(requireNonNull(historyLevel).isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_END, execution)) {
       return eventProducer.createActivityInstanceEndEvt(execution);
     } else {
       return null;

@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -51,7 +52,7 @@ import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.INCID
 /**
  * @author roman.smirnov
  */
-public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbReferences {
+public @NullUnmarked class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbReferences {
 
   protected static final IncidentLogger LOG = ProcessEngineLogger.INCIDENT_LOGGER;
 
@@ -120,7 +121,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     }
   }
 
-  public static IncidentEntity createAndInsertIncident(String incidentType, IncidentContext context, String message) {
+  public static @NonNull IncidentEntity createAndInsertIncident(String incidentType, IncidentContext context, String message) {
     // create new incident
     IncidentEntity newIncident = create(incidentType);
     newIncident.setIncidentMessage(message);
@@ -156,7 +157,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     return newIncident;
   }
 
-  protected static IncidentEntity create(String incidentType) {
+  protected static @NonNull IncidentEntity create(String incidentType) {
 
     String incidentId = Context.getProcessEngineConfiguration()
         .getDbSqlSessionFactory()
@@ -536,7 +537,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }

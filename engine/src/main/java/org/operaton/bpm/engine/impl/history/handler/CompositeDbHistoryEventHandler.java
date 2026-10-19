@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.handler;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.util.List;
 
 /**
@@ -26,7 +28,7 @@ import java.util.List;
  * @author Alexander Tyatenkov
  *
  */
-public class CompositeDbHistoryEventHandler extends CompositeHistoryEventHandler {
+public @NullMarked class CompositeDbHistoryEventHandler extends CompositeHistoryEventHandler {
 
   /**
    * Non-argument constructor that adds {@link DbHistoryEventHandler} to the

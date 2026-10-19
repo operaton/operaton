@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.Date;
 import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
+
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
 import org.operaton.bpm.engine.management.MetricIntervalValue;
@@ -116,7 +118,7 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }

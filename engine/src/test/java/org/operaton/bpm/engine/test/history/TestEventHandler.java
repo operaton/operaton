@@ -20,6 +20,7 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 
 import org.jspecify.annotations.Nullable;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 /**
  * @author Edoardo Patti
  */
-public class TestEventHandler implements HistoryEventHandler {
+public @NullMarked class TestEventHandler implements HistoryEventHandler {
 
   private final Queue<HistoryEvent> queue = new ArrayDeque<>(50);
 

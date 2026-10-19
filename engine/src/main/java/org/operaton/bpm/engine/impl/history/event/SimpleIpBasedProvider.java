@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.net.InetAddress;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
  * @author Thorben Lindhauer
  *
  */
-public class SimpleIpBasedProvider implements HostnameProvider {
+public @NullMarked class SimpleIpBasedProvider implements HostnameProvider {
 
   private static final ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 

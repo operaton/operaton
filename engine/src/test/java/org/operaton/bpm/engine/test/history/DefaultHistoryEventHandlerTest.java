@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.history;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -81,7 +82,7 @@ public class DefaultHistoryEventHandlerTest {
     assertThat(eventHandlers.get(0)).isInstanceOf(CustomHistoryEventHandler.class);
   }
 
-  public class CustomHistoryEventHandler implements HistoryEventHandler {
+  public static  @NullMarked class CustomHistoryEventHandler implements HistoryEventHandler {
 
     @Override
     public void handleEvent(HistoryEvent historyEvent) {

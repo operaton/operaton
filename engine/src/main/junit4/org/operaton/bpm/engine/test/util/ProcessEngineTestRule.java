@@ -18,9 +18,11 @@ package org.operaton.bpm.engine.test.util;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimerTask;
 
 import junit.framework.AssertionFailedError;
+import org.jspecify.annotations.Nullable;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
@@ -51,8 +53,10 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("unused")
 public class ProcessEngineTestRule extends TestWatcher {
 
   public static final String DEFAULT_BPMN_RESOURCE_NAME = "process.bpmn20.xml";
@@ -98,7 +102,6 @@ public class ProcessEngineTestRule extends TestWatcher {
     }
   }
 
-
   public void assertCaseEnded(String caseInstanceId) {
     CaseInstance caseInstance = processEngine
       .getCaseService()
@@ -120,6 +123,7 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   public <T extends DeploymentWithDefinitions> T deploy(DeploymentBuilder deploymentBuilder) {
+    @SuppressWarnings("unchecked")
     T deployment = (T) deploymentBuilder.deployWithResult();
 
     processEngineRule.manageDeployment(deployment);
@@ -128,7 +132,7 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   public Deployment deploy(BpmnModelInstance bpmnModelInstance, String resource) {
-    return deploy(createDeploymentBuilder(), Collections.singletonList(bpmnModelInstance), Collections.singletonList(resource));
+    return deploy(createDeploymentBuilder(), singletonList(bpmnModelInstance), singletonList(resource));
   }
 
   public Deployment deployForTenant(String tenantId, BpmnModelInstance... bpmnModelInstances) {
@@ -140,7 +144,7 @@ public class ProcessEngineTestRule extends TestWatcher {
   }
 
   public Deployment deployForTenant(String tenant, BpmnModelInstance bpmnModelInstance, String resource) {
-    return deploy(createDeploymentBuilder().tenantId(tenant), Collections.singletonList(bpmnModelInstance), Collections.singletonList(resource));
+    return deploy(createDeploymentBuilder().tenantId(tenant), singletonList(bpmnModelInstance), singletonList(resource));
   }
 
   public ProcessDefinition deployAndGetDefinition(BpmnModelInstance bpmnModel) {
@@ -151,8 +155,8 @@ public class ProcessEngineTestRule extends TestWatcher {
     return deployForTenantAndGetDefinition(null, classpathResource);
   }
 
-  public ProcessDefinition deployForTenantAndGetDefinition(String tenant, String classpathResource) {
-    Deployment deployment = deploy(createDeploymentBuilder().tenantId(tenant), Collections.<BpmnModelInstance>emptyList(), Collections.singletonList(classpathResource));
+  public @Nullable ProcessDefinition deployForTenantAndGetDefinition(String tenant, String classpathResource) {
+    Deployment deployment = deploy(createDeploymentBuilder().tenantId(tenant), emptyList(), singletonList(classpathResource));
 
     return processEngineRule.getRepositoryService()
       .createProcessDefinitionQuery()
@@ -160,8 +164,8 @@ public class ProcessEngineTestRule extends TestWatcher {
       .singleResult();
   }
 
-  public ProcessDefinition deployForTenantAndGetDefinition(String tenant, BpmnModelInstance bpmnModel) {
-    Deployment deployment = deploy(createDeploymentBuilder().tenantId(tenant), Collections.singletonList(bpmnModel), Collections.<String>emptyList());
+  public @Nullable ProcessDefinition deployForTenantAndGetDefinition(String tenant, BpmnModelInstance bpmnModel) {
+    Deployment deployment = deploy(createDeploymentBuilder().tenantId(tenant), singletonList(bpmnModel), emptyList());
 
     return processEngineRule.getRepositoryService()
       .createProcessDefinitionQuery()
@@ -258,6 +262,7 @@ public class ProcessEngineTestRule extends TestWatcher {
     taskService.complete(task.getId());
   }
 
+  @SuppressWarnings("unused")
   public void completeAnyTask(String taskKey) {
     TaskService taskService = processEngine.getTaskService();
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskKey).list();
@@ -305,9 +310,7 @@ public class ProcessEngineTestRule extends TestWatcher {
    * Asserts if the provided text is part of some text.
    */
   public void assertTextPresent(String expected, String actual) {
-    if ( (actual==null)
-      || (actual.indexOf(expected)==-1)
-      ) {
+    if ( (actual==null) || !actual.contains(expected)) {
       throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expected, actual));
     }
   }
@@ -379,6 +382,7 @@ public class ProcessEngineTestRule extends TestWatcher {
       .list()
       .stream()
       .map(Authorization::getId)
+      .map(Objects::requireNonNull)
       .forEach(authorizationService::deleteAuthorization);
   }
 

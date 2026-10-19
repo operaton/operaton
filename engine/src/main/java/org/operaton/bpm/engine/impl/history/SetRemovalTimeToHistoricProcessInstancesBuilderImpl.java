@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.history;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -33,15 +35,15 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 /**
  * @author Tassilo Weidner
  */
-public class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder {
+public @NullMarked class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder {
 
-  protected HistoricProcessInstanceQuery query;
-  protected List<String> ids;
-  protected Date removalTime;
-  protected Mode mode;
+  protected @Nullable HistoricProcessInstanceQuery query;
+  protected @Nullable List<String> ids;
+  protected @Nullable Date removalTime;
+  protected @Nullable Mode mode;
   protected boolean isHierarchical;
   protected boolean updateInChunks;
-  protected Integer chunkSize;
+  protected @Nullable Integer chunkSize;
 
   protected CommandExecutor commandExecutor;
 
@@ -56,7 +58,7 @@ public class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetR
   }
 
   @Override
-  public SetRemovalTimeToHistoricProcessInstancesBuilder byIds(String... ids) {
+  public SetRemovalTimeToHistoricProcessInstancesBuilder byIds(String @Nullable ... ids) {
     this.ids = ids !=  null ? List.of(ids) : null;
     return this;
   }
@@ -114,19 +116,19 @@ public class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetR
     return commandExecutor.execute(new SetRemovalTimeToHistoricProcessInstancesCmd(this));
   }
 
-  public HistoricProcessInstanceQuery getQuery() {
+  public @Nullable HistoricProcessInstanceQuery getQuery() {
     return query;
   }
 
-  public List<String> getIds() {
+  public @Nullable List<String> getIds() {
     return ids;
   }
 
-  public Date getRemovalTime() {
+  public @Nullable Date getRemovalTime() {
     return removalTime;
   }
 
-  public Mode getMode() {
+  public @Nullable Mode getMode() {
     return mode;
   }
 
@@ -138,7 +140,7 @@ public class SetRemovalTimeToHistoricProcessInstancesBuilderImpl implements SetR
     return updateInChunks;
   }
 
-  public Integer getChunkSize() {
+  public @Nullable Integer getChunkSize() {
     return chunkSize;
   }
 

@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
@@ -30,6 +31,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.DEFAULT_INVOCATIONS_PER_BATCH_JOB;
 
 public class BatchRule extends TestWatcher {
@@ -76,6 +78,9 @@ public class BatchRule extends TestWatcher {
     }
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.3")
+  @SuppressWarnings("java:S1133")
   public Map<String, List<Job>> syncExec(Batch batch) {
     return syncExec(batch, true);
   }
@@ -103,7 +108,8 @@ public class BatchRule extends TestWatcher {
 
     List<Job> processedMonitorJobs = new ArrayList<>();
     Job monitorJob = getJobForDefinition(batch.getMonitorJobDefinitionId());
-    engineRule.getManagementService().executeJob(monitorJob.getId());
+    String jobId = requireNonNull(monitorJob).getId();
+    engineRule.getManagementService().executeJob(jobId);
     processedMonitorJobs.add(monitorJob);
     processedJobs.put(MONITOR_JOB, processedMonitorJobs);
 
@@ -131,7 +137,7 @@ public class BatchRule extends TestWatcher {
     return getJobForDefinition(batch.getSeedJobDefinitionId());
   }
 
-  protected Job getJobForDefinition(String definitionId) {
+  protected @Nullable Job getJobForDefinition(String definitionId) {
     return engineRule.getManagementService().createJobQuery()
         .jobDefinitionId(definitionId)
         .singleResult();

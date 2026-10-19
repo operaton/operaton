@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.history;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Daniel Meyer
  *
  */
-public abstract class AbstractHistoryLevel implements HistoryLevel {
+public abstract @NullMarked class AbstractHistoryLevel implements HistoryLevel {
 
   @Override
   public int hashCode() {
@@ -30,7 +33,7 @@ public abstract class AbstractHistoryLevel implements HistoryLevel {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }

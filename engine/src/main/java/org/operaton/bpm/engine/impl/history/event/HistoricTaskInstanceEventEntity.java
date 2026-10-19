@@ -18,12 +18,14 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 import java.util.Date;
+
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 /**
  * @author Marcel Wieczorek
  */
-public class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent {
+public @NullUnmarked class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent {
 
   @Serial private static final long serialVersionUID = 1L;
 

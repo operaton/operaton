@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.transformer;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -27,17 +28,17 @@ import org.operaton.bpm.engine.impl.history.producer.CmmnHistoryEventProducer;
 /**
  * @author Sebastian Menski
  */
-public abstract class HistoryCaseExecutionListener implements CaseExecutionListener {
+public abstract @NullMarked class HistoryCaseExecutionListener implements CaseExecutionListener {
 
   protected CmmnHistoryEventProducer eventProducer;
-  protected HistoryLevel historyLevel;
+  protected @Nullable HistoryLevel historyLevel;
 
   protected HistoryCaseExecutionListener(CmmnHistoryEventProducer historyEventProducer) {
     eventProducer = historyEventProducer;
   }
 
   @Override
-  public void notify(@NonNull DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(DelegateCaseExecution caseExecution) throws Exception {
     HistoryEvent historyEvent = createHistoryEvent(caseExecution);
 
     if (historyEvent != null) {
@@ -54,6 +55,6 @@ public abstract class HistoryCaseExecutionListener implements CaseExecutionListe
     }
   }
 
-  protected abstract HistoryEvent createHistoryEvent(DelegateCaseExecution caseExecution);
+  protected abstract @Nullable HistoryEvent createHistoryEvent(DelegateCaseExecution caseExecution);
 
 }

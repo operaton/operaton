@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.parser;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -37,10 +39,10 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
  * @author Daniel Meyer
  *
  */
-public abstract class HistoryExecutionListener implements ExecutionListener {
+public abstract @NullMarked class HistoryExecutionListener implements ExecutionListener {
 
   protected final HistoryEventProducer eventProducer;
-  protected HistoryLevel historyLevel;
+  protected @Nullable HistoryLevel historyLevel;
 
   protected HistoryExecutionListener(HistoryEventProducer historyEventProducer) {
     this.eventProducer = historyEventProducer;
@@ -69,6 +71,6 @@ public abstract class HistoryExecutionListener implements ExecutionListener {
     }
   }
 
-  protected abstract HistoryEvent createHistoryEvent(DelegateExecution execution);
+  protected abstract @Nullable HistoryEvent createHistoryEvent(DelegateExecution execution);
 
 }

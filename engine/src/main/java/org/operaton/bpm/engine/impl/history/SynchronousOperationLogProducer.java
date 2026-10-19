@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  * The methods of this interface take care of producing operation log entries based on the
  * {@link ProcessEngineConfigurationImpl#getLogEntriesPerSyncOperationLimit() logEntriesPerSyncOperationLimit} property.
  */
-public interface SynchronousOperationLogProducer<T> {
+public @NullMarked interface SynchronousOperationLogProducer<T> {
 
   Long SUMMARY_LOG = 1L;
   Long UNLIMITED_LOG = -1L;
@@ -48,7 +49,7 @@ public interface SynchronousOperationLogProducer<T> {
   /**
    * Returns a list of changed properties summarizing the whole operation involving multiple entities.
    */
-  List<PropertyChange> getSummarizingPropChangesForOperation(List<T> results);
+  @Nullable List<PropertyChange> getSummarizingPropChangesForOperation(List<T> results);
 
   /**
    * Calls the code that produces the operation log. Usually <code>commandContext.getOperationLogManager().log...</code>
@@ -71,7 +72,7 @@ public interface SynchronousOperationLogProducer<T> {
   /**
    * The implementing command can call this method to produce the operation log entries for the current operation.
    */
-  default void produceOperationLog(CommandContext commandContext, List<T> results) {
+  default void produceOperationLog(CommandContext commandContext, @Nullable List<T> results) {
     if (results == null || results.isEmpty()) {
       return;
     }
@@ -99,7 +100,7 @@ public interface SynchronousOperationLogProducer<T> {
   private void produceDetailedLogs(CommandContext commandContext, List<T> results, long limit) {
     // create detailed log for each operation result
     Map<T, List<PropertyChange>> propChangesMap = getPropChangesForOperation(results);
-    if (propChangesMap == null) {
+    if (propChangesMap.isEmpty()) {
       propChangesMap = results.stream().collect(Collectors.toMap(Function.identity(),
           result -> Collections.singletonList(PropertyChange.EMPTY_CHANGE)));
     }

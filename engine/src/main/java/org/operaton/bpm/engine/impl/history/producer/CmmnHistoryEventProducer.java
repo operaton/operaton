@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.producer;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
  *
  * @author Sebastian Menski
  */
-public interface CmmnHistoryEventProducer {
+public @NullMarked interface CmmnHistoryEventProducer {
 
   /**
    * Creates the history event fired when a case instance is <strong>created</strong>.

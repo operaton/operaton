@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * @author Alexander Tyatenkov
  *
  */
-public class CompositeHistoryEventHandler implements HistoryEventHandler {
+public @NullMarked class CompositeHistoryEventHandler implements HistoryEventHandler {
 
   /**
    * The list of {@link HistoryEventHandler} which consume the event.
@@ -67,9 +68,9 @@ public class CompositeHistoryEventHandler implements HistoryEventHandler {
   }
 
   /**
-   * Initialize {@link #historyEventHandlers} with data transfered from constructor
+   * Initialize {@link #historyEventHandlers} with data transferred from constructor
    *
-   * @param historyEventHandlers
+   * @param historyEventHandlers the list of {@link HistoryEventHandler} that consume the event.
    */
   private void initializeHistoryEventHandlers(final List<HistoryEventHandler> historyEventHandlers) {
     EnsureUtil.ensureNotNull("History event handler", historyEventHandlers);

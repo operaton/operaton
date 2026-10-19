@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,7 @@ import org.operaton.commons.utils.CollectionUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
+@SuppressWarnings("ConstantConditions")
 class CustomHistoryEventHandlerTest {
 
   protected static RecorderHistoryEventHandler recorderHandler = new RecorderHistoryEventHandler();
@@ -168,10 +170,10 @@ class CustomHistoryEventHandlerTest {
     assertThat(variableInstanceEvent.getEventType()).isEqualTo("create");
   }
 
-  public static class RecorderHistoryEventHandler implements HistoryEventHandler {
+  public static @NullMarked class RecorderHistoryEventHandler implements HistoryEventHandler {
 
-    private Map<String, List<HistoryEvent>> historyEventsByEntity = new HashMap<>();
-    private List<HistoryEvent> historyEvents = new ArrayList<>();
+    private final Map<String, List<HistoryEvent>> historyEventsByEntity = new HashMap<>();
+    private final List<HistoryEvent> historyEvents = new ArrayList<>();
 
     @Override
     public void handleEvent(HistoryEvent historyEvent) {

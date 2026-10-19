@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serializable;
 
 /**
@@ -27,7 +29,7 @@ import java.io.Serializable;
  *
  * @author Daniel Meyer
  */
-public interface HistoryEventType extends Serializable {
+public @NullMarked interface HistoryEventType extends Serializable {
 
   /**
    * The type of the entity.

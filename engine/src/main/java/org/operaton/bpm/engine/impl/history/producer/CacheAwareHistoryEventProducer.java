@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.history.producer;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
@@ -40,7 +41,7 @@ import org.operaton.bpm.engine.runtime.Incident;
  * @author Daniel Meyer
  *
  */
-public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer {
+public @NullMarked class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer {
 
   @Override
   protected HistoricActivityInstanceEventEntity loadActivityInstanceEventEntity(ExecutionEntity execution) {
@@ -48,11 +49,7 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricActivityInstanceEventEntity cachedEntity = findInCache(HistoricActivityInstanceEventEntity.class, activityInstanceId);
 
-    if (cachedEntity != null) {
-      return cachedEntity;
-    } else {
-      return newActivityInstanceEventEntity(execution);
-    }
+    return cachedEntity != null ? cachedEntity : newActivityInstanceEventEntity(execution);
   }
 
   @Override
@@ -61,11 +58,7 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricProcessInstanceEventEntity cachedEntity = findInCache(HistoricProcessInstanceEventEntity.class, processInstanceId);
 
-    if (cachedEntity != null) {
-      return cachedEntity;
-    } else {
-      return newProcessInstanceEventEntity(execution);
-    }
+    return cachedEntity != null ? cachedEntity : newProcessInstanceEventEntity(execution);
   }
 
   @Override
@@ -74,11 +67,7 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricTaskInstanceEventEntity cachedEntity = findInCache(HistoricTaskInstanceEventEntity.class, taskId);
 
-    if (cachedEntity != null) {
-      return cachedEntity;
-    } else {
-      return newTaskInstanceEventEntity(task);
-    }
+    return cachedEntity != null ? cachedEntity : newTaskInstanceEventEntity(task);
   }
 
   @Override
@@ -87,11 +76,7 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricIncidentEventEntity cachedEntity = findInCache(HistoricIncidentEventEntity.class, incidentId);
 
-    if (cachedEntity != null) {
-      return cachedEntity;
-    } else {
-      return newIncidentEventEntity(incident);
-    }
+    return cachedEntity != null ? cachedEntity : newIncidentEventEntity(incident);
   }
 
   @Override
@@ -100,36 +85,30 @@ public class CacheAwareHistoryEventProducer extends DefaultHistoryEventProducer 
 
     HistoricBatchEntity cachedEntity = findInCache(HistoricBatchEntity.class, batchId);
 
-    if (cachedEntity != null) {
-      return cachedEntity;
-    } else {
-      return newBatchEventEntity(batch);
-    }
+    return cachedEntity != null ? cachedEntity : newBatchEventEntity(batch);
   }
 
   /** find a cached entity by primary key */
-  protected <T extends HistoryEvent> T findInCache(Class<T> type, String id) {
+  protected <T extends HistoryEvent> @Nullable T findInCache(Class<T> type, @Nullable String id) {
+    if (id == null) {
+      return null;
+    }
     return Context.getCommandContext()
       .getDbEntityManager()
       .getCachedEntity(type, id);
   }
 
   @Override
-  protected @Nullable ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
-    if (!Context.hasActiveCommandContext()) {
+  protected @Nullable ProcessDefinitionEntity getProcessDefinitionEntity(@Nullable String processDefinitionId) {
+    if (!Context.hasActiveCommandContext() || processDefinitionId == null) {
       return null;
     }
 
     CommandContext commandContext = Context.getCommandContext();
-
     DbEntityManager dbEntityManager = commandContext.getDbEntityManager();
 
     ProcessDefinitionEntity cachedEntity = dbEntityManager.getCachedEntity(ProcessDefinitionEntity.class, processDefinitionId);
 
-    if (cachedEntity != null) {
-      return cachedEntity;
-    } else {
-      return super.getProcessDefinitionEntity(processDefinitionId);
-    }
+    return cachedEntity != null ? cachedEntity : super.getProcessDefinitionEntity(processDefinitionId);
   }
 }

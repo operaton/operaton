@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
-public interface HostnameProvider {
+public @NullMarked interface HostnameProvider {
 
   /**
    * Provides a <code>String</code> that identifies the host of the given Process Engine.

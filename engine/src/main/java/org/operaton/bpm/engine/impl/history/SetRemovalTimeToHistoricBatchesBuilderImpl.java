@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.history;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
@@ -32,13 +34,13 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 /**
  * @author Tassilo Weidner
  */
-public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTimeSelectModeForHistoricBatchesBuilder {
+public @NullMarked class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTimeSelectModeForHistoricBatchesBuilder {
   private static final String MSG_REMOVAL_TIME_MODES_MUTUALLY_EXCLUSIVE = "The removal time modes are mutually exclusive";
 
-  protected HistoricBatchQuery query;
-  protected List<String> ids;
-  protected Mode mode;
-  protected Date removalTime;
+  protected @Nullable HistoricBatchQuery query;
+  protected @Nullable List<String> ids;
+  protected @Nullable Mode mode;
+  protected @Nullable Date removalTime;
 
   protected CommandExecutor commandExecutor;
 
@@ -54,7 +56,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
   }
 
   @Override
-  public SetRemovalTimeToHistoricBatchesBuilder byIds(String... ids) {
+  public SetRemovalTimeToHistoricBatchesBuilder byIds(String @Nullable... ids) {
     this.ids = ids != null ? List.of(ids) : null;
     return this;
   }
@@ -89,19 +91,19 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
     return commandExecutor.execute(new SetRemovalTimeToHistoricBatchesCmd(this));
   }
 
-  public HistoricBatchQuery getQuery() {
+  public @Nullable HistoricBatchQuery getQuery() {
     return query;
   }
 
-  public List<String> getIds() {
+  public @Nullable List<String> getIds() {
     return ids;
   }
 
-  public Date getRemovalTime() {
+  public @Nullable Date getRemovalTime() {
     return removalTime;
   }
 
-  public Mode getMode() {
+  public @Nullable Mode getMode() {
     return mode;
   }
 

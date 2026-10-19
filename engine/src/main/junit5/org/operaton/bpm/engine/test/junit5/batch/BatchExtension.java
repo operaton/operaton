@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -33,9 +35,10 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.DEFAULT_INVOCATIONS_PER_BATCH_JOB;
 
-public class BatchExtension implements TestWatcher, BeforeTestExecutionCallback, AfterTestExecutionCallback {
+public @NullMarked class BatchExtension implements TestWatcher, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
   public static final String SEED_JOB = "seed-job";
   public static final String MONITOR_JOB = "monitor-job";
@@ -128,17 +131,18 @@ public class BatchExtension implements TestWatcher, BeforeTestExecutionCallback,
     }
     while (getSeedJob(batch) != null) {
       Job seedJob = getSeedJob(batch);
-      engineRule.getManagementService().executeJob(seedJob.getId());
+      String jobId = requireNonNull(seedJob).getId();
+      engineRule.getManagementService().executeJob(jobId);
       processedJobs.add(seedJob);
     }
     return processedJobs;
   }
 
-  public Job getSeedJob(Batch batch) {
+  public @Nullable Job getSeedJob(Batch batch) {
     return getJobForDefinition(batch.getSeedJobDefinitionId());
   }
 
-  protected Job getJobForDefinition(String definitionId) {
+  protected @Nullable Job getJobForDefinition(String definitionId) {
     return engineRule.getManagementService().createJobQuery()
         .jobDefinitionId(definitionId)
         .singleResult();

@@ -19,7 +19,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -54,6 +57,7 @@ import org.operaton.bpm.engine.test.util.JobExecutorWaitUtils;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -69,14 +73,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  * protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension();
  * </pre>
  */
-public class ProcessEngineTestExtension
+public @NullMarked class ProcessEngineTestExtension
   implements BeforeEachCallback, AfterEachCallback {
 
   public static final String DEFAULT_BPMN_RESOURCE_NAME = "process.bpmn20.xml";
 
-  private ProcessEngineExtension processEngineExtension;
+  private @Nullable ProcessEngineExtension processEngineExtension;
 
-  private ProcessEngine processEngine;
+  private @Nullable ProcessEngine processEngine;
 
   public ProcessEngineTestExtension() {
   }
@@ -86,7 +90,7 @@ public class ProcessEngineTestExtension
   }
 
   public ProcessEngine getProcessEngine() {
-    return processEngine;
+    return requireNonNull(processEngine);
   }
 
   @Override
@@ -104,7 +108,7 @@ public class ProcessEngineTestExtension
   }
 
   public void assertProcessEnded(String processInstanceId) {
-    ProcessInstance processInstance = processEngine
+    ProcessInstance processInstance = getProcessEngine()
       .getRuntimeService()
       .createProcessInstanceQuery()
       .processInstanceId(processInstanceId)
@@ -116,7 +120,7 @@ public class ProcessEngineTestExtension
   }
 
   public void assertProcessNotEnded(final String processInstanceId) {
-    ProcessInstance processInstance = processEngine
+    ProcessInstance processInstance = getProcessEngine()
       .getRuntimeService()
       .createProcessInstanceQuery()
       .processInstanceId(processInstanceId)
@@ -129,7 +133,7 @@ public class ProcessEngineTestExtension
 
 
   public void assertCaseEnded(String caseInstanceId) {
-    CaseInstance caseInstance = processEngine
+    CaseInstance caseInstance = getProcessEngine()
       .getCaseService()
       .createCaseInstanceQuery()
       .caseInstanceId(caseInstanceId)
@@ -149,9 +153,10 @@ public class ProcessEngineTestExtension
   }
 
   public <T extends DeploymentWithDefinitions> T deploy(DeploymentBuilder deploymentBuilder) {
+    @SuppressWarnings("unchecked")
     T deployment = (T) deploymentBuilder.deployWithResult();
 
-    processEngineExtension.manageDeployment(deployment);
+    requireNonNull(processEngineExtension).manageDeployment(deployment);
 
     return deployment;
   }
@@ -172,27 +177,27 @@ public class ProcessEngineTestExtension
     return deploy(createDeploymentBuilder().tenantId(tenant), Collections.singletonList(bpmnModelInstance), Collections.singletonList(resource));
   }
 
-  public ProcessDefinition deployAndGetDefinition(BpmnModelInstance bpmnModel) {
+  public @Nullable ProcessDefinition deployAndGetDefinition(BpmnModelInstance bpmnModel) {
     return deployForTenantAndGetDefinition(null, bpmnModel);
   }
 
-  public ProcessDefinition deployAndGetDefinition(String classpathResource) {
+  public @Nullable ProcessDefinition deployAndGetDefinition(String classpathResource) {
     return deployForTenantAndGetDefinition(null, classpathResource);
   }
 
-  public ProcessDefinition deployForTenantAndGetDefinition(String tenant, String classpathResource) {
+  public @Nullable ProcessDefinition deployForTenantAndGetDefinition(@Nullable String tenant, String classpathResource) {
     Deployment deployment = deploy(createDeploymentBuilder().tenantId(tenant), Collections.<BpmnModelInstance>emptyList(), Collections.singletonList(classpathResource));
 
-    return processEngine.getRepositoryService()
+    return getProcessEngine().getRepositoryService()
       .createProcessDefinitionQuery()
       .deploymentId(deployment.getId())
       .singleResult();
   }
 
-  public ProcessDefinition deployForTenantAndGetDefinition(String tenant, BpmnModelInstance bpmnModel) {
+  public @Nullable ProcessDefinition deployForTenantAndGetDefinition(@Nullable String tenant, BpmnModelInstance bpmnModel) {
     Deployment deployment = deploy(createDeploymentBuilder().tenantId(tenant), Collections.singletonList(bpmnModel), Collections.<String>emptyList());
 
-    return processEngine.getRepositoryService()
+    return getProcessEngine().getRepositoryService()
       .createProcessDefinitionQuery()
       .deploymentId(deployment.getId())
       .singleResult();
@@ -213,19 +218,19 @@ public class ProcessEngineTestExtension
   }
 
   protected DeploymentBuilder createDeploymentBuilder() {
-    return processEngine.getRepositoryService().createDeployment();
+    return getProcessEngine().getRepositoryService().createDeployment();
   }
 
   public void waitForJobExecutorToProcessAllJobs() {
-    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS, 0L);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(getProcessEngine().getProcessEngineConfiguration(), JobExecutorWaitUtils.JOBS_WAIT_TIMEOUT_MS, 0L);
   }
 
   public void waitForJobExecutorToProcessAllJobs(long maxMillisToWait) {
-    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(processEngine.getProcessEngineConfiguration(), maxMillisToWait, JobExecutorWaitUtils.CHECK_INTERVAL_MS);
+    JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs(getProcessEngine().getProcessEngineConfiguration(), maxMillisToWait, JobExecutorWaitUtils.CHECK_INTERVAL_MS);
   }
 
   protected List<Job> availableJobs() {
-    return processEngine.getManagementService().createJobQuery().list().stream()
+    return getProcessEngine().getManagementService().createJobQuery().list().stream()
             .filter(job -> !job.isSuspended() && job.getRetries() > 0 && (job.getDuedate() == null || ClockUtil.getCurrentTime().after(job.getDuedate())))
             .toList();
   }
@@ -263,7 +268,7 @@ public class ProcessEngineTestExtension
   }
 
   private void executeAvailableJobs(int jobsExecuted, int expectedExecutions, Boolean recursive) {
-    List<Job> jobs = processEngine.getManagementService().createJobQuery().withRetriesLeft().list();
+    List<Job> jobs = getProcessEngine().getManagementService().createJobQuery().withRetriesLeft().list();
 
     if (jobs.isEmpty()) {
       if (expectedExecutions != Integer.MAX_VALUE) {
@@ -274,7 +279,7 @@ public class ProcessEngineTestExtension
 
     for (Job job : jobs) {
       try {
-        processEngine.getManagementService().executeJob(job.getId());
+        getProcessEngine().getManagementService().executeJob(job.getId());
         jobsExecuted += 1;
       } catch (Exception e) {}
     }
@@ -287,14 +292,14 @@ public class ProcessEngineTestExtension
   }
 
   public void completeTask(String taskKey) {
-    TaskService taskService = processEngine.getTaskService();
+    TaskService taskService = getProcessEngine().getTaskService();
     Task task = taskService.createTaskQuery().taskDefinitionKey(taskKey).singleResult();
     assertThat(task).as("Expected a task with key '%s' to exist".formatted(taskKey)).isNotNull();
     taskService.complete(task.getId());
   }
 
   public void completeAnyTask(String taskKey) {
-    TaskService taskService = processEngine.getTaskService();
+    TaskService taskService = getProcessEngine().getTaskService();
     List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskKey).list();
     assertThat(!tasks.isEmpty()).isTrue();
     taskService.complete(tasks.get(0).getId());
@@ -305,44 +310,42 @@ public class ProcessEngineTestExtension
   }
 
   public void setVariable(String executionId, String varName, Object varValue) {
-    processEngine.getRuntimeService().setVariable(executionId, varName, varValue);
+    getProcessEngine().getRuntimeService().setVariable(executionId, varName, varValue);
   }
 
   public void correlateMessage(String messageName) {
-    processEngine.getRuntimeService().createMessageCorrelation(messageName).correlate();
+    getProcessEngine().getRuntimeService().createMessageCorrelation(messageName).correlate();
   }
 
   public void sendSignal(String signalName) {
-    processEngine.getRuntimeService().signalEventReceived(signalName);
+    getProcessEngine().getRuntimeService().signalEventReceived(signalName);
   }
 
   public boolean isHistoryLevelNone() {
-    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getHistoryLevel();
+    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) getProcessEngine().getProcessEngineConfiguration()).getHistoryLevel();
     return HistoryLevel.HISTORY_LEVEL_NONE.equals(historyLevel);
   }
 
   public boolean isHistoryLevelActivity() {
-    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getHistoryLevel();
+    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) getProcessEngine().getProcessEngineConfiguration()).getHistoryLevel();
     return HistoryLevel.HISTORY_LEVEL_ACTIVITY.equals(historyLevel);
   }
 
   public boolean isHistoryLevelAudit() {
-    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getHistoryLevel();
+    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) getProcessEngine().getProcessEngineConfiguration()).getHistoryLevel();
     return HistoryLevel.HISTORY_LEVEL_AUDIT.equals(historyLevel);
   }
 
   public boolean isHistoryLevelFull() {
-    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getHistoryLevel();
+    HistoryLevel historyLevel = ((ProcessEngineConfigurationImpl) getProcessEngine().getProcessEngineConfiguration()).getHistoryLevel();
     return HistoryLevel.HISTORY_LEVEL_FULL.equals(historyLevel);
   }
 
   /**
    * Asserts if the provided text is part of some text.
    */
-  public void assertTextPresent(String expected, String actual) {
-    if ( (actual==null)
-      || (actual.indexOf(expected)==-1)
-      ) {
+  public void assertTextPresent(String expected, @Nullable String actual) {
+    if ( (actual==null) || !actual.contains(expected)) {
       throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expected, actual));
     }
   }
@@ -350,8 +353,8 @@ public class ProcessEngineTestExtension
   /**
    * Asserts if the provided text is part of some text, ignoring any uppercase characters
    */
-  public void assertTextPresentIgnoreCase(String expected, String actual) {
-    assertTextPresent(expected.toLowerCase(), actual.toLowerCase());
+  public void assertTextPresentIgnoreCase(String expected, @Nullable String actual) {
+    assertTextPresent(expected.toLowerCase(), actual != null ? actual.toLowerCase() : null);
   }
 
   public Object defaultManualActivation() {
@@ -361,12 +364,12 @@ public class ProcessEngineTestExtension
 
 
   public void deleteHistoryCleanupJobs() {
-    HistoryService historyService = processEngine.getHistoryService();
+    HistoryService historyService = getProcessEngine().getHistoryService();
     final List<Job> jobs = historyService.findHistoryCleanupJobs();
     for (final Job job : jobs) {
       final String jobId = job.getId();
 
-      ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
+      ((ProcessEngineConfigurationImpl) getProcessEngine().getProcessEngineConfiguration())
         .getCommandExecutorTxRequired()
         .execute((Command<Void>) commandContext -> {
           JobManager jobManager = commandContext.getJobManager();
@@ -384,16 +387,16 @@ public class ProcessEngineTestExtension
     return createCaseInstanceByKey(caseDefinitionKey, null, null);
   }
 
-  public CaseInstance createCaseInstanceByKey(String caseDefinitionKey, String businessKey) {
+  public CaseInstance createCaseInstanceByKey(String caseDefinitionKey, @Nullable String businessKey) {
     return createCaseInstanceByKey(caseDefinitionKey, businessKey, null);
   }
 
-  public CaseInstance createCaseInstanceByKey(String caseDefinitionKey, VariableMap variables) {
+  public CaseInstance createCaseInstanceByKey(String caseDefinitionKey, @Nullable VariableMap variables) {
     return createCaseInstanceByKey(caseDefinitionKey, null, variables);
   }
 
-  public CaseInstance createCaseInstanceByKey(String caseDefinitionKey, String businessKey, VariableMap variables) {
-    return processEngine.getCaseService()
+  public CaseInstance createCaseInstanceByKey(String caseDefinitionKey, @Nullable String businessKey, @Nullable VariableMap variables) {
+    return getProcessEngine().getCaseService()
         .withCaseDefinitionByKey(caseDefinitionKey)
         .businessKey(businessKey)
         .setVariables(variables)
@@ -401,24 +404,25 @@ public class ProcessEngineTestExtension
   }
 
   public String getDatabaseType() {
-    return ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration())
+    return ((ProcessEngineConfigurationImpl) getProcessEngine().getProcessEngineConfiguration())
         .getDbSqlSessionFactory()
         .getDatabaseType();
   }
 
   public void deleteAllAuthorizations() {
-    AuthorizationService authorizationService = processEngine.getAuthorizationService();
+    AuthorizationService authorizationService = getProcessEngine().getAuthorizationService();
 
     authorizationService.createAuthorizationQuery()
       .list()
       .stream()
       .map(Authorization::getId)
+      .map(Objects::requireNonNull)
       .forEach(authorizationService::deleteAuthorization);
   }
 
 
   public void deleteAllStandaloneTasks() {
-    TaskService taskService = processEngine.getTaskService();
+    TaskService taskService = getProcessEngine().getTaskService();
 
     taskService.createTaskQuery()
       .list()
@@ -428,7 +432,7 @@ public class ProcessEngineTestExtension
   }
 
   public void createGrantAuthorization(String userId, Resource resource, String resourceId, Permission... permissions) {
-    AuthorizationService authorizationService = processEngine.getAuthorizationService();
+    AuthorizationService authorizationService = getProcessEngine().getAuthorizationService();
 
     Authorization processInstanceAuthorization = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
     processInstanceAuthorization.setResource(resource);

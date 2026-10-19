@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 
 import org.jspecify.annotations.Nullable;
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public final class HistoryEventProcessor {
+public final @NullMarked class HistoryEventProcessor {
 
   private HistoryEventProcessor() {
   }
@@ -46,7 +47,7 @@ public final class HistoryEventProcessor {
    * The {@link HistoryEventCreator} interface which is used to interchange the implementation
    * of the creation of different HistoryEvents.
    */
-  public static class HistoryEventCreator {
+  public static @NullMarked class HistoryEventCreator {
     /**
      * Creates the {@link HistoryEvent} with the help off the given
      * {@link HistoryEventProducer}.

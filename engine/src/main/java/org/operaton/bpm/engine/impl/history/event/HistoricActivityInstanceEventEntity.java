@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.io.Serial;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
  * @author Roman Smirnov
  *
  */
-public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent {
+public @NullUnmarked class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEvent {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -146,6 +147,7 @@ public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEv
     this.activityInstanceState = activityInstanceState;
   }
 
+  @SuppressWarnings("unused")
   public int getActivityInstanceState() {
     return activityInstanceState;
   }

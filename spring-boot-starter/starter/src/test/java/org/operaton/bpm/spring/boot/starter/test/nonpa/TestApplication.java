@@ -18,6 +18,7 @@ package org.operaton.bpm.spring.boot.starter.test.nonpa;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -57,7 +58,7 @@ public class TestApplication {
   }
 
   @Bean
-  public HistoryEventHandler customHistoryEventHandler() {
+  public @NullMarked HistoryEventHandler customHistoryEventHandler() {
     return new CustomHistoryEventHandler();
   }
 

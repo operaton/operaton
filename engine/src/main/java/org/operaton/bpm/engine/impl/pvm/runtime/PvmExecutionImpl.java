@@ -757,8 +757,9 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     if (getActivity() == null) {
       throw new PvmException("cannot signal execution %s: it has no current activity".formatted(this.id));
     }
+    requireNonNull(activity);
 
-    SignallableActivityBehavior activityBehavior = (SignallableActivityBehavior) requireNonNull(activity).getActivityBehavior();
+    SignallableActivityBehavior activityBehavior = requireNonNull((SignallableActivityBehavior) activity.getActivityBehavior());
     try {
       activityBehavior.signal(this, signalName, signalData);
     } catch (RuntimeException e) {
@@ -974,7 +975,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   public List<ActivityExecution> findInactiveConcurrentExecutions(PvmActivity activity) {
     List<PvmExecutionImpl> inactiveConcurrentExecutionsInActivity = new ArrayList<>();
     if (isConcurrent()) {
-      return getParent().findInactiveChildExecutions(activity);
+      return requireNonNull(getParent()).findInactiveChildExecutions(activity);
     } else if (!isActive()) {
       inactiveConcurrentExecutionsInActivity.add(this);
     }
@@ -1186,12 +1187,12 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
 
   // process definition ///////////////////////////////////////////////////////
 
-  public void setProcessDefinition(ProcessDefinitionImpl processDefinition) {
+  public void setProcessDefinition(@Nullable ProcessDefinitionImpl processDefinition) {
     this.processDefinition = processDefinition;
   }
 
-  public ProcessDefinitionImpl getProcessDefinition() {
-    return requireNonNull(processDefinition);
+  public @Nullable ProcessDefinitionImpl getProcessDefinition() {
+    return processDefinition;
   }
 
   // process instance /////////////////////////////////////////////////////////
@@ -1937,7 +1938,8 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   public void delayEvent(DelayedVariableEvent delayedVariableEvent) {
 
     //if process definition has no conditional events the variable events does not have to be delayed
-    Boolean hasConditionalEvents = this.getProcessDefinition().getProperties().get(BpmnProperties.HAS_CONDITIONAL_EVENTS);
+    ProcessDefinitionImpl definition = requireNonNull(this.getProcessDefinition());
+    Boolean hasConditionalEvents = definition.getProperties().get(BpmnProperties.HAS_CONDITIONAL_EVENTS);
     if (hasConditionalEvents == null || !hasConditionalEvents.equals(Boolean.TRUE)) {
       return;
     }

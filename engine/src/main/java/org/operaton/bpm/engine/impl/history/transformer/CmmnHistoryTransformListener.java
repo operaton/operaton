@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.transformer;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
@@ -35,10 +37,12 @@ import org.operaton.bpm.model.cmmn.instance.ProcessTask;
 import org.operaton.bpm.model.cmmn.instance.Stage;
 import org.operaton.bpm.model.cmmn.instance.Task;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Sebastian Menski
  */
-public class CmmnHistoryTransformListener implements CmmnTransformListener {
+public @NullMarked class CmmnHistoryTransformListener implements CmmnTransformListener {
 
   // Cached listeners
   // listeners can be reused for a given process engine instance but cannot be cached in static fields since
@@ -53,7 +57,7 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
   protected CaseExecutionListener caseActivityInstanceEndListener;
 
   // The history level set in the process engine configuration
-  protected HistoryLevel historyLevel;
+  protected @Nullable HistoryLevel historyLevel;
 
   public CmmnHistoryTransformListener(CmmnHistoryEventProducer historyEventProducer) {
     initCaseExecutionListeners(historyEventProducer);
@@ -116,8 +120,9 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
   }
 
 
-  protected void addCasePlanModelHandlers(CmmnActivity caseActivity) {
+  protected void addCasePlanModelHandlers(@Nullable CmmnActivity caseActivity) {
     ensureHistoryLevelInitialized();
+    requireNonNull(historyLevel);
     if (caseActivity == null) {
       return;
     }
@@ -139,8 +144,9 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
     }
   }
 
-  protected void addTaskOrStageHandlers(CmmnActivity caseActivity) {
+  protected void addTaskOrStageHandlers(@Nullable CmmnActivity caseActivity) {
     ensureHistoryLevelInitialized();
+    requireNonNull(historyLevel);
     if (caseActivity == null) {
       return;
     }
@@ -161,8 +167,9 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
     }
   }
 
-  protected void addEventListenerOrMilestoneHandlers(CmmnActivity caseActivity) {
+  protected void addEventListenerOrMilestoneHandlers(@Nullable CmmnActivity caseActivity) {
     ensureHistoryLevelInitialized();
+    requireNonNull(historyLevel);
     if (caseActivity == null) {
       return;
     }

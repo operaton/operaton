@@ -81,7 +81,7 @@ public @NullMarked class HistoricJobLogEvent extends HistoryEvent {
     return jobId;
   }
 
-  public void setJobId(String jobId) {
+  public void setJobId(@Nullable String jobId) {
     this.jobId = jobId;
   }
 

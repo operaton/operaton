@@ -12,6 +12,10 @@ on:
       - ci-dev/**
     paths:
       - '**/pom.xml'
+      - 'webapps/frontend/package.json'
+      - 'webapps/frontend/package-lock.json'
+      - 'webapps-neo/frontend/package.json'
+      - 'webapps-neo/frontend/package-lock.json'
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -21,7 +25,6 @@ jobs:
   update_sbom:
     name: Update SBOMs
     runs-on: ubuntu-latest
-    if: contains(join(github.event.commits.*.message, ' '), 'deps')
     steps:
       - name: Install Homebrew (Ubuntu/Linux)
         if: runner.os == 'Linux'

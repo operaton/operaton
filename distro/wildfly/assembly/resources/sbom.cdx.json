@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:69427aa3-d9dd-45c6-8ee1-eb3cc5762102",
+  "serialNumber": "urn:uuid:6f834150-3532-4487-bdda-50232112b923",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-16T10:40:22Z",
+    "timestamp": "2026-10-19T11:06:22Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.76.0-SNAPSHOT-d3ade8ec0"
+          "version": "0.76.0-SNAPSHOT-b65f32308"
         }
       ]
     },
@@ -15630,6 +15630,80 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
+      "publisher": "The Apache Software Foundation",
+      "group": "org.apache.httpcomponents",
+      "name": "httpclient",
+      "version": "4.5.14",
+      "description": "Apache HttpComponents Client",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "2cb357c4b763f47e58af6cad47df6ba3"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "1194890e6f56ec29177673f2f12d0b8e627dec98"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c8bc7e1c51a6d4ce72f40d2ebbabf1c4b68bfe76e732104b04381b493478e9d6"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "a084ef30fb0a2a25397d8fab439fe68f67e294bf53153e2e1355b8df92886d40fe6abe35dc84f014245f7158e92641bcbd98019b4fbbd9e5a0db495b160b4ced"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "c8ccaa1fa8ba7c421413e3c30375bd9c31284e837c476fd831e18043ad4187e92166f49554123108891241bed674b95d"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "9a17dfcf12b2af3a9b006ec369f9bc78ba322348bf1a01146e0d4f3fec2bed6cbe8b2193fac5b4d5a0c3036c06477510"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "48f0a61b691e22dec9d6db8e0b58be4ca17a42a2846c82f0875de21f72bb0faa"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "4ad2c9adc761b7e813330f0dcad3f9978702896c7d0cbf81f60a472d550e320b1527be425ba597c8c9352d587e32e1d46ceb4c73e99c70a6190df4c699a7c2a9"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://hc.apache.org/httpcomponents-client-ga",
+          "type": "website"
+        },
+        {
+          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "http://issues.apache.org/jira/browse/HTTPCLIENT",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://mail-archives.apache.org/mod_mbox/hc-httpclient-users/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/httpcomponents-client/tree/4.5.14/httpclient",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents",
@@ -16756,80 +16830,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
-      "publisher": "The Apache Software Foundation",
-      "group": "org.apache.httpcomponents",
-      "name": "httpclient",
-      "version": "4.5.14",
-      "description": "Apache HttpComponents Client",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "2cb357c4b763f47e58af6cad47df6ba3"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "1194890e6f56ec29177673f2f12d0b8e627dec98"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "c8bc7e1c51a6d4ce72f40d2ebbabf1c4b68bfe76e732104b04381b493478e9d6"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "a084ef30fb0a2a25397d8fab439fe68f67e294bf53153e2e1355b8df92886d40fe6abe35dc84f014245f7158e92641bcbd98019b4fbbd9e5a0db495b160b4ced"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "c8ccaa1fa8ba7c421413e3c30375bd9c31284e837c476fd831e18043ad4187e92166f49554123108891241bed674b95d"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "9a17dfcf12b2af3a9b006ec369f9bc78ba322348bf1a01146e0d4f3fec2bed6cbe8b2193fac5b4d5a0c3036c06477510"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "48f0a61b691e22dec9d6db8e0b58be4ca17a42a2846c82f0875de21f72bb0faa"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "4ad2c9adc761b7e813330f0dcad3f9978702896c7d0cbf81f60a472d550e320b1527be425ba597c8c9352d587e32e1d46ceb4c73e99c70a6190df4c699a7c2a9"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://hc.apache.org/httpcomponents-client-ga",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.apache.org/service/local/staging/deploy/maven2",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "http://issues.apache.org/jira/browse/HTTPCLIENT",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://mail-archives.apache.org/mod_mbox/hc-httpclient-users/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/httpcomponents-client/tree/4.5.14/httpclient",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.22.3?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jaxrs",
@@ -17115,44 +17115,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.10.1?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.10.2?type=jar",
       "group": "com.konghq",
       "name": "unirest-java-core",
-      "version": "4.10.1",
+      "version": "4.10.2",
       "description": "Simplified, lightweight HTTP client library.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "281e2a9f20e7a84d6a1325009e3d9eb7"
+          "content": "776b823cf880a940603ea341afb5aa40"
         },
         {
           "alg": "SHA-1",
-          "content": "52fdd8bda732d7a02da3a4526698de62f36093d7"
+          "content": "3f03580ac8d76dff98987f75e7539802c90927fe"
         },
         {
           "alg": "SHA-256",
-          "content": "fdc1bdb5f1220a52dc4bc74330e1153816ff7d0365242035aad5b694ac7077f1"
+          "content": "0320d30f74200a93e1c0318002284eff37c67e0572664a7fbee0cc50fa213947"
         },
         {
           "alg": "SHA-512",
-          "content": "cdfe0b1c4173ec866a5a7a1660ca480c00b8311fdf164548e679d4844705982cf343188c4a9170a813658debe34b4870fda73f2e973ad38682d2744d3b2a89f7"
+          "content": "13e3889a12a6aadf860bdb04818acbfcb28680aec7c10a1b241e017032d63274bfbb989d8cb156633aeacc130d0bb43ad4eac1fbec6c67017ad25a2e813378c6"
         },
         {
           "alg": "SHA-384",
-          "content": "5bd7e9fdd9b068d91f8f7afa8aea43c3b6fe93864f68178b54b7505247c642931e6dd433f2ee9834c564546e719126d2"
+          "content": "6cdccfd02f4b23a782336943c93e8ab3c52d6ede2d20f1db28295f6556967fb939f2f3111556a474be416baa151fa470"
         },
         {
           "alg": "SHA3-384",
-          "content": "7772207121de1b57c755481f877a1c5f3272cf695b2da70e975169e35c7e0cfd05c3663d0377eef41afe726fcd26ef55"
+          "content": "1a0082ad2b70623a056f7ed90d6d296d4af1adc59f81fee69ea55f8ae832be1e424b813cc841bfad94f136091e13a2d4"
         },
         {
           "alg": "SHA3-256",
-          "content": "3014ead5c4f2c24a3c26e49172bf179472eabf5536ed39240e59e1d82b0efa2c"
+          "content": "e7e0aaa01a375e5e33ef561df4067c65568be36f185fdbcfb1841192bb4adf2d"
         },
         {
           "alg": "SHA3-512",
-          "content": "567e827c11d654d340b41c68ffc0c30203f19f513d2d2493f48712df2b366391ba24c8563f2b5ddf8f0da4cd9460cd741309fb5bccc02917e420b00f6a0459fa"
+          "content": "317167078725e78229a8fab04f49554b8b39be28fcca160d669cf4d5a6792d2159e50e769f33e0cea352570ea5e1ec0523a00e016c50c0ee0371357a1cdf5422"
         }
       ],
       "licenses": [
@@ -17163,7 +17163,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-java-core@4.10.1?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-java-core@4.10.2?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-java-core/",
@@ -17181,44 +17181,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.1?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.2?type=jar",
       "group": "com.konghq",
       "name": "unirest-modules-gson",
-      "version": "4.10.1",
+      "version": "4.10.2",
       "description": "Gson based object mapper for Unirest",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "acc5bfde8b6c4b14dac971e1411780aa"
+          "content": "3c763235e2675d37b4ca3b5def7b5924"
         },
         {
           "alg": "SHA-1",
-          "content": "7febf36204195c441dd88a3880b55b203eaca6dc"
+          "content": "6a7023a196da872976a64afb1afbee77e85846ab"
         },
         {
           "alg": "SHA-256",
-          "content": "167612c8b631accb89e76f31a2ae3c3e54ccfe1cac698512e33442907d36798b"
+          "content": "a665d00b0a50970cb936f072b38cea07ad036da5bd7ef4f1d110b824e99fe8f3"
         },
         {
           "alg": "SHA-512",
-          "content": "3345459387a80eea42a903cb35154d089887fb3faad45026616d11872d2fc4e79b33b43aa51089ccf4edce8680dc032d8c0db82d201b10e3b4b81c56a747217f"
+          "content": "78ef962e6058eea9e6515866a04d42db62e6516948e57a8f685523ead60decf560c2f9ea0365fd51818c0e4924c9d16bb8598cb9a1c9282b9ad60e7a1bc4c7b3"
         },
         {
           "alg": "SHA-384",
-          "content": "6a3bdac32c7904b726cb9a12474e3649e397584c01a4137ae054bf86ab9f507d0671481ee6563c0c049a1cc4d9d6cd29"
+          "content": "4635f54a4410cb2bc55caf1e6c5281bbb8e3c5dbba45d3e447ef04f80d24aaeebb02fce263fb7c9724450d26d9d82820"
         },
         {
           "alg": "SHA3-384",
-          "content": "ce7c3837200b081d2073415cd5a712310a0335750084b6efc68355c70581ebdb05a60175e235c7952cd1c0aace375ecb"
+          "content": "d28ca12d5ffd74940ecc6b16b122e038201aa019abbc53213b66cf730c8bfbbb3cfe6ee6ff44851d8fdb901b29e2b33a"
         },
         {
           "alg": "SHA3-256",
-          "content": "135d0d62cbffb8b811e28c411a494aca3c0177f5b9c1124d666c2e222827b085"
+          "content": "eae6cab352625103302e8f945067ebe328de7b76f9568a54b337ae6db7a44a7e"
         },
         {
           "alg": "SHA3-512",
-          "content": "c1743e36a7d037f40c2ae9f0d3293c5bcc1e088bd544416b5ce3e841ffd758d8bab6df525b2bce3c2cce09b0318ff46b0b2902a2506823ccc667ec9ec8cc6134"
+          "content": "93273ebb849982b581e7e79df14d19bd3c81dbe1492671dcfe78ce3d25631bdfeabd783c2174d835ba0e838837a2c3c9e01556589b463290bcdabd451ae032dd"
         }
       ],
       "licenses": [
@@ -17229,7 +17229,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.10.1?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.10.2?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-modules-gson/",
@@ -31005,7 +31005,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "9757bfb8-7d28-4b99-becf-c9d2a7a893a6",
+      "bom-ref": "0457185c-77e2-4cee-bdcc-3518c776f6cd",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36261,8 +36261,1152 @@
     },
     {
       "type": "application",
-      "bom-ref": "ff89b0b5-c6d8-43e2-ae45-5061da0892ab",
+      "bom-ref": "b0b1fcde-d41f-4352-b909-30b2273419fe",
       "name": "/repo/webapps/frontend",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:SchemaVersion",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "fa91fb84-31aa-4cf9-86f4-690c94c78347",
+      "name": "package-lock.json",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:Class",
+          "value": "lang-pkgs"
+        },
+        {
+          "name": "aquasecurity:trivy:Type",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40babel/runtime@7.29.7",
+      "group": "@babel",
+      "name": "runtime",
+      "version": "7.29.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40babel/runtime@7.29.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@babel/runtime@7.29.7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/feel-analyzer@0.5.0",
+      "group": "@bpmn-io",
+      "name": "feel-analyzer",
+      "version": "0.5.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/feel-analyzer@0.5.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/feel-analyzer@0.5.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/feel-lint@3.2.0",
+      "group": "@bpmn-io",
+      "name": "feel-lint",
+      "version": "3.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/feel-lint@3.2.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/feel-lint@3.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/feelin@6.1.0",
+      "group": "@bpmn-io",
+      "name": "feelin",
+      "version": "6.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/feelin@6.1.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/feelin@6.1.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "group": "@bpmn-io",
+      "name": "form-js-viewer",
+      "version": "1.24.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/form-js-viewer@1.24.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/lezer-feel@2.5.0",
+      "group": "@bpmn-io",
+      "name": "lezer-feel",
+      "version": "2.5.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/lezer-feel@2.5.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/lezer-feel@2.5.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40bpmn-io/semver-compat@0.1.0",
+      "group": "@bpmn-io",
+      "name": "semver-compat",
+      "version": "0.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/semver-compat@0.1.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@bpmn-io/semver-compat@0.1.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40camunda/feel-builtins@1.4.0",
+      "group": "@camunda",
+      "name": "feel-builtins",
+      "version": "1.4.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40camunda/feel-builtins@1.4.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@camunda/feel-builtins@1.4.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40carbon/grid@11.58.0",
+      "group": "@carbon",
+      "name": "grid",
+      "version": "11.58.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40carbon/grid@11.58.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@carbon/grid@11.58.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40carbon/layout@11.55.0",
+      "group": "@carbon",
+      "name": "layout",
+      "version": "11.55.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40carbon/layout@11.55.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@carbon/layout@11.55.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40ibm/telemetry-js@1.11.0",
+      "group": "@ibm",
+      "name": "telemetry-js",
+      "version": "1.11.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40ibm/telemetry-js@1.11.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@ibm/telemetry-js@1.11.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40marijn/find-cluster-break@1.0.3",
+      "group": "@marijn",
+      "name": "find-cluster-break",
+      "version": "1.0.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40marijn/find-cluster-break@1.0.3",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@marijn/find-cluster-break@1.0.3"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40preact/signals-core@1.14.4",
+      "group": "@preact",
+      "name": "signals-core",
+      "version": "1.14.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40preact/signals-core@1.14.4",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@preact/signals-core@1.14.4"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40preact/signals@2.9.4",
+      "group": "@preact",
+      "name": "signals",
+      "version": "2.9.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40preact/signals@2.9.4",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@preact/signals@2.9.4"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/bpmn-js@18.21.0",
+      "name": "bpmn-js",
+      "version": "18.21.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/bpmn-js@18.21.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "bpmn-js@18.21.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/bpmn-moddle@10.0.0",
+      "name": "bpmn-moddle",
+      "version": "10.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/bpmn-moddle@10.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "bpmn-moddle@10.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/crelt@1.0.7",
+      "name": "crelt",
+      "version": "1.0.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/crelt@1.0.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "crelt@1.0.7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/diagram-js-direct-editing@3.5.1",
+      "name": "diagram-js-direct-editing",
+      "version": "3.5.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/diagram-js-direct-editing@3.5.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "diagram-js-direct-editing@3.5.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/diagram-js@15.22.0",
+      "name": "diagram-js",
+      "version": "15.22.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/diagram-js@15.22.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "diagram-js@15.22.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.9.0",
+      "name": "dmn-js-boxed-expression",
+      "version": "17.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dmn-js-boxed-expression@17.9.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-js-boxed-expression@17.9.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.9.0",
+      "name": "dmn-js-decision-table",
+      "version": "17.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dmn-js-decision-table@17.9.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-js-decision-table@17.9.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-js-drd@17.9.0",
+      "name": "dmn-js-drd",
+      "version": "17.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dmn-js-drd@17.9.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-js-drd@17.9.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.9.0",
+      "name": "dmn-js-literal-expression",
+      "version": "17.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dmn-js-literal-expression@17.9.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-js-literal-expression@17.9.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-js-shared@17.9.0",
+      "name": "dmn-js-shared",
+      "version": "17.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dmn-js-shared@17.9.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-js-shared@17.9.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-js@17.9.0",
+      "name": "dmn-js",
+      "version": "17.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dmn-js@17.9.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-js@17.9.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-moddle@12.0.1",
+      "name": "dmn-moddle",
+      "version": "12.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/dmn-moddle@12.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-moddle@12.0.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/html-parse-stringify@3.0.1",
+      "name": "html-parse-stringify",
+      "version": "3.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/html-parse-stringify@3.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "html-parse-stringify@3.0.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/i18next-browser-languagedetector@8.2.1",
+      "name": "i18next-browser-languagedetector",
+      "version": "8.2.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/i18next-browser-languagedetector@8.2.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "i18next-browser-languagedetector@8.2.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/i18next-http-backend@4.0.2",
+      "name": "i18next-http-backend",
+      "version": "4.0.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/i18next-http-backend@4.0.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "i18next-http-backend@4.0.2"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/i18next@26.3.6",
+      "name": "i18next",
+      "version": "26.3.6",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/i18next@26.3.6",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "i18next@26.3.6"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/marked@18.0.7",
+      "name": "marked",
+      "version": "18.0.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/marked@18.0.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "marked@18.0.7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/moddle-xml@12.1.0",
+      "name": "moddle-xml",
+      "version": "12.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/moddle-xml@12.1.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "moddle-xml@12.1.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/moddle@8.2.0",
+      "name": "moddle",
+      "version": "8.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/moddle@8.2.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "moddle@8.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/preact-iso@2.12.1",
+      "name": "preact-iso",
+      "version": "2.12.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/preact-iso@2.12.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "preact-iso@2.12.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/preact-render-to-string@6.7.0",
+      "name": "preact-render-to-string",
+      "version": "6.7.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/preact-render-to-string@6.7.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "preact-render-to-string@6.7.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-bpmn@0.2.0",
+      "name": "react-bpmn",
+      "version": "0.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react-bpmn@0.2.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "react-bpmn@0.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-dom@19.2.8",
+      "name": "react-dom",
+      "version": "19.2.8",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react-dom@19.2.8",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "react-dom@19.2.8"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-hotkeys-hook@5.3.3",
+      "name": "react-hotkeys-hook",
+      "version": "5.3.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react-hotkeys-hook@5.3.3",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "react-hotkeys-hook@5.3.3"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-i18next@17.0.10",
+      "name": "react-i18next",
+      "version": "17.0.10",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react-i18next@17.0.10",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "react-i18next@17.0.10"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react@19.2.8",
+      "name": "react",
+      "version": "19.2.8",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/react@19.2.8",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "react@19.2.8"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/saxen@11.1.0",
+      "name": "saxen",
+      "version": "11.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/saxen@11.1.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "saxen@11.1.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/scheduler@0.27.0",
+      "name": "scheduler",
+      "version": "0.27.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/scheduler@0.27.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "scheduler@0.27.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/semver@7.8.5",
+      "name": "semver",
+      "version": "7.8.5",
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "purl": "pkg:npm/semver@7.8.5",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "semver@7.8.5"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/style-mod@4.1.3",
+      "name": "style-mod",
+      "version": "4.1.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/style-mod@4.1.3",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "style-mod@4.1.3"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/use-sync-external-store@1.6.0",
+      "name": "use-sync-external-store",
+      "version": "1.6.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/use-sync-external-store@1.6.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "use-sync-external-store@1.6.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/void-elements@3.1.0",
+      "name": "void-elements",
+      "version": "3.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/void-elements@3.1.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "void-elements@3.1.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "8cf1e0d3-2fd5-445e-b4f3-8c2fcabd986a",
+      "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
           "name": "aquasecurity:trivy:SchemaVersion",
@@ -37542,8 +38686,8 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/com.konghq/unirest-java-core@4.10.1?type=jar",
-        "pkg:maven/com.konghq/unirest-modules-gson@4.10.1?type=jar",
+        "pkg:maven/com.konghq/unirest-java-core@4.10.2?type=jar",
+        "pkg:maven/com.konghq/unirest-modules-gson@4.10.2?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar"
       ]
     },
@@ -38008,11 +39152,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-java-core@4.10.1?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-java-core@4.10.2?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.1?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.2?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar"
       ]
@@ -39971,7 +41115,7 @@
       "dependsOn": []
     },
     {
-      "ref": "9757bfb8-7d28-4b99-becf-c9d2a7a893a6",
+      "ref": "0457185c-77e2-4cee-bdcc-3518c776f6cd",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -40021,9 +41165,9 @@
       ]
     },
     {
-      "ref": "ff89b0b5-c6d8-43e2-ae45-5061da0892ab",
+      "ref": "b0b1fcde-d41f-4352-b909-30b2273419fe",
       "dependsOn": [
-        "9757bfb8-7d28-4b99-becf-c9d2a7a893a6"
+        "0457185c-77e2-4cee-bdcc-3518c776f6cd"
       ]
     },
     {
@@ -41420,1186 +42564,451 @@
     {
       "ref": "pkg:npm/zeebe-dmn-moddle@1.0.0",
       "dependsOn": []
-    }
-  ],
-  "vulnerabilities": [
+    },
     {
-      "id": "CVE-2022-25844",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 5,
-          "severity": "medium",
-          "method": "CVSSv2",
-          "vector": "AV:N/AC:L/Au:N/C:N/I:N/A:P"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 7.5,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 7.5,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        1333
-      ],
-      "description": "The package angular after 1.7.0 are vulnerable to Regular Expression Denial of Service (ReDoS) by providing a custom locale rule that makes it possible to assign the parameter in posPre: ' '.repeat() of NUMBER_FORMATS.PATTERNS[1].posPre with a very high value. **Note:** 1) This package has been deprecated and is no longer maintained. 2) The vulnerable versions are 1.7.0 and higher.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2022-25844"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2022-25844"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2WUSPYOTOMAZPDEFPWPSCSPMNODRDKK3"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/2WUSPYOTOMAZPDEFPWPSCSPMNODRDKK3/"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/7LNAKCNTVBIHWAUT3FKWV5N67PQXSZOO"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/7LNAKCNTVBIHWAUT3FKWV5N67PQXSZOO/"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-25844"
-        },
-        {
-          "url": "https://security.netapp.com/advisory/ntap-20220629-0009"
-        },
-        {
-          "url": "https://security.netapp.com/advisory/ntap-20220629-0009/"
-        },
-        {
-          "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-2772736"
-        },
-        {
-          "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWERGITHUBANGULAR-2772738"
-        },
-        {
-          "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-2772737"
-        },
-        {
-          "url": "https://snyk.io/vuln/SNYK-JS-ANGULAR-2772735"
-        },
-        {
-          "url": "https://stackblitz.com/edit/angularjs-material-blank-zvtdvb"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2022-25844"
-        }
-      ],
-      "published": "2022-05-01T16:15:08Z",
-      "updated": "2026-06-17T04:34:22Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "8cf1e0d3-2fd5-445e-b4f3-8c2fcabd986a",
+      "dependsOn": [
+        "fa91fb84-31aa-4cf9-86f4-690c94c78347"
       ]
     },
     {
-      "id": "CVE-2022-25869",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 6.1,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 6.1,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 4.2,
-          "severity": "low",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N"
-        }
-      ],
-      "cwes": [
-        79
-      ],
-      "description": "All versions of the package angular; all versions of the package angularjs.core; all versions of the package angularjs are vulnerable to Cross-site Scripting (XSS) due to insecure page caching in the Internet Explorer browser, which allows interpolation of <textarea> elements.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2022-25869"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2022-25869"
-        },
-        {
-          "url": "https://glitch.com/edit/%23%21/angular-repro-textarea-xss"
-        },
-        {
-          "url": "https://neverendingsupport.github.io/angularjs-poc-cve-2022-25869"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-25869"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-DOTNET-ANGULARJS-10771617"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-DOTNET-ANGULARJSCORE-6084031"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-2949783"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWERGITHUBANGULAR-2949784"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-2949782"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JS-ANGULAR-2949781"
-        },
-        {
-          "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-2949783"
-        },
-        {
-          "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWERGITHUBANGULAR-2949784"
-        },
-        {
-          "url": "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-2949782"
-        },
-        {
-          "url": "https://snyk.io/vuln/SNYK-JS-ANGULAR-2949781"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2022-25869"
-        },
-        {
-          "url": "https://www.npmjs.com/package/angular"
-        }
-      ],
-      "published": "2022-07-15T20:15:08Z",
-      "updated": "2026-06-17T04:34:25Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "fa91fb84-31aa-4cf9-86f4-690c94c78347",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/feelin@6.1.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+        "pkg:npm/%40preact/signals@2.9.4",
+        "pkg:npm/bpmn-js@18.21.0",
+        "pkg:npm/bpmn-moddle@10.0.0",
+        "pkg:npm/dmn-js@17.9.0",
+        "pkg:npm/dompurify@3.4.16",
+        "pkg:npm/htm@3.1.1",
+        "pkg:npm/i18next-browser-languagedetector@8.2.1",
+        "pkg:npm/i18next-http-backend@4.0.2",
+        "pkg:npm/i18next@26.3.6",
+        "pkg:npm/preact-iso@2.12.1",
+        "pkg:npm/preact@10.29.7",
+        "pkg:npm/react-bpmn@0.2.0",
+        "pkg:npm/react-hotkeys-hook@5.3.3",
+        "pkg:npm/react-i18next@17.0.10"
       ]
     },
     {
-      "id": "CVE-2023-26116",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        1333
-      ],
-      "description": "Versions of the package angular from 1.2.21 are vulnerable to Regular Expression Denial of Service (ReDoS) via the angular.copy() utility function due to the usage of an insecure regular expression. Exploiting this vulnerability is possible by a large carefully-crafted input, which can result in catastrophic backtracking.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2023-26116"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2023-26116"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OQWJLE5WE33WNMA54XSJIDXBRK2KL3XJ"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OQWJLE5WE33WNMA54XSJIDXBRK2KL3XJ/"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UDKFLKJ6VZKL52AFVW2OVZRMJWHMW55K"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UDKFLKJ6VZKL52AFVW2OVZRMJWHMW55K/"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-26116"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-5406320"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWERGITHUBANGULAR-5406322"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-5406321"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JS-ANGULAR-3373044"
-        },
-        {
-          "url": "https://stackblitz.com/edit/angularjs-vulnerability-angular-copy-redos"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2023-26116"
-        }
-      ],
-      "published": "2023-03-30T05:15:07Z",
-      "updated": "2026-06-17T05:42:42Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40babel/runtime@7.29.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40bpmn-io/feel-analyzer@0.5.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/lezer-feel@3.0.1",
+        "pkg:npm/%40lezer/common@1.5.2"
       ]
     },
     {
-      "id": "CVE-2023-26117",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        1333
-      ],
-      "description": "Versions of the package angular from 1.0.0 are vulnerable to Regular Expression Denial of Service (ReDoS) via the $resource service due to the usage of an insecure regular expression. Exploiting this vulnerability is possible by a large carefully-crafted input, which can result in catastrophic backtracking.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2023-26117"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2023-26117"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OQWJLE5WE33WNMA54XSJIDXBRK2KL3XJ"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OQWJLE5WE33WNMA54XSJIDXBRK2KL3XJ/"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UDKFLKJ6VZKL52AFVW2OVZRMJWHMW55K"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UDKFLKJ6VZKL52AFVW2OVZRMJWHMW55K/"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-26117"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-5406323"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWERGITHUBANGULAR-5406325"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-5406324"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JS-ANGULAR-3373045"
-        },
-        {
-          "url": "https://stackblitz.com/edit/angularjs-vulnerability-resource-trailing-slashes-redos"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2023-26117"
-        }
-      ],
-      "published": "2023-03-30T05:15:07Z",
-      "updated": "2026-06-17T05:42:42Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/cm-theme@0.2.2",
+        "pkg:npm/%40bpmn-io/feel-lint@3.2.0",
+        "pkg:npm/%40bpmn-io/lang-feel@4.0.2",
+        "pkg:npm/%40camunda/feel-builtins@1.4.0",
+        "pkg:npm/%40codemirror/autocomplete@6.20.3",
+        "pkg:npm/%40codemirror/commands@6.10.4",
+        "pkg:npm/%40codemirror/language@6.12.4",
+        "pkg:npm/%40codemirror/lint@6.9.7",
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
+        "pkg:npm/%40lezer/highlight@1.2.3",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/mitt@3.0.1"
       ]
     },
     {
-      "id": "CVE-2023-26118",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        1333
-      ],
-      "description": "Versions of the package angular from 1.4.9 are vulnerable to Regular Expression Denial of Service (ReDoS) via the <input type=\"url\"> element due to the usage of an insecure regular expression in the input[url] functionality. Exploiting this vulnerability is possible by a large carefully-crafted input, which can result in catastrophic backtracking.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2023-26118"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2023-26118"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OQWJLE5WE33WNMA54XSJIDXBRK2KL3XJ"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/OQWJLE5WE33WNMA54XSJIDXBRK2KL3XJ/"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UDKFLKJ6VZKL52AFVW2OVZRMJWHMW55K"
-        },
-        {
-          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/UDKFLKJ6VZKL52AFVW2OVZRMJWHMW55K/"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-26118"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-5406326"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWERGITHUBANGULAR-5406328"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-5406327"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JS-ANGULAR-3373046"
-        },
-        {
-          "url": "https://stackblitz.com/edit/angularjs-vulnerability-inpur-url-validation-redos"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2023-26118"
-        }
-      ],
-      "published": "2023-03-30T05:15:07Z",
-      "updated": "2026-06-17T05:42:43Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40bpmn-io/feel-lint@3.2.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/feel-analyzer@0.5.0",
+        "pkg:npm/%40bpmn-io/lezer-feel@3.0.1",
+        "pkg:npm/%40bpmn-io/semver-compat@0.1.0",
+        "pkg:npm/%40codemirror/language@6.12.4"
       ]
     },
     {
-      "id": "CVE-2024-21490",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 7.5,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 7.5,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 7.5,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        1333
-      ],
-      "description": "This affects versions of the package angular from 1.3.0; versions of the package angularjs from 1.3.0. A regular expression used to split the value of the ng-srcset directive is vulnerable to super-linear runtime due to backtracking. With large carefully-crafted input, this can result in catastrophic backtracking and cause a denial of service. \r\r\r**Note:**\r\rThis package is EOL and will not receive any updates to address this issue. Users should migrate to [@angular/core](https://www.npmjs.com/package/@angular/core).",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2024-21490"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2024-21490"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21490"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-DOTNET-ANGULARJS-10771616"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSBOWER-6241746"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-6241747"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JS-ANGULAR-6091113"
-        },
-        {
-          "url": "https://stackblitz.com/edit/angularjs-vulnerability-ng-srcset-redos"
-        },
-        {
-          "url": "https://support.herodevs.com/hc/en-us/articles/25715686953485-CVE-2024-21490-AngularJS-Regular-Expression-Denial-of-Service-ReDoS"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2024-21490"
-        }
-      ],
-      "published": "2024-02-10T05:15:08Z",
-      "updated": "2026-06-29T16:16:33Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40bpmn-io/feelin@6.1.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/lezer-feel@2.5.0",
+        "pkg:npm/%40lezer/common@1.5.2",
+        "pkg:npm/luxon@3.7.2",
+        "pkg:npm/min-dash@5.1.0"
       ]
     },
     {
-      "id": "CVE-2024-38999",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 10,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 8.9,
-          "severity": "high",
-          "method": "CVSSv4",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        1321
-      ],
-      "description": "jrburke requirejs v2.3.6 was discovered to contain a prototype pollution via the function s.contexts._.configure. This vulnerability allows attackers to execute arbitrary code or cause a Denial of Service (DoS) via injecting arbitrary properties.",
-      "recommendation": "Upgrade requirejs to version 2.3.7",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2024-38999"
-        },
-        {
-          "url": "https://gist.github.com/mestrtee/9acae342285bd2998fa09ebcb1e6d30a"
-        },
-        {
-          "url": "https://github.com/requirejs/r.js"
-        },
-        {
-          "url": "https://github.com/requirejs/r.js/issues/1015"
-        },
-        {
-          "url": "https://github.com/requirejs/requirejs/issues/1854"
-        },
-        {
-          "url": "https://github.com/requirejs/requirejs/pull/1856/commits/ebd7a2ff71473542fa132d0d15c10fb4ed1539e1"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-38999"
-        },
-        {
-          "url": "https://security.snyk.io/vuln/SNYK-JS-REQUIREJS-5416713"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2024-38999"
-        }
-      ],
-      "published": "2024-07-01T13:15:05Z",
-      "updated": "2026-06-17T07:41:20Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/requirejs@2.1.22",
-          "versions": [
-            {
-              "version": "2.1.22",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/feelin@6.1.0",
+        "pkg:npm/%40carbon/grid@11.58.0",
+        "pkg:npm/big.js@7.0.1",
+        "pkg:npm/classnames@2.5.1",
+        "pkg:npm/didi@11.0.0",
+        "pkg:npm/dompurify@3.4.16",
+        "pkg:npm/feelers@3.1.0",
+        "pkg:npm/flatpickr@4.6.13",
+        "pkg:npm/ids@3.0.2",
+        "pkg:npm/lodash@4.18.1",
+        "pkg:npm/luxon@3.7.2",
+        "pkg:npm/marked@18.0.7",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/preact@10.29.7"
       ]
     },
     {
-      "id": "CVE-2024-8372",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 4.8,
-          "severity": "low",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 2.9,
-          "severity": "low",
-          "method": "CVSSv4",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:P"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 4.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 4.3,
-          "severity": "low",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        1289
-      ],
-      "description": "Improper sanitization of the value of the 'srcset' attribute in AngularJS allows attackers to bypass common image source restrictions, which can also lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing .\n\nThis issue affects AngularJS versions 1.3.0-rc.4 and greater.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2024-8372"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2024-8372"
-        },
-        {
-          "url": "https://codepen.io/herodevs/full/xxoQRNL/0072e627abe03e9cda373bc75b4c1017"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-8372"
-        },
-        {
-          "url": "https://security.netapp.com/advisory/ntap-20241122-0002"
-        },
-        {
-          "url": "https://security.netapp.com/advisory/ntap-20241122-0002/"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2024-8372"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2024-8372"
-        }
-      ],
-      "published": "2024-09-09T15:15:12Z",
-      "updated": "2026-06-17T08:22:27Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40bpmn-io/lezer-feel@2.5.0",
+      "dependsOn": [
+        "pkg:npm/%40lezer/highlight@1.2.3",
+        "pkg:npm/%40lezer/lr@1.4.10",
+        "pkg:npm/min-dash@5.1.0"
       ]
     },
     {
-      "id": "CVE-2024-8373",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 4.8,
-          "severity": "low",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 2.9,
-          "severity": "low",
-          "method": "CVSSv4",
-          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:P"
-        },
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 4.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 4.3,
-          "severity": "low",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        791
-      ],
-      "description": "Improper sanitization of the value of the [srcset] attribute in <source> HTML elements in AngularJS allows attackers to bypass common image source restrictions, which can also lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing .\n\nThis issue affects all versions of AngularJS.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2024-8373"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2024-8373"
-        },
-        {
-          "url": "https://codepen.io/herodevs/full/bGPQgMp/8da9ce87e99403ee13a295c305ebfa0b"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-8373"
-        },
-        {
-          "url": "https://security.netapp.com/advisory/ntap-20241122-0003"
-        },
-        {
-          "url": "https://security.netapp.com/advisory/ntap-20241122-0003/"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2024-8373"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2024-8373"
-        }
-      ],
-      "published": "2024-09-09T15:15:12Z",
-      "updated": "2026-06-17T08:22:27Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40bpmn-io/semver-compat@0.1.0",
+      "dependsOn": [
+        "pkg:npm/semver@7.8.5"
       ]
     },
     {
-      "id": "CVE-2025-0716",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 4.8,
-          "severity": "low",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 2.9,
-          "severity": "low",
-          "method": "CVSSv4",
-          "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:P"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 4.8,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        791
-      ],
-      "description": "Improper sanitization of the value of the 'href' and 'xlink:href' attributes in '<image>' SVG elements in AngularJS allows attackers to bypass common image source restrictions. This can lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing  and also negatively affect the application's performance and behavior by using too large or slow-to-load images.\n\nThis issue affects all versions of AngularJS.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2025-0716"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2025-0716"
-        },
-        {
-          "url": "https://codepen.io/herodevs/pen/qEWQmpd/a86a0d29310e12c7a3756768e6c7b915"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-0716"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2025-0716"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2025-0716"
-        }
-      ],
-      "published": "2025-04-29T17:15:39Z",
-      "updated": "2026-06-17T08:27:01Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40camunda/feel-builtins@1.4.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40carbon/grid@11.58.0",
+      "dependsOn": [
+        "pkg:npm/%40carbon/layout@11.55.0",
+        "pkg:npm/%40ibm/telemetry-js@1.11.0"
       ]
     },
     {
-      "id": "CVE-2025-2336",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 4.8,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium"
-        }
-      ],
-      "cwes": [
-        791
-      ],
-      "description": "Improper sanitization of the value of the 'href' and 'xlink:href' attributes in '<image>' SVG elements in AngularJS's 'ngSanitize' module allows attackers to bypass common image source restrictions. This can lead to a form of  Content Spoofing https://owasp.org/www-community/attacks/Content_Spoofing  and also negatively affect the application's performance and behavior by using too large or slow-to-load images.\n\nThis issue affects AngularJS versions greater than or equal to 1.3.1.\n\nNote:\nThe AngularJS project is End-of-Life and will not receive any updates to address this issue. For more information see  here https://docs.angularjs.org/misc/version-support-status .",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2025-2336"
-        },
-        {
-          "url": "https://codepen.io/herodevs/pen/bNGYaXx/412a3a4218387479898912f60c269c6c"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/07/msg00005.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2336"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7958-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2025-2336"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2025-2336"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2025-2336?angularjs-nes"
-        }
-      ],
-      "published": "2025-06-04T17:15:28Z",
-      "updated": "2026-06-17T09:06:46Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular-sanitize@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40carbon/layout@11.55.0",
+      "dependsOn": [
+        "pkg:npm/%40ibm/telemetry-js@1.11.0"
       ]
     },
     {
-      "id": "CVE-2026-11998",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 7.6,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 7.6,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:L"
-        }
-      ],
-      "cwes": [
-        791,
-        79
-      ],
-      "description": "A flaw in AngularJS' Strict Contextual Escaping (SCE) logic allows bypassing certain SCE policies for resource URLs and can lead to arbitrary JavaScript execution within the context of the victim's browser session.\n\n\nSCE's purpose is to ensure that only trusted or safe values are used in certain security-sensitive contexts, such as resource URLs, including URLs that define executable JavaScript scripts, '<iframe>' documents, route templates, etc. A flaw in the logic that tries to match entire URLs against regular expression matchers can result in partial matches for certain types of regular expressions, effectively bypassing the policies and allowing the use of unsafe values as resource URLs.\n\n\nThis issue affects AngularJS versions greater than or equal to 1.2.0-rc.3.\n\n\nNote:\nThe AngularJS project was already End-of-Life when this CVE was published and will not receive any updates to address this issue. For more information see the  End-of-Life announcement https://docs.angularjs.org/misc/version-support-status .",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2026-11998"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2026-11998"
-        },
-        {
-          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2492579"
-        },
-        {
-          "url": "https://codepen.io/herodevs/pen/JobQdmz/5b3896f56fab66f20cd25e698cf3faa8"
-        },
-        {
-          "url": "https://github.com/angular/angular.js"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-11998"
-        },
-        {
-          "url": "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-11998.json"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2026-11998"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2026-11998"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2026-11998?nes-for-angularjs"
-        }
-      ],
-      "published": "2026-06-24T21:16:52Z",
-      "updated": "2026-08-05T13:20:35Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/angular@1.8.3",
-          "versions": [
-            {
-              "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
+      "ref": "pkg:npm/%40codemirror/language@6.12.4",
+      "dependsOn": [
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
+        "pkg:npm/%40lezer/common@1.5.2",
+        "pkg:npm/%40lezer/highlight@1.2.3",
+        "pkg:npm/%40lezer/lr@1.4.10",
+        "pkg:npm/style-mod@4.1.3"
       ]
+    },
+    {
+      "ref": "pkg:npm/%40codemirror/lint@6.9.7",
+      "dependsOn": [
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/%40codemirror/view@6.43.6",
+        "pkg:npm/crelt@1.0.7"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40codemirror/state@6.7.1",
+      "dependsOn": [
+        "pkg:npm/%40marijn/find-cluster-break@1.0.3"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40codemirror/view@6.43.6",
+      "dependsOn": [
+        "pkg:npm/%40codemirror/state@6.7.1",
+        "pkg:npm/crelt@1.0.7",
+        "pkg:npm/style-mod@4.1.3",
+        "pkg:npm/w3c-keyname@2.2.8"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40ibm/telemetry-js@1.11.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40marijn/find-cluster-break@1.0.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40preact/signals-core@1.14.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40preact/signals@2.9.4",
+      "dependsOn": [
+        "pkg:npm/%40preact/signals-core@1.14.4",
+        "pkg:npm/preact@10.29.7"
+      ]
+    },
+    {
+      "ref": "pkg:npm/bpmn-js@18.21.0",
+      "dependsOn": [
+        "pkg:npm/bpmn-moddle@10.0.0",
+        "pkg:npm/diagram-js-direct-editing@3.5.1",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/ids@3.0.2",
+        "pkg:npm/inherits-browser@0.1.0",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/tiny-svg@4.1.4"
+      ]
+    },
+    {
+      "ref": "pkg:npm/bpmn-moddle@10.0.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/moddle-xml@12.1.0",
+        "pkg:npm/moddle@8.2.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/crelt@1.0.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/diagram-js-direct-editing@3.5.1",
+      "dependsOn": [
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/diagram-js@15.22.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.4",
+        "pkg:npm/clsx@2.1.1",
+        "pkg:npm/didi@11.0.0",
+        "pkg:npm/inherits-browser@0.1.0",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/object-refs@0.4.0",
+        "pkg:npm/path-intersection@4.1.0",
+        "pkg:npm/tiny-svg@4.1.4"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-js-boxed-expression@17.9.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/inferno@5.6.3",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/table-js@9.4.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-js-decision-table@17.9.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
+        "pkg:npm/css.escape@1.5.1",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/escape-html@1.0.3",
+        "pkg:npm/inferno@5.6.3",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/selection-ranges@4.1.1",
+        "pkg:npm/table-js@9.4.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-js-drd@17.9.0",
+      "dependsOn": [
+        "pkg:npm/diagram-js-direct-editing@3.5.1",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/ids@3.0.2",
+        "pkg:npm/inherits-browser@0.1.0",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/object-refs@0.4.0",
+        "pkg:npm/tiny-svg@4.1.4"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-js-literal-expression@17.9.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/dmn-js-shared@17.9.0",
+        "pkg:npm/escape-html@1.0.3",
+        "pkg:npm/inferno@5.6.3",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/table-js@9.4.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-js-shared@17.9.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/didi@11.0.0",
+        "pkg:npm/dmn-moddle@12.0.1",
+        "pkg:npm/ids@3.0.2",
+        "pkg:npm/inferno@5.6.3",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/selection-ranges@4.1.1",
+        "pkg:npm/selection-update@1.1.1",
+        "pkg:npm/table-js@9.4.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-js@17.9.0",
+      "dependsOn": [
+        "pkg:npm/dmn-js-boxed-expression@17.9.0",
+        "pkg:npm/dmn-js-decision-table@17.9.0",
+        "pkg:npm/dmn-js-drd@17.9.0",
+        "pkg:npm/dmn-js-literal-expression@17.9.0",
+        "pkg:npm/dmn-js-shared@17.9.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-moddle@12.0.1",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/moddle-xml@12.1.0",
+        "pkg:npm/moddle@8.2.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/feelers@3.1.0",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/feelin@6.1.0",
+        "pkg:npm/%40bpmn-io/lezer-feelers@1.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/html-parse-stringify@3.0.1",
+      "dependsOn": [
+        "pkg:npm/void-elements@3.1.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/i18next-browser-languagedetector@8.2.1",
+      "dependsOn": [
+        "pkg:npm/%40babel/runtime@7.29.7"
+      ]
+    },
+    {
+      "ref": "pkg:npm/i18next-http-backend@4.0.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/i18next@26.3.6",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/marked@18.0.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/moddle-xml@12.1.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/moddle@8.2.0",
+        "pkg:npm/saxen@11.1.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/moddle@8.2.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.1.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/preact-iso@2.12.1",
+      "dependsOn": [
+        "pkg:npm/preact-render-to-string@6.7.0",
+        "pkg:npm/preact@10.29.7"
+      ]
+    },
+    {
+      "ref": "pkg:npm/preact-render-to-string@6.7.0",
+      "dependsOn": [
+        "pkg:npm/preact@10.29.7"
+      ]
+    },
+    {
+      "ref": "pkg:npm/preact@10.29.7",
+      "dependsOn": [
+        "pkg:npm/preact-render-to-string@6.7.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/react-bpmn@0.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/react-dom@19.2.8",
+      "dependsOn": [
+        "pkg:npm/react@19.2.8",
+        "pkg:npm/scheduler@0.27.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/react-hotkeys-hook@5.3.3",
+      "dependsOn": [
+        "pkg:npm/react-dom@19.2.8",
+        "pkg:npm/react@19.2.8"
+      ]
+    },
+    {
+      "ref": "pkg:npm/react-i18next@17.0.10",
+      "dependsOn": [
+        "pkg:npm/%40babel/runtime@7.29.7",
+        "pkg:npm/html-parse-stringify@3.0.1",
+        "pkg:npm/i18next@26.3.6",
+        "pkg:npm/react@19.2.8",
+        "pkg:npm/use-sync-external-store@1.6.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/react@19.2.8",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/saxen@11.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/scheduler@0.27.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/semver@7.8.5",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/style-mod@4.1.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/table-js@9.4.0",
+      "dependsOn": [
+        "pkg:npm/diagram-js@15.22.0",
+        "pkg:npm/didi@11.0.0",
+        "pkg:npm/inferno@5.6.3",
+        "pkg:npm/min-dash@5.1.0",
+        "pkg:npm/min-dom@5.3.0",
+        "pkg:npm/selection-ranges@4.1.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/use-sync-external-store@1.6.0",
+      "dependsOn": [
+        "pkg:npm/react@19.2.8"
+      ]
+    },
+    {
+      "ref": "pkg:npm/void-elements@3.1.0",
+      "dependsOn": []
     }
   ]
 }

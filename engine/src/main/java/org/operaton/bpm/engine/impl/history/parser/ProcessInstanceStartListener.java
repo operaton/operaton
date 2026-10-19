@@ -16,25 +16,29 @@
  */
 package org.operaton.bpm.engine.impl.history.parser;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  *
  */
-public class ProcessInstanceStartListener extends HistoryExecutionListener {
+public @NullMarked class ProcessInstanceStartListener extends HistoryExecutionListener {
 
   public ProcessInstanceStartListener(HistoryEventProducer historyEventProducer) {
     super(historyEventProducer);
   }
 
   @Override
-  protected HistoryEvent createHistoryEvent(DelegateExecution execution) {
+  protected @Nullable HistoryEvent createHistoryEvent(DelegateExecution execution) {
     ensureHistoryLevelInitialized();
-    if(historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_START, execution)) {
+    if(requireNonNull(historyLevel).isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_START, execution)) {
       return eventProducer.createProcessInstanceStartEvt(execution);
     } else {
       return null;

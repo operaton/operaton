@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BatchHelper {
@@ -69,7 +70,7 @@ public class BatchHelper {
     }
   }
 
-  public JobDefinition getSeedJobDefinition(Batch batch) {
+  public @Nullable JobDefinition getSeedJobDefinition(Batch batch) {
     return getManagementService()
       .createJobDefinitionQuery()
       .jobDefinitionId(batch.getSeedJobDefinitionId())
@@ -85,7 +86,7 @@ public class BatchHelper {
     executeJob(getSeedJob(batch));
   }
 
-  public JobDefinition getMonitorJobDefinition(Batch batch) {
+  public @Nullable JobDefinition getMonitorJobDefinition(Batch batch) {
     return getManagementService()
       .createJobDefinitionQuery().jobDefinitionId(batch.getMonitorJobDefinitionId()).jobType(BatchMonitorJobHandler.TYPE).singleResult();
   }
@@ -110,11 +111,11 @@ public class BatchHelper {
     }
   }
 
-  public JobDefinition getExecutionJobDefinition(Batch batch) {
+  public @Nullable JobDefinition getExecutionJobDefinition(Batch batch) {
     throw new AssertionError("This method is not implemented");
   }
 
-  public JobDefinition getExecutionJobDefinition(Batch batch, String jobType) {
+  public @Nullable JobDefinition getExecutionJobDefinition(Batch batch, String jobType) {
     return processEngineProvider.getProcessEngine().getManagementService()
         .createJobDefinitionQuery()
         .jobDefinitionId(batch.getBatchJobDefinitionId())
@@ -123,11 +124,13 @@ public class BatchHelper {
   }
 
   public List<Job> getExecutionJobs(Batch batch) {
-    return getJobsForDefinition(getExecutionJobDefinition(batch));
+    JobDefinition jobDefinition = requireNonNull(getExecutionJobDefinition(batch));
+    return getJobsForDefinition(jobDefinition);
   }
 
   public List<Job> getExecutionJobs(Batch batch, String jobType) {
-    return getJobsForDefinition(getExecutionJobDefinition(batch, jobType));
+    JobDefinition jobDefinition = requireNonNull(getExecutionJobDefinition(batch, jobType));
+    return getJobsForDefinition(jobDefinition);
   }
 
   public void executeJobs(Batch batch) {
@@ -171,12 +174,13 @@ public class BatchHelper {
     }
   }
 
-  public HistoricBatch getHistoricBatch(Batch batch) {
+  public @Nullable HistoricBatch getHistoricBatch(Batch batch) {
     return getHistoryService()
       .createHistoricBatchQuery()
       .batchId(batch.getId())
       .singleResult();
   }
+
   public List<HistoricJobLog> getHistoricSeedJobLog(Batch batch) {
     return getHistoryService()
       .createHistoricJobLogQuery()

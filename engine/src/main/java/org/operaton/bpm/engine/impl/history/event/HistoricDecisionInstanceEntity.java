@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
@@ -37,7 +38,7 @@ import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
  * @author Ingo Richtsmeier
  *
  */
-public class HistoricDecisionInstanceEntity extends HistoryEvent implements HistoricDecisionInstance {
+public @NullUnmarked class HistoricDecisionInstanceEntity extends HistoryEvent implements HistoricDecisionInstance {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 

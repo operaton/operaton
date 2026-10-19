@@ -2,4 +2,6 @@
  * History event handler implementations.
  * Provides handlers for consuming and persisting history events to storage backends.
  */
-package org.operaton.bpm.engine.impl.history.handler;
+@NullMarked package org.operaton.bpm.engine.impl.history.handler;
+
+import org.jspecify.annotations.NullMarked;

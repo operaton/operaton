@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.variable.value;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.variable.type.PrimitiveValueType;
 
 /**
  *
  * @author Daniel Meyer
  */
-public interface PrimitiveValue<T> extends TypedValue {
+public @NullMarked interface PrimitiveValue<T> extends TypedValue {
 
   @Override
   T getValue();

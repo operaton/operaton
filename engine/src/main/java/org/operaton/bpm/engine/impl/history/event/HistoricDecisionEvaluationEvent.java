@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,19 +27,19 @@ import java.util.Collection;
  * Container for history entities which belongs to a decision evaluation. Only
  * the containing history entities should be persisted.
  */
-public class HistoricDecisionEvaluationEvent extends HistoryEvent {
+public @NullMarked class HistoricDecisionEvaluationEvent extends HistoryEvent {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected HistoricDecisionInstanceEntity rootHistoricDecisionInstance;
+  protected @Nullable HistoricDecisionInstanceEntity rootHistoricDecisionInstance;
 
   private Collection<HistoricDecisionInstanceEntity> requiredHistoricDecisionInstances = new ArrayList<>();
 
-  public HistoricDecisionInstanceEntity getRootHistoricDecisionInstance() {
+  public @Nullable HistoricDecisionInstanceEntity getRootHistoricDecisionInstance() {
     return rootHistoricDecisionInstance;
   }
 
-  public void setRootHistoricDecisionInstance(HistoricDecisionInstanceEntity rootHistoricDecisionInstance) {
+  public void setRootHistoricDecisionInstance(@Nullable HistoricDecisionInstanceEntity rootHistoricDecisionInstance) {
     this.rootHistoricDecisionInstance = rootHistoricDecisionInstance;
   }
 

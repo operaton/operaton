@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import org.jspecify.annotations.NullUnmarked;
+
 import java.io.Serial;
 import java.util.Date;
 
@@ -23,7 +25,7 @@ import java.util.Date;
  * @author Daniel Meyer
  *
  */
-public class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity {
+public @NullUnmarked class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity {
 
   @Serial private static final long serialVersionUID = 1L;
 

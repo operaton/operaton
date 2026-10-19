@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.handler;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 
 /**
@@ -35,7 +36,7 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
  * @author Daniel Meyer
  *
  */
-public interface HistoryEventHandler {
+public @NullMarked interface HistoryEventHandler {
 
   /**
    * Called by the process engine when an history event is fired.

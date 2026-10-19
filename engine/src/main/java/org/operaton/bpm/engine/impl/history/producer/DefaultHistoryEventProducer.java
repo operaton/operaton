@@ -19,7 +19,10 @@ package org.operaton.bpm.engine.impl.history.producer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -78,6 +81,7 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.task.IdentityLink;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.JOB_CREATE;
@@ -93,7 +97,7 @@ import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
  * @author Ingo Richtsmeier
  *
  */
-public class DefaultHistoryEventProducer implements HistoryEventProducer {
+public @NullMarked class DefaultHistoryEventProducer implements HistoryEventProducer {
 
   protected static final ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
@@ -121,7 +125,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
         eventType);
   }
 
-  protected void initActivityInstanceEvent(HistoricActivityInstanceEventEntity evt, MigratingActivityInstance migratingActivityInstance, HistoryEventType eventType) {
+  protected void initActivityInstanceEvent(HistoricActivityInstanceEventEntity evt, MigratingActivityInstance migratingActivityInstance, @SuppressWarnings("SameParameterValue") HistoryEventType eventType) {
     PvmScope eventSource = migratingActivityInstance.getTargetScope();
     String activityInstanceId = migratingActivityInstance.getActivityInstanceId();
 
@@ -143,9 +147,9 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
   protected void initActivityInstanceEvent(HistoricActivityInstanceEventEntity evt,
       ExecutionEntity execution,
-      PvmScope eventSource,
-      String activityInstanceId,
-      String parentActivityInstanceId,
+      @Nullable PvmScope eventSource,
+      @Nullable String activityInstanceId,
+      @Nullable String parentActivityInstanceId,
       HistoryEventType eventType) {
 
     evt.setId(activityInstanceId);
@@ -163,7 +167,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
     fillProcessDefinitionData(evt, execution.getProcessDefinitionId());
 
-    evt.setActivityId(eventSource.getId());
+    evt.setActivityId(requireNonNull(eventSource).getId());
     evt.setActivityName((String) eventSource.getProperty("name"));
     evt.setActivityType((String) eventSource.getProperty("type"));
 
@@ -247,9 +251,6 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     evt.setPriority(taskEntity.getPriority());
     evt.setTaskDefinitionKey(taskEntity.getTaskDefinitionKey());
     evt.setTenantId(tenantId);
-    /**
-     * Sets task State for the task
-     */
     evt.setTaskState(taskEntity.getTaskState());
 
     ExecutionEntity execution = taskEntity.getExecution();
@@ -397,7 +398,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     evt.setIncidentState(incidentState.getStateCode());
   }
 
-  protected HistoryEvent createHistoricVariableEvent(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope, HistoryEventType eventType) {
+  protected HistoryEvent createHistoricVariableEvent(VariableInstanceEntity variableInstance, @Nullable VariableScope sourceVariableScope, HistoryEventType eventType) {
     String scopeActivityInstanceId = getScopeActivityInstanceId(variableInstance);
     String sourceActivityInstanceId = getSourceActivityInstanceId(sourceVariableScope);
     ExecutionEntity sourceExecution = getSourceExecution(sourceVariableScope);
@@ -431,12 +432,13 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     return evt;
   }
 
-  private static String getScopeActivityInstanceId(VariableInstanceEntity variableInstance) {
+  private static @Nullable String getScopeActivityInstanceId(VariableInstanceEntity variableInstance) {
     String scopeActivityInstanceId = null;
     if(variableInstance.getExecutionId() != null) {
       ExecutionEntity scopeExecution = Context.getCommandContext()
         .getDbEntityManager()
         .selectById(ExecutionEntity.class, variableInstance.getExecutionId());
+      requireNonNull(scopeExecution);
 
       if (variableInstance.getTaskId() == null && !variableInstance.isConcurrentLocal()) {
         scopeActivityInstanceId = scopeExecution.getParentActivityInstanceId();
@@ -450,15 +452,15 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     return scopeActivityInstanceId;
   }
 
-  private static String getSourceActivityInstanceId(VariableScope sourceVariableScope) {
+  private static @Nullable String getSourceActivityInstanceId(@Nullable VariableScope sourceVariableScope) {
     String sourceActivityInstanceId = null;
     ExecutionEntity sourceExecution = getSourceExecution(sourceVariableScope);
     CaseExecutionEntity sourceCaseExecution;
     if (sourceVariableScope instanceof ExecutionEntity) {
-      sourceActivityInstanceId = sourceExecution.getActivityInstanceId();
+      sourceActivityInstanceId = requireNonNull(sourceExecution).getActivityInstanceId();
     } else if (sourceVariableScope instanceof TaskEntity taskEntity) {
       if (sourceExecution != null) {
-        sourceActivityInstanceId = sourceExecution.getActivityInstanceId();
+        sourceActivityInstanceId = requireNonNull(sourceExecution).getActivityInstanceId();
       }
       else {
         sourceCaseExecution = taskEntity.getCaseExecution();
@@ -475,7 +477,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     return sourceActivityInstanceId;
   }
 
-  private static ExecutionEntity getSourceExecution(VariableScope sourceVariableScope) {
+  private static @Nullable ExecutionEntity getSourceExecution(@Nullable VariableScope sourceVariableScope) {
     ExecutionEntity sourceExecution = null;
     if (sourceVariableScope instanceof ExecutionEntity executionEntity) {
       sourceExecution = executionEntity;
@@ -688,7 +690,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     } else {
       if (executionEntity.isExternallyTerminated()) {
         evt.setState(HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED);
-      } else if (!executionEntity.isExternallyTerminated()) {
+      } else {
         evt.setState(HistoricProcessInstance.STATE_INTERNALLY_TERMINATED);
       }
     }
@@ -718,7 +720,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   }
 
   @Override
-  public HistoryEvent createActivityInstanceUpdateEvt(DelegateExecution execution, DelegateTask task) {
+  public HistoryEvent createActivityInstanceUpdateEvt(DelegateExecution execution, @Nullable DelegateTask task) {
     final ExecutionEntity executionEntity = (ExecutionEntity) execution;
 
     // create event instance
@@ -1091,7 +1093,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   }
 
   @Override
-  public HistoryEvent createHistoricJobLogFailedEvt(Job job, Throwable exception) {
+  public HistoryEvent createHistoricJobLogFailedEvt(Job job, @Nullable Throwable exception) {
     HistoricJobLogEventEntity event = (HistoricJobLogEventEntity) createHistoricJobLogEvt(job, JOB_FAIL);
 
     if(exception != null) {
@@ -1195,7 +1197,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
       if (timeToLive != null) {
         try {
           Integer timeToLiveDays = ParseUtil.parseHistoryTimeToLive(timeToLive);
-          Date removalTime = DefaultHistoryRemovalTimeProvider.determineRemovalTime(currentTime, timeToLiveDays);
+          Date removalTime = timeToLiveDays != null ? DefaultHistoryRemovalTimeProvider.determineRemovalTime(currentTime, timeToLiveDays) : null;
           evt.setRemovalTime(removalTime);
         } catch (ProcessEngineException e) {
           ProcessEngineException wrappedException = LOG.invalidPropertyValue("historyCleanupJobLogTimeToLive", timeToLive, e);
@@ -1285,7 +1287,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   }
 
   protected boolean isRootProcessInstance(HistoricProcessInstanceEventEntity evt) {
-    return evt.getProcessInstanceId().equals(evt.getRootProcessInstanceId());
+    return Objects.equals(evt.getProcessInstanceId(), evt.getRootProcessInstanceId());
   }
 
   protected boolean isHistoryRemovalTimeStrategyStart() {
@@ -1301,7 +1303,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
       .getHistoryRemovalTimeStrategy();
   }
 
-  protected Date calculateRemovalTime(HistoryEvent historyEvent) {
+  protected @Nullable Date calculateRemovalTime(HistoryEvent historyEvent) {
     String processDefinitionId = historyEvent.getProcessDefinitionId();
     ProcessDefinition processDefinition = findProcessDefinitionById(processDefinitionId);
 
@@ -1310,7 +1312,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
       .calculateRemovalTime((HistoricProcessInstanceEventEntity) historyEvent, processDefinition);
   }
 
-  protected Date calculateRemovalTime(HistoricBatchEntity historicBatch) {
+  protected @Nullable Date calculateRemovalTime(HistoricBatchEntity historicBatch) {
     return Context.getProcessEngineConfiguration()
       .getHistoryRemovalTimeProvider()
       .calculateRemovalTime(historicBatch);
@@ -1336,26 +1338,26 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     }
   }
 
-  protected HistoricProcessInstanceEventEntity getHistoricRootProcessInstance(String rootProcessInstanceId) {
+  protected @Nullable HistoricProcessInstanceEventEntity getHistoricRootProcessInstance(String rootProcessInstanceId) {
     return Context.getCommandContext()
       .getDbEntityManager()
       .selectById(HistoricProcessInstanceEventEntity.class, rootProcessInstanceId);
   }
 
-  protected ProcessDefinition findProcessDefinitionById(String processDefinitionId) {
+  protected @Nullable ProcessDefinition findProcessDefinitionById(String processDefinitionId) {
     return Context.getCommandContext()
       .getProcessEngineConfiguration()
       .getDeploymentCache()
       .findDeployedProcessDefinitionById(processDefinitionId);
   }
 
-  protected HistoricBatchEntity getHistoricBatchById(String batchId) {
+  protected @Nullable HistoricBatchEntity getHistoricBatchById(String batchId) {
     return Context.getCommandContext()
       .getHistoricBatchManager()
       .findHistoricBatchById(batchId);
   }
 
-  protected HistoricBatchEntity getHistoricBatchByJobId(String jobId) {
+  protected @Nullable HistoricBatchEntity getHistoricBatchByJobId(String jobId) {
     return Context.getCommandContext()
       .getHistoricBatchManager()
       .findHistoricBatchByJobId(jobId);
@@ -1373,9 +1375,10 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
   protected void addRemovalTimeToHistoricIncidents(HistoricBatchEntity historicBatch) {
     Date removalTime = historicBatch.getRemovalTime();
     if (removalTime != null) {
+      String batchId = requireNonNull(historicBatch.getId());
       Context.getCommandContext()
         .getHistoricIncidentManager()
-        .addRemovalTimeToHistoricIncidentsByBatchId(historicBatch.getId(), removalTime);
+        .addRemovalTimeToHistoricIncidentsByBatchId(batchId, removalTime);
     }
   }
 
@@ -1397,7 +1400,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     event.setSequenceCounter(sequenceCounter);
   }
 
-  private void fillProcessDefinitionData(HistoryEvent event, String processDefinitionId) {
+  private void fillProcessDefinitionData(HistoryEvent event, @Nullable String processDefinitionId) {
     ProcessDefinitionEntity entity = processDefinitionId != null
       ? getProcessDefinitionEntity(processDefinitionId)
       : null;
@@ -1415,7 +1418,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
     }
   }
 
-  protected ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
+  protected @Nullable ProcessDefinitionEntity getProcessDefinitionEntity(String processDefinitionId) {
     if (!Context.hasActiveCommandContext()) {
       return null;
     }

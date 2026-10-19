@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.history;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,8 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import static java.util.Objects.requireNonNull;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 @ExtendWith(ProcessEngineExtension.class)
@@ -73,13 +76,17 @@ public abstract class AbstractCompositeHistoryEventHandlerTest {
   protected void startProcessAndCompleteUserTask() {
     runtimeService.startProcessInstanceByKey("HistoryLevelTest");
     Task task = taskService.createTaskQuery().singleResult();
-    taskService.complete(task.getId());
+    if (task == null) {
+      return;
+    }
+    String id = requireNonNull(task.getId());
+    taskService.complete(id);
   }
 
   /**
    * A {@link HistoryEventHandler} implementation to count the history events.
    */
-  protected class CustomDbHistoryEventHandler implements HistoryEventHandler {
+  protected @NullMarked class CustomDbHistoryEventHandler implements HistoryEventHandler {
 
     @Override
     public void handleEvent(HistoryEvent historyEvent) {

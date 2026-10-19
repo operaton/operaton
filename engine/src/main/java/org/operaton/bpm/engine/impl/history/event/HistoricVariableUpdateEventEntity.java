@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import org.jspecify.annotations.NullUnmarked;
+
 import java.io.Serial;
 
 
@@ -23,7 +25,7 @@ import java.io.Serial;
  * @author Daniel Meyer
  *
  */
-public class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity {
+public @NullUnmarked class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity {
 
   @Serial private static final long serialVersionUID = 1L;
 

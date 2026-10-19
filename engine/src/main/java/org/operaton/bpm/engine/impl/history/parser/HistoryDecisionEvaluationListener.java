@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.parser;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationEvent;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationListener;
@@ -30,10 +32,12 @@ import org.operaton.bpm.engine.impl.history.producer.DmnHistoryEventProducer;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 
-public class HistoryDecisionEvaluationListener implements DmnDecisionEvaluationListener {
+import static java.util.Objects.requireNonNull;
+
+public @NullMarked class HistoryDecisionEvaluationListener implements DmnDecisionEvaluationListener {
 
   protected DmnHistoryEventProducer eventProducer;
-  protected HistoryLevel historyLevel;
+  protected @Nullable HistoryLevel historyLevel;
 
   public HistoryDecisionEvaluationListener(DmnHistoryEventProducer historyEventProducer) {
     this.eventProducer = historyEventProducer;
@@ -50,12 +54,12 @@ public class HistoryDecisionEvaluationListener implements DmnDecisionEvaluationL
     }
   }
 
-  protected HistoryEvent createHistoryEvent(DmnDecisionEvaluationEvent evaluationEvent) {
+  protected @Nullable HistoryEvent createHistoryEvent(DmnDecisionEvaluationEvent evaluationEvent) {
     if (historyLevel == null) {
       historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
     }
     DmnDecision decisionTable = evaluationEvent.getDecisionResult().getDecision();
-    if(isDeployedDecisionTable(decisionTable) && historyLevel.isHistoryEventProduced(HistoryEventTypes.DMN_DECISION_EVALUATE, decisionTable)) {
+    if(isDeployedDecisionTable(decisionTable) && requireNonNull(historyLevel).isHistoryEventProduced(HistoryEventTypes.DMN_DECISION_EVALUATE, decisionTable)) {
 
       CoreExecutionContext<? extends CoreExecution> executionContext = Context.getCoreExecutionContext();
       if (executionContext != null) {

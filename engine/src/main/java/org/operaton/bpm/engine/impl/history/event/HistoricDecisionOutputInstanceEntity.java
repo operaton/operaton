@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.history.HistoricDecisionOutputInstance;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 /**
  * @author Philipp Ossler
  */
-public class HistoricDecisionOutputInstanceEntity extends HistoryEvent implements HistoricDecisionOutputInstance, ValueFields {
+public @NullUnmarked class HistoricDecisionOutputInstanceEntity extends HistoryEvent implements HistoricDecisionOutputInstance, ValueFields {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -199,6 +200,7 @@ public class HistoricDecisionOutputInstanceEntity extends HistoryEvent implement
     return byteArrayField.getByteArrayId();
   }
 
+  @SuppressWarnings("unused")
   public void setByteArrayValueId(String byteArrayId) {
     byteArrayField.setByteArrayId(byteArrayId);
   }

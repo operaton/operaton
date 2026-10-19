@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.history.event;
 import java.io.Serial;
 import java.util.Date;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.*;
@@ -26,7 +27,7 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.*;
 /**
  * @author Sebastian Menski
  */
-public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent {
+public @NullUnmarked class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -68,6 +69,7 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
     return getEndTime();
   }
 
+  @SuppressWarnings("unused")
   public void setCloseTime(Date closeTime) {
     setEndTime(closeTime);
   }
@@ -84,7 +86,7 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
     return superCaseInstanceId;
   }
 
-  public void setSuperCaseInstanceId(String superCaseInstanceId) {
+  public void setSuperCaseInstanceId(@Nullable String superCaseInstanceId) {
     this.superCaseInstanceId = superCaseInstanceId;
   }
 
@@ -92,7 +94,7 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
     return superProcessInstanceId;
   }
 
-  public void setSuperProcessInstanceId(String superProcessInstanceId) {
+  public void setSuperProcessInstanceId(@Nullable String superProcessInstanceId) {
     this.superProcessInstanceId = superProcessInstanceId;
   }
 

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.event;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * The set of built-in history event types.
  *
@@ -23,7 +25,7 @@ package org.operaton.bpm.engine.impl.history.event;
  * @author Ingo Richtsmeier
  */
 @SuppressWarnings("java:S1192")
-public enum HistoryEventTypes implements HistoryEventType {
+public @NullMarked enum HistoryEventTypes implements HistoryEventType {
 
   /** fired when a process instance is started. */
   PROCESS_INSTANCE_START("process-instance", "start"),

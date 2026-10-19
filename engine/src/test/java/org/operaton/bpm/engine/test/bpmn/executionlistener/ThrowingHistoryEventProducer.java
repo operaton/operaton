@@ -18,17 +18,19 @@ package org.operaton.bpm.engine.test.bpmn.executionlistener;
 
 import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.producer.DefaultHistoryEventProducer;
 
-public class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
+public @NullMarked class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
 
   public static final String EXCEPTION_MESSAGE = "Intended exception from history producer";
   public static final String ERROR_CODE = "508";
 
-  protected String activityName;
+  protected @Nullable String activityName;
   protected boolean failsWithException;
 
   public ThrowingHistoryEventProducer failsWithException() {
@@ -36,7 +38,8 @@ public class ThrowingHistoryEventProducer extends DefaultHistoryEventProducer {
     return this;
   }
 
-  public ThrowingHistoryEventProducer failsAtActivity(String activityName) {
+  @SuppressWarnings("UnusedReturnValue")
+  public ThrowingHistoryEventProducer failsAtActivity(@Nullable String activityName) {
     this.activityName = activityName;
     return this;
   }

@@ -267,9 +267,12 @@ public @NullMarked class TimerEntity extends JobEntity {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
+    }
+    if (obj == null) {
+      return false;
     }
     if (!super.equals(obj)) {
       return false;

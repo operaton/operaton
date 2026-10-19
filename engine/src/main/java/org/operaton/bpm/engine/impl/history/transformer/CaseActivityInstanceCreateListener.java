@@ -16,24 +16,28 @@
  */
 package org.operaton.bpm.engine.impl.history.transformer;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.CmmnHistoryEventProducer;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Sebastian Menski
  */
-public class CaseActivityInstanceCreateListener extends HistoryCaseExecutionListener {
+public @NullMarked class CaseActivityInstanceCreateListener extends HistoryCaseExecutionListener {
 
   public CaseActivityInstanceCreateListener(CmmnHistoryEventProducer historyEventProducer) {
     super(historyEventProducer);
   }
 
   @Override
-  protected HistoryEvent createHistoryEvent(DelegateCaseExecution caseExecution) {
+  protected @Nullable HistoryEvent createHistoryEvent(DelegateCaseExecution caseExecution) {
     ensureHistoryLevelInitialized();
-    if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_CREATE, caseExecution)) {
+    if (requireNonNull(historyLevel).isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_CREATE, caseExecution)) {
       return eventProducer.createCaseActivityInstanceCreateEvt(caseExecution);
     }
     else {

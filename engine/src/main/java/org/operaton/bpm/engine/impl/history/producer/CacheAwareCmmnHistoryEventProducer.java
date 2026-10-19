@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.history.producer;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.event.HistoricCaseActivityInstanceEventEntity;
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 /**
  * @author Sebastian Menski
  */
-public class CacheAwareCmmnHistoryEventProducer extends DefaultCmmnHistoryEventProducer {
+public @NullMarked class CacheAwareCmmnHistoryEventProducer extends DefaultCmmnHistoryEventProducer {
 
   @Override
   protected HistoricCaseInstanceEventEntity loadCaseInstanceEventEntity(CaseExecutionEntity caseExecutionEntity) {
@@ -33,13 +35,7 @@ public class CacheAwareCmmnHistoryEventProducer extends DefaultCmmnHistoryEventP
 
     HistoricCaseInstanceEventEntity cachedEntity = findInCache(HistoricCaseInstanceEventEntity.class, caseInstanceId);
 
-    if (cachedEntity != null) {
-      return cachedEntity;
-    }
-    else {
-      return newCaseInstanceEventEntity(caseExecutionEntity);
-    }
-
+    return cachedEntity != null ? cachedEntity : newCaseInstanceEventEntity(caseExecutionEntity);
   }
 
   @Override
@@ -48,17 +44,12 @@ public class CacheAwareCmmnHistoryEventProducer extends DefaultCmmnHistoryEventP
 
     HistoricCaseActivityInstanceEventEntity cachedEntity = findInCache(HistoricCaseActivityInstanceEventEntity.class, caseActivityInstanceId);
 
-    if (cachedEntity != null) {
-      return cachedEntity;
-    }
-    else {
-      return newCaseActivityInstanceEventEntity(caseExecutionEntity);
-    }
+    return cachedEntity != null ? cachedEntity : newCaseActivityInstanceEventEntity(caseExecutionEntity);
 
   }
 
   /** find a cached entity by primary key */
-  protected <T extends HistoryEvent> T findInCache(Class<T> type, String id) {
+  protected <T extends HistoryEvent> @Nullable T findInCache(Class<T> type, String id) {
     return Context.getCommandContext()
       .getDbEntityManager()
       .getCachedEntity(type, id);

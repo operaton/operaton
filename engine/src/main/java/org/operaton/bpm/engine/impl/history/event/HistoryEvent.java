@@ -20,7 +20,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -49,7 +49,7 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
  * @author Daniel Meyer
  *
  */
-public @NullMarked class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
+public @NullUnmarked class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
 
   @Serial private static final long serialVersionUID = 1L;
 
@@ -283,7 +283,7 @@ public @NullMarked class HistoryEvent implements Serializable, DbEntity, Histori
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(@Nullable String id) {
     this.id = id;
   }
 

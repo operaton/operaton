@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
@@ -572,8 +571,8 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
   }
 
   @Override
-  public void dispatchEvent(VariableEvent variableEvent) {
-    if (execution != null && variableEvent.getVariableInstance().getTaskId() == null) {
+  public void dispatchEvent(@Nullable VariableEvent variableEvent) {
+    if (execution != null && variableEvent != null && variableEvent.getVariableInstance().getTaskId() == null) {
       execution.handleConditionalEventOnVariableChange(variableEvent);
     }
   }
@@ -1056,7 +1055,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
     return true;
   }
 
-  protected @NonNull List<TaskListener> getListenersForEvent(String event) {
+  protected List<TaskListener> getListenersForEvent(String event) {
     TaskDefinition resolvedTaskDefinition = getTaskDefinition();
     if (resolvedTaskDefinition != null) {
       if (skipCustomListeners) {
@@ -1106,7 +1105,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
   /**
    * @return true if the next listener can be invoked; false if not
    */
-  protected boolean invokeListener(CoreExecution currentExecution, String eventName, TaskListener taskListener) throws Exception {
+  protected boolean invokeListener(@Nullable CoreExecution currentExecution, String eventName, TaskListener taskListener) throws Exception {
     boolean isBpmnTask = currentExecution instanceof ActivityExecution;
     final TaskListenerInvocation listenerInvocation = new TaskListenerInvocation(taskListener, this, currentExecution);
 
@@ -1321,6 +1320,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
             .getProcessEngineConfiguration()
             .getDeploymentCache()
             .findDeployedProcessDefinitionById(processDefinitionId);
+        requireNonNull(processDefinition);
 
         taskDefinitions = processDefinition.getTaskDefinitions();
 
@@ -1328,12 +1328,13 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
         CaseDefinitionEntity caseDefinition = Context
             .getProcessEngineConfiguration()
             .getDeploymentCache()
-            .findDeployedCaseDefinitionById(caseDefinitionId);
+            .findDeployedCaseDefinitionById(requireNonNull(caseDefinitionId));
+        requireNonNull(caseDefinition);
 
         taskDefinitions = caseDefinition.getTaskDefinitions();
       }
 
-      taskDefinition = taskDefinitions.get(taskDefinitionKey);
+      taskDefinition = requireNonNull(taskDefinitions).get(taskDefinitionKey);
     }
     return taskDefinition;
   }
@@ -1464,6 +1465,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
   }
 
   public void initializeAttachmentAndComments() {
+    requireNonNull(id);
     this.attachmentExists = !Context.getCommandContext().getAttachmentManager().findAttachmentsByTaskId(id).isEmpty();
     this.commentExists = !Context.getCommandContext().getCommentManager().findCommentsByTaskId(id).isEmpty();
   }
@@ -1693,7 +1695,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }
@@ -1758,7 +1760,6 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
 
   public void bpmnError(String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables) {
     ensureTaskActive();
-    ActivityExecution activityExecution = getExecution();
     BpmnError bpmnError;
     if (errorMessage != null) {
       bpmnError = new BpmnError(errorCode, errorMessage);
@@ -1766,6 +1767,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
       bpmnError = new BpmnError(errorCode);
     }
     try {
+      ActivityExecution activityExecution = requireNonNull(getExecution());
       if (variables != null && !variables.isEmpty()) {
         activityExecution.setVariables(variables);
       }
@@ -1787,7 +1789,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
 
   public void escalation(String escalationCode, @Nullable Map<String, Object> variables) {
     ensureTaskActive();
-    ActivityExecution activityExecution = getExecution();
+    ActivityExecution activityExecution = requireNonNull(getExecution());
 
     if (variables != null && !variables.isEmpty()) {
       activityExecution.setVariables(variables);

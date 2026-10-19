@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.application.impl;
 
-import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
 
 
@@ -24,7 +24,9 @@ import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
  * @author Daniel Meyer
  *
  */
-public @NullMarked class ProcessApplicationDeploymentInfoImpl implements ProcessApplicationDeploymentInfo {
+public @NullUnmarked class ProcessApplicationDeploymentInfoImpl implements ProcessApplicationDeploymentInfo {
+
+  public ProcessApplicationDeploymentInfoImpl() {}
 
   public ProcessApplicationDeploymentInfoImpl(String processEngineName, String deploymentId) {
     this.processEngineName = processEngineName;

@@ -20,6 +20,7 @@ import java.sql.SQLException;
 
 import ch.qos.logback.classic.Level;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -56,12 +57,12 @@ class CustomErrorCodeProviderTest {
       c.setCustomExceptionCodeProvider(new ExceptionCodeProvider() {
         
         @Override
-        public Integer provideCode(SQLException sqlException) {
+        public @NonNull Integer provideCode(@NonNull SQLException sqlException) {
           return PROVIDED_CUSTOM_CODE;
         }
         
         @Override
-        public Integer provideCode(ProcessEngineException processEngineException) {
+        public @NonNull Integer provideCode(@NonNull ProcessEngineException processEngineException) {
           return PROVIDED_CUSTOM_CODE;
         }
         

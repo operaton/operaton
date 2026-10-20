@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.event;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.bpmn.behavior.ConditionalEventBehavior;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
@@ -36,7 +37,7 @@ public class ConditionalEventHandler implements EventHandler {
   }
 
   @Override
-  public void handleEvent(EventSubscriptionEntity eventSubscription, Object payload, Object localPayload, Object payloadToTriggeredScope, String businessKey, CommandContext commandContext) {
+  public void handleEvent(EventSubscriptionEntity eventSubscription, @Nullable Object payload, @Nullable Object localPayload, @Nullable Object payloadToTriggeredScope, @Nullable String businessKey, CommandContext commandContext) {
     VariableEvent variableEvent;
     if (payload == null || payload instanceof VariableEvent) {
       variableEvent = (VariableEvent) payload;

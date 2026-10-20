@@ -16,21 +16,24 @@
  */
 package org.operaton.bpm.engine.impl.db;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cmd.GetNextIdBlockCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Tom Baeyens
  */
-public class DbIdGenerator implements IdGenerator {
+public @NullMarked class DbIdGenerator implements IdGenerator {
 
   protected int idBlockSize;
   protected long nextId;
   protected long lastId;
 
-  protected CommandExecutor commandExecutor;
+  protected @Nullable CommandExecutor commandExecutor;
 
   public DbIdGenerator() {
     reset();
@@ -45,11 +48,12 @@ public class DbIdGenerator implements IdGenerator {
   }
 
   protected synchronized void getNewBlock() {
-    IdBlock idBlock = commandExecutor.execute(new GetNextIdBlockCmd(idBlockSize));
+    IdBlock idBlock = requireNonNull(commandExecutor).execute(new GetNextIdBlockCmd(idBlockSize));
     this.nextId = idBlock.getNextId();
     this.lastId = idBlock.getLastId();
   }
 
+  @SuppressWarnings("unused")
   public int getIdBlockSize() {
     return idBlockSize;
   }
@@ -58,7 +62,7 @@ public class DbIdGenerator implements IdGenerator {
     this.idBlockSize = idBlockSize;
   }
 
-  public CommandExecutor getCommandExecutor() {
+  public @Nullable CommandExecutor getCommandExecutor() {
     return commandExecutor;
   }
 

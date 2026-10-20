@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cfg;
 
 import javax.naming.NamingException;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -26,7 +28,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class ConfigurationLogger extends ProcessEngineLogger {
+public @NullMarked class ConfigurationLogger extends ProcessEngineLogger {
 
   public ProcessEngineException invalidConfigTransactionManagerIsNull() {
     return new ProcessEngineException(exceptionMessage(
@@ -69,13 +71,13 @@ public class ConfigurationLogger extends ProcessEngineLogger {
         "Invalid value '{}' for configuration property 'defaultUserPermissionNameForTask'. Valid values are: '{}'", defaultUserPermissionNameForTask, validPermissionNames));
   }
 
-  public ProcessEngineException invalidPropertyValue(String propertyName, String propertyValue) {
+  public ProcessEngineException invalidPropertyValue(String propertyName, @Nullable String propertyValue) {
     return new ProcessEngineException(exceptionMessage(
         "008",
         "Invalid value '{}' for configuration property '{}'.", propertyValue, propertyName));
   }
 
-  public ProcessEngineException invalidPropertyValue(String propertyName, String propertyValue, String reason) {
+  public ProcessEngineException invalidPropertyValue(String propertyName, @Nullable String propertyValue, String reason) {
     return new ProcessEngineException(exceptionMessage(
       "009",
       "Invalid value '{}' for configuration property '{}': {}.", propertyValue, propertyName, reason));
@@ -86,7 +88,7 @@ public class ConfigurationLogger extends ProcessEngineLogger {
       "010", "Invalid batch operation name '{}' with history time to live set to'{}'" , operation, historyTimeToLive);
   }
 
-  public ProcessEngineException invalidPropertyValue(String propertyName, String propertyValue, Exception e) {
+  public ProcessEngineException invalidPropertyValue(String propertyName, @Nullable String propertyValue, Exception e) {
     return new ProcessEngineException(exceptionMessage(
       "011",
       "Invalid value '{}' for configuration property '{}'.", propertyValue, propertyName), e);

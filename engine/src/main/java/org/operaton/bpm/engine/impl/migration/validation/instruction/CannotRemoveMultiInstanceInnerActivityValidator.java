@@ -20,6 +20,8 @@ import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Validates that the target process definition cannot add a remove the inner activity of a
  * migrating multi-instance body.
@@ -47,7 +49,7 @@ public class CannotRemoveMultiInstanceInnerActivityValidator implements Migratio
   }
 
   protected ActivityImpl getInnerActivity(ActivityImpl multiInstanceBody) {
-    MultiInstanceActivityBehavior activityBehavior = (MultiInstanceActivityBehavior) multiInstanceBody.getActivityBehavior();
+    MultiInstanceActivityBehavior activityBehavior = requireNonNull((MultiInstanceActivityBehavior) multiInstanceBody.getActivityBehavior());
     return activityBehavior.getInnerActivity(multiInstanceBody);
   }
 }

@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.migration.MigrationInstructionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 
-public class ValidatingMigrationInstructionImpl implements ValidatingMigrationInstruction {
+import static java.util.Objects.requireNonNull;
+
+public @NullMarked class ValidatingMigrationInstructionImpl implements ValidatingMigrationInstruction {
 
   protected ActivityImpl sourceActivity;
   protected ActivityImpl targetActivity;
@@ -39,7 +42,7 @@ public class ValidatingMigrationInstructionImpl implements ValidatingMigrationIn
 
   @Override
   public ActivityImpl getTargetActivity() {
-    return targetActivity;
+    return requireNonNull(targetActivity);
   }
 
   @Override
@@ -49,7 +52,7 @@ public class ValidatingMigrationInstructionImpl implements ValidatingMigrationIn
 
   @Override
   public MigrationInstruction toMigrationInstruction() {
-    return new MigrationInstructionImpl(sourceActivity.getId(), targetActivity.getId(), updateEventTrigger);
+    return new MigrationInstructionImpl(requireNonNull(sourceActivity.getId()), requireNonNull(targetActivity.getId()), updateEventTrigger);
   }
 
   @Override

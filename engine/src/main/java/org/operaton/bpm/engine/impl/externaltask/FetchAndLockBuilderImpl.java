@@ -20,6 +20,7 @@ package org.operaton.bpm.engine.impl.externaltask;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQueryTopicBuilder;
 import org.operaton.bpm.engine.externaltask.FetchAndLockBuilder;
@@ -27,6 +28,7 @@ import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.Direction.ASCENDING;
 import static org.operaton.bpm.engine.impl.Direction.DESCENDING;
 import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
@@ -41,7 +43,7 @@ public class FetchAndLockBuilderImpl implements FetchAndLockBuilder {
 
   protected final CommandExecutor commandExecutor;
 
-  protected String workerId;
+  protected @Nullable String workerId;
   protected int maxTasks;
 
   protected boolean usePriority;
@@ -94,10 +96,11 @@ public class FetchAndLockBuilderImpl implements FetchAndLockBuilder {
     return new ExternalTaskQueryTopicBuilderImpl(commandExecutor, workerId, maxTasks, usePriority, orderingProperties);
   }
 
-  protected void configureLastOrderingPropertyDirection(Direction direction) {
+  protected void configureLastOrderingPropertyDirection(@Nullable Direction direction) {
     QueryOrderingProperty lastProperty = orderingProperties.isEmpty() ? null : getLastElement(orderingProperties);
 
     ensureNotNull(NotValidException.class, "You should call any of the orderBy methods first before specifying a direction", "currentOrderingProperty", lastProperty);
+    requireNonNull(lastProperty);
 
     if (lastProperty.getDirection() != null) {
       ensureNull(NotValidException.class, "Invalid query: can specify only one direction desc() or asc() for an ordering constraint", "direction", direction);

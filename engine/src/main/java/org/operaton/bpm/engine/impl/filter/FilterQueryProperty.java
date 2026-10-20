@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.filter;
 
-import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.QueryPropertyImpl;
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
  * @author Sebastian Menski
  */
-final @NullMarked class FilterQueryProperty {
+final class FilterQueryProperty {
 
   public static final QueryProperty FILTER_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty RESOURCE_TYPE = new QueryPropertyImpl("RESOURCE_TYPE_");

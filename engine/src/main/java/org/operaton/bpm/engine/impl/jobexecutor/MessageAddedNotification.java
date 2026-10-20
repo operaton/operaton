@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Tom Baeyens
  */
-public class MessageAddedNotification implements TransactionListener {
+public @NullMarked class MessageAddedNotification implements TransactionListener {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 

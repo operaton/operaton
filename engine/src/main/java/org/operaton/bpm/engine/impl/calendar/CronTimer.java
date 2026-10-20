@@ -27,11 +27,12 @@ import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.model.time.ExecutionTime;
 import com.cronutils.parser.CronParser;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * A cron timer implementation that uses cronutils library for parsing and evaluation.
  */
-public class CronTimer {
+public @NullMarked class CronTimer {
 
   protected final Cron cron;
 

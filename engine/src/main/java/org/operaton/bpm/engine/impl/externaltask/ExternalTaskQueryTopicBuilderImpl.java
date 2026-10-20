@@ -21,11 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQueryTopicBuilder;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.cmd.FetchExternalTasksCmd;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Thorben Lindhauer
@@ -36,7 +39,7 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
 
   protected CommandExecutor commandExecutor;
 
-  protected String workerId;
+  protected @Nullable String workerId;
   protected int maxTasks;
   /**
    * Indicates that priority is enabled.
@@ -47,18 +50,18 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
 
   protected Map<String, TopicFetchInstruction> instructions;
 
-  protected TopicFetchInstruction currentInstruction;
+  protected @Nullable TopicFetchInstruction currentInstruction;
 
   /**
    * All args constructor.
    */
   public ExternalTaskQueryTopicBuilderImpl(CommandExecutor commandExecutor,
-                                           String workerId,
+                                           @Nullable String workerId,
                                            int maxTasks,
                                            boolean usePriority,
                                            List<QueryOrderingProperty> orderingProperties,
                                            Map<String, TopicFetchInstruction> instructions,
-                                           TopicFetchInstruction currentInstruction) {
+                                           @Nullable TopicFetchInstruction currentInstruction) {
     this.commandExecutor = commandExecutor;
     this.workerId = workerId;
     this.maxTasks = maxTasks;
@@ -72,7 +75,7 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
    * Constructor using priority & createTime.
    */
   public ExternalTaskQueryTopicBuilderImpl(CommandExecutor commandExecutor,
-                                           String workerId,
+                                           @Nullable String workerId,
                                            int maxTasks,
                                            boolean usePriority,
                                            List<QueryOrderingProperty> orderingProperties) {
@@ -83,7 +86,7 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
    * Constructor using priority.
    */
   public ExternalTaskQueryTopicBuilderImpl(CommandExecutor commandExecutor,
-                                           String workerId,
+                                           @Nullable String workerId,
                                            int maxTasks,
                                            boolean usePriority) {
     this(commandExecutor, workerId, maxTasks, usePriority, new ArrayList<>(), new HashMap<>(), null);
@@ -92,6 +95,7 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
   /**
    * Copy constructor
    */
+  @SuppressWarnings("unused")
   public ExternalTaskQueryTopicBuilderImpl(ExternalTaskQueryTopicBuilderImpl builder) {
     this(
         builder.commandExecutor,
@@ -102,6 +106,10 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
         builder.instructions,
         builder.currentInstruction
     );
+  }
+
+  private TopicFetchInstruction getCurrentInstruction() {
+    return requireNonNull(currentInstruction, "No topic specified. Call topic() before setting additional parameters.");
   }
 
   @Override
@@ -119,78 +127,78 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
   }
 
   @Override
-  public ExternalTaskQueryTopicBuilder variables(String... variables) {
+  public ExternalTaskQueryTopicBuilder variables(String @Nullable... variables) {
     // don't use plain List.of since this returns an instance of a different list class
     // that is private and may mess mybatis queries up
     if (variables != null) {
-      currentInstruction.setVariablesToFetch(new ArrayList<>(List.of(variables)));
+      getCurrentInstruction().setVariablesToFetch(new ArrayList<>(List.of(variables)));
     }
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder variables(List<String> variables) {
-    currentInstruction.setVariablesToFetch(variables);
+    getCurrentInstruction().setVariablesToFetch(variables);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder processInstanceVariableEquals(Map<String, Object> variables) {
-    currentInstruction.setFilterVariables(variables);
+    getCurrentInstruction().setFilterVariables(variables);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder processInstanceVariableEquals(String name, Object value) {
-    currentInstruction.addFilterVariable(name, value);
+    getCurrentInstruction().addFilterVariable(name, value);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder businessKey(String businessKey) {
-    currentInstruction.setBusinessKey(businessKey);
+    getCurrentInstruction().setBusinessKey(businessKey);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder processDefinitionId(String processDefinitionId) {
-    currentInstruction.setProcessDefinitionId(processDefinitionId);
+    getCurrentInstruction().setProcessDefinitionId(processDefinitionId);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder processDefinitionIdIn(String... processDefinitionIds) {
-    currentInstruction.setProcessDefinitionIds(processDefinitionIds);
+    getCurrentInstruction().setProcessDefinitionIds(processDefinitionIds);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder processDefinitionKey(String processDefinitionKey) {
-    currentInstruction.setProcessDefinitionKey(processDefinitionKey);
+    getCurrentInstruction().setProcessDefinitionKey(processDefinitionKey);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder processDefinitionKeyIn(String... processDefinitionKeys) {
-    currentInstruction.setProcessDefinitionKeys(processDefinitionKeys);
+    getCurrentInstruction().setProcessDefinitionKeys(processDefinitionKeys);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder processDefinitionVersionTag(String processDefinitionVersionTag) {
-    currentInstruction.setProcessDefinitionVersionTag(processDefinitionVersionTag);
+    getCurrentInstruction().setProcessDefinitionVersionTag(processDefinitionVersionTag);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder withoutTenantId() {
-    currentInstruction.setTenantIds(null);
+    getCurrentInstruction().setTenantIds(null);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder tenantIdIn(String... tenantIds) {
-    currentInstruction.setTenantIds(tenantIds);
+    getCurrentInstruction().setTenantIds(tenantIds);
     return this;
   }
 
@@ -202,19 +210,19 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
 
   @Override
   public ExternalTaskQueryTopicBuilder enableCustomObjectDeserialization() {
-    currentInstruction.setDeserializeVariables(true);
+    getCurrentInstruction().setDeserializeVariables(true);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder localVariables() {
-    currentInstruction.setLocalVariables(true);
+    getCurrentInstruction().setLocalVariables(true);
     return this;
   }
 
   @Override
   public ExternalTaskQueryTopicBuilder includeExtensionProperties() {
-    currentInstruction.setIncludeExtensionProperties(true);
+    getCurrentInstruction().setIncludeExtensionProperties(true);
     return this;
   }
 

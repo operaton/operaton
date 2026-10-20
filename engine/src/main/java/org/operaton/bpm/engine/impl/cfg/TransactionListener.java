@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  *
  * @author Tom Baeyens
  */
-public interface TransactionListener {
+public @NullMarked interface TransactionListener {
 
   void execute(CommandContext commandContext);
 }

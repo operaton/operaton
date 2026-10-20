@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.diagnostics;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 
 public final class PlatformDiagnosticsRegistry {
 
-  protected static ApplicationServerImpl applicationServer;
+  protected static @Nullable ApplicationServerImpl applicationServer;
 
   private PlatformDiagnosticsRegistry() {
   }
 
-  public static synchronized ApplicationServerImpl getApplicationServer() {
+  public static synchronized @Nullable ApplicationServerImpl getApplicationServer() {
     return applicationServer;
   }
 

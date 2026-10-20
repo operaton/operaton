@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.standalone.StandaloneTransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContextInterceptor;
@@ -33,12 +35,12 @@ import org.operaton.bpm.engine.impl.interceptor.TxContextCommandContextFactory;
  * Base class for a JTA-based process engine configuration. Integrates with
  * transaction managers Java Enterprise environments.
  */
-public abstract class AbstractTransactionProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
+public @NullMarked abstract class AbstractTransactionProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
 
-  protected String transactionManagerJndiName;
+  protected @Nullable String transactionManagerJndiName;
 
   /** {@link CommandContextFactory} to be used for DbSchemaOperations */
-  protected CommandContextFactory dbSchemaOperationsCommandContextFactory;
+  protected @Nullable CommandContextFactory dbSchemaOperationsCommandContextFactory;
 
   protected AbstractTransactionProcessEngineConfiguration() {
     transactionsExternallyManaged = true;
@@ -107,7 +109,8 @@ public abstract class AbstractTransactionProcessEngineConfiguration extends Proc
     }
   }
 
-  public String getTransactionManagerJndiName() {
+  @SuppressWarnings("unused")
+  public @Nullable String getTransactionManagerJndiName() {
     return transactionManagerJndiName;
   }
 
@@ -115,10 +118,12 @@ public abstract class AbstractTransactionProcessEngineConfiguration extends Proc
     this.transactionManagerJndiName = transactionManagerJndiName;
   }
 
-  public CommandContextFactory getDbSchemaOperationsCommandContextFactory() {
+  @SuppressWarnings("unused")
+  public @Nullable CommandContextFactory getDbSchemaOperationsCommandContextFactory() {
     return dbSchemaOperationsCommandContextFactory;
   }
 
+  @SuppressWarnings("unused")
   public void setDbSchemaOperationsCommandContextFactory(CommandContextFactory dbSchemaOperationsCommandContextFactory) {
     this.dbSchemaOperationsCommandContextFactory = dbSchemaOperationsCommandContextFactory;
   }

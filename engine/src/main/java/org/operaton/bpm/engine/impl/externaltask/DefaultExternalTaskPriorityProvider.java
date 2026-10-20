@@ -41,7 +41,7 @@ public class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
   }
 
   @Override
-  public @Nullable Long getSpecificPriority(ExecutionEntity execution, ExternalTaskActivityBehavior param, String jobDefinitionId) {
+  public @Nullable Long getSpecificPriority(ExecutionEntity execution, ExternalTaskActivityBehavior param, @Nullable String jobDefinitionId) {
     ParameterValueProvider priorityProvider = param.getPriorityValueProvider();
     if (priorityProvider != null) {
       return evaluateValueProvider(priorityProvider, execution, "");
@@ -50,7 +50,7 @@ public class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
   }
 
   @Override
-  protected Long getProcessDefinitionPriority(ExecutionEntity execution, ExternalTaskActivityBehavior param) {
+  protected @Nullable Long getProcessDefinitionPriority(ExecutionEntity execution, ExternalTaskActivityBehavior param) {
     return getProcessDefinedPriority(execution.getProcessDefinition(), BpmnParse.PROPERTYNAME_TASK_PRIORITY, execution, "");
   }
 }

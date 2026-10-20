@@ -2905,7 +2905,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return processEngineName;
   }
 
-  public HistoryLevel getHistoryLevel() {
+  public @Nullable HistoryLevel getHistoryLevel() {
     return historyLevel;
   }
 
@@ -3128,7 +3128,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public JobExecutor getJobExecutor() {
+  public @Nullable JobExecutor getJobExecutor() {
     return jobExecutor;
   }
 
@@ -3241,7 +3241,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public ExpressionManager getExpressionManager() {
+  public @Nullable ExpressionManager getExpressionManager() {
     return expressionManager;
   }
 
@@ -4366,7 +4366,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
   }
 
-  public MetricsRegistry getMetricsRegistry() {
+  public @Nullable MetricsRegistry getMetricsRegistry() {
     return metricsRegistry;
   }
 

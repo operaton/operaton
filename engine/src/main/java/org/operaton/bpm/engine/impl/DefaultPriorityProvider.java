@@ -139,7 +139,7 @@ public abstract @NullMarked class DefaultPriorityProvider<T> implements Priority
    * @param param the generic param
    * @return the priority defined in the process definition
    */
-  protected abstract Long getProcessDefinitionPriority(@Nullable ExecutionEntity execution, @Nullable T param);
+  protected abstract @Nullable Long getProcessDefinitionPriority(@Nullable ExecutionEntity execution, @Nullable T param);
 
   /**
    * Returns the priority which is defined in the given process definition.

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.DefaultPriorityProvider;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -30,12 +32,12 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
  * @author Thorben Lindhauer
  * @author Christopher Zell
  */
-public class DefaultJobPriorityProvider extends DefaultPriorityProvider<JobDeclaration<?, ?>> {
+public @NullMarked class DefaultJobPriorityProvider extends DefaultPriorityProvider<JobDeclaration<?, ?>> {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   @Override
-  protected Long getSpecificPriority(ExecutionEntity execution, JobDeclaration<?, ?> param, String jobDefinitionId) {
+  protected @Nullable Long getSpecificPriority(@Nullable ExecutionEntity execution, JobDeclaration<?, ?> param, @Nullable String jobDefinitionId) {
     Long specificPriority = null;
     JobDefinitionEntity jobDefinition = getJobDefinitionFor(jobDefinitionId);
     if (jobDefinition != null) {
@@ -52,12 +54,12 @@ public class DefaultJobPriorityProvider extends DefaultPriorityProvider<JobDecla
   }
 
   @Override
-  protected Long getProcessDefinitionPriority(ExecutionEntity execution, JobDeclaration<?, ?> jobDeclaration) {
+  protected @Nullable Long getProcessDefinitionPriority(@Nullable ExecutionEntity execution, JobDeclaration<?, ?> jobDeclaration) {
     ProcessDefinitionImpl processDefinition = jobDeclaration.getProcessDefinition();
     return getProcessDefinedPriority(processDefinition, BpmnParse.PROPERTYNAME_JOB_PRIORITY, execution, describeContext(jobDeclaration, execution));
   }
 
-  protected JobDefinitionEntity getJobDefinitionFor(String jobDefinitionId) {
+  protected @Nullable JobDefinitionEntity getJobDefinitionFor(@Nullable String jobDefinitionId) {
     if (jobDefinitionId != null) {
       return Context.getCommandContext()
         .getJobDefinitionManager()
@@ -67,7 +69,7 @@ public class DefaultJobPriorityProvider extends DefaultPriorityProvider<JobDecla
     }
   }
 
-  protected Long getActivityPriority(ExecutionEntity execution, JobDeclaration<?, ?> jobDeclaration) {
+  protected @Nullable Long getActivityPriority(ExecutionEntity execution, @Nullable JobDeclaration<?, ?> jobDeclaration) {
     if (jobDeclaration != null) {
       ParameterValueProvider priorityProvider = jobDeclaration.getJobPriorityProvider();
       if (priorityProvider != null) {
@@ -82,7 +84,7 @@ public class DefaultJobPriorityProvider extends DefaultPriorityProvider<JobDecla
     LOG.couldNotDeterminePriority(execution, value, e);
   }
 
-  protected String describeContext(JobDeclaration<?, ?> jobDeclaration, ExecutionEntity executionEntity) {
+  protected String describeContext(JobDeclaration<?, ?> jobDeclaration, @Nullable ExecutionEntity executionEntity) {
     return "Job %s/%s instantiated in context of %s".formatted(jobDeclaration.getActivityId(), jobDeclaration.getJobHandlerType(), executionEntity);
   }
 }

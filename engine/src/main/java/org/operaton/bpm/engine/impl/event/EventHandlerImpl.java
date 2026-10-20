@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.event;
 
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartEventActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
@@ -41,11 +42,11 @@ public class EventHandlerImpl implements EventHandler {
     this.eventType = eventType;
   }
 
-  @SuppressWarnings("unused")
+  @SuppressWarnings({"unused", "unchecked"})
   public void handleIntermediateEvent(EventSubscriptionEntity eventSubscription,
-                                      Object payload,
-                                      Object localPayload,
-                                      Object payloadToTriggeredScope,
+                                      @Nullable Object payload,
+                                      @Nullable Object localPayload,
+                                      @Nullable Object payloadToTriggeredScope,
                                       CommandContext commandContext) {
 
     PvmExecutionImpl execution = eventSubscription.getExecution();
@@ -86,10 +87,10 @@ public class EventHandlerImpl implements EventHandler {
 
   @Override
   public void handleEvent(EventSubscriptionEntity eventSubscription,
-                          Object payload,
-                          Object localPayload,
-                          Object payloadToTriggeredScope,
-                          String businessKey,
+                          @Nullable Object payload,
+                          @Nullable Object localPayload,
+                          @Nullable Object payloadToTriggeredScope,
+                          @Nullable String businessKey,
                           CommandContext commandContext) {
     handleIntermediateEvent(eventSubscription, payload, localPayload, payloadToTriggeredScope, commandContext);
   }

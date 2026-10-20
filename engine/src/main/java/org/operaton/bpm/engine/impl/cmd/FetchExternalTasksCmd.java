@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
@@ -52,7 +53,7 @@ public @NullMarked class FetchExternalTasksCmd implements Command<List<LockedExt
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  protected String workerId;
+  protected @Nullable String workerId;
   protected int maxResults;
   protected List<QueryOrderingProperty> orderingProperties;
 
@@ -62,7 +63,7 @@ public @NullMarked class FetchExternalTasksCmd implements Command<List<LockedExt
     this(workerId, maxResults, instructions, false, Collections.emptyList());
   }
 
-  public FetchExternalTasksCmd(String workerId,
+  public FetchExternalTasksCmd(@Nullable String workerId,
                                int maxResults,
                                Map<String, TopicFetchInstruction> instructions,
                                boolean usePriority,

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
 public class AdditionalFlowScopeInstructionValidator implements MigrationInstructionValidator {
@@ -25,7 +26,7 @@ public class AdditionalFlowScopeInstructionValidator implements MigrationInstruc
     ValidatingMigrationInstruction ancestorScopeInstruction = getClosestPreservedAncestorScopeMigrationInstruction(instruction, instructions);
     ScopeImpl targetScope = instruction.getTargetActivity();
 
-    if (ancestorScopeInstruction != null && targetScope != null && targetScope != targetScope.getProcessDefinition()) {
+    if (ancestorScopeInstruction != null && targetScope != targetScope.getProcessDefinition()) {
       ScopeImpl parentInstanceTargetScope = ancestorScopeInstruction.getTargetActivity();
       if (parentInstanceTargetScope != null && !parentInstanceTargetScope.isAncestorFlowScopeOf(targetScope)) {
         report.addFailure("The closest mapped ancestor '%s' is mapped to scope '%s' which is not an ancestor of target scope '%s'"
@@ -34,7 +35,7 @@ public class AdditionalFlowScopeInstructionValidator implements MigrationInstruc
     }
   }
 
-  protected ValidatingMigrationInstruction getClosestPreservedAncestorScopeMigrationInstruction(ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions) {
+  protected @Nullable ValidatingMigrationInstruction getClosestPreservedAncestorScopeMigrationInstruction(ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions) {
     ScopeImpl parent = instruction.getSourceActivity().getFlowScope();
 
     while (parent != null && instructions.getInstructionsBySourceScope(parent).isEmpty()) {

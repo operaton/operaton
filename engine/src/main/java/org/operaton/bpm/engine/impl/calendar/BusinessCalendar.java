@@ -18,17 +18,19 @@ package org.operaton.bpm.engine.impl.calendar;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.task.Task;
 
 
 /**
  * @author Tom Baeyens
  */
-public interface BusinessCalendar {
+public @NullMarked interface BusinessCalendar {
 
-  Date resolveDuedate(String duedateDescription);
+  @Nullable Date resolveDuedate(String duedateDescription);
 
-  Date resolveDuedate(String duedateDescription, Date startDate);
+  @Nullable Date resolveDuedate(String duedateDescription, @Nullable Date startDate);
 
-  Date resolveDuedate(String duedateDescription, Task task);
+  @Nullable Date resolveDuedate(String duedateDescription, Task task);
 }

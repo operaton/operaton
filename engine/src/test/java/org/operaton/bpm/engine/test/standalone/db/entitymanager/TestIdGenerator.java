@@ -18,13 +18,14 @@ package org.operaton.bpm.engine.test.standalone.db.entitymanager;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class TestIdGenerator implements IdGenerator {
+public @NullMarked class TestIdGenerator implements IdGenerator {
 
   protected AtomicLong atomicLong = new AtomicLong();
 

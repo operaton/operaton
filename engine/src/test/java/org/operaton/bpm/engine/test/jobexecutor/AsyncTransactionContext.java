@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.cfg.standalone.StandaloneTransactionContext;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  *
  */
-public class AsyncTransactionContext extends StandaloneTransactionContext {
+public @NullMarked class AsyncTransactionContext extends StandaloneTransactionContext {
 
   public AsyncTransactionContext(CommandContext commandContext) {
     super(commandContext);
@@ -34,12 +35,7 @@ public class AsyncTransactionContext extends StandaloneTransactionContext {
   // event is fired in new thread
   @Override
   protected void fireTransactionEvent(final TransactionState transactionState) {
-    Thread thread = new Thread() {
-      @Override
-      public void run() {
-        fireTransactionEventAsync(transactionState);
-      }
-    };
+    Thread thread = new Thread(() -> fireTransactionEventAsync(transactionState));
 
     thread.start();
     try {
@@ -53,7 +49,4 @@ public class AsyncTransactionContext extends StandaloneTransactionContext {
   protected void fireTransactionEventAsync(final TransactionState transactionState) {
     super.fireTransactionEvent(transactionState);
   }
-
-
-
 }

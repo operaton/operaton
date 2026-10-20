@@ -18,6 +18,8 @@
 package org.operaton.bpm.webapp.neo.impl.security.auth;
 
 import java.util.Date;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -67,6 +69,15 @@ class UserAuthenticationResourceTest {
     }
 
     clearAuthentication();
+  }
+
+  @Test
+  void shouldProduceJsonForWildcardAccept() {
+    // RESTEasy picks no JSON writer without it
+    Produces produces = UserAuthenticationResource.class.getAnnotation(Produces.class);
+
+    assertThat(produces).isNotNull();
+    assertThat(produces.value()).containsExactly(MediaType.APPLICATION_JSON);
   }
 
   @Test

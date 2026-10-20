@@ -25,6 +25,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -43,6 +44,7 @@ import org.operaton.bpm.webapp.neo.impl.util.ServletContextUtil;
  *
  */
 @Path(UserAuthenticationResource.PATH)
+@Produces(MediaType.APPLICATION_JSON)
 public class UserAuthenticationResource {
 
   protected static final WebappLogger LOGGER = WebappLogger.INSTANCE;

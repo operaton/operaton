@@ -31,6 +31,12 @@
       <type>war</type>
     </dependency>
     <dependency>
+      <groupId>org.operaton.bpm.webapp-neo</groupId>
+      <artifactId>operaton-webapp-neo-tomcat</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest</artifactId>
       <version>${project.version}</version>

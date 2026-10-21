@@ -23,6 +23,35 @@ const form_with = (criteria) => ({
   criteria,
 });
 
+describe("round trip through the saved filter", () => {
+  it("keeps the sort override and columns on re-edit", () => {
+    const body = filter_from_form(
+      {
+        name: "Overdue",
+        sortBy: "dueDate",
+        sortOrder: "desc",
+        columns: [{ name: "amount", label: "Amount" }],
+        show_undefined: true,
+        criteria: [],
+      },
+      FILTER_KEYS,
+    );
+    // The engine persists `properties`, not a top-level `sort`.
+    expect(body.sort).toBeUndefined();
+    expect(body.properties.sort).toEqual({
+      sortBy: "dueDate",
+      sortOrder: "desc",
+    });
+
+    // What the engine hands back is the same shape; editing must restore it.
+    const form = filter_form_from_saved(body);
+    expect(form.sortBy).toBe("dueDate");
+    expect(form.sortOrder).toBe("desc");
+    expect(form.columns).toEqual([{ name: "amount", label: "Amount" }]);
+    expect(form.show_undefined).toBe(true);
+  });
+});
+
 describe("criteria of a saved filter", () => {
   it("adds a criterion row", () => {
     const form = signal(form_with([]));

@@ -386,8 +386,8 @@ export const filter_form_from_saved = (filter) => ({
     label: v.label ?? "",
   })),
   show_undefined: filter.properties?.showUndefinedVariable === true,
-  sortBy: filter.sort?.sortBy ?? "",
-  sortOrder: filter.sort?.sortOrder ?? "asc",
+  sortBy: filter.properties?.sort?.sortBy ?? "",
+  sortOrder: filter.properties?.sort?.sortOrder ?? "asc",
   criteria: Object.entries(filter.query ?? {}).flatMap(([key, value]) =>
     is_variable_query(value)
       ? value.map((comparison) => ({
@@ -429,7 +429,10 @@ export const filter_from_form = (f, filter_keys) => {
   return {
     name: f.name.trim(),
     query,
-    // Variables the list shows as columns, in the shape the engine stores.
+    // Everything the engine keeps for a filter beyond its query lives in
+    // `properties` — a free-form map. A FilterDto has no `sort` field of its
+    // own, so a sort override written at the top level is silently dropped and
+    // never comes back; it belongs in properties, next to the column list.
     properties: {
       variables: (f.columns ?? [])
         .filter((c) => c.name.trim() !== "")
@@ -438,8 +441,10 @@ export const filter_from_form = (f, filter_keys) => {
           label: c.label.trim() || c.name.trim(),
         })),
       showUndefinedVariable: f.show_undefined === true,
+      ...(f.sortBy
+        ? { sort: { sortBy: f.sortBy, sortOrder: f.sortOrder } }
+        : {}),
     },
-    ...(f.sortBy ? { sort: { sortBy: f.sortBy, sortOrder: f.sortOrder } } : {}),
   };
 };
 

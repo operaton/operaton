@@ -379,7 +379,9 @@ const TasksManage = () => {
       name: filter.name,
       owner: resolve_user(state),
       query: filter.query,
-      properties: {},
+      // Keep the columns and sort override the form produced; wiping these to
+      // {} is what dropped them on save.
+      properties: filter.properties ?? {},
     };
     const result = engine_rest.filter.create_filter(state, body);
     if (result && typeof result.then === "function") result.then(refresh);
@@ -391,7 +393,9 @@ const TasksManage = () => {
       name: filter.name,
       owner: resolve_user(state),
       query: filter.query,
-      properties: {},
+      // Keep the columns and sort override the form produced; wiping these to
+      // {} is what dropped them on save.
+      properties: filter.properties ?? {},
     };
     const result = engine_rest.filter.update_filter(state, id, body);
     if (result && typeof result.then === "function") result.then(refresh);

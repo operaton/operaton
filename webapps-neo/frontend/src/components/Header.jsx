@@ -70,7 +70,14 @@ export function Header() {
     showSearch = () => document.getElementById("global-search").showModal(),
     show_mobile_menu = () => document.getElementById("mobile-menu").showModal(),
     close_mobile_menu = () => document.getElementById("mobile-menu").close(),
-    logout = () => engine_rest.auth.logout(state);
+    // Leave the page behind: after signing out the address would otherwise
+    // still name a task or an instance the next person may not open at all.
+    // Only once the session really ended — a logout the server refuses leaves
+    // the user signed in, and moving them then would say otherwise.
+    logout = async () => {
+      await engine_rest.auth.logout(state);
+      if (!state.auth.user.id.peek()) route("/");
+    };
 
   useHotkeys("alt+shift+0", () => route("/"));
   useHotkeys("alt+shift+1", () => route("/tasks"));
@@ -174,11 +181,12 @@ export function Header() {
                   <li>
                     <a
                       href="/account"
+                      title={t("nav.account")}
                       aria-current={
                         url.startsWith("/account") ? "page" : undefined
                       }
                     >
-                      {t("nav.account")}
+                      {state.auth.user.id.value || t("nav.account")}
                     </a>
                   </li>
                 </menu>
@@ -211,7 +219,9 @@ export function Header() {
               <a href="/help">{t("nav.help")}</a>
             </li>
             <li>
-              <a href="/account">{t("nav.account")}</a>
+              <a href="/account" title={t("nav.account")}>
+                {state.auth.user.id.value || t("nav.account")}
+              </a>
             </li>
             <li>
               <button

@@ -41,6 +41,7 @@ const createAppState = () => {
       create: signal(null),
       update: signal(null),
       delete: signal(null),
+      sections: signal(null),
     },
     engine: {
       telemetry: signal(null),
@@ -62,6 +63,13 @@ const createAppState = () => {
       },
       credentials: signal(null),
       unlock: signal(null),
+      // The engine's password policy, and the answer when a password is
+      // checked against it. Absent (404) when no policy is configured.
+      password_policy: signal(null),
+      password_check: signal(null),
+    },
+    execution: {
+      set_variable: signal(null),
     },
     group: {
       list: signal(null),
@@ -146,8 +154,12 @@ const createAppState = () => {
       error_details: signal(null),
     },
     task: {
+      summary: signal(null),
+      by_group: signal(null),
+      scratch: signal(null),
       list: signal(null),
       one: signal(null),
+      create: signal(null),
       by_process_instance: signal(null),
       form: signal(null),
       rendered_form: signal(null),

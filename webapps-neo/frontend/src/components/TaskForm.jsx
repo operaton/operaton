@@ -1,9 +1,13 @@
 import { useState, useContext, useEffect, useRef } from "preact/hooks";
+import { useSignal } from "@preact/signals";
 import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
+import { resolve_user, RESPONSE_STATE } from "../api/helper.jsx";
+import { keep_list_query } from "../helper/list_query.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { useRoute, useLocation } from "preact-iso";
 import { CamundaForm } from "./CamundaForm.jsx";
+import { VariableRows, repeated_names } from "./VariableRows.jsx";
 import {
   vars_to_form_data,
   form_data_to_vars,
@@ -11,6 +15,10 @@ import {
   rendered_form_to_schema,
   form_ref_of,
 } from "./TaskForm_helpers.js";
+import {
+  coerce_variable_value,
+  variable_edit_value,
+} from "../helper/variables.js";
 
 const TaskForm = () => {
   const state = useContext(AppState),
@@ -34,17 +42,54 @@ const TaskForm = () => {
     return <EmbeddedHtmlTaskForm task={selectedTask} formKey={formKey} />;
   }
 
-  // No form key — the task either has a generated form (camunda:formData) or no
-  // form at all. Render the engine's generated form through the same CamundaForm
-  // renderer so it looks like a form-js form.
+  // A task created by hand belongs to no process, so it has no task definition
+  // and therefore no form of any kind. Asking the engine to render one answers
+  // 500, which used to be all this tab showed — and with it went the complete
+  // button, leaving the task impossible to finish. The previous Tasklist showed
+  // a plain variable editor here instead.
+  if (!selectedTask.taskDefinitionKey) {
+    return <GenericTaskForm task={selectedTask} taskId={params.task_id} />;
+  }
+
+  // No form key — the task has a generated form (camunda:formData). Render the
+  // engine's generated form through the same CamundaForm renderer so it looks
+  // like a form-js form.
   return <GeneratedTaskForm task={selectedTask} taskId={params.task_id} />;
 };
+
+// Finishing a task is one request, and it can be refused — the assignee
+// changed, the task is gone, a variable is rejected. The POST wrappers answer
+// with an error state instead of rejecting, so the answer has to be read:
+// leaving for the list regardless tells the user the task is done when it is
+// not.
+const then_leave = (
+  request,
+  { set_error, task_id, route, failed, list_query = "" },
+) =>
+  void Promise.resolve(request)
+    .then((result) => {
+      if (result?.status !== RESPONSE_STATE.SUCCESS) {
+        set_error(result?.error?.message ?? failed);
+        return;
+      }
+      localStorage.removeItem(`task_form_${task_id}`);
+      route(`/tasks${list_query}`);
+    })
+    .catch((error) => set_error(error?.message ?? failed));
+
+// A task is workable only by the person it is assigned to — unassigned or held
+// by someone else means read-only, as in the previous Tasklist.
+const worked_by_me = (state, task) =>
+  !!task?.assignee && task.assignee === resolve_user(state);
 
 // ---- Camunda Forms (form-js) ------------------------------------------------
 
 const CamundaTaskForm = ({ task, taskId }) => {
   const state = useContext(AppState),
     { route } = useLocation(),
+    // Finishing a task returns to the list; without this it returns to an
+    // unfiltered one, throwing away what the user was working through.
+    list_query = keep_list_query(useRoute().query),
     [t] = useTranslation(),
     [error, setError] = useState(null),
     submit_ref = useRef(null);
@@ -87,28 +132,40 @@ const CamundaTaskForm = ({ task, taskId }) => {
     }
     setError(null);
     const payload = form_data_to_vars(data, vars, allowed);
-    engine_rest.task
-      .post_task_form(state, taskId, payload)
-      .then(() => {
-        localStorage.removeItem(`task_form_${taskId}`);
-        route("/tasks");
-      })
-      .catch((e) => setError(e?.message ?? "Submit failed"));
+    then_leave(engine_rest.task.post_task_form(state, taskId, payload), {
+      set_error: setError,
+      task_id: taskId,
+      route,
+      failed: t("tasks.form.submit-failed"),
+      list_query,
+    });
   };
+
+  const mine = worked_by_me(state, task);
 
   return (
     <div class="task-form camunda-task-form">
       <CamundaForm
         schema={schema}
         data={initial_data}
+        disabled={!mine}
         on_submit={on_submit}
         on_ready={(c) => {
           submit_ref.current = c.submit;
         }}
       />
-      {error && <p class="error" role="alert">{error}</p>}
+      {error && (
+        <p class="error" role="alert">
+          {error}
+        </p>
+      )}
+      {!mine && <p class="info-box">{t("tasks.form.claim-first")}</p>}
       <div class="form-buttons">
-        <button type="button" onClick={() => submit_ref.current?.()}>
+        <button
+          type="button"
+          disabled={!mine}
+          onClick={() => submit_ref.current?.()}
+        >
           {t("tasks.form.complete-task")}
         </button>
       </div>
@@ -163,6 +220,9 @@ const EmbeddedHtmlTaskForm = ({ task, formKey }) => {
 const GeneratedTaskForm = ({ task, taskId }) => {
   const state = useContext(AppState),
     { route } = useLocation(),
+    // Finishing a task returns to the list; without this it returns to an
+    // unfiltered one, throwing away what the user was working through.
+    list_query = keep_list_query(useRoute().query),
     [t] = useTranslation(),
     [error, setError] = useState(null),
     submit_ref = useRef(null);
@@ -200,20 +260,23 @@ const GeneratedTaskForm = ({ task, taskId }) => {
     }
     setError(null);
     const payload = form_data_to_vars(data, vars, allowed);
-    engine_rest.task
-      .post_task_form(state, taskId, payload)
-      .then(() => {
-        localStorage.removeItem(`task_form_${taskId}`);
-        route("/tasks");
-      })
-      .catch((e) => setError(e?.message ?? "Submit failed"));
+    then_leave(engine_rest.task.post_task_form(state, taskId, payload), {
+      set_error: setError,
+      task_id: taskId,
+      route,
+      failed: t("tasks.form.submit-failed"),
+      list_query,
+    });
   };
+
+  const mine = worked_by_me(state, task);
 
   return (
     <div class="task-form camunda-task-form">
       <CamundaForm
         schema={schema}
         data={initial_data}
+        disabled={!mine}
         on_submit={on_submit}
         on_ready={(c) => {
           submit_ref.current = c.submit;
@@ -224,15 +287,30 @@ const GeneratedTaskForm = ({ task, taskId }) => {
           {error}
         </p>
       )}
+      {!mine && <p class="info-box">{t("tasks.form.claim-first")}</p>}
       <div class="form-buttons">
         {has_fields ? (
-          <button type="button" onClick={() => submit_ref.current?.()}>
+          <button
+            type="button"
+            disabled={!mine}
+            onClick={() => submit_ref.current?.()}
+          >
             {t("tasks.form.complete-task")}
           </button>
         ) : (
           <button
             type="button"
-            onClick={() => complete_directly(state, setError, taskId, route)}
+            disabled={!mine}
+            onClick={() =>
+              complete_directly(
+                state,
+                setError,
+                taskId,
+                route,
+                t("tasks.form.submit-failed"),
+                list_query,
+              )
+            }
           >
             {t("tasks.form.complete-directly")}
           </button>
@@ -242,17 +320,114 @@ const GeneratedTaskForm = ({ task, taskId }) => {
   );
 };
 
+/**
+ * The form for a task that has none: a plain list of variables to carry along
+ * when the task is completed. Matches what the previous Tasklist did for a task
+ * without a form key and without a form reference.
+ */
+const GenericTaskForm = ({ task, taskId }) => {
+  const state = useContext(AppState),
+    { route } = useLocation(),
+    // Finishing a task returns to the list; without this it returns to an
+    // unfiltered one, throwing away what the user was working through.
+    list_query = keep_list_query(useRoute().query),
+    [t] = useTranslation(),
+    [error, setError] = useState(null),
+    rows = useSignal([]);
+
+  useEffect(() => {
+    // Empty for a standalone task, but it is what the engine considers the
+    // form's variables, so start from it rather than from nothing.
+    void engine_rest.task.get_task_form_variables(state, task.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task.id]);
+
+  const form_variables = state.api.task.form_variables.value;
+
+  useEffect(() => {
+    const declared = form_variables?.data;
+    if (!declared) return;
+    rows.value = Object.entries(declared).map(([name, v]) => ({
+      name,
+      type: v?.type ?? "String",
+      value: variable_edit_value(v?.type, v?.value),
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form_variables]);
+
+  if (!form_variables)
+    return <p class="fade-in-delayed">{t("common.loading")}</p>;
+
+  const named = rows.value.filter((row) => row.name.trim() !== ""),
+    duplicate = repeated_names(rows.value);
+
+  const complete = () => {
+    if (duplicate) {
+      setError(t("tasks.form.duplicate-variable"));
+      return;
+    }
+    setError(null);
+    const payload = Object.fromEntries(
+      named.map(({ name, type, value }) => [
+        name.trim(),
+        { value: coerce_variable_value(type, value), type },
+      ]),
+    );
+    then_leave(engine_rest.task.post_task_form(state, taskId, payload), {
+      set_error: setError,
+      task_id: taskId,
+      route,
+      failed: t("tasks.form.submit-failed"),
+      list_query,
+    });
+  };
+
+  const mine = worked_by_me(state, task);
+
+  return (
+    <div class="task-form generic-task-form">
+      <VariableRows
+        rows={rows.value}
+        disabled={!mine}
+        on_change={(next) => (rows.value = next)}
+      />
+
+      {!mine && <p class="info-box">{t("tasks.form.claim-first")}</p>}
+      {error && (
+        <p class="error" role="alert">
+          {error}
+        </p>
+      )}
+
+      <div class="button-group">
+        <button type="button" disabled={!mine || duplicate} onClick={complete}>
+          {rows.value.length > 0
+            ? t("tasks.form.complete-task")
+            : t("tasks.form.complete-directly")}
+        </button>
+      </div>
+    </div>
+  );
+};
+
 // Complete a task without submitting a form, via the dedicated /complete
 // endpoint (used when the task has no form fields).
-const complete_directly = (state, setError, taskId, route) => {
+const complete_directly = (
+  state,
+  setError,
+  taskId,
+  route,
+  failed,
+  list_query,
+) => {
   setError(null);
-  engine_rest.task
-    .complete_task(state, taskId)
-    .then(() => {
-      localStorage.removeItem(`task_form_${taskId}`);
-      route("/tasks");
-    })
-    .catch((error) => setError(error?.message || "Complete failed"));
+  then_leave(engine_rest.task.complete_task(state, taskId), {
+    set_error: setError,
+    task_id: taskId,
+    route,
+    failed,
+    list_query,
+  });
 };
 
 export { TaskForm };

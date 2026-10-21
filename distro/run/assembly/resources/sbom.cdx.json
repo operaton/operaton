@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:51fc74a0-aa26-4dc9-8a80-b4e8f997fd85",
+  "serialNumber": "urn:uuid:a267b1e1-bef5-4f67-b1d9-ed4e8068a337",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-21T08:54:39Z",
+    "timestamp": "2026-10-21T09:27:13Z",
     "tools": {
       "components": [
         {
@@ -22721,7 +22721,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "eafeb9fc-0741-4e6c-9538-61f920d264da",
+      "bom-ref": "487e5291-1f1c-4e17-8df7-f8fb1c9b3d00",
       "name": "package-lock.json",
       "properties": [
         {
@@ -25571,19 +25571,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.16",
+      "bom-ref": "pkg:npm/dompurify@3.4.17",
       "name": "dompurify",
-      "version": "3.4.16",
+      "version": "3.4.17",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.16",
+      "purl": "pkg:npm/dompurify@3.4.17",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.16"
+          "value": "dompurify@3.4.17"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -27977,7 +27977,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "73a814cc-2bc6-415c-9729-8306392ad51c",
+      "bom-ref": "19841feb-85a2-4880-a87a-829ef5c8c154",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27988,7 +27988,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "9375c11e-5a2e-46a8-ba10-988358ed18eb",
+      "bom-ref": "1f93e4ec-0748-4cc8-845b-7d5eb482c2a9",
       "name": "package-lock.json",
       "properties": [
         {
@@ -28641,6 +28641,28 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/dompurify@3.4.16",
+      "name": "dompurify",
+      "version": "3.4.16",
+      "licenses": [
+        {
+          "expression": "MPL-2.0 OR Apache-2.0"
+        }
+      ],
+      "purl": "pkg:npm/dompurify@3.4.16",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dompurify@3.4.16"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/html-parse-stringify@3.0.1",
       "name": "html-parse-stringify",
       "version": "3.0.1",
@@ -29121,7 +29143,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "67df19ae-f12b-4abc-882f-cc0b3e75d721",
+      "bom-ref": "61bdefa2-f436-491a-a065-c5ce0862fd9b",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -31936,13 +31958,13 @@
       "dependsOn": []
     },
     {
-      "ref": "73a814cc-2bc6-415c-9729-8306392ad51c",
+      "ref": "19841feb-85a2-4880-a87a-829ef5c8c154",
       "dependsOn": [
-        "eafeb9fc-0741-4e6c-9538-61f920d264da"
+        "487e5291-1f1c-4e17-8df7-f8fb1c9b3d00"
       ]
     },
     {
-      "ref": "eafeb9fc-0741-4e6c-9538-61f920d264da",
+      "ref": "487e5291-1f1c-4e17-8df7-f8fb1c9b3d00",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -31976,7 +31998,7 @@
         "pkg:npm/dmn-js-shared@17.12.3",
         "pkg:npm/dmn-js@17.12.3",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.16",
+        "pkg:npm/dompurify@3.4.17",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.11.2",
         "pkg:npm/jquery-ui@1.14.2",
@@ -32139,7 +32161,7 @@
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.16",
+        "pkg:npm/dompurify@3.4.17",
         "pkg:npm/feelers@3.1.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
@@ -32842,7 +32864,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.16",
+      "ref": "pkg:npm/dompurify@3.4.17",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]
@@ -33387,13 +33409,7 @@
       "dependsOn": []
     },
     {
-      "ref": "67df19ae-f12b-4abc-882f-cc0b3e75d721",
-      "dependsOn": [
-        "9375c11e-5a2e-46a8-ba10-988358ed18eb"
-      ]
-    },
-    {
-      "ref": "9375c11e-5a2e-46a8-ba10-988358ed18eb",
+      "ref": "1f93e4ec-0748-4cc8-845b-7d5eb482c2a9",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -33411,6 +33427,12 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
+      ]
+    },
+    {
+      "ref": "61bdefa2-f436-491a-a065-c5ce0862fd9b",
+      "dependsOn": [
+        "1f93e4ec-0748-4cc8-845b-7d5eb482c2a9"
       ]
     },
     {
@@ -33696,6 +33718,12 @@
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/moddle-xml@12.1.0",
         "pkg:npm/moddle@8.2.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dompurify@3.4.16",
+      "dependsOn": [
+        "pkg:npm/%40types/trusted-types@2.0.7"
       ]
     },
     {
